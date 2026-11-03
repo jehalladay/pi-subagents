@@ -1,4 +1,4 @@
-/** wb-rv3o THE SAME VIEW frame-reader census, cut #2. wb-rv3o is the rule-19 carrier child of wb-b9ot: ruling R-B270 filed it at
+/** wb-rv3o THE SAME VIEW frame-reader census, cut #3. wb-rv3o is the rule-19 carrier child of wb-b9ot: ruling R-B270 filed it at
  * wb-b9ot's refusal #3 (M:45305 / O:1697) carrying that refusal's two unmet items, the GP9 members, and ruling R-B286, the dependency
  * inversion at refusal #4 (O:1715, ruling M:45721), folded refusal #4's two unmet items, the GP18-PAREN members, into it. wb-b9ot
  * stays parked until this lands; its re-cut can import the helper. SUBJECT: the frame reader of
@@ -6,11 +6,22 @@
  * and places a frame by its code, where wb-b9ot's cut #4 (tip 808d5245, not on trunk) read the text of its Error.stack line. The
  * parent's census, test/workbench-hyperunix-evidence-tier-standing.test.ts, is neither read nor edited here.
  *
- * CUT #2 (the respin of wb-rv3o's refusal #1, O:1816, ruling R-B352; cut #1 was 4b8b87ad) keeps cut #1's reader and readings and
- * cures that refusal's two unmet items: U1-READER-TITLE-KNOWN-SCRIPT-FILE-CONDITION-UNPINNED - READER now holds knownScriptOf()'s
- * file condition on stand-in call sites (this file's sha256 at another file reads as other code) and KNOWN holds it on V8's own call
- * sites; U2-ANCHOR-REFUSAL-CITE-ASSOCIATION-UNPINNED - ANCHOR now holds each row's whole refusal cite, by exact match, to the cite
- * at a fixed opening of the text its unmet item is read from.
+ * CUT #2 (the respin of wb-rv3o's refusal #1, O:1816, ruling R-B352; cut #1 was 4b8b87ad) kept cut #1's reader and readings and
+ * cured that refusal's two unmet items: U1-READER-TITLE-KNOWN-SCRIPT-FILE-CONDITION-UNPINNED (READER's stand-ins at COPY_PATH, and
+ * KNOWN on V8's own call sites) and U2-ANCHOR-REFUSAL-CITE-ASSOCIATION-UNPINNED (ANCHOR holds each row's whole refusal cite, by exact
+ * match, to the cite at a fixed opening of the text its unmet item is read from).
+ *
+ * CUT #3 (the respin of wb-rv3o's refusal #2, O:1858, ruling R-B385; cut #2 was 54a2c4db) keeps the reader (the helper's bytes are
+ * cut #2's) and every reading cut #2 pinned, and cures that refusal's two unmet items by pinning the files its survivors' witnesses
+ * read and by narrowing READER's and KNOWN's claims to the call sites and scripts they list:
+ * U1-READER-TITLE-KNOWN-SCRIPT-FILE-EQUALITY-NEAR-FILE-SPELLINGS-UNPINNED - KNOWN compiles its source text under the nine spellings of
+ * its first file that NEAR_FILES lists (the refusal's six witness files and its control /srv/other/first.js, then two of this
+ * cut's), each read as other code with the first file's script known; U2-READER-TITLE-PACKAGE-FRAME-URL-EQUALITY-QUERY-FRAGMENT-UNPINNED
+ * - READER gives result.js's pin, without eval, to result.js's URL with the refusal's '?gp20' and '#gp20' appended, to four more
+ * spellings of that URL (its name's case changed, another extension, a './' segment, its path) and to no file under that URL as the
+ * label, each read as other code. READER also adds two built-in stand-ins (line 0; the file '') and a site with no file under this
+ * file's path as the label, each read as other code. READER's title and bullet and KNOWN's title and bullet now claim the readings of
+ * the listed sites and scripts only.
  *
  * PINNED READER SET (this file, test/workbench-hyperunix-same-view-frames-census.test.ts; observed at the cut: 19 passed (19)):
  * - OWN-3: the five functions this file imports from '@hyperunix/sdk' (decodeResultStream, assembleQueryResult, evidenceOf,
@@ -39,25 +50,37 @@
  *   frame written as other code ('eval ...' or 'script ...' with its label rooted), or, for GP9-SURL-THROW, the substitute's frame
  *   alone. Observed: each passes.
  * - READER (stand-in call sites and raised(); a stand-in's label, the location its code names for itself, getScriptNameOrSourceURL(),
- *   is its file unless the case gives one): frameText() writes a site at SDK_DIST's result.js URL with result.js's pin and no eval as
- *   the package's frame, also under another copy's URL as its label; the same site with index.js's pin, as eval code, at another
- *   copy's URL (also under result.js's URL as its label, then written by that label) or at a file under SDK_DIST outside the 27 as
- *   other code; a site with no file, no line, no script sha256 and no eval as a built-in, also under a label, and one with a line, a
- *   script sha256, a file or the eval flag as other code; a site with this file's file and sha256 as 'this file', also under another
- *   file's path as its label, and one with another sha256, the eval flag, or this file's sha256 at another file (this file's name in
- *   another checkout, /srv/hx-same-view-copy/test/...; also under this file's path as its label, then written by that label) as other
- *   code. packageModuleOf(), isBuiltIn() and knownScriptOf() read the first of those as result.js, true and this file. framesOf()
- *   writes built-in frames between the package's frames, stops at the first frame that is neither and writes 'no caller frame' when
- *   none is, 'no call sites' for a raise without call sites and 'no throw' for a call that returned. raised()
- *   records the call sites of an error whose stack the call itself read first (its first site at this file's path), records none for a
- *   thrown non-Error, reads a call that returns as no throw, and leaves Error.prepareStackTrace as it found it. rooted() writes the
- *   root's path as <root>/ wherever it occurs. Observed: passes.
- * - KNOWN (V8's own call sites): two vm.Scripts compiled here from one source text, KNOWN_SOURCE (a function that throws on null,
- *   labelled by its //# sourceURL /srv/hx-same-view-known/label.js), under the files /srv/hx-same-view-known/first.js and
- *   /srv/hx-same-view-known/second.js. Each one's script, read from one of its own frames (scriptCalling()), names its own file, and
- *   both carry the source text's sha256. A raise from the first, with the first's script known, reads as that script; a raise from the
- *   second reads, with the first's script known, as other code written by its label ('script known
- *   /srv/hx-same-view-known/label.js:1:50') and, with both scripts known, as the second's script. Observed: passes.
+ *   is its file unless the case gives one). Its claims are the readings of the 29 sites, the five raises and the calls it lists, no
+ *   others. frameText() reads as the package's frame the two listed sites at SDK_DIST's result.js URL with result.js's pin and no eval
+ *   (labelled by that URL, and by another copy's URL), and as other code the twelve other listed sites built from the first of them:
+ *   with index.js's pin, with the eval flag, at another copy's URL file:///elsewhere/@hyperunix/sdk/dist/result.js (also labelled by
+ *   result.js's URL, then written by that label), at the files zz-shim.mjs, RESULT.js and result.mjs under SDK_DIST, at result.js's URL
+ *   with '?gp20' or '#gp20' appended or written with a './' segment, at result.js's path, and with no file under result.js's URL as the
+ *   label (written by that label). It reads as built-ins the two listed sites with no file, no line, no script sha256 and no eval (one
+ *   labelled file:///labelled.js), and as other code the six listed sites that each give such a site one of a line (1, or 0), a script
+ *   sha256, a file (a wasm: URL, or '') or the eval flag. It reads as 'this file' the two listed sites at this file's file with its
+ *   sha256 and no eval (one labelled by COPY_PATH), and as other code the five other listed sites built from the first of them: with
+ *   result.js's pin, with the eval flag, at COPY_PATH with this file's sha256 (/srv/hx-same-view-copy/test/..., this file's name in
+ *   another checkout; also labelled by this file's path, then written by that label), and with no file under this file's path as the
+ *   label (written by that label). packageModuleOf(), isBuiltIn() and knownScriptOf() read the first site, a built-in stand-in and this
+ *   file's site as result.js, true and this file. framesOf() reads the five listed raises as listed: built-in frames written between
+ *   the package's frames, the reading ending at the first frame that is neither (or 'no caller frame' when the listed frames hold
+ *   none), 'no call sites' for a raise without call sites and 'no throw' for a call that returned. raised() records the call sites of
+ *   the listed error whose stack the call itself read first (its first site at this file's path), records none for the listed thrown
+ *   non-Error, reads the listed call that returns as no throw, and leaves Error.prepareStackTrace as it found it over those three
+ *   calls. rooted() writes the root's path as <root>/ at both of its occurrences in the listed text (after 'x(' and after 'file://').
+ *   Observed: passes.
+ * - KNOWN (V8's own call sites): eleven vm.Scripts compiled here from one source text, KNOWN_SOURCE (a function that throws on null,
+ *   labelled by its //# sourceURL /srv/hx-same-view-known/label.js): two under KNOWN_FILES, /srv/hx-same-view-known/first.js and
+ *   /srv/hx-same-view-known/second.js, and nine under NEAR_FILES, spellings of first.js's file that are not it - first.jsx and
+ *   first.js.bak in its directory (first.js's file is a prefix of each), /elsewhere/srv/hx-same-view-known/first.js (it ends with that
+ *   file), /x/srv/hx-same-view-known/first.js.orig (it contains it), FIRST.js (its name with the case changed) and first.cjs (its stem
+ *   with another extension) in its directory, /srv/hx-same-view-known/./first.js (a './' segment), file:///srv/hx-same-view-known/first.js
+ *   (its file: URL) and /srv/other/first.js (its name in another directory). Each one's script, read from one of its own frames
+ *   (scriptCalling()), names the file it was compiled under, and all carry the source text's sha256. With first.js's script known, a
+ *   raise from first.js reads as that script, and a raise from second.js or from each of the nine as other code written by its label
+ *   ('script known /srv/hx-same-view-known/label.js:1:50'); with second.js's script known too, a raise from second.js reads as that
+ *   script. Its claims are those readings of those eleven scripts, no others. Observed: passes.
  * - SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${route}:${pins}` and every pin as
  *   `${id}:${compile}:${body}:${label}`, each held to a literal, PINS's ids against the rows' pins in order; RESULT_LABEL, written from
  *   the root, is SDK_DIST's result.js URL (so SDK_DIST, the dist/ directory Node resolves for the helper, is the repository root's
@@ -75,30 +98,42 @@
  *   the rows whose unmet items are the fold's lines, the text between 'RULE19 DEPENDENCY INVERSION R-B286 (ruling M:45721, ' and
  *   '): members folded into wb-rv3o' in the notes. Each read takes the first occurrence of its opening. Observed: passes.
  *
- * CLAIMS AND THEIR FALSIFIERS. (1) The reader reads each raise exactly as OWN-3, OWN-4 and MEMBERS hold it, and each of its rules as
- * READER and KNOWN hold it: a reader edit that changes one of those readings reds that case. The cutting seats applied 24 one-edit
- * mutants of the helper (each of packageModuleOf()'s eval, sha256 and file conditions, knownScriptOf()'s file, sha256 and eval
- * conditions and isBuiltIn()'s four conditions dropped; packageModuleOf(), knownScriptOf(), isBuiltIn() and scriptCalling() reading a
- * site's label for its file; frameText() writing other code's file for its label; framesOf() not stopping at the caller or leaving
- * built-ins out; raised() not restoring the formatter; rooted() unchanged text; scriptCalling() reading the second frame;
- * registrationRead() reading the stand-in's own frame; the receiver type dropped from a function; other code written without its
- * kind; sitesOf() not formatting the stack itself) and read each red, at 1 to 17 cases. (2) The prior readers pass over the
- * members' substitute frames: with the helper's frame rules replaced by wb-b9ot cut #4's callerOf regex (the text after a frame line's
- * last '(') the seats read every MEMBERS case red (15 failed: the 13, READER and KNOWN), and with them replaced by cut #3/#4's rule
- * read on the same call sites (the location the code names, no eval or sha256 condition) the six GP9 cases red (8 failed: the six,
- * READER and KNOWN). (3) Each member's own plant, as its gate's archived battery writes it (the shim texts, the alias of the bare
- * specifier and of the installed index.js URL, or the src-importer redirect; GP18-PAREN-SELF labelled with this census's path), reds
- * this census: in the seats' replays every route (3) plant reds OWN-3 (and the ten route (3) MEMBERS cases, whose own
- * decodeResultStream the plant substitutes too) and every route (4) plant reds OWN-4, a paired witness reading each plant's
- * substitute realized ('decoded', or the provider's output carrying KEY). (4) The rows' unmet items,
- * refusal cites and member ids are the tracker export's, each at its row. The seats measured each of these edits red: a member removed
- * from its row and its pin (CT1, CT1b) or from every literal (CT6); a member added to a row, or moved to another row, in every
- * literal; a row removed (CT4), removed from every literal (CT5) or added in every literal; a row's unmet item shortened (CT2); a
- * row's refusal cite swapped with the other refusal's, cut to its refusal's number or to the bare word (refusal #1's L2-CITE-SWAP,
- * L2-CITE-SHORT and L2-CITE-BARE): each reds ANCHOR, through the export (CT1, CT1b and CT4 SHAPE too); and a pin's witness swapped
- * for another pin's (CT3) reds SHAPE.
+ * CLAIMS AND THEIR FALSIFIERS. (1) The reader reads each raise exactly as OWN-3, OWN-4 and MEMBERS hold it, and each listed site,
+ * raise and script as READER and KNOWN hold them: a reader edit that changes one of those readings reds that case. The cutting seats
+ * applied 47 one-edit mutants of the helper and read each red, at 1 to 17 cases: cut #2's 24 (each of packageModuleOf()'s eval, sha256
+ * and file conditions, knownScriptOf()'s file, sha256 and eval conditions and isBuiltIn()'s four conditions dropped;
+ * packageModuleOf(), knownScriptOf(), isBuiltIn() and scriptCalling() reading a site's label for its file; frameText() writing other
+ * code's file for its label; framesOf() not stopping at the caller or leaving built-ins out; raised() not restoring the formatter;
+ * rooted() unchanged text; scriptCalling() reading the second frame; registrationRead() reading the stand-in's own frame; the receiver
+ * type dropped from a function; other code written without its kind; sitesOf() not formatting the stack itself); refusal #2's seven
+ * survivors as its gate spelled them (GP20-KF-PREFIX, -SUFFIX, -INCLUDES, -CASEFOLD and -EXTLESS: knownScriptOf()'s file equality read
+ * as a prefix, a suffix, containment, case-insensitively or without the extension; GP20-PF-PREFIX and -NOQUERY: packageModuleOf()'s
+ * URL equality read as a prefix or with the query and fragment cut), the five red at KNOWN and the two at READER, and its six killed
+ * controls (GP20-KF-BASENAME, -DIRNAME, -NONNULL and -LABEL-OR-FILE, GP20-PF-SUFFIX and -LABEL-OR-FILE); and this cut's ten
+ * (knownScriptOf()'s file compared with './' segments dropped, without a leading 'file://', or by the label when the site names no
+ * file; packageModuleOf()'s file compared case-insensitively, without its extension, as a parsed URL, as the module's path too, or by
+ * the label when the site names no file; isBuiltIn() reading '' as no file, or 0 as no line). On cut #2's census bytes refusal #2's
+ * seven survivors and this cut's ten read 0 failed | 19 passed each. (2) The prior readers pass over the members' substitute frames:
+ * with the helper's frame rules replaced by wb-b9ot cut #4's callerOf regex (the text after a frame line's last '(') the seats read
+ * every MEMBERS case red (15 failed: the 13, READER and KNOWN), and with them replaced by cut #3/#4's rule read on the same call sites
+ * (the location the code names, no eval or sha256 condition) the six GP9 cases red (8 failed: the six, READER and KNOWN). (3) Each
+ * member's own plant, as its gate's archived battery writes it (the shim texts, the alias of the bare specifier and of the installed
+ * index.js URL, or the src-importer redirect; GP18-PAREN-SELF labelled with this census's path), reds this census: in the seats'
+ * replays every route (3) plant reds OWN-3 (and the ten route (3) MEMBERS cases, whose own decodeResultStream the plant substitutes
+ * too) and every route (4) plant reds OWN-4, a paired witness reading each plant's substitute realized ('decoded', or the provider's
+ * output carrying KEY). (4) The rows' unmet items, refusal cites and member ids are the tracker export's, each at its row. The seats
+ * measured each of these edits red: a member removed from its row and its pin (CT1, CT1b) or from every literal (CT6); a member added
+ * to a row, or moved to another row, in every literal; a row removed (CT4), removed from every literal (CT5) or added in every
+ * literal; a row's unmet item shortened (CT2); a row's refusal cite swapped with the other refusal's, cut to its refusal's number or
+ * to the bare word (refusal #1's L2-CITE-SWAP, L2-CITE-SHORT and L2-CITE-BARE): each reds ANCHOR, through the export (CT1, CT1b and
+ * CT4 SHAPE too); and a pin's witness swapped for another pin's (CT3) reds SHAPE.
  *
- * NOT CLAIMED. A substitute form other than the 13 members' witnesses and plants is NOT CLAIMED by this census; the seats measured more
+ * NOT CLAIMED. How the reader reads a call site or a script at a file READER or KNOWN does not list - another spelling of result.js's
+ * URL, of this file's file or of first.js's file than the listed ones - is NOT CLAIMED by this census. A second module instance of a
+ * pinned module loaded at another URL (refusal #2's GP20 witness imported result.js at its URL with '?gp20' and with '#gp20' appended
+ * and read such frames) is not loaded here: READER gives stand-in sites those two files with result.js's pin, and such an instance's
+ * own frames beyond those stand-ins are NOT CLAIMED by this census. Whether raisedAsync() puts the formatter back is NOT CLAIMED by
+ * this census. A substitute form other than the 13 members' witnesses and plants is NOT CLAIMED by this census; the seats measured more
  * gate plants red (GP9-SURLc, W6-SURL-SELFPATH, W6-PROV-PROVIDER, G21-S5, G21-S6, M-PROXY, N-FORGE, S2, S3, S4, G13), and none is a
  * pin. Whether the two EVAL members' indirect eval reads as their witnesses do is NOT CLAIMED by this census beyond claim (3)'s
  * replay (their frame there is the same 'eval' kind and label at its own position, 1:88). Code compiled as a module from a text
@@ -111,8 +146,8 @@
  * compile, body and label a member's witness carries, changed together with its SHAPE entry and its reading in every literal, is NOT
  * CLAIMED by this census (claim (3)'s replay holds the forms to the gates' archived plant texts, not an anchor this file reads). A
  * row's id or route read as the export's is NOT CLAIMED by this census: both are this census's names for the row, held by SHAPE (a
- * route by MEMBERS' witnesses too). KNOWN's readings are claimed of its two scripts; a script compiled another way (another source,
- * label, file or compile) is NOT CLAIMED by this census beyond READER's rules.
+ * route by MEMBERS' witnesses too). KNOWN's readings are claimed of its eleven scripts; a script compiled another way (another source,
+ * label, file or compile) is NOT CLAIMED by this census.
  * ANCHOR's reads are claimed on the tracked export as it stands; on any other export (another position, spelling, order or occurrence
  * of the list, the fold's lines, the route sentences or the cites, or two rows for one bead) they are NOT CLAIMED by this census. The
  * parent census's header, cases and claims, THE SAME VIEW's readings (1) and (2) there (Node's resolution of the package for this
@@ -151,6 +186,15 @@ const COPY_PATH = '/srv/hx-same-view-copy/test/workbench-hyperunix-same-view-fra
  * function it is handed returns, labelled by a //# sourceURL that names neither file. */
 const KNOWN_SOURCE = '(function known(call) { if (call === null) throw new TypeError("no call"); return call(); })\n//# sourceURL=/srv/hx-same-view-known/label.js';
 const KNOWN_FILES = {first: '/srv/hx-same-view-known/first.js', second: '/srv/hx-same-view-known/second.js'} as const;
+/** The other files KNOWN compiles KNOWN_SOURCE under: spellings of KNOWN_FILES.first that are not it. The first six are the files
+ * wb-rv3o refusal #2 (O:1858) realized its U1 witnesses at (its GP20-KF-PREFIX, -SUFFIX, -INCLUDES, -CASEFOLD and -EXTLESS readings);
+ * then this cut's two (the first's path with a './' segment, and its file: URL) and the refusal's control /srv/other/first.js (the
+ * first's name in another directory). */
+const NEAR_FILES = ['/srv/hx-same-view-known/first.jsx', '/srv/hx-same-view-known/first.js.bak', '/elsewhere/srv/hx-same-view-known/first.js',
+  '/x/srv/hx-same-view-known/first.js.orig', '/srv/hx-same-view-known/FIRST.js', '/srv/hx-same-view-known/first.cjs',
+  '/srv/hx-same-view-known/./first.js', 'file:///srv/hx-same-view-known/first.js', '/srv/other/first.js'] as const;
+/** How the reader writes a raise from a script of KNOWN_SOURCE that is not a known script: other code, written by its label. */
+const LABELLED = 'script known /srv/hx-same-view-known/label.js:1:50';
 /** The tracked tracker export, read at run time for the outside anchors (ANCHOR). */
 const EXPORT = new URL('.beads/issues.jsonl', ROOT);
 /** The member each substitute strips (route (3)) or carries (route (4)), built at run time as the gates' plants build it. */
@@ -354,7 +398,7 @@ function site(fields: {file?: string | null; label?: string | null; line?: numbe
   };
 }
 
-describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s raises, the 13 gate members\' substitutes, the reader\'s rules, the known script\'s file on V8\'s call sites, the frozen shape and the export anchors', () => {
+describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s raises, the 13 gate members\' substitutes, the reader\'s readings of the stand-in call sites READER lists and of KNOWN\'s scripts at the files it lists, the frozen shape and the export anchors', () => {
   it('OWN-3: each of the five functions this file imports from @hyperunix/sdk, called on null, and decodeResultStream refusing an unknown envelope key raise with the package\'s frames at their pinned module:line:column, then this file', () => {
     expect([SELF.name, SELF.file]).toStrictEqual(['this file', SELF_PATH]);
     const raises: Record<string, string[]> = {
@@ -394,7 +438,7 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
     });
   });
 
-  it('READER: the reader\'s rules fire on stand-in call sites (the package\'s frame needs its module\'s URL as its file, its pinned sha256 and no eval; a known script needs its file, its sha256 and no eval; a built-in names no file, line or script sha256 and is not eval; each rule reads a site\'s file, never its label), framesOf stops at the caller, raised() records the sites and restores the formatter, and rooted() writes the root', () => {
+  it('READER: frameText() reads the stand-in call sites listed here as listed - as the package\'s frame the two at result.js\'s URL with its pin and no eval, as built-ins the two with no file, line, sha256 or eval, as this file the two at this file\'s file with its sha256 and no eval, and every other listed site as other code - and framesOf(), raised() and rooted() read the listed raises, calls and text as listed', () => {
     const resultHash = PACKAGE_MODULES['result.js'] ?? '';
     const pinned = {file: new URL('result.js', SDK_DIST).href, line: 526, column: 15, fn: 'resultFromJson', hash: resultHash};
     expect([
@@ -405,11 +449,20 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       frameText(site({...pinned, file: 'file:///elsewhere/@hyperunix/sdk/dist/result.js', label: pinned.file}), []),
       frameText(site({...pinned, label: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'}), []),
       frameText(site({...pinned, file: new URL('zz-shim.mjs', SDK_DIST).href}), []),
+      frameText(site({...pinned, file: `${pinned.file}?gp20`}), []),
+      frameText(site({...pinned, file: `${pinned.file}#gp20`}), []),
+      frameText(site({...pinned, file: new URL('RESULT.js', SDK_DIST).href}), []),
+      frameText(site({...pinned, file: new URL('result.mjs', SDK_DIST).href}), []),
+      frameText(site({...pinned, file: `${SDK_DIST.href}./result.js`}), []),
+      frameText(site({...pinned, file: fileURLToPath(pinned.file)}), []),
+      frameText(site({...pinned, file: null, label: pinned.file}), []),
       frameText(site({fn: 'map', type: 'Array'}), []),
       frameText(site({fn: 'map', type: 'Array', label: 'file:///labelled.js'}), []),
       frameText(site({fn: 'map', type: 'Array', line: 1}), []),
+      frameText(site({fn: 'map', type: 'Array', line: 0}), []),
       frameText(site({fn: 'map', type: 'Array', hash: resultHash}), []),
       frameText(site({fn: 'f', file: 'wasm://wasm/0145fffe'}), []),
+      frameText(site({fn: 'map', type: 'Array', file: ''}), []),
       frameText(site({fn: 'f', eval: true}), []),
       frameText(site({file: SELF.file, line: 7, column: 8, hash: SELF.hash}), [SELF]),
       frameText(site({file: SELF.file, line: 7, column: 8, hash: resultHash}), [SELF]),
@@ -417,6 +470,7 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       frameText(site({file: COPY_PATH, line: 7, column: 8, hash: SELF.hash}), [SELF]),
       frameText(site({file: COPY_PATH, label: SELF.file, line: 7, column: 8, hash: SELF.hash}), [SELF]),
       frameText(site({file: SELF.file, label: COPY_PATH, line: 7, column: 8, hash: SELF.hash}), [SELF]),
+      frameText(site({file: null, label: SELF.file, line: 7, column: 8, hash: SELF.hash}), [SELF]),
     ]).toStrictEqual([
       'resultFromJson result.js:526:15',
       `script resultFromJson ${RESULT_LABEL}:526:15`,
@@ -425,11 +479,20 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       `script resultFromJson ${RESULT_LABEL}:526:15`,
       'resultFromJson result.js:526:15',
       'script resultFromJson file://<root>/node_modules/@hyperunix/sdk/dist/zz-shim.mjs:526:15',
+      `script resultFromJson ${RESULT_LABEL}?gp20:526:15`,
+      `script resultFromJson ${RESULT_LABEL}#gp20:526:15`,
+      'script resultFromJson file://<root>/node_modules/@hyperunix/sdk/dist/RESULT.js:526:15',
+      'script resultFromJson file://<root>/node_modules/@hyperunix/sdk/dist/result.mjs:526:15',
+      'script resultFromJson file://<root>/node_modules/@hyperunix/sdk/dist/./result.js:526:15',
+      'script resultFromJson <root>/node_modules/@hyperunix/sdk/dist/result.js:526:15',
+      `script resultFromJson ${RESULT_LABEL}:526:15`,
       'Array.map built-in',
       'Array.map built-in',
       'script Array.map no location:1:null',
+      'script Array.map no location:0:null',
       'script Array.map no location:null:null',
       'script f wasm://wasm/0145fffe:null:null',
+      'script Array.map :null:null',
       'eval f no location:null:null',
       'this file',
       'script <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
@@ -437,6 +500,7 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       `script <anonymous> ${COPY_PATH}:7:8`,
       'script <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
       'this file',
+      'script <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
     ]);
     expect([packageModuleOf(site(pinned)), isBuiltIn(site({fn: 'map'})), knownScriptOf(site({file: SELF.file, hash: SELF.hash}), [SELF])?.name])
       .toStrictEqual(['result.js', true, 'this file']);
@@ -463,10 +527,11 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
     expect(rooted(`x(${ROOT_PATH}a and file://${ROOT_PATH}b`)).toBe('x(<root>/a and file://<root>/b');
   });
 
-  it('KNOWN: on V8\'s own call sites, the two vm.Scripts compiled here from one source text under two files each name their own file and carry that text\'s sha256; with the first\'s script known a raise from the first reads as that script and a raise from the second (that sha256 at another file) as other code written by its label, and with both known a raise from the second reads as the second\'s script', () => {
+  it('KNOWN: on V8\'s own call sites, scripts compiled here from one source text under first.js, second.js and the nine NEAR_FILES spellings of first.js name their files and carry its sha256; with first.js\'s script known a raise from first.js reads as that script and one from second.js or a NEAR_FILES spelling as other code written by its label; with second.js\'s script known too, one from second.js reads as that script', () => {
     type Known = (call: (() => Script) | null) => Script;
-    const first = new vm.Script(KNOWN_SOURCE, {filename: KNOWN_FILES.first}).runInThisContext() as Known;
-    const second = new vm.Script(KNOWN_SOURCE, {filename: KNOWN_FILES.second}).runInThisContext() as Known;
+    const compile = (file: string): Known => new vm.Script(KNOWN_SOURCE, {filename: file}).runInThisContext() as Known;
+    const first = compile(KNOWN_FILES.first);
+    const second = compile(KNOWN_FILES.second);
     const readFirst = (): Script => scriptCalling(readFirst, 'the first script');
     const readSecond = (): Script => scriptCalling(readSecond, 'the second script');
     const firstScript = first(readFirst);
@@ -476,7 +541,24 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       {name: 'the second script', file: KNOWN_FILES.second, hash: sourceHash}]);
     expect([framesOf(raised(() => first(null)), [firstScript]), framesOf(raised(() => second(null)), [firstScript]),
       framesOf(raised(() => second(null)), [firstScript, secondScript])])
-      .toStrictEqual([['the first script'], ['script known /srv/hx-same-view-known/label.js:1:50'], ['the second script']]);
+      .toStrictEqual([['the first script'], [LABELLED], ['the second script']]);
+    const near = NEAR_FILES.map(file => {
+      const compiled = compile(file);
+      const readNear = (): Script => scriptCalling(readNear, 'a near-file script');
+      const script = compiled(readNear);
+      return [file, script.file === file && script.hash === sourceHash, framesOf(raised(() => compiled(null)), [firstScript])];
+    });
+    expect(near).toStrictEqual([
+      ['/srv/hx-same-view-known/first.jsx', true, [LABELLED]],
+      ['/srv/hx-same-view-known/first.js.bak', true, [LABELLED]],
+      ['/elsewhere/srv/hx-same-view-known/first.js', true, [LABELLED]],
+      ['/x/srv/hx-same-view-known/first.js.orig', true, [LABELLED]],
+      ['/srv/hx-same-view-known/FIRST.js', true, [LABELLED]],
+      ['/srv/hx-same-view-known/first.cjs', true, [LABELLED]],
+      ['/srv/hx-same-view-known/./first.js', true, [LABELLED]],
+      ['file:///srv/hx-same-view-known/first.js', true, [LABELLED]],
+      ['/srv/other/first.js', true, [LABELLED]],
+    ]);
   });
 
   it('SHAPE: the frozen shape - the four rows with their routes and pins, every pin with its compile, body and label, the labels\' unrooted forms (SDK_DIST the root\'s node_modules copy), and the 27 module pins, each named by the installed package\'s listing and equal to its installed bytes\' sha256', () => {
