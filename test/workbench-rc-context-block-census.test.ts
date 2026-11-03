@@ -170,9 +170,11 @@
  * implementation beside its signature, their parameters named apart [overload-numeric-named-method]; and through a function
  * declaration in its body, called there [nested-in-infinity-named-method]. Otherwise the string is a numeral (0 under "0",
  * 0x10 under "16", 1e3 and 1_000 under "1000", 1.7976931348623158e308 under "1.7976931348623157e+308"), which no callee
- * name spells, so no call hands such a method an argument, a member callee spelling "Infinity" included
- * [numeral-infinity-callee-method], and the note alone refuses its module [numeric-named-method]: the hold is read only as
- * "Infinity", and which numeral it holds a method under is never read. And it holds a
+ * name spells, so no call hands such a method an argument, a member callee spelling "Infinity" included - one 0 names
+ * [numeral-infinity-callee-method], and each one a finite value at or above 1e308 names, 1e308 spelled bare, with
+ * separators (1_0e307) or as a leading-dot fraction (.1e309), and 1.7976931348623158e308, which rounds down to the largest
+ * double (wb-18ce) [near-maximum-numeral-infinity-callee-methods] -, and the note alone refuses its module [numeric-named-method]:
+ * the hold is read only as "Infinity", and which numeral it holds a method under is never read. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
  * expression [function-expression-helper]. An expression's value is read
@@ -518,6 +520,12 @@
  * CLOSED probes at those compositions do not kill (they reach no method as "Infinity"), each red against one too: an object
  * literal read in place, a generator, an async and an async generator method [inline-object-infinity-method,
  * generator-infinity-named-method, async-infinity-named-method, async-generator-infinity-named-method].
+ * FOLLOW-UP wb-18ce (landing 849's F1, the R694 carry of the gate's K08, which also holds a finite numeral at or above
+ * 1e308 under "Infinity" and read 0 failed | 19 passed on the landed census, whose one numeral probe spells 0): the hold's
+ * numeral side is pinned at the largest doubles as well - a member callee spelling "Infinity" calls an object literal
+ * whose methods 1e308, spelled bare, with separators and as a leading-dot fraction, and 1.7976931348623158e308 name, each
+ * with a parameter name of its own, and the reading reads each note alone
+ * [near-maximum-numeral-infinity-callee-methods], so K08 reds it.
  * FOLLOW-UP wb-wnoj (landing 856's F1 and F2, the R694 carry of wb-07zx cut #3's PASS-WITH-FINDING): F1 the gate's E01-E03
  * (a template whose substitution is 1 + 1, a sum part (1 + 1), a bigint part 1n) falsified NOT CLAIMED's closing sentence,
  * each a committable module whose member callee reaches result.blocks while the census read 0 failed | 19 passed: the
@@ -1308,6 +1316,11 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "nested-in-bigint-named-method": `export const helpers = {\n  1n() {\n    function blocksOf(held: Record<string, unknown>) {\n      return held.blocks;\n    }\n    return blocksOf(${PROBE_RESULT});\n  },\n};\n`,
   "numeral-infinity-callee-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   "static-numeral-named-class-expression-method": `const Helpers = class {\n  static 0x10(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = Helpers[16](${PROBE_RESULT});\n`,
+  // wb-18ce (landing 849's F1, the gate's K08): the numeral side of the hold at the largest doubles - methods 1e308, spelled
+  // bare, with separators and as a leading-dot fraction, and 1.7976931348623158e308, which rounds down to the largest double,
+  // name, each with a parameter name of its own (a name binds module-wide), and a member callee spelling "Infinity" calls
+  // them, so each notes only its declaration.
+  "near-maximum-numeral-infinity-callee-methods": `const helpers = {\n  1e308(decimal: Record<string, unknown>) {\n    return decimal.blocks;\n  },\n  1.7976931348623158e308(maximum: Record<string, unknown>) {\n    return maximum.blocks;\n  },\n  1_0e307(separated: Record<string, unknown>) {\n    return separated.blocks;\n  },\n  .1e309(fraction: Record<string, unknown>) {\n    return fraction.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
   // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
   // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
