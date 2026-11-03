@@ -539,6 +539,66 @@
         ]
        },
        {
+        "id": "footnote-label-space-before",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-space-before",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-after-period",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-after-period",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-word-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-word-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-punct-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "footnote-definition",
         "causes": [
          "unqualified"
@@ -563,6 +623,24 @@
         ]
        },
        {
+        "id": "footnote-definition-nested-unspaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-first-spaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-second-spaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "footnote-definition-indented",
         "causes": [
          "unqualified"
@@ -582,6 +660,54 @@
        },
        {
         "id": "footnote-definition-long-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-triple-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quote-two-spaces",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quote-tab",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-indented-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-mixed-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-punct-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-unspaced-colon",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-emphasis",
         "causes": [
          "unqualified"
         ]
