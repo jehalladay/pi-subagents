@@ -26,14 +26,19 @@
  * THE JUDGE. A MENTION is the word "observer" (or "observers", "observer's", "observers'"), then any run of characters that
  * are neither letters nor digits (spaces, newlines, underscores, hyphens, dots, quotes, markup, format characters), then
  * "boundary" or "boundaries", in any case - the record's own middle words (recordWords), so every spelling of the record and
- * of its family (any version, with or without the producer prefix) is read. Each file's own path is read whole, every
- * directory name in it and a binary file's path included ("path"). A file holding a NUL byte is binary and its content is
- * not read. Every other file is read as raw text ("raw"); a script (.ts .tsx .mts .cts .js .jsx .mjs .cjs) also through the
- * TypeScript AST - each string-like literal by its cooked value, each identifier spelled with an escape (four hex digits
- * or a braced code point), a private name included, by its cooked name, and each part of a template expression (its head
- * and every span's literal, a tagged template's included) by its cooked text, a substitution ending the part ("cooked";
- * a template literal type's parts are not: R-TYPE-TEMPLATE), and each chain of "+" whose operands are all string literals
- * by its folded value ("folded"); a .json
+ * of its family (any version, with or without the producer prefix) is read. Each file's own path is read ("path"), a
+ * binary file's included, in the shapes FOLLOW-UP wb-dixg's path plants hold: a mention in the file name of a .ts
+ * script, of a .json, a .md, a .yml and a .toml file, of a binary file and of a file of no kind THE JUDGE names, in the
+ * top-level directory name and in each interior directory name of a four-segment path, across a "/", across a name's
+ * extension dot, and in mixed case with no character between the words. A file holding a NUL byte is binary and its
+ * content is not read. Every other file is read as raw text ("raw"); a script (.ts .tsx .mts .cts .js .jsx .mjs .cjs)
+ * also through the TypeScript AST - each string-like literal by its cooked value, each identifier spelled with an
+ * escape by its cooked name in the shapes FOLLOW-UP wb-dixg's name plants hold (a declared name spelled with four hex
+ * digits or with a braced code point, and a private name and a name read in an expression, each spelled with four hex
+ * digits), and each part of a template expression by its cooked text, a substitution ending the part, in the shapes
+ * FOLLOW-UP wb-dixg's template plants hold (the head and each span's literal of a template of one, two or three spans,
+ * and a one-span tagged template's tail) ("cooked"; a template literal type's parts are not: R-TYPE-TEMPLATE), and each
+ * chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
  * file also by its parsed keys and string values ("cooked"); a markup file (.md .html .htm .xml .svg) also with its
  * numeric character references and the common named entities decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
  * also with its backslash escapes (U, u and x forms) decoded ("decoded"). A file's forms are the readings that found a
@@ -92,24 +97,53 @@
  *   and W3. F6 a module augmentation of the observer in another file (G06) widened the client unseen; W1 reads them from
  *   every listed script, a planted one pinned. F7 the notes anchors were includes-anywhere, so a weakened owner sentence
  *   with a later verbatim quote (G22b) stayed green; they read the owner filing only, G22b and G22a controls asserted.
- * FOLLOW-UP wb-dixg (R-B375, from wb-s876 refusal #7 U4): four one-edit members of THE JUDGE (GP20-TPL-LAST, GP20-TPL-FIRST,
- *   GP20-ID-U0, GP20-BIN-PATH) kept this census green on THE JUDGE's landed path, escaped-identifier and template-part
- *   words, each realized by a paired real-tree witness; those words are restated above to the readings pinned here.
- *   PINNED READER SET: case Z2 (its witness's piPlants hold each plant's path with exactly the forms read, held to the
- *   roster) and case Q10, with the closing case. "path": media/zz-observer-boundary.bin, a binary file (a NUL byte) whose
- *   name spells the record (falsifiers: a binary verdict's forms emptied, GP20-BIN-PATH; a binary's finding dropped by
- *   judgeScope), and docs/workbench/zz-observer-boundary/zz-plant.md, a directory name (falsifier: the path read by its
- *   last segment only), beside the text-file plant docs/workbench/zz-observer-boundary.md. "cooked" names:
- *   src/workbench/zz-boundary-identifier-braced.ts, a braced code point (falsifier: the escape guard narrowed to a
- *   four-digit form, GP20-ID-U0), and src/workbench/zz-boundary-identifier-private.ts, a private name (falsifier: private
- *   names dropped), beside the four-digit plant src/workbench/zz-boundary-identifier.ts. "cooked" template parts, each
- *   under src/workbench/: zz-boundary-template-head.ts, a head (falsifier: the head dropped); zz-boundary-template-middle.ts,
- *   a two-span template's first literal (falsifier: the spans read from the last only, GP20-TPL-LAST);
- *   zz-boundary-template-second.ts, a two-span template's tail (falsifier: the first span only, GP20-TPL-FIRST); and
- *   zz-boundary-template-tagged.ts, a tagged template's tail (falsifier: a tagged template's template skipped). Q10 is
- *   R-TYPE-TEMPLATE's quiet row. NOT CLAIMED by this follow-up: these readings in a script kind other than .ts (every
- *   script plant here is a .ts file; the other kinds go through the same visit), a template nested in another's
- *   substitution, and an escape at a name's first character.
+ * FOLLOW-UP wb-dixg (R-B375, from wb-s876 refusal #7 U4; respun after its refusal #1, R-B462): one-edit members of THE
+ *   JUDGE kept this census green on THE JUDGE's path, escaped-identifier and template-part words, each realized by a
+ *   paired real-tree witness - at U4 GP20-TPL-LAST, GP20-TPL-FIRST, GP20-ID-U0 and GP20-BIN-PATH on the landed words,
+ *   at refusal #1 G202-PATH-SEGMENTS, G202-PATH-NO-TOP, G202-TPL-FIRST-TWO and G202-TPL-LAST-TWO on cut #1's restated
+ *   words; THE JUDGE now claims those three readings in exactly the shapes the plants below hold. PINNED READER SET:
+ *   case Z2 (its witness's piPlants hold each plant's path with exactly the forms read, held to the roster), case Q10
+ *   and the closing case; beside each plant, its falsifier: a one-edit member of THE JUDGE that drops the plant's shape
+ *   and so reds Z2 and the closing case. PATH PLANTS (form "path"; no plant's text names the record):
+ *   docs/workbench/zz-observer-boundary.md, a .md file's name (falsifiers: the path read by its directories only; not
+ *   read for a markup file); src/workbench/zz-observer-boundary.ts, a .ts script's name (the path not read for a
+ *   script); test/fixtures/zz-observer-boundary.json, a .json file's name (not read for a .json);
+ *   config/zz-observer-boundary.yml and config/zz-observer-boundary.toml, a .yml and a .toml file's name (not read for
+ *   a YAML file; not read for a TOML file; not read for either); media/zz-observer-boundary.bin, a binary file (a NUL
+ *   byte) whose name spells the record (a binary verdict's forms emptied, GP20-BIN-PATH; a binary's finding dropped by
+ *   judgeScope); docs/workbench/zz-observer.boundary, a file of no kind THE JUDGE names whose name holds the words
+ *   across its extension dot (the extension dropped; the path read only for a named kind or a binary);
+ *   zz-observer-boundary/docs/workbench/zz-plant.md, the top-level directory name of a four-segment path (that name
+ *   dropped, G202-PATH-NO-TOP; the path read by its last three segments);
+ *   docs/zz-observer-boundary/workbench/zz-plant.md and docs/workbench/zz-observer-boundary/zz-plant.md, its two
+ *   interior directory names (a longer path's second segment dropped; the path read by its last segment only);
+ *   docs/workbench/zz-observer/boundary.md, the words across a "/" (the path read segment by segment,
+ *   G202-PATH-SEGMENTS; by its first three segments); and docs/workbench/zz-ObserverBoundary.md, the words in mixed
+ *   case with no character between them (the path read in lower case only; read only with a character between the
+ *   words). NAME PLANTS (form "cooked"), under src/workbench/: zz-boundary-identifier.ts, a declared name spelled with
+ *   four hex digits (the escape guard narrowed to a braced form); zz-boundary-identifier-braced.ts, the same with a
+ *   braced code point (the escape guard narrowed to a four-digit form, GP20-ID-U0); zz-boundary-identifier-private.ts,
+ *   a private name (private names dropped); and zz-boundary-identifier-read.ts, a name read in an expression (only a
+ *   declared variable's name and a private name read). TEMPLATE PLANTS (form "cooked"), under src/workbench/: of a
+ *   one-span template, zz-boundary-template-head.ts its head (the head dropped) and zz-boundary-template-one-tail.ts
+ *   its tail, Q10's valueTemplate text (a one-span template's tail dropped, which reds Q10 too); of a two-span
+ *   template, zz-boundary-template-two-head.ts its head (the head read for a one-span template only),
+ *   zz-boundary-template-middle.ts its first literal (the spans read from the last only, GP20-TPL-LAST) and
+ *   zz-boundary-template-second.ts its tail (the first span only, GP20-TPL-FIRST); of a three-span template,
+ *   zz-boundary-template-three-head.ts its head (the head read only under three spans),
+ *   zz-boundary-template-three-first.ts its first literal (the last two spans only, G202-TPL-LAST-TWO),
+ *   zz-boundary-template-three-middle.ts its middle literal (the first and the last span only) and
+ *   zz-boundary-template-three-last.ts its last literal (the first two spans only, G202-TPL-FIRST-TWO); and
+ *   zz-boundary-template-tagged.ts, a one-span tagged template's tail (a tagged template's template passed over). Q10
+ *   is R-TYPE-TEMPLATE's quiet row. NOT CLAIMED by this census: a path, an escaped name or a template part in a shape
+ *   no plant above holds - among them a path of five or more segments, a directory name in a path of another length, a
+ *   file name in another extension of the kinds above (a .tsx script or an .html page, say), a combination of the
+ *   shapes above that no plant holds (a script's top-level directory name, say), an escape at a name's first character,
+ *   a braced code point in a private or a read name, a fourth or later span's literal, a tagged template of two or more
+ *   spans and a template nested in another's substitution; these readings in a script kind other than .ts (every script
+ *   plant here is a .ts file; the other kinds go through the same visit); the same readings in T1's release entries and
+ *   Z1's pin blobs beyond the shapes Z2's plants hold (one verdictOf judges every leg); and a judge edited to tell a
+ *   plant from a real file by its path or its text.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -594,9 +628,8 @@ const piListing = lazy((): PiListing => {
 });
 /**
  * One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; and
- * (wb-dixg) a path plant per path kind (a directory name, a binary file's name), an escaped name per escape kind (a braced
- * code point, a private name) and a template plant per part (a head, a two-span template's first literal and its tail, a
- * tagged template's tail).
+ * (wb-dixg) the path, name and template plants FOLLOW-UP wb-dixg lists, each holding its reading in one shape THE JUDGE
+ * claims it in (THE JUDGE's path, escaped-name and template-part claims are exactly these shapes).
  */
 const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-escaped.ts": 'export const RECORD_NAME = "\\u0046urnaceObserver\\u0042oundaryV0";\n',
@@ -612,12 +645,28 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
   "src/workbench/zz-boundary-identifier-braced.ts": "export const Furnace\\u{4f}bserverBoundaryV0 = 0;\n",
   "src/workbench/zz-boundary-identifier-private.ts": "export class Plant {\n  #Furnace\\u004fbserverBoundaryV0 = 0;\n}\n",
+  "src/workbench/zz-boundary-identifier-read.ts": "export const n = (): number => Furnace\\u004fbserverBoundaryV0;\n",
   "src/workbench/zz-boundary-template-head.ts": "export const n = (a: string): string => `Furnace\\u004fbserverBoundaryV0$" + "{a}`;\n",
+  "src/workbench/zz-boundary-template-one-tail.ts": "export const n = (a: string): string => `x$" + "{a}Furnace\\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-template-two-head.ts": "export const n = (a: string, b: string): string => `Furnace\\u004fbserverBoundaryV0$" + "{a}x$" + "{b}y`;\n",
   "src/workbench/zz-boundary-template-middle.ts": "export const n = (a: string, b: string): string => `x$" + "{a}Furnace\\u004fbserverBoundaryV0$" + "{b}y`;\n",
   "src/workbench/zz-boundary-template-second.ts": "export const n = (a: string, b: string): string => `x$" + "{a}y$" + "{b}Furnace\\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-template-three-head.ts": "export const n = (a: string, b: string, c: string): string => `Furnace\\u004fbserverBoundaryV0$" + "{a}x$" + "{b}y$" + "{c}z`;\n",
+  "src/workbench/zz-boundary-template-three-first.ts": "export const n = (a: string, b: string, c: string): string => `x$" + "{a}Furnace\\u004fbserverBoundaryV0$" + "{b}y$" + "{c}z`;\n",
+  "src/workbench/zz-boundary-template-three-middle.ts": "export const n = (a: string, b: string, c: string): string => `x$" + "{a}y$" + "{b}Furnace\\u004fbserverBoundaryV0$" + "{c}z`;\n",
+  "src/workbench/zz-boundary-template-three-last.ts": "export const n = (a: string, b: string, c: string): string => `x$" + "{a}y$" + "{b}z$" + "{c}Furnace\\u004fbserverBoundaryV0`;\n",
   "src/workbench/zz-boundary-template-tagged.ts":
     "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`x$" + "{a}Furnace\\u004fbserverBoundaryV0`;\n",
   "docs/workbench/zz-observer-boundary/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+  "zz-observer-boundary/docs/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+  "docs/zz-observer-boundary/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+  "docs/workbench/zz-observer/boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+  "docs/workbench/zz-observer.boundary": "This file's text names nothing.\n",
+  "docs/workbench/zz-ObserverBoundary.md": "# Plant\n\nThis page's text names nothing.\n",
+  "src/workbench/zz-observer-boundary.ts": "export const plant = 0;\n",
+  "test/fixtures/zz-observer-boundary.json": '{ "plant": 0 }\n',
+  "config/zz-observer-boundary.yml": "plant: 0\n",
+  "config/zz-observer-boundary.toml": "plant = 0\n",
   "media/zz-observer-boundary.bin": `${String.fromCodePoint(0)}binary bytes\n`,
 };
 /** The listed Pi files' bytes, read once: the entries the judge consumes (Z2) and the augmentation reader scans (W1). */

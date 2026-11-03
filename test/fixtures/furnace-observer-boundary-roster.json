@@ -81,11 +81,27 @@
       "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
       "src/workbench/zz-boundary-identifier-braced.ts": "export const Furnace\\u{4f}bserverBoundaryV0 = 0;\n",
       "src/workbench/zz-boundary-identifier-private.ts": "export class Plant {\n  #Furnace\\u004fbserverBoundaryV0 = 0;\n}\n",
+      "src/workbench/zz-boundary-identifier-read.ts": "export const n = (): number => Furnace\\u004fbserverBoundaryV0;\n",
       "src/workbench/zz-boundary-template-head.ts": "export const n = (a: string): string => `Furnace\\u004fbserverBoundaryV0${a}`;\n",
+      "src/workbench/zz-boundary-template-one-tail.ts": "export const n = (a: string): string => `x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-two-head.ts": "export const n = (a: string, b: string): string => `Furnace\\u004fbserverBoundaryV0${a}x${b}y`;\n",
       "src/workbench/zz-boundary-template-middle.ts": "export const n = (a: string, b: string): string => `x${a}Furnace\\u004fbserverBoundaryV0${b}y`;\n",
       "src/workbench/zz-boundary-template-second.ts": "export const n = (a: string, b: string): string => `x${a}y${b}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-three-head.ts": "export const n = (a: string, b: string, c: string): string => `Furnace\\u004fbserverBoundaryV0${a}x${b}y${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-first.ts": "export const n = (a: string, b: string, c: string): string => `x${a}Furnace\\u004fbserverBoundaryV0${b}y${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-middle.ts": "export const n = (a: string, b: string, c: string): string => `x${a}y${b}Furnace\\u004fbserverBoundaryV0${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-last.ts": "export const n = (a: string, b: string, c: string): string => `x${a}y${b}z${c}Furnace\\u004fbserverBoundaryV0`;\n",
       "src/workbench/zz-boundary-template-tagged.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`x${a}Furnace\\u004fbserverBoundaryV0`;\n",
       "docs/workbench/zz-observer-boundary/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "zz-observer-boundary/docs/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/zz-observer-boundary/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer/boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer.boundary": "This file's text names nothing.\n",
+      "docs/workbench/zz-ObserverBoundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "src/workbench/zz-observer-boundary.ts": "export const plant = 0;\n",
+      "test/fixtures/zz-observer-boundary.json": "{ \"plant\": 0 }\n",
+      "config/zz-observer-boundary.yml": "plant: 0\n",
+      "config/zz-observer-boundary.toml": "plant = 0\n",
       "media/zz-observer-boundary.bin": "\u0000binary bytes\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
@@ -644,7 +660,16 @@
               "src/workbench/zz-boundary-identifier-private.ts": [
                 "cooked"
               ],
+              "src/workbench/zz-boundary-identifier-read.ts": [
+                "cooked"
+              ],
               "src/workbench/zz-boundary-template-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-one-tail.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-two-head.ts": [
                 "cooked"
               ],
               "src/workbench/zz-boundary-template-middle.ts": [
@@ -653,10 +678,49 @@
               "src/workbench/zz-boundary-template-second.ts": [
                 "cooked"
               ],
+              "src/workbench/zz-boundary-template-three-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-first.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-middle.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-last.ts": [
+                "cooked"
+              ],
               "src/workbench/zz-boundary-template-tagged.ts": [
                 "cooked"
               ],
               "docs/workbench/zz-observer-boundary/zz-plant.md": [
+                "path"
+              ],
+              "zz-observer-boundary/docs/workbench/zz-plant.md": [
+                "path"
+              ],
+              "docs/zz-observer-boundary/workbench/zz-plant.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer/boundary.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer.boundary": [
+                "path"
+              ],
+              "docs/workbench/zz-ObserverBoundary.md": [
+                "path"
+              ],
+              "src/workbench/zz-observer-boundary.ts": [
+                "path"
+              ],
+              "test/fixtures/zz-observer-boundary.json": [
+                "path"
+              ],
+              "config/zz-observer-boundary.yml": [
+                "path"
+              ],
+              "config/zz-observer-boundary.toml": [
                 "path"
               ],
               "media/zz-observer-boundary.bin": [
