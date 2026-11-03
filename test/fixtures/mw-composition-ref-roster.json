@@ -4047,11 +4047,23 @@
     ],
     "misplaced": []
    },
+   "lead-glued": {
+    "runs": [
+     "(x)alpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
    "lead-two-spaces": {
     "runs": [],
     "misplaced": []
    },
    "lead-space-kept": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-no-body": {
     "runs": [],
     "misplaced": []
    },
@@ -4200,7 +4212,10 @@
    ],
    "leadSecond": [],
    "leadBefore": [],
-   "leadAfter": []
+   "leadAfter": [],
+   "leadGlued": [
+    "0020"
+   ]
   }
  }
 }
