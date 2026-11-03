@@ -32,19 +32,38 @@
  * an element access as a whole string literal (an added branch); no other reader line changed - narrows the loader name
  * require words to a value read and the spyOn words to the ways a mutator member is read, and pins every cell of the four claim
  * sets over the catalogs NOT CLAIMED below names.
+ * Refusal #3 on wb-tz2.21 (gate-prep-9, O:1884) found the cut #3 Vocabulary's value-read words contradicted by the readers in
+ * both directions - the left of a qualified name in a type query read as a value (typeof Proxy.revocable, typeof Reflect.get,
+ * typeof require.resolve) and the exported name of a local export specifier read as none (export { lgV as require }) - and
+ * R-B404 (M:50624) froze the WRITES reflection and ROUTES loader name sets. Cut #4, their enumerate-the-resolvable terminal form,
+ * changes no reader code: the Vocabulary below states what isValueReference reads, piece by piece, claimed only over the plants
+ * the census reads; the census pins require, Reflect and Proxy in each place those words name (its TYPE_PLACES, ACCESS_BASES,
+ * EXPORT_PLACES and JSX_PLACES join FREE_PLACES and NONVALUE_PLACES), pins each WRITES name quiet as the right of a qualified
+ * name, and checks the gate's paired twins in as TWIN rows.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
- * Vocabulary (refusal #2 on wb-tz2.21): an identifier is read as a value unless it is a member name (the name of a property
- * access, the right of a qualified name), a declared key (the name of a property, a method, an accessor or an enum member in a
- * class, an object literal or a type; the key of a binding element), a type (a type reference, a type query), a label (of a
- * labeled statement, a break, a continue), a JSX attribute, an import name (an import clause, an import specifier, a namespace
- * import) or a re-exported name (an export specifier of an export declaration with a from clause). The callee of a call is the
+ * Vocabulary (refusal #2 on wb-tz2.21; narrowed by cut #4 after refusal #3, R-B404): a member name is the name of a property
+ * access (base.name, base?.name); the right of a qualified name (A.B in a type) is no member name. An identifier is read as a
+ * value unless it is the name of a property access; the right of a qualified name; the name of a property assignment, a class
+ * field, a property signature, a method, a method signature, a get accessor, a set accessor or an enum member; the property name
+ * of a binding element (the key before its colon); the whole name of a type reference or the whole operand of a type query
+ * (typeof Proxy, never the left of typeof Proxy.revocable); the label of a labeled statement, a break or a continue; the name of
+ * a JSX attribute; a name of an import specifier, or the name of an import clause or of a namespace import; a name of an export
+ * specifier of an export declaration with a from clause; or the exported name after as in an export specifier of an export
+ * declaration with no from clause. Every other identifier is read as a value: among them the left of a qualified name in a type
+ * query or a type reference, the expression of an implements clause or of an interface's extends clause, a shorthand
+ * property's name, a shorthand binding element's name, an import-equals declaration's name, an identifier in a JSX attribute's
+ * value and the local name of an export specifier of an export declaration with no from clause. The callee of a call is the
  * call's own expression: require behind parentheses, an assertion or a non-null assertion, a new expression's require and a
  * tag's require are no callee of a call. A free Reflect or Proxy is one read as a value that no declaration of the suite binds
- * where it is read. A destructured key is a key of an object binding pattern or of an object assignment pattern (the left of a
- * destructuring = and a for-in or for-of head that declares nothing), nested object, array and spread patterns and a default's
- * own pattern included.
+ * where it is read; an unaliased export specifier with no from clause naming it (export { Proxy }) is such a declaration, the
+ * checker resolving that name to the specifier itself, while the local name of an aliased one (export { Proxy as lgV }) is a
+ * free read. A destructured key is a key of an object binding pattern or of an object assignment pattern (the left of a
+ * destructuring = and a for-in or for-of head that declares nothing), nested object, array and spread patterns, a default's own
+ * pattern and a shorthand key holding a default included. Each definition of this paragraph is claimed over the plants the
+ * census reads it in (the catalogs and plants the NOT CLAIMED block below names); in any other place it is NOT CLAIMED by this
+ * census.
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -132,7 +151,8 @@
  * words over the planted loads, holders and depths the list below names; the RUN statements, ROUTES loader name, WRITES
  * reflection and WRITES name words over the catalogs and plants the list below names; and the gates' paired real-tree twins it
  * checks in as TWIN rows (DW-L08, DW-L12, DW-L15 and DW-L17; TW-S1 to TW-S13; TW14-S1 to TW14-S7 and TW14-S9; TW12-T1, TW12-T2,
- * TW12-T3, TW12-T4, TW12-T5, TW12-T5b and TW12-T6). Every mode the list does not name is NOT CLAIMED by this census. The
+ * TW12-T3, TW12-T4, TW12-T5, TW12-T5b and TW12-T6; TW9-P1, TW9-P1b, TW9-R1, TW9-R1b, TW9-Q1, TW9-Q1b, TW9-G1, TW9-E1 and TW9-S1).
+ * Every mode the list does not name is NOT CLAIMED by this census. The
  * ROUTES global object and dynamic code crossings the census reads:
  *   a free name: each of the five names, eval and Function in each of the census's FREE_PLACES (48 places), undeclared;
  *   a declared name: each of the five names under each of the census's DECLARATIONS (19 kinds) and under a shadowing parameter,
@@ -180,27 +200,33 @@
  *   and beside a namespace import; defineConfig aliased, aliased to itself and imported by a string name. NOT CLAIMED: a name
  *   outside CONFIG_NAMES; a statement of those forms at another place.
  *   ROUTES loader name, the reads the census holds: createRequire and getBuiltinModule as an identifier in each FREE_PLACES place,
- *   in each of the census's NONVALUE_PLACES (23 places) and under each DECLARATIONS kind with a top-level read; as a member name of
- *   a parameter in each MEMBER_SPELLINGS spelling that holds no element key and in each MEMBER_PLACES place; as a whole string
- *   literal and template in each MEMBER_PLACES place and as the key of each MEMBER_SPELLINGS element-key spelling; binding, dlopen
- *   and _linkedBinding as a member name of a parameter in each spelling that holds no element key and in each MEMBER_PLACES place,
- *   as a string element key in each element-key spelling and each MEMBER_PLACES place, and read in no FREE_PLACES place, in no
- *   NONVALUE_PLACES place but a member name, and as no whole string literal or template in a MEMBER_PLACES place; require as a
- *   value in each FREE_PLACES place (as a callee and an optional callee its call is a dynamic load), in no NONVALUE_PLACES place,
- *   under each DECLARATIONS kind with a top-level read, and as the callee of a call plain and optional (read nowhere), behind
- *   parentheses, an assertion and a non-null assertion, of a new expression and as a tag (each read). NOT CLAIMED: a loader name,
- *   a loader member name or require read in a place, a spelling or a declaration outside those catalogs, or in a crossing of two
- *   of them the list does not name.
+ *   in each of the census's NONVALUE_PLACES (28 places), in each of the census's TYPE_PLACES (6 places), in each of the census's
+ *   ACCESS_BASES (3 places), in each of the census's EXPORT_PLACES (2 places), in each of the census's JSX_PLACES (2 places) and
+ *   under each DECLARATIONS kind with a top-level read; as a member name of a parameter in each MEMBER_SPELLINGS spelling that
+ *   holds no element key and in each MEMBER_PLACES place; as a whole string literal and template in each MEMBER_PLACES place and
+ *   as the key of each MEMBER_SPELLINGS element-key spelling; binding, dlopen and _linkedBinding as a member name of a parameter
+ *   in each spelling that holds no element key and in each MEMBER_PLACES place, as a string element key in each element-key
+ *   spelling and each MEMBER_PLACES place, and read in no FREE_PLACES, TYPE_PLACES, ACCESS_BASES, EXPORT_PLACES or JSX_PLACES
+ *   place, in no NONVALUE_PLACES place but a member name, and as no whole string literal or template in a MEMBER_PLACES place;
+ *   require as a value in each FREE_PLACES place (as a callee and an optional callee its call is a dynamic load), in each
+ *   TYPE_PLACES, ACCESS_BASES and EXPORT_PLACES place and as an identifier in a JSX attribute's value, in no NONVALUE_PLACES place
+ *   and not as a JSX attribute's name, under each DECLARATIONS kind with a top-level read, and as the callee of a call plain and
+ *   optional (read nowhere), behind parentheses, an assertion and a non-null assertion, of a new expression and as a tag (each
+ *   read). NOT CLAIMED: a loader name, a loader member name or require read in a place, a spelling or a declaration outside those
+ *   catalogs, or in a crossing of two of them the list does not name.
  *   WRITES reflection, a free Reflect and a free Proxy: each in each FREE_PLACES place and as the operand of typeof, under each
- *   DECLARATIONS kind and a shadowing parameter with a top-level read, and read in no NONVALUE_PLACES place.
+ *   DECLARATIONS kind and a shadowing parameter with a top-level read, in each TYPE_PLACES and ACCESS_BASES place, through the
+ *   aliased EXPORT_PLACES place (the unaliased one is a declaration binding it, so it reads nothing) and as an identifier in a JSX
+ *   attribute's value, and read in no NONVALUE_PLACES place and not as a JSX attribute's name.
  *   WRITES names, the reads the census holds (each name of the mutator member, reflection and spy or mock member lists, and
  *   spyOn): as a member name of its form's base in each MEMBER_SPELLINGS spelling that holds no element key and in each
  *   MEMBER_PLACES place; as a string element key in each element-key spelling and each MEMBER_PLACES place; as a destructured key in
- *   each of the census's DESTRUCTURINGS (19 forms); as a whole string literal and template in each MEMBER_PLACES place; the
+ *   each of the census's DESTRUCTURINGS (20 forms); as a whole string literal and template in each MEMBER_PLACES place; quiet as
+ *   the right of a qualified name in a type query and in a type reference (no member name); the
  *   admitted spy, by a string and a template key, in each spelling that holds no element key, in each MEMBER_PLACES place (a new
  *   expression's .spyOn is no call and reads) and with its target under each DECLARATIONS kind with a top-level spy. NOT
  *   CLAIMED: a name read in a spelling, a place or a destructuring outside those catalogs, or in a crossing of two of them the
- *   list does not name; a JSX attribute (no plant is a JSX module); spyOn as an identifier (a function named spyOn the suite
+ *   list does not name; a JSX attribute (no WRITES name plant is a JSX module); spyOn as an identifier (a function named spyOn the suite
  *   imports or declares is no vitest member; IMPORT reads the module it comes from).
  * Not claimed: what a module does at run time beyond the forms above (a value assembled at run time and handed to a form these
  * readers do not name); a resolution vite performs that the default tier's vouched config cannot express (the census guard
