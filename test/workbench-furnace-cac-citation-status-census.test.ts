@@ -63,14 +63,17 @@
  * (Q3, Q5, Q6, Q7, Q9 and Q14) could not be re-derived from the roster by its rule (an independent recomputation: 8 of 14 without the
  * resolution, 14 of 14 with it); its 2026-10-30 entry restates the rule and carries the three tables again, unchanged. The rule's
  * clause is ANCHOR.definition. The receipt-anchor case holds the last entry's rule blocks (anchorRules) EQUAL to [ANCHOR.definition],
- * so that entry states exactly the clause in a rule block and no different rule block beside it, and it holds this header
- * (headerOf) to CONTAIN the clause, never to state it exactly. So an entry appended without the resolution, with no rule block or
- * with a second, different one, or with words that show added around the clause in its rule block reds, and so does the clause
- * shortened in this file and the roster together, against the unchanged receipt; and a header that drops the clause reds. An EQUAL
- * second rule block (the rule item repeated in its list, or the rule restated in a later paragraph) is NOT CLAIMED by this census:
- * no control here holds one (refusal #4 U2; THE HOLES).
+ * so that entry states the clause in a rule block and no second rule block beside it in a form THE READERS' Rules reading lists as
+ * read (the 'once' of that assertion's message), and it holds this header (headerOf) to CONTAIN the clause, never to state it
+ * exactly. So an entry appended without the resolution, with no rule block, with a second rule block in a listed form (each pair
+ * for its control's inputs: 'one' and 'three' of the prose reader control, and the near rules control's pairs, refusal #5 U1), or
+ * with words that show added around the clause in its rule block reds, and so does the clause shortened in this file and the roster
+ * together, against the unchanged receipt; and a header that drops the clause reds. A second rule block in a form that reading does
+ * not list is NOT CLAIMED by this census: an EQUAL one (the rule item repeated in its list, or the rule restated in a later
+ * paragraph; refusal #4 U2) and one near the first in a way the near rules control does not hold (THE HOLES).
  * THE READERS (wb-pnn8 cut #4, the FAIL-CLOSED CORE ruling R-B159 binds on cut #3's R-B126 enumeration; cut #5 restates it over the
- * readers that wb-t8my, the child of the R-B202 dependency inversion, landed): the four receipt-anchor readers anchorTables,
+ * readers that wb-t8my, the child of the R-B202 dependency inversion, landed; cut #6, the R-B373 restatement, adds the near rules
+ * control and names the tag names the opacity controls quote): the four receipt-anchor readers anchorTables,
  * anchorProse, anchorRules and headerOf, and the building blocks shownText, UNSHOWN and ELEMENT, which the carrier view reads too, are
  * imported from test/helpers/furnace-cac-citation-status-readers.ts, where wb-t8my moved them from cut #4 with their code byte for
  * byte (the carrier view's blank-line check keeps its own isList and childrenOf, which the helper does not export). Of the four
@@ -108,11 +111,12 @@
  * escaped asterisk, the text of an inline link, of a full reference link ('[ref text][r]') and of an autolink, and a bare URL show
  * themselves; a hard break (two trailing spaces or a backslash) reads as a space; struck text, an image (its alt text included), an
  * inline HTML comment, an inline link's destination and title and a task item's checkbox show nothing; a top-level paragraph of one
- * line whose text holds a raw HTML element with a lower-case tag name, its opening and closing tags together ('<b>marked</b>') or a
- * lone closing tag ('</i>'), and a list item of one line whose text holds one with both its tags ('<i>item</i>',
- * '<span style="display:none">rule</span>'), is opaque and is dropped, that block only, and the next block is read (element of the
- * prose reader control; the opacity control); a lone opening tag, and a lone closing tag in a list item, are not listed readings
- * (refusal #4 U1; THE HOLES).
+ * line whose text holds a raw HTML element of a tag name the controls quote - a 'b' element with its opening and closing tags
+ * together ('<b>marked</b>') or an 'i' element's lone closing tag ('</i>') - and a list item of one line whose text holds an 'i' or
+ * a 'span' element with both its tags ('<i>item</i>', '<span style="display:none">rule</span>'), is opaque and is dropped, that
+ * block only, and the next block is read (element of the prose reader control; the opacity control); a lone opening tag, a lone
+ * closing tag in a list item, and an element of a tag name no control quotes, are not listed readings (refusal #4 U1; refusal #5
+ * F6; THE HOLES).
  * Rules (anchorRules): a rule block is a prose block that opens with ANCHOR.rule ('Witness rule: '; the imported anchorRules reads the
  * helper's own copy of this string, and the rule leads control, whose exact lead is built from this file's ANCHOR.rule, reds if the
  * two differ); the exact lead is read (the rule leads control), and so are a rule paragraph, a list item's rule and a task item's
@@ -123,8 +127,14 @@
  * in its block (rules of the prose reader control); a rule reads past its lead with one closing period dropped - of two, one stays
  * and an inner period stays (the rule forms control); after a space, the period goes and the space stays (the closing marks control)
  * - and with every other closing printable ASCII punctuation mark kept (the closing marks control: the 31 printable ASCII characters
- * that are neither a letter, a digit nor the period; the rule forms control for '!'); and only the last entry's rule blocks are read,
- * none from an earlier entry or from before the first (the rule entries control).
+ * that are neither a letter, a digit nor the period; the rule forms control for '!'); the rule blocks of an entry are read in
+ * document order, each as a rule of its own, for the pairs the controls hold: 'one' and 'three' (rules of the prose reader control)
+ * and the near rules control's pairs (refusal #5 U1) - a second rule block beside a first, the next item of its list or a paragraph
+ * after that list, whose clause is the first's with its first letter's or an inner letter's case flipped ('One rule, read once' or
+ * 'one rule, Read once' beside 'one rule, read once'), with one space removed or one added ('one rule,read once', 'one rule , read
+ * once'), or extended at its end or at its start ('one rule, read once, except here', 'never one rule, read once'), and each of
+ * those two extended clauses first with the clause they extend second; and only the last entry's rule blocks are read, none from an
+ * earlier entry or from before the first (the rule entries control).
  * Header (headerOf; the header reader and header forms controls): the doc comment that opens the file at its first byte, read from
  * its opening '/**' to its first closing delimiter, each line's comment prefix - an indentation of one space or one tab, one '*' and
  * one space - removed, whitespace squeezed: a later doc comment not read, a bare '*' line a removed prefix, one '*' of two removed, a
@@ -151,7 +161,10 @@
  * claimed either: any other cell markup (an image, an autolink, a character reference) and an escaped pipe in a cell (marked
  * resolves it: refusal #3 F5); an HTML element in a block of more than one line or in an item's other nested blocks, one with an
  * upper-case tag name (refusal #3 F7: the mutant that ignores upper-case names is killed outside these controls, at the judged-set
- * case), and a lone closing tag in a list item; a near lead outside the list above, and a rule clause holding a character NFKC folds.
+ * case), and a lone closing tag in a list item; a near lead outside the list above, a rule clause holding a character NFKC folds,
+ * and a second rule block near the first in a way the near rules control does not hold. Measured by the gate on cut #5 and held by
+ * no case of either census (refusal #5 F6): in prose, an element of a tag name no control quotes (the rule item's
+ * '<small>tokens</small>' reds the census, and a reader taking only 'b', 'i' and 'span' elements as opaque keeps it green).
  * READER RESIDUALS (named families, each pinned by its quiet rows in the receipt-anchor case; they are not row Q's residual families,
  * which the receipt's residuals table holds). An RR-SECOND-RULE-UNREAD or RR-UNSHOWN-WORDS quiet row is a synthetic receipt whose
  * last entry holds the rule 'one' and whose page holds one escaping form carrying the word 'two' (a second rule beside 'one' or
@@ -1963,7 +1976,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     ).toEqual(["emphasis and strong and under and double and code and *escaped* and link text and ref text and https://example.invalid/auto and https://example.invalid/bare and an gap and a hard break and a back slash break and and end"]);
     expect(
       anchorProse(page(stated("2026-10-28 second", ["a <b>marked</b> paragraph", "a later paragraph", "a stray </i> closing tag", "a next paragraph", "- an <i>item</i>\n- a later item"].join("\n\n")))),
-      "the opacity control: a top-level paragraph whose own text holds a raw HTML element with a lower-case tag name, its opening and closing tags together ('<b>marked</b>') or a lone closing tag ('</i>'), and a list item whose own text holds one with both its tags ('<i>item</i>'), is dropped, that block only - the next block is read",
+      "the opacity control: a top-level paragraph whose own text holds a 'b' element with its opening and closing tags together ('<b>marked</b>') or an 'i' element's lone closing tag ('</i>'), and a list item whose own text holds an 'i' element with both its tags ('<i>item</i>'), is dropped, that block only - the next block is read",
     ).toEqual(["a later paragraph", "a next paragraph", "a later item"]);
     expect(
       anchorTables(page(stated("2026-10-28 second", "> | Pin | Quote sha-256 |\n> | --- | --- |\n> | Q1 | 0 |\n\n- | Pin | Quote sha-256 |\n  | --- | --- |\n  | Q2 | 0 |\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |"))),
@@ -2001,6 +2014,57 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       { marks: marks.join(""), read: anchorRules(page(stated("2026-10-28 second", [...marks.map(mark => `- ${ANCHOR.rule}closes with ${mark}`), `- ${ANCHOR.rule}a period after a space .`].join("\n")))) },
       "the closing marks control: every printable ASCII character that is neither a letter, a digit nor the period, closing a rule, is kept; a closing period after a space goes and the space stays",
     ).toEqual({ marks: "!\"#$%&'()*+,-/:;<=>?@[\\]^_`{|}~", read: [...marks.map(mark => `closes with ${mark}`), "a period after a space "] });
+    // The near rules control (wb-pnn8 cut #6, refusal #5 U1): a second rule block near the first is read as a rule of its own.
+    const nearRules = (first: string, second: string): readonly (readonly string[])[] => [
+      anchorRules(page(stated("2026-10-28 second", `- ${ANCHOR.rule}${first}.\n- ${ANCHOR.rule}${second}.`))),
+      anchorRules(page(stated("2026-10-28 second", `- ${ANCHOR.rule}${first}.\n\n${ANCHOR.rule}${second}.`))),
+    ];
+    expect(
+      {
+        firstLetterCase: nearRules("one rule, read once", "One rule, read once"),
+        innerLetterCase: nearRules("one rule, read once", "one rule, Read once"),
+        spaceRemoved: nearRules("one rule, read once", "one rule,read once"),
+        spaceAdded: nearRules("one rule, read once", "one rule , read once"),
+        extendedAtEnd: nearRules("one rule, read once", "one rule, read once, except here"),
+        extendedAtStart: nearRules("one rule, read once", "never one rule, read once"),
+        firstExtendedAtEnd: nearRules("one rule, read once, except here", "one rule, read once"),
+        firstExtendedAtStart: nearRules("never one rule, read once", "one rule, read once"),
+      },
+      "the near rules control: a second rule block beside the first - the next item of its list, or a paragraph after that list - is read as a rule of its own, after the first, when its clause is the first's with its first letter's or an inner letter's case flipped ('One rule, read once', 'one rule, Read once'), with one space removed or one added ('one rule,read once', 'one rule , read once'), or extended at its end or at its start ('one rule, read once, except here', 'never one rule, read once'), and when the first's clause is one of those two extended clauses and its own is the clause they extend",
+    ).toEqual({
+      firstLetterCase: [
+        ["one rule, read once", "One rule, read once"],
+        ["one rule, read once", "One rule, read once"],
+      ],
+      innerLetterCase: [
+        ["one rule, read once", "one rule, Read once"],
+        ["one rule, read once", "one rule, Read once"],
+      ],
+      spaceRemoved: [
+        ["one rule, read once", "one rule,read once"],
+        ["one rule, read once", "one rule,read once"],
+      ],
+      spaceAdded: [
+        ["one rule, read once", "one rule , read once"],
+        ["one rule, read once", "one rule , read once"],
+      ],
+      extendedAtEnd: [
+        ["one rule, read once", "one rule, read once, except here"],
+        ["one rule, read once", "one rule, read once, except here"],
+      ],
+      extendedAtStart: [
+        ["one rule, read once", "never one rule, read once"],
+        ["one rule, read once", "never one rule, read once"],
+      ],
+      firstExtendedAtEnd: [
+        ["one rule, read once, except here", "one rule, read once"],
+        ["one rule, read once, except here", "one rule, read once"],
+      ],
+      firstExtendedAtStart: [
+        ["never one rule, read once", "one rule, read once"],
+        ["never one rule, read once", "one rule, read once"],
+      ],
+    });
     const beside = (block: string): string => page(stated("2026-10-28 second", `- ${ANCHOR.rule}one.\n\n${block}`));
     const around = (rule: string): string => page(stated("2026-10-28 second", `- ${ANCHOR.rule}${rule}`));
     const quietRows: readonly (readonly [string, string, string])[] = [
