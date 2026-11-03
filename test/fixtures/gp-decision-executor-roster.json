@@ -139,6 +139,7 @@
         "effect-unvalidated",
         "effect-unpermitted",
         "effect-unminted",
+        "effect-unrequested",
         "mismatch-receipt",
         "current-unexecuted"
       ],
@@ -242,10 +243,2926 @@
         "F2": [],
         "F3": [
           "effect-unpermitted",
-          "effect-unminted"
+          "effect-unminted",
+          "effect-unrequested"
         ],
         "F4": [],
         "F5": []
+      },
+      "M-FORGED-GRANT": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "M-REPLAYED-PERMIT": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "M-NO-REQUEST-REPLAY": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "reachedF3": {
+        "M-FORGED-GRANT": 1,
+        "M-REPLAYED-PERMIT": 1,
+        "M-NO-REQUEST-REPLAY": 1
+      },
+      "nextF1": {
+        "M-REPLAYED-PERMIT": [
+          "effect-unrequested"
+        ],
+        "M-NO-REQUEST-REPLAY": [
+          "effect-unrequested"
+        ]
+      },
+      "issuedLater": {
+        "M-REPLAYED-PERMIT": [
+          1,
+          1
+        ],
+        "M-NO-REQUEST-REPLAY": [
+          0,
+          0
+        ]
+      },
+      "handedF1s": {
+        "M-REPLAYED-PERMIT": true,
+        "M-NO-REQUEST-REPLAY": true
+      },
+      "forgedInPlace": {
+        "sameObject": true,
+        "sameGrantsArray": true,
+        "grants": [
+          "observe:furnace.run.inspect",
+          "control:furnace.stop"
+        ]
+      },
+      "forgedAtCallSite": {
+        "returned": 1,
+        "sameGrantsArray": true,
+        "grants": [
+          [
+            "observe:furnace.run.inspect",
+            "control:furnace.stop"
+          ]
+        ],
+        "handed": [
+          {
+            "decision": "permitted",
+            "minted": true
+          }
+        ]
+      },
+      "recorded": {
+        "F1": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          }
+        ],
+        "F2": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          }
+        ],
+        "F3": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          }
+        ],
+        "F4": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          }
+        ],
+        "F5": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          }
+        ]
+      },
+      "serial": {
+        "F1": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "F2": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F2"
+          ]
+        },
+        "F3": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F3"
+          ]
+        },
+        "F4": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F4"
+          ]
+        },
+        "F5": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F5"
+          ]
+        }
+      },
+      "segments": {
+        "its own segment": true,
+        "a longer number": false,
+        "a shorter number": false,
+        "inside another segment": false
+      },
+      "replays": {
+        "first": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            0,
+            -1
+          ]
+        },
+        "second": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            1,
+            -1
+          ]
+        },
+        "third": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            2,
+            -1
+          ]
+        },
+        "last": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            3,
+            -1
+          ]
+        }
+      },
+      "positions": {
+        "1 of 1": [
+          0,
+          1
+        ],
+        "1 of 2": [
+          0,
+          2
+        ],
+        "2 of 2": [
+          1,
+          2
+        ],
+        "1 of 3": [
+          0,
+          3
+        ],
+        "2 of 3": [
+          1,
+          3
+        ],
+        "3 of 3": [
+          2,
+          3
+        ],
+        "1 of 4": [
+          0,
+          4
+        ],
+        "2 of 4": [
+          1,
+          4
+        ],
+        "3 of 4": [
+          2,
+          4
+        ],
+        "4 of 4": [
+          3,
+          4
+        ]
+      },
+      "answered": {
+        "none": {
+          "F1": [
+            "effect-unrequested"
+          ],
+          "F2": [
+            "effect-unvalidated",
+            "effect-unrequested",
+            "mismatch-receipt"
+          ],
+          "F3": [
+            "effect-unrequested"
+          ],
+          "F4": [
+            "effect-unvalidated",
+            "effect-unrequested"
+          ],
+          "F5": [
+            "effect-unvalidated",
+            "effect-unrequested"
+          ]
+        },
+        "1 of 1": [],
+        "1 of 2": [],
+        "2 of 2": [],
+        "1 of 3": [],
+        "2 of 3": [],
+        "3 of 3": [],
+        "1 of 4": [],
+        "2 of 4": [],
+        "3 of 4": [],
+        "4 of 4": [],
+        "none of 1": [
+          "effect-unrequested"
+        ],
+        "none of 2": [
+          "effect-unrequested"
+        ],
+        "none of 3": [
+          "effect-unrequested"
+        ],
+        "none of 4": [
+          "effect-unrequested"
+        ]
+      },
+      "decisions": {
+        "a first decision answering none": {
+          "answering": [
+            false,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "a second decision answering none": {
+          "answering": [
+            true,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "both decisions answering": {
+          "answering": [
+            true,
+            true
+          ],
+          "found": []
+        },
+        "the first of three answering none": {
+          "answering": [
+            false,
+            true,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the middle of three answering none": {
+          "answering": [
+            true,
+            false,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the last of three answering none": {
+          "answering": [
+            true,
+            true,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "all three answering": {
+          "answering": [
+            true,
+            true,
+            true
+          ],
+          "found": []
+        }
+      },
+      "decisionsOverRecords": {
+        "first of two": {
+          "1 of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 2": {
+            "requests": 2,
+            "answered": [
+              1,
+              0
+            ],
+            "found": []
+          },
+          "1 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 3": {
+            "requests": 3,
+            "answered": [
+              1,
+              0
+            ],
+            "found": []
+          },
+          "3 of 3": {
+            "requests": 3,
+            "answered": [
+              2,
+              0
+            ],
+            "found": []
+          },
+          "1 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 4": {
+            "requests": 4,
+            "answered": [
+              1,
+              0
+            ],
+            "found": []
+          },
+          "3 of 4": {
+            "requests": 4,
+            "answered": [
+              2,
+              0
+            ],
+            "found": []
+          },
+          "4 of 4": {
+            "requests": 4,
+            "answered": [
+              3,
+              0
+            ],
+            "found": []
+          },
+          "none of 1": {
+            "requests": 1,
+            "answered": [
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 2": {
+            "requests": 2,
+            "answered": [
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 3": {
+            "requests": 3,
+            "answered": [
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 4": {
+            "requests": 4,
+            "answered": [
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          }
+        },
+        "second of two": {
+          "1 of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              1
+            ],
+            "found": []
+          },
+          "1 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              1
+            ],
+            "found": []
+          },
+          "3 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              2
+            ],
+            "found": []
+          },
+          "1 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              1
+            ],
+            "found": []
+          },
+          "3 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              2
+            ],
+            "found": []
+          },
+          "4 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              3
+            ],
+            "found": []
+          },
+          "none of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          }
+        },
+        "first of three": {
+          "1 of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 2": {
+            "requests": 2,
+            "answered": [
+              1,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 3": {
+            "requests": 3,
+            "answered": [
+              1,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "3 of 3": {
+            "requests": 3,
+            "answered": [
+              2,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 4": {
+            "requests": 4,
+            "answered": [
+              1,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "3 of 4": {
+            "requests": 4,
+            "answered": [
+              2,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "4 of 4": {
+            "requests": 4,
+            "answered": [
+              3,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "none of 1": {
+            "requests": 1,
+            "answered": [
+              -1,
+              0,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 2": {
+            "requests": 2,
+            "answered": [
+              -1,
+              0,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 3": {
+            "requests": 3,
+            "answered": [
+              -1,
+              0,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 4": {
+            "requests": 4,
+            "answered": [
+              -1,
+              0,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          }
+        },
+        "middle of three": {
+          "1 of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              1,
+              0
+            ],
+            "found": []
+          },
+          "1 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              1,
+              0
+            ],
+            "found": []
+          },
+          "3 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              2,
+              0
+            ],
+            "found": []
+          },
+          "1 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              1,
+              0
+            ],
+            "found": []
+          },
+          "3 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              2,
+              0
+            ],
+            "found": []
+          },
+          "4 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              3,
+              0
+            ],
+            "found": []
+          },
+          "none of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              -1,
+              0
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          }
+        },
+        "last of three": {
+          "1 of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "1 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0,
+              1
+            ],
+            "found": []
+          },
+          "1 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              1
+            ],
+            "found": []
+          },
+          "3 of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              2
+            ],
+            "found": []
+          },
+          "1 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              0
+            ],
+            "found": []
+          },
+          "2 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              1
+            ],
+            "found": []
+          },
+          "3 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              2
+            ],
+            "found": []
+          },
+          "4 of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              3
+            ],
+            "found": []
+          },
+          "none of 1": {
+            "requests": 1,
+            "answered": [
+              0,
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 2": {
+            "requests": 2,
+            "answered": [
+              0,
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 3": {
+            "requests": 3,
+            "answered": [
+              0,
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          },
+          "none of 4": {
+            "requests": 4,
+            "answered": [
+              0,
+              0,
+              -1
+            ],
+            "found": [
+              "effect-unrequested"
+            ]
+          }
+        }
+      },
+      "unrecordedOverRecords": {
+        "first of two": {
+          "over 1": [
+            {
+              "minted": "inv-F1-0-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 2": [
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 3": [
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 3,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 3,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 3,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 4": [
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 4,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 4,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 4,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 4,
+              "answered": [
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ]
+        },
+        "second of two": {
+          "over 1": [
+            {
+              "minted": "inv-F1-0-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 2": [
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 3": [
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 3,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 4": [
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 4,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 4,
+              "answered": [
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ]
+        },
+        "first of three": {
+          "over 1": [
+            {
+              "minted": "inv-F1-0-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 2": [
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 3": [
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 3,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 3,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 3,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 4": [
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 4,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 4,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 4,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 4,
+              "answered": [
+                -1,
+                0,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ]
+        },
+        "middle of three": {
+          "over 1": [
+            {
+              "minted": "inv-F1-0-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 2": [
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 3": [
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 3,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 4": [
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 4,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 4,
+              "answered": [
+                0,
+                -1,
+                0
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ]
+        },
+        "last of three": {
+          "over 1": [
+            {
+              "minted": "inv-F1-0-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 1,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 2": [
+            {
+              "minted": "inv-F1-0-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 2,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 3": [
+            {
+              "minted": "inv-F1-0-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 3,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 3,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 3,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ],
+          "over 4": [
+            {
+              "minted": "inv-F1-1-exec-a1-t1",
+              "requests": 4,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a1-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t2",
+              "requests": 4,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            },
+            {
+              "minted": "inv-F1-1-exec-a2-t3",
+              "requests": 4,
+              "answered": [
+                0,
+                0,
+                -1
+              ],
+              "found": [
+                "effect-unrequested"
+              ]
+            }
+          ]
+        }
+      },
+      "echoedByCore": [
+        "scope",
+        "principal",
+        "target",
+        "action",
+        "invocationId",
+        "requestedAt"
+      ],
+      "echo": {
+        "minted": true,
+        "grantsReversed": true,
+        "altered": {
+          "scope": false,
+          "principal": false,
+          "target": false,
+          "action": false,
+          "invocationId": false,
+          "requestedAt": false,
+          "grant": false
+        }
       }
     },
     "A4": {
@@ -264,7 +3181,8 @@
         ],
         "F2": [],
         "F3": [
-          "effect-unminted"
+          "effect-unminted",
+          "effect-unrequested"
         ],
         "F4": [],
         "F5": []
@@ -461,7 +3379,7 @@
     "Q3: R-CHOSEN-TARGET",
     "Q4: R-ADAPTER-OUTSIDE-PATH",
     "rule 16: the rows, the residual families, the vocabulary, the checks, the mutants, the fixtures, the bound points and the path are frozen at their measured shape",
-    "the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures; the follow-up's lead line binds the request-binding check and the gate's two points",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-decision-executor-roster.json, in order and both ways; every pin reached its witness compare"
   ]
 }

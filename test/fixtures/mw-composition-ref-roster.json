@@ -4005,6 +4005,12 @@
     ],
     "misplaced": []
    },
+   "lead-after-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
    "lead-twice": {
     "runs": [
      "(y)"
@@ -4021,6 +4027,32 @@
     "runs": [
      "(ab)"
     ],
+    "misplaced": []
+   },
+   "lead-no-open": {
+    "runs": [
+     "x)"
+    ],
+    "misplaced": []
+   },
+   "lead-no-close": {
+    "runs": [
+     "(x"
+    ],
+    "misplaced": []
+   },
+   "lead-no-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
+   "lead-two-spaces": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-space-kept": {
+    "runs": [],
     "misplaced": []
    },
    "no-lead": {
@@ -4166,7 +4198,9 @@
    "leadGap": [
     "0020"
    ],
-   "leadSecond": []
+   "leadSecond": [],
+   "leadBefore": [],
+   "leadAfter": []
   }
  }
 }
