@@ -1,0 +1,488 @@
+{
+  "comment": "wb-v03p cut #2 (the out-of-file roster pattern of the landed wb-aalz census, landing 807): the OUT-OF-FILE anchor of test/workbench-rf-graph-policy-context-readers-census.test.ts. rows: every row (id, label, pins); pins: every pin (id, quote) with every probe (id, reader and the SHA-256 of the JSON of the probe as written - its input and its literal reading, a non-finite number or -0 spelled out); g18: refusal #1's thirteen one-edit helper members, each with the pin it is paired with; witnesses: the witness ids refusal #1's UNMET block names, in its order; u4Probes: the probes its U4 item names. The census reds when any of its literals leaves this roster.",
+  "rows": [
+    {
+      "id": "U1",
+      "label": "record item forms",
+      "pins": [
+        "G-U1-CASE",
+        "G-U1-LIST",
+        "G-U1-LISTF"
+      ]
+    },
+    {
+      "id": "U2",
+      "label": "planted-positions handoff and compare",
+      "pins": [
+        "G-U2-HASKEYS",
+        "G-U2-OUTPUTSOF",
+        "G-U2-CALLSITE"
+      ]
+    },
+    {
+      "id": "U3",
+      "label": "docs locates",
+      "pins": [
+        "M-NORM-FULL",
+        "G-U3-WS4",
+        "G-U3-ZS"
+      ]
+    },
+    {
+      "id": "V",
+      "label": "the R-B221 fold (refusal #4's twins)",
+      "pins": [
+        "G5-U1-GPSEP",
+        "G5-U1-TAILSEP",
+        "G5-U1-HUMPSEP"
+      ]
+    }
+  ],
+  "pins": [
+    {
+      "id": "G-U1-CASE",
+      "quote": "vocabulary lists the roster's result keys GpRank, GPRank, rfGpRank and rfGPRank and the envelope's string values GpRank and GPRank at result.notes[0] and [1]; the roster's result keys output and gpuCount and the envelope's gpu-runner at result.notes[2] are listed nowhere",
+      "probes": [
+        {
+          "id": "CASE-ROSTER",
+          "reader": "judgeRecord",
+          "sha256": "7c0cf995aef790e7a81755e26303672952757c69443fb19ab54854e63734d1ee"
+        },
+        {
+          "id": "CASE-VALUES",
+          "reader": "judgeRecord",
+          "sha256": "6aa376ba2d81d386f3cf8c86460188d49bc88a329f09390ea1443983a08cf12e"
+        },
+        {
+          "id": "W-CASEMID",
+          "reader": "judgeRecord",
+          "sha256": "a9f40bd393bb0ca51152269b0955af931fddf3865aa9941f5b5dc8be193e3995"
+        }
+      ]
+    },
+    {
+      "id": "G-U1-LIST",
+      "quote": "vocabulary lists the roster's work keys gp_layer and gpLayer and its work-metrics keys gp_count and countGP; the roster's work-metrics key token_count is listed nowhere",
+      "probes": [
+        {
+          "id": "LIST-WORK",
+          "reader": "judgeRecord",
+          "sha256": "3a88539bdd4db9441afe0cb3c15902027098ce33117b15897cceb52a612ce4f2"
+        },
+        {
+          "id": "W-LISTCAMEL",
+          "reader": "judgeRecord",
+          "sha256": "e8bda44fd187ff646e0bd525bd93377d558b5fd50d0b28d25140e64d778c6ff4"
+        }
+      ]
+    },
+    {
+      "id": "G-U1-LISTF",
+      "quote": "fields lists the roster's result keys score_total, embedding_dim and ScoreTotal, its provenance keys receipt_digest and embeddings_seen, its work keys rankings_seen, embedding and RankingsSeen and its work-metrics key score_count, and vocabulary lists none of them; the roster's work-metrics key token_count is listed nowhere",
+      "probes": [
+        {
+          "id": "LISTF-LISTS",
+          "reader": "judgeRecord",
+          "sha256": "7a370abdc225f3beb1eb8b439a0dc15f72924839a33fdbb5faee31cee27c4886"
+        },
+        {
+          "id": "W-LISTFEMB",
+          "reader": "judgeRecord",
+          "sha256": "3a7cb418b566309c79fbb3033d6197e24076e2a55d41f6e8c724d02ac0088993"
+        },
+        {
+          "id": "W-LISTFTITLE",
+          "reader": "judgeRecord",
+          "sha256": "29057e0bffc99bc26f43059c420756819174bbf7339bd19bc8e493df5c77fb07"
+        }
+      ]
+    },
+    {
+      "id": "G-U2-HASKEYS",
+      "quote": "on the planted workspace object the reads 'score' in, 'absent' in, Reflect.ownKeys, Object.keys, .score and Object.getOwnPropertyDescriptor of 'score' each note envelope.workspace, 'score' in and Reflect.ownKeys note envelope too when the root is planted, and 'score' in notes nothing on an unplanted envelope or with the log closed",
+      "probes": [
+        {
+          "id": "LOG-HAS-BOTH",
+          "reader": "logged",
+          "sha256": "7245194d0b6a95affc3d0ae50fab2dd67476a94b601790a7d615ed6a6c13eeca"
+        },
+        {
+          "id": "LOG-HAS-WORKSPACE",
+          "reader": "logged",
+          "sha256": "c9d93b7440c3039d382ff7e059f5e2d8ee9509d60efbb92d22ab85124cf3bfd8"
+        },
+        {
+          "id": "LOG-OWNKEYS-BOTH",
+          "reader": "logged",
+          "sha256": "23fa2d0540172d30911bef8f8e59961c37c8ab19072f41d89caa51b16dea1aee"
+        },
+        {
+          "id": "LOG-OWNKEYS-WORKSPACE",
+          "reader": "logged",
+          "sha256": "5e35e9575976923949156b48acad0f1ac7731c133ac8b10e2229459270702e2d"
+        },
+        {
+          "id": "LOG-KEYS-WORKSPACE",
+          "reader": "logged",
+          "sha256": "dc716ebd14d74b9642483da7b456a3e9168a563d2694de8b3eb189b54d967a86"
+        },
+        {
+          "id": "LOG-GET-WORKSPACE",
+          "reader": "logged",
+          "sha256": "8c6492950a668c98b6f89ab45add431aa5dae8eae078c9182dc555c67bd3e0d6"
+        },
+        {
+          "id": "LOG-GOPD-WORKSPACE",
+          "reader": "logged",
+          "sha256": "68877a57fd877f28ad2128fafc9e15785c08a29c9bfd941036a90a2c9c6d7eb5"
+        },
+        {
+          "id": "LOG-HAS-UNPLANTED",
+          "reader": "logged",
+          "sha256": "f58c166b33efd92dec42f23a64452f75179699a9f841f782157bf5bb38f68eba"
+        },
+        {
+          "id": "LOG-HAS-CLOSED",
+          "reader": "logged",
+          "sha256": "bb370e17a063bc55439ae6634275920a9bc5dbc5b3a0772adab9ad327c9435e2"
+        },
+        {
+          "id": "W-HASABSENT",
+          "reader": "logged",
+          "sha256": "46661a01360aeb3ae835a4ff3198bfba0786efc205982c8d8cfbe2be5a2ca9d3"
+        }
+      ]
+    },
+    {
+      "id": "G-U2-OUTPUTSOF",
+      "quote": "outputsOf puts RUNS-DISTINCT's topology and evidence run outputs and controls each in its own run's slots, and W-OUTNULL's null evidence output and null controls stay null beside its topology output",
+      "probes": [
+        {
+          "id": "RUNS-DISTINCT",
+          "reader": "outputsOf",
+          "sha256": "bf07fdbdaedceffba2927a08da03c2022c5b94d5c3dc1647fbf49b575324c300"
+        },
+        {
+          "id": "W-OUTNULL",
+          "reader": "outputsOf",
+          "sha256": "601e2b925f3ee7c2359fdecb6b7b4dfa877b5607f8d1799ddaf4a380d99b499c"
+        }
+      ]
+    },
+    {
+      "id": "G-U2-CALLSITE",
+      "quote": "per render variant of COMPARE-AS-HANDED a planted output that differs from the plain one reads false in its slot and an equal one true, and every variant of W-CALLNAN reads evidence false for a planted evidence score NaN beside a plain score null",
+      "probes": [
+        {
+          "id": "COMPARE-AS-HANDED",
+          "reader": "Z2_CALL_SITE.compare",
+          "sha256": "0091a8bd0c58d1f2692637ac132a611fee706c3b867770b1ce0c4c98a6580340"
+        },
+        {
+          "id": "W-CALLNAN",
+          "reader": "Z2_CALL_SITE.compare",
+          "sha256": "dd51413e8322149b615c8cc29339f5bb4f813e122f44ab954fd425084921bedf"
+        }
+      ]
+    },
+    {
+      "id": "M-NORM-FULL",
+      "quote": "'## [GraphPolicyCLI](https://example.invalid/(wb-v03p)) boundary', '## *GraphPolicyCLI* boundary', '## `GraphPolicyCLI` boundary' and '## <b>GraphPolicyCLI</b> boundary' read as 'GraphPolicyCLI boundary', '## GraphPolicyCLI &amp; boundary' as 'GraphPolicyCLI & boundary', and '# Notes on snake_case names' as 'Notes on snake_case names'",
+      "probes": [
+        {
+          "id": "HEADING-PARENLINK",
+          "reader": "renderedHeading",
+          "sha256": "80eb00a2d9e6264952fb7f6ef71f7e1b5a52dc25b967e07f0faea507647e7766"
+        },
+        {
+          "id": "HEADING-SNAKE",
+          "reader": "renderedHeading",
+          "sha256": "f0cb66f39f0610b8a3eca96921ab3eff081bd38081c9795b9a53017c833d1adf"
+        },
+        {
+          "id": "W-NORM-EMPH",
+          "reader": "renderedHeading",
+          "sha256": "2011a71df0c269cce57102b04e768c095211de43aac68c7d95939ad6fb78f3e9"
+        },
+        {
+          "id": "W-NORM-CODE",
+          "reader": "renderedHeading",
+          "sha256": "baae1adc4da084304aedc8d2c9d6edaba486cb9d350d33c40518a96a9c00adfa"
+        },
+        {
+          "id": "W-NORM-AMP",
+          "reader": "renderedHeading",
+          "sha256": "fe85e3d28abf60e143c27a633a251b62d370e2d7e36096711a2d22e58ac330bb"
+        },
+        {
+          "id": "W-NORM-HTML",
+          "reader": "renderedHeading",
+          "sha256": "3b0bff41aa6019e52ce50d5e1c81d6c09ffa191477277eec85b6f56f183cb1b7"
+        }
+      ]
+    },
+    {
+      "id": "G-U3-WS4",
+      "quote": "each \\p{Zs} code point but U+0020 (U+00A0, U+1680, U+2000 to U+200A, U+202F, U+205F and U+3000) and the tab, in place of the space of '## GraphPolicyCLI boundary', and an em space after the comma of docs/03's title read as one space",
+      "probes": [
+        {
+          "id": "HEADING-U+00A0",
+          "reader": "renderedHeading",
+          "sha256": "e0c249e5d2abccc756d393ed90711ad733a156c20081634fb8c4ecb1f13bd791"
+        },
+        {
+          "id": "HEADING-U+1680",
+          "reader": "renderedHeading",
+          "sha256": "9689f37757341609a1f89c2b8b6508558917853698372a227beb6b4e098a9337"
+        },
+        {
+          "id": "HEADING-U+2000",
+          "reader": "renderedHeading",
+          "sha256": "6655919d4b01839026a85b6d21297f9ff6d9bc79a4f830a3a66ce4f9d38d9a5f"
+        },
+        {
+          "id": "HEADING-U+2001",
+          "reader": "renderedHeading",
+          "sha256": "982e0c0541b9d81fbece239d1f8352c992568e52fe811cb3be1e675b84061b1a"
+        },
+        {
+          "id": "HEADING-U+2002",
+          "reader": "renderedHeading",
+          "sha256": "171935b30953c10035337ff0f60c644751289eb1295ee40cc2660cd56bb56745"
+        },
+        {
+          "id": "HEADING-U+2003",
+          "reader": "renderedHeading",
+          "sha256": "cc41f63631cfdbf4521da165e3dfa99c2bd3f8c54929a332f640d96554b4bdf9"
+        },
+        {
+          "id": "HEADING-U+2004",
+          "reader": "renderedHeading",
+          "sha256": "e689c1631f59305a993d8cf83c8de8ed3f4fac292a039c05babf6fea309ee0f4"
+        },
+        {
+          "id": "HEADING-U+2005",
+          "reader": "renderedHeading",
+          "sha256": "7f371a225ae9aa25d454ba15720edf93f465e4c93953b66b7587699ff8be85a6"
+        },
+        {
+          "id": "HEADING-U+2006",
+          "reader": "renderedHeading",
+          "sha256": "064a05c41df265529790d490119ffd4f045095afb29355b6a02b0106c7b7b641"
+        },
+        {
+          "id": "HEADING-U+2007",
+          "reader": "renderedHeading",
+          "sha256": "c15fce5d9b7d3e3b303caf9c42dcacf7698292b52eb6cac6e3c5e2c9f91b85f3"
+        },
+        {
+          "id": "HEADING-U+2008",
+          "reader": "renderedHeading",
+          "sha256": "9790baca57cbf75a36427abfc7c3c4b20b022ed78537cda89354c035fdb65687"
+        },
+        {
+          "id": "HEADING-U+2009",
+          "reader": "renderedHeading",
+          "sha256": "a71ec3627c71e664cf3d1b0d63adbe199f2234f5a69447ac0df05131e563590c"
+        },
+        {
+          "id": "HEADING-U+200A",
+          "reader": "renderedHeading",
+          "sha256": "bb94c6cb76dd96dc4053700d7c5797e61af28b44df9c4f14fbe8475232f606a7"
+        },
+        {
+          "id": "HEADING-U+202F",
+          "reader": "renderedHeading",
+          "sha256": "2fe840e01e83fe16759dfb6c4a84bff41a0512f2558b68daf2031085e4fedd30"
+        },
+        {
+          "id": "HEADING-U+205F",
+          "reader": "renderedHeading",
+          "sha256": "b2470fc254723225549eee34e00182178f6b2938930c91e16c1772d1aebbec32"
+        },
+        {
+          "id": "HEADING-U+3000",
+          "reader": "renderedHeading",
+          "sha256": "b2999621045de204ab63d31ca12e3995c66805c7de0b203689adca917f32802d"
+        },
+        {
+          "id": "HEADING-U+0009",
+          "reader": "renderedHeading",
+          "sha256": "a68d23569c7fe516b61f6eab3303e1475724a97bff4a07244d33d8a246be15c6"
+        },
+        {
+          "id": "HEADING-TITLE-EM",
+          "reader": "renderedHeading",
+          "sha256": "05786a1eeada8a1c5f43f65171cac71703cdb72fdde8c924ceff2aed0c59ce8d"
+        }
+      ]
+    },
+    {
+      "id": "G-U3-ZS",
+      "quote": "U+000B, U+000C and U+FEFF in place of the space of '## GraphPolicyCLI boundary' read as one space, and U+200B there stays as written",
+      "probes": [
+        {
+          "id": "HEADING-U+000B",
+          "reader": "renderedHeading",
+          "sha256": "4f927713da64577e93857829b214ffa027445f0a6ba41afe39dc3e8a9bc1fe06"
+        },
+        {
+          "id": "HEADING-U+000C",
+          "reader": "renderedHeading",
+          "sha256": "69770fc0fa0938940464e12465ea64a1bf2a3a88c6d102c8ab897c0b9ece0a29"
+        },
+        {
+          "id": "HEADING-U+FEFF",
+          "reader": "renderedHeading",
+          "sha256": "b7dc4451499a9da6e3aaf6c0830f0ac4f21880bc4dad3b748a93cce2bcea8df3"
+        },
+        {
+          "id": "HEADING-U+200B",
+          "reader": "renderedHeading",
+          "sha256": "10fef93ece54291dfff0686cdbfabcb460adb88d453e6eda4c0d5729ed156828"
+        }
+      ]
+    },
+    {
+      "id": "G5-U1-GPSEP",
+      "quote": "vocabulary lists the roster's result keys trace_GP, GP_NOTE, trace-GP and GP-note and the envelope's string values trace_GP and GP_NOTE at result.labels[0] and [1]; the roster's result key output and the envelope's GPU at result.labels[2] are listed nowhere",
+      "probes": [
+        {
+          "id": "GPSEP-ROSTER",
+          "reader": "judgeRecord",
+          "sha256": "7db5da3e601a6f1a6bacf97089a7e9546c54a3b67d390569ba3edf297ce14eae"
+        },
+        {
+          "id": "GPSEP-VALUES",
+          "reader": "judgeRecord",
+          "sha256": "f41f95e6776fd0a2e255af4ce60744245a0a828ca6196f5838cef12075b2bf4e"
+        },
+        {
+          "id": "W-GPSEP-HYPHEN",
+          "reader": "judgeRecord",
+          "sha256": "527eeda8675d981f52c70ff56a5f98f0d8afcf78b65fef0d21404a4c55d388d1"
+        }
+      ]
+    },
+    {
+      "id": "G5-U1-TAILSEP",
+      "quote": "vocabulary lists the roster's result keys note_gp, rf_gp and note-gp and the envelope's string values note_gp and rf_gp at result.labels[0] and [1]; the roster's result key output and the envelope's rf_gpu at result.labels[2] are listed nowhere",
+      "probes": [
+        {
+          "id": "TAILSEP-ROSTER",
+          "reader": "judgeRecord",
+          "sha256": "4f4ae7b9f3b0cb01e974e6fca4b696feb7aff91b775e38b075c342c0ae51d858"
+        },
+        {
+          "id": "TAILSEP-VALUES",
+          "reader": "judgeRecord",
+          "sha256": "6f77f6a1fb68d1d9f3d86646ea28b6b35197ad9d159abf7895d9e39a07253aba"
+        },
+        {
+          "id": "W-TAILSEP-HYPHEN",
+          "reader": "judgeRecord",
+          "sha256": "81918361553cd1ebf336ca73e667629cff34e4e4bf318fd52894aea2ecda5c4a"
+        }
+      ]
+    },
+    {
+      "id": "G5-U1-HUMPSEP",
+      "quote": "vocabulary lists the roster's result keys rf_gpTrace, rf_gpNote and rf-gpTrace and the envelope's string values rf_gpTrace and rf_gpNote at result.labels[0] and [1]; the roster's result key output and the envelope's rf_gpuTrace at result.labels[2] are listed nowhere",
+      "probes": [
+        {
+          "id": "HUMPSEP-ROSTER",
+          "reader": "judgeRecord",
+          "sha256": "8966a6cb2bf499026782a0bea65257c5723a63f4074b1afb15e5b5039690fdb3"
+        },
+        {
+          "id": "HUMPSEP-VALUES",
+          "reader": "judgeRecord",
+          "sha256": "fe7279debee5503e758cc1fa55991fa0167c6f9bc7f4bef67cbddd8cff7271df"
+        },
+        {
+          "id": "W-HUMPSEP-HYPHEN",
+          "reader": "judgeRecord",
+          "sha256": "6d970d68b95f7f2a0fafc2c7b9cf1fe981eb5352e9b51f6fb53cd4d12ecf3607"
+        }
+      ]
+    }
+  ],
+  "g18": [
+    {
+      "member": "G18-U1-CASEMID",
+      "pin": "G-U1-CASE"
+    },
+    {
+      "member": "G18-U1-LISTCAMEL",
+      "pin": "G-U1-LIST"
+    },
+    {
+      "member": "G18-U1-LISTFEMB",
+      "pin": "G-U1-LISTF"
+    },
+    {
+      "member": "G18-U1-LISTFTITLE",
+      "pin": "G-U1-LISTF"
+    },
+    {
+      "member": "G18-V-GPHYPHEN",
+      "pin": "G5-U1-GPSEP"
+    },
+    {
+      "member": "G18-V-TAILHYPHEN",
+      "pin": "G5-U1-TAILSEP"
+    },
+    {
+      "member": "G18-V-HUMPHYPHEN",
+      "pin": "G5-U1-HUMPSEP"
+    },
+    {
+      "member": "G18-U2-HASABSENT",
+      "pin": "G-U2-HASKEYS"
+    },
+    {
+      "member": "G18-U2-OUTNULL",
+      "pin": "G-U2-OUTPUTSOF"
+    },
+    {
+      "member": "G18-U2-CALLJSON",
+      "pin": "G-U2-CALLSITE"
+    },
+    {
+      "member": "G18-U3-NORMX",
+      "pin": "M-NORM-FULL"
+    },
+    {
+      "member": "G18-U3-WSENUM",
+      "pin": "G-U3-WS4"
+    },
+    {
+      "member": "G18-U3-WSPLANT",
+      "pin": "G-U3-WS4"
+    }
+  ],
+  "witnesses": [
+    "W-CASEMID",
+    "W-LISTCAMEL",
+    "W-LISTFEMB",
+    "W-LISTFTITLE",
+    "W-GPSEP-HYPHEN",
+    "W-TAILSEP-HYPHEN",
+    "W-HUMPSEP-HYPHEN",
+    "W-HASABSENT",
+    "W-OUTNULL",
+    "W-CALLNAN",
+    "W-NORM-EMPH",
+    "W-NORM-CODE",
+    "W-NORM-AMP",
+    "W-NORM-HTML",
+    "W-WS-U+2001"
+  ],
+  "u4Probes": [
+    "LOG-HAS-BOTH",
+    "LOG-HAS-WORKSPACE",
+    "LOG-OWNKEYS-BOTH",
+    "LOG-OWNKEYS-WORKSPACE",
+    "HEADING-U+3000"
+  ]
+}
