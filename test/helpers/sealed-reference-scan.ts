@@ -38,9 +38,19 @@
  * Reached's file and line, F3; Seals.open's other members and Seals.reached's order). Only doc comments and
  * SEALED_CLAIM's reader clause change here; the scan's behaviour is unchanged.
  *
+ * wb-jwc.11 (the coverage follow-up R-B211 filed; ruling R-B283 routes cure (a) of wb-jwc.5's refusal #6 here): an
+ * instantiation expression (`f<T>` with no call of its own, an ExpressionWithTypeArguments outside a heritage clause) is a
+ * value expression, so an identifier of its expression is visited and, inside a class extends expression, reads as
+ * heritage; its type arguments stay a part of a type. Before this an instantiation expression read as a part of a type
+ * (ts.isTypeNode accepts the node), so `extends (IDS.mk<object>)()` and `IDS.fix<string>?.()` held no visited reference.
+ * test/workbench-sealed-reference-scan-coverage-census.test.ts pins it with the gate's plants, and pins the caller-reader
+ * path (refusal #3 U2) and which src modules the scan reads (U3's remainder). SEALED_CLAIM is unchanged.
+ *
  * READER: whether a visited reference only reads is its reader's question (ScanReader). LITERAL_READER is the default,
- * and the census claims the scan under it only: a reader a caller passes in its place (wb-jwc.5's raw-view readString)
- * is not claimed (refusal #3 U2; wb-jwc.11). The scan returns the same { rootOf, open } shape wb-jwc.5's sealsOf
+ * and wb-jwc.8's census claims the scan under it only: a reader a caller passes in its place (wb-jwc.5's raw-view
+ * readString) is not claimed there (refusal #3 U2); wb-jwc.11's census pins that path under two readers of its own, at
+ * the reference forms its READER plants hold (wb-un88: its READER, READER-FORMS and READER-PAIRS pins) and at no other. The
+ * scan returns the same { rootOf, open } shape wb-jwc.5's sealsOf
  * returned, plus the reaches and openings it measured (each with the channels it followed), so a census can take
  * sealedScan(tree) in place of its own sealsOf; the census reads all three for each pinned root.
  *
@@ -53,7 +63,7 @@ import ts from "typescript";
 /** A tree of modules; its .ts modules under src/ are what the scan reads. */
 export interface ModuleTree {
   readonly module: (path: string) => ts.SourceFile | undefined;
-  /** Every module of the tree: the scope of the scan (the census reads a planted tree's through its pinned readings, and holds srcTree's equal to its own enumeration of src; which of them the scan reads is pinned for src by src-live's thresholds only). */
+  /** Every module of the tree: the scope of the scan (wb-jwc.8's census reads a planted tree's through its pinned readings and holds srcTree's equal to its own enumeration of src; wb-jwc.11's census holds every src module that holds a bare const literal read). */
   readonly paths: () => readonly string[];
 }
 
@@ -219,9 +229,14 @@ function isClassExtends(node: ts.ExpressionWithTypeArguments): boolean {
   const clause = node.parent;
   return ts.isHeritageClause(clause) && clause.token === ts.SyntaxKind.ExtendsKeyword && (ts.isClassDeclaration(clause.parent) || ts.isClassExpression(clause.parent));
 }
-/** Whether an identifier sits inside a class extends expression (outside its type arguments). */
+/** Whether a node is an instantiation expression (`f<T>` with no call of its own): an ExpressionWithTypeArguments outside a heritage clause, which runs as its expression (its type arguments are a part of a type). */
+function isInstantiation(node: ts.Node): node is ts.ExpressionWithTypeArguments {
+  return ts.isExpressionWithTypeArguments(node) && !ts.isHeritageClause(node.parent);
+}
+/** Whether an identifier sits inside a class extends expression (outside its type arguments; an instantiation expression on the way is a value, wb-jwc.11). */
 export function inClassExtends(name: ts.Identifier): boolean {
   for (let node: ts.Node | undefined = name.parent; node !== undefined && !ts.isStatement(node) && !ts.isSourceFile(node); node = node.parent) {
+    if (isInstantiation(node)) continue;
     if (ts.isExpressionWithTypeArguments(node)) return isClassExtends(node);
     if (ts.isTypeNode(node)) return false;
   }
@@ -231,12 +246,15 @@ export function inClassExtends(name: ts.Identifier): boolean {
  * Whether an identifier is a value reference (VISIT): not a part of a type (an implements clause, an interface's extends
  * clause and a class extends clause's type arguments included), a declared name, a property or member name, a part of a
  * qualified name, an import, export or import-equals name or entity, or a label. An identifier inside a class extends
- * expression, outside its type arguments, is one (HERITAGE: that expression runs when the class is defined).
+ * expression, outside its type arguments, is one (HERITAGE: that expression runs when the class is defined), and so is
+ * an identifier of an instantiation expression's expression, outside its type arguments (INSTANTIATION: `f<T>` runs as f).
  */
 export function isValueReference(name: ts.Identifier): boolean {
   for (let node: ts.Node | undefined = name.parent; node !== undefined && !ts.isStatement(node) && !ts.isSourceFile(node); node = node.parent) {
     // HERITAGE (wb-jwc.8): a class's extends expression is a value; a type node below it (its type arguments) was met first.
     if (ts.isExpressionWithTypeArguments(node) && isClassExtends(node)) break;
+    // INSTANTIATION (wb-jwc.11): an instantiation expression is a value; a type node below it (its type arguments) was met first.
+    if (isInstantiation(node)) continue;
     if (ts.isTypeNode(node)) return false;
   }
   const parent = name.parent;
@@ -544,7 +562,7 @@ function everyRoot(r: Resolver, entity: Entity, seen: Set<ts.Node | string>): Li
 
 /* ---------------------------------------------------------------- the reader */
 
-/** How the scan asks whether a visited reference only reads: the value reader it is handed (LITERAL_READER unless a caller passes another; the census passes no other, so only LITERAL_READER is claimed). */
+/** How the scan asks whether a visited reference only reads: the value reader it is handed (LITERAL_READER unless a caller passes another; wb-jwc.8's census passes no other and claims LITERAL_READER only, and wb-jwc.11's census pins a caller's reader asked in its place, under two readers of its own, at the reference forms its READER plants hold and at no other, wb-un88). */
 export interface ScanReader {
   /** Whether a member read chain reads as a string where it is used. */
   readonly readsString: (chain: ts.Expression, file: ts.SourceFile, tree: ModuleTree) => boolean;
