@@ -4931,6 +4931,46 @@
                 "&#0000000;&#1111111;&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;": [
                   "\ufffd\udbfd\udc47\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
                   "\u0000\udbfd\udc47&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;"
+                ],
+                "&#X0;&#X1;&#X2;&#X3;&#X4;&#X5;&#X6;&#X7;&#X8;&#X9;&#Xa;&#Xb;&#Xc;&#Xd;&#Xe;&#Xf;&#XA;&#XB;&#XC;&#XD;&#XE;&#XF;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f"
+                ],
+                "&#X00;&#X11;&#X22;&#X33;&#X44;&#X55;&#X66;&#X77;&#X88;&#X99;&#Xaa;&#Xbb;&#Xcc;&#Xdd;&#Xee;&#Xff;&#XAA;&#XBB;&#XCC;&#XDD;&#XEE;&#XFF;": [
+                  "\ufffd\u0011\"3DUfw\u02c6\u2122\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                  "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff"
+                ],
+                "&#X000;&#X111;&#X222;&#X333;&#X444;&#X555;&#X666;&#X777;&#X888;&#X999;&#Xaaa;&#Xbbb;&#Xccc;&#Xddd;&#Xeee;&#Xfff;&#XAAA;&#XBBB;&#XCCC;&#XDDD;&#XEEE;&#XFFF;": [
+                  "\ufffd\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff",
+                  "\u0000\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff"
+                ],
+                "&#X0000;&#X1111;&#X2222;&#X3333;&#X4444;&#X5555;&#X6666;&#X7777;&#X8888;&#X9999;&#Xaaaa;&#Xbbbb;&#Xcccc;&#Xdddd;&#Xeeee;&#Xffff;&#XAAAA;&#XBBBB;&#XCCCC;&#XDDDD;&#XEEEE;&#XFFFF;": [
+                  "\ufffd\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff",
+                  "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff"
+                ],
+                "&#X00000;&#X11111;&#X22222;&#X33333;&#X44444;&#X55555;&#X66666;&#X77777;&#X88888;&#X99999;&#Xaaaaa;&#Xbbbbb;&#Xccccc;&#Xddddd;&#Xeeeee;&#Xfffff;&#XAAAAA;&#XBBBBB;&#XCCCCC;&#XDDDDD;&#XEEEEE;&#XFFFFF;": [
+                  "\ufffd\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff",
+                  "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff"
+                ],
+                "&#X000000;&#X111111;&#X222222;&#X333333;&#X444444;&#X555555;&#X666666;&#X777777;&#X888888;&#X999999;&#Xaaaaaa;&#Xbbbbbb;&#Xcccccc;&#Xdddddd;&#Xeeeeee;&#Xffffff;&#XAAAAAA;&#XBBBBBB;&#XCCCCCC;&#XDDDDDD;&#XEEEEEE;&#XFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#X111111;&#X222222;&#X333333;&#X444444;&#X555555;&#X666666;&#X777777;&#X888888;&#X999999;&#Xaaaaaa;&#Xbbbbbb;&#Xcccccc;&#Xdddddd;&#Xeeeeee;&#Xffffff;&#XAAAAAA;&#XBBBBBB;&#XCCCCCC;&#XDDDDDD;&#XEEEEEE;&#XFFFFFF;"
+                ],
+                "&#X0000000;&#X1111111;&#X2222222;&#X3333333;&#X4444444;&#X5555555;&#X6666666;&#X7777777;&#X8888888;&#X9999999;&#Xaaaaaaa;&#Xbbbbbbb;&#Xccccccc;&#Xddddddd;&#Xeeeeeee;&#Xfffffff;&#XAAAAAAA;&#XBBBBBBB;&#XCCCCCCC;&#XDDDDDDD;&#XEEEEEEE;&#XFFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#X1111111;&#X2222222;&#X3333333;&#X4444444;&#X5555555;&#X6666666;&#X7777777;&#X8888888;&#X9999999;&#Xaaaaaaa;&#Xbbbbbbb;&#Xccccccc;&#Xddddddd;&#Xeeeeeee;&#Xfffffff;&#XAAAAAAA;&#XBBBBBBB;&#XCCCCCCC;&#XDDDDDDD;&#XEEEEEEE;&#XFFFFFFF;"
+                ],
+                "&#x0000041;&#x1000041;&#x2000041;&#x3000041;&#x4000041;&#x5000041;&#x6000041;&#x7000041;&#x8000041;&#x9000041;&#xa000041;&#xb000041;&#xc000041;&#xd000041;&#xe000041;&#xf000041;&#xA000041;&#xB000041;&#xC000041;&#xD000041;&#xE000041;&#xF000041;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#x1000041;&#x2000041;&#x3000041;&#x4000041;&#x5000041;&#x6000041;&#x7000041;&#x8000041;&#x9000041;&#xa000041;&#xb000041;&#xc000041;&#xd000041;&#xe000041;&#xf000041;&#xA000041;&#xB000041;&#xC000041;&#xD000041;&#xE000041;&#xF000041;"
+                ],
+                "&#X0000041;&#X1000041;&#X2000041;&#X3000041;&#X4000041;&#X5000041;&#X6000041;&#X7000041;&#X8000041;&#X9000041;&#Xa000041;&#Xb000041;&#Xc000041;&#Xd000041;&#Xe000041;&#Xf000041;&#XA000041;&#XB000041;&#XC000041;&#XD000041;&#XE000041;&#XF000041;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#X1000041;&#X2000041;&#X3000041;&#X4000041;&#X5000041;&#X6000041;&#X7000041;&#X8000041;&#X9000041;&#Xa000041;&#Xb000041;&#Xc000041;&#Xd000041;&#Xe000041;&#Xf000041;&#XA000041;&#XB000041;&#XC000041;&#XD000041;&#XE000041;&#XF000041;"
+                ],
+                "&#00000065;&#10000065;&#20000065;&#30000065;&#40000065;&#50000065;&#60000065;&#70000065;&#80000065;&#90000065;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#10000065;&#20000065;&#30000065;&#40000065;&#50000065;&#60000065;&#70000065;&#80000065;&#90000065;"
                 ]
               },
               "escapes": {
