@@ -7,9 +7,9 @@
  * (test/workbench-w10-tsx-judge-arms-census.test.ts at the tip) is not on trunk: where a doc comment below names "the census
  * header" or its READ, REFUSED or RESIDUAL list, it means that census at that tip, and it claims nothing here. What is claimed
  * about this module is stated by the census that reads it and never here: test/workbench-w10-tsx-judge-arms-recursion-census.test.ts
- * holds, probe by probe, the readings readJudgeArms() gives the recursive-flow probes it plants and nothing wider. The parent
- * stays parked until this lands, and its later re-cut can import this module. It imports only typescript; it spawns, writes and
- * reads nothing (the caller passes the source).
+ * holds, probe by probe, the arm pattern sources and unread entries readJudgeArms() gives the recursive-flow probes it plants and
+ * nothing wider. The parent stays parked until this lands, and its later re-cut can import this module. It imports only
+ * typescript; it spawns, writes and reads nothing (the caller passes the source).
  */
 import ts from "typescript";
 
