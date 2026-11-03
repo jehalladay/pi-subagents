@@ -18,9 +18,11 @@
  * unplanted guard's live arms as the same reader reads them at run time followed by the probe's added arms written here, and
  * every unread entry in full as written here - its reason, ' (line <n>): ' and its statement text,
  * n counted from judgeTsxRow's first line for a declaration line and from its last statement's line for a code line (so an edit
- * of the guard above judgeTsxRow moves no entry). Probes marked r3 are refusal #3's gate witnesses (gate-prep-2, g10-gate-s179,
- * archived tools/witnesses.json) and r4 refusal #4's (gate-prep-4, g10-gate-s181, archived tools/witnesses2.json), each verbatim;
- * seat marks this cut's plants, each written for a member under which every gate witness reads as the moved reader reads it.
+ * of the guard above judgeTsxRow moves no entry). Each probe carries a source mark, the cutting seats' note of where it came from
+ * (r3: refusal #3's gate witnesses, gate-prep-2, g10-gate-s179, archived tools/witnesses.json; r4: refusal #4's, gate-prep-4,
+ * g10-gate-s181, archived tools/witnesses2.json; seat: a cutting seat's plant). SHAPE holds the marks to its literal and ANCHOR
+ * R3 reads the controls' marks to find its r3 control; nothing else reads them, and a probe's provenance (that its text is its
+ * mark's witness, verbatim, or why a seat wrote a plant) is NOT CLAIMED by this census.
  * - Case REAL: the unplanted guard reads judgeTsxRow's 26 live arms and no unread entry (the count and the empty list only).
  * - 28 pin cases, one per member the roster lists with probes, each asserting that every probe it lists reads exactly as written
  *   here. Row R3 holds refusal #3's two members and row R4 refusal #4's six, each pin holding its gate's own paired witnesses as
@@ -31,11 +33,14 @@
  *   archived edit: refusal #3's two members from that gate's survivor helpers (gate-prep-2, g10-gate-s179, leg2/survivor-helpers,
  *   one changed line each), every other member from refusal #4's find-and-replace table (gate-prep-4, g10-gate-s181,
  *   tools/members.json, which carries the cut #4 seat's E members too; its E-GP2 rows equal refusal #3's two edits). A quote is
- *   the record's own parenthesis after the member id, read whole, in its row's record (wb-37o9's 'Unmet items' for R3, R-B297's
- *   fold for R4, refusal #4's F3 and F4 for R4G, the narrowing audit for R4S), and a pin carries one exactly when that record
- *   gives one: R-B297's fold gives none, and R4G's are F3's, that gate's reasons for holding a member equivalent within the
- *   parent census's claims, so a NOT CLAIMED inside one is the parent's, not this census's. The roster, which case HEADER holds
- *   to the pins byte for byte:
+ *   a parenthesis its row's record (wb-37o9's 'Unmet items' for R3, R-B297's fold for R4, refusal #4's F3 and F4 for R4G, the
+ *   narrowing audit for R4S) writes after a member id in QUOTE FORM: a space (U+0020), the member id, then either one space and
+ *   '(' or ' and ' (one space each side), another member id of its row, one space and '(' - the quote being the text between
+ *   that '(' and the ')' that balances it. A pin carries a quote exactly when its row's record writes one in QUOTE FORM after its
+ *   member, and carries that text: R-B297's fold writes none (each member id there is dash-joined into its ledger slug, outside
+ *   QUOTE FORM), and R4G's are F3's, that gate's reasons for holding a member equivalent within the parent census's claims, so a
+ *   NOT CLAIMED inside one is the parent's, not this census's. The record forms NOT CLAIMED names below leave a member's quote
+ *   unclaimed. The roster, which case HEADER holds to the pins byte for byte:
  * PIN ROSTER
  *   R3 (wb-5mco's refusal #3 members, which wb-37o9's description carries): 2 pins
  *     GP2-RECUR-LAST (U1; enter: chain[chain.length - 1] === bound.callable; quote: enter(): only a recursion into the chain's last function is refused): GW2-MR-LIST, GW2-MR-THREE, GW2-MR-ITEM, GW2-MR-MIX
@@ -78,39 +83,40 @@
  *   each probe's source mark and entry count, each held to a literal; a pin holds probes exactly when it states no NOT CLAIMED
  *   reason, and each pin's edit rewrites its own site's check.
  * - Case HEADER: the PIN ROSTER block above, read from this file, equals the lines the rows, pins and controls compose.
- * - Cases ANCHOR R3, ANCHOR R4, ANCHOR R4G, ANCHOR R4S and ANCHOR CONTROLS (the outside anchors, read at run time from the tracked
- *   tracker export .beads/issues.jsonl and never retyped as the expectation). Each finds every section it reads by the first
- *   occurrence of its opening (after an earlier marker of the same record where it has one) and compares exactly the values
- *   written below that it takes from those sections, an absent quote equal only to an absent one; so an export edit that changes
- *   one of those values reds the case comparing it, and a note appended to either row's notes changes none of them. wb-5mco's
+ * - Cases ANCHOR R3, ANCHOR R4, ANCHOR R4G, ANCHOR R4S and ANCHOR CONTROLS (the outside anchors, read at run time from the
+ *   tracked tracker export .beads/issues.jsonl and never retyped as the expectation). Each finds every section it reads by the
+ *   first occurrence of its opening (after an earlier marker of the same record where it has one) and compares exactly the values
+ *   written below that it takes from those sections (each quote as recordQuote() reads it after the member, which for a member
+ *   this census claims is its QUOTE FORM quote), an absent quote equal only to an absent one; so an export edit that changes one
+ *   of those values reds the case comparing it, and a note appended to either row's notes changes none of them. wb-5mco's
  *   description and every other part of the export are NOT CLAIMED by this census. (R3) The GP2 ids the 'Unmet items' paragraph
- *   of wb-37o9's description names are exactly row R3's members, in order, each pin's quote the parenthesis there after its
+ *   of wb-37o9's description names are exactly row R3's members, in order, each pin's quote the one there in QUOTE FORM after its
  *   member; in refusal #3's verdict in wb-5mco's notes each member's item is the first upper-case word the verdict writes as
- *   '<word> <member> ' (U1, U2), and the GW2 ids after the first 'the <member> reading differs on exactly', up to the next
- *   ', and the ' or '; ', are exactly its pin's probes. (R4) R-B297's fold in wb-37o9's notes holds one ledger slug per line, each
+ *   '<word> <member> ' (U1, U2), and the GW2 ids after the first 'the <member> reading differs on exactly', up to the next ', and
+ *   the ' or '; ', are exactly its pin's probes. (R4) R-B297's fold in wb-37o9's notes holds one ledger slug per line, each
  *   slug's first word an item (U1 to U3), its GP4-ENTER- and GP4-HELD- ids exactly row R4's members of that item and its W and A
- *   ids between -WITNESS- or -WITNESSES- and -TSC- exactly the union of their probes, in order; the fold gives none of them a
- *   quote; and the '- <member>: <witnesses>' lines of refusal #4's pinned twin in wb-5mco's notes are exactly row R4's members, in
- *   order, each with its pin's probes. (R4G) The GP4 ids refusal #4's F3 and F4 name are exactly row R4G's members, in order,
- *   under their items (F3, F4), each pin's quote the parenthesis there after its member where one follows it, and the A ids F4
- *   names are its two members' probes, in order. (R4S) The E ids the narrowing audit of wb-5mco's cut #4 delivery names are
- *   exactly row R4S's members, in order, each item the word its opening gives them and each quote the parenthesis there after its
- *   member, and the TWIN after that audit writes '<member> on none of the 17' for the NOT CLAIMED pin's member. (CONTROLS) The GW2
- *   ids of refusal #3's control sentence, the C ids of the TWIN's claimed forms and the W ids of refusal #4's within-words
- *   sentence are exactly the controls, in order.
+ *   ids between -WITNESS- or -WITNESSES- and -TSC- exactly the union of their probes, in order; the fold writes none of them a
+ *   quote in QUOTE FORM; and the '- <member>: <witnesses>' lines of refusal #4's pinned twin in wb-5mco's notes are exactly row
+ *   R4's members, in order, each with its pin's probes. (R4G) The GP4 ids refusal #4's F3 and F4 name are exactly row R4G's
+ *   members, in order, under their items (F3, F4), each pin's quote the one there in QUOTE FORM after its member where the record
+ *   writes one, and the A ids F4 names are its two members' probes, in order. (R4S) The E ids the narrowing audit of wb-5mco's
+ *   cut #4 delivery names are exactly row R4S's members, in order, each item the word its opening gives them and each quote the
+ *   one there in QUOTE FORM after its member, and the TWIN after that audit writes '<member> on none of the 17' for the NOT
+ *   CLAIMED pin's member. (CONTROLS) The GW2 ids of refusal #3's control sentence, the C ids of the TWIN's claimed forms and the
+ *   W ids of refusal #4's within-words sentence are exactly the controls, in order.
  *
- * CLAIMS AND THEIR FALSIFIERS. (1) On each probe, the arm pattern sources and unread entries readJudgeArms() gives are exactly the
- * reading written here: a reader edit that changes one probe's added arm pattern sources or unread entries reds the pin case or
- * CONTROLS holding it, and an edit that changes the number of the unplanted guard's live arms or gives it an unread entry reds
+ * CLAIMS AND THEIR FALSIFIERS. (1) On each probe, the arm pattern sources and unread entries readJudgeArms() gives are exactly
+ * the reading written here: a reader edit that changes one probe's added arm pattern sources or unread entries reds the pin case
+ * or CONTROLS holding it, and an edit that changes the number of the unplanted guard's live arms or gives it an unread entry reds
  * REAL. (2) Each of the 28 members the roster lists with probes changes the reading of every probe of its own pin: the cutting
  * seat applied each one's edit, verbatim, to a copy of the helper (its find line occurring exactly once there) and read the pin
  * case named after it red; some R3 and R4 members change other probes too (the delivery note lists them), while each R4G and R4S
- * pin holds every probe its member changes. (3) The rows, pins, items, sites, edits and probe ids are frozen (SHAPE), and the
- * roster above, edits and quotes included, is the pins' (HEADER): a pin removed, swapped or relabelled in one literal, an edit
- * changed in one or two of PINS, the SHAPE literal and the roster, or a row deleted, reds SHAPE or HEADER (standing rule 16's
- * CT1-CT4). (4) The members, items, quotes, R3's and R4's probes and the controls are the ones the tracker export records
- * (ANCHOR): a pin or a control removed or relabelled, or a pin's item or quote changed, in every literal together, or a row
- * removed with its frozen-shape elements, reds ANCHOR (CT5, CT6).
+ * pin holds every probe its member changes. (3) The rows, pins, items, sites, edits and probe ids are held to SHAPE's literals
+ * (the frozen shape), and the roster above, edits and quotes included, is the pins' (HEADER): a pin removed, swapped or
+ * relabelled in one literal, an edit changed in one or two of PINS, the SHAPE literal and the roster, or a row deleted, reds
+ * SHAPE or HEADER (standing rule 16's CT1-CT4). (4) The members, items, quotes (QUOTE FORM), R3's and R4's probes and the
+ * controls are the ones the tracker export records (ANCHOR): a pin or a control removed or relabelled, or a pin's item or quote
+ * changed, in every literal together, or a row removed with its frozen-shape elements, reds ANCHOR (CT5, CT6).
  *
  * NOT CLAIMED. A reading on any page that is not one of these 32 probes is NOT CLAIMED by this census - among them a cycle of four
  * or more functions, a recursion that closes through a const reference or a traced list, and every parameter list, argument list,
@@ -126,7 +132,15 @@
  * or applies one to the reader (claim (2) is the cut's measurement). Which other edits a member is equivalent to is NOT CLAIMED,
  * and neither is a reader edit made together with the reading literal it changes. The helper's provenance (every line below its
  * header byte for byte the parent tip's line 12 onward, as its header states) is checkable against that blob and is NOT CLAIMED by
- * this census, which reads no parent commit. No residual is claimed.
+ * this census, which reads no parent commit. A member's quote is NOT CLAIMED by this census when its row's record writes, after
+ * its id, a '(' parted from it by nothing or by white space other than one U+0020 space (no space, two or more spaces, a tab, a
+ * line break or another space character: refusal #3's U2 forms); one space and '(', or ' and ', an id and ' (', where the id
+ * follows anything but a U+0020 space (a dash, as each member id R-B297's fold dash-joins into its ledger slug does: refusal #3's
+ * U1 forms); ' and ', an id not of its row and ' ('; a QUOTE FORM '(' the record never balances; or two or more QUOTE FORM
+ * parentheses: recordQuote() reads such a record as its code below does, and the census claims nothing of that reading. A probe's
+ * source mark beyond SHAPE's literal and ANCHOR R3's reading of the controls' marks, and a probe's provenance, are NOT CLAIMED by
+ * this census: no case reads the gates' archives, so a mark changed in PROBES and the SHAPE literal together, or a probe's text
+ * changed together with the reading written for it, is NOT CLAIMED (refusal #3's U3 forms). No residual is claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the guard, the tracker export and this file are only read; no
  * src, docs or receipt is edited.
@@ -186,7 +200,8 @@ interface Entry {
  * and the reading readJudgeArms() gives it: the arm pattern sources after the guard's live arms, then every unread entry. */
 interface Probe {
   readonly id: string;
-  /** r3: refusal #3's gate witness; r4: refusal #4's; seat: this cut's plant. */
+  /** The source mark (r3, r4 or seat): the cutting seats' note of where the probe came from, NOT CLAIMED beyond SHAPE's literal
+   * and ANCHOR R3's reading of the controls' marks. */
   readonly from: "r3" | "r4" | "seat";
   readonly label: string;
   readonly declaration: string;
@@ -196,7 +211,7 @@ interface Probe {
 }
 /** One member of a recursion check: the condition its one-line edit gives that check (the site's
  * `if (chain.includes(bound.callable)) {` in enter() or `if (chain.includes(callee.callable)) {` in held()), the record item naming it,
- * its record quote where its row's record gives one, and the probes its pin case holds, each of which it changes - or, for a member
+ * its record quote where its row's record writes one in QUOTE FORM, and the probes its pin case holds, each of which it changes - or, for a member
  * no probe reads differently, why it is NOT CLAIMED. */
 interface Pin {
   readonly id: string;
@@ -685,9 +700,10 @@ function sectionOf(text: string, open: string, close: string): string {
 }
 /** The ids of one kind a text names, in first-mention order (an id: the prefix, then dash-joined upper-case words). */
 const idsOf = (text: string, prefix: string): string[] => [...new Set(text.match(new RegExp(`\\b${prefix}-[A-Z0-9]+(?:-[A-Z0-9]+)*`, "g")) ?? [])];
-/** The record's own parenthesis after a member id: the first ' (' in text that follows the id as a whole word (alone, or as the
- * first of '<id> and <id>'), read whole to its matching ')', inner parentheses included; undefined when no parenthesis follows
- * the id in text. */
+/** The quote ANCHOR R3, R4, R4G and R4S read after a member id in a record's text: at the first match of the opening below (the
+ * id, not after an upper-case letter, a digit or a dash, then ' (', or ' and ', an id of upper-case letters and digits in two or
+ * more dash-joined words and ' ('), the text between that '(' and the ')' that balances it; undefined when text holds no match
+ * or never balances it. It reads every QUOTE FORM quote; the header claims no more of it than that. */
 function recordQuote(text: string, id: string): string | undefined {
   const opening = new RegExp(`(?<![A-Z0-9-])${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?: and [A-Z0-9]+(?:-[A-Z0-9]+)+)? \\(`).exec(text);
   if (opening === null) return undefined;
@@ -749,7 +765,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     expect(reading.arms).toHaveLength(26);
   });
 
-  it("SHAPE: the rows, their pins, each pin's record item, site, edit and probe ids, the controls and each probe's id, source mark and entry count stay frozen", () => {
+  it("SHAPE: the rows, their pins, each pin's record item, site, edit and probe ids, the controls and each probe's id, source mark and entry count are each held to a literal", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["R3:2", "R4:6", "R4G:11", "R4S:10"]);
     expect(PINS.map((pin) => `${pin.id}:${pin.item}:${pin.site}:${pin.edit}:${pin.probes.join(",") || "NOT CLAIMED"}`)).toEqual([
       "GP2-RECUR-LAST:U1:enter:chain[chain.length - 1] === bound.callable:GW2-MR-LIST,GW2-MR-THREE,GW2-MR-ITEM,GW2-MR-MIX",
@@ -855,7 +871,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     const pins = rowPins("R3");
     expect(idsOf(unmet, "GP2"), "the GP2 ids wb-37o9's 'Unmet items' names are exactly row R3's members, in order").toEqual(pins.map((pin) => pin.id));
     for (const pin of pins) {
-      expect(recordQuote(unmet, pin.id), `${pin.id}: its quote is its parenthesis in wb-37o9's 'Unmet items'`).toBe(pin.quote);
+      expect(recordQuote(unmet, pin.id), `${pin.id}: its quote is the one wb-37o9's 'Unmet items' writes after it in QUOTE FORM`).toBe(pin.quote);
       expect(itemOf(verdict, pin.id), `${pin.id}: its item is the first upper-case word refusal #3's verdict writes as '<word> ${pin.id} '`).toBe(pin.item);
       const from = verdict.indexOf(differsOn(pin.id));
       const named = from < 0 ? "" : verdict.slice(from + differsOn(pin.id).length).split(/, and the |; /)[0] ?? "";
@@ -867,7 +883,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     expect(idsOf(control, "GW2"), "refusal #3's control is this census's r3 control").toEqual(CONTROLS.filter((id) => probeOf(id).from === "r3"));
   });
 
-  it("ANCHOR R4: row R4's items, members, quotes and witnesses are R-B297's fold's (it gives no member a quote), and each member's witnesses refusal #4's pinned twin's", { timeout: 60_000 }, () => {
+  it("ANCHOR R4: row R4's items, members, quotes and witnesses are R-B297's fold's (it writes no member a quote in QUOTE FORM), and each member's witnesses refusal #4's pinned twin's", { timeout: 60_000 }, () => {
     const fold = sectionOf(exportRow("wb-37o9").notes, FOLD_OPEN, FOLD_CLOSE);
     const twin = sectionOf(sectionOf(exportRow("wb-5mco").notes, REFUSAL_4, ""), TWIN_OPEN, TWIN_CLOSE);
     expect(fold !== "" && twin !== "", "R-B297's fold and refusal #4's twin list are in the export").toBe(true);
@@ -881,7 +897,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
       "R-B297's fold's slugs read exactly row R4's items, their members and their witnesses, in order",
     ).toEqual(itemLines(pins));
     for (const pin of pins) {
-      expect(recordQuote(fold, pin.id), `${pin.id}: its quote is the parenthesis R-B297's fold puts after it, and the fold puts none`).toBe(pin.quote);
+      expect(recordQuote(fold, pin.id), `${pin.id}: its quote is the one R-B297's fold writes after it in QUOTE FORM, and the fold writes none`).toBe(pin.quote);
     }
     const listed = twin
       .slice(TWIN_OPEN.length)
@@ -894,7 +910,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     expect(listed, "the '- <member>: <witnesses>' lines of refusal #4's pinned twin are exactly row R4's members, each with its pin's probes").toEqual(pins.map((pin) => `${pin.id}:${pin.probes.join(",")}`));
   });
 
-  it("ANCHOR R4G: row R4G's members, under their items, are exactly the GP4 ids refusal #4's F3 and F4 name, in order, F4's with their witnesses, and each pin's quote the parenthesis F3 or F4 puts after its member, where one does", { timeout: 60_000 }, () => {
+  it("ANCHOR R4G: row R4G's members, under their items, are exactly the GP4 ids refusal #4's F3 and F4 name, in order, F4's with their witnesses, and each pin's quote the one F3 or F4 writes after its member in QUOTE FORM, where one does", { timeout: 60_000 }, () => {
     const verdict = sectionOf(exportRow("wb-5mco").notes, REFUSAL_4, "");
     const f3 = sectionOf(verdict, F3_OPEN, F4_OPEN);
     const f4 = sectionOf(verdict, F4_OPEN, F5_OPEN);
@@ -903,11 +919,11 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     expect([...idsOf(f3, "GP4").map((id) => `F3:${id}`), ...idsOf(f4, "GP4").map((id) => `F4:${id}`)]).toEqual(pins.map((pin) => `${pin.item}:${pin.id}`));
     expect(idsOf(f4, "A"), "the A ids F4 names are its members' probes, in order").toEqual(pins.filter((pin) => pin.item === "F4").flatMap((pin) => pin.probes));
     for (const pin of pins) {
-      expect(recordQuote(`${f3}${f4}`, pin.id), `${pin.id}: its quote is the parenthesis refusal #4's F3 or F4 puts after it, where one does`).toBe(pin.quote);
+      expect(recordQuote(`${f3}${f4}`, pin.id), `${pin.id}: its quote is the one refusal #4's F3 or F4 writes after it in QUOTE FORM, where one does`).toBe(pin.quote);
     }
   });
 
-  it("ANCHOR R4S: row R4S's members, items and quotes are the E members of wb-5mco's cut #4 narrowing audit, the word its opening gives them and its parentheses after them, and its NOT CLAIMED pin a member the TWIN after the audit writes as '<member> on none of the 17'", { timeout: 60_000 }, () => {
+  it("ANCHOR R4S: row R4S's members, items and quotes are the E members of wb-5mco's cut #4 narrowing audit, the word its opening gives them and its QUOTE FORM quotes after them, and its NOT CLAIMED pin a member the TWIN after the audit writes as '<member> on none of the 17'", { timeout: 60_000 }, () => {
     const notes = exportRow("wb-5mco").notes;
     const audit = sectionOf(notes, AUDIT_OPEN, AUDIT_CLOSE);
     expect(audit !== "", "cut #4's narrowing audit is in the export").toBe(true);
@@ -918,7 +934,7 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
       expect(pin.item, `${pin.id}: its item is the word the audit's opening gives its members`).toBe(word);
     }
     for (const pin of pins) {
-      expect(recordQuote(audit, pin.id), `${pin.id}: its quote is the audit's parenthesis after it`).toBe(pin.quote);
+      expect(recordQuote(audit, pin.id), `${pin.id}: its quote is the one the audit writes after it in QUOTE FORM`).toBe(pin.quote);
     }
     const twin = sectionOf(notes.slice(notes.indexOf(AUDIT_OPEN)), "TWIN (", ". So each ");
     expect(
