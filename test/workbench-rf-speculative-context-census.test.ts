@@ -30,48 +30,51 @@
  * result as 'validation'; a speculative render behind its own capability id and grant) is the bead's other half, owed once the
  * marker ships at Pi's pin (wb-jwc.4's landing); this census claims only the until-then half and pins nothing that a re-pin moves.
  *
- * wb-dkru (R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd; its F3 leads, its F4 rides): the normalized view
- * reads the rendered text of the inline marks M5 holds inside a word (marked 18.0.11 renders spec*ul*ative, spec**ul**ative,
- * spec~~ul~~ative and spec`ul`ative as one word under emphasis, strikethrough or a code span) and decodes every HTML5 named
- * reference a pattern
- * here can read (NAMED_REFERENCE_LIST), so the gate's P-D16 to P-D19 read in C1 and C2 (M5's positive controls); A2, C1 and C2
- * each judge a planted unit after the real ones, so the gate's hollowing mutants G09, G12, G13 and G14 red (PLANTED LEGS).
- * wb-eu94 (R694 follow-up from the wb-dkru landing 613 gate cmd_dc3281ed8867, hop 3 of the wb-grmo.1 chain, cut in the R739
- * TERMINAL enumerate-the-resolvable form; its F1 leads, its F3 rides; cut #2 cures refusal #1's U1 and U2; cut #3 cures refusal
- * #2's U1 and U2 under ruling R-B131; cut #4 is the FAIL-CLOSED CORE ruling R-B175 binds after refusal #3; cut #5 is the mechanical
- * re-cut ruling R-B223 binds after the dependency inversion, once the child wb-w4si had landed (landing 833): it narrows the
- * claimed readings to what this census's own pins hold - refusal #4's U1 (seven INLINE_MARKS cells) and U2 (a carriage return
- * inside a comment or a bogus comment), with its riders F3 (a backtick on one side of a run) and F4 (two SENTENCE_BREAK forms) -
- * and changes no code, no case and no roster entry; cut #6 is the same restatement after refusal #5, under ruling R-B376: it
- * narrows BOGUS_COMMENT's claimed readings to the forms its pins hold - refusal #5's U1 (eleven cells read where no ">"
- * follows) and U2 (five cells read through a later ">"), with its riders F4 (the "<?" before a line feed, now claimed and no
- * longer disclaimed) and F6 (a "<!--" no comment close follows, read through a later ">") - HTML_COMMENT's to its rows' own
- * forms (F3: a "--!>" close across a line ending) and SENTENCE_BREAK's to its pins' spellings (F5), and again changes no code,
- * no case and no roster entry). CLAIM SCOPE: the
- * normalized view claims a reading only where a pin holds it - M5's cases, every READ_FORMS row (M6), the decoded values M7 holds
- * and the texts of the quiet rows Q3 and Q8-Q17 - and no reader behaviour beyond those pins. Each reader doc comment below says
- * what its step's code does and names the readings its pins hold; a behaviour of that code no pin turns on is NOT CLAIMED by this
- * census, and the comment names the ones this cut measured (one-edit mutants of the step that change no pinned reading). In
- * outline, the pinned readings are: a code span on one line read as marked renders it (spec` ul `ative); a numeric reference
- * with or without its ";" decoded as an HTML5 parser decodes it (spe&#99ulative inside an HTML block, spec&#XAD;ulative; the
- * 0x80-0x9F Windows-1252 table: what&#150;if); the invisible code points INVISIBLE names dropped; and the markup a browser drops
- * read in one pass as the HTML5 tokenizer reads it from its data state (withoutMarkup): the comments, the bogus comments and the
- * tags that the claimed readings of HTML_COMMENT, BOGUS_COMMENT and markupEnd name, each dropped through the close those readings
- * name for it (a ">" inside a quoted attribute value closes no tag: spec<span title="a>b">ul</span>ative; the one line ending
- * inside a pinned comment or bogus comment is a line feed, and a carriage return inside either is NOT CLAIMED by this census),
- * while a "<" before a character markupEnd names as opening no markup stays as written (what<-if). The pass resumes past each
- * form it drops, so an opener inside an attribute value or a comment is never read as a form of its own
- * (spec<span title="<!x">ul</span>ative). Refusal #2's seven surviving gate mutants
- * each have their falsifier rows (GP01 an uppercase X, GP03 lowercase hex digits, GP46 an empty <!---> before a later comment,
- * GP10-99 a reference to 0x99 before a word, GP48 a "<" opening no markup in the joint, GP33 white space before an "=" that opens
- * an attribute name, GP32 a "/" inside an unquoted value), and refusal #3's two riding survivors theirs (G23-NM2 a named
- * reference written in the wrong case, spec&SHY;ulative; G23-TE10b a double-quoted value after "=" and a space). Its joined rows
- * are one word on the page and C1 and C2 read them, its split rows are split on the page and stay split, and its over-read rows
- * are split on the page yet joined by the view (marked shows the form as written - it escapes the run, leaves a mark unpaired, an
- * HTML block holds the markdown, or a code span shows it - or a br breaks the line, and the view still removes or decodes it). The
- * known forms it does not read are named residuals, each with a pinned quiet row (R-LEGACY-REFERENCE, R-MULTILINE-CODE-SPAN,
- * R-HIDDEN-CONTENT, R-ESCAPED-MARKUP, cut #2's R-EDGE-GLUE and cut #3's R-REDECODE, R-BLOCK-BREAK and R-PUNCTUATION-EMPHASIS); a
- * form neither READ_FORMS nor a residual names is not claimed.
+ * wb-dkru (R694 follow-up from the wb-grmo.1 landing 545 gate cmd_c44799b3bdfd; its F3 leads, its F4 rides): M5 holds the normalized
+ * view's reading of its 18 mark and named-reference cases, the gate's P-D16 to P-D19 first (M5's positive controls, which C1 and C2
+ * read; among M5's cases spec*ul*ative, spec**ul**ative, spec~~ul~~ative and spec`ul`ative are one word on the page under emphasis,
+ * strikethrough or a code span), and the size and digest of NAMED_REFERENCE_LIST, the names the view looks up; A2, C1 and C2 each
+ * judge a planted unit after the real ones, so the gate's hollowing mutants G09, G12, G13 and G14 red (PLANTED LEGS).
+ * wb-eu94 (R694 follow-up from the wb-dkru landing 613 gate cmd_dc3281ed8867, hop 3 of the wb-grmo.1 chain, cut in the R739 TERMINAL
+ * enumerate-the-resolvable form; its F1 leads, its F3 rides; cut #2 cures refusal #1's U1 and U2; cut #3 cures refusal #2's U1 and
+ * U2 under ruling R-B131; cut #4 is the FAIL-CLOSED CORE ruling R-B175 binds after refusal #3; cut #5 is the mechanical re-cut
+ * ruling R-B223 binds after the dependency inversion, once the child wb-w4si had landed (landing 833): it narrows the claimed
+ * readings to what this census's own pins hold - refusal #4's U1 (seven INLINE_MARKS cells) and U2 (a carriage return inside a
+ * comment or a bogus comment), with its riders F3 (a backtick on one side of a run) and F4 (two SENTENCE_BREAK forms) - and changes
+ * no code, no case and no roster entry; cut #6 is the same restatement after refusal #5, under ruling R-B376: it narrows
+ * BOGUS_COMMENT's claimed readings to the forms its pins hold - refusal #5's U1 (eleven cells read where no ">" follows) and U2
+ * (five cells read through a later ">"), with its riders F4 (the "<?" before a line feed, now claimed and no longer disclaimed) and
+ * F6 (a "<!--" no comment close follows, read through a later ">") - HTML_COMMENT's to its rows' own forms (F3: a "--!>" close
+ * across a line ending) and SENTENCE_BREAK's to its pins' spellings (F5), and again changes no code, no case and no roster entry;
+ * cut #7 is the same restatement after refusal #6, under ruling R-B409 (claims equal to pins): it restates every reader claim of
+ * this census as the pinned texts that hold it, with no class word left in a claim - refusal #6's U1 (BOGUS_COMMENT's letter and
+ * digit classes: GP13-B01 to GP13-B10), U2 (HTML_COMMENT's body holding ">": GP13-S-HCGT) and U3 (markupEnd's tags opened by a
+ * capital: GP13-S-TAGCAP) and, by its F6 sweep, every other reader doc comment, the C matchers' doc comments (SEP, JOINT,
+ * SPECULATIVE_TERM and SERVED_TERM), the outline below, the wb-dkru paragraph above and M5's two assertion messages - and changes no
+ * case, no pin and no roster entry). CLAIM SCOPE: the normalized view's readings this census claims are exactly those of its pinned
+ * texts - M5's 18 cases, the 274 READ_FORMS rows (M6) and the cases of the quiet rows Q2, Q3 and Q8-Q17, 350 texts, each read as the
+ * whole of a page as its pin says (M6 holds a READ_FORMS row to its page reading, M5 and each quiet row hold their cases to theirs)
+ * - with M7's decoded value at each DECODE_PROBES code and the sizes and digests M5 and M7 pin, and no reader behaviour beyond those
+ * pins. Each reader doc comment below has three parts: CODE, which describes what its step's code does and is never a claim; PINNED
+ * READINGS, the step's whole claim, which lists by pin and index the pinned texts in which that step reads a form (READ_FORMS
+ * indices count from 0; a quoted excerpt names its row and is never a form of its own); and NOT CLAIMED, every other text the step
+ * reads, which names the cells the gates and the cutting seats measured there (one-edit mutants of the step that change no pinned
+ * reading). A letter, digit, mark, opener, body, close, white space or code point a reader or matcher doc comment names belongs to
+ * its CODE part, describes the pinned texts it lists, or belongs to its NOT CLAIMED part, and no claim of the normalized view or of
+ * the C matchers names a class of such texts (a named residual names a family the view does not read, with its pinned quiet row). In
+ * outline, the steps with their lists: withoutMarkup (markupEnd, HTML_COMMENT, BOGUS_COMMENT, tagEnd and TAG_SPACE), CODE_SPAN with
+ * codeSpanText, INLINE_MARKS, NUMERIC_REFERENCE with codePoint and C1_REFERENCES, the named references (NAMED_REFERENCE_LIST), the
+ * backslash and NFKC steps (normalized()), INVISIBLE, SENTENCE_BREAK, and the C matchers SPECULATIVE_TERM (with SEP and JOINT) and
+ * SERVED_TERM. Refusal #2's seven surviving gate mutants each have their falsifier rows (GP01 an uppercase X, GP03 lowercase hex
+ * digits, GP46 an empty <!---> before a later comment, GP10-99 a reference to 0x99 before a word, GP48 a "<" opening no markup in
+ * the joint, GP33 white space before an "=" that opens an attribute name, GP32 a "/" inside an unquoted value), and refusal #3's two
+ * riding survivors theirs (G23-NM2 a named reference written in the wrong case, spec&SHY;ulative; G23-TE10b a double-quoted value
+ * after "=" and a space). Its joined rows are one word on the page and C1 and C2 read them, its split rows are split on the page and
+ * stay split, and its over-read rows are split on the page yet joined by the view (marked shows the form as written - it escapes the
+ * run, leaves a mark unpaired, an HTML block holds the markdown, or a code span shows it - or a br breaks the line, and the view
+ * still removes or decodes it). The known forms it does not read are named residuals, each with a pinned quiet row
+ * (R-LEGACY-REFERENCE, R-MULTILINE-CODE-SPAN, R-HIDDEN-CONTENT, R-ESCAPED-MARKUP, cut #2's R-EDGE-GLUE and cut #3's R-REDECODE,
+ * R-BLOCK-BREAK and R-PUNCTUATION-EMPHASIS); a form neither READ_FORMS nor a residual names is not claimed.
  * DEFERRED (ruling R-B175: refusal #3's four surviving families, carried by wb-w4si; NOT CLAIMED by this census, whose pins and
  * quiet rows hold none of them - the child carries their witnesses. wb-w4si landed at landing 833 as the readers census
  * test/workbench-rf-speculative-normalized-view-census.test.ts, which holds these families and refusal #4's U1 and U2 cells at its
@@ -104,12 +107,10 @@
  *    backticks; C1 judges all six quiet), and every allowlisted sentence is a unit the walk reads (an entry no sentence matches
  *    is stale), so the first docs sentence about speculative RF context is added there and C1 judges it. C1 reads
  *    co-occurrence, not polarity: a refusal sentence names its refusal ('refuses'), never a served word.
- *  M, the matchers rows A to C read: M1-M6 the spellings each must catch and pass (M5 the rendered text of inline marks and named
- *    references: the gate's P-D16 to P-D19 and M5's other mark and reference cases read, a mark or a reference a reader sees shown
- *    stays (M5's cases of it), and the decoded
- *    table's size and digest; M6 every READ_FORMS row read as the page shows it, wb-eu94); M7 the decoded value codePoint gives
- *    each DECODE_PROBES code and the C1_REFERENCES table's size and digest, held to the roster's parse5 reading (wb-eu94 cut #3);
- *    Q1-Q17 the pinned quiet rows.
+ *  M, the matchers rows A to C read: M1-M6 the spellings each must catch and pass (M5 its 18 mark and named-reference cases, each
+ *    read as its page reading says, the gate's P-D16 to P-D19 first, and NAMED_REFERENCE_LIST's size and digest; M6 every READ_FORMS
+ *    row read as its page reading says, wb-eu94); M7 the decoded value codePoint gives each DECODE_PROBES code and the C1_REFERENCES
+ *    table's size and digest, held to the roster's parse5 reading (wb-eu94 cut #3); Q1-Q17 the pinned quiet rows.
  *  PLANTED LEGS (wb-dkru F4): A2, C1 and C2 each run their own judge (srcHits, servedHits, speculativeHits) over the real units and
  *    then over the real units with a planted one after them, and hold the planted run's hits to exactly the plant's, so a judge
  *    forced quiet, a literal reader emptied or C2's allowlist read inverted reds although the real tree is clean. C2's stale-entry
@@ -203,12 +204,22 @@ const CITATIONS = [
 /** The dash look-alikes of "-": U+2010-U+2015 hyphens and dashes, U+2212 minus sign, U+FE58 small em dash, U+FE63 small
  * hyphen-minus and U+FF0D fullwidth hyphen-minus, built from their code points so none sits raw in this file. */
 const DASHES = [0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2212, 0xfe58, 0xfe63, 0xff0d].map(code => String.fromCodePoint(code)).join("");
-/** The separator between two words of a spelling: whitespace, "_", ".", "-" or a dash look-alike, a backslash, emphasis or code. */
+/** The separator between two words of a spelling (SPECULATIVE_TERM's scenario alternative). CODE, described and not claimed: a run of
+ * white space, "_", ".", a backslash, "*", "`", "~", "-" or a DASHES look-alike. PINNED READINGS (in CLAIM SCOPE's form):
+ * SPECULATIVE_TERM's. NOT CLAIMED by this census, though the code reads each as described: every other text. */
 const SEP = `[\\s_.\\\\*\`~${DASHES}-]*`;
-/** The joint inside "what-if": the same marks without whitespace, so the ordinary English "what if" is not read (R-PARAPHRASE). */
+/** The joint inside "what-if". CODE, described and not claimed: the marks SEP reads, without white space, so the ordinary English
+ * "what if" is not read (R-PARAPHRASE, Q2). PINNED READINGS (in CLAIM SCOPE's form): SPECULATIVE_TERM's. NOT CLAIMED by this census,
+ * though the code reads each as described: every other text. */
 const JOINT = `[_.\\\\*\`~${DASHES}-]*`;
-/** (C) a what-if or speculative term: speculative (speculatively, speculation), what-if joined or marked (whatif, WhatIf, what_if,
- * WHAT-IF), hypothetical, counterfactual, the rf --scenario flag, or a scenario overlay, result, render, view, branch or context. */
+/** (C) a what-if or speculative term. CODE, described and not claimed: in any case, "speculat" opening a word with any word
+ * characters after it, "what" and "if" with a JOINT between, "hypothetical" or "counterfactual" opening a word, the rf --scenario
+ * flag, or "scenario" and, after a SEP, overlay, result, render, rendering, view, branch or context (with a plural where the code
+ * allows one). PINNED READINGS (the whole claim for this matcher, SEP and JOINT, in CLAIM SCOPE's form): M1's 38 cases (32 read, 6
+ * not) and, through C1 and C2, every pinned text CLAIM SCOPE lists and the docs units C1 and C2 judge, each read as its pin says.
+ * NOT CLAIMED by this census, though the code reads each as described: every other spelling or text (the cutting seat's F6 sweep
+ * probe SW-ST-SPECULATION, a word opening "speculat" but not "speculativ" left unread, keeps every pin: Pi serves speculation
+ * context). */
 const SPECULATIVE_TERM = new RegExp(
   [
     "\\bspeculat\\w*",
@@ -220,30 +231,38 @@ const SPECULATIVE_TERM = new RegExp(
   ].join("|"),
   "i",
 );
-/** (C) a served term: a context that is served, admitted, available, supported, enabled, exposed, offered, provided or
- * delivered. Render and return are left out: a refusal sentence names what is rendered or returned. */
+/** (C) a served term. CODE, described and not claimed: serve, admit, expose, offer, provide and deliver in the inflections the
+ * pattern lists, available, supported and enabled, each a whole word in any case; render and return are left out, since a refusal
+ * sentence names what is rendered or returned. PINNED READINGS (the whole claim for this matcher, in CLAIM SCOPE's form): M2's 33
+ * cases (27 read, 6 not) and, through C1, every pinned text CLAIM SCOPE lists and the docs units C1 judges, each read as its pin
+ * says. NOT CLAIMED by this census, though the code reads each as described: every other spelling or text. */
 const SERVED_TERM = /\b(?:serv(?:e|es|ed|ing)|admit(?:s|ted|ting)?|available|supported|enabled|expos(?:e|es|ed|ing)|offer(?:s|ed|ing)?|provid(?:e|es|ed|ing)|deliver(?:s|ed|ing)?)\b/i;
-/** Sentence units: a sentence end before whitespace, a blank line, or a line opening a list item, heading, table row or quote. The
- * readings claimed are its pins' own (Q3's and Q14's cases, as written), and in break terms they hold these forms, each named
- * with its pin and each in the one spelling its pin holds: a sentence end after "." and after "!" before one space (Q3: rf
- * context. That; rf context! That) and after "?" before one space (Q14: x`?` spec&shy;ulative in a div block, which the view
- * reads as x? before a space); an empty blank line, two line feeds with nothing between (Q3); and one line feed before a line
- * that opens a "-", "*", "+", "1." or "1)" list item, a "#" heading, a "|" table row or a ">" quote, each marker with one space
- * after it, or before a line of two spaces, a "-" and one space (Q3). NOT CLAIMED by this census, though the code reads each as
- * a break: every other break form - among them a sentence end before a line ending, before another white space or before more
- * than one space (refusal #5's SBX01 and SBX02), a marker that another white space follows (SBX03 and SBX04), a "#", "|" or ">"
- * that no white space follows (SBX05, SBX06 and SBX07), a marker indented by anything but the two spaces of the "-" item
- * (SBX08), a line feed after a carriage return, a blank line that holds white space (refusal #4's SB05) and a list item numbered
- * with two digits or more (SB15). */
+/** Sentence units. CODE, described and not claimed: the code breaks after ".", "!" or "?" before white space, at a blank line (two
+ * line feeds with only white space between), and at a line feed before a line that opens, after any white space, with "-", "*" or
+ * "+" and a white space, with digits, "." or ")" and a white space, or with "#", "|" or ">". PINNED READINGS (the whole claim for
+ * this step, in CLAIM SCOPE's form): the pinned texts the code breaks - READ_FORMS 74, 79, 80, 127, 191, 192, 217, 219, 234 and 266;
+ * Q3 0-11 (R-SPLIT-SENTENCE's texts: rf context. That; rf context! That; a blank line; and a line feed before "- ", "* ", "+ ",
+ * "1. ", "1) ", "#", "|", ">" and "  - "); Q14 15 and 16; Q16 0 and 1 - each read as its pin says. NOT CLAIMED by this census,
+ * though the code reads each as described: every other text - every other break form and page context - among them refusal #5's
+ * SBX01 and SBX02 (a sentence end before a line ending, before another white space or before more than one space), SBX03 and SBX04
+ * (a marker another white space follows), SBX05, SBX06 and SBX07 (a "#", "|" or ">" that no white space follows) and SBX08 (a marker
+ * indented by anything but the two spaces of the "-" item), a line feed after a carriage return, a blank line that holds white space
+ * (refusal #4's SB05) and a list item numbered with two digits or more (SB15). */
 const SENTENCE_BREAK = /(?<=[.!?])\s+|\n\s*\n|\n(?=\s*(?:[-*+]\s|\d+[.)]\s|#|\||>))/;
-/** The named character references the normalized view decodes beside every numeric one, as name=code points (hex): every HTML5
- * name written with its ";" whose value, its format characters removed and NFKC applied, is empty or holds an ASCII letter, digit or
- * "_", white space, or a mark SEP, JOINT or SENTENCE_BREAK reads ("." "!" "?" "\" "*" "`" "~" "-" or a dash look-alike) - 309 of the
- * table's 2125 such names - then the 10 names of the markup characters & < > " ' and ":". Read off Python 3.12.15
- * html.entities.html5 by the cutting seat (the roster's basis; M5 pins the list's size and digest); the census does not re-read the
- * HTML5 table. No HTML5 name spells a SPECULATIVE_TERM or a SERVED_TERM, and every other name's value, so folded, holds only
- * characters none of these patterns reads, so the view reads any other name as written and still makes every hit its decoded value
- * would make. */
+/** The named character references normalized() decodes, as name=code points (hex). CODE, described and not claimed: after every
+ * NUMERIC_REFERENCE is decoded, normalized() replaces "&", a name (an ASCII letter, then ASCII letters or digits) and ";" by the
+ * value this list gives the name, and leaves a name the list does not hold as written. THE LIST (data; M5 pins its size and its
+ * digest): every HTML5 name written with its ";" whose value, its format characters removed and NFKC applied, is empty or holds an
+ * ASCII letter, digit or "_", white space, or a mark SEP, JOINT or SENTENCE_BREAK reads ("." "!" "?" "\" "*" "`" "~" "-" or a dash
+ * look-alike) - 309 of the table's 2125 such names - then the 10 names of the markup characters & < > " ' and ":", read off Python
+ * 3.12.15 html.entities.html5 by the cutting seat (the roster's basis); the census does not re-read the HTML5 table, and the cutting
+ * seat's measurement that no HTML5 name spells a SPECULATIVE_TERM or a SERVED_TERM and that every other name's value, so folded,
+ * holds only characters none of these patterns reads is its recorded provenance, not a pinned reading. PINNED READINGS (the whole
+ * claim for this step, in CLAIM SCOPE's form): the pinned texts in which the code reads a name - M5 2, 3, 7-12 and 15-17; READ_FORMS
+ * 131, 146, 181, 182, 225, 246, 247, 255 and 267-272; Q10 2; Q14 0, 1 and 4-16; Q15 0 and 3 - each read as its pin says. NOT CLAIMED
+ * by this census, though the code reads each as described: every other text, among them the decoding of each listed name no text
+ * above holds (the cutting seat's F6 sweep probe SW-NM-LEN, a name of more than 14 characters left as written, keeps every pin:
+ * spec&NegativeMediumSpace;ulative). */
 const NAMED_REFERENCE_LIST: readonly string[] = [
   "AMP=0026", "Afr=1D504", "Aopf=1D538", "ApplyFunction=2061", "Ascr=1D49C", "Bernoullis=212C", "Bfr=1D505", "Bopf=1D539", "Breve=02D8", "Bscr=212C",
   "CapitalDifferentialD=2145", "Cayleys=212D", "Cedilla=00B8", "Cfr=212D", "Copf=2102", "Cscr=1D49E", "DD=2145", "Dfr=1D507", "DiacriticalAcute=00B4",
@@ -498,69 +517,59 @@ function failuresOf(roster: rfFixture.RfResultRoster, result: JsonObject): strin
   return [...rfFixture.diffAgainstRoster(roster, result).failures];
 }
 
-/** An HTML comment as a browser closes it, read at its "<!--" (markupEnd): through the first "-->" or "--!>" after it, across
- * line endings, or the empty "<!-->" and "<!--->"; READ_FORMS reads each empty form before a later comment, where BOGUS_COMMENT,
- * which reads a "<!--" no close follows to its first ">", could not read it in its place. The readings claimed are its READ_FORMS
- * rows' own, as written, and in close and body terms they hold these forms, each named with its row and none combined with
- * another: a comment closed by its first "-->" before a later close (spec<!-- a -->ulative before a later comment, in text;
- * spec<!---->ulative before a later "-->", in a div block); a comment closed by the one "-->" it holds and holding ">" on one
- * line (spec<!-- a > b -->ulative, in text), or holding "->" or "-- >" on one line, a ">" after a line feed, or a tag (each in a
- * div block); a comment closed by the one "--!>" it holds and holding ">" on one line (in a div block); and the two empty forms,
- * "<!-->" before a later comment (in text) and "<!--->" before a later comment (in text and in a div block) and before a "-->"
- * the page shows (in text). NOT CLAIMED by this census, though the code reads each as its first sentence says: every other close
- * or body - among them a comment closed by "--!>" across a line ending (refusal #5's F3 cells HG-BANG-LF and HCX03) or holding
- * "->", "-- >" or a tag; which close ends a comment holding ">", "->", "-- >", a line ending or a tag, or one closed by "--!>",
- * where a later close follows it; and a carriage return inside a comment, alone or before a line feed (refusal #4's HC08). */
+/** An HTML comment, at its "<!--" (markupEnd tries it first). CODE, described and not claimed: the code reads "<!--" through the
+ * first "-->" or "--!>" after it, across line endings, or the empty "<!-->" and "<!--->"; where no close follows, it reads no
+ * comment, and BOGUS_COMMENT then reads the "<!--" to its first ">". PINNED READINGS (the whole claim for this step, in CLAIM
+ * SCOPE's form): the pinned texts in which the code reads a comment - READ_FORMS 25-28, 63, 74, 79, 80, 127, 130, 136, 138, 167,
+ * 191-193, 219, 220, 233, 234 and 251; Q14 7 - each read as its pin says (READ_FORMS 25 is spec<!-- a > b -->ulative in text,
+ * READ_FORMS 251 spec<!-- <b> -->ulative in a div block). NOT CLAIMED by this census, though the code reads each as described: every
+ * other text - every other body, close or line ending a comment holds, and every other page context - among them refusal #6's U2
+ * cell GP13-S-HCGT (a ">" after a digit in a one-line body: spec<!-- 1>2 -->ulative), the cutting seat's F6 sweep probe SW-HC-TAG (a
+ * comment holding the tag <i>, in a div block), refusal #5's F3 cells HG-BANG-LF and HCX03 (a "--!>" close across a line ending) and
+ * refusal #4's HC08 (a carriage return inside a comment). */
 const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?--!?>)/y;
-/** A bogus comment as an HTML5 tokenizer reads one, at its "<" (markupEnd, after HTML_COMMENT): the code reads a "<!" or a "<?"
- * before any character, and a "</" before anything but an ASCII letter of either case, through its first ">", across line
- * endings; with no ">" after it, it is no bogus comment and stays as written. The readings claimed are its pinned rows' own (the
- * READ_FORMS rows and Q13's and Q14's cases, as written), and in opener and ">" terms they hold these forms, each named with its
- * pin. Read as a bogus comment: a "<!" before an ASCII small letter (READ_FORMS: spec<!x y>ulative, spec<!x>ulative in text and
- * in a div block, spec<!x <!-- >ulative before a later comment; Q13: x<!spec<b></b>ulative; Q14: x<!x>spec&shy;ulative) or before
- * an ASCII capital (READ_FORMS: spec<!DOCTYPE html>ulative); a CDATA section (READ_FORMS: spec<![CDATA[]]>ulative); a "<!-"
- * before an ASCII small letter (READ_FORMS: spec<!-x>ulative); a "<!--" no comment close follows (READ_FORMS:
- * spec<!-- a >ulative; Q13: x<!--spec<b></b>ulative); a "<?" before an ASCII small letter (READ_FORMS: spec<?x?>ulative,
- * spec<?x>ulative in text and in a div block and in both after a "<" that opens no markup, spec<?x <!-- ?>ulative before a later
- * comment, spec<?x <b>ulative; Q13: x<?spec<b></b>ulative), before an ASCII capital (READ_FORMS: spec<?X?>ulative), before a
- * space (READ_FORMS: spec<? x?>ulative) or before a line feed (READ_FORMS: spec<?, a line feed, then ?>ulative in a div block);
- * and a "</" before an ASCII digit (READ_FORMS: spec</1>ulative in text and in a div block; Q14: x</1>spec&shy;ulative), before a
- * space (READ_FORMS: spec</ x>ulative) or before ">" (READ_FORMS: spec</>ulative in text and in a div block). Read through its
- * first ">" where a later ">" follows it on that first ">"'s line, six of those forms only: the "<!" before an ASCII small letter
- * (READ_FORMS: spec<!x>ulative in a div block, spec<!x <!-- >ulative before a later comment), the CDATA section (READ_FORMS:
- * spec<![CDATA[a>b]]>ulative, where "b]]>" stays shown), the "<?" before an ASCII small letter (READ_FORMS: spec<?x>ulative in a
- * div block, there also after a "<" that opens no markup, spec<?a>b?>ulative, where "b?>" stays shown, spec<?x <!-- ?>ulative
- * before a later comment), the "<?" before a line feed, across that line feed (READ_FORMS: spec<?, a line feed, then ?>ulative in
- * a div block), the "</" before an ASCII digit (READ_FORMS: spec</1>ulative in a div block) and "</>", which goes whole
- * (READ_FORMS: spec</>ulative in a div block). Left as written with no ">" after it, one form only: a "<!" before an ASCII small
- * letter (READ_FORMS: the x<!what&#45;if view). NOT CLAIMED by this census, though the same code reads each as its first sentence
- * says: every other opener, ">" or line ending - among them which ">" ends a "<!" before an ASCII capital, a "<!-", a "<!--" no
- * comment close follows, a "<?" before an ASCII capital or a space, or a "</" before a space where a later ">" follows it
- * (refusal #5's U2 cells BG-DC, BG-D1, BG-PC, BG-PW and BG-EW, and F6's BG-D2), and which ">" ends any of the six where the later
- * ">" sits on a later line; how any opener but the "<!" before an ASCII small letter reads with no ">" after it (U1's BN-DC,
- * BN-CD, BN-D1, BN-D2, BN-PS, BN-PC, BN-PW, BN-ED, BN-EW, BCX08 and BCX10); a "<!-" before anything but an ASCII small letter or
- * a "-"; a "<!" before a digit, white space, ">" or any other character no form above names; a "<?" before a digit, ASCII
- * punctuation, or any white space or control character but a space and a line feed; a "</" before ASCII punctuation other than
- * ">", before another white space or control, or before a code point outside ASCII (a letter outside ASCII is the deferred family
- * D2); and a bogus comment across any other line ending: a carriage return, alone or before a line feed (refusal #4's BC19 and
- * BC29), a line feed after a "<!" or a "</" opener (BCX05 and BCX06), or one after a character that follows a "<?". */
+/** A bogus comment, at its "<" (markupEnd tries it after HTML_COMMENT). CODE, described and not claimed: the code reads a "<!" or a
+ * "<?" before any character, and a "</" before anything but an ASCII letter of either case, through its first ">", across line
+ * endings; with no ">" after it, it reads no bogus comment there, and the "<" stays as written. PINNED READINGS (the whole claim for
+ * this step, in CLAIM SCOPE's form): the pinned texts in which the code reads a bogus comment - READ_FORMS 8, 9, 23, 24, 29-32, 50,
+ * 51, 61, 62, 67, 79, 80, 137, 152-156, 165, 217, 221, 265 and 266; Q13 3-5; Q14 5 and 6; Q16 0 and 1 - and the one pinned text in
+ * which a "<!" with no ">" after it stays as written, READ_FORMS 218 (the x<!what&#45;if view), each read as its pin says. NOT
+ * CLAIMED by this census, though the code reads each as described: every other text - every other opener, character after an opener,
+ * ">" or line ending, and every other page context - among them refusal #6's U1 cells GP13-B01 to GP13-B10 (a "<!", "<!-", "<?" or
+ * "</" before a letter or digit no text above holds there, read as a bogus comment, through a later ">" or with no ">" after it:
+ * spec<!a b>ulative, spec<!QX y>ulative, spec<!-a>ulative, spec<?b?>ulative, spec<?Q?>ulative, spec</0>ulative,
+ * the x<!a what&#45;if view), the cutting seat's F6 sweep probe SW-BC-SECOND (a "<!x" before an a: spec<!xa>ulative in a div block),
+ * refusal #5's U1 cells BN-DC, BN-CD, BN-D1, BN-D2, BN-PS, BN-PC, BN-PW, BN-ED, BN-EW, BCX08 and BCX10, its U2 cells BG-DC, BG-D1,
+ * BG-PC, BG-PW and BG-EW and its F6 cell BG-D2, refusal #4's BC19 and BC29 (a carriage return inside a bogus comment), BCX05 and
+ * BCX06 (a line feed after a "<!" or a "</" opener), and the deferred family D2 (a "</" before a letter outside ASCII). */
 const BOGUS_COMMENT = /<(?:[!?]|\/(?![A-Za-z]))[^>]*>/y;
-/** The white space an HTML5 tokenizer reads between a tag's parts: tab, line feed, form feed, carriage return and space, and no
- * other code point (a vertical tab, a no-break space, a line separator or a next-line control is part of the name it sits in). */
+/** The white space tagEnd reads between a tag's parts. CODE, described and not claimed: tab, line feed, form feed, carriage return
+ * and space, the five the HTML Standard's tag states read as white space; tagEnd reads any other code point as part of the name or
+ * value it sits in. PINNED READINGS (in CLAIM SCOPE's form): tagEnd's, whose comment lists the pinned texts (READ_FORMS 230 among
+ * them: a tag whose name holds twenty-two other white-space and format code points, U+3000 included). NOT CLAIMED by this census,
+ * though the code reads each as described: every other text, among them every code point no listed text holds inside a tag (the
+ * cutting seat's F6 sweep probe SW-TS-CTRL, U+0001 read as tag white space, keeps every pin). */
 const TAG_SPACE: ReadonlySet<string> = new Set(["\t", "\n", "\f", "\r", " "]);
 /** A tag's tokenizer states (the HTML Standard's tag name, attribute and self-closing states). */
 type TagState = "tagName" | "beforeName" | "attrName" | "afterName" | "beforeValue" | "doubleQuoted" | "singleQuoted" | "unquoted" | "afterQuoted" | "selfClosing";
-/** The index just past the ">" that closes the tag opening at `start` ("<" or "</", then a letter), read in the HTML Standard's
- * tag states as an HTML5 tokenizer reads them, end tags as start tags: a ">" closes the tag in every state but a quoted value's,
- * a ">" right after "=" included; TAG_SPACE ends the tag name, an attribute name or an unquoted value, and is skipped before a
- * name and on either side of "="; a "/" outside a value opens the self-closing state, which reads white space, a "/" or any other
- * character as it reads them before a name; an "=" after a name opens its value, while an "=" where a name starts is the name's
- * first character (<a ="x>); a '"' or "'" as a value's first character starts a quoted value only the same quote closes, so a ">"
- * inside it does not close the tag; any other first character starts an unquoted value, which TAG_SPACE ends and in which "/", "=" and
- * quotes are ordinary; after a quoted value any character but TAG_SPACE and "/" starts the next name (<a="1"b>, <a="1"="x>); a
- * quote anywhere else is an ordinary character of the tag. -1 when the text ends first (a browser then shows nothing of the rest).
- * The attribute-name and after-name states make the same move on every character, as do the before-name and self-closing states
- * and the after-value and before-name states, so no reading turns on which state of such a pair a tag is in. */
+/** The index just past the ">" that closes the tag opening at `start` ("<" or "</", then a letter). CODE, described and not claimed:
+ * the code reads the tag in states modelled on the HTML Standard's tag states, end tags as start tags: a ">" closes the tag in every
+ * state but a quoted value's, a ">" right after "=" included; TAG_SPACE ends the tag name, an attribute name or an unquoted value,
+ * and is skipped before a name and on either side of "="; a "/" outside a value opens the self-closing state, which reads white
+ * space, a "/" or any other character as it reads them before a name; an "=" after a name opens its value, while an "=" where a name
+ * starts is the name's first character (<a ="x>); a '"' or "'" as a value's first character starts a quoted value the code ends at
+ * the next same quote, so a ">" inside it does not close the tag; any other first character starts an unquoted value, which
+ * TAG_SPACE ends and in which "/", "=" and quotes are ordinary; after a quoted value any character but TAG_SPACE and "/" starts the
+ * next name (<a="1"b>, <a="1"="x>); a quote anywhere else is an ordinary character of the tag. -1 when the text ends first (a
+ * browser then shows nothing of the rest). The attribute-name and after-name states make the same move on every character, as do the
+ * before-name and self-closing states and the after-value and before-name states, so no reading turns on which state of such a pair
+ * a tag is in. PINNED READINGS (the whole claim for tagEnd, TAG_SPACE and markupEnd's tag branch, in CLAIM SCOPE's form): the pinned
+ * texts in which the code reads a tag - READ_FORMS 2-7, 15-22, 28-32, 36, 47, 48, 64, 68-78, 81-126, 128, 132, 133, 135, 139-144,
+ * 148-150, 158-166, 170, 172-176, 186, 189, 192, 194, 197, 199-202, 204-217, 219-221, 230, 232-234, 237, 248, 250, 251, 256 and 273;
+ * Q10 0; Q12 0 and 1; Q13 0-5; Q14 4, 8-13 and 15; Q15 2; Q16 0 and 1 - and those in which the text ends inside a tag, READ_FORMS 49
+ * and 138, each read as its pin says. NOT CLAIMED by this census, though the code reads each as described: every other text - every
+ * other tag name, attribute, value, quote, white space or close, and every other page context - among them the cutting seat's F6
+ * sweep probe SW-TE-QUOTE (a double quote after a backslash ending no value: spec<span title="a\">ul</span>ative in a div block). */
 function tagEnd(text: string, start: number): number {
   let state: TagState = "tagName";
   for (let at = start + (text[start + 1] === "/" ? 2 : 1); at < text.length; at += 1) {
@@ -611,14 +620,16 @@ function tagEnd(text: string, start: number): number {
   }
   return -1;
 }
-/** The index just past the markup opening at the "<" at `start`, read as an HTML5 tokenizer reads it from its data state: an
- * HTML_COMMENT, else a BOGUS_COMMENT, else a tag ("<" or "</" before an ASCII letter of either case) through the ">" tagEnd
- * finds; -1 when the "<" opens none of them or the text ends inside the tag. The readings claimed, each held by a pin (READ_FORMS,
- * its rows of the characters after a "<" one to a word among them; Q13, Q14): a comment read before a bogus comment; a start tag
- * and an end tag each opened by an ASCII capital and by an ASCII small letter; and no markup opened by a "<" before an ASCII
- * digit, a tab, a line feed, a form feed, a carriage return, a space or an ASCII punctuation character other than "!", "/" and
- * "?". NOT CLAIMED by this census, though the same code reads each as opening no tag: a "<" before another ASCII control or
- * before a code point outside ASCII (a letter outside ASCII, a fullwidth one included, is the deferred family D3). */
+/** The index just past the markup opening at the "<" at `start`. CODE, described and not claimed: an HTML_COMMENT, else a
+ * BOGUS_COMMENT, else a tag ("<" or "</" before an ASCII letter of either case) through the ">" tagEnd finds; -1 when the "<" opens
+ * none of them or the text ends inside the tag. PINNED READINGS (the whole claim for this step, in CLAIM SCOPE's form): those of
+ * HTML_COMMENT, BOGUS_COMMENT and tagEnd, whose comments list their pinned texts, and the pinned texts in which a "<" opens no
+ * markup and stays as written - READ_FORMS 136, 137, 165, 167, 196-198, 218, 232, 248 and 273 (232 and 273 hold characters after a
+ * "<" one to a word) - each read as its pin says. NOT CLAIMED by this census, though the code reads each as described: every other
+ * text - every other character after a "<", tag name or page context - among them refusal #6's U3 cell GP13-S-TAGCAP (a tag opened
+ * by a capital no listed text opens a tag with: spec<Z title="a>b">ul</Z>ative in a div block), the cutting seat's F6 sweep probes
+ * SW-ME-SMALL (a tag opened by a z) and SW-ME-NOMARKUP (a "<#" before a character other than x read as a tag), and the deferred
+ * family D3 (a "<" before a letter outside ASCII). */
 function markupEnd(text: string, start: number): number {
   for (const markup of [HTML_COMMENT, BOGUS_COMMENT]) {
     markup.lastIndex = start;
@@ -627,12 +638,12 @@ function markupEnd(text: string, start: number): number {
   }
   return /^<\/?[A-Za-z]/.test(text.slice(start, start + 3)) ? tagEnd(text, start) : -1;
 }
-/** The text with its comments, bogus comments and tags removed in one pass, as an HTML5 tokenizer reads them from its data state:
- * markupEnd reads each "<" the pass reaches, and the pass resumes just past the markup it removes, so an opener inside a tag's
- * attribute value or inside a comment ("<!", "<!--", "<?" or "</": spec<span title="<!x">ul</span>ative) is never read as
- * markup of its own. A "<" that opens no markup (what<-if, scenario<.view: a browser shows it) and a tag the text ends inside (a
- * quoted value that never closes: a browser shows nothing of the rest) are kept as written, each "<" in place, and the pass goes
- * on from the next "<". */
+/** The text with its comments, bogus comments and tags removed in one pass. CODE, described and not claimed: markupEnd reads each "<"
+ * the pass reaches, and the pass resumes just past the markup it removes, so an opener inside a tag's attribute value or inside a
+ * comment ("<!", "<!--", "<?" or "</": spec<span title="<!x">ul</span>ative) is not read as markup of its own; a "<" that opens no
+ * markup and a tag the text ends inside are kept as written, each "<" in place, and the pass goes on from the next "<". PINNED
+ * READINGS (in CLAIM SCOPE's form): those of markupEnd, HTML_COMMENT, BOGUS_COMMENT and tagEnd, whose comments list their pinned
+ * texts. NOT CLAIMED by this census, though the code reads each as described: every other text. */
 function withoutMarkup(text: string): string {
   let kept = "";
   let from = 0;
@@ -645,97 +656,110 @@ function withoutMarkup(text: string): string {
   }
   return kept + text.slice(from);
 }
-/** A code span on one line (its content holds no line feed; a carriage return, which marked reads as a line ending, is content
- * here: R-MULTILINE-CODE-SPAN), as marked 18.0.11's codespan rule reads one there: a backtick string that no backtick and no odd run
- * of backslashes precedes (an even run is escaped backslashes, so a code span still opens after it), a content of one character
- * or more that neither opens nor closes with a backtick, then the first backtick string of the same length. The lookahead after
- * the opening string and the content's first character both keep a backtick out of the content's start, so no reading turns on
- * either one alone. */
+/** A code span on one line (its content holds no line feed; a carriage return is content here: R-MULTILINE-CODE-SPAN). CODE,
+ * described and not claimed, modelled on marked 18.0.11's codespan rule: a backtick string that no backtick and no odd run of
+ * backslashes precedes (an even run is escaped backslashes, so a code span still opens after it), a content of one character or more
+ * that neither opens nor closes with a backtick, then the first backtick string of the same length; the lookahead after the opening
+ * string and the content's first character both keep a backtick out of the content's start, so no reading turns on either one alone.
+ * PINNED READINGS (the whole claim for CODE_SPAN and codeSpanText, in CLAIM SCOPE's form): the pinned texts in which the code reads
+ * a code span - M5 6; READ_FORMS 0, 1, 10-14, 40-45, 65, 66, 134, 144, 148, 149, 151, 180, 184, 222, 223, 235, 244, 249 and 253; Q11
+ * 2 and 3; Q14 8 and 15 - each read as its pin says. NOT CLAIMED by this census, though the code reads each as described: every
+ * other text, among them every other backtick string, content or page context (the cutting seat's F6 sweep probe SW-CS-RUN, a string
+ * of four backticks opening no code span, keeps every pin: spec```` ul ````ative). */
 const CODE_SPAN = /(?<!`)(?<!(?<!\\)\\(?:\\\\)*)(`+)(?!`)([^`\n]|[^`\n][^\n]*?[^`\n])\1(?!`)/g;
-/** A code span's rendered text, as marked renders it: its content, less one space at each end when the content both opens and
- * closes with a space and is not all spaces (CommonMark's padding rule); a tab or any other white space is never stripped. */
+/** A code span's rendered text. CODE, described and not claimed, modelled on CommonMark's padding rule as marked renders it: its
+ * content, less one space at each end when the content both opens and closes with a space and is not all spaces; a tab or any other
+ * white space is not stripped. PINNED READINGS (in CLAIM SCOPE's form): CODE_SPAN's, whose comment lists the pinned texts. NOT
+ * CLAIMED by this census, though the code reads each as described: every other content (the cutting seat's F6 sweep probe SW-CT-PAD,
+ * a padded content of eleven characters or more left unstripped, keeps every pin: s` peculativ `e). */
 function codeSpanText(content: string): string {
   return content.startsWith(" ") && content.endsWith(" ") && /[^ ]/.test(content) ? content.slice(1, -1) : content;
 }
-/** An inline mark beside a letter or digit, read after CODE_SPAN: the code removes a run of "*", "~" or "`" that a code point of
- * Unicode L or N precedes or follows. marked 18.0.11 renders such a run inside a word as emphasis or strikethrough (spec*ul*ative
- * shows as one word), so the normalized view removes it before any reference is decoded (a reference is never markup); an unpaired
- * run there, or a backtick a code span shows (spec`` `ul` ``ative), is removed too: inside a word an over-read that joins, at a
- * word's edge a glue that can cost the word its boundary, and at a line start a removal that can expose a list item's number
- * (R-EDGE-GLUE, Q14). "_" stays, as marked shows an intraword "_" as written (M5). The readings claimed are its pinned rows' own
- * (M5's cases, the READ_FORMS rows and Q14's cases as written), and in mark, run and neighbour terms they hold these forms, each
- * named with its pin: inside a word between ASCII small letters, a run of one, two or three "*" and a run of two "~" (M5:
- * spec*ul*ative, spec**ul**ative, spec***ul***ative, spec~~ul~~ative) and a lone "`" a code span shows (READ_FORMS: spec`` `ul`
- * ``ative, an over-read); a lone "*" inside a word between fullwidth small letters (READ_FORMS); a lone "*" with a letter or
- * digit on one side and none on the other, before or after an ASCII small letter (READ_FORMS: spec&shy;*ulative and
- * spec*&shy;ulative; M5: spec&ZeroWidthSpace;*ul*ative), an ASCII capital (READ_FORMS: SPEC&shy;*ULATIVE and SPECUL*&shy;ATIVE)
- * or a fullwidth small letter (READ_FORMS), and before or after an ASCII digit (Q14: x, a line feed, then *1) spec&shy;ulative;
- * and 1*&shy;spec&shy;ulative); and, after an ASCII small letter with no letter or digit after it, a run of three "*" and the run
- * "*~" (READ_FORMS: spec***&shy;ulative and spec*~&shy;ulative). NOT CLAIMED by this census, though the same code removes each:
- * every other mark, run or neighbour - among them a run of "~" or of "`" with a letter or digit on one side only (refusal #4's
- * IM05, IM06, IM09, IM37, IM41, IM45, IM46 and IM47; the "~" of the claimed "*~" run excepted), a run of two marks or more with a
- * letter or digit after it and none before (IM33, IM35 and IM37), a run of two "*" with a letter or digit on one side only, a run
- * inside a word that borders an ASCII capital or an ASCII digit, a run beside a fullwidth capital or digit, or beside any other
- * letter or digit outside ASCII (a modifier letter, Lm, or a letter number, Nl, among them: the deferred family D1), a run of four
- * marks or more, and a run of all three kinds. */
+/** An inline mark beside a letter or digit, read after CODE_SPAN. CODE, described and not claimed: the code removes a run of "*", "~"
+ * or "`" that a code point of Unicode L or N precedes or follows. marked 18.0.11 renders such a run inside a word as emphasis or
+ * strikethrough (spec*ul*ative shows as one word), so the normalized view removes it before any reference is decoded (a reference is
+ * never markup); an unpaired run there, or a backtick a code span shows (spec`` `ul` ``ative), is removed too: inside a word an
+ * over-read that joins, at a word's edge a glue that can cost the word its boundary, and at a line start a removal that can expose a
+ * list item's number (R-EDGE-GLUE, Q14); "_" is no mark of the code (M5: spec_ul_ative). PINNED READINGS (the whole claim for this
+ * step, in CLAIM SCOPE's form): the pinned texts in which the code removes a run - M5 0, 1, 4, 5, 7 and 14; READ_FORMS 13, 46, 65,
+ * 134, 150, 151, 179, 181, 182, 184, 223, 224, 232, 249 and 267-273; Q11 0-2; Q14 0-3, 13 and 16 - each read as its pin says. NOT
+ * CLAIMED by this census, though the code removes each: every other run - every other mark, run length, neighbour or page context -
+ * among them the cutting seat's F6 sweep probe SW-IM-BETWEEN (a run after an e kept: spe*c*ulative), refusal #4's IM05, IM06, IM09,
+ * IM33, IM35, IM37, IM41, IM45, IM46 and IM47, and the deferred family D1 (a run beside a letter or digit outside ASCII other than a
+ * fullwidth small letter). */
 const INLINE_MARKS = /[*~`]+(?=[\p{L}\p{N}])|(?<=[\p{L}\p{N}])[*~`]+/gu;
-/** A numeric character reference with or without its ";", as an HTML5 parser reads one: "&#" and one or more ASCII digits
- * (decimal), or "&#x" or "&#X" and one or more ASCII hex digits of either case (hex), every digit consumed, then at most one ";".
- * An HTML5 parser decodes one written without its ";" too (spe&#99ulative inside an HTML block). Each decimal digit and each hex
- * digit of either case is held by a READ_FORMS row whose reference reads it. */
+/** A numeric character reference with or without its ";". CODE, described and not claimed, modelled on an HTML5 parser's numeric
+ * character reference states: "&#" and one or more ASCII digits (decimal), or "&#x" or "&#X" and one or more ASCII hex digits of
+ * either case (hex), every digit consumed, then at most one ";" (an HTML5 parser decodes one written without its ";" too:
+ * spe&#99ulative inside an HTML block). PINNED READINGS (the whole claim for this step, codePoint and C1_REFERENCES, in CLAIM
+ * SCOPE's form): M7's decoded value at each DECODE_PROBES code, M7's C1_REFERENCES size and digest, and the pinned texts in which
+ * the code decodes a reference - READ_FORMS 2-6, 33-37, 52-54, 57-60, 66, 129, 145, 147, 157, 185-190, 194, 195, 203, 204, 218,
+ * 226-228, 236, 237, 239, 245 and 257-264; Q14 2, 3 and 14; Q15 0-3; Q17 0 and 1 - each read as its pin says. NOT CLAIMED by this
+ * census, though the code reads each as described: every other text, among them every other reference, digit count or page context
+ * (the cutting seat's F6 sweep probe SW-NR-LEN, a decimal reference read to eight digits only, keeps every pin:
+ * spe&#000000099;ulative in a div block). */
 const NUMERIC_REFERENCE = /&#(?:([0-9]+)|[xX]([0-9A-Fa-f]+));?/g;
-/** The Windows-1252 code points an HTML5 parser puts in place of a numeric reference to 0x80-0x9F (the HTML Standard's numeric
- * character reference end state), so what&#150;if shows an en dash: 27 entries; the five codes it leaves as they are (0x81, 0x8D,
- * 0x8F, 0x90, 0x9D) are not listed. M7 holds the decoded value of every code 0x80-0x9F, and the table's size and digest, to the
- * roster. A C1 or C2 verdict turns on five of the entries: 0x85 (an ellipsis, NFKC "..."), 0x96 and 0x97 (an en and an em dash,
- * JOINT marks) and 0x99 (a trade mark sign, NFKC "TM", letters that glue to a word beside it) each have READ_FORMS rows, and 0x98
- * (a small tilde, which NFKC opens with a space, so after a sentence's period it starts a new sentence unit) changes a C1 verdict
- * alone, which no READ_FORMS row can hold, so M7 holds it. At the positions the cutting seat measured (both edges of every
- * SPECULATIVE_TERM alternative, inside a word, the joint, a separator, before and after a sentence end; decimal and hex, with,
- * without and with a doubled ";"; in text and in p and div blocks) every other entry decodes to a code point each matcher reads
- * as it reads the C1 control in its place. */
+/** The Windows-1252 code points codePoint puts in place of a numeric reference to 0x80-0x9F, as the HTML Standard's numeric character
+ * reference end state lists them (so what&#150;if shows an en dash): 27 entries; the five codes it leaves as they are (0x81, 0x8D,
+ * 0x8F, 0x90, 0x9D) are not listed. PINNED READINGS (in CLAIM SCOPE's form): M7 holds the decoded value of every code 0x80-0x9F, and
+ * the table's size and digest, to the roster, and READ_FORMS 33-36, 57, 194 and 195 are the pinned texts whose references decode
+ * through it, each read as its pin says. RECORDED MEASUREMENT (the cutting seat's, not a pinned reading): at the positions it
+ * measured (both edges of every SPECULATIVE_TERM alternative, inside a word, the joint, a separator, before and after a sentence
+ * end; decimal and hex, with, without and with a doubled ";"; in text and in p and div blocks) a C1 or C2 verdict turned on five of
+ * the entries - 0x85 (an ellipsis, NFKC "..."), 0x96 and 0x97 (an en and an em dash, JOINT marks) and 0x99 (a trade mark sign, NFKC
+ * "TM", letters that glue to a word beside it), each with its READ_FORMS rows, and 0x98 (a small tilde, which NFKC opens with a
+ * space, so after a sentence's period it starts a new sentence unit), which changed a C1 verdict alone (M6 holds c1 and c2 equal, so
+ * M7 holds it) - and every other entry decoded to a code point each matcher read as it read the C1 control in its place. NOT CLAIMED
+ * by this census: every other text. */
 const C1_REFERENCES: ReadonlyMap<number, number> = new Map([
   [0x80, 0x20ac], [0x82, 0x201a], [0x83, 0x0192], [0x84, 0x201e], [0x85, 0x2026], [0x86, 0x2020], [0x87, 0x2021], [0x88, 0x02c6],
   [0x89, 0x2030], [0x8a, 0x0160], [0x8b, 0x2039], [0x8c, 0x0152], [0x8e, 0x017d], [0x91, 0x2018], [0x92, 0x2019], [0x93, 0x201c],
   [0x94, 0x201d], [0x95, 0x2022], [0x96, 0x2013], [0x97, 0x2014], [0x98, 0x02dc], [0x99, 0x2122], [0x9a, 0x0161], [0x9b, 0x203a],
   [0x9c, 0x0153], [0x9e, 0x017e], [0x9f, 0x0178],
 ]);
-/** The decoded value of a numeric character reference as an HTML5 parser decodes it: U+FFFD for 0, a surrogate (0xD800-0xDFFF)
- * or a value past 0x10FFFF, the C1_REFERENCES code point for one it lists, otherwise the code point itself; M7 holds its value
- * at each DECODE_PROBES code to the roster's parse5 reading. A value past Number.MAX_SAFE_INTEGER is also past 0x10FFFF, so no
- * reading turns on the safe-integer test. */
+/** The decoded value of a numeric character reference. CODE, described and not claimed, modelled on an HTML5 parser's decoding:
+ * U+FFFD for 0, a surrogate (0xD800-0xDFFF) or a value past 0x10FFFF, the C1_REFERENCES code point for one it lists, otherwise the
+ * code point itself; a value past Number.MAX_SAFE_INTEGER is also past 0x10FFFF, so no reading turns on the safe-integer test.
+ * PINNED READINGS (in CLAIM SCOPE's form): M7's value at each DECODE_PROBES code, held to the roster's parse5 reading, and
+ * NUMERIC_REFERENCE's, whose comment lists the pinned texts (READ_FORMS 52-54, 129 and 227 decode to U+FFFD). NOT CLAIMED by this
+ * census, though the code reads each as described: the value at every other code. */
 function codePoint(code: number): string {
   if (!Number.isSafeInteger(code) || code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return String.fromCodePoint(0xfffd);
   return String.fromCodePoint(C1_REFERENCES.get(code) ?? code);
 }
-/** The code points a page shows as nothing: the code removes the format characters (Unicode Cf) and the other default-ignorable
- * code points. The readings claimed, each held by a pin (M5, READ_FORMS): the soft hyphen, the zero-width space, the zero-width
- * joiner, the word joiner, the interlinear annotation anchor (a format character that is not default-ignorable), the combining
- * grapheme joiner, and the variation selectors U+FE0F and U+E0100 (a default-ignorable code point that is not a format
- * character). NOT CLAIMED by this census, though the same code removes each: every other member, the zero-width non-joiner, the
- * bidirectional marks, embeddings, overrides and isolates, the byte order mark, the invisible operators, the Mongolian vowel
- * separator, the Hangul fillers and the tag characters among them. */
+/** The code points a page shows as nothing. CODE, described and not claimed: the code removes the format characters (Unicode Cf) and
+ * the other default-ignorable code points. PINNED READINGS (the whole claim for this step, in CLAIM SCOPE's form): the pinned texts
+ * in which the code removes one - M5 2, 3, 7 and 8; READ_FORMS 4, 5, 38, 39, 146, 147, 157, 171, 178, 181-183, 185, 188, 189, 245,
+ * 246, 252, 254 and 267-272; Q14 0, 1 and 4-16; Q15 0 and 3; Q17 0 and 1 - each read as its pin says; the code points it removes
+ * there are the soft hyphen, the zero-width space, the zero-width joiner, the word joiner, the interlinear annotation anchor, the
+ * combining grapheme joiner and the variation selectors U+FE0F and U+E0100. NOT CLAIMED by this census, though the code removes
+ * each: every other text - every other code point, position or page context - among them the cutting seat's F6 sweep probe SW-IV-CTX
+ * (a soft hyphen before a t kept: specula&shy;tive), the zero-width non-joiner, the bidirectional marks, embeddings, overrides and
+ * isolates, the byte order mark, the invisible operators, the Mongolian vowel separator, the Hangul fillers and the tag characters.
+ */
 const INVISIBLE = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu;
-/** The normalized view: the text marked 18.0.11 and an HTML5 parser show of a page, for exactly the forms M5 and READ_FORMS (M6)
- * read, built in this order: the HTML a browser drops removed in one pass (withoutMarkup: comments, bogus comments and tags);
- * each CODE_SPAN replaced by its codeSpanText; the INLINE_MARKS left removed; every NUMERIC_REFERENCE decoded by codePoint, then
- * the NAMED_REFERENCES (a name the list does not hold stays as written: spec&SHY;ulative); a backslash dropped before an ASCII
- * punctuation character (CommonMark's backslash escapes), the step's one claimed reading being READ_FORMS' escaped scenario flag
- * (rf context render \-\-scenario, the hyphens); INVISIBLE code points removed; NFKC applied. NOT CLAIMED for the backslash
- * step: at a line start SENTENCE_BREAK reads "-", "*", "+", "#", "|", ">" and a digit's ")" only without a backslash before it,
- * so dropping that backslash can turn a C1 verdict there (the deferred family D4; a digit's "." is split after it by the sentence
- * end either way), and no pin holds an escape of any other character. Each READ_FORMS row reads as the page shows it: its joined rows
- * (emphasis, strikethrough, a code span on one line, a comment, a bogus comment, a tag the tokenizer closes, a numeric reference,
- * a listed named reference or an invisible code point inside a word or the joint) in C1 and C2, its split rows in neither, and
- * its over-read rows - where marked shows the form as written (it escapes the run, leaves a mark unpaired, an HTML block holds
- * the markdown, or a code span shows it), or a br breaks the line, and the view still removes or decodes it - in both. Not read,
- * each a named residual with its pinned quiet row: a look-alike letter (R-HOMOGLYPH, Q8), a link or an image inside a word
- * (R-INTRAWORD-LINK, Q9), a legacy name written without its ";" (R-LEGACY-REFERENCE, Q10), a code span across a line ending
- * (R-MULTILINE-CODE-SPAN, Q11), an element a browser hides (R-HIDDEN-CONTENT, Q12), a term inside or reached by a tag-like,
- * comment or bogus-comment run marked shows as written (R-ESCAPED-MARKUP, Q13), a term such a shown form or a break the page
- * reads borders, glued to the letter or digit beside it, and a sentence break a removed form exposes (R-EDGE-GLUE, Q14), a
- * character a reference decodes read again (R-REDECODE, Q15), markup across a blank line in an HTML block (R-BLOCK-BREAK, Q16)
- * and emphasis no letter or digit borders (R-PUNCTUATION-EMPHASIS, Q17). */
+/** The normalized view, built in this order: the HTML withoutMarkup removes in one pass (comments, bogus comments and tags); each
+ * CODE_SPAN replaced by its codeSpanText; the INLINE_MARKS left removed; every NUMERIC_REFERENCE decoded by codePoint, then the
+ * names NAMED_REFERENCE_LIST holds (a name the list does not hold stays as written: spec&SHY;ulative); a backslash dropped before an
+ * ASCII punctuation character (modelled on CommonMark's backslash escapes); INVISIBLE code points removed; NFKC applied. Each step
+ * is described here and in its own comment, and claimed only as CLAIM SCOPE says, for exactly the pinned texts its comment lists,
+ * and here: for the backslash step READ_FORMS 14, 46 and 169; Q15 1 and 2 (READ_FORMS 169: rf context render \-\-scenario, the
+ * hyphens), and for NFKC M5 9, 10, 12 and 16; READ_FORMS 35, 183, 194, 195, 224, 231, 253, 263, 264, 269 and 270; Q8 1, each read as
+ * its pin says. NOT CLAIMED for the backslash step: every other text, at a line start among them, where SENTENCE_BREAK reads "-",
+ * "*", "+", "#", "|", ">" and a digit's ")" only without a backslash before it, so dropping that backslash can turn a C1 verdict
+ * there (the deferred family D4; a digit's "." is split after it by the sentence end either way); NOT CLAIMED for NFKC: every other
+ * text. Each READ_FORMS row reads as the page shows it: its joined rows (emphasis, strikethrough, a code span on one line, a
+ * comment, a bogus comment, a tag the tokenizer closes, a numeric reference, a listed named reference or an invisible code point
+ * inside a word or the joint) in C1 and C2, its split rows in neither, and its over-read rows - where marked shows the form as
+ * written (it escapes the run, leaves a mark unpaired, an HTML block holds the markdown, or a code span shows it), or a br breaks
+ * the line, and the view still removes or decodes it - in both. Not read, each a named residual with its pinned quiet row: a
+ * look-alike letter (R-HOMOGLYPH, Q8), a link or an image inside a word (R-INTRAWORD-LINK, Q9), a legacy name written without its
+ * ";" (R-LEGACY-REFERENCE, Q10), a code span across a line ending (R-MULTILINE-CODE-SPAN, Q11), an element a browser hides
+ * (R-HIDDEN-CONTENT, Q12), a term inside or reached by a tag-like, comment or bogus-comment run marked shows as written
+ * (R-ESCAPED-MARKUP, Q13), a term such a shown form or a break the page reads borders, glued to the letter or digit beside it, and a
+ * sentence break a removed form exposes (R-EDGE-GLUE, Q14), a character a reference decodes read again (R-REDECODE, Q15), markup
+ * across a blank line in an HTML block (R-BLOCK-BREAK, Q16) and emphasis no letter or digit borders (R-PUNCTUATION-EMPHASIS, Q17).
+ */
 function normalized(body: string): string {
   return withoutMarkup(body)
     .replace(CODE_SPAN, (_match, _run: string, content: string) => codeSpanText(content))
@@ -911,10 +935,10 @@ interface ReadForm {
  * digits, GP46 an empty <!---> before a later comment, GP10-99 a reference to 0x99 before a word, GP48 a "<" opening no markup,
  * GP33 white space before an "=" that opens an attribute name, GP32 a "/" inside an unquoted value), then the cutting seat's
  * falsifiers of the survivors of its own battery (a tag state, a tag space, a comment or bogus-comment rule, a code-span, mark,
- * reference or decode rule each; tag rows sit in an HTML block, where the browser reads the tag), then rows that hold each
- * character class the reader reads against an added member, one character to a word (the ASCII punctuation INLINE_MARKS keeps,
- * the white space TAG_SPACE does not read, the code points INVISIBLE keeps, the characters after a "<" that open no markup), and
- * the dash look-alikes SEP and JOINT read that NFKC folds into no other member. Cut #4 appends refusal #3's two riding survivors'
+ * reference or decode rule each; tag rows sit in an HTML block, where the browser reads the tag), then rows that hold characters
+ * one to a word beside a form (ASCII punctuation beside an INLINE_MARKS run, white space inside a tag, code points INVISIBLE
+ * keeps inside a word, the characters after a "<"), and the dash look-alikes SEP and JOINT read that NFKC folds into no other
+ * member, each row read as its page reading says. Cut #4 appends refusal #3's two riding survivors'
  * witnesses (G23-NM2's wrong-case named reference, G23-TE10b's double-quoted value after "=" and a space), a row for each decimal
  * and hex digit no earlier row's reference read, the one-sided INLINE_MARKS readings (a capital and a fullwidth small letter on
  * one side of an unpaired mark), the run readings (three marks, two kinds of mark), the processing instructions a capital
@@ -1480,11 +1504,11 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       { text: "Pi serves sp&eacute;culative RF context.", c1: false, c2: false },
     ];
     const read = cases.map(entry => ({ text: entry.text, ...docsVerdict(entry.text) }));
-    expect(read, "the normalized view reads the rendered text: a mark or a named reference inside a word joins it (P-D16 to P-D19 first), a mark or a reference a reader sees shown stays").toStrictEqual(
+    expect(read, "the normalized view reads each M5 case as its page reading says (P-D16 to P-D19 first): its listed c1 and c2").toStrictEqual(
       cases.map(entry => ({ text: entry.text, c1: entry.c1, c2: entry.c2 })),
     );
     const table = { names: NAMED_REFERENCES.size, listed: NAMED_REFERENCE_LIST.length, sha256: createHash("sha256").update(NAMED_REFERENCE_LIST.join("\n")).digest("hex") };
-    expect(table.names, "each listed name is decoded, once").toBe(table.listed);
+    expect(table.names, "each listed name is held once (no name repeats)").toBe(table.listed);
     return { read, table };
   },
   M6: () => {
