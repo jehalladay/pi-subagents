@@ -1568,6 +1568,15 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-absolute-file-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-absolute-file-inspector.ts:<replica>/src/ui/plant-abs.js",
+                  "src/ui/plant-absolute-file-inspector.ts:<replica>/src/ui/plant-abs.ts"
+                ],
+                "packages": []
+              },
               "src/ui/plant-absolute-inspector.ts": {
                 "pure": false,
                 "builtins": [],
@@ -1951,6 +1960,15 @@
                 "unresolved": [],
                 "packages": []
               },
+              "src/ui/plant-root-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-root-inspector.ts:/plant-root.js",
+                  "src/ui/plant-root-inspector.ts:/plant-root.ts"
+                ],
+                "packages": []
+              },
               "src/ui/plant-scoped-package-inspector.ts": {
                 "pure": true,
                 "builtins": [],
@@ -2089,6 +2107,15 @@
                 "unresolved": [],
                 "packages": []
               }
+            },
+            "slash": {
+              "/plant-abs.js": [
+                false,
+                false,
+                true
+              ],
+              "/plant-root.ts": true,
+              "<replica>/src/ui/plant-abs.ts": true
             },
             "notSurfaces": {
               "src/ui/plant-inspector-notes.md": false,

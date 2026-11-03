@@ -13,6 +13,22 @@
  * declares a precompute set, and none exists (A1 reads the adoption ABSENT); "gated TSX-RQ7" is a test the charter asks the
  * producer to add, recorded in the producer facts and never judged here. The filing's "May fold with R14/R16" is not taken:
  * R14 is wb-km7q.5, its own bead and cut, and R16 has no Pi bead.
+ * THE READERS (cut #6, the mechanical restatement orchestrator ruling R-B150 (M:39675) binds over the reader of the child
+ *   wb-km7q.12, which its carrier wb-km7q.15 landed at landing 847, merge 277415010fed; wb-km7q.12 was then closed under
+ *   R-B421): words (WORDS), hasPair, byName, dependencyNames with DEPENDENCY_PAIR (the ADOPTION reading), isPage and isModule
+ *   (the .md page and the module readings), and isLocal and resolveLocal (the local-specifier reading) are imported from
+ *   test/helpers/tsx-activity-boundary-readers.ts, where wb-km7q.12 moved them out of this census's cut #5. This census calls
+ *   each with its default arguments (words with every step, resolveLocal with its default probe), and the judged set holds
+ *   VOCABULARY.dependency to DEPENDENCY_PAIR, so the pair this file and the roster record is the pair the reader reads. The
+ *   readers census (test/workbench-tsx-activity-boundary-readers-census.test.ts) holds the helper's readers to its own claim
+ *   lines and probes; those readings are its claims and are NOT CLAIMED by this census, which claims exactly the readings
+ *   below, each for the inputs the pin named beside it holds.
+ * REFUSAL #5 (O:1499, gate run g10-gate-s157, on cut #5 75274d7f; its one unmet item, U1): the C2 "/" sentence said such a
+ *   specifier "names no file of the repository and is unresolved" over one control, and a reader resolving it from the
+ *   repository root (G1-A01) or as an absolute path naming a repository file (G1-A04) kept cut #5 green. The sentence now
+ *   claims the reading for exactly the three "/" forms C2 holds, two of them new controls whose named file is present (THE
+ *   HOUSE ANALOG), and the refusal's F3 is taken: the two extension readings no longer claim that no other specifier forms
+ *   them.
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only with git show in the local ReactiveFiberTSXSDK
  * checkout on 2026-10-28 and measured again, unchanged, on the roster's measuredAt; this census is hermetic and never re-reads
@@ -46,8 +62,9 @@
  *   reads UNSHIPPED.
  * ADOPTION (row A): Pi adopts the boundary when a file Pi ships names it. The adoption reads PRESENT once a read file
  *   (below) names the subject, ABSENT otherwise. Beside it, the root package.json's reactive-fiber packages are recorded,
- *   sorted (A1 tsxDependencies, none today; the A1 replica's manifest holds every form below): a package is recorded when
- *   its NAME - a key of dependencies, devDependencies, optionalDependencies or peerDependencies - read by WORDS (below)
+ *   sorted (A1 tsxDependencies, read by dependencyNames, none today; the A1 replica's manifest holds every form below): a
+ *   package is recorded when its NAME - a key of dependencies, devDependencies, optionalDependencies or peerDependencies -
+ *   read by WORDS (below)
  *   holds the adjacent pair reactive fiber, in that order. That reading is claimed for exactly the names below; no other
  *   name is claimed. Recorded: the @reactive-fiber/ scope (a package in each of the four fields), an unscoped kebab-case
  *   name, another scope's name holding the pair, a snake-case name, a name whose pair spans the scope's slash
@@ -151,14 +168,23 @@
  *   elements are all type-only (Pi's tsconfig does not set verbatimModuleSyntax, so TypeScript erases each of these); import
  *   type x = require(); an import() in a type position (typeof import()). A declaration read is read whether or not its
  *   bindings are used (TypeScript drops an unused one; this reader never does: fail-closed) [C2 controls: an unused named
- *   import]. A local specifier is one opening with "." or "/": one opening with "/" names no file of the repository and is
- *   unresolved; one opening with "." (./, ../ or any other) is joined to the importing module's directory and resolves to the
- *   first file of: the path with .js read as .ts (a .js specifier only), the path with .mjs read as .mts (an .mjs specifier
- *   only; the two readings never apply together), the path as written, the path plus .ts, the path's index.ts. A candidate
- *   that is not a file is skipped and one outside the repository is never read [C2 controls: each candidate alone; each
- *   adjacent pair present together - .js read as .ts and .mjs read as .mts each before the path as written, the path as
- *   written before the path plus .ts, the path plus .ts before index.ts - where the earlier wins; a directory candidate; a
- *   dot form; an absolute path; an escaping path]. A specifier none of the five candidates resolves is unresolved where a
+ *   import]. A local specifier is one opening with "." or "/" (isLocal). One opening with "/" reads unresolved (resolveLocal),
+ *   claimed for exactly the three forms C2 holds [C2 controls], each beside the presence facts C2 slash holds for it [C2
+ *   slash]: an absolute path naming no file at the replica's root ("/plant-abs.js" from src/ui/: neither plant-abs.js nor
+ *   plant-abs.ts at the root, its .ts beside the importer), a root-relative path naming a file at the replica's root
+ *   ("/plant-root.ts" and "/plant-root.js" from src/ui/, plant-root.ts present at the root) and an absolute path naming a file
+ *   of the replica (the replica's own path, shown as <replica>, then /src/ui/plant-abs.ts, present, and the same path ending
+ *   .js); no other "/" form is claimed by this census. The helper's own claim line S.2, read from the helper file and so
+ *   outside this file's literals, names the readers-census pins SPEC-ROOT and SPEC-ABSOLUTE: C2 holds that the pins it names
+ *   are exactly the keys of SLASH_FORMS (the root-relative and the absolute form, in that order) and that a control reads each
+ *   pin's form unresolved. One opening with "." (./, ../ or any other) is joined to the importing module's directory and
+ *   resolves to the first file of: the path with .js read as .ts (formed for a .js specifier), the path with .mjs read as .mts
+ *   (formed for an .mjs specifier), the path as written, the path plus .ts, the path's index.ts; whether another specifier
+ *   forms either of the first two is claimed only where the twenty non-candidates below hold it. A candidate that is not a file
+ *   is skipped and one outside the repository is never read [C2 controls: each candidate alone; each adjacent pair present
+ *   together - .js read as .ts and .mjs read as .mts each before the path as written, the path as written before the path plus
+ *   .ts, the path plus .ts before index.ts - where the earlier wins; a directory candidate; a dot form; an escaping path]. A
+ *   specifier none of the five candidates resolves is unresolved where a
  *   control holds it: a missing module [C2 controls], and twenty specifiers each naming a file that only one candidate
  *   outside the five reaches [C2 controls: the non-candidates - one surface: .tsx, .js, .mts, .cts, .d.ts, .json, .jsx, .mjs
  *   and .cjs beside an extensionless specifier; index.js, index.tsx, index.d.ts and index.mts below it; .cts and .d.cts for a
@@ -190,9 +216,9 @@
  *    closure read pure, its direct value imports and packages, and the closure reader's controls over a scratch git
  *    repository (a builtin three modules deep; each declaration form beside its type-only and mixed twins; import-equals;
  *    dynamic; require; the literal forms; re-exports; the builtin forms; each module extension and a surface named by its
- *    directory; each resolution candidate and each adjacent pair of them; a directory candidate, a dot form, an absolute
- *    path, an escaping path and a missing module; the twenty non-candidates; the files named for a surface that are not
- *    surfaces).
+ *    directory; each resolution candidate and each adjacent pair of them; a directory candidate, a dot form, the three "/"
+ *    forms beside the presence of the file each names, an escaping path and a missing module; the twenty non-candidates;
+ *    the files named for a surface that are not surfaces).
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-km7q.6 in the tracked bead export (.beads/issues.jsonl;
  *   the first notes line opening with its citation, so appended notes never move it): its acceptance clause is the three
  *   labels joined, each label tiled by its pins; label A reads quiet only by "refused" and, without it, as a finding of
@@ -258,14 +284,15 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { isBuiltin } from "node:module";
-import { dirname, join, posix } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { byName, DEPENDENCY_PAIR, dependencyNames, hasPair, isLocal, isModule, isPage, resolveLocal, words } from "./helpers/tsx-activity-boundary-readers.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -441,16 +468,6 @@ const FAMILY_IDS: readonly FamilyId[] = ["inference", "effect", "query-view", "e
 const CURLY = String.fromCodePoint(0x2019);
 const CONTRACTION = new RegExp(`n['${CURLY}]t(?![a-z0-9])`);
 const fold = (text: string): string => text.normalize("NFKC").toLowerCase();
-/** The words of a text: NFKC, a break at each case change and before the last capital of an acronym run, lower case. */
-function words(text: string): string[] {
-  return text
-    .normalize("NFKC")
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2")
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter(word => word !== "");
-}
 /** The code points 0..`top` (surrogates skipped) that `test` holds for, as ranges of upper-case hex ("0020", "0030-0039"). */
 function codePoints(test: (char: string) => boolean, top: number): string[] {
   const out: string[] = [];
@@ -469,7 +486,6 @@ function codePoints(test: (char: string) => boolean, top: number): string[] {
 /** The highest Unicode scalar value, and the highest of the Basic Multilingual Plane. */
 const UNICODE_TOP = 0x10ffff;
 const BMP_TOP = 0xffff;
-const hasPair = (tokens: readonly string[], pairs: readonly Pair[]): boolean => tokens.some((word, index) => pairs.some(([first, second]) => word === first && tokens[index + 1] === second));
 const names = (tokens: readonly string[], lexicon: Lexicon): boolean => tokens.some(word => lexicon.words.includes(word)) || hasPair(tokens, lexicon.pairs);
 /** Each row's subject under a vocabulary: A the WARM word; B a state word or the boundary itself; C a DevTools-style surface. */
 const SUBJECT_OF: Readonly<Record<RowId, (tokens: readonly string[], vocab: Vocabulary) => boolean>> = {
@@ -574,8 +590,6 @@ const CLASS_PROBES: Readonly<Record<string, (char: string) => boolean>> = {
 
 // ---------------------------------------------------------------------------------------------------------------- the survey
 const NUL = String.fromCharCode(0);
-const isPage = (path: string): boolean => path.endsWith(".md");
-const isModule = (path: string): boolean => /\.(?:ts|tsx|mts|cts|js|mjs|cjs)$/.test(path);
 interface Survey {
   readonly files: readonly string[];
   readonly binary: readonly string[];
@@ -603,7 +617,6 @@ function survey(texts: readonly (readonly [string, string])[]): Survey {
   }
   return { files, binary, anchored, findings };
 }
-const byName = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 const atRoot = (path: string): boolean => !path.includes("/");
 const underAny = (path: string, roots: readonly string[]): boolean => roots.some(root => path.startsWith(`${root}/`));
 const isRead = (path: string): boolean => atRoot(path) || underAny(path, CONSTANTS.readRoots);
@@ -638,16 +651,6 @@ function live(): { readonly listed: string[]; readonly texts: [string, string][]
     liveCache = { listed, texts, unreadable, survey: survey(texts) };
   }
   return liveCache;
-}
-/** Every dependency of a package.json naming a reactive-fiber package (the TSX SDK is @reactive-fiber/tsx). */
-function tsxDependencies(manifest: string): string[] {
-  const parsed = JSON.parse(manifest) as Record<string, unknown>;
-  return ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"]
-    .flatMap(field => {
-      const table = parsed[field];
-      return table !== null && typeof table === "object" ? Object.keys(table).filter(name => hasPair(words(name), [VOCABULARY.dependency])) : [];
-    })
-    .sort(byName);
 }
 const adoptionOf = (anchored: readonly string[]): Adoption => (anchored.length === 0 ? "ABSENT" : "PRESENT");
 /** The producer reads SHIPPED only when the status line, the tip's src and the triage line all say so; it fails closed. */
@@ -753,17 +756,6 @@ function valueSpecifiers(path: string, text: string): string[] {
   };
   visit(source);
   return out;
-}
-const isLocal = (specifier: string): boolean => specifier.startsWith(".") || specifier.startsWith("/");
-/** A local specifier's module. One opening with "/" names no file of the repository: unresolved. One opening with "." is
- * joined to the importing module's directory and resolves to the first file of the candidates; an extension reading is a
- * candidate only where its suffix applies, and a candidate outside the repository is never read. */
-function resolveLocal(base: string, from: string, specifier: string): string | undefined {
-  if (specifier.startsWith("/")) return undefined;
-  const joined = posix.normalize(posix.join(posix.dirname(from), specifier));
-  const readings = [joined.replace(/\.js$/, ".ts"), joined.replace(/\.mjs$/, ".mts")].filter(candidate => candidate !== joined);
-  const candidates = [...readings, joined, `${joined}.ts`, `${joined}/index.ts`];
-  return candidates.find(candidate => !candidate.startsWith("..") && existsSync(join(base, candidate)) && statSync(join(base, candidate)).isFile());
 }
 /** A module's value import closure: local modules followed, packages recorded, builtins and unresolved locals listed. */
 function closureOf(base: string, entry: string): Closure {
@@ -1143,6 +1135,10 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   "src/ui/.plant-dot.ts": 'import { arch } from "node:os";\nexport const s = arch;\n',
   "src/ui/plant-absolute-inspector.ts": 'import { s } from "/plant-abs.js";\nexport const x = s;\n',
   "src/ui/plant-abs.ts": "export const s = 0;\n",
+  // refusal #5 U1 (R-B150): a root-relative path naming a file at the replica's root, as written and ending .js; the absolute
+  // path naming a file of the replica is ABSOLUTE_PLANT, written once the replica's path is known.
+  "src/ui/plant-root-inspector.ts": 'import { r } from "/plant-root.ts";\nimport { r as q } from "/plant-root.js";\nexport const x = [r, q];\n',
+  "plant-root.ts": "export const r = 0;\n",
   "src/ui/plant-escape-inspector.ts": 'import { s } from "../../../plant-outside.js";\nexport const x = s;\n',
   "src/ui/plant-property-loader-inspector.ts": 'export const cp = (): unknown => module.require("node:child_process");\n',
   "src/ui/plant-mts-inspector.ts": 'import { m } from "./plant-m.mjs";\nexport const x = m;\n',
@@ -1182,6 +1178,22 @@ const NOT_SURFACES: readonly string[] = [
   "qa/plant-inspector.mjs",
 ];
 const summary = (closure: Closure): { [key: string]: Json } => ({ pure: pure(closure), builtins: closure.builtins, unresolved: closure.unresolved, packages: closure.packages });
+/** The C2 surface written into the replica once its path is known (refusal #5 U1): an absolute path naming the replica's own
+ * src/ui/plant-abs.ts, as written and ending .js. Its readings show the replica's path as <replica>. */
+const ABSOLUTE_PLANT = "src/ui/plant-absolute-file-inspector.ts";
+const absoluteSpecifiers = (replica: string): readonly [string, string] => [`${replica}/src/ui/plant-abs.ts`, `${replica}/src/ui/plant-abs.js`];
+/** A reading with the replica's own path written <replica>, so a witness never holds a scratch path. */
+const shownIn = (replica: string, reading: Json): Json => JSON.parse(JSON.stringify(reading).replaceAll(JSON.stringify(replica).slice(1, -1), "<replica>")) as Json;
+/** The "/" form held here for each readers-census pin the helper's claim line S.2 names (refusal #5 U1). */
+const SLASH_FORMS: Readonly<Record<string, string>> = { "SPEC-ROOT": "/plant-root.ts", "SPEC-ABSOLUTE": "<replica>/src/ui/plant-abs.ts" };
+const HELPER_FILE = "test/helpers/tsx-activity-boundary-readers.ts";
+/** The pins the helper's claim line S.2 names, read from the helper file (" * S.2 [SPEC-ROOT SPEC-ABSOLUTE] ..."). */
+function slashPins(): string[] {
+  const line = readFileSync(join(REPO, HELPER_FILE), "utf8")
+    .split("\n")
+    .find(text => text.startsWith(" * S.2 ["));
+  return (/^ \* S\.2 \[([^\]]*)\]/.exec(line ?? "")?.[1] ?? "").split(" ").filter(pin => pin !== "");
+}
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
 const REACHED = new Set<string>();
@@ -1210,9 +1222,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       anchored: [...real.survey.anchored],
       findings: [...real.survey.findings],
       unreadable: [...real.unreadable],
-      tsxDependencies: tsxDependencies(readFileSync(join(REPO, "package.json"), "utf8")),
+      tsxDependencies: dependencyNames(readFileSync(join(REPO, "package.json"), "utf8")),
       // Each BMP code point that leaves the key reactive<c>fiber unrecorded: every other one separates the two words.
-      dependencySeparators: codePoints(char => tsxDependencies(manifestOf({ [`reactive${char}fiber`]: "0.0.0" })).length === 0, BMP_TOP),
+      dependencySeparators: codePoints(char => dependencyNames(manifestOf({ [`reactive${char}fiber`]: "0.0.0" })).length === 0, BMP_TOP),
       floors,
       positives: [...alone],
       replica: {
@@ -1221,7 +1233,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         adoption: adoptionOf(mirror.anchored),
         anchored: [...mirror.anchored],
         findings: [...mirror.findings],
-        tsxDependencies: tsxDependencies(readFileSync(join(replica, "package.json"), "utf8")),
+        tsxDependencies: dependencyNames(readFileSync(join(replica, "package.json"), "utf8")),
         // A listed directory cannot be read as a file (recorded); a path gone before its read is dropped.
         unreadable: readTexts(replica, ["docs", "docs/gone.md"]).unreadable,
       },
@@ -1232,10 +1244,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
           twin: mirror.findings.filter(finding => finding.startsWith(`${READ_TWIN}:`)),
         },
         "R-DEPENDENCY-NAME": {
-          "a folded name": [tsxDependencies(manifestOf({ "reactivefiber-zz": "0.0.0" })), tsxDependencies(manifestOf({ "reactive-fiber-zz": "0.0.0" }))],
-          "an alias": [tsxDependencies(manifestOf({ "zz-alias": "npm:@reactive-fiber/tsx@0.1.668" })), tsxDependencies(manifestOf({ "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.668" }))],
+          "a folded name": [dependencyNames(manifestOf({ "reactivefiber-zz": "0.0.0" })), dependencyNames(manifestOf({ "reactive-fiber-zz": "0.0.0" }))],
+          "an alias": [dependencyNames(manifestOf({ "zz-alias": "npm:@reactive-fiber/tsx@0.1.668" })), dependencyNames(manifestOf({ "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.668" }))],
         },
-        "R-DEPENDENCY-FIELD": [tsxDependencies(JSON.stringify({ catalog: { "@reactive-fiber/tsx": "0.1.668" } })), tsxDependencies(manifestOf({ "@reactive-fiber/tsx": "0.1.668" }))],
+        "R-DEPENDENCY-FIELD": [dependencyNames(JSON.stringify({ catalog: { "@reactive-fiber/tsx": "0.1.668" } })), dependencyNames(manifestOf({ "@reactive-fiber/tsx": "0.1.668" }))],
       },
     };
   },
@@ -1385,14 +1397,28 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       }),
     );
     const replica = gitReplica("km7q6-surface-", SURFACE_PLANTS, { outside: SURFACE_OUTSIDE });
+    const [absoluteTs, absoluteJs] = absoluteSpecifiers(replica);
+    writeFileSync(join(replica, ABSOLUTE_PLANT), `import { s } from "${absoluteTs}";\nimport { s as t } from "${absoluteJs}";\nexport const x = [s, t];\n`);
     const planted = surfacesOf(gitList(replica));
-    const controls = Object.fromEntries(planted.map(surface => [surface, summary(closureOf(replica, surface))]));
+    const controls = Object.fromEntries(planted.map(surface => [surface, shownIn(replica, summary(closureOf(replica, surface)))]));
+    // Every pin the helper's claim line S.2 names (an anchor outside this file) has its "/" form here, read unresolved by a control.
+    const unresolvedForms = new Set(planted.flatMap(surface => closureOf(replica, surface).unresolved.map(entry => entry.slice(entry.indexOf(":") + 1).replaceAll(replica, "<replica>"))));
+    expect(Object.keys(SLASH_FORMS)).toEqual(slashPins());
+    expect(slashPins().filter(pin => !unresolvedForms.has(SLASH_FORMS[pin] ?? ""))).toEqual([]);
     const isPure = (path: string): boolean => pure(closureOf(replica, path));
     return {
       surfaces,
       closures,
       header: headerOf(readFileSync(join(REPO, CONSTANTS.inspector), "utf8")),
       controls,
+      // Each "/" form beside the presence of the file it names (refusal #5 U1): "/plant-abs.js" names none at the replica's
+      // root (plant-abs.js, plant-abs.ts) with its .ts beside the importer; plant-root.ts is at the root; the absolute path is
+      // the replica's own src/ui/plant-abs.ts.
+      slash: {
+        "/plant-abs.js": [existsSync(join(replica, "plant-abs.js")), existsSync(join(replica, "plant-abs.ts")), existsSync(join(replica, "src/ui/plant-abs.ts"))],
+        "/plant-root.ts": existsSync(join(replica, "plant-root.ts")),
+        "<replica>/src/ui/plant-abs.ts": existsSync(absoluteTs),
+      },
       notSurfaces: Object.fromEntries(NOT_SURFACES.map(path => [path, planted.includes(path)])),
       quiet: {
         "R-UNNAMED-SURFACE": [planted.includes("src/ui/plant-panel.ts"), closureOf(replica, "src/ui/plant-panel.ts").builtins],
@@ -1662,6 +1688,8 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     expect(Object.keys(IMPL).sort(byName)).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
     expect(ROSTER.bead).toBe(BEAD);
     expect(ROSTER.vocabulary).toEqual(VOCABULARY);
+    // The pair the ADOPTION reading records is the landed reader's (THE READERS: dependencyNames reads DEPENDENCY_PAIR).
+    expect(VOCABULARY.dependency).toEqual(DEPENDENCY_PAIR);
     expect(ROSTER.constants).toEqual(CONSTANTS);
     // The owner filing: the first notes line opening with the citation carries the acceptance clause, the three labels joined.
     const { title, filing } = beadRow();
