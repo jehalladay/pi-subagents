@@ -432,6 +432,7 @@
    "nested-in-bigint-named-method",
    "numeral-infinity-callee-method",
    "static-numeral-named-class-expression-method",
+   "near-maximum-numeral-infinity-callee-methods",
    "code-point-escaped-string-named-method",
    "hex-escaped-string-named-method",
    "identity-escaped-string-named-method",
@@ -2020,6 +2021,12 @@
         ],
         "static-numeral-named-class-expression-method": [
          "2 declaration unpinned"
+        ],
+        "near-maximum-numeral-infinity-callee-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned",
+         "8 declaration unpinned",
+         "11 declaration unpinned"
         ],
         "code-point-escaped-string-named-method": [
          "3 member blocks"
