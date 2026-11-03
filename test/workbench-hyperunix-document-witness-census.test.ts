@@ -1,30 +1,44 @@
 /**
  * wb-gnj9 (the rule-19 structural-exit child of wb-byfw, R-B394; the dependency inversion R-B422 folded wb-byfw refusal #4's
- * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #1: the carrier cut that lands
- * wb-byfw's census, which never landed (its cut #4, 524d3b6c, the R-B394 fail-closed core over cut #3, the enumerate-the-resolvable
- * form the second-stage cap R-B362 bound for refusal #2's frozen claim sets: U1, the W7 Proxy forms; U3, each judged row's case
- * text - its probe's and its present's initializers as this file spells them - anchored outside this file), and pins the W3 and
- * W7 run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found that the anchor reads each row's case text and never the
- * row a case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps hid P-TV3ANY, E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP);
- * refusal #4 found the W9 reader's words wider than its pages (U1: four reader hollows - trailing spaces, tabs, CRLF line breaks,
- * line comments) and a spread in a row's own literal giving it another row's case (U2: GP24-SPREAD, GP24-SPREAD-W7). Here asSpelled
- * freezes each W3 and W7 table as its declaration evaluates it (W10), each W3 and W7 case first checks that it runs its table's
- * own row under its id, caseReading reads 'absent' for a row with a spread, a computed key or a method and reads a list
- * declared through a call (W9), and W9's pages carry each spacing and comment form its words name. It pins the
- * readings of twinWalk (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus census's walk in
+ * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #2: the respin, after this bead's
+ * refusal #1 (R-B475: rung 1, a member-level respin), of carrier cut #1 (04160327, refused), which carried wb-byfw's census -
+ * itself never landed: wb-byfw's cut #4, 524d3b6c, the R-B394 fail-closed core over cut #3, the enumerate-the-resolvable form the
+ * second-stage cap R-B362 bound for refusal #2's frozen claim sets (U1, the W7 Proxy forms; U3, each judged row's case text - its
+ * probe's and its present's initializers as this file spells them - anchored outside this file) - and pinned the W3 and W7
+ * run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found that the anchor read each row's case text and never the row a
+ * case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps hid P-TV3ANY, E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP); refusal
+ * #4 found the W9 reader's words wider than its pages (four reader hollows: trailing spaces, tabs, CRLF line breaks, line
+ * comments) and a spread in a row's own literal giving it another row's case (GP24-SPREAD, GP24-SPREAD-W7). Cut #1 froze each W3
+ * and W7 table as its declaration evaluates it (asSpelled, W10), made each W3 and W7 case check that it runs its table's own row
+ * under its id, made caseReading read 'absent' for a row with a spread, a computed key or a method and read a list declared
+ * through a call (W9), and gave W9 a page for each spacing and comment form its words named. This bead's refusal #1 found the
+ * run-time route open through a table declared through a callee that caseReading does not read (U1: GP8-DCALLEE-W3, GP8-DCALLEE-W7
+ * and GP8-ACALLEE-W3, a name a binding pattern binds), W9's spacing and comment words wider than its pages (U2: nine reader
+ * hollows - a leading and a trailing tab, a run of three spaces, a doc comment and a block comment across a line break, a
+ * comment-only line, and a trailing space, a CRLF line break and a line comment after a semicolon) and W9's callee and element
+ * rules pinned at one shape each (U3: a reader that keeps one list's callee, GP8-CR-ONE-CALLEE-M, and one that reads a row whose
+ * spread another property follows, GP8-CR-SPREAD-MID-M), with two riders: a probe's function object took an own property (F3,
+ * GP8-RT-FNPROPS) and a reader that follows names three steps kept every reading (F4, GP8-CR-DEPTH3-M). This seat also found the
+ * route open through a table declared by let or var and rebound at the top level to a frozen copy with C13 given C14's case
+ * (S5-LET-W3, S5-VAR-W3 and S5-LET-W7, which hid P-TV3ANY and H-PX-NESTED-SKIP). Here caseReading reads a list only from its one
+ * const declaration and through a call only of a name one of the source's top-level declarations declares, each rule failing
+ * closed to no rows (W9 Q22-Q27), asSpelled also freezes each function a row holds (W10), W9's pages carry each form refusal #1
+ * named (Q29-Q35), and ROSTER pins the reader's own statements, caseReading's and those of every top-level declaration it names,
+ * so that any edit of the reader reds the census whatever form or position it changes. It pins the readings of twinWalk
+ * (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus census's walk in
  * test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header) with at most one of the gate's
  * refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the namespace of wb-ulnv's R-HIDDEN plant
  * from machine/flywheel/wb-ulnv tip c53028b4: hiddenPlant's held, loadCases and binding lines copied byte for byte but
- * WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults to WRAPPED; WRAPPED copied; Vault
- * without its static reader, which no twin reads; the planted module entries and the release around the namespace left out, as no
- * twin reads a release's bytes; and over one-form namespaces (W3, W7). It also pins headerReading, its reader of the result-corpus
- * census's header (W5, W8), and caseReading, its reader of this file's own source (W9, ROSTER). wb-ulnv refusal #3 (gate-prep-23,
- * run g10-gate-s167) found that cut's census-side prototype channel wider than TV3 (GV3X: an array prototype carrying the
- * documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled JSON); refusal #4 (gate-prep-21, run
- * g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called the plant's functions
- * (GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's reading is the walk
- * itself with that twin's change; no walk calls a function-valued binding of the plant (W6) or a function a W3 row plants as a
- * data property (W3), and TV4 enters such a function as an object.
+ * WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults to WRAPPED; WRAPPED copied;
+ * Vault without its static reader, which no twin reads; the planted module entries and the release around the namespace left out,
+ * as no twin reads a release's bytes; and over one-form namespaces (W3, W7). It also pins headerReading, its reader of the
+ * result-corpus census's header (W5, W8), and caseReading, its reader of this file's own source (W9, ROSTER). wb-ulnv refusal #3
+ * (gate-prep-23, run g10-gate-s167) found that cut's census-side prototype channel wider than TV3 (GV3X: an array prototype
+ * carrying the documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled JSON); refusal #4 (gate-prep-21, run
+ * g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called the plant's functions (GP21-OWN-LAZY,
+ * GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's reading is the walk itself with that
+ * twin's change; no walk calls a function-valued binding of the plant (W6) or a function a W3 row plants as a data property (W3),
+ * and TV4 enters such a function as an object.
  *
  * FORM WORDS (every W3 and W7 row id and every claim below): a binding is an own property of the namespace a row plants, the
  * walks' top level; a property below the top level is an own property of the plain object a row holds in an enumerable
@@ -38,10 +52,12 @@
  * PINNED READER SET (each claim names the case that judges it and the falsifier that turns it red):
  * SCOPE: every claim below is about this file as it stands at this cut and about the edits of it that its falsifier names. A W3
  *   or W7 claim is about each row as the top-level table literal spells it (the probe's and the present's initializer text, which
- *   the roster pins) and as its case runs it: the row asSpelled froze when the table's declaration evaluated it (W10), handed to
- *   its case through that case's it.each table argument and checked there to be its table's own row under its id (W3, W7). A W8
- *   or W9 claim is about each page as its table holds it, run by its case through that case's it.each table argument as this file
- *   spells it. A change of this file that no falsifier names is NOT CLAIMED (NOT CLAIMED, below).
+ *   the roster pins) and as its case runs it: the row asSpelled froze when the table's one const declaration evaluated it (W10; a
+ *   table declared by let or var or through a call of another name reads no rows or adds a shared declaration, and ROSTER reds:
+ *   W9 Q18 and Q22-Q28), handed to its case through that case's it.each table argument and checked there to be its table's own
+ *   row under its id (W3, W7). A W8 or W9 claim is about each page as its table holds it, run by its case through that case's
+ *   it.each table argument as this file spells it. A change of this file that no falsifier names is NOT CLAIMED (NOT CLAIMED,
+ *   below).
  * W0 LIVE: over today's three export subpaths, the walk with no twin and each twin read the representation at exactly
  *   .:SDK_REPRESENTATION. Falsifier: a release or a walk that reads another path.
  * W1 THE QUIET: the walk with no twin reads hiddenPlant at exactly .:SDK_REPRESENTATION: none of the planted documents.
@@ -116,51 +132,74 @@
  *   first of two leads, reads past the second clause or before its end, or joins only one gutter width.
  * W9 THE CASE READER: caseReading over each CASE_PAGES row as its table holds it and its W9 case runs it (SCOPE), a synthetic
  *   source (CASE_BASE with the row's edits) read for its list ROWS: its rows and its shared declarations are exactly the row's. A
- *   list's rows are the elements of the one top-level array literal declared as the list, or of the array literal that is the one
- *   argument of the call of a plain name declared as the list (Q18: that name then a name the rows name; a call whose argument is
- *   not an array literal, Q21, and a list declared other than once, Q7, read no rows). A row is such an element read for its id
- *   string, and the sha256 of its probe's and its present's initializer text exactly as the source spells it, or 'absent' for an
- *   id that is not a string literal or a property the element lacks; an element with a spread (Q15), a computed key (Q16) or a
- *   method (Q17) reads 'absent' for all three, and its probe and present name nothing. The initializer text is read with each
- *   spacing and comment form a page carries inside it kept as written: a run of spaces and a block comment (Q3), a trailing space
- *   before a line break (Q11), a tab (Q12), a CRLF line break (Q13) and a line comment (Q14), each inside a probe's and a
- *   present's initializer, and the indentation of a multi-line initializer (Q9, Q11, Q13, Q14). The shared declarations are the
- *   top-level const, function and class declarations a row's probe or present names, directly or through other shared
- *   declarations (a class naming a const among them, Q10; a name three declarations deep, Q19), in source order, each with the
- *   sha256 of its statement's text (the comments before the statement not included); a name after a dot or as a property
- *   assignment's name does not name a declaration (Q4), and a shorthand property (Q5), a name before a dot and a name indexed
- *   (Q20) do. Falsifier: a reader that changes any of those forms inside a probe's or a present's initializer (collapses a run of
- *   spaces, drops a block or a line comment, strips a trailing space, reads a tab as spaces or a CRLF as LF, strips indentation),
- *   reads part or only the first line of an initializer, reads a decoy list or a list declared inside a function, reads either of
- *   two declarations of the list, keeps an id's quotes, reads an element with a spread, a computed key or a method, reads no rows
- *   through a call, leaves the called name out of the shared declarations or reads into a call's call, digests a statement with
- *   the comment before it, misses a shorthand, a class, a name before a dot, a name indexed or a transitive name (two or three
- *   declarations deep), counts a property name or a name after a dot, or orders the shared declarations other than by source.
- * W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS are frozen, and so is each of their rows and each array a row holds: asSpelled
- *   froze them as their declarations evaluated them. So no statement or expression of this file that runs after a table's
- *   declaration changes a W3 or W7 row, its probe, its present or an array it holds: Object.assign, an assignment and
- *   Object.defineProperty onto a row, or a replaced or spliced element, throw a TypeError - at the top level, as the gate's
- *   refusal #3 GP4-RT swaps put another row's probe and present onto TWIN_CONTROLS[i] or PROXY_FORMS[i] with Object.assign (the
- *   268 of the gate's run-time matrix among them), and in a declaration's initializer, as GP4-RT-DECL's const SWAPPED, the census
- *   file then fails to load; in a test body, as wb-byfw cut #4's S4-BODY-W3, that case fails. Falsifier: a table, a row or an
- *   array a row holds left unfrozen (asSpelled's call taken off one table's declaration, or a freeze dropped from asSpelled,
- *   whose statement text the roster also pins) reds W10.
+ *   list's rows are the elements of the array literal its one top-level const declaration spells, as that declaration's
+ *   initializer or as the one argument of the call of a plain name that one of the source's top-level function, class or
+ *   plain-named variable declarations declares (Q18, a const arrow; Q28, a function declaration; that name is then a name the rows
+ *   name). A list declared other than once (Q7) or only inside a function (Q8), declared by a let or a var declaration (Q26, Q27),
+ *   declared through a call whose argument is not an array literal (Q21), or declared through a call of a name no such declaration
+ *   declares - a name an object or an array binding pattern binds (Q22, Q23), an imported name (Q24) or a name the source does not
+ *   declare (Q25) - reads no rows. A row is such an element read for its id string, and the sha256 of its probe's and its
+ *   present's initializer text exactly as the source spells it, or 'absent' for an id that is not a string literal or a property
+ *   the element lacks; an element any of whose properties is a spread, a computed key or a method reads 'absent' for all three
+ *   wherever that property stands (the element's last property, Q15 and Q16; before another property, Q29, Q30 and Q17), and its
+ *   probe and present name nothing. The initializer text is read exactly as written, from its first token to its end, every
+ *   spacing and comment form inside it kept; the pages carry a run of two spaces and of three (Q3, Q32), a block comment on one
+ *   line (Q3) and across a line break (Q33), a doc comment (Q33), a trailing space (Q11) and a trailing tab (Q31) before a line
+ *   break, a tab after an arrow (Q12) and tabs as a line's indentation (Q31), a CRLF line break (Q13), a line comment after code
+ *   (Q14) and alone on its line (Q34), and a trailing space, a CRLF line break and a line comment each after a semicolon (Q35),
+ *   each inside a probe's and a present's initializer, and the indentation of a multi-line initializer (Q9, Q11, Q13, Q14, Q31,
+ *   Q34, Q35). The shared declarations are the top-level const, function and class declarations a row's probe or present or a
+ *   list's callee names, directly or through other shared declarations (a class naming a const among them, Q10; a name three
+ *   declarations deep, Q19), in source order, each with the sha256 of its statement's text (the comments before the statement not
+ *   included); a name after a dot or as a property assignment's name does not name a declaration (Q4), and a shorthand property
+ *   (Q5), a name before a dot and a name indexed (Q20) do. Falsifier: a reader that changes any spacing or comment form inside a
+ *   probe's or a present's initializer (collapses a run of spaces, drops a block, doc or line comment, strips a trailing space or
+ *   tab, reads a tab as spaces or a CRLF as LF, strips indentation), reads part or only the first line of an initializer, reads a
+ *   decoy list or a list declared inside a function, reads either of two declarations of the list, reads a list a let or a var
+ *   declaration declares, keeps an id's quotes, reads an element with a spread, a computed key or a method in any position, reads
+ *   no rows through a call, reads rows through a call of a name no top-level declaration declares, leaves the called name out of
+ *   the shared declarations or reads into a call's call, digests a statement with the comment before it, misses a shorthand, a
+ *   class, a name before a dot, a name indexed or a transitive name (at any depth), counts a property name or a name after a dot,
+ *   or orders the shared declarations other than by source. Each such reader is an edit of the reader's text, so ROSTER's reader
+ *   pin reds it too, at a form or position no page carries as at one a page carries (refusal #1's nine GP8W9 reader members,
+ *   GP8-CR-ONE-CALLEE-M, GP8-CR-SPREAD-MID-M and GP8-CR-DEPTH3-M among them).
+ * W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS are frozen, and so is each of their rows and each array and each function a row
+ *   holds (its probe and its present): asSpelled froze them as their const declarations evaluated them, and a const binding is
+ *   never rebound (a table declared by let or var, which a later statement could rebind to another frozen copy as this seat's
+ *   S5-LET-W3, S5-VAR-W3 and S5-LET-W7 did, reads no rows, and ROSTER reds: W9 Q26, Q27). So no statement or expression of this
+ *   file that runs after a table's declaration changes a W3 or W7 row, its probe, its present or an array it holds:
+ *   Object.assign, an assignment and Object.defineProperty onto a row or onto its probe or present function, or a replaced or
+ *   spliced element, throw a TypeError - at the top level, as the gate's refusal #3 GP4-RT swaps put another row's probe and
+ *   present onto TWIN_CONTROLS[i] or PROXY_FORMS[i] with Object.assign (the 268 of the gate's run-time matrix among them) and as
+ *   refusal #1's GP8-RT-FNPROPS gave C13's probe function an own property, and in a declaration's initializer, as GP4-RT-DECL's
+ *   const SWAPPED, the census file then fails to load; in a test body, as wb-byfw cut #4's S4-BODY-W3, that case fails.
+ *   Falsifier: a table, a row or an array or function a row holds left unfrozen (asSpelled's call taken off one table's
+ *   declaration, or a freeze dropped from asSpelled, whose statement text the roster also pins) reds W10.
  * ROSTER: test/fixtures/hyperunix-document-witness-roster.json (out of file; the R660 / wb-5jha roster shape) lists every W3 row
  *   with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as this file spells it, every
  *   W4 site with its form's twin, every W7 row with its throwBy, readBy, path and the same two digests, every W8 page with its
  *   lead count, its forms and the sha256 of its page text, every W9 page with its row and shared counts and the sha256 of its
- *   source, and the shared declarations the W3 and W7 rows' probes and presents name - asSpelled, which both tables' declarations
- *   call, among them - each with the sha256 of its statement's text, in census order; caseReading over this file's own source
- *   (the file the census runs from) and the in-file tables (their ids, readBy, throwBy, paths, calls, sites and pages as the
- *   tables hold them when ROSTER runs) equal it both ways, and RECORDS expects a case under the id of every row, site and page it
- *   lists. The digests read text, never the probe or present a W3 or W7 case calls; W10 and the W3 and W7 own-row checks tie the
- *   rows the cases run to that text (SCOPE). Falsifier: a row or site dropped, added, renamed or re-pinned in every literal of
- *   this file (standing rule 16's CT5 and CT6); a page's edits swapped for another page's in its table; a W3 or W7 row's probe or
- *   present initializer text replaced or edited in the table literal (the gate's 200 refusal #2 text case swaps, each one row's
- *   initializer texts given another row's, and its ten realized pairs, the swaps that hid P-TV3ANY, E-TV1-EVERY-SYMBOL,
- *   E-TV4-NONENUM, HM4, E-TV1-SYMBOL-ACCESSORS, E-TV3-CHAIN, HM1, HM2, HM5 and H-PX-NESTED-SKIP, among them, and refusal #3's
- *   text control GP4-TEXT), or given a spread, a computed key or a method beside them (the gate's refusal #4 GP24-SPREAD and
- *   GP24-SPREAD-W7, which read 'absent'); a shared declaration's statement text edited.
+ *   source, the shared declarations the W3 and W7 rows' probes and presents name with the tables' callee (asSpelled, which both
+ *   tables' declarations call), and the reader's statements - caseReading's and those of every top-level declaration it names,
+ *   directly or through one another, as namedIn reads them (ABSENT, sha256, assignment, plainElement, listLiteral, namedIn and
+ *   caseReading at this cut) - each with the sha256 of its statement's text, in census order; caseReading over this file's own
+ *   source (the file the census runs from), the in-file tables (their ids, readBy, throwBy, paths, calls, sites and pages as the
+ *   tables hold them when ROSTER runs) and the reader's statements as the ROSTER case itself reads and digests them (its own parse
+ *   of that source, digested with node:crypto, never by sha256 or caseReading) equal it both ways, and RECORDS expects a case under
+ *   the id of every row, site and page it lists. The digests read text, never the probe or present a W3 or W7 case calls; W10, the
+ *   W3 and W7 own-row checks and W9's const and declared-callee rules tie the rows the cases run to that text (SCOPE), and the
+ *   reader pin ties caseReading's readings to the reader's own text. Falsifier: a row or site dropped, added, renamed or re-pinned
+ *   in every literal of this file (standing rule 16's CT5 and CT6); a page's edits swapped for another page's in its table; a W3 or
+ *   W7 row's probe or present initializer text replaced or edited in the table literal (the gate's 200 refusal #2 text case swaps,
+ *   each one row's initializer texts given another row's, and its ten realized pairs, the swaps that hid P-TV3ANY,
+ *   E-TV1-EVERY-SYMBOL, E-TV4-NONENUM, HM4, E-TV1-SYMBOL-ACCESSORS, E-TV3-CHAIN, HM1, HM2, HM5 and H-PX-NESTED-SKIP, among them,
+ *   and refusal #3's text control GP4-TEXT), with or without a reader edit beside it (refusal #1's nine GP8W9 pairs), or given a
+ *   spread, a computed key or a method beside them (the gate's refusal #4 GP24-SPREAD and GP24-SPREAD-W7 and refusal #1's
+ *   GP8-CR-SPREAD-MID-W, which read 'absent'); a table declared by let or var or through a call of another name (refusal #1's
+ *   GP8-DCALLEE-W3, GP8-DCALLEE-W7, GP8-ACALLEE-W3, GP8-NSCALLEE-W3, GP8-FCALLEE-W3, GP8-CCALLEE-W3 and GP8-CR-ONE-CALLEE-W, and
+ *   this seat's S5-LET-W3, S5-VAR-W3 and S5-LET-W7); a shared declaration's statement text edited; any edit of a reader statement's
+ *   text (every character of the statement, the comments before it not included), so a reader change reds whatever form or
+ *   position it changes.
  * FROZEN SHAPE (standing rule 16): TWINS, TWIN_READINGS' path counts, FORMS' phrases, twins and site counts, TWIN_CONTROLS' ids,
  *   readBy and calls, PROXY_FORMS' ids, throwBy and readBy, READER_PAGES' ids, lead counts and form counts, and CASE_PAGES' ids,
  *   row counts and shared counts are literals.
@@ -185,29 +224,42 @@
  *   headerReading over a header W5 and W8 do not model (a lead split across a comment boundary, clauses joined by other marks, the
  *   lead outside the text before the first comment close, an empty form between two separators) is NOT CLAIMED by this census.
  *   A W8 or W9 case handed an it.each table argument other than its table's own rows (wb-byfw cut #4's S4-EACH-W8 and S4-EACH-W9)
- *   is NOT CLAIMED by this census, nor are the realized pairs it hides (GP4-A1 and CR10, each red alone): W10 and the own-row
- *   checks hold the W3 and W7 tables only.
+ *   is NOT CLAIMED by this census, nor is the realized pair it hides at W8 (GP4-A1, red alone; at W9 the reader pin reds cut #4's
+ *   S4-EACH-W9-PAIR, CR10 being an edit of caseReading): W10 and the own-row checks hold the W3 and W7 tables only.
  *   A change that makes a W3 or W7 case run a value other than its table's own row without changing a row - an edit of an it
  *   callback (a test body) that removes the own-row check or runs another row after it, or a declaration in the describe
  *   callback that shadows TWIN_CONTROLS, PROXY_FORMS or asSpelled - is NOT CLAIMED by this census, nor are the realized pairs it
- *   hides (P-TV3ANY under this cut's NC-BODY-W3, NC-DESCRIBE-SHADOW and NC-E5, the W3 check removed beside GP4-RT-EACH, and
+ *   hides (P-TV3ANY under cut #1's NC-BODY-W3, NC-DESCRIBE-SHADOW and NC-E5, the W3 check removed beside GP4-RT-EACH, and
  *   H-PX-NESTED-SKIP under NC-E6, the W7 check removed beside S4-EACH-W7).
- *   A run-time change of a value a shared declaration holds (PLANTED_DOCUMENT's members) or of a built-in (Object.freeze and
- *   Object.isFrozen among them) is NOT CLAIMED by this census.
+ *   A declaration in the describe callback that shadows another name this file declares or imports at its top level (a reader
+ *   statement such as caseReading or namedIn, or createHash, which the ROSTER case calls) is NOT CLAIMED by this census either,
+ *   nor are the realized pairs it hides (this seat's S7-SHADOW-READER-PAIR: a describe-callback caseReading that reads a
+ *   source's leading tabs as spaces when it names INHERITED_CASES hides refusal #1's GP8W9-LEADTAB-W, which reds ROSTER alone).
+ *   A run-time change of a value a shared declaration holds (PLANTED_DOCUMENT's members), of a built-in (Object.freeze and
+ *   Object.isFrozen among them) or of a value a module this file imports holds (typescript's node objects and their prototypes,
+ *   through which a statement can make getText read an initializer other than as written) is NOT CLAIMED by this census, nor are
+ *   the realized pairs it hides (this seat's S6-TSPATCH-TAB-PAIR: a top-level statement giving typescript's node getText a
+ *   leading-tab reading for a text that names INHERITED_CASES hides refusal #1's GP8W9-LEADTAB-W, which reds ROSTER alone).
  *   Any other edit of this file that no falsifier above names - of a test body (an it callback), of an import, of the comments
  *   before a declaration, or of a declaration no row's probe or present names (WALKS, MODULES, walked, outcome, callPlanted, RAN,
  *   caseOf and readRoster among them; WALKS without TV3 hides P-TV3ANY, wb-byfw cut #4's S4-WALKS-PAIR) - is NOT CLAIMED by this
  *   census; whether a local name spelled like a top-level declaration counts as naming it, and caseReading over a source W9 does
  *   not model (a list that is not an array literal of object literals or such a call, a name reached through a computed key or
  *   another file, an element with a quoted key, an accessor or a shorthand property, an element naming a property twice, which
- *   tsc refuses in this file as TS1117, a call of more than one argument or of a callee that is not a plain name, and a spacing
- *   or comment form no page carries, such as a no-break space or a form feed) are NOT CLAIMED by this census.
+ *   tsc refuses in this file as TS1117, and a call of more than one argument or of a callee that is not a plain name) are NOT
+ *   CLAIMED by this census.
  *   An edit of this file and the roster fixture together, or of the ROSTER case itself or SELF (the path caseReading reads), is NOT
  *   CLAIMED by this census.
  * RESIDUALS: none named; every member of wb-byfw refusal #2 (A1-A9, B1-B4, the 200 text case swaps and their pairs, D1-D4, RX1
  *   and H-PX-NESTED-SKIP) is pinned by a row above or killed through one, refusal #3's W3 and W7 run-time route (GP4-RT,
- *   GP4-RT-DECL, GP4-RT-EACH and their pairs) is pinned by W10 and the own-row checks, and refusal #4's U1 (TRAIL, TABS, CRLF,
- *   LINECOMMENT) and U2 (GP24-SPREAD, GP24-SPREAD-W7) members by W9's Q11-Q14 and Q15-Q17 and ROSTER.
+ *   GP4-RT-DECL, GP4-RT-EACH and their pairs) is pinned by W10 and the own-row checks, refusal #4's U1 (TRAIL, TABS, CRLF,
+ *   LINECOMMENT) and U2 (GP24-SPREAD, GP24-SPREAD-W7) members by W9's Q11-Q14 and Q15-Q17 and ROSTER, and this bead's refusal #1
+ *   members as follows: U1 (GP8-DCALLEE-W3, GP8-DCALLEE-W7 and GP8-ACALLEE-W3 with their pairs, and GP8-NSCALLEE-W3-PAIR) by
+ *   W9's declared-callee rule (Q22-Q25) and ROSTER; U2 (the nine GP8W9 reader members and their pairs) by W9's Q31-Q35 and
+ *   ROSTER's reader pin; U3 (GP8-CR-ONE-CALLEE-M and GP8-CR-SPREAD-MID-M with their pairs) by the reader pin and, for the second,
+ *   W9's Q29; the riders F3 (GP8-RT-FNPROPS) by W10's function freeze and F4 (GP8-CR-DEPTH3-M) by the reader pin; and this
+ *   seat's S5-LET-W3, S5-VAR-W3 and S5-LET-W7 (a table declared by let or var and rebound at the top level) by W9's const rule
+ *   (Q26, Q27) and ROSTER.
  * Display paths added: none. Test-only: it reads files, spawns nothing and writes no file.
  */
 import { createHash } from "node:crypto";
@@ -526,12 +578,12 @@ function presentAfterLoad(holder: unknown, read: (holder: unknown) => unknown): 
   return isEmptyArray(read(holder)) && callOwn(holder, "load") ? read(holder) : undefined;
 }
 
-/** W3, W7 and W10: a row table frozen as its declaration evaluates it - the array, each of its rows and each array a row holds -
- * so that no later statement or expression of this file can give a row another probe, present or reading; it returns the array
- * it froze. */
+/** W3, W7 and W10: a row table frozen as its declaration evaluates it - the array, each of its rows and each array and function
+ * a row holds - so that no later statement or expression of this file can give a row another probe, present or reading, or its
+ * probe or present function an own property; it returns the array it froze. */
 function asSpelled<Row extends object>(rows: readonly Row[]): readonly Row[] {
   for (const row of rows) {
-    for (const value of Object.values(row)) if (Array.isArray(value)) Object.freeze(value);
+    for (const value of Object.values(row)) if (Array.isArray(value) || typeof value === "function") Object.freeze(value);
     Object.freeze(row);
   }
   return Object.freeze(rows);
@@ -1134,16 +1186,19 @@ function assignment(element: ts.ObjectLiteralExpression, name: string): ts.Expre
   return undefined;
 }
 /** W9: whether caseReading reads an element: an object literal each of whose properties is a property assignment with a plain
- * name. W9's pages pin an element with a spread, a computed key or a method (Q15-Q17); other forms are NOT CLAIMED (header). */
+ * name. W9's pages carry a spread, a computed key and a method as an element's last property (Q15, Q16) and before another
+ * property (Q29, Q30, Q17); ROSTER's reader pin holds the rule for every other position (header). */
 const plainElement = (element: ts.Expression): element is ts.ObjectLiteralExpression =>
   ts.isObjectLiteralExpression(element) && element.properties.every((property) => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name));
-/** W9: the array literal a list's one declaration spells: its initializer, or the one argument of a call of a plain name that
- * its initializer is (the name then pushed to callees, a name the rows name); else undefined. */
-function listLiteral(initializer: ts.Expression | undefined, callees: string[]): ts.ArrayLiteralExpression | undefined {
+/** W9: the array literal a list's one const declaration spells: its initializer, or the one argument of a call of a plain name
+ * that its initializer is, when a top-level function, class or plain-named variable declaration of the source declares that
+ * name (the name then pushed to callees, a name the rows name); else undefined. */
+function listLiteral(initializer: ts.Expression | undefined, callees: string[], declared: ReadonlyMap<string, ts.Statement>): ts.ArrayLiteralExpression | undefined {
   if (initializer !== undefined && ts.isArrayLiteralExpression(initializer)) return initializer;
   if (initializer === undefined || !ts.isCallExpression(initializer) || !ts.isIdentifier(initializer.expression) || initializer.arguments.length !== 1) return undefined;
   const [argument] = initializer.arguments;
   if (!ts.isArrayLiteralExpression(argument)) return undefined;
+  if (!declared.has(initializer.expression.text)) return undefined;
   callees.push(initializer.expression.text);
   return argument;
 }
@@ -1160,8 +1215,9 @@ function namedIn(node: ts.Node, declared: ReadonlyMap<string, ts.Statement>): st
   visit(node);
   return names;
 }
-/** W9 and ROSTER: a source's rows for each list (the elements of the one top-level array literal declared as the list) and the
- * shared declarations the rows' probes and presents name, each statement's text digested without the comments before it. */
+/** W9 and ROSTER: a source's rows for each list (the elements of the one top-level array literal its one const declaration spells,
+ * directly or as the one argument of a call of a declared plain name) and the shared declarations the rows' probes and presents
+ * and the lists' callees name, each statement's text digested without the comments before it. */
 function caseReading(source: string, lists: readonly string[]): CaseReading {
   const file = ts.createSourceFile("case-reading.ts", source, ts.ScriptTarget.Latest, true);
   const declared = new Map<string, ts.Statement>();
@@ -1169,17 +1225,18 @@ function caseReading(source: string, lists: readonly string[]): CaseReading {
   for (const statement of file.statements) {
     if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name !== undefined) declared.set(statement.name.text, statement);
     if (!ts.isVariableStatement(statement)) continue;
+    const constant = (statement.declarationList.flags & ts.NodeFlags.BlockScoped) === ts.NodeFlags.Const;
     for (const declaration of statement.declarationList.declarations) {
       if (!ts.isIdentifier(declaration.name)) continue;
       declared.set(declaration.name.text, statement);
-      initializers.set(declaration.name.text, [...(initializers.get(declaration.name.text) ?? []), declaration.initializer]);
+      initializers.set(declaration.name.text, [...(initializers.get(declaration.name.text) ?? []), constant ? declaration.initializer : undefined]);
     }
   }
   const cases: ts.Expression[] = [];
   const callees: string[] = [];
   const rows = lists.map((list): CaseRow[] => {
     const declarations = initializers.get(list) ?? [];
-    const array = declarations.length === 1 ? listLiteral(declarations[0], callees) : undefined;
+    const array = declarations.length === 1 ? listLiteral(declarations[0], callees, declared) : undefined;
     if (array === undefined) return [];
     return array.elements.map((element): CaseRow => {
       if (!plainElement(element)) return { id: ABSENT, probe: ABSENT, present: ABSENT };
@@ -1411,6 +1468,124 @@ const CASE_PAGES: readonly CasePage[] = [
     rows: [],
     shared: [],
   },
+  {
+    id: "Q22 the list declared through a call of a name an object binding pattern binds",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst { rows } = { rows: (list: object[]): object[] => list };"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q23 the list declared through a call of a name an array binding pattern binds",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst [rows] = [(list: object[]): object[] => list];"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q24 the list declared through a call of an imported name",
+    edits: [
+      ["const BASE = { cases: [] };", 'import { rows } from "./rows.js";\nconst BASE = { cases: [] };'],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q25 the list declared through a call of a name the source does not declare",
+    edits: [
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q26 the list declared by a let declaration",
+    edits: [["const ROWS = [", "let ROWS = ["]],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q27 the list declared by a var declaration",
+    edits: [["const ROWS = [", "var ROWS = ["]],
+    rows: [],
+    shared: [],
+  },
+  {
+    id: "Q28 the list declared through a call of a function declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nfunction rows(list: object[]): object[] {\n  return list;\n}"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("function rows(list: object[]): object[] {\n  return list;\n}") }],
+  },
+  {
+    id: "Q29 a row with a spread before another property",
+    edits: [[ROW_ONE_TEXT, '{ id: "one", ...{ probe: () => 3 }, probe: () => make(1), present: (ns: object) => ns }']],
+    rows: [UNREAD_ROW, ROW_TWO],
+    shared: [],
+  },
+  {
+    id: "Q30 a row with a computed key before another property",
+    edits: [[ROW_ONE_TEXT, '{ id: "one", [KEY]: () => 3, probe: () => make(1), present: (ns: object) => ns }']],
+    rows: [UNREAD_ROW, ROW_TWO],
+    shared: [],
+  },
+  {
+    id: "Q31 a leading tab and a trailing tab inside a probe's and a present's initializer",
+    edits: [[ROW_TWO_CASE, "    probe: () => ({\t\n\t\tvalue: 2,\n    }),\n    present: (ns: object) => [\n\t\tns,\t\n    ],\n"]],
+    rows: [ROW_ONE, { id: "two", probe: sha256("() => ({\t\n\t\tvalue: 2,\n    })"), present: sha256("(ns: object) => [\n\t\tns,\t\n    ]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q32 a run of three spaces inside a probe's and a present's initializer",
+    edits: [[ROW_TWO_CASE, "    probe: () => ({   value: 2 }),\n    present: (ns: object) =>   [ns],\n"]],
+    rows: [ROW_ONE, { id: "two", probe: sha256("() => ({   value: 2 })"), present: sha256("(ns: object) =>   [ns]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q33 a doc comment and a block comment across a line break inside a probe's and a present's initializer",
+    edits: [[ROW_TWO_CASE, "    probe: () => /** the second */ ({ value: 2 }),\n    present: (ns: object) => /* the\n      list */ [ns],\n"]],
+    rows: [ROW_ONE, { id: "two", probe: sha256("() => /** the second */ ({ value: 2 })"), present: sha256("(ns: object) => /* the\n      list */ [ns]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q34 a comment-only line inside a probe's and a present's initializer",
+    edits: [[ROW_TWO_CASE, "    probe: () => ({\n      // the value\n      value: 2,\n    }),\n    present: (ns: object) => [\n      // the namespace\n      ns,\n    ],\n"]],
+    rows: [
+      ROW_ONE,
+      { id: "two", probe: sha256("() => ({\n      // the value\n      value: 2,\n    })"), present: sha256("(ns: object) => [\n      // the namespace\n      ns,\n    ]") },
+    ],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q35 a trailing space, a CRLF line break and a line comment after a semicolon inside a probe's and a present's initializer",
+    edits: [
+      [
+        ROW_TWO_CASE,
+        "    probe: () => {\n      const value = 2; \n      return { value };\r\n    },\n    present: (ns: object) => {\n      const list = [ns]; // the list\n      return list;\n    },\n",
+      ],
+    ],
+    rows: [
+      ROW_ONE,
+      {
+        id: "two",
+        probe: sha256("() => {\n      const value = 2; \n      return { value };\r\n    }"),
+        present: sha256("(ns: object) => {\n      const list = [ns]; // the list\n      return list;\n    }"),
+      },
+    ],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
 ];
 
 interface RosterRow {
@@ -1428,6 +1603,8 @@ interface Roster {
   readonly pages: readonly (RosterRow & { readonly leads: number; readonly forms: readonly string[]; readonly digest: string })[];
   readonly casePages: readonly (RosterRow & { readonly rows: number; readonly shared: number; readonly digest: string })[];
   readonly shared: readonly SharedDeclaration[];
+  /** The reader's statements: caseReading and the top-level declarations it names, directly or through one another. */
+  readonly reader: readonly SharedDeclaration[];
 }
 /** ROSTER: the case of the source row at index when that row is the one named id, else a reading that names the mismatch. */
 const caseOf = (cases: readonly CaseRow[], index: number, id: string): RosterCase =>
@@ -1547,19 +1724,42 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
     });
     RAN.add(`W9 ${id}`);
   });
-  it("W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS, each of their rows and each array a row holds are frozen", () => {
+  it("W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS, each of their rows and each array and function a row holds are frozen", () => {
     const unfrozen = (table: readonly (Control | ProxyForm)[]): string[] =>
-      table.filter((row) => !Object.isFrozen(row) || Object.values(row).some((value) => Array.isArray(value) && !Object.isFrozen(value))).map((row) => row.id);
+      table
+        .filter((row) => !Object.isFrozen(row) || Object.values(row).some((value) => (Array.isArray(value) || typeof value === "function") && !Object.isFrozen(value)))
+        .map((row) => row.id);
     expect(
       { controls: [Object.isFrozen(TWIN_CONTROLS), unfrozen(TWIN_CONTROLS)], proxies: [Object.isFrozen(PROXY_FORMS), unfrozen(PROXY_FORMS)] },
-      "W10: each table is frozen, and no row or array a row holds is not",
+      "W10: each table is frozen, and no row or array or function a row holds is not",
     ).toStrictEqual({ controls: [true, []], proxies: [true, []] });
     RAN.add("W10");
   });
-  it("ROSTER: the W3 and W7 rows with their cases as this file spells them, the W4 sites, the W8 and W9 pages and the shared declarations equal the out-of-file roster, both ways and in order", () => {
+  it("ROSTER: the W3 and W7 rows with their cases as this file spells them, the W4 sites, the W8 and W9 pages, the shared declarations and the reader's statements equal the out-of-file roster, both ways and in order", () => {
     const roster = readRoster();
-    const reading = caseReading(readFileSync(SELF, "utf8"), ["TWIN_CONTROLS", "PROXY_FORMS"]);
+    const source = readFileSync(SELF, "utf8");
+    const reading = caseReading(source, ["TWIN_CONTROLS", "PROXY_FORMS"]);
     const [controlCases = [], proxyCases = []] = reading.rows;
+    // The reader's statements, digested here with node:crypto from this file's own parse, never by sha256 or caseReading:
+    // caseReading and every top-level declaration it names, directly or through one another, as namedIn reads them.
+    const selfFile = ts.createSourceFile("self.ts", source, ts.ScriptTarget.Latest, true);
+    const declaredHere = new Map<string, ts.Statement>();
+    for (const statement of selfFile.statements) {
+      if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name !== undefined) declaredHere.set(statement.name.text, statement);
+      if (!ts.isVariableStatement(statement)) continue;
+      for (const declaration of statement.declarationList.declarations) if (ts.isIdentifier(declaration.name)) declaredHere.set(declaration.name.text, statement);
+    }
+    const readerNames = new Set<string>();
+    const pending = ["caseReading"];
+    for (let name = pending.pop(); name !== undefined; name = pending.pop()) {
+      const statement = declaredHere.get(name);
+      if (readerNames.has(name) || statement === undefined) continue;
+      readerNames.add(name);
+      pending.push(...namedIn(statement, declaredHere));
+    }
+    const reader = [...declaredHere]
+      .filter(([name]) => readerNames.has(name))
+      .map(([name, statement]) => ({ name, digest: createHash("sha256").update(statement.getText(selfFile)).digest("hex") }));
     expect(
       {
         controls: TWIN_CONTROLS.map(({ id, readBy, path, calls }, index) => ({ id, readBy, path, calls, ...caseOf(controlCases, index, id) })),
@@ -1568,9 +1768,10 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         pages: READER_PAGES.map(({ id, leads, forms, edits }) => ({ id, leads, forms, digest: sha256(readerPage(edits)) })),
         casePages: CASE_PAGES.map(({ id, edits, rows, shared }) => ({ id, rows: rows.length, shared: shared.length, digest: sha256(casePage(edits)) })),
         shared: reading.shared,
+        reader,
         sourceRows: [controlCases.length, proxyCases.length],
       },
-      "ROSTER: the census's rows, their cases and its pages equal test/fixtures/hyperunix-document-witness-roster.json's",
+      "ROSTER: the census's rows, their cases, its pages and its reader's statements equal test/fixtures/hyperunix-document-witness-roster.json's",
     ).toStrictEqual({
       controls: roster.controls,
       sites: roster.sites,
@@ -1578,6 +1779,7 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
       pages: roster.pages,
       casePages: roster.casePages,
       shared: roster.shared,
+      reader: roster.reader,
       sourceRows: [roster.controls.length, roster.proxies.length],
     });
     RAN.add("ROSTER");
@@ -1700,6 +1902,20 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         "Q19 a name three declarations deep:2:3",
         "Q20 a name before a dot and a name indexed:2:2",
         "Q21 the list declared through a call of a call:0:0",
+        "Q22 the list declared through a call of a name an object binding pattern binds:0:0",
+        "Q23 the list declared through a call of a name an array binding pattern binds:0:0",
+        "Q24 the list declared through a call of an imported name:0:0",
+        "Q25 the list declared through a call of a name the source does not declare:0:0",
+        "Q26 the list declared by a let declaration:0:0",
+        "Q27 the list declared by a var declaration:0:0",
+        "Q28 the list declared through a call of a function declaration:2:3",
+        "Q29 a row with a spread before another property:2:0",
+        "Q30 a row with a computed key before another property:2:0",
+        "Q31 a leading tab and a trailing tab inside a probe's and a present's initializer:2:2",
+        "Q32 a run of three spaces inside a probe's and a present's initializer:2:2",
+        "Q33 a doc comment and a block comment across a line break inside a probe's and a present's initializer:2:2",
+        "Q34 a comment-only line inside a probe's and a present's initializer:2:2",
+        "Q35 a trailing space, a CRLF line break and a line comment after a semicolon inside a probe's and a present's initializer:2:2",
       ],
     });
     RAN.add("FROZEN SHAPE");

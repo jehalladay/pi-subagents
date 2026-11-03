@@ -1,5 +1,5 @@
 {
-  "comment": "wb-gnj9 cut #1 (the rule-19 carrier cut over wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, and the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables and caseReading's reading of its own source to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case) and each case's own-row check (the census header's SCOPE).",
+  "comment": "wb-gnj9 cut #2 (the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
   "controls": [
     {
       "id": "TV1 an enumerable symbol-keyed data binding",
@@ -884,6 +884,90 @@
       "rows": 0,
       "shared": 0,
       "digest": "192b83755ab2ace7668ac2e40dd8b13d9f5baddc3ddadfd51672c5168628e198"
+    },
+    {
+      "id": "Q22 the list declared through a call of a name an object binding pattern binds",
+      "rows": 0,
+      "shared": 0,
+      "digest": "759ef4ae3385600e932ea90e0c950d9733c4975dd95b5caa546dfa715ccd7107"
+    },
+    {
+      "id": "Q23 the list declared through a call of a name an array binding pattern binds",
+      "rows": 0,
+      "shared": 0,
+      "digest": "62662149f9090a7d0a2d6bef29bf51a74115806c607bda4640dfcd02c651d55b"
+    },
+    {
+      "id": "Q24 the list declared through a call of an imported name",
+      "rows": 0,
+      "shared": 0,
+      "digest": "2c2cca0c5c4067047b57d62f0ab815835acbc3ff72a3712513167e8e7638feb9"
+    },
+    {
+      "id": "Q25 the list declared through a call of a name the source does not declare",
+      "rows": 0,
+      "shared": 0,
+      "digest": "9a6f05d2d42f4d9ee46300fd1078edce63c4f636592657ae1ab7781d25a4751a"
+    },
+    {
+      "id": "Q26 the list declared by a let declaration",
+      "rows": 0,
+      "shared": 0,
+      "digest": "9574b2bd49ae6e561fbe4f8a1e554326d00602c0597623d51ee3b54a3c8a4894"
+    },
+    {
+      "id": "Q27 the list declared by a var declaration",
+      "rows": 0,
+      "shared": 0,
+      "digest": "c7bd37fd796f4932c06ba00261bdb7fc38429e03fc24f2618f0985a62642fc0f"
+    },
+    {
+      "id": "Q28 the list declared through a call of a function declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "80698ba372bcd4487a1bd807a8a54b9d760f367f635ee28f7b433a278ac0979e"
+    },
+    {
+      "id": "Q29 a row with a spread before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "bdb6fd39ec6f1315132b56cab5047ba9bcc5f81d4f4397e2c956ca3d29ed2d2b"
+    },
+    {
+      "id": "Q30 a row with a computed key before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "afb158a635d3f49153ec35c2663de88f6726de765822c12859f6a32c92aa1865"
+    },
+    {
+      "id": "Q31 a leading tab and a trailing tab inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "13d9ceb79cfd8f1df3b2e437d0a35e3b01be5e6ee811ec094f5410ec149cd91b"
+    },
+    {
+      "id": "Q32 a run of three spaces inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "b2fb28ee4eb96e966682663c7a61e21b09e165e6db29b7ad9b55abdcc67630b8"
+    },
+    {
+      "id": "Q33 a doc comment and a block comment across a line break inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "f1dff0dc219d05bb4c39d84d03fb40c1cc310803dc1c95606918af6352e86b7e"
+    },
+    {
+      "id": "Q34 a comment-only line inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "60abf7667f96a2b6fd8b608f4076111da850d015385fdba1a279964d5287e8e9"
+    },
+    {
+      "id": "Q35 a trailing space, a CRLF line break and a line comment after a semicolon inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "e916ad5989049b8562047aa22dbb74309181b5774cf5c0df893f9d386dde38bc"
     }
   ],
   "shared": [
@@ -953,7 +1037,37 @@
     },
     {
       "name": "asSpelled",
-      "digest": "c3908ab1fb52cd93f44e5865606713c8c466f3407e94494326ca36021fabe4ea"
+      "digest": "368da2b12b36ad752e353416aaf96717591be01d1dd84ac6828e3bb550334cef"
+    }
+  ],
+  "reader": [
+    {
+      "name": "ABSENT",
+      "digest": "488d0fbe8eb522603ae28732b56eae80c03ed3cde44c576f90492745db08d6c3"
+    },
+    {
+      "name": "sha256",
+      "digest": "b76c3c93ce3155c67899cf51dc4f54ad2efbcb92dede0b7255f09a9c40c43b10"
+    },
+    {
+      "name": "assignment",
+      "digest": "bb48585975e861ac947f3d5b07fabdd57ac61b56fc03c41161da164a52d3074b"
+    },
+    {
+      "name": "plainElement",
+      "digest": "5c52267a8db6121077922fd90235165dfd4104ed11c5860c9f5574ec0f31714c"
+    },
+    {
+      "name": "listLiteral",
+      "digest": "e5f6cb4e80c2afe16ed85e6f07701526cbf2fc58f4eb7295fcae1ea97f48fbe7"
+    },
+    {
+      "name": "namedIn",
+      "digest": "f1203c9cc83bb2b19ba4d48b0d8e7a6a562f794a319aeefa6349eac76a22bbab"
+    },
+    {
+      "name": "caseReading",
+      "digest": "5ccb480b4416d3fb3229b9c9d8c7a1603c251f748639d2d3119207149817982f"
     }
   ]
 }
