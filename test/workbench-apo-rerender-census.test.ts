@@ -435,19 +435,20 @@
  * function and the value by call (Function.prototype.bind, call and apply each so handed: that call's rest parameter is
  * inferred from the value, as at a function's own call) - and every page still reads quiet as pinned. INTO ANY holds the
  * into-any pages (R-THIS-BINDING's cases written in that form) to its table, each page's typing to the pinned typescript's
- * checker (an anchor outside this file and its roster) and the two labels to that split, with the three written-type-argument
- * pages, which the checker types by the this parameter's type (R-THIS-BINDING pins them refused since WB-97AH), as its
- * control. F7 (CT6-v, the coordinated hollow of R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays
- * disclosed in NOT CLAIMED. F8 (the written-index reading at an ordinary call's argument and at an argument after the this
- * argument with a written rest type argument, against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is
- * not cured here: the claims it names are trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor
- * DISPATCH's fail-closed clause, and bead wb-021.10 is its home. Re-cut after refusal #1 (gate run g10-gate-s187: U1, the
- * cut known-dirty against landing 817, wb-97ah; ruling R-B333): trunk 2e5a6d8 is merged into the branch, the conflicting
- * hunks of the three files are resolved to WB-97AH's landed text, and the two label restatements are re-applied on top of
- * it - DISPATCH's exception item before WB-97AH's member-call receiver and hole clause, R-THIS-BINDING's into-any clause
- * before WB-97AH's closed-hole sentence; on the merged tree INTO ANY reads the same thirteen pages and typings (WB-97AH's
- * twenty-five pages add no page written in the into-any form). No reading of the helper is edited by this cut, so src's
- * live reach map, forms and refused uses read as at WB-97AH.
+ * checker (an anchor outside this file and its roster) and the two labels to that split (as byte-for-byte copies of the
+ * frozen phrases, wb-py8n final cut #5), with the three written-type-argument pages, which the checker types by the this
+ * parameter's type (R-THIS-BINDING pins them refused since WB-97AH), as its control. F7 (CT6-v, the coordinated hollow of
+ * R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT CLAIMED. F8 (the written-index
+ * reading at an ordinary call's argument and at an argument after the this argument with a written rest type argument,
+ * against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is not cured here: the claims it names are
+ * trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and bead
+ * wb-021.10 is its home. Re-cut after refusal #1 (gate run g10-gate-s187: U1, the cut known-dirty against landing 817,
+ * wb-97ah; ruling R-B333): trunk 2e5a6d8 is merged into the branch, the conflicting hunks of the three files are resolved
+ * to WB-97AH's landed text, and the two label restatements are re-applied on top of it - DISPATCH's exception item before
+ * WB-97AH's member-call receiver and hole clause, R-THIS-BINDING's into-any clause before WB-97AH's closed-hole sentence;
+ * on the merged tree INTO ANY reads the same thirteen pages and typings (WB-97AH's twenty-five pages add no page written
+ * in the into-any form). No reading of the helper is edited by this cut, so src's live reach map, forms and refused uses
+ * read as at WB-97AH.
  *
  * WB-PY8N RESPIN 2 (cut #3, the respin of refusal #2, gate run g10-gate-s187: U1-U5 under standing rule 16 LEG 2, R514/R515
  * with R668 - INTO ANY claimed wider than it pinned; the class guard that refusal binds holds every INTO ANY claim to a pin
@@ -455,49 +456,73 @@
  * never widen the reader, and no reading of the helper is edited). WB-PY8N's shape stands: 0 rows added or removed, 0 pins
  * removed or changed, 89 tests, the two labels and the roster's rows unchanged (only the roster's INTO ANY title is
  * restated). INTO ANY's title states its pinned readings exactly, and the row gains refused controls and a frozen phrase
- * literal. U1 (the label lists reading): the clause's four parts - its opening, the declaration fact, the any list's opening
- * and the own list's - stand once each and in that order, the any list runs from its own opening and the own list to the end
- * of its sentence, and a page's words count only in the list of its typing, each held by planted labels whose answers are
- * literals: the two lists' exact bounds; pages named in their own list, in the clause before the lists, before the clause,
- * after the own list's sentence, in both lists and in the other list only; and a label refused for each part doubled, for
- * the declaration fact before the clause and after the any list, and for the any list before the clause. U2 (DISPATCH's
- * phrases): three refused DISPATCH texts written as literals - the by-call members after the turn into any, the into-any
- * members dropped, the withdrawn wording kept - read [0, 1, 0], [1, 0, 0] and [0, 0, 1]. U3 and U4 (the selection's member
- * combinations and the call's position): INTO_ANY_FORM selects each of the nine Function.prototype.<m>.<n>( spellings (m and n
- * each bind, call or apply) and Reflect.apply given each of the three, written opening the used initializer, nested inside it
- * in an array or as an argument, after a line break, or in a statement before it. U5 (the spellings the selection does not
- * read): the claim is narrowed to the dotted spelling and held both ways - a type argument written (at a member's call and at
- * Reflect.apply), a function's own call, Reflect.apply given the function itself, and the parenthesized, element-access,
- * spaced and broken spellings of an into-any call each select nothing - and those spellings are NOT CLAIMED below. The
- * phrases the two label readings count (the clause's parts, the two withdrawn wordings, DISPATCH's two phrases and
- * INTO_ANY's naming words) are frozen as a literal (rule 16), so a one-edit change to any of them reds INTO ANY. On the
- * merged tree (trunk a9a10bb merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the
- * helper and the two labels read as at WB-PY8N's re-cut.
+ * literal. U1 (the label lists reading): the clause's four parts - its opening, the declaration fact, the any list's
+ * opening and the own list's - stand once each byte for byte and in that order, the any list runs from its own opening and
+ * the own list to the end of its sentence, and a page's words count, byte for byte, only in the list of its typing, each
+ * held by planted labels whose answers are literals: the two lists' exact bounds; pages named in their own list, in the
+ * clause before the lists, before the clause, after the own list's sentence, in both lists and in the other list only; and
+ * a label refused for each part doubled, for the declaration fact before the clause and after the any list, and for the
+ * any list before the clause. U2 (DISPATCH's phrases): three refused DISPATCH texts written as literals - the by-call
+ * members after the turn into any, the into-any members dropped, the withdrawn wording kept - read [0, 1, 0], [1, 0, 0]
+ * and [0, 0, 1]. U3 and U4 (the selection's member combinations and the call's position): INTO_ANY_FORM selects each of
+ * the nine Function.prototype.<m>.<n>( spellings (m and n each bind, call or apply) and Reflect.apply given each of the
+ * three, written opening the used initializer, nested inside it in an array or as an argument, after a line break, or in a
+ * statement before it. U5 (the spellings the selection does not read): the claim is narrowed to the dotted spelling and
+ * held both ways - a type argument written (at a member's call and at Reflect.apply), a function's own call, Reflect.apply
+ * given the function itself, and the parenthesized, element-access, spaced and broken spellings of an into-any call each
+ * select nothing - and those spellings are NOT CLAIMED below. The phrases the two label readings count (the clause's
+ * parts, the two withdrawn wordings, DISPATCH's two phrases and INTO_ANY's naming words) are frozen as a literal (rule
+ * 16), so a one-edit change to any of them reds INTO ANY (a change to a constant; a label's copy of a phrase written in
+ * another spelling is NOT CLAIMED, wb-py8n final cut #5). On the merged tree (trunk a9a10bb merged into the branch) INTO
+ * ANY reads the same thirteen pages and typings, and src, the helper and the two labels read as at WB-PY8N's re-cut.
  *
  * WB-PY8N RESPIN 3 (cut #4, the respin of refusal #3, gate run g10-gate-s193: U1-U3 under standing rule 16 LEG 2, R514/R515
  * with R668 - new members of the class refusal #2 guards, found after its named members were cured; the orchestrator's
  * second-stage cap R-B384 froze that class, so this cut is authored enumerate-the-resolvable: each surviving member is pinned
  * with its witness, the title claims exactly the pinned set, and no reading of the helper is edited). WB-PY8N's shape
  * stands: 0 rows added or removed, 0 pins removed or changed, 89 tests, the helper, the two labels and the roster's rows
- * unchanged (only the roster's INTO ANY title is restated). U1 (the clause's four parts once each): a label refused for each
- * part missing - the clause's opening, the declaration fact, the any list's opening and the own list's - joins respin 2's
- * labels refused for each part doubled, so each part's count is held at one both ways; the clause's opening, whose presence
- * the order check never reads, is held by the once-check through its missing label. U2 (DISPATCH's phrases once each):
- * refused DISPATCH texts written as literals, the by-call phrase twice and the into-any phrase twice, read [2, 1, 0] and
- * [1, 2, 0], so the reading counts each phrase and never reads presence. U3 (where the into-any phrase stands): the title's
- * position word is restated to the doc's, the into-any phrase running from that turn, and is held by a reading that reads
- * it - the turn into any (DISPATCH_TURN, frozen) ends the by-call phrase and opens the into-any phrase, and
- * dispatchTurnReading counts the two phrases written joined at it, once in DISPATCH's label; refused texts written as
- * literals read there 1 and 1 (each phrase twice), 0 (the into-any phrase before the turn), 0 (after the turn but apart
- * from it) and 2 (the two joined twice). Found by this seat at cut time inside the same class and pinned here, each realized
- * first by a one-edit instrument with a real-tree witness at 0 failed | 89 passed: the selection's text reading (the module
- * text read at its used line only, with a page whose call stands after a line break inside the used initializer) and
- * R-THIS-BINDING's withdrawn-wording count (the counted phrase swapped, with the wording planted outside the lists); each
- * now reads through a named reading its planted controls share - intoAnySelects (the selected and unselected spellings
- * planted as a case's module text, and a call in another planted file only, not selected) and withdrawnReading (planted
- * labels with the wording once outside the lists, once inside the any list and twice read 1, 1 and 2). On the merged tree
- * (trunks 59e24e4 and 8eaafa2 merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the
- * helper and the two labels read as at WB-PY8N's re-cut. RESIDUAL: none added - this cut claims no residual family.
+ * unchanged (only the roster's INTO ANY title is restated). U1 (the clause's four parts once each, byte for byte): a label
+ * refused for each part missing - the clause's opening, the declaration fact, the any list's opening and the own list's -
+ * joins respin 2's labels refused for each part doubled, so each part's byte-for-byte count is held at one both ways; the
+ * clause's opening, whose presence the order check never reads, is held by the once-check through its missing label. U2
+ * (DISPATCH's phrases once each, byte for byte): refused DISPATCH texts written as literals, the by-call phrase twice and
+ * the into-any phrase twice, read [2, 1, 0] and [1, 2, 0], so the reading counts each phrase's byte-for-byte copies and
+ * never reads presence. U3 (where the into-any phrase stands): the title's position word is restated to the doc's, the
+ * into-any phrase running from that turn, and is held by a reading that reads it - the turn into any (DISPATCH_TURN,
+ * frozen) ends the by-call phrase and opens the into-any phrase, and dispatchTurnReading counts the byte-for-byte copies
+ * of the two phrases written joined at it, once in DISPATCH's label; refused texts written as literals read there 1 and 1
+ * (each phrase twice), 0 (the into-any phrase before the turn), 0 (after the turn but apart from it) and 2 (the two joined
+ * twice). Found by this seat at cut time inside the same class and pinned here, each realized first by a one-edit
+ * instrument with a real-tree witness at 0 failed | 89 passed: the selection's text reading (the module text read at its
+ * used line only, with a page whose call stands after a line break inside the used initializer) and R-THIS-BINDING's
+ * withdrawn-wording count (the counted phrase swapped, with the wording planted outside the lists); each now reads through
+ * a named reading its planted controls share - intoAnySelects (the selected and unselected spellings planted as a case's
+ * module text, and a call in another planted file only, not selected) and withdrawnReading (planted labels with the
+ * wording once outside the lists, once inside the any list and twice read 1, 1 and 2). On the merged tree (trunks 59e24e4
+ * and 8eaafa2 merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the helper and the two
+ * labels read as at WB-PY8N's re-cut. RESIDUAL: none added - this cut claims no residual family.
+ *
+ * WB-PY8N FINAL CUT #5 (the fail-closed core: the rule-19 structural exit R-B417 at refusal #4, gate run g10-gate-s193 -
+ * U1-U3 under standing rule 16 LEG 2, R514/R515 with R668: the title's claim words did not restrict spelling while the
+ * label readings were pinned on byte-for-byte copies of the frozen phrases only, and seven gate-authored witnesses that
+ * write a frozen phrase in another spelling - a sentence-initial capital, a doubled space, the withdrawn wording without
+ * its leading 'or' - kept the census green where each exact counterpart reds it; the child wb-ldqu owns the
+ * spelling-robust readings). This cut narrows the claim and never widens the reader: each claim word of INTO ANY's label
+ * readings - in its title and the roster's, in this header's WB-PY8N paragraphs, in the readings' docs, in the lists
+ * reading's refusal message and in the row's assertion messages and comments - now claims byte-for-byte copies of the
+ * frozen phrases only, and a copy written in any other spelling, and how a reading counts one, is NOT CLAIMED (below). U1
+ * ('neither label holds its withdrawn wording'): neither label holds its withdrawn wording byte for byte -
+ * INTO_ANY_WITHDRAWN in R-THIS-BINDING's, DISPATCH_WITHDRAWN in DISPATCH's. U2 (DISPATCH's two phrases 'once each'): the
+ * by-call phrase and the into-any phrase, each byte for byte exactly once. U3 (the clause's four parts 'each once'): the
+ * clause's opening, the declaration fact, the any list's opening and the own list's opening, each byte for byte exactly
+ * once and in that order. No reading's logic, control, pin, planted text or label is edited: the helper, the two labels
+ * and the roster's rows are byte-identical to the merged tree's, 92 tests, 0 rows added or removed, 0 pins removed or
+ * changed, and only the roster's INTO ANY title is restated. Trunks fc4ced8 and 8db5de0 are merged into the branch, and
+ * neither changes a src file after cut #4's base 8eaafa2; 8db5de0 lands wb-021.10 (landing 864: REACH
+ * THIS-PARAMETER-ARGUMENTS, TAGGED-TEMPLATE-ARGUMENTS and R-INFERRED-LITERAL), whose header paragraphs stand before the
+ * WB-PY8N paragraphs (the one conflicting hunk, resolved landed-first), and it leaves R-THIS-BINDING's and DISPATCH's
+ * labels unchanged, so INTO ANY reads the same thirteen pages and typings. RESIDUAL: none added - this cut claims no
+ * residual family.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -780,6 +805,11 @@
  * INTO_ANY_FORM does not read - parenthesized, through an element access, or with a space or a line break before a dot or
  * the open parenthesis - is NOT CLAIMED by this census (the selection reads the dotted spelling only, pinned both ways by
  * INTO_ANY_SELECTED and INTO_ANY_UNSELECTED; wb-py8n respin 2, refusal #2 U5).
+ * Of INTO ANY's label readings, a copy of a frozen phrase that a label writes in any other spelling - another letter case
+ * (a sentence-initial capital), other spacing (a doubled space, a line break), a word dropped, added or inflected (the
+ * withdrawn wording without its leading 'or', a gerund) or other punctuation - is NOT CLAIMED by this census, and neither
+ * is how a reading counts such a copy: every label claim is of byte-for-byte copies of the frozen phrases only (wb-py8n
+ * final cut #5, R-B417; the spelling-robust readings are wb-ldqu's).
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
  * entries, their refused uses and their typed writers, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
  * REQUIREMENT_FIELDS, LIVE_FORMS, CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading, and FAIL_CLOSED with the
@@ -901,7 +931,7 @@ const FAIL_CLOSED_ANCHOR =
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const INTO_ANY_ROW =
-  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (m and n each bind, call or apply, the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list and own list, each once and in that order, and names each page, by INTO_ANY's words, in the list of its typing and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, once each; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; respin 3)";
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (m and n each bind, call or apply, the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below is of byte-for-byte copies of the frozen phrases, and a copy written in any other spelling, and how a reading counts one, is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each byte for byte exactly once and in that order, and names each page, by INTO_ANY's words byte for byte, in the list of its typing and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each byte for byte exactly once; and neither label holds its withdrawn wording byte for byte (wb-py8n, landing 770 F6; final cut #5, the fail-closed core)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
@@ -1119,19 +1149,20 @@ const INTO_ANY_CLAUSE = "Into any (respin 2, refusal #2 F3; narrowed at final cu
 const INTO_ANY_DECLARED = "declare their this argument and their arguments any (thisArg: any, argArray: any[])";
 const INTO_ANY_TYPED: Readonly<Record<IntoAnyTyping, string>> = { any: "pinned typed any (", own: "pinned typed by its own type (" };
 const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
-/** R-THIS-BINDING's label read for that withdrawn wording (respin 3): how often it stands anywhere in a label - the reading the row and its planted labels share. */
+/** R-THIS-BINDING's label read for that withdrawn wording (respin 3): how often a byte-for-byte copy of it stands anywhere in a label (a copy in another spelling is NOT CLAIMED) - the reading the row and its planted labels share. */
 const withdrawnReading = (label: string): number => occurrences(label, INTO_ANY_WITHDRAWN);
 /** DISPATCH's exception item: the by-call members among the flows into a type the value is (their phrase ends at the item's turn into any), the applied or called members among the flows into any (their phrase runs from that turn), and the wording landing 770 F6 withdrew. */
 const DISPATCH_INTO_OWN =
   "or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any";
 const DISPATCH_INTO_ANY = "or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written";
 const DISPATCH_WITHDRAWN = "or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written";
-/** DISPATCH's exception item read by its three phrases, each counted in the label: the by-call phrase, the into-any phrase and the withdrawn wording. */
+/** DISPATCH's exception item read by its three phrases, each counted by its byte-for-byte copies in the label (a copy in another spelling is NOT CLAIMED): the by-call phrase, the into-any phrase and the withdrawn wording. */
 const dispatchReading = (label: string): number[] => [DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN].map(phrase => occurrences(label, phrase));
 /**
  * The turn into any DISPATCH's two phrases share (respin 3, refusal #3 U3): the by-call phrase ends at it and the into-any
  * phrase opens with it, so the two phrases written joined there - the turn written once - are the into-any phrase running
- * from that turn; dispatchTurnReading counts that joined text in a label.
+ * from that turn; dispatchTurnReading counts that joined text's byte-for-byte copies in a label (a copy in another spelling
+ * is NOT CLAIMED).
  */
 const DISPATCH_TURN = "or into any";
 const DISPATCH_FROM_TURN = `${DISPATCH_INTO_OWN.slice(0, DISPATCH_INTO_OWN.length - DISPATCH_TURN.length)}${DISPATCH_INTO_ANY}`;
@@ -1158,19 +1189,20 @@ function boundTyping(rel: string, value: string): string {
   return into === checker.getTypeAtLocation(node) ? "own" : checker.typeToString(into);
 }
 /**
- * A label's into-any clause split at its two typed lists: its four parts - the clause's opening, the declaration fact and the
- * two lists' openings - stand once each and in that order (respin 2: the declaration fact among them), the any list runs
- * from its own opening to the own list's, and the own list from its opening to the end of its sentence (the first ". ").
+ * A label's into-any clause split at its two typed lists: its four parts - the clause's opening, the declaration fact and
+ * the two lists' openings - each stand as exactly one byte-for-byte copy, in that order (a copy in another spelling is NOT
+ * CLAIMED; respin 2: the declaration fact among them), the any list runs from its own opening to the own list's, and the
+ * own list from its opening to the end of its sentence (the first ". ").
  */
 function intoAnyLists(label: string): Record<IntoAnyTyping, string> {
   const parts = [INTO_ANY_CLAUSE, INTO_ANY_DECLARED, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own];
   const [clause = -1, declared = -1, any = -1, own = -1] = parts.map(part => label.indexOf(part));
   if (parts.some(part => occurrences(label, part) !== 1) || !(clause < declared && declared < any && any < own))
-    throw new Error("the label holds no into-any clause with its declaration fact, an any list and then an own list, each once");
+    throw new Error("the label holds no into-any clause with its declaration fact, an any list and then an own list, each once byte for byte");
   const end = label.indexOf(". ", own);
   return { any: label.slice(any, own), own: label.slice(own, end < 0 ? label.length : end) };
 }
-/** Where a label names each page (the judgement (5) reads): whether the page's words stand in the list of its typing, and how often in the other list. */
+/** Where a label names each page (the judgement (5) reads): whether a byte-for-byte copy of the page's words stands in the list of its typing, and how many stand in the other list (a copy in another spelling is NOT CLAIMED). */
 function intoAnyNaming(label: string, pages: readonly { readonly typed: IntoAnyTyping; readonly named: string }[]): (readonly [boolean, number])[] {
   const lists = intoAnyLists(label);
   return pages.map(page => [occurrences(lists[page.typed], page.named) > 0, occurrences(lists[page.typed === "any" ? "own" : "any"], page.named)] as const);
@@ -1432,22 +1464,22 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "this-reflect-function-bind:any",
     ]);
     const label = row?.label ?? "";
-    expect(occurrences(label, INTO_ANY_WITHDRAWN), "R-THIS-BINDING's label: the withdrawn wording (every page typed any)").toBe(0);
-    expect(occurrences(label, INTO_ANY_DECLARED), "R-THIS-BINDING's label: the declaration fact, once").toBe(1);
+    expect(occurrences(label, INTO_ANY_WITHDRAWN), "R-THIS-BINDING's label: the withdrawn wording (every page typed any), byte for byte").toBe(0);
+    expect(occurrences(label, INTO_ANY_DECLARED), "R-THIS-BINDING's label: the declaration fact, byte for byte, once").toBe(1);
     const naming = intoAnyNaming(label, INTO_ANY);
     for (const [index, page] of INTO_ANY.entries()) {
       const other: IntoAnyTyping = page.typed === "any" ? "own" : "any";
-      expect(naming[index], `${page.module}: named in the ${page.typed} list, never in the ${other} list`).toEqual([true, 0]);
+      expect(naming[index], `${page.module}: named by INTO_ANY's words, byte for byte, in the ${page.typed} list, never in the ${other} list`).toEqual([true, 0]);
     }
     const dispatch = REACH.rows.find(entry => entry.id === "DISPATCH")?.label ?? "";
     expect(
       dispatchReading(dispatch),
-      "DISPATCH's exception item: the by-call members into a type the value is, the applied or called members into any, the withdrawn wording",
+      "DISPATCH's exception item, each phrase byte for byte: the by-call members into a type the value is, the applied or called members into any, the withdrawn wording",
     ).toEqual([1, 1, 0]);
-    // Respin 3 (refusal #3 U3): the into-any phrase runs from the turn into any that ends the by-call phrase - the turn frozen (rule 16), the two phrases sharing it, and the label holding them joined there once.
+    // Respin 3 (refusal #3 U3): the into-any phrase runs from the turn into any that ends the by-call phrase - the turn frozen (rule 16), the two phrases sharing it, and the label holding them joined there once, byte for byte.
     expect(
       [DISPATCH_TURN, DISPATCH_INTO_OWN.endsWith(` - ${DISPATCH_TURN}`), DISPATCH_INTO_ANY.startsWith(`${DISPATCH_TURN} `), dispatchTurnReading(dispatch)],
-      "DISPATCH's exception item at its turn: the turn into any, the by-call phrase ending at it, the into-any phrase opening with it, the two joined there",
+      "DISPATCH's exception item at its turn: the turn into any, the by-call phrase ending at it, the into-any phrase opening with it, the two joined there, byte for byte",
     ).toEqual(["or into any", true, true, 1]);
     // Non-vacuity: the same reading at the three Function.prototype pages R-THIS-BINDING's hole pins with type arguments written gives the this parameter's type, so it reads more than any and own.
     expect(
@@ -1518,7 +1550,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       ["the own list opening missing", plantedLabel.replace(INTO_ANY_TYPED.own, "")],
     ];
     for (const [what, missing] of missingParts) expect(() => intoAnyLists(missing), what).toThrow();
-    // Respin 3: the withdrawn wording read through withdrawnReading, which the planted labels share - none in the real label, then once outside the lists, once inside the any list, and twice.
+    // Respin 3: the withdrawn wording read through withdrawnReading, which the planted labels share - none, byte for byte, in the real label, then once outside the lists, once inside the any list, and twice.
     expect(
       [
         label,
@@ -1526,7 +1558,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
         plantedLabel.replace("an applied page,", "an applied page that they type their this argument and their arguments any,"),
         `${plantedLabel} They type their this argument and their arguments any, and type their this argument and their arguments any.`,
       ].map(withdrawnReading),
-      "the withdrawn wording: none in the R-THIS-BINDING label; planted labels once outside the lists, once inside the any list, twice",
+      "the withdrawn wording, byte for byte: none in the R-THIS-BINDING label; planted labels once outside the lists, once inside the any list, twice",
     ).toEqual([0, 1, 1, 2]);
     // Respin 2 (refusal #2 U2): the DISPATCH reading on three refused texts, written as literals: the by-call members after the turn into any, the into-any members dropped, the withdrawn wording kept.
     expect(
