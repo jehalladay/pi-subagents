@@ -36,10 +36,17 @@
  *   refusal #4's verdicts; a member id is a GP11-<two digits> or L2-<two digits> token, one trailing letter kept, with neither a
  *   word character nor '-' on either side); and from the helper's own source, (4) each pin's find occurs once, inside the helper
  *   function its roster line names (the innermost function declaration, or const-bound arrow, holding it). The case also holds two
- *   facts of each pin's own edit: its replace holds its quote while its find does not, and its kind names the edit's shape - 'an
- *   inserted line' when the replace is the find with one line inserted whose text, blanks at its ends aside, is the quote; 'a
- *   rewritten line' when exactly one line of the find changes and the new line's text, blanks at its ends aside, is the quote; 'an
- *   added clause' when exactly one line of the find changes and the new line is the old one with the quote inserted once.
+ *   facts of each pin's own edit: its replace holds its quote while its find does not, and its kind names the edit's shape. The
+ *   shape is read twice, from the find's lines to the replace's lines and from the helper source's lines to the lines of that
+ *   source with the edit applied, and an edit names a shape only when both readings name that same one. A text's lines are the
+ *   runs its line feeds end, then the run after its last line feed when that run is not empty; the blanks at a text's ends are the
+ *   spaces and tabs there. Each reading names the first of these that holds: 'an inserted line' when the later lines are the
+ *   earlier ones with one line inserted, and that line and the quote are equal once the blanks at their ends are set aside; 'a
+ *   rewritten line' when the two hold as many lines and exactly one of them differs, and the new line and the quote are equal once
+ *   the blanks at their ends are set aside; 'an added clause' when the two hold as many lines and exactly one of them differs, and
+ *   the new line holds the quote exactly once and, without it, is the old line. An edit for which either reading names none of the
+ *   three, or the two name different ones, names no shape, and ANCHOR reds it whatever its kind; ANCHOR also reds a kind that is not
+ *   one of the three names.
  * - Case REGISTRATION (last): the vitest task tree holds exactly these cases in this order, every other one in run mode, not
  *   inverted and ran before it, and every pin case completed its compares, in row order.
  * PIN ROSTER
@@ -65,10 +72,14 @@
  * removed, swapped or relabelled in one literal, or a row deleted, reds SHAPE or HEADER (standing rule 16's CT1-CT4). (4) Row R3's
  * pins and unmet items are the ones wb-pyel.11's description records, row R4's the ones R-B336's fold records, each pin's quote is
  * the one wb-pyel.9's notes record for its member (on the first notes line holding the quote, the last member id before it is the
- * pin's own), each pin's kind names its edit's shape, and each find lies once in the helper function its pin names (ANCHOR): a
- * member removed, relabelled (its id, its unmet item, its kind or its helper function) or handed another member's recorded quote,
- * each in every literal together, or a row removed with its frozen-shape elements, reds ANCHOR (CT5, CT6); another member's
- * recorded quote is one whose first notes line names that member's id last before it.
+ * pin's own), each pin's kind names its edit's shape (both readings naming it), and each find lies once in the helper function its
+ * pin names (ANCHOR): a member removed, relabelled (its id, its unmet item, its kind or its helper function) or handed another
+ * member's recorded quote, each in every literal together, or a row removed with its frozen-shape elements, reds ANCHOR (CT5,
+ * CT6); another member's recorded quote is one whose first notes line names that member's id last before it. A pin's find or
+ * replace edited so that the two readings do not both name its kind reds ANCHOR as well, its kind relabelled with the edit or
+ * not - for each pin whose find ends with a line feed, a replace that drops its own final line feed is such an edit (its
+ * replace's lines stay as they were while the helper's next line takes the replace's last line at its head) - and so does a kind
+ * that is none of the three shapes' names.
  *
  * NOT CLAIMED. A reading on any input that is not one of these pages is NOT CLAIMED by this census - among them every other
  * spelling of a callee, a key, a type argument list or a call, and every reader route no page plants. The helper's exports other
@@ -164,14 +175,18 @@ const PAGES: Readonly<Record<string, Page>> = {
 
 // ---- the rows and pins ----
 
+/** The three shapes a pin's edit can name (ANCHOR). */
+const KINDS = ["an inserted line", "a rewritten line", "an added clause"] as const;
+type Kind = (typeof KINDS)[number];
 interface Pin {
   readonly id: string;
   /** The unmet item of its refusal that names the member. */
   readonly unmet: string;
   /** The helper function whose code the member's edit changes. */
   readonly at: string;
-  /** The shape of the member's edit, read from its find and replace (ANCHOR): an inserted line, a rewritten line or an added clause. */
-  readonly kind: string;
+  /** The shape of the member's edit, read from its find and replace and from the helper's source it changes, both readings naming
+   * it (ANCHOR): an inserted line, a rewritten line or an added clause. */
+  readonly kind: Kind;
   /** The line the edit inserts, the line as it rewrites it, or the clause it adds, as the refusal's verdict quotes it. */
   readonly quote: string;
   /** The member's edit as this census applies it, a find and its replace (copied from its gate's archived member table; that copy is
@@ -401,27 +416,43 @@ function lastMemberIdBefore(line: string, end: number): string {
   for (const match of line.slice(0, Math.max(0, end)).matchAll(MEMBER_ID)) last = match[0];
   return last;
 }
-/** The shape of a pin's edit, read from its find and replace: "an inserted line" when the replace is the find with one line
- * inserted whose text, blanks at its ends aside, is the quote; "a rewritten line" when exactly one line of the find changes and
- * the new line's text, blanks at its ends aside, is the quote; "an added clause" when exactly one line of the find changes and the
- * new line is the old one with the quote inserted once; "<other>" for any other edit. */
-function editShape(pin: Pin): string {
-  const before = pin.find.split("\n");
-  const after = pin.repl.split("\n");
+/** A text's lines: the runs its line feeds end, then the run after its last line feed when that run is not empty. */
+function linesOf(text: string): string[] {
+  const lines = text.split("\n");
+  if (lines[lines.length - 1] === "") lines.pop();
+  return lines;
+}
+/** A text with the blanks at its ends set aside: the spaces and tabs there, and nothing else. */
+function blanksAside(text: string): string {
+  return text.replace(/^[ \t]+|[ \t]+$/g, "");
+}
+/** The shape that takes one list of lines to another, for a quote: the first that holds of "an inserted line" (the later lines are
+ * the earlier ones with one line inserted, equal to the quote once the blanks at the ends of both are set aside), "a rewritten
+ * line" (as many lines, exactly one differs, and the new one equals the quote once those blanks are set aside) and "an added
+ * clause" (as many lines, exactly one differs, and the new one holds the quote exactly once and, without it, is the old one);
+ * undefined when none holds. */
+function shapeOf(before: readonly string[], after: readonly string[], quote: string): Kind | undefined {
   if (after.length === before.length + 1) {
     const at = after.findIndex((line, index) => line !== before[index]);
-    if (at < 0) return "<other>";
-    const kept = [...after.slice(0, at), ...after.slice(at + 1)].join("\n");
-    return kept === pin.find && after[at].trim() === pin.quote.trim() ? "an inserted line" : "<other>";
+    const kept = [...after.slice(0, at), ...after.slice(at + 1)];
+    return at >= 0 && kept.every((line, index) => line === before[index]) && blanksAside(after[at]) === blanksAside(quote) ? "an inserted line" : undefined;
   }
-  if (after.length !== before.length) return "<other>";
+  if (after.length !== before.length) return undefined;
   const changed = after.flatMap((line, index) => (line === before[index] ? [] : [index]));
-  if (changed.length !== 1) return "<other>";
+  if (changed.length !== 1) return undefined;
   const now = after[changed[0]];
   const was = before[changed[0]];
-  if (now.trim() === pin.quote.trim()) return "a rewritten line";
-  const cut = now.indexOf(pin.quote);
-  return cut >= 0 && occurrences(now, pin.quote) === 1 && now.slice(0, cut) + now.slice(cut + pin.quote.length) === was ? "an added clause" : "<other>";
+  if (blanksAside(now) === blanksAside(quote)) return "a rewritten line";
+  const cut = now.indexOf(quote);
+  return cut >= 0 && cut === now.lastIndexOf(quote) && now.slice(0, cut) + now.slice(cut + quote.length) === was ? "an added clause" : undefined;
+}
+/** The shape of a pin's edit, read twice - from its find's lines to its replace's, and from the helper source's lines to those of the
+ * source with the edit applied at the find's first occurrence - and named only when both readings name the same one (undefined
+ * otherwise, which no kind equals). */
+function editShape(pin: Pin, helper: string): Kind | undefined {
+  const text = shapeOf(linesOf(pin.find), linesOf(pin.repl), pin.quote);
+  const effect = shapeOf(linesOf(helper), linesOf(helper.replace(pin.find, () => pin.repl)), pin.quote);
+  return text === effect ? text : undefined;
 }
 
 // ---- the cases ----
@@ -486,7 +517,8 @@ describe("wb-pyel.11 EDC static-reach callee members census (test/helpers/edc-st
       const line = parentLines.find(entry => entry.includes(quoted)) ?? "";
       expect(lastMemberIdBefore(line, line.indexOf(quoted)), `${pin.id}: the first line of wb-pyel.9's notes quoting its edit names it as the last member id before the quote`).toBe(pin.id);
       expect([pin.repl.includes(pin.quote), pin.find.includes(pin.quote)], `${pin.id}: its replace holds its quote and its find does not`).toEqual([true, false]);
-      expect(editShape(pin), `${pin.id}: its kind names its edit's shape`).toBe(pin.kind);
+      expect(KINDS.includes(pin.kind), `${pin.id}: its kind is one of the three shapes' names`).toBe(true);
+      expect(editShape(pin, helper), `${pin.id}: its kind names its edit's shape, both readings agreeing`).toBe(pin.kind);
       expect(occurrences(helper, pin.find), `${pin.id}: its find occurs once in the helper's source`).toBe(1);
       const at = helper.indexOf(pin.find);
       expect(holderOf(source, at, at + pin.find.length), `${pin.id}: its find lies in the helper's ${pin.at}`).toBe(pin.at);
