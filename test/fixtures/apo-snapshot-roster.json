@@ -308,8 +308,28 @@
           "digest": "d20dc4021e81e3c080eb2e32d2573f7f30b32b5a0f11d8d5f0c4517ecaba46eb"
         },
         {
+          "id": "R-closure-export-from",
+          "digest": "bc9902f5124b52df2bac225f4c3fe64c0be15d84e616e30230bf743e17d14a11"
+        },
+        {
+          "id": "R-closure-dynamic",
+          "digest": "550490762bd6b55a0db8e127f1d1ca9a2918f0623f2ce80bdb648645ef7f67f8"
+        },
+        {
+          "id": "R-closure-require",
+          "digest": "5ec3c1f04527ee26f292e6374c12515af1aa7f1a7ac36cf5aff6082118329207"
+        },
+        {
+          "id": "R-closure-import-equals",
+          "digest": "2ee926985394c39e026d2ff63578e5433c650428012eca1fe7e60e12a2edc2b6"
+        },
+        {
           "id": "R-views-each-judged",
           "digest": "85ea75708f40b3341342254d933230092e8c87d3efc91766d807bb2bb0afccf6"
+        },
+        {
+          "id": "R-views-share-module",
+          "digest": "d9eee4b0df8ed8d338e26c4d0ba4980636441e736a9a0cfe22c846ddb9532177"
         },
         {
           "id": "R-global-escaped",
@@ -829,7 +849,12 @@
     "R R-enum-initializer",
     "R R-closure-global",
     "R R-closure-depth",
+    "R R-closure-export-from",
+    "R R-closure-dynamic",
+    "R R-closure-require",
+    "R R-closure-import-equals",
     "R R-views-each-judged",
+    "R R-views-share-module",
     "R R-global-escaped",
     "R R-script-var",
     "R R-script-typed",
@@ -943,6 +968,7 @@
     "shared pins: each pin of this census that shares an id with a pin of the landed reader's ROWS plants exactly that pin's files and copies none, each GLOBAL line it holds is a line of that pin, and every row U pin is one",
     "refusal #4 of record: each IE member its CLASSES OF RECORD names admitted, and IE8, reds judgeTree through GLOBAL, each control at the count of GLOBAL lines it states and each GK witness at exactly one",
     "provenance: judgeTree's GLOBAL reading is the landed reader's - the helper imports freeNamesOf and ADMITTED_FREE from it, judgeTree calls that freeNamesOf, no function of the helper shares a name with one the reader declares, and the helper's ADMITTED_FREE is the reader's",
+    "header anchors (wb-hjiq): every pin id this file's header and the helper's header name is a pin of ROWS, and the case counts THE PINNED SET states are ROWS's pins and the cases registered after them",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways"
   ],
   "residuals": {
