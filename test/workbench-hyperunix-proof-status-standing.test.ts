@@ -108,10 +108,11 @@
  *      beside a planted status (the variant leg, on every variant); and that probe's positive control, built outside the legs on
  *      the same cell: each variant (a planted status) with the exemplar's values set on it fires the probe and its registration
  *      twin (read off the probe's own record of the readings it judged: one judgement per variant, each the reading of the variant
- *      at its turn, pairwise distinct), and the field-less reading with them set fires the twin alone, so a reading at the
- *      exemplar's values beside a planted status fires the probe the legs read quiet; for each of R2's, the channel reads or detects
- *      the planted member of a traced reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the
- *      proxy, a structured clone refuses it while the plain reading clones with the member).
+ *      at its turn, pairwise distinct; and off the same record, the verdict it gave on each: the probe and its registration twin,
+ *      frozen, the very list the control holds from its call at that turn), and the field-less reading with them set fires the twin
+ *      alone, so a reading at the exemplar's values beside a planted status fires the probe the legs read quiet; for each of R2's,
+ *      the channel reads or detects the planted member of a traced reading while the tracer records nothing (util.inspect shows it,
+ *      util.types.isProxy tells the proxy, a structured clone refuses it while the plain reading clones with the member).
  * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
  * pinned by its quiet row in Q): for K1's judge, R-INFLECTED an inflection of "prove" that drops its final e (proving, provable,
  * unprovable); R-SYNONYM a word of the same reading built on no named stem (unconfirmed, falsified, certified, attested, untrusted,
@@ -161,6 +162,13 @@
  * variant), H03 beside Z9 (a control that reads the first variant on every pass). The probe now records each reading it is given,
  * and the control reads off that record one judgement per variant, each given the reading of the variant at its turn (rebuilt
  * from that variant, compared by serialization), and the judged readings pairwise distinct.
+ * wb-w6yw (the R694 follow-up of landing 816, its gate's F1): the probe's record held the readings it judged, not its verdict on
+ * them, so the control's one assertion of that verdict, edited at its subject to keep the call and hold its own expected list in
+ * place of the verdict (the gate's G01, [fired(reading), [label, twin]][1], and G02, fired(reading) && [label, twin]), read green
+ * beside a second edit that the control otherwise reds: G01 beside L05 or L06, G02 beside L05. The probe now records, beside each
+ * reading it is given, its verdict on that reading (frozen, and the same list fired returns), and the control also reads that
+ * verdict off the record: at each variant's turn, the probe and its registration twin (compared by serialization), frozen, and the
+ * very list the control holds from its call at that turn (compared by identity).
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2). */
 import {readFileSync} from 'node:fs';
@@ -1259,21 +1267,26 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     }
     expect(probes.map(probe => probe.expected.length > 0)).toStrictEqual(JOINT_RESIDUALS.flatMap(([, joints]) =>
       joints.flatMap(joint => [false, true, ...joint.map(() => true)])));
-    // fired records each reading it is given, in call order, so the positive control below reads the readings it judged off the
-    // probe's own record, not off the readings it built (wb-i3iu).
-    const given: JsonValue[] = [];
+    // fired records each reading it is given beside its verdict on that reading (the ids of the probes the reading fires, frozen) and
+    // returns that same list, in call order, so the positive control below reads the readings it judged off the probe's own record, not
+    // off the readings it built (wb-i3iu), and its verdict on each off that record too, not only off the value its assertion holds; and
+    // the list the control holds from each call is that recorded list itself (wb-w6yw).
+    const given: (readonly [JsonValue, readonly string[]])[] = [];
     const fired = (reading: JsonValue): readonly string[] => {
-      given.push(reading);
       const values = valuesOf(reading);
-      return probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id);
+      const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
+      given.push([reading, verdict]);
+      return verdict;
     };
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
     // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
     // the readings fired judged are read off its own record (wb-i3iu): one judgement per variant, each given the reading of the variant
-    // at its turn (rebuilt from that variant, compared by serialization), and pairwise distinct. So the probe the legs read quiet is
-    // one such a reading fires: a probe whose values no reading holds, or that fired never reports, reds here, where the legs alone
-    // read it quiet.
+    // at its turn (rebuilt from that variant, compared by serialization), and pairwise distinct; and the verdict fired gave on each
+    // judged reading is read off the same record (wb-w6yw): at each variant's turn, the probe and its registration twin (compared by
+    // serialization), frozen, and the very list the control holds from its call at that turn (compared by identity). So the probe the
+    // legs read quiet is one such a reading fires: a probe whose values no reading holds, or that fired never reports, reds here, where
+    // the legs alone read it quiet.
     let controlled = 0;
     for (const [id, joints] of JOINT_RESIDUALS) {
       for (const joint of joints) {
@@ -1283,15 +1296,27 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         const readings = variants.map(variant => k3Reading(variant.reading, joint));
         expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
         const first = given.length;
+        const returned: (readonly string[])[] = [];
         for (const [index, reading] of readings.entries()) {
-          expect(fired(reading), `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
+          const verdict = fired(reading);
+          returned.push(verdict);
+          expect(verdict, `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
           controlled++;
         }
-        const judged = given.slice(first).map(reading => JSON.stringify(reading));
+        const judged = given.slice(first).map(([reading]) => JSON.stringify(reading));
         const unjudged = variants.filter((variant, index) => judged[index] !== JSON.stringify(k3Reading(variant.reading, joint)));
         expect(unjudged.map(variant => variant.label), `${label} (positive control, a variant not judged at its turn)`).toStrictEqual([]);
         expect(judged, `${label} (positive control, one judgement per variant)`).toHaveLength(variants.length);
         expect(new Set(judged).size, `${label} (positive control, the judged readings pairwise distinct)`).toBe(variants.length);
+        const recorded = given.slice(first).map(([, verdict]) => verdict);
+        const misjudged = variants.filter((_, index) => JSON.stringify(recorded[index]) !== JSON.stringify([label, twin]));
+        expect(misjudged.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not the probe and its twin)`)
+          .toStrictEqual([]);
+        const unrecorded = variants.filter((_, index) => returned[index] !== recorded[index]);
+        expect(unrecorded.map(variant => variant.label), `${label} (positive control, a variant whose returned verdict is not the recorded one)`)
+          .toStrictEqual([]);
+        const unfrozen = variants.filter((_, index) => !Object.isFrozen(recorded[index]));
+        expect(unfrozen.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not frozen)`).toStrictEqual([]);
       }
     }
     expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
