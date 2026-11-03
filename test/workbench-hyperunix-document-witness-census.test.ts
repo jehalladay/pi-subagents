@@ -1,8 +1,13 @@
 /**
  * wb-byfw (the R694 follow-up of wb-ulnv's rule-19 structural exit R-B243; the dependency inversion R-B313 folded wb-ulnv refusal
- * #4's members into it), the DOCUMENT WITNESS twin census, cut #3: the enumerate-the-resolvable form the second-stage cap R-B362
- * binds for wb-byfw refusal #2's frozen claim sets (U1, the W7 Proxy forms; U3, each judged row's case anchored outside this
- * file), with refusal #2's rung-1 U2 (the twin-edge words) and its F1 edges D1, D3, D4 and RX1 pinned in the same cut. It pins the
+ * #4's members into it), the DOCUMENT WITNESS twin census, cut #4: the fail-closed core that the rule-19 structural exit R-B394
+ * orders at wb-byfw refusal #3 (child wb-gnj9), over cut #3, the enumerate-the-resolvable form the second-stage cap R-B362 bound
+ * for refusal #2's frozen claim sets (U1, the W7 Proxy forms; U3, each judged row's case text - its probe's and its present's
+ * initializers as this file spells them - anchored outside this file), with refusal #2's rung-1 U2 (the twin-edge words) and its
+ * F1 edges D1, D3, D4 and RX1 pinned. Cut #4 claims exactly what those pins hold: refusal #3 found that the anchor reads each
+ * row's case text and never the row a case runs, so a case run on a row changed at run time, a case handed an it.each table
+ * argument other than its table's own rows, and an edit of this file that no falsifier names are NOT CLAIMED (SCOPE and NOT
+ * CLAIMED, below); wb-gnj9 carries the W3 and W7 run-time route. It pins the
  * readings of twinWalk (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus census's walk in
  * test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header) with at most one of the gate's
  * refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the namespace of wb-ulnv's R-HIDDEN plant
@@ -20,13 +25,19 @@
  *
  * FORM WORDS (every W3 and W7 row id and every claim below): a binding is an own property of the namespace a row plants, the
  * walks' top level; a property below the top level is an own property of the plain object a row holds in an enumerable
- * string-keyed data binding (HOLDER). Each id names the one form its row plants: the key kind (string-keyed or symbol-keyed),
- * enumerability and descriptor kind (data or accessor) of the binding or property the twin's change is about, and below the
- * top level when the form sits there; what an id leaves unnamed is as the row's probe plants it, and the roster pins that
- * probe's text. An id describes the one value its row plants, not a family of values. An object Proxy is a Proxy of a plain
- * object with an empty handler; a function-target Proxy is a Proxy of an arrow function with an empty handler.
+ * string-keyed data binding (HOLDER). Each id names the one form its row, as the table literal spells it, plants: the key kind
+ * (string-keyed or symbol-keyed), enumerability and descriptor kind (data or accessor) of the binding or property the twin's
+ * change is about, and below the top level when the form sits there; what an id leaves unnamed is as the row's probe plants it,
+ * and the roster pins that probe's text. An id describes the one value its row plants, not a family of values. An object Proxy
+ * is a Proxy of a plain object with an empty handler; a function-target Proxy is a Proxy of an arrow function with an empty
+ * handler.
  *
  * PINNED READER SET (each claim names the case that judges it and the falsifier that turns it red):
+ * SCOPE (the fail-closed core, R-B394): every claim below is about this file as it stands at this cut and about the edits of it
+ *   that its falsifier names. A W3 or W7 claim is about each row as the table literal spells it (the probe's and the present's
+ *   initializer text, which the roster pins), run by its case through that case's it.each table argument as this file spells it;
+ *   a W8 or W9 claim is about each page as its table holds it, run the same way. A change of this file that no falsifier names is
+ *   NOT CLAIMED (NOT CLAIMED, below).
  * W0 LIVE: over today's three export subpaths, the walk with no twin and each twin read the representation at exactly
  *   .:SDK_REPRESENTATION. Falsifier: a release or a walk that reads another path.
  * W1 THE QUIET: the walk with no twin reads hiddenPlant at exactly .:SDK_REPRESENTATION: none of the planted documents.
@@ -37,22 +48,22 @@
  *   twin's reach (emptied, as the gate's GV1-GV6; moved to a form the twin does not read, as GV3X's array prototype and GV5X's and
  *   GV5Y's escape-spelled JSON; or held back until a function is called, as the four GP21 members) reds that twin's row, and so
  *   does a twin that reads another path.
- * W3 THE FORMS (40 rows): each TWIN_CONTROLS row plants the one form its id names in a namespace of its own. Its present read
- *   finds the planted document in that form (the position, key kind, enumerability, descriptor kind, holder and container the id
- *   names); the walk with no twin and each twin, each over an instance of its own, read it at the row's path when readBy names the
- *   twin and read nothing otherwise; every function the row plants as a data property records its name when called, a census-side
- *   call of each records exactly the row's calls (its liveness), and no walk's record holds a call. The W3 twin-edge claims are the
- *   rows themselves, the 40 ids with their readBy (FROZEN SHAPE's controls literal and the roster), each a claim about the one form
- *   its id names; no sentence of this header claims a twin's reading of a form no row plants. Among them: 'TV2 a non-enumerable
- *   string-keyed data binding' and 'TV6 an enumerable string-keyed accessor binding' are read by their twins, while 'TV1 a
- *   non-enumerable symbol-keyed data binding' and 'TV1 an enumerable symbol-keyed accessor binding' are read by no walk; 'TV3 a
- *   record prototype's enumerable string-keyed data' and 'TV4 a function's own enumerable string-keyed data' are read by their
- *   twins, while 'TV3 a record prototype's enumerable symbol-keyed data' and 'TV4 a function's own enumerable symbol-keyed data'
- *   are read by no walk. Falsifier: a twin wider or narrower than its change at a row's form (the prototype channel of wb-ulnv's
- *   cut #4, which read any object prototype, its bytes channel, which decoded JSON, and the gate's B1-B4, D1-D4 and HM1-HM5 among
- *   them) reds that row; so does a walk that calls a function a row plants, before, while or after it reads, the call caught or
- *   not; a probe swapped for one without the planted document in the row's own form (as its present read checks it) reds that
- *   read.
+ * W3 THE FORMS (40 rows): each TWIN_CONTROLS row, as the table literal spells it and its W3 case runs it (SCOPE), plants the one
+ *   form its id names in a namespace of its own. Its present read finds the planted document in that form (the position, key kind,
+ *   enumerability, descriptor kind, holder and container the id names); the walk with no twin and each twin, each over an instance
+ *   of its own, read it at the row's path when readBy names the twin and read nothing otherwise; every function the row plants as
+ *   a data property records its name when called, a census-side call of each records exactly the row's calls (its liveness), and
+ *   no walk's record holds a call. The W3 twin-edge claims are the rows themselves, the 40 ids with their readBy (FROZEN SHAPE's
+ *   controls literal and the roster), each a claim about the one form its id names as its row's literal plants it; no sentence of
+ *   this header claims a twin's reading of a form no row plants. Among them: 'TV2 a non-enumerable string-keyed data binding' and
+ *   'TV6 an enumerable string-keyed accessor binding' are read by their twins, while 'TV1 a non-enumerable symbol-keyed data
+ *   binding' and 'TV1 an enumerable symbol-keyed accessor binding' are read by no walk; 'TV3 a record prototype's enumerable
+ *   string-keyed data' and 'TV4 a function's own enumerable string-keyed data' are read by their twins, while 'TV3 a record
+ *   prototype's enumerable symbol-keyed data' and 'TV4 a function's own enumerable symbol-keyed data' are read by no walk.
+ *   Falsifier: a twin wider or narrower than its change at a row's form (the prototype channel of wb-ulnv's cut #4, which read any
+ *   object prototype, its bytes channel, which decoded JSON, and the gate's B1-B4, D1-D4 and HM1-HM5 among them) reds that row; so
+ *   does a walk that calls a function a row plants, before, while or after it reads, the call caught or not; a probe swapped for
+ *   one without the planted document in the row's own form (as its present read checks it) reds that read.
  * W4 EMPTIED: hiddenPlant with one held site emptied (its binding kept), for each site FORMS names, each reading measured against
  *   the same walk over a full hiddenPlant (not against TWIN_READINGS): the walk with no twin reads it unchanged; a twin-read site's
  *   emptying takes exactly one path from its own twin's reading and changes no other twin's; and each other site's emptying (a
@@ -71,10 +82,11 @@
  *   records each (liveness), every walk reads the recorded plant as it reads hiddenPlant, and no walk calls a recorder.
  *   Falsifier: a walk that calls a binding's function before, while or after it reads (the order of wb-ulnv cut #4's channels is
  *   the first), whether or not the call throws or is caught.
- * W7 THE PROXIES (12 rows): each PROXY_FORMS row plants one Proxy at the position its id names, in a namespace of its own; its
- *   present read finds the Proxy there; the walks the row's throwBy names throw an error saying a value is a Proxy, and every
- *   other walk reads without throwing, at the row's path when readBy names it and nothing otherwise. The W7 claims are the rows
- *   themselves, the 12 ids with their throwBy and readBy (FROZEN SHAPE's proxies literal and the roster). Among them: 'an object
+ * W7 THE PROXIES (12 rows): each PROXY_FORMS row, as the table literal spells it and its W7 case runs it (SCOPE), plants one
+ *   Proxy at the position its id names, in a namespace of its own; its present read finds the Proxy there; the walks the row's
+ *   throwBy names throw an error saying a value is a Proxy, and every other walk reads without throwing, at the row's path when
+ *   readBy names it and nothing otherwise. The W7 claims are the rows themselves, the 12 ids with their throwBy and readBy
+ *   (FROZEN SHAPE's proxies literal and the roster), each about the Proxy its row's literal plants. Among them: 'an object
  *   Proxy in an enumerable string-keyed data binding' and 'an object Proxy in an enumerable string-keyed data property below the
  *   top level' throw under every walk; 'an object Proxy in a non-enumerable string-keyed data binding' throws under TV2 only and
  *   'an object Proxy behind an enumerable string-keyed accessor binding' under TV6 only; the five rows of refusal #2's A1-A5 forms
@@ -84,17 +96,18 @@
  *   property below the top level') throw under no walk and are read by none. Falsifier: at a row's Proxy and position, a walk that
  *   reads a Proxy it enters instead of throwing, that throws on one it does not enter (TV3's Proxy prototype and the five rows
  *   above among them), or that skips one (the gate's H-PX-NESTED-SKIP).
- * W8 THE READER: headerReading over each READER_PAGES row, a synthetic header in the anchor's comment form whose R-HIDDEN entry
- *   is ENTRY (the anchor's first three clauses) with the row's edits: its lead count and its forms are exactly the row's. As the
- *   anchor words it, the anchor's 11 forms; two forms swapped, a form named anew inside the second clause, a form named twice, a
- *   form named anew or again after the bytes form (still in the second clause), a moved line break and a continuation line with
- *   one space after its gutter each read as written, in order; a form joined to the next by and reads as one form; a form named
- *   in the third clause is not read; a second, earlier lead reads 2 leads and no forms, no lead 0 leads and no forms, and a
- *   second clause with no closing semicolon no forms. Falsifier: a reader that re-orders, filters or de-duplicates the forms,
- *   splits at and, stops at the bytes form, reads the first of two leads, reads past the second clause or before its end, or
- *   joins only one gutter width.
- * W9 THE CASE READER: caseReading over each CASE_PAGES row, a synthetic source (CASE_BASE with the row's edits) read for its
- *   list ROWS: its rows and its shared declarations are exactly the row's. A row is an element of the one top-level array
+ * W8 THE READER: headerReading over each READER_PAGES row as its table holds it and its W8 case runs it (SCOPE), a synthetic
+ *   header in the anchor's comment form whose R-HIDDEN entry is ENTRY (the anchor's first three clauses) with the row's edits: its
+ *   lead count and its forms are exactly the row's. As the anchor words it, the anchor's 11 forms; two forms swapped, a form named
+ *   anew inside the second clause, a form named twice, a form named anew or again after the bytes form (still in the second
+ *   clause), a moved line break and a continuation line with one space after its gutter each read as written, in order; a form
+ *   joined to the next by and reads as one form; a form named in the third clause is not read; a second, earlier lead reads 2
+ *   leads and no forms, no lead 0 leads and no forms, and a second clause with no closing semicolon no forms. Falsifier: a reader
+ *   that re-orders the forms, drops a form a page names or de-duplicates them, splits at and, stops at the bytes form, reads the
+ *   first of two leads, reads past the second clause or before its end, or joins only one gutter width.
+ * W9 THE CASE READER: caseReading over each CASE_PAGES row as its table holds it and its W9 case runs it (SCOPE), a synthetic
+ *   source (CASE_BASE with the row's edits) read for its list ROWS: its rows and its shared declarations are exactly the row's.
+ *   A row is an element of the one top-level array
  *   literal declared as the list (no rows when the list is declared other than once): its id string, and the sha256 of its
  *   probe's and its present's initializer text exactly as the source spells it (spacing and comments inside it included), or
  *   'absent' for an id that is not a string literal or a property the element lacks. The shared declarations are the top-level
@@ -106,21 +119,24 @@
  *   id's quotes, digests a statement with the comment before it, misses a shorthand, a class or a transitive name, counts a
  *   property name or a name after a dot, or orders the shared declarations other than by source.
  * ROSTER: test/fixtures/hyperunix-document-witness-roster.json (out of file; the R660 / wb-5jha roster shape) lists every W3 row
- *   with its readBy, path, calls and the sha256 of its probe's and its present's source text, every W4 site with its form's twin,
- *   every W7 row with its throwBy, readBy, path and the same two digests, every W8 page with its lead count, its forms and the
- *   sha256 of its page text, every W9 page with its row and shared counts and the sha256 of its source, and the shared
- *   declarations the W3 and W7 cases name, each with the sha256 of its statement's text, in census order; caseReading over this
- *   file's own source (the file the census runs from) and the in-file tables equal it both ways, and RECORDS expects the case of
- *   every row, site and page it lists. Falsifier: a row or site dropped, added, renamed or re-pinned in every literal of this
- *   file (standing rule 16's CT5 and CT6); a page's edits swapped for another page's; a W3 or W7 row's probe or present replaced
- *   or edited (the gate's 200 refusal #2 case swaps, each one row given another's case, and its ten realized pairs, the swaps that
- *   hid P-TV3ANY, E-TV1-EVERY-SYMBOL, E-TV4-NONENUM, HM4, E-TV1-SYMBOL-ACCESSORS, E-TV3-CHAIN, HM1, HM2, HM5 and H-PX-NESTED-SKIP,
- *   among them); a shared declaration edited.
+ *   with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as this file spells it, every
+ *   W4 site with its form's twin, every W7 row with its throwBy, readBy, path and the same two digests, every W8 page with its
+ *   lead count, its forms and the sha256 of its page text, every W9 page with its row and shared counts and the sha256 of its
+ *   source, and the shared declarations the W3 and W7 rows' probes and presents name, each with the sha256 of its statement's
+ *   text, in census order; caseReading over this file's own source (the file the census runs from) and the in-file tables (their
+ *   ids, readBy, throwBy, paths, calls, sites and pages as the tables hold them when ROSTER runs) equal it both ways, and RECORDS
+ *   expects a case under the id of every row, site and page it lists. The digests read text, never the probe or present a W3 or
+ *   W7 case calls, and ROSTER reads the tables, never a case's it.each table argument (SCOPE). Falsifier: a row or site dropped,
+ *   added, renamed or re-pinned in every literal of this file (standing rule 16's CT5 and CT6); a page's edits swapped for another
+ *   page's in its table; a W3 or W7 row's probe or present initializer text replaced or edited in the table literal (the gate's
+ *   200 refusal #2 text case swaps, each one row's initializer texts given another row's, and its ten realized pairs, the swaps
+ *   that hid P-TV3ANY, E-TV1-EVERY-SYMBOL, E-TV4-NONENUM, HM4, E-TV1-SYMBOL-ACCESSORS, E-TV3-CHAIN, HM1, HM2, HM5 and
+ *   H-PX-NESTED-SKIP, among them, and refusal #3's text control GP4-TEXT); a shared declaration's statement text edited.
  * FROZEN SHAPE (standing rule 16): TWINS, TWIN_READINGS' path counts, FORMS' phrases, twins and site counts, TWIN_CONTROLS' ids,
  *   readBy and calls, PROXY_FORMS' ids, throwBy and readBy, READER_PAGES' ids, lead counts and form counts, and CASE_PAGES' ids,
  *   row counts and shared counts are literals.
- * RECORDS (the last case): every W2 twin, W4 site and every W3, W7, W8 and W9 row the roster lists ran to its end, with W0, W1,
- *   W5, W6, ROSTER and FROZEN SHAPE, and no other case.
+ * RECORDS (the last case): a case under every W2 twin, W4 site and W3, W7, W8 and W9 row id the roster lists ran to its end, with
+ *   W0, W1, W5, W6, ROSTER and FROZEN SHAPE, and no other case; it reads the ids the cases record, not the rows they ran.
  * NOT CLAIMED (scope sentences; no residual and no follow-up bead):
  *   The result-corpus census's own plant, quiet row and DOCUMENT WITNESS, on trunk and on wb-ulnv's branch, are NOT CLAIMED by this
  *   census: wb-ulnv's re-cut can read its plant through twinWalk, and its census judges that.
@@ -138,16 +154,28 @@
  *   Which traps a Proxy runs when a walk reads through it, whether a walk runs an accessor's getter without reading its value, and
  *   the order in which a walk lists bindings (its readings are sorted) are NOT CLAIMED by this census.
  *   headerReading over a header W5 and W8 do not model (a lead split across a comment boundary, clauses joined by other marks, the
- *   lead outside the text before the first comment close) is NOT CLAIMED by this census.
- *   The digests anchor each W3 and W7 row's probe and present text and the shared declarations' statements: an edit of a test body
- *   (an it callback), of an import, of the comments before a declaration or of a declaration no case names (callPlanted, outcome and
- *   walked among them) is NOT CLAIMED by the digests; whether a local name spelled like a top-level declaration counts as naming it,
- *   and caseReading over a source W9 does not model (a list that is not an array literal of object literals, a name reached through
- *   a computed key or another file), are NOT CLAIMED by this census.
+ *   lead outside the text before the first comment close, an empty form between two separators) is NOT CLAIMED by this census.
+ *   The digests anchor each W3 and W7 row's probe and present initializer text and the shared declarations' statements as this
+ *   file spells them, never a value the census builds from them. A case run on a row changed at run time - a statement or an
+ *   expression anywhere in this file that assigns to or into a W3 or W7 row, its probe or its present: at the top level, as the
+ *   gate's refusal #3 GP4-RT swaps put another row's probe and present onto TWIN_CONTROLS[i] or PROXY_FORMS[i] with
+ *   Object.assign (268 of 268 keep the census green); in a declaration's initializer, as GP4-RT-DECL's const SWAPPED; or in a
+ *   test body, as this cut's S4-BODY-W3 - and a W3, W7, W8 or W9 case handed an it.each table argument other than its table's own
+ *   rows (the gate's GP4-RT-EACH for W3; this cut's S4-EACH-W7, S4-EACH-W8 and S4-EACH-W9) are NOT CLAIMED by this census, nor
+ *   are the realized pairs they hide: the gate's P-TV3ANY, E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP under their rows' run-time
+ *   swaps, and this cut's H-PX-NESTED-SKIP, GP4-A1 and CR10 under the W7, W8 and W9 it.each swaps (each red alone). wb-gnj9
+ *   carries the W3 and W7 run-time route (R-B394).
+ *   Any other edit of this file that no falsifier above names - of a test body (an it callback), of an import, of the comments
+ *   before a declaration, or of a declaration no row's probe or present names (WALKS, MODULES, walked, outcome, callPlanted, RAN,
+ *   caseOf and readRoster among them; WALKS without TV3 hides P-TV3ANY, this cut's S4-WALKS-PAIR) - is NOT CLAIMED by this
+ *   census; whether a local name spelled like a top-level declaration counts as naming it, and caseReading over a source W9 does
+ *   not model (a list that is not an array literal of object literals, a name reached through a computed key or another file),
+ *   are NOT CLAIMED by this census.
  *   An edit of this file and the roster fixture together, or of the ROSTER case itself or SELF (the path caseReading reads), is NOT
  *   CLAIMED by this census.
- * RESIDUALS: none named; every member of wb-byfw refusal #2 (A1-A9, B1-B4, the 200 case swaps and their pairs, D1-D4, RX1 and
- *   H-PX-NESTED-SKIP) is pinned by a row above or killed through one.
+ * RESIDUALS: none named; every member of wb-byfw refusal #2 (A1-A9, B1-B4, the 200 text case swaps and their pairs, D1-D4, RX1
+ *   and H-PX-NESTED-SKIP) is pinned by a row above or killed through one, and refusal #3's run-time route is a scope sentence of
+ *   NOT CLAIMED above, no residual of this census (wb-gnj9 carries the W3 and W7 route).
  * Display paths added: none. Test-only: it reads files, spawns nothing and writes no file.
  */
 import { createHash } from "node:crypto";
@@ -1264,7 +1292,7 @@ const readRoster = (): Roster => JSON.parse(readFileSync(ROSTER_FIXTURE, "utf8")
 
 const RAN = new Set<string>();
 
-describe("wb-byfw DOCUMENT WITNESS twin census: twinWalk's readings of today's release, wb-ulnv's R-HIDDEN plant, one-form controls and Proxy forms, headerReading's reading of the result-corpus census's R-HIDDEN header, and caseReading's digests of this file's row cases", () => {
+describe("wb-byfw DOCUMENT WITNESS twin census: twinWalk's readings of today's release, wb-ulnv's R-HIDDEN plant, one-form controls and Proxy forms, headerReading's reading of the result-corpus census's R-HIDDEN header, and caseReading's digests of this file's row case texts", () => {
   it("W0 LIVE: every walk reads today's three export subpaths at exactly .:SDK_REPRESENTATION", () => {
     expect(Object.fromEntries(WALKS.map((walk) => [walk, walked(MODULES, walk)])), "W0: today's release under the walk and each twin").toStrictEqual(
       Object.fromEntries(WALKS.map((walk) => [walk, [SDK_PATH]])),

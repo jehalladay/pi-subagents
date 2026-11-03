@@ -13,21 +13,23 @@
  * TV3-WALK-READS-INHERITED, TV4-WALK-ENTERS-FUNCTIONS, TV5-WALK-DECODES-BYTES and TV6-TOP-ACCESSORS-READ), that change's text placed
  * behind its twin's test at the site the change edits. What a census holds this module to is the readings
  * test/workbench-hyperunix-document-witness-census.test.ts pins; each comment below names the census cases that pin its words,
- * and a reading no case pins is NOT CLAIMED there. Test-only: no src, docs or receipt is read or written here.
+ * and a reading no case pins is NOT CLAIMED there; the census pins its W3 and W7 rows as its table literals spell them and its
+ * cases run them (its header's SCOPE, wb-byfw cut #4), so a row changed at run time is NOT CLAIMED there or here. Test-only: no
+ * src, docs or receipt is read or written here.
  */
 import { types } from "node:util";
 
 /** The representation the walk looks for, as the census spells it. */
 const REPRESENTATION = "hyperunix.result/1";
 
-/** The gate's refusal #2 walk changes, each at one site of the census's walk; the census's W3 rows pin each one at the forms
- * their ids name, and a form no row plants is NOT CLAIMED here: TV1 also reads the data values of a namespace's own enumerable
- * symbol-keyed bindings; TV2 reads the data values of its own string-keyed bindings (Object.getOwnPropertyNames, non-enumerable
- * ones too); TV3 also walks the own enumerable string-keyed data properties (Object.keys) of a walked value's prototype when that
- * prototype is a record other than Object.prototype; TV4 enters a function as an object and walks its own enumerable string-keyed
- * data properties (Object.keys); TV5 carries the path of a Uint8Array (a Buffer is one) whose UTF-8 text includes the
- * representation; TV6 reads a namespace's enumerable string-keyed bindings through Reflect.get, which runs an accessor binding's
- * getter. */
+/** The gate's refusal #2 walk changes, each at one site of the census's walk; the census's W3 rows, as its table literal spells
+ * them, pin each one at the forms their ids name, and a form no row plants is NOT CLAIMED here: TV1 also reads the data values of
+ * a namespace's own enumerable symbol-keyed bindings; TV2 reads the data values of its own string-keyed bindings
+ * (Object.getOwnPropertyNames, non-enumerable ones too); TV3 also walks the own enumerable string-keyed data properties
+ * (Object.keys) of a walked value's prototype when that prototype is a record other than Object.prototype; TV4 enters a function
+ * as an object and walks its own enumerable string-keyed data properties (Object.keys); TV5 carries the path of a Uint8Array (a
+ * Buffer is one) whose UTF-8 text includes the representation; TV6 reads a namespace's enumerable string-keyed bindings through
+ * Reflect.get, which runs an accessor binding's getter. */
 export type Twin = "TV1" | "TV2" | "TV3" | "TV4" | "TV5" | "TV6";
 export const TWINS: readonly Twin[] = ["TV1", "TV2", "TV3", "TV4", "TV5", "TV6"];
 
