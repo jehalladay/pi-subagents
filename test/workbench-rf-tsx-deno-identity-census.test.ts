@@ -8,32 +8,48 @@
  * CUT #3, in the enumerate-the-resolvable form (rule 19(c); the SECOND-STAGE CAP ruling R-B405 on refusal #2 froze the pin READ and
  * ANCHOR claim sets): the header claims exactly the pinned set below, each READ form known to pass the pin cases' passes unread is a
  * NAMED RESIDUAL with a pinned quiet row, and the rest is NOT CLAIMED.
+ * CUT #4, the FINAL cut, the FAIL-CLOSED CORE (the rule-19 structural exit R-B440 on this bead's refusal #3, O:1926; its child
+ * wb-tkdc carries that refusal's members): narrowing only. Every word of the frozen ANCHOR claim set that those members realize
+ * false is narrowed to what the anchor's checks read - the helper's source as the parser reads its statements and declarations,
+ * and its module namespace at two reads, as this file loads it and at the last word on the namespace - and the members' forms are
+ * NOT CLAIMED (below); that refusal's two record-precision findings F5 and F9 are answered the same way, by narrowed words. No
+ * reading, pin, witness, quiet row, check or case changes; the anchor case's title and one of its assertion messages are narrowed
+ * with the words.
  *
  * THE PINNED READER SET (this file, test/workbench-rf-tsx-deno-identity-census.test.ts; 10 cases and two last words, file-level
- * afterAll hooks, each passed with this cut on trunk 5259399):
+ * afterAll hooks, each passed with cut #4 on HEAD f8ab51ea, trunk c2b470a6 merged, as with cut #3 on trunk 5259399):
  *  - "the frozen shape: ..." - ROWS' `${id}:${pins.length}` equals ["ID:3", "SCAN:2"]; readings(), EXPECTED and WITNESS each hold
  *    exactly one entry per pin; QUIET's ids equal ["R-CARRIED-STATE", "R-VALUE-AWARE"], and so do, in order, the residual ids this
  *    header's RESIDUALS paragraph names, while QUIET's titles equal, in order, the quiet rows' titles this header quotes (both read
  *    from this file's own text, outside its literals). Falsifier: deleting a pin or a row (CT1, CT1b, CT4); a quiet row or a
  *    residual dropped from this file's literals, named in only one of QUIET and the header, or its title shortened in QUIET.
  *  - "the helper anchor: ..." - read from the helper's own source by the TypeScript parser and from its module namespace as this
- *    file loads it. THE SOURCE holds no top-level variable statement but a plain const (a let, a var and a using are refused), no
+ *    file loads it (the last word on the namespace, below, reads the namespace again once every case has run; the anchor reads it at
+ *    no other moment). THE SOURCE holds no top-level variable statement but a plain const (a let, a var and a using are refused), no
  *    var declaration anywhere (one in a block or a loop head binds a module name), no import declaration but of a node: built-in
- *    module, no import-equals declaration, no export declaration with a from clause, and nowhere the characters @ts-; so every name of the helper's module namespace is bound by a declaration of its own (a const,
- *    function, class, enum or namespace declaration, or an export default expression) or by an import of a node: built-in module,
- *    each a binding tsc refuses to assign. A SECTION is a `// ---- <title> ----` line comment
- *    among the leading comments of one of the helper's top-level statements or of its end of file, as ts.getLeadingCommentRanges
- *    reads them; the same characters anywhere else (inside a string, a template literal or a block, or a trailing comment) are no
- *    section. A FUNCTION EXPORT is a name of that namespace whose value is a function (a class among them), placed in the section
- *    of the top-level statement the parser reads as exporting that name: an export modifier on a function, class, variable, enum or
- *    namespace declaration (a default one under the name default), an export list with or without a from clause, or an export
- *    default expression. Every row's label is a section title, rows stand in section order, every function export is placed in
- *    exactly one section, and each section's function exports are exactly its row's pins (in the helper's order) plus its UNCLAIMED
- *    names. Falsifier: deleting, renaming or relabelling a pin or a row in this file (CT2, CT5, CT6); a function export the helper
- *    gains in any of those forms (a function or class declaration, a const holding an arrow, a function expression or another
- *    export, an export alias, a default export, a re-export) or in a form the parser does not read (then placed in no section); a
- *    section mark moved, retitled, deleted or held in a string or template literal; refusal #2's U2 member G2-A01 (a let export the
- *    helper binds to a function at its first call) and its eager twin G2-A01t, each refused at the source.
+ *    module, no import-equals declaration, no export declaration with a from clause, and nowhere the characters @ts-; so every name
+ *    of the helper's module namespace is bound by a declaration of its own (a const, function, class, enum or namespace declaration,
+ *    or an export default expression) or by an import of a node: built-in module. The source reading reads those forms alone - no
+ *    assignment and no call - so what the helper's code assigns to one of these bindings when it runs is NOT CLAIMED by it (cut #4):
+ *    tsc refuses the plain assignment to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628,
+ *    TS2631) but compiles one through a target wrapped in a type assertion, '(x as unknown) = y' (this bead's refusal #3, O:1926,
+ *    its F6), and the two namespace reads claim only what such an assignment leaves at load or at the last word. A SECTION is a
+ *    `// ---- <title> ----` line comment among the leading comments of one of the helper's top-level statements or of its end of
+ *    file, as ts.getLeadingCommentRanges reads them; the same characters anywhere else (inside a string, a template literal or a
+ *    block, or a trailing comment) are no section. A FUNCTION EXPORT is a name of that namespace whose value, as this file loads it,
+ *    is a function (a class among them), placed in the section of the top-level statement the parser reads as exporting that name:
+ *    an export modifier on a function, class, variable, enum or namespace declaration (a default one under the name default), an
+ *    export list with or without a from clause, or an export default expression. Every row's label is a section title, rows stand in
+ *    section order, every function export is placed in exactly one section, and each section's function exports are exactly its
+ *    row's pins (in the helper's order) plus its UNCLAIMED names. Falsifier: deleting, renaming or relabelling a pin or a row in
+ *    this file (CT2, CT5, CT6); a function export the helper gains in any of those forms (a function or class declaration, a const
+ *    holding an arrow, a function expression or another export, an export alias, a default export, a re-export) or, held by the
+ *    namespace as this file loads it, in a form the parser does not read as one (then placed in no section, or in a section that
+ *    does not claim it: this bead's refusal #3's G3-A03t, an enum export bound to a function by a top-level statement); a section
+ *    mark moved, retitled, deleted or held in a string or template literal; refusal #2's U2 member G2-A01 (a let export the helper
+ *    binds to a function at its first call) and its eager twin G2-A01t, each refused at the source. A function a name of the
+ *    namespace holds only after load, to the end, is the last word's to read (that name's value changed), and one it holds only
+ *    between load and the last word is NOT CLAIMED (below).
  *  - one case per pin, titled by the pin under `${row.id} ${row.label}`. It plants one tree under one scratch root, then runs its
  *    three passes, in order, from one call site, before it asserts anything: in each pass READ is the pin's entry of the record
  *    readings() builds for that pass alone, handed the one planted tree and a stand-in reader made by the one factory
@@ -75,14 +91,20 @@
  *    skip, todo, fails, skipIf and runIf, the options skip, todo and fails, and the context's skip() in a case or in a hook.
  *  - THE LAST WORD ON THE NAMESPACE, a second file-level afterAll: once every case has run, the helper's module namespace holds
  *    exactly the names it held as this file loaded it, each bound to the same value (Object.is). Falsifier: G2-A01 (its let export
- *    reads undefined at load and a function at the last word).
+ *    reads undefined at load and a function at the last word); this bead's refusal #3's G3-A05 (an enum export bound to a
+ *    function in a call the run makes, and left so). It reads the namespace at the end alone: a binding changed after load and
+ *    restored before the last word (that refusal's G3-A11, G3-A06 and G3-A06-1e) is NOT CLAIMED (below).
  *
  * THE CLAIMS, pin by pin (each clause is its pin's tables and nothing wider). Paths are planted under one scratch root and read back
- * with that root, and its realpath, written <root>. The falsifiers named are the one-edit members wb-70xe's refusals #3 (O:1718) and
- * #4 (O:1736) carried into this bead; each reds this census at the pins its clause names:
+ * with that root, and its realpath, written <root>. Every reading is compared as its JSON text (each pass's reading is read back
+ * through JSON, and rooted writes a value JSON cannot write, undefined among them, as null), so two values with one JSON text read
+ * alike and which of them a reader returns is NOT CLAIMED (this bead's refusal #1 F6, carried as its refusal #3 F9: resolveOnPath's
+ * undefined and a null read alike). The falsifiers named are the one-edit members wb-70xe's refusals #3 (O:1718) and #4 (O:1736)
+ * carried into this bead; each reds this census at the pins its clause names:
  *  - resolveOnPath (row ID): with the name deno, over each PATH_ROWS PATH, the join <entry>/deno of the first entry whose deno is an
- *    executable regular file (mode 0700) or a symlink to one, and undefined when no entry has one. The entry kinds (ENTRY_KINDS): a
- *    directory named deno, a symlink to a directory, a regular file of mode 0600, a symlink to a missing path, an entry holding no
+ *    executable regular file (mode 0700) or a symlink to one, and a reading whose JSON is null when no entry has one (which value
+ *    it is, undefined or null, is NOT CLAIMED: above). The entry kinds (ENTRY_KINDS): a directory named deno, a symlink to a
+ *    directory, a regular file of mode 0600, a symlink to a missing path, an entry holding no
  *    deno and an absent entry (the six PASSED_OVER kinds), then the two RESOLVING kinds. The PATHs: each kind alone; each passed-over
  *    kind before each resolving kind; the two resolving kinds in both orders; for every length n from 1 to PATH_BOUND and every index
  *    k below n, the passed-over kinds in turn before index k, an engine at k and resolving entries after it; the empty string and an
@@ -130,7 +152,12 @@
  * G2-B01 to G2-B05, under which the held members G-H03, G-D02 and G-P01 read green) is pinned by each pass building its own record
  * over the one planted tree before any assertion runs; its U2 (the late-bound let export G2-A01, beside its eager twin G2-A01t) by
  * the anchor's source reading and the last word on the namespace. The READ forms that tell the passes apart otherwise are the two
- * residuals below.
+ * residuals below. This bead's refusal #3 (O:1926), on the ANCHOR claim set R-B405 froze, answered by the structural exit R-B440
+ * (child wb-tkdc): its U1 (an enum export bound to a function after load and restored before the last word, G3-A11, G3-A06 and
+ * G3-A06-1e) and its U2 (an enum or a namespace export assigned a function through a target wrapped in a type assertion in
+ * pinnedDenoDigest, a call no case makes, G3-A03, G3-A04, G3-A03-1e and G3-A04-1e, with the rider G3-A02b, the class export
+ * assigned so under a biome-ignore line) are not pinned here: the anchor's words are narrowed to the reads it makes and those
+ * forms are NOT CLAIMED (below); their pins are wb-tkdc's.
  *
  * NOT CLAIMED (scope sentences; no follow-up): every UNCLAIMED function export of the helper (the class DenoIdentityRefusal and the
  * functions echoPath, sha256Of and pinnedDenoDigest), every helper export whose value is not a function (each helper constant), and
@@ -148,17 +175,30 @@
  * before a newline. And the tier wiring of these readers, the lane walk and what it reads of file names, the residual families the
  * helper's header names for wb-70xe's lane census, and wb-70xe's docs07 row R10. For the pin cases: a READ whose choice reads what
  * differs between the passes without telling them apart (the clock, a random draw), so that it substitutes on a row a pass holds
- * to EXPECTED by chance alone. For the anchor: a namespace binding changed after the last words through a path the source reading
- * leaves open, a direct eval (biome's recommended noGlobalEval refuses one; this file does not read for it). For the liveness case
- * and the last word: a vitest run that selects none of this file's cases (a name
- * or line filter that matches none, a configuration that excludes the file) and a set of edits that skips every case of this file
- * at once (the readers' describe and the liveness case both); vitest then runs no case and no hook of the file.
+ * to EXPECTED by chance alone. For the anchor (cut #4, the fail-closed core): it reads the helper's module namespace as this file
+ * loads it and, through the last word on the namespace, once every case has run, and at no moment between; the value a name of
+ * the namespace is bound to between those two reads is NOT CLAIMED by this census unless a pin's readings read it (each pin case
+ * reads its own pin's export at its start and claims that export's readings alone) - this bead's refusal #3's G3-A11, G3-A06 and
+ * G3-A06-1e, an enum export bound to a function for part of the run and restored before the last word, among them (a pin case's
+ * start can observe it as a function export placed in no section: G3-A11-observe). What the helper's code assigns to a
+ * module binding when it runs is NOT CLAIMED by the source reading, which reads no assignment, whatever the binding's kind and
+ * however the assignment is spelled (through a target wrapped in a type assertion, which tsc compiles, or under a biome-ignore
+ * line); the two namespace reads claim what it leaves at load (G3-A03t reds the anchor) or at the last word (G3-A05 reds the run
+ * there), and one made in a call no case makes is NOT CLAIMED by this census (that refusal's G3-A03, G3-A04, G3-A03-1e and
+ * G3-A04-1e, an enum or a namespace export assigned a function in pinnedDenoDigest, and the rider G3-A02b, the class export
+ * assigned Error there under a biome-ignore line). Their pins are wb-tkdc's. A namespace binding changed after the last words,
+ * through such an assignment or a direct eval (biome's recommended noGlobalEval refuses one; this file does not read for it), is
+ * NOT CLAIMED either. For the liveness case and the last word: a vitest run that selects none of this file's cases (a name or
+ * line filter that matches none, a configuration that excludes the file) and a set of edits that skips every case of this file at
+ * once (the readers' describe and the liveness case both); vitest then runs no case and no hook of the file.
  *
  * RESIDUALS (named families, each with its pinned quiet row, a case of its own): R-CARRIED-STATE, a READ that tells the passes apart
- * by state an earlier pass leaves - a count it keeps on globalThis or on what that reaches (process.env among them), on a table,
- * an array or a map of this file, on an imported module's objects, or on the planted tree (a file it writes, the tree's
- * descriptor, a time a read leaves on a file) - and takes its stand-in's return on the calls that pass makes sentinels alone, its
- * own expectation on every other row: the passes break nothing, so a held member under it is not read (the form of refusal #2's
+ * by state an earlier pass leaves, wherever that state outlives the pass - a count it keeps on globalThis or on what that reaches
+ * (process.env among them), on a binding, a table, an array or a map of this file, on this file's module meta object (import.meta)
+ * or one of its function objects (this bead's refusal #3's G3-B01 and G3-B03, its F5), on an imported module's objects, or on
+ * the planted tree (a file it writes, the tree's descriptor, a time a read leaves on a file), among them - and takes its
+ * stand-in's return on the calls that pass makes sentinels alone, its own expectation on every other row: the passes break
+ * nothing, so a held member under it is not read (the form of refusal #2's
  * G2-B01, its count moved out of the fresh record into state that outlives it). R-VALUE-AWARE, a READ that tells a sentinel from a
  * reading by what a call of its stand-in shows - the value it returns, a throw, how long it takes - and takes its stand-in's
  * return on the sentinel calls alone, its own expectation on every other row: the same (cut #2's NOT CLAIMED boundary W-B14, named
@@ -665,9 +705,12 @@ function exportedNames(statement: ts.Statement): string[] {
  * declaration list is not a plain const (a let, a var, a using), a var declaration anywhere (one in a block or a loop head at the
  * top level binds a module name), an import declaration of anything but a node: built-in module, an import-equals declaration,
  * an export declaration with a from clause, and the characters @ts- anywhere in its text (a directive that would silence a type
- * error). Under them every name the helper's module namespace holds is bound by a const, a
- * function, a class, an enum or a namespace declaration of its own, each a binding tsc refuses to assign (TS2588, TS2630, TS2629,
- * TS2628, TS2631).
+ * error). Under them every name the helper's module namespace holds is bound by a const, a function, a class, an enum or a
+ * namespace declaration of its own, by an export default expression or by an import of a node: built-in module. It reads those
+ * statements and declarations and the characters @ts- alone, no assignment and no call, so what the helper's code assigns to
+ * one of these bindings when it runs is NOT CLAIMED by it (cut #4; the header's NOT CLAIMED): tsc refuses the plain assignment
+ * to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628, TS2631) but compiles one through a
+ * target wrapped in a type assertion (this bead's refusal #3's G3-A03 and G3-A04).
  */
 function helperRefusals(): string[] {
   const text = readFileSync(HELPER_PATH, "utf8");
@@ -758,7 +801,7 @@ const QUIET: readonly Quiet[] = [
 /**
  * The helper's sections, in order: each `// ---- <title> ----` line comment among the leading comments of a top-level statement or
  * of the end of file (ts.getLeadingCommentRanges), and the function exports placed in it - every name a statement after the mark
- * exports (exportedNames) whose value in the module namespace is a function.
+ * exports (exportedNames) whose value in the module namespace as this file loads it (NAMESPACE) is a function.
  */
 function helperSections(): Section[] {
   const text = readFileSync(HELPER_PATH, "utf8");
@@ -785,7 +828,7 @@ function helperSections(): Section[] {
 
 const REACHED: string[] = [];
 const FROZEN_TITLE = "the frozen shape: the rows' ids and pin counts, one reading, one expectation and one witness per pin, and the quiet rows the header's residuals name";
-const ANCHOR_TITLE = "the helper anchor: the helper's source binds every export by a declaration tsc refuses to assign, each row is a helper section, and every function its module namespace exports is placed in one section as its pin or UNCLAIMED";
+const ANCHOR_TITLE = "the helper anchor: the helper's source holds none of the forms the anchor refuses, each row is a helper section, and every function its module namespace exports as this file loads it is placed in one section as its pin or UNCLAIMED";
 const LIVENESS_TITLE = "the registered tests and the reached pins: every other test in run mode, not inverted and ran before this case, and every pin reached its compare in row order";
 
 describe("wb-j4sm identity census: 5 readers of test/helpers/rf-tsx-deno.ts over planted PATHs, engines and texts", () => {
@@ -820,7 +863,7 @@ describe("wb-j4sm identity census: 5 readers of test/helpers/rf-tsx-deno.ts over
     const functions = [...NAMESPACE].filter(([, value]) => typeof value === "function").map(([name]) => name);
     expect(
       sections.flatMap(section => section.functions).sort(),
-      "the helper's function exports (its module namespace), each placed in exactly one section",
+      "the helper's function exports (its module namespace as this file loads it), each placed in exactly one section",
     ).toEqual([...functions].sort());
     for (const section of sections) {
       const unclaimed = UNCLAIMED[section.title] ?? [];
@@ -920,7 +963,8 @@ afterAll(() => {
   expect(liveness, "the last word: the liveness case is registered once, in run mode, not inverted, and passed").toEqual(["run | pass"]);
 });
 // THE LAST WORD ON THE NAMESPACE: once every case has run, the helper's module namespace holds exactly the names it held as this
-// file loaded it, each bound to the same value.
+// file loaded it, each bound to the same value. It reads the namespace at the end alone: what the namespace held between load and
+// this read is NOT CLAIMED by the anchor (the header's NOT CLAIMED, cut #4).
 afterAll(() => {
   const now = new Map(Object.entries(helper));
   const changed = [...new Set([...NAMESPACE.keys(), ...now.keys()])]
