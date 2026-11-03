@@ -1,11 +1,12 @@
 /**
- * wb-jwc.13 binding text reader sub-form census: what test/helpers/rf-binding-text-reader.ts reads on the 41 pins below (39
- * pages; the twin tw-coll.ts is read by three pins), the sub-forms that wb-jwc.10's refusals #3 and #4 name, and what this
- * file's six probes read on its one PROBES page. wb-jwc.13 is the rule-19 dependency-inversion child of wb-jwc.10: ruling
- * R-B233 filed it at refusal #3 (O:1611) with that refusal's members, and ruling R-B263 folded refusal #4's members
- * (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4 reader, its code moved byte for byte (the helper's header
- * names the lines). wb-jwc.10's census, roster and claim parts are not on trunk and are neither added nor edited here;
- * wb-jwc.10 stays parked until this lands, and its later re-cut can import the reader.
+ * wb-jwc.13 binding text reader sub-form census: what test/helpers/rf-binding-text-reader.ts reads on the 43 pins below (39
+ * pages; the twin tw-coll.ts is read by three pins, and EX-SPACED's and OR-SPACED's pages each by two), the sub-forms that
+ * wb-jwc.10's refusals #3 and #4 name, and what this file's six probes read on its one PROBES page. wb-jwc.13 is the
+ * rule-19 dependency-inversion child of wb-jwc.10: ruling R-B233 filed it at refusal #3 (O:1611) with that refusal's
+ * members, and ruling R-B263 folded refusal #4's members (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4
+ * reader, its code moved byte for byte (the helper's header names the lines). wb-jwc.10's census, roster and claim parts
+ * are not on trunk and are neither added nor edited here; wb-jwc.10 stays parked until this lands, and its later re-cut
+ * can import the reader.
  *
  * CUT #2 (wb-jwc.13's refusal #1, O:1768; the helper is unchanged). U1: a words pin now reads words(x) as JSON, its words in
  * order, and an undefined words(x) as the bare word undefined, which no JSON text is; so one joined element in place of six
@@ -37,12 +38,24 @@
  * reds EX-SPACED, OR-SPACED and ROSTER, and its two 3-edit routes (GP22-P-X6-EXACT+JEW and GP22-P-ONEWORD+JEW) red
  * EX-SPACED, OR-SPACED, SHAPE and ROSTER; each read 0 failed on cut #3. U1a: with refusal #4's q06 or q06b on the helper each
  * route reds the same cases, and with the judge as written q06 and q06b each red EX-SPACED beside q06, EX-POSITIONS and
- * ROSTER. U1b: the same with p08 or q05, which red OR-SPACED beside p08, OR-ORDERS and ROSTER. What still reads green with
- * these members on the helper is the every-literal postures listed below (a pin's probe re-pointed with its reading
- * re-pinned, refusal #2's G-C15 posture, and the judge's dispatch changed with every reading it then changes re-pinned in
- * ROWS, in the PROBES case and in the roster) and two of this file's comparisons hollowed together.
+ * ROSTER. U1b: the same with p08 or q05, which red OR-SPACED beside p08, OR-ORDERS and ROSTER. Of the edits that cut
+ * measured, what still reads green with these members on the helper is the every-literal postures listed below (a pin's
+ * probe re-pointed with its reading re-pinned, refusal #2's G-C15 posture, and the judge's dispatch changed with every
+ * reading it then changes re-pinned in ROWS, in the PROBES case and in the roster) and two of this file's comparisons
+ * hollowed together; so does one judge edit NOT CLAIMED below, PREP s195's GP14-J-EXACT-SELF.
  *
- * THE PINNED READER SET (this file; 45 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
+ * CUT #5 (wb-jwc.13's refusal #4, O:1893, and ruling R-B411, M:50868: rung 1 of a new claim set, the two parenthetical
+ * words() readings that cut #4 added to R4-U1a's and R4-U1d's claims and that no pin held; the class R-B378 froze held on
+ * cut #4, and the helper and every cut #4 row, label, pin, page and reading are unchanged). U1: each of those readings is
+ * now held by a words pin on its page: EX-SPACED-WORDS (R4-U1a) reads EX-SPACED's page and OR-SPACED-WORDS (R4-U1d) reads
+ * OR-SPACED's page, each pin with the path of the pin whose page it reads; SHAPE and the roster hold both, and ROSTER
+ * reads both a second time. U1a: refusal #4's GP14-H-WSORT-MULTI, GP14-H-WALT-SORT and GP14-H-WTAIL-MULTI on the helper
+ * each red OR-SPACED-WORDS and ROSTER. U1b: its position-keyed GP14-H-WREV-SECOND reds EX-SPACED-WORDS and ROSTER. Each of
+ * the four read 0 failed on cut #4. The cut also narrows three sentences PREP s195 recorded uncounted: the PROBES page
+ * changed (its F5), and the CUT #4 green list above and the PROBES title, which a judge edit computing the exact probe
+ * itself reaches (its F6).
+ *
+ * THE PINNED READER SET (this file; 47 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
  * inside `<row id>: <row label>`, then SHAPE, PROBES, ANCHOR and ROSTER. For each pin the assertion target is the pin's
  * probe over the pin's page, read by bindingTextReader at the pin's path, and the observed result is the pin's reading,
  * exactly and in order (toEqual). Each probe reads the calls it locates, in source order: texts - for each probe(x),
@@ -84,7 +97,10 @@
  *   p ?? "b", c ? "a" : d ? p : "b", c ? "a" : d ? "b" : p and p (EX-POSITIONS: p written as the left operand of ??, as the
  *   middle and as the last of three conditional branches, and alone), and ["a","b"] for c ? "a" : "b" (EX-POSITIONS); and,
  *   with texts that hold a space, undefined for c ? "rf x" : p and ["rf x","rf y"] for c ? "rf x" : "rf y", each text whole
- *   (EX-SPACED, on which words() reads ["rf","x","y"] for the second). Falsifiers: q06 and q06b.
+ *   (EX-SPACED); and on EX-SPACED's page words() reads undefined for c ? "rf x" : p and ["rf","x","y"] for
+ *   c ? "rf x" : "rf y" (EX-SPACED-WORDS). Falsifiers: q06 and q06b; for EX-SPACED-WORDS's second reading refusal #4's
+ *   GP14-H-WREV-SECOND (words() reversed for a probe call that is the second statement of a block), and for its first q07
+ *   and refusal #1's L2-W2.
  * - R4-U1b (member q07): words() reads undefined for c ? "rf x" : p (q07, twin tw-q07.ts) and for p ?? "rf",
  *   c ? "rf x" : d ? p : "rf y", c ? "rf x" : d ? "rf y" : p and p (WO-POSITIONS: p written where EX-POSITIONS writes it),
  *   and ["rf","x","y"] for c ? "rf x" : "rf y" (WO-POSITIONS). Falsifiers: q07 and refusal #1's L2-W2 (the list
@@ -104,8 +120,11 @@
  *   source text as the label), which PG-WHITESPACE reds.
  * - R4-U1d (members p08 and q05): exact() reads ["b","a"] for c ? "b" : "a" (p08, twin tw-p08.ts), ["b","c","a"] for
  *   c ? "b" : d ? "c" : "a" and ["a","B"] for c ? "a" : "B" (OR-ORDERS), and ["rf y","rf x"] for c ? "rf y" : "rf x", each
- *   text whole and in source order (OR-SPACED, on which words() reads ["rf","y","x"]). Falsifiers: p08 (sorted) and q05
- *   (sorted by localeCompare).
+ *   text whole and in source order (OR-SPACED); and on OR-SPACED's page words() reads ["rf","y","x"] for
+ *   c ? "rf y" : "rf x" (OR-SPACED-WORDS). Falsifiers: p08 (sorted) and q05 (sorted by localeCompare), and for
+ *   OR-SPACED-WORDS refusal #4's GP14-H-WSORT-MULTI, GP14-H-WALT-SORT and GP14-H-WTAIL-MULTI (words() sorted when there are
+ *   two or more alternatives, the alternatives visited in the sorted order of their texts, or the first word kept and the
+ *   rest sorted when there are two or more alternatives).
  * - R4-R668 (the U1-R668 rider): the pages XT-TEXTS and XW-WORDS, copied from wb-jwc.10's branch (this census reads no file
  *   of that branch, so where the pages came from is NOT CLAIMED by this census), both using c with no declaration and p as
  *   a parameter: exact() reads XT-TEXTS's
@@ -125,7 +144,8 @@
  * - SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, the pins as
  *   `${id}:${probe}:${path}:${sha256/16 of the page}` and the PROBES case as `${its probes joined by ","}:${its path}:${sha256/16
  *   of the PROBES page}`, each held to a literal.
- * - PROBES (the judge's identity: which reader function each probe calls): the PROBES page, read at
+ * - PROBES (the judge's identity, as the readings of one page show it; which reader function each probe calls is NOT CLAIMED
+ *   beyond those readings, see NOT CLAIMED): the PROBES page, read at
  *   src/workbench/providers/zz-probes.ts, writes probe("rf x"), spawn("git log", []) and the object literals
  *   { id: "reactivefiber.b" } and { id: "reactivefiber.a" }, in that order, and the six probes read it six ways: texts as
  *   "rf x" (the text as its JSON string), exact as ["rf x"], words as ["rf","x"], programs as spawn:git, registrations as
@@ -155,9 +175,11 @@
  *   page, read a second time by the moved reader, reads the roster's six readings.
  * In ROWS alone: a row or a pin removed, or a pin's page, probe or path changed, reds SHAPE and ROSTER; a label shortened
  * reds ANCHOR and ROSTER; a reading changed reds its own pin case and ROSTER. In the PROBES case's literals alone: a probe
- * removed from PROBES, or the PROBES page changed, reds SHAPE, PROBES and ROSTER, and SHAPE and ROSTER with PROBES's
- * expectation re-pinned to match; its path changed reds SHAPE and ROSTER; PROBES's expectation changed reds PROBES. In the
- * roster alone, the PROBES case's path, page digest, probes, forms or a reading changed reds ROSTER. In ROWS and the
+ * removed from PROBES, or the PROBES page changed so that one of its six readings changes, reds SHAPE, PROBES and ROSTER,
+ * and SHAPE and ROSTER with PROBES's expectation re-pinned to match; the PROBES page changed with its six readings kept (a
+ * comment line or a declaration added) reds SHAPE and ROSTER; its path changed reds SHAPE and ROSTER; PROBES's expectation
+ * changed reds PROBES. In the roster alone, the PROBES case's path, page digest, probes, forms or a reading changed reds
+ * ROSTER. In ROWS and the
  * frozen-shape literals together (standing rule 16's CT1-CT5), each of those changes reds ROSTER. In every literal together, the roster included (CT6): a
  * row removed or its label changed, a twin's page changed, a twin's only pin removed, or a rider pin (XT-TEXTS, XW-WORDS)
  * removed reds ANCHOR, whose anchor is the tracker export; a reading changed reds its own pin case and ROSTER. In every
@@ -194,8 +216,9 @@
  * included), an object literal's fields, a const cycle, a with body, an unbound identifier's kind, a path's parse and the
  * rendering of a text that JSON escapes are NOT CLAIMED by this census. Every reading of the moved reader on another page is
  * NOT CLAIMED by this census; wb-jwc.10's census pins many of them on its branch, not on trunk. Beyond this file's literals
- * and its roster, the presence of a seat plant (EX-SPACED and OR-SPACED among them), the pages of the rider pins, the count
- * of R4-F2's tw-coll.ts pins, each pin's probe and path, the PROBES case's probes, page and readings, and which reader
+ * and its roster, the presence of a seat plant (EX-SPACED, OR-SPACED, EX-SPACED-WORDS and OR-SPACED-WORDS among them), the
+ * pages of the rider pins, the count of R4-F2's tw-coll.ts pins, each pin's probe and path, the PROBES case's probes, page
+ * and readings, and which reader
  * function each probe calls are NOT CLAIMED by this census (no outside text this census reads names them; the 6ze.39-class
  * postures above). Whether the judge reads a page at its pin's path is NOT CLAIMED by this census: no page here, the PROBES
  * page included, reads apart at another path, so a judge that reads every page at one .ts path keeps every case, and SHAPE
@@ -203,8 +226,11 @@
  * or of its comparisons (its own code, held by no outside text), alone or made together with the literals and roster
  * entries it would red, is NOT CLAIMED by this census; one such edit, the exact probe read through words() on every page but
  * EX-SPACED's, OR-SPACED's and the PROBES page's, reads green alone and reds EX-SPACED or OR-SPACED with each of q06, q06b,
- * p08 and q05 on the helper. The roster's census, helper and note fields, which no case reads, are NOT CLAIMED by this
- * census. Which calls the probes locate (probe, the seven launcher names and the registering object
+ * p08 and q05 on the helper; another, the exact probe computed from alternatives() so that exact() is never called (PREP
+ * s195's GP14-J-EXACT-SELF), reads green alone and with each of q06, q06b, p08 and q05 on the helper; and a third, the words
+ * probe computed from alternatives() and commandWords() so that words() is never called, reads green alone and with each of
+ * refusal #4's four words() mutants on the helper. The roster's census, helper and note fields, which no case reads, are
+ * NOT CLAIMED by this census. Which calls the probes locate (probe, the seven launcher names and the registering object
  * literals) is this census's own locator, not a claim about a module.
  *
  * Display paths added: none (test-only). No scratch is allocated (every page is a string parsed in memory); the tracker export
@@ -260,6 +286,10 @@ function pin(id: string, probe: Probe, text: string, reading: readonly string[])
 /** A gate twin read at src/workbench/providers/zz-<twin file name>. */
 function twin(id: string, file: string, probe: Probe, text: string, reading: readonly string[]): Pin {
   return { id, path: `src/workbench/providers/zz-${file}`, page: text, probe, reading, twin: file };
+}
+/** The pin `at` read at another pin's path, src/workbench/providers/zz-<that pin's id, lower-cased>.ts, in place of its own. */
+function atPathOf(id: string, at: Pin): Pin {
+  return { ...at, path: `src/workbench/providers/zz-${id.toLowerCase()}.ts` };
 }
 /** A template substitution's source text, built so that no string in this file spells a placeholder. */
 function sub(expression: string): string {
@@ -393,6 +423,7 @@ const ROWS: readonly Row[] = [
         ["undefined", "undefined", "undefined", "undefined", '["a","b"]'],
       ),
       pin("EX-SPACED", "exact", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "rf x" : p);', '  probe(c ? "rf x" : "rf y");', "}"), ["undefined", '["rf x","rf y"]']),
+      atPathOf("EX-SPACED", pin("EX-SPACED-WORDS", "words", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "rf x" : p);', '  probe(c ? "rf x" : "rf y");', "}"), ["undefined", '["rf","x","y"]'])),
     ],
   },
   {
@@ -488,6 +519,7 @@ const ROWS: readonly Row[] = [
       twin("p08", "tw-p08.ts", "exact", page(DECLARE_PROBE, DECLARE_C, 'probe(c ? "b" : "a");', "export {};"), ['["b","a"]']),
       pin("OR-ORDERS", "exact", page(DECLARE_PROBE, DECLARE_C, DECLARE_D, 'probe(c ? "b" : d ? "c" : "a");', 'probe(c ? "a" : "B");', "export {};"), ['["b","c","a"]', '["a","B"]']),
       pin("OR-SPACED", "exact", page(DECLARE_PROBE, DECLARE_C, 'probe(c ? "rf y" : "rf x");', "export {};"), ['["rf y","rf x"]']),
+      atPathOf("OR-SPACED", pin("OR-SPACED-WORDS", "words", page(DECLARE_PROBE, DECLARE_C, 'probe(c ? "rf y" : "rf x");', "export {};"), ['["rf","y","x"]'])),
     ],
   },
   {
@@ -647,7 +679,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
 
   it("SHAPE: the rows and their pins, each pin's probe, path and page, and the PROBES case's probes, path and page are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "R3-U1a:7", "R3-U1b:2", "R3-U1c:3", "R3-U1d:2", "R3-U2:3", "R4-U1a:3", "R4-U1b:2", "R4-U1c:5", "R4-U1d:3", "R4-R668:2", "R4-F2:3", "R4-F3:6",
+      "R3-U1a:7", "R3-U1b:2", "R3-U1c:3", "R3-U1d:2", "R3-U2:3", "R4-U1a:4", "R4-U1b:2", "R4-U1c:5", "R4-U1d:4", "R4-R668:2", "R4-F2:3", "R4-F3:6",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${at.probe}:${at.path}:${digest(at.page)}`))).toEqual([
       "n03-ts:texts:src/workbench/providers/zz-tw-n03.ts:4683c4774af2e164",
@@ -670,6 +702,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
       "q06:exact:src/workbench/providers/zz-tw-q06.ts:972a9524951df019",
       "EX-POSITIONS:exact:src/workbench/providers/zz-ex-positions.ts:4ecc66ca83b63213",
       "EX-SPACED:exact:src/workbench/providers/zz-ex-spaced.ts:3afab353ff48c530",
+      "EX-SPACED-WORDS:words:src/workbench/providers/zz-ex-spaced.ts:3afab353ff48c530",
       "q07:words:src/workbench/providers/zz-tw-q07.ts:bc827e02b8e7f253",
       "WO-POSITIONS:words:src/workbench/providers/zz-wo-positions.ts:580bd6457704631d",
       "q08:programs:src/workbench/providers/zz-tw-q08.ts:951150a7a262615c",
@@ -680,6 +713,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
       "p08:exact:src/workbench/providers/zz-tw-p08.ts:3cf6fa3a45eda664",
       "OR-ORDERS:exact:src/workbench/providers/zz-or-orders.ts:d46fd2f48289fb93",
       "OR-SPACED:exact:src/workbench/providers/zz-or-spaced.ts:e30a1cd52d63cc8f",
+      "OR-SPACED-WORDS:words:src/workbench/providers/zz-or-spaced.ts:e30a1cd52d63cc8f",
       "XT-TEXTS:exact:src/workbench/providers/zz-xt-texts.ts:17ff55942c562568",
       "XW-WORDS:words:src/workbench/providers/zz-xw-words.ts:8dd3d5171b8ea99e",
       "coll-programs:programs:src/workbench/providers/zz-tw-coll.ts:ddd76c8340a74979",
@@ -697,7 +731,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
     );
   });
 
-  it("PROBES: the six probes read the PROBES page six ways, each through its own reader function", () => {
+  it("PROBES: the six probes read the PROBES page six ways", () => {
     expect(Object.fromEntries(PROBES.map((probe) => [probe, reading(probesPin(probe))]))).toEqual({
       texts: ['"rf x"'],
       exact: ['["rf x"]'],

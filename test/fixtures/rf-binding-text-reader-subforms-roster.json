@@ -297,6 +297,20 @@
       "undefined",
       "[\"rf x\",\"rf y\"]"
      ]
+    },
+    {
+     "pin": "EX-SPACED-WORDS",
+     "path": "src/workbench/providers/zz-ex-spaced.ts",
+     "probe": "words",
+     "page": "3afab353ff48c530",
+     "forms": [
+      "c ? \"rf x\" : p",
+      "c ? \"rf x\" : \"rf y\""
+     ],
+     "reading": [
+      "undefined",
+      "[\"rf\",\"x\",\"y\"]"
+     ]
     }
    ]
   },
@@ -476,6 +490,18 @@
      ],
      "reading": [
       "[\"rf y\",\"rf x\"]"
+     ]
+    },
+    {
+     "pin": "OR-SPACED-WORDS",
+     "path": "src/workbench/providers/zz-or-spaced.ts",
+     "probe": "words",
+     "page": "e30a1cd52d63cc8f",
+     "forms": [
+      "c ? \"rf y\" : \"rf x\""
+     ],
+     "reading": [
+      "[\"rf\",\"y\",\"x\"]"
      ]
     }
    ]
