@@ -52,6 +52,13 @@
  * types entry holds 13 named re-export declarations (195 specifiers) and its main entry 12 (111), every name in them spelled
  * as written (no escape sequence) and none a DEEP class, beside one export * each (./protocol.js); vendor/README.md holds no
  * hard line break (br token).
+ * RE-MEASURED at the R-B127 restatement (read-only, by seat ws-02 of g10-work-s201, 2026-11-03T20:58:39Z, on trunk 846ba20
+ * merged into the cut #5 tip): the cut #5 facts read the same - 117 .ts scripts under src/, every one listed by git
+ * ls-files; the five spellings in three files; the two deep loads; 2 deep-path literals, both read; the tarball's bytes hash
+ * to TARBALL_SHA256 (128 entries, every one a regular file), and it carries no .ts, .tsx, .mts or .cts twin of either DEEP
+ * module; the types entry's 13 named re-export declarations (195 specifiers) and the main entry's 12 (111) name no DEEP
+ * class, as written or cooked, beside one export * each (./protocol.js); protocol.d.ts and protocol.js import and export
+ * nothing; executor.js declares one register method; vendor/README.md holds no hard line break (br token).
  *
  * FAIL-CLOSED CORE (cut #4; ruling R-B84: "narrow each claim to exactly the forms the reader proves and fail closed outside
  * it"): every row that reads the tarball - D2, D3, D4, U1 and U2 - opens with the PIN leg: the file package.json's spec names
@@ -60,14 +67,37 @@
  * and each row's PIN finding names the re-measurement that row owes. The AST and text reads below claim exactly their listed
  * forms; what they leave unread in the tarball is held by the PIN leg and never claimed for them.
  * FINAL CUT (cut #5; ruling R-B104, the rule 19 structural exit at refusal #4: "restate D3's claims to exactly what the two
- * reader paths implement", "fail closed outside the pinned set; no claim word survives without a falsifier"): D3's claims are
- * restated to its two reads as implemented - the WALK reads a named re-export only past an entry, and the ENTRY TEXT READ is a
- * whole-word match over each entry's raw text - and the hole the two share is named (R-ENTRY-SPELLING, quiet row Q12; on the
- * real tree the PIN leg holds it). The two refusal #4 items outside the PIN leg's reach are cured fail-closed: U1's README
- * read now refuses hard line breaks beside its other REFUSALS (refusal #4 U2), and D1's PATH reading now drops ASCII tab, LF
- * and CR (U3), so D1's reads and its BACKSTOP read a deep path a URL parser assembles from such a literal. The full-surface
- * reads (an AST read of an entry's named re-exports, a rendered reading of hard breaks, resolver readings beyond these) are
- * child wb-lrz.8's.
+ * reader paths implement", "fail closed outside the pinned set; no claim word survives without a falsifier"), as that cut's
+ * record: it restated D3's claims to its own two reads as they were implemented - its WALK read a named re-export only past
+ * an entry, and its ENTRY TEXT READ was a whole-word match over each entry's raw text - and named the hole the two shared
+ * (R-ENTRY-SPELLING, its quiet row Q12, retired below). It cured the two refusal #4 items outside the PIN leg's reach
+ * fail-closed, and both cures stand: U1's README read refuses hard line breaks beside its other REFUSALS (refusal #4 U2),
+ * and D1's PATH reading drops ASCII tab, LF and CR (U3), so D1's reads and its BACKSTOP read a deep path a URL parser
+ * assembles from such a literal. The full-surface reads (an AST read of an entry's named re-exports, a rendered reading of
+ * hard breaks, resolver readings beyond these) went to child wb-lrz.8, which landed them (MECHANICAL RESTATEMENT below).
+ * Refusal #5 found cut #5's WALK reading nothing of a DEEP module's TypeScript twin (its U1), its register-method count
+ * without a falsifier (U2) and a family of specifiers its WALK did not resolve (U3).
+ * MECHANICAL RESTATEMENT (ruling R-B127, the rule 19 dependency inversion at refusal #5: "the re-cut here is a mechanical
+ * restatement over the child's landed fix"; the carrier wb-lrz.8 landed at landing 894, merge f6f2ea6b): this census takes
+ * the landed readers of test/helpers/furnace-sdk-entry-readers.ts in place of its own - parsed (one parse cache), spellsDeep
+ * and holdsDeep (D1's PATH reading, through the landed pathReading), entryTextNames and entryExposures (D3's ENTRY TEXT READ
+ * and WALK, with the WALK's specifier reading and its DEEP identification), registerMethods (D4's register-method count)
+ * and renderedBlocks (U1's reading of vendor/README.md). Refusal #5's members are cured by those readers, each planted here
+ * as a judged plant that reds the census on cut #5's readers: a DEEP module's .ts or .tsx twin is DEEP (U1: G1-G6 and G1R,
+ * D3#46-#53); a computed string or template literal register name is counted (U2: G12 and G12d, D4#36-#38), and the count
+ * itself has falsifiers (U2's hollow HV5: D4#34-#40, beside control D4#41); and the WALK reads its plants' tab-, LF-, CR-,
+ * %XX-, query-, fragment- and backslash-spelled specifiers and a named re-export from a specifier it does not resolve (U3:
+ * G8-G11, D3#54-#66; at an entry too, D3#67). Cut #5's Q12 (R-ENTRY-SPELLING) is retired, since the landed WALK reads a
+ * named re-export at an entry, its name cooked: its spellings ride as judged D3#44 and D3#45, and D3#1 and D3#3 read the
+ * WALK's finding beside the ENTRY TEXT READ's; U1#19 and U1#21 read the second record a hard line break no longer hides,
+ * beside the refusal.
+ * Besides these plants, the readers swapped, Q12's quiet case (so 31 cases) and the frozen literals that count them, no
+ * reader, plant, row or case changed. What each landed reader reads beyond this census's plants and the real tree is
+ * wb-lrz.8's claim (THE CLAIMS of test/workbench-furnace-sdk-entry-readers-census.test.ts, whose claim parts are
+ * test/helpers/furnace-sdk-entry-claims.ts), pinned by that census and by wb-lrz.9's members census
+ * (test/workbench-furnace-sdk-entry-reader-members-census.test.ts); this census claims of each landed reader exactly its
+ * rows' readings of the real tree and of their plants, and a reading of a landed reader on any other input is NOT CLAIMED
+ * by this census.
  *
  * ROWS (each pin quotes the clause it binds, reads the real tree clean and reds each of its planted drifts):
  *  D, the deep imports (acceptance item 4, first half, and clause (b)):
@@ -75,9 +105,10 @@
  *   these forms, through the TypeScript AST (comments are never read, except the two triple-slash directives in (b); the
  *   shebang line is read by (e)):
  *   (a) SPECIFIER: one string or no-substitution template literal whose cooked text, or that text's PATH reading, spells
- *   @furnace/sdk/<path> by the package's name or after a node_modules/ segment. The PATH reading drops every ASCII tab, LF
- *   and CR (the characters a URL parser removes from its input, so import.meta.resolve and new URL load a path spelled with
- *   them; cut #5), then decodes every %XX escape, reads every backslash as "/" and then applies posix.normalize (empty and "."
+ *   @furnace/sdk/<path> by the package's name or after a node_modules/ segment. The PATH reading (the landed pathReading
+ *   since the R-B127 restatement) drops every ASCII tab, LF and CR (the characters a URL parser removes from its input, so
+ *   import.meta.resolve and new URL load a path spelled with them; cut #5), then decodes every %XX escape, reads every
+ *   backslash as "/" and then applies posix.normalize (empty and "."
  *   segments dropped, ".." segments resolved), so "@furnace/./sdk/", "@furnace//sdk/", a backslash-separated path,
  *   "%40furnace/sdk/", "@furnace/kit/../sdk/" and "@furnace/sd" + a tab, LF or CR + "k/" each read as
  *   @furnace/sdk/. A call's specifier argument is read through WRAPPERS (parentheses, a comma sequence's last operand, and as,
@@ -117,27 +148,31 @@
  *  D3 the PIN leg; and no switch is owed: the tarball carries a readable package/package.json with no exports map and none
  *   of the typesVersions, typings, module and browser fields, whose types and main entries are both tarball entries; and
  *   neither entry exposes a deep-imported class through D3's two reads, so furnace-hosted.ts's header claim (HEADER_CLAIM),
- *   which its header still states, holds of the tarball as far as these two reads read. Restated at cut #5 to exactly what
- *   each read implements (R-B104):
- *   ENTRY TEXT READ: neither entry's raw text - comments included, escape sequences never decoded - holds a DEEP class's name
- *   as a whole word (the regex \b<name>\b, so a longer identifier holding the name is not read). It is the ONLY read of a
- *   named re-export at an entry itself: the WALK never reads one there.
- *   WALK (AST, comments never read; each module's top-level statements only): from each entry through every export * and
- *   export * as declaration whose specifier resolves inside the tarball - a relative specifier, or the package's own name
- *   (@furnace/sdk/<path>) - trying, from a declaration file: an exact TypeScript path as written; a .js, .jsx, .mjs or .cjs
- *   path's .ts (.tsx for .js and .jsx), then .d.ts twin (.mts/.d.mts, .cts/.d.cts); an extensionless path's .ts, .tsx, .d.ts,
- *   /index.ts, /index.tsx and /index.d.ts; and from a JavaScript file: the exact path, then .js, then /index.js (bundler-style;
- *   an over-read only adds findings). In each entry and in every module it reaches it reads: an export * or export * as whose
- *   target is a DEEP module; and a local export (export { x }, aliased or not) of a name an import specifier binds by a DEEP
- *   class's own name (the specifier aliased or not, from any module), or of a name a default or namespace import of a DEEP
- *   module binds. In a module PAST an entry only (never in the entry itself) it also reads a named re-export (export { X }
- *   from ..., aliased or type-only) of a DEEP class, the class's name read cooked (an escape-spelled name reads as the class
- *   it spells).
- *   THE HOLE the two reads share (R-ENTRY-SPELLING): a named re-export AT an entry whose class name the entry spells only
- *   through an escape sequence - a unicode escape in an identifier, or any escape sequence in a string export name (unicode,
- *   hex, line continuation or a single-character escape) - is read by neither, so D3 reads nothing of it; on the real tree
- *   such an entry moves the tarball's bytes, which the PIN leg reds. Every other route is a named residual with a pinned
- *   quiet row (R-INDEX-INDIRECT, R-WALK-SPECIFIER, R-ENTRY-SPELLING).
+ *   which its header still states, holds of the tarball as far as these two reads read. Cut #5 restated the two reads to its
+ *   own readers (R-B104); since the R-B127 restatement they are wb-lrz.8's landed entryTextNames and entryExposures, each
+ *   claimed here on D3's plants (by index, D3#<n>) and the real tree only:
+ *   ENTRY TEXT READ (entryTextNames): neither entry's raw text - comments included (D3#19), escape sequences never decoded
+ *   (D3#44 and D3#45 read nothing through it) - holds a DEEP class's name as a whole word (the regex \b<name>\b: D3#1, D3#3;
+ *   a longer identifier holding the name is not read, control D3#20).
+ *   WALK (entryExposures; AST, comments never read, control D3#30; each module's top-level statements only): from each entry
+ *   through every export * and export * as declaration whose specifier resolves inside the tarball - a relative specifier, or
+ *   the package's own name (@furnace/sdk/<path>: D3#7, D3#16, and with a .. segment resolved, D3#63) - its specifier read
+ *   first with an ASCII tab dropped (from either entry: D3#54, D3#55), an LF and a CR dropped (D3#56, D3#57), a %64 escape
+ *   decoded (from either entry: D3#58, D3#59), a query and a fragment cut off (D3#60, D3#61) and a backslash read as /
+ *   (D3#62), each but D3#55 and D3#59 written in the main entry; trying, from a declaration file: an exact TypeScript path as
+ *   written; a .js, .jsx, .mjs or .cjs path's .ts (.tsx for .js and .jsx), then .d.ts twin (.mts/.d.mts, .cts/.d.cts); an
+ *   extensionless path's .ts, .tsx, .d.ts, /index.ts, /index.tsx and /index.d.ts; and from a JavaScript file: the exact
+ *   path, then .js, then /index.js (bundler-style; an over-read only adds findings; D3#4, D3#5, D3#9-#11 and D3#31-#43). A
+ *   module is DEEP when its path, its one module extension taken off, is a DEEP row's path with its .js taken off - on D3's
+ *   plants the row's .js file, its .d.ts declaration file and its .ts and .tsx TypeScript twins (D3#46-#53). In each entry
+ *   and in every module it reaches it reads: an export * or export * as whose target is a DEEP module (D3#4, D3#5, D3#7-#12,
+ *   D3#16, D3#31-#43, D3#46, D3#47, D3#50-#53); a named re-export (export { X } from ..., aliased or type-only) of a DEEP
+ *   class, in the entry itself (D3#1, D3#3, D3#44, D3#45, D3#67) and past it (D3#6, D3#24-#27), whatever its specifier
+ *   resolves to (D3#64-#67), the class's name read cooked (an escape-spelled name reads as the class it spells: D3#26, D3#27, D3#44,
+ *   D3#45); and a local export (export { x }, aliased or not) of a name an import specifier binds by a DEEP class's own name
+ *   (the specifier aliased or not, from any module: D3#13, D3#28, D3#29), or of a name a default or namespace import of a
+ *   DEEP module binds (D3#14, D3#17, D3#48, D3#49). Every other route is a named residual with a pinned quiet row
+ *   (R-INDEX-INDIRECT, R-WALK-SPECIFIER).
  *  D4 the PIN leg; the tarball still carries dist/src/durability.js and its declarations; executor.js still reads
  *   DurabilityProfile.fromDeclaration(options.durability) and documents every member false when none was (text); and its code
  *   (AST, comments never read) holds these syntactic facts, each read exactly as stated:
@@ -157,7 +192,12 @@
  *   this.#durability.set(identifier, profile); and durability()'s const profile = this.#durability.get(name); - so a
  *   string-keyed member, an alias, a call through Map.prototype.set.call, a brand check, a second store and a changed field
  *   initializer each red;
- *   DERIVATION, of its one register method (a method declaration with a body): it takes a third parameter named options with
+ *   DERIVATION, of its one register method (a method declaration with a body; the count is wb-lrz.8's landed registerMethods
+ *   since the R-B127 restatement, claimed here on D4's plants only: a second register method with a body appended to
+ *   executor.js - in a class, named by an identifier (D4#34), a string literal (D4#35), a computed string literal (D4#36),
+ *   a computed no-substitution template literal (D4#37), a computed string literal through parentheses (D4#38) or an
+ *   identifier's unicode escape (D4#39), or in an object literal (D4#40) - reds the count, and a register method
+ *   declaration without a body is not counted, control D4#41): it takes a third parameter named options with
  *   no default or an empty object default, which its body never targets with an assignment operator in a binary expression
  *   (=, a compound or a logical assignment), a prefix or postfix ++ or --, or a delete, whose target mentions options anywhere
  *   (options itself, a member chain of it, a destructuring pattern holding it); declares profile once in its body, as a const
@@ -173,11 +213,12 @@
  *   tarball's bytes and reds the PIN leg. R-DERIVATION-BODY (the durability module's code, and run-time patches through a
  *   string key in executor.js or in another module) is their named residual, with a pinned quiet row that plants each of
  *   these; the hello-reply durability rows of wb-lrz.5 rest on the durability module and read its behaviour.
- *  ENUMERATION (rule 19's enumerate-the-resolvable form, kept at cut #4 under R-B84 and at cut #5 under R-B104 for the
- *   CLAIMED-READ-FORMS class): D1, D3 and D4 claim exactly the forms listed for them above; every form outside a list that
- *   this cut knows is a named residual with a pinned quiet row; a form found later outside every list is a residual-list
- *   addition, unless it contradicts a listed form. On the tarball rows no such form keeps the census green on the real tree:
- *   the PIN leg reds it.
+ *  ENUMERATION (rule 19's enumerate-the-resolvable form, kept at cut #4 under R-B84, at cut #5 under R-B104 and at the
+ *   R-B127 restatement for the CLAIMED-READ-FORMS class): D1, D3 and D4 claim exactly the forms listed for them above - a
+ *   landed reader's forms (D1's PATH reading, D3's two reads, D4's register-method count) on their plants only; every form
+ *   outside a list that this cut knows is a named residual with a pinned quiet row; a form found later outside every list
+ *   is a residual-list addition, unless it contradicts a listed form. On the tarball rows no such form keeps the census
+ *   green on the real tree: the PIN leg reds it.
  *  V, the version literals (acceptance item 4, second half): V1 every versioned @furnace/sdk spelling in src/ (the at form
  *   "@furnace/sdk@X.Y.Z", the space form "@furnace/sdk X.Y.Z" and the tarball form "furnace-sdk-X.Y.Z.tgz") belongs to a
  *   SITES row read its listed number of times, and each one names the vendored version; V2 the observer's sdk member and sdk
@@ -190,8 +231,10 @@
  *   or more spaces, before a line ending; refused at cut #5, since a browser shows a line break where the token holds its
  *   source text), and its text - every top-level block through marked's tokens (paragraphs, headings, lists, tables, quotes
  *   and code alike), link-reference definitions dropped as marked renders none, and raw HTML and images, refused above,
- *   dropped too -
- *   shows exactly one record of the tarball as wb-zby's repack, from Furnace revision 9970621d8 (the trigger has not fired);
+ *   dropped too, and a hard line break read as the line break marked renders, collapsed to a space (wb-lrz.8's landed
+ *   renderedBlocks since the R-B127 restatement, on U1's plants: a backslash break, U1#19 and U1#21, and a two-space break,
+ *   U1#20) - shows exactly one record of the tarball as wb-zby's repack, from Furnace revision 9970621d8 (the trigger has
+ *   not fired);
  *   U2 the PIN leg; and the tarball's contract manifest digest equals its generated provenance digest - the provenance
  *   module's one exported const SMITHY_MODEL_DIGEST, a string literal, read through the AST (its header comment is never
  *   read) - the condition the hosted adapter's decodeContextValue preflight admits (acceptance item 3); the refusal itself is
@@ -240,23 +283,18 @@
  * comment other than the two triple-slash directives D1 reads (an /// <amd-dependency> directive, a JSDoc type or @import
  * tag, a line or block comment) is not read by D1 (Q7); R-WALK-SPECIFIER a specifier the walk does not resolve (a directory
  * resolved through a nested package.json, a TypeScript-extension specifier whose file the tarball lacks, a path mapping, a
- * symlink) is not followed by D3 (Q8, which plants the first two); R-ENTRY-SPELLING a named re-export at an entry (types or
- * main) whose class name the entry spells only through an escape sequence - a unicode escape in an identifier (four hex
- * digits, or a braced code point), or an escape sequence in a string export name (a unicode escape of either form, a hex
- * escape, a line continuation, or a single-character escape such as a backslash before an H) - is read by neither
- * of D3's reads: the WALK reads a named re-export past an entry only, and the ENTRY TEXT READ matches the name as the raw text
- * spells it (Q12, which plants each of these spellings, both classes, both entries); R-DERIVATION-BODY what code outside
+ * symlink) is not followed by D3 (Q8, which plants the first two); R-DERIVATION-BODY what code outside
  * register's own code does at run time - the durability module's code (DurabilityProfile.fromDeclaration's body included),
  * and a run-time patch through a string key that spells neither DurabilityProfile nor #durability as a name, in executor.js
  * or in another module (a namespace member such as fromDeclaration, a prototype member such as register, a built-in such as
  * Map.prototype.set) - is not read by D4, whose AST reads read executor.js alone and, outside register's code, only its
- * import from ./durability.js, its bindings and spellings of DurabilityProfile and #durability, and its methods named
- * register (Q10, which plants each of these);
+ * import from ./durability.js, its bindings and spellings of DurabilityProfile and #durability, and the register methods
+ * its count reads (D4#34-#41) (Q10, which plants each of these);
  * R-MAPPED-SPECIFIER a specifier that reaches @furnace/sdk/<path> only through a mapping or a link defined outside the
  * script's text (tsconfig paths, package.json imports, an npm alias, a bundler alias, a symlink) or through a file system
  * that ignores letter case (a spelling such as @Furnace/SDK/) is not read by D1 (Q11, which plants an imports-map name, an
  * alias and a case-folded spelling).
- * Every residual of a tarball row (Q6, Q8, Q10, Q12) is a tarball edit on the real tree, which the PIN leg reds: those
+ * Every residual of a tarball row (Q6, Q8, Q10) is a tarball edit on the real tree, which the PIN leg reds: those
  * residuals name what the AST reads leave unread, never an escape of the census.
  * RETIRED at cut #3: Q5 R-INDIRECT-LOADER (cut #2's quiet row). D1 (e) reads every literal form of an indirect loader, so
  * the family is no longer an escape: its quiet plant rides verbatim as a judged D1 plant that must red, and an indirect
@@ -265,6 +303,9 @@
  * rides verbatim as a judged U1 plant that must red, and Q9's id stays unused. NARROWED at cut #4: R-DERIVATION-BODY - calls
  * inside register on the options or the profile object are register's code, which CODE reads, so that half of cut #3's Q10
  * quiet plant rides as a judged D4 plant and Q10 keeps the durability module's half.
+ * RETIRED at the R-B127 restatement: Q12 R-ENTRY-SPELLING. The landed WALK reads a named re-export at an entry, its name
+ * cooked, so the family is no longer an escape: its quiet plant's spellings ride as judged D3 plants that must red (D3#44,
+ * the types entry's four; D3#45, the main entry's four), its control's form is D3#1's, and Q12's id stays unused.
  * NOT CLAIMED: what a re-vendor commit owes beyond these rows (acceptance items 1-3, 5 and 6: the vendor pins and the
  * dependency census pass on the new tarball, the live tiers re-run against a release-built binary, one re-vendor sequenced
  * with wb-zby); the hosted adapter's preflight refusal, which test/workbench-furnace-hosted.test.ts drives; a pin
@@ -282,28 +323,34 @@
  * keeps unless it moves them (the repacked plants), so each plant judges its row's AST and text reads alone; a real-tree
  * repack reds the PIN leg of all five tarball rows beside whatever those reads find. A JSX character reference TypeScript's
  * emit leaves undecoded (a named reference outside its table) is read as written, as the JSX runtime receives it; SDK code
- * copied out of the package to another path is not a @furnace/sdk load.
+ * copied out of the package to another path is not a @furnace/sdk load. Beside the real tree and the plants of D1, D3, D4
+ * and U1 that this header cites for them, what wb-lrz.8's landed readers (parsed, spellsDeep, holdsDeep, entryTextNames,
+ * entryExposures, registerMethods, renderedBlocks) read is NOT CLAIMED by this census: it is wb-lrz.8's claim (THE CLAIMS of
+ * test/workbench-furnace-sdk-entry-readers-census.test.ts and its claim parts test/helpers/furnace-sdk-entry-claims.ts),
+ * pinned by that census - whose own RESIDUALS name what those readers leave unread, each family with its Q- quiet row - and
+ * by wb-lrz.9's members census.
  * READS (contacts): package.json, vendor/README.md, the tarball package.json names (today vendor/furnace-sdk-0.1.0.tgz: its
  * bytes for the PIN legs, its entries for the text and AST reads), every script under src/ and git ls-files src/ (SCRIPTS),
  * and the wb-lrz.4 row of .beads/issues.jsonl (its description, and the N5 paragraph of its notes: an appended note is safe;
- * a notes replace that drops, doubles or weakens that paragraph's clause (b) reds the anchor case).
+ * a notes replace that drops, doubles or weakens that paragraph's clause (b) reds the anchor case). The landed readers are a
+ * module import (test/helpers/furnace-sdk-entry-readers.ts), which reads no file.
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory tree.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join, posix } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
 import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { entryExposures, entryTextNames, holdsDeep, parsed, registerMethods, renderedBlocks, SDK, spellsDeep } from "./helpers/furnace-sdk-entry-readers.js";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-lrz.4";
 const EXPORT = ".beads/issues.jsonl";
-const SDK = "@furnace/sdk";
 const OBSERVER = "src/workbench/furnace-observer.ts";
 const PROVIDER = "src/workbench/providers/furnace.ts";
 const HOSTED = "src/workbench/hosts/furnace-hosted.ts";
@@ -447,21 +494,6 @@ function pinLeg(id: string, tree: Tree, owed: string): string[] {
   return tree.bytes !== undefined && sha256(tree.bytes) === TARBALL_SHA256 ? [] : [`${id} PIN the vendored tarball's bytes no longer hash to the pinned sha256 ${TARBALL_SHA256}: ${owed}`];
 }
 
-const PARSED = new Map<string, Map<string, ts.SourceFile>>();
-/** A src script or a tarball module, parsed once per text, as its own extension says (TypeScript, TSX, JavaScript or JSX). */
-function parsed(file: string, text: string): ts.SourceFile {
-  let byText = PARSED.get(file);
-  if (byText === undefined) {
-    byText = new Map();
-    PARSED.set(file, byText);
-  }
-  const hit = byText.get(text);
-  if (hit !== undefined) return hit;
-  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, false);
-  byText.set(text, source);
-  return source;
-}
-
 function walk(node: ts.Node, visit: (node: ts.Node) => void): void {
   visit(node);
   ts.forEachChild(node, (child) => {
@@ -585,22 +617,12 @@ function loadersOf(source: ts.SourceFile): (callee: ts.Expression) => boolean {
 }
 
 /**
- * D1's PATH reading of a literal's cooked text: every ASCII tab, LF and CR dropped (a URL parser removes them from its input,
- * so import.meta.resolve and new URL load a path spelled with them; cut #5, refusal #4 U3), then every %XX escape decoded,
- * every backslash read as "/", then posix.normalize (empty and "." segments dropped, ".." segments resolved) - so
- * "@furnace/./sdk/", "@furnace//sdk/", a backslash-separated path, "%40furnace/sdk/", "@furnace/kit/../sdk/" and a tab-, LF-
- * or CR-split "@furnace/sdk/" each read as @furnace/sdk/.
+ * D1 (a): a specifier's text when it spells a deep @furnace/sdk/<path>, by the package's name or after a node_modules/
+ * segment, as cooked text or by its PATH reading - wb-lrz.8's landed spellsDeep, whose PATH reading is the landed
+ * pathReading: every ASCII tab, LF and CR dropped, then every %XX escape decoded, every backslash read as "/", then
+ * posix.normalize (since the R-B127 restatement; cut #5's own asPath held the same steps).
  */
-const asPath = (text: string): string =>
-  posix.normalize(
-    text
-      .replace(/[\t\n\r]/g, "")
-      .replace(/%([0-9A-Fa-f]{2})/g, (_, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)))
-      .replaceAll("\\", "/"),
-  );
-const spellsDeep = (text: string): boolean => text.startsWith(`${SDK}/`) || /(?:^|\/)node_modules\/@furnace\/sdk\//.test(text);
-/** D1 (a): a specifier's text when it, or its PATH reading, spells a deep @furnace/sdk/<path>, by the package's name or after a node_modules/ segment. */
-const deepSpecifier = (text: string): string | undefined => (spellsDeep(text) || spellsDeep(asPath(text)) ? text : undefined);
+const deepSpecifier = (text: string): string | undefined => (spellsDeep(text) ? text : undefined);
 
 /** One deep load, D1 (b)-(c): a declaration, or a call whose callee loads and whose specifier argument (through WRAPPERS) is deep. */
 function deepLoad(node: ts.Node, loads: (callee: ts.Expression) => boolean): { readonly specifier: string; readonly names: readonly string[]; readonly node: ts.Node } | undefined {
@@ -672,7 +694,7 @@ function deepLiteral(node: ts.Node, source: ts.SourceFile, attributes: ReadonlyS
       : ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node)
         ? node.text
         : undefined;
-  return cooked !== undefined && (cooked.includes(`${SDK}/`) || asPath(cooked).includes(`${SDK}/`)) ? cooked : undefined;
+  return cooked !== undefined && holdsDeep(cooked) ? cooked : undefined;
 }
 const READS = new WeakMap<ts.SourceFile, ScriptReads>();
 /** One script's reads: its triple-slash directives (D1 (b)), its AST loads in order, then the BACKSTOP's unread deep-path literals. */
@@ -699,7 +721,7 @@ function scriptReads(file: string, source: ts.SourceFile): ScriptReads {
   });
   const unread: string[] = [];
   const shebang = ts.getShebang(source.text);
-  if (shebang !== undefined && (shebang.includes(`${SDK}/`) || asPath(shebang).includes(`${SDK}/`))) unread.push(shebang);
+  if (shebang !== undefined && holdsDeep(shebang)) unread.push(shebang);
   walk(source, (node) => {
     const text = deepLiteral(node, source, attributes);
     if (text !== undefined && !taken.has(node)) unread.push(text);
@@ -769,98 +791,7 @@ function deepImportsResolve(tree: Tree): string[] {
   return findings;
 }
 
-// ---- D3's walk: the header's resolution order and exposure reads, nothing else ----------------------------------------
-
-const DECLARATION_FILE = /\.d\.[cm]?ts$/;
-/** The candidates a declaration file's specifier target is tried as, in order (D3: TypeScript's bundler order, files before directories). */
-function declarationCandidates(target: string): string[] {
-  const script = /\.([cm]?)(jsx?)$/.exec(target);
-  if (script !== null) {
-    const stem = target.slice(0, -script[0].length);
-    const flavour = script[1] ?? "";
-    return [`${stem}.${flavour}ts`, ...(flavour === "" ? [`${stem}.tsx`] : []), `${stem}.d.${flavour}ts`];
-  }
-  if (/\.[cm]?tsx?$/.test(target)) return [target];
-  return [".ts", ".tsx", ".d.ts", "/index.ts", "/index.tsx", "/index.d.ts"].map((suffix) => `${target}${suffix}`);
-}
-/** The tarball entry a module specifier names from the module naming it - relative, or through the package's own name - by D3's resolution order. */
-function tarballModule(tree: Tree, from: string, specifier: string): string | undefined {
-  const own = specifier.startsWith(`${SDK}/`) ? `package/${specifier.slice(`${SDK}/`.length)}` : undefined;
-  if (own === undefined && !specifier.startsWith("./") && !specifier.startsWith("../")) return undefined;
-  const target = (own ?? posix.normalize(posix.join(posix.dirname(from), specifier))).replace(/\/+$/, "");
-  const candidates = DECLARATION_FILE.test(from) ? declarationCandidates(target) : [target, `${target}.js`, `${target}/index.js`];
-  return candidates.find((candidate) => tree.tarball.has(candidate));
-}
-
-/** What an index entry exposes of the deep imports: the classes, and the module chain from the entry. */
-interface Exposure {
-  readonly names: readonly string[];
-  readonly chain: readonly string[];
-}
-/**
- * D3's WALK (AST, comments never read): from an index entry through every module an export * or export * as names; in each
- * module it reaches, an export * or export * as of a DEEP module, a named re-export of a DEEP class past the entry, and a
- * local export of a name an import specifier binds by a DEEP class's own name, or a default or namespace import binds to a
- * DEEP module.
- */
-function starExposures(tree: Tree, entry: string): Exposure[] {
-  const modules = new Map<string, readonly string[]>(DEEP.map((row) => [`package/${row.specifier.slice(`${SDK}/`.length)}`, row.names]));
-  const deepModule = (path: string): readonly string[] | undefined => modules.get(path.replace(DECLARATION_FILE, ".js"));
-  const classes = DEEP.flatMap((row) => row.names);
-  const exposures: Exposure[] = [];
-  const seen = new Set<string>([entry]);
-  const visit = (path: string, chain: readonly string[]): void => {
-    const text = tree.tarball.get(path);
-    if (text === undefined) return;
-    const statements = parsed(path, text).statements;
-    const imported = new Map<string, readonly string[]>();
-    for (const statement of statements) {
-      if (!ts.isImportDeclaration(statement) || !ts.isStringLiteralLike(statement.moduleSpecifier)) continue;
-      const target = tarballModule(tree, path, statement.moduleSpecifier.text);
-      const moduleNames = target === undefined ? undefined : deepModule(target);
-      const defaulted = statement.importClause?.name;
-      if (defaulted !== undefined && moduleNames !== undefined) imported.set(defaulted.text, moduleNames);
-      const bindings = statement.importClause?.namedBindings;
-      if (bindings === undefined) continue;
-      if (ts.isNamespaceImport(bindings)) {
-        if (moduleNames !== undefined) imported.set(bindings.name.text, moduleNames);
-      } else {
-        for (const element of bindings.elements) {
-          const name = (element.propertyName ?? element.name).text;
-          if (classes.includes(name)) imported.set(element.name.text, [name]);
-        }
-      }
-    }
-    for (const statement of statements) {
-      if (!ts.isExportDeclaration(statement)) continue;
-      const clause = statement.exportClause;
-      if (statement.moduleSpecifier === undefined) {
-        if (clause === undefined || !ts.isNamedExports(clause)) continue;
-        for (const element of clause.elements) {
-          const names = imported.get((element.propertyName ?? element.name).text);
-          if (names !== undefined) exposures.push({ names, chain });
-        }
-        continue;
-      }
-      if (!ts.isStringLiteralLike(statement.moduleSpecifier)) continue;
-      const target = tarballModule(tree, path, statement.moduleSpecifier.text);
-      if (target === undefined) continue;
-      if (clause === undefined || ts.isNamespaceExport(clause)) {
-        const names = deepModule(target);
-        if (names !== undefined) exposures.push({ names, chain: [...chain, target] });
-        else if (!seen.has(target)) {
-          seen.add(target);
-          visit(target, [...chain, target]);
-        }
-      } else if (chain.length > 1) {
-        const named = clause.elements.map((element) => (element.propertyName ?? element.name).text).filter((name) => classes.includes(name));
-        if (named.length > 0) exposures.push({ names: named, chain });
-      }
-    }
-  };
-  visit(entry, [entry]);
-  return exposures;
-}
+// ---- D3: the package.json fields and wb-lrz.8's landed readers (entryTextNames, entryExposures) ----------------------
 
 /** The package.json fields beside types and main that would route a consumer to another entry: D3 refuses each one present. */
 const OTHER_ENTRIES = ["typesVersions", "typings", "module", "browser"] as const;
@@ -880,10 +811,8 @@ function noSwitchOwed(tree: Tree): string[] {
       findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} is not in the tarball`);
       continue;
     }
-    for (const name of DEEP.flatMap((row) => row.names)) {
-      if (new RegExp(`\\b${name}\\b`).test(text)) findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} names ${name}: switch its deep import to the index re-export (acceptance 4)`);
-    }
-    for (const exposure of starExposures(tree, path)) {
+    for (const name of entryTextNames(text, DEEP)) findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} names ${name}: switch its deep import to the index re-export (acceptance 4)`);
+    for (const exposure of entryExposures(tree.tarball, path, DEEP)) {
       const chain = exposure.chain.map((module) => module.slice("package/".length)).join(" -> ");
       findings.push(`D3 the vendored SDK's ${field} entry ${String(entry)} exposes ${exposure.names.join(", ")} through export * (${chain}): switch its deep import to the index re-export (acceptance 4)`);
     }
@@ -1001,10 +930,9 @@ function registerDerivation(text: string): string[] {
   if (uses !== Object.keys(FIELD_SITES).sort().join(", ")) {
     findings.push(owed(` spells #durability at ${uses || "no site"}, not once at each pinned site (its new Map() field, register's store and durability()'s lookup, each read by its tokens)`));
   }
-  const methods: ts.MethodDeclaration[] = [];
-  walk(source, (node) => {
-    if (ts.isMethodDeclaration(node) && nameOf(node.name) === "register" && node.body !== undefined) methods.push(node);
-  });
+  const methods = registerMethods(source)
+    .map((entry) => entry.method)
+    .filter((method) => method.body !== undefined);
   const [method] = methods;
   if (methods.length !== 1 || method === undefined || method.body === undefined) return [...findings, owed(` declares ${methods.length} register methods with a body, not one`)];
   const body = method.body;
@@ -1146,24 +1074,6 @@ function providerContractSource(tree: Tree): string[] {
 
 const isList = (token: Token): token is Tokens.List => token.type === "list";
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-/** The token kinds marked renders no text for: raw HTML (comments included; a raw HTML block is R-HTML-BLOCK), link-reference definitions and image alt text. */
-const UNSHOWN: ReadonlySet<string> = new Set(["html", "def", "image"]);
-/**
- * vendor/README.md as marked renders its page: the text of each top-level block through marked's tokens - paragraphs,
- * headings, lists, tables, quotes and code alike - with raw HTML (comments included), link-reference definitions and image
- * alt text dropped.
- */
-function shownBlocks(markdown: string): string[] {
-  const shown = (token: Token): string => {
-    if (UNSHOWN.has(token.type)) return "";
-    if (isList(token)) return token.items.map((item) => ` ${shown(item)} `).join("");
-    if (isTable(token)) return [...token.header, ...token.rows.flat()].map((cell) => ` ${cell.tokens.map(shown).join("")} `).join("");
-    if ("tokens" in token && token.tokens !== undefined && token.tokens.length > 0) return token.tokens.map(shown).join("");
-    return "text" in token && typeof token.text === "string" ? token.text : token.raw;
-  };
-  return marked.lexer(markdown).map((token) => collapse(shown(token)));
-}
-
 const U1_QUOTE = "the vendored 0.1.0 pin remains correct";
 
 /** U1: the vendored version is the clause's own, and vendor/README.md's rendered page shows one record of the tarball as wb-zby's repack. */
@@ -1195,7 +1105,7 @@ function pageRefusals(markdown: string): string[] {
   if (references > 0) findings.push(`U1 vendor/README.md opens ${references} character references: U1 refuses them, since a browser shows the character a reference names where marked's tokens hold the reference`);
   const ignorable = [...markdown.matchAll(IGNORABLE)].length;
   if (ignorable > 0) findings.push(`U1 vendor/README.md carries ${ignorable} default-ignorable characters: U1 refuses them, since a browser hides them inside the text a record is read from`);
-  // A hard line break (cut #5, refusal #4 U2): shownBlocks reads a br token by its source, which a browser shows as a break.
+  // A hard line break (cut #5, refusal #4 U2): refused fail-closed; the rendered reading (renderedBlocks, since the R-B127 restatement) reads it as the break marked renders.
   const breaks = count("br");
   if (breaks > 0) {
     findings.push(
@@ -1213,7 +1123,7 @@ function untilThenPin(tree: Tree): string[] {
   const clause = /\b(\d+\.\d+\.\d+)\b/.exec(U1_QUOTE)?.[1];
   if (version !== clause) findings.push(`U1 the vendored ${SDK} is ${version}, not the until-then ${String(clause)}: ${TRIGGERED}`);
   findings.push(...pageRefusals(tree.readme));
-  const records = shownBlocks(tree.readme).flatMap((block) => [...block.matchAll(PROVENANCE)]);
+  const records = renderedBlocks(tree.readme).flatMap((block) => [...block.matchAll(PROVENANCE)]);
   const [recorded] = records;
   if (recorded === undefined) findings.push(`U1 vendor/README.md no longer records the vendored tarball as wb-zby's repack from Furnace revision ${ZBY_REVISION}: ${TRIGGERED}`);
   else if (records.length > 1) findings.push(`U1 vendor/README.md shows ${records.length} records of a tarball as wb-zby's repack, not one`);
@@ -1390,7 +1300,7 @@ const INDIRECT_LOADERS = [
   'export const fromImport: unknown = imported("@furnace/sdk/dist/src/durability.js");',
   "",
 ].join("\n");
-/** R-ENTRY-SPELLING's spellings (Q12, refusal #4 U1): named re-exports at an entry whose class name only an escape sequence spells. */
+/** Cut #5's R-ENTRY-SPELLING spellings (its Q12, refusal #4 U1; retired at the R-B127 restatement): named re-exports at an entry whose class name only an escape sequence spells, judged D3#44 and D3#45. */
 const ENTRY_SPELLINGS: Readonly<Record<"types" | "main", string>> = {
   types: [
     'export { \\u0045mbeddedHost as GateHost } from "./embedded.js";',
@@ -1428,6 +1338,16 @@ const hopPlant = (name: string, field: "types" | "main", specifier: string, hop:
     editEntry(addEntry(real, `package/dist/src/${hop}`, `export * from "${hopSpecifier}";\n`), field === "types" ? "package/dist/src/index.d.ts" : "package/dist/src/index.js", (text) => `${text}\nexport * from "${specifier}";\n`),
   findings: [switchOwed(field, field === "types" ? "dist/src/index.d.ts" : "dist/src/index.js", "EmbeddedHost", chain)],
 });
+/** A DEEP module's TypeScript twin (refusal #5 U1): the tarball also carries <module>.<extension>, holding its declaration file's text. */
+const withTwin = (tree: Tree, module: "embedded" | "resident_session", extension: "ts" | "tsx"): Tree =>
+  addEntry(tree, `package/dist/src/${module}.${extension}`, tree.tarball.get(`package/dist/src/${module}.d.ts`) ?? "");
+/** One D3 entry plant: `line` appended to the types or the main entry. */
+const entryLine = (tree: Tree, field: "types" | "main", line: string): Tree =>
+  editEntry(tree, field === "types" ? "package/dist/src/index.d.ts" : "package/dist/src/index.js", (text) => `${text}\n${line}\n`);
+/** A class appended to executor.js holding one method named `name` (refusal #5 U2): D4 counts every register method with a body. */
+const shimApp = (name: string, body = " {\n        return this;\n    }"): string => `class ShimApp {\n    ${name}()${body}\n}\n`;
+const D4_COUNT = `D4 ${EXECUTOR} declares 2 register methods with a body, not one: ${RERUN}`;
+const TWO_RECORDS = "U1 vendor/README.md shows 2 records of a tarball as wb-zby's repack, not one";
 /** A worker source that spells its loads in its text (the src/workflow/worker-source.ts shape). */
 const RUNTIME_SOURCE = ["export const SOURCE = 'const client = require(\"@furnace/sdk/dist/src/client.js\");';", 'export const TEMPLATE = `import("@furnace/sdk/dist/src/client.js")`;', ""].join("\n");
 
@@ -1830,7 +1750,10 @@ const ROWS: readonly Row[] = [
           {
             name: "a tarball whose index re-exports the embedded host",
             tree: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport { EmbeddedHost } from "./embedded.js";\n`),
-            findings: ["D3 the vendored SDK's types entry dist/src/index.d.ts names EmbeddedHost: switch its deep import to the index re-export (acceptance 4)"],
+            findings: [
+              "D3 the vendored SDK's types entry dist/src/index.d.ts names EmbeddedHost: switch its deep import to the index re-export (acceptance 4)",
+              switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts"),
+            ],
           },
           {
             name: "the header claim dropped",
@@ -1840,7 +1763,10 @@ const ROWS: readonly Row[] = [
           {
             name: "a main entry that names the resident session",
             tree: (real) => editEntry(real, "package/dist/src/index.js", (text) => `${text}\nexport { ResidentSession } from "./resident_session.js";\n`),
-            findings: ["D3 the vendored SDK's main entry dist/src/index.js names ResidentSession: switch its deep import to the index re-export (acceptance 4)"],
+            findings: [
+              "D3 the vendored SDK's main entry dist/src/index.js names ResidentSession: switch its deep import to the index re-export (acceptance 4)",
+              switchOwed("main", "dist/src/index.js", "ResidentSession", "dist/src/index.js"),
+            ],
           },
           {
             name: "an index export * of the embedded module",
@@ -1994,6 +1920,130 @@ const ROWS: readonly Row[] = [
           hopPlant("a declaration file's extensionless path held as /index.ts", "types", "./zzdir", "zzdir/index.ts", "../embedded.js", "dist/src/index.d.ts -> dist/src/zzdir/index.ts -> dist/src/embedded.js"),
           hopPlant("a declaration file's extensionless path held as /index.tsx", "types", "./zzdir2", "zzdir2/index.tsx", "../embedded.js", "dist/src/index.d.ts -> dist/src/zzdir2/index.tsx -> dist/src/embedded.js"),
           hopPlant("a JavaScript file's extensionless path held as /index.js", "main", "./zzjsdir", "zzjsdir/index.js", "../embedded.js", "dist/src/index.js -> dist/src/zzjsdir/index.js -> dist/src/embedded.js"),
+          // R-B127 restatement (D3#44-#67): the WALK is wb-lrz.8's landed entryExposures. Cut #5's Q12 spellings (R-ENTRY-SPELLING, retired) ride as judged plants.
+          {
+            name: "the types entry's four escape-spelled named re-exports (cut #5's Q12 spellings: the WALK reads a named re-export at an entry, its name cooked)",
+            tree: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\n${ENTRY_SPELLINGS.types}`),
+            findings: ["EmbeddedHost", "ResidentSession", "EmbeddedHost", "EmbeddedHost"].map((names) => switchOwed("types", "dist/src/index.d.ts", names, "dist/src/index.d.ts")),
+          },
+          {
+            name: "the main entry's four escape-spelled named re-exports (cut #5's Q12 spellings: a string unicode escape, an inner identifier escape, a line continuation and a single-character escape)",
+            tree: (real) => editEntry(real, "package/dist/src/index.js", (text) => `${text}\n${ENTRY_SPELLINGS.main}`),
+            findings: ["EmbeddedHost", "ResidentSession", "ResidentSession", "EmbeddedHost"].map((names) => switchOwed("main", "dist/src/index.js", names, "dist/src/index.js")),
+          },
+          {
+            name: "an index export * of the embedded module whose .ts twin the tarball carries (refusal #5 G1: a DEEP module is identified by its stem)",
+            tree: (real) => entryLine(withTwin(real, "embedded", "ts"), "types", 'export * from "./embedded.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.ts")],
+          },
+          {
+            name: "an index export * of the embedded module whose .tsx twin the tarball carries (refusal #5 G2)",
+            tree: (real) => entryLine(withTwin(real, "embedded", "tsx"), "types", 'export * from "./embedded.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.tsx")],
+          },
+          {
+            name: "an index's local export of a namespace import of the embedded module, its .ts twin carried (refusal #5 G3)",
+            tree: (real) => entryLine(withTwin(real, "embedded", "ts"), "types", 'import * as embedded from "./embedded.js";\nexport { embedded };'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts")],
+          },
+          {
+            name: "an index's local export of a default import of the embedded module, its .ts twin carried",
+            tree: (real) => entryLine(withTwin(real, "embedded", "ts"), "types", 'import Host from "./embedded.js";\nexport { Host };'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts")],
+          },
+          {
+            name: "an index export * as of the embedded module, its .ts twin carried (refusal #5 G4)",
+            tree: (real) => entryLine(withTwin(real, "embedded", "ts"), "types", 'export * as hosting from "./embedded.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.ts")],
+          },
+          {
+            name: "a starred module's export * of the resident session module, its .ts twin carried (refusal #5 G5: past the entry)",
+            tree: (real) => editEntry(withTwin(real, "resident_session", "ts"), "package/dist/src/protocol.d.ts", (text) => `${text}\nexport * from "./resident_session.js";\n`),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "ResidentSession", "dist/src/index.d.ts -> dist/src/protocol.d.ts -> dist/src/resident_session.ts")],
+          },
+          {
+            name: "an index export * of the embedded module by an extensionless specifier, its .ts twin carried (refusal #5 G6)",
+            tree: (real) => entryLine(withTwin(real, "embedded", "ts"), "types", 'export * from "./embedded";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.ts")],
+          },
+          {
+            name: "an index export * of the resident session module, its .ts twin carried (refusal #5 G1R)",
+            tree: (real) => entryLine(withTwin(real, "resident_session", "ts"), "types", 'export * from "./resident_session.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "ResidentSession", "dist/src/index.d.ts -> dist/src/resident_session.ts")],
+          },
+          {
+            name: "a main entry export * of the embedded module whose specifier a tab splits (refusal #5 G10: RESOLUTION drops it)",
+            tree: (real) => entryLine(real, "main", 'export * from "./embed\\tded.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a types entry export * of the embedded module whose specifier a tab splits",
+            tree: (real) => entryLine(real, "types", 'export * from "./embed\\tded.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.d.ts")],
+          },
+          {
+            name: "a main entry export * of the embedded module whose specifier an LF splits",
+            tree: (real) => entryLine(real, "main", 'export * from "./embed\\nded.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a main entry export * of the embedded module whose specifier a CR splits",
+            tree: (real) => entryLine(real, "main", 'export * from "./embed\\rded.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a main entry export * of the embedded module spelled with a %64 escape (refusal #5 G11: RESOLUTION decodes it)",
+            tree: (real) => entryLine(real, "main", 'export * from "./embedde%64.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a types entry export * of the embedded module spelled with a %64 escape",
+            tree: (real) => entryLine(real, "types", 'export * from "./embedde%64.js";'),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/embedded.d.ts")],
+          },
+          {
+            name: "a main entry export * of the embedded module with a query (RESOLUTION cuts it off)",
+            tree: (real) => entryLine(real, "main", 'export * from "./embedded.js?gate";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a main entry export * of the embedded module with a fragment (RESOLUTION cuts it off)",
+            tree: (real) => entryLine(real, "main", 'export * from "./embedded.js#gate";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a main entry export * of the embedded module through a backslash (RESOLUTION reads it as /)",
+            tree: (real) => entryLine(real, "main", 'export * from ".\\\\embedded.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a main entry export * of the embedded module through the package's own name with a .. segment (resolved)",
+            tree: (real) => entryLine(real, "main", 'export * from "@furnace/sdk/dist/zz/../src/embedded.js";'),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/embedded.js")],
+          },
+          {
+            name: "a starred module re-exporting the resident session by name from a %5F-escaped specifier (refusal #5 G9)",
+            tree: (real) => editEntry(real, "package/dist/src/protocol.js", (text) => `${text}\nexport { ResidentSession } from "./resident%5Fsession.js";\n`),
+            findings: [switchOwed("main", "dist/src/index.js", "ResidentSession", "dist/src/index.js -> dist/src/protocol.js")],
+          },
+          {
+            name: "a starred module re-exporting the embedded host by name from a specifier with a query (refusal #5 G8)",
+            tree: (real) => editEntry(real, "package/dist/src/protocol.js", (text) => `${text}\nexport { EmbeddedHost } from "./embedded.js?gate";\n`),
+            findings: [switchOwed("main", "dist/src/index.js", "EmbeddedHost", "dist/src/index.js -> dist/src/protocol.js")],
+          },
+          {
+            name: "a starred module re-exporting the embedded host by name from a specifier that resolves to nothing (a named re-export is read whatever its specifier resolves to)",
+            tree: (real) => editEntry(real, "package/dist/src/protocol.d.ts", (text) => `${text}\nexport { EmbeddedHost } from "./missing.js";\n`),
+            findings: [switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts -> dist/src/protocol.d.ts")],
+          },
+          {
+            name: "an index re-exporting the embedded host by name from a specifier that resolves to nothing (read at the entry too, whatever its specifier resolves to)",
+            tree: (real) => entryLine(real, "types", 'export { EmbeddedHost } from "./missing.js";'),
+            findings: [
+              "D3 the vendored SDK's types entry dist/src/index.d.ts names EmbeddedHost: switch its deep import to the index re-export (acceptance 4)",
+              switchOwed("types", "dist/src/index.d.ts", "EmbeddedHost", "dist/src/index.d.ts"),
+            ],
+          },
         ],
       },
       {
@@ -2175,6 +2225,47 @@ const ROWS: readonly Row[] = [
           {
             name: "control: a line comment and a JSDoc block inside register read nothing (CODE reads tokens, never comments)",
             tree: (real) => editEntry(real, EXECUTOR, (text) => text.replace(PROFILE_LINE, `/** the profile, documented */\n        // derived below\n        ${PROFILE_LINE}`)),
+            findings: [],
+          },
+          // R-B127 restatement (D4#34-#41): the count of register methods is wb-lrz.8's landed registerMethods (refusal #5 U2: HV5, G12, G12b, G12c, G12d).
+          {
+            name: "a second register method, an identifier name, in a class appended to executor.js (refusal #5 G12c)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp("register")}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method, a string-literal name (refusal #5 G12b)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp('"register"')}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method, a computed string-literal name (refusal #5 G12)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp('["register"]')}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method, a computed no-substitution template literal name (refusal #5 G12d)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp("[`register`]")}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method, a computed string-literal name through parentheses",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp('[("register")]')}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method, an identifier name spelled by a unicode escape (read cooked)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp("\\u0072egister")}`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "a second register method in an object literal appended to executor.js",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\nexport const shim = {\n    register() {\n        return this;\n    },\n};\n`),
+            findings: [D4_COUNT],
+          },
+          {
+            name: "control: a register method declaration without a body is not counted (the count reads method declarations with a body)",
+            tree: (real) => editEntry(real, EXECUTOR, (text) => `${text}\n${shimApp("register", ";")}`),
             findings: [],
           },
         ],
@@ -2439,7 +2530,7 @@ const ROWS: readonly Row[] = [
           {
             name: "a second record behind a backslash hard break, which marked renders as a line break (refusal #4 U2)",
             tree: (real) => editReadme(real, (text) => `${text}\nfurnace-sdk-0.2.0.tgz was re-packaged on 2026-11-01\\\n(wb-zby) from Furnace revision abcdef0123.\n`),
-            findings: [breaksRefused(1)],
+            findings: [breaksRefused(1), TWO_RECORDS],
           },
           {
             name: "its two-space twin: a second record behind a two-space hard break, which renders the same page",
@@ -2449,7 +2540,7 @@ const ROWS: readonly Row[] = [
           {
             name: "a second record behind a backslash hard break inside a list item",
             tree: (real) => editReadme(real, (text) => `${text}\n- furnace-sdk-0.2.0.tgz was re-packaged on 2026-11-01\\\n  (wb-zby) from Furnace revision abcdef0123.\n`),
-            findings: [breaksRefused(1)],
+            findings: [breaksRefused(1), TWO_RECORDS],
           },
         ],
       },
@@ -2628,14 +2719,6 @@ const ROWS: readonly Row[] = [
           ),
         control: (real) => withFile(real, "src/workbench/plant-q11.ts", 'import { HostClient } from "@furnace/sdk/dist/src/host_client.js";\nexport const PLANTED = HostClient;\n'),
       },
-      {
-        kind: "quiet",
-        id: "Q12",
-        residual: "R-ENTRY-SPELLING",
-        judge: noSwitchOwed,
-        quiet: (real) => editEntry(editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\n${ENTRY_SPELLINGS.types}`), "package/dist/src/index.js", (text) => `${text}\n${ENTRY_SPELLINGS.main}`),
-        control: (real) => editEntry(real, "package/dist/src/index.d.ts", (text) => `${text}\nexport { EmbeddedHost as GateHost } from "./embedded.js";\n`),
-      },
     ],
   },
 ];
@@ -2648,13 +2731,13 @@ const quotesOf = (source: Source): string[] => JUDGED.filter((pin) => pin.source
 // ---- frozen shape and each-liveness (standing rule 16; the U1 cure of wb-lrz.4 refusal #1, kept at cut #3) -----------------
 
 /** Every row's pin ids, frozen at this cut: the one literal the subsets' ids, the call sites' records and the case count are read against. */
-const FROZEN_PINS = ["D:D1,D2,D3,D4", "V:V1,V2,V3", "U:U1,U2", "Q:Q1,Q2,Q3,Q4,Q6,Q7,Q8,Q10,Q11,Q12"] as const;
+const FROZEN_PINS = ["D:D1,D2,D3,D4", "V:V1,V2,V3", "U:U1,U2", "Q:Q1,Q2,Q3,Q4,Q6,Q7,Q8,Q10,Q11"] as const;
 const FROZEN_IDS = FROZEN_PINS.flatMap((entry) => entry.slice(entry.indexOf(":") + 1).split(","));
 /** The judged ids (rows D, V and U) and the quiet ids (row Q), taken from FROZEN_PINS - never from ROWS or a subset. */
 const JUDGED_IDS = FROZEN_IDS.filter((id) => !id.startsWith("Q"));
 const QUIET_IDS = FROZEN_IDS.filter((id) => id.startsWith("Q"));
 /** Each judged pin's plant count, frozen at this cut: a plant deleted, or a plants loop cut short, goes red. */
-const PLANT_SHAPE = ["D1:73", "D2:4", "D3:44", "D4:34", "V1:13", "V2:3", "V3:3", "U1:22", "U2:8"] as const;
+const PLANT_SHAPE = ["D1:73", "D2:4", "D3:68", "D4:42", "V1:13", "V2:3", "V3:3", "U1:22", "U2:8"] as const;
 /** Each judged pin's judge, by name, frozen at this cut: both judged call sites record it, so a judge swapped out at either one goes red. */
 const JUDGE_KEYS = ["D1:deepImportSet", "D2:deepImportsResolve", "D3:noSwitchOwed", "D4:durabilityModule", "V1:versionLiterals", "V2:observerSdk", "V3:providerContractSource", "U1:untilThenPin", "U2:oneArtifact"] as const;
 /** The key each plant records at its last line, in order: its pin id and its index, expanded from PLANT_SHAPE. */
@@ -2754,7 +2837,7 @@ const TALLY_TITLE =
 
 describe("wb-lrz.4 Furnace SDK re-vendor readiness census", () => {
   it("FROZEN SHAPE (standing rule 16): literals pin ROWS's shape and pin ids, the JUDGED and QUIET subsets' ids, each judged pin's plant count and judge, and V1's forms", () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:10"]);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["D:4", "V:3", "U:2", "Q:9"]);
     expect(ROWS.map((row) => `${row.id}:${row.pins.map((pin) => pin.id).join(",")}`)).toEqual([...FROZEN_PINS]);
     expect(JUDGED.map((pin) => pin.id)).toEqual(JUDGED_IDS);
     expect(QUIET.map((pin) => pin.id)).toEqual(QUIET_IDS);
