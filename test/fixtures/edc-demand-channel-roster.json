@@ -1,0 +1,2698 @@
+{
+  "bead": "wb-pyel.2",
+  "filing": {
+    "length": 923,
+    "sha256": "d0549b8413d2b1c2d86bdc2a9f38ef126497bf6b0a28014138d087d6a7385e8f"
+  },
+  "producer": {
+    "repository": "ReactiveComponentsSDK",
+    "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+    "beadPin": "44b72145b1756908585c94da2327ab8809a3ca9a",
+    "originMaster": "5c480c5712b4562c12446b00fd47b7e9b4633067",
+    "measuredAt": "2026-10-28T12:00:45Z",
+    "blob": "de04229d9cdad063e4704d732f3cbcee1f001e68",
+    "lines": [
+      {
+        "line": 14,
+        "text": "4. Treat context demand/precision as an *explicit client projection requirement*, not an imperative model or tool call.",
+        "sha256": "00d67aecc9bdde7ae8a8e07a85a067631a70112135ff9c71146127de9c32d179"
+      }
+    ]
+  },
+  "vocabulary": {
+    "subject": [
+      "context",
+      "contexts"
+    ],
+    "families": {
+      "demand": [
+        "demand",
+        "demands",
+        "demanded",
+        "demanding"
+      ],
+      "precision": [
+        "precision",
+        "precise",
+        "precisely",
+        "imprecise",
+        "imprecisely",
+        "imprecision"
+      ]
+    },
+    "carrier": [
+      [
+        "projection",
+        "requirement"
+      ],
+      [
+        "projection",
+        "requirements"
+      ]
+    ],
+    "markers": [
+      "not",
+      "no",
+      "never",
+      "nor",
+      "neither",
+      "without",
+      "cannot",
+      "none",
+      "nothing"
+    ],
+    "stems": {
+      "word": [
+        "edc",
+        "edcs"
+      ],
+      "joined": [
+        "evidencedirected"
+      ]
+    }
+  },
+  "constants": {
+    "codeRoots": [
+      "examples",
+      "src"
+    ],
+    "pageRoots": [
+      ".agents",
+      ".pi",
+      "examples"
+    ],
+    "consumerRoot": "src",
+    "frozenAt": "864dff943711",
+    "titlePrefix": "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R4] ",
+    "seam": "reactivefiber.render.preview",
+    "backend": "claude"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "If Pi-subagents adopts EDC context assembly",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "If Pi-subagents adopts",
+          "witness": {
+            "gate": "ABSENT",
+            "sites": [],
+            "dependencies": [],
+            "floors": {
+              "srcModules": true,
+              "readings": true,
+              "tables": true
+            },
+            "walkAgreesWithGit": true,
+            "links": [],
+            "frozen": {
+              "revision": "864dff943711",
+              "ancestor": true,
+              "modules": 116,
+              "readings": 136091,
+              "sites": [],
+              "dependencies": [],
+              "tables": 3
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "EDC context assembly",
+          "witness": {
+            "stems": {
+              "word": [
+                "edc",
+                "edcs"
+              ],
+              "joined": [
+                "evidencedirected"
+              ]
+            },
+            "routes": {
+              "identifier": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymPlural": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "camel": [
+                "src/plant.ts:1 lexeme edc",
+                "src/plant.ts:2 lexeme edc"
+              ],
+              "acronymRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "caseChanges": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymRuns": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymPlurals": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "oneCapitalRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "longRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "pluralUnderscore": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "pluralSpace": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "rangeBounds": [
+                "src/plant.ts:1 lexeme edc",
+                "src/plant.ts:2 lexeme edc",
+                "src/plant.ts:3 lexeme edc",
+                "src/plant.ts:4 lexeme edc",
+                "src/plant.ts:5 lexeme edc",
+                "src/plant.ts:6 lexeme edc",
+                "src/plant.ts:7 lexeme edc",
+                "src/plant.ts:8 lexeme edc",
+                "src/plant.ts:9 lexeme edc"
+              ],
+              "string": [
+                "src/plant.ts:1 lexeme evidencedirected"
+              ],
+              "joinedForms": [
+                "src/plant.ts:1 lexeme evidencedirected",
+                "src/plant.ts:2 lexeme evidencedirected"
+              ],
+              "specifier": [
+                "src/plant.ts:1 import edc",
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "dynamicImport": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "template": [
+                "src/plant.ts:1 lexeme evidencedirected",
+                "src/plant.ts:1 lexeme evidencedirected"
+              ],
+              "member": [
+                "src/plant.ts:1 member edc",
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "invisible": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "invisibles": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "precomposed": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "fullwidth": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "decomposed": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "softHyphen": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "wordJoiner": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "doubleLowLine": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "enclosingSquare": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "javascript": [
+                "src/plant.cjs:1 lexeme edc"
+              ],
+              "manifest": [
+                "dependencies.edc-sdk",
+                "devDependencies.x",
+                "optionalDependencies.EvidenceDirected"
+              ],
+              "zeroWidthRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "softHyphenLowLine": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "lowLineRepeat": [
+                "src/plant.ts:1 lexeme edc"
+              ]
+            },
+            "words": {
+              "parseEDC": [
+                "parse",
+                "edc"
+              ],
+              "EDCs": [
+                "edc",
+                "s"
+              ],
+              "EdcAssembler": [
+                "edc",
+                "assembler"
+              ],
+              "EDCAssembler": [
+                "edc",
+                "assembler"
+              ],
+              "EDCv2Assembler": [
+                "ed",
+                "cv2",
+                "assembler"
+              ],
+              "EDC2Assembler": [
+                "edc2",
+                "assembler"
+              ],
+              "edc2_assembler": [
+                "edc2",
+                "assembler"
+              ],
+              "parseXmlEdcAssembler": [
+                "parse",
+                "xml",
+                "edc",
+                "assembler"
+              ],
+              "XMLParserEDCAssembler": [
+                "xml",
+                "parser",
+                "edc",
+                "assembler"
+              ],
+              "XMLsEDCs": [
+                "xml",
+                "s",
+                "edc",
+                "s"
+              ],
+              "IEdcAssembler": [
+                "i",
+                "edc",
+                "assembler"
+              ],
+              "HTTPSEdcAssembler": [
+                "https",
+                "edc",
+                "assembler"
+              ],
+              "IDs": [
+                "id",
+                "s"
+              ],
+              "EDCs2": [
+                "edc",
+                "s2"
+              ],
+              "castAs": [
+                "cast",
+                "as"
+              ],
+              "EdcAssembler()": [
+                "edc",
+                "assembler"
+              ],
+              "EDCs_list": [
+                "edc",
+                "s",
+                "list"
+              ],
+              "EDCs ready": [
+                "edc",
+                "s",
+                "ready"
+              ],
+              "metaEdcAssembler": [
+                "meta",
+                "edc",
+                "assembler"
+              ],
+              "bizEdcAssembler": [
+                "biz",
+                "edc",
+                "assembler"
+              ],
+              "v0EdcAssembler": [
+                "v0",
+                "edc",
+                "assembler"
+              ],
+              "v9EdcAssembler": [
+                "v9",
+                "edc",
+                "assembler"
+              ],
+              "edcZone": [
+                "edc",
+                "zone"
+              ],
+              "AEdcAssembler": [
+                "a",
+                "edc",
+                "assembler"
+              ],
+              "ZEdcAssembler": [
+                "z",
+                "edc",
+                "assembler"
+              ],
+              "EDCZone": [
+                "edc",
+                "zone"
+              ],
+              "EDCAzure": [
+                "edc",
+                "azure"
+              ],
+              "parseIDs": [
+                "parse",
+                "id",
+                "s"
+              ]
+            },
+            "nearMisses": {
+              "comment": [],
+              "innerComment": [],
+              "inner": [],
+              "evidenceAlone": [],
+              "spacingMark": [],
+              "testModule": []
+            },
+            "quiet": {
+              "R-UNNAMED-ADOPTION": [
+                [],
+                []
+              ],
+              "R-GLUED-STEM": {
+                "unread": [
+                  [],
+                  [],
+                  []
+                ],
+                "readTwins": [
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ],
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ],
+                  [
+                    "src/plant.ts:1 lexeme edc"
+                  ]
+                ]
+              }
+            },
+            "sweep": {
+              "stem": {
+                "ascii": "ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed0c|ed1c|ed2c|ed3c|ed4c|ed5c|ed6c|ed7c|ed8c|ed9c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed ac|ed bc|ed cc|ed dc|ed ec|ed fc|ed gc|ed hc|ed ic|ed jc|ed kc|ed lc|ed mc|ed nc|ed oc|ed pc|ed qc|ed rc|ed sc|ed tc|ed uc|ed vc|ed wc|ed xc|ed yc|ed zc|ed c|ed c|ed c|ed c|ed c|ed c|edac|edbc|edcc|eddc|edec|edfc|edgc|edhc|edic|edjc|edkc|edlc|edmc|ednc|edoc|edpc|edqc|edrc|edsc|edtc|educ|edvc|edwc|edxc|edyc|edzc|ed c|ed c|ed c|ed c|ed c",
+                "nothing": "edc",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edi c"
+                },
+                "fullwidth": []
+              },
+              "camelLeft": {
+                "ascii": "edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|0 edc|1 edc|2 edc|3 edc|4 edc|5 edc|6 edc|7 edc|8 edc|9 edc|edc|edc|edc|edc|edc|edc|edc|a edc|b edc|c edc|d edc|e edc|f edc|g edc|h edc|i edc|j edc|k edc|l edc|m edc|n edc|o edc|p edc|q edc|r edc|s edc|t edc|u edc|v edc|w edc|x edc|y edc|z edc|edc|edc|edc|edc|edc|edc|a edc|b edc|c edc|d edc|e edc|f edc|g edc|h edc|i edc|j edc|k edc|l edc|m edc|n edc|o edc|p edc|q edc|r edc|s edc|t edc|u edc|v edc|w edc|x edc|y edc|z edc|edc|edc|edc|edc|edc",
+                "nothing": "edc",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i edc"
+                },
+                "fullwidth": []
+              },
+              "acronymLast": {
+                "ascii": "ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed0x|ed1x|ed2x|ed3x|ed4x|ed5x|ed6x|ed7x|ed8x|ed9x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed ax|ed bx|ed cx|ed dx|ed ex|ed fx|ed gx|ed hx|ed ix|ed jx|ed kx|ed lx|ed mx|ed nx|ed ox|ed px|ed qx|ed rx|ed sx|ed tx|ed ux|ed vx|ed wx|ed xx|ed yx|ed zx|ed x|ed x|ed x|ed x|ed x|ed x|e dax|e dbx|e dcx|e ddx|e dex|e dfx|e dgx|e dhx|e dix|e djx|e dkx|e dlx|e dmx|e dnx|e dox|e dpx|e dqx|e drx|e dsx|e dtx|e dux|e dvx|e dwx|e dxx|e dyx|e dzx|ed x|ed x|ed x|ed x|ed x",
+                "nothing": "e dx",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edi x"
+                },
+                "fullwidth": []
+              },
+              "acronymLower": {
+                "ascii": "eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda0x|eda1x|eda2x|eda3x|eda4x|eda5x|eda6x|eda7x|eda8x|eda9x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda ax|eda bx|eda cx|eda dx|eda ex|eda fx|eda gx|eda hx|eda ix|eda jx|eda kx|eda lx|eda mx|eda nx|eda ox|eda px|eda qx|eda rx|eda sx|eda tx|eda ux|eda vx|eda wx|eda xx|eda yx|eda zx|eda x|eda x|eda x|eda x|eda x|eda x|ed aax|ed abx|ed acx|ed adx|ed aex|ed afx|ed agx|ed ahx|ed aix|ed ajx|ed akx|ed alx|ed amx|ed anx|ed aox|ed apx|ed aqx|ed arx|ed asx|ed atx|ed aux|ed avx|ed awx|ed axx|ed ayx|ed azx|eda x|eda x|eda x|eda x|eda x",
+                "nothing": "ed ax",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edai x"
+                },
+                "fullwidth": []
+              },
+              "pluralRun": {
+                "ascii": "e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e0s|e1s|e2s|e3s|e4s|e5s|e6s|e7s|e8s|e9s|e s|e s|e s|e s|e s|e s|e s|ea s|eb s|ec s|ed s|ee s|ef s|eg s|eh s|ei s|ej s|ek s|el s|em s|en s|eo s|ep s|eq s|er s|es s|et s|eu s|ev s|ew s|ex s|ey s|ez s|e s|e s|e s|e s|e s|e s|eas|ebs|ecs|eds|ees|efs|egs|ehs|eis|ejs|eks|els|ems|ens|eos|eps|eqs|ers|ess|ets|eus|evs|ews|exs|eys|ezs|e s|e s|e s|e s|e s",
+                "nothing": "es",
+                "swept": true,
+                "departures": {
+                  "U+0130": "ei s"
+                },
+                "fullwidth": []
+              },
+              "pluralFollower": {
+                "ascii": "edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s0|edc s1|edc s2|edc s3|edc s4|edc s5|edc s6|edc s7|edc s8|edc s9|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s a|edc s b|edc s c|edc s d|edc s e|edc s f|edc s g|edc s h|edc s i|edc s j|edc s k|edc s l|edc s m|edc s n|edc s o|edc s p|edc s q|edc s r|edc s s|edc s t|edc s u|edc s v|edc s w|edc s x|edc s y|edc s z|edc s|edc s|edc s|edc s|edc s|edc s|ed csa|ed csb|ed csc|ed csd|ed cse|ed csf|ed csg|ed csh|ed csi|ed csj|ed csk|ed csl|ed csm|ed csn|ed cso|ed csp|ed csq|ed csr|ed css|ed cst|ed csu|ed csv|ed csw|ed csx|ed csy|ed csz|edc s|edc s|edc s|edc s|edc s",
+                "nothing": "edc s",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edc si"
+                },
+                "fullwidth": []
+              },
+              "pluralLeft": {
+                "ascii": "id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|0 id s|1 id s|2 id s|3 id s|4 id s|5 id s|6 id s|7 id s|8 id s|9 id s|id s|id s|id s|id s|id s|id s|id s|aid s|bid s|cid s|did s|eid s|fid s|gid s|hid s|iid s|jid s|kid s|lid s|mid s|nid s|oid s|pid s|qid s|rid s|sid s|tid s|uid s|vid s|wid s|xid s|yid s|zid s|id s|id s|id s|id s|id s|id s|a id s|b id s|c id s|d id s|e id s|f id s|g id s|h id s|i id s|j id s|k id s|l id s|m id s|n id s|o id s|p id s|q id s|r id s|s id s|t id s|u id s|v id s|w id s|x id s|y id s|z id s|id s|id s|id s|id s|id s",
+                "nothing": "id s",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i id s"
+                },
+                "fullwidth": []
+              },
+              "pluralSingle": {
+                "ascii": "cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|0 cs|1 cs|2 cs|3 cs|4 cs|5 cs|6 cs|7 cs|8 cs|9 cs|cs|cs|cs|cs|cs|cs|cs|ac s|bc s|cc s|dc s|ec s|fc s|gc s|hc s|ic s|jc s|kc s|lc s|mc s|nc s|oc s|pc s|qc s|rc s|sc s|tc s|uc s|vc s|wc s|xc s|yc s|zc s|cs|cs|cs|cs|cs|cs|a cs|b cs|c cs|d cs|e cs|f cs|g cs|h cs|i cs|j cs|k cs|l cs|m cs|n cs|o cs|p cs|q cs|r cs|s cs|t cs|u cs|v cs|w cs|x cs|y cs|z cs|cs|cs|cs|cs|cs",
+                "nothing": "cs",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i cs"
+                },
+                "fullwidth": []
+              }
+            },
+            "categories": {
+              "Cf": {
+                "members": true,
+                "departures": {}
+              },
+              "Mn": {
+                "members": true,
+                "departures": {
+                  "U+0307": "e c",
+                  "U+030C": "e c",
+                  "U+0323": "e c",
+                  "U+0327": "e c",
+                  "U+032D": "e c",
+                  "U+0331": "e c"
+                }
+              },
+              "Me": {
+                "members": true,
+                "departures": {}
+              },
+              "Mc": {
+                "members": true,
+                "departures": {}
+              }
+            },
+            "runs": {
+              "place": "ed|c",
+              "members": {
+                "Cf": "U+200B",
+                "Mn": "U+0332",
+                "Me": "U+20DD"
+              },
+              "forms": [
+                "before Cf: U+0078 U+200B",
+                "after Cf: U+200B U+0078",
+                "before Mn: U+0078 U+0332",
+                "after Mn: U+0332 U+0078",
+                "before Me: U+0078 U+20DD",
+                "after Me: U+20DD U+0078",
+                "twice: U+0078*2",
+                "thrice: U+0078*3"
+              ],
+              "categories": {
+                "Cf": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                },
+                "Mn": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Cf": {},
+                    "before Mn": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Mn": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0327": "e c"
+                    },
+                    "before Me": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Me": {},
+                    "twice": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "thrice": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    }
+                  }
+                },
+                "Me": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                }
+              },
+              "named": {
+                "place": "ed|c",
+                "read": 297,
+                "digest": "c338574e7e6abb40",
+                "departures": {}
+              },
+              "contexts": {
+                "stem": {
+                  "place": "ed|c",
+                  "read": 297,
+                  "digest": "c338574e7e6abb40",
+                  "departures": {}
+                },
+                "camelLeft": {
+                  "place": "|Edc",
+                  "read": 297,
+                  "digest": "08c8a7011ec9621d",
+                  "departures": {}
+                },
+                "acronymLast": {
+                  "place": "ED|x",
+                  "read": 297,
+                  "digest": "dc75c054668eb21f",
+                  "departures": {}
+                },
+                "acronymLower": {
+                  "place": "EDA|x",
+                  "read": 297,
+                  "digest": "91d401b94aa497a5",
+                  "departures": {}
+                },
+                "pluralRun": {
+                  "place": "E|s",
+                  "read": 297,
+                  "digest": "fa651daa80d41ea6",
+                  "departures": {}
+                },
+                "pluralFollower": {
+                  "place": "EDCs|",
+                  "read": 297,
+                  "digest": "8414b48890fff794",
+                  "departures": {}
+                },
+                "pluralLeft": {
+                  "place": "|IDs",
+                  "read": 297,
+                  "digest": "5c7a2553925e63c3",
+                  "departures": {}
+                },
+                "pluralSingle": {
+                  "place": "|Cs",
+                  "read": 297,
+                  "digest": "a5a9600c046173f0",
+                  "departures": {}
+                },
+                "insideStem": {
+                  "place": "e|dc",
+                  "read": 297,
+                  "digest": "3aa1da10d78c5735",
+                  "departures": {}
+                },
+                "beforePlural": {
+                  "place": "EDC|s",
+                  "read": 297,
+                  "digest": "2cd9f7d6f47c23c3",
+                  "departures": {}
+                }
+              },
+              "beyond": {
+                "place": "ed|c",
+                "U+00AD U+2060": "edc",
+                "U+0332 U+00AD U+0332": "edc",
+                "U+200B*65": "edc",
+                "camelLeft U+00AD U+2060 U+0045 U+0064 U+0063": "edc",
+                "insideAcronym U+0045 U+0044 U+200B*2 U+0043": "edc"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "so no Pi prompt, tool description or capability input becomes the demand channel",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "so no Pi prompt",
+          "witness": {
+            "findings": [],
+            "liveQuiet": [
+              "src/default-agents.ts lexeme subjectless:precision precise",
+              "src/workbench/claude-capability-tools.ts lexeme subjectless:demand demand"
+            ],
+            "quietRule": [
+              ".pi/agents/plant-cut-twice.md parted:carrier projection requirement",
+              ".pi/agents/plant-cut-twice.md parted:carrier projection requirement",
+              ".pi/agents/plant-cut.md parted:carrier projection requirement",
+              ".pi/agents/plant.md subjectless:precision precise",
+              "src/plant-cut.ts access parted:carrier projection requirement",
+              "src/plant-cut.ts lexeme parted:carrier projection requirements",
+              "src/plant-marker.ts lexeme marker:never projection requirement",
+              "src/plant-marker.ts lexeme marker:not demand",
+              "src/plant-unread.ts lexeme subjectless:demand demand",
+              "src/plant-unread.ts lexeme subjectless:demand demand",
+              "src/plant.ts lexeme subjectless:precision precise",
+              "src/plant.ts lexeme subjectless:precision precise",
+              "src/plant.ts lexeme subjectless:precision precise precisely"
+            ],
+            "floors": {
+              "srcModules": true,
+              "exampleModules": true,
+              "pages": true,
+              "everyPageRoot": [
+                true,
+                true,
+                true
+              ],
+              "codeReadings": true,
+              "defaultAgents": true,
+              "guidelines": true,
+              "promptTexts": true,
+              "instructions": true
+            },
+            "walkAgreesWithGit": true,
+            "links": [],
+            "frozen": {
+              "revision": "864dff943711",
+              "ancestor": true,
+              "modules": 122,
+              "pages": 3,
+              "readings": 136815,
+              "findings": [],
+              "quieted": [
+                "src/default-agents.ts:41 lexeme:28 subjectless:precision",
+                "src/workbench/claude-capability-tools.ts:127 lexeme:1 subjectless:demand"
+              ]
+            },
+            "forms": {
+              "lexeme.identifier": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.private-name": [
+                "src/plant.ts:2 lexeme:1 demand"
+              ],
+              "lexeme.string": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.no-substitution-template": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-head": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-middle": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-tail": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.regular-expression": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.jsx-text-tsx": [
+                "src/plant.tsx:1 lexeme:1 demand"
+              ],
+              "lexeme.jsx-text-jsx": [
+                "src/plant.jsx:1 lexeme:1 demand"
+              ],
+              "lexeme.template-literal-type": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-as-spelled": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-parenthesized": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-non-null": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-type-assertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-nested-wrappers": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.concatenation-wrapped-spelled": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "lexeme.template-span-as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "access.property-access": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.optional-chain": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.non-null": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.qualified-name": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.element-access": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.element-access-as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.indexed-access-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.indexed-access-parenthesized": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-initializer": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-parameter-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-parameter-default": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.binding-nested": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-computed-key": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-computed-as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-array-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.binding-object-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-nested": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-computed-key": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-computed-as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-array-element": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-array-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-object-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-object-rest-target": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-for-of-rest": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.assignment-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-property-access-block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-property-access-line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-qualified-name": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-element-receiver": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-indexed-object": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-binding-initializer": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-binding-parameter-type": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-binding-parameter-default": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "access.comment-assignment": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-assignment-for-of": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-assignment-for-in": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "access.comment-jsdoc-cast": [
+                "src/plant.js:1 access:1 demand"
+              ],
+              "access.comment-between-words": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "member.property-assignment": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.shorthand": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.object-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.object-accessor": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.computed-name": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.computed-name-as": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.class-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-accessor": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-setter": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.class-expression": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.function-expression": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.parameter-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.interface-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.interface-method": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.type-literal": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enum-member": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-variable": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-function": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-class": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-interface": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-type-alias": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-enum": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-namespace": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.namespace-dotted": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.module-body": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "member.enclosing-shorthand": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property-declaration": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-property-signature": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-method": [
+                "src/plant.ts:3 member:1 demand"
+              ],
+              "member.enclosing-method-signature": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-getter": [
+                "src/plant.ts:3 member:1 demand"
+              ],
+              "member.enclosing-setter": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-function": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-enum-member": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "member.enclosing-parameter-property": [
+                "src/plant.ts:2 member:1 demand"
+              ],
+              "import.default": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.namespace": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named-module-name": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.named-alias": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-module-name": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-alias": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.re-export-namespace": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.equals-require": [
+                "src/plant.cts:1 import:1 demand"
+              ],
+              "import.equals-entity": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "import.comment-equals-entity": [
+                "src/plant.ts:1 import:1 demand"
+              ]
+            },
+            "comments": {
+              "plants": {
+                "property-access": [],
+                "qualified-name": [],
+                "element-receiver": [],
+                "indexed-object": [],
+                "binding-initializer": [],
+                "binding-for-of": [],
+                "binding-for-in": [],
+                "binding-parameter-type": [],
+                "binding-parameter-default": [],
+                "assignment": [],
+                "assignment-for-of": [],
+                "assignment-for-in": [],
+                "import-equals-entity": []
+              },
+              "twins": {
+                "property-access": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "qualified-name": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "element-receiver": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "indexed-object": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "binding-initializer": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-for-of": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-for-in": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "binding-parameter-type": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "binding-parameter-default": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "assignment": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "assignment-for-of": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "assignment-for-in": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "import-equals-entity": [
+                  "src/plant.ts:1 import:1 demand",
+                  "src/plant.ts:1 access:1 demand"
+                ]
+              }
+            },
+            "constants": {
+              "concatenation.parentheses": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.nonNull": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenation.typeAssertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.parentheses": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.as": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.satisfies": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.nonNull": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "templateSpan.typeAssertion": [
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "concatenationKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "concatenationKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "templateKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.parentheses": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.as": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.satisfies": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.nonNull": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementKey.typeAssertion": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "bindingKey.parentheses": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.satisfies": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.nonNull": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingKey.typeAssertion": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.parentheses": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.as": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.satisfies": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.nonNull": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentKey.typeAssertion": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "memberName.parentheses": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.as": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.satisfies": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.nonNull": [
+                "src/plant.ts:1 member:1 demand"
+              ],
+              "memberName.typeAssertion": [
+                "src/plant.ts:1 member:1 demand"
+              ]
+            },
+            "commentMatrix": {
+              "propertyAccess.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "propertyAccess.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "propertyAccess.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "qualifiedName.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "elementReceiver.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "indexedObject.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "bindingInitializer.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingInitializer.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingInitializer.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForOf.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "bindingForIn.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "parameterType.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterType.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterType.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.block": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.line": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "parameterDefault.jsdocStyle": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "assignment.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignment.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignment.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForOf.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.block": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.line": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "assignmentForIn.jsdocStyle": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "importEntity.block": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "importEntity.line": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "importEntity.jsdocStyle": [
+                "src/plant.ts:1 import:1 demand"
+              ]
+            },
+            "afterTerminator": {
+              "comment-after-dot": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-optional-dot": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-non-null": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-not": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-question": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-nullish": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-semicolon": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-spread": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-qualified-name": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-import-entity": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-number": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-binding-receiver": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "parted-carrier": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ],
+                  "quiet": []
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ],
+                  "quiet": []
+                }
+              },
+              "over-read": {
+                "plant": {
+                  "findings": [],
+                  "quiet": [
+                    "src/plant.ts access marker:never demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [],
+                  "quiet": [
+                    "src/plant.ts access marker:never demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              }
+            },
+            "quiet": {
+              "R-SCOPE": {
+                "listed": [
+                  "src/plant-comment.ts",
+                  "src/plant-shebang.ts"
+                ],
+                "findings": [],
+                "aloneWouldFind": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "R-COMPOSED": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ],
+              "R-UNREAD-FORM": {
+                "unread": {
+                  "untypedParameter": [],
+                  "requireBinding": [],
+                  "dynamicImport": [],
+                  "localExportAlias": [],
+                  "callKey": [],
+                  "inOperator": [],
+                  "catchBinding": [],
+                  "ambientBinding": [],
+                  "namespaceBindingPattern": [],
+                  "forInTarget": [],
+                  "bindingDefaultMember": [],
+                  "parameterDefaultMember": [],
+                  "signatureParameter": [],
+                  "indexSignature": [],
+                  "mappedTypeKey": [],
+                  "unionIndex": [],
+                  "jsxAttribute": [],
+                  "jsxNamespacedName": [],
+                  "assignedObject": [],
+                  "assignedObjectExports": [],
+                  "assignedObjectThis": [],
+                  "compoundAssignedObject": [],
+                  "callArgumentObject": [],
+                  "namespaceImportAlias": [],
+                  "importTypeQualifier": [],
+                  "templateTypeSpan": [],
+                  "jsxSplitText": []
+                },
+                "readTwins": {
+                  "untypedParameter": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "requireBinding": [
+                    "src/plant.cts:1 import:1 demand"
+                  ],
+                  "dynamicImport": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "localExportAlias": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "callKey": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "inOperator": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "catchBinding": [
+                    "src/plant.ts:4 access:1 demand"
+                  ],
+                  "ambientBinding": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "namespaceBindingPattern": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "forInTarget": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "bindingDefaultMember": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "parameterDefaultMember": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "signatureParameter": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "indexSignature": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "mappedTypeKey": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "unionIndex": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "jsxAttribute": [
+                    "src/plant.tsx:1 member:1 demand"
+                  ],
+                  "jsxNamespacedName": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "assignedObject": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "assignedObjectExports": [
+                    "src/plant.cjs:1 member:1 demand"
+                  ],
+                  "assignedObjectThis": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "compoundAssignedObject": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "callArgumentObject": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "namespaceImportAlias": [
+                    "src/plant.ts:2 member:1 demand"
+                  ],
+                  "importTypeQualifier": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "templateTypeSpan": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "jsxSplitText": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ]
+                }
+              },
+              "R-CUT": {
+                "cut": {
+                  "space-after-dot": [],
+                  "line-after-dot": [],
+                  "space-after-optional-dot": [],
+                  "space-after-non-null": [],
+                  "space-after-question": [],
+                  "space-after-semicolon": [],
+                  "space-import-entity": [],
+                  "terminator-in-string": [],
+                  "blank-line": [],
+                  "table-row-line": [],
+                  "list-item-line": [],
+                  "lexeme-sentence": [],
+                  "lexeme-heading": [],
+                  "member-key": [],
+                  "parted-carrier-space": []
+                },
+                "twins": {
+                  "space-after-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "line-after-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-optional-dot": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-non-null": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-question": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-after-semicolon": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "space-import-entity": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "terminator-in-string": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "blank-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "table-row-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "list-item-line": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "lexeme-sentence": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "lexeme-heading": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "member-key": [
+                    "src/plant.ts:1 member:1 demand"
+                  ],
+                  "parted-carrier-space": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ]
+                },
+                "held": {
+                  "space-after-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "line-after-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-optional-dot": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-non-null": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-question": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-after-semicolon": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "space-import-entity": [
+                    "src/plant.ts import subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "terminator-in-string": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "blank-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "table-row-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "list-item-line": [
+                    "src/plant.ts access subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "lexeme-sentence": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "lexeme-heading": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ],
+                  "member-key": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts member subjectless:demand demand"
+                  ],
+                  "parted-carrier-space": [
+                    "src/plant.ts access parted:carrier projection requirement"
+                  ]
+                },
+                "overRead": {
+                  "cut": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "twin": []
+                }
+              },
+              "R-ESCAPE": {
+                "unread": {
+                  "jsxDecimal": [],
+                  "jsxHex": [],
+                  "jsxNamed": [],
+                  "jsxAttribute": [],
+                  "regexHex": [],
+                  "regexUnicode": [],
+                  "regexClass": [],
+                  "regexCodePoint": []
+                },
+                "held": {
+                  "jsxDecimal": [],
+                  "jsxHex": [],
+                  "jsxNamed": [],
+                  "jsxAttribute": [],
+                  "regexHex": [],
+                  "regexUnicode": [],
+                  "regexClass": [],
+                  "regexCodePoint": []
+                },
+                "readTwins": {
+                  "jsxDecimal": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxHex": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxNamed": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "jsxAttribute": [
+                    "src/plant.tsx:1 lexeme:1 demand"
+                  ],
+                  "regexHex": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexUnicode": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexClass": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "regexCodePoint": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ]
+                },
+                "decoded": {
+                  "string": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ],
+                  "identifier": [
+                    "src/plant.ts:1 lexeme:1 demand"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "tool description",
+          "witness": {
+            "findings": [],
+            "floors": {
+              "piTools": true,
+              "requiredPiTools": [],
+              "everyToolDescribed": true,
+              "curatedEqualsExport": true,
+              "nativeMissing": [],
+              "injectedMissing": [],
+              "texts": true
+            },
+            "plants": {
+              "piTool": [
+                "pi:plant_tool.description:1 demand"
+              ],
+              "curatedTool": [
+                "mcp:plant_tool.description:1 carrier"
+              ],
+              "descriptor": [
+                "planted:plant.capability.description:1 precision"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "or capability input",
+          "witness": {
+            "findings": [],
+            "floors": {
+              "texts": true
+            },
+            "keys": [
+              "contextDemand: demand",
+              "contextPrecision: precision",
+              "projectionRequirement: carrier"
+            ],
+            "seamArms": [
+              {
+                "closed": true,
+                "properties": [
+                  "model",
+                  "task"
+                ]
+              },
+              {
+                "closed": true,
+                "properties": [
+                  "model",
+                  "taskId",
+                  "view"
+                ]
+              }
+            ],
+            "matrix": [
+              "forge.gate.status {target}: transport reached=true",
+              "forge.gate.status {target} +contextDemand: validation reached=false",
+              "forge.gate.status {target} +contextPrecision: validation reached=false",
+              "forge.gate.status {target} +projectionRequirement: validation reached=false",
+              "furnace.run.inspect {runId}: transport reached=true",
+              "furnace.run.inspect {runId} +contextDemand: validation reached=false",
+              "furnace.run.inspect {runId} +contextPrecision: validation reached=false",
+              "furnace.run.inspect {runId} +projectionRequirement: validation reached=false",
+              "hyperunix.find {kind}: transport reached=true",
+              "hyperunix.find {kind} +contextDemand: validation reached=false",
+              "hyperunix.find {kind} +contextPrecision: validation reached=false",
+              "hyperunix.find {kind} +projectionRequirement: validation reached=false",
+              "reactivefiber.render.preview {model,task}: transport reached=true",
+              "reactivefiber.render.preview {model,task} +contextDemand: validation reached=false",
+              "reactivefiber.render.preview {model,task} +contextPrecision: validation reached=false",
+              "reactivefiber.render.preview {model,task} +projectionRequirement: validation reached=false",
+              "reactivefiber.render.preview {view,taskId}: transport reached=true",
+              "reactivefiber.render.preview {view,taskId} +contextDemand: validation reached=false",
+              "reactivefiber.render.preview {view,taskId} +contextPrecision: validation reached=false",
+              "reactivefiber.render.preview {view,taskId} +projectionRequirement: validation reached=false"
+            ],
+            "seam": {
+              "invoke": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              },
+              "node": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              },
+              "capability_invoke": {
+                "refusals": [
+                  "{model,task} +contextDemand: validation",
+                  "{model,task} +contextPrecision: validation",
+                  "{model,task} +projectionRequirement: validation",
+                  "{view,taskId} +contextDemand: validation",
+                  "{view,taskId} +contextPrecision: validation",
+                  "{view,taskId} +projectionRequirement: validation"
+                ],
+                "spawnedOnRefusal": false,
+                "control": "returned",
+                "controlArgv": [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "fixture-model",
+                  "--task",
+                  "fixture-task",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              }
+            },
+            "plants": {
+              "piParameter": [
+                "pi:plant_tool.parameters.properties.contextDemand#key:1 demand"
+              ],
+              "curatedInput": [
+                "mcp:plant_tool.inputSchema.properties.mode.description:1 precision"
+              ],
+              "descriptorInput": [
+                "planted:plant.capability.inputSchema.properties.projection_requirement#key:1 carrier"
+              ]
+            },
+            "quiet": {
+              "R-UNNAMED-INPUT": {
+                "declared": [
+                  "inherit_context"
+                ],
+                "findings": [],
+                "shapes": [
+                  [],
+                  []
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "quote": "becomes the demand channel",
+          "witness": {
+            "subjects": [
+              "demand",
+              "demand",
+              "demand",
+              "precision",
+              "precision",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand"
+            ],
+            "families": [
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "precision",
+              "precision",
+              "precision",
+              "precision",
+              "precision",
+              "precision"
+            ],
+            "carrier": [
+              "carrier",
+              "carrier",
+              "carrier",
+              "carrier"
+            ],
+            "markers": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "nearMisses": [
+              "subjectless",
+              "subjectless",
+              "none",
+              "none",
+              "none"
+            ],
+            "cuts": [
+              [
+                "t:1 demand"
+              ],
+              [
+                "t:1 demand"
+              ],
+              [
+                "t:1 demand"
+              ],
+              [],
+              [],
+              [],
+              [],
+              [
+                "t:1 demand"
+              ],
+              [],
+              [],
+              [],
+              []
+            ],
+            "quiet": {
+              "R-PARAPHRASE": [
+                null,
+                null,
+                null,
+                null
+              ],
+              "R-SUBJECTLESS": [
+                null,
+                null,
+                null
+              ],
+              "R-SPLIT": [
+                [],
+                []
+              ],
+              "R-MARKER-ANYWHERE": [
+                null,
+                null
+              ],
+              "R-LOOKALIKE": [
+                null,
+                null
+              ],
+              "R-SYNONYM": [
+                "cannot",
+                "contexts",
+                "demanded",
+                "demanding",
+                "demands",
+                "imprecise",
+                "imprecisely",
+                "imprecision",
+                "neither",
+                "nor",
+                "nothing",
+                "precise",
+                "precisely",
+                "requirements",
+                "without"
+              ]
+            },
+            "appended": {
+              "pastBlock": [],
+              "edited": "refused"
+            },
+            "categories": {
+              "Cf": {
+                "members": true,
+                "departures": {}
+              },
+              "Mn": {
+                "members": true,
+                "departures": {
+                  "U+0300": "none",
+                  "U+0301": "none",
+                  "U+0302": "none",
+                  "U+0303": "none",
+                  "U+0304": "none",
+                  "U+0306": "none",
+                  "U+0307": "none",
+                  "U+0308": "none",
+                  "U+0309": "none",
+                  "U+030A": "none",
+                  "U+030C": "none",
+                  "U+030F": "none",
+                  "U+0311": "none",
+                  "U+0323": "none",
+                  "U+0325": "none",
+                  "U+0328": "none",
+                  "U+0340": "none",
+                  "U+0341": "none",
+                  "U+0344": "none"
+                }
+              },
+              "Me": {
+                "members": true,
+                "departures": {}
+              },
+              "Mc": {
+                "members": true,
+                "departures": {}
+              }
+            },
+            "runs": {
+              "place": "The context dema|nd rides in the prompt.",
+              "members": {
+                "Cf": "U+200B",
+                "Mn": "U+0332",
+                "Me": "U+20DD"
+              },
+              "forms": [
+                "before Cf: U+0078 U+200B",
+                "after Cf: U+200B U+0078",
+                "before Mn: U+0078 U+0332",
+                "after Mn: U+0332 U+0078",
+                "before Me: U+0078 U+20DD",
+                "after Me: U+20DD U+0078",
+                "twice: U+0078*2",
+                "thrice: U+0078*3"
+              ],
+              "categories": {
+                "Cf": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                },
+                "Mn": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Cf": {},
+                    "before Mn": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Mn": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "before Me": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Me": {},
+                    "twice": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "thrice": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    }
+                  }
+                },
+                "Me": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                }
+              },
+              "named": {
+                "place": "The context dema|nd rides in the prompt.",
+                "read": 297,
+                "digest": "f5c93ae054a91858",
+                "departures": {}
+              },
+              "subject": {
+                "place": "The con|text demand rides in the prompt.",
+                "read": 297,
+                "digest": "0aac5249526bc4e4",
+                "departures": {}
+              },
+              "beyond": {
+                "place": "The context dema|nd rides in the prompt.",
+                "U+00AD U+2060": "demand",
+                "U+0332 U+00AD U+0332": "demand",
+                "U+200B*65": "demand"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Artifact: a Pi EDC context-assembly consumer (none exists)",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "Artifact: a Pi EDC context-assembly consumer",
+          "witness": {
+            "table": {
+              "gates": [
+                "ABSENT",
+                "PRESENT",
+                "PRESENT"
+              ],
+              "guards": [
+                "pass",
+                "fail",
+                "owed",
+                "owed"
+              ],
+              "owed": [
+                [],
+                [
+                  "U1",
+                  "U2",
+                  "U3"
+                ]
+              ]
+            },
+            "replica": {
+              "sites": [
+                "src/consumer.ts:1 import edc",
+                "src/consumer.ts:1 lexeme edc"
+              ],
+              "dependencies": [
+                "dependencies.evidence-directed-assembly"
+              ],
+              "gate": "PRESENT",
+              "verdict": "owed",
+              "owed": [
+                "U1",
+                "U2",
+                "U3"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "(none exists)",
+          "witness": {
+            "gate": "ABSENT",
+            "verdict": "pass",
+            "findings": [],
+            "positives": [
+              "src/zz-plant.ts:1 lexeme:1 demand",
+              ".pi/agents/zz-plant.md:1 precision",
+              "examples/zz-plant.md:1 carrier",
+              "pi:zz_plant.description:1 demand"
+            ],
+            "replica": {
+              "code": [
+                "examples/workflows/plant-twin.js",
+                "examples/workflows/plant.js",
+                "src/plant-twin.ts",
+                "src/plant.ts"
+              ],
+              "pages": [
+                ".agents/skills/plant/SKILL.md",
+                ".pi/agents/plant-twin.md",
+                ".pi/agents/plant.md",
+                "examples/plant.md"
+              ],
+              "findings": [
+                ".agents/skills/plant/SKILL.md:1 carrier",
+                ".pi/agents/plant.md:1 demand",
+                "examples/plant.md:1 demand",
+                "examples/workflows/plant.js:1 lexeme:1 precision",
+                "src/plant.ts:1 lexeme:1 demand"
+              ],
+              "verdict": "fail",
+              "owed": "owed"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "id": "U1",
+      "source": "title",
+      "duty": "context demand and precision shall be expressed only as an explicit, typed, declarative client projection requirement validated at the boundary",
+      "reason": "an armed duty: it binds once Pi adopts EDC context assembly; no Pi EDC context-assembly consumer exists (C2 reads ABSENT), so there is no projection requirement to type or validate at a boundary"
+    },
+    {
+      "id": "U2",
+      "source": "title",
+      "duty": "never encoded as an imperative model instruction or tool call",
+      "reason": "an armed duty: it binds at adoption; until then B1-B3 read that no Pi prompt, tool description or capability input names context demand or precision at all"
+    },
+    {
+      "id": "U3",
+      "source": "filing",
+      "duty": "Acceptance: at adoption, a falsifier shows demand carried as a typed projection-requirement value, plus a red case where an imperative prompt phrase or tool call attempts to carry demand and is refused.",
+      "reason": "the acceptance is at adoption: an adoption reads PRESENT and reds this census (verdict owed, C1), and the adopting cut delivers this falsifier pair"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-UNNAMED-ADOPTION",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-GLUED-STEM",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-SCOPE",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-UNREAD-FORM",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-CUT",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-ESCAPE",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-UNNAMED-INPUT",
+      "quietPin": "B3"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SUBJECTLESS",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "B4"
+    }
+  ]
+}

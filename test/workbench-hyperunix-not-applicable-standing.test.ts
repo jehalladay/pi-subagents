@@ -28,7 +28,11 @@
  *      for every kind and licence: the baseline the on-landing row must keep;
  *   R0 the rosters those cases iterate (wb-cpqb, the landing-641 F1 follow-up): the six literal rosters hold a frozen shape,
  *      and every roster (the two derived ones included) joins an anchor outside its own literal, so an edit to a roster's
- *      members (or to a derived roster's derivation) reds R0 before any cell guard can move with it: PRE_EXISTING is the
+ *      members as R0 reads them (an array's index by index, a set's through its spread; for a derived roster, the members
+ *      its derivation yields) reds R0 before any cell guard can move with it (wb-50gc, the landing-813 F1 follow-up,
+ *      restates this sentence to the members R0 reads; what VERDICT_FRAMES and FRAME_VALUES hand T2's loops and T2's
+ *      EXPECTED_VISITS entries is held below, and an override of another literal roster's own methods that keeps those
+ *      members is not claimed): PRE_EXISTING is the
  *      shipped Completeness in declaration order then null (and exactly Completeness | null at type level), FRAME_VALUES its
  *      non-null members, COMPLETE_KINDS the declared kinds (below) on which hxLiveInvariant licenses absence under the
  *      licence, MUTATION_KINDS the declared kinds its read-outcome clause refuses and READ_KINDS the rest of them (wb-ey9p cut
@@ -36,7 +40,9 @@
  *      and, at run time, both boolean values (every licence's negation is a licence) in the order hxLiveInvariant reads them:
  *      absence licensed on exactly COMPLETE_KINDS under the first and on no kind under the second (wb-aced, so a coordinated
  *      edit of LICENCES and its frozen literal reds under any annotation), VERDICT_FRAMES distinct and exactly the fixture
- *      builder's frame union at type level (T2 also counts it absolutely), and NOT_APPLICABLE the bead's own spelling followed
+ *      builder's frame union at type level (T2 also counts it absolutely) and, at run time, the keys of FRAME_UNION, that
+ *      union as an exhaustive record, member for member and in order (the frame join, wb-50gc), and NOT_APPLICABLE the
+ *      bead's own spelling followed
  *      by its forms under the three SDK styles the declaration witnesses. The imported HYPERUNIX_EXECUTION_KINDS (the roster
  *      READ_KINDS filters, EXPECTED_CELLS counts, EXPECTED_VISITS flat-maps and the kind loops of C2 and C3 iterate) joins
  *      the SDK as this file binds it (wb-ey9p, the landing-746 F1 follow-up): its element type is exactly the SDK
@@ -53,13 +59,33 @@
  *      the ExecutionStatus kinds read from the installed declaration and never through the binding, and frozen, cells
  *      included. R0's declared join requires kindVisits over R0's own reading of the declaration to equal DECLARED_VISITS,
  *      so an edit that moves the cells built on one side of that join (kindVisits or R0's reading of the declaration on one
- *      side, DECLARED_VISITS's loops or its reading on the other) reds R0 unless the other side moves with it. A handed
+ *      side, DECLARED_VISITS's loops or its reading on the other) reds R0 unless the other side moves with it. The two
+ *      rosters T2 alone drives are held the same way (wb-50gc, the landing-813 F1 follow-up): VERDICT_FRAMES and
+ *      FRAME_VALUES can hold the members R0 reads while their iteration, map or flatMap hands other members to T2's loops
+ *      and to the module-scope build of T2's two EXPECTED_VISITS entries (own methods on the literal or on the derivation
+ *      result, or a Proxy that hands R0 its real members), so R0's T2 visit join requires those entries (built through
+ *      VERDICT_FRAMES's flatMap and NOT_APPLICABLE's and FRAME_VALUES's map) to equal, as R0 reads them, the same cells
+ *      frameVisits builds over the keys of FRAME_UNION and R0's reading of the declaration's Completeness; and T2 compares
+ *      the record of what its own loops drove first with its EXPECTED_VISITS entries and then with DECLARED_T2_VISITS
+ *      (T2's declared-visit guard): the same cells built once at module scope, before any case runs, by loops of its own in
+ *      T2's loop shape over the keys of FRAME_UNION, NOT_APPLICABLE and the Completeness values read from the installed
+ *      declaration, never through VERDICT_FRAMES or FRAME_VALUES, and frozen, cells included; R0's T2 declared join
+ *      requires frameVisits over R0's reading to equal it. FRAME_UNION is the fixture builder's frame union at run time: an
+ *      exhaustive record keyed by verdictStream's frame parameter, so typing refuses a missing or an extra frame (R0 also
+ *      holds its key type to that union), and R0's frame join requires VERDICT_FRAMES to equal its keys. So an edit of
+ *      VERDICT_FRAMES or FRAME_VALUES (FRAME_VALUES's derivation included) that substitutes, drops, duplicates, adds or
+ *      reorders a member in what its map or flatMap hands T2's EXPECTED_VISITS entries, as R0 reads them, reds R0, at the
+ *      latest at the T2 visit join, and one that does so in what its iteration hands T2's loops, whether from the start or
+ *      only after R0,
+ *      reds T2 at the latest at its declared-visit guard, whether or not its counts move; the frame join, the T2 visit
+ *      join, the T2 declared join and T2's declared-visit guard each name both of their causes. A handed
  *      value can also decide its own equality (wb-ey9p cut #4, the refusal-#3 U1-U3 cure): vitest's toStrictEqual asks a
  *      value that carries an asymmetricMatch function whether it equals the other side before any type or value check (eq
  *      in @vitest/expect), so a handed kind or cell, a roster member or the binding itself could meet a join or a guard on
- *      its own verdict. So the frozen shapes, the Completeness join, the kind join, the visit join, the declared join and
- *      the READ_KINDS join in R0, and every record guard (the EXPECTED_VISITS guards of T2, K1, K2, C1, C2 and C3 and the
- *      declared-visit guards of C1, C2 and C3), compare their two sides a second time through primitiveView (the primitive
+ *      its own verdict. So the frozen shapes, the Completeness join, the kind join, the visit join, the declared join, the
+ *      READ_KINDS join, the frame join and the T2 visit and declared joins in R0, and every record guard (the
+ *      EXPECTED_VISITS guards of T2, K1, K2, C1, C2 and C3 and the declared-visit guards of T2, C1, C2 and C3), compare
+ *      their two sides a second time through primitiveView (the primitive
  *      pass, after the first): a projection that reads an array's members by index, in order and recursively, keeps a
  *      primitive as it is and replaces any other value by a fresh marker object naming its typeof, so the two sides agree
  *      only where both hold equal primitives or both hold non-primitives of one typeof, member by member and in order, and
@@ -100,19 +126,26 @@
  *      an edit of the installed SDK declaration, or edits that move both sides of R0's declared join together (kindVisits or
  *      R0's reading of the declaration, with DECLARED_VISITS's loops or its reading), together with the binding, or a
  *      rebinding of the imported ExecutionStatusKind type (the kind join's anchors moved with it; the observer suite reads
- *      the src export against that declaration); an override of a literal roster's own methods (its iteration, filter,
+ *      the src export against that declaration); edits that move both sides of R0's T2 declared join together (frameVisits
+ *      or R0's reading of the declaration, with DECLARED_T2_VISITS's loops or its reading), together with VERDICT_FRAMES or
+ *      FRAME_VALUES, or an edit of FRAME_UNION or of verdictStream's frame union together with VERDICT_FRAMES and R0's
+ *      frozen literals (T2's absolute frame count still reds a frame set so widened or narrowed); an override of the own
+ *      methods of a literal roster other than VERDICT_FRAMES (its iteration, filter,
  *      flatMap or map, or a set's has) that keeps its members (R0's frozen shapes compare members, and every visit build,
- *      the cases' records included, is driven through the same literal rosters); an edit of the adapter beyond its tuple, or
+ *      the cases' records included, is driven through the same literal rosters, save that DECLARED_T2_VISITS and the T2
+ *      joins read the keys of FRAME_UNION, never VERDICT_FRAMES); an edit of the adapter beyond its tuple, or
  *      of the SDK, whose outputs or errors decide a comparison on their own verdict (the primitive pass holds the rosters,
  *      the binding and what it hands on, the joins and the records; the cases read the adapter's and the SDK's outputs and
- *      errors by toStrictEqual, toMatchObject, toBeInstanceOf and toBe as before); and a patch of a shared prototype (an Array
- *      or Set method of the realm, Array.isArray and Array.from included, which can move the declared side of a join with
- *      the binding or steer primitiveView). RESIDUALS: none.
+ *      errors by toStrictEqual, toMatchObject, toBeInstanceOf and toBe as before); and a patch of a shared prototype or of a
+ *      realm function (an Array or Set method of the realm, Array.isArray and Array.from included, and Object.keys, which
+ *      the readers of FRAME_UNION read through: each can move the declared side of a join with the binding or a roster, or
+ *      steer primitiveView). RESIDUALS: none.
  * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
  * on-landing leg); R0's kind join states the SDK's ExecutionStatus kinds and moves with an amended SDK only when they move, as
- * the observer suite's tuple pins do; K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch
- * directory, clock, network or file write; the only file read is the installed SDK declaration (by T1, R0 and, once at module
- * scope, DECLARED_VISITS). */
+ * the observer suite's tuple pins do; R0's T2 visit and declared joins read the declaration's Completeness, so they move with
+ * it too, after the Completeness join (wb-50gc); K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX
+ * binary, scratch directory, clock, network or file write; the only file read is the installed SDK declaration (by T1, R0
+ * and, once each at module scope, DECLARED_VISITS and DECLARED_T2_VISITS). */
 import {readFileSync} from 'node:fs';
 import {
   type Completeness, type CoverageSummary, coverageSummaryOf, decodeResultStream, type ExecutionStatusKind, ProtocolError,
@@ -139,6 +172,10 @@ const PRE_EXISTING = ['complete', 'incomplete', 'unknown', null] as const satisf
 const FRAME_VALUES = PRE_EXISTING.filter((value): value is Completeness => value !== null);
 /** The two HXS frames whose verdict carries completeness (T2), exactly the frame union verdictStream builds. */
 const VERDICT_FRAMES = ['result-coverage', 'answer-coverage'] as const;
+/** The fixture builder's frame union at run time (wb-50gc, the landing-813 F1 follow-up): an exhaustive record keyed by
+ * verdictStream's frame parameter, so typing (typecheck:test) refuses a missing or an extra frame. Its keys, in their literal
+ * order, are the frames DECLARED_T2_VISITS is built over and R0's frame and T2 joins read; neither reads VERDICT_FRAMES. */
+const FRAME_UNION = {'result-coverage': true, 'answer-coverage': true} as const satisfies Record<Parameters<typeof verdictStream>[0], true>;
 const MUTATION_KINDS: ReadonlySet<string> = new Set(['mutation-rejected', 'mutation-partial']);
 /** The adapter's read kinds (its closed tuple as imported here, which R0 joins to the SDK ExecutionStatusKind and to the
  * installed declaration, as the observer suite pins the src export) and the two whose reading is complete
@@ -182,6 +219,34 @@ const DECLARED_VISIT = 'wb-tz2.4 declared-visit guard: the cells this case drove
   + 'shadow or rebinding of HYPERUNIX_EXECUTION_KINDS here, or an override in the adapter tuple in '
   + 'src/workbench/hyperunix-observer.ts: restore a plain tuple of the declared kinds) or this case loop, its record or '
   + 'DECLARED_VISITS was edited';
+/** R0's frame join message (wb-50gc): VERDICT_FRAMES and the keys of FRAME_UNION disagree, which an edit of either side
+ * causes, so it names both causes. */
+const FRAME_JOIN = 'wb-tz2.4 R0 frame join: VERDICT_FRAMES disagrees with the keys of FRAME_UNION, the frame union of the '
+  + 'fixture builder (the frame parameter of verdictStream) as an exhaustive record, member for member and in order. Either '
+  + 'the roster was edited (restore result-coverage, answer-coverage in that order) or FRAME_UNION or that frame union was';
+/** R0's T2 visit join message (wb-50gc): reached only once the frozen shapes, the frame join and the Completeness join
+ * passed, so VERDICT_FRAMES and FRAME_VALUES hold their members as R0 reads them, and yet T2's EXPECTED_VISITS entries,
+ * built through them, differ from the same cells built over the keys of FRAME_UNION and the declaration; it names both
+ * causes. */
+const T2_VISIT_JOIN = 'wb-tz2.4 R0 T2 visit join: the cells T2 must drive (EXPECTED_VISITS.t2Refusals and .t2Validity, '
+  + 'built through the flatMap of VERDICT_FRAMES and the map of NOT_APPLICABLE and FRAME_VALUES) disagree with the same cells '
+  + 'built over the keys of FRAME_UNION and the Completeness of the installed @hyperunix/sdk declaration, while the rosters '
+  + 'hold those members as R0 reads them. Either a roster hands its map or flatMap other members than it holds (own methods '
+  + 'or a Proxy on VERDICT_FRAMES or on the derivation result of FRAME_VALUES: restore the plain literal and the plain '
+  + 'filter) or EXPECTED_VISITS was edited';
+/** R0's T2 declared join message (wb-50gc): DECLARED_T2_VISITS, the anchor of T2's declared-visit guard, and frameVisits
+ * over the keys of FRAME_UNION and the reading of the declaration in R0 disagree, which an edit of either side causes. */
+const T2_DECLARED_JOIN = 'wb-tz2.4 R0 T2 declared join: DECLARED_T2_VISITS (the cells T2 must drive, built by its own '
+  + 'loops at module scope over the keys of FRAME_UNION, NOT_APPLICABLE and the installed @hyperunix/sdk declaration) '
+  + 'disagrees with frameVisits over the same keys and the reading of that declaration in R0. Either DECLARED_T2_VISITS, '
+  + 'its loops or the reading it is built over was edited, or frameVisits or the reading in R0 was';
+/** T2's declared-visit guard message (wb-50gc): reached only once T2 passed its EXPECTED_VISITS guards, so T2 drove what
+ * its entries there hold, and yet not the cells the frame union and the declaration define; it names both causes. */
+const T2_DECLARED_VISIT = 'wb-tz2.4 T2 declared-visit guard: the cells T2 drove agree with its EXPECTED_VISITS entries '
+  + 'but not with DECLARED_T2_VISITS, the same cells built at module scope over the keys of FRAME_UNION, NOT_APPLICABLE and '
+  + 'the Completeness of the installed @hyperunix/sdk declaration. Either VERDICT_FRAMES or FRAME_VALUES hands the loops of '
+  + 'T2, and the entries built through it, other members than it holds after R0 (own methods or a Proxy: restore the plain '
+  + 'literal and the plain filter) or the loops of T2, its record or DECLARED_T2_VISITS was edited';
 /** Each case's expected cell count, computed once here from the R0-pinned rosters, the module rosters and the imported
  * HYPERUNIX_EXECUTION_KINDS (wb-aced, the landing-696 F1 follow-up; the import pinned since wb-ey9p):
  * a case that rebinds a roster locally, or narrows the roster it iterates at its loop site, cannot move its own guard with it.
@@ -222,7 +287,10 @@ function kindVisits(kinds: readonly string[], readKinds: readonly string[]): Rec
  * define (a roster rebound in its own scope, or a roster expression substituted, narrowed, widened or reordered at a loop
  * site) reds even when its cell count does not move. C1's, C2's and C3's entries are kindVisits over the binding and
  * READ_KINDS, which R0's visit join holds to kindVisits over the installed declaration's kinds as R0 reads them (wb-ey9p
- * cut #2); what C1, C2 and C3 drive is also held to DECLARED_VISITS when each case compares it (wb-ey9p cut #3). */
+ * cut #2); what C1, C2 and C3 drive is also held to DECLARED_VISITS when each case compares it (wb-ey9p cut #3). T2's two
+ * entries are built through VERDICT_FRAMES's flatMap and NOT_APPLICABLE's and FRAME_VALUES's map, which R0's T2 visit join
+ * holds to frameVisits over the keys of FRAME_UNION and the declaration's Completeness as R0 reads them; what T2 drives is
+ * also held to DECLARED_T2_VISITS when T2 compares it (wb-50gc). */
 const EXPECTED_VISITS: Readonly<Record<'t2Refusals' | 't2Validity' | 'k1' | 'k2' | 'c1' | 'c2' | 'c3', readonly Visit[]>> = Object.freeze({
   t2Refusals: VERDICT_FRAMES.flatMap(frame => NOT_APPLICABLE.map(spelling => [frame, spelling])),
   t2Validity: VERDICT_FRAMES.flatMap(frame => FRAME_VALUES.map(value => [frame, value])),
@@ -264,6 +332,41 @@ const DECLARED_VISITS = ((): Readonly<Record<'c1' | 'c2' | 'c3', readonly Visit[
     }
   }
   for (const entry of [built.c1, built.c2, built.c3]) {
+    for (const cell of entry) Object.freeze(cell);
+    Object.freeze(entry);
+  }
+  return Object.freeze(built);
+})();
+/** The cells T2 drives over a frame roster and a completeness-value roster, in order (wb-50gc, the landing-813 F1
+ * follow-up): for each frame, its refusal cells (the frame and each NOT_APPLICABLE spelling) and its validity cells (the
+ * frame and each value), as T2 records them. R0 builds them over the keys of FRAME_UNION and its reading of the
+ * declaration's Completeness and holds T2's EXPECTED_VISITS entries (the T2 visit join) and DECLARED_T2_VISITS (the T2
+ * declared join) to them. */
+function frameVisits(frames: readonly string[], values: readonly string[]): Record<'t2Refusals' | 't2Validity', Visit[]> {
+  return {
+    t2Refusals: frames.flatMap(frame => NOT_APPLICABLE.map(spelling => [frame, spelling])),
+    t2Validity: frames.flatMap(frame => values.map(value => [frame, value])),
+  };
+}
+/** The cells T2 must drive (wb-50gc, the landing-813 F1 follow-up: T2's two record halves held to a build outside the
+ * rosters T2 iterates, as DECLARED_VISITS holds C1, C2 and C3), built once here at module scope, before any case runs, by
+ * loops of its own in T2's loop shape over the keys of FRAME_UNION (the fixture builder's frame union), NOT_APPLICABLE and
+ * the Completeness values read from the installed declaration in declaration order: this build never reads VERDICT_FRAMES
+ * or FRAME_VALUES, their iteration, map or flatMap. T2 compares the record of what its own loops drove with its entries
+ * here after its EXPECTED_VISITS guards (T2's declared-visit guard), so what those two rosters hand T2's loops is held when
+ * T2 runs, even where it differs from what R0 read (an iteration switched by the running test, or entries rewritten through
+ * a reference a roster keeps); it is frozen, cells included, so nothing writes into it once it is built; R0's T2 declared
+ * join requires frameVisits over the keys of FRAME_UNION and the reading of the declaration in R0 to equal it. */
+const DECLARED_T2_VISITS = ((): Readonly<Record<'t2Refusals' | 't2Validity', readonly Visit[]>> => {
+  const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+  const completenessLine = declaration.split('\n').find(text => text.startsWith('export type Completeness =')) ?? '';
+  const values = [...completenessLine.matchAll(/"([^"]+)"/g)].map(match => match[1]);
+  const built: Record<'t2Refusals' | 't2Validity', Visit[]> = {t2Refusals: [], t2Validity: []};
+  for (const frame of Object.keys(FRAME_UNION)) {
+    for (const spelling of NOT_APPLICABLE) built.t2Refusals.push([frame, spelling]);
+    for (const value of values) built.t2Validity.push([frame, value]);
+  }
+  for (const entry of [built.t2Refusals, built.t2Validity]) {
     for (const cell of entry) Object.freeze(cell);
     Object.freeze(entry);
   }
@@ -339,6 +442,13 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expectTypeOf<(typeof LICENCES)[number]>().toEqualTypeOf<CoverageSummary['licensesAbsence']>();
     expectTypeOf<(typeof VERDICT_FRAMES)[number]>().toEqualTypeOf<Parameters<typeof verdictStream>[0]>();
     expect(new Set(VERDICT_FRAMES).size).toBe(VERDICT_FRAMES.length);
+    // The frame join (wb-50gc, the landing-813 F1 follow-up): VERDICT_FRAMES at run time is the keys of FRAME_UNION, the
+    // fixture builder's frame union as an exhaustive record (exactly that union at type level), member for member and in
+    // order; DECLARED_T2_VISITS and the T2 joins below read those keys, never VERDICT_FRAMES.
+    expectTypeOf<keyof typeof FRAME_UNION>().toEqualTypeOf<Parameters<typeof verdictStream>[0]>();
+    const frames = Object.keys(FRAME_UNION);
+    expect(VERDICT_FRAMES, FRAME_JOIN).toStrictEqual(frames);
+    expect(primitiveView(VERDICT_FRAMES), FRAME_JOIN).toStrictEqual(primitiveView(frames));
     // PRE_EXISTING is the shipped Completeness in declaration order and then null (CoverageSummary.completeness, T1).
     const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
     const declared = (alias: string): string[] => {
@@ -378,6 +488,18 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(DECLARED_VISITS, DECLARED_JOIN).toStrictEqual(kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind))));
     expect(primitiveView([DECLARED_VISITS.c1, DECLARED_VISITS.c2, DECLARED_VISITS.c3]), DECLARED_JOIN)
       .toStrictEqual(primitiveView([declaredCells.c1, declaredCells.c2, declaredCells.c3]));
+    // The T2 visit join and the T2 declared join (wb-50gc, the landing-813 F1 follow-up): T2's two EXPECTED_VISITS entries
+    // were built at module scope through VERDICT_FRAMES's flatMap and NOT_APPLICABLE's and FRAME_VALUES's map, and
+    // DECLARED_T2_VISITS by its own loops over the keys of FRAME_UNION, NOT_APPLICABLE and its own reading of the
+    // declaration; frameVisits over those keys and this reading of the declaration's Completeness must equal both, member
+    // for member and in order, and T2 compares what its own loops drive with both.
+    const {t2Refusals, t2Validity} = EXPECTED_VISITS;
+    const frameCells = frameVisits(frames, completeness);
+    expect({t2Refusals, t2Validity}, T2_VISIT_JOIN).toStrictEqual(frameCells);
+    expect(primitiveView([t2Refusals, t2Validity]), T2_VISIT_JOIN).toStrictEqual(primitiveView([frameCells.t2Refusals, frameCells.t2Validity]));
+    expect(DECLARED_T2_VISITS, T2_DECLARED_JOIN).toStrictEqual(frameCells);
+    expect(primitiveView([DECLARED_T2_VISITS.t2Refusals, DECLARED_T2_VISITS.t2Validity]), T2_DECLARED_JOIN)
+      .toStrictEqual(primitiveView([frameCells.t2Refusals, frameCells.t2Validity]));
     // COMPLETE_KINDS is the adapter's own licensed reading; MUTATION_KINDS is its read-outcome clause and READ_KINDS the rest,
     // each read over the declared kinds (wb-ey9p cut #2), never through the binding's own filter.
     const readOutcome = declaredKinds.filter(kind => hxLiveInvariant(reading(kind, false)).violations.includes('read-outcome'));
@@ -446,6 +568,13 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(validityVisits).toStrictEqual(EXPECTED_VISITS.t2Validity);
     expect(primitiveView(refusalVisits)).toStrictEqual(primitiveView(EXPECTED_VISITS.t2Refusals));
     expect(primitiveView(validityVisits)).toStrictEqual(primitiveView(EXPECTED_VISITS.t2Validity));
+    // T2's declared-visit guard (wb-50gc, the landing-813 F1 follow-up): what T2's own loops drove, held a second time to
+    // DECLARED_T2_VISITS, built at module scope over the keys of FRAME_UNION, NOT_APPLICABLE and the declaration's
+    // Completeness, never through VERDICT_FRAMES or FRAME_VALUES.
+    expect(refusalVisits, T2_DECLARED_VISIT).toStrictEqual(DECLARED_T2_VISITS.t2Refusals);
+    expect(validityVisits, T2_DECLARED_VISIT).toStrictEqual(DECLARED_T2_VISITS.t2Validity);
+    expect(primitiveView(refusalVisits), T2_DECLARED_VISIT).toStrictEqual(primitiveView(DECLARED_T2_VISITS.t2Refusals));
+    expect(primitiveView(validityVisits), T2_DECLARED_VISIT).toStrictEqual(primitiveView(DECLARED_T2_VISITS.t2Validity));
   });
 
   it('K1: every spelling is outside the closed kind set, refused before projecting under either licence, and breaks the execution-kind clause', () => {
