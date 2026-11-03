@@ -22,8 +22,9 @@
  * MEASURED (read-only): cut #1's seat (2026-10-28) at the trunk tip 09f45a52f7a7 and at its base e544dd872434, cut #2's seat
  * (2026-10-28) at its base e81d2b08eecf, cut #3's seat (2026-10-28) at its base 014d116fb4c1, the wb-odlv follow-up's seat
  * (2026-10-30) at its base 577493f9e951, the wb-4wts follow-up's seat (2026-10-30) at its base 2e3a2538887f, the wb-rz9j
- * follow-up's seat (2026-10-31) at its base f63d38962c19 and the wb-4e9v follow-up's seat (2026-11-02) at its base
- * f5cb912999ba, each also at the Pi pin 758ec18187a5: no src module spells
+ * follow-up's seat (2026-10-31) at its base f63d38962c19, the wb-4e9v follow-up's seat (2026-11-02) at its base
+ * f5cb912999ba and the wb-pnz1 follow-up's seat (2026-11-03) at its base 525939979d9e, each also at the Pi pin
+ * 758ec18187a5: no src module spells
  * GraphPolicyCLI or verifierOutcome (in any spelling the word reader reads);
  * src/workbench/control.ts declares one exported ControlOutcome type alias, a union of the four string literals, starting on
  * line 53 at the pin (read from its parse); the docs sections carrying docs/workbench/06:28, 09:91 and 08:38 render the same,
@@ -38,7 +39,8 @@
  * and (the wb-rz9j follow-up's seat) the planted-change reader reads each of the nine PLANTED_CONTROLS, and the carrier reader
  * each of the three MARKUP_CONTROLS, at the reading row S2b or S3b pins for it; and (the wb-4e9v follow-up's seat) the
  * planted-change reader reads each of the ten PLANTED_CONTROLS, sentence-twice among them, at the reading row S2b or S3b pins
- * for it.
+ * for it; and (the wb-pnz1 follow-up's seat) each of the eleven, sentence-first among them, at the reading row S2b or S3b
+ * pins for it.
  *
  * Pi records no GP decision receipt today. The census pins that (row T) and an ARMED contract (rows A1 to A7) that binds the
  * first receipt site to come, as the wb-0lf.7 and wb-gxd7.3 censuses arm theirs:
@@ -106,15 +108,16 @@
  *    down), each leave their anchor held, and each one's planted change is read in the Q3/Q10 planted form, so a plant that
  *    writes nothing reds (landing 706's F1): its planted text differs from HEAD's, by whitespace alone, its section's heading
  *    line stays where it is, the line carrying its anchor's sentence (the first from the heading on) moves one down, and it
- *    adds no blank line (W1) or one (W2, W3), the reader shown ten PLANTED_CONTROLS, each pinned at its reading in the same
+ *    adds no blank line (W1) or one (W2, W3), the reader shown eleven PLANTED_CONTROLS, each pinned at its reading in the same
  *    form (landing 737's F1 and F2: over 06:28 a re-wrap after the sentence moves no line, one inside it leaves no line
  *    carrying it, its move read -28, two before it move its line two down and a word join is no change by whitespace alone;
  *    over 09:91 a blank line above the heading moves both lines one down, and one under the heading with one after the carrier
  *    adds two blank lines; over 08:38 a blank line holding a tab is a blank line by whitespace alone, a line holding the
  *    sentence above the heading moves both lines one down and is not read as the sentence's line, and a plant that writes
  *    nothing reads no change; landing 774's F2: over 08:38 a second line holding the sentence, under the carrier's line, moves
- *    no line, the sentence's line read as the first such line from the heading on); on disk, an edit of that kind still reds a
- *    plant whose span it moves (a plant throws on a
+ *    no line, the sentence's line read as the first such line from the heading on; landing 823's F1: over 08:38 a line
+ *    holding the sentence alone, directly under the heading, is read as the sentence's line, the first such line from the
+ *    heading on, its move read -1); on disk, an edit of that kind still reds a plant whose span it moves (a plant throws on a
  *    drifted span: landing 658's gate re-wrap P-W1 reds S2b through D3's span). Three controls over the pin's text (the
  *    filing's line moved one down, the carrier text edited, the carrier's source line doubled) each leave their anchor unheld.
  *    Eleven in-memory plants (the gate's D1 to D5, D4 split by page, and D6 a withdrawing paragraph in the section, D7 a
@@ -176,7 +179,9 @@
  * the change's kind, the two lines' moves and the blank lines added, each at the value its pin reads); the planted reading of a
  * whitespace edit of a shape no plant or control pins (for example a hard break, a blank line holding spaces or a CR, a blank
  * line between two list items, a re-wrap at another space of the carrier or a doubled space); which line plantedChange reads as
- * the heading's in a text holding its section's heading on two lines; R12's field-independence rows
+ * the heading's in a text holding its section's heading on two lines; which line it reads as the sentence's when a line holding
+ * the sentence alone is the first such line from the heading on at a spot other than directly under the 08:38 heading
+ * (sentence-first pins that spot alone); R12's field-independence rows
  * (wb-0lf.6, its own bead); Furnace's own durable effect receipts; a pin's reading and its witness's expected value narrowed
  * together (REACHED binds the subjects a pin consulted, not how much of them it reads); a mutant, a journal event, a plant or a
  * control removed from its table and the frozen literal together while every check keeps a mutant that fails it alone; row Q,
@@ -875,7 +880,10 @@ interface DocsPlant {
  * and a change by whitespace alone [G-W3tab]; sentence-above adds a line holding the sentence above the heading, which the
  * reader does not take for the sentence's line, since it reads from the heading on [G-R7]; sentence-twice (landing 774's F2) adds
  * a second line holding the sentence, under the carrier's line, so two lines from the heading on carry it and the reader reads
- * the first, the carrier's own, which moves no line [G3-02, a reader of the last such line]; and no-op writes nothing [G-R1].
+ * the first, the carrier's own, which moves no line [G3-02, a reader of the last such line]; sentence-first (landing 823's F1)
+ * adds a line holding the sentence alone directly under the heading, above the carrier's line, so the first line from the
+ * heading on that carries the sentence is that line, which the reader reads as the sentence's line, its move read -1 [N04, a
+ * reader that skips a line holding the sentence alone]; and no-op writes nothing [G-R1].
  */
 const PLANTED_CONTROLS: readonly DocsPlant[] = [
   { id: "wrap-after", anchor: "06:28", apply: text => once(text, "flattened into a boolean. The", "flattened into a boolean.\nThe") },
@@ -887,6 +895,7 @@ const PLANTED_CONTROLS: readonly DocsPlant[] = [
   { id: "blank-tab", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership\n", "## Cancellation and ownership\n\t\n") },
   { id: "sentence-above", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership\n", "Causality != ownership\n## Cancellation and ownership\n") },
   { id: "sentence-twice", anchor: "08:38", apply: text => once(text, "native API semantics.\n", "native API semantics.\nCausality != ownership\n") },
+  { id: "sentence-first", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership\n", "## Cancellation and ownership\nCausality != ownership\n") },
   { id: "no-op", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership\n", "## Cancellation and ownership\n") },
 ];
 /**
@@ -943,8 +952,8 @@ function lineWhere(text: string, from: number, holds: (line: string) => boolean)
  * and W2's and W3's blank line under the heading adds one, each of the three moving the sentence's line one down and leaving the
  * heading's where it was; a re-wrap after or inside the sentence, a second re-wrap, a word join, a blank line above the heading,
  * a second blank line, a blank line holding a tab, a line holding the sentence above the heading, a second line holding it under
- * the carrier's line (landing 774's F2) and a plant that writes nothing read as the PLANTED_CONTROLS pins in S2b and S3b read
- * them.
+ * the carrier's line (landing 774's F2), a line holding it alone directly under the heading, above the carrier's line (landing
+ * 823's F1), and a plant that writes nothing read as the PLANTED_CONTROLS pins in S2b and S3b read them.
  */
 interface PlantedChange {
   readonly changed: boolean;
@@ -1540,6 +1549,7 @@ const PINS: Readonly<Record<string, () => void>> = {
           "blank-tab": { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 1 },
           "sentence-above": { changed: true, whitespace: false, heading: 1, carrier: 1, blank: 0 },
           "sentence-twice": { changed: true, whitespace: false, heading: 0, carrier: 0, blank: 0 },
+          "sentence-first": { changed: true, whitespace: false, heading: 0, carrier: -1, blank: 0 },
           "no-op": { changed: false, whitespace: true, heading: 0, carrier: 0, blank: 0 },
         },
       },
@@ -1717,7 +1727,7 @@ describe(SUITE, () => {
     expect(WHITESPACE_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the whitespace plants").toEqual(["W1:06:28", "W2:09:91", "W3:08:38"]);
     expect(PLANTED_CONTROLS.map(control => `${control.id}:${control.anchor}`), "the planted-change reader's controls").toEqual([
       "wrap-after:06:28", "wrap-inside:06:28", "wrap-twice:06:28", "word-join:06:28", "blank-above:09:91", "blank-two:09:91", "blank-tab:08:38",
-      "sentence-above:08:38", "sentence-twice:08:38", "no-op:08:38",
+      "sentence-above:08:38", "sentence-twice:08:38", "sentence-first:08:38", "no-op:08:38",
     ]);
     expect(MARKUP_CONTROLS.map(control => `${control.id}:${control.anchor}`), "the carrier reader's controls").toEqual(["html-after:06:28", "carrier-twice:06:28", "text-edit:06:28"]);
     expect(SDK_PLANTS.map(([name]) => name), "the SDK plants").toEqual([
