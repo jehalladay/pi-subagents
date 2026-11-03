@@ -8,7 +8,8 @@
  *  behind which the dependency inversion R-B300 at refusal #4 PARKED wb-km7q.10, so wb-km7q.10's remaining acceptance is this
  *  bead's. Its cut carries wb-km7q.10's cut #4 (17c5d448) byte for byte, then pins refusal #3's and refusal #4's members
  *  (REFUSAL #3 and REFUSAL #4 below). Its outside anchors stay wb-km7q.10's row in the export: that title is the statement, and
- *  those notes hold the refusal records this census reads.
+ *  those notes hold every refusal record this census reads but the carrier's own refusal #1 record, which stands in
+ *  wb-km7q.14's own row (CARRIER REFUSAL #1 below).
  *
  * WHAT IS DELIVERED. The readers are test/helpers/rc-query-evidence-readers.ts (notPlain, stringsOf, declaredViews,
  *  sizeMembers, layoutBands, tierDraws), shared so wb-km7q.3's census (blocked by this bead, R-B143; not on trunk) takes
@@ -29,7 +30,9 @@
  *  R-B349) changes no reader body and no doc either: it bounds the tier claim by TIER_SCOPE, draws every LAYOUT falsifier's
  *  page with the real draw options against the widths and row counts that falsifier pins read, names the five pages of the
  *  bands form's width examples as tier examples, and binds each record-table member to the witness its line pairs with its id
- *  (CARRIER REFUSAL #1 below).
+ *  (CARRIER REFUSAL #1 below). The carrier's cut #3 (after its refusal #2, ruling R-B382) changes neither the helper nor any
+ *  doc: it corrects CARRIER REFUSAL #1's clause on where the carrier's refusal #1 record stands (wb-km7q.14's own row in the
+ *  export) and holds that clause to the row (CARRIER REFUSAL #2 below).
  *
  * PINNED READER SET. 'the rows' (12 cases: one per pin of ROWS, each reading its gate plant both ways, its twin and its
  *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (7
@@ -37,10 +40,11 @@
  *  and each claim is restated here byte-for-byte; and every page a LAYOUT falsifier plants is drawn by tierDraws with the real
  *  draw options, its draws the widths and row counts that falsifier's pinned bands reading names), 'the residuals' (1 case:
  *  R-UNLISTED's quiet row), 'the real tree' (3 cases: src's views and draw options, docs/10's three rendered bands with each
- *  band's whole rendered text, today's surfaces) and 'records' (9 cases: every pin, roster, falsifier and refusal-#1 cure ran,
+ *  band's whole rendered text, today's surfaces) and 'records' (10 cases: every pin, roster, falsifier and refusal-#1 cure ran,
  *  every refusal-#2, refusal-#3 and refusal-#4 member is a gate mutant its line in the export names, bound to the witness its
  *  line pairs with its id, whose falsifier ran pinning the reading of that witness, every width example of the bands form
- *  plants one band of each count width its name states, and every LAYOUT falsifier's page was drawn by tierDraws).
+ *  plants one band of each count width its name states, every LAYOUT falsifier's page was drawn by tierDraws, and the
+ *  carrier's refusal #1 record stands in wb-km7q.14's row in the export where CARRIER REFUSAL #1 says).
  *
  * THE ROWS (ROWS: a row's label is the requirement text it answers, verbatim from the export; one test per pin). U1, U2 and
  *  RIDER are the description's three enumerated items, F-U1, F-U2 and F-U3 the three members R-B143 folded into the bead's note,
@@ -65,7 +69,8 @@
  *  pin or a label removed or shortened in every literal of this file still reds. src/ui/workflow-inspector.ts: the views, the
  *  draw options and the drawer. docs/workbench/10-terminal-inspector.md "## Layout responsiveness", bound by the landed rendered
  *  binding (docsSection): the bands tierDraws opens. test/helpers/rc-query-evidence-readers.ts: every roster form's examples,
- *  which name this census's falsifiers.
+ *  which name this census's falsifiers. wb-km7q.14's row in the same export: the carrier's refusal #1 record, from the first
+ *  verdict line naming that refusal to the routing line after it (CARRIER REFUSAL #1 below).
  *
  * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its rosters, the LAYOUT claim also from
  *  LAYOUT_SCOPE, and held here byte-for-byte):
@@ -249,8 +254,13 @@
  *  are measured outside this census, by the mutant runs the delivery note records.
  *
  * CARRIER REFUSAL #1 (wb-km7q.14's refusal #1 on cut #1 b6d53874, gate-prep-1, g10-gate-s190, O:1811; ruling R-B349: the
- *  refusal stands on U1 and U3, U2 is record-only; the record is not in the export at this cut's base, so this census holds the
- *  cures and the delivery note records the members' kills). U1 (the tier claim's 'every band layoutBands reads' and 'one below
+ *  refusal stands on U1 and U3, U2 is record-only; the record stands in wb-km7q.14's own row in the export,
+ *  from its verdict line opening 'GATE VERDICT wb-km7q.14 (BIND, seat gate-prep-1, run g10-gate-s190, gen g10,
+ *  2026-11-02T16:10:54Z): REFUSED (RESPIN)' to its routing line, with its unmet items U1, U2 and U3 between
+ *  them (the records case 'the carrier's refusal #1 record stands in wb-km7q.14's row in the export' composes
+ *  this clause from that row: CARRIER REFUSAL #2 below); this census holds the cures, and the delivery note
+ *  records the members' kills; no record table holds the members, and binding them to their witnesses in that
+ *  row is NOT CLAIMED by this census). U1 (the tier claim's 'every band layoutBands reads' and 'one below
  *  every row bound a band states' wider than its pins: three single-site tierDraws edits drew fewer tiers on this census's own
  *  LAYOUT pages): TIER_SCOPE claims each form only on the module and the docs/10 page its falsifier plants and on every page a
  *  LAYOUT falsifier plants; the case 'TIERS on the LAYOUT pages' draws each of those pages with the real draw options against
@@ -269,6 +279,15 @@
  *  precedes. Refusal #2's F1, whose line quotes the words its member falsifies before the id and no witness after, is bound to
  *  the first quote after its line's head and to the real docs/10 band its line says the mutant drops the description of;
  *  refusal #2's F2 to the issue its line says the cure reads and the mutant does not.
+ *
+ * CARRIER REFUSAL #2 (wb-km7q.14's refusal #2 on cut #2 6dc373f5, gate-prep-24, g10-gate-s190, O:1855; ruling R-B382: rung 1 of
+ *  its own claim set, a normal respin). U1 (CARRIER REFUSAL #1 said that refusal #1's record is not in the export at its cut's
+ *  base, while wb-km7q.14's row there carries it): CARRIER REFUSAL #1 now says where the record stands in the carrier's row,
+ *  and the records case 'the carrier's refusal #1 record stands in wb-km7q.14's row in the export' reads that row (exportRow
+ *  and recordLines read any bead's row, this census's bead unless another is named) and composes the clause from the record it
+ *  finds there: the head of its verdict line and the ids of its unmet items. The case reds when the row holds no record from
+ *  such a verdict line to a routing line, or when CARRIER REFUSAL #1 does not hold the clause the row composes. Where refusal
+ *  #2's own record stands is NOT CLAIMED by this census.
  *
  * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by this
  *  census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose column
@@ -467,14 +486,14 @@ const PAGES_DRAWN = new Set<string>();
 
 // ------------------------------------------------------------------------------------------------------- outside anchors
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
-/** The bead's row in the tracked export. */
-function exportRow(): { readonly title: string; readonly description: string; readonly notes: string } {
+/** A bead's row in the tracked export: this census's bead unless another is named. */
+function exportRow(bead = BEAD): { readonly title: string; readonly description: string; readonly notes: string } {
   for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
-    if (isRecord(row) && row.id === BEAD) return { title: String(row.title), description: String(row.description), notes: String(row.notes) };
+    if (isRecord(row) && row.id === bead) return { title: String(row.title), description: String(row.description), notes: String(row.notes) };
   }
-  throw new Error(`the export holds no row ${BEAD}`);
+  throw new Error(`the export holds no row ${bead}`);
 }
 /** The export's requirement texts, by row id, in order: the description's items, R-B143's folded members, the Acceptance. */
 function requirements(): readonly (readonly [string, string])[] {
@@ -1628,6 +1647,20 @@ const RECORD4: RecordSpan = {
   at: "refusal #4 on the FINAL fail-closed-core cut #4",
   to: "BIND rows written before this note: M:46235",
 };
+/** The carrier: this census's bead since the dependency inversion R-B300 (THE CARRIER above). */
+const CARRIER = "wb-km7q.14";
+/** The carrier's refusal #1 record in its own row's notes: from the first verdict line naming that refusal to the routing line
+ * after it. */
+const CARRIER_RECORD1: RecordSpan = { from: `GATE VERDICT ${CARRIER} `, at: "refusal #1 on cut #1 (b6d538740e627507569d81dcd6a7853870c6c921, ", to: "Routing: " };
+/** Where CARRIER REFUSAL #1 says the carrier's refusal #1 record stands, composed from the record's lines: the carrier's own row,
+ * the head of its verdict line (its text before the first ' - ') and the ids of the unmet items between that line and its routing
+ * line, in order. */
+function carrierProvenance(lines: readonly string[]): string {
+  const unmet = lines.filter(line => /^U\d+-/.test(line)).map(line => line.split("-")[0] ?? "");
+  const listed = unmet.length > 1 ? `${unmet.slice(0, -1).join(", ")} and ${unmet.at(-1) ?? ""}` : unmet.join("");
+  const head = (lines[0] ?? "").split(" - ")[0] ?? "";
+  return `the record stands in ${CARRIER}'s own row in the export, from its verdict line opening '${head}' to its routing line, with its unmet items ${listed} between them`;
+}
 const SEP = "LAYOUT/count/a thousands separator at the four count places other than the >=N count";
 const EXP = "LAYOUT/count/an exponent at the four count places other than the >=N count";
 const PLUS = "LAYOUT/count/a plus sign at the four count places other than the >=N count";
@@ -1706,9 +1739,10 @@ const REFUSAL4: readonly RecordItem[] = [
     ],
   },
 ];
-/** The record's lines in the export's notes, from its verdict line to its BIND-rows line (none when either is missing). */
-function recordLines(span: RecordSpan): string[] {
-  const notes = exportRow().notes.split("\n");
+/** The record's lines in the notes of `bead`'s row in the export (this census's bead unless another is named), from its verdict
+ * line to its closing line (none when either is missing). */
+function recordLines(span: RecordSpan, bead = BEAD): string[] {
+  const notes = exportRow(bead).notes.split("\n");
   const from = notes.findIndex(line => line.startsWith(span.from) && line.includes(span.at));
   const to = notes.findIndex((line, at) => at > from && line.startsWith(span.to));
   return from < 0 || to < 0 ? [] : notes.slice(from, to + 1);
@@ -1888,5 +1922,11 @@ describe("records", () => {
       return most > 0 && JSON.stringify(widths) === JSON.stringify(named) ? [] : [`${example}: ${JSON.stringify(widths)}`];
     });
     expect(misplanted, "each plants exactly one band per width it names").toEqual([]);
+  });
+  it("the carrier's refusal #1 record stands in wb-km7q.14's row in the export where CARRIER REFUSAL #1 says: from its verdict line to its routing line, its unmet items between them", () => {
+    const lines = recordLines(CARRIER_RECORD1, CARRIER);
+    expect(lines.length, "the record's span is in the carrier's row").toBeGreaterThan(1);
+    expect(lines.at(-1)?.split(": ")[0], "the record's last line is its routing line").toBe("Routing");
+    expect(headerClaim("CARRIER REFUSAL #1"), "CARRIER REFUSAL #1 says where the record stands, as the carrier's row holds it").toContain(carrierProvenance(lines));
   });
 });
