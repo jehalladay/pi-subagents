@@ -85,10 +85,29 @@
  * wb-9lz6 cut #4 (its refusal #3: U1, the record's PF1 on the text around a reference, and PF2, which ruling R-B388 read as
  * claimed - "behind two markers" covers ">>" - so the FOOTNOTE.definition claim set is frozen and this cut is authored in the
  * enumerate-the-resolvable form for it: the definition claim is exactly the forms listed here, each pinned by its own control;
- * every member record PF3 measured surviving is killed here or named below with the reason it is no hollowing; every other
- * definition line is NOT CLAIMED below). No residual family is added: every NOT CLAIMED form below reads unqualified under the
- * census's own judge (measured at this cut on an exemplar of each, added as throwaway A5 controls: 32 passed), so no page is
- * quiet there - the NOT CLAIMED sentences name where a hollowed judge is not caught, not a citation the judge misses.
+ * every member record PF3 measured surviving is killed here or named NOT CLAIMED below, as cut #5 restates it; every other
+ * definition line is NOT CLAIMED below). No residual family is added: an exemplar of each NOT CLAIMED form below read
+ * unqualified under the census's own judge (measured at this cut, added as throwaway A5 controls: 32 passed), and the NOT
+ * CLAIMED sentences name where a hollowed judge is not caught; how the judge reads any other page in such a form is NOT
+ * CLAIMED (cut #5 below).
+ *
+ * wb-9lz6 cut #5 (its refusal #4: U1 and U2, both in the frozen FOOTNOTE.definition claim set; ruling R-B418 executed the
+ * rule-19 structural exit, filed the exit child wb-6aaw and bound this, the bead's final cut, to the FAIL-CLOSED CORE). This
+ * cut changes comments only - no control, pin, roster entry, test title or reader code is added, removed or edited - and
+ * withdraws the words the earlier cuts gave five surviving FOOTNOTE.definition members to call them harmless. The definition
+ * claim is exactly what its pins hold: A5's nineteen forms and cut #2's two second-position pairings, one control each, and
+ * the falsifiers this header names for them, each red with the attribution named. No other FOOTNOTE.definition member is
+ * claimed to be caught: the members named NOT CLAIMED below are measured examples, and five of them (IND-SPTAB,
+ * CTX-COLON-CONTENT, the regex unanchored, its colon dropped and the definition with m) are hollowed judges this census
+ * does not catch, whose pins belong to wb-6aaw. Each page refusal #4 realized the five on, and its twin
+ * W-GP22-NBSP-INDENT, reads unqualified under the census's own judge (measured at cut #5 as throwaway A5 controls, causes
+ * ["unqualified"]: 32 passed). How the census reads a page whose definition line is in a NOT CLAIMED form is NOT CLAIMED by
+ * this census, quiet or not: the census hides a definition line's words from the carrier view, so a negation on that line
+ * does not reach a status on the next one, and such a page can read quiet - a unit made of a citing line ending "which is",
+ * the line "[^x]: not" and the line "design-only." reads qualified, and so do its twins with the reference and the label s
+ * and behind "> " (measured at cut #5 as throwaway A5 controls expecting unqualified: 2 failed | 30 passed (32) each,
+ * attributed to the probe), while marked shows that line as paragraph text. Cut #5 adds no residual family: RESIDUALS and
+ * docs/14's residual table are unchanged.
  *
  * THE TEXT AROUND A REFERENCE (U1). A5 holds a reference's label, read unqualified, in both spellings ("design-only" and
  * "Status:DESIGN-ONLY.", written L), one control per spelling, in exactly these citing-line texts and in no other, where "..."
@@ -253,14 +272,21 @@
  * " design-only", "design-only" and " *design-only*". Measured green at this cut, each a one-edit member of
  * FOOTNOTE.definition edited with its roster constant that diverges only on such forms: (?:>\s*){0,3} (four markers),
  * (?:>\s{0,2})* (three spaces after a marker), ^\s{0,4} (an indent of five), the label capped at nine characters or without
- * "_", and after the colon a lookahead refusing "(", a tab or two spaces. Three members record PF3 measured stay green and are
- * no hollowing: IND-SPTAB (^[ \t]*) differs only on a line indented with a whitespace character other than a space or a tab,
- * which CommonMark does not count as indentation, so that line is no footnote definition and the page shows it - the member
- * reads it as the page does, and the census hides it, an over-read toward unqualified; CTX-COLON-CONTENT (\]:.) differs only
- * on a line ending at its colon, which, shown, reads ":" once its reference is removed - the same verdict; and LBL-LAZY
- * ([^\]\n]+?) is equivalent. FOOTNOTE.definition's stricter members (the regex unanchored, as landing 781's F6 read, or its
- * colon dropped) hide more lines and stay green - they read toward unqualified, an over-read rather than a hollowing - and are
- * NOT CLAIMED either. A footnote definition line in any position of the citing unit other than wb-9lz6's two (the unit's one
+ * "_", and after the colon a lookahead refusing "(", a tab or two spaces. Five more one-edit members of FOOTNOTE.definition,
+ * each edited with its roster constant (and, for the flag, A5's flags literal), read green (measured at cut #5: 0 failed | 32
+ * passed (32) each) and are NOT CLAIMED by this census: each is a hollowed judge the census does not catch. They are IND-SPTAB
+ * (the leading \s* as [ \t]*) and CTX-COLON-CONTENT (\]: as \]:.), two of record PF3's survivors, and the regex unanchored (as
+ * landing 781's F6 read), its colon dropped and the definition with m. Refusal #4 realized each on a paired page appended to
+ * docs/workbench/19-worked-examples.md that the census reds (5 failed | 27 passed (32)) and the member leaves green (0 | 32):
+ * W-GP22-CR-INDENT (a definition line led by a carriage return) under IND-SPTAB; W-GP22-COLON-NEGWIN (a line holding only
+ * "[^s]:" between a negation and its status) under CTX-COLON-CONTENT; W-GP22-UNANCH-NEG (a citing line ending in a reference,
+ * a colon and a negation) under the regex unanchored; W-GP22-NOCOLON-NEG (a reference and a negation on a line of their own)
+ * under its colon dropped; and W-GP22-MFLAG-NEG (a line holding U+2028 before a reference, a colon and a negation) under the
+ * definition with m and the regex unanchored (re-measured at cut #5, each page's counts as stated). The census claims nothing
+ * about how any of the five reads a line; their pins belong to the exit child wb-6aaw (ruling R-B418), not to this census.
+ * LBL-LAZY ([^\]\n]+?), measured with them, is equivalent: its class holds no "]", so its lazy and the greedy label run both
+ * end at the label's first "]" (0 | 32 clean and 5 | 27 on each of the five pages, as the census reads). A footnote definition
+ * line in any position of the citing unit other than wb-9lz6's two (the unit's one
  * definition line, directly under its citing line, in the nineteen forms; and the second of two definition lines under it in
  * the plain and the quoted pairing cut #2 holds) is NOT CLAIMED by this census: for example the first of two or more
  * definition lines, a later definition line in the other seventeen forms or in another pairing of labels or forms, a third or
@@ -282,8 +308,8 @@
  * (?<![a-l]); after it (?!\t), (?![,;:!?]), (?!\)), (?![A-Z]), (?!\d), (?!\.\S), (?!\[) and (?![b-z]); and a lookbehind
  * refusing a space where a space also follows the reference. A FOOTNOTE flag edited in the regex, A5's flags literal and the
  * roster together that changes no control's reading is NOT CLAIMED (measured): the definition with i, s, u, v or d and the
- * reference with i, m, s, u, v or d beside its g read every control alike, and the definition with m hides more (a line
- * holding a carriage return, U+2028 or U+2029 matches after it), an over-read rather than a hollowing.
+ * reference with i, m, s, u, v or d beside its g read every control alike, and so does the definition with m, one of the five
+ * hollowed judges named NOT CLAIMED above (W-GP22-MFLAG-NEG).
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE clause (a)'s union only - qa/, test/, the root pages and docs/
  * outside docs/workbench are not judged (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * (MW-CAC-WORKFLOW-COMPOSITION-R2) does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's words in
@@ -302,7 +328,8 @@
  * citation only a comment or a link destination holds still needs a carrier the page shows; a citing unit whose rendering
  * holds a raw HTML element (an inline <br> or <span>, an element inside a list item or quote) or that sits in a list or quote
  * with raw HTML across a blank line carries nothing; the lines of a top-level raw HTML block (even a visible <pre> or
- * <details>), a comment's closing line after its --> and a footnote definition show no carrier; a carrier spelled with an
+ * <details>) and a comment's closing line after its --> show no carrier, nor does a footnote definition (conservative for a
+ * status the definition line holds, not for a negation it holds: cut #5 above); a carrier spelled with an
  * entity (design&#45;only) does not qualify. One reading is measured, not
  * assumed: a "[s]: <url>" line directly under a citing line cannot be a definition (a definition cannot interrupt a
  * paragraph), so marked and CommonMark both show it as text and a status in its URL qualifies (A5 definition-cannot-interrupt;
