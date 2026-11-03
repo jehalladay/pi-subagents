@@ -3,8 +3,12 @@
  * orchestrator rulings R-B123 and R-B161): the static-reach readers of the render-abort census's A5 at full surface - the
  * specifier reader, the loader reader, the identifier readers, the child_process tracer, the launch-call reader and the
  * resolver they share - which wb-pyel.5's census composes when it re-cuts. Every reader reads one parsed module and nothing
- * else (no file, no process, no network). What each reader reads, clause by clause, is the CLAIMS constant of
- * test/workbench-edc-static-reach-readers-census.test.ts, each clause held to the falsifier forms that census runs.
+ * else (no file, no process, no network). The code below is wb-pyel.9's FINAL cut #4 (7c192eae) unchanged; its carrier child
+ * wb-pyel.11 (orchestrator rulings R-B312 and R-B336) lands it first, and wb-pyel.9's own census at that tip is not on this
+ * tree. WHAT IS CLAIMED about these readers is stated by the censuses that read them and never here:
+ * test/workbench-edc-static-reach-callee-members-census.test.ts claims exactly the readings of the pages it holds. The comments
+ * in this file describe what the code does; they claim no coverage of their own, and an input no census page holds is not
+ * claimed by them.
  */
 import ts from "typescript";
 
