@@ -48,7 +48,8 @@
  *
  * READER: whether a visited reference only reads is its reader's question (ScanReader). LITERAL_READER is the default,
  * and wb-jwc.8's census claims the scan under it only: a reader a caller passes in its place (wb-jwc.5's raw-view
- * readString) is not claimed there (refusal #3 U2); wb-jwc.11's census pins that path under two readers of its own. The
+ * readString) is not claimed there (refusal #3 U2); wb-jwc.11's census pins that path under two readers of its own, at
+ * the reference forms its READER plants hold (wb-un88: its READER, READER-FORMS and READER-PAIRS pins) and at no other. The
  * scan returns the same { rootOf, open } shape wb-jwc.5's sealsOf
  * returned, plus the reaches and openings it measured (each with the channels it followed), so a census can take
  * sealedScan(tree) in place of its own sealsOf; the census reads all three for each pinned root.
@@ -561,7 +562,7 @@ function everyRoot(r: Resolver, entity: Entity, seen: Set<ts.Node | string>): Li
 
 /* ---------------------------------------------------------------- the reader */
 
-/** How the scan asks whether a visited reference only reads: the value reader it is handed (LITERAL_READER unless a caller passes another; wb-jwc.8's census passes no other and claims LITERAL_READER only, and wb-jwc.11's census pins a caller's reader asked in its place, under two readers of its own). */
+/** How the scan asks whether a visited reference only reads: the value reader it is handed (LITERAL_READER unless a caller passes another; wb-jwc.8's census passes no other and claims LITERAL_READER only, and wb-jwc.11's census pins a caller's reader asked in its place, under two readers of its own, at the reference forms its READER plants hold and at no other, wb-un88). */
 export interface ScanReader {
   /** Whether a member read chain reads as a string where it is used. */
   readonly readsString: (chain: ts.Expression, file: ts.SourceFile, tree: ModuleTree) => boolean;
