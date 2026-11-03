@@ -31,10 +31,15 @@
  *   .beads/issues.jsonl, (1) wb-pyel.11's description's 'Unmet items (verbatim from the row):' list gives row R3's pins with their
  *   unmet items (the GP11 member ids each item names, in order); (2) wb-pyel.11's notes carry R-B336's fold, whose items give row
  *   R4's pins with their unmet items (the L2 member ids each item names, in order; the fold upper-cases an id's i); (3) wb-pyel.9's
- *   notes quote each pin's edit - the line it inserts, the line as it rewrites it, or the clause it adds, in single quotes - and the
- *   first line of those notes holding that quote names the pin's member id before it (refusal #3's and refusal #4's verdicts), and
- *   each pin's replace holds its quote while its find does not; and from the helper's own source, (4) each pin's find occurs once,
- *   inside the helper function its roster line names (the innermost function declaration, or const-bound arrow, holding it).
+ *   notes quote each pin's edit - the line it inserts, the line as it rewrites it, or the clause it adds, in single quotes - and on
+ *   the first line of those notes holding that quote the last member id before the quote is the pin's own (refusal #3's and
+ *   refusal #4's verdicts; a member id is a GP11-<two digits> or L2-<two digits> token, one trailing letter kept, with neither a
+ *   word character nor '-' on either side); and from the helper's own source, (4) each pin's find occurs once, inside the helper
+ *   function its roster line names (the innermost function declaration, or const-bound arrow, holding it). The case also holds two
+ *   facts of each pin's own edit: its replace holds its quote while its find does not, and its kind names the edit's shape - 'an
+ *   inserted line' when the replace is the find with one line inserted whose text, blanks at its ends aside, is the quote; 'a
+ *   rewritten line' when exactly one line of the find changes and the new line's text, blanks at its ends aside, is the quote; 'an
+ *   added clause' when exactly one line of the find changes and the new line is the old one with the quote inserted once.
  * - Case REGISTRATION (last): the vitest task tree holds exactly these cases in this order, every other one in run mode, not
  *   inverted and ran before it, and every pin case completed its compares, in row order.
  * PIN ROSTER
@@ -51,15 +56,19 @@
  *     L2-07 (U4; consume, an added clause '&& !(parent.typeArguments !== undefined && ts.isElementAccessExpression(at))'): witnesses w-l2-07a-held-elem-targs-call; held t-l2-06-held-elem-call
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each page moduleReading returns exactly the lines written here: a helper edit that changes
- * one page's reading reds every pin case listing that page and the REPLAY CONTROL. (2) Each carried member reads exactly its
+ * one page's reading through this file's import of the helper reds every pin case listing that page, and one that changes it on
+ * the replay's compile-and-run path reds the REPLAY CONTROL. (2) Each carried member reads exactly its
  * pin's WITNESSES apart and every other page as written: its REPLAY case applies the member's own edit, so a witness that stopped
  * reading apart, a held page or another page that started to, or a member edit that no longer applies exactly once, reds that
  * REPLAY case; the REPLAY CONTROL reds when the compile-and-run path reads any page otherwise than written here. (3) The rows,
  * pins, unmet items, page counts and page ids are frozen (SHAPE) and the roster above is the pins' (HEADER): a pin of either row
  * removed, swapped or relabelled in one literal, or a row deleted, reds SHAPE or HEADER (standing rule 16's CT1-CT4). (4) Row R3's
  * pins and unmet items are the ones wb-pyel.11's description records, row R4's the ones R-B336's fold records, each pin's quote is
- * the one wb-pyel.9's notes record for its member, and each find lies once in the helper function its pin names (ANCHOR): a member
- * removed or relabelled in every literal together, or a row removed with its frozen-shape elements, reds ANCHOR (CT5, CT6).
+ * the one wb-pyel.9's notes record for its member (on the first notes line holding the quote, the last member id before it is the
+ * pin's own), each pin's kind names its edit's shape, and each find lies once in the helper function its pin names (ANCHOR): a
+ * member removed, relabelled (its id, its unmet item, its kind or its helper function) or handed another member's recorded quote,
+ * each in every literal together, or a row removed with its frozen-shape elements, reds ANCHOR (CT5, CT6); another member's
+ * recorded quote is one whose first notes line names that member's id last before it.
  *
  * NOT CLAIMED. A reading on any input that is not one of these pages is NOT CLAIMED by this census - among them every other
  * spelling of a callee, a key, a type argument list or a call, and every reader route no page plants. The helper's exports other
@@ -68,8 +77,13 @@
  * by this census. Whether a reading equals what TypeScript's checker or Node makes of a page is NOT CLAIMED by this census. That a
  * page's bytes are its gate's archived page's, and that a member's find and replace are its gate's archived edit's beyond the quote
  * ANCHOR reads, are NOT CLAIMED by this census: the tracker records name each member, its unmet item and its quote, not those
- * bytes. wb-pyel.9's census, claims and roster, and the helper's own comments, are NOT CLAIMED by this census. An edit of this
- * file's own code (a case, a check or a reader removed or rewritten) is NOT CLAIMED by this census. No residual is claimed.
+ * bytes. That wb-pyel.9's notes name a pin's kind in this file's words is NOT CLAIMED by this census: the kind is read from the
+ * pin's own edit. The gate seat and run a row's label names (gate-prep-11, run g10-gate-s181 for R3; gate-prep-8, run g10-gate-s187
+ * for R4) are NOT CLAIMED by this census: no record is read for them. That a pin's held pages are the twins its gate named for its
+ * member is NOT CLAIMED by this census: a held list is held only by SHAPE's counts and checks, HEADER's roster, and its pin and
+ * REPLAY cases' readings. wb-pyel.9's census, claims and roster, and the helper's own comments, are NOT CLAIMED by this census.
+ * An edit of this file's own code (a case, a check or a reader removed or rewritten) is NOT CLAIMED by this census. No residual is
+ * claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the helper's source, the tracker export and this file are only
  * read; no src, docs or receipt is edited.
@@ -156,15 +170,18 @@ interface Pin {
   readonly unmet: string;
   /** The helper function whose code the member's edit changes. */
   readonly at: string;
+  /** The shape of the member's edit, read from its find and replace (ANCHOR): an inserted line, a rewritten line or an added clause. */
   readonly kind: string;
   /** The line the edit inserts, the line as it rewrites it, or the clause it adds, as the refusal's verdict quotes it. */
   readonly quote: string;
-  /** The member: its gate's find and replace. */
+  /** The member's edit as this census applies it, a find and its replace (copied from its gate's archived member table; that copy is
+   * NOT CLAIMED beyond the quote ANCHOR reads). */
   readonly find: string;
   readonly repl: string;
   /** Every page the member's edit reads apart, in page order. */
   readonly witnesses: readonly string[];
-  /** The pages its gate named as its twins: each reads as written under the member. */
+  /** Pages its pin case reads beside its witnesses, each reading as written under the member (its REPLAY case checks it); that
+   * they are the twins its gate named is NOT CLAIMED. */
   readonly held: readonly string[];
 }
 interface Row {
@@ -375,8 +392,36 @@ function between(text: string, open: string, close: string): string {
 function namedIn(lines: readonly string[], ids: RegExp): string[] {
   return lines.flatMap(line => (line.match(ids) ?? []).map(id => `${/U\d+/.exec(line)?.[0] ?? "<none>"} ${id.replace(/I$/, "i")}`));
 }
-function token(id: string): RegExp {
-  return new RegExp(`(?<![\\w-])${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w-])`);
+/** A member id in the tracker records: GP11-<two digits> or L2-<two digits>, one trailing letter kept, with neither a word
+ * character nor '-' on either side. */
+const MEMBER_ID = /(?<![\w-])(?:GP11|L2)-\d\d[A-Za-z]?(?![\w-])/g;
+/** The last member id a line names before an offset ("<none>" when it names none there). */
+function lastMemberIdBefore(line: string, end: number): string {
+  let last = "<none>";
+  for (const match of line.slice(0, Math.max(0, end)).matchAll(MEMBER_ID)) last = match[0];
+  return last;
+}
+/** The shape of a pin's edit, read from its find and replace: "an inserted line" when the replace is the find with one line
+ * inserted whose text, blanks at its ends aside, is the quote; "a rewritten line" when exactly one line of the find changes and
+ * the new line's text, blanks at its ends aside, is the quote; "an added clause" when exactly one line of the find changes and the
+ * new line is the old one with the quote inserted once; "<other>" for any other edit. */
+function editShape(pin: Pin): string {
+  const before = pin.find.split("\n");
+  const after = pin.repl.split("\n");
+  if (after.length === before.length + 1) {
+    const at = after.findIndex((line, index) => line !== before[index]);
+    if (at < 0) return "<other>";
+    const kept = [...after.slice(0, at), ...after.slice(at + 1)].join("\n");
+    return kept === pin.find && after[at].trim() === pin.quote.trim() ? "an inserted line" : "<other>";
+  }
+  if (after.length !== before.length) return "<other>";
+  const changed = after.flatMap((line, index) => (line === before[index] ? [] : [index]));
+  if (changed.length !== 1) return "<other>";
+  const now = after[changed[0]];
+  const was = before[changed[0]];
+  if (now.trim() === pin.quote.trim()) return "a rewritten line";
+  const cut = now.indexOf(pin.quote);
+  return cut >= 0 && occurrences(now, pin.quote) === 1 && now.slice(0, cut) + now.slice(cut + pin.quote.length) === was ? "an added clause" : "<other>";
 }
 
 // ---- the cases ----
@@ -384,7 +429,7 @@ function token(id: string): RegExp {
 const TITLES = {
   shape: "SHAPE: the rows, the pins with their unmet items and page counts, and the page ids are the frozen literals; every page is listed by a pin and parses with no syntactic diagnostic",
   header: "HEADER: the PIN ROSTER block of this file's header equals the lines the rows and pins compose",
-  anchor: "ANCHOR: row R3's pins are wb-pyel.11's description's, row R4's R-B336's fold's, each pin's quote wb-pyel.9's notes', and each find lies once in the helper function its pin names",
+  anchor: "ANCHOR: row R3's pins are wb-pyel.11's description's, row R4's R-B336's fold's, each pin's quote the one wb-pyel.9's notes record with its own member id the last before it, each pin's kind its edit's shape, and each find lies once in the helper function its pin names",
   control: "REPLAY CONTROL: the helper's own source, compiled and run the replay's way, reads every page exactly as written",
   registration: "REGISTRATION: the registered tests are these cases in this order, each ran in run mode before this one, and every pin case completed its compares",
 } as const;
@@ -439,8 +484,9 @@ describe("wb-pyel.11 EDC static-reach callee members census (test/helpers/edc-st
     for (const pin of PINS) {
       const quoted = `'${pin.quote}'`;
       const line = parentLines.find(entry => entry.includes(quoted)) ?? "";
-      expect(token(pin.id).test(line.slice(0, Math.max(0, line.indexOf(quoted)))), `${pin.id}: wb-pyel.9's notes quote its edit on a line that names it before the quote`).toBe(true);
+      expect(lastMemberIdBefore(line, line.indexOf(quoted)), `${pin.id}: the first line of wb-pyel.9's notes quoting its edit names it as the last member id before the quote`).toBe(pin.id);
       expect([pin.repl.includes(pin.quote), pin.find.includes(pin.quote)], `${pin.id}: its replace holds its quote and its find does not`).toEqual([true, false]);
+      expect(editShape(pin), `${pin.id}: its kind names its edit's shape`).toBe(pin.kind);
       expect(occurrences(helper, pin.find), `${pin.id}: its find occurs once in the helper's source`).toBe(1);
       const at = helper.indexOf(pin.find);
       expect(holderOf(source, at, at + pin.find.length), `${pin.id}: its find lies in the helper's ${pin.at}`).toBe(pin.at);
