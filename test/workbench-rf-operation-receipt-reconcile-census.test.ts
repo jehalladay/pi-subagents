@@ -138,11 +138,17 @@
  *     the committing capability unregistered - src's own registration, which registers no committing rf capability - or
  *     registered as this file's test-only stand-in at each member of src's CapabilityDescriptor effectClass union (read through
  *     that helper's srcUnion, as the landed honesty census reads it). Every ACK FORMS acknowledgement, every override after one
- *     and the FED SET's evidence action are decided under each triple of the three (seventy-five today); each decision's deps
- *     are recorded as src receives them (the task's status, the committing capability's class its registry answers, and the
- *     shape read off the task object itself), and every triple's decisions must carry exactly that triple (the DECISION-INPUT
- *     LIVENESS), so an input dropped at a call site reds. The input that helper decides under - a completed task in that
- *     helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(), decision for
+ *     and the FED SET's evidence action are decided under each triple of the three (seventy-five today); each of those
+ *     decisions crosses this file's one decideReconcile seam (decideAtSeam, wb-x3h8), which records the deps object it hands
+ *     src, read off that very object (the task's status, the committing capability's class its registry answers, and the task
+ *     object's SEAM SHAPE, below), and hands src that same object; every triple's decisions must carry exactly that triple (the
+ *     DECISION-INPUT LIVENESS), so an input dropped or changed at decideUnder's call into the seam reds (measured: the task
+ *     object handed over without its journal path, the gate's GP17-C4, or with its journal path undefined, its status replaced
+ *     or the committing capability's class replaced), and so does a task object taskOf builds whose own enumerable keys,
+ *     observation scope (its keys in order and their values) or journal path differ from its TASK SHAPE's SEAM SHAPE. The
+ *     seam's own decideReconcile call is this file's judging code: an edit there that hands src another object than the one
+ *     the seam records is NOT CLAIMED by this census (R-SELF-ANCHORED). The input that helper decides under - a completed task
+ *     in that helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(), decision for
  *     decision: N checks both, H the first. N's and H acceptance.3.1's witnesses list each distinct outcome text once, after the
  *     inputs that give it.
  *   TASK SHAPES (refusal #8 U1, R-B345): the task objects a decision is made with, each built from its request context; the
@@ -154,7 +160,11 @@
  *     then sessionId): its journal path undefined (journal-path-undefined, a run whose journal was never persisted) or this
  *     file's one journal path for the context (journal-path: sessionTaskDir()'s layout for the context's workspace, session and
  *     task id, <session scratch root>/<encoded workspace>/<session>/tasks/<task id>.workflow.jsonl, composed and never created;
- *     decideReconcile reads no journal).
+ *     decideReconcile reads no journal). SEAM SHAPES (wb-x3h8): each TASK SHAPE's task object as the seam must hand it to src,
+ *     declared apart from taskOf (SEAM_SHAPES, this file's own literals, R-SELF-ANCHORED): the task's own keys in order, its
+ *     observation scope's own keys in order, each holding the context's value, and its journal path - no key, the key holding
+ *     undefined, or the key holding this file's one journal path for the context (the fixture path, threaded to the seam). The
+ *     seam judges the task object it hands src against those alone, never against an object taskOf builds.
  *   N statement.3, never commit evidence: in every ACK FORM and under every DECISION INPUT - with no read (an uncited
  *     acknowledgement stating the producer unavailable) or with only the receipt of one read of the FED SET in hand (cited once
  *     or twice), each with no resolvedValue and with the operator one, in a task of every src status in each TASK SHAPE (no
@@ -304,6 +314,14 @@
  *   its acknowledgement's receipt in hand, restates N's and H acceptance.3.1's claims, R-PROBE-CONTEXT and the Not claimed list
  *   to them, and lists each context's task objects in R-PROBE-CONTEXT's quiet row. The G and S readers and every other
  *   residual's reader are unchanged.
+ * wb-x3h8 (the landed-census follow-up orchestrator ruling R-B381 files on the owner's F2 weigh-in at landing 845; boundary
+ *   sentence, verbatim from the record: "the restated DECISION INPUTS words hold only up to decideUnder's decideReconcile
+ *   call."): the gate's one-site census edit GP17-C4, decideUnder handing decideReconcile the task object without its journal
+ *   path, kept this census at 0|26 and the honesty census at 0|81 and hid G20-JP2 (alone 3|23), because the DECISION-INPUT
+ *   LIVENESS recorded the shape read off the object decideUnder built. The liveness is now recorded at the decideReconcile
+ *   seam (decideAtSeam), read off the deps object handed to src, and the task object's shape is judged against SEAM_SHAPES,
+ *   declared apart from taskOf with this file's one journal path threaded in: GP17-C4 now reds N and H acceptance.3.1, alone
+ *   and with G20-JP2. The decisions, the N and H witnesses, the pin lines and every other reader are unchanged.
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
  *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
  *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
@@ -1105,15 +1123,43 @@ function taskText(task: object): string {
   const text = Object.entries(task).map(([key, value]) => `${key}=${value === undefined ? "undefined" : parameterText(value)}`).join(" ");
   return `{${text.split(sessionScratchRoot()).join("<session scratch root>")}}`;
 }
-/** The TASK SHAPES member a decision's task object is, read off the object itself (keys, their order and values), or what it is instead. */
-function taskShapeOf(task: ReconcileDeps["task"], context: DecisionContext): string {
+/** A key of the observation scope src's ReconcileDeps task carries (a key src renames fails typecheck:test in SEAM_SHAPES). */
+type ScopeKey = keyof NonNullable<NonNullable<ReconcileDeps["task"]>["observationScope"]>;
+/**
+ * SEAM SHAPES (wb-x3h8): each TASK SHAPE's task object as the decideReconcile seam must hand it to src, declared here and never
+ * built by taskOf - the task's own keys in order; its observation scope's own keys in order, each holding the context's value;
+ * and its journal path: no key, the key holding undefined, or the key holding this file's one journal path for the context
+ * (journalPathOf, the fixture path threaded to the seam).
+ */
+const SEAM_SHAPES: Readonly<Record<TaskShape, { readonly keys: readonly string[]; readonly scope: readonly ScopeKey[]; readonly journalPath: "no key" | "undefined" | "the context's" }>> = {
+  "no-journal-path": { keys: ["status", "observationScope"], scope: ["sessionId", "workspace", "principal"], journalPath: "no key" },
+  "journal-path-undefined": { keys: ["status", "observationScope", "journalPath"], scope: ["workspace", "principal", "sessionId"], journalPath: "undefined" },
+  "journal-path": { keys: ["status", "observationScope", "journalPath"], scope: ["workspace", "principal", "sessionId"], journalPath: "the context's" },
+};
+/** The TASK SHAPES member a task object handed across the seam is, judged against SEAM_SHAPES alone (no object taskOf builds is read), or what it is instead. */
+function seamShapeOf(task: ReconcileDeps["task"], context: DecisionContext): string {
   if (task === undefined) return "<no task>";
-  const text = taskText(task);
-  return TASK_SHAPES.find(shape => taskText(taskOf({ status: task.status, commitClass: undefined, taskShape: shape }, context)) === text) ?? `<unlisted task ${text}>`;
+  const scopeValues: Readonly<Record<ScopeKey, string>> = { sessionId: context.session, workspace: context.workspace, principal: context.principal };
+  const shape = TASK_SHAPES.find(member => {
+    const declared = SEAM_SHAPES[member];
+    return JSON.stringify(Object.keys(task)) === JSON.stringify(declared.keys)
+      && JSON.stringify(Object.entries(task.observationScope ?? {})) === JSON.stringify(declared.scope.map(key => [key, scopeValues[key]]))
+      && task.journalPath === (declared.journalPath === "the context's" ? journalPathOf(context) : undefined);
+  });
+  return shape ?? `<unlisted task ${taskText(task)}>`;
 }
-/** DECISION-INPUT LIVENESS: the input each ACK FORMS decision's deps carried as src received them - its task's status, the committing capability's effect class its registry answers and its task object's shape - in decision order. */
+/**
+ * DECISION-INPUT LIVENESS (wb-x3h8: recorded at the decideReconcile seam, never off the object decideUnder built): the input
+ * each ACK FORMS decision's deps carried across the seam - read off the deps object handed to src: its task's status, the
+ * committing capability's effect class its registry answers and its task object's SEAM SHAPE - in decision order.
+ */
 const DECIDED: string[] = [];
-/** One decision in `context` under `input`: a task in that status and shape, effect classes read from that input's decision registry. */
+/** The decideReconcile seam every decision decideUnder makes crosses: it records the deps object it hands src, read off that very object, and hands src that same object. */
+function decideAtSeam(request: ReconcileRequest, crossing: ReconcileDeps, context: DecisionContext): ReconcileDecision {
+  DECIDED.push(`${crossing.task?.status ?? "<no task>"}/${crossing.currentEffectClass(COMMIT_ID) ?? "unregistered"}/${seamShapeOf(crossing.task, context)}`);
+  return decideReconcile(request, crossing);
+}
+/** One decision in `context` under `input`: a task in that status and shape, effect classes read from that input's decision registry, handed to src across the seam. */
 function decideUnder(
   action: "evidence" | "acknowledge" | "override",
   params: Record<string, JsonValue>,
@@ -1127,13 +1173,13 @@ function decideUnder(
     task: taskOf(input, context),
     entries, receipts, currentEffectClass: id => registry.effectClassOf(id), now: () => context.observedAt,
   };
-  DECIDED.push(`${decisionDeps.task?.status ?? "<no task>"}/${decisionDeps.currentEffectClass(COMMIT_ID) ?? "unregistered"}/${taskShapeOf(decisionDeps.task, context)}`);
-  return decideReconcile(
+  return decideAtSeam(
     {
       action, taskId: context.taskId, position: context.position, grants: context.grants, scope: { workspace: context.workspace, principal: context.principal },
       sessionId: context.session, principal: { id: context.principal, role: OPERATOR_ROLE }, params,
     },
     decisionDeps,
+    context,
   );
 }
 /** An uncited form's acknowledgement of the committed-effect row, in this file's own context, under `input`. */
