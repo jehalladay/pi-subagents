@@ -1032,7 +1032,7 @@
        "functionOfName": "refused event,trace,interval",
        "variableOfName": "refused snapshotPaths,event,interval",
        "escapedClassMerge": "refused snapshot,snapshotPaths",
-       "declaredTwice": "refused event,trace,interval",
+       "declaredTwice": "refused event",
        "extendsClause": "refused snapshot,snapshotPaths",
        "typeParameters": "refused snapshotPaths,event,trace",
        "missing": "refused snapshotPaths,event,interval",
@@ -1056,10 +1056,10 @@
        "mappedType": "refused snapshotPaths",
        "qualifiedName": "refused snapshotPaths",
        "importType": "refused snapshotPaths",
+       "libType": "refused snapshotPaths",
        "otherNames": "accepted",
        "typeAndHeritageUses": "accepted",
-       "leafUnion": "accepted",
-       "libType": "accepted"
+       "leafUnion": "accepted"
       },
       "journeys": {
        "freshOnly": {
