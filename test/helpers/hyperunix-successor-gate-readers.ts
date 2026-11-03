@@ -40,30 +40,81 @@
  * the census reads; the census pins require, Reflect and Proxy in each place those words name (its TYPE_PLACES, ACCESS_BASES,
  * EXPORT_PLACES and JSX_PLACES join FREE_PLACES and NONVALUE_PLACES), pins each WRITES name quiet as the right of a qualified
  * name, and checks the gate's paired twins in as TWIN rows.
+ * Refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) found 15 one-edit hollowings of these readers that the cut #4 census keeps
+ * green inside cut #4's words (the callee words; each Vocabulary definition of an identifier read as no value, pinned in one
+ * context; the binding-element key through a free Proxy), and R-B438 (M:51906) executed the rung-3 structural exit: wb-cl20
+ * owns that coverage. Cut #5, this bead's final cut in the fail-closed-core form, changes no reader logic and no plant: the
+ * Vocabulary below claims each definition only in the module texts the census writes for it and names refusal #4's fifteen
+ * forms NOT CLAIMED either way; the callee words name exactly the planted callee forms; the loader name require piece drops its
+ * word anywhere.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
- * Vocabulary (refusal #2 on wb-tz2.21; narrowed by cut #4 after refusal #3, R-B404): a member name is the name of a property
- * access (base.name, base?.name); the right of a qualified name (A.B in a type) is no member name. An identifier is read as a
- * value unless it is the name of a property access; the right of a qualified name; the name of a property assignment, a class
- * field, a property signature, a method, a method signature, a get accessor, a set accessor or an enum member; the property name
- * of a binding element (the key before its colon); the whole name of a type reference or the whole operand of a type query
- * (typeof Proxy, never the left of typeof Proxy.revocable); the label of a labeled statement, a break or a continue; the name of
- * a JSX attribute; a name of an import specifier, or the name of an import clause or of a namespace import; a name of an export
- * specifier of an export declaration with a from clause; or the exported name after as in an export specifier of an export
- * declaration with no from clause. Every other identifier is read as a value: among them the left of a qualified name in a type
- * query or a type reference, the expression of an implements clause or of an interface's extends clause, a shorthand
- * property's name, a shorthand binding element's name, an import-equals declaration's name, an identifier in a JSX attribute's
- * value and the local name of an export specifier of an export declaration with no from clause. The callee of a call is the
- * call's own expression: require behind parentheses, an assertion or a non-null assertion, a new expression's require and a
- * tag's require are no callee of a call. A free Reflect or Proxy is one read as a value that no declaration of the suite binds
- * where it is read; an unaliased export specifier with no from clause naming it (export { Proxy }) is such a declaration, the
- * checker resolving that name to the specifier itself, while the local name of an aliased one (export { Proxy as lgV }) is a
- * free read. A destructured key is a key of an object binding pattern or of an object assignment pattern (the left of a
- * destructuring = and a for-in or for-of head that declares nothing), nested object, array and spread patterns, a default's own
- * pattern and a shorthand key holding a default included. Each definition of this paragraph is claimed over the plants the
- * census reads it in (the catalogs and plants the NOT CLAIMED block below names); in any other place it is NOT CLAIMED by this
- * census.
+ * Vocabulary (refusal #2 on wb-tz2.21; narrowed by cut #4 after refusal #3, R-B404; narrowed again by cut #5, the R-B438
+ * fail-closed core, after refusal #4): each definition below holds only for the module texts this census writes for it, the
+ * plants it quotes and the catalog entries it names, and an identifier standing in the same syntax in any other text (another
+ * container, initializer, operand, annotation, modifier, wrapper or nesting) is NOT CLAIMED either way by this census.
+ * A member name is the name of a property access as the census's member reads write it (base.name and base?.name, and the
+ * MEMBER_SPELLINGS spellings that hold no element key in each MEMBER_PLACES place); the right of a qualified name in a type
+ * alias's type (export type LgT = typeof lgO.name; export type LgT = lgO.name) is no member name.
+ * An identifier is read as no value in these plants and catalog entries only: the name of the property access in export const
+ * lgW = (m: Record<string, unknown>): unknown => m.name and in export const lgW = (m?: Record<string, unknown>): unknown =>
+ * m?.name (NONVALUE_PLACES' member names), and each member name the MEMBER_SPELLINGS and MEMBER_PLACES reads plant; the right
+ * of the qualified name in the two type aliases above; the key of the property assignment in export const lgW = { name: 1 } and in the object literal { name: 1 } that
+ * initializes const { name } = { name: 1 } (a DECLARATIONS statement); the name of the method in export const lgW = { name():
+ * number { return 1; } } and in export class LgC { name(): void {} }; the name of the get accessor in export const lgW = { get
+ * name(): number { return 1; } }, in export class LgC { get name(): number { return 1; } } and in export interface LgI { get
+ * name(): number; }; the name of the set accessor in export const lgW = { set name(lgV: number) { void lgV; } } and in export
+ * class LgC { set name(lgV: number) { void lgV; } }; the name of the class field in export class LgC { name = 1; }; the name of
+ * the property signature in export interface LgI { name: number; } and of the method signature in export interface LgI {
+ * name(): void; }; the name of the enum member in export enum LgE { name = 1, }; the property name of the binding element (the
+ * key before its colon) in the arrow function parameter's object binding pattern of export const lgW = ({ name: lgV }:
+ * Record<string, unknown>): unknown => lgV; the whole name of the type reference in export type LgT = name and the whole
+ * operand of the type query in export type LgT = typeof name (never the left of typeof Proxy.revocable); the label of the
+ * labeled for statement and of its break in name: for (;;) break name, and of its continue in name: for (;;) continue name; the
+ * name of the JSX attribute in export const lgW = <lgX name={1} /> (a .tsx module); the names of the import specifiers in
+ * import { name } and import { name as lgV }, the name of the import clause in import name and of the namespace import in
+ * import * as name, each from "./lg-x.js"; the names of the export specifiers in export { name } from "./lg-x.js" and export {
+ * name as lgV } from "./lg-x.js"; and the exported name after as in const lgV = 1; export { lgV as name }.
+ * An identifier is read as a value in these plants and catalog entries only: each FREE_PLACES place as its plant writes it (the
+ * shorthand property in export const lgW = { name } among them); the left of the qualified name in export type LgT = typeof
+ * name.lgX, typeof name.lgX.lgY, export type LgT = name.LgX and name.LgX.LgY, the expression of the implements clause in export
+ * class LgC implements name {} and of the extends clause in export interface LgI extends name {} (TYPE_PLACES); the base in
+ * export const lgW = name.lgX, name?.lgX and name["lgX"] (ACCESS_BASES); the local name in export { name } and in export { name
+ * as lgV } (EXPORT_PLACES); the identifier in the attribute's expression of export const lgW = <lgX lgK={name} />; each name a
+ * DECLARATIONS statement declares but an import name (an import clause, an import specifier or a namespace import), the
+ * shorthand binding element in const { name } = { name: 1 } and the name in import name = require("./lg-x.js") among them, and
+ * its top-level read export const lgW = name after the statement; and the parameter and both reads of the shadowing plant
+ * export const lgA = (name: number): number => name; export const lgB = name.
+ * The callee of a call is the call's own expression, in these plants only: require("./lg-x.js") and require?.("./lg-x.js") read
+ * no require route, and require() and require?.() are a dynamic load (FREE_PLACES' callee and optional callee); require is no
+ * callee of a call, and so a loader name read, behind exactly one pair of parentheses in (require)("./lg-x.js"), behind an as
+ * assertion to a function type in (require as (lgS: string) => unknown)("./lg-x.js"), behind a non-null assertion in
+ * require!("./lg-x.js"), as the expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js`
+ * and require`lg`.
+ * A free Reflect or Proxy is one read as a value in those plants that no declaration of the suite binds where it is read, the
+ * declarations being the DECLARATIONS statements, the shadowing parameter and the unaliased local export in export { Proxy },
+ * which binds it (the checker resolves that name to the specifier itself); the local name in export { Proxy as lgV } is a free
+ * read.
+ * A destructured key is a key in one of the census's DESTRUCTURINGS (20 forms) as it writes each: an object binding pattern of
+ * a const, a let, a for-of and a nested declaration, of an arrow, a function and a method parameter and of a catch clause, a
+ * shorthand and a string key among them; an object assignment pattern on the left of a destructuring =, nested object, array
+ * and spread patterns, a default's own pattern, a for-of and a for-in head that declares nothing, a shorthand key, a string key
+ * and a shorthand key holding a default.
+ * NOT CLAIMED either way by this census, by name, the forms refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) records surviving,
+ * whose coverage wb-cl20 owns (R-B438): require behind a <T> assertion, behind a satisfies expression and behind two pairs of
+ * parentheses as a callee (GP9C4-REQ-CALLEE-ANGLE, GP9C4-REQ-CALLEE-SATISFIES and GP9C4-REQ-CALLEE-DOUBLE-PAREN; twins
+ * TW9C4-A1, TW9C4-A2 and TW9C4-A3), and behind any two wrappers; the expression of new require with no argument list
+ * (GP9C4-REQ-NEW-NOARGS); a tag behind parentheses, (require)`./lg-x.js` (GP9C4-REQ-TAG-PAREN); the property name of a binding
+ * element in any other pattern, the variable declarations const { require: lgV } = lgO and const { Proxy: lgV } = lgO among
+ * them (GP9C4-VR-BINDING-KEY-PARAM-ONLY; twins TW9C4-B1 and TW9C4-B1P); the key of a property assignment in an object literal
+ * that initializes no variable, String({ require: 1 }) among them (GP9C4-VR-PROPKEY-DECL-INIT-ONLY; TW9C4-B2); a method
+ * signature and a get accessor of a type literal (GP9C4-VR-METHODSIG-INTERFACE-ONLY and GP9C4-VR-GET-NOT-TYPELITERAL; TW9C4-B3
+ * and TW9C4-B4); a set accessor of an interface or of a type literal (GP9C4-VR-SET-NOT-TYPEDECL; TW9C4-B5); a class field and a
+ * method of a class expression (GP9C4-VR-FIELD-CLASSDECL-ONLY and GP9C4-VR-METHOD-NOT-CLASSEXPR; TW9C4-B6 and TW9C4-B7); a type
+ * reference that is no type alias's type, a parameter's annotation among them (GP9C4-VR-TYPEREF-ALIAS-ONLY); the label of a
+ * labeled statement that is no loop and the label of its break, require: { break require; } (GP9C4-VR-LABEL-LOOP-ONLY;
+ * TW9C4-B9); and the name of a JSX attribute with no initializer, <lgX require /> (GP9C4-VR-JSX-ATTR-VALUED-ONLY).
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -108,7 +159,7 @@
  * - require call: the first argument of a call of an identifier require when it is a string literal; when it is a no-substitution template
  * ROUTES (routesOf; a local module holding one is a carrier; a package module holding one is a carrier; each route of the cited suite is a CHANNEL finding):
  * - dynamic load: in every scope; an import() call whose first argument is no string literal (a no-substitution template counts as one); a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one); either call with no argument
- * - loader name: in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value anywhere but as the callee of a call
+ * - loader name: in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value but as the callee of a call
  * - loader member: in every scope; the loader members importActual, importMock; each read as an identifier, as a member name, as a whole string literal; on any base
  * - vite name: in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one
  * - import meta: in every scope, import.meta read other than as the base of import.meta.url
@@ -211,13 +262,19 @@
  *   require as a value in each FREE_PLACES place (as a callee and an optional callee its call is a dynamic load), in each
  *   TYPE_PLACES, ACCESS_BASES and EXPORT_PLACES place and as an identifier in a JSX attribute's value, in no NONVALUE_PLACES place
  *   and not as a JSX attribute's name, under each DECLARATIONS kind with a top-level read, and as the callee of a call plain and
- *   optional (read nowhere), behind parentheses, an assertion and a non-null assertion, of a new expression and as a tag (each
- *   read). NOT CLAIMED: a loader name, a loader member name or require read in a place, a spelling or a declaration outside those
- *   catalogs, or in a crossing of two of them the list does not name.
+ *   optional (read nowhere), behind exactly one pair of parentheses, behind an as assertion to a function type and behind a
+ *   non-null assertion, as the expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js`
+ *   and require`lg` (each read; the plants the Vocabulary quotes); a JSX module is read as a local module only. NOT CLAIMED: a
+ *   loader name, a loader member name or require read in a place, a spelling or a declaration outside those catalogs, or in a
+ *   crossing of two of them the list does not name; require behind a <T> assertion, a satisfies expression, two pairs of
+ *   parentheses or any two wrappers as a callee, as the expression of new require with no argument list and as a tag behind
+ *   parentheses (refusal #4 on wb-tz2.21; wb-cl20).
  *   WRITES reflection, a free Reflect and a free Proxy: each in each FREE_PLACES place and as the operand of typeof, under each
  *   DECLARATIONS kind and a shadowing parameter with a top-level read, in each TYPE_PLACES and ACCESS_BASES place, through the
  *   aliased EXPORT_PLACES place (the unaliased one is a declaration binding it, so it reads nothing) and as an identifier in a JSX
- *   attribute's value, and read in no NONVALUE_PLACES place and not as a JSX attribute's name.
+ *   attribute's value, and read in no NONVALUE_PLACES place and not as a JSX attribute's name; a Reflect or Proxy key of a
+ *   binding pattern other than NONVALUE_PLACES' arrow parameter pattern (const { Proxy: lgV } = lgO; refusal #4 U3, twin
+ *   TW9C4-B1P) is NOT CLAIMED (wb-cl20).
  *   WRITES names, the reads the census holds (each name of the mutator member, reflection and spy or mock member lists, and
  *   spyOn): as a member name of its form's base in each MEMBER_SPELLINGS spelling that holds no element key and in each
  *   MEMBER_PLACES place; as a string element key in each element-key spelling and each MEMBER_PLACES place; as a destructured key in
@@ -308,7 +365,7 @@ export type LoadForm = (typeof LOAD_FORMS)[number]["word"];
 
 export const ROUTE_FORMS = roster([
   ["dynamic load", "in every scope; an import() call whose first argument is no string literal (a no-substitution template counts as one); a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one); either call with no argument"],
-  ["loader name", "in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value anywhere but as the callee of a call"],
+  ["loader name", "in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value but as the callee of a call"],
   ["loader member", "in every scope; the loader members importActual, importMock; each read as an identifier, as a member name, as a whole string literal; on any base"],
   ["vite name", "in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one"],
   ["import meta", "in every scope, import.meta read other than as the base of import.meta.url"],

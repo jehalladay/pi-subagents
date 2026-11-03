@@ -46,6 +46,22 @@
  * shorthand key holding a default in an assignment pattern; GP9C3-ASSIGNED-SHORTHAND-DEFAULT behind TW9-S1) is a
  * DESTRUCTURINGS form and a TWIN row; its five unrealized RUN unwrap survivors (F1) are pins; every row, pin, plant and reading
  * of cut #3 is kept (the census is a strict superset: FROZEN SHAPE gains 9 TWIN rows and 14 MEMBERS pin counts, loses none).
+ * Refusal #4 on wb-tz2.21 (gate-prep-9, O:1924; cut #4 e8ef334c; R-B438 M:51906 executed the rung-3 STRUCTURAL EXIT R-B404
+ * pre-bound: child wb-cl20 filed first, this bead's FINAL cut #5 = the fail-closed core, the dependency inversion over wb-cl20's
+ * landed reader pre-bound) found 15 one-edit hollowings of the readers keeping this census at 0 failed | 465 passed, 11 of them
+ * realized on tsc-clean twin pages of the cited suite: U1 ROUTES:loader name, the callee words pinned by one pair of
+ * parentheses, one as assertion and one non-null assertion (GP9C4-REQ-CALLEE-ANGLE, -SATISFIES and -DOUBLE-PAREN; twins
+ * TW9C4-A1, TW9C4-A2 and TW9C4-A3); U2 ROUTES:loader name, each Vocabulary definition of an identifier read as no value pinned
+ * in one context (eight GP9C4-VR- members; twins TW9C4-B1 to TW9C4-B9, B8 aside); U3 WRITES:reflection, the binding-element
+ * key definition through a free Proxy (TW9C4-B1P); U4 rule 16 LEG 2; four more survivors are hypothetical (F1:
+ * GP9C4-VR-TYPEREF-ALIAS-ONLY, GP9C4-VR-JSX-ATTR-VALUED-ONLY, GP9C4-REQ-NEW-NOARGS, GP9C4-REQ-TAG-PAREN). Read here, in cut #5
+ * (the R-B392 family form: the census claims exactly the fail-closed subset its pins hold, no wider word survives), as: no
+ * plant, pin, row or reader logic changes; the helper header's Vocabulary claims each definition only in the module texts this
+ * census writes for it, quoting each plant or naming its catalog, and names every other text NOT CLAIMED either way, refusal
+ * #4's fifteen forms by name; its callee sentence names exactly the planted callee forms; the ROUTES loader name require piece
+ * reads "an identifier require read as a value but as the callee of a call" (its "anywhere" dropped from the helper's roster,
+ * its header line and the MEMBERS quote here); the coverage refusal #4 records is wb-cl20's (its acceptance: the 11 realized
+ * twins red this census). FROZEN SHAPE is unchanged; each narrowed positive claim keeps its falsifier (PINNED READER SET).
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -182,11 +198,15 @@
  *    spellings and the places, quiet in the 48 places, the other 26 NONVALUE_PLACES, the TYPE_PLACES, ACCESS_BASES,
  *    EXPORT_PLACES and JSX_PLACES and as a whole string or template in the places; require in each FREE_PLACES, TYPE_PLACES,
  *    ACCESS_BASES and EXPORT_PLACES place and in a JSX attribute's value, quiet in each NONVALUE_PLACES place and as a JSX
- *    attribute's name, under each DECLARATIONS kind, and as the callee of a call plain, optional, parenthesized, asserted and
- *    non-null, of a new expression and as a tag; every plant but the two JSX ones read again in the suite, a local module and a
- *    package module (piece 1); target: routesOf's finding list. Falsifiers: GP12C2-REQUIRE-CALLEE, GP12C2-LN-MEMBER-BASE,
- *    GP9C3-VR-QUALIFIED-LEFT, GP9C3-VR-EXPORT-ALIAS, GP9C3-VR-REEXPORT-FROM, GP9C3-VR-TYPEREF, GP9C3-VR-LABELED,
- *    GP9C3-VR-SET-ACCESSOR, GP9C3-VR-BINDING-KEY, GP9C3-REQ-OPTIONAL-CALLEE (gate); SP12-LN-*, SP9-VR-* (seat).
+ *    attribute's name, under each DECLARATIONS kind, and as the callee of a call plain and optional (read nowhere), behind
+ *    exactly one pair of parentheses, behind an as assertion to a function type and behind a non-null assertion, as the
+ *    expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js` and require`lg` (each read;
+ *    cut #5 narrows the callee words to exactly these forms); every plant but the two JSX ones read again in the suite, a local
+ *    module and a package module (piece 1; the JSX plants read in a local module only); target: routesOf's finding list.
+ *    Falsifiers: GP12C2-REQUIRE-CALLEE, GP12C2-LN-MEMBER-BASE, GP9C3-VR-QUALIFIED-LEFT, GP9C3-VR-EXPORT-ALIAS,
+ *    GP9C3-VR-REEXPORT-FROM, GP9C3-VR-TYPEREF, GP9C3-VR-LABELED, GP9C3-VR-SET-ACCESSOR, GP9C3-VR-BINDING-KEY,
+ *    GP9C3-REQ-OPTIONAL-CALLEE (gate); SP12-LN-*, SP9-VR-* and the cut #5 SP9C5-* probes, one per narrowed callee form and one
+ *    per narrowed Vocabulary context, each dropping exactly the planted context the narrowed words keep (seat).
  *  - "MEMBERS WRITES:reflection, pieces 1, 2 and 8" and "MEMBERS WRITES:mutator member, pieces 10-13" and "MEMBERS WRITES:spy or
  *    mock member, pieces 1 and 20": a free Reflect and Proxy in each FREE_PLACES place and as the operand of typeof, under each
  *    DECLARATIONS kind and a shadowing parameter, quiet in each NONVALUE_PLACES place, read in each TYPE_PLACES and ACCESS_BASES
@@ -223,11 +243,19 @@
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
  * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee; a
  * vitest/config name outside CONFIG_NAMES; a loader name, require or a WRITES name read outside the cut #3 and cut #4
- * catalogs; a WRITES name as a JSX attribute; spyOn as an identifier; and each definition of the helper header's Vocabulary in
- * any place outside the plants this census reads (a type parameter's name, a parameter property's name, the left of a qualified
- * name in an import-equals reference and a JSX tag name among them).
+ * catalogs; a WRITES name as a JSX attribute; spyOn as an identifier; each definition of the helper header's Vocabulary in
+ * any text other than the plants it quotes and the catalog entries it names (a type parameter's name, a parameter property's
+ * name, the left of a qualified name in an import-equals reference and a JSX tag name among them); and, by name in that
+ * Vocabulary, the fifteen forms refusal #4 on wb-tz2.21 records surviving, deferred to wb-cl20: require behind a <T>
+ * assertion, a satisfies expression or two pairs of parentheses as a callee, the expression of new require with no argument
+ * list and a tag behind parentheses; a binding element's key in a pattern other than the arrow parameter's (a variable
+ * declaration's, for require and for Proxy); a property assignment's key in an object literal that initializes no variable; a
+ * type literal's method signature and get accessor; an interface's and a type literal's set accessor; a class expression's
+ * field and method; a type reference that is no type alias's type; the label of a statement that is no loop; and a JSX
+ * attribute with no initializer.
  * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family: every
- * mode refusal #3 records for the two frozen claim sets is a pin (the enumerate-the-resolvable form), none a residual.
+ * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are NOT CLAIMED
+ * (scope sentences of the fail-closed core, deferred to wb-cl20), none a residual.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -1727,7 +1755,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       asTemplateKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1"),
       localRoute('export const lgW = (m: Record<string, unknown>): unknown => m[("dlopen")];\n', ["loader name 'dlopen' :1"]),
       localRoute('export const lgW = (m: Record<string, unknown>): unknown => m["binding" as string];\n', ["loader name 'binding' :1"])),
-    member("ROUTES:loader name", "an identifier require read as a value anywhere but as the callee of a call",
+    member("ROUTES:loader name", "an identifier require read as a value but as the callee of a call",
       ...FREE_PLACES.map(([label, text, , line]) => localRoute(text("require"), CALLEE_PLACES.includes(label) ? [`dynamic load require() of nothing :${line}`] : [`loader name require, not called :${line}`])),
       ...NONVALUE_PLACES.map(([, text]) => localRoute(text("require"), [])),
       ...DECLARATIONS.map(([declare]) => localRoute(`${declare("require")}\nexport const lgW = require;\n`, requireDeclared(declare("require")))),
