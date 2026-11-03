@@ -19,7 +19,9 @@
  * identity reading (test/helpers/rf-tsx-deno.ts) holds; the DENO_IDENTITY_SUITE cases show that it bites. Before rf is
  * launched they refuse an unresolved engine and each of the three shim forms, over these pinned members: a symlink to a
  * binary of another name (named mise, deno-shim, Deno and mise-deno), a file under a shims directory (shims as its parent
- * and as an ancestor two levels up) and a #!/bin/sh script. Once the render reports the pin they refuse an unpinned engine
+ * and as an ancestor two levels up, each as a regular file there, the mark on its resolved path and on its realpath, and as
+ * a symlink there to an engine-named binary outside any shims directory, the mark on its resolved path alone) and a
+ * #!/bin/sh script. Once the render reports the pin they refuse an unpinned engine
  * and a mismatched one, over the pin f*64 and pins that differ from the measured digest only in its first, its 33rd or its
  * last hex (a greater and a lesser pin). Each
  * refused row's first failure opens with its literal typed code. A passing row prints the resolved path, realpath and
@@ -32,15 +34,17 @@
  * the echo rule's whole class range and its length bound, which these cases pin at the five paths above. NOT CLAIMED by
  * these cases: a version reading of the PATH deno (the binary is held to the lock's sha256 and never asked its version; the
  * render's distribution_version stays an R9 receipt field), a live receipt of record carrying the RF-TSX-ENGINE line (no
- * live run is part of this cut), and any manager name, shims position, script form or digest position other than the
- * pinned members (among them, deferred to wb-j4sm, the rule-19 structural exit child of this bead, ruling R-B292: a #!
- * script whose third byte is not /, a shims directory more than two levels above the file, and a manager name that
- * differs from deno only by an extension such as deno.exe or by surrounding whitespace).
+ * live run is part of this cut), a deno symlinked from outside any shims directory to a file under one (the mark on its
+ * realpath alone: the identity unit cases pin that reading, these cases do not), and any manager name, shims position,
+ * script form or digest position other than the pinned members (among them the deferred scope of wb-j4sm, the rule-19
+ * structural exit child of this bead (ruling R-B292), whose landed census states its own claims: a #! script whose third
+ * byte is not /, a shims directory more than two levels above the file, and a manager name that differs from deno only by
+ * an extension such as deno.exe or by surrounding whitespace).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
-import { delimiter, join, relative } from "node:path";
+import { delimiter, join, relative, sep } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { REACTIVE_FIBER_CLI_SCHEMA } from "../src/workbench/providers/reactivefiber.js";
 import defaultConfig from "../vitest.config.js";
@@ -635,6 +639,26 @@ describe(DENO_IDENTITY_SUITE, () => {
         const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
         return [standInEngine(join(dir, ...segments)), tsx, process.env.PATH ?? ""].join(delimiter);
       });
+      expectRefused(run, "rf_tsx_deno_shim", "is a version-manager shim (it sits in a shims directory);");
+      expect(existsSync(run.launched)).toBe(false);
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it.each<[string, readonly string[]]>([
+    ["its parent directory: manager/shims/deno", ["manager", "shims"]],
+    ["an ancestor directory: manager/shims/bin/deno", ["manager", "shims", "bin"]],
+  ])(
+    "a deno that is a symlink under a shims directory (%s) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone",
+    (_label, segments) => {
+      const run = provisionedRun("rf-tsx-deno-shims-link-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        const engine = join(standInEngine(join(dir, "tools", "bin")), DENO_ENGINE);
+        mkdirSync(join(dir, ...segments), { recursive: true });
+        symlinkSync(engine, join(dir, ...segments, DENO_ENGINE));
+        return [join(dir, ...segments), tsx, process.env.PATH ?? ""].join(delimiter);
+      });
+      expect(realpathSync(join(run.dir, ...segments, DENO_ENGINE)).split(sep)).not.toContain("shims");
       expectRefused(run, "rf_tsx_deno_shim", "is a version-manager shim (it sits in a shims directory);");
       expect(existsSync(run.launched)).toBe(false);
     },

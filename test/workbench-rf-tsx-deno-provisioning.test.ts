@@ -15,20 +15,23 @@
  * <unrecognized>: 4097 characters, an empty string, NUL, TAB, LF, ESC, US, DEL, U+0080, a Latin-1 letter and a character
  * past U+FFFF), the filesystem's path classes among them through real scratch paths in a refusal message; manager
  * binaries named mise, deno-shim, Deno, DENO, mise-deno, xdeno and dino refused as other names than deno; a shims
- * directory as the file's parent and two levels above it, on the resolved path and on the realpath, while a directory
- * named Shims, shim, myshims or shims2 is not the mark; a #!/bin/sh script refused as the script mark, while a first byte
- * # without a ! after it is not the mark; and the pin f*64 and pins one hex off the measured digest at its first, 33rd
- * and last position. The empty-PATH branch of resolveOnPath and its relative read of an empty PATH entry are NOT CLAIMED
- * by a falsifier: the repository root holds no deno, so its working-directory lookup, a skipped entry and shutil.which's
- * None read alike there. The tier wiring of the same reading (refused before rf runs, refused after the render reports
+ * directory as the file's parent and two levels above it, at each of the two positions on the resolved path alone, on the
+ * realpath alone and on both, while a directory named Shims, shim, myshims or shims2 is not the mark; resolveOnPath
+ * passing over, in PATH order, a directory, a symlink to a directory, a non-executable file and a broken symlink before
+ * the first executable file; a #!/bin/sh script refused as the script mark, while a first byte # without a ! after it is
+ * not the mark; and the pin f*64 and pins one hex off the measured digest at its first, 33rd and last position. The
+ * empty-PATH branch of resolveOnPath and its relative read of an empty PATH entry are NOT CLAIMED by a falsifier: the
+ * repository root holds no deno, so its working-directory lookup, a skipped entry and shutil.which's None read alike
+ * there. The tier wiring of the same reading (refused before rf runs, refused after the render reports
  * the pin, the engine line's fields) is pinned by the wb-70xe cases of test/workbench-rf-tsx-tier.test.ts. NOT CLAIMED by
- * the identity cases (the forms named here are deferred to wb-j4sm, the rule-19 structural exit child of this bead,
- * ruling R-B292): a #! script whose third byte is not / (one that opens with #! and a space, or with #! and a relative
- * interpreter), a shims directory more than two levels above the file, a manager name that differs from deno only by an
- * extension (such as deno.exe) or by surrounding whitespace, the shim reason's echo of a realpath name that is not
- * printable ASCII (no pinned manager name holds one), the order and the joining of two or more shim reasons (no pinned
- * case carries two), and any other manager name, shims position, script form or digest position outside the pinned
- * members.
+ * the identity cases (the first three forms named here were the deferred scope of wb-j4sm, the rule-19 structural exit
+ * child of this bead (ruling R-B292), whose own census of this reading, test/workbench-rf-tsx-deno-identity-census.test.ts,
+ * landed with it and states its own claims): a #! script whose third byte is not / (one that opens with #! and a space,
+ * or with #! and a relative interpreter), a shims directory more than two levels above the file, a manager name that
+ * differs from deno only by an extension (such as deno.exe) or by surrounding whitespace, the shim reason's echo of a
+ * realpath name that is not printable ASCII (no pinned manager name holds one), the order and the joining of two or more
+ * shim reasons (no pinned case carries two), and any other manager name, shims position, script form or digest position
+ * outside the pinned members.
  *
  * The second part is the lane census for (c)'s first clause. Its walk lists every regular file at the repository root
  * (AGENTS.md, forge.toml, package.json and the root vitest configs among them) and in the .github, .agents, .pi, .codex,
@@ -60,7 +63,8 @@
  * (the census claims the planted forms, not every spelling a shape's source admits); a one-edit widening of a shape that
  * reads no quiet row, no near-miss row and no walked line (a widened shape reads more lines, never fewer); a filter of
  * the reported hits, or of the lines offered to the shapes, by a property no scratch plant varies (the forms named here
- * are deferred to wb-j4sm, ruling R-B292: a hit in a file larger than the largest planted file, the gate's file over 128
+ * were the deferred scope of wb-j4sm, ruling R-B292, whose landed census states its own claims: a hit in a file larger
+ * than the largest planted file, the gate's file over 128
  * KiB among them; a hit past line 2049, the planted line farthest down, the gate's line past 4096 among them; a hit in a
  * dot-named file; and a line led by #); a second hit on a line that already holds one, which no planted line carries;
  * inside one shape, a coordinated removal of one alternative (a manager, a verb, a host) from the matcher, its planted
@@ -78,7 +82,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { chmodSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
-import { delimiter, extname, join } from "node:path";
+import { delimiter, extname, join, sep } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   DENO_ENGINE,
@@ -157,6 +161,20 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(resolveOnPath(DENO_ENGINE, ["a", "b", "c"].map(entry => join(dir, entry)).join(delimiter))).toBeUndefined();
     expect([resolveOnPath(DENO_ENGINE, undefined), resolveOnPath(DENO_ENGINE, "")]).toEqual([undefined, undefined]);
     expect(resolveOnPath(DENO_ENGINE, `${delimiter}${join(dir, "d")}`)).toBe(first);
+    expect(existsSync(marker)).toBe(false);
+  });
+
+  it("resolveOnPath passes over a PATH entry whose deno is a symlink to a directory (the link is followed to the directory), and the next entry's executable file wins", () => {
+    const dir = scratch("deno-which-dirlink-");
+    const marker = join(dir, "executed");
+    mkdirSync(join(dir, "target", DENO_ENGINE), { recursive: true });
+    mkdirSync(join(dir, "a"));
+    symlinkSync(join(dir, "target", DENO_ENGINE), join(dir, "a", DENO_ENGINE));
+    const engine = plantEngine(join(dir, "b"), marker);
+    const path = [join(dir, "a"), join(dir, "b")].join(delimiter);
+    expect(resolveOnPath(DENO_ENGINE, path)).toBe(engine);
+    expect(resolveOnPath(DENO_ENGINE, join(dir, "a"))).toBeUndefined();
+    expect(provisionedDeno(path)).toEqual({ resolved: engine, realpath: realpathSync(engine) });
     expect(existsSync(marker)).toBe(false);
   });
 
@@ -403,6 +421,19 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const linked = refusalOf(() => provisionedDeno(join(dir, "bin")));
     expectCode(linked, "rf_tsx_deno_shim");
     expect(linked.message).toContain(`(realpath ${realpathSync(engine)}) is a version-manager shim (it sits in a shims directory)`);
+    expect(existsSync(marker)).toBe(false);
+  });
+
+  it("a PATH entry two levels under a shims directory (manager/shims/bin) is refused typed rf_tsx_deno_shim on the resolved path alone, though its symlink's target is an engine-named binary outside one", () => {
+    const dir = scratch("deno-shims-resolved-nested-");
+    const marker = join(dir, "executed");
+    const engine = plantEngine(join(dir, "tools", "bin"), marker);
+    mkdirSync(join(dir, "manager", "shims", "bin"), { recursive: true });
+    symlinkSync(engine, join(dir, "manager", "shims", "bin", DENO_ENGINE));
+    expect(realpathSync(engine).split(sep)).not.toContain("shims");
+    const refusal = refusalOf(() => provisionedDeno(join(dir, "manager", "shims", "bin")));
+    expectCode(refusal, "rf_tsx_deno_shim");
+    expect(refusal.message).toContain(`the PATH-resolved deno ${join(dir, "manager", "shims", "bin", DENO_ENGINE)} (realpath ${realpathSync(engine)}) is a version-manager shim (it sits in a shims directory)`);
     expect(existsSync(marker)).toBe(false);
   });
 

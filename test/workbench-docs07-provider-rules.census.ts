@@ -80,15 +80,18 @@
  * resolved deno, its realpath and its sha256 beside the four-field receipt line, over a regular file, the operator's
  * versioned symlink layout, four paths that are not printable ASCII (a Latin-1 letter, TAB, US, DEL: the placeholder) and one
  * printable path with a space and a tilde (verbatim); each of the sentence's three shim forms is refused before rf runs over
- * its pinned members (a binary named mise, deno-shim, Deno or mise-deno; shims as the file's parent or two levels above it;
- * a #!/bin/sh script), as is an unresolved deno, and a mismatched or unpinned one once the render reports the pin (the pin
+ * its pinned members (a binary named mise, deno-shim, Deno or mise-deno; shims as the file's parent or two levels above it,
+ * as a regular file there and as a symlink there to an engine-named binary outside any shims directory; a #!/bin/sh script),
+ * as is an unresolved deno, and a mismatched or unpinned one once the render reports the pin (the pin
  * f*64, and pins off the measured digest only in its first, 33rd or last hex), each by its literal typed code), its
  * no-lane-install half to the lane census of test/workbench-rf-tsx-deno-provisioning.test.ts (whose walk is held to the
  * repository's git index, whose hit read is held to each walked file's size and line count, whose reach is held at its
  * scratch plants in every walked tree and file kind, and whose six shapes are held to their planted forms and to this
- * sentence's six command families). NOT CLAIMED by row R10 (scope; the forms named here are deferred to wb-j4sm, the
- * rule-19 structural exit child of wb-70xe, ruling R-B292): the sentence's shim forms and its lane clause beyond those
- * pinned members, among them a #! script whose third byte is not /, a shims directory more than two levels above the file,
+ * sentence's six command families). NOT CLAIMED by row R10 (scope; the forms named here, except the realpath-alone one,
+ * were the deferred scope of wb-j4sm, the rule-19 structural exit child of wb-70xe (ruling R-B292), whose landed census states
+ * its own claims): the sentence's shim forms and its lane clause beyond those pinned members, among them a deno symlinked
+ * from outside any shims directory to a file under one (the mark on its realpath alone, which the tier cases do not
+ * plant), a #! script whose third byte is not /, a shims directory more than two levels above the file,
  * a manager name that differs from deno only by an extension or by surrounding whitespace, and the lane hit read's reach
  * past its scratch plants (a hit in a file larger than the largest planted one, past the planted line farthest down or in a
  * dot-named file, and a line led by #).
@@ -757,6 +760,8 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         pin("rf-tsx-tier", "a deno symlinked to a version manager's binary named mise-deno (the engine's name with a prefix) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno that is a file under a shims directory (its parent directory: manager/shims/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno that is a file under a shims directory (an ancestor directory: manager/shims/bin/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a symlink under a shims directory (its parent directory: manager/shims/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a symlink under a shims directory (an ancestor directory: manager/shims/bin/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno that is a #!/bin/sh script fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports (the pin f*64) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
@@ -953,7 +958,7 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R8/both-hosts:3",
   "R8/documented-channel:1",
   "R9/whole:1",
-  "R10/lock-pinned-engine:20",
+  "R10/lock-pinned-engine:22",
   "R10/no-lane-install:7",
   "B1/whole:2",
   "B2/whole:2",
@@ -1038,6 +1043,8 @@ const FROZEN_R10_BINDING: readonly string[] = [
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary named mise-deno (the engine's name with a prefix) fails the success row typed rf_tsx_deno_shim before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a file under a shims directory (its parent directory: manager/shims/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a file under a shims directory (an ancestor directory: manager/shims/bin/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a symlink under a shims directory (its parent directory: manager/shims/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a symlink under a shims directory (an ancestor directory: manager/shims/bin/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a #!/bin/sh script fails the success row typed rf_tsx_deno_shim before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports (the pin f*64) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
