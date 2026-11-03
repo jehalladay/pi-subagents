@@ -55,11 +55,13 @@
  *   derives nothing. The cases hold chains one to four corrections deep from a team outcome, a feedback and a decision,
  *   and two to four deep through an actor-naming correction (R-DEEP-CHAIN names the bound this leaves); a per-actor
  *   reward equal to the reward, and one equal to the share, of the correction past each of the four actor-naming forms
- *   (k48 past k9, k45 past k31, k54 past k32, k57 past k33) is a case. An admitted record is appended: the log returned
- *   is the input plus the record, every prior record byte-identical, and the caller's log untouched.
- * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (57),
+ *   (k48 past k9, k45 past k31, k54 past k32, k57 past k33) is a case, and past each of the three forms besides k9's (k45,
+ *   k54, k57) each of those two values is a case as a1's feedback causal benefit, and as the reward and as the causal benefit
+ *   of a correction of a1's feedback, each on a1's receipt. An admitted record is appended: the log returned is the input
+ *   plus the record, every prior record byte-identical, and the caller's log untouched.
+ * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (75),
  *   K-APPEND (8), K-OPERATOR (9). A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller
- *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 65
+ *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 67
  *   validators, one fault each, each refused by exactly its declared checks; every check refuses one alone, and every
  *   typed refusal is some case's.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its validator
@@ -375,7 +377,12 @@ type Fault =
   | "decision-actor-within-four-steps"
   | "chain-through-outsider-naming-underived"
   | "chain-through-verifier-naming-underived"
-  | "chain-through-indirect-naming-underived";
+  | "chain-through-indirect-naming-underived"
+  | "correction-copier-past-other-forms-unchecked"
+  | "causal-past-other-forms-unread";
+
+/** M63-M65's faults together: a correction past an actor-naming form besides k9's (k45, k54, k57 in the cases) derives nothing. */
+const OTHER_FORMS_UNDERIVED: readonly Fault[] = ["chain-through-outsider-naming-underived", "chain-through-verifier-naming-underived", "chain-through-indirect-naming-underived"];
 
 function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const has = (fault: Fault): boolean => faults.has(fault);
@@ -462,9 +469,14 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
       const actor = record.kind === "correction" ? (has("correction-bypasses-team") ? undefined : named) : record.kind === "feedback" ? record.actor : undefined;
       if (actor !== undefined && !has("team-copy-unread")) {
         const derived = derivedValues(log, record.episode, faults);
+        // correction-copier-past-other-forms-unchecked (a correction's values, either field) and causal-past-other-forms-unread
+        // (a causal benefit, either kind) read the derived values M63-M65 together leave: no correction past those forms.
+        const otherFormsUnread = (field: ValueField): boolean => (record.kind === "correction" && has("correction-copier-past-other-forms-unchecked")) || (field === "causalBenefit" && has("causal-past-other-forms-unread"));
+        const withoutOtherForms = has("correction-copier-past-other-forms-unchecked") || has("causal-past-other-forms-unread") ? derivedValues(log, record.episode, new Set([...faults, ...OTHER_FORMS_UNDERIVED])) : derived;
         for (const field of VALUE_FIELDS) {
           if (field === "causalBenefit" && (has("causal-benefit-uncopied") || (record.kind === "correction" && has("correction-causal-uncopied")))) continue;
           const value = fieldValue(record, field);
+          if (otherFormsUnread(field) && value !== undefined && !withoutOtherForms.includes(value)) continue;
           if (value !== undefined && derived.includes(value) && !actorLevelVerifier(record.outcome)) return refuse(record, "team-outcome-copied", field);
         }
       }
@@ -761,6 +773,24 @@ const TEAM_CASES: readonly Case[] = [
   at("t-chained-actor-correction-fixed-share", K32_FIXED, feedback("c66", { actor: "a1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-chained-outsider-correction-fixed-copy", K33_FIXED, feedback("c67", { actor: "a1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-chained-outsider-correction-fixed-share", K33_FIXED, feedback("c68", { actor: "a1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-copy", K31_FIXED, correction("c69", { corrects: "f1", status: "observed", reward: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-share", K31_FIXED, correction("c70", { corrects: "f1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-copy", K32_FIXED, correction("c71", { corrects: "f1", status: "observed", reward: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-share", K32_FIXED, correction("c72", { corrects: "f1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-copy", K33_FIXED, correction("c73", { corrects: "f1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-share", K33_FIXED, correction("c74", { corrects: "f1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-copy-causal", K31_FIXED, correction("c75", { corrects: "f1", status: "observed", causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-correction-share-causal", K31_FIXED, correction("c76", { corrects: "f1", status: "observed", causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-copy-causal", K32_FIXED, correction("c77", { corrects: "f1", status: "observed", causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-share-causal", K32_FIXED, correction("c78", { corrects: "f1", status: "observed", causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-copy-causal", K33_FIXED, correction("c79", { corrects: "f1", status: "observed", causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-share-causal", K33_FIXED, correction("c80", { corrects: "f1", status: "observed", causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-copy-causal", K31_FIXED, feedback("c81", { actor: "a1", status: "observed", causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-share-causal", K31_FIXED, feedback("c82", { actor: "a1", status: "observed", causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-copy-causal", K32_FIXED, feedback("c83", { actor: "a1", status: "observed", causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-share-causal", K32_FIXED, feedback("c84", { actor: "a1", status: "observed", causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-copy-causal", K33_FIXED, feedback("c85", { actor: "a1", status: "observed", causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-share-causal", K33_FIXED, feedback("c86", { actor: "a1", status: "observed", causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
 ];
 const APPEND_CASES: readonly Case[] = [
   at("a-correct-feedback", BASE, correction("k1", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") }), "ok"),
@@ -908,6 +938,8 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M63", "chain-through-outsider-naming-underived", ["K-TEAM"]),
   mutant("M64", "chain-through-verifier-naming-underived", ["K-TEAM"]),
   mutant("M65", "chain-through-indirect-naming-underived", ["K-TEAM"]),
+  mutant("M66", "correction-copier-past-other-forms-unchecked", ["K-TEAM"]),
+  mutant("M67", "causal-past-other-forms-unread", ["K-TEAM"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 
@@ -1588,7 +1620,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     ]);
     expect(
       read,
-      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor), as does the correction past each of the other three actor-naming forms (k45, k54, k57: its reward and its share for a1)",
+      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor), as does the correction past each of the other three actor-naming forms (k45, k54, k57: its reward and its share as a1's feedback reward)",
     ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1657,10 +1689,22 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-correction-decision-depth3-copy-causal",
       "t-correction-decision-depth4-copy",
       "t-correction-decision-depth4-copy-causal",
+      "t-outsider-team-correction-fixed-correction-copy",
+      "t-outsider-team-correction-fixed-correction-share",
+      "t-chained-actor-correction-fixed-correction-copy",
+      "t-chained-actor-correction-fixed-correction-share",
+      "t-chained-outsider-correction-fixed-correction-copy",
+      "t-chained-outsider-correction-fixed-correction-share",
+      "t-outsider-team-correction-fixed-correction-copy-causal",
+      "t-outsider-team-correction-fixed-correction-share-causal",
+      "t-chained-actor-correction-fixed-correction-copy-causal",
+      "t-chained-actor-correction-fixed-correction-share-causal",
+      "t-chained-outsider-correction-fixed-correction-copy-causal",
+      "t-chained-outsider-correction-fixed-correction-share-causal",
     ]);
     expect(
       read,
-      "the causal benefit, and a correction of a per-actor record - a feedback or a decision, directly or through a chain of corrections one to four deep, in either field, or naming its actor itself or along its chain - are held to the same reference",
+      "the causal benefit, and a correction of a per-actor record - a feedback or a decision, directly or through a chain of corrections one to four deep, in either field, or naming its actor itself or along its chain - are held to the same reference, and so is a correction of a1's feedback, on a1's receipt, carrying the reward or the share of the correction past each of the other three actor-naming forms (k45, k54, k57) in either field",
     ).toEqual({
       "t-copy-causal": "team-outcome-copied:causalBenefit",
       "t-actor-verifier": "ok",
@@ -1683,6 +1727,18 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-correction-decision-depth3-copy-causal": "team-outcome-copied:causalBenefit",
       "t-correction-decision-depth4-copy": "team-outcome-copied:reward",
       "t-correction-decision-depth4-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
     });
     return { matrix, read };
   },
@@ -1935,10 +1991,16 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-chained-actor-correction-fixed-share",
       "t-chained-outsider-correction-fixed-copy",
       "t-chained-outsider-correction-fixed-share",
+      "t-outsider-team-correction-fixed-copy-causal",
+      "t-outsider-team-correction-fixed-share-causal",
+      "t-chained-actor-correction-fixed-copy-causal",
+      "t-chained-actor-correction-fixed-share-causal",
+      "t-chained-outsider-correction-fixed-copy-causal",
+      "t-chained-outsider-correction-fixed-share-causal",
     ]);
     expect(
       read,
-      "a team-level reward and its share - the team outcome's, or a correction's whose chain ends at it (up to four corrections deep, naming an actor, or passing through one that does), the original kept beside it - copied into a per-actor reward or causal benefit, are refused naming the field",
+      "a team-level reward and its share - the team outcome's, or a correction's whose chain ends at it (up to four corrections deep, naming an actor, or passing through one that does), the original kept beside it - copied into a per-actor reward or causal benefit, are refused naming the field, and the correction past each of the other three actor-naming forms (k45, k54, k57) has its reward and its share refused as a1's feedback reward and as a1's feedback causal benefit, on a1's receipt",
     ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1966,6 +2028,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
       "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
       "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
     });
     return read;
   },
@@ -2251,7 +2319,7 @@ describe(SUITE, () => {
       "team-outcome-copied",
     ]);
     expect(BASE.map(record => `${record.id}:${record.kind}:${record.writer}`)).toEqual(["t1:team-outcome:host", "d1:decision:policy", "d2:decision:policy", "f1:feedback:host"]);
-    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:57", "K-APPEND:8", "K-OPERATOR:9"]);
+    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:75", "K-APPEND:8", "K-OPERATOR:9"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:open-status:K-STATUS",
       "M02:missing-status-observed:K-STATUS",
@@ -2318,6 +2386,8 @@ describe(SUITE, () => {
       "M63:chain-through-outsider-naming-underived:K-TEAM",
       "M64:chain-through-verifier-naming-underived:K-TEAM",
       "M65:chain-through-indirect-naming-underived:K-TEAM",
+      "M66:correction-copier-past-other-forms-unchecked:K-TEAM",
+      "M67:causal-past-other-forms-unread:K-TEAM",
     ]);
     expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:3", "Q3:2", "Q4:3", "Q5:3", "Q6:5", "Q7:3"]);
     expect(DEEP_CHAIN.map(member => `${member.id}:${member.fault}`)).toEqual([
