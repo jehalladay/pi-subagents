@@ -3,7 +3,7 @@
   "claims": {
     "wrappers": [
       {
-        "words": "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there (the outermost-wrapper class: skipping such a kind at one site reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
+        "words": "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there, on the routes that hand the site an expression and around the operands that the pinned forms wrap in that kind there (the outermost-wrapper class: one kind skipped at one site, on every route and around every operand, reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
         "falsifiers": [
           "F-OUTERMOST-WRAPPERS",
           "unwrap@resolveTexts#1",
@@ -24,7 +24,7 @@
     ],
     "specifiers": [
       {
-        "words": "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and every loader call's first argument through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
+        "words": "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and the first argument of every loader call the loader reader reads (in the spellings its first clause names) through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
         "falsifiers": [
           "F-ENTRIES",
           "F-LOADS",
@@ -38,7 +38,7 @@
     ],
     "loader": [
       {
-        "words": "the loader reader reads import(), every call whose callee is spelled with a LOADER_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template), a LOADER_FACTORIES call's result called directly, and a call of a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (each callee and factory read through WRAPPERS, with type arguments, optional calls and any arguments; a bound name is read by its name in every scope)",
+        "words": "the loader reader reads import() and a call of each of these callees in the spellings its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require or getBuiltinModule as a property name, and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly (a plain call, unwrapped or through each WRAPPERS kind; an optional call, unwrapped or under an instantiation expression, parenthesized or not); and a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression, parenthesized or not); the LOADER_FACTORIES call itself is createRequire called as a name (a plain call, unwrapped or parenthesized; an optional call or a call with type arguments, unwrapped; an optional call under an instantiation expression) or as a property name or a literal element name with a string key (a plain call, unwrapped), with one or two arguments; a loader call with its first argument or none; a bound name is read by its name in every scope",
         "falsifiers": [
           "LOADER_CALLS@isLoaderCall#1",
           "LOADER_FACTORIES@factory#1",
@@ -55,7 +55,7 @@
         ]
       },
       {
-        "words": "each such call whose first argument does not resolve or is absent is read once, labelled as spelled: import(), <callee>(), <factory>()() for a factory result called directly",
+        "words": "each such call whose first argument does not resolve or is absent is read once, labelled as spelled (import(), <callee>(), <factory>()() for a factory result called directly), in the spellings its pinned labels hold: import(); require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; a call with type arguments, unwrapped; an optional call under an instantiation expression); require or getBuiltinModule as a property name and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly, and the LOADER_FACTORIES call itself, in every spelling the first clause names for them; a bound name (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression)",
         "falsifiers": [
           "F-LOADS",
           "F-ENTRY-EDGES",
@@ -97,7 +97,7 @@
     ],
     "tracer": [
       {
-        "words": "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates)",
+        "words": "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates), in the spellings its pinned entries hold: import(); require as a name (a plain call, unwrapped or parenthesized; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require as a literal element name with a string key and getBuiltinModule as a property name (a plain call, unwrapped); and a LOADER_FACTORIES call's result, the factory createRequire called as a name in a plain call, unwrapped, called directly or through a name a declaration or a binding assignment binds it to (a plain call, unwrapped; an optional call under an instantiation expression, parenthesized or not)",
         "falsifiers": [
           "CHILD_PROCESS@names#1",
           "F-ENTRIES",
@@ -106,7 +106,7 @@
         ]
       },
       {
-        "words": "it follows a held value through WRAPPERS and await",
+        "words": "it follows a held value through WRAPPERS and await, on the routes and around the operands the pinned forms spell (the wrappers clause)",
         "falsifiers": [
           "isWrapper@consume#1",
           "W-AS",
@@ -117,7 +117,7 @@
         ]
       },
       {
-        "words": "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), optional ones like plain ones; a default read off the module is the module itself",
+        "words": "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), an optional member read by name or by a string key like a plain one; a default read off the module is the module itself",
         "falsifiers": [
           "F-FOLLOW",
           "F-BINDINGS",
@@ -162,7 +162,7 @@
         ]
       },
       {
-        "words": "a call of a held LAUNCH_CALLS member, with type arguments or optional too, reads its command (resolution; <expression> when it does not resolve or is absent)",
+        "words": "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name)",
         "falsifiers": [
           "LAUNCH_CALLS@consume#1",
           "isWrapper@consume#1",
@@ -225,7 +225,7 @@
     ],
     "launches": [
       {
-        "words": "the launch-call reader reads every call whose callee is spelled with a LAUNCH_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template; through WRAPPERS, with type arguments or an optional call) and whose command resolves",
+        "words": "the launch-call reader reads every call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped",
         "falsifiers": [
           "LAUNCH_CALLS@launchSitesAt#1",
           "unwrap@calleeName#1",
@@ -240,7 +240,7 @@
         ]
       },
       {
-        "words": "and, its command <expression>, every such call in a namespace body or an enum declaration whose command does not resolve, and every such call whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read)",
+        "words": "and, its command <expression>, every such call spelled with a property name (unwrapped, in a plain call) that sits in a namespace body or an enum declaration and whose command does not resolve, or whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read), and every such call spelled with a name (unwrapped, in a plain call) whose command resolves only through an index into a const array that is not only read",
         "falsifiers": [
           "NS2",
           "F-MERGED",

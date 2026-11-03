@@ -11,20 +11,24 @@
  * THE CLAIMS are the CLAIMS constant, reader by reader and clause by clause, each clause naming the pins that falsify its words,
  * held byte for byte to the roster's claims; every pin is named by a clause and every falsifier a clause names is a pin. The
  * readers read one parsed module each and nothing else. In short: the specifier reader names every import and export-from
- * specifier, every external import-equals and every loader call's first argument (<expression> unresolved); the loader reader
- * reads import(), LOADER_CALLS callees, a LOADER_FACTORIES result called directly and a name a plain declaration or a
- * BINDING_ASSIGNMENTS assignment binds to one, each unresolved call labelled once; the identifier readers read every IO_GLOBALS
- * and GLOBAL_OBJECTS reference and every process reference but a PROCESS_READS member; the child_process tracer follows every
- * value derived from a child_process entry through WRAPPERS and await, member reads, declarations and binding assignments, a
- * held name's logical assignment, EITHER_OPERAND results and a conditional's arms, reads a held LAUNCH_CALLS member's call as
- * its command and every other use as <reference> (<re-export>, <untraced>); the launch-call reader reads every LAUNCH_CALLS
- * call whose command resolves (<expression> in a merged scope or by trusting what resolution refuses); resolution follows
- * literals, a conditional's arms, the const a name binds in its scope and an index into a const array only read, within
- * RESOLVE_DEPTH steps, reading every module as strict code (a function binds only in its block) and resolving no name in a
- * namespace body or an enum declaration. The WRAPPERS (parentheses, as, satisfies, <T>, !, an instantiation expression) hold at
- * every use site, each site's module spelling every kind, the outermost layer included for every kind TypeScript's parser admits
- * there (the outermost-wrapper class, OUTERMOST_SKIPS: one kind skipped at one unwrap or isWrapper use site reds that site's pin, or
- * the parser never puts that kind outermost there and the member names the parse that says so).
+ * specifier, every external import-equals and the first argument of every loader call the loader reader reads (<expression>
+ * unresolved); the loader reader reads import(), LOADER_CALLS callees, a LOADER_FACTORIES result called directly and a name a
+ * plain declaration or a BINDING_ASSIGNMENTS assignment binds to one, each in the callee spellings its clauses name per call (a
+ * plain call, an optional call, a call with type arguments), each unresolved call labelled once; the identifier readers read
+ * every IO_GLOBALS and GLOBAL_OBJECTS reference and every process reference but a PROCESS_READS member; the child_process tracer
+ * follows every value derived from a child_process entry through WRAPPERS and await, member reads, declarations and binding
+ * assignments, a held name's logical assignment, EITHER_OPERAND results and a conditional's arms, reads a held LAUNCH_CALLS
+ * member's call as its command in the spellings its clause names per call and command, and every other use as <reference>
+ * (<re-export>, <untraced>); the launch-call reader reads a LAUNCH_CALLS call whose command resolves in the callee spellings its
+ * clause names per call (<expression> in a merged scope or by trusting what resolution refuses, in the spellings its second
+ * clause names); resolution follows literals, a conditional's arms, the const a name binds in its scope and an index into a
+ * const array only read, within RESOLVE_DEPTH steps, reading every module as strict code (a function binds only in its block)
+ * and resolving no name in a namespace body or an enum declaration. The WRAPPERS (parentheses, as, satisfies, <T>, !, an
+ * instantiation expression) hold at every use site, each site's module spelling every kind, the outermost layer included for
+ * every kind TypeScript's parser admits there, on the routes that hand the site an expression and around the operands the pinned
+ * forms wrap in that kind there (the outermost-wrapper class, OUTERMOST_SKIPS: one kind skipped at one unwrap or isWrapper use
+ * site, on every route and around every operand, reds that site's pin, or the parser never puts that kind outermost there and the
+ * member names the parse that says so).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns the readers' measured witness, held to
  * the roster):
@@ -105,7 +109,8 @@
  *    unwrap@loaderLabel#1 the same): cut #3 held these three members equivalent under a premise that is false (TypeScript parses an
  *    instantiation followed by an optional call, api.exec<F>?.("rf", []), with the instantiation expression as the call's callee),
  *    so that reason is deleted and the three members are killed members: unwrap@calleeName#1's module spells
- *    api.exec<F>?.("rf", []) and require<F>?.(name), unwrap@isLoaderCall#1's createRequire(import.meta.url)<F>?.(name) and a bound
+ *    api.exec<F>?.("rf", []) and require<F>?.(name) (an instantiation of a property read and of a name - the operands CUT #5 scopes
+ *    the class to there), unwrap@isLoaderCall#1's createRequire(import.meta.url)<F>?.(name) and a bound
  *    loader's load<F>?.(name), unwrap@loaderLabel#1's createRequire(import.meta.url)<F>?.(name), and the two climb sites spell the
  *    same routes (isWrapper@consume#1 a held member's name called as g8<F>?.("rf", []) and a member read off the held value as
  *    cp<F>?.["spawn"]; isWrapper@elementRead#1 an element called as T7[0]<F>?.()). KILLS executes the gate's three one-edit mutants
@@ -117,6 +122,25 @@
  *    optional call too (f as T?.(x), f satisfies T?.(x), <T>f?.(x)), each assignment premise every operator its site reads (=, ||=,
  *    &&= and ??= at unwrap@loaderNames#1; ||=, &&= and ??= at unwrap@consume#1); the class's 78 members are 63 killed and 15
  *    equivalent.
+ * CUT #5 (the post-inversion restatement of cut #4 7c192eae over its landed carrier: wb-pyel.9 refusal #4, gate-prep-8 run
+ * g10-gate-s187; rulings R-B312 and R-B336 parked this bead behind its exit child wb-pyel.11, which landed this helper's code
+ * unchanged with its own census test/workbench-edc-static-reach-callee-members-census.test.ts at landing 888; no case, reader,
+ * form, plant, pin, kill, constant or roster row is added or removed - every cure narrows claim words to the pins that hold them):
+ *  - U1 (L2-01i: unwrap@calleeName#1 reads an outermost f<T> as written when the instantiation's operand is a literal element
+ *    name) and U4's L2-04i (isWrapper@consume#1 does not climb an outermost instantiation of a member read by an element key):
+ *    CLAIMS.wrappers, the tracer's WRAPPERS clause and the header's WRAPPERS sentence claim the outermost layer on the routes that
+ *    hand a site an expression and around the operands the pinned forms wrap in that kind there - at unwrap@calleeName#1 an
+ *    instantiation of a property read or of a name, at isWrapper@consume#1 an instantiation of a held module, of a bound name or
+ *    of a member read by name - so a member restricted to an operand no pinned form wraps there is NOT CLAIMED (the NOT CLAIMED
+ *    entry below); the class's unrestricted members stand as at cut #4 (63 killed, 15 equivalent).
+ *  - U2 and U3 (L2-02 and L2-03: calleeName names no callee for a literal element name in an optional call or in a call with type
+ *    arguments): the launch-call reader's two clauses, the loader reader's two clauses, the specifier reader's loader-call slot
+ *    and the tracer's entry clause name, per call (a plain call, an optional call, a call with type arguments), only callee
+ *    spellings this file's forms read there - a literal element name callee only in a plain call and unwrapped.
+ *  - U4 (L2-06 and L2-07: an optional call, or a call with type arguments, of a held member read by an element key reads
+ *    <reference>): the tracer's held-member call clause names, per call and per command (resolved, unresolved, absent), only
+ *    spellings this file's forms read, and its member-read clause names the optional member reads they read (by name, or by a
+ *    string key).
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set (every row's id, label and pins,
  * every pin's witness, the claims, the kills, the constants and every registered test title) is held to the out-of-file roster
@@ -141,9 +165,17 @@
  * outside anchor names it; a form's probe edited in both; a reading of a module the readers are never given (the readers read
  * one module; the module closure is the composing census's). Two kinds skipped at once, or one kind skipped at two use sites at
  * once, is NOT CLAIMED by this census (each class member is one kind at one site); a kind skipped at a use site only on some of
- * the routes that hand it an expression (conditioned on the expression's parent or on the resolution depth) is NOT CLAIMED beyond
- * the routes its site module spells outermost; an equivalent member is NOT CLAIMED beyond reading every pin the same and its
- * premise parsing as held.
+ * the routes that hand it an expression, or only around some of the operands it wraps (conditioned on the expression's parent, on
+ * the resolution depth, or on the kind of the expression the wrapper wraps), is NOT CLAIMED beyond the routes and operands the
+ * pinned forms spell outermost there - refusal #4's L2-01i (f<T> at unwrap@calleeName#1 around a literal element name) and
+ * L2-04i (f<T> at isWrapper@consume#1 around a member read by an element key) are such members; an equivalent member is NOT
+ * CLAIMED beyond reading every pin the same and its premise parsing as held. A callee spelling that a reader's clause does not
+ * name for its call is NOT CLAIMED by this census - among them a literal element name callee of an optional call, of a call with
+ * type arguments or under any wrapper (refusal #4's L2-02 and L2-03 at the launch-call and loader readers), and a held member read
+ * by an element key called optionally, with type arguments or through an instantiation (refusal #4's L2-06, L2-07 and L2-04i at
+ * the tracer). Refusal #4's six members are the carrier's: wb-pyel.11's landed census
+ * test/workbench-edc-static-reach-callee-members-census.test.ts holds each of them to its witness and held pages, read over this
+ * same helper; no case here reads those pages, so this census claims none of their readings.
  * RESIDUALS (named, each with its pinned quiet row): R-STATIC-FORMS the forms the readers do not parse (Q-STATIC-FORMS: one probe
  * per form, its reading by every reader pinned), member by member as RESIDUE_MEMBERS names them and the residual claim spells
  * them - a launch through an API that is no child_process binding with an unresolved command; a launch through a value the
@@ -1282,7 +1314,9 @@ const CALLEE_ASSERTION = "<T>f(x) and <T>f?.(x) assert the call, whose callee is
 /** The outermost-wrapper class, every member in the helper's source order (outermostMembers): killed (it reds its own site's pin) or
  * equivalent (it reads every pin the same; its premise is held). Cut #4 deletes cut #3's reason for the f<T> members at the three callee
  * sites ("a call's callee is never a bare instantiation expression"): an instantiation followed by an optional call, f<T>?.(x), is a call
- * whose callee is the instantiation expression, so those members are killed by their sites' optional-call pins. */
+ * whose callee is the instantiation expression, so those members are killed by their sites' optional-call pins. Each member is one
+ * kind skipped at one site on every route and around every operand; a member restricted to some operands (refusal #4's L2-01i and
+ * L2-04i) is NOT CLAIMED beyond the operands the pinned forms wrap there (the header's NOT CLAIMED entry). */
 const OUTERMOST_SKIPS: Readonly<Record<string, "killed" | Equivalent>> = {
   "unwrap@resolveTexts#1 (...)": "killed",
   "unwrap@resolveTexts#1 as": "killed",
@@ -1412,23 +1446,23 @@ interface Clause {
 const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   wrappers: [
     {
-      words: "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there (the outermost-wrapper class: skipping such a kind at one site reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
+      words: "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there, on the routes that hand the site an expression and around the operands that the pinned forms wrap in that kind there (the outermost-wrapper class: one kind skipped at one site, on every route and around every operand, reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
       falsifiers: ["F-OUTERMOST-WRAPPERS", "unwrap@resolveTexts#1", "unwrap@resolveTexts#2", "isWrapper@elementRead#1", "unwrap@resolveArrays#1", "unwrap@calleeName#1", "unwrap@factory#1", "unwrap@loaderNames#1", "unwrap@isLoaderCall#1", "unwrap@bindTarget#1", "isWrapper@consume#1", "unwrap@consume#1", "unwrap@loaderLabel#1", "isWrapper@isWriteTarget#1"],
     },
   ],
   specifiers: [
     {
-      words: "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and every loader call's first argument through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
+      words: "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and the first argument of every loader call the loader reader reads (in the spellings its first clause names) through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
       falsifiers: ["F-ENTRIES", "F-LOADS", "F-ENTRY-EDGES", "F-PLANTED", "F-ENTRY-CANDIDATES", "F-SPECIFIER-SLOTS", "F-OUTERMOST-WRAPPERS"],
     },
   ],
   loader: [
     {
-      words: "the loader reader reads import(), every call whose callee is spelled with a LOADER_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template), a LOADER_FACTORIES call's result called directly, and a call of a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (each callee and factory read through WRAPPERS, with type arguments, optional calls and any arguments; a bound name is read by its name in every scope)",
+      words: "the loader reader reads import() and a call of each of these callees in the spellings its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require or getBuiltinModule as a property name, and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly (a plain call, unwrapped or through each WRAPPERS kind; an optional call, unwrapped or under an instantiation expression, parenthesized or not); and a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression, parenthesized or not); the LOADER_FACTORIES call itself is createRequire called as a name (a plain call, unwrapped or parenthesized; an optional call or a call with type arguments, unwrapped; an optional call under an instantiation expression) or as a property name or a literal element name with a string key (a plain call, unwrapped), with one or two arguments; a loader call with its first argument or none; a bound name is read by its name in every scope",
       falsifiers: ["LOADER_CALLS@isLoaderCall#1", "LOADER_FACTORIES@factory#1", "LOADER_FACTORIES@isLoaderCall#1", "BINDING_ASSIGNMENTS@loaderNames#1", "unwrap@calleeName#1", "unwrap@isLoaderCall#1", "W-BAND-LOADER", "W-ELEM-LOADER", "W-CWRAP-LOADER", "F-LOADS", "F-LOADER-SPELLINGS", "F-OUTERMOST-WRAPPERS"],
     },
     {
-      words: "each such call whose first argument does not resolve or is absent is read once, labelled as spelled: import(), <callee>(), <factory>()() for a factory result called directly",
+      words: "each such call whose first argument does not resolve or is absent is read once, labelled as spelled (import(), <callee>(), <factory>()() for a factory result called directly), in the spellings its pinned labels hold: import(); require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; a call with type arguments, unwrapped; an optional call under an instantiation expression); require or getBuiltinModule as a property name and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly, and the LOADER_FACTORIES call itself, in every spelling the first clause names for them; a bound name (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression)",
       falsifiers: ["F-LOADS", "F-ENTRY-EDGES", "unwrap@loaderLabel#1", "F-LOADER-SPELLINGS", "F-OUTERMOST-WRAPPERS"],
     },
   ],
@@ -1445,12 +1479,15 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   ],
   tracer: [
     {
-      words: "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates)",
+      words: "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates), in the spellings its pinned entries hold: import(); require as a name (a plain call, unwrapped or parenthesized; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require as a literal element name with a string key and getBuiltinModule as a property name (a plain call, unwrapped); and a LOADER_FACTORIES call's result, the factory createRequire called as a name in a plain call, unwrapped, called directly or through a name a declaration or a binding assignment binds it to (a plain call, unwrapped; an optional call under an instantiation expression, parenthesized or not)",
       falsifiers: ["CHILD_PROCESS@names#1", "F-ENTRIES", "F-ENTRY-EDGES", "F-ENTRY-CANDIDATES"],
     },
-    { words: "it follows a held value through WRAPPERS and await", falsifiers: ["isWrapper@consume#1", "W-AS", "W-SAT", "W-TA", "W-NN", "F-INSTANTIATION"] },
     {
-      words: "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), optional ones like plain ones; a default read off the module is the module itself",
+      words: "it follows a held value through WRAPPERS and await, on the routes and around the operands the pinned forms spell (the wrappers clause)",
+      falsifiers: ["isWrapper@consume#1", "W-AS", "W-SAT", "W-TA", "W-NN", "F-INSTANTIATION"],
+    },
+    {
+      words: "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), an optional member read by name or by a string key like a plain one; a default read off the module is the module itself",
       falsifiers: ["F-FOLLOW", "F-BINDINGS", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
     },
     {
@@ -1465,7 +1502,10 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
       words: "the result of an EITHER_OPERAND operator (??, ||, &&) whichever operand holds the value, beside an operand of any kind and along a chain, a comma's right operand and a conditional's arms (a nested conditional's too)",
       falsifiers: ["EITHER_OPERAND@consume#1", "W-OR", "W-ANDOP", "LA4c2", "F-FOLLOW", "F-FLOWS"],
     },
-    { words: "a call of a held LAUNCH_CALLS member, with type arguments or optional too, reads its command (resolution; <expression> when it does not resolve or is absent)", falsifiers: ["LAUNCH_CALLS@consume#1", "isWrapper@consume#1", "F-FOLLOW", "F-BINDINGS", "F-FLOWS", "F-OPTIONAL-CHAINS"] },
+    {
+      words: "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name)",
+      falsifiers: ["LAUNCH_CALLS@consume#1", "isWrapper@consume#1", "F-FOLLOW", "F-BINDINGS", "F-FLOWS", "F-OPTIONAL-CHAINS"],
+    },
     {
       words: "an export of a held value (a declaration, a local export under any name, a type-only one included, an export assignment, an exported import-equals, an export-from of child_process) reads <re-export>",
       falsifiers: ["F-EXPORTS", "F-ENTRY-EDGES", "P-EXPORT", "F-FLOWS", "F-ENTRY-CANDIDATES"],
@@ -1486,11 +1526,11 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   ],
   launches: [
     {
-      words: "the launch-call reader reads every call whose callee is spelled with a LAUNCH_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template; through WRAPPERS, with type arguments or an optional call) and whose command resolves",
+      words: "the launch-call reader reads every call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped",
       falsifiers: ["LAUNCH_CALLS@launchSitesAt#1", "unwrap@calleeName#1", "W-ELEM", "W-CWRAP", "BF1", "BF1c", "NS2c", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS", "F-OUTERMOST-WRAPPERS"],
     },
     {
-      words: "and, its command <expression>, every such call in a namespace body or an enum declaration whose command does not resolve, and every such call whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read)",
+      words: "and, its command <expression>, every such call spelled with a property name (unwrapped, in a plain call) that sits in a namespace body or an enum declaration and whose command does not resolve, or whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read), and every such call spelled with a name (unwrapped, in a plain call) whose command resolves only through an index into a const array that is not only read",
       falsifiers: ["NS2", "F-MERGED", "F-AMBIENT", "F-ARRAYS", "F-BOUNDS", "F-ARRAY-REACH", "F-WRITE-TARGETS"],
     },
     { words: "launchUnion reads both readers' sites, one per call and callee", falsifiers: ["F-FOLLOW", "F-ENTRIES", "F-SCRIPTS"] },
