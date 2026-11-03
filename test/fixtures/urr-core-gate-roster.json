@@ -1570,7 +1570,9 @@
    "codeSpanNameAfter": "![wa&sopf;m `&Copf;`](x.png)",
    "codeSpanSameNameBefore": "![`&sopf;` &Copf; &sopf;](x.png)",
    "codeSpanSameNameAfter": "![&sopf; &Copf; `&sopf;`](x.png)",
-   "codeSpanPair": "![`wa&sopf;m` `wa&sopf;m`](x.png)"
+   "codeSpanPair": "![`wa&sopf;m` `wa&sopf;m`](x.png)",
+   "codeSpanFrakturReference": "![`wa&sfr;m`](x.png)",
+   "escapeFrakturReference": "![wa\\&sfr;m](x.png)"
   },
   "altFormPath": "docs/alt-form.md",
   "imageAlt": "image alt",
@@ -2745,6 +2747,12 @@
        "codeSpanPair": [
         "wb-x32.comments[0].text:1: rendered unknown &sopf;",
         "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
        ]
       }
      }
@@ -3069,6 +3077,12 @@
        "codeSpanPair": [
         "codeSpanPair:1: rendered unknown &sopf;",
         "codeSpanPair:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "codeSpanFrakturReference:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "escapeFrakturReference:1: rendered unknown &sfr;"
        ]
       }
      }
@@ -5329,6 +5343,12 @@
        "codeSpanPair": [
         "docs/alt-form.md:1: rendered unknown &sopf;",
         "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
        ]
       },
       "plantedTree": {
