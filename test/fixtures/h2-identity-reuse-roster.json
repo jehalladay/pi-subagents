@@ -1,6 +1,6 @@
 {
  "bead": "wb-4nut.9",
- "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster. wb-jdz6 (the landing-594 gate's F1-F3): scan.readingControls gains the type-name root's qualified form (type E = rec.Owner[\"epoch\"]) and the regex reading's separator family, one control per kind (class escapes, assertions and control character escapes), each spelling the term across every member of its kind, one literal per member; A2's witness gains their readings and spellings; pinCase (the SELF-READ's pin case body: every statement of the pin case's callback body, of any kind, in order) joins the roster, and reached's judged end counts its one new assertion. wb-jdz6 cut #2 (refusal #1's U1 and F2): the SELF-READ reads every held statement and every held literal token for token (tokensOf: the compiler's tokens in order, each with its own text, and every comment between two of them), so spellingControls (the reader's own controls: [label, one spelling, another, whether the two read as one]) joins the roster after pinCase; scan.readingControls gains a qualified name two links deep (type E = Rec.Owner.Epoch), A2's witness gains its reading and spelling, and reached's judged end counts the one new spelling-control assertion. wb-jdz6 cut #3 (refusal #2's U2 and F4): spellingControls holds one control per member the reader's kill sentence names, each label naming its member (an equality and an inequality operator's own text; a doubled space inside a double- and a single-quoted string, a no-substitution template, a template head, middle and tail, and a regex; a block comment, a line comment and a JSDoc block between two tokens, each kind's own words and a doubled space inside it; a second block comment between the same two tokens, two block comments' order there and a block comment's place; the tokens' order; and layout, now with a tab and CRLF); scan.readingControls gains a qualified name three links deep (type E = A.Rec.Owner.Epoch) and A2's witness gains its reading and spelling; reached is unchanged (no assertion is added). wb-jdz6 cut #4 (refusal #3's U3, F2, F3 and F4, in the enumerate-the-resolvable form under orchestrator ruling R-B141): spellingControls gains, for each of the ten whitespace members, a second control that pairs no space against two beside its one-space pair; selfReadResiduals (the SELF-READ residual members: [family, member, one spelling, another, from, to]) and selfReadQuiet (each member's measured quiet row: whether its model erases the member, the controls whose verdict it changes and how many pinned statements it reads otherwise) join the roster after spellingControls; residuals and residualRows gain R-CHAIN-DEPTH, whose quiet row in A2's witness is the longest run of links of one kind its chain reading controls spell, by link kind; and reached's judged end counts the one new assertion (the residual members' quiet rows and every residual family named in the census header).",
+ "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster. wb-jdz6 (the landing-594 gate's F1-F3): scan.readingControls gains the type-name root's qualified form (type E = rec.Owner[\"epoch\"]) and the regex reading's separator family, one control per kind (class escapes, assertions and control character escapes), each spelling the term across every member of its kind, one literal per member; A2's witness gains their readings and spellings; pinCase (the SELF-READ's pin case body: every statement of the pin case's callback body, of any kind, in order) joins the roster, and reached's judged end counts its one new assertion. wb-jdz6 cut #2 (refusal #1's U1 and F2): the SELF-READ reads every held statement and every held literal token for token (tokensOf: the compiler's tokens in order, each with its own text, and every comment between two of them), so spellingControls (the reader's own controls: [label, one spelling, another, whether the two read as one]) joins the roster after pinCase; scan.readingControls gains a qualified name two links deep (type E = Rec.Owner.Epoch), A2's witness gains its reading and spelling, and reached's judged end counts the one new spelling-control assertion. wb-jdz6 cut #3 (refusal #2's U2 and F4): spellingControls holds one control per member the reader's kill sentence names, each label naming its member (an equality and an inequality operator's own text; a doubled space inside a double- and a single-quoted string, a no-substitution template, a template head, middle and tail, and a regex; a block comment, a line comment and a JSDoc block between two tokens, each kind's own words and a doubled space inside it; a second block comment between the same two tokens, two block comments' order there and a block comment's place; the tokens' order; and layout, now with a tab and CRLF); scan.readingControls gains a qualified name three links deep (type E = A.Rec.Owner.Epoch) and A2's witness gains its reading and spelling; reached is unchanged (no assertion is added). wb-jdz6 cut #4 (refusal #3's U3, F2, F3 and F4, in the enumerate-the-resolvable form under orchestrator ruling R-B141): spellingControls gains, for each of the ten whitespace members, a second control that pairs no space against two beside its one-space pair; selfReadResiduals (the SELF-READ residual members: [family, member, one spelling, another, from, to]) and selfReadQuiet (each member's measured quiet row: whether its model erases the member, the controls whose verdict it changes and how many pinned statements it reads otherwise) join the roster after spellingControls; residuals and residualRows gain R-CHAIN-DEPTH, whose quiet row in A2's witness is the longest run of links of one kind its chain reading controls spell, by link kind; and reached's judged end counts the one new assertion (the residual members' quiet rows and every residual family named in the census header). wb-0g9n (the landing-771 gate's F1-F4, the R694 follow-up of wb-2hdl): scan.readingControls gains a second mixed-kind four-link chain after the alternating one, with a same-kind run of two (const e = (globalThis as unknown as X).a[\"b-c\"]?.owner.epoch;, three property accesses in one chain), and A2's witness gains its reading and spelling; R-CHAIN-DEPTH's quiet row keeps each kind's longest run and the longest total chain and gains, by link kind, the most links of that kind one chain holds and each chain control's shape (the link kinds of its outermost chains, outermost first), every measure read from the controls' sources by syntax kind through the transparent wrappers, apart from linkOf; selfReadQuiet is unchanged (erased is read by text equality for the text-substitution members and by token reading for wb-2hdl's token models); reached is unchanged (no assertion is added). wb-0g9n cut #2 (refusal #1's U1, the link-depth class answered at class level): scan.readingControls gains the same-kind-run four-link shape again at a plain name root, without an optional link, with an identifier-like key and with all three (after the same-kind-run control: const e = rec.a[\"b-c\"]?.owner.epoch;, const e = (globalThis as unknown as X).a[\"b-c\"].owner.epoch;, const e = (globalThis as unknown as X).a[\"bc\"]?.owner.epoch;, const e = rec.a[\"bc\"].owner.epoch;) and two and three qualified names in a type query (after the twice-nested qualified name: type E = typeof rec.owner.epoch;, type E = typeof a.rec.owner.epoch;), and A2's witness gains their readings and spellings; R-CHAIN-DEPTH's quiet row gains their chain shapes and, after the chain shapes, each chain control's chain contexts (for each outermost chain, its root, its links root first with their names or keys, optional links and the wrappers each inner is read through, the nodes it stands in up to its module and its line, every one read from the controls' sources by syntax kind apart from linkOf); reached is unchanged (no assertion is added).",
  "quote": "Restart changes source owner epoch; matching sequence counter cannot authorize reuse.",
  "citation": "RL docs/programs/harness2-reactive-evolution-2026-10-20/README.md:45@bfe1f4ac7fa0",
  "scan": {
@@ -157,6 +157,36 @@
     "const e = record.owner.epoch;"
    ],
    [
+    "mixed-kind four-link chain",
+    "chain",
+    "const e = (globalThis as unknown as X).a[\"b-c\"]?.owner[\"epoch-at\"];"
+   ],
+   [
+    "mixed-kind four-link chain with a same-kind run of two",
+    "chain",
+    "const e = (globalThis as unknown as X).a[\"b-c\"]?.owner.epoch;"
+   ],
+   [
+    "four-link chain at a plain name root",
+    "chain",
+    "const e = rec.a[\"b-c\"]?.owner.epoch;"
+   ],
+   [
+    "four-link chain without an optional link",
+    "chain",
+    "const e = (globalThis as unknown as X).a[\"b-c\"].owner.epoch;"
+   ],
+   [
+    "four-link chain with an identifier-like key",
+    "chain",
+    "const e = (globalThis as unknown as X).a[\"bc\"]?.owner.epoch;"
+   ],
+   [
+    "four-link chain at a plain name root without an optional link and with an identifier-like key",
+    "chain",
+    "const e = rec.a[\"bc\"].owner.epoch;"
+   ],
+   [
     "computed root",
     "chain",
     "const e = load().owner.epoch;"
@@ -180,6 +210,16 @@
     "twice-nested qualified name",
     "chain",
     "type E = A.Rec.Owner.Epoch;"
+   ],
+   [
+    "nested qualified name in a type query",
+    "chain",
+    "type E = typeof rec.owner.epoch;"
+   ],
+   [
+    "twice-nested qualified name in a type query",
+    "chain",
+    "type E = typeof a.rec.owner.epoch;"
    ],
    [
     "object keys",
@@ -920,6 +960,102 @@
    "/* one */"
   ],
   [
+   "R-SELF-TEXT",
+   "a string literal's own letters read case-folded",
+   "const s = \"MIXEDCASE\";",
+   "const s = \"mixedcase\";",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a template part's own letters read case-folded",
+   "const s = `MIXEDCASE ${pin}`;",
+   "const s = `mixedcase ${pin}`;",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a regex pattern's own letters read case-folded",
+   "const r = /MIXEDCASE/;",
+   "const r = /mixedcase/;",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a semicolon token read as nothing",
+   "const n = 1;",
+   "const n = 1",
+   ";",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a comma token read as nothing",
+   "const n = [1,2];",
+   "const n = [1 2];",
+   ",",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a parenthesis token read as nothing",
+   "const n = (1);",
+   "const n = 1);",
+   "(",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing parenthesis token read as nothing",
+   "const n = (1);",
+   "const n = (1;",
+   ")",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "an opening bracket token read as nothing",
+   "const n = [1];",
+   "const n = 1];",
+   "[",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing bracket token read as nothing",
+   "const n = [1];",
+   "const n = [1;",
+   "]",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "an opening brace token read as nothing",
+   "const n = {a: 1};",
+   "const n = a: 1};",
+   "{",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing brace token read as nothing",
+   "const n = {a: 1};",
+   "const n = {a: 1;",
+   "}",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a dot token read as nothing",
+   "const n = a.b;",
+   "const n = a b;",
+   ".",
+   ""
+  ],
+  [
    "R-SELF-COMMENT-ORDER",
    "a second JSDoc block between the same two tokens dropped",
    "const f = /** a */ /** a */ (x: number) => x;",
@@ -1107,6 +1243,90 @@
    "pinned": 0
   },
   {
+   "family": "R-SELF-TEXT",
+   "member": "a string literal's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a template part's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a regex pattern's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a semicolon token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 13
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a comma token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 4
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a parenthesis token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 9
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing parenthesis token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 9
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "an opening bracket token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 5
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing bracket token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 5
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "an opening brace token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing brace token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a dot token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 7
+  },
+  {
    "family": "R-SELF-COMMENT-ORDER",
    "member": "a second JSDoc block between the same two tokens dropped",
    "erased": true,
@@ -1275,11 +1495,19 @@
        "string:true",
        "template part:true",
        "property access:true",
+       "mixed-kind four-link chain:true",
+       "mixed-kind four-link chain with a same-kind run of two:true",
+       "four-link chain at a plain name root:true",
+       "four-link chain without an optional link:true",
+       "four-link chain with an identifier-like key:true",
+       "four-link chain at a plain name root without an optional link and with an identifier-like key:true",
        "computed root:true",
        "element access:true",
        "qualified name:true",
        "nested qualified name:true",
        "twice-nested qualified name:true",
+       "nested qualified name in a type query:true",
+       "twice-nested qualified name in a type query:true",
        "object keys:true",
        "type members:true",
        "binding pattern:true",
@@ -1323,11 +1551,19 @@
        "string: owner epoch",
        "template part:  owner epoch ",
        "property access: record.owner.epoch",
+       "mixed-kind four-link chain: globalThis.a.b-c.owner.epoch-at",
+       "mixed-kind four-link chain with a same-kind run of two: globalThis.a.b-c.owner.epoch",
+       "four-link chain at a plain name root: rec.a.b-c.owner.epoch",
+       "four-link chain without an optional link: globalThis.a.b-c.owner.epoch",
+       "four-link chain with an identifier-like key: globalThis.a.bc.owner.epoch",
+       "four-link chain at a plain name root without an optional link and with an identifier-like key: rec.a.bc.owner.epoch",
        "computed root: owner.epoch",
        "element access: record.owner.epoch",
        "qualified name: Owner.Epoch",
        "nested qualified name: Rec.Owner.Epoch",
        "twice-nested qualified name: A.Rec.Owner.Epoch",
+       "nested qualified name in a type query: rec.owner.epoch",
+       "twice-nested qualified name in a type query: a.rec.owner.epoch",
        "object keys: owner.epoch",
        "type members: owner.epoch",
        "binding pattern: owner.epoch",
@@ -1410,7 +1646,76 @@
         "property access": 2,
         "element access": 2,
         "qualified name": 3,
-        "indexed access type": 2
+        "indexed access type": 2,
+        "total links": 4,
+        "most links of one kind in one chain": {
+         "property access": 3,
+         "element access": 2,
+         "qualified name": 3,
+         "indexed access type": 2
+        },
+        "chain shapes": [
+         "property access: property access, property access",
+         "mixed-kind four-link chain: element access, property access, element access, property access",
+         "mixed-kind four-link chain with a same-kind run of two: property access, property access, element access, property access",
+         "four-link chain at a plain name root: property access, property access, element access, property access",
+         "four-link chain without an optional link: property access, property access, element access, property access",
+         "four-link chain with an identifier-like key: property access, property access, element access, property access",
+         "four-link chain at a plain name root without an optional link and with an identifier-like key: property access, property access, element access, property access",
+         "computed root: property access, property access",
+         "element access: element access, element access",
+         "qualified name: qualified name",
+         "nested qualified name: qualified name, qualified name",
+         "twice-nested qualified name: qualified name, qualified name, qualified name",
+         "nested qualified name in a type query: qualified name, qualified name",
+         "twice-nested qualified name in a type query: qualified name, qualified name, qualified name",
+         "non-null link: property access, property access",
+         "parenthesized link: property access, property access",
+         "as link: property access, property access",
+         "satisfies link: property access, property access",
+         "type assertion link: property access, property access",
+         "parenthesized key: element access, element access",
+         "indexed access type: indexed access type, indexed access type",
+         "parenthesized type: indexed access type, indexed access type",
+         "type query root: indexed access type, indexed access type",
+         "type name root: indexed access type",
+         "type name qualified root: indexed access type | qualified name",
+         "type query name root: indexed access type",
+         "type query qualified root: indexed access type | qualified name",
+         "this root: property access, property access",
+         "this type root: indexed access type, indexed access type"
+        ],
+        "chain contexts": [
+         "property access: Identifier record; .owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "mixed-kind four-link chain: Identifier globalThis; ParenthesizedExpression AsExpression AsExpression .a [\"b-c\"] ?.owner [\"epoch-at\"]; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "mixed-kind four-link chain with a same-kind run of two: Identifier globalThis; ParenthesizedExpression AsExpression AsExpression .a [\"b-c\"] ?.owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "four-link chain at a plain name root: Identifier rec; .a [\"b-c\"] ?.owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "four-link chain without an optional link: Identifier globalThis; ParenthesizedExpression AsExpression AsExpression .a [\"b-c\"] .owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "four-link chain with an identifier-like key: Identifier globalThis; ParenthesizedExpression AsExpression AsExpression .a [\"bc\"] ?.owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "four-link chain at a plain name root without an optional link and with an identifier-like key: Identifier rec; .a [\"bc\"] .owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "computed root: CallExpression; .owner .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "element access: Identifier record; [\"owner\"] ?.[\"epoch\"]; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "qualified name: Identifier Owner; .Epoch; in TypeReference < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "nested qualified name: Identifier Rec; .Owner .Epoch; in TypeReference < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "twice-nested qualified name: Identifier A; .Rec .Owner .Epoch; in TypeReference < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "nested qualified name in a type query: Identifier rec; .owner .epoch; in TypeQuery < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "twice-nested qualified name in a type query: Identifier a; .rec .owner .epoch; in TypeQuery < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "non-null link: Identifier record; .owner NonNullExpression .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "parenthesized link: Identifier record; .owner ParenthesizedExpression .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "as link: Identifier record; .owner ParenthesizedExpression AsExpression .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "satisfies link: Identifier record; .owner ParenthesizedExpression SatisfiesExpression .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "type assertion link: Identifier record; .owner ParenthesizedExpression TypeAssertionExpression .epoch; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "parenthesized key: Identifier record; [ParenthesizedExpression \"owner\"] [ParenthesizedExpression \"epoch\"]; in VariableDeclaration < VariableDeclarationList < VariableStatement < SourceFile; at control.ts:1",
+         "indexed access type: TypeReference Rec; [\"owner\"] [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "parenthesized type: TypeReference Rec; [\"owner\"] ParenthesizedType [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "type query root: TypeQuery record; ParenthesizedType [\"owner\"] [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "type name root: TypeReference Owner; [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "type name qualified root: TypeReference rec.Owner; [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1 | Identifier rec; .Owner; in TypeReference < IndexedAccessType < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "type query name root: TypeQuery owner; ParenthesizedType [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "type query qualified root: TypeQuery record.owner; ParenthesizedType [\"epoch\"]; in TypeAliasDeclaration < SourceFile; at control.ts:1 | Identifier record; .owner; in TypeQuery < ParenthesizedType < IndexedAccessType < TypeAliasDeclaration < SourceFile; at control.ts:1",
+         "this root: ThisKeyword; .owner .epoch; in PropertyDeclaration < ClassDeclaration < SourceFile; at control.ts:1",
+         "this type root: ThisType; [\"owner\"] [\"epoch\"]; in PropertySignature < InterfaceDeclaration < SourceFile; at control.ts:1"
+        ]
        }
       }
      }
