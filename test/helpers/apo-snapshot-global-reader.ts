@@ -6,7 +6,8 @@
  * and its roster are written from the same rows. The reader is wb-021.2 cut #4's (2f053186,
  * test/helpers/apo-snapshot-census.ts :319-510) with one reading added - instantiation expressions, below - and its
  * view-census readings (views, closures, EFFECT, PACKAGE, UNRESOLVED, UNREADABLE, CONSTRUCTOR, the seams) left in
- * wb-021.2's census, which is not on trunk; wb-021.2's eventual re-cut restates its census over this reader (R-B166).
+ * wb-021.2's census (test/workbench-apo-snapshot-census.test.ts), which its re-cut restated over this reader (R-B166) and
+ * which landed at landing 806 (merge 6bfc0f2); wb-hjiq corrected this sentence, which said that census was not on trunk.
  * This bead's cut #2 answered its refusal #1 (UNMET U1-U7) with pins and narrowed claim words. Cut #3 answers its refusal
  * #2 (UNMET U1-U3, the collapsed-slot members of that class; ruling R-B268: the class frozen, this cut in the
  * enumerate-the-resolvable form) with refusal #2's gate witnesses, a split pin for each collapsed GLOBAL line
