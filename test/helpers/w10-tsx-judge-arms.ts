@@ -1,13 +1,15 @@
 /**
- * T-ARMS READER (wb-5mco, the rule-19 structural-exit child of wb-m14y: ruling R-B149 moved the reader's coverage work here and
- * R-B193 inverted the dependency, so wb-m14y's guard adopts this module at its mechanical re-cut): readJudgeArms() reads every
- * diagnosis the W10 stamped-claim guard's TSX-era judge (judgeTsxRow in test/workbench-w10-stamped-claim-guard.test.ts) can emit,
- * following the diagnosis flow back from the judge's return statements with the TypeScript parser, and raises every construct it
- * does not read as an unread entry. The reader is wb-m14y cut #4's (4274091260b2), moved verbatim: readJudgeArms() and
- * bindingChecker() are byte-identical to that cut, so every one-edit mutant its gates authored against them applies here
- * unchanged. Its census, test/workbench-w10-tsx-judge-arms-census.test.ts, holds the claim lists (READ, REFUSED, RESIDUAL) and the
- * probes that falsify each item; this module claims nothing beyond them.
- * Spawns nothing; writes nothing; reads nothing (the caller passes the source).
+ * wb-37o9 (the rule-19 structural-exit child of wb-5mco: ruling R-B290 deferred the recursive-flow cycle figures here at
+ * wb-5mco's refusal #3, and ruling R-B297 folded refusal #4's members into its notes and parked the parent behind it): the
+ * T-ARMS reader of wb-5mco's FINAL cut #4 (machine/flywheel/wb-5mco tip f0f84dbbcc4c8fbc2d1b3c5c51a947de5a736744, the same
+ * path), which this cut lands first. Every line below this header is that tip's line 12 onward, byte for byte and in its order;
+ * only the tip's own header (its lines 1-11), which pointed into wb-5mco's census, is replaced by this one. That census
+ * (test/workbench-w10-tsx-judge-arms-census.test.ts at the tip) is not on trunk: where a doc comment below names "the census
+ * header" or its READ, REFUSED or RESIDUAL list, it means that census at that tip, and it claims nothing here. What is claimed
+ * about this module is stated by the census that reads it and never here: test/workbench-w10-tsx-judge-arms-recursion-census.test.ts
+ * holds, probe by probe, the arm pattern sources and unread entries readJudgeArms() gives the recursive-flow probes it plants and
+ * nothing wider. The parent stays parked until this lands, and its later re-cut can import this module. It imports only
+ * typescript; it spawns, writes and reads nothing (the caller passes the source).
  */
 import ts from "typescript";
 

@@ -1029,6 +1029,58 @@
    "nestedInline": {
     "path": "docs/nested-inline.md",
     "text": "Pi embeds the [*Fi&#98;*](x)[**&#101;r**](y) [~~co&#114;e~~](z).\n"
+   },
+   "altBreakItem": {
+    "path": "docs/alt-item.md",
+    "text": "- Pi embeds a ![wa  \nsm](x.png) runtime.\n"
+   },
+   "altEmphasisJoin": {
+    "path": "docs/alt-emphasis.md",
+    "text": "Pi embeds a ![*wa*sm](x.png) runtime.\n"
+   },
+   "altStrongBreak": {
+    "path": "docs/alt-strong-break.md",
+    "text": "Pi embeds a ![**wa  \nsm**](x.png) runtime.\n"
+   },
+   "altCoreReference": {
+    "path": "docs/alt-core.md",
+    "text": "Pi embeds the ![`Fiber &Copf;ore`](x.png).\n"
+   },
+   "altTextReference": {
+    "path": "docs/alt-text-reference.md",
+    "text": "Pi embeds a ![wa&sopf;m](x.png) runtime.\n"
+   },
+   "altMixedReference": {
+    "path": "docs/alt-mixed-reference.md",
+    "text": "Pi embeds a ![wa&sopf;m `wa&sopf;m`](x.png) runtime.\n"
+   },
+   "altRawState": {
+    "path": "docs/alt-raw-state.md",
+    "text": "Pi embeds the <code>![x](x.png)</code>.\n"
+   },
+   "altNestedImage": {
+    "path": "docs/alt-nested-image.md",
+    "text": "Pi embeds a ![![wa  \nsm](y.png)](x.png) runtime.\n"
+   },
+   "altRefusedMarkup": {
+    "path": "docs/alt-refused-markup.md",
+    "text": "Pi embeds a ![wa<?x?>sm](x.png) runtime.\n"
+   },
+   "paragraphBreak": {
+    "path": "docs/break.md",
+    "text": "Pi will embed wa  \nsm.\n"
+   },
+   "paragraphBackslashBreak": {
+    "path": "docs/break-backslash.md",
+    "text": "Pi will embed wa\\\nsm.\n"
+   },
+   "rawStateReference": {
+    "path": "docs/raw-reference.md",
+    "text": "Pi embeds the <code>[Fib<o:p>er core]</code>.\n"
+   },
+   "rawStateReferenceClaim": {
+    "path": "docs/raw-reference-claim.md",
+    "text": "Pi embeds the <code>[Fiber core]</code>.\n"
    }
   },
   "descriptorControls": {
@@ -1342,6 +1394,7 @@
    "iframe",
    "input",
    "link",
+   "marquee",
    "math",
    "meter",
    "noembed",
@@ -1408,7 +1461,8 @@
    "refusedElement": "<template>x</template>",
    "refusedAttribute": "<span hidden>x</span>",
    "upperElement": "<TEMPLATE>x</TEMPLATE>",
-   "upperAttribute": "<span HIDDEN>x</span>"
+   "upperAttribute": "<span HIDDEN>x</span>",
+   "marquee": "<marquee width=\"0\">x</marquee>"
   },
   "htmlFormPath": "docs/html-form.md",
   "rawStateForms": {
@@ -1501,6 +1555,27 @@
    "imageAltSplit": "<img src=\"x.png\" alt=\"WA\u200bSM\">"
   },
   "invisibleFormPath": "docs/invisible.md",
+  "altForms": {
+   "spaceBreak": "![wa  \nsm](x.png)",
+   "backslashBreak": "![wa\\\nsm](x.png)",
+   "codeSpanReference": "![`wa&#115;m`](x.png)",
+   "htmlAttribute": "![<span title=\"wa&#115;m\">](x.png)",
+   "emDestination": "![*[x](wa&#115;m)*](x.png)",
+   "strongDestination": "![**[x](wa&#115;m)**](x.png)",
+   "delDestination": "![~~[x](wa&#115;m)~~](x.png)",
+   "linkCodeSpan": "![[`wa&#115;m`](u)](x.png)",
+   "codeSpanUnknownReference": "![`wa&sopf;m`](x.png)",
+   "escapeUnknownReference": "![wa\\&sopf;m](x.png)",
+   "codeSpanNameBefore": "![`&Copf;` wa&sopf;m](x.png)",
+   "codeSpanNameAfter": "![wa&sopf;m `&Copf;`](x.png)",
+   "codeSpanSameNameBefore": "![`&sopf;` &Copf; &sopf;](x.png)",
+   "codeSpanSameNameAfter": "![&sopf; &Copf; `&sopf;`](x.png)",
+   "codeSpanPair": "![`wa&sopf;m` `wa&sopf;m`](x.png)",
+   "codeSpanFrakturReference": "![`wa&sfr;m`](x.png)",
+   "escapeFrakturReference": "![wa\\&sfr;m](x.png)"
+  },
+  "altFormPath": "docs/alt-form.md",
+  "imageAlt": "image alt",
   "expandedWord": {
    "module": "expanded-word.ts",
    "words": [
@@ -1932,6 +2007,10 @@
    "deleteReference": "x&#127;y",
    "noncharacterReference": "x&#xFDD0;y"
   },
+  "pageReach": {
+   "page": "Pi embeds the <code>ITEM</code>.",
+   "cutThreeFrom": 89
+  },
   "inputReadForms": {
    "noType": "<input value=\"Fiber\" size=\"6\">",
    "textType": "<input type=\"text\" value=\"Fiber\" size=\"6\">",
@@ -1987,7 +2066,11 @@
    "invisibleReference": "Pi embeds a <code>WA&#x200BSM</code> runtime.\n",
    "imageBeside": "Pi embeds the <code>Fib<o:p>er</code> ![core](a.png).\n",
    "imageAlt": "Pi embeds the ![<code>Fib<o:p>er core</code>](x.png).\n",
-   "linkChildren": "Pi embeds the [<code>Fib<o:p>er core</code>](x).\n"
+   "linkChildren": "Pi embeds the [<code>Fib<o:p>er core</code>](x).\n",
+   "unitLacks": "Pi embeds the Fiber core; a <code>WA&#x200BSM</code> runtime.\n",
+   "imageTwinBetween": "Pi embeds the Fiber ![core](a.png); a <code>WA&#x200BSM</code> runtime.\n",
+   "imageTwinFirst": "Pi embeds the Fib![x](a.png)er core; Pi embeds the <code>Fib<o:p>er core</code> too.\n",
+   "otherUnitHolds": "| a | b |\n| --- | --- |\n| Pi embeds the Fiber core | Pi embeds the <code>Fib<o:p>er core</code> |\n"
   },
   "pageTwinPath": "docs/page-twin.md",
   "inheritedReferenceForms": {
@@ -2490,6 +2573,9 @@
        ],
        "upperAttribute": [
         "wb-x32.comments[0].text:1: rendered unknown <span HIDDEN>"
+       ],
+       "marquee": [
+        "wb-x32.comments[0].text:1: rendered unknown <marquee width=\"0\">"
        ]
       },
       "rawStateForms": {
@@ -2608,6 +2694,66 @@
         ],
         "page": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
        }
+      },
+      "altForms": {
+       "spaceBreak": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "wb-x32.comments[0].text:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
+       ]
       }
      }
     },
@@ -2757,6 +2903,9 @@
        ],
        "upperAttribute": [
         "upperAttribute:1: rendered unknown <span HIDDEN>"
+       ],
+       "marquee": [
+        "marquee:1: rendered unknown <marquee width=\"0\">"
        ]
       },
       "rawStateForms": {
@@ -2875,6 +3024,66 @@
         ],
         "page": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
        }
+      },
+      "altForms": {
+       "spaceBreak": [
+        "spaceBreak:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "backslashBreak:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "codeSpanReference:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "htmlAttribute:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "emDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "strongDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "delDestination:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "linkCodeSpan:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "codeSpanUnknownReference:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "escapeUnknownReference:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "codeSpanNameBefore:1: rendered unknown &sopf;",
+        "codeSpanNameBefore:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "codeSpanNameAfter:1: rendered unknown &sopf;",
+        "codeSpanNameAfter:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "codeSpanSameNameBefore:1: rendered unknown &Copf;",
+        "codeSpanSameNameBefore:1: rendered unknown &sopf;",
+        "codeSpanSameNameBefore:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "codeSpanSameNameAfter:1: rendered unknown &sopf;",
+        "codeSpanSameNameAfter:1: rendered unknown &Copf;",
+        "codeSpanSameNameAfter:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "codeSpanPair:1: rendered unknown &sopf;",
+        "codeSpanPair:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "codeSpanFrakturReference:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "escapeFrakturReference:1: rendered unknown &sfr;"
+       ]
       }
      }
     }
@@ -3969,6 +4178,41 @@
        ],
        "nestedInline": [
         "docs/nested-inline.md:1: rendered fibercore,embed+core"
+       ],
+       "altBreakItem": [
+        "docs/alt-item.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "altEmphasisJoin": [
+        "docs/alt-emphasis.md:1: rendered embed+core"
+       ],
+       "altStrongBreak": [],
+       "altCoreReference": [
+        "docs/alt-core.md:1: rendered unknown &Copf;"
+       ],
+       "altTextReference": [
+        "docs/alt-text-reference.md:1: rendered unknown &sopf;"
+       ],
+       "altMixedReference": [
+        "docs/alt-mixed-reference.md:1: rendered unknown &sopf;",
+        "docs/alt-mixed-reference.md:1: rendered unknown &sopf;"
+       ],
+       "altRawState": [
+        "docs/alt-raw-state.md:1: rendered unknown raw-state text \"x\""
+       ],
+       "altNestedImage": [
+        "docs/alt-nested-image.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "altRefusedMarkup": [
+        "docs/alt-refused-markup.md:1: rendered unknown <?x?>",
+        "docs/alt-refused-markup.md:1: rendered unknown image alt \"wa<?x?>sm\"",
+        "docs/alt-refused-markup.md:1: rendered embed+core"
+       ],
+       "paragraphBreak": [],
+       "paragraphBackslashBreak": [],
+       "rawStateReference": [],
+       "rawStateReferenceClaim": [
+        "docs/raw-reference-claim.md:1: fibercore,embed+core",
+        "docs/raw-reference-claim.md:1: rendered fibercore,embed+core"
        ]
       },
       "htmlForms": {
@@ -4228,6 +4472,14 @@
         "inline": [
          "docs/html-form.md:1: rendered unknown <span HIDDEN>"
         ]
+       },
+       "marquee": {
+        "block": [
+         "docs/html-form.md:1: rendered unknown <marquee width=\"0\">"
+        ],
+        "inline": [
+         "docs/html-form.md:1: rendered unknown <marquee width=\"0\">"
+        ]
        }
       },
       "refusedElements": {
@@ -4281,6 +4533,10 @@
        ],
        "link": [
         "docs/html-form.md:1: rendered unknown <link>",
+        "docs/html-form.md:1: rendered fibercore,embed+core"
+       ],
+       "marquee": [
+        "docs/html-form.md:1: rendered unknown <marquee>",
         "docs/html-form.md:1: rendered fibercore,embed+core"
        ],
        "math": [
@@ -4749,6 +5005,162 @@
        "deleteReference": "x\u007fy",
        "noncharacterReference": "x\ufdd0y"
       },
+      "pageReach": {
+       "namespacedTag": true,
+       "dottedTag": true,
+       "spacedEndTag": true,
+       "emptyEndTag": true,
+       "declaration": true,
+       "instruction": false,
+       "cdata": false,
+       "comment": false,
+       "commentHoldsGreaterThan": false,
+       "emptyComment": false,
+       "dashComment": false,
+       "bangComment": true,
+       "quotedValue": true,
+       "singleQuotedValue": true,
+       "spacedValue": true,
+       "nameQuote": true,
+       "unquotedValue": false,
+       "unquotedThenQuoted": false,
+       "endTagValue": true,
+       "nameEquals": true,
+       "spaceEquals": true,
+       "unclosedTag": true,
+       "unclosedComment": true,
+       "otherLessThan": true,
+       "decimalReference": true,
+       "closedDecimal": true,
+       "hexReference": true,
+       "greedyHexDigits": true,
+       "upperHexReference": true,
+       "longDecimal": true,
+       "nullReference": true,
+       "surrogateReference": true,
+       "overReference": true,
+       "windowsReference": true,
+       "unmappedReference": true,
+       "emptyNumeric": true,
+       "namedReference": true,
+       "legacyName": true,
+       "unknownName": true,
+       "inheritedName": true,
+       "rawTextElement": false,
+       "tabTagSpace": true,
+       "lineFeedTagSpace": true,
+       "formFeedTagSpace": true,
+       "carriageReturnTagSpace": false,
+       "verticalTabNoSpace": true,
+       "nameSolidus": true,
+       "solidusBeforeName": true,
+       "solidusAfterName": true,
+       "solidusAfterValue": true,
+       "spaceAfterUnquoted": true,
+       "spaceAfterQuoted": true,
+       "nameAfterQuoted": true,
+       "nameAfterQuotedValue": true,
+       "equalsAfterQuotedValue": true,
+       "singleQuoteAfterName": true,
+       "singleNameQuote": true,
+       "singleQuoteInName": true,
+       "doubleQuoteInUnquoted": true,
+       "singleQuoteInUnquoted": true,
+       "quoteAfterQuotedValue": true,
+       "singleQuoteAfterQuotedValue": true,
+       "upperStartTag": true,
+       "upperEndTag": true,
+       "upperOpening": true,
+       "endTagNameEquals": true,
+       "spacedEndTagValue": true,
+       "unclosedInstruction": true,
+       "unclosedDeclaration": false,
+       "unclosedSpacedEndTag": true,
+       "otherMarkupFirstClose": true,
+       "commentFirstClose": false,
+       "bangCommentFirstClose": true,
+       "commentEitherClose": false,
+       "commentDashThenBang": false,
+       "lowSurrogate": true,
+       "lastSurrogate": true,
+       "belowSurrogate": true,
+       "aboveSurrogate": true,
+       "maxReference": true,
+       "longHex": true,
+       "manyHexDigits": true,
+       "longerDecimal": true,
+       "manyDecimalDigits": true,
+       "windowsTable": true,
+       "twoLetterName": true,
+       "upperInitialName": true,
+       "namedTable": true,
+       "legacyNameUnclosed": true,
+       "spaceAfterQuotedName": true,
+       "spaceAfterQuotedQuote": true,
+       "solidusAfterValueName": true,
+       "solidusAfterValueQuote": true,
+       "solidusAfterNameName": true,
+       "solidusAfterNameQuote": true,
+       "solidusBeforeNameName": true,
+       "solidusBeforeNameQuote": true,
+       "nameSolidusQuote": true,
+       "spaceRunAfterQuoted": true,
+       "digitEndTag": true,
+       "digitNameEndTag": true,
+       "oneDashDeclaration": true,
+       "oneDashEmpty": true,
+       "dashBangComment": true,
+       "cdataGreaterThan": true,
+       "lessThanGreaterThan": true,
+       "lessThanGreaterThanTwice": true,
+       "oneReference": true,
+       "oneHexReference": true,
+       "tabReference": true,
+       "lastC0Reference": true,
+       "lastC0HexReference": true,
+       "beforeAttributeSpace": true,
+       "selfClosingSpace": true,
+       "beforeValueSpace": true,
+       "afterUnquotedSpace": true,
+       "afterQuotedSpace": true,
+       "beforeAttributeTab": true,
+       "selfClosingTab": true,
+       "beforeValueTab": true,
+       "afterUnquotedTab": true,
+       "afterQuotedTab": true,
+       "beforeAttributeLineFeed": true,
+       "selfClosingLineFeed": true,
+       "beforeValueLineFeed": true,
+       "afterUnquotedLineFeed": true,
+       "afterQuotedLineFeed": true,
+       "beforeAttributeFormFeed": true,
+       "selfClosingFormFeed": true,
+       "beforeValueFormFeed": true,
+       "afterUnquotedFormFeed": true,
+       "afterQuotedFormFeed": true,
+       "beforeAttributeCarriageReturn": false,
+       "selfClosingCarriageReturn": false,
+       "beforeValueCarriageReturn": false,
+       "afterUnquotedCarriageReturn": false,
+       "afterQuotedCarriageReturn": false,
+       "beforeAttributeVerticalTab": true,
+       "selfClosingVerticalTab": true,
+       "beforeValueVerticalTab": true,
+       "afterUnquotedVerticalTab": true,
+       "afterQuotedVerticalTab": true,
+       "spaceRunEqualsName": true,
+       "unquotedSolidusEquals": true,
+       "singleQuoteInDoubleQuoted": true,
+       "lessThanDash": true,
+       "instructionQuote": true,
+       "declarationQuote": true,
+       "overlappingBangClose": true,
+       "dashBangNoGreaterThan": true,
+       "closedEmptyComment": false,
+       "carriageReturnReference": true,
+       "deleteReference": true,
+       "noncharacterReference": true
+      },
       "inputReadForms": {
        "noType": "Pi embeds the [input:Fiber] core.",
        "textType": "Pi embeds the [input:Fiber] core.",
@@ -4824,7 +5236,8 @@
        },
        "imageAlt": {
         "findings": [
-         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/page-twin.md:1: rendered unknown image alt \"<code>Fib<o:p>er core</code>\""
         ],
         "page": "Pi embeds the Fib<o:p>er core."
        },
@@ -4834,6 +5247,40 @@
          "docs/page-twin.md:1: rendered fibercore,embed+core"
         ],
         "page": "Pi embeds the Fiber core."
+       },
+       "unitLacks": {
+        "findings": [
+         "docs/page-twin.md:1: fibercore,embed+core",
+         "docs/page-twin.md:1: rendered unknown raw-state text \"WA&#x200BSM\"",
+         "docs/page-twin.md:1: rendered fibercore,embed+core",
+         "docs/page-twin.md:1: rendered unknown invisible U+200B"
+        ],
+        "page": "Pi embeds the Fiber core; a WA\u200bSM runtime."
+       },
+       "imageTwinBetween": {
+        "findings": [
+         "docs/page-twin.md:1: fibercore,embed+core",
+         "docs/page-twin.md:1: rendered unknown raw-state text \"WA&#x200BSM\"",
+         "docs/page-twin.md:1: rendered fibercore,embed+core",
+         "docs/page-twin.md:1: rendered unknown invisible U+200B"
+        ],
+        "page": "Pi embeds the Fiber core; a WA\u200bSM runtime."
+       },
+       "imageTwinFirst": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/page-twin.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fibxer core; Pi embeds the Fiber core too."
+       },
+       "otherUnitHolds": {
+        "findings": [
+         "docs/page-twin.md:3: fibercore,embed+core",
+         "docs/page-twin.md:3: rendered fibercore,embed+core",
+         "docs/page-twin.md:3: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/page-twin.md:3: rendered fibercore,embed+core"
+        ],
+        "page": "a b Pi embeds the Fiber core Pi embeds the Fiber core"
        }
       },
       "inheritedReferenceForms": {
@@ -4842,6 +5289,66 @@
        ],
        "toStringName": [
         "docs/inherited-reference.md:1: rendered unknown &toString;"
+       ]
+      },
+      "altForms": {
+       "spaceBreak": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "backslashBreak": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "codeSpanReference": [
+        "docs/alt-form.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "htmlAttribute": [
+        "docs/alt-form.md:1: rendered unknown image alt \"<span title=\"wasm\">\""
+       ],
+       "emDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "strongDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "delDestination": [
+        "docs/alt-form.md:1: rendered unknown image alt \"[x](wasm)\""
+       ],
+       "linkCodeSpan": [
+        "docs/alt-form.md:1: rendered unknown image alt \"`wasm`\""
+       ],
+       "codeSpanUnknownReference": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownReference": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "docs/alt-form.md:1: rendered unknown &Copf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanFrakturReference": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturReference": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
        ]
       },
       "plantedTree": {
