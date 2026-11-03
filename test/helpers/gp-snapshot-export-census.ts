@@ -21,7 +21,10 @@
  * double-quoted strings compose (COMPOSE_PLANTS); wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757) pins the code
  * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from SHAPE_QUIET's
  * plants, which wb-oddy (the R694 follow-up from wb-4z24's landing 791) holds at five places, one plant per place, each
- * answering the shape-reader survivor the R694 row that filed it names in the tracker export (quietSurvivorsOf).
+ * answering the shape-reader survivor the R694 row that filed it names in the tracker export (quietSurvivorsOf); wb-rzqi (the R694
+ * follow-up from wb-oddy's landing 830) tries each of quietSurvivorsOf's rules on a line of QUIET_CONTROL of its own, the lines
+ * answering the members its own row names before its first Context: line (controlMembersOf, QUIET_CONTROL_ANSWERS), and holds
+ * QUIET_BEADS to the R694 follow-up chain that row's title closes.
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2963,7 +2966,8 @@ export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: stri
 ];
 
 // ---- wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757): the code reader's parse kind pinned on each reader itself (F1)
-// and the shape reader's quiet plants (F2), one per place since wb-oddy (the R694 follow-up from its landing 791: F1, F2, F4) ----
+// and the shape reader's quiet plants (F2), one per place since wb-oddy (the R694 follow-up from its landing 791: F1, F2, F4),
+// and the survivor reader's rules each on a control line of its own since wb-rzqi (the R694 follow-up from wb-oddy's landing 830) ----
 
 /**
  * PARSE_PLANTS (wb-4z24's F1): one module per live kind of the residual source members, each read by that kind's code reader
@@ -2987,7 +2991,11 @@ export interface QuietPlant {
   readonly answers: FailClosedAnchor;
   readonly text: string;
 }
-/** The R694 rows that filed SHAPE_QUIET's plants, in filing order: wb-4z24 (landing 757's carried F2) and wb-oddy (landing 791's carried F1). */
+/**
+ * The R694 rows that filed SHAPE_QUIET's plants, in filing order: wb-4z24 (landing 757's carried F2) and wb-oddy (landing 791's
+ * carried F1). With wb-0lf.8 before them and the control's row (QUIET_CONTROL_BEAD) after them they are an R694 follow-up chain
+ * in the tracker export: each row's title opens "R694 follow-up from ", the row before it and " landing " (wb-rzqi's F2).
+ */
 export const QUIET_BEADS: readonly string[] = ["wb-4z24", "wb-oddy"];
 /**
  * The lines of the tracker export text that hold a bead's "id" key, in order, joined by newlines: a grep by indexOf, so the
@@ -3042,13 +3050,24 @@ export const quietPlacesOf = (plant: QuietPlant): string[] => {
   });
   return places;
 };
-/** A gate survivor's name as an R694 filing note's carried lines write it: G or GP<n>, a hyphen, then capitals and digits in hyphen-joined parts (G-P1, GP20-U5-CSK-READS-BINDINGS). */
+/**
+ * A gate survivor's name as an R694 filing note's carried lines write it, a whole word: G or GP<n> (GP and one or more digits),
+ * a hyphen, then capitals and digits in hyphen-joined parts (G-P1, GP20-U5-CSK-READS-BINDINGS). QUIET_CONTROL's name-shape line
+ * writes five words that are no survivor name, each followed by a kind: N-C10 (another capital than G), GP-C11 (GP with no
+ * digit), G-c12 (a small letter), XG-C13 and G-C14x (a name inside a longer word).
+ */
 const SURVIVOR_NAME = /\bG(?:P\d+)?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 /**
  * The shape-reader survivors an R694 filing note's carried finding lines name, each with the node kind it makes the code reader
- * read: on each "[leads] - " and "[rides] - " line, read up to the note's first "Context: " line (so its not-carried lines and
- * every later note are never read), each gate survivor name whose first mention on the line is followed, before the line's
- * next mention of another survivor name, by a QUIET_KINDS kind (the first one written there), each once, in order.
+ * read, by six rules, each tried on a line of QUIET_CONTROL of its own: (1) a line is read only when it starts with "[leads] - "
+ * or "[rides] - ", never a line of another role, though it quote one of them (G-C5, G-C15); (2) reading stops at the note's
+ * first line that starts with "Context: " (so its not-carried lines and every later note are never read), and a "Context: "
+ * written inside a line stops nothing (G-C6, G-C17); (3) a survivor name is SURVIVOR_NAME's (GP9-C4, the name-shape line); (4) a
+ * survivor's kind is the first QUIET_KINDS kind written after its first mention on the line, inside a longer word as well, and
+ * before the line's next mention of another survivor name, a mention of its own name ending nothing (G-C1, G-C2, G-C7, G-C16);
+ * (5) a survivor whose first mention on a line has no kind there is not read from that line, its later mentions on the line
+ * passed over, and a later line may read it (G-C8); (6) each survivor is read once, the first time a line reads it, in the
+ * order the lines read them (G-C1 again).
  */
 export function quietSurvivorsOf(notes: string): { readonly name: string; readonly holds: QuietKind }[] {
   const survivors: { readonly name: string; readonly holds: QuietKind }[] = [];
@@ -3067,18 +3086,66 @@ export function quietSurvivorsOf(notes: string): { readonly name: string; readon
   return survivors;
 }
 /**
- * quietSurvivorsOf's control (wb-oddy): an R694-shaped note each of whose lines tries one of the reader's rules - a carried line
- * whose first survivor has two kinds after its first mention (the first written counts), whose second survivor has none before
- * the next survivor's mention (no survivor), and whose third has one; a carried line with a fourth survivor and a second mention
- * of the first (read once); a line of another role; and a carried line after the note's first "Context: " line (neither read).
+ * quietSurvivorsOf's control (wb-oddy; wb-rzqi's F1 and F2): an R694-shaped note each of whose lines tries one of the reader's
+ * rules, read as quietSurvivorsOf's docstring says - a carried line whose first survivor has two kinds after its first mention
+ * (G-C1: the first written counts), whose second has none before the next survivor's mention (G-C2: no survivor) and whose
+ * third has one (G-C3); a [rides] line with a GP<n> survivor (GP9-C4) and a second mention of G-C1 (read once); a line of
+ * another role (G-C5: not read); a survivor named again before its kind (G-C7: read, its own mention ends nothing); a kindless
+ * first mention of G-C8 before G-C9's mention, with a later mention on the line that has a kind (G-C8 not read from that line,
+ * G-C9 read), and a later line that reads G-C8; the name-shape line, whose five words are no survivor name (SURVIVOR_NAME); a
+ * line of another role quoting "[rides] - " (G-C15: not read); a survivor whose first kind is written inside a longer word and
+ * before a second kind (G-C16: BindingElement); a carried line with "Context: " inside it (G-C17: read); the note's first
+ * "Context: " line; a carried line after it (G-C6: not read); and a second "Context: " line. QUIET_CONTROL_ANSWERS ties these
+ * lines to the members the control's row names.
  */
 export const QUIET_CONTROL = [
   "[leads] - G-C1 (BindingElement names, then PropertySignature names) and G-C2, a parse survivor; G-C3 reads PropertySignature names.",
   "[rides] - GP9-C4 reads PropertySignature names; G-C1 reads BindingElement names again.",
   "[owner-routed: OWNER WEIGH-IN] - G-C5 reads BindingElement names.",
+  "[leads] - G-C7 (G-C7 is named again before its kind) reads BindingElement names.",
+  "[rides] - G-C8, then G-C9 reads PropertySignature names; G-C8 reads BindingElement names.",
+  "[leads] - G-C8 reads PropertySignature names on a later line.",
+  "[rides] - N-C10 reads BindingElement names; GP-C11 reads PropertySignature names; G-c12 reads BindingElement names; XG-C13 reads PropertySignature names; G-C14x reads BindingElement names.",
+  "[not carried: INFO] - this line quotes '[rides] - G-C15 reads PropertySignature names.'",
+  "[rides] - G-C16 reads BindingElements' names, not PropertySignature names.",
+  "[leads] - G-C17 reads BindingElement names (a Context: written mid-line).",
   "Context: the control's end.",
   "[leads] - G-C6 reads PropertySignature names.",
+  "Context: the control's second Context: line.",
 ].join("\n");
+/** The R694 row that filed the reader mutants and control members QUIET_CONTROL answers: wb-rzqi, the R694 follow-up from wb-oddy's landing 830 (its carried F1 and F2 lines). */
+export const QUIET_CONTROL_BEAD = "wb-rzqi";
+/**
+ * The control members an R694 filing note names before its first line that starts with "Context: ": the gate's reader mutants
+ * of quietSurvivorsOf as wb-rzqi's lines write them (G2-QS-... and F-QS-..., capitals and digits in hyphen-joined parts) and the
+ * control survivors it names (G-C<n>), each once, in the note's order. Its reading is pinned on QUIET_CONTROL_BEAD's row only.
+ */
+export function controlMembersOf(notes: string): string[] {
+  const cut = notes.search(/^Context: /m);
+  const names: string[] = [];
+  for (const match of notes.slice(0, cut === -1 ? notes.length : cut).matchAll(/\b(?:G\d+-QS|F-QS)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b|\bG-C\d+\b/g)) if (!names.includes(match[0])) names.push(match[0]);
+  return names;
+}
+/**
+ * The QUIET_CONTROL word that answers each member the control's row names (controlMembersOf over QUIET_CONTROL_BEAD's row), in
+ * the row's order: each reader mutant of wb-rzqi's F1 line by a word written only on the line that tries the rule it breaks
+ * (that line's survivor, or N-C10 on the name-shape line, whose words are no survivor name), a control survivor of its F2 line
+ * by itself, and the two kind-order mutants its F2 line names by G-C16, the control's second survivor with two kinds after its
+ * first mention (F2: G-C1's second kind was their only exemplar).
+ */
+export const QUIET_CONTROL_ANSWERS: readonly { readonly name: string; readonly survivor: string }[] = [
+  { name: "G2-QS-SAME-NAME-BOUND", survivor: "G-C7" },
+  { name: "G2-QS-REMENTION-FALLBACK", survivor: "G-C9" },
+  { name: "G2-QS-CONTEXT-ANYWHERE", survivor: "G-C17" },
+  { name: "G2-QS-ROLE-ANYWHERE", survivor: "G-C15" },
+  { name: "G2-QS-NAME-LOOSE", survivor: "N-C10" },
+  { name: "G-C5", survivor: "G-C5" },
+  { name: "G-C6", survivor: "G-C6" },
+  { name: "G-C2", survivor: "G-C2" },
+  { name: "G-C1", survivor: "G-C1" },
+  { name: "F-QS-LAST-KIND", survivor: "G-C16" },
+  { name: "F-QS-ENUM-ORDER", survivor: "G-C16" },
+];
 
 // ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
 
