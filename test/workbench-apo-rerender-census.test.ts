@@ -308,13 +308,15 @@
  * added, and the UNLISTED-FORMS label and the readForms doc are restated to what is read. Two readings of the helper are
  * edited (ownAt reads its this parameter through the same predicate, unchanged): (1) argumentTarget skips a src
  * declaration's own declared this parameter, as ownAt skips it for a stand-in, so an argument is read against the declared
- * parameter the checker binds it to - parametersOf's list holds the this parameter, so before this cut a src callee that
+ * parameter the checker binds it to (in the cells THIS-PARAMETER-ARGUMENTS names, restated as cells at respin 3, below) -
+ * parametersOf's list holds the this parameter, so before this cut a src callee that
  * declares one read each argument against the parameter declared before its own, the first against the this parameter
  * itself (the pinned pages, at trunk f5cb912: a class instance, a callback and an object literal not written where it
  * flows read quiet, a value hidden at its own parameter after one that keeps the projection read argument, and a value
  * kept at its own first parameter was refused against the this parameter; refusal #3's mechanism, and the value member
  * wb-021.7's cut #4 delivery found); (2) in the cells TAGGED-TEMPLATE-ARGUMENTS names, each a tag form, a substitution
- * position and a value (narrowed at respins 1 and 2, below), a tagged template's substitution is read as the argument
+ * position and a value (narrowed at respins 1 and 2, and at respin 3 to each cell's written spellings, below), a tagged
+ * template's substitution is read as the argument
  * at its index among the substitutions plus one, the tagged template the site, and no other tag form, position or value
  * is claimed - before this cut no substitution was read as a
  * flow (refusal #4's LTT2 holder, and a callback and a context-less literal, read quiet) and one that exposes the
@@ -384,6 +386,41 @@
  * census (NOT CLAIMED below). argumentTarget's doc no longer says a library declaration's parameters are read as
  * declared (refusal #2 F4: no pin observes it); a library declaration's own this parameter is NOT CLAIMED. src at trunk
  * a9a10bb equals f5cb912's (no src path changed between them), so the measurement above stands.
+ *
+ * WB-021.10 RESPIN 3 (cut #4, refusal #3: U1 and U2 on the TAGGED-TEMPLATE-ARGUMENTS claim set R-B350 guarded, U3 and U4
+ * on THIS-PARAMETER-ARGUMENTS, failing for the first time; ruling R-B386, the second-stage cap: the guarded class is FROZEN
+ * and this cut is its ENUMERATE-THE-RESOLVABLE cut, the R739 terminal form, while THIS-PARAMETER-ARGUMENTS stands at rung 1
+ * of its own class, its guard bound there). U1: the label's cells named src tag forms by declaration kind while every page
+ * wrote a declaration-named tag as the declaration's bare name, so a reading of only the first substitution under a
+ * property-access tag (gate mutant PROP) or an element-access tag (ELEMENT), and no tagged reading under a parenthesized tag
+ * (PAREN), kept the census green. U2: the cells named a class instance by its type while every page wrote it as a new
+ * expression, so the tagged reading skipped for an identifier of class type (IDENT) kept it green. U3 and U4:
+ * THIS-PARAMETER-ARGUMENTS planted no parenthesized callee and no identifier-held argument, so the this parameter left
+ * unskipped for either (TPPAREN, TPIDENT2) kept it green. Trunk 59e24e4 is merged INTO the branch (it changes no src path
+ * and none of this cut's paths); no reading of the helper is edited. Each surviving member is pinned with its witness,
+ * beside a call twin: TAGGED-TEMPLATE-ARGUMENTS gains twenty-two pages - under a src function declaration whose strings
+ * parameter is written TemplateStringsArray, its tag spelled as a property access and as an element access with a string
+ * literal key on a const object literal that holds it in a shorthand property (refusal #3's LWP and r2 shapes), as a
+ * property access on a namespace import of a src module that exports it (q2) and as its own name in parentheses (LWR, r1),
+ * each given a class instance as the only substitution and as the second of two (refused, structural-stand-in); and, the
+ * tag spelled by its own name, a class instance held by the name of a const its new expression initializes (LWI, r3) as
+ * the only substitution and as the second of two (refused, structural-stand-in) and a declaring one so held (quiet);
+ * THIS-PARAMETER-ARGUMENTS gains six - through a function declaration, its callee spelled as its own name in parentheses
+ * (LTP, t1) and a class instance held by a const's name (LTI, t2), each refused (structural-stand-in), and a declaring one
+ * so held (quiet), each beside its twin. Under PROP, ELEMENT, PAREN and IDENT the census reds at REACH
+ * TAGGED-TEMPLATE-ARGUMENTS, and under TPPAREN and TPIDENT2 at REACH THIS-PARAMETER-ARGUMENTS (each 0 failed on the pre-cut
+ * bytes); every twin reads alike under each. The claim words are restated to exactly the pinned set: each of the two labels
+ * names, beside its cells, the spelling of each tag or callee and of each value its pages write, and every other spelling -
+ * among them a call's result, a conditional, a cast, a non-null or a satisfies expression, a comma expression, an alias, a
+ * let or a var binding, a property or an element access on a holder no cell names, an element access on a namespace
+ * import, parentheses no cell names and an optional call - and every other page text are NOT CLAIMED by this census;
+ * THIS-PARAMETER-ARGUMENTS is restated as cells (each a callee form - its declaration, its this parameter's written type
+ * and its callee's spelling -, an argument position and a value with its reading), so its class instance is claimed through
+ * each pinned callee form and its other values through a function declaration only, as pinned. Reading (1) and reading (2)
+ * above, the readForms doc, argumentTarget's doc, flowOf's comment and the REACH paragraph's plant sentence below point at
+ * the same cells. No escape of the frozen class is known unpinned at this cut, so no residual is added (R-INFERRED-LITERAL
+ * stands as it was). src at trunk 59e24e4 equals f5cb912's (no src path changed between them), so the measurement above
+ * stands.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -471,8 +508,8 @@
  * (wb-vgri) plant the held and the bound stand-ins the flow reading never judges as the type they stand in for, their quiet
  * pages beside read twins (respin 2: R-THIS-BINDING's label names each of its pages). THIS-PARAMETER-ARGUMENTS and
  * TAGGED-TEMPLATE-ARGUMENTS (wb-021.10) plant the arguments of src callees that declare an explicit this parameter and
- * the substitutions of tagged templates in the cells its label names (each a tag form, a substitution position and a
- * value), each paired page read as the argument it is
+ * the substitutions of tagged templates in the cells their labels name (each a callee or a tag form - its declaration and
+ * its spelling -, a position and a value with its spelling: respin 3), each paired page read as the argument it is
  * beside its twin (the callee
  * declared with no this parameter; the tag called with its strings argument and the same values), and
  * R-INFERRED-LITERAL plants the hiding literal a generic callee's inferred instantiation reads quiet, with and without
@@ -616,7 +653,11 @@
  * first under an object literal's method, an explicit-this tag or a strings parameter written { readonly raw: readonly
  * string[] } and any value there but a class instance, under the arrow function and the function expression any
  * substitution but a class instance as the only one, and under String.raw any substitution of a template that holds
- * two or more); a library declaration's this parameter
+ * two or more); at respin 3, any spelling of a tag, a callee or a value that no cell of the two labels names (among them
+ * a call's result, a conditional, a cast, a non-null or a satisfies expression, a comma expression, an alias, a let or a
+ * var binding, a property or an element access on a holder no cell names, an element access on a namespace import,
+ * parentheses no cell names and an optional call), a this parameter written with a type no cell names, and any page text
+ * a cell's pages do not write; a library declaration's this parameter
  * (Function.prototype's call, apply and bind keep
  * R-THIS-BINDING's pinned readings); a decorator's implicit argument, an instanceof's Symbol.hasInstance argument and a
  * JSX element's attributes (src holds no decorator and no .tsx module); and, beside R-INFERRED-LITERAL, an object literal
@@ -626,8 +667,9 @@
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
  * included, and wb-021.10's THIS-PARAMETER-ARGUMENTS, TAGGED-TEMPLATE-ARGUMENTS and R-INFERRED-LITERAL); pages of such a
- * row removed with the row's frozen-literal count and roster pins together (wb-021.10 respin 1's eighteen tag-form pages
- * and respin 2's twenty-four cell pages included: no outside anchor names them either); argumentTarget's
+ * row removed with the row's frozen-literal count and roster pins together (wb-021.10 respin 1's eighteen tag-form pages,
+ * respin 2's twenty-four cell pages and respin 3's twenty-eight spelling pages included: no outside anchor names them
+ * either); argumentTarget's
  * this-parameter skip or the tagged-template substitution reading removed from the helper together with the pages of
  * THIS-PARAMETER-ARGUMENTS or TAGGED-TEMPLATE-ARGUMENTS, the frozen literal and the roster (the src plants recorded with
  * wb-021.10 are their falsifiers; src holds no such call); a case and its expected reading
@@ -1201,8 +1243,8 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/CALLBACK-RETURNS:8",
       "REACH/STAND-IN-RETURNS:9",
       "REACH/UNLISTED-STAND-INS:10",
-      "REACH/THIS-PARAMETER-ARGUMENTS:37",
-      "REACH/TAGGED-TEMPLATE-ARGUMENTS:72",
+      "REACH/THIS-PARAMETER-ARGUMENTS:43",
+      "REACH/TAGGED-TEMPLATE-ARGUMENTS:94",
       "REACH/R-INFERRED-LITERAL:20",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
