@@ -2,13 +2,16 @@
  * wb-021.2 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2, program-triage-2026-10-18): the judge, the tables and the plants of the
  * APO snapshot census (test/workbench-apo-snapshot-census.test.ts, whose header states the claims). One module, so the
  * census and its roster are written from the same rows. Its GLOBAL reading is wb-021.8's landed GLOBAL binding reader
- * (test/helpers/apo-snapshot-global-reader.ts, landing 803), imported unedited: this cut is the restatement of the census
- * over that reader that ruling R-B166 binds after refusal #4 on cut #4, and it holds no reader code of its own (cut #4's
- * copy of the reader, its :319-510, is removed; the census's provenance case holds the import).
+ * (test/helpers/apo-snapshot-global-reader.ts, landing 803), imported with its code unedited: this cut is the restatement
+ * of the census over that reader that ruling R-B166 binds after refusal #4 on cut #4, and it holds no reader code of its
+ * own (cut #4's copy of the reader, its :319-510, is removed; the census's provenance case holds the import). wb-hjiq
+ * (the R694 follow-up of the census's landing-806 gate) adds row R's closure pins R-closure-export-from, R-closure-dynamic,
+ * R-closure-require, R-closure-import-equals and R-views-share-module (CLOSURE, below).
  *
  * CLAIM SCOPE (the R-B166 restatement over wb-021.8's landed reader: the census claims what its pins and the reader's
  * census hold, and no wider). judgeTree admits an APO view when its whole runtime closure holds no finding and reds it
- * with a typed finding otherwise, each view of a tree judged (R-views-each-judged: the second of two views reds). Each
+ * with a typed finding otherwise, each view of a tree judged (R-views-each-judged: the second of two views reds;
+ * R-views-share-module: a module two views share reds at each view). Each
  * reading below is claimed for the forms its pins hold, each naming its pin: a quiet form is the admitted form (row V, and
  * the quiet positions each reading names) or a named residual held quiet by a row Q pin, and a red form is a pin whose
  * findings hold it. GLOBAL's readings are the landed reader's, claimed at its census's pinned set (GLOBAL, below). A form
@@ -37,10 +40,16 @@
  * resolveRelative: as written (R-resolve-forms; R-dts-module), .js to .ts (the P plants; R-dts-script), and a bare path
  * to .ts or a directory to its index.ts, exactly . and .. included (R-resolve-forms) - so ./env.d.ts as written and ./env.d.js through its .js-to-.ts
  * candidate each reach a declaration file src/apo/env.d.ts. Every module of the closure is judged whole, at the depths
- * the pins plant (one edge from the view: R-closure-global, GLOBAL; R-closure-builtin, PACKAGE; two edges: P-gradient, EFFECT;
- * R-closure-depth, every finding kind but UNREADABLE, which reds wherever it is): every handler path through the view's own code and the code it
+ * and through the edge kinds the pins plant, each with the finding kinds it holds (one edge from the view - a static edge:
+ * R-closure-global, GLOBAL; R-closure-builtin, PACKAGE; R-views-share-module, every finding kind but UNREADABLE; an
+ * export-from, a dynamic, a require and an import-equals edge: R-closure-export-from, R-closure-dynamic,
+ * R-closure-require and R-closure-import-equals, every finding kind but UNREADABLE, each on its own line of the module
+ * the edge reaches; two edges - a static and an export-from edge: P-gradient, EFFECT; two static edges: R-closure-depth,
+ * every finding kind but UNREADABLE; UNREADABLE reds wherever it is), and for each view whose closure holds it (a module
+ * two views share reds at each view: R-views-share-module): every handler path through the view's own code and the code it
  * imports runs inside it, and code no handler reaches is judged too (code handed in at run time is outside it:
- * R-UNNAMED-EFFECT, R-IMPLICIT-CALL).
+ * R-UNNAMED-EFFECT, R-IMPLICIT-CALL). A finding kind at a route no pin plants it at is NOT CLAIMED by this census (GLOBAL
+ * in a module reached past a first edge that is not static among them).
  * FINDINGS (each a line; every one is a red):
  * - UNREADABLE: a file of the judged tree the readers cannot read or parse; it cannot be identified, so the tree reds
  *   whether or not a view reaches it (R-unreadable).
@@ -440,6 +449,27 @@ const V = "src/apo/view.ts";
 const companion = (name: string): string[] => [`interface ${name} {`, "  readonly tag?: never;", "}"];
 /** A GLOBAL finding of the planted view, at one line of one module of its closure, reached by one route. */
 const globalAt = (line: number, name: string, file = V, route = V): string => `GLOBAL ${V} -> ${file}:${line} ${name} via ${route}`;
+/** A closure module holding one line per finding kind but UNREADABLE (the lines of R-closure-depth's deep module): UNRESOLVED :1, PACKAGE :2, GLOBAL :4, CONSTRUCTOR :6, EFFECT :7. */
+const EVERY_KIND = [
+  'import { gone } from "./gone.js";',
+  'import { basename } from "node:path";',
+  "export function stop(): void {",
+  "  process.exitCode = 1;",
+  "  void [gone, basename];",
+  "  void ({}).constructor;",
+  '  void "retry";',
+  "}",
+  "",
+].join("\n");
+const EVERY_KIND_FILE = "src/apo/stop.ts";
+/** EVERY_KIND's five findings for one view, in its module reached by one route. */
+const everyKindAt = (view: string, route: string): string[] => [
+  `UNRESOLVED ${view} -> ${EVERY_KIND_FILE}:1 static ./gone.js via ${route}`,
+  `PACKAGE ${view} -> ${EVERY_KIND_FILE}:2 static node:path via ${route}`,
+  `GLOBAL ${view} -> ${EVERY_KIND_FILE}:4 process via ${route}`,
+  `CONSTRUCTOR ${view} -> ${EVERY_KIND_FILE}:6 name via ${route}`,
+  `EFFECT ${view} -> ${EVERY_KIND_FILE}:7 literal "retry" (retry:retry) via ${route}`,
+];
 
 /** The judged rows: L, V and N tile the export title's statement; P and Z tile the owner filing's acceptance; R holds the readings; U GLOBAL's binding family, enumerated; S the seams; Q the residuals. */
 export const ROWS: readonly Row[] = [
@@ -1305,6 +1335,50 @@ export const ROWS: readonly Row[] = [
       },
       {
         kind: "plant",
+        id: "R-closure-export-from",
+        what: "every finding kind reds one export-from edge from the view (the view re-exports from the module), each on its own line of that module: UNRESOLVED, PACKAGE, GLOBAL, CONSTRUCTOR and EFFECT",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'export { stop } from "./stop.js";'], ["void this.selected;"]),
+          [EVERY_KIND_FILE]: EVERY_KIND,
+        },
+        views: [V],
+        findings: everyKindAt(V, `${V} -export-from-> ${EVERY_KIND_FILE}`),
+      },
+      {
+        kind: "plant",
+        id: "R-closure-dynamic",
+        what: "every finding kind reds one dynamic edge from the view (the handler imports the module dynamically), each on its own line of that module: UNRESOLVED, PACKAGE, GLOBAL, CONSTRUCTOR and EFFECT",
+        files: {
+          [V]: view("APO resource pressure", [HOST], ['void import("./stop.js");']),
+          [EVERY_KIND_FILE]: EVERY_KIND,
+        },
+        views: [V],
+        findings: everyKindAt(V, `${V} -dynamic-> ${EVERY_KIND_FILE}`),
+      },
+      {
+        kind: "plant",
+        id: "R-closure-require",
+        what: "every finding kind reds one require edge from the view (the handler requires the module), each on its own line of that module: UNRESOLVED, PACKAGE, GLOBAL, CONSTRUCTOR and EFFECT; the view reds on the free name require",
+        files: {
+          [V]: view("APO resource pressure", [HOST], ['require("./stop.js");']),
+          [EVERY_KIND_FILE]: EVERY_KIND,
+        },
+        views: [V],
+        findings: [...everyKindAt(V, `${V} -require-> ${EVERY_KIND_FILE}`), globalAt(7, "require")],
+      },
+      {
+        kind: "plant",
+        id: "R-closure-import-equals",
+        what: "every finding kind reds one import-equals edge from the view (import x = require(...) of the module), each on its own line of that module: UNRESOLVED, PACKAGE, GLOBAL, CONSTRUCTOR and EFFECT",
+        files: {
+          [V]: view("APO resource pressure", [HOST, 'import stop = require("./stop.js");'], ["void stop;"]),
+          [EVERY_KIND_FILE]: EVERY_KIND,
+        },
+        views: [V],
+        findings: everyKindAt(V, `${V} -import-equals-> ${EVERY_KIND_FILE}`),
+      },
+      {
+        kind: "plant",
         id: "R-views-each-judged",
         what: "each view of a tree is judged, not the first alone: of two views, the first (src/apo/a-view.ts) reads its own selection and the second reads process in its handler, which reds at the second view (GLOBAL)",
         files: {
@@ -1313,6 +1387,18 @@ export const ROWS: readonly Row[] = [
         },
         views: ["src/apo/a-view.ts", V],
         findings: [`GLOBAL ${V} -> ${V}:7 process via ${V}`],
+      },
+      {
+        kind: "plant",
+        id: "R-views-share-module",
+        what: "a module two views both import is judged for each view, not once for the tree: every finding kind of the shared module (UNRESOLVED, PACKAGE, GLOBAL, CONSTRUCTOR and EFFECT, each on its own line) reds at each of the two views, through that view's own static edge",
+        files: {
+          "src/apo/a-view.ts": view("APO resource pressure", [HOST, 'import { stop } from "./stop.js";'], ["stop();"]),
+          [V]: view("APO certificate dependency", [HOST, 'import { stop } from "./stop.js";'], ["stop();"]),
+          [EVERY_KIND_FILE]: EVERY_KIND,
+        },
+        views: ["src/apo/a-view.ts", V],
+        findings: [...everyKindAt("src/apo/a-view.ts", `src/apo/a-view.ts -static-> ${EVERY_KIND_FILE}`), ...everyKindAt(V, `${V} -static-> ${EVERY_KIND_FILE}`)],
       },
       {
         kind: "plant",
