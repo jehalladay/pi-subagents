@@ -3,17 +3,17 @@
  * what the tool pi serves under the name furnace_observe replies to five pinned calls, read at run time through the tool
  * registry the boot harness keeps, and never through the source text of a registration. wb-40zp's final cut #4 (4c1368f1, not
  * on trunk) defers two readings here in its NOT CLAIMED sentence: which execute pi serves under the name furnace_observe, and
- * what the two literal refusals say and what the error reply is handed. Statement (the bead's tracker-export title,
- * verbatim): "R694 follow-up from wb-40zp (rule-19 structural exit): the R-B163-frozen reader class gets member witnesses or
+ * what the two literal refusals say and what the error reply is handed. Statement (the bead's tracker-export title, verbatim):
+ * "R694 follow-up from wb-40zp (rule-19 structural exit): the R-B163-frozen reader class gets member witnesses or
  * named-residual status". Acceptance (the export description, verbatim): "per surviving member, a witness that reds the
  * delivered census under the member while reading clean under trunk, or the member documented as a NAMED residual with the
- * claims narrowed to the proven subset; claims no wider than pins (rule 16 LEG 2, R514/R515/R668)." Cut #2 answers this bead's
- * own refusal #1 (O:1772): each claim word that refusal names is held by a case that reds under its gate probe (MEMBERS).
- * Cut #3 answers refusal #2 (O:1825), whose record reads the class refusal #1 guarded (the served reader's own claim words)
- * re-failing through new members, so rule 19(c) freezes it, in the ENUMERATE-THE-RESOLVABLE form: this header claims exactly
- * the pinned set (THE PINNED READER SET, J2 PINNED FORMS and CLAIMS), every known member of the frozen class is pinned so the
- * census reds under it (MEMBERS), a form no case writes is NOT CLAIMED, and RESIDUALS names each known escape within the
- * claims with its pinned quiet row.
+ * claims narrowed to the proven subset; claims no wider than pins (rule 16 LEG 2, R514/R515/R668)." Cut #2 answered this bead's
+ * own refusal #1 (O:1772), and cut #3 its refusal #2 (O:1825) in the ENUMERATE-THE-RESOLVABLE form R-B360 bound. Refusal #3
+ * (O:1873) read the class R-B360 froze (claims wider than pins on the served reader's own claim words, the reply judge's
+ * identity and shape words first) failing on cut #3 through new members, and R-B395 (M:50316) executed the rule-19 STRUCTURAL
+ * EXIT: the child wb-bk8a carries those members, and this is the FINAL cut #4, the FAIL-CLOSED CORE. Each claim below names
+ * exactly the pinned facts it rests on (THE PINNED READER SET, J2 PINNED FORMS and CLAIMS), a value or form no case writes is
+ * NOT CLAIMED, and MEMBERS records the members of record, refusal #3's among them, with what each reads.
  *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
@@ -22,34 +22,41 @@
  * THE PINNED READER SET (this file, test/workbench-furnace-observe-served-census.test.ts; each case title opens with its id and
  * the ROWS it holds; 17 cases, registered in this order):
  * - J0 [registered]: target recordRegistrations on a stub registerTool; observed: every value reaches the stub unchanged and in
- *   order, each return value comes back, and the names read are exactly J0_NAMES, a property read of each value (a nameless
- *   object, a primitive and null read undefined, an anonymous function reads "", and a named function, an array's own name
- *   and an inherited name read theirs); a name behind a getter is read once per registration; a wrapper installed over the
- *   recorder that calls it reaches the stub through it, and the recorder reads the name the wrapper hands on; and each name
- *   is appended before its value reaches the stub (a stub that reads the recorder's list as it is called).
+ *   order, each return value comes back, and the names read are exactly J0_NAMES, a property read of each value (the nameless
+ *   object { label: "nameless" }, the string "furnace_observe" and null read undefined, an anonymous arrow function reads "",
+ *   and the function zzNamedTool, an array given the name zz-array-tool and an object inheriting the name zz-inherited-tool
+ *   read theirs); the counted tool's name, behind a getter, is read once as it is registered; the wrapper J0 installs over the
+ *   recorder, which calls it bound to the stub, reaches the stub through it, and the recorder reads zz-wrapped, the name that
+ *   wrapper hands on; and each of two names is appended before its value reaches a stub that reads the recorder's list as it is
+ *   called.
  * - J1 [registered]: target judgeRegistrations over the nine J1 fixtures; observed: each fixture's findings, exactly.
- * - J2 [grant, identity, data, error]: target judgeReply over the 72 J2 fixtures; observed: each fixture's findings, exactly.
- *   The forms the fixtures write are J2 PINNED FORMS below; the census claims the judge's reading at those forms and at no
- *   other.
- * - S0 [registered, grant, identity, data, error]: target isServedTool over the S0 fixtures; observed: true for an object whose
- *   execute is a function (own, async, inherited, a class method, on a null-prototype object), false for an object without
- *   one or whose execute is a string or an object, and false for an array or a function holding a function execute, null,
- *   undefined and a string.
+ * - J2 [grant, identity, data, error]: target judgeReply over the 72 J2 fixtures, each judged for the text T; observed: each
+ *   fixture's findings, exactly. The values the fixtures write are J2 PINNED FORMS below; the census claims the judge's reading
+ *   at those values and at no other value.
+ * - S0 [registered, grant, identity, data, error]: target isServedTool over the 13 S0 fixtures; observed: true for the five
+ *   objects whose execute is a function (an own arrow function, an own async arrow function, one inherited from the prototype,
+ *   a class method, and an own one on a null-prototype object), and false for an object without execute, one whose execute is
+ *   the string "run", one whose execute is the object { call: run }, an empty array and an arrow function each given an execute
+ *   function, null, undefined and the string "furnace_observe".
  * - B0 [registered, grant, identity, data, error]: target bootServed over two planted factories in place of the real one;
- *   observed: the recorder reads the factory's own registration and then those of the session_start handler, which runs once,
- *   awaited, with {} and a context whose cwd (as realpath reads it) is the boot's sandbox, whose .pi/subagents.json holds the
- *   header's settings with the boot's grants; serves is true for the object tools registered and false for an array tool and
- *   an absent name; call resolves to what the served execute returns and calls it as execute("census", params, undefined,
- *   undefined, that context); and an array tool under furnace_observe is registered and not served, so call throws.
- * - K1 [registered, grant, identity, data, error]: target a fresh harness pi and pi's loader source; observed: of two tools
- *   registered under one name the harness serves the second, a tool of another name is kept apart, and loader.js holds one
- *   extension.tools.set site, `extension.tools.set(tool.name, {` with `definition: tool,`, inside its registerTool method.
+ *   observed: in the first boot, with the grant furnace:inspect, the recorder reads the factory's own registration and then the
+ *   two of the session_start handler, which runs once, awaited, with {} and a context whose cwd (as realpath reads it) is the
+ *   boot's sandbox, whose .pi/subagents.json holds the header's settings with that grant; serves is true for the two object
+ *   tools registered and false for the array tool registered and the absent name zz-absent; call resolves to the planted
+ *   execute's return value and calls it as execute("census", { runId: "zz-run" }, undefined, undefined, that context); and in
+ *   the second boot, without the grant, an array tool registered under furnace_observe is registered and not served, so call
+ *   throws.
+ * - K1 [registered, grant, identity, data, error]: target a fresh harness pi and pi's loader source; observed: of the two tools
+ *   registered under zz-served the harness serves the second, the tool registered under zz-other is kept apart (two entries),
+ *   and loader.js holds one extension.tools.set site, `extension.tools.set(tool.name, {` with `definition: tool,`, inside its
+ *   registerTool method.
  * - I1 [data, error]: target the census's instrument; observed: while installed, the fake is the first furnace on PATH and,
- *   after restore, it is not; a command no answer names exits 2 with nothing on stdout; Date reads FIXED_NOW inside
- *   atFixedDate and the real clock after it; the census's own observer reads the complete Run with
- *   completeness "complete" and the partial Run with "partial", each stamped FIXED_NOW, each with source.producerVersion
- *   holding INVISIBLE, which JSON.stringify of the reading keeps and sanitizeWorkbenchJsonText of it does not; and it rejects
- *   the failing Run with an Error whose message is FAILING_MESSAGE, a text sanitizeWorkbenchText leaves unchanged.
+ *   after restore, it is not; the command run status frn-run-census-unanswered --json, under an empty answers file, exits 2
+ *   with nothing on stdout; Date reads FIXED_NOW inside atFixedDate and the real clock after it; the census's own observer
+ *   reads the complete Run with completeness "complete" and the partial Run with "partial", each stamped FIXED_NOW, each with
+ *   source.producerVersion holding INVISIBLE, which JSON.stringify of the reading keeps and sanitizeWorkbenchJsonText of it
+ *   does not; and it rejects the failing Run with an Error whose message is FAILING_MESSAGE, a text sanitizeWorkbenchText
+ *   leaves unchanged.
  * - C0 [registered]: target bootServed([]) and bootServed(["furnace:inspect"]); observed: C0 boots once without the grant and
  *   then once with it; each boot's <sandbox>/.pi/subagents.json reads the reader header's settings with that boot's grants;
  *   judgeRegistrations(received, "furnace_observe") is [] for each, and each serves an execute under that name.
@@ -62,110 +69,130 @@
  *   observer's reading of the same Run under the same fixed Date, and R's completeness is "complete".
  * - C4 [data]: the same for { runId: "frn-run-census-partial" } and the partial Run; R's completeness is "partial".
  * - C5 [error]: the same boot's served execute called with { runId: "frn-run-census-failing" } while the fake plays the failing
- *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census
- *   observer rejects the same Run with.
+ *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census observer
+ *   rejects the same Run with.
  * - A0 []: target sourceAnchors over the 28 A0 fixtures (planted texts); observed: each fixture's literal count and reply
- *   sites, exactly. The fixtures write these forms of the reader header's sourceAnchors reading, and the census claims the
- *   reading at them and at no other: the keys (an identifier and a string
- *   literal read, each also with an escape; a computed key, a shorthand, a method and a computed execute do not), the value
- *   (an escaped value reads cooked; a template literal, the value under parentheses, satisfies, as, a type assertion or a
- *   non-null assertion, an identifier, a concatenation, a call, and another case, a longer, shorter, padded or prefixed name
- *   do not; a literal holding another name key before it still counts), which literal (the first of two, the outer of two
- *   nested), which execute (the first; no site without one), the callee (the identifier, escaped or called optionally,
- *   reads; under parentheses, a member, .call, new and a tagged template do not), the order (nested functions included; a
- *   call in another's arguments after it), and the argument (only the first; a string literal's cooked text; an identifier
- *   callee's cooked name; any other form's source text, without the space and comment before it, "" when absent).
+ *   sites, exactly. The fixtures write these forms of the reader header's sourceAnchors reading, each by the spellings named,
+ *   and the census claims the reading at them and at no other: the keys (the identifiers name and execute and the string
+ *   literals "name" and "execute" read, each also spelled with a \u escape; the computed key ["name"], a shorthand name, a
+ *   method execute and the computed key ["execute"] do not), the value (the string literal "furnace_observe" reads, also
+ *   spelled with a \u escape; the template literal `furnace_observe`, that literal under parentheses, under satisfies string,
+ *   as const or as string, under a <string> type assertion or a ! non-null assertion, the identifier NAME, the concatenation
+ *   "furnace_" + "observe", the call String("furnace_observe"), and the strings "Furnace_Observe", "furnace_observer",
+ *   " furnace_observe", "furnace_observe ", "furnace_observ" and "xfurnace_observe" do not; a literal holding the property
+ *   name: "workflow_observe" before it still counts), which literal (the first of two, the outer of two nested), which execute
+ *   (the first of two; no site without one), the callee (the identifier textResult reads, also spelled with a \u escape or
+ *   called with ?.; (textResult)(...), a.textResult(...), textResult.call(...), new textResult(...), the tagged template
+ *   textResult`t` and the identifier reply do not), the order (a call in a nested arrow function before a later call; a call in
+ *   another's argument after it), and the argument (only the first, of "first" and "second"; a string literal's cooked text,
+ *   its \u escapes decoded; a call whose callee is an identifier by that identifier's cooked name, f, sanitize and
+ *   s\u0061nitize; any other argument by its source text: msg, `t`, a.b(), ("p"), "a" as string and (g)(r), without the space
+ *   and the block comment before msg, and "" when absent).
  * - A1 []: target src/index.ts read by sourceAnchors; observed: one literal names furnace_observe, one registration row stands
  *   per such literal, and its execute's textResult sites are exactly the reply rows' sites in ROWS order.
  * - F1 []: target the tables; observed: the frozen shape (standing rule 16) below.
  * - J3 []: target ROWS and CASES; observed: each row's pins are exactly the cases naming it, and every case is registered once.
  *
- * J2 PINNED FORMS (the judge's reading of each word, held by the J2 fixtures named; findings exactly as each fixture states):
- * - the result as an object: undefined (not-an-object), null (result-null), a string (result-string), a number
- *   (result-number), a boolean (result-boolean), a symbol (result-symbol), a bigint (result-bigint), an array of the element
- *   (an-array), and an array (result-array-shaped) or a function (result-function) holding content and details each read
- *   "result: not an object", alone.
- * - its keys, the own enumerable string keys sorted and comma-joined, against content,details: details absent
- *   (details-absent) and content absent (content-absent); an extra key sorting before content (result-key-before-content's
- *   annotations, result-underscore-key's _zz, result-dollar-key's $zz, result-digit-key's 0, result-empty-key's empty
- *   string), between content and details (result-key-between's data) and after details (extra-result-key's isError, and
- *   result-key-defined-first's isError defined first, whose finding lists the keys sorted); an expected key in another case
- *   (result-key-case's Content) and a padded copy beside it (result-key-padded); the expected keys defined in another order
- *   (result-key-order), inherited (result-inherited-keys) and beside a non-enumerable and a symbol-keyed property
- *   (unread-keys), which read no key finding, no keys and no key finding.
- * - details, a property read: undefined alone reads no finding; an object (details-defined), null (details-null), an
- *   inherited object (inherited-details), 0 (details-zero), the empty string (details-empty-string), false (details-false),
- *   a function (details-function), a symbol (details-symbol), a bigint (details-bigint) and an inherited 0
+ * J2 PINNED FORMS (the 72 values the J2 fixtures write, each judged for the text T = "the expected text", findings exactly as
+ * each fixture states; the census claims the judge's reading at these values and at no other value. "the element" is
+ * { type: "text", text: T }, and "the element with ..." is that object with the fields named spread over it):
+ * - the result: undefined (not-an-object), null (result-null), the string T (result-string), the number 0 (result-number),
+ *   false (result-boolean), Symbol("zz-result") (result-symbol), the bigint 0n (result-bigint), the array [the element]
+ *   (an-array), and an empty array (result-array-shaped) and an arrow function (result-function) each given content [the
+ *   element] and details undefined, each read "result: not an object", alone.
+ * - its keys, against content,details: content [the element] alone (details-absent) and details undefined alone
+ *   (content-absent); beside content [the element] and details undefined, the key annotations [] (result-key-before-content),
+ *   _zz true (result-underscore-key), $zz 1 (result-dollar-key), the key 0 with 1 (result-digit-key), the empty-string key with
+ *   1 (result-empty-key), data 1 (result-key-between) and isError true (extra-result-key), and isError true defined first
+ *   (result-key-defined-first, whose finding lists the keys sorted); Content [the element] in place of content
+ *   (result-key-case); the key "content " with 1 beside content (result-key-padded); and details defined before content
+ *   (result-key-order), content and details inherited from the prototype (result-inherited-keys), and a non-enumerable own
+ *   isError true and an enumerable Symbol.for("zz-unread") property on the result and on the element (unread-keys), which read
+ *   no key finding, the keys "" and no key finding.
+ * - details: undefined reads no finding (exact); {} (details-defined), null (details-null), {} inherited from the prototype
+ *   (inherited-details), 0 (details-zero), the empty string (details-empty-string), false (details-false), an arrow function
+ *   (details-function), Symbol("zz-details") (details-symbol), 0n (details-bigint) and 0 inherited from the prototype
  *   (inherited-primitive-details) each read "details: defined".
- * - content: a string (content-not-array), an array-like object (content-array-like), null (content-null) and an absent
- *   content (content-absent) read "content: not an array"; no element (no-items) and two (two-items) read the count.
- * - the element as an object: a string (item-not-object), null (item-null), an array (item-array) and a function
- *   (item-function) holding type and text read "item: not an object".
- * - its keys against text,type: an extra key sorting before text (item-extra-key's extra), between text and type
- *   (item-key-between's title) and after type (item-key-after-type's zz, defined after type and text), an underscore-led key
- *   (item-underscore-key's _zz) and an expected key in another case (item-key-case's Text); the expected keys defined in
- *   another order (item-key-order), inherited (item-inherited-keys) and beside unread properties (unread-keys).
- * - its type against "text", ===: another word (item-type), another case (type-case), padded after (type-padded) and
- *   before (type-leading-padded), a longer word ending in text (type-ends-with), a String wrapper (type-wrapped) and an
- *   array (type-array).
- * - its text against the text, ===: longer (text-differs), another case (text-case), padded after (text-padded) and before
- *   (text-leading-padded), a longer text ending in the text (text-ends-with), a prefix (text-prefix), a String wrapper
- *   (text-wrapped), an array (text-array) and absent (text-absent).
- * - the exact text (exact) reads no finding; the order of the findings and the points where a reading ends: all-findings,
- *   ends-at-content, ends-at-count and ends-at-item, and every fixture above that reads two findings.
+ * - content: the string T (content-not-array), { 0: the element, length: 1 } (content-array-like), null (content-null) and no
+ *   content (content-absent) read "content: not an array"; [] (no-items) and [the element, the element] (two-items) read the
+ *   count.
+ * - the element: the string T (item-not-object), null (item-null), and an empty array (item-array) and an arrow function
+ *   (item-function) each given type "text" and text T read "item: not an object".
+ * - its keys, against text,type: the element with extra 1 (item-extra-key), with title "x" (item-key-between), with zz true
+ *   after type and text (item-key-after-type) and with _zz true (item-underscore-key); { Text: T, type: "text" }
+ *   (item-key-case); { text: T, type: "text" }, text defined first (item-key-order); an object inheriting the element's type
+ *   and text from its prototype (item-inherited-keys); and the element of unread-keys.
+ * - its type, against "text": "image" (item-type), "Text" (type-case), "text " (type-padded), " text" (type-leading-padded),
+ *   "plaintext" (type-ends-with), new String("text") (type-wrapped) and ["text"] (type-array).
+ * - its text, against T: T followed by "!" (text-differs), T upper-cased (text-case), T followed by a space (text-padded), a
+ *   space followed by T (text-leading-padded), "x" followed by T (text-ends-with), T's first five characters (text-prefix),
+ *   new String(T) (text-wrapped), [T] (text-array), and the element { type: "text" } without text (text-absent).
+ * - the result { content: [the element], details: undefined } (exact) reads no finding; the order of the findings and the
+ *   points where a reading ends: all-findings, ends-at-content, ends-at-count and ends-at-item, and every fixture above that
+ *   reads two findings.
  *
- * CLAIMS (each claims exactly the pinned set it names and no wider; its falsifiers are the cases named). "A result judgeReply
- * reads as textResult(X)" is a result judgeReply finds nothing in for the text X. The reader header words that reading (an
- * object whose keys are content and details, details undefined, content an array of one object whose keys are type and text,
- * type === "text" and text === X), and the census claims it at the J2 PINNED FORMS and no other: a reply that differs from
- * textResult(X) in a listed form that reads a finding makes the calling case red, and the listed forms that read none (the
- * expected keys defined in another order, unread properties) read clean, as the reading says. "Served" is the reader's
- * isServedTool (S0): a tool S0 reads as not served (an array or a function holding a function execute, null, undefined and a
- * string, and an object whose execute is absent, a string or an object) is refused, so the census reds on it.
+ * CLAIMS (each claims exactly the pinned facts it names and no wider; its falsifiers are the cases named). "A result judgeReply
+ * reads as textResult(X)" is a result for which judgeReply(result, X) returns [], no finding: each reply row's case asserts
+ * exactly that of the served reply to its pinned call, and the reply rows claim nothing more of the replies. What a finding, or
+ * its absence, says of a result is the judge's reading, which the reader header describes at every value and the census claims
+ * only at the 72 values J2 PINNED FORMS lists: at each, judgeReply returns exactly the fixture's findings, in order (J2). At
+ * any other value the reading is NOT CLAIMED (below). "Served" is the reader's isServedTool, claimed at S0's 13 values (S0);
+ * what bootServed's serves and call do with an entry is claimed at the entries B0 plants (B0), and each pinned boot serves an
+ * execute under furnace_observe (C0).
  * - registered: the pinned boot, booted once without the furnace:inspect grant and once with it, its settings read back, hands
- *   the harness's registerTool exactly one tool named furnace_observe (the name the recorder reads once, when the tool is
- *   handed, === "furnace_observe"), so the harness serves that tool under the name (C0; J0, J1, S0, B0, K1).
- * - grant: without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads
- *   as textResult(REFUSALS.grant) (C1; J2, S0, B0, K1).
+ *   the harness's registerTool exactly one tool named furnace_observe as the recorder and the count read it, so the harness
+ *   serves that tool under the name (C0; J0, J1, S0, B0, K1): for each boot, judgeRegistrations finds nothing for
+ *   furnace_observe in the names recordRegistrations reads, each read once as its tool is handed, and serves(furnace_observe)
+ *   is true (C0). The recorder is claimed at J0's values and the count at J1's nine lists, and their reading of a boot's own
+ *   list is claimed no wider than C0 asserts it (NOT CLAIMED below).
+ * - grant: without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as
+ *   textResult(REFUSALS.grant) (C1; J2, S0, B0, K1).
  * - identity: with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity) (C2; J2,
  *   S0, B0, K1).
  * - data: for the complete and the partial pinned Run it replies with a result judgeReply reads as
- *   textResult(sanitizeWorkbenchJsonText(R)), R being the census observer's reading of that Run; R carries INVISIBLE, which
- *   JSON.stringify(R) keeps and that sanitizer removes (I1), so a reply of the reading's plain JSON text differs (C3, C4; J2,
- *   S0, B0, K1, I1).
+ *   textResult(sanitizeWorkbenchJsonText(R)), R being the census observer's reading of that Run (C3, C4; J2, S0, B0, K1, I1).
  * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M)), M
  *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
  *
  * NOT CLAIMED (scope sentences; no residual semantics; no follow-up bead):
- * - A reply that differs from textResult(X) only in a form J2 PINNED FORMS does not list (another extra-key spelling or
- *   position, another details value, another spelling of the type or the text) is NOT CLAIMED by this census: the reader
- *   header describes how the judge reads it, and no case holds that reading.
+ * - The judge's reading anywhere but at the 72 J2 values, each judged for T, is NOT CLAIMED by this census: a result judged for
+ *   a row's own text X (REFUSALS.grant, REFUSALS.identity, sanitizeWorkbenchJsonText(R) or sanitizeWorkbenchText(M)), whatever
+ *   its form, is outside them, and so is a result judged for T in a form J2 PINNED FORMS does not list (another key, details
+ *   value, content, element, type or text). Of a served reply the census claims the [] its row's case asserts, and not what
+ *   that [] says of the reply.
+ * - Whether the census tells a data reply of the reading's plain JSON text, JSON.stringify(R), which keeps I1's INVISIBLE, from
+ *   textResult(sanitizeWorkbenchJsonText(R)) is NOT CLAIMED by this census: no J2 fixture writes that value. Refusal #3
+ *   (O:1873) measured the judge's reading there unpinned (MEMBERS: GP8-M01, GP8-M02 and the witness GP8-W01), and the rule-19
+ *   exit child wb-bk8a (R-B395) carries it.
+ * - That bootServed refuses an entry under furnace_observe that isServedTool reads as not served, other than the array tool B0
+ *   plants, so that call throws and the calling case reds, is NOT CLAIMED by this census: isServedTool's reading is claimed at
+ *   S0's values, and bootServed's refusal at B0's one planted entry.
  * - Each other reader at a form its case does not write (a registered value J0 does not hand, a received list J1 does not
- *   judge, a tools-Map value S0 does not test, a factory B0 does not plant, a src text A0 does not read) is NOT CLAIMED by
- *   this census: the reader header describes those readings, and the census claims them at the fixtures and plants named.
- * - A served reply's properties that judgeReply does not read are NOT CLAIMED by this census: its non-enumerable,
- *   symbol-keyed and inherited properties other than the four the reading reads (details, content, type and text).
+ *   judge, a tools-Map value S0 does not test, a factory B0 does not plant, a src text A0 does not read) is NOT CLAIMED by this
+ *   census: the reader header describes those readings, and the census claims them at the fixtures and plants named. Each
+ *   pinned boot's own list of registrations is such a list: C0 asserts the count's [] there, and not what that [] says of the
+ *   boot's registrations beyond the recorder's and the count's reading.
+ * - A served reply's properties that judgeReply does not read are NOT CLAIMED by this census: its non-enumerable, symbol-keyed
+ *   and inherited properties other than the four the reading reads (details, content, type and text).
  * - A tool whose name reads differently on different reads (a name getter) is NOT CLAIMED by this census: the recorder reads
  *   each name once (J0), and what pi serves for such a tool is not read.
- * - A call other than C1-C5's (other params, another tool-call id, a signal or an update callback, another grant set,
- *   another Run, an Attempt page that holds Attempts and their log reads) is NOT CLAIMED by this census.
- * - A boot other than the pinned boot (other settings, pi's own loader and runtime, a registration made after session_start)
- *   is NOT CLAIMED by this census.
+ * - A call other than C1-C5's (other params, another tool-call id, a signal or an update callback, another grant set, another
+ *   Run, an Attempt page that holds Attempts and their log reads) is NOT CLAIMED by this census.
+ * - A boot other than the pinned boot (other settings, pi's own loader and runtime, a registration made after session_start) is
+ *   NOT CLAIMED by this census.
  * - What the observer reads from a Run and what the shared sanitizers do are NOT CLAIMED by this census: the expected replies
  *   are computed with the FurnaceObserver and the sanitizers src/index.ts imports, so a change to
  *   src/workbench/furnace-observer.ts or src/workbench/redaction.ts moves both sides alike (wb-b04.2's census reads them).
- * - Whether the served execute is the function the furnace_observe literal holds, and what it hands the client and the
- *   observer it builds, are NOT CLAIMED by this census: only its replies to the pinned calls are.
+ * - Whether the served execute is the function the furnace_observe literal holds, and what it hands the client and the observer
+ *   it builds, are NOT CLAIMED by this census: only its replies to the pinned calls are.
  * - Whether the error reply is run through sanitizeWorkbenchText is NOT CLAIMED by this census: FAILING_MESSAGE is a text that
  *   sanitizer leaves unchanged, so C5 reads the reply's text only.
  * - A served execute that tells this census's calls from others is NOT CLAIMED by this census.
  * - Tools other than furnace_observe are NOT CLAIMED by this census: their names are read only to count furnace_observe.
  *
- * RESIDUALS: none named at this cut, and none is known within the claims. Every known member of the frozen class (MEMBERS:
- * refusal #2's four with their witnesses, and its riding F3's two) reds the census, and so does every member of the cutting
- * seat's own one-edit battery over the judge, the recorder and the served predicate (the delivery note's SM3 line) but the
- * two EQUIVALENT ones MEMBERS names. A newly found escape within the claims is a residual-list addition here, with its
- * pinned quiet row.
+ * RESIDUALS: none named. Refusal #3's GP8-M01 and GP8-M02 keep the census green (MEMBERS); the reading they fold, the judge's
+ * text identity at a value no J2 fixture writes, is outside this cut's claims (NOT CLAIMED above), and the exit child wb-bk8a
+ * carries it with its own enumerate obligations.
  *
  * MEMBERS (the bead's members of record; each src plant is applied to src/index.ts in the cutting seat's worktree and the
  * census run on it, src restored by sha256 after; the counts are the seat's receipts in the delivery note):
@@ -198,6 +225,15 @@
  *   GP3-X08-FINDING-KEYS-UNSORTED reds J2 (result-key-defined-first). GP3-X02-BOOT-CTX-DEFAULT-CWD reads clean and is
  *   EQUIVALENT by construction: hermeticDir chdirs into the sandbox, so ctx()'s default cwd is the sandbox. The seat's SM3
  *   member that dedupes the keys reads clean and is EQUIVALENT by construction: Object.keys returns each own key once.
+ * - this bead's refusal #3 (O:1873; each gate member and witness read as data from the gate-prep-8 PREP archive and applied
+ *   verbatim to these bytes, the witnesses to src/index.ts): GP8-M01-TEXT-FORMAT-FOLD and GP8-M02-TEXT-PRINTABLE-FOLD (the
+ *   judge's text test with Unicode format characters, or every character outside printable ASCII, removed from both sides
+ *   first) read clean, and the witness GP8-W01-PLAIN-JSON-REPLY (the data reply of the reading's plain JSON text) reds C3 and
+ *   C4 under the delivered census and reads clean under each; the riding F3's GP8-M03-TYPE-FORMAT-FOLD (the same fold of the
+ *   type test) reads clean, and its witness GP8-WT3-TYPE-ZWSP (textResult's type spelled with an inner U+200B) reds C1-C5 under
+ *   the delivered census and reads clean under it. GP8-M01, GP8-M02 and GP8-M03 each depart from the judge's reading only at
+ *   values no J2 fixture writes (J2 stays green under each), which this cut does not claim (NOT CLAIMED); the exit child
+ *   wb-bk8a carries the text identity GP8-M01 and GP8-M02 fold.
  *
  * FROZEN SHAPE (standing rule 16): F1 pins ROWS as `${id}:${pins.length}` and its clauses, the case ids, SCENARIO_IDS,
  * J0_NAMES, the ids of the J1, J2 and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals. A1 holds the rows to
@@ -297,14 +333,14 @@ const CASES = {
   J1: { rows: ["registered"], title: "over J1's received lists the registration judge counts only names === furnace_observe: case variants, longer, shorter, padded and non-string names are other names" },
   J2: {
     rows: ["grant", "identity", "data", "error"],
-    title: "at each J2 PINNED FORM the reply judge reads textResult(text)'s own enumerable keys, details, content, element, type and text, compared ===, and names each difference in its order",
+    title: "at each J2 PINNED FORM, the 72 values its fixtures write, each judged for the text T, the reply judge's findings are exactly the fixture's, in its order",
   },
   S0: { rows: ["registered", "grant", "identity", "data", "error"], title: "over S0's values the served-tool predicate holds for an object whose execute, own or inherited, is a function, and not for an array, a function or a primitive" },
   B0: {
     rows: ["registered", "grant", "identity", "data", "error"],
-    title: "the boot's own order, over two planted factories: settings written, the recorder in front of registerTool from the factory through the awaited session_start, serves and call as the header reads them",
+    title: "the boot's own order, over two planted factories: settings written, the recorder in front of registerTool from the factory through the awaited session_start, and serves and call at the entries they plant",
   },
-  K1: { rows: ["registered", "grant", "identity", "data", "error"], title: "the tool served under a name is the last one registered under it, in the harness as in pi's loader" },
+  K1: { rows: ["registered", "grant", "identity", "data", "error"], title: "the harness serves the second of two tools registered under one name, and pi's loader sets its tools at one site, keyed by tool.name" },
   I1: { rows: ["data", "error"], title: "the instrument: the fake furnace is first on PATH, Date is fixed, and the census observer reads the three pinned Runs" },
   C0: {
     rows: ["registered"],
