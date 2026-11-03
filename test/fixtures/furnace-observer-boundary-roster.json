@@ -78,7 +78,15 @@
       "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
       "config/zz-boundary.yml": "record: \"Furnace\\u004fbserverBoundaryV0\"\n",
       "config/zz-boundary.toml": "record = \"Furnace\\U0000004fbserverBoundaryV0\"\n",
-      "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n"
+      "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
+      "src/workbench/zz-boundary-identifier-braced.ts": "export const Furnace\\u{4f}bserverBoundaryV0 = 0;\n",
+      "src/workbench/zz-boundary-identifier-private.ts": "export class Plant {\n  #Furnace\\u004fbserverBoundaryV0 = 0;\n}\n",
+      "src/workbench/zz-boundary-template-head.ts": "export const n = (a: string): string => `Furnace\\u004fbserverBoundaryV0${a}`;\n",
+      "src/workbench/zz-boundary-template-middle.ts": "export const n = (a: string, b: string): string => `x${a}Furnace\\u004fbserverBoundaryV0${b}y`;\n",
+      "src/workbench/zz-boundary-template-second.ts": "export const n = (a: string, b: string): string => `x${a}y${b}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-tagged.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "docs/workbench/zz-observer-boundary/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "media/zz-observer-boundary.bin": "\u0000binary bytes\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -118,7 +126,8 @@
       "R-INTERIOR": "Q6",
       "R-COMPUTED": "Q7",
       "R-OTHER-MODULE": "Q8",
-      "R-COMPUTED-ACCESS": "Q9"
+      "R-COMPUTED-ACCESS": "Q9",
+      "R-TYPE-TEMPLATE": "Q10"
     }
   },
   "tests": [
@@ -142,6 +151,7 @@
     "Q7",
     "Q8",
     "Q9",
+    "Q10",
     "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
   ],
   "rows": [
@@ -627,6 +637,30 @@
               ],
               "src/workbench/zz-boundary-identifier.ts": [
                 "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-braced.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-private.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-middle.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-second.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged.ts": [
+                "cooked"
+              ],
+              "docs/workbench/zz-observer-boundary/zz-plant.md": [
+                "path"
+              ],
+              "media/zz-observer-boundary.bin": [
+                "path"
               ]
             }
           }
@@ -787,6 +821,26 @@
             "residual": "R-COMPUTED-ACCESS",
             "reads": 3,
             "unchained": 0
+          }
+        },
+        {
+          "id": "Q10",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-TYPE-TEMPLATE",
+            "readings": {
+              "typeTemplate": {
+                "text": "export type N = `x${string}Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": []
+              },
+              "valueTemplate": {
+                "text": "export const n = (a: string): string => `x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": [
+                  "cooked"
+                ]
+              }
+            }
           }
         }
       ]
