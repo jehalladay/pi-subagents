@@ -20,8 +20,10 @@
  * each, every read a registered read capability of its own producer. Elsewhere src spells the stems only outside descriptors
  * (comments, prompt text in src/index.ts, the hypothesis relation kind with its labels and attention reasons, its topology
  * trace reason and src/workbench/patch-proposal.ts's PatchProposalHypothesisInput and PatchProposalHypothesis interfaces and
- * the proposal's hypothesis field - the last two omitted at the cut, inserted by wb-ypjn F4 after a re-measure on trunk e8e13f8:
- * 51 lines in 15 of 117 src modules spell a stem, each in these classes), never in a descriptor's id or description.
+ * the proposal's hypothesis field - the last two omitted at the cut, inserted by wb-ypjn F4 after a re-measure on trunk
+ * e8e13f8 - and attention.ts's hypothesis-edge flag, the private ObservedEdges.hypothesis boolean and its bindings, which
+ * raises the hypothesis-edges attention reason, inserted by wb-o6xi F1 after a site-level re-measure on trunk cdf5484: 51
+ * lines in 15 of 117 src modules spell a stem, each in these classes), never in a descriptor's id or description.
  *
  * THE VOCABULARY: a judged field (a descriptor's id, its description) names a stem when its NFKC fold, lower-cased with every
  * character outside a-z and 0-9 removed, contains the stem. The stems are the clause's three words (predict, CPHS, hypothesis,

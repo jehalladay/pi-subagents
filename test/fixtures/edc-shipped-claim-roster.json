@@ -1,6 +1,6 @@
 {
   "bead": "wb-pyel.4",
-  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control.",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control. wb-kv0y (R694 follow-up of landing 612, hop 3 of the chain, R739's terminal enumerate-the-resolvable form) records each file a reading reads only through its judgment's own output, adds THE PLANTED READING to A2 and B2 (every file of the scope read again wrapped between its reader's own controls and a last part; the plants are pinned constants, and each witness pins the plant's own reading, its count, that it reads as the controls do, and the files it found unjudged or unwrapped) and walks WALK_CONTROL through docsWalk itself. Its cut #2 (refusal #1's U1 cure (b), U2 cure (a), F3) reads every file of A2's, B2's and B3's scope once, wrapped between the plant's parts, and takes every record, count and mention from that one judgment by the plant's pinned extent (the plant's last part is the controls again and the modifier, so every control form is judged at both of a file's ends); each witness pins the plant's own reading, its count and extent, the files whose ends do not hold it (unjudged) or whose own part miscounts (unwrapped), and the reader's own controls read as files (own); and walks WALK_CONTROL, root included, through claimPages.; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q7; re-measured by seat ws-04 (run g10-work-s153) on trunk bffdf2d, after wb-kv0y's landing 717: THE PLANTED READING's plants carry those controls (every SOURCE_CONTROLS module but the JSX one, every PAGE_CONTROLS page), so plantedModule, plantedPage and A2's and B2's planted witnesses are re-pinned; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3, F4): THE FOLD SWEEP's verdict in A3 with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers); eleven more SOURCE_CONTROLS rows (the page plant's zero-width, full-width, precomposed, noncomposing, spacing, enclosing and joined-mark spellings, and the private-name, no-substitution, template-middle and template-tail escapes), which the module plant carries, so plantedModule and A2's planted witness (plant, count 53 -> 109, extent 12/13 -> 23/24, own) are re-pinned; and Q7's JSX attribute hex probe; respun as cut #4 by seat ws-06 (run g10-work-s171) on trunk f63d389 plus the cut for wb-a6m9 refusal #3 (U1-U2 and F7, in the enumerate-the-resolvable form ruling R-B212 binds): nine more SOURCE_CONTROLS escape rows (the import, export-from and dynamic-import specifier, string property key, string literal type and single-quoted string hex escapes, and the property-access name and import and export specifier name unicode escapes), read by A3 and carried by the module plant, so plantedModule and A2's planted witness (plant, count 109 -> 147, extent 23/24 -> 32/33, own) are re-pinned; and the hex-reference PAGE_CONTROLS page (E&#x44;C), read by B5 and carried by the page plant, so plantedPage and B2's planted witness (plant, count 79 -> 81, extent 39/40 -> 40/41, own) are re-pinned; extended by seat ws-01 (run g10-work-s182) on trunk f5cb912 plus the cut for wb-6jao (the R694 follow-up of landing 776, its F5 lead and F6 ride): Q7's three second spellings, one per sub-form the landing-776 gate named (regex-hex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), and their three plain twins (regex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), with ADOPTION's R-ESCAPED sentence narrowed to the ten src probe texts; and the named-reference (Evidence&nbsp;directed) and markdown-escape (EDC\\_integration) PAGE_CONTROLS pages, read by B5 and carried by the page plant, so pageControls, plantedPage and B2's planted witness (plant, count 81 -> 85, extent 40/41 -> 42/43, own) are re-pinned, with CLAIM PAGES' escape and reference sentence narrowed to the pinned pages",
   "constants": {
     "stems": {
       "edc": "word",
@@ -88,16 +88,31 @@
       "emphasis-split": "**Evidence**-*directed* assembly ships.\n",
       "strikethrough": "~~EDC~~ shipped.\n",
       "numeric-reference": "E&#68;C integration ships.\n",
+      "hex-reference": "E&#x44;C integration ships.\n",
       "soft-break": "The evidence-\ndirected assembly ships.\n",
       "zero-width": "E\u200bDC integration ships.\n",
       "full-width": "\uff25\uff24\uff23 integration ships.\n",
+      "combining-mark": "E\u0301DC integration ships.\n",
+      "precomposed": "\u00c9DC integration ships.\n",
+      "noncomposing-mark": "E\u0332DC integration ships.\n",
+      "spacing-mark": "E\u0903DC integration ships.\n",
+      "enclosing-mark": "E\u20ddDC integration ships.\n",
+      "joined-mark": "Evide\u0301nce-directed assembly ships.\n",
       "camel": "The EdcAssembler ships.\n",
       "html-block": "<details>\n<summary>EDC integration</summary>\n</details>\n",
       "cross-word": "The named capability is used carefully.\n",
       "inside-word": "Reedcraft and credcheck ship.\n",
-      "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n"
+      "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n",
+      "named-reference": "Evidence&nbsp;directed integration ships.\n",
+      "markdown-escape": "EDC\\_integration ships.\n"
     },
     "walkControl": {
+      "": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "README.md/",
+        "docs/"
+      ],
       "docs": [
         "a.md",
         "b.markdown",
@@ -211,7 +226,68 @@
       "regex": "const pattern = /EDC/;",
       "private-name": "class Host { #edcBlock = 1; }",
       "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
-      "jsx.tsx": "export const view = <span>EDC integration</span>;"
+      "jsx.tsx": "export const view = <span>EDC integration</span>;",
+      "zero-width": "const label = \"E\u200bDC ships\";",
+      "full-width": "const label = \"\uff25\uff24\uff23 ships\";",
+      "combining-mark": "const label = \"E\u0301DC ships\";",
+      "precomposed": "const label = \"\u00c9DC ships\";",
+      "noncomposing-mark": "const label = \"E\u0332DC ships\";",
+      "spacing-mark": "const label = \"E\u0903DC ships\";",
+      "enclosing-mark": "const label = \"E\u20ddDC ships\";",
+      "joined-mark": "const label = \"evide\u0301nce-directed context\";",
+      "string-escape": "const label = \"\\x45DC ships\";",
+      "template-escape": "const label = `\\x45DC ${name} ships`;",
+      "identifier-escape": "const \\u0045dcAssembler = 1;",
+      "private-name-escape": "class Host { #\\u0065dcBlock = 1; }",
+      "no-substitution-escape": "const label = `\\x45DC ships`;",
+      "template-middle-escape": "const label = `${first} \\x45DC ${second} ships`;",
+      "template-tail-escape": "const label = `${name} \\x45DC ships`;",
+      "import-escape": "import { assemble } from \"\\x45DC-ships\";",
+      "export-from-escape": "export { assemble } from \"\\x45DC-ships\";",
+      "dynamic-import-escape": "const load = () => import(\"\\x45DC-ships\");",
+      "property-key-escape": "const table = { \"\\x45DC ships\": 1 };",
+      "literal-type-escape": "type Label = \"\\x45DC ships\";",
+      "single-quoted-escape": "const label = '\\x45DC ships';",
+      "property-access-escape": "const value = host.\\u0045dcAssembler;",
+      "import-name-escape": "import { \\u0045dcAssembler } from \"./ships\";",
+      "export-name-escape": "export { \\u0045dcAssembler } from \"./ships\";"
+    },
+    "foldClasses": {
+      "Mn": "/^\\p{Mn}$/u",
+      "Mc": "/^\\p{Mc}$/u",
+      "Me": "/^\\p{Me}$/u",
+      "Cf": "/^\\p{Cf}$/u"
+    },
+    "precomposedLetter": "/^[A-Za-z]\\p{M}+$/u",
+    "foldUnion": [
+      "/^[\\p{M}\\p{Cf}]$/u",
+      "/^[A-Za-z]$/",
+      "/^\\p{M}$/u"
+    ],
+    "foldFloors": {
+      "Mn": 1800,
+      "Mc": 400,
+      "Me": 12,
+      "Cf": 150,
+      "precomposed": 450
+    },
+    "foldCarriers": {
+      "stems": [
+        "EDC",
+        "edc",
+        "evidence-directed",
+        "EVIDENCE-DIRECTED"
+      ]
+    },
+    "plantedModule": {
+      "first": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u200bDC ships\";\nconst label = \"\uff25\uff24\uff23 ships\";\nconst label = \"E\u0301DC ships\";\nconst label = \"\u00c9DC ships\";\nconst label = \"E\u0332DC ships\";\nconst label = \"E\u0903DC ships\";\nconst label = \"E\u20ddDC ships\";\nconst label = \"evide\u0301nce-directed context\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;\nclass Host { #\\u0065dcBlock = 1; }\nconst label = `\\x45DC ships`;\nconst label = `${first} \\x45DC ${second} ships`;\nconst label = `${name} \\x45DC ships`;\nimport { assemble } from \"\\x45DC-ships\";\nexport { assemble } from \"\\x45DC-ships\";\nconst load = () => import(\"\\x45DC-ships\");\nconst table = { \"\\x45DC ships\": 1 };\ntype Label = \"\\x45DC ships\";\nconst label = '\\x45DC ships';\nconst value = host.\\u0045dcAssembler;\nimport { \\u0045dcAssembler } from \"./ships\";\nexport { \\u0045dcAssembler } from \"./ships\";",
+      "gap": "\n",
+      "last": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u200bDC ships\";\nconst label = \"\uff25\uff24\uff23 ships\";\nconst label = \"E\u0301DC ships\";\nconst label = \"\u00c9DC ships\";\nconst label = \"E\u0332DC ships\";\nconst label = \"E\u0903DC ships\";\nconst label = \"E\u20ddDC ships\";\nconst label = \"evide\u0301nce-directed context\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;\nclass Host { #\\u0065dcBlock = 1; }\nconst label = `\\x45DC ships`;\nconst label = `${first} \\x45DC ${second} ships`;\nconst label = `${name} \\x45DC ships`;\nimport { assemble } from \"\\x45DC-ships\";\nexport { assemble } from \"\\x45DC-ships\";\nconst load = () => import(\"\\x45DC-ships\");\nconst table = { \"\\x45DC ships\": 1 };\ntype Label = \"\\x45DC ships\";\nconst label = '\\x45DC ships';\nconst value = host.\\u0045dcAssembler;\nimport { \\u0045dcAssembler } from \"./ships\";\nexport { \\u0045dcAssembler } from \"./ships\";\nconst evidenceDirectedPlant = 1;"
+    },
+    "plantedPage": {
+      "first": "# EDC adoption\n\n---\n\nEvidence-directed context assembly ships today.\n\n---\n\n| EDC | Status |\n| --- | --- |\n| assembly | shipped |\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC integration | shipped |\n\n---\n\n- EDC integration is supported\n\n---\n\n- outer item\n  - evidence directed assembly\n\n---\n\n- first\n\n- EDCs are wired\n\n---\n\n> The EDC path is available.\n\n---\n\n```ts\nimport { assemble } from './edc';\n```\n\n---\n\nThe `EvidenceDirected` reader ships.\n\n---\n\n[EDC integration](https://example.invalid/a)\n\n---\n\n**Evidence**-*directed* assembly ships.\n\n---\n\n~~EDC~~ shipped.\n\n---\n\nE&#68;C integration ships.\n\n---\n\nE&#x44;C integration ships.\n\n---\n\nThe evidence-\ndirected assembly ships.\n\n---\n\nE\u200bDC integration ships.\n\n---\n\n\uff25\uff24\uff23 integration ships.\n\n---\n\nE\u0301DC integration ships.\n\n---\n\n\u00c9DC integration ships.\n\n---\n\nE\u0332DC integration ships.\n\n---\n\nE\u0903DC integration ships.\n\n---\n\nE\u20ddDC integration ships.\n\n---\n\nEvide\u0301nce-directed assembly ships.\n\n---\n\nThe EdcAssembler ships.\n\n---\n\n<details>\n<summary>EDC integration</summary>\n</details>\n\n---\n\nThe named capability is used carefully.\n\n---\n\nReedcraft and credcheck ship.\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n\n---\n\nEvidence&nbsp;directed integration ships.\n\n---\n\nEDC\\_integration ships.\n",
+      "gap": "\n\n---\n\n",
+      "last": "# EDC adoption\n\n---\n\nEvidence-directed context assembly ships today.\n\n---\n\n| EDC | Status |\n| --- | --- |\n| assembly | shipped |\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC integration | shipped |\n\n---\n\n- EDC integration is supported\n\n---\n\n- outer item\n  - evidence directed assembly\n\n---\n\n- first\n\n- EDCs are wired\n\n---\n\n> The EDC path is available.\n\n---\n\n```ts\nimport { assemble } from './edc';\n```\n\n---\n\nThe `EvidenceDirected` reader ships.\n\n---\n\n[EDC integration](https://example.invalid/a)\n\n---\n\n**Evidence**-*directed* assembly ships.\n\n---\n\n~~EDC~~ shipped.\n\n---\n\nE&#68;C integration ships.\n\n---\n\nE&#x44;C integration ships.\n\n---\n\nThe evidence-\ndirected assembly ships.\n\n---\n\nE\u200bDC integration ships.\n\n---\n\n\uff25\uff24\uff23 integration ships.\n\n---\n\nE\u0301DC integration ships.\n\n---\n\n\u00c9DC integration ships.\n\n---\n\nE\u0332DC integration ships.\n\n---\n\nE\u0903DC integration ships.\n\n---\n\nE\u20ddDC integration ships.\n\n---\n\nEvide\u0301nce-directed assembly ships.\n\n---\n\nThe EdcAssembler ships.\n\n---\n\n<details>\n<summary>EDC integration</summary>\n</details>\n\n---\n\nThe named capability is used carefully.\n\n---\n\nReedcraft and credcheck ship.\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n\n---\n\nEvidence&nbsp;directed integration ships.\n\n---\n\nEDC\\_integration ships.\n\n\n---\n\n# Evidence-directed plant\n"
     },
     "vocabulary": [
       "context assembly charter",
@@ -263,6 +339,30 @@
       "docs/plant.html"
     ],
     "unnamedAdoption": "import { renderBlock } from \"@example/context-blocks\";\nexport const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: \"ref\" });",
+    "escapedSources": {
+      "regex-hex": "export const pattern = /\\x45DC/;",
+      "regex-unicode": "export const pattern = /\\u0045DC/;",
+      "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+      "jsx-decimal.tsx": "export const view = <span>&#69;DC integration</span>;",
+      "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
+      "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC integration\">view</span>;",
+      "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC integration\">view</span>;",
+      "regex-hex-flagged": "export const pattern = /\\x45DC/i;",
+      "jsx-fragment.tsx": "export const view = <>&#69;DC integration</>;",
+      "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"&#69;DC integration\">view</span>;"
+    },
+    "escapedSourceTwins": {
+      "regex": "export const pattern = /EDC/;",
+      "jsx.tsx": "export const view = <span>EDC integration</span>;",
+      "jsx-attribute.tsx": "export const view = <span title=\"EDC integration\">view</span>;",
+      "regex-flagged": "export const pattern = /EDC/i;",
+      "jsx-fragment.tsx": "export const view = <>EDC integration</>;",
+      "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"EDC integration\">view</span>;"
+    },
+    "escapedPage": [
+      "&Eacute;DC integration ships.\n",
+      "\u00c9DC integration ships.\n"
+    ],
     "residuals": {
       "R-VOCABULARY": [
         "Q1"
@@ -281,6 +381,9 @@
       ],
       "R-UNNAMED-ADOPTION": [
         "Q6"
+      ],
+      "R-ESCAPED": [
+        "Q7"
       ]
     }
   },
@@ -300,6 +403,7 @@
     "Q4",
     "Q5",
     "Q6",
+    "Q7",
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "rows": [
@@ -325,7 +429,182 @@
             "outsideSrc": [],
             "untracked": [],
             "unread": [],
-            "mentions": []
+            "empty": [],
+            "mentions": [],
+            "planted": {
+              "plant": [
+                "identifier|edc",
+                "string|evidencedirected",
+                "template|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "regex|edc",
+                "identifier|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "string|edc",
+                "template|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "string|edc",
+                "template|edc",
+                "template|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "string|evidencedirected",
+                "template|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "regex|edc",
+                "identifier|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "string|edc",
+                "template|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "string|edc",
+                "template|edc",
+                "template|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "identifier|edc",
+                "identifier|evidencedirected"
+              ],
+              "count": 147,
+              "extent": {
+                "before": 32,
+                "after": 33
+              },
+              "asControls": true,
+              "unjudged": [],
+              "unwrapped": [],
+              "own": {
+                "identifier": [
+                  "identifier:1|identifier|edc"
+                ],
+                "string": [
+                  "string:1|string|evidencedirected"
+                ],
+                "template": [
+                  "template:1|template|edc"
+                ],
+                "import-specifier": [
+                  "import-specifier:1|string|edc"
+                ],
+                "dynamic-import": [
+                  "dynamic-import:1|string|evidencedirected"
+                ],
+                "regex": [
+                  "regex:1|regex|edc"
+                ],
+                "private-name": [
+                  "private-name:1|identifier|edc"
+                ],
+                "cross-word": [],
+                "jsx.tsx": [
+                  "jsx.tsx:1|jsx|edc"
+                ],
+                "zero-width": [
+                  "zero-width:1|string|edc"
+                ],
+                "full-width": [
+                  "full-width:1|string|edc"
+                ],
+                "combining-mark": [
+                  "combining-mark:1|string|edc"
+                ],
+                "precomposed": [
+                  "precomposed:1|string|edc"
+                ],
+                "noncomposing-mark": [
+                  "noncomposing-mark:1|string|edc"
+                ],
+                "spacing-mark": [
+                  "spacing-mark:1|string|edc"
+                ],
+                "enclosing-mark": [
+                  "enclosing-mark:1|string|edc"
+                ],
+                "joined-mark": [
+                  "joined-mark:1|string|evidencedirected"
+                ],
+                "string-escape": [
+                  "string-escape:1|string|edc"
+                ],
+                "template-escape": [
+                  "template-escape:1|template|edc"
+                ],
+                "identifier-escape": [
+                  "identifier-escape:1|identifier|edc"
+                ],
+                "private-name-escape": [
+                  "private-name-escape:1|identifier|edc"
+                ],
+                "no-substitution-escape": [
+                  "no-substitution-escape:1|string|edc"
+                ],
+                "template-middle-escape": [
+                  "template-middle-escape:1|template|edc"
+                ],
+                "template-tail-escape": [
+                  "template-tail-escape:1|template|edc"
+                ],
+                "import-escape": [
+                  "import-escape:1|string|edc"
+                ],
+                "export-from-escape": [
+                  "export-from-escape:1|string|edc"
+                ],
+                "dynamic-import-escape": [
+                  "dynamic-import-escape:1|string|edc"
+                ],
+                "property-key-escape": [
+                  "property-key-escape:1|string|edc"
+                ],
+                "literal-type-escape": [
+                  "literal-type-escape:1|string|edc"
+                ],
+                "single-quoted-escape": [
+                  "single-quoted-escape:1|string|edc"
+                ],
+                "property-access-escape": [
+                  "property-access-escape:1|identifier|edc"
+                ],
+                "import-name-escape": [
+                  "import-name-escape:1|identifier|edc"
+                ],
+                "export-name-escape": [
+                  "export-name-escape:1|identifier|edc"
+                ]
+              }
+            }
           }
         },
         {
@@ -377,7 +656,116 @@
               "cross-word": [],
               "jsx.tsx": [
                 "jsx.tsx:1|jsx|edc"
+              ],
+              "zero-width": [
+                "zero-width:1|string|edc"
+              ],
+              "full-width": [
+                "full-width:1|string|edc"
+              ],
+              "combining-mark": [
+                "combining-mark:1|string|edc"
+              ],
+              "precomposed": [
+                "precomposed:1|string|edc"
+              ],
+              "noncomposing-mark": [
+                "noncomposing-mark:1|string|edc"
+              ],
+              "spacing-mark": [
+                "spacing-mark:1|string|edc"
+              ],
+              "enclosing-mark": [
+                "enclosing-mark:1|string|edc"
+              ],
+              "joined-mark": [
+                "joined-mark:1|string|evidencedirected"
+              ],
+              "string-escape": [
+                "string-escape:1|string|edc"
+              ],
+              "template-escape": [
+                "template-escape:1|template|edc"
+              ],
+              "identifier-escape": [
+                "identifier-escape:1|identifier|edc"
+              ],
+              "private-name-escape": [
+                "private-name-escape:1|identifier|edc"
+              ],
+              "no-substitution-escape": [
+                "no-substitution-escape:1|string|edc"
+              ],
+              "template-middle-escape": [
+                "template-middle-escape:1|template|edc"
+              ],
+              "template-tail-escape": [
+                "template-tail-escape:1|template|edc"
+              ],
+              "import-escape": [
+                "import-escape:1|string|edc"
+              ],
+              "export-from-escape": [
+                "export-from-escape:1|string|edc"
+              ],
+              "dynamic-import-escape": [
+                "dynamic-import-escape:1|string|edc"
+              ],
+              "property-key-escape": [
+                "property-key-escape:1|string|edc"
+              ],
+              "literal-type-escape": [
+                "literal-type-escape:1|string|edc"
+              ],
+              "single-quoted-escape": [
+                "single-quoted-escape:1|string|edc"
+              ],
+              "property-access-escape": [
+                "property-access-escape:1|identifier|edc"
+              ],
+              "import-name-escape": [
+                "import-name-escape:1|identifier|edc"
+              ],
+              "export-name-escape": [
+                "export-name-escape:1|identifier|edc"
               ]
+            },
+            "sweep": {
+              "belowFloor": [],
+              "unswept": {
+                "marks": 0,
+                "precomposed": 0
+              },
+              "written": {
+                "mark": [
+                  "U+0045",
+                  "U+00AD",
+                  "U+0044",
+                  "U+00AD",
+                  "U+0043"
+                ],
+                "precomposed": [
+                  "U+0045",
+                  "U+0044",
+                  "U+00C7"
+                ]
+              },
+              "carriers": {
+                "EDC": [
+                  "edc"
+                ],
+                "edc": [
+                  "edc"
+                ],
+                "evidence-directed": [
+                  "evidencedirected"
+                ],
+                "EVIDENCE-DIRECTED": [
+                  "evidencedirected"
+                ]
+              },
+              "splitCount": 0,
+              "splits": []
             }
           }
         }
@@ -398,6 +786,7 @@
             "symlinks": [],
             "walkControl": {
               "pages": [
+                "CHANGELOG.md",
                 "docs/a.md",
                 "docs/b.markdown",
                 "docs/c.MD",
@@ -422,7 +811,169 @@
             "wordsBelowFloor": false,
             "untracked": [],
             "unread": [],
-            "mentions": []
+            "mentions": [],
+            "planted": {
+              "plant": [
+                "heading|edc",
+                "paragraph|evidencedirected",
+                "header-cell|edc",
+                "cell|edc",
+                "text|edc",
+                "text|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "code|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "html|edc",
+                "cell|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "heading|edc",
+                "paragraph|evidencedirected",
+                "header-cell|edc",
+                "cell|edc",
+                "text|edc",
+                "text|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "code|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "html|edc",
+                "cell|edc",
+                "paragraph|evidencedirected",
+                "paragraph|edc",
+                "heading|evidencedirected"
+              ],
+              "count": 85,
+              "extent": {
+                "before": 42,
+                "after": 43
+              },
+              "asControls": true,
+              "unjudged": [],
+              "unwrapped": [],
+              "own": {
+                "heading": [
+                  "heading|heading#0|edc"
+                ],
+                "paragraph": [
+                  "paragraph|paragraph#0|evidencedirected"
+                ],
+                "table-header": [
+                  "table-header|header-cell#0|edc"
+                ],
+                "table-cell": [
+                  "table-cell|cell#2|edc"
+                ],
+                "list-item": [
+                  "list-item|text#0|edc"
+                ],
+                "nested-list": [
+                  "nested-list|text#1|evidencedirected"
+                ],
+                "loose-list": [
+                  "loose-list|paragraph#1|edc"
+                ],
+                "blockquote": [
+                  "blockquote|paragraph#0|edc"
+                ],
+                "fenced-code": [
+                  "fenced-code|code#0|edc"
+                ],
+                "codespan": [
+                  "codespan|paragraph#0|evidencedirected"
+                ],
+                "link-text": [
+                  "link-text|paragraph#0|edc"
+                ],
+                "emphasis-split": [
+                  "emphasis-split|paragraph#0|evidencedirected"
+                ],
+                "strikethrough": [
+                  "strikethrough|paragraph#0|edc"
+                ],
+                "numeric-reference": [
+                  "numeric-reference|paragraph#0|edc"
+                ],
+                "hex-reference": [
+                  "hex-reference|paragraph#0|edc"
+                ],
+                "soft-break": [
+                  "soft-break|paragraph#0|evidencedirected"
+                ],
+                "zero-width": [
+                  "zero-width|paragraph#0|edc"
+                ],
+                "full-width": [
+                  "full-width|paragraph#0|edc"
+                ],
+                "combining-mark": [
+                  "combining-mark|paragraph#0|edc"
+                ],
+                "precomposed": [
+                  "precomposed|paragraph#0|edc"
+                ],
+                "noncomposing-mark": [
+                  "noncomposing-mark|paragraph#0|edc"
+                ],
+                "spacing-mark": [
+                  "spacing-mark|paragraph#0|edc"
+                ],
+                "enclosing-mark": [
+                  "enclosing-mark|paragraph#0|edc"
+                ],
+                "joined-mark": [
+                  "joined-mark|paragraph#0|evidencedirected"
+                ],
+                "camel": [
+                  "camel|paragraph#0|edc"
+                ],
+                "html-block": [
+                  "html-block|html#0|edc"
+                ],
+                "cross-word": [],
+                "inside-word": [],
+                "inline-tag": [
+                  "inline-tag|cell#2|edc"
+                ],
+                "named-reference": [
+                  "named-reference|paragraph#0|evidencedirected"
+                ],
+                "markdown-escape": [
+                  "markdown-escape|paragraph#0|edc"
+                ]
+              }
+            }
           }
         },
         {
@@ -431,7 +982,9 @@
             "surface": "TRACEABILITY",
             "inClaimPages": true,
             "empty": [],
-            "mentions": []
+            "mentions": [],
+            "unjudged": [],
+            "unwrapped": []
           }
         },
         {
@@ -508,6 +1061,9 @@
               "numeric-reference": [
                 "numeric-reference|paragraph#0|edc"
               ],
+              "hex-reference": [
+                "hex-reference|paragraph#0|edc"
+              ],
               "soft-break": [
                 "soft-break|paragraph#0|evidencedirected"
               ],
@@ -516,6 +1072,24 @@
               ],
               "full-width": [
                 "full-width|paragraph#0|edc"
+              ],
+              "combining-mark": [
+                "combining-mark|paragraph#0|edc"
+              ],
+              "precomposed": [
+                "precomposed|paragraph#0|edc"
+              ],
+              "noncomposing-mark": [
+                "noncomposing-mark|paragraph#0|edc"
+              ],
+              "spacing-mark": [
+                "spacing-mark|paragraph#0|edc"
+              ],
+              "enclosing-mark": [
+                "enclosing-mark|paragraph#0|edc"
+              ],
+              "joined-mark": [
+                "joined-mark|paragraph#0|evidencedirected"
               ],
               "camel": [
                 "camel|paragraph#0|edc"
@@ -527,6 +1101,12 @@
               "inside-word": [],
               "inline-tag": [
                 "inline-tag|cell#2|edc"
+              ],
+              "named-reference": [
+                "named-reference|paragraph#0|evidencedirected"
+              ],
+              "markdown-escape": [
+                "markdown-escape|paragraph#0|edc"
               ]
             },
             "descriptor": [
@@ -625,6 +1205,47 @@
           "witness": {
             "source": [],
             "page": []
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "sources": {
+              "regex-hex": [],
+              "regex-unicode": [],
+              "regex-code-point": [],
+              "jsx-decimal.tsx": [],
+              "jsx-hex.tsx": [],
+              "jsx-attribute.tsx": [],
+              "jsx-attribute-hex.tsx": [],
+              "regex-hex-flagged": [],
+              "jsx-fragment.tsx": [],
+              "jsx-attribute-aria.tsx": []
+            },
+            "twins": {
+              "regex": [
+                "regex:1|regex|edc"
+              ],
+              "jsx.tsx": [
+                "jsx.tsx:1|jsx|edc"
+              ],
+              "jsx-attribute.tsx": [
+                "jsx-attribute.tsx:1|string|edc"
+              ],
+              "regex-flagged": [
+                "regex-flagged:1|regex|edc"
+              ],
+              "jsx-fragment.tsx": [
+                "jsx-fragment.tsx:1|jsx|edc"
+              ],
+              "jsx-attribute-aria.tsx": [
+                "jsx-attribute-aria.tsx:1|string|edc"
+              ]
+            },
+            "page": [],
+            "pageTwin": [
+              "escaped-page-twin|paragraph#0|edc"
+            ]
           }
         }
       ]

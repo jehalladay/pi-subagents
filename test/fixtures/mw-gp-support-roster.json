@@ -135,7 +135,14 @@
     "M19:untyped-outside-refusal:K-OUTSIDE",
     "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE",
     "M21:unsafe-integer-capacity:K-LEGAL",
-    "M22:invoke-grant-overrides-permissions:K-LEGAL"
+    "M22:invoke-grant-overrides-permissions:K-LEGAL",
+    "M23:grant-matched-as-prefix:K-LEGAL",
+    "M24:grant-matched-as-suffix:K-LEGAL",
+    "M25:grant-matched-case-folded:K-LEGAL",
+    "M26:grant-matched-trimmed:K-LEGAL",
+    "M27:grant-matched-by-wildcard:K-LEGAL",
+    "M28:grant-matched-compatibility-folded:K-LEGAL",
+    "M29:grant-matched-when-contained:K-LEGAL"
   ],
   "witnesses": {
     "A1a": {
@@ -171,7 +178,8 @@
           "id": "empty-support",
           "agents": [
             "a-ungranted:known:0",
-            "a-unmeasured:unknown:3"
+            "a-unmeasured:unknown:3",
+            "a-near:known:17"
           ]
         },
         {
@@ -279,6 +287,10 @@
             "empty-support: holds a-ungranted/t-write, outside the legal pairs",
             "empty-support: holds a-ungranted/t-open, outside the legal pairs",
             "empty-support: holds a-ungranted/t-dual, outside the legal pairs",
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-write, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-dual, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-read, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-write, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-dual, outside the legal pairs"
@@ -293,6 +305,8 @@
             "bounds: holds a-partial/t-open, outside the legal pairs",
             "empty-support: holds a-ungranted/t-read, outside the legal pairs",
             "empty-support: holds a-ungranted/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-read, outside the legal pairs"
           ]
         ],
@@ -312,6 +326,7 @@
             "one-agent: holds a-solo/t-missing, outside the legal pairs",
             "bounds: holds a-partial/t-missing, outside the legal pairs",
             "empty-support: holds a-ungranted/t-missing, outside the legal pairs",
+            "empty-support: holds a-near/t-missing, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-missing, outside the legal pairs"
           ]
         ],
@@ -370,8 +385,171 @@
             "invoke-grants: holds a-invoker/t-write, outside the legal pairs",
             "invoke-grants: holds a-invoker/t-dual, outside the legal pairs"
           ]
+        ],
+        [
+          "M23",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-write, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M24",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs"
+          ]
+        ],
+        [
+          "M25",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs"
+          ]
+        ],
+        [
+          "M26",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-write, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M27",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-write, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-dual, outside the legal pairs"
+          ]
+        ],
+        [
+          "M28",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs"
+          ]
+        ],
+        [
+          "M29",
+          [
+            "empty-support: holds a-near/t-read, outside the legal pairs",
+            "empty-support: holds a-near/t-write, outside the legal pairs",
+            "empty-support: holds a-near/t-open, outside the legal pairs",
+            "empty-support: holds a-near/t-dual, outside the legal pairs"
+          ]
         ]
-      ]
+      ],
+      "near": {
+        "M23": [
+          "a-near/t-read",
+          "a-near/t-write",
+          "a-near/t-open",
+          "a-near/t-dual"
+        ],
+        "M24": [
+          "a-near/t-read",
+          "a-near/t-open"
+        ],
+        "M25": [
+          "a-near/t-read",
+          "a-near/t-open"
+        ],
+        "M26": [
+          "a-near/t-read",
+          "a-near/t-write",
+          "a-near/t-open",
+          "a-near/t-dual"
+        ],
+        "M27": [
+          "a-near/t-read",
+          "a-near/t-write",
+          "a-near/t-open",
+          "a-near/t-dual"
+        ],
+        "M28": [
+          "a-near/t-read",
+          "a-near/t-open"
+        ],
+        "M29": [
+          "a-near/t-read",
+          "a-near/t-write",
+          "a-near/t-open",
+          "a-near/t-dual"
+        ]
+      },
+      "required": [
+        "fixture:read",
+        "fixture:write",
+        "invoke:fixture.support-open"
+      ],
+      "kinds": {
+        "M23": [
+          "prefix"
+        ],
+        "M24": [
+          "suffix"
+        ],
+        "M25": [
+          "case"
+        ],
+        "M26": [
+          "padded"
+        ],
+        "M27": [
+          "wildcard"
+        ],
+        "M28": [
+          "compatibility"
+        ],
+        "M29": [
+          "padded",
+          "longer"
+        ]
+      },
+      "through": {
+        "M23": [
+          "prefix:\"fixture\"->fixture:read",
+          "prefix:\"fixture\"->fixture:write",
+          "prefix:\"invoke\"->invoke:fixture.support-open",
+          "prefix:\"invoke:fixture\"->invoke:fixture.support-open"
+        ],
+        "M24": [
+          "suffix:\"read\"->fixture:read",
+          "suffix:\"fixture.support-open\"->invoke:fixture.support-open"
+        ],
+        "M25": [
+          "case:\"FIXTURE:READ\"->fixture:read",
+          "case:\"INVOKE:FIXTURE.SUPPORT-OPEN\"->invoke:fixture.support-open"
+        ],
+        "M26": [
+          "padded:\" fixture:read\"->fixture:read",
+          "padded:\"fixture:write \"->fixture:write",
+          "padded:\" invoke:fixture.support-open\"->invoke:fixture.support-open",
+          "padded:\"invoke:fixture.support-open \"->invoke:fixture.support-open"
+        ],
+        "M27": [
+          "wildcard:\"fixture:*\"->fixture:read",
+          "wildcard:\"fixture:*\"->fixture:write",
+          "wildcard:\"invoke:*\"->invoke:fixture.support-open"
+        ],
+        "M28": [
+          "compatibility:\"fixture\uff1aread\"->fixture:read",
+          "compatibility:\"invoke\uff1afixture.support-open\"->invoke:fixture.support-open"
+        ],
+        "M29": [
+          "padded:\" fixture:read\"->fixture:read",
+          "padded:\"fixture:write \"->fixture:write",
+          "padded:\" invoke:fixture.support-open\"->invoke:fixture.support-open",
+          "padded:\"invoke:fixture.support-open \"->invoke:fixture.support-open",
+          "longer:\"fixture:reader\"->fixture:read",
+          "longer:\"invoke:fixture.support-opener\"->invoke:fixture.support-open"
+        ]
+      }
     },
     "A2a": {
       "records": [
@@ -527,7 +705,7 @@
         "five-agents: count 25 for 5 pairs",
         "one-agent: count 5 for 3 pairs",
         "bounds: count 30 for 1 pair",
-        "empty-support: count 10 for 0 pairs",
+        "empty-support: count 15 for 0 pairs",
         "invoke-grants: count 5 for 1 pair"
       ]
     },
@@ -552,6 +730,7 @@
       }
     },
     "A4b": {
+      "unread": [],
       "floor": true,
       "anchor": true,
       "words": [],
@@ -721,6 +900,11 @@
             "a-unmeasured/t-open",
             "a-unmeasured/t-dual",
             "a-unmeasured/t-missing",
+            "a-near/t-read",
+            "a-near/t-write",
+            "a-near/t-open",
+            "a-near/t-dual",
+            "a-near/t-missing",
             "a-ghost/t-read",
             "a-ungranted/t-ghost"
           ]
@@ -849,6 +1033,11 @@
             "empty-support: a-unmeasured/t-open is not the typed refusal",
             "empty-support: a-unmeasured/t-dual is not the typed refusal",
             "empty-support: a-unmeasured/t-missing is not the typed refusal",
+            "empty-support: a-near/t-read is not the typed refusal",
+            "empty-support: a-near/t-write is not the typed refusal",
+            "empty-support: a-near/t-open is not the typed refusal",
+            "empty-support: a-near/t-dual is not the typed refusal",
+            "empty-support: a-near/t-missing is not the typed refusal",
             "empty-support: a-ghost/t-read is not the typed refusal",
             "empty-support: a-ungranted/t-ghost is not the typed refusal",
             "invoke-grants: a-invoker/t-read is not the typed refusal",
@@ -929,6 +1118,11 @@
             "empty-support: a-unmeasured/t-open is not the typed refusal",
             "empty-support: a-unmeasured/t-dual is not the typed refusal",
             "empty-support: a-unmeasured/t-missing is not the typed refusal",
+            "empty-support: a-near/t-read is not the typed refusal",
+            "empty-support: a-near/t-write is not the typed refusal",
+            "empty-support: a-near/t-open is not the typed refusal",
+            "empty-support: a-near/t-dual is not the typed refusal",
+            "empty-support: a-near/t-missing is not the typed refusal",
             "empty-support: a-ghost/t-read is not the typed refusal",
             "empty-support: a-ungranted/t-ghost is not the typed refusal",
             "invoke-grants: a-invoker/t-read is not the typed refusal",
@@ -1000,8 +1194,8 @@
       },
       "tally": {
         "permitted": 28,
-        "authorization": 32,
-        "unavailable": 15
+        "authorization": 36,
+        "unavailable": 16
       },
       "fromRegistry": {
         "five-agents": [
@@ -1252,7 +1446,7 @@
   },
   "assertions": [
     "A1a:13",
-    "A1b:20",
+    "A1b:30",
     "A2a:7",
     "A2b:10",
     "A3a:12",
