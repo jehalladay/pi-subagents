@@ -1,9 +1,11 @@
 /**
- * wb-ts6.2 (HXFS-PI-R6, program-triage-2026-10-18), the until-then leg: the HX mutation 'Verified' census, cut #6 - cut #5, the
+ * wb-ts6.2 (HXFS-PI-R6, program-triage-2026-10-18), the until-then leg: the HX mutation 'Verified' census, cut #7 - cut #5, the
  * mechanical restatement over wb-ts6.3's landed readers (test/helpers/hx-mutation-verified-readers.ts) that orchestrator ruling
- * R-B145 binds, restated under orchestrator ruling R-B346 after refusal #5: C3 draws the verified glyphs in both glyph tiers the
- * two layouts select between, at two render input sets (one of them each layout's default width), and its glyph clause names
- * the render input sets it draws (CUT HISTORY).
+ * R-B145 binds, restated under orchestrator ruling R-B346 after refusal #5 (cut #6: C3 draws the verified glyphs in both glyph
+ * tiers the two layouts select between, at two render input sets, one of them each layout's default width, and its glyph clause
+ * names the render input sets it draws) and under orchestrator ruling R-B379 after refusal #6 (cut #7: C3 reads every tick of
+ * either tier at every position of every line each layout draws - the node's whole row and every other drawn line - not only
+ * the glyph before the node's label) (CUT HISTORY).
  * Statement (bead title, as the tracker export holds it, rendered in 7-bit ASCII: its two em dashes as ' - '): "Before any Pi
  * hyperunix capability with a non-read effect class registers (gating artifact: the same Pi HX WRITE surface wb-tz2.8 gates), its
  * reconcile/receipt path shall read an HX mutation 'Verified' postcondition as filesystem-only - never as import/build/semantic
@@ -32,7 +34,8 @@
  * census reds by design: re-measure, and the armed acceptance applies.
  *
  * CLAIM SCOPE (cut #5, the mechanical restatement over wb-ts6.3's landed readers that orchestrator ruling R-B145 binds after
- * refusal #4 on the FINAL fail-closed-core cut #4 of ruling R-B112, as cut #6 restates it under R-B346; wb-ts6.3 landed at landing
+ * refusal #4 on the FINAL fail-closed-core cut #4 of ruling R-B112, as cut #6 restates it under R-B346 and cut #7 under R-B379;
+ * wb-ts6.3 landed at landing
  * 810): wherever the landed helper
  * test/helpers/hx-mutation-verified-readers.ts carries a reader, this census reads through it, imported unedited - the src walk
  * (entriesBelow, entryKind), C1's resolution (resolvesIntoSdk, packageNameOf), C2's member readers (sdkDeclarations, bindingKey,
@@ -55,14 +58,15 @@
  * vocabulary) and A4 (the adapter's src import closure and its environment reads); B1 (the guard's bytes and titles), B2 (the
  * registrations' descriptors, the provider's exports and every src reference to its registration exports) and B3 (the default
  * tier's file list); C1 (SDK sites), C2 (SDK member references and the destructure exclusion), C3 (the evidence projection, each
- * layout's glyph-tier selection and its glyphs, drawn in both glyph tiers at two render input sets), C4 (hx words) and C5 (the src
+ * layout's glyph-tier selection and its glyphs, drawn in both glyph tiers at two render input sets, every tick of either tier at
+ * every position of every line each drawn layout shows, and the tick reader's controls), C4 (hx words) and C5 (the src
  * walk); Q1-Q16 (the residuals' quiet rows); and the task-tree case (every registered test,
  * in roster order, in run mode, ran, and every pin reached its witness).
  *
  * MEASURED (cut 1 by seat ws-04, run g10-work-s125, on trunk 061c2ac; respin 1 by seat ws-05, run g10-work-s138, on trunk 04123dc;
  * respin 2 by seat ws-03, run g10-work-s141, on trunk aa95f43; cut #4 by seat ws-02, run g10-work-s146, on trunk cdf5484; cut #5
- * by seat ws-01, run g10-work-s185, on trunk e23b18e; cut #6 by seat ws-04, run g10-work-s189, on trunk a9a10bb; every fact here
- * is a pinned witness): the vendored @hyperunix/sdk 0.1.0
+ * by seat ws-01, run g10-work-s185, on trunk e23b18e; cut #6 by seat ws-04, run g10-work-s189, on trunk a9a10bb; cut #7 by seat
+ * ws-03, run g10-work-s194, on trunk 0e003aa; every fact here is a pinned witness): the vendored @hyperunix/sdk 0.1.0
  * declares 13 ExecutionStatusKind members, two of them mutation outcomes (mutation-rejected, mutation-partial), and no Verified
  * kind; its client's PATH lookup spawns hx.exe on win32 and hx elsewhere; its receipt wire form carries a coherent Verified
  * receipt in six fields (state, terminal_event, journal, verification, verified, recovery), and its index exports four wire-form
@@ -83,8 +87,9 @@
  * verbatim); in each of the two layouts the glyphs binding of the function's own statements selects the glyph tier by the ascii
  * option (input.ascii ? ASCII_* : UNICODE_*), and,
  * drawn for every declared kind in both tiers at C3's two render input sets, the workflow card's and the dialog's verified glyph light
- * on none - each draws "?" - ("verified", which no declared kind spells, lights both, each tier's own tick), and src names
- * domainStatus at 25 places. No word of a string in a src module is an hx
+ * on none - neither layout shows a tick of either tier at any position of any line it draws, and each draws "?" before the node's
+ * label - ("verified", which no declared kind spells, lights both: each layout shows exactly one tick, its tier's own, the glyph
+ * before the node's label), and src names domainStatus at 25 places. No word of a string in a src module is an hx
  * spelling; src launches forge, git and rf by literal command.
  *
  * REPRESENT, as the owner filing grounds it: a Pi path represents Verified when an HX mutation outcome - a receipt, its
@@ -238,7 +243,17 @@
  *    option unset, each layout's own default; the dialog from its initial state; the task RENDER_TASK; the progress that one node
  *    alone), over a done, current, evidenced hyperunix.find node (RENDER_LABEL) for every declared kind show the node's glyph,
  *    light no tick of either tier (each layout module's own unicode and ASCII tick glyph) and draw the glyph C3's witness pins,
- *    and the control "verified" lights both, each with its tier's own tick; a glyph conditioned on another render input - another
+ *    and the control "verified" lights both, each with its tier's own tick. A tick lights (cut #7, refusal #6 U1) wherever the
+ *    layout draws it: at any position of any line it draws - the glyph before the node's label, the rest of the node's row and
+ *    every other drawn line (the card's header; the dialog's header, panes, borders and hints) - as the tick reader reads it
+ *    (ticksDrawn: every occurrence of each tick glyph RENDER_TIERS names in every drawn line, a tick inside a longer token
+ *    included, read as L<line>C<column>:<tier>; a layout drawing the other tier's or the other module's tick lights too); the
+ *    drawn control shows exactly one tick in each layout, its tier's own, and C3's witness pins every reading beside the glyph
+ *    before the label. The tick reader reads its controls (TICK_CONTROLS: a tick before the label, after the node's row text,
+ *    beside the label, on another line, of the other tier, inside a longer token, and three ticks in column order) and reads none
+ *    in the near-miss control (other check marks - U+2713, U+2705, U+2611 - and letters, none of them a tick of either tier). A
+ *    glyph other than the two tick glyphs, drawn anywhere but before the node's label, is NOT CLAIMED by this census; a glyph
+ *    conditioned on another render input - another
  *    clock, another width, the task, progress (another entry beside the node), a node field other than its domainStatus, the
  *    dialog's state or another dialog option (spinnerFrame, terminalRows, bodyRows, available) - is NOT CLAIMED by this census;
  *    every src
@@ -360,6 +375,10 @@
  * refusal #5 record, no src caller selects): C3 draws both glyph tiers (RENDER_TIERS) and reads each layout's tier selection, and
  * its glyph clause names
  * the two render input sets it draws (RENDER_INPUTS, one of them each layout's default width; another render input NOT CLAIMED).
+ * Cut #7 (R-B379's restatement, after refusal #6 on cut #6) cures refusal #6 U1 (C3 read the verified glyph at the label slot only:
+ * glyphOf takes the one token before the label, so a tick drawn elsewhere on the node's row was never read): C3 reads every tick of
+ * either tier at every position of every line both layouts draw (ticksDrawn; lights() reads its readings), its drawn witness pins
+ * each layout's tick readings beside its glyph before the label, and the tick reader reads its controls (TICK_CONTROLS).
  *
  * Display paths added: none. Test-only: no scratch is allocated and nothing is written (the virtual modules live in memory); src,
  * the SDK's shipped declarations and client, @types/node's module declarations (through the program), one landed test file, the
@@ -1858,6 +1877,21 @@ const RENDER_LAYOUTS: readonly (readonly [string, string])[] = [
   ["src/ui/workflow-card.ts", "layoutWorkflowCard"],
   ["src/ui/workflow-dialog.ts", "layoutWorkflowDialog"],
 ];
+/** The tick reader's controls (cut #7, refusal #6 U1): drawn line sets, each read by ticksDrawn exactly as C3 reads a drawn layout.
+ * Each holds a tick (U+2714 the unicode tier's, U+221A the ascii tier's): before the label, after the node's row text (refusal #6's
+ * card member), beside the label (its dialog member), on another line, of the other tier, inside a longer token, and three in
+ * column order; the near-miss control holds other check marks (U+2713, U+2705, U+2611) and letters, none of them a tick of either
+ * tier, and reads none. */
+const TICK_CONTROLS: Readonly<Record<string, readonly string[]>> = {
+  slot: ["  \u2714 census-node - hyperunix.find - verified"],
+  rowSuffix: ["  ? census-node - hyperunix.find - mutation-partial \u2714"],
+  besideLabel: ["  ? census-node \u2714 - census-execution - current - hyperunix.find"],
+  otherLine: ["  workflow  0/0 agents - 1s - done \u221a", "  ? census-node - hyperunix.find - complete"],
+  otherTier: ["  ? census-node - hyperunix.find - complete \u221a"],
+  inToken: ["  ? census-node[\u2714]"],
+  three: ["\u2714 a \u221a b \u2714"],
+  nearMiss: ["  ? census-node \u2713 \u2705 \u2611 v V x"],
+};
 /** Whether an expression reads domainStatus: a member, an element key or a name (a destructured binding, a parameter), through
  * parentheses, ??, a non-null assertion or a cast. */
 function readsStatus(expression: ts.Expression): boolean {
@@ -1957,21 +1991,51 @@ function glyphOf(lines: readonly string[]): string {
   const line = lines.find(text => text.includes(` ${RENDER_LABEL} `));
   return line === undefined ? "none" : (new RegExp(`(\\S+) ${RENDER_LABEL} `).exec(line)?.[1] ?? "none");
 }
+/** What C3 reads of one drawn pair: each layout's glyph before the node's label (glyphOf) and every tick of either tier it shows
+ * (ticksDrawn, cut #7). */
+interface DrawnGlyphs {
+  readonly card: string;
+  readonly dialog: string;
+  readonly cardTicks: readonly string[];
+  readonly dialogTicks: readonly string[];
+}
 /** The workflow card's and the dialog's glyph for a node of one domainStatus, drawn by the real layouts in one glyph tier at one of
- * C3's render input sets (cut #6, refusal #5 U1: C3 draws every tier RENDER_TIERS names, not the ASCII tier alone). */
-function drawnGlyphs(domainStatus: string, tier: RenderTier, inputs: RenderInputs): { readonly card: string; readonly dialog: string } {
+ * C3's render input sets (cut #6, refusal #5 U1: C3 draws every tier RENDER_TIERS names, not the ASCII tier alone), with every tick
+ * of either tier each drawn layout shows, read at every position of every drawn line (cut #7, refusal #6 U1: ticksDrawn). */
+function drawnGlyphs(domainStatus: string, tier: RenderTier, inputs: RenderInputs): DrawnGlyphs {
   const progress = [renderedNode(domainStatus)];
   const card = plainWorkflowCardLines(layoutWorkflowCard({ progress, task: RENDER_TASK, ...inputs.card, ...tier.options }));
   const dialog = plainWorkflowDialogLines(
     layoutWorkflowDialog({ progress, task: RENDER_TASK, state: initialWorkflowDialogState(), ...inputs.dialog, ...tier.options }),
   );
-  return { card: glyphOf(card), dialog: glyphOf(dialog) };
+  return { card: glyphOf(card), dialog: glyphOf(dialog), cardTicks: ticksDrawn(card), dialogTicks: ticksDrawn(dialog) };
 }
 /** Every verified tick glyph C3 reads: the card module's and the dialog module's tick of each tier RENDER_TIERS names. */
 const TICKS: ReadonlySet<string> = new Set(RENDER_TIERS.flatMap(tier => [tier.ticks.card, tier.ticks.dialog]));
-/** Whether a drawn pair lights a verified tick (cut #6: a tick of any tier, so a layout drawing another tier's tick lights too). */
-function lights(drawn: { readonly card: string; readonly dialog: string }): boolean {
-  return TICKS.has(drawn.card) || TICKS.has(drawn.dialog);
+/** Each tick glyph C3 reads, with the tier (or the tiers, joined by +) whose card or dialog tick it is (cut #7). */
+const TICK_TIERS: ReadonlyMap<string, string> = new Map(
+  [...TICKS].map(tick => [tick, RENDER_TIERS.filter(tier => tier.ticks.card === tick || tier.ticks.dialog === tick).map(tier => tier.tier).join("+")]),
+);
+/** Every tick of either tier one drawn layout shows (cut #7, refusal #6 U1: read at every position of every drawn line, not only the
+ * glyph before the node's label): each occurrence of a tick glyph TICK_TIERS names - one inside a longer token included - read as
+ * L<line>C<column>:<tier> (the line's index among the drawn lines, the tick's UTF-16 index in that line, the tick's tier), in line
+ * order and then column order. */
+function ticksDrawn(lines: readonly string[]): string[] {
+  return lines.flatMap((line, row) =>
+    [...TICK_TIERS]
+      .flatMap(([tick, tier]) => {
+        const columns: number[] = [];
+        for (let column = tick.length > 0 ? line.indexOf(tick) : -1; column >= 0; column = line.indexOf(tick, column + tick.length)) columns.push(column);
+        return columns.map(column => ({ column, reading: `L${row}C${column}:${tier}` }));
+      })
+      .sort((left, right) => left.column - right.column)
+      .map(hit => hit.reading),
+  );
+}
+/** Whether a drawn pair lights a verified tick: a tick of either tier at any position of any line either layout draws (cut #7,
+ * refusal #6 U1, through ticksDrawn; cut #6: a tick of any tier, so a layout drawing another tier's tick lights too). */
+function lights(drawn: DrawnGlyphs): boolean {
+  return drawn.cardTicks.length > 0 || drawn.dialogTicks.length > 0;
 }
 /** Each layout's glyph-tier selection (cut #6), read as module|function|the initializer text of each glyphs binding in the function's
  * own statements ("none" when it has none). */
@@ -2389,7 +2453,30 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       "the drawn control lights the card's and the dialog's tick in every tier at every input set, each the tier's own",
     ).toStrictEqual([]);
     expect(selections.filter(selection => selection.endsWith("|none")), "every drawn layout selects its glyph tier in a glyphs binding").toStrictEqual([]);
+    expect(
+      drawn
+        .filter(entry => !RENDER_CONTROLS.includes(entry.status))
+        .flatMap(entry => [
+          ...entry.cardTicks.map(hit => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|card|${hit}`),
+          ...entry.dialogTicks.map(hit => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|dialog|${hit}`),
+        ]),
+      "no declared kind's drawn layout shows a tick of either tier at any position of any line it draws (the node's whole row and every other line), in any tier at any input set",
+    ).toStrictEqual([]);
     expect(declared.filter(kind => lit.has(kind) || lighting.includes(kind)), "no declared kind lights a verified glyph in any tier").toStrictEqual([]);
+    expect(
+      drawn
+        .filter(entry => RENDER_CONTROLS.includes(entry.status))
+        .filter(entry => [entry.cardTicks, entry.dialogTicks].some(ticks => ticks.length !== 1 || ticks[0]?.endsWith(`:${entry.tier.tier}`) !== true))
+        .map(entry => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|card:${entry.cardTicks.join(",")}|dialog:${entry.dialogTicks.join(",")}`),
+      "the drawn control shows exactly one tick in each layout, its tier's own, in every tier at every input set",
+    ).toStrictEqual([]);
+    const tickControl = Object.fromEntries(Object.entries(TICK_CONTROLS).map(([name, lines]) => [name, ticksDrawn(lines)]));
+    expect(
+      Object.entries(tickControl)
+        .filter(([name, hits]) => (name === "nearMiss") !== (hits.length === 0))
+        .map(([name]) => name),
+      "the tick reader reads a tick in every control but the near-miss control, and none there",
+    ).toStrictEqual([]);
     const receiptFind = declared.map(kind => `${kind}|${nativeEvidence("hyperunix.find", findReading(kind, false, RECEIPT_FIELDS_SHAPE)).domainStatus ?? "none"}`);
     expect(receiptFind, "a find reading carrying the receipt fields projects its kind as domainStatus, verbatim").toStrictEqual(declared.map(kind => `${kind}|${kind}`));
     expect([RECEIPT_WIRE.verified, RECEIPT_WIRE.state], "the SDK recomputes the census receipt as coherent and verified").toStrictEqual([true, "Verified"]);
@@ -2422,7 +2509,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         return `${id}|${JSON.stringify(nativeEvidence(id, json({ contract: `${id}/v1`, source: RECEIPT_SOURCE })))}`;
       }),
       tierSelections: selections,
-      drawn: drawn.map(entry => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|card:${entry.card}|dialog:${entry.dialog}`),
+      drawn: drawn.map(
+        entry =>
+          `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|card:${entry.card}|dialog:${entry.dialog}|cardTicks:${entry.cardTicks.join(",") || "none"}|dialogTicks:${entry.dialogTicks.join(",") || "none"}`,
+      ),
+      tickControl,
       glyphTriggers: triggers,
       glyphControl: glyphTriggersIn("control", parse("glyph", READER_CONTROLS.glyph ?? "")),
       statusPlaces: srcModules().flatMap(module => statusPlacesIn(module, srcSource(module))),
@@ -2722,6 +2813,7 @@ describe("wb-ts6.2 HX mutation Verified census (HXFS-PI-R6, until-then leg) over
         renderTiers: RENDER_TIERS,
         renderInputs: RENDER_INPUTS,
         renderLayouts: RENDER_LAYOUTS,
+        tickControls: TICK_CONTROLS,
         residuals: RESIDUALS,
         helper: HELPER,
         helperSha256: createHash("sha256").update(textOf(HELPER)).digest("hex"),
