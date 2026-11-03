@@ -26,6 +26,13 @@
  * page of the narrowed items by its quote (NARROWED, a new case), the helper's CLAIMED FORMS has `as the rows lay it` claim the
  * rows' texts only, and STRINGS holds every position to a row and every row outside the kind range's positions to THE SYNTAX TREE's
  * naming of it.
+ * Its cut #3, after refusal #2 of wb-km7q.16 (gate-prep-5, g10-gate-s195; U1-U3: the gate members G5-R01 to G5-R07 inside the
+ * helper's REFUSAL heritage, type parameters and class modifier words, which its CLAIMED FORMS did not bound; the class guard R-B397
+ * binds there), changes no reading, and no row, pin, plant or test title of the earlier cuts: FORMS lays each member's witness page as
+ * the gate's archive holds it (nine rows, each with a `member`, a `witness` and a `quote` pin), ITEM holds refusal #2's three lines
+ * (K16-RF2-U1 to -U3), the helper's CLAIMED FORMS bounds REFUSAL too, as its REFUSAL heading says, each REFUSAL line names its rows'
+ * forms after `as the rows lay it`, its FORMS rows by id and each G5 page by its quote, and REFUSAL ROWS (a new case) holds those
+ * lines and refusal #2's to the rows.
  *
  * ACCEPTANCE (the description's acceptance line, verbatim in ACCEPTANCE below and held to the tracker export): "each plant reds the
  * unmodified census and greens under the cure; claim text (header, LIMITS, comment, delivery note) and reader coverage agree
@@ -53,7 +60,12 @@
  * R-B359 rules it: each of its four forms narrowed to the pages the rows write (the helper's lines name each page of the narrowed
  * items by its quote, NARROWED, and `as the rows lay it` claims the rows' texts only), so G16-R01, G16-R19, G16-R23 and G16-R25 read
  * outside every claim, NOT CLAIMED, and the two STRINGS rows FROZEN SHAPE alone held are held to THE SYNTAX TREE's naming of them
- * (STRINGS); that every earlier member stays killed is the seat's battery's measurement.
+ * (STRINGS); that every earlier member stays killed is the seat's battery's measurement. (cut #3) Its refusal #2 is read as R-B397
+ * binds it: each of the seven members (G5-R01 to G5-R07) has a FORMS row on each of its gate witness pages, pinned with the reader's
+ * reading under every word and without its own; every section a reading word belongs to is one the helper's CLAIMED FORMS bounds,
+ * REFUSAL now among them; and each REFUSAL line names its rows' forms after `as the rows lay it`, its FORMS rows by id and each G5
+ * page by its quote (REFUSAL ROWS), so a REFUSAL form no row lays reads outside every claim, NOT CLAIMED; that each row reds under
+ * its member is the seat's battery's measurement.
  *
  * MEMBER CHECK MODEL: wb-km7q.4's B1 feeds exactly the entries of the real module's reading (its comparisons are equal on the real
  * module, which that census asserts), so a plant reds THE MEMBER CHECK exactly when its reading differs from BASE as a multiset
@@ -74,7 +86,10 @@
  *   slug), K16-ACCEPTANCE its acceptance line, K16-FOLD-U1 and K16-FOLD-U2 its notes' R-B306 fold lines (each the slug of the
  *   wb-km7q.11 line it folds, `fold <item>`), and K11-RF3-F1 and K11-RF4-U1, -U2 and -F1 to -F4 the wb-km7q.11 lines of refusal
  *   #3's F1 and refusal #4's unmet items and findings, each with the member names its line holds (G7-<id> and GP16-<id>) and the
- *   row each maps to (`cures <member> CARRIED:<member>/<witness>`; G7-L02 to TYPES:moduleReference, which its line names). ITEM
+ *   row each maps to (`cures <member> CARRIED:<member>/<witness>`; G7-L02 to TYPES:moduleReference, which its line names); (cut #3)
+ *   K16-RF2-U1 to -U3 hold the carrier's refusal #2 lines (its notes' UNMET items U1-U3, each the FIRST line opening with its slug,
+ *   the export carrying them from the landing-854 hop on), each with the G5 members its line names and the FORMS row of each
+ *   member's first witness page (`cures <member> FORMS:<word>/<id>`). ITEM
  *   holds that every member a line names maps to a row this census holds; that the row reds under the member is the battery's
  *   measurement.
  *  GATE: one row per member the three refusal lines name, in their order; each plant is the gate's text (quoted by the line where it
@@ -85,7 +100,13 @@
  *  BASE: the real module's two lists, entry by entry.
  *  FORMS: one or more calibration plants per roster word, each with its reading under every word and under every word but its own.
  *   Cut #3 adds elsewhere's export-only and nested module blocks (refusal #2's U2 and F2) and five inner interface rows: an extends
- *   clause, type parameters, a class merge, a class modifier and an augmentation of the inner name (U3).
+ *   clause, type parameters, a class merge, a class modifier and an augmentation of the inner name (U3). wb-km7q.16's cut #3 adds
+ *   nine REFUSAL rows, each the gate's witness page of one member of its refusal #2, laid as the archive's g5-witnesses.json holds it:
+ *   heritage qualifiedNameEntry and qualifiedNameClassEntry (G5-R01: W-R01, W-R01-class), twoEntries (G5-R02: W-R02) and
+ *   typeArgumentsEntry (G5-R03: W-R03); type parameters constrainedParameter and constrainedParameterUsed (G5-R04: W-R04,
+ *   W-R04-used) and twoParameters (G5-R05: W-R05); class modifier decoratorAfterExport (G5-R06: W-R06) and calledDecorator (G5-R07:
+ *   W-R07). Each pins `member <G5-R<nn>>`, `witness <W-...>` (the page's name on refusal #2's line) and `quote <text>`, the line's
+ *   own single-quoted text of the page, which its word's helper line names in backquotes.
  *  TYPES: one or more rows per node kind ts.isTypeNode accepts, each a NativeSnapshot.subjectBasis type holding that kind, except the
  *   two kinds the parser never yields there (UNREACHABLE: intrinsic reads as a type reference in a member, and an expression with
  *   type arguments stands only in a heritage clause or an expression), each shown by a parse.
@@ -154,6 +175,14 @@
  *   NARROWED_ITEMS lists (K16-U1 to K16-U4 and K11-RF4-U1: the forms refusal #1 found wider, with K16-U2's method signature, the
  *   sibling of the gate's G16-R24) names each of that member's pages by its CARRIED quote, in backquotes, so each such line names
  *   the arm order, optionality, parameter list and quote style its pages write.
+ *  REFUSAL ROWS (wb-km7q.16 cut #3, its refusal #2's U1-U3): every rostered section whose words a reading uses (every section but
+ *   NOT READ, by the helper's exported rosters) is one the helper's CLAIMED FORMS paragraph lists, 'every DECLARATION, REFUSAL,
+ *   MEMBER, EXPANSION and LEAF form below', its heading says 'as CLAIMED FORMS bounds them' and each of its roster lines names its
+ *   rows' forms after `as the rows lay it`; each REFUSAL line names, after FORMS, exactly the FORMS rows of its word by id; each FORMS
+ *   row with a `member` pin has that member named by its word's REFUSAL line and each of its `quote` pins named there in backquotes
+ *   and held by its page; the G5 members the REFUSAL lines name are exactly those the `member` pins name; and they are refusal #2's:
+ *   the members its K16-RF2 lines' cures map, each cures pin a FORMS row pinned with its member, each line's page names (W-<id>) the
+ *   `witness` pins of its members' rows, and each such row's `quote` that line's text between single quotes.
  *
  * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl (wb-km7q.11's description
  * lines, its R-B140 note and its refusal #2 lines; wb-km7q.4's notes, each the FIRST line opening with its prefix, so a later note
@@ -171,7 +200,11 @@
  * CARRIED's checker pins); the helper's THE SYNTAX TREE paragraph (cut #2: every STRINGS row it names by id, `STRINGS propertyName`
  * and `STRINGS importSpecifier`, is a row, and every row outside RANGE_POSITIONS is one it names) and its roster lines, headings and
  * paragraphs read with the CARRIED quotes (NARROWED: each line naming a narrowed member holds that member's page quotes, which
- * CARRIED holds to the tracker export's lines and to the pages); src/workbench/observation.ts read from disk (BASE).
+ * CARRIED holds to the tracker export's lines and to the pages); (cut #3 of wb-km7q.16) the helper's exported rosters, headings,
+ * CLAIMED FORMS paragraph and REFUSAL lines (REFUSAL ROWS: every FORMS row of a REFUSAL word is one its line names by id and every
+ * row a line names is one; every G5 member a line names has the FORMS rows whose `member` pins name it, each page held to the line's
+ * quote and the quote to the page) and wb-km7q.16's refusal #2 lines in the tracker export (K16-RF2-U1 to -U3: its G5 members, page
+ * names and quotes); src/workbench/observation.ts read from disk (BASE).
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): a
  * FORMS row of a word that keeps another FORMS row; a TYPES or MEMBERS row of a kind that keeps another row; a RESIDUALS row of a
  * word that keeps another row; a GATE row's plant beyond the quotes its line gives; a CONTEXTS row of a slot that keeps another row
@@ -186,7 +219,8 @@
  * holds THE SYNTAX TREE to name; and
  * (cut #4, wb-km7q.16) the text of each claim word's narrowing in the helper (its `as the rows lay it` forms, its NOT CLAIMED
  * clauses, its headings, CLAIMED FORMS and THE SYNTAX TREE), which CLAIM holds only between the helper's header and its exported
- * rosters, headings and paragraphs, so an edit of both copies together reads green.
+ * rosters, headings and paragraphs, so an edit of both copies together reads green; and (cut #3 of wb-km7q.16) a REFUSAL row's page
+ * beyond its quote, and which page of a member a K16-RF2 cures pin names, beyond its existence.
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count>.
  *
  * NOT CLAIMED: anything of wb-km7q.4's census beyond the reader (its journeys, its comparisons' fed lists, its other legs); that a
@@ -220,7 +254,8 @@
  * (G16-R25), another augmentation block of two or more statements or another ../ spelling, an inner interface property under
  * Interval's expansion, another class declaration without export, a type reference to a name no row writes, and another string or
  * template text, spelling or position (a string literal in single quotes, G16-R01, and a text written with an escape sequence among
- * them).
+ * them). (cut #3 of wb-km7q.16) A REFUSAL form no row lays is NOT CLAIMED by this census: another text, read name, clause, entry,
+ * list, parameter, modifier, decorator or position than the helper's REFUSAL lines name.
  *
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export,
  * src/workbench/observation.ts and TypeScript's lib/typescript.d.ts, lays every plant over that text in memory, and runs the
@@ -242,6 +277,8 @@ import {
   OBSERVATION_MODULE,
   type ObservationMembers,
   observationMembers,
+  REFUSAL_FORMS,
+  type RefusalWord,
   ROOTS,
   type Word,
   words,
@@ -301,6 +338,8 @@ const respinMembers = (line: string): string[] =>
 /** The gate members a line of the carrier's items or of wb-km7q.11's refusal #3 and #4 lines names (wb-km7q.16): refusal #3's G7-<id> and
  * refusal #4's GP16-<id>, in order of first appearance. */
 const carriedMembers = (line: string): string[] => unique([...line.matchAll(/\bG7-[A-Z]\d{2}\b|\bGP16-[A-Z]\d{2}\b/gu)].map(match => match[0]));
+/** The gate members a line of wb-km7q.16's refusal #2 or a REFUSAL line names (cut #3: G5-R<nn>), in order of first appearance. */
+const refusalMembers = (line: string): string[] => unique([...line.matchAll(/\bG5-R\d{2}\b/gu)].map(match => match[0]));
 /** The witness pages a refusal #4 line names (W-<id> and W-<id>-<name>), in order of first appearance. */
 const witnessNames = (line: string): string[] => unique([...line.matchAll(/\bW-[A-Z]\d{2}(?:-[A-Za-z]+)?\b/gu)].map(match => match[0]));
 /** A line's slug: its text before its first ' (' or '. ' (the whole line when it holds neither). */
@@ -418,7 +457,7 @@ const without = (word: Word): readonly Word[] => ALL_WORDS.filter(entry => entry
 const pinsWith = (pins: readonly string[], ...prefixes: string[]): string[] => pins.filter(pin => prefixes.some(prefix => pin.startsWith(prefix)));
 
 // ---------------------------------------------------------------------------------------------------------- ITEM
-type Home = "child description" | "child notes" | "parent notes" | "carrier description" | "carrier notes" | "carrier unmet items";
+type Home = "child description" | "child notes" | "parent notes" | "carrier description" | "carrier notes" | "carrier unmet items" | "carrier refusal notes";
 interface ItemRow {
   readonly id: string;
   readonly home: Home;
@@ -484,6 +523,10 @@ const K11_RF4_F3 =
   "- F3 INFO: [PREP qualifier: NOT CLAIMED under CLAIMED FORMS] GP16-M01, a class property with an initializer read as another member, keeps the census at 0 failed | 15 passed (15), tsc and biome clean";
 const K11_RF4_F4 =
   "- F4 INFO: [PREP qualifier: no claim word contradicted; record precision] GP16-R04, REFUSAL type parameters read only for a non-empty list ('(declaration.typeParameters ?? []).length > 0'), keeps the census at 0 failed | 15 passed (15), tsc and biome clean";
+/** wb-km7q.16's refusal #2 lines (cut #3; gate-prep-5, g10-gate-s195): its notes' three UNMET items, each by its slug. */
+const K16_RF2_U1 = "U1-HIGH-CONFIRMED-R514-R515-R668-REFUSAL-HERITAGE-CLAUSE-ENTRY-FORMS-UNPINNED";
+const K16_RF2_U2 = "U2-LOW-CONFIRMED-R514-R515-R668-REFUSAL-TYPE-PARAMETERS-LIST-FORMS-UNPINNED";
+const K16_RF2_U3 = "U3-LOW-CONFIRMED-R514-R515-R668-REFUSAL-CLASS-MODIFIER-DECORATOR-FORMS-UNPINNED";
 /** A carried line's pins (wb-km7q.16): its label, the member names it holds, and the row each maps to. */
 const labelled = (label: string, cures: readonly (readonly [string, string])[]): readonly string[] => [
   `label ${label}`,
@@ -615,6 +658,33 @@ const ITEM_ROWS: readonly ItemRow[] = [
   { id: "K16-ACCEPTANCE", home: "carrier description", pins: [`line ${K16_ACCEPTANCE}`] },
   { id: "K16-FOLD-U1", home: "carrier notes", pins: [`line ${K16_FOLD_U1}`, "fold K11-RF4-U1"] },
   { id: "K16-FOLD-U2", home: "carrier notes", pins: [`line ${K16_FOLD_U2}`, "fold K11-RF4-U2"] },
+  // wb-km7q.16's refusal #2 (cut #3): its notes' UNMET lines U1-U3, each the FIRST line opening with its slug, each G5 member its line
+  // names mapped to the FORMS row of the member's first witness page (REFUSAL ROWS holds every page of it to the line).
+  {
+    id: "K16-RF2-U1",
+    home: "carrier refusal notes",
+    pins: respin(K16_RF2_U1, [
+      ["G5-R01", "FORMS:heritage/qualifiedNameEntry"],
+      ["G5-R02", "FORMS:heritage/twoEntries"],
+      ["G5-R03", "FORMS:heritage/typeArgumentsEntry"],
+    ]),
+  },
+  {
+    id: "K16-RF2-U2",
+    home: "carrier refusal notes",
+    pins: respin(K16_RF2_U2, [
+      ["G5-R04", "FORMS:type parameters/constrainedParameter"],
+      ["G5-R05", "FORMS:type parameters/twoParameters"],
+    ]),
+  },
+  {
+    id: "K16-RF2-U3",
+    home: "carrier refusal notes",
+    pins: respin(K16_RF2_U3, [
+      ["G5-R06", "FORMS:class modifier/decoratorAfterExport"],
+      ["G5-R07", "FORMS:class modifier/calledDecorator"],
+    ]),
+  },
   { id: "K11-RF3-F1", home: "child notes", pins: labelled(K11_RF3_F1, [["G7-D04", "CARRIED:G7-D04/W-D04"]]) },
   {
     id: "K11-RF4-U1",
@@ -638,6 +708,7 @@ const HOME_TEXT: Readonly<Record<Home, string>> = {
   "carrier description": CARRIER_TEXT.description,
   "carrier notes": CARRIER_TEXT.notes,
   "carrier unmet items": CARRIER_UNMET.join("\n"),
+  "carrier refusal notes": CARRIER_TEXT.notes,
 };
 const homeText = (home: Home): string => HOME_TEXT[home];
 /** An item's line in its home: the first line opening with its slug and ': ' (refusal #2), or with its label (the acceptance line
@@ -654,6 +725,7 @@ function itemLine(row: ItemRow): string {
 function itemMembers(row: ItemRow, line: string): string[] {
   if (row.id === "R-B140") return Object.entries(MUTANT_CLAUSES).flatMap(([clause, name]) => (line.includes(clause) ? [name] : []));
   if (row.id.startsWith("RF2-")) return respinMembers(line);
+  if (row.id.startsWith("K16-RF2-")) return refusalMembers(line);
   if (row.id.startsWith("K16-") || row.id.startsWith("K11-")) return carriedMembers(line);
   return memberNames(line);
 }
@@ -769,6 +841,12 @@ interface FormRow {
   readonly pins: readonly string[];
 }
 const form = (word: Word, id: string, plant: Plant, pins: readonly string[]): FormRow => ({ word, id, plant, pins });
+/** A REFUSAL row on the gate's own witness page of one member of wb-km7q.16's refusal #2 (cut #3; gate-prep-5, g10-gate-s195, its
+ * archive's specs/g5-witnesses.json, each page laid byte for byte): `member <G5-R<nn>>`, `witness <W-...>` (the page's name on the
+ * refusal line) and `quote <text>`, a text of the page the refusal line quotes between single quotes and its word's helper line names
+ * in backquotes (REFUSAL ROWS), before the reading's pins. */
+const refusedPage = (word: RefusalWord, id: string, member: string, witness: string, quote: string, plant: Plant, pins: readonly string[]): FormRow =>
+  form(word, id, plant, [`member ${member}`, `witness ${witness}`, `quote ${quote}`, ...pins]);
 const TRACE_REFUSED = "-trace.invocationId -trace.parentSpan -trace.spanId -trace.correlationIds +trace.?";
 const INTERVAL_REFUSED = "-interval.startedAt -interval.endedAt +interval.?";
 const ALL_SNAPSHOT = BASE_ROW.pins[0].slice("snapshot ".length).split(" ");
@@ -970,6 +1048,45 @@ const FORM_ROWS: readonly FormRow[] = [
     "without snapshot =",
     "without event =",
   ]),
+  // REFUSAL heritage on the witness pages of wb-km7q.16's refusal #2 U1 (cut #3): a qualified-name entry (G5-R01, pages W-R01 and
+  // W-R01-class), a clause of two entries (G5-R02, W-R02) and an entry with a type argument (G5-R03, W-R03), each refused, where the
+  // checker's NativeSnapshot gains region? (and zone?) and each member read BASE.
+  refusedPage(
+    "heritage",
+    "qualifiedNameEntry",
+    "G5-R01",
+    "W-R01",
+    "export interface NativeSnapshot extends ProbeNs.ProbeBase {",
+    both(afterName("NativeSnapshot", " extends ProbeNs.ProbeBase"), appended("export namespace ProbeNs { export interface ProbeBase { region?: string } }")),
+    ["snapshot ?", "event =", "without snapshot =", "without event ="],
+  ),
+  refusedPage(
+    "heritage",
+    "qualifiedNameClassEntry",
+    "G5-R01",
+    "W-R01-class",
+    "export declare class NativeSnapshot extends ProbeNs.ProbeBase {}",
+    appended("export declare class NativeSnapshot extends ProbeNs.ProbeBase {}", "export declare namespace ProbeNs { class ProbeBase { region?: string } }"),
+    ["snapshot ?", "event =", "without snapshot =", "without event ="],
+  ),
+  refusedPage(
+    "heritage",
+    "twoEntries",
+    "G5-R02",
+    "W-R02",
+    "extends ProbeBaseA, ProbeBaseB",
+    both(afterName("NativeSnapshot", " extends ProbeBaseA, ProbeBaseB"), appended("export interface ProbeBaseA { region?: string }", "export interface ProbeBaseB { zone?: string }")),
+    ["snapshot ?", "event =", "without snapshot =", "without event ="],
+  ),
+  refusedPage(
+    "heritage",
+    "typeArgumentsEntry",
+    "G5-R03",
+    "W-R03",
+    "extends ProbeBox<string>",
+    both(afterName("NativeSnapshot", " extends ProbeBox<string>"), appended("export interface ProbeBox<T> { region?: T }")),
+    ["snapshot ?", "event =", "without snapshot =", "without event ="],
+  ),
   form("type parameters", "interfaceTypeParameters", afterName("ObservationTrace", "<T = string>"), [
     `snapshot ${TRACE_REFUSED}`,
     `event ${TRACE_REFUSED}`,
@@ -984,6 +1101,35 @@ const FORM_ROWS: readonly FormRow[] = [
     "without snapshot +region",
     "without event =",
   ]),
+  // REFUSAL type parameters on the witness pages of wb-km7q.16's refusal #2 U2 (cut #3), each a list after the module's Interval: a
+  // constrained parameter (G5-R04, pages W-R04 and W-R04-used, the second with endedAt typed by it) and two parameters (G5-R05, W-R05).
+  refusedPage(
+    "type parameters",
+    "constrainedParameter",
+    "G5-R04",
+    "W-R04",
+    "export interface Interval<T extends string = string> {",
+    afterName("Interval", "<T extends string = string>"),
+    [`snapshot ${INTERVAL_REFUSED}`, `event ${INTERVAL_REFUSED}`, "without snapshot =", "without event ="],
+  ),
+  refusedPage(
+    "type parameters",
+    "constrainedParameterUsed",
+    "G5-R04",
+    "W-R04-used",
+    "export interface Interval<T extends string = string> {",
+    both(afterName("Interval", "<T extends string = string>"), retyped("Interval", "endedAt", "T")),
+    [`snapshot ${INTERVAL_REFUSED}`, `event ${INTERVAL_REFUSED}`, "without snapshot -interval.endedAt +interval.?", "without event -interval.endedAt +interval.?"],
+  ),
+  refusedPage(
+    "type parameters",
+    "twoParameters",
+    "G5-R05",
+    "W-R05",
+    "export interface Interval<T = string, U = number> {",
+    afterName("Interval", "<T = string, U = number>"),
+    [`snapshot ${INTERVAL_REFUSED}`, `event ${INTERVAL_REFUSED}`, "without snapshot =", "without event ="],
+  ),
   form("class modifier", "abstractClass", appended("export declare abstract class NativeSnapshot { region?: string }"), [
     "snapshot ?",
     "event =",
@@ -992,6 +1138,26 @@ const FORM_ROWS: readonly FormRow[] = [
   ]),
   form("class modifier", "defaultClass", appended("export default class NativeSnapshot { region?: string }"), ["snapshot ?", "event =", "without snapshot +region", "without event ="]),
   form("class modifier", "decoratedClass", appended("@sealed export class NativeSnapshot { region?: string }"), ["snapshot ?", "event =", "without snapshot +region", "without event ="]),
+  // REFUSAL class modifier on the witness pages of wb-km7q.16's refusal #2 U3 (cut #3): a decorator written after export (G5-R06, W-R06)
+  // and a called decorator (G5-R07, W-R07), each refused, where each member read the class's region.
+  refusedPage(
+    "class modifier",
+    "decoratorAfterExport",
+    "G5-R06",
+    "W-R06",
+    "export @probeSealed class NativeSnapshot { region?: string }",
+    appended("export @probeSealed class NativeSnapshot { region?: string }", "function probeSealed(value: unknown, context: ClassDecoratorContext): void {}"),
+    ["snapshot ?", "event =", "without snapshot +region", "without event ="],
+  ),
+  refusedPage(
+    "class modifier",
+    "calledDecorator",
+    "G5-R07",
+    "W-R07",
+    "@probeSealed() export class NativeSnapshot { region?: string }",
+    appended("@probeSealed() export class NativeSnapshot { region?: string }", "function probeSealed(): (value: unknown, context: ClassDecoratorContext) => void { return () => {}; }"),
+    ["snapshot ?", "event =", "without snapshot +region", "without event ="],
+  ),
   form("property", "asIs", asIs, [
     "snapshot =",
     "event =",
@@ -1989,6 +2155,16 @@ const literalText = (node: ts.Node): string | undefined =>
     ? node.text
     : undefined;
 
+// ---------------------------------------------------------------------------------------------------------- REFUSAL ROWS (wb-km7q.16 cut #3)
+/** The FORMS row ids a line names: each `FORMS <id>`, and each id a list after it joins with ', ', ' and ' or ', and ' (row ids are
+ * camelCase, so a list ends at the first word that is none). */
+const formsNamed = (line: string): string[] =>
+  unique(
+    [...line.matchAll(/\bFORMS ([a-z]+[A-Z][A-Za-z0-9]*(?:(?:, and |, | and )[a-z]+[A-Z][A-Za-z0-9]*)*)/gu)].flatMap(match => (match[1] ?? "").split(/, and |, | and /u)),
+  );
+/** Names joined as a sentence lists them: 'A, B and C'. */
+const listed = (names: readonly string[]): string => (names.length < 2 ? (names[0] ?? "") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1] ?? ""}`);
+
 // ---------------------------------------------------------------------------------------------------------- the checker (AGREEMENT)
 const VIRTUAL = "/wb-km7q11-virtual";
 const ORACLE_OPTIONS: ts.CompilerOptions = {
@@ -2179,7 +2355,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "ITEM:U1:2", "ITEM:U2:4", "ITEM:ACCEPTANCE:1", "ITEM:R-B140:2", "ITEM:RF4-U1:2", "ITEM:RF5-U1:2", "ITEM:RF5-U2:2", "ITEM:RF2-U1:16", "ITEM:RF2-U2:5", "ITEM:RF2-U3:5",
   "ITEM:RF2-U4:6", "ITEM:RF2-U5:10", "ITEM:RF2-U6:7",
   "ITEM:K16-U1:6", "ITEM:K16-U2:3", "ITEM:K16-U3:3", "ITEM:K16-U4:3", "ITEM:K16-U5:5", "ITEM:K16-U6:3", "ITEM:K16-ACCEPTANCE:1", "ITEM:K16-FOLD-U1:2",
-  "ITEM:K16-FOLD-U2:2", "ITEM:K11-RF3-F1:3", "ITEM:K11-RF4-U1:5", "ITEM:K11-RF4-U2:2", "ITEM:K11-RF4-F1:3", "ITEM:K11-RF4-F2:3", "ITEM:K11-RF4-F3:3",
+  "ITEM:K16-FOLD-U2:2", "ITEM:K16-RF2-U1:5", "ITEM:K16-RF2-U2:4", "ITEM:K16-RF2-U3:4", "ITEM:K11-RF3-F1:3", "ITEM:K11-RF4-U1:5", "ITEM:K11-RF4-U2:2", "ITEM:K11-RF4-F1:3", "ITEM:K11-RF4-F2:3", "ITEM:K11-RF4-F3:3",
   "ITEM:K11-RF4-F4:3",
   "GATE:O7:3", "GATE:O15:3", "GATE:O8:3", "GATE:O7b:3", "GATE:O15b:3", "GATE:O7bt:3", "GATE:O15bt:3",
   "GATE:GP-globalBrandSnapshot:3", "GATE:GP-globalBrandEvent:3", "GATE:GP-globalBrandInner:3", "GATE:GP-globalLeafSnapshot:3", "GATE:GP-topBrandSnapshot:3",
@@ -2197,9 +2373,9 @@ const FROZEN_SHAPE: readonly string[] = [
   "FORMS:elsewhere/caseSpecifier:4", "FORMS:elsewhere/indexSpecifier:4", "FORMS:elsewhere/namespaceInAugmentation:4", "FORMS:elsewhere/classInAugmentation:4",
   "FORMS:elsewhere/undeclaredModuleBlock:4", "FORMS:elsewhere/nestedModuleBlock:4", "FORMS:elsewhere/dtsSpecifier:4", "FORMS:elsewhere/mtsSpecifier:4",
   "FORMS:elsewhere/exportModuleBlock:4", "FORMS:elsewhere/nestedAugmentationBlock:4", "FORMS:heritage/extendsClause:4", "FORMS:heritage/classExtends:4",
-  "FORMS:heritage/classImplements:4", "FORMS:heritage/augmentationExtends:4", "FORMS:type parameters/interfaceTypeParameters:4",
-  "FORMS:type parameters/classTypeParameters:4", "FORMS:type parameters/augmentationTypeParameters:4", "FORMS:class modifier/abstractClass:4",
-  "FORMS:class modifier/defaultClass:4", "FORMS:class modifier/decoratedClass:4", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4",
+  "FORMS:heritage/classImplements:4", "FORMS:heritage/augmentationExtends:4", "FORMS:heritage/qualifiedNameEntry:7", "FORMS:heritage/qualifiedNameClassEntry:7", "FORMS:heritage/twoEntries:7", "FORMS:heritage/typeArgumentsEntry:7", "FORMS:type parameters/interfaceTypeParameters:4",
+  "FORMS:type parameters/classTypeParameters:4", "FORMS:type parameters/augmentationTypeParameters:4", "FORMS:type parameters/constrainedParameter:7", "FORMS:type parameters/constrainedParameterUsed:7", "FORMS:type parameters/twoParameters:7", "FORMS:class modifier/abstractClass:4",
+  "FORMS:class modifier/defaultClass:4", "FORMS:class modifier/decoratedClass:4", "FORMS:class modifier/decoratorAfterExport:7", "FORMS:class modifier/calledDecorator:7", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4",
   "FORMS:type literal/asIs:4", "FORMS:read interface/asIs:4", "FORMS:inner interface/asIs:4", "FORMS:inner interface/refusedInnerName:4",
   "FORMS:inner interface/heritageInnerName:4", "FORMS:inner interface/typeParametersInnerName:4", "FORMS:inner interface/classMergeInnerName:4",
   "FORMS:inner interface/classModifierInnerName:4", "FORMS:inner interface/augmentedInnerName:4", "FORMS:string/asIs:4", "FORMS:number/asIs:4",
@@ -3217,6 +3393,68 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
       const naming = lines.filter(([, text]) => carriedMembers(text).includes(member));
       if (naming.length === 0) failures.push(`${member}: no helper line names it`);
       for (const [name, text] of naming) for (const quote of quotes) if (!text.includes(`\`${quote}\``)) failures.push(`${name}: names ${member} without its page \`${quote}\``);
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it("REFUSAL ROWS: every section a reading word belongs to is one CLAIMED FORMS bounds, as its heading says, and each of its lines names its rows' forms after `as the rows lay it`; each REFUSAL line names exactly its word's FORMS rows by id, and each page of a G5 member it names by that row's quote, in backquotes; and those members, pages and quotes are the ones wb-km7q.16's refusal #2 lines name and quote", () => {
+    const failures: string[] = [];
+    // wb-km7q.16 cut #3 (refusal #2: CLAIMED FORMS did not list REFUSAL, and no REFUSAL line named its forms, so G5-R01 to G5-R07 read
+    // inside its words): the sections whose words a reading uses, every section but NOT READ, as the helper's own rosters give them.
+    const readWords = new Set<string>(ALL_WORDS);
+    const read = HEADER_SECTIONS.filter(([, roster]) => roster.length > 0 && roster.every(entry => readWords.has(entry.word)));
+    const claimedForms = HEADER_PARAGRAPHS.find(([name]) => name === "CLAIMED FORMS")?.[1] ?? "";
+    const bounded = `every ${listed(read.map(([section]) => section))} form below`;
+    if (!claimedForms.includes(bounded)) failures.push(`CLAIMED FORMS names no '${bounded}'`);
+    for (const [section, roster] of read) {
+      const heading = HEADER_HEADINGS.find(([name]) => name === section)?.[1] ?? "";
+      if (!heading.includes("as CLAIMED FORMS bounds them")) failures.push(`${section}: its heading says no 'as CLAIMED FORMS bounds them'`);
+      for (const entry of roster) if (!entry.claim.includes("as the rows lay it")) failures.push(`${section} ${entry.word}: its line names no forms after 'as the rows lay it'`);
+    }
+    for (const entry of REFUSAL_FORMS) {
+      const named = formsNamed(entry.claim);
+      const rows = FORM_ROWS.filter(row => row.word === entry.word).map(row => row.id);
+      if (!sameList([...named].sort(), [...rows].sort())) failures.push(`REFUSAL ${entry.word}: its line names FORMS ${named.join(" ")}, its rows are ${rows.join(" ")}`);
+    }
+    const paged = FORM_ROWS.filter(row => pinsWith(row.pins, "member ").length > 0);
+    for (const row of paged) {
+      const member = pinsWith(row.pins, "member ")[0]?.slice("member ".length) ?? "";
+      const line = REFUSAL_FORMS.find(entry => entry.word === row.word)?.claim ?? "";
+      if (!refusalMembers(line).includes(member)) failures.push(`${row.word}/${row.id}: its word's REFUSAL line names no ${member}`);
+      const quotes = pinsWith(row.pins, "quote ").map(pin => pin.slice("quote ".length));
+      if (quotes.length === 0) failures.push(`${row.word}/${row.id}: holds no quote of its page`);
+      const page = rowText(row.plant);
+      for (const quote of quotes) {
+        if (!line.includes(`\`${quote}\``)) failures.push(`${row.word}/${row.id}: its line names no page \`${quote}\``);
+        if (!holdsQuote(page, quote)) failures.push(`${row.word}/${row.id}: the page holds no ${JSON.stringify(quote)}`);
+      }
+    }
+    const named = unique(REFUSAL_FORMS.flatMap(entry => refusalMembers(entry.claim))).sort();
+    const members = unique(paged.flatMap(row => pinsWith(row.pins, "member ").map(pin => pin.slice("member ".length)))).sort();
+    if (!sameList(named, members)) failures.push(`the REFUSAL lines name ${named.join(" ")}, the FORMS rows' member pins ${members.join(" ")}`);
+    // The members, their pages and quotes are refusal #2's own: its lines in the tracker export (ITEM K16-RF2-U1 to -U3, which ITEM holds
+    // to name exactly the members their cures map), each page by the name its line gives it and by the line's own single-quoted text.
+    const refusal = ITEM_ROWS.filter(row => row.home === "carrier refusal notes");
+    const cures = refusal.flatMap(row => pinsWith(row.pins, "cures ").map(pin => pin.slice("cures ".length)));
+    const cured = unique(cures.map(entry => entry.slice(0, entry.indexOf(" ")))).sort();
+    if (!sameList(cured, members)) failures.push(`refusal #2's lines name ${cured.join(" ")}, the FORMS rows' member pins ${members.join(" ")}`);
+    for (const entry of cures) {
+      const member = entry.slice(0, entry.indexOf(" "));
+      const target = entry.slice(entry.indexOf(" ") + 1);
+      const row = paged.find(candidate => `FORMS:${candidate.word}/${candidate.id}` === target);
+      if (row === undefined || !row.pins.includes(`member ${member}`)) failures.push(`${member} maps to ${target}, no FORMS row pinned with it`);
+    }
+    for (const item of refusal) {
+      const line = itemLine(item);
+      const onLine = refusalMembers(line);
+      const rows = paged.filter(row => onLine.some(member => row.pins.includes(`member ${member}`)));
+      const pages = rows.map(row => pinsWith(row.pins, "witness ")[0]?.slice("witness ".length) ?? "");
+      if (!sameList([...witnessNames(line)].sort(), [...pages].sort())) failures.push(`${item.id}: its line names the pages ${witnessNames(line).join(" ")}, the rows ${pages.join(" ")}`);
+      for (const row of rows) {
+        for (const quote of pinsWith(row.pins, "quote ").map(pin => pin.slice("quote ".length))) {
+          if (!line.includes(`'${quote}'`)) failures.push(`${row.word}/${row.id}: ${item.id}'s line quotes no '${quote}'`);
+        }
+      }
     }
     expect(failures).toEqual([]);
   });
