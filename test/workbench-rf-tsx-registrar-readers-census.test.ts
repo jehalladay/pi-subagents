@@ -2,7 +2,9 @@
  * wb-6fr4 registrar readers census (the rule-19 dependency-inversion child of wb-8avz: ruling R-B179 filed it, ruling R-B218
  * folded wb-8avz's refusal #4 member into it). SUBJECT: two readers of test/helpers/rf-tsx-registrar-readers.ts -
  * registrarBindings() and tierReadingOf() (which reports what refusedVitestImports() names) - moved byte for byte from
- * wb-8avz's FINAL cut #4 (tip b8cfd428). The parent's census and roster at that tip are not on trunk and are neither added nor
+ * wb-8avz's FINAL cut #4 (tip b8cfd428). The parent's census at that tip differs from trunk's, which is the census its re-cut
+ * landed (landing 800, tip 9497cb2d); its roster at that tip (test/fixtures/rf-tsx-remote-hook-roster.json) is trunk's byte
+ * for byte since that landing. Neither is added nor
  * edited here; trunk's test/workbench-rf-tsx-remote-hook-census.test.ts, whose C2 imports tierReadingOf() from the helper
  * since the parent's R-B218 re-cut landed, is not read by this census. wb-ffz5, the R694 follow-up of wb-6fr4's landing 780
  * (its findings F3 and F4), anchors row R's pins to refusal #4 and the R-B218 fold and adds M2's probe after a leading vitest
