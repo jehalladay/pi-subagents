@@ -197,9 +197,10 @@
  * 28: the gate's GP22-CX-BASE-PATH-SRC (src/index.ts) and GP22-CX-BASE-PATH-QA (qa/workbench/status-ledger.mjs), and the same row
  * at test/helpers/scratch.ts, docs/workbench/18-decisions-and-risks.md and examples/agent-tool-description.md (measured at
  * 28eea02; at the base tree's two holder paths, its census module and the fixture that module names, the row already reds 2, at
- * the context findings pin). The site pin now reads the plant's files off the disk with no base exemption: every entry under the
- * synthetic root that is new, gone or holds other bytes once the plant has written, against the root as the base tree left it
- * (diskEntries, changedEntries), is a CONTEXT_TABLE site, and every site is one (PLANT IDENTITY below), so each of the seven rows
+ * the context findings pin). The site pin now reads the plant's files off the disk with no base exemption: every file under the
+ * synthetic root that is new, gone or holds other bytes once the plant has written, and every entry the walk cannot read (a symlink,
+ * a socket) that is new or gone, against the root as the base tree left it (diskEntries, changedEntries; a directory as well since
+ * wb-xu2e cut #4, below), is a CONTEXT_TABLE site, and every site is one (PLANT IDENTITY below), so each of the seven rows
  * reds 2 (R-SPELLING, records; measured). No judged row, pin, roster entry or frozen literal changes. Cost: R-SPELLING 8,289 and
  * 7,985 ms against 7,863 and 7,096 ms on cut #1's bytes, measured back to back at load1 ~69 to 76 (the two disk readings read the
  * base tree's 7 files and the 23 the root holds once the plant has written).
@@ -214,6 +215,27 @@
  * #4's six members red as on cut #2 (the five context hollows 2, the write hollow 3), and so does each with its cure; refusal #1's
  * seven base-path CONTEXT_SITES rows red 2 each; the anchor owes 390 subjects in this worktree unbuilt, 20 base separator swaps, 34
  * class and 16 context among them. This re-cut changes no code token, judged row, pin, roster entry or frozen literal past the merge.
+ * RESPIN (wb-xu2e cut #4; the gate's refusal #3, U1, the first judged failure of the entry words cut #2 wrote - rung 1 of their own
+ * claim set under the orchestrator's ruling R-B389, a normal respin with the class-level guard bound on those words - merged with
+ * trunk a6b770c, landing 853, whose census and roster bytes are cut #3's): cut #2's words said the disk reading holds every entry
+ * under the synthetic root, while diskEntries keyed only the regular files and the entries the walk cannot read and only recursed a
+ * directory, so a directory the context plant leaves with no file under it was in neither reading: the gate's GP21-CX-EMPTY-DIR
+ * (src/plant-context-dir), GP21-CX-EMPTY-DIR-ROOT (plant-context-dir) and GP21-CX-EMPTY-DIR-HIDDEN (.agents/plant-context), one
+ * mkdirSync each after write()'s writeFileSync keyed to a context path, each read 28 of 28 on cut #3's merged bytes, while the
+ * gate's paired witness W-GP21-DIRS (every entry, a directory by its path and a trailing slash, read before and after the plant
+ * writes) read 28 of 28 alone and red 2 with each (measured). diskEntries now keys each directory by its path and a trailing slash,
+ * with no text, and recurses it (the refusal's cure option (a)), so each of the three reds 2 at the site pin (R-SPELLING, records),
+ * and so does a directory the plant leaves nested and hidden (test/fixtures/.plant-context) or two deep (docs/workbench/plant-a/
+ * plant-b) and a directory made before the first disk reading and removed by the plant, each 28 of 28 on cut #3's merged bytes; a
+ * FIFO or a socket the plant leaves and a symlink made before the first reading and removed red 2 on both (cut #2's reading keyed
+ * them); the delivered plant leaves no directory (16 entries before it writes, 9 directories and 7 files, and 32 after, 9 and 23)
+ * and reads 28 of 28 (measured). The site pin's words are restated to the reading (PLANT IDENTITY, THE CONTEXT PLANT, the
+ * CONTEXT_SITES, CONTEXT_TABLE, diskEntries and changedEntries docs, the R-SPELLING comments and the site pin's message): every
+ * entry new or gone - a file, a directory, an entry the walk cannot read - and every file that holds other bytes. NOT CLAIMED by
+ * this census (PLANT IDENTITY below): an entry's metadata and what an entry the walk cannot read points to - a chmod of a base-tree
+ * file or directory, a touch of a base-tree file and a symlink made before the first reading and retargeted in place each read 28
+ * of 28, on both (measured). No judged row, pin, roster entry or frozen literal changes. Cost: R-SPELLING 5,053 and 4,925 ms against
+ * 5,103 and 5,161 ms on cut #3's merged bytes, measured back to back at load1 ~31 to 33 (no cost measured past the noise).
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -326,13 +348,16 @@
  * (WHITE_SPACE), and its other cases and its base separator swaps (wb-zulk) by the residual anchor's subjects, derived from the needle
  * set apart from swaps(); and of the context plant the five measured open members (OPEN_MEMBERS). For the separator and context
  * plants (wb-xu2e) the census also claims the identity of the artifact each produces, read off the text the line reading is handed
- * for each of their files, which the walk reads from disk, and the context plant's file set off the disk itself (wb-xu2e cut #2).
+ * for each of their files, which the walk reads from disk, and the context plant's file set off the disk itself (wb-xu2e cut #2),
+ * with every other entry it leaves there (wb-xu2e cut #4).
  * The landed separator plant's own written file (src/plant.ts, at the first of its two writes) is, as the line reading is handed it,
  * byte for byte the text its builder hands write(), and the two-word member's separators read off it, statement by statement in
  * code()'s form as written apart from code() (codeSpellings), are SPACE_SEPARATOR_POINTS' in planting order (refusal #4 U2's cure).
  * The context plant's files are exactly the sites CONTEXT_TABLE names - every file it leaves under the synthetic root, read off the
  * disk against the root as the base tree left it, new or holding other bytes, a base-tree file it rewrites among them (cut #2,
- * refusal #1 U1's cure: no base exemption) - and each, read off as the line reading is handed it, is lines in its site's form and
+ * refusal #1 U1's cure: no base exemption), and it leaves no other entry there new or gone: no directory, keyed by its path and a
+ * trailing slash (wb-xu2e cut #4, refusal #3 U1's cure), no entry the walk cannot read (a symlink, a socket) and no base-tree file
+ * removed - and each, read off as the line reading is handed it, is lines in its site's form and
  * nothing else, holding the member with its space, CONTEXT_TABLE's four joiners in its order and the member with its space again
  * (refusal #4 U1's cure); CONTEXT_TABLE is written apart from the context plant's builder (CONTEXT_JOINERS,
  * CONTEXT_SITES, padded, contextFiles). Wherever this header says R-SPELLING or its quiet row plants, writes or holds a spelling, it
@@ -342,7 +367,10 @@
  * above), and its second write, the file beside a judged needle; a coordinated edit of a table and what it is held to -
  * CONTEXT_TABLE with the context plant's builder (the artifact the builder produces is the table's one anchor), or
  * SPACE_SEPARATOR_POINTS with the separator plant's builder (swaps) or with the WHITE_SPACE derivation (landing 635's F2); and a file
- * the context plant leaves outside the synthetic root (the disk reading reads that root alone, cut #2). Cut #4's byte-for-byte
+ * the context plant leaves outside the synthetic root (the disk reading reads that root alone, cut #2); and, under that root, an
+ * entry's metadata (its mode, owner or times: a chmod or a touch that leaves a file's bytes as they were) and what an entry the walk
+ * cannot read points to (a symlink retargeted in place): the disk reading keys a directory and such an entry by its path alone and
+ * reads a file's bytes and nothing else (wb-xu2e cut #4; the base tree holds no symlink). Cut #4's byte-for-byte
  * comparisons stay as pins: the text the line reading is handed for each class and context file against its built text, and
  * PLANTED's read-back in the residual anchor.
  * THE CLASS PLANT writes every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other Unicode
@@ -363,7 +391,8 @@
  * which joiners it writes at which sites NOT CLAIMED (refusal #4 U1: five one-edit hollows of CONTEXT_JOINERS or CONTEXT_SITES read
  * 28 of 28, measured); since wb-xu2e the census claims them as read off the artifact the plant produces, against CONTEXT_TABLE
  * (PLANT IDENTITY above) - its sites off the disk, every file it leaves under the root, a base-tree file it rewrites counted among
- * them (cut #2), and its joiners off the context files the line reading is handed: the joined spelling, U+200B, U+3164 and the
+ * them (cut #2), and no other entry it leaves there new or gone, a directory among them (wb-xu2e cut #4), and its joiners off the
+ * context files the line reading is handed: the joined spelling, U+200B, U+3164 and the
  * doubled U+200B, in that order, at each of the census's ten plant sites in C1's and F1's forms (each file renamed plant-context-c1
  * and plant-context-f1), at a single-quoted, a template and a bare line in src, and at the code line padded to 128, 1,024 and 8,192
  * bytes as read; each of refusal #4's five hollows reds, and so does a CONTEXT_SITES row at each of the base tree's seven paths
@@ -1436,7 +1465,8 @@ const padded =
  * that give the joiners forms neither those sites nor the class shapes give them - a single-quoted, a template and a bare line, and
  * the code line padded to 128, 1,024 and 8,192 characters as read. A builder statement, held apart from the builder since wb-xu2e:
  * the files the plant leaves under the root, read off the disk with no base exemption (cut #2: a base-tree file it rewrites is
- * counted among them), are CONTEXT_TABLE's sites, each read off in its form (cut #5 stated them NOT CLAIMED, refusal #4 U1);
+ * counted among them), are CONTEXT_TABLE's sites, and it leaves no other entry there new or gone, a directory among them (wb-xu2e
+ * cut #4), each site read off in its form (cut #5 stated them NOT CLAIMED, refusal #4 U1);
  * OPEN_MEMBERS holds the five measured open members' contexts apart from it. */
 const CONTEXT_SITES: readonly (readonly [string, (spelling: string) => string])[] = [
   ...PLANT_SITES.map(([site, line]) => [site.replace("/plant.", "/plant-context-c1."), line] as const),
@@ -1488,7 +1518,8 @@ const paddedTo =
 /** The context plant as this census states it (wb-xu2e, refusal #4 U1's cure), written apart from its builder (CONTEXT_JOINERS,
  * CONTEXT_SITES, padded, contextFiles) and read off the artifact it produces (R-SPELLING): the joiners by code point in planting order
  * - the joined spelling, U+200B, U+3164 and the doubled U+200B - and the sites by path (every file the plant leaves under the root,
- * read off the disk, cut #2), each with the form its lines take as read:
+ * read off the disk, cut #2, and no other entry it leaves there new or gone, a directory among them, wb-xu2e cut #4), each with the
+ * form its lines take as read:
  * the census's ten plant sites in C1's and F1's forms, a single-quoted, a template and a bare line in src, and the code line padded
  * to 128, 1,024 and 8,192 bytes as read. */
 const CONTEXT_TABLE: { readonly joiners: readonly string[]; readonly sites: Readonly<Record<string, ContextForm>> } = {
@@ -1514,21 +1545,26 @@ const CONTEXT_TABLE: { readonly joiners: readonly string[]; readonly sites: Read
 };
 /** A produced file's text as the walk reads it (latin1, a character to a byte) read back as the UTF-8 text it holds (wb-xu2e). */
 const asUtf8 = (read: string | undefined): string => Buffer.from(read ?? "", "latin1").toString("utf8");
-/** A synthetic root as the disk holds it (wb-xu2e cut #2, refusal #1 U1's cure): every entry under it by path, not only the five trees
- * the walk reads - a regular file with its text (latin1, a character to a byte, as the walk reads a file), any other entry the walk
- * cannot read (a symlink, a socket) with none - so what a plant leaves under the root is read off the disk, a base-tree file it
- * rewrites among it. */
-function diskEntries(root: string): Map<string, string | undefined> {
-  const unread: string[] = [];
-  const files = readdirSync(root, { withFileTypes: true }).flatMap(entry => {
-    if (entry.isDirectory()) return walk(root, entry.name, unread);
-    if (entry.isFile()) return [entry.name];
-    unread.push(entry.name);
-    return [];
-  });
-  return new Map<string, string | undefined>([...files.map((file): [string, string] => [file, readFileSync(join(root, file), "latin1")]), ...unread.map((path): [string, undefined] => [path, undefined])]);
+/** A synthetic root as the disk holds it (wb-xu2e cut #2, refusal #1 U1's cure; cut #4, refusal #3 U1's): every entry under it by
+ * path, read from the root down by directory entries (hidden entries included), not only the five trees the walk reads - a regular
+ * file keyed by its path, with its text (latin1, a character to a byte, as the walk reads a file); a directory keyed by its path and
+ * a trailing slash, with no text, and recursed (wb-xu2e cut #4: so a directory a plant leaves new or gone, an empty one among them,
+ * is an entry of its own, where the walk only recurses it); any other entry the walk cannot read (a symlink, a socket) keyed by its
+ * path, with no text - so what a plant leaves under the root is read off the disk, a base-tree file it rewrites among it. An entry's
+ * text is a file's bytes alone: a directory's or an unread entry's reading is its key, never what it points to or its metadata. */
+function diskEntries(root: string, dir = ""): Map<string, string | undefined> {
+  const entries = new Map<string, string | undefined>();
+  for (const entry of readdirSync(join(root, dir), { withFileTypes: true })) {
+    const path = dir === "" ? entry.name : `${dir}/${entry.name}`;
+    if (entry.isDirectory()) {
+      entries.set(`${path}/`, undefined);
+      for (const [inner, text] of diskEntries(root, path)) entries.set(inner, text);
+    } else entries.set(path, entry.isFile() ? readFileSync(join(root, path), "latin1") : undefined);
+  }
+  return entries;
 }
-/** The paths two disk readings of a root disagree on, sorted: an entry new or gone, a file whose bytes differ (wb-xu2e cut #2). */
+/** The paths two disk readings of a root disagree on, sorted: an entry new or gone (a file, a directory by its path and a trailing
+ * slash since wb-xu2e cut #4, or an entry the walk cannot read), a file whose bytes differ (wb-xu2e cut #2). */
 const changedEntries = (before: ReadonlyMap<string, string | undefined>, after: ReadonlyMap<string, string | undefined>): string[] =>
   [...new Set([...before.keys(), ...after.keys()])].filter(path => before.has(path) !== after.has(path) || before.get(path) !== after.get(path)).sort();
 /** The joiners a context file holds, read off its text as produced (wb-xu2e): each line in its site's form (CONTEXT_TABLE) holds the
@@ -1818,6 +1854,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
     const contexts = contextFiles();
     withTree(root => {
       // wb-xu2e cut #2 (refusal #1 U1's cure): the root as the disk holds it before the plant writes, the base tree's files among it
+      // (and, since wb-xu2e cut #4, refusal #3 U1's cure, its directories, each by its path and a trailing slash)
       const before = diskEntries(root);
       for (const entry of contexts) write(root, entry.file, entry.text);
       const walked = new Map<string, string>();
@@ -1826,15 +1863,16 @@ const QUIET: Readonly<Record<string, () => void>> = {
         contexts.filter(entry => !Buffer.from(walked.get(entry.file) ?? "", "latin1").equals(Buffer.from(entry.text, "utf8"))).map(entry => entry.file),
         "the line reading is handed each context file byte for byte as built, in its site's form",
       ).toEqual([]);
-      // wb-xu2e (refusal #4 U1's cure; cut #2, refusal #1 U1's): the context plant read as the artifact it produces, held apart from its
-      // builder - the files it leaves under the root, read off the disk against the root as the base tree left it (each entry new, gone
-      // or with other bytes, a base-tree file it rewrites counted among them: no base exemption), are exactly CONTEXT_TABLE's sites, and each,
-      // read off as the line reading is handed it, is lines in its site's form and nothing else, holding the member with its space,
-      // CONTEXT_TABLE's joiners in its order and the member again
+      // wb-xu2e (refusal #4 U1's cure; cut #2, refusal #1 U1's; cut #4, refusal #3 U1's): the context plant read as the artifact it
+      // produces, held apart from its builder - what it leaves under the root, read off the disk against the root as the base tree left
+      // it (each entry new or gone - a file, a directory by its path and a trailing slash, an entry the walk cannot read - and each file
+      // with other bytes, a base-tree file it rewrites counted among them: no base exemption), is exactly CONTEXT_TABLE's sites, and
+      // each, read off as the line reading is handed it, is lines in its site's form and nothing else, holding the member with its
+      // space, CONTEXT_TABLE's joiners in its order and the member again
       const sites = Object.keys(CONTEXT_TABLE.sites).sort();
       expect(
         changedEntries(before, diskEntries(root)),
-        "the context plant writes exactly the sites CONTEXT_TABLE names: every file it leaves under the root, new or rewritten, read off the disk against the root as the base tree left it, a base-tree file among them",
+        "the context plant writes exactly the sites CONTEXT_TABLE names: every entry it leaves under the root new or gone (a file, a directory, an entry the walk cannot read) and every file it rewrites, read off the disk against the root as the base tree left it, a base-tree file among them",
       ).toEqual(sites);
       expect(
         sites.map(site => [site, contextJoiners(site, asUtf8(walked.get(site)))]),
