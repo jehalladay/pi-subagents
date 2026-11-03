@@ -1139,6 +1139,7 @@
     "outside anchors: this bead's export row with its refusal #1 and #2 records and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states",
     "collapse guard (refusal #2, R-B268): each GLOBAL line of each pin holds one reading of its name, except the collapsed lines COLLAPSED_SPLITS lists, each split by its named pin into one reading per line",
     "rule 16: every judged row, the residual families and the collapsed lines are frozen at their measured shape",
+    "header anchors (wb-qakj): every pin id this file's header and the helper's header name is a pin of ROWS, the helper's header names every pin of ROWS, and the counts THE PINNED READER SET states are ROWS's",
     "roster: the judged rows, the registered tests, the residual families and the collapsed lines equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways"
   ],
   "residuals": {
