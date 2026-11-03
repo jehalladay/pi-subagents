@@ -61,13 +61,18 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (each pin with its quote),
  * every pin's witness, the constants, the harness, the record, the hooks, the carrier, the native result, the placements, the
  * probes, the registered test titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json),
- * which readRoster reads before any other statement of this file's module body runs (THE ORDER) and freezes through every member (THE
- * FREEZE), so no in-place write this file makes changes what they are held to; ROWS and the object and list constants held to it are
- * frozen where they are declared too (THE FREEZE, wb-5333), and each of them, like the strings, the titles and the patterns, is one
- * top-level const whose initializer THE FORM reads clean (wb-26dh's bindingsRead, read here since wb-5333 cut #5), the deepFrozen it
- * calls being this file's own one top-level function declaration, named nowhere else but as a call's callee (THE FREEZER, wb-5333 cut
- * #6), that no statement of this file re-assigns and that the judged set re-binds by no declaration the SELF-READ reads (THE BINDINGS
- * and the binding rule, wb-5333 cut #3). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row
+ * which readRoster reads before any other statement of this file's module body runs (THE ORDER), freezes through every member (THE
+ * FREEZE) and, before it returns it, reads back against the text it read (THE DECLARATION, wb-5333 cut #7), so no in-place write this
+ * file makes after the read changes what they are held to, and a write that a function of this file readRoster or deepFrozen calls
+ * (isObject, json, strings, objectOf or envelopeOf; THE DECLARATION's own readers are the reader, NOT CLAIMED below) makes during the
+ * read, changing what they are held to or leaving one of them unfrozen, fails the file at collection; ROWS and the object and list
+ * constants held to it are frozen where they are declared too (THE FREEZE, wb-5333), and each of them, like the strings, the titles and
+ * the patterns, is one top-level const whose initializer THE FORM reads clean (wb-26dh's bindingsRead, read here since wb-5333 cut #5),
+ * the deepFrozen it calls being this file's own one top-level function declaration, named nowhere else but as a call's callee (THE
+ * FREEZER, wb-5333 cut #6), that no statement of this file re-assigns and that the judged set re-binds by no declaration the SELF-READ
+ * reads (THE BINDINGS and the binding rule, wb-5333 cut #3), and whose run-time value, at collection and at the judged set's two
+ * readings, is the value its own declaration spells in this file's source, whatever path wrote it (THE DECLARATION, wb-5333 cut #7).
+ * OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row
  * wb-tz4r.3): each acceptance clause is exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating
  * artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
@@ -138,8 +143,10 @@
  * held the roster alone): ROWS and each object or list constant the judged set compares against the roster (GATING_ARTIFACTS, FIELDS,
  * REF_KIND, MEMBER, INVOCATION, HARNESS, RECORD and HOOKS; BEAD, QUOTE_PIN and QUOTE are strings) are frozen through every member where
  * they are declared, as are the patterns the judged set and the cases read through (SEPARATOR, which the PIN ANCHOR reads every gap
- * with, RI_ROOT, FIELD_SPELLINGS and REF_PREFIX), so an in-place write to any of them, from the judged set or anywhere else in this
- * file, throws a TypeError or is refused. The judged set pins it: no unfrozen object or list is reachable from them; the six write
+ * with, RI_ROOT, FIELD_SPELLINGS and REF_PREFIX), so an in-place write to any of them after that freeze, from the judged set or anywhere else
+ * in this file, throws a TypeError or is refused (RegExp.prototype.compile throws one too, but only after it has rewritten a frozen
+ * pattern's body and flags - measured; THE DECLARATION reads that, and what a write made before the freeze leaves, below). The judged
+ * set pins it: no unfrozen object or list is reachable from them; the six write
  * forms are each refused on every member of row B and of D3's pin in ROWS and on the first member of ROWS and of each constant, which
  * read the same after them; and a test method set on each pattern is refused. Nor does the judged set bind a name this file binds at
  * module scope: the SELF-READ refuses each declaration of the judged set that binds a value name - a variable or a parameter (its
@@ -249,10 +256,64 @@
  * b2v (re-bound through a direct eval), each beside row B's label cut; the gate's named twin b2n (another helper's name called in
  * ROWS's initializer) stays refused at THE GUARD by THE FORM. A binding re-written through the runtime's own debugging interface
  * (node:inspector) is NOT CLAIMED by this census.
- * So THE FREEZE, the binding rule, THE BINDINGS and THE FREEZER refuse, for an in-file side, an in-place write, a re-binding by the
- * judged set through any declaration the SELF-READ reads, a re-assignment, a declaration other than one top-level const that is not
- * ambient, an initializer THE FORM does not read clean, and a deepFrozen that is not this file's own one top-level function declaration
- * or is named other than as a call's callee (or eval named), in each form these pins spell; a reading on any other initializer form is
+ * THE DECLARATION (wb-5333 cut #7, refusal #6's U1: the wb-5333 gate's DF-CALLEE family - deepFrozen, this file's one unedited
+ * top-level function declaration, calls isObject, a function of this file, on every member before it freezes it, and isObject edited
+ * in this file (ii), calling an imported helper (ib) or imported in place of its declaration (io) wrote the roster file's label and
+ * pins into the ROWS literal's rows before the freeze, beside row B's label cut, D3 removed from ROWS or D3's quote cut to 'to any', and
+ * stayed 0 failed | 18 passed on the wb-5333 cut #6, lint- and type-clean there, since THE FREEZE refuses writes made after the freeze
+ * and THE FREEZER holds deepFrozen's declaration, never what it calls): each in-file side is, at collection and at the judged set's two
+ * readings (its THE DECLARATION block and its last statement), the value its own declaration spells in this file's source.
+ * declarationMisses reads each side's one top-level const from SELF_TEXT's AST by THE FORM's forms, never by running it - a string or
+ * substitution-free template's text, a template's substitutions read from their own declarations (THE FORM admits TRIGGER alone, in
+ * row A's label), a regular expression's body and flags,
+ * an array's elements and a plain-keyed object's members in order, through `as` and the one deepFrozen call - and reads the run-time
+ * value against it through builtins alone (departures): a string must be that string; an object or list must be of the declared value's
+ * prototype, with its own members in order and no other (symbols included), each a data member, enumerable as declared and holding the
+ * declared value, and frozen through every member where the declaration calls deepFrozen; a pattern must hold the declared body and
+ * flags, read through RegExp.prototype's own getters, with lastIndex its one member. The run-time sides it reads are DECLARED_SIDES, one
+ * top-level const of Object.freeze over the IN_FILE_SIDES names in order, and its collection verdict is DECLARATION_MISSES, which is
+ * declarationMisses(SELF_TEXT, DECLARED_SIDES), taken after THE GUARD's (so THE FORM has read every initializer clean) and thrown on
+ * (its throwing statement stands at the top level, read by the AST: declarationStands); declarationMisses refuses a source that declares
+ * either otherwise. Seventeen perturbed inputs pin the reading in the judged set beside this file's reading clean: a row's label, a
+ * pin added, a pin's quote, a row unfrozen, a label made an accessor, a row of another prototype, a symbol member, a pattern's own test
+ * method, a pattern recompiled after its freeze, a string side, an object side's member, a side declared twice, an initializer it does
+ * not read, a value list one short, DECLARED_SIDES declared otherwise, DECLARATION_MISSES declared otherwise, and the clean planted
+ * source. So a side whose run-time value is not its declaration's reds at collection or at the judged set's next reading, whatever wrote
+ * it. Measured on the wb-5333 cut #6 (52e2d917; trunk 6d6bf9a merged, the census blob unchanged), each 0 failed there and failing now:
+ * the gate's ii, ib and io beside CT2's label cut, CT1's D3 removal and e12's quote cut (seven members), each at collection ('ROWS[1].label
+ * is not its declared literal', 'ROWS[3].pins has other members than its declaration', 'ROWS[3].pins[2].quote is not its declared
+ * literal'), while ii, ib and io alone read 0 failed | 18 passed there and now (the rows they write equal the literal's); and this seat's
+ * members, each lint- and type-clean there (biome rc 0, tsc 0 errors): isObject re-bound by an assignment before ROWS's declaration
+ * (its TS2630 and noFunctionAssign suppressed, the biome-ignore above isObject's declaration), beside CT2; an unfrozen row's
+ * label re-defined by isObject as an accessor answering the roster file, beside CT2 - held to rows whose pins are an id and a quote,
+ * ROWS's ('ROWS[0].label is an accessor' and the three other rows'), and unheld, when it reaches the roster's own rows first and
+ * readRoster's read-back fails the file ('ROSTER.rows[0].label is an accessor' and the three others); INVOCATION's task written by isObject from the roster file, beside that task edited in source; a ref kind likewise; a test
+ * method isObject sets on SEPARATOR before the freeze, reading every gap that holds no quote as a separator, beside CT6 (C3 removed from
+ * ROWS, IMPL, the frozen-shape literal and the roster: 0 failed | 17 passed there) and alone ('SEPARATOR has other members than its
+ * declaration'); and SEPARATOR recompiled after the freeze to read the gap C3 leaves as a separator, beside CT6 (0 failed | 17 passed
+ * there), at the top level after its own declaration (at collection: 'SEPARATOR is not its declared literal') and after
+ * DECLARATION_MISSES (at the judged set's first reading).
+ * SEPARATOR at each PIN ANCHOR reading (wb-5333 cut #7): a recompile made inside the judged set after THE DECLARATION's first reading and
+ * restored before its last, beside CT6, kept 0 failed | 17 passed on this cut's bytes before this pin (census sha256/16
+ * 787035c9b2a103f7; lint- and type-clean applied to the cut), so every gap and quote the PIN ANCHOR reads - tiles' gaps and the judged
+ * set's quote check - goes through separatorTests, which first reads SEPARATOR's body and flags against SEPARATOR's own declaration and
+ * throws when they differ (measured: that member now reds the judged set, D4 and the record). The judged set pins it: SEPARATOR as
+ * declared answers a separator and a quote, and a frozen copy recompiled is refused.
+ * THE DECLARATION over the roster (wb-5333 cut #7: this seat's RR members - json, the function of this file readRoster copies each
+ * witness through, edited to drop one mutant from D3's witness beside a D3 measuring one mutant fewer, stayed 0 failed | 18 passed on the
+ * wb-5333 cut #6, lint- and type-clean there; isObject edited to delete it from the raw roster's D3 pin was refused there only by the
+ * SELF-READ's witness rule, for naming the member): readRoster reads its frozen result back against the text it read, parsed again,
+ * through rosterReadBack (builtins alone) - the file's own members at every level and no other (an object's in any order, a list's in
+ * order, symbols included), each a data member holding the file's value, every object and list frozen and of the file's prototype - and
+ * throws on any reading, so the file fails at collection (measured, each now: both RR members, 'ROSTER.rows[3].pins[2].witness has other
+ * members than the roster file's'). The judged set pins it: ten perturbed inputs (the file's value read back clean, and in another key
+ * order; a member dropped, changed or added; a list reordered; a member unfrozen, an accessor, another prototype, a symbol member), and
+ * readRoster's read-back stands as its last three statements (rosterReadBackStands, read by the AST).
+ * So THE FREEZE, the binding rule, THE BINDINGS, THE FREEZER and THE DECLARATION refuse, for an in-file side, an in-place write after
+ * its freeze, a re-binding by the judged set through any declaration the SELF-READ reads, a re-assignment, a declaration other than one
+ * top-level const that is not ambient, an initializer THE FORM does not read clean, a deepFrozen that is not this file's own one
+ * top-level function declaration or is named other than as a call's callee (or eval named), in each form these pins spell, and a
+ * run-time value other than the one its declaration spells, whatever wrote it (THE DECLARATION, wb-5333 cut #7); a reading on any other initializer form is
  * NOT CLAIMED by this census (above), what replaces the runtime is R-RUNTIME, and an edit of the reader itself, deepFrozen's own body
  * among it, is NOT CLAIMED (below).
  * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
@@ -290,15 +351,23 @@
  * removed, beside what they refuse, is a change of the reader (measured: afterEach dropped from HOOK_NAMES with its three pins, or
  * THE GUARD removed, each beside a flipping hook, kept a broken D3 at 18/18; without the hook each reds, and afterEach dropped while
  * its pins stay reds at THE GUARD). Likewise THE FREEZE: the freeze dropped from readRoster together with the judged set's freeze
- * pins, beside a write of the D3 witness, is a change of the reader (measured: it kept a broken D3 at 18/18; the freeze dropped alone
- * reds the judged set, as it does beside that write, and with either of the judged set's two roster pins dropped the other reds it -
- * the write probes, writing through, red D3 and the record as well).
+ * pins, beside a write of the D3 witness, is a change of the reader (measured on the wb-b93c cut: it kept a broken D3 at 18/18; the
+ * freeze dropped alone reds the judged set, as it does beside that write, and with either of the judged set's two roster pins dropped
+ * the other reds it - the write probes, writing through, red D3 and the record as well). Since wb-5333 cut #7 readRoster's read-back
+ * reads such a roster unfrozen and fails the file at collection (measured: the freeze and the judged set's four roster freeze pins
+ * dropped, the judged set writing D3's witness short of one mutant through Object.assign beside a D3 measuring one mutant fewer - 0
+ * failed | 18 passed on the wb-5333 cut #6, biome rc 0 with one noUnusedVariables warning, tsc 0 errors - fails at collection now), so
+ * the change of the reader is that with the read-back's frozenness reading dropped as well, together with the judged set's pin of it
+ * (measured on this cut: the reading dropped alone reds that pin's unfrozen input, and with that input dropped too it keeps 18/18).
  * Likewise the in-file freeze and THE ORDER (wb-5333): a constant's freeze dropped together with its entry in the judged set's in-file
  * pin, readRoster's own body edited (what it reads, parses, keeps or freezes), or the judged set's own comparisons removed or made
- * unreachable is a change of the reader (measured on the cut: INVOCATION's freeze and its entry dropped, beside INVOCATION's task cut
+ * unreachable is a change of the reader (measured on the wb-5333 cut #1: INVOCATION's freeze and its entry dropped, beside INVOCATION's task cut
  * and restored, kept 18/18, and with its entry kept it reds the judged set; readRoster dropping a mutant from D3's witness, beside a
  * D3 measuring one mutant fewer, kept 18/18; row B's label cut beside 'if (ROWS.length > 0) return;' after the judged set's first
- * assertion kept 18/18). So is readRoster replaced or removed (wb-5333 cut #2): imported from a module that forges D3's witness
+ * assertion kept 18/18). Re-measured on the wb-5333 cut #6, each 0 failed | 18 passed there, lint- and type-clean: since cut #7 the
+ * first reds at the judged set's THE DECLARATION block ('INVOCATION.task is not its declared literal', the task restored by the judged
+ * set) and the second at collection (readRoster's read-back reads D3's witness short of the file's), while the third still keeps
+ * 18/18, as does readRoster dropping that mutant from the text it read, before it parses it (a change of what readRoster reads). So is readRoster replaced or removed (wb-5333 cut #2): imported from a module that forges D3's witness
  * beside READ_FIRST, or deleted together with ROSTER's declaration while ROSTER is a global such a module sets and another file
  * declares (measured on the wb-5333 cut #2, each beside D3's mutant line deleted: 18/18). Likewise THE BINDINGS (wb-5333 cut #3;
  * wb-26dh's helper since cut #5) and THE FREEZER (wb-5333 cut #6): the helper edited (bindingsRead, THE FORM or IN_FILE_SIDES - what
@@ -308,13 +377,21 @@
  * removed, above) is not this file's shape, so THE BINDINGS and THE FREEZER read nothing there; and INVOCATION is Pi's own invocation,
  * this fixture's choice like the placements and the probes, so INVOCATION and its roster key changed together is a change these two
  * files make, which nothing outside them reads (measured: the
- * judged set's roster comparison alone holds INVOCATION's task). Nor is the tracked bead export's file held:
+ * judged set's roster comparison alone holds INVOCATION's task). Likewise THE DECLARATION (wb-5333 cut #7): its readers edited,
+ * removed, imported or re-bound (declarationMisses, declaredLiteral, literalOf, departures, topLevelConsts, declarationStands,
+ * separatorTests, rosterReadBack and rosterReadBackStands), DECLARED_SIDES or DECLARATION_MISSES changed together with what reads
+ * their form, the judged set's two readings or separatorTests' call sites removed, or readRoster's read-back statements edited, is a
+ * change of the reader. A rewrite of this file's own source on disk before SELF_TEXT reads it is NOT CLAIMED by this census (the
+ * SELF-READ, THE GUARD and THE DECLARATION read the text SELF_TEXT holds), nor is a pattern recompiled by a pin case's IMPL function
+ * after the judged set's last reading (SEPARATOR's PIN ANCHOR readings aside, which separatorTests reads at each). Nor is the tracked bead export's file held:
  * exportRow reads .beads/issues.jsonl from disk when it is called, so a rewrite of that file this file makes before a read and restores
  * after it is not refused - THE ORDER binds the roster's read alone (measured on the wb-5333 cut #2: the wb-5333 gate's G02, CT6
  * beside row C's label cut and that rewrite in the judged set, 17/17). Nor are the values this file keeps for its own readers frozen:
  * CARRIER, BASE, CONTEXTS, ABSENT, SEAMS,
  * SURFACES, GRANTS, IMPL, the native descriptor cache, the SELF-READ's tables and planted pins, THE GUARD's inputs and reading, and
- * the records MEASURED, REACHED and scratches. THE FREEZE holds exactly the roster, ROWS, the constants and the patterns named above.
+ * the records MEASURED, REACHED and scratches. THE FREEZE holds exactly the roster, ROWS, the constants and the patterns named above;
+ * THE DECLARATION reads exactly the IN_FILE_SIDES (at collection and at the judged set's two readings), SEPARATOR at each PIN ANCHOR
+ * reading, and the roster at its read.
  * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five, R-RUNTIME and R-PRE-READ, A1's for R-READ-SITE):
  * R-COINCIDENT a
  * "default" that restates the value today's projection already holds at that path is no change and reads quiet; R-KIND the
@@ -349,7 +426,11 @@
  * seat's n06-n08c, replayed on the wb-5333 cut where they stood (before ROSTER's declaration), fail at collection, and placed after the
  * read n06 and n08c each red 3 (the roster's D3 witness is frozen by the builtin). The in-file sides trust the same builtins
  * (R-RUNTIME): measured on the wb-5333 cut, n08c's replacements placed after the read, beside row B's label cut restored through the
- * Object.assign they saved, kept 18/18.
+ * Object.assign they saved, kept 18/18. THE DECLARATION and readRoster's read-back (wb-5333 cut #7) trust the builtins they read
+ * through - Reflect.ownKeys, Reflect.getOwnPropertyDescriptor, Reflect.get, Object.getPrototypeOf, Object.isFrozen, Object.freeze,
+ * Array.isArray, JSON.parse, RegExp.prototype's test, source and flags, and the Array and String methods they call - and the
+ * typescript module they parse with: their replacement is
+ * R-RUNTIME (this cut does not re-measure n08c, whose source the wb-b93c seat holds).
  * SCOPE: the RI facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe re-reads
  * them; when RI ships the envelope (RI-DEC-06/08) and rf surfaces it, the adopter's projection replaces the reference adoption and
  * B4 reds by its findings alone, the cue to re-cut this census to the shipped shape. No reader is added or faked here.
@@ -595,7 +676,8 @@ function envelopeOf(value: unknown, name: string): Envelope {
 /**
  * THE FREEZE (wb-b93c F1): `value` returned as given, with it and every object and list reached from it through its members frozen;
  * applied to the roster at read and, where they are declared, to ROWS, the constants and the patterns (wb-5333 F1). THE FREEZER
- * (wb-5333 cut #6) holds this declaration as this file's one deepFrozen, named elsewhere only as a call's callee.
+ * (wb-5333 cut #6) holds this declaration as this file's one deepFrozen, named elsewhere only as a call's callee; what it calls
+ * (isObject) and what any path writes before it freezes are read by their result instead (THE DECLARATION, wb-5333 cut #7).
  */
 function deepFrozen<T>(value: T): T {
   const members: readonly unknown[] = Array.isArray(value) ? value : isObject(value) ? Object.values(value) : [];
@@ -610,7 +692,8 @@ function deepFrozen<T>(value: T): T {
  */
 function readRoster(): Roster {
   const ROSTER_PATH = join(dirname(fileURLToPath(import.meta.url)), "fixtures", "ri-decision-provenance-echo-roster.json");
-  const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
+  const text = readFileSync(ROSTER_PATH, "utf8");
+  const raw: unknown = JSON.parse(text);
   if (!isObject(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.placements)) throw new Error("roster must be an object with rows and placements");
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
@@ -638,7 +721,7 @@ function readRoster(): Roster {
   if (!Array.isArray(revisionProbes) || !Array.isArray(policyProbes)) throw new Error("roster needs revisionProbes and policyProbes lists");
   const record = raw.record;
   if (!isObject(record) || typeof record.context !== "string") throw new Error("roster needs a record with a context and statements");
-  return deepFrozen({
+  const roster: Roster = deepFrozen({
     bead, quotePin, quote, rfVersion,
     gatingArtifacts: strings(raw.gatingArtifacts, "gatingArtifacts"),
     producer: objectOf(json(producer), "producer"),
@@ -659,8 +742,55 @@ function readRoster(): Roster {
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
   });
+  const misses = rosterReadBack(roster, JSON.parse(text), "ROSTER");
+  if (misses.length > 0) throw new Error(`THE DECLARATION (wb-5333 cut #7): readRoster's roster is not the roster file's - ${misses.join("; ")}`);
+  return roster;
 }
 
+/**
+ * THE DECLARATION over the roster (wb-5333 cut #7): readRoster's frozen result read back, through builtins alone (their replacement is
+ * R-RUNTIME), against the text it read, parsed again - the file's own members at every level and no other (an object's in any order,
+ * a list's in order; symbols included), each a data member holding the file's value, every object and list frozen and of the file's
+ * prototype. readRoster throws when this reads anything, so a function of this file it or deepFrozen calls (isObject, json, strings,
+ * objectOf, envelopeOf) that writes what the roster holds during the read, or leaves a member of it unfrozen, fails the file at
+ * collection. Returns the readings, by path.
+ */
+function rosterReadBack(actual: unknown, filed: unknown, at: string): string[] {
+  if (typeof filed !== "object" || filed === null) return actual === filed ? [] : [`${at} is not the roster file's`];
+  if (typeof actual !== "object" || actual === null) return [`${at} is not the roster file's`];
+  const found: string[] = [];
+  if (Object.getPrototypeOf(actual) !== Object.getPrototypeOf(filed)) found.push(`${at} has another prototype`);
+  if (!Object.isFrozen(actual)) found.push(`${at} is not frozen`);
+  const keys = Reflect.ownKeys(actual);
+  const named = Reflect.ownKeys(filed).filter((key): key is string => typeof key === "string");
+  const listed = Array.isArray(filed);
+  const order = (list: readonly string[]): string[] => (listed ? [...list] : [...list].sort());
+  const mine = order(keys.filter((key): key is string => typeof key === "string"));
+  const theirs = order(named);
+  if (keys.length !== named.length || mine.some((key, index) => key !== theirs[index])) return [...found, `${at} has other members than the roster file's`];
+  for (const key of named) {
+    const own = Reflect.getOwnPropertyDescriptor(actual, key);
+    const file = Reflect.getOwnPropertyDescriptor(filed, key);
+    if (own === undefined || file === undefined) continue;
+    const path = listed && key !== "length" ? `${at}[${key}]` : `${at}.${key}`;
+    if (!("value" in own)) found.push(`${path} is an accessor`);
+    else found.push(...rosterReadBack(own.value, file.value, path));
+  }
+  return found;
+}
+/** Whether readRoster ends with its read-back (wb-5333 cut #7): rosterReadBack over its result and the text it read, a throw on any reading, then the result. */
+function rosterReadBackStands(text: string): boolean {
+  const file = ts.createSourceFile("read-back.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const reader = file.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === "readRoster");
+  const body = reader?.body?.statements ?? [];
+  const tail = body.slice(-3).map(statement => statement.getText(file).replace(/\s+/g, " "));
+  return (
+    tail.length === 3 &&
+    tail[0] === 'const misses = rosterReadBack(roster, JSON.parse(text), "ROSTER");' &&
+    (tail[1] ?? "").startsWith("if (misses.length > 0) throw new Error(") &&
+    tail[2] === "return roster;"
+  );
+}
 /** The measured carrier with this run's root in place of the fixture root (its one occurrence: workspace.root). */
 const CARRIER: Envelope = { ...envelopeOf(json(ROSTER.carrier), "carrier"), workspace: { id: ROSTER.carrier.workspace.id, root: ROOT } };
 const NATIVE: JsonObject = ROSTER.native;
@@ -734,18 +864,43 @@ function ownerTextOf(row: Row, title: string, clauses: Readonly<Record<string, s
 }
 /** A gap between two quotes that names nothing: separators and at most one joining or/and (the wb-if7q.2 and wb-z3ft.2 form). */
 const SEPARATOR = deepFrozen(/^[\s,;:]*(?:(?:or|and)[\s,;:]+)?$/);
+/**
+ * SEPARATOR at each PIN ANCHOR reading (THE DECLARATION, wb-5333 cut #7): RegExp.prototype.compile rewrites even a frozen pattern's
+ * body and flags before it throws (measured), so every gap or quote the PIN ANCHOR reads goes through this one call, which first reads
+ * the pattern's body and flags (SEPARATOR's, unless the judged set's probe hands it another) against SEPARATOR's own declaration in
+ * SELF_TEXT (declaredLiteral) and throws when they differ, then tests each text: a recompile made before a reading reds that reading,
+ * whether or not it is restored after it.
+ */
+function separatorTests(texts: readonly string[], pattern: RegExp = SEPARATOR): boolean[] {
+  const declared = declaredLiteral(ts.createSourceFile("separator.ts", SELF_TEXT, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), "SEPARATOR").value;
+  const read = (name: string): unknown => {
+    try {
+      return Reflect.get(RegExp.prototype, name, pattern);
+    } catch {
+      return undefined;
+    }
+  };
+  if (!(declared instanceof RegExp) || read("source") !== declared.source || read("flags") !== declared.flags) {
+    throw new Error("THE DECLARATION (wb-5333 cut #7): SEPARATOR is not its declaration where the PIN ANCHOR reads it");
+  }
+  return texts.map(text => pattern.test(text));
+}
 /** Whether the quotes, in order, tile the text: each found after the previous one, every gap a separator; the gaps that are not. */
 function tiles(body: string, quotes: readonly string[]): { covered: boolean; untiled: string[] } {
   let at = 0;
   const gaps: string[] = [];
+  const unseparated = (): string[] => {
+    const separates = separatorTests(gaps);
+    return gaps.filter((_, index) => separates[index] !== true);
+  };
   for (const quote of quotes) {
     const found = body.indexOf(quote, at);
-    if (found < 0) return { covered: false, untiled: [...gaps.filter(gap => !SEPARATOR.test(gap)), `<missing ${quote}>`] };
+    if (found < 0) return { covered: false, untiled: [...unseparated(), `<missing ${quote}>`] };
     gaps.push(body.slice(at, found));
     at = found + quote.length;
   }
   gaps.push(body.slice(at));
-  const untiled = gaps.filter(gap => !SEPARATOR.test(gap));
+  const untiled = unseparated();
   return { covered: untiled.length === 0, untiled };
 }
 
@@ -2289,6 +2444,175 @@ interface GuardInputs {
 const GUARD_INPUTS: GuardInputs = { text: SELF_TEXT, pins: [PLANTED_SOURCES, PLANTED_BLOCKS], harness: HARNESS, record: RECORD, hooks: HOOKS };
 const GUARD_MISSES: readonly string[] = guardMisses(GUARD_INPUTS);
 if (GUARD_MISSES.length > 0) throw new Error(`THE GUARD (wb-yi2o): the SELF-READ refuses this file or misreads a planted pin - ${GUARD_MISSES.join("; ")}`);
+/**
+ * THE DECLARATION (wb-5333 cut #7): a value an in-file side's initializer spells, read from the AST by THE FORM's forms (never by
+ * running it) - a string or a substitution-free template's text, a template's substitutions read from their own declarations, a
+ * regular expression's body and flags, an array's elements and a plain-keyed object's members in order - through `as` and the one
+ * deepFrozen call.
+ */
+type Declared = string | RegExp | readonly Declared[] | { readonly [key: string]: Declared };
+/** The top-level const declarations, not ambient, that bind `name` in a source (THE BINDINGS' const, wb-26dh). */
+function topLevelConsts(file: ts.SourceFile, name: string): ts.VariableDeclaration[] {
+  return file.statements.flatMap(statement =>
+    ts.isVariableStatement(statement) && (statement.declarationList.flags & ts.NodeFlags.BlockScoped) === ts.NodeFlags.Const && !statement.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.DeclareKeyword)
+      ? statement.declarationList.declarations.filter(entry => ts.isIdentifier(entry.name) && entry.name.text === name)
+      : [],
+  );
+}
+/** The value `node` spells (THE DECLARATION), or undefined for a form it does not read; `within` holds the sides being read (a cycle reads nothing). */
+function literalOf(node: ts.Expression, file: ts.SourceFile, within: readonly string[]): Declared | undefined {
+  if (ts.isAsExpression(node)) return literalOf(node.expression, file, within);
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+  if (ts.isRegularExpressionLiteral(node)) {
+    const close = node.text.lastIndexOf("/");
+    return new RegExp(node.text.slice(1, close), node.text.slice(close + 1));
+  }
+  if (ts.isTemplateExpression(node)) {
+    const parts: string[] = [node.head.text];
+    for (const span of node.templateSpans) {
+      const part = ts.isIdentifier(span.expression) ? declaredLiteral(file, span.expression.text, within).value : undefined;
+      if (typeof part !== "string") return undefined;
+      parts.push(part, span.literal.text);
+    }
+    return parts.join("");
+  }
+  if (ts.isArrayLiteralExpression(node)) {
+    const elements = node.elements.map(element => literalOf(element, file, within));
+    return elements.every((element): element is Declared => element !== undefined) ? elements : undefined;
+  }
+  if (ts.isObjectLiteralExpression(node)) {
+    const members: { [key: string]: Declared } = {};
+    for (const property of node.properties) {
+      if (!ts.isPropertyAssignment(property) || !(ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) || property.name.text === "__proto__") return undefined;
+      const member = literalOf(property.initializer, file, within);
+      if (member === undefined) return undefined;
+      members[property.name.text] = member;
+    }
+    return members;
+  }
+  if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === FREEZER && node.arguments.length === 1) {
+    const [argument] = node.arguments;
+    return argument === undefined ? undefined : literalOf(argument, file, within);
+  }
+  return undefined;
+}
+/** A side's one top-level const declaration in a source, read by literalOf: how many there are, its value, and whether it calls deepFrozen. */
+function declaredLiteral(file: ts.SourceFile, name: string, within: readonly string[] = []): { readonly count: number; readonly value: Declared | undefined; readonly frozen: boolean } {
+  const declared = topLevelConsts(file, name);
+  const initializer = declared.length === 1 ? declared[0]?.initializer : undefined;
+  if (initializer === undefined || within.includes(name)) return { count: declared.length, value: undefined, frozen: false };
+  const frozen = ts.isCallExpression(initializer) && ts.isIdentifier(initializer.expression) && initializer.expression.text === FREEZER;
+  return { count: declared.length, value: literalOf(initializer, file, [...within, name]), frozen };
+}
+/**
+ * Where `actual` departs from the value its declaration spells (THE DECLARATION), read through builtins alone (their replacement is
+ * R-RUNTIME): a string must be that string; an object or list must have the declaration's prototype, its own members in order and no
+ * other (symbols included), each a data member, enumerable as declared, holding the declared value - and be frozen through every
+ * member where the declaration calls deepFrozen; a pattern must hold the declared body and flags (read by RegExp.prototype's own
+ * getters, so a recompile shows) and lastIndex as its one member.
+ */
+function departures(actual: unknown, expected: Declared, at: string, frozen: boolean): string[] {
+  if (typeof expected === "string") return actual === expected ? [] : [`${at} is not its declared literal`];
+  if (typeof actual !== "object" || actual === null) return [`${at} is not its declared literal`];
+  const found: string[] = [];
+  if (Object.getPrototypeOf(actual) !== Object.getPrototypeOf(expected)) found.push(`${at} has another prototype`);
+  if (frozen && !Object.isFrozen(actual)) found.push(`${at} is not frozen`);
+  const keys = Reflect.ownKeys(actual);
+  const spelled = Reflect.ownKeys(expected);
+  if (keys.length !== spelled.length || keys.some((key, index) => key !== spelled[index])) return [...found, `${at} has other members than its declaration`];
+  for (const key of spelled) {
+    const own = typeof key === "string" ? Reflect.getOwnPropertyDescriptor(actual, key) : undefined;
+    const declared = typeof key === "string" ? Reflect.getOwnPropertyDescriptor(expected, key) : undefined;
+    if (typeof key !== "string" || own === undefined || declared === undefined) continue;
+    const path = Array.isArray(expected) && key !== "length" ? `${at}[${key}]` : `${at}.${key}`;
+    if (!("value" in own)) {
+      found.push(`${path} is an accessor`);
+      continue;
+    }
+    if (own.enumerable !== declared.enumerable) found.push(`${path} is not enumerable as declared`);
+    const value: unknown = declared.value;
+    const nested = typeof value === "string" || (typeof value === "object" && value !== null);
+    if (nested) found.push(...departures(own.value, value as Declared, path, frozen));
+    else if (own.value !== value) found.push(`${path} is not its declared literal`);
+  }
+  if (Object.getPrototypeOf(expected) === RegExp.prototype) {
+    const read = (pattern: object, name: string): unknown => {
+      try {
+        return Reflect.get(RegExp.prototype, name, pattern);
+      } catch {
+        return undefined;
+      }
+    };
+    if (read(actual, "source") !== read(expected, "source") || read(actual, "flags") !== read(expected, "flags")) found.push(`${at} is not its declared literal`);
+  }
+  return found;
+}
+/**
+ * THE DECLARATION (wb-5333 cut #7) over a source and the run-time values of its in-file sides, in IN_FILE_SIDES order: each side is
+ * declared once, read from its declaration, and departs from it nowhere (departures); and a source that declares DECLARED_SIDES or
+ * DECLARATION_MISSES declares DECLARED_SIDES as Object.freeze over the IN_FILE_SIDES names in order and DECLARATION_MISSES as
+ * declarationMisses(SELF_TEXT, DECLARED_SIDES). Returns the refused readings, by side.
+ */
+function declarationMisses(text: string, values: readonly unknown[]): string[] {
+  const file = ts.createSourceFile("declaration.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: string[] = [];
+  const sides = topLevelConsts(file, "DECLARED_SIDES");
+  if (sides.length > 0) {
+    const initializer = sides.length === 1 ? sides[0]?.initializer : undefined;
+    const freezes =
+      initializer !== undefined &&
+      ts.isCallExpression(initializer) &&
+      ts.isPropertyAccessExpression(initializer.expression) &&
+      ts.isIdentifier(initializer.expression.expression) &&
+      initializer.expression.expression.text === "Object" &&
+      initializer.expression.name.text === "freeze" &&
+      initializer.arguments.length === 1;
+    const list = freezes ? initializer.arguments[0] : undefined;
+    const names = list !== undefined && ts.isArrayLiteralExpression(list) ? list.elements.map(element => (ts.isIdentifier(element) ? element.text : "")) : [];
+    if (names.length !== IN_FILE_SIDES.length || names.some((name, index) => name !== IN_FILE_SIDES[index])) found.push("DECLARED_SIDES is not Object.freeze over the IN_FILE_SIDES names in order");
+  }
+  const verdict = topLevelConsts(file, "DECLARATION_MISSES");
+  if (verdict.length > 0) {
+    const initializer = verdict.length === 1 ? verdict[0]?.initializer : undefined;
+    const reads =
+      initializer !== undefined &&
+      ts.isCallExpression(initializer) &&
+      ts.isIdentifier(initializer.expression) &&
+      initializer.expression.text === "declarationMisses" &&
+      initializer.arguments.length === 2 &&
+      initializer.arguments.every((argument, index) => ts.isIdentifier(argument) && argument.text === ["SELF_TEXT", "DECLARED_SIDES"][index]);
+    if (!reads) found.push("DECLARATION_MISSES is not declarationMisses(SELF_TEXT, DECLARED_SIDES)");
+  }
+  if (values.length !== IN_FILE_SIDES.length) return [...found, "the sides read are not the IN_FILE_SIDES"];
+  for (const [index, side] of IN_FILE_SIDES.entries()) {
+    const declared = declaredLiteral(file, side);
+    if (declared.count !== 1) found.push(`${side} is not declared once`);
+    else if (declared.value === undefined) found.push(`${side} is not read from its declaration`);
+    else found.push(...departures(values[index], declared.value, side, declared.frozen));
+  }
+  return found;
+}
+/** Whether a source keeps THE DECLARATION's statement at its top level: `if (DECLARATION_MISSES.length > 0) throw ...` (wb-5333 cut #7). */
+function declarationStands(text: string): boolean {
+  const file = ts.createSourceFile("declaration.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return file.statements.some(
+    statement =>
+      ts.isIfStatement(statement) &&
+      statement.elseStatement === undefined &&
+      ts.isThrowStatement(statement.thenStatement) &&
+      ts.isBinaryExpression(statement.expression) &&
+      statement.expression.operatorToken.kind === ts.SyntaxKind.GreaterThanToken &&
+      statement.expression.left.getText(file) === "DECLARATION_MISSES.length" &&
+      statement.expression.right.getText(file) === "0",
+  );
+}
+/**
+ * THE DECLARATION's run-time sides (wb-5333 cut #7): each in-file side's value, in IN_FILE_SIDES order, frozen where it is declared;
+ * its verdict, taken at collection after THE GUARD's (so THE FORM has read every initializer clean) and again in the judged set.
+ */
+const DECLARED_SIDES: readonly unknown[] = Object.freeze([BEAD, PROGRAM_TAG, TRIGGER, QUOTE_PIN, QUOTE, GATING_ARTIFACTS, INVOCATION, FIELDS, REF_KIND, MEMBER, RI_ROOT, FIELD_SPELLINGS, REF_PREFIX, JUDGED_TITLE, RECORD_TITLE, ROWS, SEPARATOR, HARNESS, RECORD, HOOKS]);
+const DECLARATION_MISSES: readonly string[] = declarationMisses(SELF_TEXT, DECLARED_SIDES);
+if (DECLARATION_MISSES.length > 0) throw new Error(`THE DECLARATION (wb-5333 cut #7): an in-file side is not the value its declaration spells - ${DECLARATION_MISSES.join("; ")}`);
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -2664,6 +2988,103 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect(Object.entries(patterns).flatMap(([name, value]) => unfrozen(value, `$.${name}`)), "every pattern the judged set and the cases read through is frozen").toEqual([]);
     const regexps = [SEPARATOR, RI_ROOT, ...FIELD_SPELLINGS, REF_PREFIX];
     expect(regexps.map(pattern => [Reflect.set(pattern, "test", () => true), Reflect.defineProperty(pattern, "test", { value: () => true })]), "a test method set on each pattern is refused").toEqual(regexps.map(() => [false, false]));
+    // THE DECLARATION (wb-5333 cut #7, refusal #6's U1: the wb-5333 gate's DF-CALLEE family - isObject, the in-file callee of
+    // deepFrozen's body, edited to write the roster file's rows into the ROWS literal's rows before the freeze, beside row B's label
+    // cut, D3 removed from ROWS or D3's quote cut, stayed 0 failed | 18 passed on the wb-5333 cut #6): each in-file side is, here as at
+    // collection, the value its own declaration spells in this file's source; each reading reports a perturbed input; and the
+    // collection statement stands.
+    expect(declarationMisses(SELF_TEXT, DECLARED_SIDES), "every in-file side is the value its own declaration spells").toEqual([]);
+    expect(DECLARATION_MISSES).toEqual([]);
+    const declaredSource = plantedSides({
+      INVOCATION: 'const INVOCATION = deepFrozen({ model: "m", task: "t" });',
+      ROWS: `const ROWS = deepFrozen([{ id: "A", label: \`(a) \${TRIGGER}\`, pins: [{ id: "A1", quote: "q" }] }]);`,
+      SEPARATOR: "const SEPARATOR = deepFrozen(/^[\\s,;:]*$/);",
+    });
+    const frozenPins = Object.freeze([Object.freeze({ id: "A1", quote: "q" })]);
+    const declarationRows = (row: object): unknown => Object.freeze([Object.freeze(row)]);
+    const asDeclared: Readonly<Record<string, unknown>> = {
+      INVOCATION: Object.freeze({ model: "m", task: "t" }),
+      ROWS: declarationRows({ id: "A", label: "(a) trigger", pins: frozenPins }),
+      SEPARATOR: Object.freeze(/^[\s,;:]*$/),
+    };
+    const sidesWith = (values: Readonly<Record<string, unknown>>): unknown[] => IN_FILE_SIDES.map(side => (Object.hasOwn(values, side) ? values[side] : Object.hasOwn(asDeclared, side) ? asDeclared[side] : side.toLowerCase()));
+    const recompiledPattern = Object.freeze(/^[\s,;:]*$/);
+    try {
+      recompiledPattern.compile("^(?:[\\s,;:]*|, no carrier default substitutes )$");
+    } catch {
+      // RegExp.prototype.compile rewrites the frozen pattern's body and flags, then throws on its lastIndex (measured)
+    }
+    expect({
+      clean: declarationMisses(declaredSource, sidesWith({})),
+      label: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows({ id: "A", label: "(a) trigger, the roster file's label", pins: frozenPins }) })),
+      pin: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows({ id: "A", label: "(a) trigger", pins: Object.freeze([...frozenPins, Object.freeze({ id: "A2", quote: "r" })]) }) })),
+      quote: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows({ id: "A", label: "(a) trigger", pins: Object.freeze([Object.freeze({ id: "A1", quote: "q, the roster file's quote" })]) }) })),
+      unfrozen: declarationMisses(declaredSource, sidesWith({ ROWS: Object.freeze([{ id: "A", label: "(a) trigger", pins: frozenPins }]) })),
+      accessor: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows(Object.defineProperty({ id: "A", label: "", pins: frozenPins }, "label", { get: () => "(a) trigger", enumerable: true })) })),
+      prototype: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows(Object.setPrototypeOf({ id: "A", label: "(a) trigger", pins: frozenPins }, { kept: true })) })),
+      member: declarationMisses(declaredSource, sidesWith({ ROWS: declarationRows({ id: "A", label: "(a) trigger", pins: frozenPins, [Symbol.for("wb-5333")]: true }) })),
+      patternMember: declarationMisses(declaredSource, sidesWith({ SEPARATOR: Object.freeze(Object.defineProperty(/^[\s,;:]*$/, "test", { value: () => true })) })),
+      recompiled: declarationMisses(declaredSource, sidesWith({ SEPARATOR: recompiledPattern })),
+      string: declarationMisses(declaredSource, sidesWith({ BEAD: "another bead" })),
+      object: declarationMisses(declaredSource, sidesWith({ INVOCATION: Object.freeze({ model: "m", task: "the roster file's task" }) })),
+      twice: declarationMisses(plantedSides({ BEAD: 'const BEAD = "bead";\nconst BEAD = "bead";' }), sidesWith({ ROWS: "rows", SEPARATOR: "separator", INVOCATION: "invocation" })),
+      unread: declarationMisses(plantedSides({ BEAD: 'const BEAD = String("bead");' }), sidesWith({ ROWS: "rows", SEPARATOR: "separator", INVOCATION: "invocation" })),
+      count: declarationMisses(declaredSource, sidesWith({}).slice(1)),
+      sidesForm: declarationMisses(plantedSides({}, "const DECLARED_SIDES: readonly unknown[] = Object.freeze([BEAD]);\n"), sidesWith({ ROWS: "rows", SEPARATOR: "separator", INVOCATION: "invocation" })),
+      verdictForm: declarationMisses(plantedSides({}, "const DECLARATION_MISSES: readonly string[] = declarationMisses(SELF_TEXT, [BEAD]);\n"), sidesWith({ ROWS: "rows", SEPARATOR: "separator", INVOCATION: "invocation" })),
+    }).toStrictEqual({
+      clean: [],
+      label: ["ROWS[0].label is not its declared literal"],
+      pin: ["ROWS[0].pins has other members than its declaration"],
+      quote: ["ROWS[0].pins[0].quote is not its declared literal"],
+      unfrozen: ["ROWS[0] is not frozen"],
+      accessor: ["ROWS[0].label is an accessor"],
+      prototype: ["ROWS[0] has another prototype"],
+      member: ["ROWS[0] has other members than its declaration"],
+      patternMember: ["SEPARATOR has other members than its declaration"],
+      recompiled: ["SEPARATOR is not its declared literal"],
+      string: ["BEAD is not its declared literal"],
+      object: ["INVOCATION.task is not its declared literal"],
+      twice: ["BEAD is not declared once"],
+      unread: ["BEAD is not read from its declaration"],
+      count: ["the sides read are not the IN_FILE_SIDES"],
+      sidesForm: ["DECLARED_SIDES is not Object.freeze over the IN_FILE_SIDES names in order"],
+      verdictForm: ["DECLARATION_MISSES is not declarationMisses(SELF_TEXT, DECLARED_SIDES)"],
+    });
+    expect([declarationStands(SELF_TEXT), declarationStands(SELF_TEXT.replace(/^if \(DECLARATION_MISSES\.length > 0\) throw .*$/m, ""))]).toEqual([true, false]);
+    // THE DECLARATION over the roster (wb-5333 cut #7): readRoster read its frozen result back against the text it read before it
+    // returned it (it throws otherwise, so ROSTER is that result); the read-back reports each perturbed input, and readRoster's
+    // read-back stands.
+    const filedRoster = { rows: [{ id: "D", pins: [{ id: "D3", quote: "to any literal", held: { kept: ["a", "b"], dropped: ["c"] } }] }], reached: ["D3:4"] };
+    const readAs = (edit: (copy: { rows: { id: string; pins: Record<string, unknown>[] }[]; reached: string[] }) => void = () => undefined): unknown => {
+      const copy = JSON.parse(JSON.stringify(filedRoster)) as { rows: { id: string; pins: Record<string, unknown>[] }[]; reached: string[] };
+      edit(copy);
+      return deepFrozen(copy);
+    };
+    expect({
+      clean: rosterReadBack(readAs(), filedRoster, "ROSTER"),
+      reordered: rosterReadBack(deepFrozen({ reached: ["D3:4"], rows: [{ pins: [{ held: { dropped: ["c"], kept: ["a", "b"] }, quote: "to any literal", id: "D3" }], id: "D" }] }), filedRoster, "ROSTER"),
+      dropped: rosterReadBack(readAs(copy => Reflect.deleteProperty(copy.rows[0]?.pins[0]?.held as object, "dropped")), filedRoster, "ROSTER"),
+      changed: rosterReadBack(readAs(copy => Reflect.set((copy.rows[0]?.pins[0]?.held as { kept: string[] }).kept, "1", "B")), filedRoster, "ROSTER"),
+      listOrder: rosterReadBack(readAs(copy => (copy.rows[0]?.pins[0]?.held as { kept: string[] }).kept.reverse()), filedRoster, "ROSTER"),
+      added: rosterReadBack(readAs(copy => Reflect.set(copy.rows[0]?.pins[0]?.held as object, "forged", ["d"])), filedRoster, "ROSTER"),
+      unfrozen: rosterReadBack(Object.freeze({ rows: Object.freeze([{ id: "D", pins: (readAs() as typeof filedRoster).rows[0]?.pins }]), reached: Object.freeze(["D3:4"]) }), filedRoster, "ROSTER"),
+      accessor: rosterReadBack(readAs(copy => Object.defineProperty(copy.rows[0] as object, "id", { get: () => "D", enumerable: true })), filedRoster, "ROSTER"),
+      prototype: rosterReadBack(readAs(copy => Object.setPrototypeOf(copy.rows[0] as object, { kept: true })), filedRoster, "ROSTER"),
+      symbol: rosterReadBack(readAs(copy => Reflect.set(copy.rows[0] as object, Symbol.for("wb-5333"), true)), filedRoster, "ROSTER"),
+    }).toStrictEqual({
+      clean: [],
+      reordered: [],
+      dropped: ["ROSTER.rows[0].pins[0].held has other members than the roster file's"],
+      changed: ["ROSTER.rows[0].pins[0].held.kept[1] is not the roster file's"],
+      listOrder: ["ROSTER.rows[0].pins[0].held.kept[0] is not the roster file's", "ROSTER.rows[0].pins[0].held.kept[1] is not the roster file's"],
+      added: ["ROSTER.rows[0].pins[0].held has other members than the roster file's"],
+      unfrozen: ["ROSTER.rows[0] is not frozen"],
+      accessor: ["ROSTER.rows[0].id is an accessor"],
+      prototype: ["ROSTER.rows[0] has another prototype"],
+      symbol: ["ROSTER.rows[0] has other members than the roster file's"],
+    });
+    expect([rosterReadBackStands(SELF_TEXT), rosterReadBackStands(SELF_TEXT.replace(/^ {2}if \(misses\.length > 0\) throw .*$/m, ""))]).toEqual([true, false]);
     // The anchor outside this file and its roster: the owner filing in the tracked bead export.
     const { title, notes } = exportRow();
     const clauses = acceptanceClauses(notes);
@@ -2685,7 +3106,19 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     // B-D's their clauses - with separator-only gaps, and dropping any one quote leaves its row's owner text untiled.
     const owner = ROWS.map(row => ownerTextOf(row, title, clauses));
     expect(owner.map(entry => entry.length > 0), "every row has its owner text").toEqual(ROWS.map(() => true));
-    expect(ROWS.flatMap(row => row.pins).filter(pin => SEPARATOR.test(pin.quote)).map(pin => pin.id), "every quote names something").toEqual([]);
+    const quotesRead = ROWS.flatMap(row => row.pins);
+    const quoteSeparates = separatorTests(quotesRead.map(pin => pin.quote));
+    expect(quotesRead.filter((_, index) => quoteSeparates[index] === true).map(pin => pin.id), "every quote names something").toEqual([]);
+    // SEPARATOR at each PIN ANCHOR reading (wb-5333 cut #7): a pattern recompiled away from SEPARATOR's declaration - frozen, as
+    // SEPARATOR is - is refused at the reading it precedes.
+    const recompiledSeparator = Object.freeze(new RegExp(SEPARATOR.source, SEPARATOR.flags));
+    try {
+      recompiledSeparator.compile("^.*$");
+    } catch {
+      // compile rewrites the frozen pattern, then throws on its lastIndex (measured)
+    }
+    expect(separatorTests([", ", "a quote"]), "SEPARATOR as declared").toEqual([true, false]);
+    expect(() => separatorTests(["a quote"], recompiledSeparator), "a recompiled pattern is refused at the PIN ANCHOR's reading").toThrow("SEPARATOR is not its declaration where the PIN ANCHOR reads it");
     expect(ROWS.map((row, index) => tiles(owner[index] ?? "", row.pins.map(pin => pin.quote)).untiled), "each row's quotes tile its owner text").toEqual(ROWS.map(() => []));
     const droppable = ROWS.flatMap((row, index) => row.pins.filter(pin => tiles(owner[index] ?? "", row.pins.filter(other => other !== pin).map(other => other.quote)).covered).map(pin => pin.id));
     expect(droppable, "a pin whose quote drops with its row's owner text still tiled").toEqual([]);
@@ -2715,6 +3148,8 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
       hooks: ["HOOKS are not the roster's hooks"],
     });
     expect([guardStands(SELF_TEXT), guardStands(SELF_TEXT.replace(/^if \(GUARD_MISSES\.length > 0\) throw .*$/m, ""))]).toEqual([true, false]);
+    // THE DECLARATION again at the judged set's end (wb-5333 cut #7): a pattern recompiled during the judged set reds here.
+    expect(declarationMisses(SELF_TEXT, DECLARED_SIDES), "every in-file side is still the value its own declaration spells").toEqual([]);
   });
 
   for (const row of ROWS) {
