@@ -2,7 +2,7 @@
   "bead": "wb-pyel.8",
   "claims": {
     "COMMENTS": "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER) - after each of those tokens a run of each comment kind alone, of a comment with white space and a line end around it, and of each shape T-RUNS names: two block comments, a block and a line comment, two line comments, a comment with a blank or a white-space-only line after it, a blank line before it and tabs around it (T-RUNS, W-COMMENTS) -; and as one space after any other token (T-R1C, M-BEFORE, T-ELSEWHERE: every other punctuator the compiler lists; every literal and template token kind - a string in either quote, a regular expression without a flag and with the flag 'g' -; an identifier and a private name ending in each ASCII character the compiler reads as an identifier part - each of the 26 lowercase and 26 uppercase letters, the ten digits, '_' and '$' -; and the keyword 'this', 'async' before an arrow function's parameter and each keyword the compiler parses right before an operand (as a prefix operator: delete, new, typeof, void, yield, await; as an infix operator: in, instanceof, as, satisfies; as a type operator: typeof, asserts, infer, keyof, readonly, unique) - but '`', '#' and '</', which the compiler's token list never holds as a token of their own, and JSX text, which reads a comment's bytes as its text), each T-ELSEWHERE plant's run in each comment kind (T-KINDS, W-COMMENTS: a line and a JSDoc-style comment beside its block one, but a line comment right after 'async', 'yield' and 'asserts', whose line end the compiler parses otherwise), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment of these runs cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
-    "AS-WRITTEN": "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key; plain with a no-substitution template or a '+' concatenation of two strings as its key, each joining as its constant text; and plain with a number or an identifier as its key, each joining as '?'), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index; plain with a parenthesized string literal type as its index, joining as its constant text; and plain with a number literal type or a type reference as its index, each joining as '?'), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT).",
+    "AS-WRITTEN": "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key; plain with a no-substitution template or a '+' concatenation of two strings as its key, each joining as its constant text; and plain with a number or an identifier as its key, each joining as '?'; those four key forms each only in the sub-forms its row K pin plants: K-TEMPLATE, K-CONCATENATION, K-NUMBER and K-IDENTIFIER), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index; plain with a parenthesized string literal type as its index, joining as its constant text; and plain with a number literal type or a type reference as its index, each joining as '?'; those three index forms each only in the sub-forms its row K pin plants: K-PARENTHESIZED, K-NUMBER-TYPE and K-TYPE-REFERENCE), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT). Row K's sub-forms are the gate's paired witnesses (wb-ft52's F1 line), each read as the delivered reader reads it: K-TEMPLATE a template of a word, with a hex escape, empty, of two words and with a code point escape (T1-T5); K-CONCATENATION two strings in double, in single and in mixed quotes, with a comment before the '+', with a hex escape in the right string, with an empty left string, with a line end after the '+' and with a hex escape in the left string (C1-C8); K-NUMBER a zero, a one, a decimal fraction, a hex, an exponent, a separated and a binary number and a fraction with no leading digit (N1-N8); K-IDENTIFIER a name, a family word, a name starting with '$' and with '_', and undefined (I1-I5); K-PARENTHESIZED a string in double and in single quotes, in two parentheses, with spaces inside them, with a hex escape and with a comment inside them (P1-P6); K-NUMBER-TYPE a zero, a decimal fraction, a hex, a negative number and an exponent (L1-L5); and K-TYPE-REFERENCE a name, a qualified name, a name with a type argument, a family word, a name with a string literal type argument and a qualified name in lower case (R1-R6).",
     "CUT": "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space, a tab or a line end - right after a token that ends in a terminator (C-SPACE); a blank or white-space-only line (of spaces, or of a tab); a line read whole as a table row (a '|' first - followed by a space, a second '|', a '=' or the line's end - at the line's start or after spaces or a tab) or as a heading (none to three spaces, one to six '#', then white space or the line's end - four spaces, seven '#' or a word right after the '#' make none), each such line its own sentence, so the next line starts another; a line read as a list item (a '-', '+' or '*' bullet or a number of one to five digits with ')', then a space or a tab - a bullet with a word right after it makes none; a number with '.' is a terminator cut, C-SPACE); or a terminator before a space or a tab inside a string, a template, a regular expression or JSX text the reading holds (C-LINES, W-CUT). A terminator stays with the sentence it ends, and each finding names the line of the reading its sentence's first non-blank piece stands on: the first line after the cut - a terminator before a line end or a space, a blank line, a heading, a table row or a list item - that holds anything but white space, a punctuator alone too, which can precede the line of the sentence's first word: '(' alone, in code and in a template's text, and in a template's text each ASCII punctuator SENTENCES reads alone as no line rule and no terminator, the template's closing '`' among them (C-LINE-OF, W-LINE-OF). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
     "LIVE QUIET": "quietOf holds, beside the quiet readings of one text, every carrier pair whose two words a sentence cut parts - each occurrence of each pair, in a code reading and across a page's sentences - as '<where> parted:carrier <pair>' (P-ONE, P-C04, P-C05, P-C06, P-CODE); a pair one sentence spells is a finding and is held as parted nowhere, while a parted occurrence of the same pair beside it is held (P-WITHIN)."
   },
@@ -122,6 +122,27 @@
       "M-AFTER",
       "M-BEFORE",
       "W-AS-WRITTEN"
+    ],
+    "G23-K06": [
+      "K-PARENTHESIZED"
+    ],
+    "G23-K07": [
+      "K-TEMPLATE"
+    ],
+    "G23-K08": [
+      "K-CONCATENATION"
+    ],
+    "G23-K09": [
+      "K-NUMBER"
+    ],
+    "G23-K10": [
+      "K-TYPE-REFERENCE"
+    ],
+    "G23-K11": [
+      "K-NUMBER-TYPE"
+    ],
+    "G23-K12": [
+      "K-TEMPLATE"
     ]
   },
   "rows": [
@@ -16770,6 +16791,476 @@
           }
         }
       ]
+    },
+    {
+      "id": "K",
+      "label": "the restated AS-WRITTEN key and index words are wider than the pins at unplanted sub-forms",
+      "pins": [
+        {
+          "id": "K-TEMPLATE",
+          "witness": {
+            "T1": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "T2": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "T3": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).",
+                "context.inner"
+              ]
+            },
+            "T4": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).dem and",
+                "context.inner"
+              ]
+            },
+            "T5": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-CONCATENATION",
+          "witness": {
+            "C1": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C2": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C3": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C4": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C5": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C6": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C7": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "C8": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-NUMBER",
+          "witness": {
+            "N1": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N2": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N3": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N4": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N5": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N6": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N7": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "N8": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-IDENTIFIER",
+          "witness": {
+            "I1": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "I2": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "I3": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "I4": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            },
+            "I5": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "(context.inner).?",
+                "context.inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-PARENTHESIZED",
+          "witness": {
+            "P1": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "P2": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "P3": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "P4": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "P5": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "P6": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-NUMBER-TYPE",
+          "witness": {
+            "L1": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "L2": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "L3": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "L4": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "L5": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "K-TYPE-REFERENCE",
+          "witness": {
+            "R1": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "R2": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts access subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner",
+                "Keys.Demand"
+              ]
+            },
+            "R3": {
+              "findings": [],
+              "quiet": [],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "R4": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "R5": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner"
+              ]
+            },
+            "R6": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts access subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.?",
+                "Context.Inner",
+                "keys.demand"
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "tests": [
@@ -16804,6 +17295,13 @@
     "W-CUT",
     "W-LINE-OF",
     "W-AS-WRITTEN",
+    "K-TEMPLATE",
+    "K-CONCATENATION",
+    "K-NUMBER",
+    "K-IDENTIFIER",
+    "K-PARENTHESIZED",
+    "K-NUMBER-TYPE",
+    "K-TYPE-REFERENCE",
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ]
 }
