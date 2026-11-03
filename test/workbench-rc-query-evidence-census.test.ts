@@ -9,16 +9,35 @@
  * host-pending/unavailable-block (never logical UNKNOWN), an empty rendered list never flips unknown to pass, and the
  * inspector/DevTools surface only consumes emitted evidence, never computes query truth."
  *
- * CUT #5 (the FINAL cut: orchestrator ruling R-B110, the rule-19 structural exit at refusal #4, binds it to the FAIL-CLOSED
- *  CORE). Refusal #4 measured two read claims wider than their readers: U1, R14 said every surface value is plain JSON data and
- *  anything else fails closed, while notPlain checks no array's prototype and takes every canonical numeric key of an array for
- *  an index; U2, R13 and D1 said every InspectorView, while the census draws each view in the inspector's ASCII tier only. Both
- *  are restated to exactly what their readers read, and each hole is stated as a named residual with a pinned quiet row: R14
- *  lists the forms notPlain fails closed on, one plant each, beside R-ARRAY-PROTOTYPE, R-NUMERIC-KEY and R-UNLISTED; R13, D1,
- *  SURFACES and A1 name the one draw the census makes (DRAW, held to the roster) beside R-UNDRAWN-TIER, whose quiet row reds
- *  when the inspector declares a draw option it does not name. The baseline legs' falsifiers plant a reading on every case and
- *  every view their claims name. The reader work itself - an array's prototype and numeric keys checked, every declared tier
- *  drawn - is child wb-km7q.10's (NOT CLAIMED).
+ * CUT #6 (the mechanical restatement orchestrator ruling R-B143 binds: at refusal #5 on the FINAL cut #5 b0edc42d the rule-19
+ *  dependency inversion parked this bead behind its structural-exit child wb-km7q.10, its re-cut to be a mechanical restatement
+ *  over the child's landed readers; the child's carrier wb-km7q.14 landed them at landing 862, merge 5bf15c6dd6e5, and ruling
+ *  R-B421 closed wb-km7q.10 on that carrier). The census reads with the landed readers of
+ *  test/helpers/rc-query-evidence-readers.ts - notPlain, stringsOf, declaredViews, sizeMembers, layoutBands and tierDraws - in
+ *  place of its own notPlain, stringsOf, declaredViews, sizeMembers and DRAW, and each claim it made of those is restated over
+ *  them: every reader's claim is the helper's own, held here byte-for-byte (THE READERS' CLAIMS); SURFACES, A1, R13 and D1 draw
+ *  every view declaredViews reads at every tier draw tierDraws makes (54 draws, held to the roster), each page at its own draw;
+ *  R14 and the falsifiers read with notPlain and stringsOf. Refusal #5's three unmet members are cured by those readers: U1
+ *  (Q25's draw-option check read only the first InspectorSize declaration's identifier-named members) - sizeMembers reads every
+ *  merged declaration, string and computed member names and extended interfaces (SIZE CLAIM) and tierDraws draws every optional
+ *  boolean option it reads (TIER CLAIM), so a merged, quoted or inherited draw option changes the draws R13 holds to the roster
+ *  (R13 reads each of the gate's three plants on the module's text); U2 (a view declared through an alias member was never
+ *  drawn) - declaredViews reads alias members (VIEWS CLAIM), so such a view is drawn at every tier draw and read (R13 reads the
+ *  gate's alias plant on the module's text); U3 (an UNKNOWN token carried as an object key on the zero-block snapshot was read
+ *  by nothing) - stringsOf reads the keys a value lists (READINGS CLAIM), and B3, C2 and D1 each fire on a key-borne plant on
+ *  the zero-block render. Refusal #5's riding F4 (the drawer's model inputs, named in prose only) is pinned: R-UNDRAWN-TIER is
+ *  restated as R-UNDRAWN-DRAW, the draws the census does not make, its quiet row drawing another width, another row count,
+ *  another state, an evidence store and a topology selector (the input refusal #5's F4 plant reads). R-ARRAY-PROTOTYPE and
+ *  R-NUMERIC-KEY are cured by notPlain and retired, their plants failing closed in R14; R-UNLISTED stays, named by both readers'
+ *  claims.
+ * CUT #5 (the FINAL cut of the loop: orchestrator ruling R-B110, the rule-19 structural exit at refusal #4, bound it to the
+ *  FAIL-CLOSED CORE; superseded by CUT #6). Refusal #4 measured two read claims wider than their readers: U1, R14 said every
+ *  surface value is plain JSON data and anything else fails closed, while cut #5's notPlain checked no array's prototype and
+ *  took every canonical numeric key of an array for an index; U2, R13 and D1 said every InspectorView, while the census drew
+ *  each view in the inspector's ASCII tier only. Cut #5 restated both to exactly what its readers read, stated each hole as a
+ *  named residual with a pinned quiet row (R-ARRAY-PROTOTYPE, R-NUMERIC-KEY, R-UNLISTED and R-UNDRAWN-TIER) and planted a
+ *  reading on every case and every view its baseline legs claimed; the reader work went to child wb-km7q.10. Refusal #5 measured
+ *  three of its restated claims wider than cut #5's readers (U1-U3, cured in CUT #6).
  * CUT #4 (the respin of refusal #3, gate-prep-17 of g10-gate-s137, under orchestrator ruling R-B85: the enumerate-the-resolvable
  *  form for A1's read claims and for the clause bindings; kept). Every claim A1 makes about what it reads is listed in A1 READ
  *  CLAIMS with the reader form it is proven on, and each is bound to an executable falsifier: the test of its id (R1-R14) feeds
@@ -41,9 +60,13 @@
  *  The roster vendors both producer files as base64 (so no Pi text census reads producer prose as Pi text) and the outputs the
  *  installed adapter returned, run read-only from rf's environment, for one view of each verdict and for each policy.
  *  RE-READ AT CUTS #2, #3 AND #4 (seat ws-05, 2026-10-29) AND AT CUT #5 (seat ws-04, 2026-10-30; read-only): the installed rf
- *  is still 0.1.845, its bundled reactive_components 0.1.1.20261024212618 adapter is still blob c8a2f154, and no reactive_fiber_cli module names
- *  query_evidence, project_query_evidence or unavailable_block. On Pi's side the trigger has not fired (A1): no A1 read claim
- *  reads anything on today's tree.
+ *  was still 0.1.845, its bundled reactive_components 0.1.1.20261024212618 adapter still blob c8a2f154, and no
+ *  reactive_fiber_cli module named query_evidence, project_query_evidence or unavailable_block. RE-READ AT CUT #6 (seat ws-01,
+ *  2026-11-03; read-only): the installed rf is 0.1.880, its bundled reactive_components 0.1.1.20261031084107 adapter is still
+ *  blob c8a2f154, and no reactive_fiber_cli Python module names reactive_components.query_evidence, project_query_evidence,
+ *  unavailable_block or query_evidence_of (two hold the substring query_evidence, only inside rf's own load_query_evidence of
+ *  its context-explain query views). On Pi's side the trigger has not fired (A1): no A1 read claim reads anything on today's
+ *  tree.
  *
  * WHERE ADOPTED EVIDENCE ARRIVES (SURFACES, read from src). RC's adapter renders context blocks, and Pi takes assembled context
  *  only through the rf render envelope, so adopted evidence rides result.output.text and the result.blocks rows of a render. The
@@ -52,12 +75,12 @@
  *  the node evidence the runtime emits and the inspector shows) and the RF reader adapter (reactivefiber-observer.ts, the
  *  snapshot an ObservationProjection holds). The fourth surface is the DevTools surface the bead names: the drawer, the src
  *  module declaring layoutInspector (ui/workflow-inspector.ts, docs/workbench/10), drawn over a projection holding that
- *  snapshot, in every InspectorView member the module declares as the census draws it (DRAW, R13: the inspector's plain ASCII
- *  tier at 120 columns by 40 rows in one column; R-UNDRAWN-TIER). Every src module whose code names layoutInspector is classified
- *  (R9): it declares the name (a drawer), only imports or re-exports it (a forward: today the workflow dialog, an undriven
- *  renderer, Q6) or neither (unclassified). A new envelope reader or drawer reds A1 until it joins SURFACES, a new forward reds
- *  A1's witness until it is re-measured, and an unclassified module reds A1; a module naming neither is not found
- *  (R-UNNAMED-READER, R-UNNAMED-DRAWER).
+ *  snapshot, on every page: every InspectorView member declaredViews reads from the module (VIEWS CLAIM) at every tier draw
+ *  tierDraws makes from the module's draw options and docs/10's Layout responsiveness bands (TIER CLAIM; R13, R-UNDRAWN-DRAW).
+ *  Every src module whose code names layoutInspector is classified (R9): it declares the name (a drawer), only imports or
+ *  re-exports it (a forward: today the workflow dialog, an undriven renderer, Q6) or neither (unclassified). A new envelope
+ *  reader or drawer reds A1 until it joins SURFACES, a new forward reds A1's witness until it is re-measured, and an
+ *  unclassified module reds A1; a module naming neither is not found (R-UNNAMED-READER, R-UNNAMED-DRAWER).
  * CASES: the clean full-shape envelope (test/helpers/rf-render-fixture.ts) whose document is one producer output - the TRUE,
  *  FALSE and UNKNOWN (empty source list) evidence blocks and the unavailable block, each on two carriers (text: the block's text
  *  in output.text with today's rf row, the helper's five row keys and a span; row: that row also carrying every field of the
@@ -67,28 +90,28 @@
  *
  * READINGS. A verdict TOKEN is a VERDICTS member spelled exactly (case-sensitive, word-bounded) and a verdict TEXT is a
  *  TEST_HEALTH_TEXTS value or the UNAVAILABLE_TEXT, matched as a substring; both are read from the vendored producer bytes. A
- *  PASS or FAIL word is a roster word, read as a case-insensitive word. Each verdict's class is read from its own text: the
- *  text naming a PASS word is the pass, the one naming a FAIL word the fail, the one naming neither the unknown. Each class's
- *  words are the regular inflections of one stem (the stem and its -s, -ed and -ing forms). Each stem is anchored by its
- *  verdict's TestHealth text (passed names the pass, failed the fail), and every pass or fail word the owner title and Citation
- *  line, the charter or the adapter module spell (pass, passed, passing, failed) must be a class word, which anchors the
- *  rule's bare, -ed and -ing branches; no outside text spells an -s form (passes, fails), so the -s branch is the rule's alone
- *  (R-S-INFLECTION). The falsifiers read a surface's strings (stringsOf) and the inspector's drawn lines, the baseline legs a
- *  surface's JSON and its drawn lines; where they do not read is stated, never claimed: R-ARRAY-PROTOTYPE, R-NUMERIC-KEY and
- *  R-UNLISTED (values notPlain passes whose readings miss what they hold) and R-UNDRAWN-TIER (the draws the census does not
- *  make).
+ *  PASS or FAIL word is a roster word, read as a case-insensitive word. Each verdict's class is read from its own text: the text
+ *  naming a PASS word is the pass, the one naming a FAIL word the fail, the one naming neither the unknown. Each class's words
+ *  are the regular inflections of one stem (the stem and its -s, -ed and -ing forms). Each stem is anchored by its verdict's
+ *  TestHealth text (passed names the pass, failed the fail), and every pass or fail word the owner title and Citation line, the
+ *  charter or the adapter module spell (pass, passed, passing, failed) must be a class word, which anchors the rule's bare, -ed
+ *  and -ing branches; no outside text spells an -s form (passes, fails), so the -s branch is the rule's alone (R-S-INFLECTION).
+ *  The falsifiers read a surface's strings as stringsOf reads them (READINGS CLAIM: the strings a value lists, an object's keys
+ *  among them) and the lines of every inspector page (a line planted on any one page is among them: B3), the baseline legs a
+ *  surface's JSON and those lines; where they do not read is stated, never claimed: the forms the READINGS CLAIM leaves unread
+ *  (a surface value holding one that can hold a string fails notPlain, which every surface value passes: A1, R14), R-UNLISTED (a
+ *  proxy, named by both readers' claims) and R-UNDRAWN-DRAW (the draws the census does not make).
  * THE FALSIFIERS (each armed by the pin that judges it: on every surface it reads, each planted reading of its class fires):
  *  F1 (arm 1, B3), on a missing-resource case (unavailable, defer): any logical-UNKNOWN reading (the UNKNOWN token or text) on a
  *    surface. The producer emitted none, so any such reading is Pi's.
  *  F2 (arm 2, C1 and C2), on an unknown-or-empty case (UNKNOWN with no sources, defer): any pass reading (the TRUE token or
  *    text, a PASS word) on a surface, and on the reader adapter a zero-block render reading complete or success.
- *  F3 (arm 3, D1), on every case, on the inspector as the census draws it (DRAW) and its inputs (the node evidence and the
- *    snapshot): any verdict reading that
- *    the producer block the case carries does not hold. The text carrier carries the block's content (the output text) and its
- *    key (inside the row's candidate key); the row carrier also the row's producer fields; the neutral render and the defer
- *    policy carry none. rf's own envelope fields (the necessity record's failure_mode 'fail', the provenance, the budget) are
- *    never the producer's evidence. Consuming emitted evidence passes and a reading the producer did not emit fires; a computed
- *    reading equal to one the producer emitted for the case cannot be told from consuming it (R-COINCIDENT).
+ *  F3 (arm 3, D1), on every case, on every inspector page and its inputs (the node evidence and the snapshot): any verdict
+ *    reading that the producer block the case carries does not hold. The text carrier carries the block's content (the output
+ *    text) and its key (inside the row's candidate key); the row carrier also the row's producer fields; the neutral render and
+ *    the defer policy carry none. rf's own envelope fields (the necessity record's failure_mode 'fail', the provenance, the
+ *    budget) are never the producer's evidence. Consuming emitted evidence passes and a reading the producer did not emit fires;
+ *    a computed reading equal to one the producer emitted for the case cannot be told from consuming it (R-COINCIDENT).
  *
  * JUDGED ROWS (ROWS: a row per title part, labelled by the acceptance's part, and a pin per clause of the part in title order,
  *  one test each under its row's label; every witness carries its pin id and is held to the roster; each pin reads its clause
@@ -97,16 +120,16 @@
  *   A1 "If Pi ever projects query evidence into context via RC's optional query-evidence adapter": the trigger has not fired.
  *    The clause spells an adapter word sequence. On today's tree every A1 read claim reads nothing: no code module lexeme or
  *    spelling spells an adapter word sequence or holds a producer text (R1-R6), no key or string value of package.json spells a
- *    sequence (R7), SURFACES are exactly the envelope readers and the drawer with the forwards pinned and none unclassified
- *    (R8, R9), every case shows strings on every surface and its details view selects the RF node, every surface value passes
- *    the plain-data check (R14: the forms notPlain fails closed on), and no surface reads the evidence where the baseline legs
- *    look: the provider carries every case's envelope verbatim and nothing beside it but what the neutral render carries (R10),
- *    and each one-block case projects on the node evidence (R11), the observer (but each snapshot's payload reference, the
- *    output text's digest; R12) and every inspector view as the census draws it (R13: DRAW) as the neutral render does.
- *    A1 also holds the read claims' outside anchors - every root of the code pass holds modules (R1), the token kinds read are
- *    TypeScript's identifier, literal and template token kinds but the skipped, no token of a skipped kind in Pi's code holds a
- *    letter (R2), the producer module defines no public name the sequences miss (R6) - and one falsifier of each baseline leg
- *    and of the plain-data check (R10-R14), each firing on a planted reading.
+ *    sequence (R7), SURFACES are exactly the envelope readers and the drawer with the forwards pinned and none unclassified (R8,
+ *    R9), every case shows strings on every surface and its details view selects the RF node, every surface value passes the
+ *    plain-data check (R14: notPlain, R14 CLAIM), and no surface reads the evidence where the baseline legs look: the provider
+ *    carries every case's envelope verbatim and nothing beside it but what the neutral render carries (R10), and each one-block
+ *    case projects on the node evidence (R11), the observer (but each snapshot's payload reference, the output text's digest;
+ *    R12) and every inspector page (R13: every view at every tier draw) as the neutral render does. A1 also holds the read
+ *    claims' outside anchors - every root of the code pass holds modules (R1), the token kinds read are TypeScript's identifier,
+ *    literal and template token kinds but the skipped, no token of a skipped kind in Pi's code holds a letter (R2), the producer
+ *    module defines no public name the sequences miss (R6) - and one falsifier of each baseline leg and of the plain-data check
+ *    (R10-R14), each firing on a planted reading.
  *   A2 "2026-10-17 amendment": the producer artifact. The vendored bytes are the measured blobs; the charter section over :44 is
  *    the clause; :44's arm sentences are the roster's, one per arm row and each a whole sentence; the outputs agree with the
  *    adapter module's texts, kinds, schema and policies (one output per verdict; one policy renders no block, and it has a null
@@ -124,22 +147,23 @@
  *   B2 "an explicit unavailable-block policy": the producer policy the clause names (unavailable_block) renders its block on
  *    both carriers, the provider carrying its text, kind and policy verbatim.
  *   B3 "never as logical UNKNOWN": the token the clause names reads as the unknown class; F1 is quiet on every surface of every
- *    missing-resource case (the outputs of both policies) and fires on every surface on the UNKNOWN token and text planted.
+ *    missing-resource case (the outputs of both policies) and fires on every surface on the UNKNOWN token and text planted, and
+ *    on the token carried as an object key on the zero-block snapshot.
  *  C "an empty rendered list never flips unknown to pass", arm 2.
  *   C1 "unknown never renders as passing": the clause names the unknown verdict and a PASS word; F2 is quiet on every surface of
  *    the UNKNOWN view with an empty source list on both carriers, the record's verdict and empty sources carried verbatim
  *    beside the producer's own refusal of a TRUE without coverage; and F2 fires on every surface on the TRUE token and text and
  *    each PASS word planted, each word also in upper case.
  *   C2 "because an empty list rendered": the clause is a run of arm 2's sentence; on the policy that renders no block F2 is
- *    quiet on every surface and the render is never complete or success, while that structural reading fires on the same
- *    render forced complete.
+ *    quiet on every surface and the render is never complete or success, while that structural reading fires on the same render
+ *    forced complete; and F2 fires on each PASS word carried as an object key on its node evidence.
  *  D "the inspector/DevTools surface only consumes emitted evidence, never computes query truth", arm 3.
  *   D1 "no DevTools/debugger surface computes query truth": each term of the clause's slash pair, and a run of two words or more
- *    beside it, is a run of arm 3's sentence; F3 is quiet on every InspectorView of every case as the census draws it (DRAW: the
- *    ASCII tier; R-UNDRAWN-TIER) and on the node evidence and the snapshot of every case; the node evidence holds no
- *    domainStatus and only the envelope's own values; and F3, on the UNKNOWN
- *    row case and each of those surfaces, fires on every token, text and PASS or FAIL word (each word also in upper case) its
- *    producer block does not hold and is quiet on the two it holds.
+ *    beside it, is a run of arm 3's sentence; F3 is quiet on every inspector page of every case (every InspectorView at every
+ *    tier draw; R-UNDRAWN-DRAW) and on the node evidence and the snapshot of every case; the node evidence holds no domainStatus
+ *    and only the envelope's own values; and F3, on the UNKNOWN row case and each of those surfaces, fires on every token, text
+ *    and PASS or FAIL word (each word also in upper case) its producer block does not hold and is quiet on the two it holds, and
+ *    each of those fires carried as an object key on the zero-block snapshot.
  * CLAUSE BINDINGS (the head-misattribution rider, enumerated). Every pin reads every word of its clause against an outside text
  *  (bindingOf): A1 the charter's amendment section (its heading through :46), A2 the section heading over :44, A3 charter:46,
  *  and each arm pin its arm's charter:44 sentence; the clause's words that text spells and the words it does not, each in
@@ -188,105 +212,221 @@
  *  R11 the node-evidence leg: each one-block case's nativeEvidence equals the neutral render's, every key.
  *  R12 the observer leg: each one-block case's topology equals the neutral render's but each snapshot's own nativePayloadRef,
  *   which is the case's output text's digest; a payload reference anywhere else is compared like any other key.
- *  R13 the inspector leg: each one-block case draws the neutral render's lines in every declared InspectorView as the census
- *   draws it - DRAW, held to the roster: the inspector's plain ASCII tier (every drawn character printable ASCII) at 120 columns
- *   by 40 rows in one column (no panes), the overview, graph and timeline from the initial state and the details view with the
- *   RF node selected; a line planted in any one view of any one-block case is read. The inspector's other draws are not made
- *   (R-UNDRAWN-TIER).
- *  R14 the plain-data check (notPlain): every surface value of every case is walked through each object's own string-keyed
- *   properties (an array's length skipped), recursing into their data values, and notPlain fails closed on each of these forms
- *   (one plant each, and one 64 levels down): an object that is no array whose prototype is neither Object.prototype nor null
- *   (a Map, a Set, a class instance), a symbol key, a property that is not enumerable, an accessor (a getter or a setter), a
- *   value of type undefined, function, symbol or bigint, a number that is not finite (NaN, an infinity), and on an array an own
- *   key that is no canonical numeric string (a name, 01); null, strings, finite numbers and booleans pass, and so do plain and
- *   null-prototype objects and arrays whose properties pass. It checks no array's prototype (R-ARRAY-PROTOTYPE), takes every
- *   canonical numeric key of an array for an index (R-NUMERIC-KEY) and reads only the keys a value lists (R-UNLISTED).
+ *  R13 the inspector leg: each one-block case draws the neutral render's lines on every page - every InspectorView declaredViews
+ *   reads (VIEWS CLAIM) at every tier draw tierDraws makes (TIER CLAIM) from the drawer module's draw options (sizeMembers, SIZE
+ *   CLAIM) and docs/10's Layout responsiveness bands (layoutBands, LAYOUT CLAIM) at the roster's 40 rows, the 54 draw ids held
+ *   to the roster and nothing of the module or docs/10 left unread; the overview, graph and timeline drawn from the initial
+ *   state and the details view with the RF node selected; each page drawn at its own draw, an ASCII-tier page drawing printable
+ *   ASCII only, every glyph-tier draw a character outside it and every pane draw at or above the single-column band's bounds
+ *   lines its one-column twin does not; a line planted on any one page of any one-block case is read; and on the module's text,
+ *   refusal #5's merged, quoted and inherited verdictLine option each adds +verdictLine draws, and its alias view is read beside
+ *   the four. The draws the census does not make are R-UNDRAWN-DRAW's.
+ *  R14 the plain-data check: every surface value of every case is walked by notPlain, whose claim is R14 CLAIM (THE READERS'
+ *   CLAIMS); here a plant of each form cut #5 listed (a Map, a Set, a class instance, a property that is not enumerable, a
+ *   symbol key, a getter, a setter, undefined, a function, a symbol, NaN, an infinity, a bigint, a named and a non-canonical
+ *   numeric key on an array) and a Map 64 levels down, the gate's class-instance array and the array key 4294967295 (refusal #4
+ *   U1), an array whose inherited toJSON hides its element and the array key 4294967296 each fail closed, while plain data, a
+ *   null-prototype object and 64 levels of nesting pass.
+ * THE READERS' CLAIMS (test/helpers/rc-query-evidence-readers.ts, landed by wb-km7q.14, the carrier of wb-km7q.10, at landing
+ *  862): each reader's claim as the helper composes it from its rosters and as
+ *  test/workbench-rc-query-evidence-readers-census.test.ts proves it example by example, held here byte-for-byte (the readers
+ *  case holds each paragraph to its constant and the list to the helper's exports whose names end _CLAIM). A claim's examples
+ *  are the readers census's to pin and are NOT CLAIMED by this census, which claims of each reader only what its own cases read
+ *  on its surfaces and plants:
+ * R14 CLAIM: notPlain walks every own string-keyed property of every object, whatever its name (a name, length, a numeric name);
+ *  every own string-keyed property of every array but its length (an index, a named property); the data value of every property
+ *  it walks, at any depth (64 levels down, under a property that is not enumerable), and fails closed on each of these forms: an
+ *  object that is no array whose prototype is neither Object.prototype nor null (a Map, a Set, a class instance, an object
+ *  inheriting a value); an array whose prototype is not Array.prototype, whatever it inherits (the gate's class-instance array,
+ *  a class-instance array holding nothing of its own, an array without a prototype); a symbol key (on an object, on an array);
+ *  on an array, an own key that is no array index: no canonical numeric string, or one at or above 4294967295 (a name, 01,
+ *  4294967295, 4294967296); a property that is not enumerable (on an object, at an index of an array); an accessor (a getter, a
+ *  setter, a getter at an index of an array); a value of type undefined, function, symbol or bigint (undefined, a function, a
+ *  symbol, a bigint); a number that is not finite (NaN, an infinity, a negative infinity). It passes null, a string, a finite
+ *  number and a boolean (null, a string, an empty string, 0, a negative fraction, true, false); a plain or null-prototype object
+ *  whose properties pass (a plain object, a null-prototype object, an empty object, an object with numeric length); a plain
+ *  array whose properties pass, its length never read (a plain array, a sparse array, an empty array, nested arrays). It reads a
+ *  value through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers
+ *  or hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'. A value
+ *  nested deeper than the stack throws, failing a census, never passing it.
+ * READINGS CLAIM: stringsOf reads every string a value lists, in order: a string itself (at the top, 64 arrays down); the value
+ *  of each own enumerable index of an array, never the index itself (an index, the largest index); the value of each own
+ *  enumerable string-keyed property of an object (a data property, a getter); the name of each own enumerable string-keyed
+ *  property of an object (a name, a numeric name); the name and the value of each own enumerable key of an array that is no
+ *  array index (a name, 01, 4294967295, 4294967296). It leaves unread any value that is no string, array or object, which reads
+ *  as nothing (a number, a boolean, null, undefined, a function, a symbol, a bigint); what a value holds other than as an own
+ *  enumerable string-keyed property (what it inherits, a Map's entries, a Set's entries, a symbol-keyed property, a
+ *  non-enumerable property, an array's length); and notPlain fails closed on each unread value that can hold a string (what it
+ *  inherits, a Map's entries, a Set's entries, a symbol-keyed property, a non-enumerable property, a function). It reads a value
+ *  through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers or
+ *  hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'.
+ * VIEWS CLAIM: declaredViews reads every member of the module's InspectorView union: a string-literal member of the union, read
+ *  once however often it is written (the real union, a repeated literal); a bare name of a type alias the module declares once
+ *  at top level without type parameters, read through its own members (an alias chain, a whole union behind one alias); a member
+ *  written in parentheses (a parenthesized union, a parenthesized literal). It fails closed on any other member (a template
+ *  literal type, a keyword, a number literal, a boolean literal, a qualified name, type arguments on a plain alias, type
+ *  arguments on a generic alias, an undeclared name); a bare name the module declares other than once at top level as a type
+ *  alias without type parameters (a generic alias, an alias declared twice, an interface); an alias that leads back to an alias
+ *  on its own path (back to InspectorView, between two other aliases, back to itself); InspectorView declared other than once at
+ *  top level as a type alias, or beside it as an interface, a class or an enum (no declaration, two aliases, an interface alone,
+ *  an alias beside an interface, an alias beside a class, an alias beside an enum).
+ * SIZE CLAIM: sizeMembers reads the drawer module's draw options: every member of every top-level interface InspectorSize
+ *  declaration of the module (one declaration, merged declarations); a member named by an identifier, a string or numeric
+ *  literal, or a computed name holding a string, numeric or no-substitution template literal (an identifier, a string, a number,
+ *  a computed string, a computed number, a computed template literal); every member of every interface an extends clause names
+ *  by a bare name the module declares at top level, recursively (an extended interface, an interface an extended one extends,
+ *  two interfaces one clause names, a merged extended interface, one interface two paths reach); each member's name, whether it
+ *  is optional, its type as spelled and the interface that declares it (a member of InspectorSize, a member an extended
+ *  interface declares, a member with no type written). It fails closed on a member that is no property signature (a method, an
+ *  index signature, a call signature, a construct signature, a get accessor, a set accessor); any other member name (a private
+ *  name, a bigint literal, another computed name); an interface it reads that declares type parameters (InspectorSize, an
+ *  extended interface); an extends clause naming anything else (a type alias, type arguments on a declared interface, type
+ *  arguments on an undeclared name, a qualified name, an undeclared name); an extends clause that leads back to an interface on
+ *  its own path (back to InspectorSize, between two other interfaces); a member name two of the declarations it reads both
+ *  declare (an override in InspectorSize, a member two merged declarations repeat); InspectorSize declared nowhere at top level
+ *  as an interface, or beside one as a type alias, a class or an enum (no declaration, a type alias alone, a class alone, an
+ *  interface beside a class, an interface beside a type alias, an interface beside an enum).
+ * LAYOUT CLAIM: layoutBands reads the bands of the section docsSection (test/helpers/census.ts) binds as docs/10's '## Layout
+ *  responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or level-2
+ *  heading or the end (the real section, a level-1 heading after its list); each item of each list in the section, by its
+ *  rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band holding its item's
+ *  whole rendered text, an item whose rendered text opens with one of these leads, then ': ' and a description holding no digit,
+ *  each count and each description as its examples plant them, the width examples planting each count width they name at the
+ *  count place they name, a count written otherwise claimed to fail closed only where an example below plants it (<N columns or
+ *  <M rows, <N columns, N to M with an en dash and N at most M, >=N, a lead in bold, an N of four digits, a >=N count of each
+ *  width from one to five digits, a <N columns count of each width from one to three digits, a <M rows count of each width from
+ *  one to three digits, an N of N to M of each width from one to three digits, an M of N to M of each width from one to four
+ *  digits, a description holding ': '); as prose and no band, an item whose rendered text holds no digit (the resize item alone,
+ *  a note with a colon). It fails closed on a section docsSection refuses for one of these reasons (a missing heading, a heading
+ *  rendered twice, the heading under another parent, a code fence hiding a heading line); a section that carries HTML (a
+ *  comment, a tag); a block in the section of one of these kinds (a paragraph, a code block, a heading, a blockquote, a table);
+ *  an item holding a digit outside a lead it reads (a lead it cannot read, a range from more to less, a zero, a leading zero, a
+ *  greater-than-or-equal sign, a greater-than sign that opens a quote, a band nested under another band, a digit in a band's
+ *  description, no space after the colon); an item whose lead is a band lead with its comparison sign changed in one of these
+ *  ways (> in place of >=, a space after >=, a space inside >=, no < before the count of a <N columns lead, no < before the row
+ *  count, a space after the first < of a <N columns or <M rows lead, a space after the second <, a less-than-or-equal sign in
+ *  place of the first < of a <N columns or <M rows lead, a less-than-or-equal sign in place of the second <); an item whose lead
+ *  is a <N columns or <M rows lead with one of these changes to its words or spaces (column in the singular, row in the
+ *  singular, cols in place of columns, and in place of or, a comma in place of or, no space before columns, no space before or,
+ *  no space after or, no space before rows, columns capitalized); an item whose lead is an N to M lead with its en dash changed
+ *  in one of these ways (a hyphen, an em dash, a space before the en dash and none after, a space after the en dash and none
+ *  before, no dash between the counts, a figure dash, a minus sign); an item whose lead is a band lead with one of these counts,
+ *  a count standing at the <N columns count, the <M rows count, either count of N to M or the >=N count (a zero wherever a count
+ *  stands, a leading zero wherever a count stands, a decimal point wherever a count stands, a thousands separator in the >=N
+ *  count, an exponent in the >=N count, a plus sign in the >=N count, a thousands separator at the four count places other than
+ *  the >=N count, an exponent at the four count places other than the >=N count, a plus sign at the four count places other than
+ *  the >=N count); an item whose text up to its first ': ' is a <N columns or <M rows, a <N columns, an N to M or a >=N lead
+ *  with one of these additions (a word before each of those leads, a word after each of those leads, a space before the colon of
+ *  each of those leads); an item holding a digit after its first ': ' (a note over 160 columns, a note whose only digit is a
+ *  zero, a band lead with a digit after a word of its description, a band lead whose description's only digit is a zero). A
+ *  digit is one of the ASCII digits 0 to 9. Each form, read or fail-closed, is claimed only in the examples it lists, and each
+ *  example only in the spellings, at the count places, in the count widths, in the leads and with the descriptions its falsifier
+ *  in the readers census plants: an item, a block or a section written otherwise is NOT CLAIMED by the readers census to be
+ *  read, as a band or as prose, or to fail closed, whatever a form's lead says a band count or a description is.
+ * TIER CLAIM: tierDraws draws every declared tier of the inspector: the default tier, no draw option given (at 120x40, at every
+ *  width and row count); each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and
+ *  true, in every combination (the real ascii and panes, a third option); each combination at one width inside every band
+ *  layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order (the real
+ *  three bands, a fourth band, a band listed first, two bands sharing a width, the real three bands and a >=N count of each
+ *  width from one to five digits, the real three bands and a <N columns count of each width from one to three digits, the real
+ *  three bands and an N of N to M of each width from one to three digits, the real three bands and an M of N to M of each width
+ *  from one to four digits); each width at the census's row count and at one below every row bound a band states, ascending (the
+ *  real row bound, no row bound, a row bound at the census's row count, a one-digit row bound, the real row bound and a <M rows
+ *  count of each width from one to three digits); each draw named <width>x<rows>, then per option in name order -<option> for
+ *  false or +<option> for true, the first option varying fastest (the real 54 draws). It fails closed on a draw option that is
+ *  neither optional with its type spelled boolean nor required with its type spelled number and named width or rows (a union
+ *  type, a required number of another name, a required boolean, a width spelled string, an optional width, an optional rows, a
+ *  boolean spelled with undefined); a module that declares no width or no rows draw option (no width, no rows); anything
+ *  sizeMembers or layoutBands leave unread (a method member, a band lead it cannot read, a refused section); no band at all (a
+ *  section with no band item). Each form, drawn or fail-closed, is claimed only in the examples it lists, each on the module and
+ *  the docs/10 page its falsifier in the readers census plants, and on every docs/10 page a LAYOUT falsifier in the readers
+ *  census plants, drawn with the real draw options: a module or a page written otherwise is NOT CLAIMED by the readers census to
+ *  be drawn or to fail closed, whatever a form's lead says every band, every row bound or every combination is.
  * OUTSIDE ANCHORS. The owner filing's row of wb-km7q.3 in .beads/issues.jsonl: the acceptance clause is the labels joined; the
  *  title's statement is the rows' parts (the trigger to the parenthesis that closes it, then the three arms); each part's
  *  clauses (split at an opening or closing parenthesis, a semicolon, a comma, an em dash, an " or " and before a " because ",
  *  without a leading "and " or a closing period or parenthesis) are its row's pins' quotes in title order, so the frozen shape
- *  is the title's clause count per part and the pins that ran are one per title clause; the citation pins are the roster's.
- *  The vendored producer bytes: the tokens, texts, kinds and policies and their coverage, the PASS and FAIL stems (through the
+ *  is the title's clause count per part and the pins that ran are one per title clause; the citation pins are the roster's. The
+ *  vendored producer bytes: the tokens, texts, kinds and policies and their coverage, the PASS and FAIL stems (through the
  *  verdict classes), the attested pass and fail words, the amendment heading, the arm sentences, the gate item, the clause
- *  bindings' texts and the top-level public names (R6). src: the envelope readers, the drawer and the forwards, and the
- *  drawer's InspectorView members. The rf fixture helper: the neutral render and today's rf row (the text carrier); the
- *  vendored outputs' fields: the row carrier. src again: the drawer's InspectorSize members (R-UNDRAWN-TIER), its initial
- *  state and its ASCII tier (R13: the drawn characters). TypeScript: the token kinds R2 reads; Pi's own tokens: that no skipped kind holds
- *  a letter. So a row, a pin, a case, a surface or a PASS or FAIL word removed from every literal of this file and of the
- *  roster together still reds. Not anchored outside: the part and clause rule (R-CLAUSE-RULE), the paradigm rule's -s branch
- *  (R-S-INFLECTION), the residual list itself (cut #5's four among it: R-ARRAY-PROTOTYPE, R-NUMERIC-KEY and R-UNLISTED, whose
- *  quiet rows pin notPlain's own behaviour, and R-UNDRAWN-TIER, whose quiet row pins the census's own draw beside src's draw
- *  options), DRAW's width and rows (held to the roster alone), the plain-data check's form
- *  list (a form taken out of notPlain, R14's plants and this header together stays green, while A1 holds one plain-data
- *  falsifier), and the read claim list itself (a disclosure: a read claim removed from every
- *  literal of this file and the roster, its test included, stays green, while its reader stays held outside that test - the
- *  roots, the token kinds, Pi's skipped tokens, the public names, the envelope readers, the manifest reader's alias plant and
- *  one falsifier per baseline leg and for plain data in A1, the drawer and its forward in A1, Q6 and Q22, the template and
- *  chain spellings in Q9 and Q13, the producer texts in Q9 and Q21).
+ *  bindings' texts and the top-level public names (R6). src: the envelope readers, the drawer and the forwards, and the drawer's
+ *  InspectorView members. The rf fixture helper: the neutral render and today's rf row (the text carrier); the vendored outputs'
+ *  fields: the row carrier. src again: the drawer's draw options, read by sizeMembers, and docs/10's Layout responsiveness
+ *  bands, read by layoutBands - the tier draws R13 holds to the roster - and the drawer's initial state (R13). The landed
+ *  helper: the readers and their claims (THE READERS' CLAIMS, each held to its constant, the list to the helper's exports).
+ *  TypeScript: the token kinds R2 reads; Pi's own tokens: that no skipped kind holds a letter. So a row, a pin, a case, a
+ *  surface or a PASS or FAIL word removed from every literal of this file and of the roster together still reds. Not anchored
+ *  outside: the part and clause rule (R-CLAUSE-RULE), the paradigm rule's -s branch (R-S-INFLECTION), the residual list itself
+ *  (R-UNLISTED's quiet row pins the readers' own behaviour, and R-UNDRAWN-DRAW's the drawer beside the census's own draws), the
+ *  census's row count, 40 (held to the roster alone), R14's plants (a plant taken out of R14 and this header together stays
+ *  green, while the readers census holds a falsifier for every example of R14 CLAIM), and the read claim list itself (a
+ *  disclosure: a read claim removed from every literal of this file and the roster, its test included, stays green, while its
+ *  reader stays held outside that test - the roots, the token kinds, Pi's skipped tokens, the public names, the envelope
+ *  readers, the manifest reader's alias plant and one falsifier per baseline leg and for plain data in A1, the drawer and its
+ *  forward in A1, Q6 and Q22, the template and chain spellings in Q9 and Q13, the producer texts in Q9 and Q21).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, held to the title's clause count per part;
- *  rows, pins, quotes, witnesses, cases, surfaces, words, floors, read claims, residuals and the draw are held to
+ *  rows, pins, quotes, witnesses, cases, surfaces, words, floors, read claims, residuals and the tier draws are held to
  *  test/fixtures/rc-query-evidence-roster.json; the last cases read that the judged set and its binding case ran to their end,
- *  that every pin ran to its witness (one per title clause), that every read claim ran its falsifier and that every residual's
- *  quiet row ran.
+ *  that every pin ran to its witness (one per title clause), that every read claim ran its falsifier, that every residual's
+ *  quiet row ran and that the readers' claims case ran to its end.
  * RESIDUALS (named; each has a pinned quiet row): Q1 R-TONE-WORD Pi's own lowercase presentation word 'unknown' (a statusTone,
  *  coverage, freshness or connection value, the inspector's attention line) marks a partial or unobserved reading and is no
- *  verdict, so F1 stays quiet on it; Q2 R-RENDER-TONE the reader adapter's success tone and complete coverage judge the
- *  render's envelope, so a clean render carrying an UNKNOWN block reads success as a render and F2 reads it structurally only
- *  for a zero-block render; Q3 R-CASE a verdict re-spelled in another letter case ("true", "Unknown") is no token reading;
- *  Q4 R-SYNONYM a pass or an unknown said in other words ("succeeded", "green", "all clear"; "indeterminate") is not read;
- *  Q5 R-COMMENT a code comment (or a shebang line, trivia like a comment) naming the adapter is no trigger (A1 reads code
- *  tokens); Q6 R-UNDRIVEN the surfaces this census
- *  does not drive (the workflow runtime's module-private resultPreview of a capability result, the dialog and card renderers -
- *  the drawer's forward -, the inspector's evidence-store payload view (its pane tiers and other draws are R-UNDRAWN-TIER's),
- *  the reconcile decision core) are not
- *  judged: what they draw from the provider output, which R10 judges whole, is outside this census; Q7 R-OTHER-ROUTE an
- *  adoption that spells no adapter sequence (a generic reader of rendered rows) is no trigger, while what it puts on a driven
- *  surface is judged - the provider output whole for every case (R10), the node evidence, the observer and the inspector for
- *  each one-block case (R11-R13); Q8 R-NON-MODULE a file that is not a JS or TS module (a doc page, a Python or shell script
- *  under qa/, a configuration file, the lockfile) is not read by A1, which reads package.json alone among them; Q9 R-COMPOSED a
- *  name assembled from a part spelled() does not fold - any part but a string literal, a string literal type, or a template or
- *  + chain of them (parentheses seen through): a variable holding the word, a call, a cast such as "evidence" as const, a type
- *  span such as string - is read with that part as one space (constant + chains, templates, template literal types and
- *  constant spans fold as spelled); Q10 R-LOOKALIKE a look-alike letter (Cyrillic, Greek) or an inserted invisible inside a
- *  word is not folded (NFKC folds the fullwidth forms, which are read); Q11 R-ABBREVIATION an abbreviation of the producer or
- *  its adapter ("RC", "rc", RC_ADAPTER; an "rc" package in the manifest) is not read, since every sequence spells two words or
- *  more; Q12 R-RUN-TOGETHER a sequence run together inside one word (QUERYEVIDENCE) is no run of words, a word breaking only at
- *  a case change, an acronym's last capital or a character outside a-z and 0-9; Q13 R-JOIN a name joined at run time from an
- *  array of literal parts (["query", "evidence"].join("_")) or by a call ("query".concat("_evidence")) is read part by part,
- *  never folded; Q14 R-UNNAMED-READER an envelope reader whose code holds no REACTIVE_FIBER_CLI_SCHEMA identifier (a generic
- *  reader of a provider output's source.result.blocks, or one naming the constant in a literal, rf["REACTIVE_FIBER_CLI_SCHEMA"])
- *  is not found by A1; Q15 R-S-INFLECTION no outside text spells the -s forms, so a removal of the paradigm rule's -s branch
- *  together with both -s words from every literal stays green; Q16 R-COINCIDENT a reading a surface computed that equals one
- *  the producer emitted for the case reads as consuming it (F3 judges readings, not how a surface made them); Q17
- *  R-CLAUSE-RULE the part and clause breaks are this file's own rule, not an outside text, so an edit of the rule (a break
- *  dropped so that two clauses merge, a clause filtered out, a part cut short) together with the pins it changes still tiles
- *  the title once Q17 goes too, its quiet row pinning every break's merge and so every part's clause count while it stands; Q18 R-OUT-OF-ROOT a module outside src/, qa/, examples/ and the root (the
- *  test tree, whose censuses spell the adapter's words to judge them, test/helpers/ included) is not read by A1; Q19
- *  R-ACROSS-LEXEMES a sequence spelled across lexemes (a property path config.query.evidence, an element access
- *  query["evidence"], a nesting { query: { evidence } }) is no lexeme's run, A1 reading each lexeme's own words; Q20
- *  R-INFLECTED-SEQUENCE a sequence word in another inflection (reactive component, query views, unavailable blocks) is not the
- *  sequence, each word matched as the producer spells it; Q21 R-RECASED-TEXT a producer text in another letter case or with
- *  other spacing is not read, a producer text matched as the producer spells it; Q22 R-UNNAMED-DRAWER a module drawing the
- *  inspector views that never names layoutInspector (a drawer under another name, an access through
- *  inspector["layoutInspector"], a star re-export) is not found by A1; Q23 R-DUPLICATE-KEY a key given twice in one object of
- *  package.json is read as JSON.parse returns it, the last one (npm reads the manifest the same way), so an earlier duplicate
- *  is not read; Q24 R-ZERO-BLOCK the zero-block render (the defer policy) differs from the neutral render by design (no block,
- *  partial coverage), so R11-R13 compare the one-block cases only and a reading a surface puts beside the provider on the
- *  zero-block render is judged only by F1 and F2, for its verdict readings; Q25 R-UNDRAWN-TIER the inspector's draws the census
- *  does not make are not read - its default tier (ascii absent or false: the tier it draws unless asked for ASCII, with its box
- *  and glyph characters), its pane tiers (panes), every other width or row count and every other state - so a line only they
- *  draw is read by no leg and no falsifier; its quiet row reads InspectorSize's members (width, rows, ascii, panes) from src, so
- *  a draw option src adds reds it until it is named here; Q26 R-ARRAY-PROTOTYPE notPlain checks no array's prototype: an array
- *  that is a class instance (an Array subclass) passes, and what it inherits (an accessor, a method such as toJSON) is read by
- *  no leg; Q27 R-NUMERIC-KEY notPlain takes every canonical numeric key of an array for an index: one at or above 2^32-1
- *  (4294967295) is no array index, so JSON and the string readings never read it, while a key that is no canonical numeric
- *  string (01) fails closed; Q28 R-UNLISTED notPlain and the readings read the keys a value lists: a name a value answers
- *  without listing it (a proxy's get trap) is read by no leg.
+ *  verdict, so F1 stays quiet on it; Q2 R-RENDER-TONE the reader adapter's success tone and complete coverage judge the render's
+ *  envelope, so a clean render carrying an UNKNOWN block reads success as a render and F2 reads it structurally only for a
+ *  zero-block render; Q3 R-CASE a verdict re-spelled in another letter case ("true", "Unknown") is no token reading; Q4
+ *  R-SYNONYM a pass or an unknown said in other words ("succeeded", "green", "all clear"; "indeterminate") is not read; Q5
+ *  R-COMMENT a code comment (or a shebang line, trivia like a comment) naming the adapter is no trigger (A1 reads code tokens);
+ *  Q6 R-UNDRIVEN the surfaces this census does not drive (the workflow runtime's module-private resultPreview of a capability
+ *  result, the dialog and card renderers - the drawer's forward -, the reconcile decision core; the inspector's draws from a
+ *  model input the census never passes, the evidence-store payload view among them, are R-UNDRAWN-DRAW's) are not judged: what
+ *  they draw from the provider output, which R10 judges whole, is outside this census; Q7 R-OTHER-ROUTE an adoption that spells
+ *  no adapter sequence (a generic reader of rendered rows) is no trigger, while what it puts on a driven surface is judged - the
+ *  provider output whole for every case (R10), the node evidence, the observer and the inspector for each one-block case
+ *  (R11-R13); Q8 R-NON-MODULE a file that is not a JS or TS module (a doc page, a Python or shell script under qa/, a
+ *  configuration file, the lockfile) is not read by A1, which reads package.json alone among them; Q9 R-COMPOSED a name
+ *  assembled from a part spelled() does not fold - any part but a string literal, a string literal type, or a template or +
+ *  chain of them (parentheses seen through): a variable holding the word, a call, a cast such as "evidence" as const, a type
+ *  span such as string - is read with that part as one space (constant + chains, templates, template literal types and constant
+ *  spans fold as spelled); Q10 R-LOOKALIKE a look-alike letter (Cyrillic, Greek) or an inserted invisible inside a word is not
+ *  folded (NFKC folds the fullwidth forms, which are read); Q11 R-ABBREVIATION an abbreviation of the producer or its adapter
+ *  ("RC", "rc", RC_ADAPTER; an "rc" package in the manifest) is not read, since every sequence spells two words or more; Q12
+ *  R-RUN-TOGETHER a sequence run together inside one word (QUERYEVIDENCE) is no run of words, a word breaking only at a case
+ *  change, an acronym's last capital or a character outside a-z and 0-9; Q13 R-JOIN a name joined at run time from an array of
+ *  literal parts (["query", "evidence"].join("_")) or by a call ("query".concat("_evidence")) is read part by part, never
+ *  folded; Q14 R-UNNAMED-READER an envelope reader whose code holds no REACTIVE_FIBER_CLI_SCHEMA identifier (a generic reader of
+ *  a provider output's source.result.blocks, or one naming the constant in a literal, rf["REACTIVE_FIBER_CLI_SCHEMA"]) is not
+ *  found by A1; Q15 R-S-INFLECTION no outside text spells the -s forms, so a removal of the paradigm rule's -s branch together
+ *  with both -s words from every literal stays green; Q16 R-COINCIDENT a reading a surface computed that equals one the producer
+ *  emitted for the case reads as consuming it (F3 judges readings, not how a surface made them); Q17 R-CLAUSE-RULE the part and
+ *  clause breaks are this file's own rule, not an outside text, so an edit of the rule (a break dropped so that two clauses
+ *  merge, a clause filtered out, a part cut short) together with the pins it changes still tiles the title once Q17 goes too,
+ *  its quiet row pinning every break's merge and so every part's clause count while it stands; Q18 R-OUT-OF-ROOT a module
+ *  outside src/, qa/, examples/ and the root (the test tree, whose censuses spell the adapter's words to judge them,
+ *  test/helpers/ included) is not read by A1; Q19 R-ACROSS-LEXEMES a sequence spelled across lexemes (a property path
+ *  config.query.evidence, an element access query["evidence"], a nesting { query: { evidence } }) is no lexeme's run, A1 reading
+ *  each lexeme's own words; Q20 R-INFLECTED-SEQUENCE a sequence word in another inflection (reactive component, query views,
+ *  unavailable blocks) is not the sequence, each word matched as the producer spells it; Q21 R-RECASED-TEXT a producer text in
+ *  another letter case or with other spacing is not read, a producer text matched as the producer spells it; Q22
+ *  R-UNNAMED-DRAWER a module drawing the inspector views that never names layoutInspector (a drawer under another name, an
+ *  access through inspector["layoutInspector"], a star re-export) is not found by A1; Q23 R-DUPLICATE-KEY a key given twice in
+ *  one object of package.json is read as JSON.parse returns it, the last one (npm reads the manifest the same way), so an
+ *  earlier duplicate is not read; Q24 R-ZERO-BLOCK the zero-block render (the defer policy) differs from the neutral render by
+ *  design (no block, partial coverage), so R11-R13 compare the one-block cases only and a reading a surface puts beside the
+ *  provider on the zero-block render is judged only by F1 and F2, for its verdict readings; Q25 R-UNDRAWN-DRAW the inspector's
+ *  draws the census does not make are not read - a width or a row count other than the ones tierDraws draws (another width
+ *  inside a band, 100 columns in the 80-119 band; another row count below a row bound, 8 rows where it draws 19), a state other
+ *  than the four the census draws (following, a filter, another zoom or pan, another selection) and a model carrying an input
+ *  the census never passes (the graph view model, the evidence store, the timeline lanes, the linked topology selector, the
+ *  attention report: inputs the production dialog passes, refusal #5's riding F4) - so a line only they draw is read by no leg
+ *  and no falsifier; its quiet row draws 100 columns, 8 rows, a following state, a model holding an evidence store and one
+ *  holding a topology selector (refusal #5's G13-INS-TOPOLOGY-INPUT input), each drawing lines the census's pages do not; Q26
+ *  and Q27 (R-ARRAY-PROTOTYPE, R-NUMERIC-KEY) are retired at cut #6, the landed notPlain failing closed on both (R14); Q28
+ *  R-UNLISTED notPlain and stringsOf read a value through what reflection reports and only the keys it lists (R14 CLAIM,
+ *  READINGS CLAIM): a name a value answers without listing it (a proxy's get trap) is read by no leg.
  * NOT CLAIMED: the producer's own conformance (RC's tests own RC-RQ2) and rf's; any Pi doc page (the trigger is code); the
- *  undriven surfaces (Q6); the reader work child wb-km7q.10 carries under R-B110 (notPlain checking an array's prototype and
- *  its canonical numeric keys: R-ARRAY-PROTOTYPE, R-NUMERIC-KEY; the inspector drawn in every declared tier, the default
- *  included: R-UNDRAWN-TIER). An adopting cut owes its projection surface in SURFACES and a re-measured A1 baseline (A1 red until
- *  it does).
+ *  undriven surfaces (Q6); the examples of the readers' claims (each pinned by the readers census, which this census does not
+ *  re-run; this census restates the claims and claims of each reader only what its own cases read on its surfaces and plants).
+ *  An adopting cut owes its projection surface in SURFACES and a re-measured A1 baseline (A1 red until it does).
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch with the leak guard installed; Pi's code,
  * the bead export and package.json are only read; nothing is spawned but git and the stand-in rf.
@@ -300,10 +440,14 @@ import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { type InspectorModel, type InspectorSize, type InspectorState, type InspectorView, initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
+import type { EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
-import { ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import { ObservationProjection, type ObservationScope, type ObservedNode } from "../src/workbench/observation.js";
 import { registerNativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberProjectionTopology, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { type LinkedTopology, TOPOLOGY_CAVEAT, TOPOLOGY_CONTRACT } from "../src/workbench/topology-slice.js";
+import * as READERS from "./helpers/rc-query-evidence-readers.js";
+import { declaredViews, LAYOUT_CLAIM, layoutBands, notPlain, R14_CLAIM, SIZE_CLAIM, STRINGS_CLAIM, sizeMembers, stringsOf, TIER_CLAIM, type TierDraw, tierDraws, VIEWS_CLAIM } from "./helpers/rc-query-evidence-readers.js";
 import { fullShapeRf, type Json, rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -367,9 +511,7 @@ const RESIDUALS = [
   { id: "R-UNNAMED-DRAWER", quiet: "Q22" },
   { id: "R-DUPLICATE-KEY", quiet: "Q23" },
   { id: "R-ZERO-BLOCK", quiet: "Q24" },
-  { id: "R-UNDRAWN-TIER", quiet: "Q25" },
-  { id: "R-ARRAY-PROTOTYPE", quiet: "Q26" },
-  { id: "R-NUMERIC-KEY", quiet: "Q27" },
+  { id: "R-UNDRAWN-DRAW", quiet: "Q25" },
   { id: "R-UNLISTED", quiet: "Q28" },
 ];
 /** A1's read claims (R-B85, enumerated in the header as A1 READ CLAIMS): each falsified by the test of its id. */
@@ -421,12 +563,12 @@ interface Roster {
   readonly residuals: readonly { readonly id: string; readonly quiet: string; readonly family: string }[];
   readonly census: string;
   readonly reads: readonly { readonly id: string; readonly label: string }[];
-  readonly draw: InspectorSize;
+  readonly tiers: { readonly rows: number; readonly draws: readonly string[] };
 }
 const isObject = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
 function readRoster(): Roster {
   const value: unknown = JSON.parse(readFileSync(join(HERE, "fixtures", "rc-query-evidence-roster.json"), "utf8"));
-  const keys = ["bead", "rows", "frozenShape", "pins", "producer", "armSentences", "gatePhrase", "cases", "surfaces", "words", "floors", "residuals", "census", "reads", "draw"];
+  const keys = ["bead", "rows", "frozenShape", "pins", "producer", "armSentences", "gatePhrase", "cases", "surfaces", "words", "floors", "residuals", "census", "reads", "tiers"];
   if (!isObject(value) || !keys.every(key => Object.hasOwn(value, key))) throw new Error(`the roster needs ${keys.join(", ")}`);
   const producer = value.producer;
   const producerKeys = ["repository", "pin", "originMaster", "measuredUtc", "charter", "adapter", "installed", "outputs", "refusals"];
@@ -560,14 +702,6 @@ function zeroBlockPass(topology: ReactiveFiberProjectionTopology): string[] {
 function f3(strings: readonly string[], emitted: readonly string[]): string[] {
   const allowed = new Set(emitted.flatMap(text => verdictReadings(text).map(reading => reading.evidence)));
   return strings.flatMap(text => verdictReadings(text).filter(reading => !allowed.has(reading.evidence)).map(reading => reading.evidence));
-}
-/** The string leaves of a value as it lists them, in order: an array's indexes and an object's own enumerable string-keyed values
- * (what R-ARRAY-PROTOTYPE, R-NUMERIC-KEY and R-UNLISTED name is not read). */
-function stringsOf(value: unknown): string[] {
-  if (typeof value === "string") return [value];
-  if (Array.isArray(value)) return value.flatMap(stringsOf);
-  if (isObject(value)) return Object.values(value).flatMap(stringsOf);
-  return [];
 }
 const upper = (list: readonly string[]): string[] => list.map(word => word.toUpperCase());
 
@@ -790,28 +924,19 @@ function manifestFindings(manifest: unknown, sequences: readonly (readonly strin
 }
 /** package.json's findings. */
 const manifest = (): string[] => manifestFindings(JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")), triggerSequences());
-/** The InspectorView members a module declares (its `type InspectorView = "a" | ...` union), read by the TypeScript AST. */
-function declaredViews(path: string): InspectorView[] {
-  if (!MODULE.test(path) || !existsSync(join(REPO, path))) return [];
-  const source = parseModule(path, readFileSync(join(REPO, path), "utf8"));
-  const alias = source.statements.find((statement): statement is ts.TypeAliasDeclaration => ts.isTypeAliasDeclaration(statement) && statement.name.text === "InspectorView");
-  const members = alias !== undefined && ts.isUnionTypeNode(alias.type) ? alias.type.types : [];
-  return members.flatMap(member => (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal) ? [member.literal.text as InspectorView] : []));
-}
-/** The inspector's views, read from the DevTools surface's module. */
-const VIEWS: readonly InspectorView[] = declaredViews(SURFACES.inspector ?? "");
-/** The members of a module's `interface InspectorSize` (the inspector's draw options), sorted, read by the TypeScript AST. */
-function sizeMembers(path: string): string[] {
-  if (!MODULE.test(path) || !existsSync(join(REPO, path))) return [];
-  const source = parseModule(path, readFileSync(join(REPO, path), "utf8"));
-  const size = source.statements.find((statement): statement is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(statement) && statement.name.text === "InspectorSize");
-  return (size?.members ?? []).flatMap(member => (member.name !== undefined && ts.isIdentifier(member.name) ? [member.name.text] : [])).sort();
-}
-/** The one draw the census makes of every view (R13, held to the roster): the inspector's plain ASCII tier at 120 columns by 40
- * rows, in one column (no panes). */
-const DRAW: InspectorSize = { width: 120, rows: 40, ascii: true };
-/** The inspector's draw options, each named by R-UNDRAWN-TIER (its quiet row holds this list to src). */
-const DRAW_OPTIONS = ["ascii", "panes", "rows", "width"];
+/** The drawer module's text, read once (src is only read; an absent or non-module path reads as no text, which every reader below
+ * leaves unread, failing closed). */
+const INSPECTOR_TEXT = MODULE.test(SURFACES.inspector ?? "") && existsSync(join(REPO, SURFACES.inspector ?? "")) ? readFileSync(join(REPO, SURFACES.inspector ?? ""), "utf8") : "";
+/** docs/10, whose "## Layout responsiveness" bands open the tiers (read by layoutBands through the rendered docs binding). */
+const DOCS10 = "docs/workbench/10-terminal-inspector.md";
+/** The inspector's views: every member of the drawer module's InspectorView union, read by declaredViews (VIEWS CLAIM). */
+const VIEWS_READ = declaredViews(INSPECTOR_TEXT, SURFACES.inspector);
+const VIEWS: readonly InspectorView[] = VIEWS_READ.members.map(view => view as InspectorView);
+/** The tier draws (R13, TIER CLAIM): every draw tierDraws makes from the drawer module's draw options (sizeMembers, SIZE CLAIM) and
+ * docs/10's bands (layoutBands, LAYOUT CLAIM) at the roster's row count; none when anything is unread. */
+const TIERS = tierDraws(sizeMembers(INSPECTOR_TEXT, SURFACES.inspector), layoutBands(existsSync(join(REPO, DOCS10)) ? readFileSync(join(REPO, DOCS10), "utf8") : ""), ROSTER.tiers.rows);
+/** The census's pages of each case: every view at every tier draw, keyed `<draw id> <view>` (R13). */
+const PAGES: readonly { readonly key: string; readonly draw: TierDraw; readonly view: InspectorView }[] = TIERS.members.flatMap(draw => VIEWS.map(view => ({ key: `${draw.id} ${view}`, draw, view })));
 
 // ------------------------------------------------------------------------------------------------------------ the cases
 /** The producer block's fields the row carrier adds to its row: every key of a vendored producer output but its key (which
@@ -890,6 +1015,7 @@ interface Surfaces {
   readonly provider: JsonValue;
   readonly native: Readonly<Record<string, unknown>>;
   readonly topology: ReactiveFiberProjectionTopology;
+  /** The inspector's pages, by `<draw id> <view>` (PAGES). */
   readonly inspector: Readonly<Record<string, readonly string[]>>;
   readonly detailsSelected: boolean;
   /** The forms the plain-data check fails closed on in each surface value as Pi returned it (R14). */
@@ -897,22 +1023,27 @@ interface Surfaces {
 }
 const SCOPE: ObservationScope = { workspace: REPO, principal: "reader" };
 const INVOCATION = "workflow-1";
-/** Every inspector view over a projection holding the snapshot, drawn at `size` (the census's draw is DRAW): the overview, graph
- * and timeline from the initial state and the details view with the RF node selected; the state each view is drawn from too. */
-function inspectorViews(topology: ReactiveFiberProjectionTopology, size: InspectorSize = DRAW): { readonly views: Record<string, readonly string[]>; readonly detailsSelected: boolean; readonly states: Readonly<Record<string, InspectorState>> } {
+/** The inspector model over a projection holding the snapshot: the projection, scope, invocation, title and status only (the
+ * model inputs the census never passes are R-UNDRAWN-DRAW's). */
+function inspectorModel(topology: ReactiveFiberProjectionTopology): InspectorModel {
   const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 16, maxEdges: 16, maxQuery: 16 });
   for (const snapshot of topology.snapshots) projection.refresh(snapshot);
   for (const relation of topology.relations) projection.relate(relation);
-  const model: InspectorModel = { projection, scope: SCOPE, invocationId: INVOCATION, title: "query evidence census", status: "observed" };
+  return { projection, scope: SCOPE, invocationId: INVOCATION, title: "query evidence census", status: "observed" };
+}
+/** Every page of the inspector over the snapshot (R13): each view at each tier draw - the overview, graph and timeline from the
+ * initial state and the details view with the RF node selected; the state each view is drawn from too. */
+function inspectorPages(topology: ReactiveFiberProjectionTopology): { readonly pages: Record<string, readonly string[]>; readonly detailsSelected: boolean; readonly states: Readonly<Record<string, InspectorState>> } {
+  const model = inspectorModel(topology);
   const base = initialInspectorState();
   const selected = reduceInspectorKey("j", base, model)?.state ?? base;
   const details = reduceInspectorKey("e", selected, model)?.state ?? selected;
   const states: Record<string, InspectorState> = Object.fromEntries(VIEWS.map(view => [view, view === details.view ? details : { ...base, view }]));
-  const views = Object.fromEntries(VIEWS.map(view => [view, layoutInspector(model, states[view] ?? base, size)]));
-  return { views, detailsSelected: details.view === "details" && details.selected !== null, states };
+  const pages = Object.fromEntries(PAGES.map(page => [page.key, layoutInspector(model, states[page.view] ?? base, page.draw.size)]));
+  return { pages, detailsSelected: details.view === "details" && details.selected !== null, states };
 }
-/** Every case through the registered native provider (a stand-in rf on PATH), nativeEvidence, the reader adapter and the inspector
- * as DRAW draws it. */
+/** Every case through the registered native provider (a stand-in rf on PATH), nativeEvidence, the reader adapter and the inspector's
+ * pages. */
 async function surfacesOf(cases: readonly string[]): Promise<Map<string, Surfaces>> {
   const dir = makeScratch("km7q3-rf-");
   const oldPath = process.env.PATH;
@@ -932,9 +1063,9 @@ async function surfacesOf(cases: readonly string[]): Promise<Map<string, Surface
       const provider = await registry.invoke(CAPABILITY, { model: "model", task: "task" }, { grants: ["reactivefiber:render"], signal: new AbortController().signal });
       const evidence = nativeEvidence(CAPABILITY, provider);
       const topology = reactivefiberTopology(provider, { scope: SCOPE, seam: "rf-cli", capturedAt: "2026-10-28T00:00:00Z", observedAt: "2026-10-28T00:00:01Z", invocationId: INVOCATION });
-      const { views, detailsSelected } = inspectorViews(topology);
-      const issues = [...notPlain(provider, "provider"), ...notPlain(evidence, "native-evidence"), ...notPlain(topology, "observer"), ...notPlain(views, "inspector")];
-      out.set(id, { provider, native: { ...evidence }, topology, inspector: views, detailsSelected, notPlain: issues });
+      const { pages, detailsSelected } = inspectorPages(topology);
+      const issues = [...notPlain(provider, "provider"), ...notPlain(evidence, "native-evidence"), ...notPlain(topology, "observer"), ...notPlain(pages, "inspector")];
+      out.set(id, { provider, native: { ...evidence }, topology, inspector: pages, detailsSelected, notPlain: issues });
     }
     return out;
   } finally {
@@ -955,12 +1086,12 @@ async function reading(id: string): Promise<Surfaces> {
   if (found === undefined) throw new Error(`the matrix holds no case ${id}`);
   return found;
 }
-/** The strings the falsifiers read on one surface of one case: stringsOf of its value, or the inspector's lines as DRAW draws them. */
+/** The strings the falsifiers read on one surface of one case: stringsOf of its value, or the lines of every inspector page. */
 function surfaceStrings(surfaces: Surfaces, surface: string): string[] {
   if (surface === "provider") return stringsOf(surfaces.provider);
   if (surface === "native-evidence") return stringsOf(surfaces.native);
   if (surface === "observer") return stringsOf(surfaces.topology);
-  if (surface === "inspector") return VIEWS.flatMap(view => surfaces.inspector[view] ?? []);
+  if (surface === "inspector") return PAGES.flatMap(page => surfaces.inspector[page.key] ?? []);
   throw new Error(`no surface ${surface}`);
 }
 const SURFACE_IDS = (): string[] => Object.keys(ROSTER.surfaces);
@@ -1018,33 +1149,9 @@ function baselineDiffs(read: ReadonlyMap<string, Surfaces>): string[] {
     const digest = `rf-output:sha256:${sha256(outputText(id))}`;
     const refs = surfaces.topology.snapshots.map(snapshot => snapshot.nativePayloadRef);
     if (refs.length === 0 || refs.some(ref => ref !== digest)) diffs.push(`${id} observer: payload not by digest`);
-    for (const view of VIEWS) if ((surfaces.inspector[view] ?? []).join("\n") !== (neutral.inspector[view] ?? []).join("\n")) diffs.push(`${id} inspector ${view}`);
+    for (const page of PAGES) if ((surfaces.inspector[page.key] ?? []).join("\n") !== (neutral.inspector[page.key] ?? []).join("\n")) diffs.push(`${id} inspector ${page.key}`);
   }
   return diffs;
-}
-/** The forms the plain-data check fails closed on (R14), by `<at>: <form>`: an object that is no array whose prototype is neither
- * Object.prototype nor null (a Map, a Set, a class instance), a symbol key, a property that is not enumerable or is an accessor,
- * on an array an own key that is no canonical numeric string, or a value of type undefined, function, symbol or bigint or a
- * number that is not finite. It checks no array's prototype (R-ARRAY-PROTOTYPE), takes every canonical numeric key of an array
- * for an index (R-NUMERIC-KEY) and walks only the keys a value lists (R-UNLISTED). */
-function notPlain(value: unknown, at: string): string[] {
-  if (value === null || typeof value === "string" || typeof value === "boolean") return [];
-  if (typeof value === "number") return Number.isFinite(value) ? [] : [`${at}: a number that is not finite`];
-  if (typeof value !== "object") return [`${at}: a ${typeof value}`];
-  const out: string[] = [];
-  const prototype: unknown = Object.getPrototypeOf(value);
-  if (!Array.isArray(value) && prototype !== Object.prototype && prototype !== null) out.push(`${at}: no plain object`);
-  if (Object.getOwnPropertySymbols(value).length > 0) out.push(`${at}: a symbol key`);
-  for (const key of Object.getOwnPropertyNames(value)) {
-    if (Array.isArray(value) && key === "length") continue;
-    if (Array.isArray(value) && !/^(?:0|[1-9]\d*)$/.test(key)) out.push(`${at}.${key}: a named property on an array`);
-    const property = Object.getOwnPropertyDescriptor(value, key);
-    if (property === undefined) continue;
-    if (!property.enumerable) out.push(`${at}.${key}: not enumerable`);
-    if (property.get !== undefined || property.set !== undefined) out.push(`${at}.${key}: an accessor`);
-    else out.push(...notPlain(property.value, `${at}.${key}`));
-  }
-  return out;
 }
 /** A mutable view of a cloned value (a falsifier's plant edits a copy, never the matrix). */
 const mutable = (value: unknown): Record<string, unknown> => (isObject(value) ? value : {});
@@ -1061,9 +1168,11 @@ async function planted(edits: Readonly<Record<string, (copy: Surfaces) => void>>
   }
   return out;
 }
-/** The diffs a planted matrix adds to the real one. */
+let realDiffs: string[] | undefined;
+/** The diffs a planted matrix adds to the real one (the real matrix's diffs computed once). */
 async function addedDiffs(edits: Readonly<Record<string, (copy: Surfaces) => void>>): Promise<string[]> {
-  const real = baselineDiffs(await matrixRead());
+  realDiffs ??= baselineDiffs(await matrixRead());
+  const real = realDiffs;
   return baselineDiffs(await planted(edits)).filter(diff => !real.includes(diff));
 }
 
@@ -1302,12 +1411,12 @@ describe(`A ${labelOf("A")}`, () => {
     expect(plain, "every surface value passes the plain-data check").toEqual([]);
     const diffs = baselineDiffs(read);
     expect(diffs, "no surface reads the evidence where the baseline legs look").toEqual([]);
-    const view = VIEWS.at(-1) ?? "details";
+    const page = PAGES.at(-1)?.key ?? "";
     const legs = {
       provider: await addedDiffs({ "true:row": copy => Object.assign(mutable(copy.provider), { verdictNote: "query FALSE" }) }),
       native: await addedDiffs({ "false:row": copy => Object.assign(mutable(copy.native), { domainStatus: "failed" }) }),
       observer: await addedDiffs({ "unknown-empty:row": copy => Object.assign(mutable(copy.topology), { diagnostics: [...copy.topology.diagnostics, "query UNKNOWN"] }) }),
-      inspector: await addedDiffs({ "false:text": copy => Object.assign(mutable(copy.inspector), { [view]: [...(copy.inspector[view] ?? []), "Query verdict: FALSE"] }) }),
+      inspector: await addedDiffs({ "false:text": copy => Object.assign(mutable(copy.inspector), { [page]: [...(copy.inspector[page] ?? []), "Query verdict: FALSE"] }) }),
       plain: notPlain({ reading: new Map([["verdict", "FALSE"]]) }, "plant"),
     };
     expect(Object.entries(legs).filter(([, found]) => found.length === 0).map(([leg]) => leg), "each baseline leg and the plain-data check fire on a planted reading (R10-R14)").toEqual([]);
@@ -1605,32 +1714,74 @@ describe("A1 read claims (R-B85: each claim's falsifier feeds plants to the read
     READ_RAN.add("R12");
   });
 
-  it("R13 the inspector leg: each one-block case draws the neutral render's lines in every declared view as the census draws it - DRAW: the ASCII tier at 120 by 40 in one column, the initial state, the details view with the RF node selected", { timeout: SLOW }, async () => {
-    const view = VIEWS.at(-1) ?? "details";
-    expect(await addedDiffs({ "false:text": copy => Object.assign(mutable(copy.inspector), { [view]: [...(copy.inspector[view] ?? []), "Query verdict: FALSE"] }) }), "a line added").toEqual([`false:text inspector ${view}`]);
+  it("R13 the inspector leg: each one-block case draws the neutral render's lines on every page - every view declaredViews reads at every tier draw tierDraws makes, the 54 draws held to the roster, refusal #5's merged, quoted and inherited option and its alias view each read on the module's text - each page drawn at its own draw with each glyph and pane tier reached, the initial state and the details view with the RF node selected", { timeout: SLOW }, async () => {
+    expect([...VIEWS_READ.unread, ...TIERS.unread], "declaredViews and tierDraws leave nothing of the drawer module or docs/10 unread").toEqual([]);
+    expect(TIERS.members.map(draw => draw.id), "the census draws the roster's tier draws").toEqual(ROSTER.tiers.draws);
+    const planted = (old: string, replacement: string): string => {
+      const count = INSPECTOR_TEXT.split(old).length - 1;
+      if (count !== 1) throw new Error(`anchor count ${count} for ${JSON.stringify(old.slice(0, 60))}`);
+      return INSPECTOR_TEXT.replace(old, () => replacement);
+    };
+    const bands = layoutBands(readFileSync(join(REPO, DOCS10), "utf8"));
+    const drawsOf = (module: string): string[] => tierDraws(sizeMembers(module, SURFACES.inspector), bands, ROSTER.tiers.rows).members.map(draw => draw.id);
+    const tail = "  panes?: boolean;\n}\nexport type InspectorAction";
+    const options = {
+      merged: planted(tail, "  panes?: boolean;\n}\nexport interface InspectorSize {\n  verdictLine?: boolean;\n}\nexport type InspectorAction"),
+      quoted: planted(tail, "  panes?: boolean;\n  'verdictLine'?: boolean;\n}\nexport type InspectorAction"),
+      inherited: planted("export interface InspectorSize {\n", "interface InspectorVerdictOption {\n  verdictLine?: boolean;\n}\nexport interface InspectorSize extends InspectorVerdictOption {\n"),
+    };
+    expect(Object.entries(options).filter(([, module]) => !drawsOf(module).some(id => id.endsWith("+verdictLine"))).map(([form]) => form), "a merged, quoted or inherited draw option is drawn, so it changes the draws held to the roster (refusal #5 U1's plants, on the module's text)").toEqual([]);
+    const alias = planted("export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';\n", "export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | InspectorVerdictView;\nexport type InspectorVerdictView = 'verdicts';\n");
+    expect(declaredViews(alias, SURFACES.inspector).members, "a view declared through an alias member is read, so it is drawn at every tier draw (refusal #5 U2's plant, on the module's text)").toEqual([...VIEWS, "verdicts"]);
+    const last = PAGES.at(-1)?.key ?? "";
+    expect(await addedDiffs({ "false:text": copy => Object.assign(mutable(copy.inspector), { [last]: [...(copy.inspector[last] ?? []), "Query verdict: FALSE"] }) }), "a line added").toEqual([`false:text inspector ${last}`]);
     const missed: string[] = [];
     for (const id of ROSTER.cases.filter(id => id !== "neutral" && blockCount(id) === 1)) {
-      for (const drawn of VIEWS) {
-        const added = await addedDiffs({ [id]: copy => Object.assign(mutable(copy.inspector), { [drawn]: [...(copy.inspector[drawn] ?? []), "Query verdict: FALSE"] }) });
-        if (JSON.stringify(added) !== JSON.stringify([`${id} inspector ${drawn}`])) missed.push(`${id} ${drawn}: ${added.join("; ")}`);
+      for (const page of PAGES) {
+        const added = await addedDiffs({ [id]: copy => Object.assign(mutable(copy.inspector), { [page.key]: [...(copy.inspector[page.key] ?? []), "Query verdict: FALSE"] }) });
+        if (JSON.stringify(added) !== JSON.stringify([`${id} inspector ${page.key}`])) missed.push(`${id} ${page.key}: ${added.join("; ")}`);
       }
     }
-    expect(missed, "a line planted in any one view of any one-block case is read").toEqual([]);
-    expect(DRAW, "the census draws the roster's draw").toEqual(ROSTER.draw);
-    const read = await matrixRead();
-    const unprintable = ROSTER.cases.flatMap(id => VIEWS.flatMap(drawn => (read.get(id)?.inspector[drawn] ?? []).filter(line => !/^[\x20-\x7e]*$/.test(line)).map(line => `${id} ${drawn}: ${line}`)));
-    expect(unprintable, "every drawn character is printable ASCII: the inspector's plain ASCII tier").toEqual([]);
-    const { states } = inspectorViews((await reading("neutral")).topology);
+    expect(missed, "a line planted on any one page of any one-block case is read").toEqual([]);
+    const neutral = await reading("neutral");
+    const model = inspectorModel(neutral.topology);
+    const { states } = inspectorPages(neutral.topology);
     const initial = initialInspectorState();
-    expect(VIEWS.filter(drawn => drawn !== "details" && JSON.stringify(states[drawn]) !== JSON.stringify({ ...initial, view: drawn })), "the overview, graph and timeline are drawn from the initial state").toEqual([]);
+    const drawn = (key: string): string => (neutral.inspector[key] ?? []).join("\n");
+    expect(PAGES.filter(page => drawn(page.key) !== layoutInspector(model, states[page.view] ?? initial, page.draw.size).join("\n")).map(page => page.key), "each page is drawn at its own draw").toEqual([]);
+    const printable = (key: string): boolean => (neutral.inspector[key] ?? []).every(line => /^[\x20-\x7e]*$/.test(line));
+    const single = bands.members.find(band => band.columnsBelow !== undefined);
+    const paned = TIERS.members.filter(draw => draw.size.panes === true && draw.size.width >= (single?.columnsBelow ?? Number.POSITIVE_INFINITY) && draw.size.rows >= (single?.rowsBelow ?? Number.POSITIVE_INFINITY));
+    const twin = (draw: TierDraw): TierDraw | undefined => TIERS.members.find(other => other.size.panes === undefined && other.size.width === draw.size.width && other.size.rows === draw.size.rows && other.size.ascii === draw.size.ascii);
+    const unreached = {
+      ascii: PAGES.filter(page => page.draw.size.ascii === true && !printable(page.key)).map(page => page.key),
+      glyph: TIERS.members.filter(draw => draw.size.ascii !== true && VIEWS.every(view => printable(`${draw.id} ${view}`))).map(draw => draw.id),
+      panes: [...(paned.length === 0 ? ["no pane draw"] : []), ...paned.filter(draw => VIEWS.every(view => drawn(`${draw.id} ${view}`) === drawn(`${twin(draw)?.id ?? ""} ${view}`))).map(draw => draw.id)],
+    };
+    expect(unreached, "an ASCII-tier page draws printable ASCII only, every glyph-tier draw a character outside it, and every pane draw at or above the single-column band's bounds lines its one-column twin does not").toEqual({ ascii: [], glyph: [], panes: [] });
+    expect(VIEWS.filter(view => view !== "details" && JSON.stringify(states[view]) !== JSON.stringify({ ...initial, view })), "the overview, graph and timeline are drawn from the initial state").toEqual([]);
     expect([states.details?.view, typeof states.details?.selected], "the details view is drawn with a node selected").toEqual(["details", "string"]);
     READ_RAN.add("R13");
   });
 
-  it("R14 the plain-data check: notPlain fails closed on each form it lists, one plant each and one 64 levels down, and passes plain data", () => {
+  it("R14 the plain-data check: notPlain fails closed on a plant of each form cut #5 listed and one 64 levels down, on the gate's class-instance arrays and on the array keys at and above 4294967295, and passes plain data", () => {
     class Plant {
       readonly verdict = "FALSE";
     }
+    class GateNotes extends Array<string> {
+      get queryVerdict(): string {
+        return "FALSE";
+      }
+    }
+    class QuietNotes extends Array<string> {
+      toJSON(): string[] {
+        return [];
+      }
+    }
+    const gate = new GateNotes();
+    gate.push("query");
+    const quiet = new QuietNotes();
+    quiet.push("FALSE");
     /** A value nested `depth` levels down, alternating objects and arrays. */
     const nested = (value: unknown, depth: number): unknown => (depth === 0 ? value : depth % 2 === 0 ? { nested: nested(value, depth - 1) } : [nested(value, depth - 1)]);
     const plants: readonly (readonly [string, unknown])[] = [
@@ -1649,12 +1800,53 @@ describe("A1 read claims (R-B85: each claim's falsifier feeds plants to the read
       ["a bigint", { verdict: 1n }],
       ["a named property on an array", { notes: Object.assign(["query"], { verdict: "FALSE" }) }],
       ["a numeric key that is not canonical on an array", { notes: Object.assign(["query"], { "01": "FALSE" }) }],
+      ["the gate's class-instance array, whose prototype holds a reading", { diagnostics: gate }],
+      ["a class-instance array whose inherited toJSON hides its element", { diagnostics: quiet }],
+      ["an array key at 4294967295, no array index", { notes: Object.assign(["query"], { "4294967295": "FALSE" }) }],
+      ["an array key at 4294967296", { notes: Object.assign(["query"], { "4294967296": "FALSE" }) }],
       ["a Map 64 levels down", nested(new Map([["verdict", "FALSE"]]), 64)],
     ];
-    expect(plants.filter(([, value]) => notPlain(value, "plant").length === 0).map(([name]) => name), "every form R14 lists fails closed").toEqual([]);
+    expect(plants.filter(([, value]) => notPlain(value, "plant").length === 0).map(([name]) => name), "every plant fails closed").toEqual([]);
     const bare = Object.assign(Object.create(null) as Record<string, string>, { text: "z" });
     expect(notPlain({ text: "x", count: 1, flag: true, none: null, list: [{ nested: ["y"] }], bare, deep: nested("x", 64) }, "plant"), "plain data, a null-prototype object and 64 levels of nesting pass").toEqual([]);
     READ_RAN.add("R14");
+  });
+});
+
+/** The readers' claims (test/helpers/rc-query-evidence-readers.ts), each restated in THE READERS' CLAIMS under its label. */
+const CLAIMS: readonly (readonly [string, string])[] = [
+  ["R14 CLAIM:", R14_CLAIM],
+  ["READINGS CLAIM:", STRINGS_CLAIM],
+  ["VIEWS CLAIM:", VIEWS_CLAIM],
+  ["SIZE CLAIM:", SIZE_CLAIM],
+  ["LAYOUT CLAIM:", LAYOUT_CLAIM],
+  ["TIER CLAIM:", TIER_CLAIM],
+];
+/** The header's paragraph labelled `label`, its lines joined (the readers census's own reading of its header, here of this one). */
+function headerClaim(label: string): string {
+  const header = readFileSync(fileURLToPath(import.meta.url), "utf8").split(" */")[0] ?? "";
+  const lines = header.split("\n");
+  const start = lines.findIndex(line => line.startsWith(` * ${label} `));
+  if (start < 0) return "";
+  const paragraph = [lines[start] ?? ""];
+  for (const line of lines.slice(start + 1)) {
+    if (!line.startsWith(" *  ")) break;
+    paragraph.push(line);
+  }
+  return paragraph
+    .map(line => line.replace(/^ \*\s+/, ""))
+    .join(" ")
+    .slice(label.length + 1);
+}
+/** The readers' claims case ran to its end; recorded for the last cases. */
+let claimsRan = false;
+
+describe("the readers (R-B143: the landed readers of test/helpers/rc-query-evidence-readers.ts)", () => {
+  it("every claim the helper exports is restated byte-for-byte in THE READERS' CLAIMS", () => {
+    const exported = Object.entries(READERS).flatMap(([name, value]) => (name.endsWith("_CLAIM") && typeof value === "string" ? [value] : []));
+    expect(CLAIMS.map(([, claim]) => claim).sort(), "the claims restated are every claim the helper exports").toEqual([...exported].sort());
+    expect(CLAIMS.filter(([label, claim]) => headerClaim(label) !== claim).map(([label]) => label), "each claim is restated byte-for-byte").toEqual([]);
+    claimsRan = true;
   });
 });
 
@@ -1707,6 +1899,13 @@ describe(`B ${labelOf("B")}`, () => {
         armed += 1;
       }
     }
+    const zero = (await reading("defer")).topology;
+    expect(f1(stringsOf({ ...zero, tally: { [token]: 1 } })).length, "F1 fires on the token carried as an object key on the zero-block snapshot").toBeGreaterThan(f1(stringsOf(zero)).length);
+    const unavailable = await reading("unavailable:row");
+    const line = `query: ${token}`;
+    const onPage = (key: string): Surfaces => ({ ...unavailable, inspector: { ...unavailable.inspector, [key]: [...(unavailable.inspector[key] ?? []), line] } });
+    expect(PAGES.filter(page => !surfaceStrings(onPage(page.key), "inspector").includes(line)).map(page => page.key), "the falsifiers read every inspector page: a line planted on any one page is among the inspector's strings").toEqual([]);
+    expect(f1(surfaceStrings(onPage(PAGES.at(-1)?.key ?? ""), "inspector")).length, "F1 fires on the token planted on the last page").toBeGreaterThan(f1(surfaceStrings(unavailable, "inspector")).length);
     witnessed("B3", { pin: "B3", bound: boundClause("B3"), tokens, cases, judged: count, readings, armed });
   });
 });
@@ -1753,19 +1952,21 @@ describe(`C ${labelOf("C")}`, () => {
       forced.push(...zeroBlockPass(copy).map(found => `${id}: ${found}`));
     }
     expect(forced.length, "the structural reading fires on a zero-block render forced complete").toBeGreaterThan(0);
+    const zero = (await reading("defer")).native;
+    expect(ROSTER.words.pass.filter(word => f2(stringsOf({ ...zero, verdicts: { [word]: 1 } })).length <= f2(stringsOf(zero)).length), "F2 fires on each PASS word carried as an object key on the zero-block node evidence").toEqual([]);
     witnessed("C2", { pin: "C2", bound: boundClause("C2"), cases, blocks: cases.map(blockCount), judged: count, readings, structural, forced });
   });
 });
 
 describe(`D ${labelOf("D")}`, () => {
-  it("D1 no DevTools/debugger surface computes query truth: its slash pair and a run beside it are arm 3's words, F3 is quiet on every inspector view as the census draws it (the ASCII tier), the node evidence and the snapshot of every case, the node evidence holds only the envelope's own values, and F3 fires on each reading the producer did not emit", { timeout: SLOW }, async () => {
+  it("D1 no DevTools/debugger surface computes query truth: its slash pair and a run beside it are arm 3's words, F3 is quiet on every inspector page (every view at every tier draw), the node evidence and the snapshot of every case, the node evidence holds only the envelope's own values, and F3 fires on each reading the producer did not emit", { timeout: SLOW }, async () => {
     const readings: string[] = [];
-    let views = 0;
+    let pages = 0;
     for (const id of ROSTER.cases) {
       const surfaces = await reading(id);
-      for (const view of VIEWS) {
-        views += 1;
-        readings.push(...f3(surfaces.inspector[view] ?? [], emittedBy(id)).map(evidence => `${id} ${view}: ${evidence}`));
+      for (const page of PAGES) {
+        pages += 1;
+        readings.push(...f3(surfaces.inspector[page.key] ?? [], emittedBy(id)).map(evidence => `${id} ${page.key}: ${evidence}`));
       }
     }
     const inputs = await judged(ROSTER.cases, ["native-evidence", "observer"], (strings, id) => f3(strings, emittedBy(id)));
@@ -1800,7 +2001,9 @@ describe(`D ${labelOf("D")}`, () => {
         armed.quiet += 1;
       }
     }
-    witnessed("D1", { pin: "D1", bound: boundClause("D1"), judged: { views, inputs: inputs.judged }, readings, nativeKeys: [...keys].sort(), foreign, f3Plants, f3Quiet, armed });
+    const zero = (await reading("defer")).topology;
+    expect(f3Plants.filter(plant => f3(stringsOf({ ...zero, tally: { [plant]: 1 } }), emittedBy("defer")).length <= f3(stringsOf(zero), emittedBy("defer")).length), "F3 fires on each reading carried as an object key on the zero-block snapshot").toEqual([]);
+    witnessed("D1", { pin: "D1", bound: boundClause("D1"), judged: { pages, inputs: inputs.judged }, readings, nativeKeys: [...keys].sort(), foreign, f3Plants, f3Quiet, armed });
   });
 });
 
@@ -2004,55 +2207,38 @@ describe("residuals, the read claims", () => {
     expect(manifestFindings(once, sequences).length, "the twin").toBeGreaterThan(0);
     quietRan("Q23");
   });
-  it("Q25 R-UNDRAWN-TIER: the census draws one tier at one size, so the default tier, a pane tier and another size are not drawn, and every draw option src declares is named", { timeout: SLOW }, async () => {
-    expect(sizeMembers(SURFACES.inspector ?? ""), "the residual names every draw option the inspector declares").toEqual(DRAW_OPTIONS);
+  it("Q25 R-UNDRAWN-DRAW: the census draws one width per band, its row counts, four states and a model without inputs, so another width, another row count, another state, an evidence store and a topology selector each draw other lines no leg or falsifier reads, while F3 reads the drawn pages only", { timeout: SLOW }, async () => {
     const neutral = await reading("neutral");
-    expect(VIEWS.filter(view => (inspectorViews(neutral.topology).views[view] ?? []).join("\n") !== (neutral.inspector[view] ?? []).join("\n")), "the census reads DRAW's lines").toEqual([]);
-    const draws = { default: { width: DRAW.width, rows: DRAW.rows }, panes: { ...DRAW, panes: true }, size: { ...DRAW, width: 60, rows: 12 } };
-    const differs = Object.entries(draws).filter(([, size]) => VIEWS.some(view => (inspectorViews(neutral.topology, size).views[view] ?? []).join("\n") !== (neutral.inspector[view] ?? []).join("\n")));
-    expect(differs.map(([name]) => name), "the residual is live: each undrawn draw draws other lines").toEqual(Object.keys(draws));
-    const unicode = VIEWS.flatMap(view => inspectorViews(neutral.topology, draws.default).views[view] ?? []);
-    expect(unicode.some(line => !/^[\x20-\x7e]*$/.test(line)), "the default tier draws characters outside printable ASCII").toBe(true);
-    const planted = [...unicode, "Query verdict: FALSE"];
-    expect(f3(planted, emittedBy("true:text")).length, "a reading only the default tier drew would be F3's").toBeGreaterThan(0);
-    expect(f3(surfaceStrings(await reading("true:text"), "inspector"), emittedBy("true:text")), "while F3 reads DRAW's lines only").toEqual([]);
+    const model = inspectorModel(neutral.topology);
+    const { states } = inspectorPages(neutral.topology);
+    const initial = initialInspectorState();
+    const rows = ROSTER.tiers.rows;
+    const drawnAt = (width: number, height: number): string => TIERS.members.find(draw => JSON.stringify(draw.size) === JSON.stringify({ width, rows: height }))?.id ?? "";
+    const page = (id: string, view: InspectorView): string => (neutral.inspector[`${id} ${view}`] ?? []).join("\n");
+    const lines = (view: InspectorView, size: InspectorSize, state: InspectorState = states[view] ?? initial, drawer: InspectorModel = model): string => layoutInspector(drawer, state, size).join("\n");
+    expect([TIERS.members.some(draw => draw.size.width === 100), TIERS.members.some(draw => draw.size.rows === 8)], "100 columns and 8 rows are not drawn").toEqual([false, false]);
+    const evidence: Pick<EvidenceStore, "get" | "request" | "abortAll"> = { get: () => ({ state: "not-requested" }), request: () => Promise.resolve(), abortAll: () => undefined };
+    const empty = { edges: [], remainder: { count: 0, atLeast: false, byClass: {} } };
+    const topology = (node: ObservedNode): LinkedTopology => ({ contract: TOPOLOGY_CONTRACT, basis: "observed", focus: { key: node.key, nativeRef: node.nativeRef, label: "node" }, upstream: empty, downstream: empty, references: [], referencesRemainder: 0, trace: { label: "observed", reasons: [], caveat: TOPOLOGY_CAVEAT } });
+    const live = {
+      width: VIEWS.filter(view => lines(view, { width: 100, rows }) !== page(drawnAt(80, rows), view)),
+      rows: VIEWS.filter(view => lines(view, { width: 79, rows: 8 }) !== page(drawnAt(79, 19), view)),
+      state: VIEWS.filter(view => lines(view, { width: 80, rows }, { ...(states[view] ?? initial), follow: true }) !== page(drawnAt(80, rows), view)),
+      evidence: VIEWS.filter(view => lines(view, { width: 80, rows }, states[view] ?? initial, { ...model, evidence }) !== page(drawnAt(80, rows), view)),
+      topology: VIEWS.filter(view => lines(view, { width: 80, rows }, states[view] ?? initial, { ...model, topology }) !== page(drawnAt(80, rows), view)),
+    };
+    expect(Object.entries(live).filter(([, found]) => found.length === 0).map(([member]) => member), "the residual is live: each undrawn draw draws other lines").toEqual([]);
+    const undrawn = lines("details", { width: 80, rows }, states.details ?? initial, { ...model, evidence }).split("\n");
+    expect(f3([...undrawn, "Query verdict: FALSE"], emittedBy("true:text")).length, "a reading only an undrawn draw drew would be F3's").toBeGreaterThan(0);
+    expect(f3(surfaceStrings(await reading("true:text"), "inspector"), emittedBy("true:text")), "while F3 reads the drawn pages only").toEqual([]);
     quietRan("Q25");
   });
-  it("Q26 R-ARRAY-PROTOTYPE: notPlain checks no array's prototype, so a class-instance array passes and what it inherits is read by no leg, while the same reading as an own property fails closed", () => {
-    class GateNotes extends Array<string> {
-      get queryVerdict(): string {
-        return "FALSE";
-      }
-    }
-    class QuietNotes extends Array<string> {
-      toJSON(): string[] {
-        return [];
-      }
-    }
-    const notes = new GateNotes();
-    notes.push("query");
-    const quiet = new QuietNotes();
-    quiet.push("FALSE");
-    expect([notes.queryVerdict, Array.isArray(notes), Object.getPrototypeOf(notes) === Array.prototype], "the residual is live: an array whose prototype holds a reading").toEqual(["FALSE", true, false]);
-    expect([...notPlain({ diagnostics: notes }, "plant"), ...notPlain({ diagnostics: quiet }, "plant")], "notPlain passes both").toEqual([]);
-    expect([JSON.stringify(notes), stringsOf(notes), JSON.stringify(quiet)], "neither JSON nor the string readings read what they inherit").toEqual(['["query"]', ["query"], "[]"]);
-    expect(notPlain({ diagnostics: Object.assign(["query"], { queryVerdict: "FALSE" }) }, "plant"), "the twin: an own property fails closed").toEqual(["plant.diagnostics.queryVerdict: a named property on an array"]);
-    quietRan("Q26");
-  });
-  it("Q27 R-NUMERIC-KEY: notPlain takes every canonical numeric key of an array for an index, so 4294967295 passes and no reading reads it, while a key that is not canonical fails closed", () => {
-    const notes = Object.assign(["query"], { "4294967295": "FALSE" });
-    expect([notes.length, Object.hasOwn(notes, "4294967295")], "the residual is live: the key is no array index").toEqual([1, true]);
-    expect(notPlain({ diagnostics: notes }, "plant"), "notPlain passes it").toEqual([]);
-    expect([JSON.stringify(notes), stringsOf(notes)], "neither JSON nor the string readings read it").toEqual(['["query"]', ["query"]]);
-    expect(notPlain({ diagnostics: Object.assign(["query"], { "01": "FALSE" }) }, "plant"), "the twin").toEqual(["plant.diagnostics.01: a named property on an array"]);
-    quietRan("Q27");
-  });
-  it("Q28 R-UNLISTED: notPlain and the readings read the keys a value lists, so a name a proxy answers without listing it is read by no leg, while the same name listed is read", () => {
+  it("Q28 R-UNLISTED: notPlain and stringsOf read a value through what reflection reports and only the keys it lists, so a name a proxy answers without listing it is read by no leg, while the same name listed is read", () => {
     const target = { text: "query" };
     const unlisted = new Proxy(target, { get: (object, key) => (key === "queryVerdict" ? "FALSE" : Reflect.get(object, key)) });
     expect(Reflect.get(unlisted, "queryVerdict"), "the residual is live: the proxy answers a name it does not list").toBe("FALSE");
     expect(notPlain({ snapshot: unlisted }, "plant"), "notPlain passes it").toEqual([]);
-    expect([JSON.stringify(unlisted), stringsOf(unlisted), f3(stringsOf(unlisted), [])], "neither JSON, the string readings nor F3 read it").toEqual(['{"text":"query"}', ["query"], []]);
+    expect([JSON.stringify(unlisted), stringsOf(unlisted), f3(stringsOf(unlisted), [])], "neither JSON, the string readings nor F3 read it").toEqual(['{"text":"query"}', ["text", "query"], []]);
     expect(f3(stringsOf({ ...target, queryVerdict: "FALSE" }), []), "the twin: listed, it is read").toEqual(["FALSE"]);
     quietRan("Q28");
   });
@@ -2074,5 +2260,8 @@ describe("records", () => {
   });
   it("every residual's quiet row ran", () => {
     expect([...QUIET].sort()).toEqual(ROSTER.residuals.map(residual => residual.quiet).sort());
+  });
+  it("the readers' claims case ran to its end", () => {
+    expect(claimsRan).toBe(true);
   });
 });

@@ -466,7 +466,7 @@
      ]
     },
     "judged": {
-     "views": 40,
+     "pages": 2160,
      "inputs": 20
     },
     "readings": [],
@@ -723,7 +723,7 @@
   {
    "id": "R-UNDRIVEN",
    "quiet": "Q6",
-   "family": "surfaces the census does not drive (the runtime resultPreview, the dialog and card renderers - the drawer's forward -, the inspector evidence-store view (its pane tiers and other draws are R-UNDRAWN-TIER's), the reconcile core) are not judged: what they draw from the provider output, which R10 judges whole, is outside the census"
+   "family": "surfaces the census does not drive (the runtime resultPreview, the dialog and card renderers - the drawer's forward -, the inspector's draws from a model input the census never passes, the evidence-store view among them, being R-UNDRAWN-DRAW's, the reconcile core) are not judged: what they draw from the provider output, which R10 judges whole, is outside the census"
   },
   {
    "id": "R-OTHER-ROUTE",
@@ -816,24 +816,14 @@
    "family": "the zero-block render (the defer policy) differs from the neutral render by design (no block, partial coverage), so the baseline legs beside the provider compare the one-block cases only: a reading a surface puts beside the provider on the zero-block render is judged only by F1 and F2, for its verdict readings"
   },
   {
-   "id": "R-UNDRAWN-TIER",
+   "id": "R-UNDRAWN-DRAW",
    "quiet": "Q25",
-   "family": "the inspector's draws the census does not make are not read - its default tier (ascii absent or false), its pane tiers (panes), every other width or row count and every other state - so a line only they draw is read by no leg and no falsifier; the quiet row holds InspectorSize's members (width, rows, ascii, panes) to src, so a draw option src adds reds it until it is named"
-  },
-  {
-   "id": "R-ARRAY-PROTOTYPE",
-   "quiet": "Q26",
-   "family": "notPlain checks no array's prototype: an array that is a class instance (an Array subclass) passes, and what it inherits (an accessor, a method such as toJSON) is read by no leg"
-  },
-  {
-   "id": "R-NUMERIC-KEY",
-   "quiet": "Q27",
-   "family": "notPlain takes every canonical numeric key of an array for an index: one at or above 2^32-1 (4294967295) is no array index, so JSON and the string readings never read it, while a key that is no canonical numeric string (01) fails closed"
+   "family": "the inspector's draws the census does not make are not read - a width or a row count other than the ones tierDraws draws (another width inside a band, another row count below a row bound), a state other than the four the census draws (following, a filter, another zoom or pan, another selection) and a model carrying an input the census never passes (the graph view model, the evidence store, the timeline lanes, the linked topology selector, the attention report) - so a line only they draw is read by no leg and no falsifier"
   },
   {
    "id": "R-UNLISTED",
    "quiet": "Q28",
-   "family": "notPlain and the readings read the keys a value lists: a name a value answers without listing it (a proxy's get trap) is read by no leg"
+   "family": "notPlain and stringsOf read a value through what reflection reports and only the keys it lists: a name a value answers without listing it (a proxy's get trap) is read by no leg"
   }
  ],
  "reads": [
@@ -894,9 +884,63 @@
    "label": "the plain-data check"
   }
  ],
- "draw": {
-  "width": 120,
+ "tiers": {
   "rows": 40,
-  "ascii": true
+  "draws": [
+   "79x19",
+   "79x19-ascii",
+   "79x19+ascii",
+   "79x19-panes",
+   "79x19-ascii-panes",
+   "79x19+ascii-panes",
+   "79x19+panes",
+   "79x19-ascii+panes",
+   "79x19+ascii+panes",
+   "79x40",
+   "79x40-ascii",
+   "79x40+ascii",
+   "79x40-panes",
+   "79x40-ascii-panes",
+   "79x40+ascii-panes",
+   "79x40+panes",
+   "79x40-ascii+panes",
+   "79x40+ascii+panes",
+   "80x19",
+   "80x19-ascii",
+   "80x19+ascii",
+   "80x19-panes",
+   "80x19-ascii-panes",
+   "80x19+ascii-panes",
+   "80x19+panes",
+   "80x19-ascii+panes",
+   "80x19+ascii+panes",
+   "80x40",
+   "80x40-ascii",
+   "80x40+ascii",
+   "80x40-panes",
+   "80x40-ascii-panes",
+   "80x40+ascii-panes",
+   "80x40+panes",
+   "80x40-ascii+panes",
+   "80x40+ascii+panes",
+   "120x19",
+   "120x19-ascii",
+   "120x19+ascii",
+   "120x19-panes",
+   "120x19-ascii-panes",
+   "120x19+ascii-panes",
+   "120x19+panes",
+   "120x19-ascii+panes",
+   "120x19+ascii+panes",
+   "120x40",
+   "120x40-ascii",
+   "120x40+ascii",
+   "120x40-panes",
+   "120x40-ascii-panes",
+   "120x40+ascii-panes",
+   "120x40+panes",
+   "120x40-ascii+panes",
+   "120x40+ascii+panes"
+  ]
  }
 }
