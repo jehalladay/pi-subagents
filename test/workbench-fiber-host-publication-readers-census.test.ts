@@ -2,7 +2,7 @@
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, program-triage-2026-10-18; the rule-19 structural exit of wb-pyel.1 under
  * orchestrator rulings R-B105 and R-B135), cut #4 (the FAIL-CLOSED CORE orchestrator ruling R-B265 bound at refusal #3's rule-19
  * structural exit; the deferred coverage is the child wb-pyel.10's), re-cut under orchestrator ruling R-B308 after that child
- * landed (landing 829) and restated under orchestrator ruling R-B367 (refusal #5):
+ * landed (landing 829) and restated under orchestrator rulings R-B367 (refusal #5) and R-B400 (refusal #6):
  * the census of the Fiber host-publication census's A1 and A3 readers,
  * test/helpers/fiber-host-publication-readers.ts, which wb-pyel.1's census composes when it re-cuts. Statement (bead title,
  * verbatim): "A1 pip-manifest readers cover .pip, extensionless and requirements-directory name forms and A3 registration coverage
@@ -57,6 +57,23 @@
  * module, a text, a descriptor, a member, a registry, or the tree at this cut - to what its plant holds there; a listing is
  * the paths one reading is handed together), NOT CLAIMED names the rest, and nothing else changes (no claim word, channel,
  * pin, plant, row, test, constant or reader is added; narrow the claim, never widen the reader).
+ *
+ * THE R-B400 RE-CUT (refusal #6 on the R-B367 re-cut, O:1882; orchestrator ruling R-B400, M:50512): refusal #6 found two
+ * gate hollowings of the helper inside the R-B367 re-cut's claim words, each realized by a real-tree witness: against the
+ * A3 raw-files clause GP8-06 (a raw line whose trimmed text starts with // skipped; a tracked raw file below src holding the
+ * one line // register), where the clause excluded the # lead alone, and against the root readers' clause GP8-01
+ * (package.json's parsed keys and strings one key or index step below its root dropped; the root package.json with a
+ * top-level key holding the stem), where the clause claimed every step count up to three while its plants put the stem two
+ * and three steps down only; beside them it recorded GP8-03 and GP8-04 (the live tree's one raw-read manifest left
+ * unselected or read as empty) against the raw-lines clause's live words, and GP8-05 at a NOT CLAIMED place. Every plant
+ * here leads a word's raw line below src by {, by a double quote, by two spaces and a double quote, or by four spaces and
+ * registry., and puts package.json's stem texts two steps down (a key in a top-level field's object, a string item in a
+ * top-level field's list) or three (a string field of an object in a top-level field's object, a string field and a key of
+ * an object item in a top-level field's list). This re-cut is the same mechanical restatement in lineage of 9cc1fb2a: three
+ * clauses narrow (the raw-files clause to the leads its plants give a word's line, the root readers' clause to the steps
+ * its plants put the stem at, the raw-lines clause's live words to the live tree's raw-read hits), NOT CLAIMED names the
+ * rest, and nothing else changes (no channel, pin, plant, row, test, constant or reader is added; narrow the claim, never
+ * widen the reader).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -187,7 +204,19 @@
  * (fiber-optics==0.1.0) or with another specifier than == (FiberOpticsSDK>=0.1.0), a blank line before the stem's line, a raw
  * line led by # (#  register), a package.json key or string four or more key or index steps below its root, a manifest below
  * a vendored (vendor/), installed (node_modules/) or hidden (dot-led) directory, and a family member with other fields beside
- * its criterion than its plant gives it. Edits of this file and the roster together: a plant removed from its table and the
+ * its criterion than its plant gives it. Nor, at the R-B400 re-cut (the raw-files clause claims a word's line only at the
+ * leads its plants give it, the root readers' clause package.json's keys and strings only at the steps its plants put them
+ * at, and the raw-lines clause, of the live tree, its raw-read hits alone), is a raw line in a raw file below src led
+ * otherwise than a plant here leads it - beside the # lead named above, among them a line led by // (// register), by /*,
+ * by *, by ;, by --, by %, by <!-- or by a single quote, and a line led by a tab or by one, three or more than four spaces
+ * before its first other character (the positions census plants register after spaces at every column to its own
+ * COLUMN_BOUND, never this census) -, a package.json key or string one key or index step below its root (a top-level key,
+ * package.json{fiber-optics}, or a top-level field's string, package.json.description) or two or three steps below it at
+ * other steps than a plant puts it at (a string field of a top-level field's object, two steps down; a key of an object, or
+ * a string item of a list, in a top-level field's object, three steps down), which of the live tree's files the forms
+ * select and how much of a live raw-read file is read (LIVE-A1 pins the live tree's raw-read hits alone, none at this cut),
+ * or a raw-read text longer than any planted one (LINE_TEXTS' every text, 1463 characters, is the longest). Edits of this
+ * file and the roster together: a plant removed from its table and the
  * roster together where no outside anchor names it, and a pin a later cut adds beyond the export's member lists and the
  * claims, removed whole, are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
@@ -540,11 +569,11 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-DIRECTORY", "L3-M2", "L3-Mc2", "L3-M3", "G01", "G04", "G05", "G06"],
     },
     {
-      words: "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, its line, file and listing as its plant spells them (each planted text PLANT_TEXT or a LINE_TEXTS text: the stem's line FiberOpticsSDK==0.1.<n> and nothing else, every other line pytest>=8, pytest-cov>=5 or a stem line, each line ended by a newline, or by a carriage return and a newline in G09's crlf text; the live tree's raw-read files as they stand at this cut), a hit named by its line",
+      words: "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, its line, file and listing as its plant spells them (each planted text PLANT_TEXT or a LINE_TEXTS text: the stem's line FiberOpticsSDK==0.1.<n> and nothing else, every other line pytest>=8, pytest-cov>=5 or a stem line, each line ended by a newline, or by a carriage return and a newline in G09's crlf text; of the live tree as it stands at this cut, its raw-read hits alone, none), a hit named by its line",
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at most three key or index steps below its root and its raw text one line; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; its raw text one line; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
@@ -569,7 +598,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       words: "a script module is a file whose lower-cased extension is a SCRIPT_KINDS key, in a path and a text as its plant spells them, each SCRIPT_PLANTS script module parsed and each SCRIPT_PLANTS raw one, the extensionless among them, read as raw lines",
       falsifiers: ["G26"],
     },
-    { words: "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, its line, file and listing as its plant spells them (no line led by # and none blank before the word's line, each line ended by a newline), every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
+    { words: "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, its line, file and listing as its plant spells them (each planted raw text S-RAW's value-host.json or value-host.py or a G27 text, each word's line led as its plant leads it: by {, by a double quote, by two spaces and a double quote, or by four spaces and registry.; none blank before the word's line, each line ended by a newline), every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
     { words: "near misses are not read, in a module as its plant spells it: registered, RegisterHost, unregister, a registerTool call, and registering, $register and register_x in a string", falsifiers: ["S-QUIET"] },
     {
       words: "Fiber family: a descriptor, as its plant spells it, whose id folds to hold fiber at its head, ahead of its last dot (<spelling>.value.host), or a permission does at its head, ahead of its last colon (<spelling>:publish; each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does in the word after a planted export (value-host@1.0.0:Host.read <spelling>-publish, forge@0.1.0:GateFacade.status fiber-publish), each FOLD_FORMS spelling read alone at that place in each of the three and each FOLD_QUIET spelling there in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",

@@ -73,7 +73,7 @@
         ]
       },
       {
-        "words": "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, its line, file and listing as its plant spells them (each planted text PLANT_TEXT or a LINE_TEXTS text: the stem's line FiberOpticsSDK==0.1.<n> and nothing else, every other line pytest>=8, pytest-cov>=5 or a stem line, each line ended by a newline, or by a carriage return and a newline in G09's crlf text; the live tree's raw-read files as they stand at this cut), a hit named by its line",
+        "words": "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, its line, file and listing as its plant spells them (each planted text PLANT_TEXT or a LINE_TEXTS text: the stem's line FiberOpticsSDK==0.1.<n> and nothing else, every other line pytest>=8, pytest-cov>=5 or a stem line, each line ended by a newline, or by a carriage return and a newline in G09's crlf text; of the live tree as it stands at this cut, its raw-read hits alone, none), a hit named by its line",
         "falsifiers": [
           "N-OTHER",
           "N-ROOT-READERS",
@@ -84,7 +84,7 @@
         ]
       },
       {
-        "words": "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at most three key or index steps below its root and its raw text one line; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+        "words": "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; its raw text one line; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
         "falsifiers": [
           "N-ROOT-READERS",
           "G32"
@@ -132,7 +132,7 @@
         ]
       },
       {
-        "words": "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, its line, file and listing as its plant spells them (no line led by # and none blank before the word's line, each line ended by a newline), every line from 1 to LINE_BOUND",
+        "words": "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, its line, file and listing as its plant spells them (each planted raw text S-RAW's value-host.json or value-host.py or a G27 text, each word's line led as its plant leads it: by {, by a double quote, by two spaces and a double quote, or by four spaces and registry.; none blank before the word's line, each line ended by a newline), every line from 1 to LINE_BOUND",
         "falsifiers": [
           "S-RAW",
           "G27"
