@@ -353,6 +353,31 @@
  * merged tree (trunk a9a10bb merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the
  * helper and the two labels read as at WB-PY8N's re-cut.
  *
+ * WB-PY8N RESPIN 3 (cut #4, the respin of refusal #3, gate run g10-gate-s193: U1-U3 under standing rule 16 LEG 2, R514/R515
+ * with R668 - new members of the class refusal #2 guards, found after its named members were cured; the orchestrator's
+ * second-stage cap R-B384 froze that class, so this cut is authored enumerate-the-resolvable: each surviving member is pinned
+ * with its witness, the title claims exactly the pinned set, and no reading of the helper is edited). WB-PY8N's shape
+ * stands: 0 rows added or removed, 0 pins removed or changed, 89 tests, the helper, the two labels and the roster's rows
+ * unchanged (only the roster's INTO ANY title is restated). U1 (the clause's four parts once each): a label refused for each
+ * part missing - the clause's opening, the declaration fact, the any list's opening and the own list's - joins respin 2's
+ * labels refused for each part doubled, so each part's count is held at one both ways; the clause's opening, whose presence
+ * the order check never reads, is held by the once-check through its missing label. U2 (DISPATCH's phrases once each):
+ * refused DISPATCH texts written as literals, the by-call phrase twice and the into-any phrase twice, read [2, 1, 0] and
+ * [1, 2, 0], so the reading counts each phrase and never reads presence. U3 (where the into-any phrase stands): the title's
+ * position word is restated to the doc's, the into-any phrase running from that turn, and is held by a reading that reads
+ * it - the turn into any (DISPATCH_TURN, frozen) ends the by-call phrase and opens the into-any phrase, and
+ * dispatchTurnReading counts the two phrases written joined at it, once in DISPATCH's label; refused texts written as
+ * literals read there 1 and 1 (each phrase twice), 0 (the into-any phrase before the turn), 0 (after the turn but apart
+ * from it) and 2 (the two joined twice). Found by this seat at cut time inside the same class and pinned here, each realized
+ * first by a one-edit instrument with a real-tree witness at 0 failed | 89 passed: the selection's text reading (the module
+ * text read at its used line only, with a page whose call stands after a line break inside the used initializer) and
+ * R-THIS-BINDING's withdrawn-wording count (the counted phrase swapped, with the wording planted outside the lists); each
+ * now reads through a named reading its planted controls share - intoAnySelects (the selected and unselected spellings
+ * planted as a case's module text, and a call in another planted file only, not selected) and withdrawnReading (planted
+ * labels with the wording once outside the lists, once inside the any list and twice read 1, 1 and 2). On the merged tree
+ * (trunks 59e24e4 and 8eaafa2 merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the
+ * helper and the two labels read as at WB-PY8N's re-cut. RESIDUAL: none added - this cut claims no residual family.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -602,7 +627,8 @@
  * REQUIREMENT_FIELDS, LIVE_FORMS, CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading, and FAIL_CLOSED with the
  * row that plants each shape refused beside a quiet page (cuts #7 and #8) as literals, and INTO ANY pins the into-any pages
  * with their typing as a literal (wb-py8n) and the phrases its two label readings count, with INTO_ANY's naming words, as
- * another (wb-py8n respin 2); test/fixtures/apo-rerender-roster.json holds every judged
+ * another (wb-py8n respin 2), and the turn into any DISPATCH's turn reading joins its two phrases at as a third (wb-py8n
+ * respin 3); test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -717,7 +743,7 @@ const FAIL_CLOSED_ANCHOR =
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const INTO_ANY_ROW =
-  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (m and n each bind, call or apply, the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list and own list, each once and in that order, and names each page, by INTO_ANY's words, in the list of its typing and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase after that turn, once each; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; respin 2)";
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (m and n each bind, call or apply, the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list and own list, each once and in that order, and names each page, by INTO_ANY's words, in the list of its typing and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, once each; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; respin 3)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
@@ -925,11 +951,18 @@ const INTO_ANY_UNSELECTED = [
   "export const used = Function.prototype.call.apply (use, [new Holder()]);",
   "export const used = Function.prototype.call\n  .apply(use, [new Holder()]);",
 ];
+/**
+ * The case reading INTO ANY's selection makes (respin 3): a case is an into-any page when its planted module text, read
+ * whole, holds INTO_ANY_FORM; the row reads R-THIS-BINDING's cases and its planted cases through this one reading.
+ */
+const intoAnySelects = (item: { readonly module: string; readonly plants: Readonly<Record<string, string>> }): boolean => INTO_ANY_FORM.test(item.plants[item.module] ?? "");
 /** R-THIS-BINDING's into-any clause: its opening, the declaration fact it states, the opening of each typed list, and the wording landing 770 F6 withdrew. */
 const INTO_ANY_CLAUSE = "Into any (respin 2, refusal #2 F3; narrowed at final cut #4; restated at wb-py8n, landing 770 F6): ";
 const INTO_ANY_DECLARED = "declare their this argument and their arguments any (thisArg: any, argArray: any[])";
 const INTO_ANY_TYPED: Readonly<Record<IntoAnyTyping, string>> = { any: "pinned typed any (", own: "pinned typed by its own type (" };
 const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
+/** R-THIS-BINDING's label read for that withdrawn wording (respin 3): how often it stands anywhere in a label - the reading the row and its planted labels share. */
+const withdrawnReading = (label: string): number => occurrences(label, INTO_ANY_WITHDRAWN);
 /** DISPATCH's exception item: the by-call members among the flows into a type the value is (their phrase ends at the item's turn into any), the applied or called members among the flows into any (their phrase runs from that turn), and the wording landing 770 F6 withdrew. */
 const DISPATCH_INTO_OWN =
   "or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any";
@@ -937,6 +970,14 @@ const DISPATCH_INTO_ANY = "or into any by Reflect.apply's second overload or by 
 const DISPATCH_WITHDRAWN = "or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written";
 /** DISPATCH's exception item read by its three phrases, each counted in the label: the by-call phrase, the into-any phrase and the withdrawn wording. */
 const dispatchReading = (label: string): number[] => [DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN].map(phrase => occurrences(label, phrase));
+/**
+ * The turn into any DISPATCH's two phrases share (respin 3, refusal #3 U3): the by-call phrase ends at it and the into-any
+ * phrase opens with it, so the two phrases written joined there - the turn written once - are the into-any phrase running
+ * from that turn; dispatchTurnReading counts that joined text in a label.
+ */
+const DISPATCH_TURN = "or into any";
+const DISPATCH_FROM_TURN = `${DISPATCH_INTO_OWN.slice(0, DISPATCH_INTO_OWN.length - DISPATCH_TURN.length)}${DISPATCH_INTO_ANY}`;
+const dispatchTurnReading = (label: string): number => occurrences(label, DISPATCH_FROM_TURN);
 /** The type the pinned typescript's checker gives the value bound as this at a planted page (its contextual type there, at the call the checker instantiates): any, own (the value's own type) or that type's name. */
 function boundTyping(rel: string, value: string): string {
   const program = planted();
@@ -1209,6 +1250,10 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       (row?.cases ?? []).filter(item => INTO_ANY_FORM.test(item.plants[item.module] ?? "")).map(item => item.module),
       "the into-any pages: R-THIS-BINDING's cases written in the into-any form, in row order",
     ).toEqual(INTO_ANY.map(page => page.module));
+    // Respin 3: the selection read through intoAnySelects, the case reading the planted cases below share.
+    expect((row?.cases ?? []).filter(intoAnySelects).map(item => item.module), "the into-any pages read through the shared case reading, in row order").toEqual(
+      INTO_ANY.map(page => page.module),
+    );
     expect(
       INTO_ANY.map(page => `${page.module}:${boundTyping(page.module, page.value)}`),
       "the type the pinned typescript's checker gives each page's bound value at the call it instantiates",
@@ -1241,6 +1286,11 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       dispatchReading(dispatch),
       "DISPATCH's exception item: the by-call members into a type the value is, the applied or called members into any, the withdrawn wording",
     ).toEqual([1, 1, 0]);
+    // Respin 3 (refusal #3 U3): the into-any phrase runs from the turn into any that ends the by-call phrase - the turn frozen (rule 16), the two phrases sharing it, and the label holding them joined there once.
+    expect(
+      [DISPATCH_TURN, DISPATCH_INTO_OWN.endsWith(` - ${DISPATCH_TURN}`), DISPATCH_INTO_ANY.startsWith(`${DISPATCH_TURN} `), dispatchTurnReading(dispatch)],
+      "DISPATCH's exception item at its turn: the turn into any, the by-call phrase ending at it, the into-any phrase opening with it, the two joined there",
+    ).toEqual(["or into any", true, true, 1]);
     // Non-vacuity: the same reading at the three Function.prototype pages R-THIS-BINDING's hole pins with type arguments written gives the this parameter's type, so it reads more than any and own.
     expect(
       ["bind-call", "call-call", "apply-call"].map(form => boundTyping(`src/ui/census-forms-this-function-${form}-explicit.ts`, "new Holder()")),
@@ -1252,6 +1302,19 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     // Respin 2 (refusal #2 U3-U5): the selection reads every member combination and every position the title names, and the dotted spelling only.
     expect(INTO_ANY_SELECTED.filter(text => !INTO_ANY_FORM.test(text)), "the spellings and positions the selection reads (none unselected)").toEqual([]);
     expect(INTO_ANY_UNSELECTED.filter(text => INTO_ANY_FORM.test(text)), "the spellings the selection does not read (none selected)").toEqual([]);
+    // Respin 3: the same spellings planted as a case module text and read through intoAnySelects, and a case whose call stands in another planted file only.
+    const plantedCase = (text: string, other: string): { readonly module: string; readonly plants: Readonly<Record<string, string>> } => ({
+      module: "src/ui/planted.ts",
+      plants: { "src/ui/planted.ts": text, "src/ui/other.ts": other },
+    });
+    expect(
+      [
+        INTO_ANY_SELECTED.filter(text => !intoAnySelects(plantedCase(text, ""))),
+        INTO_ANY_UNSELECTED.filter(text => intoAnySelects(plantedCase(text, ""))),
+        intoAnySelects(plantedCase("export const used = use;\n", "export const used = Function.prototype.call.apply(use, [new Holder()]);\n")),
+      ],
+      "planted cases: each selected spelling selected, each unselected one not, and the call in another planted file only not selected",
+    ).toEqual([[], [], false]);
     // Respin 2 (refusal #2 U1): the bounds of the lists reading and the words of each page in its own list only, on a planted label whose answers are literals.
     const lead = `${INTO_ANY_CLAUSE}the members ${INTO_ANY_DECLARED}, so a hiding callback reads quiet - `;
     const anyList = `${INTO_ANY_TYPED.any}applied): an applied page, and a page named twice; `;
@@ -1289,6 +1352,24 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       ["the declaration fact after the any list", `${INTO_ANY_CLAUSE}the members - ${anyList}${INTO_ANY_DECLARED}; ${ownList}.`],
     ];
     for (const [what, refused] of refusedLabels) expect(() => intoAnyLists(refused), what).toThrow();
+    // Respin 3 (refusal #3 U1): each of the four parts missing - each planted label below refuses, the clause opening among them, whose presence only the once-check reads.
+    const missingParts: readonly (readonly [string, string])[] = [
+      ["the clause opening missing", plantedLabel.replace(INTO_ANY_CLAUSE, "")],
+      ["the declaration fact missing", plantedLabel.replace(INTO_ANY_DECLARED, "")],
+      ["the any list opening missing", plantedLabel.replace(INTO_ANY_TYPED.any, "")],
+      ["the own list opening missing", plantedLabel.replace(INTO_ANY_TYPED.own, "")],
+    ];
+    for (const [what, missing] of missingParts) expect(() => intoAnyLists(missing), what).toThrow();
+    // Respin 3: the withdrawn wording read through withdrawnReading, which the planted labels share - none in the real label, then once outside the lists, once inside the any list, and twice.
+    expect(
+      [
+        label,
+        `${plantedLabel} They type their this argument and their arguments any.`,
+        plantedLabel.replace("an applied page,", "an applied page that they type their this argument and their arguments any,"),
+        `${plantedLabel} They type their this argument and their arguments any, and type their this argument and their arguments any.`,
+      ].map(withdrawnReading),
+      "the withdrawn wording: none in the R-THIS-BINDING label; planted labels once outside the lists, once inside the any list, twice",
+    ).toEqual([0, 1, 1, 2]);
     // Respin 2 (refusal #2 U2): the DISPATCH reading on three refused texts, written as literals: the by-call members after the turn into any, the into-any members dropped, the withdrawn wording kept.
     expect(
       [
@@ -1302,6 +1383,22 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       [1, 0, 0],
       [0, 0, 1],
     ]);
+    // Respin 3 (refusal #3 U2 and U3): five refused DISPATCH texts written as literals - the by-call phrase twice, the into-any phrase twice, the into-any phrase before the turn, the into-any phrase after the turn but apart from it, and the two phrases joined at the turn twice.
+    const refusedTurns = [
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any), and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written), and a member call's receiver",
+      "a value bound as a function's this - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written - into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any (wb-py8n, landing 770 F6), and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any (wb-py8n, landing 770 F6), or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written, and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; and again or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written), and a member call's receiver",
+    ];
+    expect(refusedTurns.map(dispatchReading), "refused DISPATCH texts read by their phrase counts: each phrase twice, then each once, then both twice").toEqual([
+      [2, 1, 0],
+      [1, 2, 0],
+      [1, 1, 0],
+      [1, 1, 0],
+      [2, 2, 0],
+    ]);
+    expect(refusedTurns.map(dispatchTurnReading), "refused DISPATCH texts read at the turn: joined once where a phrase is doubled, never before the turn or apart from it, twice where joined twice").toEqual([1, 1, 0, 0, 2]);
     // Respin 2: the phrases the two label readings count, frozen (rule 16), so a one-edit change to any of them reds here.
     expect(
       [INTO_ANY_CLAUSE, INTO_ANY_DECLARED, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own, INTO_ANY_WITHDRAWN, DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN, ...INTO_ANY.map(page => page.named)],
