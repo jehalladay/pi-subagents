@@ -10,12 +10,16 @@
  * (its findings F3 and F4), anchors row R's pins to refusal #4 and the R-B218 fold and adds M2's probe after a leading vitest
  * import. Its cut #2, the respin of wb-ffz5's refusal #1, reads each pin's statement whole, up to its delimiter, holds ANCHOR's
  * checks to the nine witness plants of refusal #1 (Case READERS), and narrows ANCHOR's claims to the export as it stands and
- * those plants.
+ * those plants. wb-60qs, the R694 follow-up of wb-ffz5's landing 839 (its findings F7 and F8), holds each pin case's probe loop
+ * and READERS' plant loop to their lists from inside the case, and narrows claims (3) and (4) to what ANCHOR reads on the
+ * export as it stands and READERS on the nine plants with this file's code as written.
  *
  * PINNED READER SET (this file, test/workbench-rf-tsx-registrar-readers-census.test.ts; observed at the cut: every case passes
  * on the moved readers, and each named member, applied to a copy of the helper with its refusal gate's own edit, reds the pin
  * case named after it). Each pin case is named "<member id>: <quote>" and asserts, for every probe it holds, that the reader
- * beside the probe returns exactly the literal reading written here (toEqual over the reader's whole output). A probe is a
+ * beside the probe returns exactly the literal reading written here (toEqual over the reader's whole output); then it holds the
+ * ids of the probes it read, in order, to the probe ids of the PINS entry its id names (pinOf()), and its assertion count to
+ * one per probe of that entry and one more (expect.assertions()). A probe is a
  * synthetic module text read as test/probe.test.ts: the bindings reader is registrarBindings() over it (its rows, suites and
  * namespaces sets, each sorted) and the tier reader is tierReadingOf() over it (titles, unaccounted, claims). The probes
  * dStmtFirst, dStmtFirstStep, dConstFirst, dOtherModuleFirst, dDefaultCombined, dDefaultCombinedStep and dDefaultNsCombined
@@ -80,22 +84,31 @@
  *   U2-LOW-PLAUSIBLE on refusal #4's UNMET line and in the fold; W-A3 N-A3's statement in brackets; W-A4 an 's' before N-A1's
  *   statement's period; W-A5 ' by name' before N-A3's statement's parenthesis; and W-A9 an earlier quoted copy of refusal #4's
  *   verdict opening, closed by a RED line, written just before that opening (the gate's witness wrote it at the start of the
- *   notes). On each plant anchorFailures() returns exactly the checks written beside it.
+ *   notes). On each plant anchorFailures() returns exactly the checks written beside it; READERS then holds the ids of the
+ *   plants it checked, in order, to PLANTS' ids, and its assertion count to the witness check, one per plant edit, one per
+ *   plant and that ids check (expect.assertions()).
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here: a
- * reader edit that changes one reading reds that pin case. (2) Each named member changes a reading of its own pin's probes: the
- * cutting seat applies each member's own edit (its refusal gate's find and replace, verbatim, over a copy of the helper) and
- * reads the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) The tracker
- * export records each pin's id, unmet item, grade and quote, the order of each row's pins, row R's label, the plants wb-6fr4's
+ * reader edit that changes one reading reds that pin case. A pin case whose loop reads other than every probe of the PINS entry
+ * its id names, once each and in order, reds that pin case at its ids check - its probe list cut to its first or its last probe
+ * among them (wb-60qs, the landing-839 F8 members GH09 and GH10) - and one that makes fewer reading assertions than that entry
+ * holds probes reds it at its assertion count. (2) Each named member changes a reading of its own pin's probes: the cutting
+ * seat applies each member's own edit (its refusal gate's find and replace, verbatim, over a copy of the helper) and reads the
+ * pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) The tracker export
+ * records each pin's id, unmet item, grade and quote, the order of each row's pins, row R's label, the plants wb-6fr4's
  * description items name (P-STMT for M1, P-OTHER for M2) and the plants the cut #4 note names for row R's claim (P-STMT,
- * P-OTHER and P-DEFAULT, each in every row R pin's probes): a row or a pin removed, one of these changed - a quote lengthened
- * or shortened among them, since each statement is read whole - or one of these plants removed from those probes, in one
- * literal or in every literal together, reds SHAPE, ANCHOR or READERS (standing rule 16's CT1-CT6 among them). (4) On the
- * export as it stands no ANCHOR check fails, and on each READERS plant exactly the checks written beside it fail: an
- * anchorFailures() edit that changes which checks fail on one of these ten inputs reds ANCHOR or READERS, and a plant removed
- * from PLANTS and from SHAPE's literal together reds READERS, because refusal #1 still names it. The cutting seat applied
- * refusal #1's nine reader members GA1-GA9 (its gate's archived edits, each carried onto the line of anchorFailures() or
- * sectionOf() that makes the same read) and read READERS red under each, where the cut #1 census read each at 0 failed; and
+ * P-OTHER and P-DEFAULT, each in every row R pin's probes): with this file's code as written, a row or a pin removed, one of
+ * these changed - a quote lengthened or shortened among them, since each statement is read whole - or one of these plants
+ * removed from those probes, in one literal or in every literal together, reds SHAPE, ANCHOR or READERS (standing rule 16's
+ * CT1-CT6 among them). Each ANCHOR or READERS red there is a reading ANCHOR or READERS makes on the export as it stands or on
+ * the nine plants against the edited literals, by this file's code, and that code is held only through those readings (see NOT
+ * CLAIMED). (4) On the export as it stands no ANCHOR check fails, and on each READERS plant exactly the checks written beside
+ * it fail: an anchorFailures() edit that changes which checks fail on one of these ten inputs reds ANCHOR or READERS - READERS
+ * checks every plant, since it holds the ids of the plants it checked to PLANTS' ids and its assertion count, so a plant loop
+ * cut to its first plant (wb-60qs, the landing-839 F7 member GH08) reds it - and, with this file's code as written, a plant
+ * removed from PLANTS and from SHAPE's literal together reds READERS, because refusal #1 still names it. The cutting seat
+ * applied refusal #1's nine reader members GA1-GA9 (its gate's archived edits, each carried onto the line of anchorFailures()
+ * or sectionOf() that makes the same read) and read READERS red under each, where the cut #1 census read each at 0 failed; and
  * its five quote members GQ-N-A1, GQ-N-A3, GQ-M1, GQ-M2 and GQ-M3 (each pin's quote lengthened to the words its record holds
  * before the record's next delimiter) read ANCHOR and READERS red.
  *
@@ -119,8 +132,15 @@
  * missing, a later occurrence of an opening or of a close, a record repeated elsewhere in the notes, and an export holding two
  * rows for one bead; and so is a plant made from any other export. Which edit a plant makes, changed to another edit on which
  * the same checks fail, is NOT CLAIMED by this census, and neither is a probe's source or a plant's edit changed together with
- * the reading or the checks written beside it, nor an anchorFailures() edit made together with the plant checks it changes. The
- * parent census's own header, cases and roster are NOT CLAIMED by this census. No residual is claimed.
+ * the reading or the checks written beside it, nor an anchorFailures() edit made together with the plant checks it changes. An
+ * edit of the code that makes ANCHOR's and READERS' reads - anchorFailures(), sectionOf(), statementsOf(), exportRow() and
+ * READERS' read of refusal #1's witness ids - that leaves every reading ANCHOR and READERS make on the export as it stands and
+ * on the nine plants unchanged is NOT CLAIMED by this census, alone or made together with a literal edit claim (3) or claim (4)
+ * names: among them a row's pins sorted before they are read, a row M statement read to its quote's length or for its quote's
+ * containment, refusal #1's witness ids read only among PLANTS' ids, a description item's plant found in any pin's probes and
+ * the falsifier plants read in the first row R pin's probes only (wb-60qs, the landing-839 F7 members GH01-GH07). The pin
+ * cases' probe loop and READERS' plant loop are not that code: claims (1) and (4) hold them. The parent census's own header,
+ * cases and roster are NOT CLAIMED by this census. No residual is claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant is built in
  * memory; no src, docs or receipt is edited.
@@ -556,11 +576,13 @@ describe("wb-6fr4 registrar readers census (test/helpers/rf-tsx-registrar-reader
 
   it("READERS: the plants are the W-A witnesses wb-ffz5's refusal #1 names, in the order it first names them, and on each plant, made on wb-6fr4's and wb-8avz's export rows with its edits, exactly the ANCHOR checks written beside it fail", () => {
     const rows: Readonly<Record<Bead, ExportRow>> = { "wb-6fr4": exportRow("wb-6fr4"), "wb-8avz": exportRow("wb-8avz") };
+    expect.assertions(2 + PLANTS.length + PLANTS.flatMap(plant => plant.edits).length);
     const witnesses = [...new Set(sectionOf(exportRow("wb-ffz5").notes, PLANT_RECORD, PLANT_RECORD_END).match(/\bW-A\d+\b/g) ?? [])];
     expect(
       PLANTS.map(plant => plant.id),
       "the plants are the W-A witnesses refusal #1 names, in the order it first names them",
     ).toEqual(witnesses);
+    const checked: string[] = [];
     for (const plant of PLANTS) {
       const planted: Record<Bead, ExportRow> = { ...rows };
       for (const edit of plant.edits) {
@@ -570,14 +592,21 @@ describe("wb-6fr4 registrar readers census (test/helpers/rf-tsx-registrar-reader
         planted[edit.bead] = { description: row.description, notes: `${row.notes.slice(0, at)}${edit.write}${row.notes.slice(at + edit.find.length)}` };
       }
       expect(anchorFailures(planted["wb-6fr4"], planted["wb-8avz"]), `${plant.id}: the ANCHOR checks that fail on the plant`).toEqual(plant.fails);
+      checked.push(plant.id);
     }
+    expect(checked, "READERS checked every plant of PLANTS, once each and in PLANTS' order").toEqual(PLANTS.map(plant => plant.id));
   });
 
   for (const pin of PINS) {
     it(`${pin.id}: ${pin.quote}`, () => {
+      const held = pinOf(pin.id)?.probes.map(probe => probe.id) ?? [];
+      expect.assertions(held.length + 1);
+      const read: string[] = [];
       for (const probe of pin.probes) {
         expect(READERS[probe.reader](probe.source), `${pin.id} / ${probe.id}: ${probe.reader} reads the probe exactly as written here`).toEqual(probe.reading);
+        read.push(probe.id);
       }
+      expect(read, `${pin.id}: the case read every probe of the PINS entry its id names, once each and in order`).toEqual(held);
     });
   }
 });
