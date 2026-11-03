@@ -8,6 +8,9 @@
  * export title spells the dash as the six characters shown: a backslash, u, 2, 0, 1, 4).
  * Acceptance (the owner filing's, verbatim): "per-view interaction falsifier - every handler path is projection-read-only
  * with zero capability invokes and zero journal/native writes." (the filing's dash is U+2014).
+ * wb-hjiq (the R694 follow-up of this census's landing-806 gate, filed under wb-021: its F1, F2 and F8) adds the closure
+ * pins of row R below - one edge of each runtime edge kind from the view and a module two views share - and the header
+ * anchors, below; it corrects the sentence of the reader's header that said this census was not on trunk.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0, 2026-10-30 at trunks c2695d7 and 360919f, whose
  * src is unchanged since 04123dc, and 2026-11-01 at trunk 19024ab, whose src differs from 04123dc in one doc comment of
@@ -16,14 +19,14 @@
  * src declares them: ObservationProjection's 18 public members (12 read, 6 admission), CapabilityRegistry's 7,
  * CapabilityProvider's 3 and src/workflow/journal.ts's 4 exported values (SEAMS classifies each).
  *
- * THE PINNED SET (this file; each pin's case id is `<row id> <pin id>`, registered in ROWS order, 176 cases, then seven
+ * THE PINNED SET (this file; each pin's case id is `<row id> <pin id>`, registered in ROWS order, 181 cases, then 8
  * cases): for each plant of rows L, V, N, P, Z, R, U and Q the assertion target is judgeTree over the pin's planted tree
  * (written to rule-11 scratch, its copies byte-for-byte from the repository) and the observed result is the pin's views
  * and findings, exactly (the sorted finding lines); for each reading pin (R-families, R-words) effectReading over the
  * pin's texts; for each live pin the src tree as git lists it - L1-src's views and findings and each S seam pin's members
- * read from src; for each seam reader pin (S-reader-*) seamMembers over the pin's source. The seven cases - outside
- * anchors, rule 16, composition, shared pins, refusal #4 of record, provenance and roster (registered last) - are named
- * in the paragraphs below, each with what it holds.
+ * read from src; for each seam reader pin (S-reader-*) seamMembers over the pin's source. The eight cases - outside
+ * anchors, rule 16, composition, shared pins, refusal #4 of record, provenance, header anchors and roster (registered
+ * last) - are named in the paragraphs below, each with what it holds.
  *
  * THE FALSIFIER (the judge, its readings and every finding are defined in test/helpers/apo-snapshot-census.ts, whose
  * header is the reading of record and names, per form, the pin that holds each reading form; its CLAIM SCOPE: each reading
@@ -33,7 +36,7 @@
  * admitted, so node:fs, node:child_process, every native client package, an absolute path, a URL and a dot-led bare
  * specifier refuse), EFFECT (a text holding a statement or acceptance verb, or a whole text that is a seam effect name),
  * GLOBAL (a free name of a closure module as wb-021.8's landed GLOBAL binding reader reads it,
- * test/helpers/apo-snapshot-global-reader.ts, imported unedited; the reader's readings are claimed at its census's pinned
+ * test/helpers/apo-snapshot-global-reader.ts, imported with its code unedited; the reader's readings are claimed at its census's pinned
  * set, test/workbench-apo-snapshot-global-reader-census.test.ts, and this census claims their COMPOSITION, below) and
  * CONSTRUCTOR.
  * COMPOSITION (ruling R-B166: this cut restates the census over the reader wb-021.8 landed at landing 803, after refusal #4
@@ -67,8 +70,14 @@
  * the constructor route, each red. R: the reading forms the helper's header names, per form, each held by a plant, a
  * reading pin or a line of its own with its own expected finding: the EFFECT texts and their folds; UNRESOLVED and
  * PACKAGE by every edge kind and the specifier forms its pins plant; resolveRelative's candidates; the finding kinds one
- * and two edges from the view (R-closure-depth: every kind but UNREADABLE); each view of a tree judged, the second of two
- * views red at its own finding (R-views-each-judged); the GLOBAL forms its pins plant (a script
+ * and two edges from the view (R-closure-depth: every kind but UNREADABLE, two static edges), one edge from it by each
+ * other runtime edge kind (R-closure-export-from, R-closure-dynamic, R-closure-require and R-closure-import-equals: every
+ * kind but UNREADABLE, each on its own line of the module the edge reaches) and in a module two views share, at each
+ * view (R-views-share-module: every kind but UNREADABLE, one static edge from each view) - the landing-806 gate's judge
+ * mutant JG1 (GLOBAL read only on routes of static edges) reds the four edge-kind pins and JG5 (each closure module
+ * judged once across a tree's views) reds R-views-share-module, measured by the seat's mutant battery (the delivery
+ * note), not by a case; each view of a tree judged, the second of two views red at its own finding
+ * (R-views-each-judged); the GLOBAL forms its pins plant (a script
  * shim, a declaration file, an ambient, type-only or bodiless declaration, a const enum, the arguments object, an alias
  * or a namespace of no value) and the name positions they plant, the erased type declarations included (the pins among
  * them that share an id with a reader pin plant its files: the shared-pins case); and CONSTRUCTOR in
@@ -92,6 +101,16 @@
  * residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pin digests, the
  * registered test titles and the residual families are held to the out-of-file roster (test/fixtures/apo-snapshot-roster.json).
+ * HEADER ANCHORS (their own case; wb-hjiq, after the landing-806 gate's F2): the pin set is held outside the census's own
+ * literals and roster as well. Each pin id this header names and each pin id the helper's header names is a pin of ROWS,
+ * and the case counts THE PINNED SET states - ROWS's pins, then the cases registered after them - are the file's. A pin
+ * id is read by its shape (PIN_ID: the id families of ROWS, written in this file and never read from ROWS); every pin id
+ * of ROWS reads whole by it, and a record member's own name, as row U's paragraph writes one (GP1, NS-C2, EN-forward),
+ * reads as none. So a pin removed from ROWS together with its frozen-literal count and a regenerated roster reds while a
+ * header names its id or THE PINNED SET states the count it changes. Falsifiers: the landing-806 gate's four coordinated
+ * hollows (its F2: a pin deleted with its frozen-literal count and its roster row and test) of R-views-each-judged,
+ * R-closure-depth, U-EN-forward and U-binds-values, each green before this case and red with it, measured by the seat's
+ * mutant battery on these bytes (the delivery note), not by a case.
  * OUTSIDE ANCHORS (their own case, plus the live pins): the export row - rows L, V and N tile its statement, rows P and Z
  * the owner filing's acceptance (read from the filing section alone, which holds exactly one Acceptance line), its
  * requirement id carries the program's slug, the statement's parenthesis is VIEW_CLASSES and rows V and P each plant every
@@ -124,6 +143,12 @@
  * computed key (R-REFLECTIVE-REACH); regular-expression literals and comments, never read (R-UNREAD-TEXT); whether an
  * import's relative target exports the name it imports - the import's own declaration binds either way, and at run time a
  * missing export reads undefined or fails to link, not a host global (R-UNLINKED-IMPORT); any code outside src/.
+ * A finding kind at a route no pin plants it at is NOT CLAIMED by this census (GLOBAL in a module reached past a first
+ * edge that is not static among them). The row a header names a pin under is NOT CLAIMED by the header anchors (they hold
+ * each pin id a header names to ROWS, not to a row); a pin's plant and findings rewritten together with its roster digest
+ * are NOT CLAIMED by the header anchors (they read pin ids and the stated counts, not plants); a pin no header names,
+ * removed together with its frozen-literal count, its roster row and test and the count THE PINNED SET states, is NOT
+ * CLAIMED by the header anchors.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-UNNAMED-VIEW, R-LOOKALIKE-VIEW, R-UNNAMED-EFFECT,
  * R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT, R-UNLINKED-IMPORT.
  *
@@ -367,6 +392,30 @@ function span(text: string, key: string, end: string): string {
 }
 const uniqueTokens = (text: string, pattern: RegExp): string[] => [...new Set([...text.matchAll(pattern)].map(match => match[0]))];
 
+/** A module's header: its text up to the close of the doc comment it opens with, or "" when it opens with none. */
+function moduleHeader(text: string): string {
+  const close = text.indexOf("*/");
+  return text.startsWith("/**") && close > 0 ? text.slice(0, close) : "";
+}
+/**
+ * A pin id as the two headers write one, by the id families of ROWS - written here and never read from ROWS, so a pin
+ * deleted from ROWS keeps its shape: a row L pin (L1-src, L9-slug-name), a pin of rows N, P, R, S, V and Z (N-admit,
+ * P-gradient, R-closure-depth, S-reader-exports-unnamed, V-type-only, Z-global-wrapper), a row U pin (U-GP1L, U-NS-C2,
+ * U-EN-forward) and a row Q pin, a residual family (R-UNNAMED-VIEW). A record member's own name (GP1, NS-C2,
+ * EN-forward, W-G14-I10) is no pin id of this census and reads as none.
+ */
+const PIN_ID = /(?<![\w-])(?:L\d+-[a-z]+(?:-[a-z]+)*|[NPRSVZ]-[a-z][a-z\d]*(?:-[a-z\d]+)*|U-[A-Za-z\d]+(?:-[A-Za-z\d]+)*|R-[A-Z]+(?:-[A-Z]+)+)(?![\w-])/g;
+/** The pin ids a text names by PIN_ID, once each, in first-occurrence order. */
+const pinIdsIn = (text: string): string[] => uniqueTokens(text, PIN_ID);
+/** The case counts a header's THE PINNED SET paragraph states: its pin cases and the cases registered after them (-1 each when it states none). */
+function headerCounts(header: string): { readonly pins: number; readonly further: number } {
+  const start = header.indexOf(" * THE PINNED SET (");
+  const stop = start < 0 ? -1 : header.indexOf("\n *\n", start);
+  const paragraph = stop < 0 ? "" : header.slice(start, stop).replace(/\n \* ?/g, " ");
+  const counts = /registered in ROWS order, (\d+) cases, then (\d+) cases\)/.exec(paragraph);
+  return { pins: Number(counts?.[1] ?? "-1"), further: Number(counts?.[2] ?? "-1") };
+}
+
 /** A parsed module of the repository and the names of the function declarations it holds, at any depth. */
 const parseModule = (file: string): ts.SourceFile => ts.createSourceFile(file, readFileSync(join(ROOT, file), "utf8"), ts.ScriptTarget.ESNext, true, ts.ScriptKind.TS);
 function functionNames(sf: ts.SourceFile): string[] {
@@ -492,7 +541,7 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): j
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:43", "U:73", "S:9", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:48", "U:73", "S:9", "Q:9"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-UNNAMED-VIEW:Q R-UNNAMED-VIEW",
       "R-LOOKALIKE-VIEW:Q R-LOOKALIKE-VIEW",
@@ -607,6 +656,37 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): j
     expect(own, "the helper declares no binding named freeNamesOf of its own, so the name judgeTree calls is the import").toEqual([]);
     expect(calls.includes("freeNamesOf"), "judgeTree calls freeNamesOf").toBe(true);
     expect(ADMITTED_FREE, "the helper's ADMITTED_FREE is the reader's array").toBe(READER_ADMITTED_FREE);
+  });
+
+  it("header anchors (wb-hjiq): every pin id this file's header and the helper's header name is a pin of ROWS, and the case counts THE PINNED SET states are ROWS's pins and the cases registered after them", ({ task }) => {
+    const ids = ROWS.flatMap(row => row.pins.map(pin => pin.id));
+    expect(
+      ids.filter(id => pinIdsIn(id).join(" ") !== id),
+      "every pin id of ROWS reads whole by PIN_ID",
+    ).toEqual([]);
+    const own = pinIdsIn(moduleHeader(readFileSync(fileURLToPath(import.meta.url), "utf8")));
+    const helper = pinIdsIn(moduleHeader(readFileSync(join(ROOT, HELPER), "utf8")));
+    expect([own.length > 0, helper.length > 0], "each header names pin ids").toEqual([true, true]);
+    expect(
+      own.filter(id => !ids.includes(id)),
+      "every pin id this file's header names is a pin of ROWS",
+    ).toEqual([]);
+    expect(
+      helper.filter(id => !ids.includes(id)),
+      "every pin id the helper's header names is a pin of ROWS",
+    ).toEqual([]);
+    let registered = 0;
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered += 1;
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(
+      headerCounts(moduleHeader(readFileSync(fileURLToPath(import.meta.url), "utf8"))),
+      "the case counts THE PINNED SET states: ROWS's pins, then the cases registered after them",
+    ).toEqual({ pins: ids.length, further: registered - ids.length });
   });
 
   it("roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways", ({ task }) => {
