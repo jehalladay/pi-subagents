@@ -1059,7 +1059,11 @@
         "the first segment": true,
         "the last segment": true,
         "beside another serial": true,
-        "with a leading zero": false
+        "with a leading zero": false,
+        "the last of seven segments": true,
+        "the first of seven segments": true,
+        "the fifth of eight segments": true,
+        "a segment's leading part": false
       },
       "replays": {
         "first": {
@@ -6680,7 +6684,11 @@
         "the first segment": "87-inv-F1-exec-a1-t1",
         "the last segment": "inv-F1-exec-a1-t1-87",
         "beside another serial": "inv-F1-86-87-exec-a1-t1",
-        "with a leading zero": "inv-F1-087-exec-a1-t1"
+        "with a leading zero": "inv-F1-087-exec-a1-t1",
+        "the last of seven segments": "inv-F1-86-exec-a1-t1-87",
+        "the first of seven segments": "87-F1-86-x-exec-a1-t1",
+        "the fifth of eight segments": "inv-F1-86-x-87-exec-a1-t1",
+        "a segment's leading part": "inv-F1-87x-exec-a1-t1"
       },
       "serialPlants": {
         "the kinds from own": {
@@ -6874,6 +6882,142 @@
               "inv-F1-1008-exec-a1-t2",
               "inv-F1-1008-exec-a2-t2",
               "inv-F1-1008-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D03's page": {
+          "returned": [
+            [
+              "inv-F1-7-exec-a1-t1-8",
+              "inv-F1-7-exec-a1-t2-8",
+              "inv-F1-7-exec-a2-t2-8",
+              "inv-F1-7-exec-a2-t3-8"
+            ],
+            [
+              "inv-F1-8-exec-a1-t1-9",
+              "inv-F1-8-exec-a1-t2-9",
+              "inv-F1-8-exec-a2-t2-9",
+              "inv-F1-8-exec-a2-t3-9"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D04's page": {
+          "returned": [
+            [
+              "8-F1-7-x-exec-a1-t1",
+              "8-F1-7-x-exec-a1-t2",
+              "8-F1-7-x-exec-a2-t2",
+              "8-F1-7-x-exec-a2-t3"
+            ],
+            [
+              "9-F1-8-x-exec-a1-t1",
+              "9-F1-8-x-exec-a1-t2",
+              "9-F1-8-x-exec-a2-t2",
+              "9-F1-8-x-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D05's page": {
+          "returned": [
+            [
+              "inv-F1-7-x-8-exec-a1-t1",
+              "inv-F1-7-x-8-exec-a1-t2",
+              "inv-F1-7-x-8-exec-a2-t2",
+              "inv-F1-7-x-8-exec-a2-t3"
+            ],
+            [
+              "inv-F1-8-x-9-exec-a1-t1",
+              "inv-F1-8-x-9-exec-a1-t2",
+              "inv-F1-8-x-9-exec-a2-t2",
+              "inv-F1-8-x-9-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D06's page": {
+          "returned": [
+            [
+              "inv-F1-7x-exec-a1-t1",
+              "inv-F1-7x-exec-a1-t2",
+              "inv-F1-7x-exec-a2-t2",
+              "inv-F1-7x-exec-a2-t3"
+            ],
+            [
+              "inv-F1-8x-exec-a1-t1",
+              "inv-F1-8x-exec-a1-t2",
+              "inv-F1-8x-exec-a2-t2",
+              "inv-F1-8x-exec-a2-t3"
             ]
           ],
           "carried": [

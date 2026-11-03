@@ -56,8 +56,8 @@
  *    the first, second, third and last asked, carries that call's own serial in its invocationId, and of two such calls
  *    in a row over one fixture, in each ordered pair of the three orders, neither issues an invocationId the other
  *    issued, as the serial reading reads them, claimed only in the invocationId forms A3's segment and serial plants
- *    pin, at each position of either call (A3's serial and serial plants sentences name them; every other form is NOT
- *    CLAIMED, among them the forms of the gate's drive pages D03-D06, wb-vuoz's); the check
+ *    pin, at each position of either call (A3's serial and serial plants sentences name them, the forms of the gate's
+ *    drive pages D01-D06 among them, D03-D06 wb-vuoz's; every other form is NOT CLAIMED); the check
  *    reads every handed decision, the first, middle and last of three, against every recorded request, at each
  *    position of one to four (in the decision records: each handed
  *    decision in turn minted for each candidate's request the record does not hold, or for its fellows' request with
@@ -94,14 +94,16 @@
  *    the serial (the same four requests asked by a planted point driven over each fixture twice in a row: every request of
  *    each call carries that call's serial, driveSerial as its drive left it, and not the other call's, as the serial
  *    reading reads them, claimed in the forms the planted invocationIds pin and no other: carriesSerial reads the
- *    eight segment plants (serial 87) as planted, the serial as the whole first, third or last segment of a six-segment
- *    id or as the whole fourth of seven beside 86 carried, and 870, 8, x87 and 087 as the third of six not carried, and
- *    the serial reading reads the serial plants' forms as planted (below); a serial at a segment no plant holds it at,
- *    by position and count (among them the second, the fourth of six, the fifth, the sixth of seven or more, past the
- *    sixth, the first of seven or more), a segment holding the serial beside other characters in a form no plant
- *    spells (87x among them), and a separator other than a dash, or a space beside a segment, are NOT CLAIMED; the
- *    two calls issue no invocationId in common, and their requests name the fixture driven, as their second
- *    dash-separated segment);
+ *    twelve segment plants (serial 87) as planted, the serial as the whole first, third or last segment of a six-segment
+ *    id, as the whole fourth of seven beside 86, as the whole last or the whole first of seven, or as the whole fifth of
+ *    eight carried (the last three wb-vuoz's, where the gate's drive pages D03, D04 and D05 spell the other call's
+ *    serial), and 870, 8, x87, 087 and 87x as the third of six not carried (87x wb-vuoz's, D06's form), and the serial
+ *    reading reads the serial plants' forms as planted (below); a serial at a segment no plant holds it at, by
+ *    position and count (among them the second, the fourth of six, the fifth of six or seven, the sixth of seven or
+ *    more, the seventh of eight or more, past the seventh and the first of eight or more), a segment holding the serial
+ *    beside other characters in a form no plant spells (x87x and 87xx among them), and a separator other than a dash,
+ *    or a space beside a segment, are NOT CLAIMED; the two calls issue no invocationId in common, and their requests
+ *    name the fixture driven, as their second dash-separated segment);
  *    the replay (for each position of the four, a planted point
  *    driven over F1 twice in a row issues the four requests, one per can_execute candidate in the snapshot's order; the
  *    first call executes the core's permit for the request at that position, which answers that request, and meets every
@@ -176,20 +178,29 @@
  *    records by hand and every stranger read back from its receipt, by its invocationId or by the member its form
  *    alters) and the serial plants (the serial reading shown planted calls, serials 7 then 8, each returned four
  *    requests over the snapshot's candidates in its order, every invocationId in plantedId's form
- *    inv-<name>-<serial segments>-<candidate>, of six or seven segments: in four
+ *    inv-<name>-<serial segments>-<candidate>, of six or seven segments, or in one of the forms of the gate's drive
+ *    pages D03-D06: in four
  *    rotations each position of each call holds each kind of request in turn, its invocationId carrying as its third
  *    segment that call's serial alone, which reads carried, or the other call's alone, both (that call's third, the
  *    other's fourth: D01's page form) or neither (D02's page form, the serial plus 1000), each of which reads not
  *    carried, and the id the first call carries as its own, which the second carries as the other's, reads shared;
  *    D01's and D02's pages themselves, every request of both calls respelled as each respells it (the first call's
  *    carried at no position, the second call's at every one on D01's, its serial third and 9 fourth, and at none on
- *    D02's); four ids
+ *    D02's); wb-vuoz's D03's to D06's pages, every request of both calls respelled as the gate's drive pages D03-D06
+ *    respell it, its serial third and the next serial as the last of seven segments (D03's,
+ *    inv-F1-<serial>-<candidate>-<serial plus 1>), as the first of seven (D04's,
+ *    <serial plus 1>-F1-<serial>-x-<candidate>) or as the fifth of eight (D05's,
+ *    inv-F1-<serial>-x-<serial plus 1>-<candidate>), or its serial only as the third segment's leading part (D06's,
+ *    inv-F1-<serial>x-<candidate>): the first call's carried at no position on each, the second call's at every one on
+ *    D03's, D04's and D05's and at none on D06's; four ids
  *    both calls were returned (7 third, 8 fourth), in reverse order in the second, read shared in the first call's
  *    order and carried in neither call; an id one call was returned twice and the other never reads not shared; and a
  *    name at each position of each call reads named once, in the order first named; each plant's invocationIds read
  *    back; the serial reading is claimed in these forms only: that call's serial at a segment other than the third,
- *    the other call's at a segment other than the third or the fourth beside it, and an invocationId both calls were
- *    returned in a form or a length no plant holds are NOT CLAIMED, wb-vuoz's). A4 a hand-built
+ *    the other call's at a segment no plant holds it at (the plants hold it as the third, as the fourth beside that
+ *    call's third, as the last or the first of seven segments and as the fifth of eight), a serial beside other
+ *    characters in a form no plant spells, and an invocationId both calls were returned in a form or a length no plant
+ *    holds are NOT CLAIMED). A4 a hand-built
  *    look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
@@ -280,16 +291,17 @@
  * record other than the six the decision records plant beside the position, check and decision controls' own; and
  * the serial reading over planted calls other than plantedSerial and the serial plants (two calls of two or of four
  * requests, serials 7 then 8) and the drives' own. wb-vuoz (filed by the rule-19 structural exit R-B398 to pin the
- * serial segment forms cut #4 left unplanted) carries every invocationId form the segment and serial plants do not
- * plant, on planted calls and on the drives' own alike, each NOT CLAIMED here, among them: a serial, that call's or
- * the other call's, at a segment no plant holds it at, by position and count (among them the second, the fourth of
- * six, the fifth, the sixth of seven or more, past the sixth and the first of seven or more; the fifth, past the sixth
- * and the first of seven or more are the forms the gate's GP6-K13, K10 and K12 leave unread and its drive pages D05,
- * D03 and D04 spell); a segment holding the serial beside other characters in a form no plant spells (87x, which
- * GP6-K14 reads carried and D06 spells, among them); a separator other than a dash, or a space, beside a segment; that
- * call's serial read by the serial reading at a segment other than the third, and the other call's at a segment
- * other than the third or the fourth beside that call's; and an invocationId both calls were returned in a form or a
- * length no plant holds.
+ * serial segment forms cut #4 left unplanted) plants the forms the gate's GP6-K10, K12, K13 and K14 misread and its
+ * drive pages D03-D06 spell (the serial as the last and as the first of seven segments, as the fifth of eight, and as
+ * a segment's leading part, 87x), in A3's segment plants and as D03's to D06's pages among its serial plants; every
+ * invocationId form the segment and serial plants do not plant, on planted calls and on the drives' own alike, stays
+ * NOT CLAIMED, among them: a serial, that call's or the other call's, at a segment no plant holds it at, by position
+ * and count (among them the second, the fourth of six, the fifth of six or seven, the sixth of seven or more, the
+ * seventh of eight or more, past the seventh and the first of eight or more); a segment holding the serial beside
+ * other characters in a form no plant spells (x87x and 87xx among them); a separator other than a dash, or a space,
+ * beside a segment; that call's serial read by the serial reading at a segment other than the third, and the other
+ * call's at a segment no serial plant holds it at; and an invocationId both calls were returned in a form or a length
+ * no plant holds.
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -393,6 +405,20 @@
  * fixture's request. Beside that table, its assertion, the none entries' assertion message and form pin, A3's
  * sentence on the decisions over a record, those two clauses and this history, no claim, reading, mutant, control,
  * pin or test title changes; the A3 witness gains unrecordedOverRecords. Display paths added: none.
+ *
+ * wb-vuoz (filed by the rule-19 structural exit R-B398 at wb-kbh1's refusal #3, gate-prep-6 / g10-gate-s195: the
+ * R-B361-frozen serial claim set re-failed through the gate's GP6-K10 (the segments past the sixth unread), K12 (only
+ * the last six read), K13 (the fifth unread) and K14 (a segment read by its leading digits), realized FAIL-OPEN by its
+ * drive pages D03-D06 and named NOT CLAIMED by wb-kbh1's cut #4). Cut #1 pins those forms red-first: four segment
+ * plants (the serial 87 as the last and as the first of seven segments and as the fifth of eight, carried, and 87x as
+ * the third of six, not carried) and four serial plants (D03's to D06's pages, every request of both planted calls
+ * respelled as each drive page respells it), so each of the four members reds A3 at its segment expect, alone and
+ * composed with its page. The CHECKS parenthetical's serial clause, A3's serial and serial plants sentences, the NOT
+ * CLAIMED list, the docs of SEGMENT_PLANTS, carriesSerial, SerialReading, serialOf and serialPlants, and A3's segment
+ * and serial plants messages name the planted forms; every other form stays NOT CLAIMED. No reader changes:
+ * violations(), answers(), serialOf() and carriesSerial() are byte-unchanged; the frozen literal gains the four
+ * segment plants and the four pages, and the roster's A3 witness gains their measured readings. Display paths added:
+ * none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -776,7 +802,7 @@ function recordReading(entry: Fixture, size: number, order: readonly number[] = 
 }
 /** The positions of a call's four requests, one per can_execute relation of the snapshot (the outside anchors hold the count). */
 const POSITIONS = ["first", "second", "third", "last"] as const;
-/** The invocationIds A3 reads carriesSerial on, with serial 87, by what each holds (wb-5omz cut #3's four, then wb-kbh1 cut #3's four). */
+/** The invocationIds A3 reads carriesSerial on, with serial 87, by what each holds (wb-5omz cut #3's four, then wb-kbh1 cut #3's four, then wb-vuoz's four: the serial where the gate's drive pages D03, D04 and D05 spell the other call's, the last and the first of seven segments and the fifth of eight, and as a segment's leading part, D06's form). */
 const SEGMENT_PLANTS: Readonly<Record<string, string>> = {
   "its own segment": "inv-F1-87-exec-a1-t1",
   "a longer number": "inv-F1-870-exec-a1-t1",
@@ -786,19 +812,23 @@ const SEGMENT_PLANTS: Readonly<Record<string, string>> = {
   "the last segment": "inv-F1-exec-a1-t1-87",
   "beside another serial": "inv-F1-86-87-exec-a1-t1",
   "with a leading zero": "inv-F1-087-exec-a1-t1",
+  "the last of seven segments": "inv-F1-86-exec-a1-t1-87",
+  "the first of seven segments": "87-F1-86-x-exec-a1-t1",
+  "the fifth of eight segments": "inv-F1-86-x-87-exec-a1-t1",
+  "a segment's leading part": "inv-F1-87x-exec-a1-t1",
 };
-/** Whether an invocationId carries a serial as one whole dash-separated segment: claimed only in the forms A3's eight segment plants and its serial plants spell (the drives' own requestFor form among them; the header's NOT CLAIMED names the rest, wb-vuoz's). */
+/** Whether an invocationId carries a serial as one whole dash-separated segment: claimed only in the forms A3's twelve segment plants and its serial plants spell (the drives' own requestFor form and the forms of the gate's drive pages D01-D06 among them, D03-D06 wb-vuoz's; the header's NOT CLAIMED names the rest). */
 const carriesSerial = (invocationId: string, serial: number): boolean => invocationId.split("-").includes(String(serial));
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type SerialReading = {
-  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's (A3's serial plants hold each kind of request at each position of either call, wb-kbh1 cut #3; claimed in the planted forms only, the header's NOT CLAIMED names the rest). */
+  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's (A3's serial plants hold each kind of request at each position of either call, wb-kbh1 cut #3, and the gate's drive pages D03-D06 at every position, wb-vuoz; claimed in the planted forms only, the header's NOT CLAIMED names the rest). */
   readonly carried: readonly (readonly boolean[])[];
   /** The invocationIds both calls issued, in the first call's order (A3's serial plants hold one at each position, wb-kbh1 cut #3; claimed in the planted forms only). */
   readonly shared: readonly string[];
   /** The names the two calls' invocationIds carry as their second dash-separated segment (a drive's fixture id), once each, in the order first named (A3's serial plants hold one at each position of either call, wb-kbh1 cut #3). */
   readonly named: readonly string[];
 };
-/** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2, in the forms its serial plants pin, cut #3; the header's NOT CLAIMED names the rest). */
+/** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2, in the forms its serial plants pin, cut #3, D03's to D06's pages among them, wb-vuoz; the header's NOT CLAIMED names the rest). */
 function serialOf(returned: readonly (readonly { readonly invocationId: string }[])[], serials: readonly number[]): SerialReading {
   const carried = returned.map((requests, index) =>
     requests.map(request => carriesSerial(request.invocationId, serials[index] ?? 0) && !carriesSerial(request.invocationId, serials[1 - index] ?? 0)),
@@ -883,7 +913,7 @@ function kindSerials(kind: SerialKind, serial: number, otherSerial: number): num
   if (kind === "both") return [serial, otherSerial];
   return [serial + 1000];
 }
-/** A3's planted call pairs beside plantedSerial (wb-kbh1 cut #3): two calls of four requests each over the snapshot's candidates in its order, serials PLANTED_SERIALS, each with the reading the serial reading must give it. */
+/** A3's planted call pairs beside plantedSerial (wb-kbh1 cut #3): two calls of four requests each over the snapshot's candidates in its order, serials PLANTED_SERIALS, each with the reading the serial reading must give it; wb-vuoz adds the gate's drive pages D03-D06, every request respelled as each respells it (its serial third and the next serial as the seventh and last of seven segments, as the first of seven or as the fifth of eight; the serial only as the third segment's leading part, before an x). */
 function serialPlants(candidates: readonly string[]): Record<string, { readonly returned: string[][]; readonly reading: SerialReading }> {
   const [first, second] = PLANTED_SERIALS;
   const serialsOf = (call: number): readonly [number, number] => (call === 0 ? [first, second] : [second, first]);
@@ -910,6 +940,10 @@ function serialPlants(candidates: readonly string[]): Record<string, { readonly 
     ...Object.fromEntries(rotations),
     "D01's page": { returned: page((serial, candidate) => plantedId("F1", [serial, serial + 1], candidate)), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
     "D02's page": { returned: page((serial, candidate) => plantedId("F1", [serial + 1000], candidate)), reading: { carried: [everyPosition(false), everyPosition(false)], shared: [], named: ["F1"] } },
+    "D03's page": { returned: page((serial, candidate) => `inv-F1-${serial}-${candidate}-${serial + 1}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D04's page": { returned: page((serial, candidate) => `${serial + 1}-F1-${serial}-x-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D05's page": { returned: page((serial, candidate) => `inv-F1-${serial}-x-${serial + 1}-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D06's page": { returned: page((serial, candidate) => `inv-F1-${serial}x-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(false)], shared: [], named: ["F1"] } },
     "four ids both calls were returned": { returned: [both, [...both].reverse()], reading: { carried: [everyPosition(false), everyPosition(false)], shared: both, named: ["F1"] } },
     "an id one call was returned twice": { returned: [[twice, twice, ...rest.slice(0, 2)], callOf(1, owned)], reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: ["F1"] } },
     "a name at each position": { returned: names.map((row, call) => callOf(call, owned, row)), reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: names.flat() } },
@@ -1516,7 +1550,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       Object.fromEntries(FIXTURES.map(entry => [entry.id, { carried: [everyPosition, everyPosition], shared: [], named: [entry.id] }])),
     );
     const segments = Object.fromEntries(Object.entries(SEGMENT_PLANTS).map(([label, invocationId]) => [label, carriesSerial(invocationId, 87)]));
-    expect(segments, "on the eight planted invocationIds (serial 87), the serial as the whole first, third or last segment of a six-segment id, or as the whole fourth of seven beside 86, reads carried; 870, 8, x87 and 087 as the third of six read not carried (every other form is NOT CLAIMED)").toEqual({
+    expect(segments, "on the twelve planted invocationIds (serial 87), the serial as the whole first, third or last segment of a six-segment id, as the whole fourth of seven beside 86, as the whole last or the whole first of seven, or as the whole fifth of eight, reads carried; 870, 8, x87, 087 and 87x as the third of six read not carried (every other form is NOT CLAIMED)").toEqual({
       "its own segment": true,
       "a longer number": false,
       "a shorter number": false,
@@ -1525,6 +1559,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "the last segment": true,
       "beside another serial": true,
       "with a leading zero": false,
+      "the last of seven segments": true,
+      "the first of seven segments": true,
+      "the fifth of eight segments": true,
+      "a segment's leading part": false,
     });
     const replays = replayReading();
     expect(replays, "a permit minted for the request at any of the four positions of one call answers that request and meets every check there, and handed to the seam on the next call answers none and fails effect-unrequested alone").toEqual({
@@ -2047,7 +2085,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const serialPlanted = Object.fromEntries(
       Object.entries(plants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), PLANTED_SERIALS) }]),
     );
-    expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests in plantedId's form (serials 7 then 8), a request at any position of either call reads carried when its third segment is that call's serial, alone or before 9 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000 (neither, D02's page), or its third and fourth segments are the two calls' serials, in either order (both, D01's page, the ids both calls were returned); each planted id both calls were returned, at any positions, reads shared, in the first call's order, and an id only one call was returned, twice, does not; each name the planted ids carry as their second segment, at any position of either call, reads named once, in the order first named").toEqual(
+    expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests in plantedId's form or in a drive page's (serials 7 then 8), a request at any position of either call reads carried when its third segment is that call's serial, alone or before 9 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000 (neither, D02's page), or its third and fourth segments are the two calls' serials, in either order (both, D01's page, the ids both calls were returned); on D03's to D06's pages (wb-vuoz), a request carrying its call's serial third reads carried when the next serial it carries as the last of seven segments (D03's), the first of seven (D04's) or the fifth of eight (D05's) is not the other call's (the second call) and not carried when it is (the first call), and a request carrying its serial only as the third segment's leading part reads not carried in either call (D06's); each planted id both calls were returned, at any positions, reads shared, in the first call's order, and an id only one call was returned, twice, does not; each name the planted ids carry as their second segment, at any position of either call, reads named once, in the order first named").toEqual(
       Object.fromEntries(Object.entries(plants).map(([label, { returned, reading }]) => [label, { returned, ...reading }])),
     );
     const formCandidates = (order: readonly number[]): string[] => order.flatMap(index => candidates.slice(index, index + 1));
@@ -2377,6 +2415,10 @@ describe(SUITE, () => {
       "the kinds from neither",
       "D01's page",
       "D02's page",
+      "D03's page",
+      "D04's page",
+      "D05's page",
+      "D06's page",
       "four ids both calls were returned",
       "an id one call was returned twice",
       "a name at each position",
@@ -2390,6 +2432,10 @@ describe(SUITE, () => {
       "the last segment:inv-F1-exec-a1-t1-87",
       "beside another serial:inv-F1-86-87-exec-a1-t1",
       "with a leading zero:inv-F1-087-exec-a1-t1",
+      "the last of seven segments:inv-F1-86-exec-a1-t1-87",
+      "the first of seven segments:87-F1-86-x-exec-a1-t1",
+      "the fifth of eight segments:inv-F1-86-x-87-exec-a1-t1",
+      "a segment's leading part:inv-F1-87x-exec-a1-t1",
     ]);
     expect(Object.entries(DERIVED_STRANGERS).map(([label, { member }]) => `${label}:${member}`)).toEqual(["the principal's role dropped:principal", "requested later:requestedAt"]);
     expect(Object.keys(MUTANTS)).toEqual([
