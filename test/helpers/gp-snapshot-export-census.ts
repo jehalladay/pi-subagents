@@ -19,8 +19,12 @@
  * (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's liveness from the
  * member's parse, where a comment is trivia and a string's content is no code, and of whose literal tokens only the
  * double-quoted strings compose (COMPOSE_PLANTS); wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757) pins the code
- * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from a type
- * literal's members or a destructuring's bindings (SHAPE_QUIET).
+ * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from SHAPE_QUIET's
+ * plants, which wb-oddy (the R694 follow-up from wb-4z24's landing 791) holds at five places, one plant per place, each
+ * answering the shape-reader survivor the R694 row that filed it names in the tracker export (quietSurvivorsOf); wb-rzqi (the R694
+ * follow-up from wb-oddy's landing 830) tries each of quietSurvivorsOf's rules on a line of QUIET_CONTROL of its own, the lines
+ * answering the members its own row names before its first Context: line (controlMembersOf, QUIET_CONTROL_ANSWERS), and holds
+ * QUIET_BEADS to the R694 follow-up chain that row's title closes.
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2871,7 +2875,7 @@ const eachNode = (node: ts.Node, visit: (node: ts.Node) => void): void => {
   visit(node);
   ts.forEachChild(node, child => eachNode(child, visit));
 };
-/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the identifier names of the properties the member's object literals assign that are keys of the given document, each once in order (no type literal's member and no destructuring's binding: SHAPE_QUIET); kind is a TSX control's (PARSE_PLANTS). */
+/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the identifier names of the properties the member's object literals assign that are keys of the given document, each once in order (no name SHAPE_QUIET's plants hold at their five places: SHAPE_QUIET); kind is a TSX control's (PARSE_PLANTS). */
 export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>, kind?: ts.ScriptKind): string[] => {
   const named: string[] = [];
   eachNode(memberCode(text, kind), node => {
@@ -2962,7 +2966,8 @@ export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: stri
 ];
 
 // ---- wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757): the code reader's parse kind pinned on each reader itself (F1)
-// and the shape reader's quiet type-literal members and destructuring bindings (F2) ----
+// and the shape reader's quiet plants (F2), one per place since wb-oddy (the R694 follow-up from its landing 791: F1, F2, F4),
+// and the survivor reader's rules each on a control line of its own since wb-rzqi (the R694 follow-up from wb-oddy's landing 830) ----
 
 /**
  * PARSE_PLANTS (wb-4z24's F1): one module per live kind of the residual source members, each read by that kind's code reader
@@ -2975,24 +2980,172 @@ export const PARSE_PLANTS: readonly { readonly id: string; readonly live: Source
   { id: "type-assertion-composed", live: "composed", text: 'export const label = <string>"Graph" + "Policy";\n' },
   { id: "type-assertion-shape", live: "shape", text: 'export const shape = <unknown>{ schema_ref: { namespace: "x" }, entities: [], relations: [] };\n' },
 ];
+/** The node kinds a SHAPE_QUIET plant holds names in: a type's members (PropertySignature names; a type, where no code runs) and an object binding pattern's bindings (BindingElement names). */
+export const QUIET_KINDS = ["PropertySignature", "BindingElement"] as const;
+export type QuietKind = (typeof QUIET_KINDS)[number];
+/** A SHAPE_QUIET plant: its id, the node kind it holds names in, its place (the syntax kind quietPlacesOf reads for its first held name), the survivor it answers (the R694 row that filed it and the name that row gives the survivor) and its module text. */
+export interface QuietPlant {
+  readonly id: string;
+  readonly holds: QuietKind;
+  readonly place: keyof typeof ts.SyntaxKind;
+  readonly answers: FailClosedAnchor;
+  readonly text: string;
+}
 /**
- * SHAPE_QUIET (wb-4z24's F2): keys of the vendored v1 document written where no object literal assigns them, one plant per
- * node kind: a type literal's members (PropertySignature names; a type, where no code runs) and a destructuring's bindings
- * (BindingElement names). Each plant holds names of its node kind (heldNamesOf) that are keys of the document, and the code
- * reader reads no key from either.
+ * The R694 rows that filed SHAPE_QUIET's plants, in filing order: wb-4z24 (landing 757's carried F2) and wb-oddy (landing 791's
+ * carried F1). With wb-0lf.8 before them and the control's row (QUIET_CONTROL_BEAD) after them they are an R694 follow-up chain
+ * in the tracker export: each row's title opens "R694 follow-up from ", the row before it and " landing " (wb-rzqi's F2).
  */
-export const SHAPE_QUIET: readonly { readonly id: string; readonly holds: "PropertySignature" | "BindingElement"; readonly text: string }[] = [
-  { id: "type-literal", holds: "PropertySignature", text: "export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\n" },
-  { id: "destructuring", holds: "BindingElement", text: "export const keysOf = (input: Record<string, unknown>): unknown[] => {\n  const { schema_ref, entities, relations } = input;\n  return [schema_ref, entities, relations];\n};\n" },
+export const QUIET_BEADS: readonly string[] = ["wb-4z24", "wb-oddy"];
+/**
+ * The lines of the tracker export text that hold a bead's "id" key, in order, joined by newlines: a grep by indexOf, so the
+ * full-surface row reads QUIET_BEADS' rows without splitting the whole export again (beadRow picks the bead's own row among
+ * them).
+ */
+export function exportLinesOf(exportText: string, bead: string): string {
+  const needle = `"id":"${bead}"`;
+  const lines: string[] = [];
+  for (let at = exportText.indexOf(needle); at !== -1; ) {
+    const end = exportText.indexOf("\n", at);
+    const stop = end === -1 ? exportText.length : end;
+    lines.push(exportText.slice(exportText.lastIndexOf("\n", at) + 1, stop));
+    at = exportText.indexOf(needle, stop);
+  }
+  return lines.join("\n");
+}
+/**
+ * SHAPE_QUIET (wb-4z24's F2; wb-oddy's F1, F2 and F4): keys of the vendored v1 document written where no object literal assigns
+ * them, one plant per place, five places: PropertySignature names of a type alias's type literal, of a type literal that is a
+ * type reference's argument and of an interface's members, and BindingElement names of a variable declaration's and of a
+ * parameter's object binding pattern. Each plant answers the shape-reader survivor its R694 row names in the tracker export
+ * (quietSurvivorsOf: wb-4z24's two, wb-oddy's G-P1 to G-P3) and holds the node kind that row names for it; each holds names
+ * of its node kind only (heldNamesOf), every one a key of the document, its first one at its own place (quietPlacesOf); and the
+ * code reader reads no key from any of the five.
+ */
+export const SHAPE_QUIET: readonly QuietPlant[] = [
+  { id: "type-literal", holds: "PropertySignature", place: "TypeAliasDeclaration", answers: { bead: "wb-4z24", name: "GP20-U5-CSK-READS-TYPE-MEMBERS" }, text: "export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\n" },
+  { id: "destructuring", holds: "BindingElement", place: "VariableDeclaration", answers: { bead: "wb-4z24", name: "GP20-U5-CSK-READS-BINDINGS" }, text: "export const keysOf = (input: Record<string, unknown>): unknown[] => {\n  const { schema_ref, entities, relations } = input;\n  return [schema_ref, entities, relations];\n};\n" },
+  { id: "parameter-destructuring", holds: "BindingElement", place: "Parameter", answers: { bead: "wb-oddy", name: "G-P1" }, text: "export const keysOf = ({ schema_ref, entities, relations }: Record<string, unknown>): unknown[] => [schema_ref, entities, relations];\n" },
+  { id: "type-argument", holds: "PropertySignature", place: "TypeReference", answers: { bead: "wb-oddy", name: "G-P2" }, text: "export type Snapshot = Readonly<{ schema_ref: { namespace: string }; entities: unknown[]; relations: [] }>;\n" },
+  { id: "interface", holds: "PropertySignature", place: "InterfaceDeclaration", answers: { bead: "wb-oddy", name: "G-P3" }, text: "export interface Snapshot {\n  schema_ref: { namespace: string };\n  entities: unknown[];\n  relations: [];\n}\n" },
 ];
 /** The identifier names a SHAPE_QUIET plant holds in its node kind (PropertySignature or BindingElement), in source order, as the code reader's parse holds them. */
-export const heldNamesOf = (plant: (typeof SHAPE_QUIET)[number]): string[] => {
+export const heldNamesOf = (plant: QuietPlant): string[] => {
   const names: string[] = [];
   eachNode(memberCode(plant.text), node => {
     if ((ts.isPropertySignature(node) || ts.isBindingElement(node)) && node.kind === ts.SyntaxKind[plant.holds] && ts.isIdentifier(node.name)) names.push(node.name.text);
   });
   return names;
 };
+/**
+ * The places a SHAPE_QUIET plant holds its names at, one per held name in heldNamesOf's order, by syntax kind name: the node
+ * holding the type literal or object binding pattern the name is written in, or the interface holding it as a member. A
+ * plant's place is its first name's.
+ */
+export const quietPlacesOf = (plant: QuietPlant): string[] => {
+  const places: string[] = [];
+  eachNode(memberCode(plant.text), node => {
+    if (!(ts.isPropertySignature(node) || ts.isBindingElement(node)) || node.kind !== ts.SyntaxKind[plant.holds] || !ts.isIdentifier(node.name)) return;
+    places.push(ts.SyntaxKind[(ts.isInterfaceDeclaration(node.parent) ? node.parent : node.parent.parent).kind]);
+  });
+  return places;
+};
+/**
+ * A gate survivor's name as an R694 filing note's carried lines write it, a whole word: G or GP<n> (GP and one or more digits),
+ * a hyphen, then capitals and digits in hyphen-joined parts (G-P1, GP20-U5-CSK-READS-BINDINGS). QUIET_CONTROL's name-shape line
+ * writes five words that are no survivor name, each followed by a kind: N-C10 (another capital than G), GP-C11 (GP with no
+ * digit), G-c12 (a small letter), XG-C13 and G-C14x (a name inside a longer word).
+ */
+const SURVIVOR_NAME = /\bG(?:P\d+)?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
+/**
+ * The shape-reader survivors an R694 filing note's carried finding lines name, each with the node kind it makes the code reader
+ * read, by six rules, each tried on a line of QUIET_CONTROL of its own: (1) a line is read only when it starts with "[leads] - "
+ * or "[rides] - ", never a line of another role, though it quote one of them (G-C5, G-C15); (2) reading stops at the note's
+ * first line that starts with "Context: " (so its not-carried lines and every later note are never read), and a "Context: "
+ * written inside a line stops nothing (G-C6, G-C17); (3) a survivor name is SURVIVOR_NAME's (GP9-C4, the name-shape line); (4) a
+ * survivor's kind is the first QUIET_KINDS kind written after its first mention on the line, inside a longer word as well, and
+ * before the line's next mention of another survivor name, a mention of its own name ending nothing (G-C1, G-C2, G-C7, G-C16);
+ * (5) a survivor whose first mention on a line has no kind there is not read from that line, its later mentions on the line
+ * passed over, and a later line may read it (G-C8); (6) each survivor is read once, the first time a line reads it, in the
+ * order the lines read them (G-C1 again).
+ */
+export function quietSurvivorsOf(notes: string): { readonly name: string; readonly holds: QuietKind }[] {
+  const survivors: { readonly name: string; readonly holds: QuietKind }[] = [];
+  for (const line of notes.split("\n")) {
+    if (line.startsWith("Context: ")) break;
+    if (!line.startsWith("[leads] - ") && !line.startsWith("[rides] - ")) continue;
+    const mentions = [...line.matchAll(SURVIVOR_NAME)];
+    for (const [index, mention] of mentions.entries()) {
+      const name = mention[0];
+      if (mentions.findIndex(other => other[0] === name) !== index || survivors.some(entry => entry.name === name)) continue;
+      const after = line.slice(mention.index + name.length, mentions.slice(index + 1).find(other => other[0] !== name)?.index ?? line.length);
+      const holds = QUIET_KINDS.filter(kind => after.includes(kind)).sort((left, right) => after.indexOf(left) - after.indexOf(right))[0];
+      if (holds !== undefined) survivors.push({ name, holds });
+    }
+  }
+  return survivors;
+}
+/**
+ * quietSurvivorsOf's control (wb-oddy; wb-rzqi's F1 and F2): an R694-shaped note each of whose lines tries one of the reader's
+ * rules, read as quietSurvivorsOf's docstring says - a carried line whose first survivor has two kinds after its first mention
+ * (G-C1: the first written counts), whose second has none before the next survivor's mention (G-C2: no survivor) and whose
+ * third has one (G-C3); a [rides] line with a GP<n> survivor (GP9-C4) and a second mention of G-C1 (read once); a line of
+ * another role (G-C5: not read); a survivor named again before its kind (G-C7: read, its own mention ends nothing); a kindless
+ * first mention of G-C8 before G-C9's mention, with a later mention on the line that has a kind (G-C8 not read from that line,
+ * G-C9 read), and a later line that reads G-C8; the name-shape line, whose five words are no survivor name (SURVIVOR_NAME); a
+ * line of another role quoting "[rides] - " (G-C15: not read); a survivor whose first kind is written inside a longer word and
+ * before a second kind (G-C16: BindingElement); a carried line with "Context: " inside it (G-C17: read); the note's first
+ * "Context: " line; a carried line after it (G-C6: not read); and a second "Context: " line. QUIET_CONTROL_ANSWERS ties these
+ * lines to the members the control's row names.
+ */
+export const QUIET_CONTROL = [
+  "[leads] - G-C1 (BindingElement names, then PropertySignature names) and G-C2, a parse survivor; G-C3 reads PropertySignature names.",
+  "[rides] - GP9-C4 reads PropertySignature names; G-C1 reads BindingElement names again.",
+  "[owner-routed: OWNER WEIGH-IN] - G-C5 reads BindingElement names.",
+  "[leads] - G-C7 (G-C7 is named again before its kind) reads BindingElement names.",
+  "[rides] - G-C8, then G-C9 reads PropertySignature names; G-C8 reads BindingElement names.",
+  "[leads] - G-C8 reads PropertySignature names on a later line.",
+  "[rides] - N-C10 reads BindingElement names; GP-C11 reads PropertySignature names; G-c12 reads BindingElement names; XG-C13 reads PropertySignature names; G-C14x reads BindingElement names.",
+  "[not carried: INFO] - this line quotes '[rides] - G-C15 reads PropertySignature names.'",
+  "[rides] - G-C16 reads BindingElements' names, not PropertySignature names.",
+  "[leads] - G-C17 reads BindingElement names (a Context: written mid-line).",
+  "Context: the control's end.",
+  "[leads] - G-C6 reads PropertySignature names.",
+  "Context: the control's second Context: line.",
+].join("\n");
+/** The R694 row that filed the reader mutants and control members QUIET_CONTROL answers: wb-rzqi, the R694 follow-up from wb-oddy's landing 830 (its carried F1 and F2 lines). */
+export const QUIET_CONTROL_BEAD = "wb-rzqi";
+/**
+ * The control members an R694 filing note names before its first line that starts with "Context: ": the gate's reader mutants
+ * of quietSurvivorsOf as wb-rzqi's lines write them (G2-QS-... and F-QS-..., capitals and digits in hyphen-joined parts) and the
+ * control survivors it names (G-C<n>), each once, in the note's order. Its reading is pinned on QUIET_CONTROL_BEAD's row only.
+ */
+export function controlMembersOf(notes: string): string[] {
+  const cut = notes.search(/^Context: /m);
+  const names: string[] = [];
+  for (const match of notes.slice(0, cut === -1 ? notes.length : cut).matchAll(/\b(?:G\d+-QS|F-QS)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b|\bG-C\d+\b/g)) if (!names.includes(match[0])) names.push(match[0]);
+  return names;
+}
+/**
+ * The QUIET_CONTROL word that answers each member the control's row names (controlMembersOf over QUIET_CONTROL_BEAD's row), in
+ * the row's order: each reader mutant of wb-rzqi's F1 line by a word written only on the line that tries the rule it breaks
+ * (that line's survivor, or N-C10 on the name-shape line, whose words are no survivor name), a control survivor of its F2 line
+ * by itself, and the two kind-order mutants its F2 line names by G-C16, the control's second survivor with two kinds after its
+ * first mention (F2: G-C1's second kind was their only exemplar).
+ */
+export const QUIET_CONTROL_ANSWERS: readonly { readonly name: string; readonly survivor: string }[] = [
+  { name: "G2-QS-SAME-NAME-BOUND", survivor: "G-C7" },
+  { name: "G2-QS-REMENTION-FALLBACK", survivor: "G-C9" },
+  { name: "G2-QS-CONTEXT-ANYWHERE", survivor: "G-C17" },
+  { name: "G2-QS-ROLE-ANYWHERE", survivor: "G-C15" },
+  { name: "G2-QS-NAME-LOOSE", survivor: "N-C10" },
+  { name: "G-C5", survivor: "G-C5" },
+  { name: "G-C6", survivor: "G-C6" },
+  { name: "G-C2", survivor: "G-C2" },
+  { name: "G-C1", survivor: "G-C1" },
+  { name: "F-QS-LAST-KIND", survivor: "G-C16" },
+  { name: "F-QS-ENUM-ORDER", survivor: "G-C16" },
+];
 
 // ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
 

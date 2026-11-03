@@ -1,68 +1,62 @@
 /**
- * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the Deno identity reading of the rf-preview-tsx tier's success row, and the Deno
- * install-shape matcher of the provisioning census (test/workbench-rf-tsx-deno-provisioning.test.ts).
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the Deno identity reading that wb-70xe wires into the rf-preview-tsx tier's success
+ * row, and the Deno install-shape matcher of wb-70xe's lane census. The code below is wb-70xe's cut #4 (cb85b5c8) unchanged; its
+ * carrier child wb-j4sm (the rule-19 structural exit of wb-70xe, orchestrator rulings R-B292 and R-B307) lands it first, and
+ * wb-70xe's re-cut composes it when it lands. WHAT IS CLAIMED about these readers is stated by the censuses that read them and never
+ * here: test/workbench-rf-tsx-deno-identity-census.test.ts claims, reader by reader, exactly the readings its plants hold. The
+ * comments in this file describe what the code does, rule by rule; they claim no coverage of their own, and an input no census plant
+ * holds is not claimed by them.
  *
- * Authority: RFCLI ruling A4, as the owner filing on the bead quotes it (IMPLEMENTATION_AND_QA.md:149@82bd879eee52, not
- * re-read here): "Deno is pinned to the exact version recorded in integrations/tsx/runtime-lock.json and provisioned per host
- * into a versioned tool directory by the operator, never installed by a lane". At render time rf resolves its engine by name
- * on PATH and nothing else: runtime.tsx_engine.resolve_engine (read in the installed rf 0.1.875) is shutil.which over the
- * PATH the provider hands it, from the working directory Pi's own process holds (the provider spawns rf without a cwd), and
- * its docstring states that "A version manager's shim on PATH is answered as the shim"; the same module's docstring records
- * that a mise shim run for a pinned but uninstalled engine downloads one over the network (rfc-3fhh4.28).
+ * Authority: RFCLI ruling A4, as the owner filing on wb-70xe quotes it (IMPLEMENTATION_AND_QA.md:149@82bd879eee52, not re-read
+ * here): "Deno is pinned to the exact version recorded in integrations/tsx/runtime-lock.json and provisioned per host into a
+ * versioned tool directory by the operator, never installed by a lane". At render time rf resolves its engine by name on PATH and
+ * nothing else: runtime.tsx_engine.resolve_engine (read in the installed rf 0.1.875) is shutil.which over the PATH the provider
+ * hands it, from the working directory Pi's own process holds (the provider spawns rf without a cwd), and its docstring states that
+ * "A version manager's shim on PATH is answered as the shim"; the same module's docstring records that a mise shim run for a pinned
+ * but uninstalled engine downloads one over the network (rfc-3fhh4.28).
  *
- * So this reading never executes the resolved file, and it reads no rf install layout: it reads the head of the file (for
- * the #! mark) and its sha256. RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME hashes the binary it resolves the same way
- * (rf 0.1.875, application/doctor.py _sha256_of, in 1 MiB reads, whose docstring says "Never executes the file."), but
- * unlike this reading the doctor's preflight (runtime.tsx_engine.preflight_engine, rfc-2s2o2.27) also asks a manager shim
- * for its concrete binary and runs one bounded version probe on that binary; this reading runs neither. The pin is the one the
- * render itself reports: provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock
- * (definitions.tsx_pins.engine_version_entries, rf 0.1.875: distribution_version is the lock's exact engine version,
- * contract_fingerprint is "sha256:" and the binary digest the lock pins for the host's target triple, or "unknown" when it
- * pins none). The test modules that use
- * it launch no engine: the worker-lifecycle census (wb-csbt.3, wb-jdpn) pins that no test module launches one.
+ * So this reading never executes the resolved file, and it reads no rf install layout: it reads the head of the file (for the #!
+ * mark) and its sha256. RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME hashes the binary it resolves the same way (rf 0.1.875,
+ * application/doctor.py _sha256_of, in 1 MiB reads, whose docstring says "Never executes the file."), but unlike this reading the
+ * doctor's preflight (runtime.tsx_engine.preflight_engine, rfc-2s2o2.27) also asks a manager shim for its concrete binary and runs
+ * one bounded version probe on that binary; this reading runs neither. The pin is the one the render itself reports:
+ * provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock (definitions.tsx_pins.engine_version_entries, rf
+ * 0.1.875: distribution_version is the lock's exact engine version, contract_fingerprint is "sha256:" and the binary digest the lock
+ * pins for the host's target triple, or "unknown" when it pins none). The test modules that use it launch no engine: the
+ * worker-lifecycle census (wb-csbt.3, wb-jdpn) pins that no test module launches one.
  *
- * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the
- * digest check runs once the render has reported the pin:
- *  - provisionedDeno(PATH): the engine rf will resolve; refuses rf_tsx_deno_unresolved when none resolves and
- *    rf_tsx_deno_shim when the resolved file carries one of three version-manager shim marks, each claimed over the members
- *    its tests pin (test/workbench-rf-tsx-deno-provisioning.test.ts and the tier's DENO_IDENTITY_SUITE cases): its
- *    realpath's file name is another name than deno (pinned: mise, deno-shim, Deno, DENO, mise-deno, xdeno and dino), a
- *    directory named shims is the file's parent or the directory two levels above it, on its resolved path or on its
- *    realpath (pinned: manager/shims/deno and manager/shims/bin/deno; a directory named Shims, shim, myshims or shims2 is
- *    not the mark), or the file is a #!/bin/sh script (pinned; a first byte # without a ! after it is not the mark);
- *  - pinnedDenoDigest(engine, fingerprint): refuses rf_tsx_deno_unpinned when the render reports no sha256 pin for the host
- *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it (pinned: the pin f*64, and pins one hex off
- *    the measured digest only in its first, its 33rd or its last hex); returns the measured "sha256:<hex>".
- * A resolved file either half cannot read is refused rf_tsx_deno_unreadable. Every refusal is a DenoIdentityRefusal whose
- * message starts with its reason: a typed failure, never a skip.
+ * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the digest
+ * check runs once the render has reported the pin:
+ *  - provisionedDeno(PATH): the engine rf will resolve (resolveOnPath), refused rf_tsx_deno_unresolved when none resolves and
+ *    rf_tsx_deno_shim when shimReasons names one or more of three version-manager shim marks on it: its realpath's file name is
+ *    not deno (compared with !==), a path segment of its resolved path or of its realpath is shims (compared with ===), or the
+ *    first two bytes of its realpath read #!;
+ *  - pinnedDenoDigest(engine, fingerprint): refused rf_tsx_deno_unpinned when the render reports no sha256 pin for the host and
+ *    rf_tsx_deno_mismatch when the resolved file's sha256 differs from it; returns the measured "sha256:<hex>".
+ * A resolved file either half cannot read is refused rf_tsx_deno_unreadable. Every refusal is a DenoIdentityRefusal whose message
+ * starts with its reason: a typed failure, never a skip. A version manager's binary copied or hard-linked under the engine's own
+ * name outside a shims directory carries none of the three marks, so the pre-render half passes it and the digest half then
+ * refuses it (rf_tsx_deno_mismatch, its sha256 is not the pin), after rf has run it.
  *
- * NOT CLAIMED (scope; the forms named here are deferred to wb-j4sm, the rule-19 structural exit child of this bead, ruling
- * R-B292): a #! script whose third byte is not / (one that opens with #! and a space, or with #! and a relative
- * interpreter), a shims directory more than two levels above the file, a manager name that differs from deno only by an
- * extension (such as deno.exe) or by surrounding whitespace, the shim reason's echo of a realpath name that is not
- * printable ASCII (no pinned manager name holds one), the order and the joining of two or more shim reasons (no pinned case
- * carries two), and any other shim mark form, manager name, shims position or digest position outside the pinned members.
+ * The lane half: DENO_INSTALL_SHAPES, six closed families of install command, each tested by denoInstallScan against every line of
+ * a text. wb-70xe's lane census walks the lane trees with it, holds each shape to its planted controls and reads the list below as
+ * the anchor of its residual rows. NAMED RESIDUALS, the install forms no shape reads, as wb-70xe's lane census names them (its quiet
+ * rows pin them there; this file pins none): R-MIRROR, an engine archive or installer script fetched from a host no shape names;
+ * R-COMPOSED, an install command assembled from parts at run time, which no source line spells; R-UNNAMED-MANAGER, an install
+ * through a version or package manager no shape names; R-UNNAMED-VERB, an install through a named manager by a verb, subcommand or
+ * runner its shape does not spell; R-DECLARED-TOOL, the engine declared in a version manager's tool file, which a bare install verb
+ * then installs; R-IMAGE-FORM, the engine image used by a form the image shape does not spell (a flag before the image, a container
+ * key, a docker command, a copy from the image); R-THIRD-PARTY-ACTION, a CI setup action from another owner; R-RELEASE-API, the
+ * release metadata read through the forge's REST API; R-SPLIT-LINE, an install command continued over several lines, which a
+ * per-line read never sees whole.
  *
- * NAMED RESIDUAL R-COPIED-MANAGER: the pre-render half recognizes a shim by those three marks only, so a version manager's
- * binary copied or hard-linked under the engine's own name outside a shims directory passes it; the digest half then refuses
- * it (rf_tsx_deno_mismatch, its sha256 is not the pin), after rf has run it. The provisioning test pins that quiet row.
- *
- * The lane census reads DENO_INSTALL_SHAPES, six closed families of install command, per line; the docs/workbench/07 Deno
- * sentence names the same six families, label for label. Each shape is held to the forms its planted controls spell (the
- * census's frozen per-shape count); a form no control spells is not claimed. NAMED RESIDUALS, the install forms no shape
- * reads, each with pinned quiet rows in the census: R-MIRROR, an engine archive or installer script fetched from a host no
- * shape names; R-COMPOSED, an install command assembled from parts at run time, which no source line spells (the census's
- * own planted controls are built so); R-UNNAMED-MANAGER, an install through a version or package manager no shape names;
- * R-UNNAMED-VERB, an install through a named manager by a verb, subcommand or runner its shape does not spell;
- * R-DECLARED-TOOL, the engine declared in a version manager's tool file, which a bare install verb then installs;
- * R-IMAGE-FORM, the engine image used by a form the image shape does not spell (a flag before the image, a container key,
- * a docker command, a copy from the image); R-THIRD-PARTY-ACTION, a CI setup action from another owner; R-RELEASE-API, the
- * release metadata read through the forge's REST API; R-SPLIT-LINE, an install command continued over several lines, which
- * a per-line read never sees whole.
+ * Display paths added: none. Test-only: nothing here executes, spawns or installs anything.
  */
 import { createHash } from "node:crypto";
 import { accessSync, closeSync, constants, openSync, readSync, realpathSync, statSync } from "node:fs";
 import { basename, delimiter, join, sep } from "node:path";
+
+// ---- the identity reading ----
 
 /** The engine command rf resolves (runtime.tsx_engine.ENGINE_COMMAND). */
 export const DENO_ENGINE = "deno";
@@ -78,16 +72,16 @@ export const DENO_REFUSAL = {
 export type DenoRefusalReason = (typeof DENO_REFUSAL)[keyof typeof DENO_REFUSAL];
 
 /**
- * The describe of the tier wiring cases in test/workbench-rf-tsx-tier.test.ts. The docs07 census's row R10 binds its
- * lock-pinned-engine half to exactly the cases the gate's own report collects under it.
+ * The describe wb-70xe registers its tier wiring cases under, in test/workbench-rf-tsx-tier.test.ts; wb-70xe's docs07 census row
+ * R10 binds its lock-pinned-engine half to the cases a report collects under it.
  */
 export const DENO_IDENTITY_SUITE = "rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe)";
 /**
- * The describe of the lane census cases in test/workbench-rf-tsx-deno-provisioning.test.ts. The docs07 census's row R10
- * binds its no-lane-install half to exactly the cases the gate's own report collects under it.
+ * The describe wb-70xe registers its lane census cases under, in test/workbench-rf-tsx-deno-provisioning.test.ts; wb-70xe's docs07
+ * census row R10 binds its no-lane-install half to the cases a report collects under it.
  */
 export const DENO_LANE_SUITE = "no Pi lane carries a Deno install command (wb-70xe)";
-/** The describes the wb-70xe cases are registered under, each with its file, in order; row R10 has one half per entry. */
+/** The describes wb-70xe registers its cases under, each with its file, in order; its row R10 has one half per entry. */
 export const DENO_CASE_SUITES: readonly { readonly suite: string; readonly file: string }[] = [
   { suite: DENO_IDENTITY_SUITE, file: "test/workbench-rf-tsx-tier.test.ts" },
   { suite: DENO_LANE_SUITE, file: "test/workbench-rf-tsx-deno-provisioning.test.ts" },
@@ -124,12 +118,11 @@ function echoToken(value: unknown): string {
 }
 
 /**
- * shutil.which(name) over `path`: the first entry, in order, where `name` is an existing non-directory file (symlinks
- * followed) the current user may execute. An empty entry inside `path` joins to a relative path, read from the working
- * directory, as it is for rf (NOT CLAIMED by a falsifier: the repository root, the tests' working directory, holds no deno,
- * so that read and a skipped entry read alike there). An empty `path` resolves nothing, as shutil.which answers None for
- * PATH "" (rf's Python 3.15, measured); an unset one resolves nothing too, since shutil.which would read the interpreter's
- * CS_PATH there, which this reading does not guess - so the engine is refused unresolved, never passed.
+ * Modelled on shutil.which(name) over `path`: each entry of `path`, in order, joined with `name`; the first join that statSync
+ * (symlinks followed) reads as no directory and that accessSync admits for execute (X_OK) is returned, and a join either call
+ * throws on is passed over. An empty entry joins to a relative path, read from the working directory, as it is for rf. An empty or
+ * unset `path` returns undefined at once (shutil.which answers None for PATH "", rf's Python 3.15, measured; for an unset one it
+ * would read the interpreter's CS_PATH, which this reading does not guess), so the engine is refused unresolved, never passed.
  */
 export function resolveOnPath(name: string, path: string | undefined): string | undefined {
   if (path === undefined || path === "") return undefined;
@@ -159,8 +152,8 @@ function startsWithScriptMagic(file: string): boolean {
 }
 
 /**
- * Why the resolved engine is a version-manager shim; empty when it is not one. How two or more reasons are ordered and joined
- * is NOT CLAIMED: no pinned case carries two.
+ * Why the resolved engine is a version-manager shim, one reason per mark it carries, in this order: the realpath's name, a shims
+ * segment on either path, the #! head; empty when it carries none.
  */
 export function shimReasons(engine: ResolvedDeno): string[] {
   const reasons: string[] = [];
@@ -199,6 +192,8 @@ export function provisionedDeno(path: string | undefined): ResolvedDeno {
   }
   return engine;
 }
+
+// ---- the digest half ----
 
 const CHUNK = 1 << 20;
 /** The sha256 hex of `file`, read in chunks; the file is never executed. */
@@ -239,15 +234,17 @@ export function pinnedDenoDigest(engine: ResolvedDeno, fingerprint: unknown): st
   return `sha256:${measured}`;
 }
 
-/** One closed family of Deno install commands the lane census reads (case-insensitive, per line). */
+// ---- the install-shape read ----
+
+/** One closed family of Deno install commands wb-70xe's lane census reads (case-insensitive, per line). */
 export interface DenoInstallShape {
   readonly id: string;
   readonly label: string;
   readonly source: string;
 }
 /**
- * The install shapes, in order. Each source is spelled so that this file's own text matches none of them (the census walks
- * this file and pins it quiet), and each has its planted positive controls in the census (its frozen per-shape count).
+ * The install shapes, in order. Each source is spelled so that this file's own text matches none of them (wb-70xe's lane census
+ * walks this file and holds it quiet); that census plants each shape's positive controls.
  */
 export const DENO_INSTALL_SHAPES: readonly DenoInstallShape[] = [
   { id: "I1", label: "the Deno installer script", source: String.raw`deno\.land/(?:x/)?install` },
@@ -283,10 +280,9 @@ export interface DenoInstallScan {
 }
 
 /**
- * The lines of `text`, each tested against the shapes: `lines` counts the lines this read iterated (so a read that stops
- * early counts fewer than the text holds), and `hits` is "<line>:<shape id>" in line order. Which lines reach the shapes is
- * claimed at the census's planted lines only (a line led by # is NOT CLAIMED, deferred to wb-j4sm), and so is a second hit
- * on a line that already holds one, which no planted line carries.
+ * The lines of `text` (split at "\n"), each tested against every shape: `lines` counts the lines this read iterated (so a read
+ * that stops early counts fewer than the text holds), and `hits` is "<line>:<shape id>" in line order, a line's shapes in
+ * DENO_INSTALL_SHAPES order.
  */
 export function denoInstallScan(text: string): DenoInstallScan {
   const patterns = DENO_INSTALL_SHAPES.map(shape => ({ id: shape.id, pattern: new RegExp(shape.source, "i") }));
