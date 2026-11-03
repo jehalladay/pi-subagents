@@ -294,7 +294,22 @@
       "qa/zz-boundary-kind-jsx.js": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
       "qa/zz-boundary-kind-jsx.mjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
       "qa/zz-boundary-kind-jsx.cjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
-      "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n"
+      "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n",
+      "src/workbench/zz-boundary-kind-instantiation.tsx": "export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = \"\\u004fbserverBoundaryV0\"; / 1 /;\n",
+      "src/workbench/zz-boundary-kind-instantiation.jsx": "export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = \"\\u004fbserverBoundaryV0\"; / 1 /;\n",
+      "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-regex.js": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-regex.mjs": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-regex.cjs": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-template.js": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "qa/zz-boundary-kind-template.mjs": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "qa/zz-boundary-kind-template.cjs": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "config/zz-boundary-x-digits.yaml": "record: \"The Furnace observer\\x20\\x21\\x22\\x23\\x24\\x25\\x26\\x27\\x28\\x29\\x2a\\x2b\\x2c\\x2d\\x2e\\x2f\\x2A\\x2B\\x2C\\x2D\\x2E\\x2Fboundary record.\"\n",
+      "config/zz-boundary-u-digits.yml": "record: \"The Furnace observer\\u0020\\u0021\\u0022\\u0023\\u0024\\u0025\\u0026\\u0027\\u0028\\u0029\\u002a\\u002b\\u002c\\u002d\\u002e\\u002f\\u002A\\u002B\\u002C\\u002D\\u002E\\u002Fboundary record.\"\n",
+      "config/zz-boundary-long-digits.toml": "record = \"The Furnace observer\\U00000020\\U00000021\\U00000022\\U00000023\\U00000024\\U00000025\\U00000026\\U00000027\\U00000028\\U00000029\\U0000002a\\U0000002b\\U0000002c\\U0000002d\\U0000002e\\U0000002f\\U0000002A\\U0000002B\\U0000002C\\U0000002D\\U0000002E\\U0000002Fboundary record.\"\n",
+      "docs/workbench/zz-boundary-hex-digits.md": "The Furnace observer&#x20;&#x21;&#x22;&#x23;&#x24;&#x25;&#x26;&#x27;&#x28;&#x29;&#x2a;&#x2b;&#x2c;&#x2d;&#x2e;&#x2f;&#x2A;&#x2B;&#x2C;&#x2D;&#x2E;&#x2F;boundary record.\n",
+      "src/workbench/zz-boundary-paren-trail.ts": "export const n = (\"\\u004fbserver\" + \"Boundary\") + part;\n",
+      "src/workbench/zz-boundary-paren-lead.ts": "export const n = part + (\"\\u004fbserver\" + \"Boundary\");\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4583,7 +4598,8 @@
               "liveness"
             ],
             "mentions": [
-              "piPlants"
+              "piPlants",
+              "decodings"
             ]
           },
           "witness": {
@@ -4783,7 +4799,94 @@
               ],
               "test/fixtures/zz-boundary-unparseable.json": [
                 "raw"
+              ],
+              "src/workbench/zz-boundary-kind-instantiation.tsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-instantiation.jsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.cjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.cjs": [
+                "cooked"
+              ],
+              "config/zz-boundary-x-digits.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-digits.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-digits.toml": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-hex-digits.md": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-paren-trail.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-boundary-paren-lead.ts": [
+                "folded"
               ]
+            },
+            "decodings": {
+              "markup": {
+                "&#0;&#xD800;&#x110000;&#128;&#129;&#146;&#x92;&#159;&#160;": [
+                  "\ufffd\ufffd\ufffd\u20ac\u0081\u2019\u2019\u0178\u00a0",
+                  "\u0000\ud800&#x110000;\u0080\u0081\u0092\u0092\u009f\u00a0"
+                ],
+                "&#136;&#146;&#x92;&#x110000;": [
+                  "\u02c6\u2019\u2019\ufffd",
+                  "\u0088\u0092\u0092&#x110000;"
+                ],
+                "&constructor;&toString;&hasOwnProperty;&AMP;": [
+                  "&constructor;&toString;&hasOwnProperty;&",
+                  "&constructor;&toString;&hasOwnProperty;&"
+                ],
+                "&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;": [
+                  "&<>\"'\u00a0|&<>\"'\u00a0",
+                  "&<>\"'\u00a0|&<>\"'\u00a0"
+                ],
+                "&#xDC00;&#xDFFF;&#x10FFFF;": [
+                  "\ufffd\ufffd\udbff\udfff",
+                  "\udc00\udfff\udbff\udfff"
+                ],
+                "&#xa;&#xaf;&#XAF;": [
+                  "\n\u00af\u00af",
+                  "\n\u00af\u00af"
+                ],
+                "&#x0000000;&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;"
+                ],
+                "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;"
+                ]
+              },
+              "escapes": {
+                "\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000": "\t\n\u000f\n\u000f|\t\n\u000f\n\u000f|\t\n\u000f\n\u000f|\udbff\udfff\\U00110000",
+                "\\x00\\x11\\x22\\x33\\x44\\x55\\x66\\x77\\x88\\x99\\xaa\\xbb\\xcc\\xdd\\xee\\xff\\xAA\\xBB\\xCC\\xDD\\xEE\\xFF": "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                "\\u0000\\u1111\\u2222\\u3333\\u4444\\u5555\\u6666\\u7777\\u8888\\u9999\\uaaaa\\ubbbb\\ucccc\\udddd\\ueeee\\uffff\\uAAAA\\uBBBB\\uCCCC\\uDDDD\\uEEEE\\uFFFF": "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff",
+                "\\U00000000\\U00011111\\U00022222\\U00033333\\U00044444\\U00055555\\U00066666\\U00077777\\U00088888\\U00099999\\U000aaaaa\\U000bbbbb\\U000ccccc\\U000ddddd\\U000eeeee\\U000fffff\\U000AAAAA\\U000BBBBB\\U000CCCCC\\U000DDDDD\\U000EEEEE\\U000FFFFF\\U00100000": "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\udbc0\udc00"
+              }
             }
           }
         },
@@ -4922,12 +5025,21 @@
           "claims": null,
           "witness": {
             "residual": "R-COMPUTED",
+            "plants": {
+              "substitution": "export const n = `Observer${part}Boundary`;\n",
+              "runtimeJoin": "export const n = [\"Obs\", \"erver\", \"Boundary\"].join(\"\");\n",
+              "charCode": "export const n = String.fromCharCode(79) + \"bserverBoundary\";\n",
+              "trailingComputed": "export const n = \"\\u004fbserver\" + \"Boundary\" + part;\n",
+              "leadingComputed": "export const n = part + \"\\u004fbserver\" + \"Boundary\";\n",
+              "middleComputed": "export const n = \"\\u004fbserver\" + part + \"Boundary\";\n"
+            },
             "quiet": {
               "substitution": true,
               "runtimeJoin": true,
               "charCode": true,
               "trailingComputed": true,
-              "leadingComputed": true
+              "leadingComputed": true,
+              "middleComputed": true
             }
           }
         },

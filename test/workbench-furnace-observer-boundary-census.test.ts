@@ -33,8 +33,9 @@
  * identifier spelled with an escape by its cooked name and each template part by its cooked text, a substitution ending
  * the part ("cooked"), and each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
  * file also by its parsed keys and string values ("cooked"; a file JSON.parse refuses yields no cooked unit); a markup file (.md .html .htm .xml .svg) also with its
- * numeric character references, each spelled with its semicolon and of up to eight decimal or seven hex digits (a
- * longer one is NOT CLAIMED either way; OVER-READS), decoded two ways - as the HTML standard decodes them
+ * numeric character references, each spelled with its semicolon and of up to eight decimal or seven hex digits (each
+ * hex digit any of 0-9 and a-f, in either case; a longer one is NOT CLAIMED either way; OVER-READS), decoded two ways -
+ * as the HTML standard decodes them
  * (numericReference: a code point of the standard's 0x80-0x9F table, NUMERIC_REFERENCES, to its Windows-1252 character, so
  * &#146; reads as U+2019; 0, a surrogate and a code point above 0x10FFFF to U+FFFD; any other to itself) and each to its
  * own code point (decodedCodePoints, the landed reading; one above 0x10FFFF left as written), a mention in either reading
@@ -42,11 +43,13 @@
  * with its semicolon, decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
  * also with its backslash escapes (U, u and x forms, hex digits in either case, every escape of the file; a U escape
  * above U+10FFFF left as written) decoded ("decoded"). These decoder claims - the markup and YAML/TOML file kinds, the
- * six names, the reference lengths, the hex digit range at its ends, the edges of both readings, the three escape
- * forms, each escape form's hex digits 0, 9, a, f, A and F, two escapes in one file and the U form's edge at U+10FFFF
- * and above it - are each pinned through THE JUDGE's own decoders, by the plants and W1 assertions THE JUDGE'S PINS
- * names (cuts #6 and #7) and by W1's cut #3 decoding assertions; the three parse modes and the refused .json are pinned
- * by THE JUDGE'S PINS' script-kind and JSON plants (cut #7). A
+ * six names, the reference lengths, every decimal digit and every hex digit (0-9 and a-f, in either case) of a markup
+ * reference in every place up to those lengths, the edges of both readings, the three escape forms, every hex digit of
+ * each escape form (0-9, a-f and A-F) in every place a code point up to U+10FFFF uses, two escapes in one file and the
+ * U form's edge at U+10FFFF and above it - are each pinned through THE JUDGE's own decoders, by the plants and W1
+ * assertions THE JUDGE'S PINS names (cuts #6, #7 and #8), by W1's cut #3 decoding assertions and by Z2's decodings
+ * (cut #8: each W1 decoding text with THE JUDGE's readings of it, and the digit-place texts); the three parse modes and the refused
+ * .json are pinned by THE JUDGE'S PINS' script-kind and JSON plants (cuts #7 and #8). A
  * file's forms are the readings that found a mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
  * forced empty reds.
@@ -63,10 +66,12 @@
  * case; the low surrogates U+DC00 and U+DFFF (U+FFFD in the standard's reading, themselves in the code-point reading)
  * and U+10FFFF (itself in both); and a one-digit hex reference and the hex digits a and f in either case.
  * Cut #7 (ruling R-B338, the same restatement with every header claim no wider than its pinned reader) adds 26 Z2
- * plants. For THE JUDGE's script reading, eight, one per script extension, each read in its own parse mode only (form:
- * cooked): a type assertion of an escape-spelled literal (<string>"\u004f...") in .ts, .mts and .cts, which a JSX
- * parse reads as JSX text, and JSX text holding "//" before an escape-spelled literal in .tsx, .jsx, .js, .mjs and
- * .cjs, which a TypeScript parse reads as a comment. For its JSON reading, one: a .json page JSON.parse refuses, whose
+ * plants. For THE JUDGE's script reading, eight, one per script extension (form: cooked): a type assertion of an
+ * escape-spelled literal (<string>"\u004f...") in .ts, .mts and .cts, which the TypeScript parse reads and a JSX parse
+ * reads as JSX text, and JSX text holding "//" before an escape-spelled literal in .tsx, .jsx, .js, .mjs and .cjs,
+ * which the TSX and JavaScript parses read and the TypeScript parse reads as a comment - so cut #7's plants tell the
+ * TypeScript parse from the JSX parses, not TSX from JavaScript (refusal #7 U1; cut #8's plants below do). For its
+ * JSON reading, one: a .json page JSON.parse refuses, whose
  * record is read raw only (form: raw). For THE JUDGE's decodedEscapes, 17 (each form: decoded): a .yaml page spelling the record through the second of two
  * x escapes (\x46 and \x4f); the record's O as an upper-case hex digit in each form (\x4F in a .yaml page, \u004F in
  * a .yml page, \U0000004F in a .toml page); a separator escape between the words for the digits 0 and 9 in each form
@@ -75,6 +80,26 @@
  * literal string (\U0000004f), the over-read OVER-READS discloses. W1 asserts, on THE JUDGE's decodedEscapes, one text
  * holding the hex digits 0, 9, a, f, A and F in each form, every escape of it decoded, U+10FFFF decoded and \U00110000
  * left as written.
+ * Cut #8 (ruling R-B375, the same restatement in the lineage of cut #7) adds 15 Z2 plants. For THE JUDGE's script
+ * reading, nine (form: cooked), so that each extension's script-kind plants are read together by its own parse mode
+ * only, of TypeScript's TypeScript, TSX, JavaScript and JSON parses: in .tsx and .jsx JSX text holding "//", then the
+ * statements a<b>/ 1; and an escape-spelled literal, which only the TSX parse reads (the TypeScript parse reads a
+ * comment from the "//", the JavaScript parse reads the literal inside a regular expression and the JSON parse does not
+ * read it); in .js, .mjs and .cjs the expression
+ * a<b>/ 1 / / "\u004f..." / 1, which the JavaScript parse reads with the literal as a division's operand and the
+ * TypeScript and TSX parses read with the literal inside a regular expression; and in .js, .mjs and .cjs a template
+ * at a statement's start whose tail spells the record with an x escape, which every script parse reads and the JSON
+ * parse does not; and cut #7's type assertion in a .ts page whose path holds .tsx and .js before its extension
+ * (src/workbench/zz-boundary-kind-assertion.tsx.js.ts), which only the TypeScript parse reads, so each extension test
+ * of the kind line reads the path's end only. For THE JUDGE's decodedEscapes, three (form: decoded): a .yaml, a .yml and a .toml page spelling,
+ * between the words, a run of separator escapes holding every hex digit of its form (\x20 to \x2f, then \x2A to \x2F,
+ * and the same code points in the u form and in the U form). For its markup decoders, one (form: decoded): a .md page
+ * spelling the same run with hex references (&#x20; to &#x2f;, then &#x2A; to &#x2F;). For its fold, two (form:
+ * folded): an all-literal group in parentheses before a computed operand and one after it (R-COMPUTED). Z2's witness
+ * holds each text W1 asserts THE JUDGE's markup and escape decoders on, with THE JUDGE's readings of it (decodings:
+ * decodedMarkup's and decodedCodePoints' of a markup text, decodedEscapes' of an escape text), and with them five
+ * texts of cut #8's own that spell each digit in the places DECODINGS names; and Q7's witness holds each quiet row's
+ * text (plants).
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the release package.json resolves @furnace/sdk to is read entry
  * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports or re-exports from
@@ -98,7 +123,8 @@
  * today and the same judge over the filing pin's objects reads no mention, the pin being where the row was filed, with a
  * byte floor and content-liveness anchors over the blobs the judge read; Z2 every listed Pi file (tracked plus
  * untracked-not-ignored, minus the tracker and the holders) spells no mention, with file, script, binary and byte floors,
- * content-liveness anchors read from the text the judge read, and planted entries of each reading found; Z3 the record's identity: its words
+ * content-liveness anchors read from the text the judge read, and planted entries of each reading found (since cut #8 with
+ * THE JUDGE's readings of each W1 decoding text and of the digit-place texts: decodings); Z3 the record's identity: its words
  * from the export title, every spelling form read, and the observer's own identifiers and the sibling record (named in
  * wb-dqf.2's export title) quiet. Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
@@ -307,6 +333,35 @@
  *   green (a chain whose first operand is computed folded with it), which Q7's leadingComputed row pins. The escape claim words are restated to the pinned
  *   list (THE JUDGE above, decodedEscapes' own words). No reader is added; READERS, ROWS, the frozen literal, the
  *   docs/09 reading, its plants and the shared reader are unchanged.
+ * CUT #8 (the R-B375 restatement of cut #7, in its lineage: refusal #7, gate s190, outbox O:1849, found three claims
+ *   cut #7 carries wider than their pins - U1 the parse-mode words, as the five JSX-text plants read alike under the
+ *   TSX and JavaScript parses (GP20-SK-TSX-JS, GP20-SK-TSX-JSX and GP20-SK-JS-TSX, each realized by paired real-tree
+ *   pages); U2 the hex-digit words, as the pins exercised only some digits of each escape form (x: 0, 2, 4, 6, 9, a,
+ *   f, A and F; u: 0, 4, 9, a, f, A and F; U: 0, 1, 4, 9, a, f, A and F) and of a markup hex reference (0, 1, 2, 8, 9,
+ *   a, c, d and f) (ten inner-digit narrowings, GP20-ES-x-NO5, -NOb and -NOB, the same in the u and U forms, and
+ *   GP20-DR-HEX-NO5, realized fail-open); U3 R-COMPUTED's cut #7 clause, which a
+ *   parenthesized all-literal group beside a computed operand contradicts - and F1, cut #7's pins held by a name and
+ *   a boolean or by an inner assertion only (GP20-Q7-HOLLOW-TRAIL, GP20-Q7-HOLLOW-LEAD, GP20-W1-ESC-DEL); R-B375 bound
+ *   this cut to the same restatement with every header claim it carries no wider than its pinned reader, and ruled
+ *   refusal #7's U4 - the landed template-part, escaped-identifier and binary-path words, which this cut does not
+ *   restate - a landed-census gap carried by wb-dixg). On cut #7's bytes merged with trunk, the cutting seat
+ *   reproduced those members green (0 failed | 24 passed), the F1 hollows as the gate ran them (GP20-Q7-HOLLOW-TRAIL
+ *   alone and with SU-PARENT-TRUE, GP20-Q7-HOLLOW-LEAD with SU-FOLD-NOLEFT, GP20-W1-ESC-DEL alone and with
+ *   ES-WHOLE), and found three more green beside them:
+ *   SK-JS-JSON (.js, .mjs and .cjs parsed by TypeScript's JSON parse, which reads the JSX-text plants), SK-X-ANCHOR
+ *   (the TSX test unanchored, so a .js page whose path holds an x is parsed as TSX) and U3-PAREN-ROOT (a "+" chain in
+ *   parentheses not folded on its own). U1: the script-kind plants THE JUDGE'S PINS adds (cut #8) tell each
+ *   extension's parse mode from the other parses, and cut #7's "each read in its own parse mode only" is restated to
+ *   the parses each plant is read by (THE JUDGE'S PINS, cut #7). U2: a run of separator escapes holding every hex
+ *   digit of each escape form, and one of hex references, each a Z2 plant; and, beside refusal #7's class, Z2's
+ *   decodings hold texts with each digit in the places DECODINGS names (a place-specific narrowing - ES-x-P1-NO8, ES-x-P1-NOC,
+ *   ES-u-P2-NOC, ES-U-P4-NOE, DR-HEX-P1-NOB and DR-DEC-P1-NO5 - kept the census green on this cut's earlier bytes,
+ *   0 failed | 24 passed). U3: R-COMPUTED's clause is restated to a
+ *   mention spelled across literal operands written outside parentheses, with a third quiet row (middleComputed), and
+ *   the parenthesized groups are planted as read. F1: Q7's witness holds each row's text (plants, the Q10 form) and
+ *   Z2's holds every W1 decoding text with THE JUDGE's readings of it (decodings), so a row hollowed or a W1 decoding
+ *   assertion deleted alone leaves its pin. No reader is added; READERS, ROWS, the frozen literal, the docs/09
+ *   reading, its plants and the shared reader are unchanged.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -317,8 +372,11 @@
  * override reverses (the words stored backwards; cut #2), or a
  * backslash escape in a file kind whose escapes are not decoded (a shell script, plain text: only scripts, .json, markup
  * entities and YAML/TOML are decoded) hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read,
- * nor (cut #7) are the all-literal operands of a "+" chain whose other operand is computed, before or after them, as
- * only a whole chain is folded
+ * nor (cuts #7 and #8) is a mention spelled across the string-literal operands of a "+" chain that has a computed
+ * operand before, between or after them, the operands written outside parentheses (Q7's trailingComputed,
+ * middleComputed and leadingComputed rows), as only a chain whose operands are all string literals is folded; a chain
+ * in parentheses is a chain of its own, so an all-literal group in parentheses beside a computed operand is folded and
+ * its value read (THE JUDGE'S PINS, cut #8)
  * (Q7); R-OTHER-MODULE W reads only the observer module and its module augmentations in the listed scripts:
  * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope, and a global declaration of
  * interface Object (in declare global, or at the top level of a file that is not a module) widens every object type's
@@ -497,7 +555,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
     polling: ["ownership"],
   },
   Z1: { "until then": ["triggerFired", "filingPin", "filedAtPin", "absentBeforePin", "pinFilesAtFloor", "pinBytesAtFloor", "pinLiveness", "pinMentions", "pinPlant"] },
-  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "bytesAtFloor", "liveness"], mentions: ["piPlants"] },
+  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "bytesAtFloor", "liveness"], mentions: ["piPlants", "decodings"] },
   Z3: { "of the record": ["recordWords", "spellingForms", "piIdentifiersQuiet", "siblingQuiet"] },
 };
 /** Each residual family and its quiet row. */
@@ -778,7 +836,7 @@ function numericReference(code: number): number {
   if (code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return 0xfffd;
   return NUMERIC_REFERENCES.get(code) ?? code;
 }
-/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits; a longer one is NOT CLAIMED) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cut #6). */
+/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits, each decimal digit (0-9) and each hex digit (0-9 and a-f, in either case) in every place up to those lengths; a longer one is NOT CLAIMED) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cuts #6 and #8). */
 function decodedReferences(text: string, decode: (code: number, whole: string) => string): string {
   return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
@@ -803,9 +861,11 @@ function decodedCodePoints(text: string): string {
 /**
  * A YAML or TOML file's text with its backslash escapes decoded (\UXXXXXXXX, \uXXXX, \xXX, hex digits in either case;
  * wb-6c6i F4), every escape of the text, wherever they sit: an over-read in single-quoted and literal strings, where a
- * backslash is literal; a \U escape above U+10FFFF is left as written. Pinned by THE JUDGE'S PINS (cut #7): each form's
- * digits 0, 9, a, f, A and F, two escapes in one text and U+10FFFF (W1 and Z2), \U00110000 left as written (W1), and a
- * YAML single-quoted and a TOML literal string (Z2).
+ * backslash is literal; a \U escape above U+10FFFF is left as written. Pinned by THE JUDGE'S PINS (cuts #7 and #8):
+ * every hex digit of each form, 0-9, a-f and A-F, in every place a code point up to U+10FFFF uses (Z2's plants and
+ * decodings, cut #8; the digits 0, 9, a, f, A and F in W1 as well), two
+ * escapes in one text and U+10FFFF (W1 and Z2), \U00110000 left as written (W1, its text and reading held in Z2's
+ * decodings since cut #8), and a YAML single-quoted and a TOML literal string (Z2).
  */
 function decodedEscapes(text: string): string {
   return text.replace(/\\(?:U([0-9a-fA-F]{8})|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2}))/g, (whole, long: string | undefined, short: string | undefined, byte: string | undefined) => {
@@ -908,7 +968,7 @@ const piListing = lazy((): PiListing => {
   const excluded = listed.filter(path => path.startsWith(TRACKER) || holders.has(path));
   return { paths: listed.filter(path => !excluded.includes(path) && existsSync(join(REPO, path))), excluded };
 });
-/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants), and since cut #7 the escape decoder's (two escapes in one file, an upper-case digit in each form, separator escapes for the digits 0, 9, a and A in each form, U+10FFFF, a single-quoted and a literal string), one plant per script extension read in its own parse mode only, and a .json page JSON.parse refuses. */
+/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants), and since cut #7 the escape decoder's (two escapes in one file, an upper-case digit in each form, separator escapes for the digits 0, 9, a and A in each form, U+10FFFF, a single-quoted and a literal string), one plant per script extension, and a .json page JSON.parse refuses; and since cut #8 the script-kind plants that tell each extension's parse mode from the others (JSX text and an instantiation expression in .tsx and .jsx, a regular expression and a statement-start template in .js, .mjs and .cjs, and a type assertion in a .ts page whose path holds .tsx and .js), a run of separator escapes holding every hex digit of each escape form, one of hex references, and an all-literal group in parentheses before and after a computed operand. */
 const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-escaped.ts": 'export const RECORD_NAME = "\\u0046urnaceObserver\\u0042oundaryV0";\n',
   "src/workbench/zz-boundary-split.ts": 'export const SPELLED = "Furnace" + "Obs" + "erverBoundaryV0";\n',
@@ -971,6 +1031,51 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "qa/zz-boundary-kind-jsx.mjs": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
   "qa/zz-boundary-kind-jsx.cjs": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
   "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n",
+  "src/workbench/zz-boundary-kind-instantiation.tsx": 'export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = "\\u004fbserverBoundaryV0"; / 1 /;\n',
+  "src/workbench/zz-boundary-kind-instantiation.jsx": 'export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = "\\u004fbserverBoundaryV0"; / 1 /;\n',
+  "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": 'export const C = <string>"\\u004fbserverBoundaryV0";\n',
+  "qa/zz-boundary-kind-regex.js": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-regex.mjs": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-regex.cjs": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-template.js": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "qa/zz-boundary-kind-template.mjs": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "qa/zz-boundary-kind-template.cjs": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "config/zz-boundary-x-digits.yaml": 'record: "The Furnace observer\\x20\\x21\\x22\\x23\\x24\\x25\\x26\\x27\\x28\\x29\\x2a\\x2b\\x2c\\x2d\\x2e\\x2f\\x2A\\x2B\\x2C\\x2D\\x2E\\x2Fboundary record."\n',
+  "config/zz-boundary-u-digits.yml": 'record: "The Furnace observer\\u0020\\u0021\\u0022\\u0023\\u0024\\u0025\\u0026\\u0027\\u0028\\u0029\\u002a\\u002b\\u002c\\u002d\\u002e\\u002f\\u002A\\u002B\\u002C\\u002D\\u002E\\u002Fboundary record."\n',
+  "config/zz-boundary-long-digits.toml": 'record = "The Furnace observer\\U00000020\\U00000021\\U00000022\\U00000023\\U00000024\\U00000025\\U00000026\\U00000027\\U00000028\\U00000029\\U0000002a\\U0000002b\\U0000002c\\U0000002d\\U0000002e\\U0000002f\\U0000002A\\U0000002B\\U0000002C\\U0000002D\\U0000002E\\U0000002Fboundary record."\n',
+  "docs/workbench/zz-boundary-hex-digits.md": "The Furnace observer&#x20;&#x21;&#x22;&#x23;&#x24;&#x25;&#x26;&#x27;&#x28;&#x29;&#x2a;&#x2b;&#x2c;&#x2d;&#x2e;&#x2f;&#x2A;&#x2B;&#x2C;&#x2D;&#x2E;&#x2F;boundary record.\n",
+  "src/workbench/zz-boundary-paren-trail.ts": 'export const n = ("\\u004fbserver" + "Boundary") + part;\n',
+  "src/workbench/zz-boundary-paren-lead.ts": 'export const n = part + ("\\u004fbserver" + "Boundary");\n',
+};
+/**
+ * The texts W1 asserts THE JUDGE's markup and escape decoders on (its cut #3, #5, #6 and #7 decoding assertions), held with
+ * THE JUDGE's readings of each in Z2's witness (decodings; cut #8, refusal #7 F1): the roster holds every text and its
+ * readings, so a W1 decoding assertion deleted or hollowed alone leaves its readings pinned. A markup text is read by
+ * decodedMarkup and by decodedCodePoints, an escape text by decodedEscapes. The last two markup texts and the last
+ * three escape texts are cut #8's own (no W1 assertion reads them): one hex reference of seven digits per hex digit in
+ * either case and one decimal reference of eight digits per decimal digit, that digit in every place, and for each
+ * escape form one escape per hex digit with that digit in every place a code point up to U+10FFFF uses (a U escape's
+ * first two digits are 0 and its third 0 or 1 there), so narrowing any one of those digits out of one of those places
+ * alone reds Z2 (a U escape above U+10FFFF is left as written whether or not it matches, so its other digits in those
+ * first three places are not observable and are NOT CLAIMED).
+ */
+const DECODINGS: { readonly markup: readonly string[]; readonly escapes: readonly string[] } = {
+  markup: [
+    "&#0;&#xD800;&#x110000;&#128;&#129;&#146;&#x92;&#159;&#160;",
+    "&#136;&#146;&#x92;&#x110000;",
+    "&constructor;&toString;&hasOwnProperty;&AMP;",
+    "&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;",
+    "&#xDC00;&#xDFFF;&#x10FFFF;",
+    "&#xa;&#xaf;&#XAF;",
+    "&#x0000000;&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;",
+    "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;",
+  ],
+  escapes: [
+    "\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000",
+    "\\x00\\x11\\x22\\x33\\x44\\x55\\x66\\x77\\x88\\x99\\xaa\\xbb\\xcc\\xdd\\xee\\xff\\xAA\\xBB\\xCC\\xDD\\xEE\\xFF",
+    "\\u0000\\u1111\\u2222\\u3333\\u4444\\u5555\\u6666\\u7777\\u8888\\u9999\\uaaaa\\ubbbb\\ucccc\\udddd\\ueeee\\uffff\\uAAAA\\uBBBB\\uCCCC\\uDDDD\\uEEEE\\uFFFF",
+    "\\U00000000\\U00011111\\U00022222\\U00033333\\U00044444\\U00055555\\U00066666\\U00077777\\U00088888\\U00099999\\U000aaaaa\\U000bbbbb\\U000ccccc\\U000ddddd\\U000eeeee\\U000fffff\\U000AAAAA\\U000BBBBB\\U000CCCCC\\U000DDDDD\\U000EEEEE\\U000FFFFF\\U00100000",
+  ],
 };
 /** The listed Pi files' bytes, read once: the entries the judge consumes (Z2) and the augmentation reader scans (W1). */
 const piEntries = lazy((): Entry[] => piListing().paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) })));
@@ -1994,6 +2099,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       bytesAtFloor: verdict.textBytes - plantBytes >= FLOORS.piBytes,
       liveness: liveness(verdict.anchored),
       piPlants: findingsFor(verdict, plantPaths, true),
+      decodings: {
+        markup: Object.fromEntries(DECODINGS.markup.map(text => [text, [decodedMarkup(text), decodedCodePoints(text)]])),
+        escapes: Object.fromEntries(DECODINGS.escapes.map(text => [text, decodedEscapes(text)])),
+      },
     });
   },
   Z3: () => {
@@ -2070,8 +2179,9 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       charCode: 'export const n = String.fromCharCode(79) + "bserverBoundary";\n',
       trailingComputed: 'export const n = "\\u004fbserver" + "Boundary" + part;\n',
       leadingComputed: 'export const n = part + "\\u004fbserver" + "Boundary";\n',
+      middleComputed: 'export const n = "\\u004fbserver" + part + "Boundary";\n',
     };
-    return json({ residual: "R-COMPUTED", quiet: Object.fromEntries(Object.entries(computed).map(([kind, text]) => [kind, verdictOf("src/zz.ts", Buffer.from(text, "utf8")).forms.length === 0])) });
+    return json({ residual: "R-COMPUTED", plants: computed, quiet: Object.fromEntries(Object.entries(computed).map(([kind, text]) => [kind, verdictOf("src/zz.ts", Buffer.from(text, "utf8")).forms.length === 0])) });
   },
   Q8: () => {
     const { verbs } = docs09Furnace();
