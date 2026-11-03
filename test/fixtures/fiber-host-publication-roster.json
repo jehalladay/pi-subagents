@@ -114,9 +114,11 @@
    "Cargo.toml",
    "Cargo.lock"
   ],
-  "pipRequirements": "^(?:(?:[\\w.-]*requirements[\\w.-]*|[\\w.-]*constraints[\\w.-]*)\\.(?:txt|in|lock)|pylock\\.toml)$",
-  "pipRequirementsDir": "(?:^|\\/)requirements\\/[^/]+\\.(?:txt|in)$",
-  "pipFamily": "requirements|constraints|pylock",
+  "pipFamilyWords": [
+   "requirements",
+   "constraints",
+   "pylock"
+  ],
   "registrationWords": [
    "register",
    "registerNativeProviders"
@@ -151,6 +153,8 @@
    "ImportEqualsDeclaration",
    "TypeParameter"
   ],
+  "familyWord": "fiber",
+  "rfContract": "rf@",
   "rootNpm": [
    "package.json",
    "package-lock.json"
@@ -783,16 +787,16 @@
        "src/": false
       },
       "rawManifestHits": [],
-      "candidates": [
-       "docs/workbench/02-atomic-requirements.md"
-      ],
       "manifestTree": {
        "selected": [
         "Requirements_Docs.TXT",
         "build.constraints.lock",
         "constraints.in",
+        "constraints.pip",
         "constraints.txt",
+        "constraints/base.txt",
         "dev-requirements.txt",
+        "docs/requirements.md",
         "environment.yml",
         "examples/host/npm-shrinkwrap.json",
         "examples/host/package-lock.json",
@@ -800,6 +804,7 @@
         "examples/host/pnpm-lock.yaml",
         "examples/host/yarn.lock",
         "package.json",
+        "py/Requirements/base.txt",
         "py/host/Pipfile",
         "py/host/Pipfile.lock",
         "py/host/environment.yaml",
@@ -809,30 +814,86 @@
         "py/host/setup.py",
         "py/host/uv.lock",
         "py/requirements/test.txt",
+        "pylock.dev.toml",
         "pylock.toml",
+        "requirements copy.txt",
         "requirements.in",
         "requirements.lock",
+        "requirements.pip",
         "requirements.txt",
+        "requirements/base.pip",
         "requirements/base.txt",
         "requirements/dev.in",
+        "requirements/env/dev.txt",
         "rust/observer/Cargo.lock",
         "rust/observer/Cargo.toml",
+        "sidecar/requirements",
         "sidecar/requirements-dev.txt",
         "test-requirements.txt",
-        "tools/value-host/pyproject.toml"
+        "tools/value-host/pyproject.toml",
+        "web/Package.json"
        ],
+       "forms": {
+        "Requirements_Docs.TXT": "pip-name",
+        "build.constraints.lock": "pip-name",
+        "constraints.in": "pip-name",
+        "constraints.pip": "pip-name",
+        "constraints.txt": "pip-name",
+        "constraints/base.txt": "pip-directory",
+        "dev-requirements.txt": "pip-name",
+        "docs/requirements.md": "pip-name",
+        "environment.yml": "manifest-name",
+        "examples/host/npm-shrinkwrap.json": "manifest-name",
+        "examples/host/package-lock.json": "manifest-name",
+        "examples/host/package.json": "manifest-name",
+        "examples/host/pnpm-lock.yaml": "manifest-name",
+        "examples/host/yarn.lock": "manifest-name",
+        "package.json": "manifest-name",
+        "py/Requirements/base.txt": "pip-directory",
+        "py/host/Pipfile": "manifest-name",
+        "py/host/Pipfile.lock": "manifest-name",
+        "py/host/environment.yaml": "manifest-name",
+        "py/host/pdm.lock": "manifest-name",
+        "py/host/poetry.lock": "manifest-name",
+        "py/host/setup.cfg": "manifest-name",
+        "py/host/setup.py": "manifest-name",
+        "py/host/uv.lock": "manifest-name",
+        "py/requirements/test.txt": "pip-directory",
+        "pylock.dev.toml": "pip-name",
+        "pylock.toml": "pip-name",
+        "requirements copy.txt": "pip-name",
+        "requirements.in": "pip-name",
+        "requirements.lock": "pip-name",
+        "requirements.pip": "pip-name",
+        "requirements.txt": "pip-name",
+        "requirements/base.pip": "pip-directory",
+        "requirements/base.txt": "pip-directory",
+        "requirements/dev.in": "pip-directory",
+        "requirements/env/dev.txt": "pip-directory",
+        "rust/observer/Cargo.lock": "manifest-name",
+        "rust/observer/Cargo.toml": "manifest-name",
+        "sidecar/requirements": "pip-name",
+        "sidecar/requirements-dev.txt": "pip-name",
+        "test-requirements.txt": "pip-name",
+        "tools/value-host/pyproject.toml": "manifest-name",
+        "web/Package.json": "manifest-name"
+       },
        "raw": [
         "Requirements_Docs.TXT",
         "build.constraints.lock",
         "constraints.in",
+        "constraints.pip",
         "constraints.txt",
+        "constraints/base.txt",
         "dev-requirements.txt",
+        "docs/requirements.md",
         "environment.yml",
         "examples/host/npm-shrinkwrap.json",
         "examples/host/package-lock.json",
         "examples/host/package.json",
         "examples/host/pnpm-lock.yaml",
         "examples/host/yarn.lock",
+        "py/Requirements/base.txt",
         "py/host/Pipfile",
         "py/host/Pipfile.lock",
         "py/host/environment.yaml",
@@ -842,22 +903,31 @@
         "py/host/setup.py",
         "py/host/uv.lock",
         "py/requirements/test.txt",
+        "pylock.dev.toml",
         "pylock.toml",
+        "requirements copy.txt",
         "requirements.in",
         "requirements.lock",
+        "requirements.pip",
         "requirements.txt",
+        "requirements/base.pip",
         "requirements/base.txt",
         "requirements/dev.in",
+        "requirements/env/dev.txt",
         "rust/observer/Cargo.lock",
         "rust/observer/Cargo.toml",
+        "sidecar/requirements",
         "sidecar/requirements-dev.txt",
         "test-requirements.txt",
-        "tools/value-host/pyproject.toml"
+        "tools/value-host/pyproject.toml",
+        "web/Package.json"
        ],
        "hits": [
         "Requirements_Docs.TXT:1: fiberoptics",
         "build.constraints.lock:1: fiberoptics",
         "constraints.in:1: fiberoptics",
+        "constraints.pip:1: fiberoptics",
+        "constraints/base.txt:1: fiberoptics",
         "dev-requirements.txt:1: fiberoptics",
         "environment.yml:3: fiberoptics",
         "examples/host/npm-shrinkwrap.json:1: fiberoptics",
@@ -865,6 +935,7 @@
         "examples/host/package.json:1: fiberoptics",
         "examples/host/pnpm-lock.yaml:2: fiberoptics",
         "examples/host/yarn.lock:1: fiberoptics",
+        "py/Requirements/base.txt:1: fiberoptics",
         "py/host/Pipfile:2: fiberoptics",
         "py/host/Pipfile.lock:1: fiberoptics",
         "py/host/environment.yaml:2: fiberoptics",
@@ -874,30 +945,24 @@
         "py/host/setup.py:1: fiberoptics",
         "py/host/uv.lock:2: fiberoptics",
         "py/requirements/test.txt:1: fiberoptics",
+        "pylock.dev.toml:2: fiberoptics",
         "pylock.toml:2: fiberoptics",
+        "requirements copy.txt:1: fiberoptics",
         "requirements.in:1: fiberoptics",
         "requirements.lock:1: fiberoptics",
+        "requirements.pip:1: fiberoptics",
         "requirements.txt:1: fiberoptics",
+        "requirements/base.pip:1: fiberoptics",
         "requirements/base.txt:1: fiberoptics",
         "requirements/dev.in:1: fiberoptics",
+        "requirements/env/dev.txt:1: fiberoptics",
         "rust/observer/Cargo.lock:2: fiberoptics",
         "rust/observer/Cargo.toml:2: fiberoptics",
+        "sidecar/requirements:1: fiberoptics",
         "sidecar/requirements-dev.txt:2: fiberoptics",
         "test-requirements.txt:1: fiberoptics",
-        "tools/value-host/pyproject.toml:3: fiberoptics"
-       ],
-       "candidates": [
-        "constraints.pip",
-        "constraints/base.txt",
-        "docs/requirements.md",
-        "py/Requirements/base.txt",
-        "pylock.dev.toml",
-        "requirements copy.txt",
-        "requirements.pip",
-        "requirements/base.pip",
-        "requirements/env/dev.txt",
-        "sidecar/requirements",
-        "web/Package.json"
+        "tools/value-host/pyproject.toml:3: fiberoptics",
+        "web/Package.json:1: fiberoptics"
        ]
       },
       "manifestControls": {
@@ -1021,12 +1086,21 @@
      "witness": {
       "surface": "registered capabilities",
       "artifact": "a registered Pi Fiber-hosting or Fiber-publishing capability (none exists)",
+      "missing": {
+       "native": [],
+       "injected": []
+      },
       "native": {
-       "missing": [],
        "hosting": [],
        "family": [
         {
          "id": "reactivefiber.render.preview",
+         "criteria": [
+          "id",
+          "permission",
+          "contract",
+          "rf-contract"
+         ],
          "effectClass": "read",
          "supportedModes": [
           "invoke"
@@ -1041,11 +1115,16 @@
        ]
       },
       "injected": {
-       "missing": [],
        "hosting": [],
        "family": [
         {
          "id": "reactivefiber.render.preview",
+         "criteria": [
+          "id",
+          "permission",
+          "contract",
+          "rf-contract"
+         ],
          "effectClass": "read",
          "supportedModes": [
           "invoke"
@@ -1172,10 +1251,14 @@
       ],
       "controls": {
        "runtimeHost": {
-        "family": true,
+        "criteria": [
+         "id",
+         "permission",
+         "contract"
+        ],
         "publishing": [
          "effectClass external",
-         "contract without --no-commit"
+         "contract not ending with \" --no-commit\""
         ],
         "needles": [
          "fiberruntime",
@@ -1183,39 +1266,54 @@
         ]
        },
        "valueFlush": {
-        "family": true,
+        "criteria": [
+         "id",
+         "permission"
+        ],
         "publishing": [
          "effectClass write",
-         "contract without --no-commit"
+         "contract not ending with \" --no-commit\""
         ],
         "needles": [
          "fiberoptics"
         ]
        },
        "commitRender": {
-        "family": true,
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
         "publishing": [
          "effectClass write",
-         "contract without --no-commit"
+         "contract not ending with \" --no-commit\""
         ],
         "needles": []
        },
        "observePreview": {
-        "family": true,
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
         "publishing": [
          "mode observe"
         ],
         "needles": []
        },
        "rfContract": {
-        "family": true,
+        "criteria": [
+         "rf-contract"
+        ],
         "publishing": [
-         "contract without --no-commit"
+         "contract not ending with \" --no-commit\""
         ],
         "needles": []
        },
        "entryDescription": {
-        "family": false,
+        "criteria": [],
         "publishing": [],
         "needles": [
          "queuevaluepublication",
@@ -1223,24 +1321,29 @@
         ]
        },
        "previewShape": {
-        "family": true,
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
         "publishing": [],
         "needles": []
        },
        "nestedSchema": {
-        "family": false,
+        "criteria": [],
         "publishing": [],
         "needles": [
          "fiberruntime"
         ]
        },
        "rfLayoutDescription": {
-        "family": false,
+        "criteria": [],
         "publishing": [],
         "needles": []
        },
        "neutral": {
-        "family": false,
+        "criteria": [],
         "publishing": [],
         "needles": []
        }
@@ -1541,77 +1644,66 @@
         "path": "qa/host.mjs",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 4
        },
        {
         "path": "examples/host.ts",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "Dockerfile",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "scripts/setup-sidecar.sh",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "tools/value-host/deps.txt",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "providers/local-value.cjs",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "vendor/value-host/dist/index.js",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "tox.ini",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "web/bun.lock",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "web/package.yaml",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        },
        {
         "path": "test/fixtures/host/pyproject.toml",
         "walked": false,
         "selected": false,
-        "candidate": false,
         "needles": 1
        }
       ]
@@ -1676,7 +1768,7 @@
       ],
       "manifest": [],
       "descriptor": {
-       "family": false,
+       "criteria": [],
        "publishing": [],
        "needles": []
       }
