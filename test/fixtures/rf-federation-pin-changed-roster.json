@@ -698,6 +698,48 @@
         "composed": 0,
         "launches": 1
        },
+       "methodThreeMemberScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowThreeElementScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowThreeDeclaratorScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "threeStatementScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowConcisePushInside": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "nestedFunctionPushInside": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,

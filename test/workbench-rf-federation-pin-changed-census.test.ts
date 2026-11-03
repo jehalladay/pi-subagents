@@ -52,10 +52,16 @@
  *    patternParamDefault and paramAlias) and in the body of an arrow function a variable declaration binds, a class's method
  *    and an exported function declaration, each holding nestedPatternScoped's nest with a three-element default as
  *    arrowNestScoped, methodNestScoped and exportedNestScoped spell it (arrowPushInside, methodPushInside and
- *    exportedPushInside; wb-8cgw F2),
+ *    exportedPushInside; wb-8cgw F2), and, with that nest, in two more places, each exactly as its control writes it: inside
+ *    the launch's argv argument in the concise body of an arrow function a variable declaration binds
+ *    (arrowConcisePushInside) and in the block body of a nested arrow function an exported function declaration declares and
+ *    then calls (nestedFunctionPushInside; wb-2l05 F3),
  *    and a later function's push stays out for each parameter a quiet control spells, the later function exactly where that
- *    control spells it (a later top-level function, or for three a later function inside the parameter's own class, array
- *    literal or statement; wb-8cgw F1), so a declarationScope loop that climbs one of them to anything but its parameter reds
+ *    control spells it, in a host holding exactly the members that control writes (a later top-level function in a file of
+ *    the parameter's statement and that function, or with a third statement between them for threeStatementScoped; or for
+ *    three a later function inside the parameter's own class, array literal or statement holding those two members, or with
+ *    a third member after them for methodThreeMemberScoped, arrowThreeElementScoped and arrowThreeDeclaratorScoped; wb-8cgw
+ *    F1; wb-2l05 F2), so a declarationScope loop that climbs one of them to anything but its parameter reds
  *    A1 - in a function declaration with a
  *    one-element default, the parameter itself (paramScoped), one pattern level of each kind (patternScoped and
  *    arrayPatternScoped; wb-gdqz) and seventeen nests (wb-ia9d): six with one binding element per pattern level, each object element
@@ -80,8 +86,11 @@
  *    later function sits inside the parameter's own host (wb-8cgw F1): methodNestScoped's parameter in a class whose later
  *    sibling method pushes (methodSiblingScoped), and arrowNestScoped's in an arrow function that is an array literal's
  *    element before a pushing arrow element (arrowElementSiblingScoped) or a statement's declarator before a pushing arrow
- *    declarator (arrowDeclaratorSiblingScoped); no other parameter holds one (NOT CLAIMED)): a .push or ["push"] call, its
- *    callee and
+ *    declarator (arrowDeclaratorSiblingScoped); and four whose host holds a third member (wb-2l05 F2): each of those three
+ *    hosts with one more member after the pushing one, a method, an element or a declarator (methodThreeMemberScoped,
+ *    arrowThreeElementScoped, arrowThreeDeclaratorScoped), and exportedNestScoped's parameter in a file with a third
+ *    statement between its two functions (threeStatementScoped); no other parameter holds one (NOT CLAIMED)): a .push or
+ *    ["push"] call, its callee and
  *    receiver read through the same wrappers, made on the literal's name
  *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
  *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
@@ -177,7 +186,7 @@
  *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
  * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
  * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk,
- * wb-shnw, wb-gdqz, wb-ia9d, wb-11rf and wb-8cgw controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
+ * wb-shnw, wb-gdqz, wb-ia9d, wb-11rf, wb-8cgw and wb-2l05 controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
  * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines; nor an edit of
  * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz);
  * nor declarationScope's loop climbing a parameter no A1 control spells as it is written there (wb-ia9d; wb-11rf) - among them
@@ -185,16 +194,21 @@
  * key or a hole other than the one each of the eighteen two-level element-shape controls spells, or two of those shapes at
  * once, and one in a host or with a default no control spells as written (a function expression, a constructor, an accessor
  * and an object literal's method among the hosts; an arrow function's, a method's or an exported function declaration's
- * parameter other than the five the wb-11rf F3 and F4 controls spell, each where its control or a wb-8cgw control writes
- * it; a default of two or more elements in any other
+ * parameter other than the five the wb-11rf F3 and F4 controls spell, each where its control or a wb-8cgw or wb-2l05
+ * control writes it; a default of two or more elements in any other
  * parameter): a loop that stops short of such a parameter is not pinned, and the two such loops measured, G2-THREELEVEL (a
  * climb of at most three pattern levels) and G2-MIXTHIRD (a third level climbed only in the declaration's own pattern kind),
- * stay green; nor the read of a push inside any parameter's function but those four non-exported function declarations and
- * the three wb-8cgw F2 hosts, each only as its control spells it (a push statement in the body, after its F3 nest parameter,
- * of an arrow function a variable declaration binds, a class's method or an exported function declaration; a push in another
- * parameter's default, in a concise arrow body or in a nested function is not pinned); nor a later function's push kept out
- * of a quiet control's parameter anywhere but where that control spells the later function (a later argument of the same
- * call or a later property of the same object literal is not pinned).
+ * stay green; nor the read of a push inside any parameter's function but those four non-exported function declarations,
+ * the three wb-8cgw F2 hosts and the two wb-2l05 F3 places, each only as its control spells it (a push statement in the
+ * body, after its F3 nest parameter, of an arrow function a variable declaration binds, a class's method or an exported
+ * function declaration; a push inside the launch's argv argument in the concise body of such an arrow function; a push
+ * statement in a nested arrow function such an exported function declaration declares and then calls; a push in another
+ * parameter's default, in any other concise body or in any other nested function - a function expression, a nested
+ * function declaration, a nested function in another host or one never called among them - is not pinned); nor a later
+ * function's push kept out of a quiet control's parameter anywhere but where that control spells the later function, or in
+ * a host holding members other than those its control writes (a later argument of the same call, a later property of the
+ * same object literal, and a class, array literal, statement or file holding a fourth member, or a third member anywhere
+ * but where a wb-2l05 control writes it, are not pinned).
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -1395,8 +1409,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrayPatternScoped: control('function f([argv = ["context"]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
       // wb-ia9d: six nests of the two pattern kinds, one binding element per pattern level, each a quiet row of its own, so a
       // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (the eleven
-      // element-shape nests, wb-11rf's thirteen parameters and wb-8cgw's three sibling hosts below hold one each too; no other:
-      // NOT CLAIMED). Two levels deep,
+      // element-shape nests, wb-11rf's thirteen parameters, wb-8cgw's three sibling hosts and wb-2l05's four three-member hosts
+      // below hold one each too; no other: NOT CLAIMED). Two levels deep,
       // one per pairing: an array in an
       // array (GX-ONELEVEL, a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it), an array
       // in an object (G2-OBJONCE, an object arm climbing only the declaration's own pattern, reds it), an object in an array
@@ -1410,8 +1424,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       threeObjectScoped: control('function f({ a: { b: { argv = ["context"] } } }: { a: { b: Options } }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
       // wb-ia9d cut #3 (enumerate-the-resolvable, R-B183): eleven two-level nests, each one element shape off the six above and
       // each a quiet row of its own, so a declarationScope loop that climbs one of them, exactly as written here, to anything but
-      // its parameter reds A1 (wb-11rf's thirteen and wb-8cgw's three sibling hosts below hold one each too; no other: NOT
-      // CLAIMED). Each of refusal #2's seven loop
+      // its parameter reds A1 (wb-11rf's thirteen, wb-8cgw's three sibling hosts and wb-2l05's four three-member hosts below
+      // hold one each too; no other: NOT CLAIMED). Each of refusal #2's seven loop
       // mutants reds A1 here: G1-NESTFIRST (an
       // outer element climbs only as its pattern's first element) reds afterSiblingInObjectScoped, afterSiblingInArrayScoped and
       // holeBeforeNestScoped; G1-OBJSINGLE (an outer object pattern climbs only holding one element) reds the object sibling pair;
@@ -1432,7 +1446,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       holeBeforeNestScoped: control('function f([, [argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
       // wb-11rf (the R694 follow-up of wb-ia9d's landing 759): thirteen more parameters, each a quiet row of its own, so a
       // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (wb-8cgw's
-      // three sibling hosts below hold one each too; no other parameter: NOT CLAIMED). F2, two-level nests in a function declaration with a one-element default, each one element shape
+      // three sibling hosts and wb-2l05's four three-member hosts below hold one each too; no other parameter: NOT CLAIMED). F2, two-level nests in a function declaration with a one-element default, each one element shape
       // off the eleven above: GP10-SIBOBJ (an outer element after a sibling climbs only when its name is an array pattern) reds
       // objectAfterSiblingInObjectScoped and objectAfterSiblingInArrayScoped; GP10-DEFLITERAL (an outer element whose default is no
       // array or object literal stops the climb) reds outerIdentifierDefaultScoped; GP10-KEYEXPR (a computed key whose expression
@@ -1481,6 +1495,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrowPushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n};'),
       methodPushInside: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n    argv.push("render", "--json");\n    return spawn("rf", argv);\n  }\n}'),
       exportedPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      // wb-2l05 (the R694 follow-up of wb-8cgw's landing 828): six more rows, each holding the nest the wb-8cgw rows spell. F2,
+      // four quiet rows whose parameter's host holds one member more than the row each is built from, so a return line that
+      // climbs a parameter to its host only when the host holds more than two members reds A1: GP16-NC-METHOD3 (a method
+      // parameter's scope is its class when the class has more than two members) reds methodThreeMemberScoped
+      // (methodSiblingScoped's class with a third method after the pushing one); GP16-NC-ELEMENT3 (an array-element arrow's scope
+      // is the array literal when it holds more than two elements) reds arrowThreeElementScoped (arrowElementSiblingScoped's array
+      // literal with a third element after the pushing arrow); GP16-NC-DECL3 (an arrow declarator's scope is its variable
+      // statement when the list holds more than two declarators) reds arrowThreeDeclaratorScoped (arrowDeclaratorSiblingScoped's
+      // statement with a third declarator after the pushing arrow); GP16-NC-FILE3 (a parameter's scope is its source file when the
+      // file holds more than two statements) reds threeStatementScoped (exportedNestScoped's two functions with a third statement
+      // between them). F3, two rows whose push sits inside the parameter's own function (render 1, uncommitted 1): GP16-NC-CONCISE
+      // (an arrow function with a concise body keeps its parameter's scope to the parameter itself) reds arrowConcisePushInside
+      // (arrowPushInside's arrow with a concise body that pushes inside its launch's argv argument), and GP16-NC-NESTEDFN (the
+      // later-push filter keeps out a push whose nearest enclosing function is not the parameter's own) reds
+      // nestedFunctionPushInside (exportedPushInside's function pushing inside a nested arrow function it declares and calls).
+      methodThreeMemberScoped: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\n  other(argv: string[]) { argv.push("render", "--json"); }\n  stop() {}\n}'),
+      arrowThreeElementScoped: control('const launchers = [([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, (argv: string[]) => { argv.push("render", "--json"); }, () => undefined];'),
+      arrowThreeDeclaratorScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, g = (argv: string[]) => { argv.push("render", "--json"); }, h = 0;'),
+      threeStatementScoped: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\nconst unrelated = 1;\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowConcisePushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => spawn("rf", (argv.push("render", "--json"), argv));'),
+      nestedFunctionPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return spawn("rf", argv);\n}'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1548,6 +1583,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrowDeclaratorSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrowPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, methodPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       exportedPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      methodThreeMemberScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowThreeElementScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowThreeDeclaratorScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, threeStatementScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowConcisePushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nestedFunctionPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
