@@ -2444,6 +2444,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
+      "openers": 2,
       "proxy": true
     },
     "FC-S2-Q2-COMMENTED": {
@@ -2452,7 +2453,163 @@
       "refusal": [
         "R-COMMENTED"
       ],
+      "openers": 1,
       "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-COMMENT": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-MID-LINE": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 8,
+      "proxy": true
+    },
+    "FC-S2-Q1-LINE-INDENTED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 2,
+      "proxy": true
+    },
+    "FC-S2-Q1-LINE-TRAILING": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 18,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-UNSPACED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 1,
+      "proxy": true
+    },
+    "FC-S2-Q1-BLOCK-MULTI-LINE": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "openers": 3,
+      "proxy": true
+    },
+    "FC-LISTING-SYMLINK": {
+      "listed": {
+        "src": [
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "walked": {
+        "src": [
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "index": {
+        "src": [],
+        "qa": []
+      },
+      "untracked": {
+        "src": [
+          "src/workbench/zz-g15-dangling.ts",
+          "src/workbench/zz-g15-dir",
+          "src/workbench/zz-g15-link.ts",
+          "src/workbench/zz-g15-module.ts"
+        ],
+        "qa": [
+          "qa/zz-g15-link.ts",
+          "qa/zz-g15-target.ts"
+        ]
+      },
+      "ignored": {
+        "src": [
+          "src/workbench/zz-g15-ignored.ts"
+        ],
+        "qa": []
+      },
+      "behind": [
+        "S-UNREGISTERED src/workbench/zz-g15-link.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "refusal": [
+        "S-NONREGULAR src/workbench/zz-g15-dangling.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-g15-dir is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR qa/zz-g15-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it"
+      ]
+    },
+    "FC-LISTING-TRACKED": {
+      "listed": {
+        "src": [
+          "src/workbench/zz-l2-module.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "walked": {
+        "src": [
+          "src/workbench/zz-l2-module.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "index": {
+        "src": [
+          "src/workbench/zz-l2-dangling.ts",
+          "src/workbench/zz-l2-dir",
+          "src/workbench/zz-l2-link.ts",
+          "src/workbench/zz-l2-removed.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-link.ts"
+        ]
+      },
+      "untracked": {
+        "src": [
+          "src/workbench/zz-l2-module.ts",
+          "src/workbench/zz-l2-untracked.ts"
+        ],
+        "qa": [
+          "qa/zz-l2-target.ts"
+        ]
+      },
+      "ignored": {
+        "src": [],
+        "qa": []
+      },
+      "behind": [
+        "S-UNREGISTERED src/workbench/zz-l2-link.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "refusal": [
+        "S-NONREGULAR src/workbench/zz-l2-dangling.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-dir is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR src/workbench/zz-l2-untracked.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it",
+        "S-NONREGULAR qa/zz-l2-link.ts is a symbolic link git would commit, which the landed listers drop, so no reader of this census reads it"
+      ]
     }
   },
   "fullSurface": {
@@ -4155,6 +4312,18 @@
         ]
       }
     },
+    "quietSurvivors": [
+      "wb-4z24:GP20-U5-CSK-READS-TYPE-MEMBERS:PropertySignature",
+      "wb-4z24:GP20-U5-CSK-READS-BINDINGS:BindingElement",
+      "wb-oddy:G-P1:BindingElement",
+      "wb-oddy:G-P2:PropertySignature",
+      "wb-oddy:G-P3:PropertySignature"
+    ],
+    "quietControl": [
+      "G-C1:BindingElement",
+      "G-C3:PropertySignature",
+      "GP9-C4:PropertySignature"
+    ],
     "shapeQuiet": {
       "type-literal": {
         "holds": [
@@ -4162,6 +4331,13 @@
           "namespace",
           "entities",
           "relations"
+        ],
+        "other": [],
+        "places": [
+          "TypeAliasDeclaration",
+          "PropertySignature",
+          "TypeAliasDeclaration",
+          "TypeAliasDeclaration"
         ],
         "code": [],
         "raw": [
@@ -4177,8 +4353,73 @@
           "entities",
           "relations"
         ],
+        "other": [],
+        "places": [
+          "VariableDeclaration",
+          "VariableDeclaration",
+          "VariableDeclaration"
+        ],
         "code": [],
         "raw": []
+      },
+      "parameter-destructuring": {
+        "holds": [
+          "schema_ref",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "Parameter",
+          "Parameter",
+          "Parameter"
+        ],
+        "code": [],
+        "raw": []
+      },
+      "type-argument": {
+        "holds": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "TypeReference",
+          "PropertySignature",
+          "TypeReference",
+          "TypeReference"
+        ],
+        "code": [],
+        "raw": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ]
+      },
+      "interface": {
+        "holds": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "InterfaceDeclaration",
+          "PropertySignature",
+          "InterfaceDeclaration",
+          "InterfaceDeclaration"
+        ],
+        "code": [],
+        "raw": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ]
       }
     },
     "coreOverlap": {
@@ -4193,7 +4434,7 @@
         "unreachable": 5,
         "COMPOSE_PLANTS": 4,
         "PARSE_PLANTS": 2,
-        "SHAPE_QUIET": 2
+        "SHAPE_QUIET": 5
       },
       "core": {
         "SITE_WORD_SPELLINGS": 48,
@@ -4208,7 +4449,7 @@
         "FAIL_CLOSED docs": 3,
         "RESIDUALS docs": 10,
         "RESIDUALS source": 5,
-        "FAIL_CLOSED member": 2
+        "FAIL_CLOSED member": 8
       },
       "pairs": [
         {

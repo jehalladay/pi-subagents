@@ -1,6 +1,6 @@
 {
  "bead": "wb-jwc.9",
- "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers, probe vocabulary and planted inputs: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant; an empty anchor at occurrence 0 writes plant as a new file) with the pins whose claim it contradicts; mutants lists each one-edit change of a helper reader (the same edit form, in the helper) with the pins it falsifies; residuals maps each named residual to its quiet pin; cut #3 adds refusal #2's fail-open plants (PL3-*), its 13 gate mutants verbatim (GL3-*) and the seat's class guard (M3-*); cut #4 (the fail-closed core, R-B213) narrows the G:literal, G:unjudged and R:reader-form requirements and keeps every falsifier and mutant byte-identical. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
+ "provenance": "wb-jwc.9 falsifier roster for test/workbench-rf-operation-receipt-honesty-census.test.ts (readers, probe vocabulary and planted inputs: test/helpers/rf-operation-receipt-honesty.ts). rows restates every row, clause and pin requirement of the census byte for byte; falsifiers lists each src plant (edits: the 1-based occurrence of anchor in file replaced by plant; an empty anchor at occurrence 0 writes plant as a new file) with the pins whose claim it contradicts; mutants lists each one-edit change of a helper reader (the same edit form, in the helper) with the pins it falsifies; residuals maps each named residual to its quiet pin; cut #3 adds refusal #2's fail-open plants (PL3-*), its 13 gate mutants verbatim (GL3-*) and the seat's class guard (M3-*); cut #4 (the fail-closed core, R-B213) narrows the G:literal, G:unjudged and R:reader-form requirements and keeps every falsifier and mutant byte-identical. The wb-jwc.12 cut (refusal #3's unmet items as the R-B213 structural exit's child files them) adds row S, refusal #3's fail-open plants (PL4-*, each a gate-prep-1 plant-delivered witness verbatim), its 5 gate mutants verbatim (GL4-*) and the seat's class guards (M4-*), restates the G:literal, G:unjudged and R:reader-form requirements over row S, and keeps every earlier falsifier and mutant byte-identical. The census reads rows, the falsified pin ids and the residual map; the edits are for replay on a throwaway copy, never applied by the census.",
  "rows": [
   {
    "id": "G",
@@ -8,15 +8,15 @@
    "pins": [
     {
      "id": "G:literal:registerReactiveFiberRender",
-     "requirement": "the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM; its coverage is deferred to wb-jwc.12), refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an argument, an assertion to a string literal type as an effectClass or as a permissions element, and a binary whose left operand is a whole token"
+     "requirement": "the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart on, as planted there); a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM)"
     },
     {
      "id": "G:literal:registerNativeReactiveFiberRender",
-     "requirement": "the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM; its coverage is deferred to wb-jwc.12), refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an argument, an assertion to a string literal type as an effectClass or as a permissions element, and a binary whose left operand is a whole token"
+     "requirement": "the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart on, as planted there); a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM)"
     },
     {
      "id": "G:unjudged",
-     "requirement": "each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere, so a registration made through one is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them; deferred to wb-jwc.12); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM)"
+     "requirement": "each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere (row S plants refusal #3's U2 forms: a forge registration through registry?.register and one in a dotfile module are listed nowhere, while an rf registration respelled through registry?.register is read as an rf literal), so a registration made through a read call whose id is not an rf capability id is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM)"
     },
     {
      "id": "G:runs",
@@ -247,6 +247,36 @@
    ]
   },
   {
+   "id": "S",
+   "clause": "refusal #3",
+   "pins": [
+    {
+     "id": "S:registrations:conditional-branch",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #3 U1a): each planted rf literal whose effectClass is written as a conditional with one branch that is not a whole token (mode !== undefined ? mode : 'read', and mode === undefined ? 'read' : mode) has it read as the syntax standing there in angle brackets, not as its token branch's word; the reading is listed"
+    },
+    {
+     "id": "S:registrations:call-argument",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #3 U1b): each planted rf literal whose effectClass is written as a call holding a whole-token argument (a parenthesized arrow function called with 'read' as its first argument, and chooseClass(mode, 'read') with it as its last) has it read as the syntax standing there in angle brackets, not as that argument's word; the reading is listed"
+    },
+    {
+     "id": "S:registrations:asserted-class",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #3 U1c): each planted rf literal whose effectClass is written as an as assertion to a string literal type ((mode === 'commit' ? 'write' : 'read') as 'read', and mode as 'read') has it read as the syntax standing there in angle brackets, not as the asserted type's word; the reading is listed"
+    },
+    {
+     "id": "S:registrations:asserted-element",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #3 U1d): each planted rf literal whose permissions element is written as an as assertion to a string literal type ([(mode === 'commit' ? 'reactivefiber:commit' : 'reactivefiber:render') as 'reactivefiber:render'], and [permission as 'reactivefiber:render']) has it read as its syntax in angle brackets, not as the asserted type's word; the reading is listed"
+    },
+    {
+     "id": "S:registrations:token-left",
+     "requirement": "rfRegistrationLiterals over a planted src module (refusal #3 U1e): each planted rf literal whose effectClass is written as a binary whose left operand is a whole token ('read' && (mode ?? 'read'), 'read' || mode and 'read' ?? mode) has it read as the syntax standing there in angle brackets, not as its left operand's word; the reading is listed"
+    },
+    {
+     "id": "S:tree:other-id",
+     "requirement": "srcTree and rfRegistrationLiterals over a planted src tree (refusal #3 U2): the planted register calls whose id is not an rf capability id (forge.plant-optional through registry?.register in src/plant.ts, and forge.plant-dot in the dotfile module src/.plant-dot-forge.ts, which is listed as a module) are listed nowhere, neither as rf literals nor unjudged, while the planted rf registration respelled through registry?.register beside the first (reactivefiber.plant-optional) is read as an rf literal; the split and the reading are listed"
+    }
+   ]
+  },
+  {
    "id": "R",
    "clause": "residual",
    "pins": [
@@ -272,7 +302,7 @@
     },
     {
      "id": "R:reader-form",
-     "requirement": "NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P and Q feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax (refusal #3's U1a-U1e forms among them), owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed"
+     "requirement": "NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P, Q and S feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax, owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed"
     }
    ]
   }
@@ -954,6 +984,106 @@
    ],
    "falsifies": [
     "R:run-form"
+   ]
+  },
+  {
+   "id": "PL4-CONDFALSE",
+   "origin": "refusal #3 PREP fail-open witness FO-CONDFALSE (gate-prep-1, specs/fo-census.json, plant-delivered): the native registrar's effect class written mode !== undefined ? mode : 'read' for a mode argument no run form passes",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,mode?:\"read\"|\"write\"):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\",permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "effectClass:mode!==undefined?mode:\"read\",permissions:[\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL4-CALLARG",
+   "origin": "refusal #3 PREP fail-open witness FO-CALLARG (gate-prep-1, specs/fo-census.json, plant-delivered): the native registrar's effect class written as an arrow function called with 'read' first and a mode argument no run form passes",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,mode?:\"read\"|\"write\"):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\",permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "effectClass:((fallback:\"read\"|\"write\",chosen?:\"read\"|\"write\")=>chosen??fallback)(\"read\",mode),permissions:[\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL4-ASLIT",
+   "origin": "refusal #3 PREP fail-open witness FO-ASLIT (gate-prep-1, specs/fo-census.json, plant-delivered): the native registrar's effect class written as a conditional of a mode argument asserted as 'read'",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,mode?:string):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\",permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "effectClass:(mode===\"commit\"?\"write\":\"read\") as \"read\",permissions:[\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL4-WS-ASLIT",
+   "origin": "refusal #3 PREP fail-open witness FO-WS-ASLIT (gate-prep-1, specs/fo-census.json, plant-delivered): the native registrar's permissions element written as a conditional of a mode argument asserted as 'reactivefiber:render'",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,mode?:string):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\",permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "effectClass:\"read\",permissions:[(mode===\"commit\"?\"reactivefiber:commit\":\"reactivefiber:render\") as \"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
+   ]
+  },
+  {
+   "id": "PL4-ANDLEFT",
+   "origin": "refusal #3 PREP fail-open witness FO-ANDLEFT (gate-prep-1, specs/fo-census.json, plant-delivered): the native registrar's effect class written 'read' && (mode ?? 'read'); tsc refuses it (TS2872), so it is a fail-open plant, not a tsc-clean witness",
+   "file": "src/workbench/providers/reactivefiber.ts",
+   "edits": [
+    {
+     "anchor": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {",
+     "occurrence": 1,
+     "plant": "export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string,mode?:\"read\"|\"write\"):void {"
+    },
+    {
+     "anchor": "effectClass:\"read\",permissions:[\"reactivefiber:render\"]",
+     "occurrence": 2,
+     "plant": "effectClass:\"read\"&&(mode??\"read\"),permissions:[\"reactivefiber:render\"]"
+    }
+   ],
+   "falsifies": [
+    "G:literal:registerNativeReactiveFiberRender"
    ]
   }
  ],
@@ -2338,6 +2468,203 @@
    ],
    "falsifies": [
     "R:reader-form"
+   ]
+  },
+  {
+   "id": "GL4-W-CONDFALSE",
+   "origin": "refusal #3 PREP GP1-W-CONDFALSE (gate-prep-1, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isConditionalExpression(value) && !isWholeToken(value.whenTrue) && isWholeToken(value.whenFalse) ? value.whenFalse.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:conditional-branch"
+   ]
+  },
+  {
+   "id": "GL4-W-CALLARG",
+   "origin": "refusal #3 PREP GP1-W-CALLARG (gate-prep-1, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isCallExpression(value) && value.arguments[0] !== undefined && isWholeToken(value.arguments[0]) ? value.arguments[0].text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:call-argument"
+   ]
+  },
+  {
+   "id": "GL4-W-ASLIT",
+   "origin": "refusal #3 PREP GP1-W-ASLIT (gate-prep-1, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isAsExpression(value) && ts.isLiteralTypeNode(value.type) && ts.isStringLiteral(value.type.literal) ? value.type.literal.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:asserted-class"
+   ]
+  },
+  {
+   "id": "GL4-WS-ASLIT",
+   "origin": "refusal #3 PREP GP1-WS-ASLIT (gate-prep-1, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isAsExpression(element) && ts.isLiteralTypeNode(element.type) && ts.isStringLiteral(element.type.literal) ? element.type.literal.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:asserted-element"
+   ]
+  },
+  {
+   "id": "GL4-W-ANDLEFT",
+   "origin": "refusal #3 PREP GP1-W-ANDLEFT (gate-prep-1, specs/leg2.json), the mutant alone",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && isWholeToken(value.left) ? value.left.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:token-left"
+   ]
+  },
+  {
+   "id": "M4-W-CONDTRUE",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as a conditional with a non-token whenFalse reads as its whenTrue token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isConditionalExpression(value) && isWholeToken(value.whenTrue) && !isWholeToken(value.whenFalse) ? value.whenTrue.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:conditional-branch"
+   ]
+  },
+  {
+   "id": "M4-W-CALLLAST",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as a call reads as its last argument when that argument is a whole token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isCallExpression(value) && isWholeToken(value.arguments[value.arguments.length - 1] ?? value) ? (value.arguments[value.arguments.length - 1] as ts.StringLiteral).text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:call-argument"
+   ]
+  },
+  {
+   "id": "M4-W-ASREF",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as an identifier asserted to a string literal type reads as that type's text",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isAsExpression(value) && ts.isIdentifier(value.expression) && ts.isLiteralTypeNode(value.type) && ts.isStringLiteral(value.type.literal) ? value.type.literal.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:asserted-class"
+   ]
+  },
+  {
+   "id": "M4-W-ASPAREN",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as a parenthesized expression asserted to a string literal type reads as that type's text",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isAsExpression(value) && ts.isParenthesizedExpression(value.expression) && ts.isLiteralTypeNode(value.type) && ts.isStringLiteral(value.type.literal) ? value.type.literal.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:asserted-class"
+   ]
+  },
+  {
+   "id": "M4-WS-ASREF",
+   "origin": "seat (wb-jwc.12 class guard): a permissions element written as an identifier asserted to a string literal type reads as that type's text",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;",
+     "occurrence": 1,
+     "plant": "  return `[${value.elements.map(element => (isWholeToken(element) ? element.text : ts.isAsExpression(element) && ts.isIdentifier(element.expression) && ts.isLiteralTypeNode(element.type) && ts.isStringLiteral(element.type.literal) ? element.type.literal.text : `<${ts.SyntaxKind[element.kind]}>`)).join(\",\")}]`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:asserted-element"
+   ]
+  },
+  {
+   "id": "M4-W-ORLEFT",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as an || binary with a whole-token left operand reads as that token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.BarBarToken && isWholeToken(value.left) ? value.left.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:token-left"
+   ]
+  },
+  {
+   "id": "M4-W-NULLISHLEFT",
+   "origin": "seat (wb-jwc.12 class guard): an effectClass written as a ?? binary with a whole-token left operand reads as that token",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "  return isWholeToken(value) ? value.text : `<${ts.SyntaxKind[value.kind]}>`;",
+     "occurrence": 1,
+     "plant": "  return isWholeToken(value) ? value.text : ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken && isWholeToken(value.left) ? value.left.text : `<${ts.SyntaxKind[value.kind]}>`;"
+    }
+   ],
+   "falsifies": [
+    "S:registrations:token-left"
+   ]
+  },
+  {
+   "id": "M4-OTHER-UNJUDGED",
+   "origin": "seat (wb-jwc.12 class guard): a read call whose id is not an rf capability id is listed unjudged instead of nowhere",
+   "file": "test/helpers/rf-operation-receipt-honesty.ts",
+   "edits": [
+    {
+     "anchor": "          if (isRfCapabilityId(id.text)) rf.push({ file, owner, id: id.text, effectClass: wordOf(soleAssignment(descriptor, \"effectClass\")), permissions: wordsOf(soleAssignment(descriptor, \"permissions\")) });\n          return;\n",
+     "occurrence": 1,
+     "plant": "          if (isRfCapabilityId(id.text)) {\n            rf.push({ file, owner, id: id.text, effectClass: wordOf(soleAssignment(descriptor, \"effectClass\")), permissions: wordsOf(soleAssignment(descriptor, \"permissions\")) });\n            return;\n          }\n          why = `id ${id.text} is not an rf capability id`;\n"
+    }
+   ],
+   "falsifies": [
+    "G:unjudged",
+    "P:registrations:ids",
+    "S:tree:other-id"
    ]
   }
  ],

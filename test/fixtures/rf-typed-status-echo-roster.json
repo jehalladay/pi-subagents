@@ -460,6 +460,30 @@
               "tagTypeArgument": 0,
               "qualifiedTypeName": 0,
               "typeofChain": 0
+            },
+            "keyPathsCut6": {
+              "doubleParenthesizedHead": 1,
+              "qualifiedDoubleParenthesizedHead": 1,
+              "throwInLoop": 1,
+              "throwInLoopWithParameter": 1,
+              "asCallee": 1,
+              "memberCallAsCallee": 1,
+              "asConstructionCallee": 1,
+              "classWithHeritage": 1,
+              "heritageWithImplements": 1,
+              "heritageWithTwoImplements": 1,
+              "returnedHeritageClass": 1,
+              "sessionClassTwin": 1,
+              "sessionClassTwinAfterStatement": 1,
+              "sessionClassTwinAfterImport": 1,
+              "signatureInIntersection": 1,
+              "signatureBesideGenericReference": 1,
+              "constructSignatureInIntersection": 1
+            },
+            "heldSrcUnitCut6": {
+              "module": "src/workbench/hosts/furnace-hosted.ts",
+              "unit": "openHost.sessionClass",
+              "reads": 1
             }
           }
         },
