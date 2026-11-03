@@ -61,23 +61,36 @@
  *
  * LIVE SET (W1's reader; W2 reads the files it reads live): liveReading of test/helpers/hx-live-set-reader.ts, the reader the
  * rule-19 child wb-tz2.19 cured and its carrier wb-tz2.22 landed (landing 858), taken in place of this file's own reader as ruling
- * R-B128's mechanical restatement. It reads with every word of its rosters on and with this file's READ SET scanner as its witness
- * (W1_READ: an HX case WITNESSES when the scanner reads a claim in its body); casesOf, HX_ENTRIES, nodesOf, squeeze, within and the
- * registration lists TEST_ROOTS, CASE_FLAGS, CASE_METHODS and NON_CASE_MEMBERS are that helper's too. The helper's header states
- * what the reader reads and test/workbench-hx-live-set-reader-census.test.ts falsifies it; this census claims of the reader only
- * what its own pins hold: W1's reading of the native-read files and of every LIVE_FORMS form, both held to the roster. The case
- * flags, the case methods and the members that register no case partition vitest's own test-API members (REGISTRATION_MEMBERS of
- * test/helpers/census.ts), and this file derives the same partition from vitest's runtime objects. LIVE_FORMS: one module per form,
- * each with its surface - a membership or registration form reads live with the HX cases it registers (one, or two for a form
- * that carries the entry from one case into another) and nothing unresolved or outside, a fail-closed form reads something
- * unresolved or outside, and a control reads quiet (not live, no case, nothing unresolved or outside: no HX import, a non-entry SDK
- * import, a non-entry provider import, an entry named only in a comment or a title, a side-effect import) - and the roster holds
- * each form's reading: whether it reads live, its HX cases (`<registration chain, its members space-separated> :: <title>`) and its
- * unresolved and outside counts. The eleven forms named carried-* are the ten members of the former residual family Q9
- * R-LIVE-ASSIGNED-VALUE (an HX entry carried by the value of an M6 assignment) and Q7's former tenth member, the prototype
- * hand-off; this reader reads carried-alias-value-declared as a membership form and the other ten as fail-closed forms. W1 pins
- * the native-read files' HX locals and HX cases as read and their UNRESOLVED and OUTSIDE lists empty, so in a native-read file an
- * hx drive the reader reads as a new HX local or HX case, or places UNRESOLVED or OUTSIDE, reds W1.
+ * R-B128's mechanical restatement. W1 reads it through W1_READ, which hands the reader this file's READ SET scanner as its witness
+ * (an HX case WITNESSES when the scanner reads a claim in its body) and no word list, so each roster the helper's HEADER_SECTIONS
+ * names is read with every word on; casesOf, HX_ENTRIES, nodesOf, squeeze, within and the registration lists TEST_ROOTS,
+ * CASE_FLAGS, CASE_METHODS and NON_CASE_MEMBERS are that helper's too. THE WORD SET (its own case) holds that reading three ways:
+ * W1_READ's keys are its witness alone; every word of every HEADER_SECTIONS roster is held - the reading with every word of those
+ * rosters written out and that one word dropped reads at least one LIVE_FORMS form otherwise (its form witness: live, HX cases,
+ * unresolved and outside counts) than the reading with every word does, and the roster pins every form's witness as W1 reads it,
+ * so a W1 reading of the forms that drops any one word reds W1 at such a form; and the native-read files and every LIVE_FORMS
+ * form, read again with every word written out, read as the roster's W1 pins them (a second reading beside W1's own). The
+ * helper's header states what the reader reads and test/workbench-hx-live-set-reader-census.test.ts falsifies it; this census
+ * claims of the reader only what its own pins hold: W1's reading of the native-read files and of every LIVE_FORMS form, both held
+ * to the roster, and THE WORD SET. The case flags, the case methods and the members that register no case partition vitest's own
+ * test-API members (REGISTRATION_MEMBERS of test/helpers/census.ts), and this file derives the same partition from vitest's
+ * runtime objects. LIVE_FORMS: one module per form, each with its surface - a membership or registration form reads live with the
+ * HX cases it registers (one, or two for a form that carries the entry from one case into another) and nothing unresolved or
+ * outside, a fail-closed form reads something unresolved or outside, and a control reads quiet (not live, no case, nothing
+ * unresolved or outside: no HX import, a non-entry SDK import, a non-entry provider import, an entry named only in a comment or a
+ * title, a side-effect import) - and the roster holds each form's reading: whether it reads live, its HX cases (`<registration
+ * chain, its members space-separated> :: <title>`) and its unresolved and outside counts. The eleven forms named carried-* are the
+ * ten members of the former residual family Q9 R-LIVE-ASSIGNED-VALUE (an HX entry carried by the value of an M6 assignment) and
+ * Q7's former tenth member, the prototype hand-off; this reader reads carried-alias-value-declared as a membership form and the
+ * other ten as fail-closed forms. The ten forms dynamic-destructured-module, dynamic-destructured-shorthand-module,
+ * dynamic-destructured-rest-module, alias-member-rest, alias-destructured-shorthand, alias-destructured-rest,
+ * binding-site-parameter, binding-site-function, binding-site-class (membership) and binding-default (fail closed) were added at
+ * the R-B455 restatement for the ten words refusal #5 measured held by no form (BINDING destructured renamed, destructured
+ * shorthand, destructured rest, rest module, alias shorthand and alias rest; REFERENCE parameter name, function name and class
+ * name; PLACEMENT binding default): each writes the declaration or binding site of its word at the top level, outside the HX
+ * probe case, where a native-read file's own module-level drive stands. W1 pins the native-read files' HX locals and HX cases as
+ * read and their UNRESOLVED and OUTSIDE lists empty, so in a native-read file an hx drive the reader reads as a new HX local or HX
+ * case, or places UNRESOLVED or OUTSIDE, reds W1.
  * ROUTE (W2's reader). A ROUTE is a chain whose head is expect(...) or expect.soft(...) of a direct call of hxLiveInvariant, the
  * subject read through UNWRAP (the bare name: a verdict held in a variable, the predicate under another name or as a namespace
  * member is no route); the reader records the whole chain's text, whitespace removed, and the title of the innermost case holding
@@ -150,7 +163,8 @@
  * wb-cax.25), so merging an atom-carrying pin into a sibling reds. Row Q, each family's name and quiet row and every member are
  * docs/14's residual table. Every LIVE SET and ROUTE form, with its surface, is docs/14's table "HX licensed-complete census read
  * forms", both ways and in order; the registration partition is vitest's runtime test API's (a flag is a member that is itself the
- * whole chainable API, a member that registers no case is vitest's own describe or hook export, a method is any other member). The
+ * whole chainable API, a member that registers no case is vitest's own describe or hook export, a method is any other member);
+ * THE WORD SET's rosters and words are the helper's HEADER_SECTIONS, and its option keys are held to their names. The
  * claim vocabulary is src's, and each vocabulary form has a falsifier spelling its derived value that the scanner flags. The HX
  * evidence rows, S1's fixture cases and S2's lead paragraph are docs/14's; N1's sentence is TRACEABILITY.md's. So a row, a residual
  * family or member, a LIVE SET or ROUTE form, a registration flag or method, an atom-carrying pin, a kind or an HX row removed from
@@ -169,8 +183,8 @@
  * NOT CLAIMED: the On-landing leg; any hx behaviour (the native tier's receipt owns that); that the native tier ran (this census
  * reads sources, configs and docs) or how a case runs beyond its written registration chain (a skip decided inside the body, a
  * condition's run-time value); a claim, an hx drive or a route hollowing outside a reader's read set (RESIDUALS names the known
- * families); any reading of the LIVE SET reader beyond W1's pins (the helper's header states its claims and its census falsifies
- * them); that prose is understood (CONSERVATIVE READINGS); the coordinated removal of a SELF-ANCHORED member.
+ * families); any reading of the LIVE SET reader beyond W1's pins and THE WORD SET (the helper's header states its claims and its
+ * census falsifies them); that prose is understood (CONSERVATIVE READINGS); the coordinated removal of a SELF-ANCHORED member.
  *
  * Display paths added: none. Test and docs only: no src change, no live case, no fixture workspace and no receipt; docs/14 carries
  * the read-forms and residual sections this census reads.
@@ -191,7 +205,7 @@ import censusConfig from "../vitest.census.config.js";
 import defaultConfig from "../vitest.config.js";
 import nativeConfig from "../vitest.native.config.js";
 import { DEFAULT_GATE_TIER, docsSection, REGISTRATION_MEMBERS, resolveTier, sectionTables } from "./helpers/census.js";
-import { CASE_FLAGS, CASE_METHODS, casesOf, HX_ENTRIES, type LiveReading, liveReading, NON_CASE_MEMBERS, nodesOf, type ReadOptions, squeeze, TEST_ROOTS, within } from "./helpers/hx-live-set-reader.js";
+import { CASE_FLAGS, CASE_METHODS, casesOf, HEADER_SECTIONS, HX_ENTRIES, type LiveReading, liveReading, NON_CASE_MEMBERS, nodesOf, type ReadOptions, squeeze, TEST_ROOTS, within, words } from "./helpers/hx-live-set-reader.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-tz2.9";
@@ -323,7 +337,10 @@ const liveFiles = (): string[] => nativeTier().files.filter(file => liveReading(
 /** A LIVE SET reading as a form's witness: whether it reads live, its HX cases (`<registration chain, its members space-separated>
  * :: <title>`) and its unresolved and outside counts. */
 function liveSummary(source: string): Json {
-  const reading = liveReading(parse("form.ts", source), W1_READ);
+  return summaryOf(liveReading(parse("form.ts", source), W1_READ));
+}
+/** A LIVE SET reading's form witness (liveSummary's, and THE WORD SET's re-reading of every form). */
+function summaryOf(reading: LiveReading): Json {
   return plain({
     live: reading.live,
     cases: reading.cases.map(entry => `${entry.registration.split(".").join(" ")} :: ${entry.title}`),
@@ -533,8 +550,27 @@ const claimsOfSource = (file: string, text: string): string[] => {
   const sf = parse(file, text);
   return claimsIn(sf, sf, CLAIM_VOCABULARY);
 };
-/** W1's reading options: the landed LIVE SET reader with every word on, and this file's READ SET scanner as its witness. */
+/** W1's reading options: this file's READ SET scanner as the landed LIVE SET reader's witness, and no word list, so every word of
+ * every roster is on (THE WORD SET holds it). */
 const W1_READ: ReadOptions = { witness: (body, sf) => claimsIn(body, sf, CLAIM_VOCABULARY).length > 0 };
+/** The ReadOptions key of each roster the helper's HEADER_SECTIONS names, in its order (THE WORD SET writes the rosters out). */
+const ROSTER_OPTION: Readonly<Record<string, Exclude<keyof ReadOptions, "witness">>> = {
+  MODULE: "modules",
+  ENTRY: "entries",
+  UNWRAP: "unwraps",
+  BINDING: "bindings",
+  REGISTRATION: "registrations",
+  FLAG: "flags",
+  METHOD: "methods",
+  UNRESOLVED: "unresolved",
+  REFERENCE: "references",
+  PLACEMENT: "placements",
+};
+/** Every word of every HEADER_SECTIONS roster written out but the one `dropped` names (`<SECTION>/<word>`), with W1's witness. */
+function wordsWritten(dropped = ""): ReadOptions {
+  const lists = HEADER_SECTIONS.map((section): [string, string[]] => [ROSTER_OPTION[section.name] ?? section.name, words(section.roster).filter(word => `${section.name}/${word}` !== dropped)]);
+  return { ...Object.fromEntries(lists), witness: W1_READ.witness } as ReadOptions;
+}
 
 /** A synthetic live source shaped like the native tier's HX case: the preamble statements, then the probe's own. */
 const LIVE_PREAMBLE: readonly string[] = [
@@ -720,6 +756,9 @@ const LIVE_FORMS: readonly LiveForm[] = [
   { id: "dynamic-destructured", surface: "membership", source: moduleOf("", "it", `const {nativeHyperUnixFind: find} = await import("${PROVIDER_SPECIFIER}"); await find(${FIND_ARGUMENTS});`) },
   { id: "dynamic-destructured-shorthand", surface: "membership", source: moduleOf("", "it", `const {nativeHyperUnixFind} = await import("${PROVIDER_SPECIFIER}"); await nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
   { id: "dynamic-destructured-rest", surface: "membership", source: moduleOf("", "it", `const {...hxModule} = await import("${PROVIDER_SPECIFIER}"); await hxModule.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-destructured-module", surface: "membership", source: moduleOf(`const {nativeHyperUnixFind: find} = await import("${PROVIDER_SPECIFIER}");`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "dynamic-destructured-shorthand-module", surface: "membership", source: moduleOf(`const {nativeHyperUnixFind} = await import("${PROVIDER_SPECIFIER}");`, "it", FIND) },
+  { id: "dynamic-destructured-rest-module", surface: "membership", source: moduleOf(`const {...hxModule} = await import("${PROVIDER_SPECIFIER}");`, "it", `await hxModule.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
   { id: "dynamic-inline", surface: "membership", source: moduleOf("", "it", `await (await import("${PROVIDER_SPECIFIER}")).nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
   { id: "dynamic-module", surface: "membership", source: moduleOf(`const hxProvider = await import("${PROVIDER_SPECIFIER}");`, "it", `await hxProvider.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
   { id: "dynamic-unawaited", surface: "membership", source: moduleOf(`const loading = import("${PROVIDER_SPECIFIER}");`, "it", `await (await loading).nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
@@ -727,10 +766,13 @@ const LIVE_FORMS: readonly LiveForm[] = [
   { id: "alias-member", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const find = hxProvider.nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-member-default", surface: "membership", source: moduleOf(`import hxProvider from "${PROVIDER_SPECIFIER}"; const find = hxProvider.nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-member-dynamic", surface: "membership", source: moduleOf(`const hxProvider = await import("${PROVIDER_SPECIFIER}"); const find = hxProvider.nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "alias-member-rest", surface: "membership", source: moduleOf(`const {...hxModule} = await import("${PROVIDER_SPECIFIER}"); const find = hxModule.nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-member-element", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const find = hxProvider["nativeHyperUnixFind"];`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-destructured", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {nativeHyperUnixFind: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-destructured-default", surface: "membership", source: moduleOf(`import hxProvider from "${PROVIDER_SPECIFIER}"; const {nativeHyperUnixFind: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "alias-destructured-dynamic", surface: "membership", source: moduleOf(`const hxProvider = await import("${PROVIDER_SPECIFIER}"); const {nativeHyperUnixFind: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "alias-destructured-shorthand", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {nativeHyperUnixFind} = hxProvider;`, "it", FIND) },
+  { id: "alias-destructured-rest", surface: "membership", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {...hxModule} = hxProvider;`, "it", `await hxModule.nativeHyperUnixFind(${FIND_ARGUMENTS});`) },
   { id: "alias-chain", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const first = nativeHyperUnixFind; const second = first;`, "it", `await second(${FIND_ARGUMENTS});`) },
   { id: "alias-after-assignment", surface: "membership", source: moduleOf(`${NAMED_IMPORT} let first; first = nativeHyperUnixFind; const second = first;`, "it", `await second(${FIND_ARGUMENTS});`) },
   { id: "assigned", surface: "membership", source: moduleOf(`${NAMED_IMPORT} let find; find = nativeHyperUnixFind;`, "it", `await find(${FIND_ARGUMENTS});`) },
@@ -746,6 +788,9 @@ const LIVE_FORMS: readonly LiveForm[] = [
   { id: "stored-deep", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const holder = {inner: {find: undefined}}; holder.inner.find = nativeHyperUnixFind;`, "it", `await holder.inner.find(${FIND_ARGUMENTS});`) },
   { id: "stored-element", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const holder = {find: undefined}; holder["find"] = nativeHyperUnixFind;`, "it", `await holder.find(${FIND_ARGUMENTS});`) },
   { id: "carried-alias-value-declared", surface: "membership", source: `${NAMED_IMPORT} let carried; const find = (carried = nativeHyperUnixFind); it("HX probe", async () => { await find(${FIND_ARGUMENTS}); });` },
+  { id: "binding-site-parameter", surface: "membership", source: moduleOf(`${NAMED_IMPORT} function carryParameter(nativeHyperUnixFind: number): number { return 0; }`, "it", FIND) },
+  { id: "binding-site-function", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const carried = function nativeHyperUnixFind(): number { return 1; };`, "it", FIND) },
+  { id: "binding-site-class", surface: "membership", source: moduleOf(`${NAMED_IMPORT} const carried = class nativeHyperUnixFind {};`, "it", FIND) },
   { id: "root-test", surface: "registration", source: moduleOf(NAMED_IMPORT, "test", FIND) },
   { id: "import-alias", surface: "registration", source: moduleOf(`import {it as liveIt} from "vitest"; ${NAMED_IMPORT}`, "liveIt", FIND) },
   { id: "const-alias", surface: "registration", source: moduleOf(`${NAMED_IMPORT} const liveIt = it;`, "liveIt", FIND) },
@@ -773,6 +818,7 @@ const LIVE_FORMS: readonly LiveForm[] = [
   { id: "unread-binding", surface: "fail-closed", source: moduleOf("", "it", `const {[key]: find} = await import("${PROVIDER_SPECIFIER}"); await find(${FIND_ARGUMENTS});`) },
   { id: "unread-alias-binding", surface: "fail-closed", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; const {[key]: find} = hxProvider;`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "unread-assignment-pattern", surface: "fail-closed", source: moduleOf(`import * as hxProvider from "${PROVIDER_SPECIFIER}"; let find; ({[key]: find} = hxProvider);`, "it", `await find(${FIND_ARGUMENTS});`) },
+  { id: "binding-default", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} const {HYPERUNIX_FIND_CONTRACT: contract = String(await nativeHyperUnixFind(${FIND_ARGUMENTS}))} = await import("${PROVIDER_SPECIFIER}");`, "it", "expect(contract).toBeDefined();") },
   { id: "array-held", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} const [find] = [nativeHyperUnixFind];`, "it", `await find(${FIND_ARGUMENTS});`) },
   { id: "hook", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} let result: unknown; beforeAll(async () => { result = ${FIND} });`, "it", "expect(result).toBeDefined();") },
   { id: "hook-iife-entry", surface: "fail-closed", source: moduleOf(`${NAMED_IMPORT} let result: unknown; beforeAll(async () => { result = await (() => nativeHyperUnixFind)()(${FIND_ARGUMENTS}); });`, "it", "expect(result).toBeDefined();") },
@@ -1385,6 +1431,9 @@ describe(SUITE, () => {
       "membership:dynamic-destructured",
       "membership:dynamic-destructured-shorthand",
       "membership:dynamic-destructured-rest",
+      "membership:dynamic-destructured-module",
+      "membership:dynamic-destructured-shorthand-module",
+      "membership:dynamic-destructured-rest-module",
       "membership:dynamic-inline",
       "membership:dynamic-module",
       "membership:dynamic-unawaited",
@@ -1392,10 +1441,13 @@ describe(SUITE, () => {
       "membership:alias-member",
       "membership:alias-member-default",
       "membership:alias-member-dynamic",
+      "membership:alias-member-rest",
       "membership:alias-member-element",
       "membership:alias-destructured",
       "membership:alias-destructured-default",
       "membership:alias-destructured-dynamic",
+      "membership:alias-destructured-shorthand",
+      "membership:alias-destructured-rest",
       "membership:alias-chain",
       "membership:alias-after-assignment",
       "membership:assigned",
@@ -1411,6 +1463,9 @@ describe(SUITE, () => {
       "membership:stored-deep",
       "membership:stored-element",
       "membership:carried-alias-value-declared",
+      "membership:binding-site-parameter",
+      "membership:binding-site-function",
+      "membership:binding-site-class",
       "registration:root-test",
       "registration:import-alias",
       "registration:const-alias",
@@ -1449,6 +1504,7 @@ describe(SUITE, () => {
       "fail-closed:unread-binding",
       "fail-closed:unread-alias-binding",
       "fail-closed:unread-assignment-pattern",
+      "fail-closed:binding-default",
       "fail-closed:array-held",
       "fail-closed:hook",
       "fail-closed:hook-iife-entry",
@@ -1621,6 +1677,31 @@ describe(SUITE, () => {
     ).toEqual([]);
   });
 
+  it("the LIVE SET word set: W1_READ hands the reader its witness alone, every word of every roster the helper's HEADER_SECTIONS names is held by a LIVE_FORMS form whose reading moves when that one word is dropped, and the native-read files and every LIVE_FORMS form, read again with every word written out, read as the roster's W1 pins them", { timeout: BUDGET_MS }, () => {
+    expect(Object.keys(W1_READ), "W1_READ hands the reader its witness and no word list").toEqual(["witness"]);
+    expect(Object.keys(ROSTER_OPTION), "one ReadOptions key per roster the helper's HEADER_SECTIONS names, in its order").toEqual(HEADER_SECTIONS.map(section => section.name));
+    const forms = LIVE_FORMS.map(form => parse(`${form.id}.ts`, form.source));
+    const every = forms.map(sf => summaryOf(liveReading(sf, wordsWritten())));
+    const dropped = HEADER_SECTIONS.flatMap(section => words(section.roster).map(word => `${section.name}/${word}`));
+    expect(
+      dropped.filter(word => {
+        const options = wordsWritten(word);
+        return forms.every((sf, at) => isDeepStrictEqual(summaryOf(liveReading(sf, options)), every[at]));
+      }),
+      "every word is held: the reading with every word written out and that one word dropped reads at least one LIVE_FORMS form otherwise",
+    ).toEqual([]);
+    const native = nativeTier().files.map(file => ({ file, reading: liveReading(parseRepo(file), wordsWritten()) }));
+    const pinned = ROSTER.witnesses.W1;
+    expect(
+      plain({
+        live: native.filter(({ reading }) => reading.live).map(({ file, reading }) => ({ file, entries: reading.entries, cases: reading.cases, witnessing: reading.witnessing })),
+        unresolved: native.flatMap(({ file, reading }) => reading.unresolved.map(entry => `${file}:${entry}`)),
+        outside: native.flatMap(({ file, reading }) => reading.outside.map(entry => `${file}:${entry}`)),
+        forms: Object.fromEntries(LIVE_FORMS.map((form, at) => [form.id, every[at] ?? null])),
+      }),
+      "the native-read files and every LIVE_FORMS form, read again with every word written out, read as the roster's W1 pins them",
+    ).toStrictEqual(isRecord(pinned) ? plain({ live: pinned.live, unresolved: pinned.unresolved, outside: pinned.outside, forms: pinned.forms }) : null);
+  });
   it("roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
     expect(ROSTER.bead, "the roster is this bead's").toBe(BEAD);
     expect(ROWS, "the judged rows equal the roster rows exactly and in order").toEqual(ROSTER.rows);

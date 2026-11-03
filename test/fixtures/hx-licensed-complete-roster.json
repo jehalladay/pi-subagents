@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern), the post-inversion RESTATEMENT that orchestrator ruling R-B128 binds (the mechanical restatement over the landed fix of the rule-19 child wb-tz2.19, carried by wb-tz2.22 at landing 858): W1's LIVE SET reader is the landed helper's liveReading (test/helpers/hx-live-set-reader.ts), the residual family Q9 R-LIVE-ASSIGNED-VALUE dissolved with it (its ten members and Q7's former prototype hand-off read loud through that reader and are the LIVE_FORMS forms carried-*); one other LIVE_FORMS reading moved with the reader (unread-assignment-pattern: its unread assignment places nothing, so its namespace reference also reads OUTSIDE, outside 0 to 1), and every pin's witness but W1's and Q7's is cut #4's. rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order (row Q's families and members are also held, both ways, to docs/14's 'HX licensed-complete census residuals' table, and every LIVE SET and ROUTE form to its 'HX licensed-complete census read forms' table); witnesses: one per pin, each the value its case MEASURED at the cut (trunk e75c4ed0335b merged into the branch), computed by the census from the docs, the configs, forge.toml, package.json, the live sources, the docs/14 fixture cases, the census's own form modules read by its readers, and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the cutting seats' read-only measurements, which the census never re-reads.",
+  "comment": "wb-tz2.9 (HX-ORIGINAL-GOALS-CLOSURE-R9): the OUT-OF-FILE anchor of test/workbench-hx-licensed-complete-census.test.ts (the hk9l/5jha roster pattern), the post-inversion RESTATEMENT that orchestrator ruling R-B128 binds (the mechanical restatement over the landed fix of the rule-19 child wb-tz2.19, carried by wb-tz2.22 at landing 858): W1's LIVE SET reader is the landed helper's liveReading (test/helpers/hx-live-set-reader.ts), the residual family Q9 R-LIVE-ASSIGNED-VALUE dissolved with it (its ten members and Q7's former prototype hand-off read loud through that reader and are the LIVE_FORMS forms carried-*); one other LIVE_FORMS reading moved with the reader (unread-assignment-pattern: its unread assignment places nothing, so its namespace reference also reads OUTSIDE, outside 0 to 1), and every pin's witness but W1's and Q7's is cut #4's. rows, quotes, readings and residuals: the census's judged set, held to the census both ways and in order (row Q's families and members are also held, both ways, to docs/14's 'HX licensed-complete census residuals' table, and every LIVE SET and ROUTE form to its 'HX licensed-complete census read forms' table); witnesses: one per pin, each the value its case MEASURED at the cut (trunk e75c4ed0335b merged into the branch), computed by the census from the docs, the configs, forge.toml, package.json, the live sources, the docs/14 fixture cases, the census's own form modules read by its readers, and src; tests: every registered test title in registration order; gate: the R9 gate artifact's state, its condition, citations and on-landing text (each equal to the bead's own description in the tracker export), and the cutting seats' read-only measurements, which the census never re-reads. R-B455 RESTATEMENT (refusal #5, the further restatement in the same lineage that ruling binds): W1's forms witness gains the ten top-level LIVE_FORMS forms dynamic-destructured-module, dynamic-destructured-shorthand-module, dynamic-destructured-rest-module, alias-member-rest, alias-destructured-shorthand, alias-destructured-rest, binding-site-parameter, binding-site-function, binding-site-class and binding-default, each measured by the census on trunk 3023c3db6334 merged into the branch, and tests gains the LIVE SET word-set case; every other witness, title and reading is unchanged.",
   "bead": "wb-tz2.9",
   "rows": [
     {
@@ -435,6 +435,30 @@
           "unresolved": 0,
           "outside": 0
         },
+        "dynamic-destructured-module": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-destructured-shorthand-module": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "dynamic-destructured-rest-module": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "dynamic-inline": {
           "live": true,
           "cases": [
@@ -491,6 +515,14 @@
           "unresolved": 0,
           "outside": 0
         },
+        "alias-member-rest": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
         "alias-member-element": {
           "live": true,
           "cases": [
@@ -516,6 +548,22 @@
           "outside": 0
         },
         "alias-destructured-dynamic": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-destructured-shorthand": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "alias-destructured-rest": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -637,6 +685,30 @@
           "outside": 0
         },
         "carried-alias-value-declared": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "binding-site-parameter": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "binding-site-function": {
+          "live": true,
+          "cases": [
+            "it :: HX probe"
+          ],
+          "unresolved": 0,
+          "outside": 0
+        },
+        "binding-site-class": {
           "live": true,
           "cases": [
             "it :: HX probe"
@@ -930,6 +1002,12 @@
           "live": true,
           "cases": [],
           "unresolved": 1,
+          "outside": 1
+        },
+        "binding-default": {
+          "live": true,
+          "cases": [],
+          "unresolved": 0,
           "outside": 1
         },
         "array-held": {
@@ -1802,6 +1880,7 @@
     "the description anchors: the bead's own description binds the rows, row N's citation, every label atom's carrier pin and the gate block",
     "the docs and src anchors: docs/14's residual table binds row Q and every member, src binds the claim vocabulary and every falsifier form, and docs/14's HX fixture cases bind the scanner's sense",
     "the live-set anchors: docs/14's read-forms table binds every LIVE SET and ROUTE form, vitest's own test API binds the registration partition, every form reads as its surface requires, W1's witnessing reader reads every falsifier and no benign statement, and the intact route is the live files' chain",
+    "the LIVE SET word set: W1_READ hands the reader its witness alone, every word of every roster the helper's HEADER_SECTIONS names is held by a LIVE_FORMS form whose reading moves when that one word is dropped, and the native-read files and every LIVE_FORMS form, read again with every word written out, read as the roster's W1 pins them",
     "roster: the judged rows, the quotes, the readings, the residual members and the registered tests equal test/fixtures/hx-licensed-complete-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "gate": {

@@ -334,6 +334,9 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | membership | dynamic-destructured |
 | membership | dynamic-destructured-shorthand |
 | membership | dynamic-destructured-rest |
+| membership | dynamic-destructured-module |
+| membership | dynamic-destructured-shorthand-module |
+| membership | dynamic-destructured-rest-module |
 | membership | dynamic-inline |
 | membership | dynamic-module |
 | membership | dynamic-unawaited |
@@ -341,10 +344,13 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | membership | alias-member |
 | membership | alias-member-default |
 | membership | alias-member-dynamic |
+| membership | alias-member-rest |
 | membership | alias-member-element |
 | membership | alias-destructured |
 | membership | alias-destructured-default |
 | membership | alias-destructured-dynamic |
+| membership | alias-destructured-shorthand |
+| membership | alias-destructured-rest |
 | membership | alias-chain |
 | membership | alias-after-assignment |
 | membership | assigned |
@@ -360,6 +366,9 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | membership | stored-deep |
 | membership | stored-element |
 | membership | carried-alias-value-declared |
+| membership | binding-site-parameter |
+| membership | binding-site-function |
+| membership | binding-site-class |
 | registration | root-test |
 | registration | import-alias |
 | registration | const-alias |
@@ -398,6 +407,7 @@ Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then
 | fail-closed | unread-binding |
 | fail-closed | unread-alias-binding |
 | fail-closed | unread-assignment-pattern |
+| fail-closed | binding-default |
 | fail-closed | array-held |
 | fail-closed | hook |
 | fail-closed | hook-iife-entry |
