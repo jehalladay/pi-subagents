@@ -48,7 +48,11 @@
  * refusal #6's record and its disposition after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block,
  * refusal #4's member lines and refusal #5's UNMET record unchanged; refusal #6's UNMET record, which this cut reads, is among the
  * additions), and the absence census still names that roster, all this census reads of it; every count below re-measured equal at
- * a9a10bbaa2fa. Not pinned:
+ * a9a10bbaa2fa. wb-rdlh.4's cut (row D pinned) read them again at 36cb64856c54 (landing 892, trunk at its claim) and at
+ * fbe12f0274af (landing 894, merged into the branch; of the paths this census reads only the bead export changed between the two, and
+ * not this row): of the paths this census reads, that cut edits docs/workbench/12-security.md (clause (d)'s bullet, after the eighth)
+ * and the wb-gs2.3 census test/workbench-docs12-authorization.census.ts (its ninth AUTH_MARKDOWN entry), and every count below
+ * re-measured equal, each docs count on the parked page (DOCS below). Not pinned:
  * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
  * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
@@ -95,7 +99,11 @@
  *   identifier character), in code, strings, comments and patterns alike; it complements FIELDS, which reads decoded names that the
  *   raw text does not spell.
  * - DOCS (row D): the page's 'Authorization design' section, read through two views of the one page, each claimed at the forms D1's
- *   pins hold and no wider. THE SECTION-SOURCE READER: wb-rdlh.3's, landed at landing 798 (test/helpers/docs-section-source.ts) and
+ *   pins hold and no wider. Since wb-rdlh.4 the page carries clause (d)'s sentence (CLAUSE_SENTENCE) as the section's ninth bullet,
+ *   right after the eighth: the PARKED PAGE is the page with that one bullet set aside where it follows the eighth exactly once
+ *   (parkedPage; the page refusals #1 to #6 measured), the readings below that name FROZEN_SECTION, the parked sentence's terms or a
+ *   docs plant are taken on it, and DELIVERED (the end of this paragraph) reads the page itself. THE SECTION-SOURCE READER:
+ *   wb-rdlh.3's, landed at landing 798 (test/helpers/docs-section-source.ts) and
  *   imported unedited (sectionSource, termsStated) by one import declaration, whose two names docsBinding calls; no function, variable
  *   or class declaration, parameter or binding element of this file takes either name at the placements PROVENANCE names, and no
  *   import declaration of it names marked (the provenance case, at the forms PROVENANCE names; a copy of termsStated feeding the
@@ -125,7 +133,16 @@
  *   as four raws re-joined: the heading 23, a space 2, the list 1094 and a space 2, refusal #4's member (c)). CHECKS: D1 names every
  *   check a reading fails, in this order (DOCS_CHECKS): view (the shared view refuses the section), tokens (sectionSource refuses it)
  *   and untiled (sectionSource binds it and reads the page untiled), html, blocks, bullets, rendered and source (the shape) and terms
- *   (termsStated reads a term in the source); each holds on the page and fails on one docs plant at least.
+ *   (termsStated reads a term in the source); each holds on the parked page and fails on one docs plant at least. DELIVERED: the same
+ *   two views read the page itself, held to its delivered shape (FROZEN_PINNED: one list of nine items, no HTML, the items' text and
+ *   the section's source each held to a sha-256, the source's bytes and its four raws, the list's longer by clause (d)'s line); D1 names
+ *   every delivered check a page fails, in this order (CLAUSE_CHECKS): view, tokens and untiled as above, html, blocks, bullets,
+ *   rendered and source against FROZEN_PINNED, terms (the source does not spell out both terms, in order) and base (clause (d)'s bullet
+ *   does not follow the eighth exactly once, or the page with it set aside fails a check above); each holds on the page and fails on
+ *   one clause plant at least. THE BINDING: the string elements of the one AUTH_MARKDOWN array literal of the wb-gs2.3 census
+ *   (test/workbench-docs12-authorization.census.ts, read from its TypeScript AST) equal the section's items as the shared view gives
+ *   their markdown, clause (d)'s sentence the ninth; that census's own run and the strength of its rows' pins are NOT CLAIMED by this
+ *   census.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A. A1 the wb-pjj provenance test (its header names wb-pjj) reads this roster by path and registers one describe for clause (a)
@@ -153,17 +170,29 @@
  *    form other than a bare literal); the schema family of both line sets joins the field reading; and the word reading covers
  *    every record-shaped name (the 40 members and the 50 schema names), finds none spelled in src, and reads the name in each of
  *    refusal #1's plants.
- *  D. PARKED, never counted satisfied: clause (d) asks for a sentence on the W19 security-design page; standing rule 3 (the user's W19
- *    INPUT HYGIENE order) keeps agents to product input-hygiene tests, so the sentence and its wb-gs2.3 census row are the owner's. D1
- *    holds the parked state: the row carries that reason, the page's tokens tile it, the section binds in both views, its source is the
- *    frozen source and marked carries it as the four raws member (c) names, it spells out neither term of the parked sentence, and the
- *    page fails no check. So a cut that edits the section's source (any character of the span: a bullet added, removed, reworded or
- *    re-marked; a block added or the list removed; a link, an image, a definition, a table, a block quote or HTML added, at any depth;
- *    a CR or a CRLF; white space changed; the heading line edited; the clause (d) sentence added in any form or wording) reds D1 by
- *    source and binds this row in the same commit, and by each further check it fails: untiled when the section still binds and the
- *    edit is one marked's top-level tokens do not carry (a CR, a CRLF, a top-level definition whose label repeats one), tokens when the
- *    heading no longer binds, terms when the section still binds and the edit spells a term of the parked sentence out in the span. Its
- *    controls (DOCS_PLANTS: each the page with one edit made in memory, and every check it fails) are refusal #1's docs plants (the
+ *  D. PINNED since wb-rdlh.4: clause (d)'s sentence was parked under standing rule 3 (the user's W19 INPUT HYGIENE order keeps agents
+ *    to product input-hygiene tests) until the owner's security-design ruling R-B459 approved it, and wb-rdlh.4 delivered it with its
+ *    wb-gs2.3 census entry in one commit. D1 holds the delivered state: the row carries no reason; the page carries clause (d)'s bullet
+ *    once, right after the eighth; the page's tokens tile it and the section binds in both views; it spells out both terms of the
+ *    sentence, each of which row D's label (the filing's clause (d)) spells; the sentence renders as the ninth item and as no other; the
+ *    section's source is the delivered source and marked carries it as four raws; the page fails no delivered check; with the bullet
+ *    set aside the page is the parked page, failing no parked check and stating no term, and the delivery adds that one bullet line and
+ *    leaves the eight parked items as they were (it removes and rewords nothing); the wb-gs2.3 census's AUTH_MARKDOWN literal is the
+ *    section's items, clause (d)'s sentence the ninth, and each of three edits of that census's source made in memory (BINDING_EDITS:
+ *    the entry dropped, the entry reworded, the literal renamed) unbinds it. Its delivered controls (CLAUSE_PLANTS: each the page with one edit
+ *    made in memory, and every delivered check it fails) are clause (d)'s bullet removed, its never-softens clause and its
+ *    authorization-input clause reworded, the bullet moved under the next section, nested under the eighth, hidden in an HTML comment,
+ *    split into two bullets and doubled; the seventh bullet reworded and removed; a CR on the page's title line; a level-1 heading
+ *    placed above the section; and the heading's space spelled as an entity. D1 keeps the parked readings, each on the parked page: its
+ *    tokens tile it, the section binds in both views, its source is the frozen source and marked carries it as the four raws member
+ *    (c) names, it spells out neither term of the parked sentence, and it fails no check. So an edit of the parked page's section source
+ *    (any character of the span: a bullet added, removed, reworded or re-marked; a block added or the list removed; a link, an image, a
+ *    definition, a table, a block quote or HTML added, at any depth; a CR or a CRLF; white space changed; the heading line edited; the
+ *    parked sentence added in any form or wording) reds the parked reading by source, and by each further check it fails: untiled when
+ *    the section still binds and the edit is one marked's top-level tokens do not carry (a CR, a CRLF, a top-level definition whose
+ *    label repeats one), tokens when the heading no longer binds, terms when the section still binds and the edit spells a term of the
+ *    parked sentence out in the span. Its parked controls (DOCS_PLANTS: each the parked page with one edit made in memory, and every
+ *    check it fails) are refusal #1's docs plants (the
  *    sentence as a bullet, a nested item, a paragraph, a block quote and an HTML block, and the paraphrase as a bullet); refusal #2's
  *    (the sentence as a link title in the first bullet, L2-D1; as a reference link's title with its definition after the page's last
  *    line, L2-D1b, which reds by source alone, its definition outside the span; as an empty-alt image's title, L2-D3) with that gate's
@@ -284,7 +313,8 @@
  * list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together:
  * the program states no residual list to anchor it outside the cut.
  * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
- * two test sources it binds, the section-source reader it imports and the bead export are only read.
+ * two test sources it binds, the wb-gs2.3 census source it reads the binding from, the section-source reader it imports and the bead
+ * export are only read.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
@@ -404,11 +434,9 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "D",
-    status: "parked",
+    status: "pinned",
     label:
       "docs/workbench/12-security.md 'Authorization design' gains one falsifiable sentence (CAC output never an authorization input; UNKNOWN never softens a denial) bound by the wb-gs2.3 census test",
-    reason:
-      "standing rule 3 (W19 INPUT HYGIENE, the user's order): agents write product input-hygiene tests only, never security design or security claims, and docs/workbench/12-security.md 'Authorization design' is the W19 security-design page (the wb-gs2.3 census, W19 / docs-12, binds it); the sentence and its wb-gs2.3 row are the owner's",
     pins: [
       {
         id: "D1",
@@ -992,6 +1020,18 @@ const FROZEN_SECTION = {
   bytes: 1121,
   tokens: ["heading:23", "space:2", "list:1094", "space:2"],
 } as const;
+/** The section's shape on the delivered page (wb-rdlh.4: FROZEN_SECTION's eight items and clause (d)'s ninth): the shared view's blocks
+ * one list (kinds) of nine items (items), the items' text as the shared view renders it, joined by newlines, held to sha256; and the
+ * section's source held to source, its UTF-8 encoding bytes long, which marked's top-level tokens carry on the page as four raws
+ * re-joined (tokens: FROZEN_SECTION's four, the list's raw longer by clause (d)'s bullet line). */
+const FROZEN_PINNED = {
+  kinds: ["list"],
+  items: 9,
+  sha256: "d2963bffc68649c6e3a149e8c69e2aff40f5fd4f003950064d9f39918caf571c",
+  source: "a2671b857c116a4b3163c67377eee5af04a9e04b9299cb51dbef78bfffe743b3",
+  bytes: 1361,
+  tokens: ["heading:23", "space:2", "list:1334", "space:2"],
+} as const;
 interface DocsReading {
   /** The shared view binds the section. */
   readonly view: boolean;
@@ -1108,6 +1148,101 @@ const OUTSIDE_DEFINITION = "[gate-dup]: #threat-categories";
 const TITLED_DEFINITION = `[gate-dup]: #authorization-design "${PARKED_SENTENCE}"`;
 const UNTITLED_DEFINITION = "[gate-dup]: #authorization-design";
 const withOutside: PageEdit = page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE}${OUTSIDE_DEFINITION}\n`);
+/** Clause (d)'s sentence as wb-rdlh.4 delivered it (owner security-design ruling R-B459): the section's ninth bullet, right after the
+ * eighth (DOCS_ANCHOR), and the ninth entry of the wb-gs2.3 census's AUTH_MARKDOWN. */
+const CLAUSE_SENTENCE =
+  "A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.";
+const CLAUSE_BULLET = `- ${CLAUSE_SENTENCE}\n`;
+/** The section's seventh bullet, which clause (d)'s sentence complements (two clause plants edit it). */
+const SEVENTH_BULLET = "- Treat unknown permission data as deny.\n";
+/** A page's parked page: the page with clause (d)'s bullet set aside where it follows the eighth bullet exactly once (the page refusals
+ * #1 to #6 measured, whose section FROZEN_SECTION holds); undefined when the bullet does not follow the eighth exactly once. */
+function parkedPage(page: string): string | undefined {
+  const added = `${DOCS_ANCHOR}${CLAUSE_BULLET}`;
+  return page.split(added).length === 2 ? page.replace(added, () => DOCS_ANCHOR) : undefined;
+}
+/** The parked page of the page given (the page on disk by default), on which the parked readings are taken: the docs plants, refusal
+ * #3's slices and refusal #4's members; it throws when clause (d)'s bullet does not follow the eighth exactly once. */
+function basePage(page: string = readRepo(DOCS_FILE)): string {
+  const base = parkedPage(page);
+  if (base === undefined) throw new Error(`${DOCS_FILE} does not carry clause (d)'s bullet once, right after the eighth bullet`);
+  return base;
+}
+/** D1's reading of a delivered page: the page's own reading (docsBinding), and the reading of its parked page (undefined when clause
+ * (d)'s bullet does not follow the eighth exactly once). */
+interface ClauseReading {
+  readonly reading: DocsReading;
+  readonly base: DocsReading | undefined;
+}
+const clauseBinding = (page: string): ClauseReading => {
+  const base = parkedPage(page);
+  return { reading: docsBinding(page), base: base === undefined ? undefined : docsBinding(base) };
+};
+/** D1's checks of a delivered page (row D pinned), in the order a red names them: BINDING as DOCS_CHECKS reads it (view, tokens,
+ * untiled); SHAPE held to FROZEN_PINNED (html, blocks, bullets, rendered, source); TERMS: terms (the source does not spell out both terms
+ * of clause (d)'s sentence, in PARKED_TERMS order); and BASE: base (clause (d)'s bullet does not follow the eighth exactly once, or the
+ * page with it set aside fails a check of DOCS_CHECKS, so it is not the parked page). */
+const CLAUSE_CHECKS: Readonly<Record<string, (clause: ClauseReading) => boolean>> = {
+  view: ({ reading }) => !reading.view,
+  tokens: ({ reading }) => !reading.bound,
+  untiled: ({ reading }) => reading.bound && !reading.tiled,
+  html: ({ reading }) => reading.html,
+  blocks: ({ reading }) => JSON.stringify(reading.kinds) !== JSON.stringify(FROZEN_PINNED.kinds),
+  bullets: ({ reading }) => reading.items.length !== FROZEN_PINNED.items,
+  rendered: ({ reading }) => sha256(reading.items.join("\n")) !== FROZEN_PINNED.sha256,
+  source: ({ reading }) => reading.source !== FROZEN_PINNED.source,
+  terms: ({ reading }) => JSON.stringify(reading.terms) !== JSON.stringify(PARKED_TERMS),
+  base: ({ base }) => base === undefined || docsCauses(base).length > 0,
+};
+/** Why a delivered page reds D1: every check of CLAUSE_CHECKS it fails, in order. */
+const clauseCauses = (clause: ClauseReading): string[] =>
+  Object.entries(CLAUSE_CHECKS)
+    .filter(([, fails]) => fails(clause))
+    .map(([check]) => check);
+/** The clause plants, each the delivered page with one edit made in memory and every check of CLAUSE_CHECKS it fails: clause (d)'s bullet
+ * removed, its never-softens clause and its authorization-input clause reworded, the bullet moved under the next section, nested under
+ * the eighth, hidden in an HTML comment, split into two bullets and doubled; the seventh bullet reworded and removed (the delivery is
+ * additive); a CR on the page's title line; a level-1 heading placed above the section; the heading's space spelled as an entity. */
+const CLAUSE_PLANTS: readonly (readonly [string, PageEdit, readonly string[]])[] = [
+  ["C-REMOVED", page => page.replace(CLAUSE_BULLET, () => ""), ["bullets", "rendered", "source", "terms", "base"]],
+  ["C-SOFTENS", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace("never softens", "never weakens")), ["rendered", "source", "terms", "base"]],
+  ["C-INPUT", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace("authorization input", "authorization signal")), ["rendered", "source", "terms", "base"]],
+  ["C-ELSEWHERE", page => page.replace(CLAUSE_BULLET, () => "").replace(NEXT_HEADING, () => `${NEXT_HEADING}\n${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "terms", "base"]],
+  ["C-NESTED", page => page.replace(CLAUSE_BULLET, () => `  ${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "base"]],
+  ["C-COMMENTED", page => page.replace(CLAUSE_BULLET, () => `<!-- ${CLAUSE_SENTENCE} -->\n`), ["html", "blocks", "bullets", "rendered", "source", "base"]],
+  ["C-SPLIT", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace(", and an UNKNOWN evaluation", ".\n- An UNKNOWN evaluation")), ["bullets", "rendered", "source", "base"]],
+  ["C-DOUBLED", page => page.replace(CLAUSE_BULLET, () => `${CLAUSE_BULLET}${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "base"]],
+  ["C-SEVENTH-REWORDED", page => page.replace(SEVENTH_BULLET, () => SEVENTH_BULLET.replace("as deny", "as allow")), ["rendered", "source", "base"]],
+  ["C-SEVENTH-REMOVED", page => page.replace(SEVENTH_BULLET, () => ""), ["bullets", "rendered", "source", "base"]],
+  ["C-CR-OUTSIDE", page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE.slice(0, -1)}${CR}\n`), ["untiled", "base"]],
+  ["C-RE-HOMED", page => page.replace(HEADING_LINE, () => `# Appendix\n\n${HEADING_LINE}`), ["view", "blocks", "bullets", "rendered", "base"]],
+  ["C-HEADING-ENTITY", atHeading("## Authorization&nbsp;design\n"), ["tokens", "source", "terms", "base"]],
+];
+/** The wb-gs2.3 census, whose frozen 'Authorization design' items bind clause (d)'s sentence (the label's 'bound by the wb-gs2.3 census
+ * test'). */
+const DOCS12_CENSUS = "test/workbench-docs12-authorization.census.ts";
+/** The wb-gs2.3 census's frozen items, read from its source's TypeScript AST: the elements of its one AUTH_MARKDOWN array literal, each a
+ * string literal's text (an element of another kind reads as null); undefined unless exactly one such declaration exists. */
+function censusItems(text: string): (string | null)[] | undefined {
+  const source = ts.createSourceFile(DOCS12_CENSUS, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: (string | null)[][] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "AUTH_MARKDOWN" && node.initializer !== undefined && ts.isArrayLiteralExpression(node.initializer)) {
+      found.push(node.initializer.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null)));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found.length === 1 ? found[0] : undefined;
+}
+/** Clause (d)'s sentence as the wb-gs2.3 census's source spells its entry (a double-quoted literal). */
+const CLAUSE_LITERAL = JSON.stringify(CLAUSE_SENTENCE);
+/** Three edits of the wb-gs2.3 census's source, made in memory: each unbinds clause (d)'s sentence from that census's frozen items. */
+const BINDING_EDITS: readonly (readonly [string, (text: string) => string])[] = [
+  ["B-ENTRY-DROPPED", text => text.replace(`  ${CLAUSE_LITERAL},\n`, () => "")],
+  ["B-ENTRY-REWORDED", text => text.replace(CLAUSE_LITERAL, () => CLAUSE_LITERAL.replace("never softens", "never weakens"))],
+  ["B-LITERAL-RENAMED", text => text.replace("const AUTH_MARKDOWN:", () => "const AUTH_BULLETS:")],
+];
 /** The docs plants, each with every check it fails, in DOCS_CHECKS order (docsCauses; at the nine placements refusal #4's member (a)
  * measured without terms, every check but rendered, which is NOT CLAIMED there), each bound by its id and those checks (which edit a
  * plant carries is R-PLANT-EDIT): refusal #1's (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML and the rider
@@ -1731,17 +1866,52 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   D1: () => {
     const row = ROWS.find(entry => entry.id === "D");
-    expect([row?.status, row?.reason?.startsWith("standing rule 3 ")], "clause (d) is parked under standing rule 3").toEqual(["parked", true]);
-    const docs = docsBinding();
+    expect([row?.status, row?.reason], "clause (d) is pinned: wb-rdlh.4 delivered its sentence, and the row carries no parked reason").toEqual(["pinned", undefined]);
+    const live = readRepo(DOCS_FILE);
+    expect(live.split(`${DOCS_ANCHOR}${CLAUSE_BULLET}`).length - 1, "the page carries clause (d)'s sentence once, as the bullet right after the eighth").toBe(1);
+    const docs = docsBinding(live);
     expect([docs.tiled, docs.view, docs.bound], "the page's top-level token raws re-join to the page itself, and the section binds in both views").toEqual([true, true, true]);
-    expect(docs.terms, "the section's source spells out no term of the parked sentence (this cut adds none)").toEqual([]);
-    expect([docs.source, docs.bytes], "the section's source, the page's own text over the span sectionSource binds, is the frozen source").toEqual([FROZEN_SECTION.source, FROZEN_SECTION.bytes]);
-    expect(docs.tokens, "marked's top-level tokens carry it as the four raws refusal #4's member (c) names").toEqual([...FROZEN_SECTION.tokens]);
-    expect(docsCauses(docs), "the page fails no check: the section is its frozen shape, one list of eight items, no HTML, its items' text and its source held to the sha-256s").toEqual([]);
-    const page = readRepo(DOCS_FILE);
-    expect([HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR, PAGE_TITLE, SECOND_BULLET, NEXT_HEADING].map(line => page.split(line).length), "each plant anchor occurs once on the page").toEqual([2, 2, 2, 2, 2, 2]);
-    expect(sha256(sectionSlice(page)), "the page's own text from the section's heading line up to the next section's is that source").toBe(docs.source);
-    expect(DOCS_PLANTS.filter(([, edit]) => edit(page) === page).map(([id]) => id), "every docs plant edits the page").toEqual([]);
+    expect(docs.terms, "the section's source spells out both terms of clause (d)'s sentence, in order").toEqual([...PARKED_TERMS]);
+    expect(
+      PARKED_TERMS.filter(term => !(row?.label ?? "").includes(term)),
+      "each term is spelled by row D's label, the filing's clause (d)",
+    ).toEqual([]);
+    expect(
+      docs.items.flatMap((item, index) => (item === CLAUSE_SENTENCE ? [index] : [])),
+      "clause (d)'s sentence renders as the section's ninth item, and as no other",
+    ).toEqual([8]);
+    expect([docs.source, docs.bytes], "the section's source, the page's own text over the span sectionSource binds, is the delivered source").toEqual([FROZEN_PINNED.source, FROZEN_PINNED.bytes]);
+    expect(docs.tokens, "marked's top-level tokens carry it as four raws, the list's longer than the parked list by clause (d)'s line").toEqual([...FROZEN_PINNED.tokens]);
+    expect(clauseCauses(clauseBinding(live)), "the page fails no delivered check: one list of nine items, no HTML, its items' text and its source held to the sha-256s, both terms, the parked page beneath").toEqual([]);
+    const page = basePage(live);
+    const parked = docsBinding(page);
+    expect([parked.terms, docsCauses(parked)], "with clause (d)'s bullet set aside the page is the parked page: it spells out neither term and fails no parked check").toEqual([[], []]);
+    expect(
+      [docs.bytes - parked.bytes, docs.items.slice(0, -1)],
+      "so the delivery adds that one bullet line and leaves the eight parked items as they were",
+    ).toEqual([Buffer.byteLength(CLAUSE_BULLET, "utf8"), [...parked.items]]);
+    const section = docsSection(live, DOCS_HEADING, 2, [DOCS_PARENT]);
+    const markdown = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.markdown) : []));
+    const census = readRepo(DOCS12_CENSUS);
+    expect([censusItems(census), markdown.at(-1)], "bound by the wb-gs2.3 census: its AUTH_MARKDOWN literal is the section's items, clause (d)'s sentence the ninth").toEqual([
+      markdown,
+      CLAUSE_SENTENCE,
+    ]);
+    expect(
+      BINDING_EDITS.map(([id, edit]) => [id, edit(census) !== census, JSON.stringify(censusItems(edit(census))) === JSON.stringify(markdown)]),
+      "each binding edit of that census's source edits it and unbinds the sentence",
+    ).toEqual(BINDING_EDITS.map(([id]) => [id, true, false]));
+    expect(CLAUSE_PLANTS.filter(([, edit]) => edit(live) === live).map(([id]) => id), "every clause plant edits the page").toEqual([]);
+    const delivered = CLAUSE_PLANTS.map(([id, edit]) => [id, clauseCauses(clauseBinding(edit(live)))] as const);
+    expect(delivered, "each clause plant reds D1 by every delivered check it fails").toEqual(CLAUSE_PLANTS.map(([id, , causes]) => [id, [...causes]]));
+    expect(Object.keys(CLAUSE_CHECKS).filter(check => !delivered.some(([, causes]) => causes.includes(check))), "every delivered check fails at least one clause plant").toEqual([]);
+    // The parked readings, each taken on the parked page (the page refusals #1 to #6 measured).
+    expect([parked.tiled, parked.view, parked.bound], "the parked page's top-level token raws re-join to it, and its section binds in both views").toEqual([true, true, true]);
+    expect([parked.source, parked.bytes], "its section's source, the parked page's own text over the span sectionSource binds, is the frozen source").toEqual([FROZEN_SECTION.source, FROZEN_SECTION.bytes]);
+    expect(parked.tokens, "marked's top-level tokens carry it as the four raws refusal #4's member (c) names").toEqual([...FROZEN_SECTION.tokens]);
+    expect([HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR, PAGE_TITLE, SECOND_BULLET, NEXT_HEADING].map(line => page.split(line).length), "each plant anchor occurs once on the parked page").toEqual([2, 2, 2, 2, 2, 2]);
+    expect(sha256(sectionSlice(page)), "the parked page's own text from the section's heading line up to the next section's is that source").toBe(parked.source);
+    expect(DOCS_PLANTS.filter(([, edit]) => edit(page) === page).map(([id]) => id), "every docs plant edits the parked page").toEqual([]);
     const readings = new Map(DOCS_PLANTS.map(([id, edit]) => [id, docsBinding(edit(page))] as const));
     const readingOf = (id: string): DocsReading => {
       const reading = readings.get(id);
@@ -1763,26 +1933,37 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       Buffer.byteLength(spaced, "utf8"),
     ]);
     const verdicts = DOCS_PLANTS.map(([id]) => [id, pinnedCauses(id, docsCauses(readingOf(id)))] as const);
-    expect(verdicts.filter(([, causes]) => causes.length === 0).map(([id]) => id), "every docs plant reds D1").toEqual([]);
+    expect(verdicts.filter(([, causes]) => causes.length === 0).map(([id]) => id), "every docs plant reds D1's parked reading").toEqual([]);
     expect(verdicts, "each by every check it fails (at the nine placements refusal #4's member (a) measured without terms, every check but rendered)").toEqual(
       DOCS_PLANTS.map(([id, , causes]) => [id, [...causes]]),
     );
     expect(Object.keys(DOCS_CHECKS).filter(check => !verdicts.some(([, causes]) => causes.includes(check))), "every check fails at least one plant").toEqual([]);
     return {
       claim: claim("D1"),
-      status: "parked",
+      status: "pinned",
       page: DOCS_FILE,
       section: DOCS_HEADING,
-      sentence: "absent",
+      sentence: CLAUSE_SENTENCE,
       tiled: docs.tiled,
       kinds: [...docs.kinds],
       items: docs.items.length,
-      sha256: FROZEN_SECTION.sha256.slice(0, 16),
-      source: FROZEN_SECTION.source.slice(0, 16),
+      sha256: FROZEN_PINNED.sha256.slice(0, 16),
+      source: FROZEN_PINNED.source.slice(0, 16),
       bytes: docs.bytes,
       tokens: [...docs.tokens],
-      checks: Object.keys(DOCS_CHECKS),
-      plants: DOCS_PLANTS.map(([id]) => id),
+      terms: [...docs.terms],
+      binding: DOCS12_CENSUS,
+      checks: Object.keys(CLAUSE_CHECKS),
+      plants: CLAUSE_PLANTS.map(([id]) => id),
+      parked: {
+        items: parked.items.length,
+        sha256: FROZEN_SECTION.sha256.slice(0, 16),
+        source: FROZEN_SECTION.source.slice(0, 16),
+        bytes: parked.bytes,
+        tokens: [...parked.tokens],
+        checks: Object.keys(DOCS_CHECKS),
+        plants: DOCS_PLANTS.map(([id]) => id),
+      },
     };
   },
 };
@@ -1914,7 +2095,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
       "D-BLOCKQUOTE-SWAP:D-BLOCKQUOTE",
       "L2-D1-SWAP:L2-D1",
     ]);
-    const page = readRepo(DOCS_FILE);
+    const page = basePage();
     for (const [swapId, id, change, swapped] of PLANT_SWAPS) {
       const [plant, swap] = [plantEdit(id)(page), swapped(page)];
       expect([swap === plant, swap === page], `${swapId} (${id}, ${change}): the swap edits the page, otherwise than the plant`).toEqual([false, false]);
@@ -1991,7 +2172,7 @@ const QUIETED = new Set<string>();
 describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-COMPOSITIONAL-AUTONOMOUS-COMPUTATION-R1)", () => {
   it("judged set, frozen shape: ROWS pins its own row/pin-count and status literals", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:1"]);
-    expect(ROWS.map(row => `${row.id}:${row.status}`)).toEqual(["A:pinned", "B:pinned", "C:pinned", "D:parked"]);
+    expect(ROWS.map(row => `${row.id}:${row.status}`)).toEqual(["A:pinned", "B:pinned", "C:pinned", "D:pinned"]);
     expect(ROWS.filter(row => (row.status === "parked") !== (row.reason !== undefined)).map(row => row.id), "a reason exactly on a parked row").toEqual([]);
   });
 
@@ -2024,7 +2205,7 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     expect(DOCS_PLANTS.slice(-ids.length).map(([id]) => id), "the plants members (a) and (b) name are the last docs plants, in the members' order").toEqual(ids);
     expect(DOCS_PLANTS.filter(([id]) => ids.includes(id)).length, "and no other docs plant takes one of their ids").toBe(ids.length);
     expect(refusal4Members(`${beadNotes(BEAD)}${APPENDED_WITNESSES.WX1}`), "a later note's member lines appended (refusal #5's WX1) are not read: the first line of each").toEqual(MEMBERS);
-    const page = readRepo(DOCS_FILE);
+    const page = basePage();
     const causes = (id: string): string[] => docsCauses(docsBinding(plantEdit(id)(page)));
     expect(MEMBERS.a.filter(id => !causes(id).includes("source") || !causes(id).includes("terms")), "each of member (a)'s placements reds D1 by source and by terms").toEqual([]);
     const ordered = (checks: readonly string[]): string[] => Object.keys(DOCS_CHECKS).filter(check => checks.includes(check));
@@ -2040,7 +2221,7 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
       ["C-TOP-DUPDEF", false, ["untiled", "source", "terms"]],
     ]);
     expect([MEMBERS.raws, MEMBERS.bytes], "member (c)'s four raws and their sum are FROZEN_SECTION's").toEqual([[...FROZEN_SECTION.tokens], FROZEN_SECTION.bytes]);
-    expect([docsBinding().tokens, MEMBERS.raws.reduce((sum, raw) => sum + Number(raw.split(":")[1]), 0)], "and the real page's section tokens, their raws' lengths summing to the source's bytes").toEqual([
+    expect([docsBinding(page).tokens, MEMBERS.raws.reduce((sum, raw) => sum + Number(raw.split(":")[1]), 0)], "and the parked page's section tokens, their raws' lengths summing to the source's bytes").toEqual([
       [...FROZEN_SECTION.tokens],
       FROZEN_SECTION.bytes,
     ]);

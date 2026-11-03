@@ -26,7 +26,8 @@
  * identity digest (HOLDERS); line 23 of docs/workbench/12-security.md carries the isCoreMintedDecision sentence, the one
  * carrier of its "Authorization design" section, and line 88 of docs/workbench/09-observation-and-provenance.md the
  * duplicate-replay control, the one carrier of its "Acceptance/negative controls" section, and each of the two sections renders
- * at HEAD exactly as at the pin; the docs/09 envelope (proposal) declares subjectBasis and definitionDigest, and docs/09 names no
+ * at HEAD exactly as at the pin, docs/12's once its one later line is set aside (LATER below: clause (d)'s bullet, which wb-rdlh.4
+ * added after the section's eighth bullet, re-measured by that cut); the docs/09 envelope (proposal) declares subjectBasis and definitionDigest, and docs/09 names no
  * sourceVersion: the third name of the filing's parenthetical is src's, declared on its own line by src/workbench/observation.ts
  * three times (ObservationEvent, NativeSnapshot, ObservedNode); the export row of wb-pjj reads closed. The export row of wb-973.8
  * reads open at the pin and closed at HEAD (the bead closed after the pin). At HEAD only (the gp fixtures postdate the
@@ -162,7 +163,11 @@
  *    source with its whitespace collapsed), so at HEAD anchorReading compares the section rather than the pin's line, and a later edit of
  *    either section that changes those blocks reds this census until it is re-measured (a whitespace edit that leaves each
  *    block's kind, rendered text and collapsed source as they were changes none of them: a re-wrapped or re-spaced line, or a
- *    blank line between list items, as the gate's GD12 to GD14). Three controls read at the pin (the anchor's line moved one
+ *    blank line between list items, as the gate's GD12 to GD14). LATER (the one re-measurement so far, wb-rdlh.4's): S1b's anchor
+ *    names one line HEAD carries that the pin does not, clause (d)'s bullet right after the section's eighth bullet; every HEAD
+ *    reading of S1b below is taken on the HEAD page with that line set aside where it follows the eighth bullet exactly once
+ *    (setAside), and the anchor's later reading is "holds" when it follows it exactly once and "missing" when not (the HEAD page is
+ *    then read as it is, so its section reads unheld); S2b names no later line ("none"). Three controls read at the pin (the anchor's line moved one
  *    down, the anchor's carrier text edited, and the pin's text with the carrier's source line doubled) each read their own
  *    reason, and seven in-memory plants over the HEAD text (DOCS_PLANTS: the gate's D1 to D5 as its refusal record describes
  *    them, D6 a second "Authorization design" section at the end of the page, D7 a level-1 heading re-homing the controls
@@ -939,6 +944,8 @@ interface DocsAnchor {
   readonly line: number;
   readonly marker: string;
   readonly carrier: string;
+  /** A line HEAD carries right after a line of the pin's section (after), each a whole source line: set aside at HEAD (setAside). */
+  readonly later?: { readonly after: string; readonly line: string };
 }
 const DOCS_ANCHORS: readonly DocsAnchor[] = [
   {
@@ -946,6 +953,10 @@ const DOCS_ANCHORS: readonly DocsAnchor[] = [
     carrier: "A control adapter executes only the decision object the decision core minted in this process: isCoreMintedDecision (src/workbench/control.ts) " +
       "is an identity check against a module-private WeakSet, so a copy, a deserialized or audit/journal-replayed receipt and a hand-built look-alike are " +
       `refused with the fixed text "${CONTROL_UNMINTED_REASON}" however exact their shape, and structural vetting stays behind it as defense in depth.`,
+    later: {
+      after: "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.",
+      line: "- A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.",
+    },
   },
   {
     pin: "S2b", path: OBSERVATION_DOC, title: OBSERVATION_TITLE, heading: "Acceptance/negative controls", line: 88, marker: "Replay duplicate/out-of-order events",
@@ -1052,6 +1063,23 @@ const DOCS_PLANTS: readonly DocsPlant[] = [
 /** The prose items of a rendered section: each paragraph and each item of each list (a code block or an HTML block carries none). */
 const proseOf = (blocks: readonly RenderedBlock[]): readonly { readonly text: string; readonly markdown: string }[] =>
   blocks.flatMap(block => (block.kind === "paragraph" ? [{ text: block.text, markdown: block.markdown }] : block.kind === "list" ? block.items : []));
+/**
+ * A docs anchor's HEAD page with its later line set aside: the line HEAD carries right after a line of the pin's section (S1b:
+ * clause (d)'s bullet, wb-rdlh.4's, after the eighth bullet), removed where it follows that line exactly once; a page where it does
+ * not is read as it is (laterReading reads it missing).
+ */
+function setAside(text: string, anchor: DocsAnchor): string {
+  const later = anchor.later;
+  if (later === undefined) return text;
+  const added = `${later.after}\n${later.line}\n`;
+  return text.split(added).length === 2 ? text.replace(added, () => `${later.after}\n`) : text;
+}
+/** A docs anchor's later reading of a HEAD page: "holds" when its later line follows its line exactly once, "missing" when not, "none" for an anchor that names none. */
+function laterReading(text: string, anchor: DocsAnchor): string {
+  const later = anchor.later;
+  if (later === undefined) return "none";
+  return text.split(`${later.after}\n${later.line}\n`).length === 2 ? "holds" : "missing";
+}
 /** A paragraph's or a list item's source line, its list marker dropped. */
 const sourceOf = (line: string): string => line.trim().replace(/^(?:\d+[.)]|[-*+])\s+/, "");
 /** Why docsSection refused to bind a section: its heading repeated in the rendered view, re-homed under another parent, or else. */
@@ -1141,7 +1169,7 @@ function respaced(text: string, anchor: DocsAnchor): string {
  */
 function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
   const pin = pinText(anchor.path);
-  const head = headText(anchor.path);
+  const head = setAside(headText(anchor.path), anchor);
   const source = lineOf(pin, anchor.line);
   /** Each of the anchor's plants over a page, at that page's own sites: the reason the planted page reads, or needle-miss. */
   const plantsOver = (text: string): Record<string, string> => {
@@ -1185,6 +1213,7 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
     });
   return {
     pin: anchorReading(pin, anchor),
+    later: laterReading(headText(anchor.path), anchor),
     controls: {
       line: anchorReading(pin, { ...anchor, line: anchor.line + 1 }), carrier: anchorReading(pin, { ...anchor, carrier: `${anchor.carrier} (edited)` }),
       twice: anchorReading(once(pin, `${source}\n`, `${source}\n\n${source}\n`), anchor),
@@ -1629,7 +1658,7 @@ const PINS: Readonly<Record<string, () => void>> = {
       line: named(lineOf(pinText(anchor.path), anchor.line)), ...anchorWitness(anchor),
       pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
     }, {
-      line: true, pin: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
+      line: true, pin: "holds", later: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
       variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading }, pjj: { pin: "closed", head: "closed" },
     });
   },
@@ -1655,7 +1684,7 @@ const PINS: Readonly<Record<string, () => void>> = {
       spacing: { afterMarker: { head: "holds", plants, markerKept: true }, noBlank: { head: "holds", plants }, betweenWords: { head: "holds", plants } },
     };
     witness("S2b", { line: lineOf(pinText(anchor.path), anchor.line), ...anchorWitness(anchor) }, {
-      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds",
+      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds", later: "none",
       controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
       variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading },
     });
@@ -1828,6 +1857,7 @@ describe(SUITE, () => {
     expect(DOCS_ANCHORS.map(anchor => `${anchor.pin}:${anchor.path}#${anchor.heading}:${anchor.line}`), "the docs anchors").toEqual([
       "S1b:docs/workbench/12-security.md#Authorization design:23", "S2b:docs/workbench/09-observation-and-provenance.md#Acceptance/negative controls:88",
     ]);
+    expect(DOCS_ANCHORS.map(anchor => `${anchor.pin}:${anchor.later === undefined ? 0 : 1}`), "the later lines each docs anchor sets aside at HEAD").toEqual(["S1b:1", "S2b:0"]);
     expect(DOCS_ANCHORS.map(anchor => ROWS.find(row => row.id === anchor.pin.slice(0, 2))?.pins.includes(anchor.pin)), "each docs anchor is a pin of its row").toEqual([
       true, true,
     ]);
