@@ -1,0 +1,1057 @@
+{
+  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. The wb-km7q.17 carrier cut (the rule-19 exit child R-B334 filed at wb-km7q.7's refusal #3, made the carrier by R-B353's dependency inversion at refusal #4; seat ws-05, g10-work-s196) lands this roster as cut #4 left it and adds the witnesses of its new pins, each measured on trunk 525939979d9e39ed330ebb090166c57a5ea451d2 (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B3 gains the modifier, identifier-position and callable-position controls and DescriptorProbe's names (descriptorControl), B2 four knowing edge forms, and D1 the modifier and identifier-position controls; A2's and D1's missedPlants now read each planted walk through the walk's own reading, and their witnesses are unchanged. wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #4 (the FINAL fail-closed core that the rule-19 STRUCTURAL EXIT R-B334 binds at refusal #3; seat ws-04, g10-work-s185) narrows the four row labels to the census's witnesses and changes no pin witness: every witness reads unchanged on trunk 152011133c296b89ee5e50f112f2e0295d5da32c (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules), and refusal #3's families U1-U5 are NOT CLAIMED and deferred to wb-km7q.17. Cut #3 (enumerate-the-resolvable, the respin of refusal #2 under R-B304; seat ws-01, g10-work-s182) measured every witness on trunk f5cb912999baeccb2705922ff80fd9066d5e70c4 (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2 gains the every-module knowing plant and the knowing edge-form, resolution and unread controls, B3 the per-core (head and tail) and per-class (first and last name) plants, the every-name prototype probe and the prefix, name and heritage controls, D1 the bare-stem control, the B label the cut #3 claim words, and the readings' regular expressions and floors are held here; A1-A3, B1, C1, C2 and D1's other readings read as cut #2 measured them. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
+  "launchExports": {
+    "@anthropic-ai/claude-agent-sdk": [
+      "prewarm",
+      "query",
+      "startup"
+    ],
+    "@earendil-works/pi-ai": [
+      "createModels",
+      "createProvider",
+      "lazyStream",
+      "retryAssistantCall"
+    ],
+    "@earendil-works/pi-coding-agent": [
+      "AgentSession",
+      "AgentSessionRuntime",
+      "InteractiveMode",
+      "ModelRuntime",
+      "createAgentSession",
+      "createAgentSessionFromServices",
+      "createAgentSessionRuntime",
+      "createAgentSessionServices",
+      "main",
+      "runPrintMode",
+      "runRpcMode"
+    ]
+  },
+  "providerPackages": [
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-bedrock-runtime",
+    "@google/genai",
+    "openai"
+  ],
+  "wholeSubpaths": [
+    "@earendil-works/pi-ai/api/",
+    "@earendil-works/pi-ai/providers/"
+  ],
+  "turnMembers": [
+    "sendUserMessage",
+    "triggerTurn"
+  ],
+  "runtimeMembers": [
+    "completeSimple",
+    "fetchDeferred",
+    "streamDeferred",
+    "streamSimple",
+    "complete",
+    "stream"
+  ],
+  "cores": [
+    "src/workbench/evidence-loader.ts",
+    "src/workbench/observation.ts",
+    "src/workbench/observe-query.ts"
+  ],
+  "seam": "src/workbench/native-modules.ts",
+  "modelSide": [
+    "src/index.ts",
+    "src/workbench/claude-host.ts",
+    "src/workbench/hosts/local-detached.ts",
+    "src/workbench/native-modules.ts"
+  ],
+  "optInChecklist": [
+    "output contract",
+    "generation",
+    "exact model/version/settings",
+    "measured success/ROI",
+    "budget"
+  ],
+  "licenseClause": "query evidence is never a license",
+  "listenerNames": [
+    "addEventListener",
+    "addListener",
+    "listen",
+    "removeEventListener",
+    "removeListener",
+    "subscribe",
+    "unsubscribe",
+    "unwatch",
+    "watch"
+  ],
+  "functionTypes": [
+    "CallableFunction",
+    "Function",
+    "NewableFunction"
+  ],
+  "warmStarts": [
+    "prewarm",
+    "startup"
+  ],
+  "listenerPrefix": "/^on[A-Z]/",
+  "speculation": "/specul/i",
+  "anchorForms": {
+    "evidence": "/^src\\/workbench\\/[^/]*-evidence\\.ts$/",
+    "evidencePrefix": "/^src\\/workbench\\/evidence-[^/]*\\.ts$/",
+    "observer": "/^src\\/workbench\\/[^/]*-observer\\.ts$/"
+  },
+  "floors": {
+    "src": 100,
+    "knowers": 50,
+    "anchors": {
+      "evidence": 4,
+      "evidencePrefix": 3,
+      "observer": 8,
+      "planeUi": 3
+    },
+    "prototypes": {
+      "EvidenceStore": 5,
+      "ObservationProjection": 20
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "a model-call site is a launch export of a model package, a provider SDK binding, a host turn or a model-runtime call: the vocabulary resolves against the installed packages, the walk's sites are the held multiset with A2's planted binding read once in each module, and each named A3 control reads its held site count",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "launchExports": {
+              "@anthropic-ai/claude-agent-sdk": [
+                "prewarm",
+                "query",
+                "startup"
+              ],
+              "@earendil-works/pi-ai": [
+                "createModels",
+                "createProvider",
+                "lazyStream",
+                "retryAssistantCall"
+              ],
+              "@earendil-works/pi-coding-agent": [
+                "AgentSession",
+                "AgentSessionRuntime",
+                "InteractiveMode",
+                "ModelRuntime",
+                "createAgentSession",
+                "createAgentSessionFromServices",
+                "createAgentSessionRuntime",
+                "createAgentSessionServices",
+                "main",
+                "runPrintMode",
+                "runRpcMode"
+              ]
+            },
+            "providers": [
+              "@anthropic-ai/sdk",
+              "@aws-sdk/client-bedrock-runtime",
+              "@google/genai",
+              "openai"
+            ],
+            "wholeSubpaths": [
+              "@earendil-works/pi-ai/api/",
+              "@earendil-works/pi-ai/providers/"
+            ],
+            "turns": {
+              "sendUserMessage": true,
+              "triggerTurn": true
+            },
+            "runtimeMembers": [
+              "complete",
+              "completeSimple",
+              "fetchDeferred",
+              "stream",
+              "streamDeferred",
+              "streamSimple"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "modulesAboveFloor": true,
+            "sites": [
+              "src/agent-runner.ts: @earendil-works/pi-coding-agent createAgentSession",
+              "src/index.ts: turn triggerTurn",
+              "src/index.ts: turn triggerTurn",
+              "src/index.ts: turn triggerTurn",
+              "src/mention-clone.ts: @earendil-works/pi-coding-agent createAgentSession",
+              "src/workbench/claude-host.ts: @anthropic-ai/claude-agent-sdk query"
+            ],
+            "topLevel": [],
+            "missedPlants": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "named": 1,
+            "aliased": 1,
+            "subpath": 1,
+            "namespaceMember": 1,
+            "namespaceLiteralKey": 1,
+            "namespaceComputed": 1,
+            "namespaceArgument": 1,
+            "namespaceDestructured": 1,
+            "namespaceSpread": 1,
+            "namespaceAlias": 1,
+            "defaultMember": 1,
+            "importEquals": 1,
+            "reexportNamed": 1,
+            "reexportStar": 1,
+            "reexportNamespace": 1,
+            "dynamicDestructured": 1,
+            "dynamicMember": 1,
+            "dynamicBound": 1,
+            "dynamicOpaque": 1,
+            "requireLiteral": 1,
+            "createRequireLiteral": 1,
+            "providerDefault": 1,
+            "providerNamed": 1,
+            "providerSubpath": 1,
+            "piAiProvider": 1,
+            "piAiApi": 1,
+            "piAiClient": 1,
+            "turnUser": 1,
+            "turnUserLiteralKey": 1,
+            "turnTrigger": 1,
+            "turnTriggerComputed": 1,
+            "turnShorthand": 1,
+            "turnAssigned": 1,
+            "runtimeSimple": 1,
+            "runtimeDeferredRead": 1,
+            "runtimeDestructured": 1,
+            "runtimeCalled": 1,
+            "runtimeOptional": 1,
+            "runtimeViaCall": 1,
+            "typeOnlyImport": 0,
+            "typeOnlySpecifier": 0,
+            "typeOnlyReexport": 0,
+            "typeOnlyLaunchSpecifier": 0,
+            "typeOnlyLaunchClause": 0,
+            "nonLaunchExports": 0,
+            "namespaceTypeQuery": 0,
+            "sideEffectImport": 0,
+            "localQuery": 0,
+            "triggerTurnFalse": 0,
+            "turnInComment": 0,
+            "dataFields": 0,
+            "aliasedRuntime": 0,
+            "runtimeViaApply": 1,
+            "runtimeViaBind": 1,
+            "runtimeDestructuredAlias": 1,
+            "namespaceAliasedDestructured": 1,
+            "dynamicLiteralMember": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "the evidence/query/projection plane is three cores and the walk's modules whose knowing edges reach one (B2's floors and anchors, its planted type import known in every module, and its named edge-form, resolution and unread controls); B3's subscription reading of the cores is exactly no listener spelling, the callable type nodes EvidenceLoader.canLoad and .load and the heritage clause EvidenceRefusal extends Error, read at each core's head and tail (corePlants) and on each class's stand-in prototype (prototypePlants), with its named controls",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "cores": [
+              "src/workbench/evidence-loader.ts",
+              "src/workbench/observation.ts",
+              "src/workbench/observe-query.ts"
+            ],
+            "surfaces": [
+              "src/workbench/evidence-loader.ts: class EvidenceStore",
+              "src/workbench/observation.ts: class ObservationProjection",
+              "src/workbench/observe-query.ts: function observeInvocation"
+            ],
+            "runtime": [
+              "function",
+              "function",
+              "function"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "knowersAboveFloor": true,
+            "coresKnown": true,
+            "anchorFloors": {
+              "evidence": true,
+              "evidencePrefix": true,
+              "observer": true,
+              "planeUi": true
+            },
+            "missingAnchors": [],
+            "controls": {
+              "byTypeImport": true,
+              "atDistance": true,
+              "byImportType": true,
+              "unrelated": false,
+              "unknowingAnchors": [
+                "src/workbench/Gp-14_plant-evidence.ts",
+                "src/workbench/Gp-14_plant-observer.ts",
+                "src/workbench/evidence-Gp-14_plant.ts"
+              ],
+              "edgeForms": {
+                "typeClause": true,
+                "typeSpecifier": true,
+                "valueImport": true,
+                "defaultImport": true,
+                "namespaceImport": true,
+                "sideEffectImport": true,
+                "namedReexport": true,
+                "typeReexport": true,
+                "starReexport": true,
+                "typeStarReexport": true,
+                "namespaceReexport": true,
+                "importEquals": true,
+                "typeImportEquals": true,
+                "importType": true,
+                "typeofImportType": true,
+                "dynamicImport": true,
+                "dynamicTemplate": true,
+                "requireLoad": true,
+                "requireTemplate": true,
+                "createRequireLoad": true,
+                "createRequireTemplate": true,
+                "typeNamespaceClause": true,
+                "typeDefaultClause": true,
+                "defaultWithNamed": true,
+                "defaultWithNamespace": true
+              },
+              "resolution": {
+                "js": true,
+                "mjs": true,
+                "cjs": true,
+                "ts": true,
+                "extensionless": true,
+                "directoryIndex": true
+              },
+              "unread": {
+                "augmentation": false,
+                "tripleSlash": false,
+                "composedSpecifier": false,
+                "bareSpecifier": false
+              }
+            },
+            "knowingPlants": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "listeners": [],
+            "callables": [
+              "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+              "src/workbench/evidence-loader.ts: EvidenceLoader.load"
+            ],
+            "heritage": [
+              "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error"
+            ],
+            "prototypeFloors": {
+              "EvidenceStore": true,
+              "ObservationProjection": true
+            },
+            "prototypeListeners": [],
+            "prototypeControl": [
+              "PrototypeProbe.addEventListener",
+              "PrototypeProbe.addListener",
+              "PrototypeProbe.listen",
+              "PrototypeProbe.onChange",
+              "PrototypeProbe.removeEventListener",
+              "PrototypeProbe.removeListener",
+              "PrototypeProbe.subscribe",
+              "PrototypeProbe.unsubscribe",
+              "PrototypeProbe.unwatch",
+              "PrototypeProbe.watch"
+            ],
+            "vocabulary": [
+              "addEventListener",
+              "addListener",
+              "listen",
+              "onChange",
+              "removeEventListener",
+              "removeListener",
+              "subscribe",
+              "unsubscribe",
+              "unwatch",
+              "watch"
+            ],
+            "controls": {
+              "onChange": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "subscribe": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "callbackOption": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "listenerOption": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "quietMethod": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "privateMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "nearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "identifierName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "privateName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "stringName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "templateName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "templateSpans": {
+                "listeners": 3,
+                "callables": 0,
+                "heritage": 0
+              },
+              "bindingName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typePosition": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "argumentPosition": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "moduleFunction": {
+                "listeners": 1,
+                "callables": 2,
+                "heritage": 0
+              },
+              "moduleOnChange": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "objectLiteral": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "emitterSubclass": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "typeAliasOption": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "anonymousDefaultClass": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "classExpression": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "protectedMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "staticMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "interfaceStringName": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "functionType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "constructorType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "methodSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "callSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "constructSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "functionNames": {
+                "listeners": 0,
+                "callables": 3,
+                "heritage": 0
+              },
+              "classExtends": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "classImplements": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "interfaceExtends": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "commentOnly": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "importedCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typeofCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "qualifiedCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "globalEmitter": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "promiseFeed": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "iteratorFeed": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "composedName": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "lateDefinition": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "prefixLetters": {
+                "listeners": 26,
+                "callables": 0,
+                "heritage": 0
+              },
+              "prefixTails": {
+                "listeners": 6,
+                "callables": 0,
+                "heritage": 0
+              },
+              "prefixNearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "namesNearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "classExpressionHeritage": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "unlistedNames": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "publicMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "asyncMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "abstractMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "declareClass": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "declareMember": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "overrideMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 1
+              },
+              "accessorMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "readonlyMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "parameterProperty": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "memberAccessName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "parameterName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "classFieldName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "propertyAssignmentName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "getAccessorName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "setAccessorName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "enumMemberName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typeParameterName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typeLiteralMethodSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "typeLiteralCallSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "typeLiteralConstructSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "aliasedFunctionType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "parameterConstructorType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              }
+            },
+            "corePlants": {
+              "src/workbench/evidence-loader.ts": {
+                "listeners": [
+                  "src/workbench/evidence-loader.ts: onCoreHead",
+                  "src/workbench/evidence-loader.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/evidence-loader.ts: CorePlantFeed.onCorePlant.listener",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/evidence-loader.ts: CorePlantFeed extends EventTarget",
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error"
+                ]
+              },
+              "src/workbench/observation.ts": {
+                "listeners": [
+                  "src/workbench/observation.ts: onCoreHead",
+                  "src/workbench/observation.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load",
+                  "src/workbench/observation.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/observation.ts: CorePlantFeed.onCorePlant.listener"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error",
+                  "src/workbench/observation.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/observation.ts: CorePlantFeed extends EventTarget"
+                ]
+              },
+              "src/workbench/observe-query.ts": {
+                "listeners": [
+                  "src/workbench/observe-query.ts: onCoreHead",
+                  "src/workbench/observe-query.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load",
+                  "src/workbench/observe-query.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/observe-query.ts: CorePlantFeed.onCorePlant.listener"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error",
+                  "src/workbench/observe-query.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/observe-query.ts: CorePlantFeed extends EventTarget"
+                ]
+              }
+            },
+            "prototypePlants": {
+              "EvidenceStore": {
+                "listeners": [
+                  "EvidenceStore.onCorePlant",
+                  "EvidenceStore.subscribe"
+                ],
+                "copied": true
+              },
+              "ObservationProjection": {
+                "listeners": [
+                  "ObservationProjection.onCorePlant",
+                  "ObservationProjection.subscribe"
+                ],
+                "copied": true
+              }
+            },
+            "descriptorControl": [
+              "DescriptorProbe.onAccessor",
+              "DescriptorProbe.onBody",
+              "DescriptorProbe.onBodyGetter",
+              "DescriptorProbe.onGetter",
+              "DescriptorProbe.onSetter",
+              "DescriptorProbe.onValue",
+              "DescriptorProbe.subscribe",
+              "DescriptorProbe.watch"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(acceptance) no model-call site is reachable from evidence/query/projection-change paths: in C1's reach reading of the walk no knower outside the four model-side modules has a value closure holding a launch-site module, C1's planted launch binding makes every such knower a violation, and each named C2 control reads its held count",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "violations": [],
+            "typedHandles": [
+              "src/ui/workflow-card.ts <- src/ui/agent-widget.ts: Theme",
+              "src/ui/workflow-dialog.ts <- src/ui/agent-widget.ts: Theme",
+              "src/workbench/claude-control-observer.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/claude-topology.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/claude-transcript.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/detached-control.ts <- src/workbench/hosts/local-detached.ts: DetachedCommand",
+              "src/workbench/detached-control.ts <- src/workbench/hosts/local-detached.ts: connectDetachedWorkflow",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedReceipt",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedSnapshot",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: LocalOperator",
+              "src/workflow/host.ts <- src/agent-manager.ts: AgentManager"
+            ],
+            "knowersReaching": [
+              "src/index.ts",
+              "src/workbench/claude-host.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts"
+            ],
+            "justified": [
+              "src/index.ts: site",
+              "src/workbench/claude-host.ts: site",
+              "src/workbench/hosts/local-detached.ts -> src/workbench/claude-host.ts",
+              "src/workbench/native-modules.ts -> src/workbench/claude-host.ts"
+            ],
+            "reaching": [
+              "src/agent-manager.ts",
+              "src/agent-runner.ts",
+              "src/cross-extension-rpc.ts",
+              "src/index.ts",
+              "src/mention-clone.ts",
+              "src/schedule.ts",
+              "src/ui/agent-widget.ts",
+              "src/ui/conversation-viewer.ts",
+              "src/ui/fleet-list.ts",
+              "src/workbench/claude-host.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts"
+            ],
+            "siteModules": [
+              "src/agent-runner.ts",
+              "src/index.ts",
+              "src/mention-clone.ts",
+              "src/workbench/claude-host.ts"
+            ],
+            "seamMembers": {
+              "Furnace": [
+                "@furnace/sdk"
+              ],
+              "createClaudeWorkflowHost": [
+                "src/workbench/claude-host.ts"
+              ],
+              "createClaudeObserver": [
+                "src/workbench/claude-transcript.ts"
+              ],
+              "readClaudeTranscript": [
+                "src/workbench/claude-transcript.ts"
+              ],
+              "connectDetachedWorkflow": [
+                "src/workbench/hosts/local-detached.ts"
+              ],
+              "launchDetachedWorkflow": [
+                "src/workbench/hosts/local-detached.ts"
+              ],
+              "openForgeOperationConnection": [
+                "src/workbench/providers/forge.ts"
+              ],
+              "registerNativeProviders": [
+                "src/workbench/providers/forge.ts",
+                "src/workbench/providers/furnace.ts",
+                "src/workbench/providers/hyperunix.ts",
+                "src/workbench/providers/reactivefiber.ts"
+              ]
+            },
+            "seamImporters": {
+              "src/index.ts": [
+                "Furnace",
+                "connectDetachedWorkflow",
+                "createClaudeObserver",
+                "createClaudeWorkflowHost",
+                "launchDetachedWorkflow",
+                "openForgeOperationConnection",
+                "readClaudeTranscript",
+                "registerNativeProviders"
+              ],
+              "src/workbench/evidence-wiring.ts": [
+                "Furnace",
+                "readClaudeTranscript"
+              ]
+            },
+            "plantedMissing": []
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "topLevel": {
+              "callsLaunchBinding": 1,
+              "callsReachingImport": 1,
+              "topLevelTurn": 1,
+              "insideFunction": 0,
+              "callsAliasedDynamic": 1,
+              "callsAliasedNamespace": 1,
+              "callsProviderDefault": 1,
+              "callsProviderDynamic": 1
+            },
+            "typedHandles": {
+              "typedLauncher": 1,
+              "typedImportType": 1,
+              "structural": 0,
+              "typedQuiet": 0
+            },
+            "direct": 1,
+            "transitive": 1,
+            "reexportNamed": 1,
+            "reexportStar": 1,
+            "sideEffect": 1,
+            "importEquals": 1,
+            "dynamic": 1,
+            "dynamicDestructured": 1,
+            "requireLiteral": 1,
+            "selfLaunch": 1,
+            "selfProvider": 1,
+            "injectedTurn": 1,
+            "injectedTrigger": 1,
+            "injectedRuntime": 1,
+            "seamLaunchMember": 1,
+            "seamTypedMember": 1,
+            "nonLiteralConst": 1,
+            "seamStaticEdge": 1,
+            "mixedLiteral": 1,
+            "atDistance": 1,
+            "typeOnlyEdge": 0,
+            "literalConst": 0,
+            "literalObject": 0,
+            "seamReadMember": 0,
+            "reverseDirection": 0,
+            "modelSide": 0,
+            "injected": 0,
+            "injectedGlobal": 0,
+            "composed": 0,
+            "workerLoad": 0,
+            "unnamedPlane": 0,
+            "cliLaunch": 0,
+            "ipcLaunch": 0,
+            "httpLaunch": 0,
+            "seamComposedMember": 0,
+            "mixedArray": 1,
+            "mixedObject": 1,
+            "literalParenthesized": 0,
+            "literalSatisfies": 0,
+            "literalTemplate": 0,
+            "literalStringKey": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: D1's spelling reading of the walk holds no /specul/i spelling with its planted binding read once in each module, the walk's sites hold no warm-start export site, and each named D1 control reads its held count, so a site or spelling in A2's or D1's planted form, appended to a module of the walk, reds this census until the checklist is bound",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "checklist": [
+              "output contract",
+              "generation",
+              "exact model/version/settings",
+              "measured success/ROI",
+              "budget"
+            ],
+            "licenseClause": "query evidence is never a license",
+            "vocabulary": [],
+            "warmStarts": [],
+            "controls": {
+              "identifier": 1,
+              "string": 1,
+              "comment": 0,
+              "outsideVocabulary": 0,
+              "privateName": 2,
+              "noSubstitutionTemplate": 1,
+              "templateSpans": 3,
+              "stem": 2,
+              "privateMember": 1,
+              "protectedMember": 1,
+              "staticMember": 1,
+              "publicMember": 1,
+              "asyncMember": 1,
+              "abstractMember": 1,
+              "declareClass": 1,
+              "declareMember": 1,
+              "overrideMember": 1,
+              "accessorMember": 1,
+              "readonlyMember": 1,
+              "parameterProperty": 1,
+              "memberAccessName": 1,
+              "parameterName": 1,
+              "classFieldName": 1,
+              "propertyAssignmentName": 1,
+              "getAccessorName": 1,
+              "setAccessorName": 1,
+              "enumMemberName": 1,
+              "typeParameterName": 1
+            },
+            "warmStartControls": {
+              "prewarm": 1,
+              "startup": 1,
+              "query": 0
+            },
+            "missedPlants": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "D1",
+    "registration: every judged pin registered once, ran in run mode, was not inverted and reached its witness"
+  ]
+}
