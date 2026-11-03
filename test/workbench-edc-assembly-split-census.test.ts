@@ -117,11 +117,31 @@
  * cured by the finding's second cure: row S3c's indexOrder witness reads K-SPLIT's content on each dense blocks array
  * behind the probe at length 2^32 - 1 as well (the dense content row reads plain, probed and oversized, each with no
  * finding), and the clause names those three variants. The same row reads each oversized array's misquoted twin (its
- * last block's text is not its subject's source) as source:s12, source:s101 and source:s1000, so a content reading that
- * reads no block, or not the last one, of these dense arrays at length 2^32 - 1 reds row S3c too. K-DEMAND's placement
- * and demand readings of the dense arrays at length 2^32 - 1, and a misquoted twin of any other array, are NOT CLAIMED
- * by this census. The pinned reader set is still this file's case S3c: to query providers, mint coverage or admit work;
- * this control adds no registered case, mutant, row or title.
+ * last block's text is 'misquoted <subject>', not its subject's source 'source of <subject>') as source:s12, source:s101
+ * and source:s1000, so a content reading that reads no block, or not the last one, of these dense arrays at length
+ * 2^32 - 1 reds row S3c too. K-DEMAND's placement and demand readings of the dense arrays at length 2^32 - 1, and a
+ * misquoted twin of any other array, are NOT CLAIMED by this census. The pinned reader set is still this file's case S3c:
+ * to query providers, mint coverage or admit work; this control adds no registered case, mutant, row or title.
+ *
+ * WB-Y3YO (seat ws-06, run g10-work-s197; the R694 follow-up of landing 844's PASS-WITH-FINDING, gate cmd_aded87282ed3,
+ * whose F1 leads and F2 rides): F1 (the WB-VM56 readings' findings are the same at every length and listing, so the gate's
+ * one-expression census edits C03-C06 - the oversized or the misquoted content reading moved to its array's own length or
+ * onto a plain array of length 2^32 - 1 - and X05 = C03 + C05 + GK02 kept the census green) is cured by the finding's first
+ * cure: each K-SPLIT content reading of row S3c's indexOrder witness - the ORDER_KEYS blocks, each dense blocks array
+ * plain, behind the probe and behind the probe at length 2^32 - 1, and each content twin - pins beside its findings the
+ * length, the listing and three absent reads of the very array it read, taken after it (THE INDEX ORDER, below), so a
+ * content reading moved off its array's length, off the probe or off its listing reds row S3c (the landed analog C07, the
+ * probed dense content control moved off the probe, among them). F2 (the clause and the WB-VM56 paragraph defined the twin
+ * by a property, a last-block text that is not its subject's source, while the pin held one text per array, so the gate's
+ * K07 SOURCE-PREFIX6-AT-LIMIT and K10 SOURCE-INCLUDES-SOURCE-AT-LIMIT kept the census green) is cured both ways: each
+ * length-2^32 - 1 dense blocks array has four content twins (TWIN_TEXTS) whose last block's text is 'misquoted <subject>',
+ * 'source of s1' (another subject's source), 'source of <subject> ' (its source with one space appended) or the empty text,
+ * each read as source:<subject> beside the last text read back from its array, and the clause and the WB-VM56 paragraph
+ * name exactly these texts. A content twin with any other last-block text, or of any other array, is NOT CLAIMED by this
+ * census; the gate's C08 (the in-order placement control behind the probe moved off it) and any other control that is not a
+ * content reading, moved onto another array on which its own reading reads the same, are NOT CLAIMED by this census to red
+ * (THE INDEX ORDER). The pinned reader set is still this file's case S3c: to query providers, mint coverage or admit work;
+ * these controls add no registered case, mutant, row or title.
  *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
@@ -195,16 +215,28 @@
  *  every neighbouring pair of ORDER_KEYS and at the last two items of each dense array; its demand reading admits the dense
  *  subjects (plain and behind the probe) in the request's order and refuses that twin with subjects; K-SPLIT's content reads
  *  the ORDER_KEYS blocks and the dense blocks (plain, behind the probe, and behind the probe at length 2^32 - 1) with no
- *  finding, and reads source:<subject> on each length-2^32 - 1 dense blocks array's twin whose last block's text is not
- *  its subject's source; and through the whole judge a control request of 35 answerable
- *  subjects whose blocks sit one at each ORDER_KEYS index reads K-DEMAND ok, and demand:order with the blocks at the two
- *  largest indices swapped. Row S3c also pins each indexOrder array's listing (its first three own keys), a walk of the length
- *  of each dense array of its own length (filter: it ends) and, on each array of length 2^32 - 1, three reads of absent
- *  indices (has, get and own descriptor: the third is probed) - no control walks an array of length 2^32 - 1 - so a control
- *  that left the probe or its listing reds. Every other array - other index keys, another listing of its own keys
- *  (the ORDER_KEYS listed ascending among them), more than 1000 present items - is NOT CLAIMED by this census: a comparator,
- *  or a reading of the present items, that errs only there is outside these pins. THE INDEX ORDER names no residual: refusal
- *  #2's members are killed by these pins, and what no pin reads is a scope sentence (NOT CLAIMED), never a residual.
+ *  finding, and reads source:<subject> on each of the four content twins (TWIN_TEXTS) of each length-2^32 - 1 dense blocks
+ *  array - that array with its last block's text 'misquoted <subject>', 'source of s1' (another subject's source),
+ *  'source of <subject> ' (its source with one space appended) or the empty text; and through the whole judge a control
+ *  request of 35 answerable subjects whose blocks sit one at each ORDER_KEYS index reads K-DEMAND ok, and demand:order with
+ *  the blocks at the two largest indices swapped. Row S3c also pins the listing (its first three own keys) of the
+ *  ORDER_KEYS array and of each dense subjects array (plain, behind the probe, and behind the probe at length 2^32 - 1), a
+ *  walk of the length of each dense subjects array of its own length (filter: it ends) and, on the ORDER_KEYS array and on
+ *  each dense subjects array of length 2^32 - 1, three reads of absent indices (has, get and own descriptor: the third is
+ *  probed) - no control walks an array of length 2^32 - 1 - so a listing control that left the probe or its listing reds,
+ *  and so does an absent-read control that left the probe. Each K-SPLIT content reading above (wb-y3yo) pins beside its
+ *  findings the length, the listing and three absent reads (from its first absent index) of the very array it read, taken
+ *  after it - on a plain array all three end; behind the probe the third is probed, so the content reading probed none of
+ *  that array's absent indices - and each twin also the last block's text read back from its array, so a content reading
+ *  moved off its array's length, the probe or its listing reds too. Any other control - presentItems', itemsOf's, the
+ *  walk's, the listing's, the absent reads', K-DEMAND's placement and demand readings' and the judge's - moved onto another
+ *  array on which its own reading reads the same (the in-order placement control behind the probe moved off it, or a
+ *  listing or absent-read control moved to another length, among them) is NOT CLAIMED by this census to red. Every other
+ *  array - other index keys, another listing of its own keys (the ORDER_KEYS listed ascending among them), more than 1000
+ *  present items - is NOT CLAIMED by this census: a comparator, or a reading of the present items, that errs only there is
+ *  outside these pins; and a content twin with any other last-block text, or of any other array, is NOT CLAIMED by this
+ *  census. THE INDEX ORDER names no residual: refusal #2's members are killed by these pins, and what no pin reads is a
+ *  scope sentence (NOT CLAIMED), never a residual.
  *  FAIL CLOSED: every reading above is guarded - a reading that throws is the finding unreadable:<reading>, so its check
  *  refuses and the judge goes on: the wiring (M74), demand (M75), placement and content (M72) readings and K-PURE's input
  *  datum (M73, M75) and repeat comparison (M72); the shape reading reads keys, descriptors and prototypes only and stops at
@@ -1408,13 +1440,23 @@ const ORDER_KEYS: readonly number[] = [
 ];
 /** THE INDEX ORDER's dense arrays: these counts of items, each array holding one at every index from 0 to its count - 1. */
 const DENSE_COUNTS: readonly number[] = [12, 101, 1000];
+/** wb-y3yo F2: THE INDEX ORDER's content twins - the last-block texts, each written from the last block's subject, that each dense blocks array
+ * behind the probe at length 2^32 - 1 is read with, none its subject's source ('source of <subject>'): wb-vm56's misquoted text, another
+ * subject's source, the source with one space appended, and the empty text. */
+const TWIN_TEXTS: readonly { readonly id: string; readonly text: (subject: string) => string }[] = [
+  { id: "misquoted", text: subject => `misquoted ${subject}` },
+  { id: "another", text: () => "source of s1" },
+  { id: "appended", text: subject => `source of ${subject} ` },
+  { id: "empty", text: () => "" },
+];
 /** wb-j517 cut #3 (refusal #2 U1-U2): THE INDEX ORDER's indexOrder arrays (the census header) - ORDER_KEYS on an array of length 2^32 - 1 behind the
  * probe, and the DENSE_COUNTS arrays, plain, behind the probe and behind the probe at length 2^32 - 1 - read by presentItems and itemsOf,
  * K-DEMAND's placement and demand readings (each order as an in-order twin and an out-of-order twin, two neighbouring items swapped) and K-SPLIT's
  * content, and the ORDER_KEYS blocks through the whole judge. These are paired reading controls, not additions to the eleven-case seam battery.
  * On the dense arrays behind the probe at length 2^32 - 1, presentItems, itemsOf's holes, the listing, the absent reads and K-SPLIT's content
- * (wb-vm56: the blocks with no finding, and their misquoted twin, its last block's text not its source, with source:<subject>) read them;
- * K-DEMAND's placement and demand readings read the dense arrays plain and behind the probe only. */
+ * (wb-vm56: the blocks with no finding; wb-y3yo: their four content twins, TWIN_TEXTS, each with source:<subject>) read them; K-DEMAND's
+ * placement and demand readings read the dense arrays plain and behind the probe only. Each K-SPLIT content reading here pins, beside its
+ * findings, the length, the listing and the absent reads of the array it read (contentOn, wb-y3yo F1). */
 function indexOrderReadings(): unknown {
   const named = (count: number): string[] => Array.from({ length: count }, (_, index) => `s${index + 1}`);
   const requestOf = (subjects: readonly string[]): Request => ({
@@ -1424,10 +1466,11 @@ function indexOrderReadings(): unknown {
   });
   const blockOf = (subject: string): Block => ({ subject, text: `source of ${subject}`, evidence: [evidenceOf(subject, `${subject} holds`)] });
   const wiringOf = (subjects: readonly string[]): Wiring => ({ demand: { owner: "host", subjects }, evidence: [], sources: [], ports: {} });
+  /** A copy of the blocks whose last block's text is written from its subject (a content twin, read at length 2^32 - 1: TWIN_TEXTS, wb-vm56's
+   * misquoted text first). */
+  const retexted = (blocks: readonly Block[], text: (subject: string) => string): Block[] =>
+    blocks.map((block, index) => (index === blocks.length - 1 ? { ...block, text: text(block.subject) } : block));
   /** A copy of the items with the two at the positions at and at + 1 swapped (the out-of-order twin). */
-  /** A copy of the blocks whose last block's text is not its subject's source (wb-vm56: the content twin, read at length 2^32 - 1). */
-  const misquoted = (blocks: readonly Block[]): Block[] =>
-    blocks.map((block, index) => (index === blocks.length - 1 ? { ...block, text: `misquoted ${block.subject}` } : block));
   const swapped = <T>(items: readonly T[], at: number): T[] => items.map((item, index) => (index === at ? items[at + 1] : index === at + 1 ? items[at] : item) as T);
   /** The items placed one at each ORDER_KEYS index, in order, on an array of length 2^32 - 1 behind the probe (defined through the proxy, which has
    * no defineProperty trap, so placing an item probes nothing): never a plain array of that length, on which a reading that walks the length
@@ -1461,6 +1504,19 @@ function indexOrderReadings(): unknown {
         return error instanceof RangeError ? "probed" : "threw";
       }
     });
+  /** K-SPLIT's content on one blocks array, beside that very array's length, listing and three absent reads from at (its first absent index), each
+   * taken after the content reading (wb-y3yo F1): on a plain array all three end; behind the probe the third is probed, so the content reading
+   * probed none of its absent indices. A content control moved off its array's length, the probe or its listing reds here even where its
+   * findings read the same on every variant. */
+  const contentOn = (blocks: readonly Block[], request: Request, at: number) => {
+    const findings = contentFindings({ blocks, unmet: [] }, request);
+    return { findings, length: blocks.length, listing: listingOf(blocks), absent: absentReads(blocks, at) };
+  };
+  /** A content twin's reading (wb-y3yo F2): the last block's text, read back from the twin's array once contentOn has read it, beside that reading. */
+  const twinOn = (blocks: readonly Block[], request: Request, at: number) => {
+    const read = contentOn(blocks, request, at);
+    return { text: presentItems(blocks).at(-1)?.text, ...read };
+  };
   const keyed = ORDER_KEYS.map(key => `at:${key}`);
   const stairSubjects = named(ORDER_KEYS.length);
   const stairRequest = requestOf(stairSubjects);
@@ -1498,9 +1554,9 @@ function indexOrderReadings(): unknown {
         swapped: demandFindings(wiringOf(listed(swapped(subjects, last), probe)), request),
       })),
       content: {
-        ...listings(probe => contentFindings({ blocks: listed(blocks, probe), unmet: [] }, request)),
-        oversized: contentFindings({ blocks: probed(blocks, INDEX_LIMIT), unmet: [] }, request),
-        misquoted: contentFindings({ blocks: probed(misquoted(blocks), INDEX_LIMIT), unmet: [] }, request),
+        ...listings(probe => contentOn(listed(blocks, probe), request, count)),
+        oversized: contentOn(probed(blocks, INDEX_LIMIT), request, count),
+        twins: Object.fromEntries(TWIN_TEXTS.map(twin => [twin.id, twinOn(probed(retexted(blocks, twin.text), INDEX_LIMIT), request, count)])),
       },
     };
   };
@@ -1514,7 +1570,7 @@ function indexOrderReadings(): unknown {
         ordered: placementFindings({ blocks: stairs(stairBlocks), unmet: [] }, stairRequest),
         swapped: Object.fromEntries(pairs.map(({ pair, at }) => [pair, placementFindings({ blocks: stairs(swapped(stairBlocks, at)), unmet: [] }, stairRequest)])),
       },
-      content: contentFindings({ blocks: stairs(stairBlocks), unmet: [] }, stairRequest),
+      content: contentOn(stairs(stairBlocks), stairRequest, 3),
       judge: { ordered: readingsOf(placedSeam(), stairCase), swapped: readingsOf(placedSeam(ORDER_KEYS.length - 2), stairCase) },
     },
     dense: Object.fromEntries(DENSE_COUNTS.map(count => [String(count), dense(count)])),
@@ -2894,6 +2950,12 @@ describe(SUITE, () => {
       INDEX_LIMIT - 1,
     ]);
     expect([ORDER_KEYS.length, DENSE_COUNTS], "THE INDEX ORDER's key count and dense counts").toEqual([35, [12, 101, 1000]]);
+    expect(TWIN_TEXTS.map(twin => `${twin.id}:${twin.text("s12")}`), "THE INDEX ORDER's content twins, their last-block texts written for s12").toEqual([
+      "misquoted:misquoted s12",
+      "another:source of s1",
+      "appended:source of s12 ",
+      "empty:",
+    ]);
     expect(shapeLine(DOCUMENT_SHAPE), "the closed document shape").toBe("{blocks:[{subject:string,text:string,evidence:[{subject:string,claim:string,value:string,evaluatedBy:string}]}],unmet:[string]}");
     expect([CARRIERS, WIRING_CARRIERS, DOCUMENT_NODES, DOCUMENT_OBJECTS, LEAVES, WIRING_NODES, WIRING_OBJECTS], "the carrier tables").toEqual([
       ["listed", "hidden", "symbol", "accessor", "inherited", "proxy", "index-like"],

@@ -4312,6 +4312,11 @@
         ]
       }
     },
+    "quietChain": [
+      "wb-0lf.8",
+      "wb-4z24",
+      "wb-oddy"
+    ],
     "quietSurvivors": [
       "wb-4z24:GP20-U5-CSK-READS-TYPE-MEMBERS:PropertySignature",
       "wb-4z24:GP20-U5-CSK-READS-BINDINGS:BindingElement",
@@ -4322,7 +4327,25 @@
     "quietControl": [
       "G-C1:BindingElement",
       "G-C3:PropertySignature",
-      "GP9-C4:PropertySignature"
+      "GP9-C4:PropertySignature",
+      "G-C7:BindingElement",
+      "G-C9:PropertySignature",
+      "G-C8:PropertySignature",
+      "G-C16:BindingElement",
+      "G-C17:BindingElement"
+    ],
+    "quietControlMembers": [
+      "G2-QS-SAME-NAME-BOUND",
+      "G2-QS-REMENTION-FALLBACK",
+      "G2-QS-CONTEXT-ANYWHERE",
+      "G2-QS-ROLE-ANYWHERE",
+      "G2-QS-NAME-LOOSE",
+      "G-C5",
+      "G-C6",
+      "G-C2",
+      "G-C1",
+      "F-QS-LAST-KIND",
+      "F-QS-ENUM-ORDER"
     ],
     "shapeQuiet": {
       "type-literal": {
