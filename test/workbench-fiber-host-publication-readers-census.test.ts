@@ -2,7 +2,7 @@
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, program-triage-2026-10-18; the rule-19 structural exit of wb-pyel.1 under
  * orchestrator rulings R-B105 and R-B135), cut #4 (the FAIL-CLOSED CORE orchestrator ruling R-B265 bound at refusal #3's rule-19
  * structural exit; the deferred coverage is the child wb-pyel.10's), re-cut under orchestrator ruling R-B308 after that child
- * landed (landing 829) and restated under orchestrator rulings R-B367 (refusal #5) and R-B400 (refusal #6):
+ * landed (landing 829) and restated under orchestrator rulings R-B367 (refusal #5), R-B400 (refusal #6) and R-B427 (refusal #7):
  * the census of the Fiber host-publication census's A1 and A3 readers,
  * test/helpers/fiber-host-publication-readers.ts, which wb-pyel.1's census composes when it re-cuts. Statement (bead title,
  * verbatim): "A1 pip-manifest readers cover .pip, extensionless and requirements-directory name forms and A3 registration coverage
@@ -15,8 +15,8 @@
  * clause names is a pin, and no clause names none. Every quantifier in a clause ranges over a planted bound or table named in its
  * words (DEPTH_BOUND, LINE_BOUND, NEST_BOUND, CASE_FORMS, POSITION_FORMS, DIRECTORY_FORMS, PIP_EXTENSIONS, TEST_ROOT_PLANTS,
  * FOLD_FORMS, FOLD_QUIET, RF_FORMS, CARRIER_FORMS, PLANTED_EFFECTS, MODE_SETS, FLAG_FORMS, NEEDLE_FORMS, SCRIPT_PLANTS,
- * REGISTER_NAME_PLANTS, LIST_POSITIONS, NEAR_BEFORE, NEAR_AFTER, SPLIT_SEPARATORS, the planted modules and fields, the readers'
- * vocabulary): the claims are claimed over those plants and no wider.
+ * REGISTER_NAME_PLANTS, LIST_POSITIONS, NEAR_BEFORE, NEAR_AFTER, SPLIT_SEPARATORS, CHANNEL_PLANTS, KEY_VALUE_PLANTS, the planted
+ * modules and fields, the readers' vocabulary): the claims are claimed over those plants and no wider.
  *
  * CUT #4, THE FAIL-CLOSED CORE (R-B265): the claims narrow to the pinned subset and nothing else changes: no new claim word, no
  * new channel, no pin, plant, row or test, and the helper is byte-identical (narrow the claim, never widen the reader). Four
@@ -75,6 +75,22 @@
  * rest, and nothing else changes (no channel, pin, plant, row, test, constant or reader is added; narrow the claim, never
  * widen the reader).
  *
+ * THE R-B427 RE-CUT (refusal #7 on the R-B400 re-cut, O:1911; orchestrator ruling R-B427, M:51543): refusal #7 found one
+ * gate hollowing of the helper against the root readers' clause, GP4-15 (manifestHits drops its parsed channel whenever the
+ * raw text is handed), realized by a real-tree witness (WG4-15: the live root package.json as one line whose dependencies
+ * object gains the key fiber-optics, its hyphen JSON-escaped, so only the parsed reading sees it), where every planted
+ * parsed reading handed no raw text while LIVE-A1 reads the root file with its raw text; beside it, it recorded GP4-17
+ * (textsOf reading a key only when its value is a string; WG4-17, the escaped key with an object value in overrides) and
+ * GP4-16 (the raw lines read only when the parsed reading is empty). R-B427 ordered claims equal to pins, by a pin or by
+ * narrowing; this re-cut takes the pin. N-ROOT-READERS reads two new plant tables: CHANNEL_PLANTS, one-line package.json
+ * texts read with their raw text handed as LIVE-A1 reads the root file, five holding the escaped stem alone at each of the
+ * five places the clause names and one holding it beside a stem only the raw line sees (a shadowed duplicate key), each
+ * declaring the hits its reading states; and KEY_VALUE_PLANTS, the key fiber-optics in a top-level field's object holding
+ * each value but a non-empty string (an object, an empty object, a list, an empty list, a number, zero, true, false, null,
+ * an empty string). GP4-15, GP4-16 and GP4-17 each red the census. The root readers' clause names both tables, NOT CLAIMED
+ * names the rest, and nothing else changes: no row, pin id, test, channel or reader is added, the helper is untouched, and
+ * refusal #6's narrowings stand.
+ *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
  *     L3-M1 requirements.pip, L3-M4 an extensionless requirements, L3-M2 requirements/base.pip, the paired .txt controls L3-Mc1
@@ -86,8 +102,9 @@
  *     description's three name forms (N-DIRECTORY also a member with every PIP_EXTENSIONS extension, or none, below each word's
  *     directory); N-OTHER the word held beside other text, another extension, the test/ tree left unread and a hit's line;
  *     N-ROOT-READERS the root npm pair's own readers (package.json read whole: a manifest per planted dependency list, a key, a
- *     nested value and a raw shadowed duplicate key; package-lock.json by installed path and name field, each at every LIST_POSITIONS
- *     position of the installed packages; two near misses quiet).
+ *     nested value and a raw shadowed duplicate key, each CHANNEL_PLANTS text read with its raw text handed and a key holding each
+ *     KEY_VALUE_PLANTS value; package-lock.json by installed path and name field, each at every LIST_POSITIONS position of the
+ *     installed packages; two near misses quiet).
  *  R  the description's A3 item, its label read from the tracker export: refusal #3's A3 members (wb-pyel.1's notes, its U2 line),
  *     each a planted module in the probe's shape (an exported const-arrow registerValuePublish calling the registry): L3-R1 .call,
  *     L3-R2 an element access by a string key, L3-R3 a Reflect.apply argument, L3-R4 a parenthesized callee, the controls L3-Rc1 a
@@ -215,7 +232,14 @@
  * other steps than a plant puts it at (a string field of a top-level field's object, two steps down; a key of an object, or
  * a string item of a list, in a top-level field's object, three steps down), which of the live tree's files the forms
  * select and how much of a live raw-read file is read (LIVE-A1 pins the live tree's raw-read hits alone, none at this cut),
- * or a raw-read text longer than any planted one (LINE_TEXTS' every text, 1463 characters, is the longest). Edits of this
+ * or a raw-read text longer than any planted one (LINE_TEXTS' every text, 1463 characters, is the longest). Nor, at the
+ * R-B427 re-cut (the root readers' clause claims package.json's parsed keys and strings read beside its raw text only for
+ * the CHANNEL_PLANTS texts, and a key's value only for a key in a top-level field's object and the KEY_VALUE_PLANTS values),
+ * is a root package.json raw text of more than one line read beside its parsed keys and strings, a stem its raw line hides
+ * otherwise than by a JSON escape of the stem's hyphen, two or more stems that only the parsed reading sees in one text read
+ * with its raw text, a package.json key at another place than a top-level field's object holding another value than a
+ * string (a key of an object item in a top-level field's list among them), or a needle in a descriptor key whose value is
+ * not a string (the KEY_VALUE_PLANTS values are package.json's alone). Edits of this
  * file and the roster together: a plant removed from its table and the
  * roster together where no outside anchor names it, and a pin a later cut adds beyond the export's member lists and the
  * claims, removed whole, are NOT CLAIMED.
@@ -573,7 +597,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; its raw text one line; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; a key in a top-level field's object holding a string or each KEY_VALUE_PLANTS value (an object, an empty object, a list, an empty list, a number, zero, true, false, null, an empty string); its raw text one line, read beside its parsed keys and strings when it is handed, as LIVE-A1 hands the root file's: each CHANNEL_PLANTS text, one line ended by a newline, holds the stem with its hyphen JSON-escaped, so only the parsed reading sees it, alone at each of those five places, and once beside a stem only its raw line sees (a shadowed duplicate key), both read; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
@@ -685,6 +709,43 @@ const LOCK_FILLERS: readonly [[string, JsonValue], [string, JsonValue]] = [
 ];
 /** A raw manifest whose first dependencies key JSON.parse shadows with the second: only the raw-line reading sees it. */
 const SHADOWED_MANIFEST = '{ "dependencies": { "fiber-optics": "1.0.0" }, "dependencies": {} }';
+/** A root package.json plant read with its raw text handed, as LIVE-A1 reads the root file: its one-line raw text and the hits its reading states. */
+interface ChannelPlant {
+  readonly raw: string;
+  readonly hits: readonly string[];
+}
+/**
+ * N-ROOT-READERS' channel plants (refusal #7's U1 and F3, GP4-15 and GP4-16; R-B427): a one-line package.json, ended by a newline,
+ * read through manifestHits with its raw text handed, as LIVE-A1 reads the root file. Each of the first five holds the stem with
+ * its hyphen JSON-escaped, so only the parsed reading sees it, alone at one of the five places the root readers' clause names
+ * (WG4-15's shape at the first); the last holds that stem beside a stem only the raw line sees, a shadowed duplicate key, so both
+ * readings are read together.
+ */
+const CHANNEL_PLANTS: Readonly<Record<string, ChannelPlant>> = {
+  "dependencies key": { raw: '{"dependencies":{"fiber\\u002doptics":"^0.1.0"}}\n', hits: ["package.json.dependencies{fiber-optics}: fiberoptics"] },
+  "keywords item": { raw: '{"keywords":["fiber\\u002doptics"]}\n', hits: ["package.json.keywords[0]: fiberoptics"] },
+  "overrides field": { raw: '{"overrides":{"a":{"engine":"fiber\\u002doptics"}}}\n', hits: ["package.json.overrides.a.engine: fiberoptics"] },
+  "contributors field": { raw: '{"contributors":[{"name":"fiber\\u002doptics"}]}\n', hits: ["package.json.contributors[0].name: fiberoptics"] },
+  "contributors key": { raw: '{"contributors":[{"fiber\\u002doptics":"x"}]}\n', hits: ["package.json.contributors[0]{fiber-optics}: fiberoptics"] },
+  "both channels": { raw: '{"dependencies":{"fiber\\u002doptics":"^0.1.0"},"devDependencies":{"fiber-optics":"1.0.0"},"devDependencies":{}}\n', hits: ["package.json.dependencies{fiber-optics}: fiberoptics", "package.json:1: fiberoptics"] },
+};
+/**
+ * N-ROOT-READERS' key-value plants (refusal #7's F2, GP4-17; R-B427): the key fiber-optics in a top-level field's object
+ * (overrides), two steps down, holding each value but a non-empty string (the dependencies control holds one), read through
+ * manifestHits with no raw text: the key is read as text whatever value it holds.
+ */
+const KEY_VALUE_PLANTS: Readonly<Record<string, JsonValue>> = {
+  "object": { overrides: { "fiber-optics": { ".": "^0.1.0" } } },
+  "empty object": { overrides: { "fiber-optics": {} } },
+  "list": { overrides: { "fiber-optics": ["^0.1.0"] } },
+  "empty list": { overrides: { "fiber-optics": [] } },
+  "number": { overrides: { "fiber-optics": 1 } },
+  "zero": { overrides: { "fiber-optics": 0 } },
+  "true": { overrides: { "fiber-optics": true } },
+  "false": { overrides: { "fiber-optics": false } },
+  "null": { overrides: { "fiber-optics": null } },
+  "empty string": { overrides: { "fiber-optics": "" } },
+};
 const ROOT_LOCK_CONTROLS: Readonly<Record<string, JsonValue>> = {
   lockPath: { packages: { "node_modules/fiber-optics": { version: "0.1.0" } } },
   lockName: { packages: { "node_modules/alias": { name: "FiberOpticsSDK", version: "0.1.0" } } },
@@ -1647,6 +1708,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     json({
       manifestControls: Object.fromEntries(Object.entries(ROOT_MANIFEST_CONTROLS).map(([name, manifest]) => [name, manifestHits(manifest, undefined, name)])),
       shadowedKey: { parsed: manifestHits(JSON.parse(SHADOWED_MANIFEST), undefined, "shadowed"), raw: manifestHits(JSON.parse(SHADOWED_MANIFEST), SHADOWED_MANIFEST, "shadowed") },
+      channels: Object.fromEntries(Object.entries(CHANNEL_PLANTS).map(([name, plant]) => [name, manifestHits(JSON.parse(plant.raw), plant.raw, "package.json")])),
+      keyValues: Object.fromEntries(Object.entries(KEY_VALUE_PLANTS).map(([name, manifest]) => [name, manifestHits(manifest, undefined, name)])),
       lockControls: Object.fromEntries(Object.entries(ROOT_LOCK_CONTROLS).map(([name, lock]) => [name, lockReading(lock).hits])),
     }),
   "LIVE-A1": async () => {
@@ -1721,6 +1784,8 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
         descriptorControls: DESCRIPTOR_CONTROLS,
         rootManifestControls: ROOT_MANIFEST_CONTROLS,
         shadowedManifest: SHADOWED_MANIFEST,
+        channelPlants: CHANNEL_PLANTS,
+        keyValuePlants: KEY_VALUE_PLANTS,
         rootLockControls: ROOT_LOCK_CONTROLS,
         unreadManifests: UNREAD_MANIFESTS,
         unreadRegistration: UNREAD_REGISTRATION,
@@ -1907,6 +1972,15 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     for (const position of Object.keys(LIST_POSITIONS)) {
       expect(lockHits[`lockPath ${position}`], `N-ROOT-READERS: the stem in a lock package's path is read ${position}`).toEqual(["node_modules/fiber-optics: fiberoptics"]);
       expect(lockHits[`lockName ${position}`], `N-ROOT-READERS: the stem in a lock package's name field is read ${position}`).toEqual(["node_modules/alias name: fiberoptics"]);
+    }
+    const rootReaders = objectAt(rosterWitness("N-ROOT-READERS"));
+    const channels = objectAt(rootReaders.channels);
+    for (const [name, plant] of Object.entries(CHANNEL_PLANTS)) {
+      expect(channels[name], `N-ROOT-READERS: ${name}, its raw text handed, is read for its parsed and raw stems together`).toEqual(plant.hits);
+    }
+    const keyValues = objectAt(rootReaders.keyValues);
+    for (const name of Object.keys(KEY_VALUE_PLANTS)) {
+      expect(keyValues[name], `N-ROOT-READERS: a key in a top-level field's object is read holding its ${name} value`).toEqual([`${name}.overrides{fiber-optics}: fiberoptics`]);
     }
     const moduleReading = (pin: string): { [module: string]: string[] } => {
       return Object.fromEntries(Object.entries(objectAt(rosterWitness(pin))).map(([module, entries]) => [module, Array.isArray(entries) ? entries.map(String) : []]));
