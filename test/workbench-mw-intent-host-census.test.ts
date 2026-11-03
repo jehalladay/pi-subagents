@@ -40,7 +40,8 @@
  * by object identity: only a permit decideControl minted in this process. docs/workbench/07-native-integrations.md line 12
  * reads "5. Validate output and record native evidence references; preserve four existing outcome variants." at clause C's
  * pin 9df9a03 and at the base, and docs/workbench/01 J03 names the four: verified_candidate / verification_failed /
- * needs_evidence / indeterminate (wb-w12's statement lists the same four).
+ * needs_evidence / indeterminate (wb-w12's statement lists the same four). The wb-oxsg follow-up re-read docs/workbench/01
+ * at trunk 577493f9e951: its J03 paragraph (line 21) carries exactly one such clause.
  *
  * Pi hosts no MechanicalWorkflows intent today. The census pins that (row T) and an ARMED contract (rows A to C) that binds the
  * first host to come, as the wb-e66.5 coordination census and the HX censuses arm their first reader:
@@ -102,13 +103,17 @@
  * HTML of any kind, block or inline, comments included (the binding's hasHtml), and reads the one top-level paragraph block
  * whose rendered text opens with the word J03, whose rendered text must equal its source, whitespace collapsed (so emphasis,
  * a strikethrough, a code span, a link, an image, an escape or a decoded entity in it reads nothing), and the ' / '-separated
- * list its "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names; a refused binding,
- * HTML in the section, a J03 block whose rendered text is not its source, or no such block or more than one, read nothing (a
+ * list its one "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names (the reader
+ * counts every match of those words, as written, in the block's rendered text and reads the list only when there is exactly
+ * one); a refused binding, HTML in the section, a J03 block whose rendered text is not its source, no such block or more
+ * than one, or a J03 block carrying no such clause or more than one (the same clause twice included), read nothing (a
  * J03 inside a list item, block quote or table, or run into the paragraph above it, is no such block). The case's controls
  * show a duplicated heading, another page title, a code block carrying a heading line, a section carrying a comment or a
  * hidden wrapper, and a J03 carrying a strikethrough each reading nothing; the indented, empty, tab-separated, closed and
  * level-1 ATX forms and both Setext forms each
- * ending the section; a J03 past the section's end or inside a list item not read; two J03 paragraphs reading nothing; and a
+ * ending the section; a J03 past the section's end or inside a list item not read; two J03 paragraphs reading nothing; a J03
+ * carrying a second such clause after its own, before it or on its next line, the same clause twice, or none, each reading
+ * nothing, and one naming the producer's outcome and Boolean success outside the clause's words reading its one clause; and a
  * J03 indented by one or three spaces, or wrapped over two lines, read whole. Clause C's citation resolves in Pi's own objects
  * to the docs/07 line that counts the variants. Clause B's citation binds the roster producer block's line, the first seven
  * hex digits of its sha (the citation's pin) and the quoted words its text must contain, and the notes' resolution of the
@@ -138,8 +143,10 @@
  * deletes the vocabulary leg, after which a src module spelling an M0 code reds nothing); that the J03 reading is a
  * browser's view of the page beyond what the binding renders: where marked departs from CommonMark the binding follows
  * marked, an entity reference outside the binding's decoded set (&amp; &lt; &gt; &quot; &#39; &#x27; &nbsp;) is read as
- * written, and a section the binding refuses, one carrying HTML, or a J03 block whose rendered text is not its source reads
- * nothing whatever a browser would show (the census then reds: it fails closed, never open); the producer block's blob, the
+ * written, and a section the binding refuses, one carrying HTML, a J03 block whose rendered text is not its source, or one
+ * carrying no such clause or more than one reads nothing whatever a browser would show (the census then reds: it fails
+ * closed, never open); a second clause in J03 that the clause's words, as written, do not match (another case, another
+ * apostrophe, other words) is not counted, so the block reads its one matching clause; the producer block's blob, the
  * rest of its sha past the citation's pin and the rest of its text past the quoted words (the roster's own words, as stated
  * above).
  * RESIDUALS (named families, each family one pinned quiet row over its members; a reader that starts reading a member reds
@@ -847,8 +854,9 @@ const JOURNEY_HEADING = "Concrete user journeys";
  * J03's variants, read through the landed docsSection binding: the heading renders exactly once at level 2 under the page
  * title, and the section runs to the next top-level level-1 or level-2 heading or EOF. A refused binding or a section carrying
  * any HTML reads nothing; so do no top-level paragraph block whose rendered text opens with J03 or more than one, and a J03
- * block whose rendered text is not its source. The variants are the ' / '-separated list that block's
- * "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names.
+ * block whose rendered text is not its source. The variants are the ' / '-separated list that block's one
+ * "preserving the producer's ... outcome rather than collapsing to Boolean success" clause names: every match of those words,
+ * as written, in the block's rendered text is counted, and a block carrying no such clause or more than one reads nothing.
  */
 function journeyVariants(text: string): readonly string[] | undefined {
   const section = docsSection(text, JOURNEY_HEADING, 2, [JOURNEY_PAGE]);
@@ -856,7 +864,8 @@ function journeyVariants(text: string): readonly string[] | undefined {
   const j03 = section.blocks.flatMap(block => (block.kind === "paragraph" && /^J03\b/.test(block.text) ? [block] : []));
   const only = j03.length === 1 ? j03[0] : undefined;
   if (only === undefined || only.markdown !== only.text) return undefined;
-  return /preserving the producer's (.+?) outcome rather than collapsing to Boolean success/.exec(only.text)?.[1]?.split(" / ");
+  const clauses = [...only.text.matchAll(/preserving the producer's (.+?) outcome rather than collapsing to Boolean success/g)];
+  return clauses.length === 1 ? clauses[0]?.[1]?.split(" / ") : undefined;
 }
 /** A clause without its final period and without a trailing parenthetical that cites a pinned source (path:line@sha). */
 function labelOf(clause: string): { readonly label: string; readonly citation?: string } {
@@ -958,6 +967,14 @@ describe(SUITE, () => {
     expect(journeyVariants(`${page(sentence(fewer))}\n${sentence(VARIANTS)}\n`), "a J03 outside its section is not read").toEqual(fewer);
     expect(journeyVariants(page(`- ${sentence(VARIANTS)}`)), "a J03 inside a list item is not read").toBeUndefined();
     expect(journeyVariants(page(`${sentence(VARIANTS)}\n\n${sentence(VARIANTS)}`)), "two J03 paragraphs fail closed").toBeUndefined();
+    const three = VARIANTS.filter(variant => variant !== "needs_evidence");
+    const draft = (variants: readonly string[]): string => `A later draft reads: preserving the producer's ${variants.join(" / ")} outcome rather than collapsing to Boolean success.`;
+    expect(journeyVariants(page(`${sentence(VARIANTS)} ${draft(three)}`)), "a J03 carrying a second such clause after its own reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`${sentence(three)} ${draft(VARIANTS)}`)), "a J03 whose clause follows a second such clause reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`${sentence(VARIANTS)}\n${draft(three)}`)), "a J03 carrying a second such clause on its next line reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`${sentence(VARIANTS)} ${draft(VARIANTS)}`)), "a J03 carrying the same clause twice reads nothing").toBeUndefined();
+    expect(journeyVariants(page("J03 binds, with no outcome clause.")), "a J03 carrying no such clause reads nothing").toBeUndefined();
+    expect(journeyVariants(page(`${sentence(VARIANTS)} The producer's outcome is never collapsed to Boolean success.`)), "a J03 naming the producer's outcome and Boolean success outside the clause's words reads its one clause").toEqual([...VARIANTS]);
     expect(journeyVariants(page(`${sentence(VARIANTS)}\n\n## ${JOURNEY_HEADING}\n\n${sentence(fewer)}`)), "a duplicated journeys heading reads nothing").toBeUndefined();
     expect(journeyVariants(page(sentence(VARIANTS), "Another page")), "the section under another page title reads nothing").toBeUndefined();
     expect(journeyVariants(page(`J01 x\n\n\`\`\`\n## not a heading\n\`\`\`\n\n${sentence(VARIANTS)}`)), "a code block carrying a heading line reads nothing").toBeUndefined();

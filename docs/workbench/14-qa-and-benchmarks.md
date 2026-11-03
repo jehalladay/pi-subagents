@@ -281,6 +281,24 @@ Named residuals of test/workbench-rf-definition-source-census.test.ts, the until
 | A20 | R-MARKER-RUN | page cure |
 | T4 | R-NESTED | names rule |
 
+## MW workflow-composition citation-status census residuals
+
+Named residuals of test/workbench-mw-cac-citation-status-census.test.ts: one row per family the census names and does not claim to catch. Each row names the family's quiet row, an exemplar its probe carries exactly once and that reads quiet, and a clear form that undoes that family: with the exemplar replaced by the clear form, the probe must read the causes given. The census judges this table against its residual families and quiet probes in both directions, so a family dropped, renamed or moved to another quiet row reds. R-SCOPE's probe is Q1's outside list (one path a line), read as the clause (a) scopes whose roots would list each path; all other probes are read at their path by the census's unit judge. In an exemplar or clear form, `\n` stands for a line break. The Q9 exemplar is only the split seam, not a type declaration or a claim that any type is shipped; these rows describe the reader, not an integration.
+
+| Quiet row | Residual family | Exemplar | Clear form | Clear form reads |
+| --- | --- | --- | --- | --- |
+| Q1 | R-SCOPE | `README.md` | `docs/workbench/README.md` | docs/workbench |
+| Q2 | R-REQUIREMENT-ID | `COMPOSITION-R1` | `COMPOSITION` | unqualified |
+| Q3 | R-PARAPHRASE-CITE | `assurance` | `workflow composition` | unqualified |
+| Q4 | R-NEGATION-DISTANCE | `not, as of today,` | `not` | unqualified |
+| Q5 | R-PARAPHRASE-EXISTS | `vets` | `runs` | exists:v0, exists:bridge-checker |
+| Q6 | R-GUARD-WORD | `If anything,` | `Indeed,` | exists:v0 |
+| Q7 | R-CROSS-CLAUSE | `. It` | `, and it` | exists:v0 |
+| Q8 | R-SUBJECT-SPELLING | `checker for the bridge` | `bridge checker` | exists:bridge-checker |
+| Q9 | R-SPLIT-SOURCE | `Workflow" + "Composition` | `WorkflowComposition` | unqualified |
+| Q10 | R-ESCAPED-SPELLING | `\-workflow\-` | `-workflow-` | unqualified |
+| Q11 | R-DOCUMENT-SCOPE | `\n\n` | `\n` | exists:pi-mw-adapter |
+
 ## HX licensed-complete census read forms
 
 Read forms of test/workbench-hx-licensed-complete-census.test.ts, the until-then census of the HX licensed-complete branch (wb-tz2.9): one row per form its live-set reader reads (surfaces membership, registration and fail-closed, beside the quiet controls) and per form its route reader reads (surface route), each a falsifier module the census runs. A membership or registration form reads live with the HX cases it registers and nothing unresolved or outside, a fail-closed form reads something unresolved or outside, a control reads quiet, and every route form but the intact one reads a route list other than the intact one's. A fail-closed form writes its HX reference directly where it stands; an hx drive carried there by the value of an M6 assignment is the residual family R-LIVE-ASSIGNED-VALUE (Q9), which the census reads quiet. The census holds this table to its form lists in both directions and in table order, so a form dropped, renamed, reordered or moved to another surface on either side reads red.

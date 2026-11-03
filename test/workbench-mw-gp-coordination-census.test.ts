@@ -15,7 +15,11 @@
  * control's input beside its outcome), F3 (an instantiation expression's type arguments are a wrapper) and F4 (a
  * require called as a member and an import in a type position are read; a file-form launcher's shell option is named in
  * R-WRAPPED-LAUNCH); and refusal #1's F4 (every check the outside anchors make is reached by a Q7 control, pinned label
- * by label).
+ * by label). And by wb-5hcx (the landing-656 verdict's F1-F3, cut in the same form): R-HTML-COMMENT's fourteen unpinned
+ * forms the verdict measured (ten in contexts its definition did not list, X1-X8, X14 and X17, and four nestings of
+ * pinned forms, X11-X13 and X16) and six more of its class the cutting seat measured are pinned members, each with its
+ * twin a pinned bound, and its definition names the context of each; R-OTHER-LAUNCHER names a require reached through
+ * .apply, .bind or Reflect.apply (F2) and an import a JSDoc comment holds (F3), each a pinned quiet row.
  * Statement (bead title, verbatim): "Pi shall adopt no GP-conditioned coordination at runtime (no GP scoring in any
  * scheduling, assignment or control path) before the eight README.md:23@4b8b974ca72b acceptance terms are recorded and a
  * shadow-mode adapter plus opt-in canary with rollback exist; until then one census pins zero
@@ -59,9 +63,10 @@
  *   mw_training_export are read too: a superset of the grep's alternation.
  * - MEANS: in a TS or JS file, read through the TypeScript parser: an import, export-from, import-equals, require
  *   (called bare or, wb-5esj cut #3, as a member such as module.require), import() or import in a type position (cut
- *   #3: typeof import("gp"), import("gp").T) whose specifier names the vocabulary or is a bare gp / mp package in any
- *   case (gp, gp/..., mp, mp/..., GP); a call whose callee is named as one of node:child_process's launchers (spawn,
- *   spawnSync, exec, execSync, execFile, execFileSync, fork), bare or as a member of any object (so a RegExp's exec
+ *   #3: typeof import("gp"), import("gp").T; a type in the source's own syntax, never one a JSDoc comment holds, which
+ *   the parser's walk does not visit: wb-5hcx, R-OTHER-LAUNCHER) whose specifier names the vocabulary or is a bare gp /
+ *   mp package in any case (gp, gp/..., mp, mp/..., GP); a call whose callee is named as one of node:child_process's
+ *   launchers (spawn, spawnSync, exec, execSync, execFile, execFileSync, fork), bare or as a member of any object (so a RegExp's exec
  *   counts too, failing closed), whose first argument (a string literal, a template's literal head, or a same-file
  *   const bound to a string literal) names gp or mp as its program (the file argument's last path segment, or a shell
  *   line's first word, lower-cased, a Windows launcher extension dropped) or names the vocabulary. Each of those
@@ -124,9 +129,11 @@
  *   is the record's. THE COMMENT RUNS (cut #3, refusal #2 U1, its cure (b): the reader's comment model, exactly): a run
  *   starts at a '<!--' and ends with the first '-->' wholly after those four characters, or at that raw text's end when
  *   none follows. The raw text is read as text: a '<!--' starts a run wherever it stands (an attribute value; script,
- *   style, textarea, title, iframe or noframes content), '<!-->' and '<!--->' start runs (their own dashes never close
- *   them) and '--!>' closes none; a heading tag's text counts wherever no run hides it (inside an attribute value, a
- *   declaration, a processing instruction, CDATA, a <template> or an element a browser hides too, each failing closed).
+ *   style, textarea, title, iframe or noframes content; wb-5hcx: an attribute name, an end tag's attribute value, xmp,
+ *   noembed or noscript content, a processing instruction, a declaration, CDATA in HTML content and a CDATA section in
+ *   svg or math content), '<!-->' and '<!--->' start runs (their own dashes never close them) and '--!>' closes none; a
+ *   heading tag's text counts wherever no run hides it (inside an attribute value, a declaration, a processing
+ *   instruction, CDATA, a <template> or an element a browser hides too, each failing closed).
  *   Where HTML reads that '<!--' otherwise (as no comment's start, or a comment it closes sooner), a run can hide a
  *   heading a browser shows, which then ends no entry: that is the residual R-HTML-COMMENT (Q8), its members the pinned
  *   forms, and each member's twin (the same heading tag with no run before it) is a pinned bound. A heading of level 3
@@ -146,7 +153,8 @@
  * the run (cut #3: a comma and '#' beside the accented letter); cut #2: OPENING, each opening rule's controls, and
  * BETWEEN, each bound form and each form that ends nothing, placed between the record's heading and its citations (cut
  * #3: each R-HTML-COMMENT member's twin, the textual readings that fail closed, a list item's inline heading tag,
- * levels 4 and 5, <h4>, <h5>, an <h2x> and the HTML blocks that leave state open), with the calendar, the entry-text
+ * levels 4 and 5, <h4>, <h5>, an <h2x> and the HTML blocks that leave state open; wb-5hcx: the twins of its twenty new
+ * members), with the calendar, the entry-text
  * and the bound-before checks); B2 each of the eight terms, one per dropped term, an unreferenced term line, one line
  * naming every term and references only comments carry (cut #2: SHOWN, each WHAT SHOWS and LINE rule on the first
  * term's citation; cut #3: <div hidden> and an escaped underscore); B3 the shadow-mode run and its two zero phrases,
@@ -168,7 +176,10 @@
  * launcher's argument its shell option runs as a line), R-OTHER-LAUNCHER (Q4, a launch or a load the means reader does
  * not read: outside the seven child_process launchers and the import forms MEANS reads - a worker, another process
  * library -, a loader bound to a name - createRequire's, or an aliased require -, a require reached through .call or an
- * element access, or a load whose specifier is no literal, such as a const; cut #3 adds the last four), R-TEST-MENTION
+ * element access, or a load whose specifier is no literal, such as a const; cut #3 adds the last four; wb-5hcx, the
+ * landing-656 verdict's F2 and F3: a require reached through .apply, .bind or Reflect.apply, and an import a JSDoc
+ * comment holds - an import type in a @type tag, or an @import tag; JSDoc is where a JS file states its types),
+ * R-TEST-MENTION
  * (Q5, a test file naming the vocabulary as text or a name), R-LOCAL-SCORER (Q6, scoring or assignment code that names
  * no word and launches nothing: what GP-conditioned coordination means without GraphPolicyCLI is outside a text
  * census), R-COORDINATED (Q7, wb-5esj F1, the wb-p46r / wb-4nvi form): a hollow applied to this file, the helper and
@@ -188,16 +199,21 @@
  * (refusal #1 F4), so dropping a check reds Q7. No anchor reads a reader, a witness or a live leg, so a reader's code
  * or a case hollowed with its roster witness is the same class, seen only as these plants are. And R-HTML-COMMENT (Q8,
  * cut #3, refusal #2 U1, its cure (b)): a comment run hides the text of an <h1> or <h2> start tag that HTML reads as a
- * heading, where HTML reads the run's '<!--' as no comment's start (a quoted or unquoted attribute value; script,
- * style, textarea, title, iframe or noframes content) or closes the comment sooner ('<!-->', '<!--->', '--!>'), at the
- * top level or nested in a list item or a block quote; so the heading a browser shows ends no entry, the citations
- * after it are the record's, and each member (the respin gate's FA1-FA10 among the nineteen), placed between the
- * record's heading and its citations, admits the planted adoption.
+ * heading, where HTML reads the run's '<!--' as no comment's start (a quoted or unquoted attribute value or an
+ * attribute name of a start tag, and a double-quoted or unquoted attribute value of an end tag; script, style,
+ * textarea, title, iframe, noframes, xmp, noembed or noscript (scripting enabled) content; a processing instruction, a
+ * declaration - <!DOCTYPE, or a bogus one such as <!x - or CDATA in HTML content, each ended by the first '>'; a CDATA
+ * section in svg or math content) or closes the comment sooner ('<!-->', '<!--->', '--!>', '---!>'), at the top level
+ * or nested in list items and block quotes (a list item, an ordered one, a nested one, a block quote, a nested one, and
+ * either inside the other); so the heading a browser shows ends no entry, the citations after it are the record's, and
+ * each member (the respin gate's FA1-FA10 and the landing-656 verdict's X1-X8, X11-X14, X16 and X17 among the
+ * thirty-nine), placed between the record's heading and its citations, admits the planted adoption.
  * NOT CLAIMED: docs/workbench and receipts (outside the statement's scope; docs/workbench/03's boundary section is
  * wb-1xvp.2's); the shadow-first order between a shadow and a canary adoption; that a cited reference resolves; a
  * symbolic link under src/ or test/ (neither listing holds it, and neither leg reads its target); that the rendered
  * view is what a browser shows (it is marked's token tree read by the rules above; R-HTML-COMMENT and the WHAT SHOWS
- * limits name where they differ).
+ * limits name where they differ, each by its general clause, and pin only the forms measured: wb-5hcx, no list of forms
+ * or contexts here is exhaustive).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and every residual
  * family's member count (R-COORDINATED's members are its hollows, R-HTML-COMMENT's its blocks) as literals, with Q7's
  * member, seen-control and row-edit counts and the counts of the OPENING, BETWEEN and SHOWN controls; the judged set
@@ -427,6 +443,26 @@ const BETWEEN: Readonly<Record<string, { readonly block: string; readonly bound:
   "title content before an HTML level-2 heading": { block: "<title>a title</title><h2>another entry</h2>", bound: true },
   "iframe content before an HTML level-2 heading": { block: "<iframe></iframe><h2>another entry</h2>", bound: true },
   "noframes content before an HTML level-2 heading": { block: "<noframes></noframes><h2>another entry</h2>", bound: true },
+  // wb-5hcx (the landing-656 verdict's F1): the twin of each new R-HTML-COMMENT member, the same heading tag with no
+  // '<!--' a run starts at before it.
+  "a processing instruction before an HTML level-2 heading": { block: "<? a note ?><h2>another entry</h2>", bound: true },
+  "a DOCTYPE declaration before an HTML level-2 heading": { block: "<!DOCTYPE html><h2>another entry</h2>", bound: true },
+  "a bogus declaration before an HTML level-2 heading": { block: "<!x a note><h2>another entry</h2>", bound: true },
+  "CDATA in HTML content before an HTML level-2 heading": { block: "<![CDATA[ a note ]]><h2>another entry</h2>", bound: true },
+  "xmp content before an HTML level-2 heading": { block: "<div><xmp>a note</xmp><h2>another entry</h2></div>", bound: true },
+  "noembed content before an HTML level-2 heading": { block: "<div><noembed>a note</noembed><h2>another entry</h2></div>", bound: true },
+  "noscript content before an HTML level-2 heading": { block: "<div><noscript>a note</noscript><h2>another entry</h2></div>", bound: true },
+  "a CDATA section in svg content before an HTML level-2 heading": { block: "<div><svg><![CDATA[a note]]></svg><h2>another entry</h2></div>", bound: true },
+  "a processing instruction before an HTML level-2 heading in an HTML block": { block: "<div><? a note ?><h2>another entry</h2></div>", bound: true },
+  "an end tag's attribute value before an HTML level-2 heading": { block: '<div></div title="a note"><h2>another entry</h2>', bound: true },
+  "a closed comment before an HTML level-2 heading in a block quote": { block: "> <!-- a note --> <h2>another entry</h2>", bound: true },
+  "an HTML level-2 heading between two closed comments in a list item": { block: "- <!-- a --> <h2>another entry</h2> <!-- b -->", bound: true },
+  "an attribute value before an HTML level-2 heading in a nested block quote": { block: '> > <div title="a note"><h2>another entry</h2></div>', bound: true },
+  "an attribute name before an HTML level-2 heading": { block: "<div title ><h2>another entry</h2></div>", bound: true },
+  "an unquoted end tag's attribute value before an HTML level-2 heading": { block: "<div></div title=note><h2>another entry</h2>", bound: true },
+  "a CDATA section in math content before an HTML level-2 heading": { block: "<div><math><![CDATA[a note]]></math><h2>another entry</h2></div>", bound: true },
+  "a closed comment before an HTML level-2 heading in an ordered list item": { block: "1. <!-- a note --> <h2>another entry</h2>", bound: true },
+  "a closed comment before an HTML level-2 heading in a list item in a block quote": { block: "> - <!-- a note --> <h2>another entry</h2>", bound: true },
   // A '*' bullet keeps it a tight list of its own (a '-' item would join the citations' list, a loose one, as a paragraph).
   "an inline HTML level-2 heading in a list item's text": { block: "* see <h2>another entry</h2> below", bound: true },
   "an inline empty comment before an inline HTML level-2 heading (FT3)": { block: "see <!--> <h2>another entry</h2> below", bound: true },
@@ -469,7 +505,9 @@ const BETWEEN: Readonly<Record<string, { readonly block: string; readonly bound:
  * heading and its citations. In each, a comment run (COMMENTS in the helper: from a '<!--' wherever it stands to the first
  * '-->' wholly after it, or to the raw text's end) hides the text of an <h1> or <h2> start tag that HTML reads as a
  * heading, because HTML reads that '<!--' as no comment's start (in a quoted or unquoted attribute value; in script,
- * style, textarea, title, iframe or noframes content) or closes the comment sooner ('<!-->', '<!--->', '--!>'). So the
+ * style, textarea, title, iframe or noframes content; wb-5hcx: in an attribute name, an end tag's attribute value, xmp,
+ * noembed or noscript (scripting enabled) content, a processing instruction, a declaration, CDATA in HTML content or a
+ * CDATA section in svg or math content) or closes the comment sooner ('<!-->', '<!--->', '--!>', '---!>'). So the
  * heading a browser shows ends no entry, the citations after it are the record's and the planted adoption is admitted:
  * that is each member's quiet row (a reader that starts bounding a member reds it). FA1-FA10 are the respin gate's. Each
  * member names its twin, a BETWEEN control with the same heading tag and no run before it, which bounds.
@@ -494,6 +532,28 @@ const HTML_COMMENT: Readonly<Record<string, { readonly block: string; readonly t
   "a '<!--' in iframe content": { block: "<iframe><!--</iframe><h2>another entry</h2>", twin: "iframe content before an HTML level-2 heading" },
   "a '<!--' in noframes content": { block: "<noframes><!--</noframes><h2>another entry</h2>", twin: "noframes content before an HTML level-2 heading" },
   "a comment closed by '--!>'": { block: "<!-- a --!> <h2>another entry</h2> <!-- b -->", twin: "an HTML level-2 heading between two closed comments" },
+  // wb-5hcx (the landing-656 verdict's F1, PREP PF1: X1-X8, X11-X14, X16 and X17), then six more of the class the cutting
+  // seat measured the same way (an attribute name, an unquoted end-tag attribute, math CDATA, '---!>', and two nestings).
+  "a '<!--' in a processing instruction (X1)": { block: "<? <!-- ?><h2>another entry</h2>", twin: "a processing instruction before an HTML level-2 heading" },
+  "a '<!--' in a DOCTYPE declaration (X2)": { block: "<!DOCTYPE <!-- ><h2>another entry</h2>", twin: "a DOCTYPE declaration before an HTML level-2 heading" },
+  "a '<!--' in a bogus declaration (X3)": { block: "<!x <!-- ><h2>another entry</h2>", twin: "a bogus declaration before an HTML level-2 heading" },
+  "a '<!--' in CDATA in HTML content (X4)": { block: "<![CDATA[ <!-- ]]><h2>another entry</h2>", twin: "CDATA in HTML content before an HTML level-2 heading" },
+  "a '<!--' in xmp content (X5)": { block: "<div><xmp><!--</xmp><h2>another entry</h2></div>", twin: "xmp content before an HTML level-2 heading" },
+  "a '<!--' in noembed content (X6)": { block: "<div><noembed><!--</noembed><h2>another entry</h2></div>", twin: "noembed content before an HTML level-2 heading" },
+  "a '<!--' in noscript content, scripting enabled (X7)": { block: "<div><noscript><!--</noscript><h2>another entry</h2></div>", twin: "noscript content before an HTML level-2 heading" },
+  "a '<!--' in a CDATA section in svg content (X8)": { block: "<div><svg><![CDATA[<!--]]></svg><h2>another entry</h2></div>", twin: "a CDATA section in svg content before an HTML level-2 heading" },
+  "a '<!--' in a processing instruction in an HTML block (X14)": { block: "<div><? <!-- ?><h2>another entry</h2></div>", twin: "a processing instruction before an HTML level-2 heading in an HTML block" },
+  "a '<!--' in an end tag's attribute value (X17)": { block: '<div></div title="<!--"><h2>another entry</h2>', twin: "an end tag's attribute value before an HTML level-2 heading" },
+  "an empty comment <!--> in a block quote (X11)": { block: "> <!--> <h2>another entry</h2>", twin: "a closed comment before an HTML level-2 heading in a block quote" },
+  "a comment closed by '--!>' in a list item (X12)": { block: "- <!-- a --!> <h2>another entry</h2> <!-- b -->", twin: "an HTML level-2 heading between two closed comments in a list item" },
+  "a '<!--' in an attribute value in a nested block quote (X13)": { block: '> > <div title="<!--"><h2>another entry</h2></div>', twin: "an attribute value before an HTML level-2 heading in a nested block quote" },
+  "an empty comment <!---> in a block quote in a list item (X16)": { block: "- > <!---> <h2>another entry</h2>", twin: "a closed comment before an HTML level-2 heading in a block quote in a list item" },
+  "a '<!--' as an attribute name": { block: "<div <!-- ><h2>another entry</h2></div>", twin: "an attribute name before an HTML level-2 heading" },
+  "an unquoted '<!--' in an end tag's attribute": { block: "<div></div title=<!--><h2>another entry</h2>", twin: "an unquoted end tag's attribute value before an HTML level-2 heading" },
+  "a '<!--' in a CDATA section in math content": { block: "<div><math><![CDATA[<!--]]></math><h2>another entry</h2></div>", twin: "a CDATA section in math content before an HTML level-2 heading" },
+  "a comment closed by '---!>'": { block: "<!-- a ---!> <h2>another entry</h2> <!-- b -->", twin: "an HTML level-2 heading between two closed comments" },
+  "an empty comment in an ordered list item": { block: "1. <!--> <h2>another entry</h2>", twin: "a closed comment before an HTML level-2 heading in an ordered list item" },
+  "an empty comment in a list item in a block quote": { block: "> - <!--> <h2>another entry</h2>", twin: "a closed comment before an HTML level-2 heading in a list item in a block quote" },
 };
 
 /** A citation form: the first term's list line in that form, a block of its own after the list, or both (no line: its list line is dropped). */
@@ -1253,9 +1313,9 @@ describe(SUITE, () => {
 
   it("rule 16: the rows, the residual families, the vocabulary, the terms and the allowlist are frozen at their measured shape", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:1", "S:3", "Q:8"]);
-    expect(Object.entries(FAMILY_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:4", "Q2:10", "Q3:6", "Q4:7", "Q5:2", "Q6:1", "Q7:10", "Q8:19"]);
+    expect(Object.entries(FAMILY_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:4", "Q2:10", "Q3:6", "Q4:12", "Q5:2", "Q6:1", "Q7:10", "Q8:39"]);
     expect([COORDINATED.length, SEEN.length, ROW_SEEN.length], "R-COORDINATED: its members, Q7's seen controls and its export-row edits").toEqual([10, 17, 2]);
-    expect([Object.keys(OPENING).length, Object.keys(BETWEEN).length, Object.keys(SHOWN).length], "wb-5esj cut #2 and #3: the opening, bound and shown-text controls").toEqual([9, 75, 17]);
+    expect([Object.keys(OPENING).length, Object.keys(BETWEEN).length, Object.keys(SHOWN).length], "wb-5esj cut #2 and #3: the opening, bound and shown-text controls").toEqual([9, 93, 17]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}`)).toEqual(["V1:GraphPolicy", "V2:GraphDataIR", "V3:MicroPolicy", "V4:mw.training-export"]);
     expect(TERMS).toEqual([
