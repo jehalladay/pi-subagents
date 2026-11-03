@@ -42,7 +42,12 @@
  * re-cut ruling R-B223 binds after the dependency inversion, once the child wb-w4si had landed (landing 833): it narrows the
  * claimed readings to what this census's own pins hold - refusal #4's U1 (seven INLINE_MARKS cells) and U2 (a carriage return
  * inside a comment or a bogus comment), with its riders F3 (a backtick on one side of a run) and F4 (two SENTENCE_BREAK forms) -
- * and changes no code, no case and no roster entry). CLAIM SCOPE: the
+ * and changes no code, no case and no roster entry; cut #6 is the same restatement after refusal #5, under ruling R-B376: it
+ * narrows BOGUS_COMMENT's claimed readings to the forms its pins hold - refusal #5's U1 (eleven cells read where no ">"
+ * follows) and U2 (five cells read through a later ">"), with its riders F4 (the "<?" before a line feed, now claimed and no
+ * longer disclaimed) and F6 (a "<!--" no comment close follows, read through a later ">") - HTML_COMMENT's to its rows' own
+ * forms (F3: a "--!>" close across a line ending) and SENTENCE_BREAK's to its pins' spellings (F5), and again changes no code,
+ * no case and no roster entry). CLAIM SCOPE: the
  * normalized view claims a reading only where a pin holds it - M5's cases, every READ_FORMS row (M6), the decoded values M7 holds
  * and the texts of the quiet rows Q3 and Q8-Q17 - and no reader behaviour beyond those pins. Each reader doc comment below says
  * what its step's code does and names the readings its pins hold; a behaviour of that code no pin turns on is NOT CLAIMED by this
@@ -51,12 +56,12 @@
  * with or without its ";" decoded as an HTML5 parser decodes it (spe&#99ulative inside an HTML block, spec&#XAD;ulative; the
  * 0x80-0x9F Windows-1252 table: what&#150;if); the invisible code points INVISIBLE names dropped; and the markup a browser drops
  * read in one pass as the HTML5 tokenizer reads it from its data state (withoutMarkup): the comments, the bogus comments and the
- * tags that the claimed readings of HTML_COMMENT, BOGUS_COMMENT and markupEnd name, each dropped through the ">" that closes it (a
- * ">" inside a quoted attribute value does not: spec<span title="a>b">ul</span>ative; the one line ending inside a pinned comment
- * or bogus comment is a line feed, and a carriage return inside either is NOT CLAIMED by this census), while a "<" before a
- * character markupEnd names as opening no
- * markup stays as written (what<-if). The pass resumes past each form it drops, so an opener inside an attribute value or a
- * comment is never read as a form of its own (spec<span title="<!x">ul</span>ative). Refusal #2's seven surviving gate mutants
+ * tags that the claimed readings of HTML_COMMENT, BOGUS_COMMENT and markupEnd name, each dropped through the close those readings
+ * name for it (a ">" inside a quoted attribute value closes no tag: spec<span title="a>b">ul</span>ative; the one line ending
+ * inside a pinned comment or bogus comment is a line feed, and a carriage return inside either is NOT CLAIMED by this census),
+ * while a "<" before a character markupEnd names as opening no markup stays as written (what<-if). The pass resumes past each
+ * form it drops, so an opener inside an attribute value or a comment is never read as a form of its own
+ * (spec<span title="<!x">ul</span>ative). Refusal #2's seven surviving gate mutants
  * each have their falsifier rows (GP01 an uppercase X, GP03 lowercase hex digits, GP46 an empty <!---> before a later comment,
  * GP10-99 a reference to 0x99 before a word, GP48 a "<" opening no markup in the joint, GP33 white space before an "=" that opens
  * an attribute name, GP32 a "/" inside an unquoted value), and refusal #3's two riding survivors theirs (G23-NM2 a named
@@ -219,9 +224,16 @@ const SPECULATIVE_TERM = new RegExp(
  * delivered. Render and return are left out: a refusal sentence names what is rendered or returned. */
 const SERVED_TERM = /\b(?:serv(?:e|es|ed|ing)|admit(?:s|ted|ting)?|available|supported|enabled|expos(?:e|es|ed|ing)|offer(?:s|ed|ing)?|provid(?:e|es|ed|ing)|deliver(?:s|ed|ing)?)\b/i;
 /** Sentence units: a sentence end before whitespace, a blank line, or a line opening a list item, heading, table row or quote. The
- * forms its pins hold: a sentence end after "." and after "!" (Q3) and after "?" (Q14), an empty blank line, a line opening a
- * "-", "*", "+", "1." or "1)" list item, an indented "-" item, a heading, a table row and a quote (Q3). NOT CLAIMED by this
- * census, though the code reads each as a break: a blank line that holds white space (refusal #4's SB05) and a list item numbered
+ * readings claimed are its pins' own (Q3's and Q14's cases, as written), and in break terms they hold these forms, each named
+ * with its pin and each in the one spelling its pin holds: a sentence end after "." and after "!" before one space (Q3: rf
+ * context. That; rf context! That) and after "?" before one space (Q14: x`?` spec&shy;ulative in a div block, which the view
+ * reads as x? before a space); an empty blank line, two line feeds with nothing between (Q3); and one line feed before a line
+ * that opens a "-", "*", "+", "1." or "1)" list item, a "#" heading, a "|" table row or a ">" quote, each marker with one space
+ * after it, or before a line of two spaces, a "-" and one space (Q3). NOT CLAIMED by this census, though the code reads each as
+ * a break: every other break form - among them a sentence end before a line ending, before another white space or before more
+ * than one space (refusal #5's SBX01 and SBX02), a marker that another white space follows (SBX03 and SBX04), a "#", "|" or ">"
+ * that no white space follows (SBX05, SBX06 and SBX07), a marker indented by anything but the two spaces of the "-" item
+ * (SBX08), a line feed after a carriage return, a blank line that holds white space (refusal #4's SB05) and a list item numbered
  * with two digits or more (SB15). */
 const SENTENCE_BREAK = /(?<=[.!?])\s+|\n\s*\n|\n(?=\s*(?:[-*+]\s|\d+[.)]\s|#|\||>))/;
 /** The named character references the normalized view decodes beside every numeric one, as name=code points (hex): every HTML5
@@ -489,22 +501,49 @@ function failuresOf(roster: rfFixture.RfResultRoster, result: JsonObject): strin
 /** An HTML comment as a browser closes it, read at its "<!--" (markupEnd): through the first "-->" or "--!>" after it, across
  * line endings, or the empty "<!-->" and "<!--->"; READ_FORMS reads each empty form before a later comment, where BOGUS_COMMENT,
  * which reads a "<!--" no close follows to its first ">", could not read it in its place. The readings claimed are its READ_FORMS
- * rows': a comment closed by its first "-->" or by "--!>", one holding ">", "->" or "-- >" on one line or a ">" after a line feed
- * (in a div block), and the two empty forms. NOT CLAIMED by this census, though the code reads across it: a carriage return inside a
- * comment, alone or before a line feed (refusal #4's HC08). */
+ * rows' own, as written, and in close and body terms they hold these forms, each named with its row and none combined with
+ * another: a comment closed by its first "-->" before a later close (spec<!-- a -->ulative before a later comment, in text;
+ * spec<!---->ulative before a later "-->", in a div block); a comment closed by the one "-->" it holds and holding ">" on one
+ * line (spec<!-- a > b -->ulative, in text), or holding "->" or "-- >" on one line, a ">" after a line feed, or a tag (each in a
+ * div block); a comment closed by the one "--!>" it holds and holding ">" on one line (in a div block); and the two empty forms,
+ * "<!-->" before a later comment (in text) and "<!--->" before a later comment (in text and in a div block) and before a "-->"
+ * the page shows (in text). NOT CLAIMED by this census, though the code reads each as its first sentence says: every other close
+ * or body - among them a comment closed by "--!>" across a line ending (refusal #5's F3 cells HG-BANG-LF and HCX03) or holding
+ * "->", "-- >" or a tag; which close ends a comment holding ">", "->", "-- >", a line ending or a tag, or one closed by "--!>",
+ * where a later close follows it; and a carriage return inside a comment, alone or before a line feed (refusal #4's HC08). */
 const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?--!?>)/y;
 /** A bogus comment as an HTML5 tokenizer reads one, at its "<" (markupEnd, after HTML_COMMENT): the code reads a "<!" or a "<?"
  * before any character, and a "</" before anything but an ASCII letter of either case, through its first ">", across line
- * endings; with no ">" after it, it is no bogus comment and stays as written. The readings claimed, each held by a pin (READ_FORMS,
- * Q13, Q14): "<!" opening a declaration or a DOCTYPE (an ASCII letter of either case after it), a CDATA section, or a "<!-" or a
- * "<!--" no comment close follows; "<?" opening a processing instruction (an ASCII letter or a space after it), so "<?a>b?>"
- * leaves "b?>" shown; "</" before an ASCII digit, a space or ">", so "</>" goes whole; each read through its first ">", and a
- * processing instruction read so across a line feed (READ_FORMS: "<?", a line feed, then "?>" in a div block); and none where no
- * ">" follows. NOT CLAIMED by this census, though the same code reads each as a bogus comment: a "</" before ASCII punctuation
- * other than ">", before another white space or control, or before a code point outside ASCII (a letter outside ASCII is the
- * deferred family D2); a "<!" before a digit, white space, ">" or any other character no claimed reading names; a "<?" before a
- * digit, ASCII punctuation, another white space or a control; and a bogus comment across any other line ending - a carriage
- * return, alone or before a line feed (refusal #4's BC19 and BC29), or a line feed after a "<!" or a "</" opener. */
+ * endings; with no ">" after it, it is no bogus comment and stays as written. The readings claimed are its pinned rows' own (the
+ * READ_FORMS rows and Q13's and Q14's cases, as written), and in opener and ">" terms they hold these forms, each named with its
+ * pin. Read as a bogus comment: a "<!" before an ASCII small letter (READ_FORMS: spec<!x y>ulative, spec<!x>ulative in text and
+ * in a div block, spec<!x <!-- >ulative before a later comment; Q13: x<!spec<b></b>ulative; Q14: x<!x>spec&shy;ulative) or before
+ * an ASCII capital (READ_FORMS: spec<!DOCTYPE html>ulative); a CDATA section (READ_FORMS: spec<![CDATA[]]>ulative); a "<!-"
+ * before an ASCII small letter (READ_FORMS: spec<!-x>ulative); a "<!--" no comment close follows (READ_FORMS:
+ * spec<!-- a >ulative; Q13: x<!--spec<b></b>ulative); a "<?" before an ASCII small letter (READ_FORMS: spec<?x?>ulative,
+ * spec<?x>ulative in text and in a div block and in both after a "<" that opens no markup, spec<?x <!-- ?>ulative before a later
+ * comment, spec<?x <b>ulative; Q13: x<?spec<b></b>ulative), before an ASCII capital (READ_FORMS: spec<?X?>ulative), before a
+ * space (READ_FORMS: spec<? x?>ulative) or before a line feed (READ_FORMS: spec<?, a line feed, then ?>ulative in a div block);
+ * and a "</" before an ASCII digit (READ_FORMS: spec</1>ulative in text and in a div block; Q14: x</1>spec&shy;ulative), before a
+ * space (READ_FORMS: spec</ x>ulative) or before ">" (READ_FORMS: spec</>ulative in text and in a div block). Read through its
+ * first ">" where a later ">" follows it on that first ">"'s line, six of those forms only: the "<!" before an ASCII small letter
+ * (READ_FORMS: spec<!x>ulative in a div block, spec<!x <!-- >ulative before a later comment), the CDATA section (READ_FORMS:
+ * spec<![CDATA[a>b]]>ulative, where "b]]>" stays shown), the "<?" before an ASCII small letter (READ_FORMS: spec<?x>ulative in a
+ * div block, there also after a "<" that opens no markup, spec<?a>b?>ulative, where "b?>" stays shown, spec<?x <!-- ?>ulative
+ * before a later comment), the "<?" before a line feed, across that line feed (READ_FORMS: spec<?, a line feed, then ?>ulative in
+ * a div block), the "</" before an ASCII digit (READ_FORMS: spec</1>ulative in a div block) and "</>", which goes whole
+ * (READ_FORMS: spec</>ulative in a div block). Left as written with no ">" after it, one form only: a "<!" before an ASCII small
+ * letter (READ_FORMS: the x<!what&#45;if view). NOT CLAIMED by this census, though the same code reads each as its first sentence
+ * says: every other opener, ">" or line ending - among them which ">" ends a "<!" before an ASCII capital, a "<!-", a "<!--" no
+ * comment close follows, a "<?" before an ASCII capital or a space, or a "</" before a space where a later ">" follows it
+ * (refusal #5's U2 cells BG-DC, BG-D1, BG-PC, BG-PW and BG-EW, and F6's BG-D2), and which ">" ends any of the six where the later
+ * ">" sits on a later line; how any opener but the "<!" before an ASCII small letter reads with no ">" after it (U1's BN-DC,
+ * BN-CD, BN-D1, BN-D2, BN-PS, BN-PC, BN-PW, BN-ED, BN-EW, BCX08 and BCX10); a "<!-" before anything but an ASCII small letter or
+ * a "-"; a "<!" before a digit, white space, ">" or any other character no form above names; a "<?" before a digit, ASCII
+ * punctuation, or any white space or control character but a space and a line feed; a "</" before ASCII punctuation other than
+ * ">", before another white space or control, or before a code point outside ASCII (a letter outside ASCII is the deferred family
+ * D2); and a bogus comment across any other line ending: a carriage return, alone or before a line feed (refusal #4's BC19 and
+ * BC29), a line feed after a "<!" or a "</" opener (BCX05 and BCX06), or one after a character that follows a "<?". */
 const BOGUS_COMMENT = /<(?:[!?]|\/(?![A-Za-z]))[^>]*>/y;
 /** The white space an HTML5 tokenizer reads between a tag's parts: tab, line feed, form feed, carriage return and space, and no
  * other code point (a vertical tab, a no-break space, a line separator or a next-line control is part of the name it sits in). */
