@@ -4879,6 +4879,58 @@
                 "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;": [
                   "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
                   "\u0000&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;"
+                ],
+                "&#x0;&#x1;&#x2;&#x3;&#x4;&#x5;&#x6;&#x7;&#x8;&#x9;&#xa;&#xb;&#xc;&#xd;&#xe;&#xf;&#xA;&#xB;&#xC;&#xD;&#xE;&#xF;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f"
+                ],
+                "&#x00;&#x11;&#x22;&#x33;&#x44;&#x55;&#x66;&#x77;&#x88;&#x99;&#xaa;&#xbb;&#xcc;&#xdd;&#xee;&#xff;&#xAA;&#xBB;&#xCC;&#xDD;&#xEE;&#xFF;": [
+                  "\ufffd\u0011\"3DUfw\u02c6\u2122\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                  "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff"
+                ],
+                "&#x000;&#x111;&#x222;&#x333;&#x444;&#x555;&#x666;&#x777;&#x888;&#x999;&#xaaa;&#xbbb;&#xccc;&#xddd;&#xeee;&#xfff;&#xAAA;&#xBBB;&#xCCC;&#xDDD;&#xEEE;&#xFFF;": [
+                  "\ufffd\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff",
+                  "\u0000\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff"
+                ],
+                "&#x0000;&#x1111;&#x2222;&#x3333;&#x4444;&#x5555;&#x6666;&#x7777;&#x8888;&#x9999;&#xaaaa;&#xbbbb;&#xcccc;&#xdddd;&#xeeee;&#xffff;&#xAAAA;&#xBBBB;&#xCCCC;&#xDDDD;&#xEEEE;&#xFFFF;": [
+                  "\ufffd\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff",
+                  "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff"
+                ],
+                "&#x00000;&#x11111;&#x22222;&#x33333;&#x44444;&#x55555;&#x66666;&#x77777;&#x88888;&#x99999;&#xaaaaa;&#xbbbbb;&#xccccc;&#xddddd;&#xeeeee;&#xfffff;&#xAAAAA;&#xBBBBB;&#xCCCCC;&#xDDDDD;&#xEEEEE;&#xFFFFF;": [
+                  "\ufffd\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff",
+                  "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff"
+                ],
+                "&#x000000;&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;"
+                ],
+                "&#0;&#1;&#2;&#3;&#4;&#5;&#6;&#7;&#8;&#9;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t"
+                ],
+                "&#00;&#11;&#22;&#33;&#44;&#55;&#66;&#77;&#88;&#99;": [
+                  "\ufffd\u000b\u0016!,7BMXc",
+                  "\u0000\u000b\u0016!,7BMXc"
+                ],
+                "&#000;&#111;&#222;&#333;&#444;&#555;&#666;&#777;&#888;&#999;": [
+                  "\ufffdo\u00de\u014d\u01bc\u022b\u029a\u0309\u0378\u03e7",
+                  "\u0000o\u00de\u014d\u01bc\u022b\u029a\u0309\u0378\u03e7"
+                ],
+                "&#0000;&#1111;&#2222;&#3333;&#4444;&#5555;&#6666;&#7777;&#8888;&#9999;": [
+                  "\ufffd\u0457\u08ae\u0d05\u115c\u15b3\u1a0a\u1e61\u22b8\u270f",
+                  "\u0000\u0457\u08ae\u0d05\u115c\u15b3\u1a0a\u1e61\u22b8\u270f"
+                ],
+                "&#00000;&#11111;&#22222;&#33333;&#44444;&#55555;&#66666;&#77777;&#88888;&#99999;": [
+                  "\ufffd\u2b67\u56ce\u8235\uad9c\ufffd\ud801\udc6a\ud80b\udfd1\ud816\udf38\ud821\ude9f",
+                  "\u0000\u2b67\u56ce\u8235\uad9c\ud903\ud801\udc6a\ud80b\udfd1\ud816\udf38\ud821\ude9f"
+                ],
+                "&#000000;&#111111;&#222222;&#333333;&#444444;&#555555;&#666666;&#777777;&#888888;&#999999;": [
+                  "\ufffd\ud82c\ude07\ud899\udc0e\ud905\ude15\ud972\udc1c\ud9de\ude23\uda4b\udc2a\udab7\ude31\udb24\udc38\udb90\ude3f",
+                  "\u0000\ud82c\ude07\ud899\udc0e\ud905\ude15\ud972\udc1c\ud9de\ude23\uda4b\udc2a\udab7\ude31\udb24\udc38\udb90\ude3f"
+                ],
+                "&#0000000;&#1111111;&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;": [
+                  "\ufffd\udbfd\udc47\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000\udbfd\udc47&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;"
                 ]
               },
               "escapes": {

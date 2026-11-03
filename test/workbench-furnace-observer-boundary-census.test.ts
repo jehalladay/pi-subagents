@@ -43,12 +43,15 @@
  * with its semicolon, decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
  * also with its backslash escapes (U, u and x forms, hex digits in either case, every escape of the file; a U escape
  * above U+10FFFF left as written) decoded ("decoded"). These decoder claims - the markup and YAML/TOML file kinds, the
- * six names, the reference lengths, every decimal digit and every hex digit (0-9 and a-f, in either case) of a markup
- * reference in every place up to those lengths, the edges of both readings, the three escape forms, every hex digit of
- * each escape form (0-9, a-f and A-F) in every place a code point up to U+10FFFF uses, two escapes in one file and the
- * U form's edge at U+10FFFF and above it - are each pinned through THE JUDGE's own decoders, by the plants and W1
- * assertions THE JUDGE'S PINS names (cuts #6, #7 and #8), by W1's cut #3 decoding assertions and by Z2's decodings
- * (cut #8: each W1 decoding text with THE JUDGE's readings of it, and the digit-place texts); the three parse modes and the refused
+ * six names, the reference lengths (each length of one to eight decimal and of one to seven hex digits), every decimal
+ * digit and every hex digit (0-9 and a-f, in either case) of a markup reference in every place of each of those
+ * lengths, the edges of both readings, the three escape forms, every hex digit of each escape form (0-9, a-f and A-F)
+ * in every place a code point up to U+10FFFF uses, two escapes in one file and the U form's edge at U+10FFFF and above
+ * it - are each pinned through THE JUDGE's own decoders, by the plants and W1 assertions THE JUDGE'S PINS names (cuts
+ * #6, #7 and #8), by W1's cut #3 decoding assertions and by Z2's decodings (cuts #8 and #9: each W1 decoding text with
+ * THE JUDGE's readings of it, and the digit-place texts, which hold each digit in each claimed place through one
+ * reference of each length, or one escape of each form, holding that digit in every claimed place; a digit refused in
+ * one place only beside particular digits in the other places is NOT CLAIMED); the three parse modes and the refused
  * .json are pinned by THE JUDGE'S PINS' script-kind and JSON plants (cuts #7 and #8). A
  * file's forms are the readings that found a mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
@@ -100,6 +103,11 @@
  * decodedMarkup's and decodedCodePoints' of a markup text, decodedEscapes' of an escape text), and with them five
  * texts of cut #8's own that spell each digit in the places DECODINGS names; and Q7's witness holds each quiet row's
  * text (plants).
+ * Cut #9 (ruling R-B416, the same restatement in the lineage of cut #8, claims equal to pins) adds thirteen markup
+ * texts to Z2's decodings, one per reference length below the longest - hex lengths 1 to 6, then decimal lengths 1 to
+ * 7 - each holding one reference of that length per digit (the hex digits 0-9, a-f and A-F), that digit in every
+ * place; with cut #8's seven-digit hex and eight-digit decimal texts, every reference length the markup decoders claim
+ * holds each digit in each of its places.
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the release package.json resolves @furnace/sdk to is read entry
  * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports or re-exports from
@@ -362,6 +370,17 @@
  *   Z2's holds every W1 decoding text with THE JUDGE's readings of it (decodings), so a row hollowed or a W1 decoding
  *   assertion deleted alone leaves its pin. No reader is added; READERS, ROWS, the frozen literal, the docs/09
  *   reading, its plants and the shared reader are unchanged.
+ * CUT #9 (the R-B416 restatement of cut #8, in its lineage: refusal #8, gate s195, outbox O:1898, found the markup
+ *   decoders' digit words wider than their pins - U1 'every decimal digit and every hex digit ... in every place up to
+ *   those lengths', held in every place at the longest lengths only (G17-DR-HEX-LEN1-NOf, a one-digit hex reference
+ *   of f refused, and G17-DR-DEC-LEN3-P3-NO7, a three-digit decimal reference with 7 in its third place refused), and
+ *   U2 'of up to eight decimal or seven hex digits' and 'the reference lengths', held at decimal lengths 1, 2, 3 and 8
+ *   and hex lengths 1, 2, 4, 6 and 7 only (G17-DR-DEC-NOLEN5 and G17-DR-HEX-NOLEN3, one length refused), each
+ *   realized fail-open by a paired real-tree page; R-B416 bound this cut to claims equal to pins, pin preferred). Each
+ *   reference length below the longest gains a DECODINGS text holding each digit in every place (THE JUDGE'S PINS,
+ *   cut #9), so each of the four reds Z2; the digit words are restated to the pin, a digit held in each place by one
+ *   reference of each length, a combination of digits NOT CLAIMED. No reader is added; READERS, ROWS, the frozen
+ *   literal, PI_PLANTS, W1, the docs/09 reading, its plants and the shared reader are unchanged.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -836,7 +855,7 @@ function numericReference(code: number): number {
   if (code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return 0xfffd;
   return NUMERIC_REFERENCES.get(code) ?? code;
 }
-/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits, each decimal digit (0-9) and each hex digit (0-9 and a-f, in either case) in every place up to those lengths; a longer one is NOT CLAIMED) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cuts #6 and #8). */
+/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits - each length from one to eight decimal and from one to seven hex digits - each decimal digit (0-9) and each hex digit (0-9 and a-f, in either case) in every place of each of those lengths, each held by one reference per length and digit that spells the digit in every place (a combination of digits NOT CLAIMED); a longer one is NOT CLAIMED) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cuts #6, #8 and #9). */
 function decodedReferences(text: string, decode: (code: number, whole: string) => string): string {
   return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
@@ -1051,13 +1070,19 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
  * The texts W1 asserts THE JUDGE's markup and escape decoders on (its cut #3, #5, #6 and #7 decoding assertions), held with
  * THE JUDGE's readings of each in Z2's witness (decodings; cut #8, refusal #7 F1): the roster holds every text and its
  * readings, so a W1 decoding assertion deleted or hollowed alone leaves its readings pinned. A markup text is read by
- * decodedMarkup and by decodedCodePoints, an escape text by decodedEscapes. The last two markup texts and the last
- * three escape texts are cut #8's own (no W1 assertion reads them): one hex reference of seven digits per hex digit in
- * either case and one decimal reference of eight digits per decimal digit, that digit in every place, and for each
+ * decodedMarkup and by decodedCodePoints, an escape text by decodedEscapes. The seventh and eighth markup texts and the
+ * last three escape texts are cut #8's own (no W1 assertion reads them): one hex reference of seven digits per hex digit
+ * in either case and one decimal reference of eight digits per decimal digit, that digit in every place, and for each
  * escape form one escape per hex digit with that digit in every place a code point up to U+10FFFF uses (a U escape's
  * first two digits are 0 and its third 0 or 1 there), so narrowing any one of those digits out of one of those places
  * alone reds Z2 (a U escape above U+10FFFF is left as written whether or not it matches, so its other digits in those
- * first three places are not observable and are NOT CLAIMED).
+ * first three places are not observable and are NOT CLAIMED). The last thirteen markup texts are cut #9's own (ruling
+ * R-B416, refusal #8; no W1 assertion reads them): one per reference length below the longest - hex lengths 1 to 6,
+ * then decimal lengths 1 to 7 - each holding one reference of that length per digit (the hex digits 0-9, a-f and
+ * A-F), that digit in every place, so with cut #8's two texts every length the markup decoders claim (one to eight
+ * decimal and one to seven hex digits) holds each digit in each of its places, and refusing one of those lengths, or
+ * one digit in one place of one length, alone reds Z2. A digit refused in one place only beside particular digits in
+ * the other places (a combination of digits) is NOT CLAIMED, for a reference as for an escape.
  */
 const DECODINGS: { readonly markup: readonly string[]; readonly escapes: readonly string[] } = {
   markup: [
@@ -1069,6 +1094,19 @@ const DECODINGS: { readonly markup: readonly string[]; readonly escapes: readonl
     "&#xa;&#xaf;&#XAF;",
     "&#x0000000;&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;",
     "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;",
+    "&#x0;&#x1;&#x2;&#x3;&#x4;&#x5;&#x6;&#x7;&#x8;&#x9;&#xa;&#xb;&#xc;&#xd;&#xe;&#xf;&#xA;&#xB;&#xC;&#xD;&#xE;&#xF;",
+    "&#x00;&#x11;&#x22;&#x33;&#x44;&#x55;&#x66;&#x77;&#x88;&#x99;&#xaa;&#xbb;&#xcc;&#xdd;&#xee;&#xff;&#xAA;&#xBB;&#xCC;&#xDD;&#xEE;&#xFF;",
+    "&#x000;&#x111;&#x222;&#x333;&#x444;&#x555;&#x666;&#x777;&#x888;&#x999;&#xaaa;&#xbbb;&#xccc;&#xddd;&#xeee;&#xfff;&#xAAA;&#xBBB;&#xCCC;&#xDDD;&#xEEE;&#xFFF;",
+    "&#x0000;&#x1111;&#x2222;&#x3333;&#x4444;&#x5555;&#x6666;&#x7777;&#x8888;&#x9999;&#xaaaa;&#xbbbb;&#xcccc;&#xdddd;&#xeeee;&#xffff;&#xAAAA;&#xBBBB;&#xCCCC;&#xDDDD;&#xEEEE;&#xFFFF;",
+    "&#x00000;&#x11111;&#x22222;&#x33333;&#x44444;&#x55555;&#x66666;&#x77777;&#x88888;&#x99999;&#xaaaaa;&#xbbbbb;&#xccccc;&#xddddd;&#xeeeee;&#xfffff;&#xAAAAA;&#xBBBBB;&#xCCCCC;&#xDDDDD;&#xEEEEE;&#xFFFFF;",
+    "&#x000000;&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;",
+    "&#0;&#1;&#2;&#3;&#4;&#5;&#6;&#7;&#8;&#9;",
+    "&#00;&#11;&#22;&#33;&#44;&#55;&#66;&#77;&#88;&#99;",
+    "&#000;&#111;&#222;&#333;&#444;&#555;&#666;&#777;&#888;&#999;",
+    "&#0000;&#1111;&#2222;&#3333;&#4444;&#5555;&#6666;&#7777;&#8888;&#9999;",
+    "&#00000;&#11111;&#22222;&#33333;&#44444;&#55555;&#66666;&#77777;&#88888;&#99999;",
+    "&#000000;&#111111;&#222222;&#333333;&#444444;&#555555;&#666666;&#777777;&#888888;&#999999;",
+    "&#0000000;&#1111111;&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;",
   ],
   escapes: [
     "\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000",
