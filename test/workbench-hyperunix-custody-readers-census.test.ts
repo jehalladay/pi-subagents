@@ -83,6 +83,15 @@
  * const variable initialized by the function, an immediately invoked arrow function, call() by the immediately-invoked route,
  * an array literal reached through a const name, a pattern with no hole), so a one-edit hollowing that drops that place on
  * one route only reds this census too.
+ * wb-tz2.24 cut #2 answers this carrier's own refusal #1 (gate-prep-3 / g10-gate-s203, O:1966; rung 1 of the carrier's own
+ * L021 claim set, needsRuling false): U1's eight members on L021's parameter-default words. Each member is a
+ * CARRIER_SURVIVORS_1 row on L021 with the sub-form the verdict states; its witness, replayed verbatim from the PREP archive
+ * (specs/members-gp3.json and members-gp3b.json), is a GP3W SUB-READINGS row pinned on L021, so the member's hollowing reds this
+ * census; and L021 narrows, in place, to its pinned pages as a clause of its own and names NOT CLAIMED on its line the default
+ * of a third or later parameter, the place past the one the FIRSTONLY witness plants. The FAIL-CLOSED CARRY case reads L021
+ * too, and the CHILD REFUSAL #3 and #4 ANCHORS and the new CARRIER REFUSAL #1 ANCHOR read a row's words as governed by the NOT
+ * CLAIMED predicate of their own parenthesis, not by placement inside it (refusal #1 F1). No reader code changes: the helper
+ * differs from cut #1 in its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -146,7 +155,10 @@
  *   witness of a row is a SUB-READINGS row pinned on one of its lines.
  *  CHILD REFUSAL #3 ANCHOR (wb-tz2.20 cut #4, outside this census): the members this child's own refusal #3 verdict lists under
  *   its U1, U2 and U3 items, each with its lines and in order, are exactly the CHILD_SURVIVORS_3 rows, and each row's words
- *   stand inside a NOT CLAIMED parenthesis on one of its lines.
+ *   stand, on one of its lines, in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2,
+ *   refusal #1 F1: inside that parenthesis and in the clause of it that holds them, before the clause's "is NOT CLAIMED" or
+ *   "are NOT CLAIMED" with no other "is" or "are" between, or after its "NOT CLAIMED, among them"; placement inside the
+ *   parenthesis alone reads as not narrowed).
  *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every claim line
  *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
@@ -155,10 +167,16 @@
  *  CHILD REFUSAL #4 ANCHOR (wb-tz2.24, outside this census): the members that fold note lists under its U1 and U2 items, each
  *   with its line and in order, are exactly the CHILD_SURVIVORS_4 rows; each member's witness, as the note states its kind, its
  *   text (white space folded) and its delivered reading, is its row's G1W SUB-READINGS row and a pin of its line's CLAIM_LINES
- *   row; and each row's words stand inside a NOT CLAIMED parenthesis on its line.
+ *   row; and each row's words stand, on its line, in a list the NOT CLAIMED predicate of their own parenthesis governs (cut #2).
+ *  CARRIER REFUSAL #1 ANCHOR (wb-tz2.24 cut #2, outside this census): the members this carrier's own refusal #1 verdict lists
+ *   under its U1 item, each with its line, its sub-form and in order, are exactly the CARRIER_SURVIVORS_1 rows; each member's
+ *   witness, as the verdict states its kind, its text (white space folded) and its delivered reading, is its row's GP3W
+ *   SUB-READINGS row and a pin of its line's CLAIM_LINES row; and its line narrows to its pinned pages as a clause of its own,
+ *   naming NOT CLAIMED, in a list the predicate of its own parenthesis governs, the place a row names past its witness.
  *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
- *   words name an argument or element place of a root form or of the watched reference narrows to its pinned pages as a clause
- *   of its own; the FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
+ *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
+ *   value, narrows to its pinned pages as a clause of its own; the FAIL-CLOSED CORE case reads its 17 lines the same way
+ *   (refusal #4 F2).
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -199,6 +217,10 @@
  * other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (they read the phrase's place and those words,
  * not the line's meaning); and that a G1S plant stays is NOT CLAIMED by an anchor outside this census (they are its own
  * literals, like the Z plants).
+ * wb-tz2.24 cut #2: on L021, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own words say
+ * so), among them the default of a third or later parameter, named so on the line; and that a CARRIER_SURVIVORS_1 row's past
+ * words name the first place past its witness is NOT CLAIMED by an anchor outside this census (the CARRIER REFUSAL #1 ANCHOR
+ * holds each member, its line, its sub-form and its witness; the words are this census's own).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -573,7 +595,7 @@ function childMembers3(block: string, item: NarrowedSurvivor["item"]): string[] 
   const span = block.slice(start, Math.min(block.length, ...ends));
   return [...span.matchAll(/^ {2}- (G7-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3})(?:-(L\d{3}))?, /gm)].map(match => [match[1], match[2], match[3]].filter(part => part !== undefined).join(" "));
 }
-/** Whether the words stand on the line inside a parenthesis (the innermost one around them) that says NOT CLAIMED. */
+/** Whether the words stand on the line in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2, refusal #1 F1): inside the innermost parenthesis around them and in the clause of it that holds them (between that parenthesis's own semicolons), either before the clause's "is NOT CLAIMED" or "are NOT CLAIMED" with no other "is" or "are" between, or after its "NOT CLAIMED, among them" with no "is" or "are" from that list's start to the clause's end; placement inside the parenthesis alone reads as not narrowed. */
 function notClaimedHolds(line: string, words: string): boolean {
   for (let at = line.indexOf(words); at >= 0; at = line.indexOf(words, at + 1)) {
     let open = -1;
@@ -592,7 +614,24 @@ function notClaimedHolds(line: string, words: string): boolean {
         else depth -= 1;
       }
     }
-    if (open >= 0 && close > open && line.slice(open, close + 1).includes("NOT CLAIMED")) return true;
+    if (open < 0 || close <= open) continue;
+    let from = open + 1;
+    let to = close;
+    for (let depth = 0, index = open + 1; index < close; index += 1) {
+      if (line[index] === "(") depth += 1;
+      else if (line[index] === ")") depth -= 1;
+      else if (depth === 0 && line[index] === ";") {
+        if (index < at) from = index + 1;
+        else if (index >= at + words.length && to === close) to = index;
+      }
+    }
+    const before = line.slice(from, at);
+    const after = line.slice(at + words.length, to);
+    const predicate = after.search(/ (?:is|are) NOT CLAIMED\b/);
+    const listedBefore = predicate >= 0 && !/ (?:is|are) /.test(after.slice(0, predicate));
+    const among = before.lastIndexOf(", among them ");
+    const listedAfter = among >= 0 && before.slice(0, among).includes("NOT CLAIMED") && !/ (?:is|are) /.test(before.slice(among)) && !/ (?:is|are) /.test(after);
+    if (listedBefore || listedAfter) return true;
   }
   return false;
 }
@@ -617,6 +656,34 @@ function foldMembers(block: string, item: FoldedSurvivor["item"]): FoldedMember[
       line: match[2] ?? "",
       kind: match[3] ?? "",
       text: match[4] ?? "",
+      delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
+    };
+  });
+}
+/** This carrier's own refusal verdict in its notes (wb-tz2.24 cut #2): from the GATE VERDICT heading that names the refusal to the next delivery, verdict or ruling. */
+function carrierVerdictBlock(refusal: number): string {
+  const notes = exportRecord(CARRIER).notes;
+  const heading = `GATE VERDICT ${CARRIER} (`;
+  let start = notes.indexOf(heading);
+  while (start >= 0 && !notes.slice(start, start + 600).includes(`substance refusal #${refusal} of ${CARRIER},`)) start = notes.indexOf(heading, start + 1);
+  if (start < 0) return "";
+  const ends = ["DELIVERED by the orchestrator collect step", `GATE VERDICT ${CARRIER}`, "ORCHESTRATOR RULING"].map(marker => notes.indexOf(marker, start + 1)).filter(at => at > start);
+  return notes.slice(start, Math.min(notes.length, ...ends));
+}
+/** The members that verdict's UNMET U1 item lists, in order, each read from its '<id> (<line>, <sub-form>): '<edit>'; witness <kind> '<text>' => <delivered reading> vs <mutant reading>' form. */
+function carrierMembers(block: string): (FoldedMember & { readonly subForm: string })[] {
+  const start = block.indexOf("\nU1: U1-MEDIUM-CONFIRMED-");
+  if (start < 0) return [];
+  const end = block.indexOf("\n", start + 1);
+  const span = block.slice(start, end < 0 ? block.length : end);
+  return [...span.matchAll(/(GP3-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\): '.*?'; witness (tampers|tamperlines) '(.*?)' => (\[[^\]]*\]) vs /g)].map(match => {
+    const delivered: unknown = JSON.parse(match[6] ?? "[]");
+    return {
+      id: match[1] ?? "",
+      line: match[2] ?? "",
+      subForm: match[3] ?? "",
+      kind: match[4] ?? "",
+      text: match[5] ?? "",
       delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
     };
   });
@@ -846,6 +913,15 @@ interface FoldedMember {
   readonly kind: string;
   readonly text: string;
   readonly delivered: readonly string[];
+}
+/** wb-tz2.24 cut #2: a member of this carrier's own refusal #1 (gate-prep-3 / g10-gate-s203, O:1966) on the line its verdict names, with the sub-form the verdict states, its GP3W witness and the words its line names NOT CLAIMED past the place that witness plants ("" when its sub-form is a form, not a place). */
+interface CarrierSurvivor {
+  readonly id: string;
+  readonly item: "U1";
+  readonly line: string;
+  readonly subForm: string;
+  readonly witness: string;
+  readonly past: string;
 }
 interface LocationRow {
   readonly id: string;
@@ -2283,6 +2359,14 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "G1S-A-CALLCALL-IIFE-IDX1", claim: "wb-tz2.24 seat sweep (L024): call() argument by the immediately-invoked route, for the second parameter", kind: "tampers", text: "((n: number, t: { parse: unknown }): void => {\n  t.parse = null;\n}).call(undefined, 1, JSON);\n", expected: ["JSON.parse assigned"] },
   { id: "G1S-P-FOROF-CONST-IDX2", claim: "wb-tz2.24 seat sweep (L020): for-of element through a const name, every one of three elements", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst targets = [JSON, Math, hx.HyperUnix];\nfor (const target of targets) {\n  (target as { open?: unknown }).open = forged;\n}\n", expected: ["JSON.open assigned", "Math.open assigned", "hx.HyperUnix.open assigned"] },
   { id: "G1S-P-DESTR-NOHOLE-IDX2", claim: "wb-tz2.24 seat sweep (L019): destructured: an array element at index 2 with no hole before it", kind: "tampers", text: "import { hxList } from \"@hyperunix/sdk\";\nconst [first, second, third] = hxList;\nthird.tag = forged;\n", expected: ["hxList.2.tag assigned"] },
+  { id: "GP3W-PDEFAULT-FIRSTONLY", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-FIRSTONLY witness (L021 parameter default, gate-prep-3 archive), the default of a second parameter", kind: "tampers", text: "export function patch(n = 1, target = JSON): void {\n  target.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP3W-PDEFAULT-NAMEONLY", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NAMEONLY witness (L021 parameter default, gate-prep-3 archive), a default that is a member chain on an imported root", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nexport function patch(target = hx.HyperUnix): void {\n  target.open = forged;\n}\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP3W-PDEFAULT-NOGLOBALMEMBER", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOGLOBALMEMBER witness (L021 parameter default, gate-prep-3 archive), a default that is a member chain on a global root", kind: "tampers", text: "function patch(target = globalThis.JSON): void {\n  target.parse = forged;\n}\n", expected: ["globalThis.JSON.parse assigned"] },
+  { id: "GP3W-PDEFAULT-NOELEMENT", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOELEMENT witness (L021 parameter default, gate-prep-3 archive), a default that is an element access", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nfunction patch(target = hx[\"HyperUnix\"]): void {\n  target.open = forged;\n}\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP3W-PDEFAULT-NOIMPORTNAME", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOIMPORTNAME witness (L021 parameter default, gate-prep-3 archive), a default that is an imported name", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nfunction patch(target = HyperUnix): void {\n  target.open = forged;\n}\n", expected: ["HyperUnix.open assigned"] },
+  { id: "GP3W-PDEFAULT-NOLOCALNAME", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOLOCALNAME witness (L021 parameter default, gate-prep-3 archive), a default that is a local name", kind: "tampers", text: "const J = JSON;\nfunction patch(target = J): void {\n  target.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP3W-PDEFAULT-NOTYPED", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOTYPED witness (L021 parameter default, gate-prep-3 archive), the default of a parameter with a type annotation", kind: "tampers", text: "function patch(target: { parse?: unknown } = JSON): void {\n  target.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP3W-PDEFAULT-TOPONLY", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-TOPONLY witness (L021 parameter default, gate-prep-3 archive), the default of a function declared in another function's body", kind: "tampers", text: "export function outer(): void {\n  function patch(target = JSON): void {\n    target.parse = forged;\n  }\n  patch();\n}\n", expected: ["JSON.parse assigned"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -2607,7 +2691,18 @@ const CHILD_SURVIVORS_4: readonly FoldedSurvivor[] = [
   { id: "G1-P-DESTR-IDX2", item: "U2", line: "L019", witness: "G1W-P-DESTR-IDX2", words: "an array element at index 3 or later" },
   { id: "G1-P-FOROF-IDX2", item: "U2", line: "L020", witness: "G1W-P-FOROF-IDX2", words: "a fourth or later element of the array literal" },
 ];
-/** wb-tz2.24's own requirement lines (its description's acceptance sentence and the U1 and U2 slugs of the R-B424 fold note in its notes). */
+/** wb-tz2.24 cut #2: this carrier's own refusal #1 members (gate-prep-3 / g10-gate-s203, O:1966; U1, eight fail-open on L021's parameter-default words) as its verdict lists them, each with the sub-form the verdict states, its GP3W witness and the words its line names NOT CLAIMED past the place that witness plants. */
+const CARRIER_SURVIVORS_1: readonly CarrierSurvivor[] = [
+  { id: "GP3-PDEFAULT-FIRSTONLY", item: "U1", line: "L021", subForm: "the default of a second or later parameter", witness: "GP3W-PDEFAULT-FIRSTONLY", past: "the default of a third or later parameter" },
+  { id: "GP3-PDEFAULT-NAMEONLY", item: "U1", line: "L021", subForm: "a default that is not a bare name", witness: "GP3W-PDEFAULT-NAMEONLY", past: "" },
+  { id: "GP3-PDEFAULT-NOGLOBALMEMBER", item: "U1", line: "L021", subForm: "a default that is a member chain on a global root", witness: "GP3W-PDEFAULT-NOGLOBALMEMBER", past: "" },
+  { id: "GP3-PDEFAULT-NOELEMENT", item: "U1", line: "L021", subForm: "a default that is an element access", witness: "GP3W-PDEFAULT-NOELEMENT", past: "" },
+  { id: "GP3-PDEFAULT-NOIMPORTNAME", item: "U1", line: "L021", subForm: "a default that is an imported name", witness: "GP3W-PDEFAULT-NOIMPORTNAME", past: "" },
+  { id: "GP3-PDEFAULT-NOLOCALNAME", item: "U1", line: "L021", subForm: "a default that is a local name", witness: "GP3W-PDEFAULT-NOLOCALNAME", past: "" },
+  { id: "GP3-PDEFAULT-NOTYPED", item: "U1", line: "L021", subForm: "the default of a parameter with a type annotation", witness: "GP3W-PDEFAULT-NOTYPED", past: "" },
+  { id: "GP3-PDEFAULT-TOPONLY", item: "U1", line: "L021", subForm: "the default of a function declared below the file's top level", witness: "GP3W-PDEFAULT-TOPONLY", past: "" },
+];
+/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and, cut #2, the UNMET slug of its own refusal #1 verdict). */
 const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   {
     key: "wb-tz2.24 ACCEPTANCE",
@@ -2616,6 +2711,7 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   },
   { key: "wb-tz2.24 R-B424 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-FINAL-CUT-4-UNNARROWED-ARGUMENT-POSITION-WORDS-4-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2518-L022-L023-L024-L031" },
   { key: "wb-tz2.24 R-B424 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-FINAL-CUT-4-UNNARROWED-ELEMENT-POSITION-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2518-L019-L020" },
+  { key: "wb-tz2.24 refusal #1 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-1-UNNARROWED-PARAMETER-DEFAULT-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2534-L021" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -2775,7 +2871,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
   { id: "L019", line: "- destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040", "SUB:WR7", "SUB:WR7c", "SUB:G1W-P-DESTR-IDX2", "SUB:G1S-P-DESTR-NOHOLE-IDX2"] },
   { id: "L020", line: "- for-of element: on its pinned pages, a for-of variable's elements when the iterable is an array literal, directly or through a const name (a fourth or later element of the array literal, a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034", "SUB:G5W-O-RF-FORIN", "SUB:G5C-O-RF-FORIN", "SUB:X3-FORIN-CONST", "SUB:G1W-P-FOROF-IDX2", "SUB:G1S-P-FOROF-CONST-IDX2"] },
-  { id: "L021", line: "- parameter default: a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter is NOT CLAIMED)", pins: ["ROOT:parameter default"] },
+  { id: "L021", line: "- parameter default: on its pinned pages, a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter, and the default of a third or later parameter, are NOT CLAIMED)", pins: ["ROOT:parameter default", "SUB:GP3W-PDEFAULT-FIRSTONLY", "SUB:GP3W-PDEFAULT-NAMEONLY", "SUB:GP3W-PDEFAULT-NOGLOBALMEMBER", "SUB:GP3W-PDEFAULT-NOELEMENT", "SUB:GP3W-PDEFAULT-NOIMPORTNAME", "SUB:GP3W-PDEFAULT-NOLOCALNAME", "SUB:GP3W-PDEFAULT-NOTYPED", "SUB:GP3W-PDEFAULT-TOPONLY"] },
   { id: "L022", line: "- call argument: on its pinned pages, the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, a let or var variable, and the argument at a fourth or later parameter's position, are NOT CLAIMED); a rest parameter reads nothing", pins: ["ROOT:call argument", "SUB:A39", "SUB:A40", "SUB:S0645", "SUB:S1092", "SUB:S1093", "SUB:S1094", "SUB:S0647", "SUB:S1091", "SUB:S1295", "SUB:W44", "SUB:T0033", "SUB:T0035", "SUB:WR8", "SUB:WR8c", "SUB:G1W-A-CALLARG-IDX2", "SUB:G1S-A-CALLARG-CONST-IDX1", "SUB:G1S-A-CALLARG-CONST-IDX2"] },
   { id: "L023", line: "- immediately invoked: on its pinned pages, the argument at a parameter's position when its function is itself the callee (the argument at a third or later parameter's position is NOT CLAIMED)", pins: ["ROOT:immediately invoked", "SUB:S0651", "SUB:G1W-A-IIFE-IDX1", "SUB:G1S-A-IIFE-ARROW-IDX1"] },
   { id: "L024", line: "- call() argument: on its pinned pages, the argument one place later in a call() of the function by either route (an optional call(), and the argument for a third or later parameter, are NOT CLAIMED)", pins: ["ROOT:call() argument", "SUB:A41", "SUB:A43", "SUB:S1090", "SUB:T0036", "SUB:T0159", "SUB:G1W-A-CALLCALL-IDX1", "SUB:G1S-A-CALLCALL-IIFE-IDX1"] },
@@ -2886,6 +2982,10 @@ const SCOPE_LINES: readonly string[] = [
   "L020, L022, L023, L024 and L031 - to their pinned pages, naming NOT CLAIMED on each line every place past the one its witness",
   "plants (an array element at index 3 or later, a fourth or later element, a fourth or later parameter's position, a third or",
   "later one, the argument for a third or later parameter, and a call's third or later argument); no reader code changes.",
+  "wb-tz2.24 cut #2 (this carrier's own refusal #1, gate-prep-3 / g10-gate-s203, O:1966: rung 1 of its L021 claim set) plants",
+  "the witnesses of that refusal's eight members on L021, the line they defeat, and narrows L021, in place, to its pinned",
+  "pages, naming NOT CLAIMED on it the default of a third or later parameter, the place past the one its position witness",
+  "plants; no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -4249,6 +4349,14 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:G1S-A-CALLCALL-IIFE-IDX1:65401561e0e5",
   "SUB_READINGS:G1S-P-FOROF-CONST-IDX2:82174d77619c",
   "SUB_READINGS:G1S-P-DESTR-NOHOLE-IDX2:708b7ac62b78",
+  "SUB_READINGS:GP3W-PDEFAULT-FIRSTONLY:3d018957ab4c",
+  "SUB_READINGS:GP3W-PDEFAULT-NAMEONLY:cf8a18ea3222",
+  "SUB_READINGS:GP3W-PDEFAULT-NOGLOBALMEMBER:ad017ddf7028",
+  "SUB_READINGS:GP3W-PDEFAULT-NOELEMENT:cf64a31078db",
+  "SUB_READINGS:GP3W-PDEFAULT-NOIMPORTNAME:6cc6b090a39e",
+  "SUB_READINGS:GP3W-PDEFAULT-NOLOCALNAME:ea545504af82",
+  "SUB_READINGS:GP3W-PDEFAULT-NOTYPED:4c7daadb879a",
+  "SUB_READINGS:GP3W-PDEFAULT-TOPONLY:b4e7781c09d6",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -4378,7 +4486,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L018:1b1b1c9895e7",
   "CLAIM_LINES:L019:57eb86c41b09",
   "CLAIM_LINES:L020:1f0c79f2751a",
-  "CLAIM_LINES:L021:0e53e1e5f958",
+  "CLAIM_LINES:L021:d2098fba1642",
   "CLAIM_LINES:L022:b69bee034664",
   "CLAIM_LINES:L023:f57fa2bb36ac",
   "CLAIM_LINES:L024:b52cc99a34b6",
@@ -4747,6 +4855,15 @@ const FROZEN: readonly string[] = [
   "CARRIER_REQUIREMENTS:wb-tz2.24 ACCEPTANCE:b8ee3d688391",
   "CARRIER_REQUIREMENTS:wb-tz2.24 R-B424 U1:a60e9671aaa9",
   "CARRIER_REQUIREMENTS:wb-tz2.24 R-B424 U2:32c9beba306e",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #1 U1:89a36276a0aa",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-FIRSTONLY:591b0c832bdd",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NAMEONLY:9ce2827aa53c",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOGLOBALMEMBER:be82470fb489",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOELEMENT:2cf0c349f952",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOIMPORTNAME:7e4b82bfd87e",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOLOCALNAME:efeeffdeb4f6",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOTYPED:08439d961cd6",
+  "CARRIER_SURVIVORS_1:GP3-PDEFAULT-TOPONLY:92e380a4cfcf",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -5210,7 +5327,7 @@ describe(SUITE, () => {
   });
 
   describe("CHILD REFUSAL #3 ANCHOR (wb-tz2.20 cut #4, outside this census): this child's own refusal #3 verdict in the tracker export", () => {
-    it("the members its U1, U2 and U3 items list, each with its lines and in order, are the CHILD_SURVIVORS_3 rows, and each row's words stand inside a NOT CLAIMED parenthesis on one of its lines", () => {
+    it("the members its U1, U2 and U3 items list, each with its lines and in order, are the CHILD_SURVIVORS_3 rows, and each row's words stand, on one of its lines, in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2, refusal #1 F1)", () => {
       const block = childVerdictBlock3();
       const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
       expect({
@@ -5233,7 +5350,7 @@ describe(SUITE, () => {
       const sources: Record<string, string> = { description: record.description, notes: record.notes };
       expect(CARRIER_REQUIREMENTS.filter(requirement => !(sources[requirement.source] ?? "").includes(requirement.text)).map(requirement => requirement.key)).toStrictEqual([]);
     });
-    it("the requirement lines are exactly the description's acceptance sentence and the R-B424 fold note's U1 and U2 slugs, in both directions", () => {
+    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and (cut #2) the UNMET slugs of the carrier's own refusal #1 verdict, in both directions", () => {
       const record = exportRecord(CARRIER);
       const acceptance = record.description.indexOf("Acceptance (");
       const next = record.description.indexOf(" Merge trunk INTO the branch first", acceptance);
@@ -5242,16 +5359,22 @@ describe(SUITE, () => {
         notes: CARRIER_REQUIREMENTS.filter(requirement => requirement.source === "notes").map(requirement => requirement.text),
       }).toStrictEqual({
         description: acceptance < 0 || next < acceptance ? [] : [record.description.slice(acceptance, next)],
-        notes: foldBlock()
-          .split("\n")
-          .filter(line => /^U[12]-MEDIUM-CONFIRMED-/.test(line))
-          .map(line => line.slice(0, line.indexOf(". MEMBERS"))),
+        notes: [
+          ...foldBlock()
+            .split("\n")
+            .filter(line => /^U[12]-MEDIUM-CONFIRMED-/.test(line))
+            .map(line => line.slice(0, line.indexOf(". MEMBERS"))),
+          ...carrierVerdictBlock(1)
+            .split("\n")
+            .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*\. MEMBERS/.test(line))
+            .map(line => line.slice(line.indexOf(": ") + 2, line.indexOf(". MEMBERS"))),
+        ],
       });
     });
   });
 
   describe("CHILD REFUSAL #4 ANCHOR (wb-tz2.24, outside this census): wb-tz2.20's own refusal #4 members as the R-B424 fold note in the carrier's notes lists them", () => {
-    it("the members its U1 and U2 items list, each on its line and in order, are the CHILD_SURVIVORS_4 rows; each member's witness, by the kind, text (white space folded) and delivered reading the note states, is its row's SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's words stand inside a NOT CLAIMED parenthesis on its line", () => {
+    it("the members its U1 and U2 items list, each on its line and in order, are the CHILD_SURVIVORS_4 rows; each member's witness, by the kind, text (white space folded) and delivered reading the note states, is its row's SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's words stand, on its line, in a list the NOT CLAIMED predicate of their own parenthesis governs (cut #2, refusal #1 F1)", () => {
       const block = foldBlock();
       const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
       const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
@@ -5266,6 +5389,33 @@ describe(SUITE, () => {
       }).toStrictEqual({
         members: CHILD_SURVIVORS_4.map(row => `${row.item} ${row.id} ${row.line}`),
         witnesses: CHILD_SURVIVORS_4.map(row => {
+          const sub = subs.get(row.witness);
+          return sub === undefined ? `${row.id} <no witness row>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+        }),
+        unpinned: [],
+        unnarrowed: [],
+      });
+    });
+  });
+
+  describe("CARRIER REFUSAL #1 ANCHOR (wb-tz2.24 cut #2, outside this census): this carrier's own refusal #1 verdict in the tracker export", () => {
+    it("the members its U1 item lists, each with its line, its sub-form and in order, are the CARRIER_SURVIVORS_1 rows; each member's witness, by the kind, text (white space folded) and delivered reading the verdict states, is its row's SUB-READINGS row and a pin of its line's CLAIM_LINES row; and its line narrows to its pinned pages as a clause of its own, naming NOT CLAIMED, in a list the predicate of its own parenthesis governs, the place its row names past its witness", () => {
+      const listed = carrierMembers(carrierVerdictBlock(1));
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const subs = new Map(SUB_READINGS.map(row => [row.id, row] as const));
+      const folded = (text: string): string => text.replace(/\s+/g, " ").trim();
+      expect({
+        members: listed.map(member => `U1 ${member.id} ${member.line} (${member.subForm})`),
+        witnesses: listed.map(member => `${member.id} ${member.kind} ${folded(member.text)} => ${JSON.stringify(member.delivered)}`),
+        unpinned: CARRIER_SURVIVORS_1.filter(row => !(pins.get(row.line) ?? []).includes(`SUB:${row.witness}`)).map(row => row.id),
+        unnarrowed: CARRIER_SURVIVORS_1.filter(row => {
+          const line = lines.get(row.line) ?? "";
+          return !narrowsToPinnedPages(line) || (row.past !== "" && !notClaimedHolds(line, row.past));
+        }).map(row => row.id),
+      }).toStrictEqual({
+        members: CARRIER_SURVIVORS_1.map(row => `${row.item} ${row.id} ${row.line} (${row.subForm})`),
+        witnesses: CARRIER_SURVIVORS_1.map(row => {
           const sub = subs.get(row.witness);
           return sub === undefined ? `${row.id} <no witness row>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
         }),
@@ -5376,11 +5526,11 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cut #2): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value narrows to its pinned pages as a clause of its own", () => {
       const lines = helperClaimLines();
-      const placed = lines.filter(entry => /a parameter's position|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
+      const placed = lines.filter(entry => /a parameter's position|a parameter's default value|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
       expect({ placed, unnarrowed: placed.filter(id => !narrowsToPinnedPages(lines.find(entry => entry.id === id)?.line ?? "")) }).toStrictEqual({
-        placed: ["L019", "L020", "L022", "L023", "L024", "L031"],
+        placed: ["L019", "L020", "L021", "L022", "L023", "L024", "L031"],
         unnarrowed: [],
       });
     });
@@ -5465,6 +5615,7 @@ describe(SUITE, () => {
         ...rows("CHILD_SURVIVORS_3", CHILD_SURVIVORS_3),
         ...rows("CHILD_SURVIVORS_4", CHILD_SURVIVORS_4),
         ...rows("CARRIER_REQUIREMENTS", CARRIER_REQUIREMENTS),
+        ...rows("CARRIER_SURVIVORS_1", CARRIER_SURVIVORS_1),
       ]).toStrictEqual(FROZEN);
     });
   });

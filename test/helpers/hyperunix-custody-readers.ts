@@ -30,6 +30,10 @@
  * L020, L022, L023, L024 and L031 - to their pinned pages, naming NOT CLAIMED on each line every place past the one its witness
  * plants (an array element at index 3 or later, a fourth or later element, a fourth or later parameter's position, a third or
  * later one, the argument for a third or later parameter, and a call's third or later argument); no reader code changes.
+ * wb-tz2.24 cut #2 (this carrier's own refusal #1, gate-prep-3 / g10-gate-s203, O:1966: rung 1 of its L021 claim set) plants
+ * the witnesses of that refusal's eight members on L021, the line they defeat, and narrows L021, in place, to its pinned
+ * pages, naming NOT CLAIMED on it the default of a third or later parameter, the place past the one its position witness
+ * plants; no reader code changes.
  *
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
@@ -51,7 +55,7 @@
  * - reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)
  * - destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)
  * - for-of element: on its pinned pages, a for-of variable's elements when the iterable is an array literal, directly or through a const name (a fourth or later element of the array literal, a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)
- * - parameter default: a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter is NOT CLAIMED)
+ * - parameter default: on its pinned pages, a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter, and the default of a third or later parameter, are NOT CLAIMED)
  * - call argument: on its pinned pages, the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, a let or var variable, and the argument at a fourth or later parameter's position, are NOT CLAIMED); a rest parameter reads nothing
  * - immediately invoked: on its pinned pages, the argument at a parameter's position when its function is itself the callee (the argument at a third or later parameter's position is NOT CLAIMED)
  * - call() argument: on its pinned pages, the argument one place later in a call() of the function by either route (an optional call(), and the argument for a third or later parameter, are NOT CLAIMED)
