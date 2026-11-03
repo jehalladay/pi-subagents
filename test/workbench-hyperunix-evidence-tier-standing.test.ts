@@ -14,9 +14,13 @@
  * module, and the Set constructor read by its name; its cut #3, the enumerate-the-resolvable cut ruling R-B370 binds on its refusal
  * #2, pins checkStream rebound by a compound assignment, the gate's GP17-COMPOUND-CHECKSTREAM, and each HOLDER written as a binding
  * in each of 27 statement forms beyond the plain assignment, and states every claim word over exactly its planted statements and
- * texts, each other statement, text, member form and position NOT CLAIMED): each case claims exactly the cells and pins it
+ * texts, each other statement, text, member form and position NOT CLAIMED; and wb-tz2.18's cut #5 is its cut #4 restated over
+ * that carrier once it landed (landing 857), the re-cut ruling R-B311 binds, which changes no case, reader, plant, row or pin, so
+ * T2's acceptance reading is the landed carrier's): each case claims exactly the cells and pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
- * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins. The
+ * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins,
+ * except the realized escape landing 857's gate routed to follow-up wb-1us8 (a compound-assignment write of a HOLDER nested below
+ * a top-level statement), which is not named here. The
  * statement (STATEMENT below,
  * verbatim, the bead's title): "When a GC-D13 ADR plus an SDK result field carry provider evidence tiers
  * (14-decisions-and-migration.md:19@6ed14cab8d; HXGC-PROV-001 DESIGN requirements.jsonl:22), Pi shall read the tier as a separate

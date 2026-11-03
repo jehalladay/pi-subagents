@@ -39,8 +39,133 @@
  * witness to another family's probe (X22-QUIET-SWAP-COORD) reds; R-SCOPE's probe is Q1's outside list, one path a line, read
  * as the clause (a) scopes whose roots would list each path. The section's units cite nothing (judged in the same case), and
  * its rows as read at this cut are a frozen literal there, so a docs-side edit the judge still accepts reds too. F6: A5's
- * footnote-definition control holds a status that only a footnote definition line inside the citing unit carries as
- * unqualified, pinning FOOTNOTE.definition (the gate's M22-FOOTNOTE-DEF-NEVER).
+ * footnote-definition control holds, as unqualified, a status that only a plain footnote definition line carries when that
+ * line is the citing unit's one definition line, directly under its citing line, killing FOOTNOTE.definition's never-match
+ * member (the gate's M22-FOOTNOTE-DEF-NEVER); wb-9lz6 below pins the line's other forms and its second position.
+ *
+ * wb-9lz6 (the R694 follow-up of landing 781, gate cmd_453531a97151: its F1 leads and is cured here). A5's footnote-definition
+ * controls hold that status, read unqualified, on the citing unit's one definition line directly under its citing line, one
+ * control per form. This first cut pinned eight forms: the plain line "[^s]: design-only" (footnote-definition); both lines
+ * behind "> " (footnote-definition-quoted, the gate's witness gate-fndef-quote verbatim), behind ">"
+ * (footnote-definition-unspaced-quote) or behind "> > " (footnote-definition-nested-quote); the definition line indented by
+ * two spaces (footnote-definition-indented, the gate's witness gate-fndef-indent verbatim), by four spaces
+ * (footnote-definition-deep-indent) or by one tab (footnote-definition-tab-indent); and the plain line under the label
+ * [^note-1] (footnote-definition-long-label). Cut #4 below enumerates every form A5 holds, these eight among them, with each
+ * form's falsifiers, and that enumeration is the claim.
+ *
+ * wb-9lz6 cut #2 (its refusal #1: U1, the record's PF1 on FOOTNOTE.definition's flags, and PF2, cured beside it). Two A5
+ * controls hold the status on the second of two definition lines directly under the citing line, the first under the label
+ * [^note-1] and the second, holding the status, under [^s]: plain (footnote-definition-second, the gate's witness W-FLAG
+ * verbatim) and with each line behind one blockquote marker and a space (footnote-definition-quoted-second, the witness
+ * W-FLAG-Q verbatim). Their falsifiers are the gate's G-FLAG-G and G-FLAG-Y, FOOTNOTE.definition with the g or the y flag:
+ * .test() then starts at the previous match's lastIndex, so the line tested right after a hidden definition line is shown, and
+ * each member reds both controls (A5 and the closing case). FOOTNOTE's flags are pinned beside its sources: A5 holds them as a
+ * literal (the reference's "g", the definition's "", no flag) and the roster's constants.carrierView.footnoteFlags carries
+ * both, so any flag added to or dropped from either regex reds A5 and the closing case, and the judged-set case too unless the
+ * roster is edited with it. The reference's g is pinned by behaviour as well: footnote-label-second (the record's PF2 witness
+ * W-REF verbatim) holds, as unqualified, a status carried only by the label of the second of two adjacent footnote references
+ * on the citing line, that label spelled "design-only"; its falsifier is the gate's G-REF-NOG (FOOTNOTE.reference without g
+ * removes a line's first reference only), and the reference with gy reds it and footnote-label. Every other position of a
+ * definition line or a reference, and every FOOTNOTE flag edit that changes no control's reading, is stated NOT CLAIMED below.
+ *
+ * wb-9lz6 cut #3 (its refusal #2: U1, the record's PF1 on the second reference's label spelling, and PF2, cured beside it). A5
+ * holds a footnote reference's label, read unqualified, in two spellings at each of the two positions it claims, each in the
+ * citing-line texts cut #4 lists below and in no other: at a line's only reference "design-only" (footnote-label) and
+ * "Status:DESIGN-ONLY." (footnote-label-punct, the record's PF2 position, with its definition after a blank line), and at the
+ * second of two adjacent references "design-only" (footnote-label-second) and "Status:DESIGN-ONLY."
+ * (footnote-label-second-punct, the record's gate-only feasibility control gate-label-second-punct, its text verbatim). The
+ * second spelling holds capital letters, a colon and a final period (19 characters), so a one-edit narrowing of
+ * FOOTNOTE.reference's label class that leaves it unmatched keeps the label on the view, where its status qualifies the unit:
+ * each of the gate's G2-R-LBL-WORDHY ([\w-]+), G2-R-LBL-MAX12 ({1,12}), G2-R-LBL-LOWER ([a-z0-9-]+) and G2-R-LBL-ALNUMHY
+ * ([A-Za-z0-9-]+), and the class with the colon, the period or the capital letters excluded or capped at 18 characters, edited
+ * with its roster constant, reds both punct controls and their five cut #4 twins (A5 and the closing case). G-REF-NOG reds
+ * footnote-label-second-punct beside footnote-label-second and both cut #4 second-position lines, and the reference with gy
+ * reds all fourteen label controls. A label in any other spelling, at either position, is stated NOT CLAIMED below.
+ *
+ * wb-9lz6 cut #4 (its refusal #3: U1, the record's PF1 on the text around a reference, and PF2, which ruling R-B388 read as
+ * claimed - "behind two markers" covers ">>" - so the FOOTNOTE.definition claim set is frozen and this cut is authored in the
+ * enumerate-the-resolvable form for it: the definition claim is exactly the forms listed here, each pinned by its own control;
+ * every member record PF3 measured surviving is killed here or named NOT CLAIMED below, as cut #5 restates it; every other
+ * definition line is NOT CLAIMED below). No residual family is added: an exemplar of each NOT CLAIMED form below read
+ * unqualified under the census's own judge (measured at this cut, added as throwaway A5 controls: 32 passed), and the NOT
+ * CLAIMED sentences name where a hollowed judge is not caught; how the judge reads any other page in such a form is NOT
+ * CLAIMED (cut #5 below).
+ *
+ * wb-9lz6 cut #5 (its refusal #4: U1 and U2, both in the frozen FOOTNOTE.definition claim set; ruling R-B418 executed the
+ * rule-19 structural exit, filed the exit child wb-6aaw and bound this, the bead's final cut, to the FAIL-CLOSED CORE). This
+ * cut changes comments only - no control, pin, roster entry, test title or reader code is added, removed or edited - and
+ * withdraws the words the earlier cuts gave five surviving FOOTNOTE.definition members to call them harmless. The definition
+ * claim is exactly what its pins hold: A5's nineteen forms and cut #2's two second-position pairings, one control each, and
+ * the falsifiers this header names for them, each red with the attribution named. No other FOOTNOTE.definition member is
+ * claimed to be caught: the members named NOT CLAIMED below are measured examples, and five of them (IND-SPTAB,
+ * CTX-COLON-CONTENT, the regex unanchored, its colon dropped and the definition with m) are hollowed judges this census
+ * does not catch, whose pins belong to wb-6aaw. Each page refusal #4 realized the five on, and its twin
+ * W-GP22-NBSP-INDENT, reads unqualified under the census's own judge (measured at cut #5 as throwaway A5 controls, causes
+ * ["unqualified"]: 32 passed). How the census reads a page whose definition line is in a NOT CLAIMED form is NOT CLAIMED by
+ * this census, quiet or not: the census hides a definition line's words from the carrier view, so a negation on that line
+ * does not reach a status on the next one, and such a page can read quiet - a unit made of a citing line ending "which is",
+ * the line "[^x]: not" and the line "design-only." reads qualified, and so do its twins with the reference and the label s
+ * and behind "> " (measured at cut #5 as throwaway A5 controls expecting unqualified: 2 failed | 30 passed (32) each,
+ * attributed to the probe), while marked shows that line as paragraph text. Cut #5 adds no residual family: RESIDUALS and
+ * docs/14's residual table are unchanged.
+ *
+ * THE TEXT AROUND A REFERENCE (U1). A5 holds a reference's label, read unqualified, in both spellings ("design-only" and
+ * "Status:DESIGN-ONLY.", written L), one control per spelling, in exactly these citing-line texts and in no other, where "..."
+ * stands for "Pi reads the cac-workflow-composition-2026-10-18": at a line's only reference, its definition after a blank
+ * line, "... program[^L]." (footnote-label, footnote-label-punct), "... program [^L]." (footnote-label-space-before,
+ * footnote-label-punct-space-before), "... program.[^L]" (footnote-label-after-period, footnote-label-punct-after-period),
+ * "... program[^L]and nothing more." (footnote-label-word-after, footnote-label-punct-word-after) and "... program[^L] today."
+ * (footnote-label-space-after, footnote-label-punct-space-after); at the second of two adjacent references, with no definition
+ * line, "... program[^s][^L]." (footnote-label-second, footnote-label-second-punct) and "... program[^s][^L] today."
+ * (footnote-label-second-space-after, footnote-label-second-punct-space-after). So directly before a claimed reference stand
+ * only the "m" that ends "program", a space, a "." or the first reference's "]", and directly after it only a ".", the line
+ * end, the "a" of "and" or a space, each only as these lines write them. The design-only texts of the five new lines are the
+ * record's gate-only feasibility controls gate-ctx-space-before, gate-ctx-after-period, gate-ctx-word-after,
+ * gate-ctx-space-after and gate-ctx-second-space-after verbatim, and footnote-label-punct-space-before is the paragraph of the
+ * record's witness W-CTX6-PUNCT-SPACE-BEFORE. Falsifiers, each a one-edit lookaround in FOOTNOTE.reference edited with its
+ * roster constant, red A5 and the closing case with soft attribution exactly as named: the gate's CTX-BEFORE-NOWS (?<!\s) the
+ * two space-before lines; CTX-BEFORE-NOPUNCT (?<![.,;:!?]) the two after-period lines; CTX-AFTER-NOWORD (?!\w) the two
+ * word-after lines; CTX-AFTER-NOSPACE (?!\s) the four space-after lines; CTX-AFTER-PERIOD (?=\.) the eight new lines without a
+ * "." after the reference; CTX-BEFORE-WORD (?<=\w) and CTX-WORDBOUNDARY \b the eight lines without a word character before it;
+ * and the seat's (?<!m) the six lines with the "m" before it, (?<! ) the two space-before lines, (?<!\.) the two after-period
+ * lines, (?<!\]) the four second-position lines, (?!\.) the six lines with a "." after it, (?!$) the two after-period lines,
+ * (?! ) the four space-after lines and (?!a) the two word-after lines. Each new line's causes flipped to [] reds the census,
+ * in IMPL alone and with the roster.
+ *
+ * THE FOOTNOTE DEFINITION LINE (the frozen class, enumerated). A5 holds a definition line's status, read unqualified, on the
+ * citing unit's one definition line directly under its citing line
+ * "Pi reads the cac-workflow-composition-2026-10-18 program[^s]." (with the reference [^note-1] or [^Note:A-1.] for those two
+ * labels), in exactly these nineteen forms and in no other, one control each: with no prefix, "[^s]: design-only"
+ * (footnote-definition), "[^note-1]: design-only" (footnote-definition-long-label), "[^Note:A-1.]: design-only"
+ * (footnote-definition-punct-label), "[^s]:design-only" (footnote-definition-unspaced-colon) and "[^s]: *design-only*"
+ * (footnote-definition-emphasis); with both lines behind exactly one of the prefixes "> " (footnote-definition-quoted), ">"
+ * (footnote-definition-unspaced-quote), ">" and two spaces (footnote-definition-quote-two-spaces), ">" and one tab
+ * (footnote-definition-quote-tab), "> > " (footnote-definition-nested-quote), ">>" (footnote-definition-nested-unspaced),
+ * "> >" (footnote-definition-nested-first-spaced), ">> " (footnote-definition-nested-second-spaced), "> > > "
+ * (footnote-definition-triple-quote) and two spaces then "> " (footnote-definition-indented-quote), each before
+ * "[^s]: design-only"; and with the definition line alone indented by two spaces (footnote-definition-indented), four spaces
+ * (footnote-definition-deep-indent), one tab (footnote-definition-tab-indent) or two spaces then a tab
+ * (footnote-definition-mixed-indent). footnote-definition-nested-unspaced is the record's gate-only control
+ * gate-fndef-nested-unspaced verbatim (the text of its witness W-DEF-NESTED-NOSPACE), footnote-definition-nested-first-spaced
+ * is the text of the record's W-DEF-NESTED-INNERSPACE, and each of the eight forms from footnote-definition-triple-quote to
+ * footnote-definition-emphasis kills a member record PF3 measured surviving, each first realized fail-open by the seat's
+ * paired witness of that form appended to docs/workbench/19-worked-examples.md (the census 5 failed | 27 passed, the member
+ * 0 | 32). Falsifiers, each a one-edit member of FOOTNOTE.definition edited with its roster constant, red A5 and the closing
+ * case with soft attribution exactly as named: the never-match member all nineteen; the blockquote prefix (?:>\s*)* dropped
+ * (the gate's G2-FNDEF-NO-QUOTE) the ten quoted ones, made optional the five with two or three markers, its \s* made \s+ the
+ * four with a marker directly before a marker or the label (">", ">>", "> >", ">> ") and its \s* dropped the eight with
+ * whitespace after a marker; D-CTX Q-NOTBEFORE-MARKER of refusal #3 ((?!>) after each marker) the two with a marker directly
+ * before a marker (">>", ">> "); Q-MAX2 ((?:>\s*){0,2}) the three-marker form; QSP-OPT1 ((?:> ?)*) the two-space and the tab
+ * form; ORDER-SWAP (^(?:>\s*)*\s*) the indented quote; the leading \s* dropped (the gate's G2-FNDEF-NO-INDENT) the four
+ * indents and the indented quote, narrowed to spaces the tab and the mixed one, to \s? the two-space, four-space, mixed and
+ * indented-quote ones and to \s{0,3} the four-space one; INDENT-NOT-MIXED (^(?! +\t)) the mixed one; the label's + dropped, or
+ * the label narrowed to \w+, the [^note-1] and [^Note:A-1.] forms, and narrowed to {1,6} or to [a-z0-9-]+ (LBL-MAX6,
+ * LBL-LOWERHY) the [^Note:A-1.] one; a space required after the colon ((?= ) or (?!\S): CTX-COLON-SPACE,
+ * COLON-THEN-SPACE-OR-EOL) the unspaced-colon one; a word required after it (\s*\w: CTX-COLON-WORD) the emphasis one; a prefix
+ * made required (\s+, or (?:>\s*)+) the forms without it. Of cut #2's two second-position controls above, the never-match
+ * member and the required indent red both, the blockquote prefix dropped or with its \s* dropped the quoted one, the required
+ * blockquote prefix the plain one, and no other member named here reds either. Each new form's causes flipped to [] reds the
+ * census, in IMPL alone and with the roster.
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
@@ -128,14 +253,63 @@
  * NOT CLAIMED (edits of this file and the roster together, unless named otherwise): a re-tiling that folds A7 ("in the same
  * paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour in every
  * literal and the roster (landing 442's F4: measured 30/30 at wb-3cql's cut; not re-measured by wb-ubhh); a control removed from
- * IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster together; a floor
+ * IMPL and the roster together while every remaining control holds, alone or with a FOOTNOTE member only the removed controls
+ * kill; one or more controls' texts rewritten in IMPL to other texts that read the same causes (the roster holds a control's
+ * id and causes, never its text), alone or with a FOOTNOTE member only the rewritten controls kill, edited with its roster
+ * constant (and, for a flag, A5's flags literal); a plant edited in IMPL and the roster together; a floor
  * lowered in FLOORS and the roster together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added
  * vocabulary
  * member (of EXISTS, GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only
  * the bead text's words are anchored outside); a residual probe rewritten in IMPL and the roster to another text that still
  * carries its row's exemplar once, reads quiet and reads the table's causes under its clear form; a residual family or its row
  * edited in this file, the roster and docs/14 together; the outside-anchor case, the residual-anchor case or the closing case
- * removed with its roster title.
+ * removed with its roster title. A footnote definition line in any form other than cut #4's nineteen above is NOT CLAIMED by
+ * this census: any other prefix of either line - four or more markers, other whitespace after a marker (three or more spaces,
+ * two or more tabs, a space and a tab, or a character other than a space or a tab), a marker prefix on one line only or
+ * differing between the two lines, an indent of another width (one, three, five or more spaces, two or more tabs, another mix)
+ * or an indent combined with markers other than two spaces then "> " - a label other than s, note-1 and Note:A-1. (for example
+ * one holding an underscore or whitespace, or longer than nine characters), and any text after the colon other than
+ * " design-only", "design-only" and " *design-only*". Measured green at this cut, each a one-edit member of
+ * FOOTNOTE.definition edited with its roster constant that diverges only on such forms: (?:>\s*){0,3} (four markers),
+ * (?:>\s{0,2})* (three spaces after a marker), ^\s{0,4} (an indent of five), the label capped at nine characters or without
+ * "_", and after the colon a lookahead refusing "(", a tab or two spaces. Five more one-edit members of FOOTNOTE.definition,
+ * each edited with its roster constant (and, for the flag, A5's flags literal), read green (measured at cut #5: 0 failed | 32
+ * passed (32) each) and are NOT CLAIMED by this census: each is a hollowed judge the census does not catch. They are IND-SPTAB
+ * (the leading \s* as [ \t]*) and CTX-COLON-CONTENT (\]: as \]:.), two of record PF3's survivors, and the regex unanchored (as
+ * landing 781's F6 read), its colon dropped and the definition with m. Refusal #4 realized each on a paired page appended to
+ * docs/workbench/19-worked-examples.md that the census reds (5 failed | 27 passed (32)) and the member leaves green (0 | 32):
+ * W-GP22-CR-INDENT (a definition line led by a carriage return) under IND-SPTAB; W-GP22-COLON-NEGWIN (a line holding only
+ * "[^s]:" between a negation and its status) under CTX-COLON-CONTENT; W-GP22-UNANCH-NEG (a citing line ending in a reference,
+ * a colon and a negation) under the regex unanchored; W-GP22-NOCOLON-NEG (a reference and a negation on a line of their own)
+ * under its colon dropped; and W-GP22-MFLAG-NEG (a line holding U+2028 before a reference, a colon and a negation) under the
+ * definition with m and the regex unanchored (re-measured at cut #5, each page's counts as stated). The census claims nothing
+ * about how any of the five reads a line; their pins belong to the exit child wb-6aaw (ruling R-B418), not to this census.
+ * LBL-LAZY ([^\]\n]+?), measured with them, is equivalent: its class holds no "]", so its lazy and the greedy label run both
+ * end at the label's first "]" (0 | 32 clean and 5 | 27 on each of the five pages, as the census reads). A footnote definition
+ * line in any position of the citing unit other than wb-9lz6's two (the unit's one
+ * definition line, directly under its citing line, in the nineteen forms; and the second of two definition lines under it in
+ * the plain and the quoted pairing cut #2 holds) is NOT CLAIMED by this census: for example the first of two or more
+ * definition lines, a later definition line in the other seventeen forms or in another pairing of labels or forms, a third or
+ * later definition line, a definition line above the citing line or after a line of the unit that is no definition line, and a
+ * definition line that itself cites. A footnote reference in any other position on a line (after its second, or a second
+ * reference apart from the first) is NOT CLAIMED. A footnote reference's label at either claimed position (a line's only
+ * reference, the second of two adjacent references) in any spelling other than cut #3's two ("design-only" and
+ * "Status:DESIGN-ONLY.") is NOT CLAIMED by this census - for example a label holding a digit, an underscore, whitespace or
+ * another punctuation mark, or one longer than 19 characters - and a one-edit narrowing of FOOTNOTE.reference's label class
+ * that both spellings still match reads every control alike and is NOT CLAIMED either (measured: the class with digits, the
+ * underscore, whitespace or "!" excluded, or capped at 19 characters, keeps the census green). A footnote reference at either
+ * claimed position in any citing-line text other than cut #4's fourteen above is NOT CLAIMED by this census: any other
+ * character or none directly before it (a letter other than the "m" ending "program", a capital, a digit, an underscore, a tab
+ * or other whitespace, punctuation other than ".", the line start) or directly after it (a letter other than the "a" of "and",
+ * a capital, a digit, a tab or other whitespace, punctuation other than "."), a pairing of a before and an after that no line
+ * above writes (for example a space on both sides, or the line end or a word after the second reference), and any other text
+ * on the citing line. Measured green at this cut, each a one-edit lookaround in FOOTNOTE.reference edited with its roster
+ * constant: before the reference (?<!\t), (?<![,;:!?]), (?<!\(), (?<![A-Z]), (?<!\d), (?<!_), (?<!^), (?<![^\S ]) and
+ * (?<![a-l]); after it (?!\t), (?![,;:!?]), (?!\)), (?![A-Z]), (?!\d), (?!\.\S), (?!\[) and (?![b-z]); and a lookbehind
+ * refusing a space where a space also follows the reference. A FOOTNOTE flag edited in the regex, A5's flags literal and the
+ * roster together that changes no control's reading is NOT CLAIMED (measured): the definition with i, s, u, v or d and the
+ * reference with i, m, s, u, v or d beside its g read every control alike, and so does the definition with m, one of the five
+ * hollowed judges named NOT CLAIMED above (W-GP22-MFLAG-NEG).
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE clause (a)'s union only - qa/, test/, the root pages and docs/
  * outside docs/workbench are not judged (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * (MW-CAC-WORKFLOW-COMPOSITION-R2) does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's words in
@@ -154,7 +328,8 @@
  * citation only a comment or a link destination holds still needs a carrier the page shows; a citing unit whose rendering
  * holds a raw HTML element (an inline <br> or <span>, an element inside a list item or quote) or that sits in a list or quote
  * with raw HTML across a blank line carries nothing; the lines of a top-level raw HTML block (even a visible <pre> or
- * <details>), a comment's closing line after its --> and a footnote definition show no carrier; a carrier spelled with an
+ * <details>) and a comment's closing line after its --> show no carrier, nor does a footnote definition (conservative for a
+ * status the definition line holds, not for a negation it holds: cut #5 above); a carrier spelled with an
  * entity (design&#45;only) does not qualify. One reading is measured, not
  * assumed: a "[s]: <url>" line directly under a citing line cannot be a definition (a definition cannot interrupt a
  * paragraph), so marked and CommonMark both show it as text and a status in its URL qualifies (A5 definition-cannot-interrupt;
@@ -951,8 +1126,53 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "element", text: `Pi reads the ${cite} program. <span hidden>design-only</span>`, causes: ["unqualified"] },
       { id: "struck", text: `${cite} is ~~design-only~~.`, causes: ["unqualified"] },
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's PF2, the only-reference position): the label in capitals with a colon and a final period shows no carrier either.
+      { id: "footnote-label-punct", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.].\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      // wb-9lz6 cut #2 (refusal #1's PF2 witness W-REF verbatim): the label of a line's second footnote reference shows no carrier either.
+      { id: "footnote-label-second", text: `Pi reads the ${cite} program[^s][^design-only].`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's U1; the record's gate-only feasibility control gate-label-second-punct, its text verbatim): the same spelling as the second label.
+      { id: "footnote-label-second-punct", text: `Pi reads the ${cite} program[^s][^Status:DESIGN-ONLY.].`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (refusal #3's U1; the record's gate-only feasibility controls gate-ctx-*, their texts verbatim, each beside its
+      // twin in the second spelling): the text around a reference on its line, each line text written exactly as below.
+      { id: "footnote-label-space-before", text: `Pi reads the ${cite} program [^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-space-before", text: `Pi reads the ${cite} program [^Status:DESIGN-ONLY.].\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-after-period", text: `Pi reads the ${cite} program.[^design-only]\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-after-period", text: `Pi reads the ${cite} program.[^Status:DESIGN-ONLY.]\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-word-after", text: `Pi reads the ${cite} program[^design-only]and nothing more.\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-word-after", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.]and nothing more.\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-space-after", text: `Pi reads the ${cite} program[^design-only] today.\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-space-after", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.] today.\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-second-space-after", text: `Pi reads the ${cite} program[^s][^design-only] today.`, causes: ["unqualified"] },
+      { id: "footnote-label-second-punct-space-after", text: `Pi reads the ${cite} program[^s][^Status:DESIGN-ONLY.] today.`, causes: ["unqualified"] },
       // wb-ubhh F6: a footnote definition line inside the citing unit shows no carrier (FOOTNOTE.definition).
       { id: "footnote-definition", text: `Pi reads the ${cite} program[^s].\n[^s]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 (landing 781's F1): the same definition line behind blockquote markers, indented, or under a longer label.
+      { id: "footnote-definition-quoted", text: `> Pi reads the ${cite} program[^s].\n> [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-unspaced-quote", text: `>Pi reads the ${cite} program[^s].\n>[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-quote", text: `> > Pi reads the ${cite} program[^s].\n> > [^s]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (refusal #3's PF2, ruled under R-B388: the record's gate-only control gate-fndef-nested-unspaced, its text verbatim,
+      // then the two other spacings of two markers): two markers with no space, a space after the first only, a space after the second only.
+      { id: "footnote-definition-nested-unspaced", text: `>>Pi reads the ${cite} program[^s].\n>>[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-first-spaced", text: `> >Pi reads the ${cite} program[^s].\n> >[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-second-spaced", text: `>> Pi reads the ${cite} program[^s].\n>> [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-indented", text: `Pi reads the ${cite} program[^s].\n  [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-deep-indent", text: `Pi reads the ${cite} program[^s].\n    [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-tab-indent", text: `Pi reads the ${cite} program[^s].\n\t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-long-label", text: `Pi reads the ${cite} program[^note-1].\n[^note-1]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (the enumerate-the-resolvable form for the frozen definition class): one form for each surviving member
+      // refusal #3's PF3 measured (Q-MAX2, QSP-OPT1, ORDER-SWAP, INDENT-NOT-MIXED, LBL-MAX6, LBL-LOWERHY, CTX-COLON-SPACE,
+      // COLON-THEN-SPACE-OR-EOL, CTX-COLON-WORD), each line text written exactly as below.
+      { id: "footnote-definition-triple-quote", text: `> > > Pi reads the ${cite} program[^s].\n> > > [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quote-two-spaces", text: `>  Pi reads the ${cite} program[^s].\n>  [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quote-tab", text: `>\tPi reads the ${cite} program[^s].\n>\t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-indented-quote", text: `  > Pi reads the ${cite} program[^s].\n  > [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-mixed-indent", text: `Pi reads the ${cite} program[^s].\n  \t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-punct-label", text: `Pi reads the ${cite} program[^Note:A-1.].\n[^Note:A-1.]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-unspaced-colon", text: `Pi reads the ${cite} program[^s].\n[^s]:design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-emphasis", text: `Pi reads the ${cite} program[^s].\n[^s]: *design-only*`, causes: ["unqualified"] },
+      // wb-9lz6 cut #2 (refusal #1's U1, the gate's witnesses W-FLAG and W-FLAG-Q verbatim): the second of two definition lines shows no carrier.
+      { id: "footnote-definition-second", text: `Pi reads the ${cite} program[^note-1][^s].\n[^note-1]: a note.\n[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quoted-second", text: `> Pi reads the ${cite} program[^note-1][^s].\n> [^note-1]: a note.\n> [^s]: design-only`, causes: ["unqualified"] },
       { id: "hidden-citation", text: `<!-- ${cite} is design-only. -->`, causes: ["unqualified"] },
       { id: "shown-link-text", text: `${cite} is [design-only](https://example.invalid).`, causes: [] },
       { id: "shown-code-span", text: `${cite} is \`design-only\`.`, causes: [] },
@@ -960,6 +1180,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "shown-emphasis", text: `${cite} is design-*only*.`, causes: [] },
       { id: "definition-cannot-interrupt", text: `Pi reads the [${cite} program][s].\n[s]: https://example.invalid/design-only`, causes: [] },
     ];
+    // wb-9lz6 cut #2: FOOTNOTE's flags, pinned beside its sources (a g or y flag would carry lastIndex from one tested line to the next).
+    expect([FOOTNOTE.reference.flags, FOOTNOTE.definition.flags], "FOOTNOTE's flags: the reference's g, the definition's none").toEqual(["g", ""]);
     return json({ word: DESIGN_ONLY, controls: controlsHold(controls) });
   },
   A6: () => {
@@ -1208,7 +1430,12 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
         exists: EXISTS.source,
         guard: [GUARD.source, GUARD_AFTER.source],
         clauseSplit: CLAUSE_SPLIT.source,
-        carrierView: { unshown: UNSHOWN, element: ELEMENT.source, footnote: [FOOTNOTE.reference.source, FOOTNOTE.definition.source] },
+        carrierView: {
+          unshown: UNSHOWN,
+          element: ELEMENT.source,
+          footnote: [FOOTNOTE.reference.source, FOOTNOTE.definition.source],
+          footnoteFlags: [FOOTNOTE.reference.flags, FOOTNOTE.definition.flags],
+        },
         units: [BLANK.source, LIST_ITEM.source, HEADING.source, TABLE_ROW.source, FENCE.source],
         scopes: SCOPES,
         floors: FLOORS,
