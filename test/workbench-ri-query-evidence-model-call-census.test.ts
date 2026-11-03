@@ -58,14 +58,28 @@
  * before one letter, by the SEGMENTS sweep (one plant per joining member and vocabulary pair, sized from VOCABULARY; its
  * query.view, query_view, query/view and reactive inference members spell their twins' pairs); GP6-CASE-PAIR-AR, the change
  * from a to R left unbroken, by casePair (dataReactiveQuery, its twin's spelling); and GP6-RUN-PAIR-CI, the run's break
- * skipped at C before In, by runPair (ABCInference SDK, its twin's spelling). The claim words are narrowed to the pins:
- * READINGS SPELLING, WORDS, SUBJECTS and SEGMENTS each claim a reading only as a C1 plant, a sweep member or a quiet row
- * named there spells it, THE READ SET only its listing equalities and the probes it names, and the wordsOf, readSubjects,
- * visibleOf, decodedOf and findingsOf docs only what those readings claim; a member of a class at any partner but the one
- * its plant spells, a joining member or an ending character in any spelling but a plant's, a sweep member's or a quiet
+ * skipped at C before In, by runPair (ABCInference SDK, its twin's spelling). A member of a class at any partner but the
+ * one its plant spells, a joining member or an ending character in any spelling but a plant's, a sweep member's or a quiet
  * row's, and every other form, position or context of those readings are NOT CLAIMED by this census (each reading ends
  * with its own scope sentence). The reader's own code (wordsOf through seamReading) is unchanged at this cut; the C1 runner
- * adds the SEGMENTS sweep (its witness: the pairs each joining member reads) and the two plants.
+ * adds the SEGMENTS sweep (its witness: the pairs each joining member reads) and the two plants. (Its restatement that the
+ * claim words were narrowed to the pins, measured false at refusal #3, O:1875 U3, for the module content that row C1,
+ * CLAIMED, THE GATE and the findingsOf doc still claimed and for THE READ SET's wide-probe cap words, is removed; CARRIER
+ * CUT #4 states the narrowed claim.)
+ *
+ * CARRIER CUT #4 (wb-km7q.13 refusal #3, O:1875, and R-B396: the rule-19 structural exit, its child wb-km7q.18; this cut is
+ * the FAIL-CLOSED CORE, the final cut). The census claims exactly the fail-closed subset its pins hold: C1's reading of a
+ * module is claimed only for THE PINNED TEXTS, each read as a whole module at the place its pin writes it (READINGS THE READ
+ * SET), and THE READ SET's probes claim only their own readings. Refusal #3's six realized members are NOT CLAIMED by this
+ * census and carried by wb-km7q.18: GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and GP9-SEAM-GENERATED
+ * (findingsOf reading nothing of a module whose text opens with #!, holds a carriage return before a line feed, opens with
+ * U+FEFF, holds a NUL character or holds an @generated marker) and GP9-S-SEGCAP6 (readSubjects reading only a text's first
+ * six segments). Each still reads 0 failed | 9 passed, and with its paired real-tree twin planted this census reds 3 failed
+ * | 6 passed (C1, C2, records) while the member stays at 0 | 9 (measured at this cut). The words that claimed them are
+ * narrowed: row C1, CLAIMED, THE GATE, THE READ SET, the findingsOf, readSubjects, textSubjects and coverageProbesOf docs and
+ * seamReading's manifest comment. Refusal #3's three survivors in NOT CLAIMED scope (GP9-W-CASE-AFTER2, GP9-J-FUSED-LEN20
+ * and GP9-F-PAIR-NEXT-ONLY-COMMENT) stay NOT CLAIMED. Comments only: no code line, row, pin, witness, test title or roster
+ * byte changes at this cut.
  *
  * PINNED READER SET (this file, describe "wb-km7q.8 query evidence and model calls: the adoption-time falsifier
  * (INF-RQ1..INF-RQ5)"; each pin case's output is held to its witness in test/fixtures/ri-query-evidence-model-call-roster.json;
@@ -99,11 +113,13 @@
  * (provider, type, event kind, title and nodes per arm; the census's own source by default) and refuses each pinned mutant
  * composition: the eight MUTANTS over the census source, and the five compositions each keyed on one attribute of a
  * query-shaped source (its provider, type, kind or title, or a call from its third flip on) when that source is handed in
- * (A1). Pi's session as it stands reads 0 calls on every arm of both sources (A3). The gate (row C) reads CLOSED; a file of
- * the C1 read set (row C1: the git-listed .js, .cjs, .mjs, .ts, .cts, .mts, .jsx and .tsx files below src/, qa/ and examples/
- * and at the repository root, and the root package.json) that spells a subject within the READINGS flips it and reds this
- * census, until the adopting cut hands falsify() its own composition and its own evidence source, and witnessViolations() its
- * receipt (C1, C2). The falsifier refuses a composition only through the calls its counting seam counts inside a step's window
+ * (A1). Pi's session as it stands reads 0 calls on every arm of both sources (A3). The gate (row C) reads CLOSED; a module
+ * of the C1 read set (row C1: the git-listed .js, .cjs, .mjs, .ts, .cts, .mts, .jsx and .tsx files below src/, qa/ and
+ * examples/ and at the repository root, and the root package.json) whose whole text is one of THE PINNED TEXTS, at a place
+ * its pin writes it (READINGS THE READ SET), flips it and reds this census, until the adopting cut hands falsify() its own
+ * composition and its own evidence source, and witnessViolations() its receipt (C1, C2); a module or a package.json holding
+ * any other text, and a pinned text at any other place, is NOT CLAIMED by this census (wb-km7q.13 cut #4). The falsifier
+ * refuses a composition only through the calls its counting seam counts inside a step's window
  * or the settle: a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source presents
  * (R-FLIP-COUNT) reads quiet, each a named residual with a pinned quiet row.
  * NOT CLAIMED (ROSTER.unclaimed; scope sentences, not residuals): the title's last clause (no query engine is expected inside
@@ -113,8 +129,8 @@
  * INF-RQ1..INF-RQ5 tests are NOT CLAIMED by this census (C2 reads their gate state, never re-runs them). wb-km7q.7's (R19)
  * standing posture (whether any Pi model-call site is reachable from an evidence path beyond the projection module, and the
  * opt-in checklist) is NOT CLAIMED by this census. A form, position, member, input or loading mechanism that no pinned row
- * exercises is NOT CLAIMED by this census (SPELLING, WORDS, SUBJECTS, SEGMENTS, THE CLOSURE, THE ENTRIES and THE RECORDS each
- * end with their own scope sentence).
+ * exercises is NOT CLAIMED by this census (SPELLING, WORDS, SUBJECTS, SEGMENTS, THE READ SET, THE CLOSURE, THE ENTRIES and
+ * THE RECORDS each end with their own scope sentence).
  *
  * THE PRODUCER AT THE PINS (the roster's `producer` block; measured read-only with git show in the local ReactiveInferenceSDK
  * checkout by the cut #1 seat on 2026-10-28 and re-verified by the cut #2 seat on 2026-10-29, no fetch, every vendored line and
@@ -130,12 +146,15 @@
  * line end).
  * THE GATE: producerGateOf reads PASSED only when the status line no longer carries "design only" and the acceptance line still
  * names every gate the title's range INF-RQ1..INF-RQ5 expands to (a missing line fails closed); the Pi seam (C1) reads PRESENT
- * once a file of the C1 read set (row C1 below) spells a subject within the READINGS. gateOf is CLOSED while the seam reads
- * ABSENT; ADOPTED-BEFORE-GATE when it reads PRESENT under a NOT-PASSED producer and ADOPTED-FALSIFIER-OWED under a PASSED
+ * once a module of the C1 read set (row C1 below) holds one of THE PINNED TEXTS at a place its pin writes it (READINGS THE
+ * READ SET; every other text and place is NOT CLAIMED by this census). gateOf is CLOSED while the seam reads ABSENT;
+ * ADOPTED-BEFORE-GATE when it reads PRESENT under a NOT-PASSED producer and ADOPTED-FALSIFIER-OWED under a PASSED
  * one, both red here: the adoption is the FLIP of this freeze-and-flip, and the adopting cut re-measures this census with its
  * composition and its evidence source handed to falsify() and its receipt to witnessViolations().
  *
- * READINGS
+ * READINGS (wb-km7q.13 cut #4: each reading is claimed only at the places THE READ SET names: a plant's or quiet row's text as
+ * C1 reads it directly, and a code plant's or a sweep's text also as its coverage-tree module; every other place, and a
+ * plant's text inside another module's text, is NOT CLAIMED by this census)
  * - SPELLING (claimed at the C1 plants named here, each read as the plant spells it): a text with no escape is read as
  *   written (importSpecifier, identifier, comment and the other plants that carry no escape); an escaped plant is read with
  *   its escape decoded: the JS escapes \u0071 (escapedUnicode), \x71 (escapedHex), \u{51} (escapedBrace), \n
@@ -221,21 +240,38 @@
  *   space keeps a capital-run word at a line's end apart from the next line's first word (capsContinued: REACTIVE, then
  *   query on the next line). A pair split by more than one line break, and a continued pair in any spelling but those
  *   plants hold, are NOT CLAIMED by this census.
- * - THE READ SET (C1): the reader's listing of the live tree (listedCode) equals the read set listed apart
- *   (readSetListedApart: git's own listing of every tracked, or untracked and not ignored, file, filtered by its own spelling
- *   of the eight extensions, the three code roots and the root), and the live seam's reading equals its reading recomputed
- *   apart from seamReading (findingsOf over each listed module's text, then manifestFindings and findingsOf over the root
- *   package.json), so each module the live tree lists is read as findingsOf reads its text. THE READ SET's coverage tree
- *   (coverageProbesOf), a scratch git repository built at every run from that listing and its texts, is read whole through
- *   seamReading where the live tree spells no subject: it holds a module at every listed path (the mirror), one module per
- *   extension (.d.ts among them) below each code root and at the root (the matrix), each C1 code plant, the WORDS sweep and
- *   the SEGMENTS sweep as modules of their own, a module one line longer than the longest listed module with its subject on
- *   its last line, a module larger than the largest with its subject after that many bytes, and a module of one line, wider
- *   than the widest listed line, with its subject at its end and no line break after it (wb-km7q.13 cut #2: so the line-pair
- *   reading never holds it and a cap on the line's raw reading, the line as written, reds it); each probe reads its subject
- *   and each plant module reads as findingsOf reads its text. NOT CLAIMED by this census (wb-km7q.13 cut #3, O:1829 F4): a
- *   cap on a line's decoded reading or on a line-pair reading (the wide probe carries neither an escape nor a pair), and a
- *   cap on one segment or one word.
+ * - THE READ SET (C1; claimed at the rows named here, each as the row spells it; wb-km7q.13 cut #4, the fail-closed core):
+ *   the reader's listing of the live tree (listedCode) equals the read set listed apart (readSetListedApart: git's own listing
+ *   of every tracked, or untracked and not ignored, file, filtered by its own spelling of the eight extensions, the three code
+ *   roots and the root; the listing's falsifier), and the live seam's reading equals its reading recomputed apart from
+ *   seamReading (findingsOf over each listed module's text, then manifestFindings and findingsOf over the root package.json;
+ *   the live reading's falsifier), so each module the live tree lists is read as findingsOf reads its text. What findingsOf
+ *   reads of a module is claimed only for THE PINNED TEXTS, each read as a whole module at the place its pin writes it, each
+ *   reading held to the roster's C1 witness (its falsifier): PROBE_SUBJECT (`export const engine = "reactive-query-sdk";` and
+ *   a line feed) at every listed path (the mirror, each reading query on its line 1) and at one path per extension (.d.ts
+ *   among them) below each code root and at the root (the matrix, each reading query); each C1 code plant's text at
+ *   src/plants/<plant>.ts, and the WORDS sweep's and the SEGMENTS sweep's texts at src/plants/wordsSweep.ts and
+ *   src/plants/segmentsSweep.ts, each reading as findingsOf reads that text as src/plant.ts; three probes below src/, sized at
+ *   every run from the listed texts and each reading query: coverage-long.ts, one line longer than the longest listed module,
+ *   PROBE_SUBJECT on its last line; coverage-large.ts, larger than the largest listed module, PROBE_SUBJECT after that many
+ *   bytes; and coverage-wide.ts, a single line wider than the widest listed line, PROBE_SUBJECT's text at its end and no line
+ *   break after it (so the line-pair reading never holds it); and the planted tree's modules (a one-line engine export at
+ *   src/tracked.ts, src/untracked.ts, qa/q.mjs, examples/e.tsx and root.ts) and its package.json (a subject on a script line
+ *   and in a dependency name), as row C1 names them. The mirror, the matrix, the plant and sweep modules and the three probes
+ *   are THE READ SET's coverage tree (coverageProbesOf), a scratch git repository built at every run from the listing and its
+ *   texts and read through seamReading where the live tree spells no subject. C1's plants and quiet rows are claimed as C1
+ *   reads them directly (findingsOf as src/plant.ts, manifestFindings over each manifest plant, selectCode over
+ *   R-OUTSIDE-ROOTS' paths). NOT CLAIMED by this census (wb-km7q.13 cut #4; refusal #3's realized members, O:1875 U1 and U2,
+ *   are carried by wb-km7q.18): what findingsOf or manifestFindings reads of any text but THE PINNED TEXTS, or of a pinned
+ *   text at any other place or inside another module's text; a listed module's own content, since the mirror spells
+ *   PROBE_SUBJECT at each listed path and never the module's own text, so a reading that drops, cuts or changes a listed
+ *   module, or a line or a segment of it, for what its own text holds (a first line opening #!, a carriage return, a U+FEFF
+ *   lead, a NUL character or an @generated marker: GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and
+ *   GP9-SEAM-GENERATED, among them) or for where it sits; and which reader edits the probes hold beyond each probe's own
+ *   reading: a cap on how many segments of a text (GP9-S-SEGCAP6, the first six), words of a segment or subjects of a text
+ *   are read, a cap on a line's decoded reading or on a line-pair reading (the wide probe carries neither an escape nor a
+ *   pair), a cap on one segment's or one word's width (wb-km7q.13 cut #3, O:1829 F4), and a cap or a skip that turns on a
+ *   module's text or place, among them.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
  *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
@@ -320,11 +356,12 @@
  *    string epoch, a boolean generation, a nested wrap, a nulled digest, an all-null witness, an alias member, upper-case keys,
  *    an empty trace; with R-SAME-VALUE's quiet row (a hollowing outside that list is NOT CLAIMED by this census).
  *  C "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution (gated INF-RQ1..INF-RQ5)": C1 the
- *    Pi seam reads ABSENT over the C1 read set: every git-listed file (tracked, or untracked and not ignored) ending .js, .cjs,
- *    .mjs, .ts, .cts, .mts, .jsx or .tsx below src/, qa/ and examples/ and at the root, read line by line in the SPELLING and
- *    across one line break as READINGS SEGMENTS names (a pair whose next line opens with a comment marker); and the root
- *    package.json: the names and string specs of its four dependency fields and its whole
- *    text. Pinned: a read-set row (one path per extension below each code root, and one at the root), a seam reading over a
+ *    Pi seam reads ABSENT over the C1 read set: the git-listed files (tracked, or untracked and not ignored) ending .js, .cjs,
+ *    .mjs, .ts, .cts, .mts, .jsx or .tsx below src/, qa/ and examples/ and at the root, each read as findingsOf reads its
+ *    text, and the root package.json, its four dependency fields' names and string specs as manifestFindings reads them and
+ *    its whole text as findingsOf reads it; what those readings hold is claimed only for THE PINNED TEXTS at their places
+ *    (READINGS THE READ SET), and every other text and place is NOT CLAIMED by this census (wb-km7q.13 cut #4). Pinned: a
+ *    read-set row (one path per extension below each code root, and one at the root), a seam reading over a
  *    planted git tree (a tracked, an untracked and an ignored module below src/, a module below qa/, below examples/ and at
  *    the root, a module below docs/ and one below test/, and a package.json whose subject sits on a script line and in a
  *    dependency name, each finding held to the roster) and THE READ SET's rows (the reader's listing of the live tree held to
@@ -627,7 +664,9 @@ function subjectsIn(words: readonly string[], vocabulary: readonly SubjectPair[]
  * plant spells one, and "?" and ":" the ending characters claimed, as the operatorJoin and R-SEPARATOR quiet rows spell
  * them, so `config.query ?? sdkQuery` reads no "query sdk" while "the reactive query engine", "@acme/reactive-query",
  * "reactive.query" and "reactive/query" do; a joining member or an ending character in any other spelling, and what else of
- * the class below joins one beyond the words' own ASCII letters, is NOT CLAIMED.
+ * the class below joins one beyond the words' own ASCII letters, is NOT CLAIMED. How many of a text's segments, a segment's
+ * words or a text's subjects are read is claimed only as THE PINNED TEXTS spell them (READINGS THE READ SET): a cap on any
+ * of them (refusal #3's GP9-S-SEGCAP6, the first six segments, carried by wb-km7q.18) is NOT CLAIMED.
  */
 function readSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
   const segments = visibleOf(text).split(/[^\p{L}\p{N}\s_./-]+/u);
@@ -665,7 +704,7 @@ function decodedOf(text: string): string {
     .replace(/&#(?:[xX]([0-9a-fA-F]{1,6})|(\d{1,7}));/g, (_whole, hex?: string, decimal?: string) => codePointOf(hex !== undefined ? Number.parseInt(hex, 16) : Number(decimal)))
     .replace(/%([0-9a-fA-F]{2})/g, (_whole, two: string) => String.fromCharCode(Number.parseInt(two, 16)));
 }
-/** The subjects a text names as written or with its escapes decoded. */
+/** The subjects a text names as written or with its escapes decoded (READINGS SPELLING names what this census claims of it). */
 function textSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
   const raw = readSubjects(text, vocabulary);
   const decoded = decodedOf(text);
@@ -678,8 +717,10 @@ function textSubjects(text: string, vocabulary: readonly SubjectPair[]): string[
 const COMMENT_LEAD = /^\s*(?:\/\/+|\/\*+|\*+|#+)\s?/;
 /**
  * `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line,
- * the two lines joined by a space; READINGS SEGMENTS names the continuations this census claims, one plant each, and
- * READINGS THE READ SET the probes that read it whole).
+ * the two lines joined by a space; READINGS SEGMENTS names the continuations this census claims, one plant each). This census
+ * claims it only for THE PINNED TEXTS at their places (READINGS THE READ SET): a module, a line or a pair in any other text or
+ * place, a listed module's own content among them (a first line opening #!, a carriage return, a U+FEFF lead, a NUL character
+ * or an @generated marker: refusal #3's five whole-module members, carried by wb-km7q.18), is NOT CLAIMED.
  */
 function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair[]): string[] {
   const lines = text.split(/\r?\n/);
@@ -745,7 +786,8 @@ function seamReading(root: string, vocabulary: readonly SubjectPair[], env: Node
   const code = modules.flatMap(path => findingsOf(path, readFileSync(join(root, path), "utf8"), vocabulary));
   const manifestText = readFileSync(join(root, "package.json"), "utf8");
   const manifest = JSON.parse(manifestText) as { [key: string]: Json };
-  // The whole manifest text too (overrides, bundled names, scripts), beside its four dependency fields' names and specs.
+  // The whole manifest text too, beside its four dependency fields' names and specs: claimed as the planted tree's
+  // package.json spells it (a subject on a script line and in a dependency name); its other content is NOT CLAIMED.
   const whole = findingsOf("package.json", manifestText, vocabulary);
   return { modules: modules.length, findings: [...code, ...manifestFindings(manifest, vocabulary), ...whole] };
 }
@@ -1600,12 +1642,12 @@ interface CoverageProbes {
 }
 const PROBE_SUBJECT = 'export const engine = "reactive-query-sdk";\n';
 /**
- * THE READ SET's coverage tree for a live listing and its texts (READINGS THE READ SET): a module at every listed path (the
- * mirror), one module per extension (.d.ts among them) below each code root and at the root (the matrix), one module per
- * plant text (each verbatim), a module one line longer than the longest listed module with its subject on its last line, a
- * module larger than the largest with its subject after that many bytes, and a module of one line, wider than the widest
- * listed line, with its subject at the line's end and no line break after it. Each module spells a subject; the
- * package.json spells none.
+ * THE READ SET's coverage tree for a live listing and its texts (READINGS THE READ SET): PROBE_SUBJECT at every listed path
+ * (the mirror; never the listed module's own text) and at one path per extension (.d.ts among them) below each code root and
+ * at the root (the matrix), one module per plant text (each verbatim), a module one line longer than the longest listed
+ * module with its subject on its last line, a module larger than the largest with its subject after that many bytes, and a
+ * module of one line, wider than the widest listed line, with its subject at the line's end and no line break after it. Each
+ * module spells a subject; the package.json spells none.
  */
 function coverageProbesOf(listed: readonly string[], texts: readonly string[], plantTexts: Readonly<Record<string, string>>): CoverageProbes {
   const tree: Record<string, string> = { "package.json": '{ "name": "km7q13-coverage" }\n' };
