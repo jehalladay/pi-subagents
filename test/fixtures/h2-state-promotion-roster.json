@@ -660,7 +660,29 @@
       "siblingEntries": 3,
       "unread": true,
       "walkComplete": true,
-      "walkGitListed": true
+      "walkGitListed": true,
+      "bound": [
+       {
+        "binding": "node:child_process execFileSync",
+        "liveNarrowed": true,
+        "gitListingUnchanged": true
+       },
+       {
+        "binding": "node:fs lstatSync",
+        "liveNarrowed": true,
+        "gitListingUnchanged": true
+       },
+       {
+        "binding": "node:path join",
+        "liveNarrowed": true,
+        "gitListingUnchanged": true
+       },
+       {
+        "binding": "node:path normalize",
+        "liveNarrowed": true,
+        "gitListingUnchanged": true
+       }
+      ]
      }
     },
     {
@@ -847,7 +869,7 @@
   "C3:4",
   "D1:4",
   "D2:4",
-  "E1:9",
+  "E1:10",
   "E2:8",
   "E3:4"
  ],
