@@ -64,6 +64,12 @@
  * line's pattern in parentheses and nested pattern with a default, each element read once (X3 rows). A for-in variable is named
  * NOT CLAIMED on the for-of element line, beside its pinned witness. No reader code changes: the helper differs from cut #2 in
  * its header words only.
+ * wb-tz2.20 cut #4 is the FAIL-CLOSED CORE orchestrator ruling R-B392 binds after this child's own refusal #3 (gate-prep-7 /
+ * g10-gate-s193, O:1869): the frozen classes failed ON cut #3 through new members, so no plant is added and no reader code
+ * changes. Every claim line of the four frozen classes (L015, L029, L034 to L037, L040, L042 to L045, L052 to L055, L061 and
+ * L062) narrows in place to its pinned pages, the pages its CLAIM_LINES pins plant, and names NOT CLAIMED, inside a parenthesis
+ * on its own line, the sub-form of each of the 56 members refusal #3's U1, U2 and U3 items list (the CHILD_SURVIVORS_3 rows);
+ * covering those sub-forms is deferred to wb-tz2.24, the child R-B392 filed.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -125,6 +131,11 @@
  *  CHILD REFUSAL #2 ANCHOR (wb-tz2.20 cut #3, outside this census): the members this child's own refusal #2 verdict lists under
  *   its U1, U2 and U3 items, in order, are exactly the CHILD_SURVIVORS_2 rows; each row's lines are named in its item; and every
  *   witness of a row is a SUB-READINGS row pinned on one of its lines.
+ *  CHILD REFUSAL #3 ANCHOR (wb-tz2.20 cut #4, outside this census): the members this child's own refusal #3 verdict lists under
+ *   its U1, U2 and U3 items, each with its lines and in order, are exactly the CHILD_SURVIVORS_3 rows, and each row's words
+ *   stand inside a NOT CLAIMED parenthesis on one of its lines.
+ *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every claim line
+ *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -152,7 +163,12 @@
  * CLAIMED by this census (each named so on its line); an X3 row is held outside this census only as far as the CLASS GUARD
  * derives its sub-form from the helper header's words (a second row for a derived sub-form is NOT CLAIMED by that anchor); and
  * G5-O-CI-ONE, the one refusal #2 survivor no witness divided from the
- * delivered readers, is no member here.
+ * delivered readers, is no member here. Cut #4: on a claim line of the four frozen classes, a page other than the line's pinned
+ * pages is NOT CLAIMED by this census (the line's own words say so), among them each sub-form refusal #3's members leave green,
+ * named so on its line; and that a CHILD_SURVIVORS_3 row's words name the very sub-form its member defeats is NOT CLAIMED by an
+ * anchor outside this census (the CHILD REFUSAL #3 ANCHOR holds each member and its lines; the words are this census's own);
+ * and which pages a frozen-class line's pins plant is NOT CLAIMED by an anchor outside this census beyond what the CLASS GUARD
+ * derives from the helper header's words and the refusal anchors hold (the CLAIM_LINES pins are this census's own literals).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -507,6 +523,48 @@ function childMembers2(block: string, item: CarriedSurvivor["item"]): string[] {
   }
   return ids;
 }
+/** wb-tz2.20's own refusal #3 verdict (gate-prep-7 / g10-gate-s193) in its notes: from its heading to the next delivery, verdict, ruling or exit note. */
+function childVerdictBlock3(): string {
+  const notes = exportRecord(CHILD).notes;
+  const heading = `GATE VERDICT ${CHILD}: REFUSED (RESPIN) - substance refusal at PREP F`;
+  let start = notes.indexOf(heading);
+  while (start >= 0 && !notes.slice(start, start + 1500).includes("refusal #3 on cut #3")) start = notes.indexOf(heading, start + 1);
+  if (start < 0) return "";
+  const ends = ["DELIVERED by the orchestrator collect step", `GATE VERDICT ${CHILD}`, "ORCHESTRATOR RULING", "RULE-19 STRUCTURAL EXIT"].map(marker => notes.indexOf(marker, start + 1)).filter(at => at > start);
+  return notes.slice(start, Math.min(notes.length, ...ends));
+}
+/** The members one UNMET item of that verdict lists under its MEMBERS heading, each as "<id> <line>" (a range L042-L043 reads as both lines). */
+function childMembers3(block: string, item: NarrowedSurvivor["item"]): string[] {
+  const heads = ["\n- U1-MEDIUM-CONFIRMED", "\n- U2-LOW-CONFIRMED", "\n- U3-LOW-PLAUSIBLE"];
+  const start = block.indexOf(heads[Number(item.slice(1)) - 1] ?? "\n- <no item>");
+  if (start < 0) return [];
+  const ends = [...heads, "\nNEXT CUT"].map(marker => block.indexOf(marker, start + 1)).filter(at => at > start);
+  const span = block.slice(start, Math.min(block.length, ...ends));
+  return [...span.matchAll(/^ {2}- (G7-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3})(?:-(L\d{3}))?, /gm)].map(match => [match[1], match[2], match[3]].filter(part => part !== undefined).join(" "));
+}
+/** Whether the words stand on the line inside a parenthesis (the innermost one around them) that says NOT CLAIMED. */
+function notClaimedHolds(line: string, words: string): boolean {
+  for (let at = line.indexOf(words); at >= 0; at = line.indexOf(words, at + 1)) {
+    let open = -1;
+    for (let depth = 0, index = at - 1; index >= 0 && open < 0; index -= 1) {
+      if (line[index] === ")") depth += 1;
+      else if (line[index] === "(") {
+        if (depth === 0) open = index;
+        else depth -= 1;
+      }
+    }
+    let close = -1;
+    for (let depth = 0, index = at + words.length; index < line.length && close < 0; index += 1) {
+      if (line[index] === "(") depth += 1;
+      else if (line[index] === ")") {
+        if (depth === 0) close = index;
+        else depth -= 1;
+      }
+    }
+    if (open >= 0 && close > open && line.slice(open, close + 1).includes("NOT CLAIMED")) return true;
+  }
+  return false;
+}
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
   const marker = "ROOT KINDS is not: ";
@@ -703,6 +761,13 @@ interface CarriedSurvivor {
   readonly item: "U1" | "U2" | "U3" | "F7";
   readonly lines: readonly string[];
   readonly witnesses: readonly string[];
+}
+/** wb-tz2.20 cut #4: a member of this child's own refusal #3 (gate-prep-7 / g10-gate-s193), on the lines its verdict names, with the words that name its sub-form NOT CLAIMED on one of them. */
+interface NarrowedSurvivor {
+  readonly id: string;
+  readonly item: "U1" | "U2" | "U3";
+  readonly lines: readonly string[];
+  readonly words: string;
 }
 interface LocationRow {
   readonly id: string;
@@ -2384,6 +2449,65 @@ const CHILD_SURVIVORS_2: readonly CarriedSurvivor[] = [
   { id: "G5-A-SPY-SECONDRECV", item: "U2", lines: ["L029"], witnesses: ["G5W-A-SPY-SECONDRECV", "G5C-A-SPY-SECONDRECV"] },
   { id: "G5-O-RF-FORIN", item: "U3", lines: ["L020"], witnesses: ["G5W-O-RF-FORIN", "G5C-O-RF-FORIN"] },
 ];
+/** wb-tz2.20 cut #4 (the fail-closed core, R-B392): this child's own refusal #3 members (gate-prep-7 / g10-gate-s193; U1 6 fail-open, U2 43 read-more, U3 7), each on the lines its verdict names, with the words its line names NOT CLAIMED; their coverage is deferred to wb-tz2.24. */
+const CHILD_SURVIVORS_3: readonly NarrowedSurvivor[] = [
+  { id: "G7-D-ARR-FROM1-HOLE", item: "U1", lines: ["L034"], words: "an element after a hole" },
+  { id: "G7-D-ARR-SLICE3", item: "U1", lines: ["L034"], words: "a fourth or later element" },
+  { id: "G7-D-OBJ-COMPUTEDKEY", item: "U1", lines: ["L034"], words: "an element under a computed key" },
+  { id: "G7-D-OBJ-STRINGKEY", item: "U1", lines: ["L034"], words: "an element under a string key" },
+  { id: "G7-D-SHORTHAND-DEFAULT", item: "U1", lines: ["L034"], words: "a shorthand element with a default" },
+  { id: "G7-D-NESTED-DEPTH2", item: "U1", lines: ["L034"], words: "a pattern nested three deep" },
+  { id: "G7-RK-NEW-ARG1", item: "U2", lines: ["L015"], words: "a new's second argument" },
+  { id: "G7-RK-NEW-FROM2", item: "U2", lines: ["L015"], words: "a new's arguments after the first" },
+  { id: "G7-RK-NEW-SPREAD", item: "U2", lines: ["L015"], words: "a new's spread argument" },
+  { id: "G7-RK-NEWMEMBER-ARG1", item: "U2", lines: ["L015"], words: "a new of a member's second argument" },
+  { id: "G7-RK-CALL-ARG2", item: "U2", lines: ["L015"], words: "a call's third argument" },
+  { id: "G7-RK-CALL-SPREAD", item: "U2", lines: ["L015"], words: "a call's spread argument" },
+  { id: "G7-RK-CALL-IDCALLEE-ARG1", item: "U2", lines: ["L015"], words: "the second argument of a call by a bare name" },
+  { id: "G7-RK-OPTCALL-ARG1", item: "U2", lines: ["L015"], words: "an optional call's second argument" },
+  { id: "G7-RK-SUPER-ARG1", item: "U2", lines: ["L015"], words: "a super() call's second argument" },
+  { id: "G7-RK-BIND-ARG1", item: "U2", lines: ["L015"], words: "a bind call's second argument" },
+  { id: "G7-RK-CALLCALL-ARG2", item: "U2", lines: ["L015"], words: "a call() call's third argument" },
+  { id: "G7-RK-APPLY-ARG1", item: "U2", lines: ["L015"], words: "an apply() call's argument list as a chain" },
+  { id: "G7-RK-IMPORT-ARG1", item: "U2", lines: ["L015"], words: "an import() call's options argument" },
+  { id: "G7-RK-TPL-SPAN2", item: "U2", lines: ["L015"], words: "a template's third span" },
+  { id: "G7-RK-TAG-SPAN1", item: "U2", lines: ["L015"], words: "a tagged template's second span" },
+  { id: "G7-RK-ARR-ELEM4", item: "U2", lines: ["L015"], words: "an array literal's fifth element" },
+  { id: "G7-RK-OBJ-COMPUTED", item: "U2", lines: ["L015"], words: "an object literal's computed key" },
+  { id: "G7-RK-OBJ-METHOD", item: "U2", lines: ["L015"], words: "an object literal method's return value" },
+  { id: "G7-RK-OBJ-GETTER", item: "U2", lines: ["L015"], words: "an object literal getter's return value" },
+  { id: "G7-RK-FUNC-PARAMDEFAULT", item: "U2", lines: ["L015"], words: "a function's parameter default" },
+  { id: "G7-RK-ARROW-PARAMDEFAULT", item: "U2", lines: ["L015"], words: "an arrow function's parameter default" },
+  { id: "G7-RK-CLASS-INSTANCEPROP", item: "U2", lines: ["L015"], words: "a class's instance property initializer" },
+  { id: "G7-RK-CLASS-METHOD", item: "U2", lines: ["L015"], words: "a class method's return value" },
+  { id: "G7-RK-CLASS-COMPUTED", item: "U2", lines: ["L015"], words: "a class's computed member name" },
+  { id: "G7-RK-JSXEL-ATTR", item: "U2", lines: ["L015"], words: "a JSX element's attribute value" },
+  { id: "G7-RK-JSXEL-SPREADATTR", item: "U2", lines: ["L015"], words: "a JSX element's spread attribute" },
+  { id: "G7-RK-JSXSELF-SPREADATTR", item: "U2", lines: ["L015"], words: "a self-closing JSX element's spread attribute" },
+  { id: "G7-RK-YIELD-DELEGATE", item: "U2", lines: ["L015"], words: "the operand of yield*" },
+  { id: "G7-RK-BIN-NESTED-COMMA", item: "U2", lines: ["L015"], words: "the middle of a three-element comma list" },
+  { id: "G7-RK-NONNULL-CALL", item: "U2", lines: ["L015"], words: "a call through a non-null callee" },
+  { id: "G7-C-NOARROWPARAM", item: "U2", lines: ["L042", "L043"], words: "an arrow function's parameter" },
+  { id: "G7-C-NOMETHODPARAM", item: "U2", lines: ["L042", "L043"], words: "a method's or constructor's parameter" },
+  { id: "G7-C-NOFUNCEXPRPARAM", item: "U2", lines: ["L042", "L043"], words: "a function expression's parameter" },
+  { id: "G7-C-NOPLAINPARAM", item: "U2", lines: ["L042", "L043"], words: "a parameter without a default" },
+  { id: "G7-C-TOPLEVELONLY", item: "U2", lines: ["L042", "L043"], words: "a declaration below the top level" },
+  { id: "G7-C-NOARRAYDESTRUCT", item: "U2", lines: ["L042", "L043"], words: "an array destructuring declaration" },
+  { id: "G7-C-NOCONSTDESTRUCT", item: "U2", lines: ["L042", "L043"], words: "a const destructuring declaration" },
+  { id: "G7-C-NOPARAMDESTRUCT", item: "U2", lines: ["L042", "L043"], words: "a destructured parameter" },
+  { id: "G7-C-NOCATCHDESTRUCT", item: "U2", lines: ["L042", "L043"], words: "a destructured catch variable" },
+  { id: "G7-C-NOFOROFCONST", item: "U2", lines: ["L042", "L043"], words: "a const or var for-of variable" },
+  { id: "G7-C-NOMULTIDECL", item: "U2", lines: ["L042", "L043"], words: "a name declared twice" },
+  { id: "G7-D-DEFAULT-OBJNESTED", item: "U2", lines: ["L034"], words: "an object pattern with a default nested in an array" },
+  { id: "G7-A-SPY-LATERSTRING", item: "U2", lines: ["L029"], words: "a later argument that is a name" },
+  { id: "G7-A-OV-NOSPREADCALL", item: "U3", lines: ["L061", "L062"], words: "a spread argument" },
+  { id: "G7-A-VF-CONSTONELEVEL", item: "U3", lines: ["L061", "L062"], words: "a chain of const names" },
+  { id: "G7-C-SITE-SECONDELEM-0", item: "U3", lines: ["L042", "L043"], words: "a later array-pattern element ([other, local])" },
+  { id: "G7-C-SITE-SECONDELEM-1", item: "U3", lines: ["L042", "L043"], words: "a later array-pattern element ([other, local])" },
+  { id: "G7-C-SITE-SECONDELEM-2", item: "U3", lines: ["L042", "L043"], words: "a later array-pattern element ([other, local])" },
+  { id: "G7-C-SITE-SECONDELEM-3", item: "U3", lines: ["L042", "L043"], words: "a later array-pattern element ([other, local])" },
+  { id: "G7-C-DELETE-PAREN1", item: "U3", lines: ["L043"], words: "a target in two pairs of parentheses" },
+];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
   { id: "L061", roster: "ENV_CALLS", receiver: "", first: 1, last: 10, values: ["a string", "a no-substitution template", "a const name holding one"] },
@@ -2536,7 +2660,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L012", line: "CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157"] },
   { id: "L013", line: "a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const", pins: ["SUB:A20", "SUB:A21", "SUB:W17a", "SUB:W17b", "SUB:T0158"] },
   { id: "L014", line: "initialized by a member chain or a name, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032"] },
-  { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
+  { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
   { id: "L016", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
   { id: "L017", line: "- initializer: a variable's initializer", pins: ["ROOT:initializer"] },
   { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
@@ -2550,40 +2674,40 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L026", line: "leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).", pins: ["SUB:A46", "SUB:A48", "SUB:R:PROTOTYPE_LINKS:constructor", "SUB:R:PROTOTYPE_LINKS:__proto__", "SUB:R:PROTOTYPE_LINKS:prototype", "SUB:W25"] },
   { id: "L027", line: "", pins: [] },
   { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
-  { id: "L029", line: "- spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\") (with one or two later arguments too; three or more later arguments are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014", "SUB:G5W-A-SPY-ARITY", "SUB:G5C-A-SPY-ARITY", "SUB:G5W-A-SPY-SECONDRECV", "SUB:G5C-A-SPY-SECONDRECV", "SUB:X3-SPY-TWO"] },
+  { id: "L029", line: "- spy: on its pinned pages, a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\") (with one or two later arguments too, each the string \"get\" or \"set\" as those pages spell it; three or more later arguments, a later argument that is a name, and a later argument of any other value are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014", "SUB:G5W-A-SPY-ARITY", "SUB:G5C-A-SPY-ARITY", "SUB:G5W-A-SPY-SECONDRECV", "SUB:G5C-A-SPY-SECONDRECV", "SUB:X3-SPY-TWO"] },
   { id: "L030", line: "- global stub: a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52", "SUB:WC16", "SUB:WC16c", "SUB:W-GS-CHAIN", "SUB:C-GS-CHAIN", "LOCATED:global stub"] },
   { id: "L031", line: "- watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26", "SUB:WC3", "SUB:WC3b", "SUB:WC3c", "LOCATED:watched reference"] },
   { id: "L032", line: "- destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)", pins: ["C2:destructured watched", "SUB:A54", "SUB:A55", "SUB:W28", "SUB:T0050", "SUB:T0051", "SUB:T0053", "SUB:T0138", "SUB:Z0006", "LOCATED:destructured watched"] },
   { id: "L033", line: "- destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)", pins: ["C2:destructuring-assigned watched", "SUB:S0880", "SUB:S0881", "SUB:S1102", "SUB:T0052", "SUB:T0137", "SUB:W-DAW-NESTED", "SUB:C-DAW-NESTED", "SUB:Z0001", "SUB:Z0002", "SUB:Z0003", "SUB:Z0004", "SUB:Z0005", "LOCATED:destructuring-assigned watched"] },
-  { id: "L034", line: "- assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest), a pattern in parentheses and a nested pattern with a default too, each element read once (an as, satisfies, non-null or <T> assertion around a pattern is NOT CLAIMED)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056", "LOCATED:assignment", "SUB:Y0309", "SUB:G5W-D-NOBARE", "SUB:G5W-D-DEFAULT-NESTED", "SUB:X3-ASG-PAREN-OBJECT", "SUB:X3-ASG-PAREN-NESTED", "SUB:X3-ASG-PAREN-TWICE", "SUB:X3-ASG-DEFAULT-OBJECT", "SUB:X3-ASG-DEFAULT-DEEP"] },
-  { id: "L035", line: "- compound operator: an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target", pins: ["C2:compound operator", "SUB:A61", "SUB:A62", "SUB:A63", "SUB:A63b", "SUB:T0054", "SUB:T0057", "LOCATED:compound operator"] },
-  { id: "L036", line: "- for-of target: an outside for-of assignment target (a for await...of loop, and a target in parentheses or written as an element access, are NOT CLAIMED)", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058", "SUB:WC17", "SUB:WC17c", "LOCATED:for-of target", "SUB:Y0301", "SUB:Y0302", "SUB:Y0303", "SUB:Y0304", "SUB:Y0305"] },
-  { id: "L037", line: "- for-in target: an outside for-in assignment target (a target in parentheses or written as an element access is NOT CLAIMED)", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059", "LOCATED:for-in target", "SUB:W6-T-FORIN-PATTERN", "SUB:W6-T-FORIN-OBJPATTERN", "SUB:W6-T-FORIN-ARRONLY", "SUB:Y0306", "SUB:Y0307", "SUB:Y0308"] },
+  { id: "L034", line: "- assignment: on its pinned pages, = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest), a pattern in parentheses and a nested pattern with a default too, each element read once, in the shapes those pages spell: the target alone, [x, y], [a, x], [[x]], [...x], [x = v], { a, b: x }, { a: { k: x } }, { ...x }, { x }, ([x]), (([x])), ({ k: x }), [([x])], [[x] = []], [[[x] = []] = []] and { k: [x] = [] } (an as, satisfies, non-null or <T> assertion around a pattern is NOT CLAIMED, and so is any other shape, among them an element after a hole, a fourth or later element, an element under a computed key, an element under a string key, a shorthand element with a default, a pattern nested three deep and an object pattern with a default nested in an array)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056", "LOCATED:assignment", "SUB:Y0309", "SUB:G5W-D-NOBARE", "SUB:G5W-D-DEFAULT-NESTED", "SUB:X3-ASG-PAREN-OBJECT", "SUB:X3-ASG-PAREN-NESTED", "SUB:X3-ASG-PAREN-TWICE", "SUB:X3-ASG-DEFAULT-OBJECT", "SUB:X3-ASG-DEFAULT-DEEP"] },
+  { id: "L035", line: "- compound operator: on its pinned pages, an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target (a destructuring pattern as its target, and an operator or a target those pages do not spell, are NOT CLAIMED)", pins: ["C2:compound operator", "SUB:A61", "SUB:A62", "SUB:A63", "SUB:A63b", "SUB:T0054", "SUB:T0057", "LOCATED:compound operator"] },
+  { id: "L036", line: "- for-of target: on its pinned pages, an outside for-of assignment target, alone or as the one element of the patterns those pages spell, [x], { k: x }, [[x]], [...x] and { ...x } (a for await...of loop, a target in parentheses or written as an element access, and any other pattern shape, among them an element after a hole, a later element, an element under a computed or a string key, a shorthand element and an element with a default, are NOT CLAIMED)", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058", "SUB:WC17", "SUB:WC17c", "LOCATED:for-of target", "SUB:Y0301", "SUB:Y0302", "SUB:Y0303", "SUB:Y0304", "SUB:Y0305"] },
+  { id: "L037", line: "- for-in target: on its pinned pages, an outside for-in assignment target, alone or as the one element of the patterns those pages spell, [x], { k: x }, [[x]], [...x] and { ...x } (a target in parentheses or written as an element access, and any other pattern shape, among them an element after a hole, a later element, an element under a computed or a string key, a shorthand element and an element with a default, are NOT CLAIMED)", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059", "LOCATED:for-in target", "SUB:W6-T-FORIN-PATTERN", "SUB:W6-T-FORIN-OBJPATTERN", "SUB:W6-T-FORIN-ARRONLY", "SUB:Y0306", "SUB:Y0307", "SUB:Y0308"] },
   { id: "L038", line: "- delete: delete of an outside chain (an optional chain and an operand in parentheses are NOT CLAIMED)", pins: ["C2:delete", "SUB:A73", "SUB:S0735", "SUB:T0060", "LOCATED:delete"] },
   { id: "L039", line: "- update: ++ or -- (prefix or postfix) of an outside chain", pins: ["C2:update", "SUB:A64", "SUB:A64b", "SUB:A65", "SUB:T0061", "LOCATED:update"] },
-  { id: "L040", line: "- mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, and a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - are NOT CLAIMED)", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064", "SUB:WC15", "SUB:WC15c", "LOCATED:mutator call", "SUB:W6-T-MUT-SECOND", "SUB:C6-T-MUT-SECOND", "SUB:Y0008"] },
+  { id: "L040", line: "- mutator call: on its pinned pages, a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - and a call of a member, an arity or an argument spelling those pages do not spell, a spread argument among them, are NOT CLAIMED)", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064", "SUB:WC15", "SUB:WC15c", "LOCATED:mutator call", "SUB:W6-T-MUT-SECOND", "SUB:C6-T-MUT-SECOND", "SUB:Y0008"] },
   { id: "L041", line: "- legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140", "SUB:WC14", "SUB:WC14c", "LOCATED:legacy accessor definer"] },
-  { id: "L042", line: "A write whose target is a bare name bound to a local let, var, const, parameter, destructured, catch clause or for-of variable declaration (another kind is NOT CLAIMED), written alone or in parentheses, or, in the assignment, compound operator, for-of target and for-in target forms, as a pattern element ([local], { key: local }, { local }, [[local]], [...local] or { ...local }), rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c", "SUB:Y0201", "SUB:Y0202", "SUB:Y0203", "SUB:Y0204", "SUB:Y0205", "SUB:Y0206", "SUB:Y0207", "REBIND:let", "REBIND:var", "REBIND:const", "REBIND:parameter", "REBIND:destructured", "REBIND:catch clause", "REBIND:for-of variable"] },
-  { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6", "SUB:W6-T-RB-FORIN", "SUB:C6-T-RB-FORIN", "SUB:W6-T-RB-DELETE", "SUB:C6-T-RB-DELETE", "WRITE:assignment | alone", "WRITE:assignment | in parentheses", "WRITE:assignment | an array pattern", "WRITE:assignment | an object pattern", "WRITE:assignment | a shorthand", "WRITE:assignment | a nested pattern", "WRITE:assignment | a spread", "WRITE:assignment | a rest", "WRITE:compound operator | alone", "WRITE:compound operator | in parentheses", "WRITE:compound operator | an array pattern", "WRITE:compound operator | an object pattern", "WRITE:compound operator | a shorthand", "WRITE:compound operator | a nested pattern", "WRITE:compound operator | a spread", "WRITE:compound operator | a rest", "WRITE:for-of target | alone", "WRITE:for-of target | in parentheses", "WRITE:for-of target | an array pattern", "WRITE:for-of target | an object pattern", "WRITE:for-of target | a shorthand", "WRITE:for-of target | a nested pattern", "WRITE:for-of target | a spread", "WRITE:for-of target | a rest", "WRITE:for-in target | alone", "WRITE:for-in target | in parentheses", "WRITE:for-in target | an array pattern", "WRITE:for-in target | an object pattern", "WRITE:for-in target | a shorthand", "WRITE:for-in target | a nested pattern", "WRITE:for-in target | a spread", "WRITE:for-in target | a rest", "WRITE:delete | alone", "WRITE:delete | in parentheses", "WRITE:update | alone", "WRITE:update | in parentheses", "SUB:G5W-C-PATELEM-FOROF", "SUB:G5C-C-PATELEM-FOROF", "SUB:G5W-C-PATELEM-FORIN", "SUB:G5C-C-PATELEM-FORIN", "SUB:G5W-C-PATELEM-COMPOUND", "SUB:G5C-C-PATELEM-COMPOUND"] },
-  { id: "L044", line: "MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, and a callee spelled as an element access or reached through an alias of the mock, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142", "SUB:WC13", "SUB:WC13c", "SUB:Y0011"] },
-  { id: "L045", line: "or of the import() its first argument is (a template argument is NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066", "SUB:Y0012"] },
+  { id: "L042", line: "On its pinned pages, a write whose target is a bare name bound to a local let, var, const, parameter, destructured, catch clause or for-of variable declaration (another kind is NOT CLAIMED), written alone or in parentheses, or, in the assignment, compound operator, for-of target and for-in target forms, as a pattern element ([local], { key: local }, { local }, [[local]], [...local] or { ...local }), rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c", "SUB:Y0201", "SUB:Y0202", "SUB:Y0203", "SUB:Y0204", "SUB:Y0205", "SUB:Y0206", "SUB:Y0207", "REBIND:let", "REBIND:var", "REBIND:const", "REBIND:parameter", "REBIND:destructured", "REBIND:catch clause", "REBIND:for-of variable"] },
+  { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it on its pinned pages (any other page is NOT CLAIMED, among them a declaration of another spelling or place - an arrow function's parameter, a method's or constructor's parameter, a function expression's parameter, a parameter without a default, a declaration below the top level, an array destructuring declaration, a const destructuring declaration, a destructured parameter, a destructured catch variable, a const or var for-of variable and a name declared twice - a target in two pairs of parentheses and a later array-pattern element ([other, local])).", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6", "SUB:W6-T-RB-FORIN", "SUB:C6-T-RB-FORIN", "SUB:W6-T-RB-DELETE", "SUB:C6-T-RB-DELETE", "WRITE:assignment | alone", "WRITE:assignment | in parentheses", "WRITE:assignment | an array pattern", "WRITE:assignment | an object pattern", "WRITE:assignment | a shorthand", "WRITE:assignment | a nested pattern", "WRITE:assignment | a spread", "WRITE:assignment | a rest", "WRITE:compound operator | alone", "WRITE:compound operator | in parentheses", "WRITE:compound operator | an array pattern", "WRITE:compound operator | an object pattern", "WRITE:compound operator | a shorthand", "WRITE:compound operator | a nested pattern", "WRITE:compound operator | a spread", "WRITE:compound operator | a rest", "WRITE:for-of target | alone", "WRITE:for-of target | in parentheses", "WRITE:for-of target | an array pattern", "WRITE:for-of target | an object pattern", "WRITE:for-of target | a shorthand", "WRITE:for-of target | a nested pattern", "WRITE:for-of target | a spread", "WRITE:for-of target | a rest", "WRITE:for-in target | alone", "WRITE:for-in target | in parentheses", "WRITE:for-in target | an array pattern", "WRITE:for-in target | an object pattern", "WRITE:for-in target | a shorthand", "WRITE:for-in target | a nested pattern", "WRITE:for-in target | a spread", "WRITE:for-in target | a rest", "WRITE:delete | alone", "WRITE:delete | in parentheses", "WRITE:update | alone", "WRITE:update | in parentheses", "SUB:G5W-C-PATELEM-FOROF", "SUB:G5C-C-PATELEM-FOROF", "SUB:G5W-C-PATELEM-FORIN", "SUB:G5C-C-PATELEM-FORIN", "SUB:G5W-C-PATELEM-COMPOUND", "SUB:G5C-C-PATELEM-COMPOUND"] },
+  { id: "L044", line: "MOCKS (moduleMockSpecifiers): on its pinned pages, every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, a callee spelled as an element access or reached through an alias of the mock, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142", "SUB:WC13", "SUB:WC13c", "SUB:Y0011"] },
+  { id: "L045", line: "or of the import() its first argument is, on its pinned pages (a template argument, and an import() of an arity or an argument spelling those pages do not spell, are NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066", "SUB:Y0012"] },
   { id: "L046", line: "", pins: [] },
   { id: "L047", line: "C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):", pins: ["DRIVER:value import", "SUB:A113", "SUB:W37b", "SUB:W38b", "SUB:W63", "SUB:T0109", "SUB:T0110", "SUB:T0111", "SUB:T0112", "SUB:T0113", "SUB:T0114", "SUB:T0115", "SUB:T0116", "SUB:T0117", "SUB:T0118", "SUB:T0119"] },
   { id: "L048", line: "- value import [import]: an import declaration of an HX module with a clause that is not type-only", pins: ["DRIVER:value import", "SUB:A80", "SUB:A81", "SUB:A82", "SUB:A83", "SUB:S0911", "SUB:S0913", "SUB:W-VI-DEFAULT", "SUB:C-VI-DEFAULT", "SUB:Z0007", "LOCATED:value import"] },
   { id: "L049", line: "- side-effect import [import]: an import declaration of an HX module with no clause", pins: ["DRIVER:side-effect import", "SUB:T0122", "SUB:Z0008", "LOCATED:side-effect import"] },
   { id: "L050", line: "- export-from [import]: an export declaration from an HX module that is not type-only, named or namespace", pins: ["DRIVER:export-from", "SUB:A84", "SUB:A85", "SUB:A86", "SUB:S0917", "SUB:S0920", "SUB:S0924", "SUB:W40", "SUB:Z0009", "LOCATED:export-from"] },
   { id: "L051", line: "- import-equals [import]: an import-equals of an HX module value that is not type-only", pins: ["DRIVER:import-equals", "SUB:A87", "SUB:S0928", "SUB:T0123", "SUB:W-IEQ-EXPORT", "SUB:C-IEQ-EXPORT", "SUB:Z0010", "LOCATED:import-equals"] },
-  { id: "L052", line: "- dynamic import [import]: an import() call whose first argument is an HX module value", pins: ["DRIVER:dynamic import", "SUB:S0935", "LOCATED:dynamic import", "SUB:Y0009"] },
-  { id: "L053", line: "- loader call [import]: a LOADERS call (read through calleeChains) whose first argument is an HX module value (a callee spelled as an element access is NOT CLAIMED)", pins: ["DRIVER:loader call", "SUB:A89", "SUB:A90", "SUB:A91", "SUB:S0939", "SUB:W75", "LOCATED:loader call", "SUB:Y0015"] },
-  { id: "L054", line: "- created require [import]: a call of a call, or of a name whose own binding is a const initialized by a call, whose first argument is an HX module value (refusal #4 F2; an inner call whose callee is not the bare name createRequire, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:created require", "SUB:A92", "SUB:S0949", "SUB:S1280", "SUB:W89", "SUB:T0120", "SUB:WD9", "SUB:WD9c", "LOCATED:created require", "SUB:Y0010"] },
-  { id: "L055", line: "- invoke [invoke]: a call whose callee chains end .invoke and whose first argument's value is hyperunix.find (a callee spelled as an element access or through an optional member is NOT CLAIMED)", pins: ["DRIVER:invoke", "SUB:A93", "SUB:A94", "SUB:S0960", "SUB:T0125", "SUB:T0126", "SUB:WD3", "SUB:WD3c", "LOCATED:invoke", "SUB:W6-D-INVOKE-ANYARG", "SUB:C6-D-INVOKE-ANYARG", "SUB:Y0007"] },
+  { id: "L052", line: "- dynamic import [import]: on its pinned pages, an import() call whose first argument is an HX module value (an import() call of an arity or an argument spelling those pages do not spell is NOT CLAIMED)", pins: ["DRIVER:dynamic import", "SUB:S0935", "LOCATED:dynamic import", "SUB:Y0009"] },
+  { id: "L053", line: "- loader call [import]: on its pinned pages, a LOADERS call (read through calleeChains) whose first argument is an HX module value (a callee spelled as an element access, and a call of a member, an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:loader call", "SUB:A89", "SUB:A90", "SUB:A91", "SUB:S0939", "SUB:W75", "LOCATED:loader call", "SUB:Y0015"] },
+  { id: "L054", line: "- created require [import]: on its pinned pages, a call of a call, or of a name whose own binding is a const initialized by a call, whose first argument is an HX module value (refusal #4 F2; an inner call whose callee is not the bare name createRequire, an optional call, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:created require", "SUB:A92", "SUB:S0949", "SUB:S1280", "SUB:W89", "SUB:T0120", "SUB:WD9", "SUB:WD9c", "LOCATED:created require", "SUB:Y0010"] },
+  { id: "L055", line: "- invoke [invoke]: on its pinned pages, a call whose callee chains end .invoke and whose first argument's value is hyperunix.find (a callee spelled as an element access or through an optional member, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:invoke", "SUB:A93", "SUB:A94", "SUB:S0960", "SUB:T0125", "SUB:T0126", "SUB:WD3", "SUB:WD3c", "LOCATED:invoke", "SUB:W6-D-INVOKE-ANYARG", "SUB:C6-D-INVOKE-ANYARG", "SUB:Y0007"] },
   { id: "L056", line: "- override member [override]: HYPERUNIX_HX as a member name, an element key value or a type member on any receiver (one read through an optional chain is NOT CLAIMED)", pins: ["DRIVER:override member", "SUB:A95", "SUB:S0964", "SUB:S0965", "LOCATED:override member"] },
   { id: "L057", line: "- override destructuring [override]: HYPERUNIX_HX as a destructuring key", pins: ["DRIVER:override destructuring", "SUB:S0973", "LOCATED:override destructuring", "SUB:Z0018", "SUB:Z0019", "SUB:Z0020", "SUB:Z0021"] },
   { id: "L058", line: "- override destructuring assignment [override]: HYPERUNIX_HX as a destructuring-assignment key", pins: ["DRIVER:override destructuring assignment", "SUB:S0977", "LOCATED:override destructuring assignment"] },
   { id: "L059", line: "- override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127", "SUB:WD6", "SUB:WD6b", "SUB:WD6c", "LOCATED:override object key"] },
   { id: "L060", line: "- override in [override]: HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993", "LOCATED:override in"] },
-  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
-  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
+  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
+  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
   { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
   { id: "L064", line: "- member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143", "SUB:WS1", "SUB:WS1b", "SUB:WS1c", "LOCATED:member"] },
   { id: "L065", line: "- element key: an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230", "LOCATED:element key"] },
@@ -2643,6 +2767,11 @@ const SCOPE_LINES: readonly string[] = [
   "the claim words of the four guarded classes to enumerations its rows plant whole: the override's argument places (POSITIONS),",
   "the custody stub's later arguments, the ROOT KINDS, the rebind sentence's declarations and target shapes (REBIND GRID) and the",
   "assignment pattern shapes; every other member of each class is NOT CLAIMED, as is a for-in variable on the for-of element line.",
+  "wb-tz2.20 cut #4 (orchestrator ruling R-B392: the frozen classes failed ON cut #3 through new members, so this cut is the",
+  "fail-closed core) narrows, in place, every claim line of the four frozen classes - L015, L029, L034 to L037, L040, L042 to",
+  "L045, L052 to L055, L061 and L062 - to its pinned pages, the pages its CLAIM_LINES pins plant (a sentence that runs on, L042",
+  "and L043, to the pages of both), and names NOT CLAIMED on its line the sub-form of each member refusal #3 lists; it adds no",
+  "plant and no claimed sub-form, and no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -4117,7 +4246,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L012:8e1bea49b41c",
   "CLAIM_LINES:L013:9438e106cc75",
   "CLAIM_LINES:L014:981b4577cfc0",
-  "CLAIM_LINES:L015:6c8bb05d7500",
+  "CLAIM_LINES:L015:c391a9b942e4",
   "CLAIM_LINES:L016:9e65049274e3",
   "CLAIM_LINES:L017:66455025707b",
   "CLAIM_LINES:L018:1b1b1c9895e7",
@@ -4131,40 +4260,40 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L026:3a968b4bf1a6",
   "CLAIM_LINES:L027:40d747567628",
   "CLAIM_LINES:L028:9267de5ddc50",
-  "CLAIM_LINES:L029:176b39cc5a24",
+  "CLAIM_LINES:L029:9d82d99c4f3c",
   "CLAIM_LINES:L030:e031a71a5e8f",
   "CLAIM_LINES:L031:319885e89bc2",
   "CLAIM_LINES:L032:4618911f276a",
   "CLAIM_LINES:L033:4f47ad2aa528",
-  "CLAIM_LINES:L034:02800b4401cc",
-  "CLAIM_LINES:L035:6c7464e9a66f",
-  "CLAIM_LINES:L036:bc78e651918d",
-  "CLAIM_LINES:L037:db9c8d68a38a",
+  "CLAIM_LINES:L034:f9dc43e0d1f0",
+  "CLAIM_LINES:L035:4af3c4703b7b",
+  "CLAIM_LINES:L036:21ce9e3b3994",
+  "CLAIM_LINES:L037:9e706e798059",
   "CLAIM_LINES:L038:e23f24e83501",
   "CLAIM_LINES:L039:e5a644938955",
-  "CLAIM_LINES:L040:4609df791720",
+  "CLAIM_LINES:L040:4e0f193fa47b",
   "CLAIM_LINES:L041:6831125633e9",
-  "CLAIM_LINES:L042:151f7f148931",
-  "CLAIM_LINES:L043:b1fc5451e26a",
-  "CLAIM_LINES:L044:61f1b564ecae",
-  "CLAIM_LINES:L045:cc7716b3da67",
+  "CLAIM_LINES:L042:09629410ea6f",
+  "CLAIM_LINES:L043:655b60d89745",
+  "CLAIM_LINES:L044:f25fe45a459b",
+  "CLAIM_LINES:L045:dafb7fd3eeb7",
   "CLAIM_LINES:L046:ed80aed8078d",
   "CLAIM_LINES:L047:94bd841e1b70",
   "CLAIM_LINES:L048:d182bff65852",
   "CLAIM_LINES:L049:76068ac43ba8",
   "CLAIM_LINES:L050:4f3c143821e7",
   "CLAIM_LINES:L051:51783a7a16da",
-  "CLAIM_LINES:L052:475317953311",
-  "CLAIM_LINES:L053:a1bbf2308c3d",
-  "CLAIM_LINES:L054:5c101d938abd",
-  "CLAIM_LINES:L055:1c7c6b08c61b",
+  "CLAIM_LINES:L052:4fe6131694e0",
+  "CLAIM_LINES:L053:f0f0711d23a8",
+  "CLAIM_LINES:L054:978780bca576",
+  "CLAIM_LINES:L055:5c451256ffa1",
   "CLAIM_LINES:L056:960f4c2b1bc7",
   "CLAIM_LINES:L057:b013e38ffc2d",
   "CLAIM_LINES:L058:2005cf1da543",
   "CLAIM_LINES:L059:0001efdb6287",
   "CLAIM_LINES:L060:5094e778a4ee",
-  "CLAIM_LINES:L061:72e1198d36e9",
-  "CLAIM_LINES:L062:08008b72695b",
+  "CLAIM_LINES:L061:de3eeb25a821",
+  "CLAIM_LINES:L062:61ec54d8c773",
   "CLAIM_LINES:L063:70676d295d9c",
   "CLAIM_LINES:L064:59fd1eb2ae18",
   "CLAIM_LINES:L065:532ec55845fc",
@@ -4427,6 +4556,62 @@ const FROZEN: readonly string[] = [
   "REBIND_WRITES:delete | in parentheses:adc7c6ce41c3",
   "REBIND_WRITES:update | alone:950230e42e4d",
   "REBIND_WRITES:update | in parentheses:cbd1cd462d7f",
+  "CHILD_SURVIVORS_3:G7-D-ARR-FROM1-HOLE:aa526c004261",
+  "CHILD_SURVIVORS_3:G7-D-ARR-SLICE3:4febc4f3313a",
+  "CHILD_SURVIVORS_3:G7-D-OBJ-COMPUTEDKEY:82affaaf2102",
+  "CHILD_SURVIVORS_3:G7-D-OBJ-STRINGKEY:3b52a23d8216",
+  "CHILD_SURVIVORS_3:G7-D-SHORTHAND-DEFAULT:9da6e7333353",
+  "CHILD_SURVIVORS_3:G7-D-NESTED-DEPTH2:dc5e11697883",
+  "CHILD_SURVIVORS_3:G7-RK-NEW-ARG1:171921016cc6",
+  "CHILD_SURVIVORS_3:G7-RK-NEW-FROM2:1f3dc04d262a",
+  "CHILD_SURVIVORS_3:G7-RK-NEW-SPREAD:1d9ceee6c5f2",
+  "CHILD_SURVIVORS_3:G7-RK-NEWMEMBER-ARG1:7b5e13c2999a",
+  "CHILD_SURVIVORS_3:G7-RK-CALL-ARG2:e2ef28370aeb",
+  "CHILD_SURVIVORS_3:G7-RK-CALL-SPREAD:2c86cc60467a",
+  "CHILD_SURVIVORS_3:G7-RK-CALL-IDCALLEE-ARG1:72aa5b7510d1",
+  "CHILD_SURVIVORS_3:G7-RK-OPTCALL-ARG1:f227999f9d9e",
+  "CHILD_SURVIVORS_3:G7-RK-SUPER-ARG1:e5625f701119",
+  "CHILD_SURVIVORS_3:G7-RK-BIND-ARG1:fe09afd9c269",
+  "CHILD_SURVIVORS_3:G7-RK-CALLCALL-ARG2:ae22f7d6a4b3",
+  "CHILD_SURVIVORS_3:G7-RK-APPLY-ARG1:adcbace32d5d",
+  "CHILD_SURVIVORS_3:G7-RK-IMPORT-ARG1:dc348275b0c4",
+  "CHILD_SURVIVORS_3:G7-RK-TPL-SPAN2:2ae072d19c18",
+  "CHILD_SURVIVORS_3:G7-RK-TAG-SPAN1:2505e5df54dd",
+  "CHILD_SURVIVORS_3:G7-RK-ARR-ELEM4:396e60a81fcd",
+  "CHILD_SURVIVORS_3:G7-RK-OBJ-COMPUTED:dbbb01551c33",
+  "CHILD_SURVIVORS_3:G7-RK-OBJ-METHOD:5d2b6ace49d6",
+  "CHILD_SURVIVORS_3:G7-RK-OBJ-GETTER:277184b07097",
+  "CHILD_SURVIVORS_3:G7-RK-FUNC-PARAMDEFAULT:8f255c83804c",
+  "CHILD_SURVIVORS_3:G7-RK-ARROW-PARAMDEFAULT:080646721dc0",
+  "CHILD_SURVIVORS_3:G7-RK-CLASS-INSTANCEPROP:d5bb251c3798",
+  "CHILD_SURVIVORS_3:G7-RK-CLASS-METHOD:398836c38125",
+  "CHILD_SURVIVORS_3:G7-RK-CLASS-COMPUTED:ce021a8e6b5c",
+  "CHILD_SURVIVORS_3:G7-RK-JSXEL-ATTR:dbbca8574425",
+  "CHILD_SURVIVORS_3:G7-RK-JSXEL-SPREADATTR:4d33f22c1d41",
+  "CHILD_SURVIVORS_3:G7-RK-JSXSELF-SPREADATTR:934fce756fae",
+  "CHILD_SURVIVORS_3:G7-RK-YIELD-DELEGATE:602fdc49d134",
+  "CHILD_SURVIVORS_3:G7-RK-BIN-NESTED-COMMA:7d77108dc261",
+  "CHILD_SURVIVORS_3:G7-RK-NONNULL-CALL:3337973359ba",
+  "CHILD_SURVIVORS_3:G7-C-NOARROWPARAM:dfab5df36ec9",
+  "CHILD_SURVIVORS_3:G7-C-NOMETHODPARAM:6d161628e92b",
+  "CHILD_SURVIVORS_3:G7-C-NOFUNCEXPRPARAM:e5b9104868f2",
+  "CHILD_SURVIVORS_3:G7-C-NOPLAINPARAM:fe2e6b019aa0",
+  "CHILD_SURVIVORS_3:G7-C-TOPLEVELONLY:7c8599b5e4db",
+  "CHILD_SURVIVORS_3:G7-C-NOARRAYDESTRUCT:4cf0302c9f1c",
+  "CHILD_SURVIVORS_3:G7-C-NOCONSTDESTRUCT:cde26cafc60c",
+  "CHILD_SURVIVORS_3:G7-C-NOPARAMDESTRUCT:4e70d65ab19b",
+  "CHILD_SURVIVORS_3:G7-C-NOCATCHDESTRUCT:4e93b170e6bd",
+  "CHILD_SURVIVORS_3:G7-C-NOFOROFCONST:fdfe02d387fb",
+  "CHILD_SURVIVORS_3:G7-C-NOMULTIDECL:63e834aa460e",
+  "CHILD_SURVIVORS_3:G7-D-DEFAULT-OBJNESTED:63d31cae99a9",
+  "CHILD_SURVIVORS_3:G7-A-SPY-LATERSTRING:a87ca7731d01",
+  "CHILD_SURVIVORS_3:G7-A-OV-NOSPREADCALL:0c0abc923d9c",
+  "CHILD_SURVIVORS_3:G7-A-VF-CONSTONELEVEL:261c1a6b5704",
+  "CHILD_SURVIVORS_3:G7-C-SITE-SECONDELEM-0:a1975d5c8df7",
+  "CHILD_SURVIVORS_3:G7-C-SITE-SECONDELEM-1:13cb03bed8c1",
+  "CHILD_SURVIVORS_3:G7-C-SITE-SECONDELEM-2:2471dfcb94ea",
+  "CHILD_SURVIVORS_3:G7-C-SITE-SECONDELEM-3:9c93a6727fa7",
+  "CHILD_SURVIVORS_3:G7-C-DELETE-PAREN1:9c502fd7fb7a",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -4889,7 +5074,25 @@ describe(SUITE, () => {
     });
   });
 
-  describe("CLASS GUARD (wb-tz2.20 cuts #2 and #3): each sub-form the helper header's own words name or enumerate in the four bound classes has at least one pinned row (the words, outside this census; one row per derived sub-form, never one per hollowing)", () => {
+  describe("CHILD REFUSAL #3 ANCHOR (wb-tz2.20 cut #4, outside this census): this child's own refusal #3 verdict in the tracker export", () => {
+    it("the members its U1, U2 and U3 items list, each with its lines and in order, are the CHILD_SURVIVORS_3 rows, and each row's words stand inside a NOT CLAIMED parenthesis on one of its lines", () => {
+      const block = childVerdictBlock3();
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      expect({
+        u1: childMembers3(block, "U1"),
+        u2: childMembers3(block, "U2"),
+        u3: childMembers3(block, "U3"),
+        unnarrowed: CHILD_SURVIVORS_3.filter(row => !row.lines.some(id => notClaimedHolds(lines.get(id) ?? "", row.words))).map(row => row.id),
+      }).toStrictEqual({
+        u1: CHILD_SURVIVORS_3.filter(row => row.item === "U1").map(row => [row.id, ...row.lines].join(" ")),
+        u2: CHILD_SURVIVORS_3.filter(row => row.item === "U2").map(row => [row.id, ...row.lines].join(" ")),
+        u3: CHILD_SURVIVORS_3.filter(row => row.item === "U3").map(row => [row.id, ...row.lines].join(" ")),
+        unnarrowed: [],
+      });
+    });
+  });
+
+  describe("CLASS GUARD (wb-tz2.20 cuts #2 to #4): each sub-form the helper header's own words name or enumerate in the four bound classes has at least one pinned row (the words, outside this census; one row per derived sub-form, never one per hollowing)", () => {
     it("ARGUMENT POSITIONS: every claim line naming a first argument or an argument value pins an 'a later argument:' row", () => {
       const named = helperClaimLines()
         .filter(entry => /first argument|an argument value/.test(entry.line))
@@ -4925,7 +5128,7 @@ describe(SUITE, () => {
       const patterned = /written alone or in parentheses, or, in the (.+?) forms, as a pattern element \((.+?)\), rebinds/.exec(text);
       const patternForms = (patterned?.[1] ?? "").split(/, | and /);
       const elements = (patterned?.[2] ?? "").split(/, | or /);
-      const forms = (/\(writtenChains\), so the (.+?) forms read nothing for it\./.exec(text)?.[1] ?? "").split(/, | and /);
+      const forms = (/\(writtenChains\), so the (.+?) forms read nothing for it on its pinned pages \(/.exec(text)?.[1] ?? "").split(/, | and /);
       const planted = (form: string, target: string): boolean => REBIND_WRITES.some(row => row.form === form && row.target === target);
       expect({
         declarations,
@@ -4951,7 +5154,7 @@ describe(SUITE, () => {
     });
     it("CUSTODY STUB (cut #3): each count of later arguments the spy line names pins an 'a custody stub with <count> later argument:' row on L029", () => {
       const line = helperClaimLines().find(entry => entry.id === "L029")?.line ?? "";
-      const counts = (/the custody stub vi\.spyOn\(HyperUnix, "open"\) \(with (.+?) later arguments too;/.exec(line)?.[1] ?? "").split(" or ");
+      const counts = (/the custody stub vi\.spyOn\(HyperUnix, "open"\) \(with (.+?) later arguments too[,;]/.exec(line)?.[1] ?? "").split(" or ");
       const head = (count: string): string => `a custody stub with ${count} later argument${count === "one" ? "" : "s"}:`;
       expect({ counts, missing: counts.filter(count => pinnedWith(["L029"], head(count), false).length === 0) }).toStrictEqual({ counts: ["one", "two"], missing: [] });
     });
@@ -4959,7 +5162,7 @@ describe(SUITE, () => {
       const text = helperClaimLines()
         .map(entry => entry.line)
         .join(" ");
-      const forms = (/\(writtenChains\), so the (.+?) forms read nothing for it\./.exec(text)?.[1] ?? "").split(/, | and /);
+      const forms = (/\(writtenChains\), so the (.+?) forms read nothing for it on its pinned pages \(/.exec(text)?.[1] ?? "").split(/, | and /);
       expect({ forms, missing: forms.filter(form => pinnedWith(["L042", "L043"], `${form}:`, true).length === 0) }).toStrictEqual({
         forms: ["assignment", "compound operator", "for-of target", "for-in target", "delete", "update"],
         missing: [],
@@ -4974,6 +5177,20 @@ describe(SUITE, () => {
         shapes: ["array", "object", "nested", "spread", "rest"],
         targets: ["L036", "L037"],
         missing: [],
+      });
+    });
+    it("FAIL-CLOSED CORE (cut #4, R-B392): every claim line of the four frozen classes - the lines the guard derives a sub-form from (first-argument, POSITIONS and for-of and for-in target lines) and the ROOTS, spy, assignment, compound operator and rebind lines - carries, in its own words, the narrowing 'on its pinned pages'", () => {
+      const lines = helperClaimLines();
+      const derived = (pattern: RegExp): string[] => lines.filter(entry => pattern.test(entry.line)).map(entry => entry.id);
+      const frozen = [
+        ...derived(/first argument|an argument value/),
+        ...derived(/as the k-th argument of an (?:ENV_CALLS|ENV_METHODS) /),
+        ...derived(/an outside for-(?:of|in) assignment target/),
+        ...derived(/ROOT KINDS is not: |^- spy: |^- assignment: |^- compound operator: |^On its pinned pages, a write whose target is a bare name |^\(writtenChains\), /),
+      ].sort();
+      expect({ frozen, unnarrowed: frozen.filter(id => !(lines.find(entry => entry.id === id)?.line ?? "").includes("on its pinned pages") && !(lines.find(entry => entry.id === id)?.line ?? "").startsWith("On its pinned pages, ")) }).toStrictEqual({
+        frozen: ["L015", "L029", "L034", "L035", "L036", "L037", "L040", "L042", "L043", "L044", "L045", "L052", "L053", "L054", "L055", "L061", "L062"],
+        unnarrowed: [],
       });
     });
   });
@@ -5054,6 +5271,7 @@ describe(SUITE, () => {
         ...rows("POSITIONS", POSITIONS),
         ...rows("REBIND_DECLARATIONS", REBIND_DECLARATIONS),
         ...rows("REBIND_WRITES", REBIND_WRITES),
+        ...rows("CHILD_SURVIVORS_3", CHILD_SURVIVORS_3),
       ]).toStrictEqual(FROZEN);
     });
   });
