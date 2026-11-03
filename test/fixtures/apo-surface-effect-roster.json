@@ -480,6 +480,12 @@
    "path": "src/workbench/zz-pin-plant.ts",
    "text": "// Presents MW adaptive-policy-organizations state.\nexport {};\n"
   },
+  "twinProbe": {
+   "text": "\n// APO census twin probe.\nexport const zzCensusTwinProbe = \"APO census twin probe\";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: \"zz.census.twin.probe\" } });\n  registry.register(descriptor);\n  return registry.invoke(\"zz.census.twin.probe\");\n}\n",
+   "registrar": "registerZzCensusTwinProbe",
+   "id": "zz.census.twin.probe",
+   "effectClass": "write"
+  },
   "descriptorPlants": [
    {
     "id": "apo.policy.apply",
@@ -1086,6 +1092,7 @@
        "listedEqualsGit",
        "listingPlant",
        "judgedEqualsListed",
+       "judgedEach",
        "entriesReadWhole",
        "filesAtFloor",
        "scriptsAtFloor",
@@ -1133,6 +1140,11 @@
        "whole": true
       },
       "judgedEqualsListed": true,
+      "judgedEach": {
+       "mentions": [],
+       "registrations": [],
+       "reaches": []
+      },
       "entriesReadWhole": true,
       "filesAtFloor": true,
       "scriptsAtFloor": true,
@@ -1159,6 +1171,7 @@
        "srcMentions",
        "filingPin",
        "pinFilesAtFloor",
+       "pinFiles",
        "pinMentions",
        "pinPlant",
        "pinLiveness"
@@ -1168,6 +1181,7 @@
       "srcMentions": {},
       "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
       "pinFilesAtFloor": true,
+      "pinFiles": 115,
       "pinMentions": {},
       "pinPlant": [
        "raw"
