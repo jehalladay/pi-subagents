@@ -123,10 +123,10 @@
  * function declaration returns, that are named, or that an arrow function's concise body is (U4), and a single-quoted
  * name with a string escape (U5); in WALK FORM (3), a braced and an inner identifier escape in an import specifier (U6)
  * and, with the WALK's every-module words, the plain spelling in protocol.js (U7); and in RENDERED, a list bulleted +
- * (U8), inline span tags (U9) and a reference image (U10). This re-cut pins each on a plant built byte for byte from
+ * (U8), inline span tags (U9) and a reference image (U10). That re-cut pinned each on a plant built byte for byte from
  * the refusal's paired real-tree witness - E1-TEXT-TRAILING, E1-TEXT-MULTILINE, E1-TEXT-RS-BEFORE, R-COMPUTED-SINGLE,
  * R-OBJECT-LOCAL, R-CLASS-EXPR-LOCAL, R-CLASS-EXPR-NAMED, R-CLASS-EXPR-ARROW, R-STRING-SINGLE-ESC, W-LOCAL-ESC-BRACE,
- * W-LOCAL-ESC-INNER, W-LOCAL-PLAIN-JS, U2-LIST-PLUS, U2-HTML-SPAN and U2-IMAGE-REF - and narrows the words refusal #6
+ * W-LOCAL-ESC-INNER, W-LOCAL-PLAIN-JS, U2-LIST-PLUS, U2-HTML-SPAN and U2-IMAGE-REF - and narrowed the words refusal #6
  * named to the plants' own forms (U11): the ENTRY TEXT READ's comments to its plants' comments, by kind, entry,
  * position and line count, and its word-character, $ and non-ASCII clauses to the names its plants write; REGISTER
  * METHODS' class expressions and object literals to its plants' containers, its string escapes to its plants' spellings
@@ -135,6 +135,24 @@
  * its plants have it read each form in, each with the class names read there (WALK_READS in the claims module, which
  * CLAIM ROSTER holds equal to the plants' own lines). The rest is NOT CLAIMED by a specific sentence below. No reader
  * line changed: the landed helper is imported as it landed.
+ *
+ * REFUSAL #7 AND THE R-B432 RE-CUT (this bead's refusal #7, on the R-B399 re-cut, its U1-U10; ruling R-B432, a
+ * post-ladder disposition under standing rule 22(d)). Refusal #7 found nine one-edit mutants of the landed helper that
+ * left this census and the members census green, each on a form words of RENDERED or REGISTER METHODS held and no plant
+ * held: in RENDERED, an inline link with a title (U1), an HTML block whose comment spans lines (U2), a link-reference
+ * definition with a single-quoted title (U3), a table whose delimiter row sets an alignment (U4), a blockquote holding
+ * a blockquote (U5) and a whitespace run that is one tab alone (U6); in REGISTER METHODS, a computed no-substitution
+ * template literal (U7) and a double-quoted computed string literal (U8) each spelled with a string escape, and an
+ * identifier escape naming the method of an object literal (U9). This re-cut pins each on a plant built byte for byte
+ * from the refusal's paired real-tree witness - U2-LINK-TITLE, U2-HTML-MULTILINE, U2-DEF-SINGLE, U2-TABLE-ALIGNED,
+ * U2-QUOTE-NESTED, U2-TAB-RUN, R-TEMPLATE-ESC, R-COMPUTED-ESC and R-OBJECT-LOCAL-ESC - and restates both paragraphs
+ * word by word to their plants' own forms (U10): RENDERED claims its plants' blocks only as they write them, each
+ * block's kind and each token, run, line ending, delimiter, title and comment in it, and names the runs, hard line
+ * breaks, table delimiters, blockquote nesting, emphasis and strong spellings, link titles, comment lengths and
+ * definition titles its plants write; REGISTER METHODS claims each name form only in the containers its plants write it
+ * in and there only in the spellings they write it in, each name form and spelling ShimApp holds listed one by one and
+ * every other container's identifier name plain, shimLocal's also spelled by an identifier escape. The rest is NOT
+ * CLAIMED by a specific sentence below. No reader line changed: the landed helper is imported as it landed.
  *
  * THE ROWS (ROWS; a row's label is the line it answers, verbatim from the bead's row of the tracker export):
  *  E-U1, E-U2, E-U3: the description's enumerated items U1-U3. E-U4 (the note contact count) is DROPPED (below).
@@ -155,13 +173,14 @@
  * THE CLAIMS (each a ClaimPart of CLAIM_PARTS in test/helpers/furnace-sdk-entry-claims.ts, held here byte-for-byte as
  * its own paragraph; each claim lists its sub-forms, and SUBFORMS names, for every listed sub-form in claim order, the
  * plants that prove it and the mark each of them carries). A claim is what its words state, as its plants' cases read
- * it (the real tree's reading plus exactly each plant's lines). Where refusal #4, refusal #5 or refusal #6 found a
- * claim's words covering a form no plant planted, the paragraph now names its plants' own forms - the modules,
- * positions, spellings, letters, codes and kinds they write - and NOT CLAIMED below names the rest by a specific
- * sentence; NOT CLAIMED's closing scope sentence narrows no specific word (R-B233). The paragraphs refusal #4 named do
- * so since the R-B305 re-cut, those refusal #5 named (WALK FORM (2), WALK FORM (3), the ENTRY TEXT READ, RENDERED and
- * REGISTER METHODS) since the R-B369 re-cut, and those refusal #6 named (the WALK, WALK FORM (3), the ENTRY TEXT READ,
- * RENDERED and REGISTER METHODS) since this re-cut:
+ * it (the real tree's reading plus exactly each plant's lines). Where refusal #4, refusal #5, refusal #6 or refusal #7
+ * found a claim's words covering a form no plant planted, the paragraph now names its plants' own forms - the modules,
+ * positions, spellings, letters, codes, kinds, containers, runs, titles and nestings they write - and NOT CLAIMED below
+ * names the rest by a specific sentence; NOT CLAIMED's closing scope sentence narrows no specific word (R-B233). The
+ * paragraphs refusal #4 named do so since the R-B305 re-cut, those refusal #5 named (WALK FORM (2), WALK FORM (3), the
+ * ENTRY TEXT READ, RENDERED and REGISTER METHODS) since the R-B369 re-cut, those refusal #6 named (the WALK, WALK FORM
+ * (3), the ENTRY TEXT READ, RENDERED and REGISTER METHODS) since the R-B399 re-cut, and those refusal #7 named
+ * (RENDERED and REGISTER METHODS, each now bounded word by word to its plants' own forms) since this re-cut:
  *
  * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export *
  * from any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of
@@ -285,33 +304,45 @@
  * begins with @furnace/sdk/ or holds node_modules/@furnace/sdk/ at its start or node_modules/@furnace/sdk/ after a /,
  * and holds one when either holds @furnace/sdk/ anywhere
  *
- * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text (its plants' blocks
- * appended at its end, after the real text), whitespace collapsed (every run one space, each run of spaces, tabs and
- * line feeds): a hard line break (a br token, a backslash before a line ending or two or more spaces before a line
- * ending) reads as the line break marked renders, a space; a list (its plants' lists bulleted -, as they write them, a
- * one-item list bulleted + and a two-item list ordered 1. and 2.) reads by its items' tokens, a table by its header
- * cells' tokens and row cells' tokens, and a token holding tokens (a paragraph, a heading (a ## heading), a blockquote,
- * emphasis, strong text or a link (an inline link, or a reference link written [text][label] beside its definition)) by
- * those tokens; raw HTML (an HTML block holding a comment, or inline HTML tags - its plants' <b> and </b>, and <span>
- * and </span>, each pair around (wb-zby)), a link-reference definition and an image (its plants' inline image and a
- * reference image written ![alt][label] beside its definition, each with a record as its alt text) read as nothing
+ * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, on its plants' blocks
+ * (appended at its end, after the real text) and only as they write them - each block's kind, and each token, run, line
+ * ending, delimiter, title and comment in it, in the spellings, nestings and positions its plants write -, whitespace
+ * collapsed (every run one space: each run of spaces, tabs and line feeds its plants write in a record, a space, three
+ * spaces, a line feed, a space, a tab and a space, and a tab alone): a hard line break (a br token: a backslash before
+ * a line ending, its plants' before (wb-zby), before revision and inside emphasis, and two or three spaces before a
+ * line ending, its plants' before (wb-zby)) reads as the line break marked renders, a space; a list (its plants' lists
+ * bulleted -, as they write them, a one-item list bulleted + and a two-item list ordered 1. and 2.) reads by its items'
+ * tokens, a table (its plants' tables, as they write them, each delimiter cell --- but in one table, whose aligned
+ * delimiter row is | :-- | and whose record sits in its row cell) by its header cells' tokens and row cells' tokens,
+ * and a token holding tokens (its plants', as they write them: a paragraph, a heading (a ## heading), a blockquote
+ * (holding paragraphs, and in one plant a blockquote holding a blockquote, written > >), emphasis (written * or _),
+ * strong text (written ** or __) or a link (an inline link to https://example.invalid/r, untitled or titled in double
+ * quotes, or a reference link written [text][label] beside its definition)) by those tokens; raw HTML (an HTML block
+ * holding a comment - its plants' comments, on one line and spanning three lines - or inline HTML tags - its plants'
+ * <b> and </b>, and <span> and </span>, each pair around (wb-zby)), a link-reference definition (its plants'
+ * definitions, one titled in double quotes, one titled in single quotes and the untitled ones beside its reference link
+ * and its reference image) and an image (its plants' inline image and a reference image written ![alt][label] beside
+ * its definition, each with a record as its alt text) read as nothing
  *
  * REGISTER METHODS: executor.js's register methods are its method declarations written with no modifier and no
- * asterisk, in a class or in an object literal (each name form below in its plants' unexported class declaration
- * ShimApp at the module's top level; an identifier name in the real tree's exported class declaration ExecutorApp, in a
+ * asterisk, in a class or in an object literal, whose name reads register, read cooked (an escape reads as the name it
+ * spells), each name form only in the containers its plants write it in and there only in the spellings they write it
+ * in (each of its plants' containers appended at the module's end and holding that one method): in its plants'
+ * unexported class declaration ShimApp at the module's top level, an identifier name, plain or by an identifier escape
+ * (its plants' \u0072 and braced \u{72}, each the name's first character), a string-literal name, double-quoted - plain
+ * or with a string escape (its plants' \x65 and \u0065 for the e before the final r) - or single-quoted - plain or with
+ * \x65 in a single-quoted name for the same e -, or a computed name whose expression is a computed string literal,
+ * double-quoted - plain, with \x65 in a double-quoted computed string literal for the same e, or plain through
+ * parentheses (its plants' one and two around it) - or single-quoted and unparenthesized and plain, or a computed
+ * no-substitution template literal - plain, with \x65 in a template literal for the same e, or plain through one
+ * parenthesis; and an identifier name, plain, in the real tree's exported class declaration ExecutorApp, in a
  * default-exported class declaration at the module's top level, named (ShimDefault) or anonymous, in its plants' class
  * expressions - the anonymous one an exported function declaration returns (makeShim), a named class expression an
  * exported function declaration returns (NamedShim, in makeNamed), the anonymous one an unexported function declaration
  * returns (makeLocal) and the anonymous one that is an arrow function's concise body (makeArrow, an exported const
  * declaration's initializer) - and in its plants' object literals, an exported const declaration's initializer (shim)
- * and an unexported const declaration's initializer (shimLocal); each of its plants' containers appended at the
- * module's end), whose name reads register: an identifier name or a string-literal name (double-quoted, or
- * single-quoted), read cooked (an identifier escape - its plants' \u0072 and braced \u{72}, each the name's first
- * character - or a string escape - its plants' \x65 and \u0065 for the e before the final r in a double-quoted name,
- * and \x65 in a single-quoted name for the same e - reads as the name it spells), or a computed name whose expression,
- * through parentheses (its plants' one and two around a double-quoted string literal and one around a template
- * literal), is a computed string literal, double-quoted or single-quoted and unparenthesized, or a computed
- * no-substitution template literal
+ * and an unexported const declaration's initializer (shimLocal), where its plants also spell the identifier name by an
+ * identifier escape in an object literal, \u0072 first
  *
  * RESIDUALS (named; what the readers leave unread; each family has a quiet plant of row Q - R-WALK-SPECIFIER and R-PATH-UNREAD
  * two - reading as nothing, with a twin in a read form that reads its line):
@@ -370,10 +401,22 @@
  * name or in a spelling, that none of its plants writes it in; and in RENDERED, a list but its plants' lists bulleted
  * -, a one-item list bulleted + and a two-item list ordered 1. and 2. (a * bullet, a ) delimiter and a + bulleted list
  * of more items among the rest), inline HTML but the <b> and <span> pairs around (wb-zby), and an image but an inline
- * image and a reference image written ![alt][label] (a collapsed or a shortcut reference image among the rest). A
- * reading on any input that is not one of this census's plants or their twins is NOT CLAIMED by this census - among
- * them every spelling, module kind, naming module, entry, position, depth, nesting, escape form, letter, character, %XX
- * code or README block that no plant plants, whatever a claim's words would cover there (THE CLAIMS).
+ * image and a reference image written ![alt][label] (a collapsed or a shortcut reference image among the rest). Beside
+ * the plants' own forms the paragraphs name since the R-B432 re-cut, NOT CLAIMED by this census, read or not: in
+ * RENDERED, a block, or a token, run, line ending, delimiter, title or comment in it, of a kind, spelling, nesting or
+ * position its plants do not write - among the rest an inline link titled in single quotes or in parentheses or holding
+ * a record in its title, a link-reference definition titled in parentheses, an HTML comment spanning two lines or more
+ * than three, a delimiter row aligned other than | :-- | (a --: or a :-: cell among them) and a record in an aligned
+ * table's header cell, a blockquote nested past two levels, a run its plants do not write in a record (two spaces
+ * between words, and a tab beside a line feed, among them) and four or more spaces before a line ending -; and in
+ * REGISTER METHODS, a name form or a spelling in a container but those the paragraph places it in - among the rest an
+ * identifier escape in any container but ShimApp and shimLocal and a braced one in shimLocal, a string-literal or a
+ * computed name in any container but ShimApp, a \u0065 or a braced escape in a computed string literal or a template
+ * literal, and an escape in a parenthesized or a single-quoted computed literal - and a container of its plants holding
+ * a method besides its one. A reading on any input that is not one of this census's plants or their twins is NOT
+ * CLAIMED by this census - among them every spelling, module kind, naming module, entry, position, depth, nesting,
+ * escape form, letter, character, %XX code or README block that no plant plants, whatever a claim's words would cover
+ * there (THE CLAIMS).
  *
  * PINNED BY wb-lrz.9 (CUT #4 deferred refusal #3's members to wb-lrz.9 under R-B266, R-B305 folded this bead's refusal
  * #4's members into it, and it landed at landing 826: test/workbench-furnace-sdk-entry-reader-members-census.test.ts
@@ -2151,6 +2194,60 @@ const PLANTS: Readonly<Record<string, Plant>> = {
     added: [walkLine("main", "local-import", RS, IDX_J, PROTO_J)],
   },
 
+  // Cut #8 (this bead's refusal #7, ruling R-B432): each refusal #7 member pinned on a plant built byte for byte from its
+  // paired real-tree witness. E-U2: RENDERED's titled inline link, a comment spanning lines, a definition titled in single
+  // quotes, a table with an aligned delimiter row, a blockquote holding a blockquote and a run of one tab alone.
+  "U2-LINK-TITLE": {
+    name: "a second record whose re-packaged is an inline link titled in double quotes (a link reads by its tokens; refusal #7 GP5-U-LINK-TITLE-RAW)",
+    tree: (real) => withReadme(real, 'furnace-sdk-0.2.0.tgz was [re-packaged](https://example.invalid/r "t") on 2026-11-01 (wb-zby) from Furnace revision abcdef0123.'),
+    added: [SECOND],
+  },
+  "U2-HTML-MULTILINE": {
+    name: "a second record inside an HTML comment spanning three lines (raw HTML reads as nothing; refusal #7 GP5-U-HTML-MULTILINE-COMMENT-SHOWN)",
+    tree: (real) => withReadme(real, `<!--\n${RECORD_LINE}\n-->`),
+    added: [],
+    twin: { tree: (real) => withReadme(real, RECORD_LINE), added: [SECOND] },
+  },
+  "U2-DEF-SINGLE": {
+    name: "a second record as a link-reference definition's title in single quotes (a definition reads as nothing; refusal #7 GP5-U-DEF-SINGLE-QUOTED-TITLE-SHOWN)",
+    tree: (real) => withReadme(real, `[gate]: https://example.invalid/r '${RECORD_LINE}'`),
+    added: [],
+    twin: { tree: (real) => withReadme(real, RECORD_LINE), added: [SECOND] },
+  },
+  "U2-TABLE-ALIGNED": {
+    name: "a second record, with emphasis, in the row cell of a table whose delimiter row is aligned | :-- | (a table reads by its cells' tokens; refusal #7 GP5-U-TABLE-ALIGNED-RAW)",
+    tree: (real) => withReadme(real, "| Record |\n| :-- |\n| furnace-sdk-0.2.0.tgz was *re-packaged* on 2026-11-01 (wb-zby) from Furnace revision abcdef0123 |"),
+    added: [SECOND],
+  },
+  "U2-QUOTE-NESTED": {
+    name: "a second record, with emphasis, in a blockquote holding a blockquote (a blockquote reads by its tokens; refusal #7 GP5-U-QUOTE-NESTED-RAW)",
+    tree: (real) => withReadme(real, "> > furnace-sdk-0.2.0.tgz was *re-packaged* on 2026-11-01 (wb-zby) from Furnace revision abcdef0123"),
+    added: [SECOND],
+  },
+  "U2-TAB-RUN": {
+    name: "a second record whose Furnace and revision a run of one tab alone parts (every run reads as one space; refusal #7 GP5-U-TAB-RUN-KEPT)",
+    tree: (real) => withReadme(real, `furnace-sdk-0.2.0.tgz was re-packaged on 2026-11-01 (wb-zby) from Furnace${TAB}revision abcdef0123.`),
+    added: [SECOND],
+  },
+
+  // F-U2: REGISTER METHODS' computed template and double-quoted computed string literals each spelled with a string escape,
+  // and an identifier escape naming the method of an object literal.
+  "R-TEMPLATE-ESC": {
+    name: "a second register method by a computed no-substitution template literal with a hex escape (refusal #7 GP5-G-TEMPLATE-ESC-RAW)",
+    tree: (real) => appended(real, EXECUTOR, shim("[`regist\\x65r`]()")),
+    added: ["register computed-template"],
+  },
+  "R-COMPUTED-ESC": {
+    name: "a second register method by a double-quoted computed string literal with a hex escape (refusal #7 GP5-G-COMPUTED-STRING-ESC-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, shim('["regist\\x65r"]()')),
+    added: ["register computed-string"],
+  },
+  "R-OBJECT-LOCAL-ESC": {
+    name: "a register method named by an identifier escape in the object literal an unexported const declaration's initializer holds (refusal #7 GP5-G-OBJECT-IDESC-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "const shimLocal = {\n  \\u0072egister() {\n    return 1;\n  },\n};"),
+    added: ["register identifier"],
+  },
+
   // Q: the residuals' quiet rows.
   "Q-INDIRECT": {
     name: "R-INDEX-INDIRECT: a value and a type declared from the class, a default export of it, a module augmentation, a named re-export chain, a namespace import of a starring module and an import-equals, each exported",
@@ -2312,7 +2409,7 @@ const ROWS: readonly Row[] = [
     from: "description",
     label: "- U2 backslash hard-break rendered reading (the refusal's U2 member).",
     judge: "u1",
-    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST", "U2-LINK-REF", "U2-LIST-PLUS", "U2-HTML-SPAN", "U2-IMAGE-REF"],
+    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST", "U2-LINK-REF", "U2-LIST-PLUS", "U2-HTML-SPAN", "U2-IMAGE-REF", "U2-LINK-TITLE", "U2-HTML-MULTILINE", "U2-DEF-SINGLE", "U2-TABLE-ALIGNED", "U2-QUOTE-NESTED", "U2-TAB-RUN"],
   },
   {
     id: "E-U3",
@@ -2334,7 +2431,7 @@ const ROWS: readonly Row[] = [
     from: "notes",
     label: "- U2 (LOW, rides): D4's register-count read has no falsifier - add one or state it.",
     judge: "d4",
-    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE", "R-ID-ESC-BRACE", "R-STR-ESC-U", "R-STRING-SINGLE", "R-DEFAULT-CLASS", "R-ANON-CLASS", "R-COMPUTED-SINGLE", "R-OBJECT-LOCAL", "R-CLASS-EXPR-LOCAL", "R-CLASS-EXPR-NAMED", "R-CLASS-EXPR-ARROW", "R-STRING-SINGLE-ESC"],
+    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE", "R-ID-ESC-BRACE", "R-STR-ESC-U", "R-STRING-SINGLE", "R-DEFAULT-CLASS", "R-ANON-CLASS", "R-COMPUTED-SINGLE", "R-OBJECT-LOCAL", "R-CLASS-EXPR-LOCAL", "R-CLASS-EXPR-NAMED", "R-CLASS-EXPR-ARROW", "R-STRING-SINGLE-ESC", "R-TEMPLATE-ESC", "R-COMPUTED-ESC", "R-OBJECT-LOCAL-ESC"],
   },
   {
     id: "F-U3",
@@ -2609,52 +2706,62 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["path", "holds @furnace/sdk/ anywhere", ["P-HOLDS", "P-HOLDS-PATH", "P-RAW-HOLDS"], /^holds /m],
   ["render", "whitespace collapsed", ["U2-BR-WBZBY", "U2-BR-SPACES"], /2026-11-01(?:\\| {2,})\n\(wb-zby\)/],
   ["render", "every run one space", ["U2-RUNS"], /re-packaged {2,}on 2026-11-01\n\(wb-zby\) from Furnace \t revision/],
+  ["render", "a tab alone", ["U2-TAB-RUN"], /from Furnace\trevision abcdef0123\./],
   ["render", "a backslash before a line ending", ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS"], /\\\n/],
-  ["render", "two or more spaces before a line ending", ["U2-BR-SPACES", "U2-BR-SPACES3"], /\S {2,}\n/],
+  ["render", "two or three spaces before a line ending", ["U2-BR-SPACES", "U2-BR-SPACES3"], /\S {2,3}\n/],
   ["render", "a list", ["U2-LIST", "U2-LIST-SECOND", "U2-ORDERED", "U2-LIST-FIRST", "U2-LIST-PLUS"], /^(?:[-+] |\d+\. )/m],
   ["render", "bulleted +", ["U2-LIST-PLUS"], /^\+ furnace-sdk-0\.2\.0\.tgz was \*re-packaged\* on /m],
   ["render", "its items' tokens", ["U2-LIST-SECOND", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-ITEM-FIRST"], /^(?:- other\n(?:- | {2}- |\n {2})|1\. other\n2\. )furnace-sdk-0\.2\.0\.tgz |^- furnace-sdk-0\.2\.0\.tgz [^\n]*\n {2}- other$/m],
   ["render", "a table", ["U2-TABLE", "U2-TABLE-HEAD"], /^\| --- \|$/m],
+  ["render", "aligned delimiter row", ["U2-TABLE-ALIGNED"], /^\| :-- \|$/m],
   ["render", "header cells' tokens", ["U2-TABLE-HEAD", "U2-TABLE-HEAD-SECOND", "U2-TABLE-HEAD-FIRST"], /^\|[^\n]*furnace-sdk-0\.2\.0\.tgz[^\n]*\|\n\| --- /m],
   ["render", "row cells' tokens", ["U2-TABLE", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST"], /^\| --- [^\n]*\n(?:\|[^\n]*\n)*\|[^\n]*furnace-sdk-0\.2\.0\.tgz/m],
   ["render", "a paragraph", ["U2-EMPHASIS", "U2-STRONG", "U2-LINK"], /vendor\/README\.md: \nfurnace-sdk-0\.2\.0\.tgz was /],
   ["render", "a heading", ["U2-HEADING"], /^## furnace-sdk/m],
   ["render", "a blockquote", ["U2-QUOTE", "U2-QUOTE-SECOND", "U2-QUOTE-FIRST"], /^> /m],
+  ["render", "a blockquote holding a blockquote", ["U2-QUOTE-NESTED"], /^> > /m],
   ["render", "emphasis", ["U2-EMPHASIS", "U2-BR-EMPHASIS", "U2-EMPHASIS-NESTED"], /(?<![*_])[*_]re-/],
   ["render", "strong text", ["U2-STRONG", "U2-STRONG-NESTED"], /(?:\*\*|__)re-/],
   ["render", "a link", ["U2-LINK", "U2-LINK-NESTED"], /\[re-[^\]]*\]\(https:\/\/example\.invalid\/r\)/],
+  ["render", "titled in double quotes", ["U2-LINK-TITLE"], /\[re-packaged\]\(https:\/\/example\.invalid\/r "t"\)/],
   ["render", "a reference link", ["U2-LINK-REF"], /\[re-packaged\]\[gate\] on [^\n]*\n\n\[gate\]: https:\/\/example\.invalid\/r$/m],
   ["render", "by those tokens", ["U2-EMPHASIS", "U2-HEADING", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-QUOTE-FIRST"], /[*_]re-|\[re-|^> other$/m],
   ["render", "raw HTML", ["U2-HTML", "U2-HTML-INLINE", "U2-HTML-SPAN"], /<!-- |<b>|<span>/],
   ["render", "an HTML block", ["U2-HTML"], /^<!-- /m],
+  ["render", "spanning three lines", ["U2-HTML-MULTILINE"], /^<!--\n[^\n]+\n-->$/m],
   ["render", "inline HTML", ["U2-HTML-INLINE", "U2-HTML-SPAN"], /<(b|span)>\(wb-zby\)<\/\1>/],
   ["render", "<span> and </span>", ["U2-HTML-SPAN"], /<span>\(wb-zby\)<\/span>/],
   ["render", "a link-reference definition", ["U2-DEF"], /^\[gate\]: /m],
+  ["render", "titled in single quotes", ["U2-DEF-SINGLE"], /^\[gate\]: https:\/\/example\.invalid\/r '[^'\n]+'$/m],
   ["render", "an image", ["U2-IMAGE", "U2-IMAGE-REF"], /^!\[/m],
   ["render", "a reference image", ["U2-IMAGE-REF"], /^!\[[^\]\n]+\]\[img\]\n\n\[img\]: https:\/\/example\.invalid\/i\.png$/m],
   ["register", "in a class", ["R-PLAIN", "R-CLASS-EXPR", "R-CLASS-EXPR-LOCAL", "R-CLASS-EXPR-NAMED", "R-CLASS-EXPR-ARROW"], /\bclass(?: \w+)? \{\n {2,4}register\(\) \{/],
   ["register", "in an object literal", ["R-OBJECT", "R-OBJECT-LOCAL"], /= \{\n {2}register\(\) \{/],
+  ["register", "an identifier name", ["R-PLAIN"], /^ {2}register\(\) \{$[\s\S]*^register identifier$/m],
+  ["register", "an identifier escape", ["R-ID-ESC", "R-ID-ESC-BRACE"], /^ {2}\\u(?:0072|\{72\})egister\(\) \{$[\s\S]*^register identifier$/m],
+  ["register", "a string-literal name", ["R-STRING"], /^ {2}"register"\(\) \{$[\s\S]*^register string$/m],
+  ["register", "a string escape", ["R-STR-ESC", "R-STR-ESC-U", "R-STRING-SINGLE-ESC"], /^ {2}(["'])regist\\(?:x65|u0065)r\1\(\) \{$[\s\S]*^register string$/m],
+  ["register", "single-quoted", ["R-STRING-SINGLE"], /^ {2}'register'\(\) \{$[\s\S]*^register string$/m],
+  ["register", "\\x65 in a single-quoted name", ["R-STRING-SINGLE-ESC"], /^ {2}'regist\\x65r'\(\) \{$[\s\S]*^register string$/m],
+  ["register", "a computed name", ["R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-COMPUTED-SINGLE"], /^ {2}\[[^\]\n]+\]\(\) \{$[\s\S]*^register computed-(?:string|template)$/m],
+  ["register", "a computed string literal", ["R-COMPUTED", "R-COMPUTED-SINGLE"], /^ {2}\[(["'])register\1\]\(\) \{$[\s\S]*^register computed-string$/m],
+  ["register", "\\x65 in a double-quoted computed string literal", ["R-COMPUTED-ESC"], /^ {2}\["regist\\x65r"\]\(\) \{$[\s\S]*^register computed-string$/m],
+  ["register", "through parentheses", ["R-PARENS", "R-PARENS2"], /^ {2}\[\(+"register"\)+\]\(\) \{$/m],
+  ["register", "single-quoted and unparenthesized", ["R-COMPUTED-SINGLE"], /^ {2}\['register'\]\(\) \{$[\s\S]*^register computed-string$/m],
+  ["register", "a computed no-substitution template literal", ["R-TEMPLATE", "R-PARENS-TEMPLATE"], /^ {2}\[\(*`register`\)*\]\(\) \{$[\s\S]*^register computed-template$/m],
+  ["register", "\\x65 in a template literal", ["R-TEMPLATE-ESC"], /^ {2}\[`regist\\x65r`\]\(\) \{$[\s\S]*^register computed-template$/m],
+  ["register", "through one parenthesis", ["R-PARENS-TEMPLATE"], /^ {2}\[\(`register`\)\]\(\) \{$/m],
   ["register", "a default-exported class declaration", ["R-DEFAULT-CLASS", "R-ANON-CLASS"], /^export default class (?:\w+ )?\{\n {2}register\(\) \{$/m],
   ["register", "a named class expression", ["R-CLASS-EXPR-NAMED"], /^ {2}return class \w+ \{\n {4}register\(\) \{$/m],
   ["register", "an unexported function declaration", ["R-CLASS-EXPR-LOCAL"], /^function \w+\(\) \{\n {2}return class \{\n {4}register\(\) \{$/m],
   ["register", "an arrow function's concise body", ["R-CLASS-EXPR-ARROW"], /^export const \w+ = \(\) =>\n {2}class \{\n {4}register\(\) \{$/m],
   ["register", "an exported const declaration's initializer", ["R-OBJECT"], /^export const \w+ = \{\n {2}register\(\) \{$/m],
   ["register", "an unexported const declaration's initializer", ["R-OBJECT-LOCAL"], /^const \w+ = \{\n {2}register\(\) \{$/m],
-  ["register", "an identifier name", ["R-PLAIN"], /^ {2}register\(\) \{$[\s\S]*^register identifier$/m],
-  ["register", "a string-literal name", ["R-STRING"], /^ {2}"register"\(\) \{$[\s\S]*^register string$/m],
-  ["register", "single-quoted", ["R-STRING-SINGLE"], /^ {2}'register'\(\) \{$[\s\S]*^register string$/m],
-  ["register", "an identifier escape", ["R-ID-ESC", "R-ID-ESC-BRACE"], /^ {2}\\u(?:0072|\{72\})egister\(\) \{$[\s\S]*^register identifier$/m],
-  ["register", "a string escape", ["R-STR-ESC", "R-STR-ESC-U", "R-STRING-SINGLE-ESC"], /^ {2}(["'])regist\\(?:x65|u0065)r\1\(\) \{$[\s\S]*^register string$/m],
-  ["register", "\\x65 in a single-quoted name", ["R-STRING-SINGLE-ESC"], /^ {2}'regist\\x65r'\(\) \{$[\s\S]*^register string$/m],
-  ["register", "a computed name", ["R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-COMPUTED-SINGLE"], /^ {2}\[[^\]\n]+\]\(\) \{$[\s\S]*^register computed-(?:string|template)$/m],
-  ["register", "through parentheses", ["R-PARENS", "R-PARENS2", "R-PARENS-TEMPLATE"], /^ {2}\[\(+["`]register["`]\)+\]\(\) \{$/m],
-  ["register", "a computed string literal", ["R-COMPUTED", "R-COMPUTED-SINGLE"], /^ {2}\[(["'])register\1\]\(\) \{$[\s\S]*^register computed-string$/m],
-  ["register", "single-quoted and unparenthesized", ["R-COMPUTED-SINGLE"], /^ {2}\['register'\]\(\) \{$[\s\S]*^register computed-string$/m],
-  ["register", "a computed no-substitution template literal", ["R-TEMPLATE", "R-PARENS-TEMPLATE"], /^ {2}\[\(*`register`\)*\]\(\) \{$[\s\S]*^register computed-template$/m],
+  ["register", "by an identifier escape in an object literal", ["R-OBJECT-LOCAL-ESC"], /^const shimLocal = \{\n {2}\\u0072egister\(\) \{$[\s\S]*^register identifier$/m],
 ];
 
 /** Each row's id and pin count, frozen at this cut (PAGES' key order, every plant in ROWS order, freezes the pin ids). */
-const FROZEN_SHAPE = ["E-U1:37", "E-U2:39", "E-U3:31", "F-U1:20", "F-U2:22", "F-U3:21", "W:100", "Q:7"] as const;
+const FROZEN_SHAPE = ["E-U1:37", "E-U2:45", "E-U3:31", "F-U1:20", "F-U2:25", "F-U3:21", "W:100", "Q:7"] as const;
 /** The header labels of the claim parts' paragraphs, in CLAIM_PARTS order. */
 const CLAIM_LABELS: Readonly<Record<string, string>> = {
   walk: "WALK",
@@ -2754,6 +2861,12 @@ const PAGES: Readonly<Record<string, string>> = {
   "U2-LIST-PLUS": "70d8918e019007d6",
   "U2-HTML-SPAN": "1bbea39d2b4eedf1",
   "U2-IMAGE-REF": "0162a606f260925e",
+  "U2-LINK-TITLE": "90b60f6d254cc934",
+  "U2-HTML-MULTILINE": "66f4a58831f2ee53",
+  "U2-DEF-SINGLE": "cbc2eebedd6146f2",
+  "U2-TABLE-ALIGNED": "17376ae28efcdbdb",
+  "U2-QUOTE-NESTED": "441ebc0860846b5b",
+  "U2-TAB-RUN": "590072d9fa095d03",
   "P-RESOLVE-TAB": "a8ca4f775c04c596",
   "P-RESOLVE-LF": "95699034de8657d8",
   "P-RESOLVE-CR": "7f8f5bc711533181",
@@ -2827,6 +2940,9 @@ const PAGES: Readonly<Record<string, string>> = {
   "R-CLASS-EXPR-NAMED": "15d2793fe76f1466",
   "R-CLASS-EXPR-ARROW": "18cc80dff3d8b2a3",
   "R-STRING-SINGLE-ESC": "4361d264f12a4674",
+  "R-TEMPLATE-ESC": "2d9b54f5ace86758",
+  "R-COMPUTED-ESC": "654c45b8c97ba196",
+  "R-OBJECT-LOCAL-ESC": "bc11347229a3341d",
   "S-TAB": "9e6153405c43eee8",
   "S-LF": "cfdb664a7af7d292",
   "S-CR": "4abb6c1fe3ec1ecc",
