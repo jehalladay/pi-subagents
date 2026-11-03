@@ -5,43 +5,77 @@
  * first: for five of the helper's exported functions, the readings over planted PATHs, planted engines and planted texts. wb-70xe's
  * own cases (its tier wiring in test/workbench-rf-tsx-tier.test.ts, its provisioning and lane census, its docs07 row R10) are not on
  * this tree; nothing here restates them, and wb-70xe's re-cut composes this helper when it lands.
+ * CUT #3, in the enumerate-the-resolvable form (rule 19(c); the SECOND-STAGE CAP ruling R-B405 on refusal #2 froze the pin READ and
+ * ANCHOR claim sets): the header claims exactly the pinned set below, each READ form known to pass the pin cases' passes unread is a
+ * NAMED RESIDUAL with a pinned quiet row, and the rest is NOT CLAIMED.
  *
- * THE PINNED READER SET (this file, test/workbench-rf-tsx-deno-identity-census.test.ts; 8 cases and the last word, a file-level
- * afterAll, each passed with this cut on trunk 7d41a63 and again on trunk d141a9a):
- *  - "the frozen shape: ..." - ROWS' `${id}:${pins.length}` equals ["ID:3", "SCAN:2"], and READ, EXPECTED and WITNESS each hold
- *    exactly one entry per pin. Falsifier: deleting a pin or a row (CT1, CT1b, CT4).
- *  - "the helper anchor: ..." - read from the helper's own source by the TypeScript parser and from its module namespace at run
- *    time. A SECTION is a `// ---- <title> ----` line comment among the leading comments of one of the helper's top-level statements
- *    or of its end of file, as ts.getLeadingCommentRanges reads them; the same characters anywhere else (inside a string, a template
- *    literal or a block, or a trailing comment) are no section. A FUNCTION EXPORT is a name of the helper's module namespace whose
- *    value is a function (a class among them), placed in the section of the top-level statement the parser reads as exporting that
- *    name: an export modifier on a function, class, variable, enum or namespace declaration (a default one under the name default),
- *    an export list with or without a from clause, or an export default expression. Every row's label is a section title, rows
- *    stand in section order, every function export is placed in exactly one section, and each section's function exports are
- *    exactly its row's pins (in the helper's order) plus its UNCLAIMED names. Falsifier: deleting, renaming or relabelling a pin or
- *    a row in this file (CT2, CT5, CT6); a function export the helper gains in any of those forms (a function or class declaration,
- *    a const holding an arrow, a function expression or another export, an export alias, a default export, a re-export) or in a
- *    form the parser does not read (then placed in no section); a section mark moved, retitled, deleted or held in a string or
- *    template literal.
- *  - one case per pin, titled by the pin under `${row.id} ${row.label}`. It runs READ three times, each time handing it a stand-in
- *    reader made by the one factory handedReader, so READ cannot tell the passes apart by what it is handed; a stand-in's n-th call
- *    (from 0) returns either the result of the function the helper module exports under the pin's own name, for the arguments READ
- *    passed, or a sentinel naming the pin and n. THE READING PASS (no sentinel): READ's reading over the pin's planted tables
- *    strictly equals the reading built here from the same tables without the helper (EXPECTED), the stand-in is called once per
- *    row, and the reading's sha256 prefix equals WITNESS. THE TWO BINDING PASSES (sentinels on the even calls, then on the odd
- *    calls): the stand-in is called once per row, each sentinel row (row n, of call n) carries its own call's sentinel and no other,
- *    and every other row strictly equals its EXPECTED row, so every row is read through the handed reader in some pass, whichever
- *    pass READ might single out by the order of its own invocations. Falsifier: each one-edit member named in that pin's clause
- *    below; any swap of a pin's reading (CT3); and a READ that reads, in any row of any pass, anything but the reader it is handed
- *    (a sibling export, the pin's export read directly, its own expectation, a constant).
+ * THE PINNED READER SET (this file, test/workbench-rf-tsx-deno-identity-census.test.ts; 10 cases and two last words, file-level
+ * afterAll hooks, each passed with this cut on trunk 5259399):
+ *  - "the frozen shape: ..." - ROWS' `${id}:${pins.length}` equals ["ID:3", "SCAN:2"]; readings(), EXPECTED and WITNESS each hold
+ *    exactly one entry per pin; QUIET's ids equal ["R-CARRIED-STATE", "R-VALUE-AWARE"], and so do, in order, the residual ids this
+ *    header's RESIDUALS paragraph names, while QUIET's titles equal, in order, the quiet rows' titles this header quotes (both read
+ *    from this file's own text, outside its literals). Falsifier: deleting a pin or a row (CT1, CT1b, CT4); a quiet row or a
+ *    residual dropped from this file's literals, named in only one of QUIET and the header, or its title shortened in QUIET.
+ *  - "the helper anchor: ..." - read from the helper's own source by the TypeScript parser and from its module namespace as this
+ *    file loads it. THE SOURCE holds no top-level variable statement but a plain const (a let, a var and a using are refused), no
+ *    var declaration anywhere (one in a block or a loop head binds a module name), no import declaration but of a node: built-in
+ *    module, no import-equals declaration, no export declaration with a from clause, and nowhere the characters @ts-; so every name of the helper's module namespace is bound by a declaration of its own (a const,
+ *    function, class, enum or namespace declaration, or an export default expression) or by an import of a node: built-in module,
+ *    each a binding tsc refuses to assign. A SECTION is a `// ---- <title> ----` line comment
+ *    among the leading comments of one of the helper's top-level statements or of its end of file, as ts.getLeadingCommentRanges
+ *    reads them; the same characters anywhere else (inside a string, a template literal or a block, or a trailing comment) are no
+ *    section. A FUNCTION EXPORT is a name of that namespace whose value is a function (a class among them), placed in the section
+ *    of the top-level statement the parser reads as exporting that name: an export modifier on a function, class, variable, enum or
+ *    namespace declaration (a default one under the name default), an export list with or without a from clause, or an export
+ *    default expression. Every row's label is a section title, rows stand in section order, every function export is placed in
+ *    exactly one section, and each section's function exports are exactly its row's pins (in the helper's order) plus its UNCLAIMED
+ *    names. Falsifier: deleting, renaming or relabelling a pin or a row in this file (CT2, CT5, CT6); a function export the helper
+ *    gains in any of those forms (a function or class declaration, a const holding an arrow, a function expression or another
+ *    export, an export alias, a default export, a re-export) or in a form the parser does not read (then placed in no section); a
+ *    section mark moved, retitled, deleted or held in a string or template literal; refusal #2's U2 member G2-A01 (a let export the
+ *    helper binds to a function at its first call) and its eager twin G2-A01t, each refused at the source.
+ *  - one case per pin, titled by the pin under `${row.id} ${row.label}`. It plants one tree under one scratch root, then runs its
+ *    three passes, in order, from one call site, before it asserts anything: in each pass READ is the pin's entry of the record
+ *    readings() builds for that pass alone, handed the one planted tree and a stand-in reader made by the one factory
+ *    handedReader, whose n-th call (from 0) returns either the result of the function the helper module exports under the pin's
+ *    own name, for the arguments READ passed, or a sentinel naming the pin and n. THE READING PASS (no sentinel): the stand-in is
+ *    called once per row, READ's reading strictly equals the reading built here from the same tables without the helper
+ *    (EXPECTED), and its sha256 prefix equals WITNESS. THE TWO BINDING PASSES (sentinels on the even calls, then on the odd calls,
+ *    so every call is a sentinel in exactly one of them): the stand-in is called once per row, each sentinel row (row n, of call n)
+ *    carries its own call's sentinel and no other, and every other row strictly equals its EXPECTED row. So a READ that, in all
+ *    three passes alike, substitutes on some row anything for its stand-in's return on that row's call - a sibling export's
+ *    reading, the pin's export read directly, its own expectation, a constant - reds at that row's sentinel. A READ chooses alike
+ *    in all three passes when its choice reads only what is the same in each: this file's tables and bindings, which no pass
+ *    writes; its entry's own closures (each pass builds a fresh record); the planted tree's paths, entry kinds and file bytes (one
+ *    tree per case); the runner's assertion count (no assertion runs until the three passes have); and the arguments it hands its
+ *    stand-in. Falsifier: each one-edit member named in that pin's clause below; any swap of a pin's
+ *    reading (CT3); refusal #1's U3 members (READ reading the sibling export, its own expectation or a constant); refusal #2's U1
+ *    members G2-B01, G2-B03, G2-B04 and G2-B05 (a pass count in the entry's own closure) and G2-B02 (the pass read from the
+ *    runner's assertion count), alone and each with its held member (G-H03, G-D02, G-P01, G-S01).
+ *  - the two quiet rows, one per residual, under "the residuals' quiet rows: ...": "R-CARRIED-STATE: a READ that counts its passes
+ *    in state outliving them keeps its stand-in's value on the sentinel calls alone, and the passes read it quiet over a held
+ *    member" and "R-VALUE-AWARE: a READ that tells a sentinel from a reading by the value its stand-in returns keeps the sentinels
+ *    alone, and the passes read it quiet over a held member" (QUIET's titles equal these quotations, in order). Each plants the tree
+ *    and runs the denoInstallHits pin's three passes three times over that pin's EXPECTED and WITNESS, every time with the stand-in
+ *    reading heldShapeIds, a planted held member (the helper's hits with their line numbers dropped, G-H03's form): with the pin's
+ *    own READ the passes break (the loud twin); with the residual's READ, from one source for the three passes, they break nothing
+ *    (the quiet page); and with the residual's READ from a source made for each pass they break for R-CARRIED-STATE, whose quiet
+ *    rides on the count its source carries, and break nothing for R-VALUE-AWARE, whose quiet does not. Falsifier: the residual's
+ *    READ made to take its stand-in's return on every row (the quiet page silenced); the held member made to read every row as the
+ *    helper does, or the denoInstallHits pin's own READ made one of the two residual forms (the loud twin silenced); one quiet row's
+ *    READ swapped for the other's; each reds the quiet rows it reaches. The residual forms on the other four pins' READs are not
+ *    read by them (RESIDUALS below).
  *  - "the registered tests and the reached pins: ..." - registered at the top level of this file after the readers' describe, so no
  *    modifier of that describe reaches it. It reads the vitest task tree: every other test of this file in run mode, not inverted
- *    and ran before it, titles unique and in order, and every pin reached its compare in row order. THE LAST WORD, this file's own
- *    afterAll, reads the same tree after every case has run, through the file task the top-level afterEach leaves after each case
- *    that ran (when none left it, the tree reads empty): the liveness case is registered once, in run mode, not inverted, and
- *    passed. Falsifier: a skipped, todo, failing-inverted or missing case at any level of this file - the readers' describe, a row's
- *    describe, a case, the liveness case itself - in each form vitest offers: the chained modifiers skip, todo, fails, skipIf and
- *    runIf, the options skip, todo and fails, and the context's skip() in a case or in a hook.
+ *    and ran before it, titles unique and in order, every pin reached its compare in row order and then every quiet row its own.
+ *    THE LAST WORD, this file's own afterAll, reads the same tree after every case has run, through the file task the top-level
+ *    afterEach leaves after each case that ran (when none left it, the tree reads empty): the liveness case is registered once, in
+ *    run mode, not inverted, and passed. Falsifier: a skipped, todo, failing-inverted or missing case at any level of this file -
+ *    the readers' describe, a row's describe, a case, the liveness case itself - in each form vitest offers: the chained modifiers
+ *    skip, todo, fails, skipIf and runIf, the options skip, todo and fails, and the context's skip() in a case or in a hook.
+ *  - THE LAST WORD ON THE NAMESPACE, a second file-level afterAll: once every case has run, the helper's module namespace holds
+ *    exactly the names it held as this file loaded it, each bound to the same value (Object.is). Falsifier: G2-A01 (its let export
+ *    reads undefined at load and a function at the last word).
  *
  * THE CLAIMS, pin by pin (each clause is its pin's tables and nothing wider). Paths are planted under one scratch root and read back
  * with that root, and its realpath, written <root>. The falsifiers named are the one-edit members wb-70xe's refusals #3 (O:1718) and
@@ -84,19 +118,24 @@
  * three levels up, depth 3 here, with every depth to DEPTH_BOUND), U3 (deno.exe and a trailing-space name, with a leading-space one)
  * and U6 (shims2 among NEAR_NAMES) are pinned above; its U4 (a), (b) and (d) are pinned at the scan, and its U4 (c) (hits in a
  * dot-named file) is a property of the lane walk's file names, which the scan never receives (NOT CLAIMED below); its U5 (the
- * residual table's row-level frozen shape) belongs to wb-70xe's lane census, which holds the residual table and is not on this tree,
- * and this census holds no residual table. Refusal #4's U1 (a symlink at <x>/shims/v1/deno, shims two levels up on the resolved path
- * alone, to an engine outside any shims directory) and U2 (a symlink to a directory before an engine) are pinned above; their tier
- * pages are wb-70xe's tier wiring, NOT CLAIMED here. This bead's own refusal #1 (O:1840): its U1 (a collection skip of the readers'
- * describe, which also skipped the liveness case) is pinned by the liveness case standing outside that describe and by the last
- * word; its U2 (function exports in forms other than a named function declaration, and section marks read by a line pattern over
- * the raw text) by the anchor's parser and namespace reading; its U3 (READ bound to its handed reader by this file's text alone) by
- * the pin cases' three passes.
+ * residual table's row-level frozen shape) belongs to wb-70xe's lane census, which holds the residual table and is not on this tree;
+ * this census's own residual list is QUIET, held to the header above. Refusal #4's U1 (a symlink at <x>/shims/v1/deno, shims two
+ * levels up on the resolved path alone, to an engine outside any shims directory) and U2 (a symlink to a directory before an engine)
+ * are pinned above; their tier pages are wb-70xe's tier wiring, NOT CLAIMED here. This bead's own refusal #1 (O:1840): its U1 (a
+ * collection skip of the readers' describe, which also skipped the liveness case) is pinned by the liveness case standing outside
+ * that describe and by the last word; its U2 (function exports in forms other than a named function declaration, and section marks
+ * read by a line pattern over the raw text) by the anchor's parser and namespace reading; its U3 (READ bound to its handed reader by
+ * this file's text alone) by the pin cases' binding passes. This bead's refusal #2 (O:1886), whose pin READ and ANCHOR claim sets
+ * R-B405 froze: its U1 (READs that tell the passes apart by a count in the entry's own closure or by the runner's assertion count,
+ * G2-B01 to G2-B05, under which the held members G-H03, G-D02 and G-P01 read green) is pinned by each pass building its own record
+ * over the one planted tree before any assertion runs; its U2 (the late-bound let export G2-A01, beside its eager twin G2-A01t) by
+ * the anchor's source reading and the last word on the namespace. The READ forms that tell the passes apart otherwise are the two
+ * residuals below.
  *
- * NOT CLAIMED (scope sentences; no residual, no follow-up): every UNCLAIMED function export of the helper (the class
- * DenoIdentityRefusal and the functions echoPath, sha256Of and pinnedDenoDigest), every helper export whose value is not a function
- * (each helper constant), and a function reachable only as a member of an export (a class's static or instance member, a property
- * of an object or an array); for a pinned reader, every input outside its tables. For resolveOnPath: a name other
+ * NOT CLAIMED (scope sentences; no follow-up): every UNCLAIMED function export of the helper (the class DenoIdentityRefusal and the
+ * functions echoPath, sha256Of and pinnedDenoDigest), every helper export whose value is not a function (each helper constant), and
+ * a function reachable only as a member of an export (a class's static or instance member, a property of an object or an array);
+ * for a pinned reader, every input outside its tables. For resolveOnPath: a name other
  * than deno, an entry kind outside ENTRY_KINDS (a FIFO, a socket, a device, a symlink loop, an entry the user may not search, an
  * executable the user may not read), an empty entry inside PATH, a relative entry, an empty PATH read from a working directory that
  * holds a deno, and a PATH longer than PATH_BOUND. For shimReasons and provisionedDeno: an engine carrying two or more marks (the
@@ -107,15 +146,28 @@
  * wb-70xe's lane census's claim), a text holding more than one install line, a second hit on one line, a line past the planted
  * positions, a line longer than the largest LONG_SIZES length plus its install line, a lead outside LEADS, and a carriage return
  * before a newline. And the tier wiring of these readers, the lane walk and what it reads of file names, the residual families the
- * helper's header names for wb-70xe's lane census, and wb-70xe's docs07 row R10. For the pin cases: a READ that calls its handed
- * reader and then, telling a sentinel from a reading by the value returned, substitutes another reading for that value. For the
- * liveness case and the last word: a vitest run that selects none of this file's cases (a name or line filter that matches none, a
- * configuration that excludes the file) and a set of edits that skips every case of this file at once (the readers' describe and
- * the liveness case both); vitest then runs no case and no hook of the file. This census names no residual: every member the bead
- * carries is pinned above or placed outside it here.
+ * helper's header names for wb-70xe's lane census, and wb-70xe's docs07 row R10. For the pin cases: a READ whose choice reads what
+ * differs between the passes without telling them apart (the clock, a random draw), so that it substitutes on a row a pass holds
+ * to EXPECTED by chance alone. For the anchor: a namespace binding changed after the last words through a path the source reading
+ * leaves open, a direct eval (biome's recommended noGlobalEval refuses one; this file does not read for it). For the liveness case
+ * and the last word: a vitest run that selects none of this file's cases (a name
+ * or line filter that matches none, a configuration that excludes the file) and a set of edits that skips every case of this file
+ * at once (the readers' describe and the liveness case both); vitest then runs no case and no hook of the file.
  *
- * FROZEN SHAPE (standing rule 16): the literal above. THE ANCHOR outside this file's literals is the helper's own source and its
- * module namespace: its sections and its function exports, read as the anchor case above says.
+ * RESIDUALS (named families, each with its pinned quiet row, a case of its own): R-CARRIED-STATE, a READ that tells the passes apart
+ * by state an earlier pass leaves - a count it keeps on globalThis or on what that reaches (process.env among them), on a table,
+ * an array or a map of this file, on an imported module's objects, or on the planted tree (a file it writes, the tree's
+ * descriptor, a time a read leaves on a file) - and takes its stand-in's return on the calls that pass makes sentinels alone, its
+ * own expectation on every other row: the passes break nothing, so a held member under it is not read (the form of refusal #2's
+ * G2-B01, its count moved out of the fresh record into state that outlives it). R-VALUE-AWARE, a READ that tells a sentinel from a
+ * reading by what a call of its stand-in shows - the value it returns, a throw, how long it takes - and takes its stand-in's
+ * return on the sentinel calls alone, its own expectation on every other row: the same (cut #2's NOT CLAIMED boundary W-B14, named
+ * here). On the denoInstallHits pin either form reds through the quiet rows' loud twin, which reads that pin's own READ; on the
+ * other four pins neither does.
+ *
+ * FROZEN SHAPE (standing rule 16): the two literals above, ROWS' ids and pin counts and QUIET's ids. THE ANCHORS outside this
+ * file's literals: for ROWS, the helper's own source and its module namespace (its sections and its function exports, read as the
+ * anchor case above says); for QUIET, this header's RESIDUALS paragraph (the ids) and its quotations of the quiet rows' titles.
  *
  * Display paths added: none. Test-only: nothing is executed, spawned or installed; the planted engines are text files under a
  * scratch root, and the helper's source is only read.
@@ -124,6 +176,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
 import { delimiter, dirname, join, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it, type RunnerTestFile } from "vitest";
 import * as helper from "./helpers/rf-tsx-deno.js";
@@ -412,24 +465,26 @@ const UNCLAIMED: Readonly<Record<string, readonly string[]>> = {
   "the digest half": ["sha256Of", "pinnedDenoDigest"],
 };
 
-/** Each pin's reading, handed the stand-in reader its pin case makes with handedReader (the helper's export, or the sentinels). */
-const READ: Readonly<Record<string, (reader: unknown) => unknown>> = {
-  resolveOnPath: reader => {
+/** A pin's reading: handed the stand-in reader its pin case makes with handedReader, and the case's one planted tree. */
+type ReadFn = (reader: unknown, planted: Planted) => unknown;
+/**
+ * Each pin's reading (READ), in a record built afresh by every call: each pass of a pin case calls readings() once and reads its
+ * pin's entry, so no closure an entry makes lives from one pass into the next.
+ */
+const readings = (): Readonly<Record<string, ReadFn>> => ({
+  resolveOnPath: (reader, planted) => {
     const read = reader as typeof helper.resolveOnPath;
-    const planted = plantAll();
     return PATH_ROWS.map((row, index) => ({ key: row.key, read: rooted(planted, read(ENGINE, pathOf(planted, index, row.path))) }));
   },
-  shimReasons: reader => {
+  shimReasons: (reader, planted) => {
     const read = reader as typeof helper.shimReasons;
-    const planted = plantAll();
     return MARK_ROWS.map(row => {
       const resolved = join(planted.root, row.resolved);
       return { key: row.key, read: outcome(planted, () => read({ resolved, realpath: realpathSync(resolved) })) };
     });
   },
-  provisionedDeno: reader => {
+  provisionedDeno: (reader, planted) => {
     const read = reader as typeof helper.provisionedDeno;
-    const planted = plantAll();
     return [
       ...MARK_ROWS.map(row => ({ key: row.key, read: outcome(planted, () => read(dirname(join(planted.root, row.resolved)))) })),
       ...PATH_ROWS.map((row, index) => ({ key: row.key, read: outcome(planted, () => read(pathOf(planted, index, row.path))) })),
@@ -443,7 +498,7 @@ const READ: Readonly<Record<string, (reader: unknown) => unknown>> = {
     const read = reader as typeof helper.denoInstallHits;
     return TEXT_ROWS.map(row => ({ key: row.key, read: read(row.text) }));
   },
-};
+});
 
 const EXPECTED: Readonly<Record<string, () => unknown>> = {
   resolveOnPath: () => PATH_ROWS.map((row, index) => ({ key: row.key, read: resolutionOf(index, row.path)?.resolved ?? null })),
@@ -475,7 +530,7 @@ function digest(value: unknown): string {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0, 16);
 }
 
-// ---- the handed reader: the reading pass and the binding pass ----
+// ---- the handed reader: the reading pass and the two binding passes ----
 
 /** The sentinel the binding pass's stand-in returns on its `call`-th call (from 0) for `pin`. */
 function sentinel(pin: string, call: number): string {
@@ -497,10 +552,14 @@ function handedReader(pin: string, target: unknown, sentinelAt: (call: number) =
     return typeof target === "function" && !sentinelAt(call) ? Reflect.apply(target, undefined, args) : sentinel(pin, call);
   };
 }
-/** The two binding passes: the stand-in returns a sentinel on its even calls in one and on its odd calls in the other. */
-const BINDING_PASSES: readonly { readonly label: string; readonly sentinelAt: (call: number) => boolean }[] = [
-  { label: "even", sentinelAt: call => call % 2 === 0 },
-  { label: "odd", sentinelAt: call => call % 2 === 1 },
+/**
+ * The three passes of a pin case, in order: the reading pass (no sentinel), then the two binding passes, whose stand-in returns a
+ * sentinel on its even calls in one and on its odd calls in the other.
+ */
+const PASSES: readonly { readonly label: string; readonly binding: boolean; readonly sentinelAt: (call: number) => boolean }[] = [
+  { label: "reading", binding: false, sentinelAt: () => false },
+  { label: "even", binding: true, sentinelAt: call => call % 2 === 0 },
+  { label: "odd", binding: true, sentinelAt: call => call % 2 === 1 },
 ];
 interface ReadRow {
   readonly key: string;
@@ -516,6 +575,52 @@ function rowsOf(reading: unknown): ReadRow[] {
     return { key: entry.key, read: entry.read };
   });
 }
+/** One pass of a pin case: the pass, how many times READ called its stand-in, and READ's reading as its JSON reads back. */
+interface PassRun {
+  readonly label: string;
+  readonly binding: boolean;
+  readonly sentinelAt: (call: number) => boolean;
+  readonly calls: number;
+  readonly reading: unknown;
+}
+/**
+ * The three passes, run in PASSES order from this one call site before the case asserts anything: each takes the READ that `fresh`
+ * builds for it alone, handed a stand-in from handedReader over `target` (its own call count) and the one planted tree.
+ */
+function passRuns(pin: string, fresh: () => ReadFn | undefined, target: unknown, planted: Planted): PassRun[] {
+  return PASSES.map(pass => {
+    const calls = { count: 0 };
+    const read = fresh();
+    const reading = read === undefined ? null : plain(read(handedReader(pin, target, pass.sentinelAt, calls), planted));
+    return { ...pass, calls: calls.count, reading };
+  });
+}
+/**
+ * What the passes break, one line per broken check (none when every check holds): the passes are one reading pass and two binding
+ * passes in which every call is a sentinel exactly once; each pass calls its stand-in once per row; the reading pass's reading
+ * strictly equals `want` and its sha256 prefix is `witness`; in each binding pass each sentinel row carries its own call's sentinel
+ * and no other, and every other row strictly equals its `want` row.
+ */
+function passFailures(pin: string, runs: readonly PassRun[], want: unknown, witness: string | undefined): string[] {
+  const rows = rowsOf(want);
+  const binding = runs.filter(run => run.binding);
+  const failures: string[] = [];
+  const unbound = rows.filter((_, call) => binding.filter(run => run.sentinelAt(call)).length !== 1).length;
+  if (runs.length !== 3 || binding.length !== 2 || unbound > 0) failures.push(`${pin}: ${runs.length} passes, ${binding.length} binding, ${unbound} calls not a sentinel exactly once`);
+  for (const run of runs) {
+    if (run.calls !== rows.length) failures.push(`${pin}: the ${run.label} pass calls its stand-in ${run.calls} times for ${rows.length} rows`);
+    if (!run.binding) {
+      if (!isDeepStrictEqual(run.reading, want)) failures.push(`${pin}: the ${run.label} pass's reading is not its EXPECTED reading`);
+      if (digest(run.reading) !== witness) failures.push(`${pin}'s witness: the ${run.label} pass reads ${digest(run.reading)}, not ${String(witness)}`);
+      continue;
+    }
+    const bound = rowsOf(run.reading).map((entry, call) => (run.sentinelAt(call) ? { key: entry.key, sentinels: sentinelsIn(entry.read) } : entry));
+    const held = rows.map((entry, call) => (run.sentinelAt(call) ? { key: entry.key, sentinels: [sentinel(pin, call)] } : entry));
+    const broken = held.filter((entry, call) => !isDeepStrictEqual(bound[call], entry)).length + Math.max(0, bound.length - held.length);
+    if (broken > 0) failures.push(`${pin}: the ${run.label} binding pass breaks ${broken} rows (a sentinel row not carrying exactly its own call's sentinel, or another row not its EXPECTED row)`);
+  }
+  return failures;
+}
 
 // ---- the anchor: the helper's own source and its module namespace ----
 
@@ -524,7 +629,7 @@ interface Section {
   readonly functions: string[];
 }
 const SECTION_MARK = /^\/\/ ---- (.+) ----$/;
-/** The helper's module namespace at run time: each export name and its value. */
+/** The helper's module namespace as this file loads it: each export name and its value (the last word reads it again). */
 const NAMESPACE: ReadonlyMap<string, unknown> = new Map(Object.entries(helper));
 /** The names a binding declares: an identifier, or every identifier of a destructuring pattern. */
 function bindingNames(name: ts.BindingName): string[] {
@@ -556,6 +661,101 @@ function exportedNames(statement: ts.Statement): string[] {
   return [];
 }
 /**
+ * What the anchor refuses in the helper's own source, one line each (none when it holds): a top-level variable statement whose
+ * declaration list is not a plain const (a let, a var, a using), a var declaration anywhere (one in a block or a loop head at the
+ * top level binds a module name), an import declaration of anything but a node: built-in module, an import-equals declaration,
+ * an export declaration with a from clause, and the characters @ts- anywhere in its text (a directive that would silence a type
+ * error). Under them every name the helper's module namespace holds is bound by a const, a
+ * function, a class, an enum or a namespace declaration of its own, each a binding tsc refuses to assign (TS2588, TS2630, TS2629,
+ * TS2628, TS2631).
+ */
+function helperRefusals(): string[] {
+  const text = readFileSync(HELPER_PATH, "utf8");
+  const file = ts.createSourceFile(HELPER_PATH, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const refusals: string[] = [];
+  for (const statement of file.statements) {
+    const at = `:${file.getLineAndCharacterOfPosition(statement.getStart(file)).line + 1}`;
+    if (ts.isVariableStatement(statement) && (statement.declarationList.flags & ts.NodeFlags.BlockScoped) !== ts.NodeFlags.Const) refusals.push(`${at} a top-level variable statement that is no plain const`);
+    if (ts.isImportDeclaration(statement) && !(ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text.startsWith("node:"))) refusals.push(`${at} an import of a module that is no node: built-in`);
+    if (ts.isImportEqualsDeclaration(statement)) refusals.push(`${at} an import-equals declaration`);
+    if (ts.isExportDeclaration(statement) && statement.moduleSpecifier !== undefined) refusals.push(`${at} an export declaration with a from clause`);
+  }
+  const varsIn = (node: ts.Node): void => {
+    if (ts.isVariableDeclarationList(node) && (node.flags & ts.NodeFlags.BlockScoped) === 0) {
+      refusals.push(`:${file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1} a var declaration`);
+    }
+    ts.forEachChild(node, varsIn);
+  };
+  varsIn(file);
+  if (text.includes("@ts-")) refusals.push("the characters @ts- in its text");
+  return refusals;
+}
+/** The quiet rows' titles this file's header quotes, in order: each "R-<family>: ..." quotation, read with its line breaks joined. */
+function headerQuietTitles(): string[] {
+  const header = (/^\/\*\*([\s\S]*?)\*\//.exec(readFileSync(fileURLToPath(import.meta.url), "utf8"))?.[1] ?? "").replace(/\n \*\s*/g, " ");
+  return [...header.matchAll(/"(R-[A-Z]+(?:-[A-Z]+)*: [^"]+)"/g)].map(match => match[1] ?? "");
+}
+/** The residual ids this file's header names, in order: its RESIDUALS paragraph, read from this file's own text. */
+function headerResiduals(): string[] {
+  const header = /^\/\*\*([\s\S]*?)\*\//.exec(readFileSync(fileURLToPath(import.meta.url), "utf8"))?.[1] ?? "";
+  const paragraph = /\n \* RESIDUALS \(([\s\S]*?)\n \*\n/.exec(header)?.[1] ?? "";
+  return [...new Set(paragraph.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])];
+}
+
+// ---- the residuals' quiet rows: the denoInstallHits pin's passes over a planted held member ----
+
+/** The pin the quiet rows read: its tables, its EXPECTED and its WITNESS are its pin case's own. */
+const QUIET_PIN = "denoInstallHits";
+/** A planted held member (G-H03's form): the helper's hits with their line numbers dropped, so every row holding a hit reads wrong. */
+function heldShapeIds(text: string): string[] {
+  return helper.denoInstallHits(text).map(hit => hit.slice(hit.indexOf(":") + 1));
+}
+/** What a residual's READ substitutes on a row: that row's own expectation. */
+function ownHits(index: number): string[] {
+  return [...(TEXT_ROWS[index]?.hits ?? [])];
+}
+interface Quiet {
+  readonly id: string;
+  readonly title: string;
+  /** A source of the residual's READ, made once per quiet row: each call builds one pass's READ, and what the source holds outlives them. */
+  readonly source: () => () => ReadFn;
+  /** Whether the READ's quiet rides on what its source carries across the passes: with a source made for each pass, it breaks them. */
+  readonly carried: boolean;
+}
+/** Each residual's quiet row: its id, its case title and the READ form the three passes read quiet. */
+const QUIET: readonly Quiet[] = [
+  {
+    id: "R-CARRIED-STATE",
+    title: "R-CARRIED-STATE: a READ that counts its passes in state outliving them keeps its stand-in's value on the sentinel calls alone, and the passes read it quiet over a held member",
+    source: () => {
+      const carried = { passes: 0 };
+      return () => reader => {
+        const pass = PASSES[carried.passes];
+        carried.passes += 1;
+        const read = reader as typeof helper.denoInstallHits;
+        return TEXT_ROWS.map((row, index) => {
+          const handed = read(row.text);
+          return { key: row.key, read: pass?.sentinelAt(index) === true ? handed : ownHits(index) };
+        });
+      };
+    },
+    carried: true,
+  },
+  {
+    id: "R-VALUE-AWARE",
+    title: "R-VALUE-AWARE: a READ that tells a sentinel from a reading by the value its stand-in returns keeps the sentinels alone, and the passes read it quiet over a held member",
+    source: () => () => reader => {
+      const read = reader as (text: string) => unknown;
+      return TEXT_ROWS.map((row, index) => {
+        const handed = read(row.text);
+        return { key: row.key, read: typeof handed === "string" ? handed : ownHits(index) };
+      });
+    },
+    carried: false,
+  },
+];
+
+/**
  * The helper's sections, in order: each `// ---- <title> ----` line comment among the leading comments of a top-level statement or
  * of the end of file (ts.getLeadingCommentRanges), and the function exports placed in it - every name a statement after the mark
  * exports (exportedNames) whose value in the module namespace is a function.
@@ -584,20 +784,27 @@ function helperSections(): Section[] {
 }
 
 const REACHED: string[] = [];
-const FROZEN_TITLE = "the frozen shape: the rows' ids and pin counts, and one reading, one expectation and one witness per pin";
-const ANCHOR_TITLE = "the helper anchor: each row is a helper section, and every function the helper's module namespace exports is placed in one section as its pin or UNCLAIMED";
+const FROZEN_TITLE = "the frozen shape: the rows' ids and pin counts, one reading, one expectation and one witness per pin, and the quiet rows the header's residuals name";
+const ANCHOR_TITLE = "the helper anchor: the helper's source binds every export by a declaration tsc refuses to assign, each row is a helper section, and every function its module namespace exports is placed in one section as its pin or UNCLAIMED";
 const LIVENESS_TITLE = "the registered tests and the reached pins: every other test in run mode, not inverted and ran before this case, and every pin reached its compare in row order";
 
 describe("wb-j4sm identity census: 5 readers of test/helpers/rf-tsx-deno.ts over planted PATHs, engines and texts", () => {
   it(FROZEN_TITLE, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["ID:3", "SCAN:2"]);
     const pins = ROWS.flatMap(row => row.pins);
-    expect(Object.keys(READ).sort(), "one reading per pin").toEqual([...pins].sort());
+    expect(Object.keys(readings()).sort(), "one reading per pin").toEqual([...pins].sort());
     expect(Object.keys(EXPECTED).sort(), "one expectation per pin").toEqual([...pins].sort());
     expect(Object.keys(WITNESS).sort(), "one witness per pin").toEqual([...pins].sort());
+    expect(
+      QUIET.map(quiet => quiet.id),
+      "the residuals' quiet rows",
+    ).toEqual(["R-CARRIED-STATE", "R-VALUE-AWARE"]);
+    expect(headerResiduals(), "the residuals this file's header names, in order, are the quiet rows'").toEqual(QUIET.map(quiet => quiet.id));
+    expect(headerQuietTitles(), "the quiet rows' titles this file's header quotes, in order").toEqual(QUIET.map(quiet => quiet.title));
   });
 
   it(ANCHOR_TITLE, () => {
+    expect(helperRefusals(), "what the anchor refuses in the helper's source").toEqual([]);
     const sections = helperSections();
     const titles = sections.map(section => section.title);
     expect(
@@ -632,33 +839,40 @@ describe("wb-j4sm identity census: 5 readers of test/helpers/rf-tsx-deno.ts over
     describe(`${row.id} ${row.label}`, () => {
       for (const pin of row.pins) {
         it(pin, { timeout: 60_000 }, () => {
-          const read = READ[pin];
-          const expected = EXPECTED[pin];
-          expect(read, `no reading for ${pin}`).toBeTypeOf("function");
-          expect(expected, `no expectation for ${pin}`).toBeTypeOf("function");
           const reader: unknown = Object.entries(helper).find(([name]) => name === pin)?.[1];
-          expect(reader, `the helper exports no function ${pin}`).toBeTypeOf("function");
+          const planted = plantAll();
+          const runs = passRuns(pin, () => readings()[pin], reader, planted);
+          const expected = EXPECTED[pin];
+          expect(
+            { read: typeof readings()[pin], expected: typeof expected, reader: typeof reader },
+            `${pin}: a reading, an expectation and a helper export of the pin's name`,
+          ).toEqual({ read: "function", expected: "function", reader: "function" });
           const want = expected === undefined ? undefined : plain(expected());
-          const readingCalls = { count: 0 };
-          const reading = read === undefined ? null : plain(read(handedReader(pin, reader, () => false, readingCalls)));
-          expect(reading).toStrictEqual(want);
-          const rows = rowsOf(want);
-          expect(readingCalls.count, `${pin}: the reading pass calls the helper's export once per row`).toBe(rows.length);
-          expect(digest(reading), `${pin}'s witness`).toBe(WITNESS[pin]);
-          for (const pass of BINDING_PASSES) {
-            const calls = { count: 0 };
-            const bound = rowsOf(read === undefined ? null : plain(read(handedReader(pin, reader, pass.sentinelAt, calls))));
-            expect(calls.count, `${pin}: the ${pass.label} binding pass calls its stand-in once per row`).toBe(rows.length);
-            expect(
-              bound.map((entry, call) => (pass.sentinelAt(call) ? { key: entry.key, sentinels: sentinelsIn(entry.read) } : entry)),
-              `${pin}: in the ${pass.label} binding pass each sentinel row carries its own call's sentinel and no other, and every other row is its EXPECTED row`,
-            ).toStrictEqual(rows.map((entry, call) => (pass.sentinelAt(call) ? { key: entry.key, sentinels: [sentinel(pin, call)] } : entry)));
-          }
+          expect(passFailures(pin, runs, want, WITNESS[pin]), `${pin}: the reading pass and the two binding passes`).toEqual([]);
           REACHED.push(pin);
         });
       }
     });
   }
+
+  describe("the residuals' quiet rows: the denoInstallHits pin's three passes over a planted held member", () => {
+    for (const quiet of QUIET) {
+      it(quiet.title, { timeout: 60_000 }, () => {
+        const planted = plantAll();
+        const expected = EXPECTED[QUIET_PIN];
+        const want = expected === undefined ? undefined : plain(expected());
+        const loud = passFailures(QUIET_PIN, passRuns(QUIET_PIN, () => readings()[QUIET_PIN], heldShapeIds, planted), want, WITNESS[QUIET_PIN]);
+        const read = quiet.source();
+        const silent = passFailures(QUIET_PIN, passRuns(QUIET_PIN, read, heldShapeIds, planted), want, WITNESS[QUIET_PIN]);
+        const rebuilt = passFailures(QUIET_PIN, passRuns(QUIET_PIN, () => quiet.source()(), heldShapeIds, planted), want, WITNESS[QUIET_PIN]);
+        expect(
+          { loud: loud.length > 0, quiet: silent, rebuiltLoud: rebuilt.length > 0 },
+          `${quiet.id}: the pin's own READ breaks the passes over the held member (the loud twin), the residual's READ breaks none, and with a source made for each pass it breaks them exactly when its quiet rides on carried state`,
+        ).toEqual({ loud: true, quiet: [], rebuiltLoud: quiet.carried });
+        REACHED.push(quiet.id);
+      });
+    }
+  });
 });
 
 // The liveness case stands at the top level of the file, after the readers' describe, so no modifier of that describe reaches it.
@@ -672,7 +886,7 @@ it(LIVENESS_TITLE, ({ task }) => {
   };
   walk(task.file.tasks);
   const titles = walked.map(entry => entry.name);
-  expect(titles, "every registered test of this file (vitest task tree), in order").toEqual([FROZEN_TITLE, ANCHOR_TITLE, ...ROWS.flatMap(row => row.pins), LIVENESS_TITLE]);
+  expect(titles, "every registered test of this file (vitest task tree), in order").toEqual([FROZEN_TITLE, ANCHOR_TITLE, ...ROWS.flatMap(row => row.pins), ...QUIET.map(quiet => quiet.title), LIVENESS_TITLE]);
   expect(
     titles.filter((name, index) => titles.indexOf(name) !== index),
     "titles registered twice",
@@ -685,7 +899,7 @@ it(LIVENESS_TITLE, ({ task }) => {
     walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(reading),
     "every other test is in run mode, not inverted, and ran before this case",
   ).toEqual([]);
-  expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+  expect(REACHED, "every pin reached its passes' compare, in row order, and then every quiet row its own").toEqual([...ROWS.flatMap(row => row.pins), ...QUIET.map(quiet => quiet.id)]);
 });
 
 // THE LAST WORD: no case can read its own skip, so this file's afterAll reads the liveness case once every case has run. The file
@@ -704,4 +918,13 @@ afterAll(() => {
   };
   walk(FILE.task?.tasks ?? []);
   expect(liveness, "the last word: the liveness case is registered once, in run mode, not inverted, and passed").toEqual(["run | pass"]);
+});
+// THE LAST WORD ON THE NAMESPACE: once every case has run, the helper's module namespace holds exactly the names it held as this
+// file loaded it, each bound to the same value.
+afterAll(() => {
+  const now = new Map(Object.entries(helper));
+  const changed = [...new Set([...NAMESPACE.keys(), ...now.keys()])]
+    .filter(name => !(NAMESPACE.has(name) && now.has(name) && Object.is(NAMESPACE.get(name), now.get(name))))
+    .map(name => `${name}: ${NAMESPACE.has(name) ? typeof NAMESPACE.get(name) : "absent"} at load, ${now.has(name) ? typeof now.get(name) : "absent"} at the last word`);
+  expect(changed, "the last word: the helper's module namespace holds the names it held at load, each bound to the same value").toEqual([]);
 });
