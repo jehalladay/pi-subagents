@@ -294,6 +294,51 @@
      "pin": "P1",
      "page": "3991d4983ea4679e",
      "falsifies": "refusal #2 U2 plant p1.js: in a JavaScript module a require const reads <opaque X:import>, a require pattern element <opaque join:import>, and a literal const \"y\""
+    },
+    {
+     "pin": "GP6-K3",
+     "page": "4034e4a19b8db124",
+     "falsifies": "refusal #5 U1c member GP6-K3 (namespace only for a top-level namespace's body): its twin page gp6-k3-0, a const exported from the body of a namespace nested in one (A.B) and one exported from a dotted namespace's body (C.D), reads <opaque X:namespace> and <opaque Y:namespace>, never their initializers"
+    },
+    {
+     "pin": "GP6-K1",
+     "page": "e3ab6a3ac8faf8dc",
+     "falsifies": "refusal #5 U1d member GP6-K1 (a class declaration in a block reads other): its twin page gp6-k1-0, a class declared in the body of a function declared at the top level, reads <opaque BK:class>"
+    },
+    {
+     "pin": "GP6-K2",
+     "page": "162e5392eb8854e8",
+     "falsifies": "refusal #5 U1d member GP6-K2 (a function declaration in a block reads other): its twin page gp6-k2-0, a function declared in the body of a function declared at the top level, reads <opaque BF:function>"
+    },
+    {
+     "pin": "GP6-K4",
+     "page": "6dfda9426f8292f5",
+     "falsifies": "refusal #5 U1d member GP6-K4 (a namespace declared in a namespace reads other): its twin page gp6-k4-0, a namespace declared in the body of a namespace declared at the top level, reads <opaque B:namespace>"
+    },
+    {
+     "pin": "GP6-K8",
+     "page": "afe91a64c166c41e",
+     "falsifies": "refusal #5 U1d member GP6-K8 (an enum declared in a block reads other): its twin page gp6-k8-0, an enum declared in the body of a function declared at the top level, reads <opaque BE:enum>"
+    },
+    {
+     "pin": "GP6-K5",
+     "page": "326b22114cf469e1",
+     "falsifies": "refusal #5 U1e member GP6-K5 (a method's parameter reads other): its twin page gp6-k5-0, a parameter of a method of a class declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP6-K6",
+     "page": "2c959bd23bf7daf2",
+     "falsifies": "refusal #5 U1e member GP6-K6 (a set accessor's parameter reads other): its twin page gp6-k6-0, the parameter of a set accessor of a class declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP6-K12",
+     "page": "7ed19c1a940b447a",
+     "falsifies": "refusal #5 U1f member GP6-K12 (a let in a for-of head reads using): its twin page gp6-k12-0, a let declared in a for-of statement's head at the top level, reads <opaque L:let>"
+    },
+    {
+     "pin": "GP6-K13",
+     "page": "b61b896956eece82",
+     "falsifies": "refusal #5 U1f member GP6-K13 (a var in a for-of head reads using): its twin page gp6-k13-0, a var declared in a for-of statement's head at the top level, reads <opaque V:var>"
     }
    ]
   },
@@ -751,7 +796,7 @@
     {
      "pin": "XW-FORMS",
      "page": "1928d101612b5975",
-     "falsifies": "a tab and a newline split words; a relative path and a Windows path reduce to their base names; .CMD and .Exe drop in either case; a .exe that is not trailing (z.exe.bak) stays"
+     "falsifies": "a tab and a newline split words; a relative path and a Windows path reduce to their base names; .CMD and .Exe drop; a .exe that is not trailing (z.exe.bak) stays"
     },
     {
      "pin": "M59",
@@ -797,6 +842,21 @@
      "pin": "XW-CUTS",
      "page": "4bf62cabfd695a87",
      "falsifies": "a/b cuts to b and c\\d to d; e/, f\\, .EXE and x/.cmd each cut to the empty word; each word once: rf b d and the empty word"
+    },
+    {
+     "pin": "GP6-W1",
+     "page": "598c82016a34b9ee",
+     "falsifies": "refusal #5 U1a member GP6-W1 (a lower-case trailing .exe kept): its twin page gp6-w1-0, \"rf x.exe\", reads rf x: a trailing .exe in lower case drops"
+    },
+    {
+     "pin": "GP6-W3",
+     "page": "da286de5eeeb7c81",
+     "falsifies": "refusal #5 U1b member GP6-W3 (a word holding both / and \\ cut after its last /): its twin page gp6-w3-0, \"rf a/b\\c\", reads rf c: the word cuts after whichever separator comes last, here a \\"
+    },
+    {
+     "pin": "XW-MIXED",
+     "page": "523724266a858b2f",
+     "falsifies": "a word holding both separators cuts after whichever comes last, in either order: a/b\\c to c, d\\e/f to f and g\\h/i\\j to j (rf c f j)"
     }
    ]
   },
@@ -833,6 +893,16 @@
      "pin": "XP-CUTS",
      "page": "a71f653e19fcf17e",
      "falsifies": "the program a=b,c reads its one word; .EXE, /usr/bin/rf/ and x/.cmd y read the empty first word"
+    },
+    {
+     "pin": "GP6-W1-PROGRAM",
+     "page": "a5d982bd015b4945",
+     "falsifies": "refusal #5 U1a member GP6-W1's program twin gp6-w1-1: spawn(\"rf.exe\") reads spawn:rf, READINGS (2)'s first word with its lower-case .exe dropped"
+    },
+    {
+     "pin": "GP6-W3-PROGRAM",
+     "page": "c0f58295d8d3b70c",
+     "falsifies": "refusal #5 U1b member GP6-W3's program twin gp6-w3-1: spawn(\"C:/tools\\rf.cmd\") reads spawn:rf, the first word cut after its last separator (a \\, after a /) and its .cmd dropped"
     }
    ]
   },
