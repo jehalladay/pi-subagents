@@ -12,14 +12,16 @@
  * cross-block references of merged instantiated namespaces (jiti wraps the IIFE unqualified, so they bind the host global)
  * and reads import.meta.env as Pi's process.env alias; judge mutants GJ1/GJ4/GJ15/GJ16 killed". Ruling R-B166 (the bead's
  * notes) folds wb-021.2 refusal #4's unmet members into it: the instantiation-expression hole (IE1-IE12) joins its
- * reader-coverage scope, and the judge mutants GK1, GK2 and GK3 owe kills.
+ * reader-coverage scope, and the judge mutants GK1, GK2 and GK3 owe kills. wb-qakj (the R694 follow-up of this bead's
+ * landing-803 gate F1, filed under wb-021) adds the header anchors, below: the pin set held outside the census's own
+ * literals, so that a coordinated hollow reds.
  *
  * THE PINNED READER SET (this file; each case id is `<row id> <pin id>`, registered in ROWS order, 216 cases): for each pin
  * of rows F (6), R (23), U (53), NS (44), EN (16), M (23), I (43), J (5) and Q (3), the assertion target is judgeGlobals over
  * the pin's planted tree, written to rule-11 scratch, and the observed result is the pin's findings, exactly and in order
  * (the sorted GLOBAL lines `GLOBAL <file>:<line> <name>`; [] for a quiet pin). Each pin's planted files and findings are held
- * by its digest in test/fixtures/apo-snapshot-global-reader-roster.json. Four further cases: the outside anchors, the
- * collapse guard, rule 16's frozen shape and the roster (registered last).
+ * by its digest in test/fixtures/apo-snapshot-global-reader-roster.json. Five further cases: the outside anchors, the
+ * collapse guard, rule 16's frozen shape, the header anchors and the roster (registered last).
  *
  * ONE READING PER LINE (refusal #2's class; R-B268): a GLOBAL line is this census's observable, so a reading is claimed at a
  * position only where a pin holds it as the one reading of its name on its line. The collapse guard (its own case) counts,
@@ -115,13 +117,25 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and COLLAPSED_SPLITS `${pin}>${split}` as literals; each
  * row's id, label and pin digests, the registered test titles, the residual families and the collapsed lines are held to
  * the out-of-file roster.
+ * HEADER ANCHORS (their own case; wb-qakj): the pin set is held outside the census's own literals and roster as well.
+ * Each pin id this header names and each pin id the helper's header names is a pin of ROWS; the helper's header names
+ * every pin of ROWS (its claim scope names the pins of each reading); and the counts THE PINNED READER SET states - each
+ * row's pins and the 216 cases - are ROWS's. A pin id is read by its shape (PIN_ID: the id families of ROWS, written in
+ * this file and never read from ROWS), and every pin id of ROWS reads whole by it. So a pin removed from ROWS together
+ * with its frozen-literal count, its COLLAPSED_SPLITS entry and a regenerated roster reds while a header names it or
+ * counts it. Falsifiers: the landing-803 gate's two coordinated hollows (its F1), R-names-read-positions alone and
+ * U-wrapper-forms with its split S-U-wrapper-forms and its COLLAPSED_SPLITS entry, each green before this case and red
+ * with it; the counts are measured by the seat's mutant battery on these bytes (the delivery note), not by a case.
  * NOT CLAIMED (scope sentences): a form or a position no pin holds is NOT CLAIMED by this census; a position a collapsed
  * line holds and no split or one-reading pin holds is NOT CLAIMED by this census; member reads are NOT CLAIMED by this
  * census (the reader reads free names and not the members of a value: a reach or a write through a member reads quiet
  * unless a free name on its path reds); a form TypeScript parses only under error recovery (a grammar error) is NOT
  * CLAIMED by this census; the internals of any package are NOT CLAIMED by this census; the view census's other readings -
  * wb-021.2's views, closures, EFFECT, PACKAGE, UNRESOLVED, UNREADABLE, CONSTRUCTOR and seams - are NOT CLAIMED by this
- * census; any code outside a planted tree is NOT CLAIMED by this census.
+ * census; any code outside a planted tree is NOT CLAIMED by this census; the row a header names a pin under is NOT
+ * CLAIMED by this census (the header anchors hold each pin id a header names to ROWS, not to a row); a pin's plant and
+ * findings rewritten together with its roster digest are NOT CLAIMED by this census (the header anchors read pin ids
+ * and the stated counts, not plants).
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-FIELD-MUTATION, R-REFLECTIVE-REACH, R-UNLINKED-IMPORT.
  *
  * Display paths added: none. Test-only: no src change.
@@ -153,6 +167,7 @@ installScratchLeakGuard(afterAll);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER = "test/fixtures/apo-snapshot-global-reader-roster.json";
+const HELPER = "test/helpers/apo-snapshot-global-reader.ts";
 const EXPORT = ".beads/issues.jsonl";
 /** A plant writes its tree to scratch, reads every module and builds one checker program. */
 const PLANT_BUDGET_MS = 60_000;
@@ -210,6 +225,29 @@ function headerResiduals(): string[] {
   if (start < 0) return [];
   const paragraph = header.slice(start, header.indexOf("\n *\n", start));
   return [...paragraph.slice(paragraph.indexOf("):") + 2).matchAll(/R-[A-Z]+(?:-[A-Z]+)*/g)].map(match => match[0]);
+}
+
+/** A module's header: its text up to the close of the doc comment it opens with, or "" when it opens with none. */
+function moduleHeader(text: string): string {
+  const close = text.indexOf("*/");
+  return text.startsWith("/**") && close > 0 ? text.slice(0, close) : "";
+}
+/**
+ * A pin id as the headers write one, by the id families of ROWS - written here and never read from ROWS, so a pin
+ * deleted from ROWS keeps its shape: a family prefix and a lower-case slug, with an upper-case code between or not
+ * (V-admitted-free, Z-global-process, R-names-read-positions, U-wrapper-forms, U-NS-nested-cross, G4-NS-reverse-order,
+ * W-GK1-block-statement, NS-positions-2); a plant code (U-GP1L, U-NS3bL, U-NS-C1, U-META1, U-IE5d); a gate witness
+ * (W-G14-N10, W-G14-MN, W-G14-R5c, W-G7-N1); a residual family (R-FIELD-MUTATION); each also with the split prefix S-.
+ */
+const PIN_ID = /(?<![\w-])(?:S-)?(?:[A-Z][A-Z\d]?-(?:[A-Z]+\d*-)?[a-z][a-z\d]*(?:-[a-z\d]+)*|U-[A-Z]+(?:\d+[A-Za-z]*|-C\d+)|W-G\d+-[A-Z]+\d*[a-z]?|R-[A-Z]+(?:-[A-Z]+)+)(?![\w-])/g;
+/** The pin ids a text names by PIN_ID, once each, in first-occurrence order. */
+const pinIdsIn = (text: string): string[] => tokens(text, PIN_ID);
+/** The counts a header's THE PINNED READER SET paragraph states: each row's `<id>:<pins>`, in order, and its case count (-1 when it states none). */
+function headerCounts(header: string): { readonly rows: string[]; readonly cases: number } {
+  const start = header.indexOf(" * THE PINNED READER SET (");
+  const stop = start < 0 ? -1 : header.indexOf("\n *\n", start);
+  const paragraph = stop < 0 ? "" : header.slice(start, stop).replace(/\n \* ?/g, " ");
+  return { rows: [...paragraph.matchAll(/\b([A-Z]{1,2}) \((\d+)\)/g)].map(match => `${match[1]}:${match[2]}`), cases: Number(/registered in ROWS order, (\d+) cases\)/.exec(paragraph)?.[1] ?? "-1") };
 }
 
 /** An identifier the reader reads as a key and never as a value (the reader's own list): a property access's or a qualified name's right side, a binding element's or an import specifier's property name, a label, a meta-property's or an import attribute's name. */
@@ -439,6 +477,32 @@ describe("APO snapshot GLOBAL binding reader census (wb-021.8, MW-ADAPTIVE-POLIC
       "M W-G14-M20>S-W-G14-M20",
       "I W-G14-I5>S-W-G14-I5",
     ]);
+  });
+
+  it("header anchors (wb-qakj): every pin id this file's header and the helper's header name is a pin of ROWS, the helper's header names every pin of ROWS, and the counts THE PINNED READER SET states are ROWS's", () => {
+    const ids = ROWS.flatMap(row => row.pins.map(pin => pin.id));
+    const own = moduleHeader(readFileSync(fileURLToPath(import.meta.url), "utf8"));
+    const helper = moduleHeader(readFileSync(join(ROOT, HELPER), "utf8"));
+    expect(
+      ids.filter(id => pinIdsIn(id).join(" ") !== id),
+      "every pin id of ROWS reads whole by PIN_ID",
+    ).toEqual([]);
+    expect(
+      pinIdsIn(own).filter(id => !ids.includes(id)),
+      "every pin id this file's header names is a pin of ROWS",
+    ).toEqual([]);
+    const named = pinIdsIn(helper);
+    expect(
+      named.filter(id => !ids.includes(id)),
+      "every pin id the helper's header names is a pin of ROWS",
+    ).toEqual([]);
+    expect(
+      ids.filter(id => !named.includes(id)),
+      "the helper's header names every pin of ROWS",
+    ).toEqual([]);
+    const counts = headerCounts(own);
+    expect(counts.rows, "the row counts THE PINNED READER SET states are ROWS's, in order").toEqual(ROWS.map(row => `${row.id}:${row.pins.length}`));
+    expect(counts.cases, "the case count THE PINNED READER SET states is the number of pins of ROWS").toBe(ids.length);
   });
 
   it("roster: the judged rows, the registered tests, the residual families and the collapsed lines equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways", ({ task }) => {

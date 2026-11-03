@@ -110,6 +110,19 @@
  * and the probe control's comments - now name THE INDEX ORDER, and every array it does not name is NOT CLAIMED. These
  * controls add no registered case, mutant, row or title.
  *
+ * WB-VM56 (seat ws-05, run g10-work-s188; the R694 follow-up of landing 801's PASS-WITH-FINDING, gate cmd_ccf3ba79b9a6,
+ * whose F1 leads): F1 (claim precision: THE INDEX ORDER's content clause covered, by the DENSE_COUNTS arrays' own
+ * definition, the dense blocks behind the probe at length 2^32 - 1, which no content reading read, so the gate's GK02
+ * CONTENT-OVERSIZED-35 - the content reading cut to 35 blocks on an array of length 2^32 - 1 - kept the census green) is
+ * cured by the finding's second cure: row S3c's indexOrder witness reads K-SPLIT's content on each dense blocks array
+ * behind the probe at length 2^32 - 1 as well (the dense content row reads plain, probed and oversized, each with no
+ * finding), and the clause names those three variants. The same row reads each oversized array's misquoted twin (its
+ * last block's text is not its subject's source) as source:s12, source:s101 and source:s1000, so a content reading that
+ * reads no block, or not the last one, of these dense arrays at length 2^32 - 1 reds row S3c too. K-DEMAND's placement
+ * and demand readings of the dense arrays at length 2^32 - 1, and a misquoted twin of any other array, are NOT CLAIMED
+ * by this census. The pinned reader set is still this file's case S3c: to query providers, mint coverage or admit work;
+ * this control adds no registered case, mutant, row or title.
+ *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
  * docs/programs/evidence-directed-computation-2026-10-18.md (blob de04229d9cdad063e4704d732f3cbcee1f001e68, the same blob
@@ -181,7 +194,9 @@
  *  and behind the probe), in demand order and refuses each out-of-order twin with order - two neighbouring items swapped, at
  *  every neighbouring pair of ORDER_KEYS and at the last two items of each dense array; its demand reading admits the dense
  *  subjects (plain and behind the probe) in the request's order and refuses that twin with subjects; K-SPLIT's content reads
- *  the ORDER_KEYS blocks and the dense blocks with no finding; and through the whole judge a control request of 35 answerable
+ *  the ORDER_KEYS blocks and the dense blocks (plain, behind the probe, and behind the probe at length 2^32 - 1) with no
+ *  finding, and reads source:<subject> on each length-2^32 - 1 dense blocks array's twin whose last block's text is not
+ *  its subject's source; and through the whole judge a control request of 35 answerable
  *  subjects whose blocks sit one at each ORDER_KEYS index reads K-DEMAND ok, and demand:order with the blocks at the two
  *  largest indices swapped. Row S3c also pins each indexOrder array's listing (its first three own keys), a walk of the length
  *  of each dense array of its own length (filter: it ends) and, on each array of length 2^32 - 1, three reads of absent
@@ -1396,7 +1411,10 @@ const DENSE_COUNTS: readonly number[] = [12, 101, 1000];
 /** wb-j517 cut #3 (refusal #2 U1-U2): THE INDEX ORDER's indexOrder arrays (the census header) - ORDER_KEYS on an array of length 2^32 - 1 behind the
  * probe, and the DENSE_COUNTS arrays, plain, behind the probe and behind the probe at length 2^32 - 1 - read by presentItems and itemsOf,
  * K-DEMAND's placement and demand readings (each order as an in-order twin and an out-of-order twin, two neighbouring items swapped) and K-SPLIT's
- * content, and the ORDER_KEYS blocks through the whole judge. These are paired reading controls, not additions to the eleven-case seam battery. */
+ * content, and the ORDER_KEYS blocks through the whole judge. These are paired reading controls, not additions to the eleven-case seam battery.
+ * On the dense arrays behind the probe at length 2^32 - 1, presentItems, itemsOf's holes, the listing, the absent reads and K-SPLIT's content
+ * (wb-vm56: the blocks with no finding, and their misquoted twin, its last block's text not its source, with source:<subject>) read them;
+ * K-DEMAND's placement and demand readings read the dense arrays plain and behind the probe only. */
 function indexOrderReadings(): unknown {
   const named = (count: number): string[] => Array.from({ length: count }, (_, index) => `s${index + 1}`);
   const requestOf = (subjects: readonly string[]): Request => ({
@@ -1407,6 +1425,9 @@ function indexOrderReadings(): unknown {
   const blockOf = (subject: string): Block => ({ subject, text: `source of ${subject}`, evidence: [evidenceOf(subject, `${subject} holds`)] });
   const wiringOf = (subjects: readonly string[]): Wiring => ({ demand: { owner: "host", subjects }, evidence: [], sources: [], ports: {} });
   /** A copy of the items with the two at the positions at and at + 1 swapped (the out-of-order twin). */
+  /** A copy of the blocks whose last block's text is not its subject's source (wb-vm56: the content twin, read at length 2^32 - 1). */
+  const misquoted = (blocks: readonly Block[]): Block[] =>
+    blocks.map((block, index) => (index === blocks.length - 1 ? { ...block, text: `misquoted ${block.subject}` } : block));
   const swapped = <T>(items: readonly T[], at: number): T[] => items.map((item, index) => (index === at ? items[at + 1] : index === at + 1 ? items[at] : item) as T);
   /** The items placed one at each ORDER_KEYS index, in order, on an array of length 2^32 - 1 behind the probe (defined through the proxy, which has
    * no defineProperty trap, so placing an item probes nothing): never a plain array of that length, on which a reading that walks the length
@@ -1476,7 +1497,11 @@ function indexOrderReadings(): unknown {
         ordered: demandFindings(wiringOf(listed(subjects, probe)), request),
         swapped: demandFindings(wiringOf(listed(swapped(subjects, last), probe)), request),
       })),
-      content: listings(probe => contentFindings({ blocks: listed(blocks, probe), unmet: [] }, request)),
+      content: {
+        ...listings(probe => contentFindings({ blocks: listed(blocks, probe), unmet: [] }, request)),
+        oversized: contentFindings({ blocks: probed(blocks, INDEX_LIMIT), unmet: [] }, request),
+        misquoted: contentFindings({ blocks: probed(misquoted(blocks), INDEX_LIMIT), unmet: [] }, request),
+      },
     };
   };
   return {
