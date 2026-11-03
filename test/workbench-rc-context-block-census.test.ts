@@ -533,6 +533,9 @@
  * are named residuals beside their pinned quiet rows, held to the wb-wnoj row (WNOJ_PINS), each row's key reading pinned
  * (wnojKeys); F2 every READ_PROBES and QUIET_PROBES text is held by id at its sha256/16 (probeDigests), so a probe's text
  * edited in this file alone - the gate's XA4, XA4b and XA4c, an export or an abstract dropped - reds the judged set.
+ * wb-wnoj cut #2 (the re-cut after wb-18ce landed on this file at landing 902; trunk merged in, never rebased) keeps
+ * both FOLLOW-UP paragraphs and holds wb-18ce's read probe [near-maximum-numeral-infinity-callee-methods] by its digest
+ * as well, so that probe's text edited in this file alone reds the judged set too.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.

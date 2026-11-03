@@ -782,6 +782,7 @@
     "nested-in-bigint-named-method": "fec5baab43ec0b8d",
     "numeral-infinity-callee-method": "617232a3fb836b16",
     "static-numeral-named-class-expression-method": "e394472b51eaa8c3",
+    "near-maximum-numeral-infinity-callee-methods": "6e9e5d7675c98b66",
     "code-point-escaped-string-named-method": "efe50f5d7eaac215",
     "hex-escaped-string-named-method": "05d3aa61c031f0e5",
     "identity-escaped-string-named-method": "8948f4be321860ff",
