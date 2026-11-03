@@ -1344,53 +1344,82 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * test/helpers/docs06-leg-readers.ts - moduleImports, and propertyWrites composing spelledAnywhere over WRITER_ROUTE,
  * cut #5's code byte for byte - with its own census, test/workbench-docs06-leg-readers-census.test.ts, which pins that
  * code and those readers' readings of its plants. The restatement (the parent's re-cut over its landed carrier: cut
- * #6, and cut #7 after refusal #6, O:1885, R-B406) rides that module: this file imports moduleImports, propertyWrites
- * and spelledAnywhere from it, and its modules-loaded record holds that load. Through those readers this census claims
- * exactly the readings its own rows take: of this file's text (its loads as the record; no member write and no writer
- * API; no prototype or reflective route spelled), of the "the modules loaded" row's loads.ts, the "the property
- * writes" row's writes.ts and the two route rows' texts, of each planted member's text through the leg (the members
- * those readers refuse: T-CHAI, T-CHAI-NARROW and C-VITEST-SUITE by the modules loaded; T-DESC-SORT and C-MEMBER-WRITE
- * by the property writes; C-PROTOTYPE by the prototype routes spelled; T-DESC-SORT and C-OWN-NAMES by the reflective
- * routes spelled), and of each twin's planted text and unit (the restatement rows). CLAIMED here as well, by the R717
- * planted-member rows: the leg refuses each gate twin of refusals #4 and #5 that wb-mcoj's roster
- * (test/fixtures/docs06-leg-readers-roster.json) plants, each planted on this file's text in memory and refused naming
- * exactly the reading it changes - G-TWIN-TS-NAMED, G-TWIN2-NS, GP9-TWIN-NODE-ALIAS2, GP9-TWIN-NODE-ALIAS and
- * GP9-TWIN-NODE-TYPEONLY (one line of this file's import block edited: the modules loaded) and G-TWIN2-PW (two
- * statements added in the AC2 case before its push: the property writes). The restatement rows claim, each by its own
- * assertions: (A) that member set is the roster's twins, in the roster's order, each refused by the reading of its
- * roster table; (B) each twin's planted text reads through the shared readers (sharedReading: moduleImports' entries,
- * then propertyWrites' with each write's place, its line counted from this file's AC2 case head, that head's line
- * being 1) as this file's own reading - the record's loads and no write - with exactly the one edit TWIN_READINGS
- * names, at the index it names, every entry before it and after the edit the same and in the same order: each import
- * twin's entry in place of the entry of the line it edits (index 4, the typescript import, or 1, the node:fs import),
- * and G-TWIN2-PW's one write added at index 8, after the loads: an assignment to sink.length at 3:6, line 3 counted
- * from the AC2 case head and column 6; (C) each twin's unit (twinUnit: an import twin's planted import declarations,
- * one per line in source order, the shared readers' load set aside; G-TWIN2-PW's planted lines after the AC2 case head
- * through its push, between MCOJ_AC2_HEAD and MCOJ_AC2_CLOSE) and its reading through the shared reader of its table
- * hash with the twin's id to exactly the sha256 the roster pins for that plant (rosterDigest: the digest of a plant's
- * id, text and reading, as wb-mcoj's census's rosterPlant computes it and its ROSTER row holds the roster to its
- * plants), and this file's own import declarations, the shared readers' load set aside, read as the record less that
- * load and hash so to P-RECORD's. As far as the roster holds wb-mcoj's plants, (C) makes each twin's unit wb-mcoj's
- * plant of that id, its text and pinned reading byte for byte - each import twin's planted import block is that
- * plant's text, and G-TWIN2-PW's two statements are that plant's (a sink declared, then its length written through an
- * object pattern property with a computed key), between the AC2 case head and its push - and this file's import
- * block, the shared readers' load set aside, P-RECORD (the cut #5 block wb-mcoj's census plants; its reading is the
- * record's first seven entries, the shared readers' load the eighth). Falsifiers: the gate narrowing each twin
- * witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS, GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied
- * to the shared module, hides its twin from the leg and reds that twin's row and rows (B) and (C); an edit of a twin's
- * plant that changes its unit reds (C); one that changes this file's reading through the shared readers other than as
- * TWIN_READINGS names it - an entry moved, reordered, repeated or added, or a write at another place - reds (B); a
- * twin member removed from every literal of this file reds (A); an edit of the roster's digest of a twin or of
- * P-RECORD reds (C). NOT CLAIMED by this census, as at the final cut: what the readers of the modules loaded, the
- * property writes and the uses of expect output on any other text - a form or combination neither their rows nor the
- * planted members plant, G-MI-NSEXPORT's export * as <name> included (the shared module's readings of wb-mcoj's plants
- * are that census's claims, not this one's) - and the test context's own expect, a member named expect
- * (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0; wb-mcoj's named residual R-CTX-EXPECT, whose two quiet rows
- * read this file). NOT CLAIMED by this census either (the restatement's scope at cut #7): an edit of a twin's plant
- * that changes neither its unit nor this file's reading through the shared readers (the R717 rows judge such an edit
- * through the leg's readings, never the restatement rows); and wb-mcoj's census itself - (C) matches each unit to the
- * roster's digest and never reads that census, so a twin's plant, its roster digest and wb-mcoj's plant of it changed
- * together are that census's rows' to refuse, not this one's.
+ * #6, cut #7 after refusal #6 (O:1885, R-B406) and cut #8 after refusal #7 (O:1923, R-B436)) rides that module: this
+ * file imports moduleImports, propertyWrites and spelledAnywhere from it, and its modules-loaded record holds that load.
+ * Through those readers this census claims exactly the readings its own rows take: of this file's text (its loads as
+ * the record; no member write and no writer API; no prototype or reflective route spelled), of the "the modules loaded"
+ * row's loads.ts, the "the property writes" row's writes.ts and the two route rows' texts, of each planted member's text
+ * through the leg (the members those readers refuse: T-CHAI, T-CHAI-NARROW and C-VITEST-SUITE by the modules loaded;
+ * T-DESC-SORT and C-MEMBER-WRITE by the property writes; C-PROTOTYPE by the prototype routes spelled; T-DESC-SORT and
+ * C-OWN-NAMES by the reflective routes spelled), of each twin's planted text and unit (the restatement rows) and of row
+ * (E)'s witnesses. CLAIMED here as well, by the R717 planted-member rows: the leg refuses each gate twin of refusals #4
+ * and #5 that wb-mcoj's roster (test/fixtures/docs06-leg-readers-roster.json) plants, each planted on this file's text in
+ * memory and refused naming exactly the reading it changes - G-TWIN-TS-NAMED, G-TWIN2-NS, GP9-TWIN-NODE-ALIAS2,
+ * GP9-TWIN-NODE-ALIAS and GP9-TWIN-NODE-TYPEONLY (one of this file's import declarations edited: the modules loaded) and
+ * G-TWIN2-PW (two lines added in the AC2 case before its push: the property writes), each twin's edit as row (D) reads
+ * it. The restatement rows claim, each by its own assertions:
+ * (A) that member set is the roster's twins, in the roster's order, each refused by the reading of its roster table;
+ * (B) each twin's planted text reads through the shared readers (sharedReading: moduleImports' entries, then
+ * propertyWrites' with each write's place, its line counted from this file's AC2 case head, that head's line being 1) as
+ * this file's own reading - the record's loads and no write - with exactly the one edit TWIN_READINGS names, as
+ * readingEdit gives it, at the index it names: each import twin's entry in place of the entry of the import it edits
+ * (index 4, the typescript import, or 1, the node:fs import), and G-TWIN2-PW's one write added at index 8, after the
+ * loads: an assignment to sink.length at 3:6, line 3 counted from the AC2 case head and column 6;
+ * (C) each twin's unit (twinUnit: an import twin's planted import declarations, one per line in source order, the shared
+ * readers' load set aside; G-TWIN2-PW's planted lines after the AC2 case head through its push, between MCOJ_AC2_HEAD
+ * and MCOJ_AC2_CLOSE) and its reading through the shared reader of its table hash with the twin's id to exactly the
+ * sha256 the roster pins for that plant (rosterDigest: the digest of a plant's id, text and reading, as wb-mcoj's
+ * census's rosterPlant computes it and its ROSTER row holds the roster to its plants); this file's own import
+ * declarations, the shared readers' load set aside, read as the record less that load and hash so to P-RECORD's; and the
+ * record is P-RECORD's reading and then one entry more, the shared readers' load - its eighth entry, last - as this
+ * file's text loads the shared readers on the line right after its last other import declaration;
+ * (D) each twin's planted text is this file's text outside the twin's unit, piece for piece: unitCut cuts a text at the
+ * parts twinUnit takes its unit from (unitParts: an import twin's import declarations but the shared readers' load, each
+ * from its first token to its end; G-TWIN2-PW's lines after the AC2 case head through its push, one part), holds those
+ * parts, joined as twinUnit joins them, to the text's twinUnit, and keeps the text before the first part, between each
+ * two and after the last; and the twin's unit is this file's with one edit (plantReading): an import twin's parts are
+ * this file's one for one with exactly one changed, and G-TWIN2-PW's part is this file's lines with exactly two lines
+ * added before the last, its push. Its witnesses row reads each OUTSIDE_WITNESSES text as the reading its form names:
+ * the "outside" form - a twin's planted text with content added outside its unit: in the form of one coordinated member
+ * of refusal #7 each, an export declaration after G-TWIN-TS-NAMED's import (GN1C's form) and after
+ * GP9-TWIN-NODE-TYPEONLY's (GN3C's), the shared readers' load repeated after G-TWIN-TS-NAMED's import (GN7C's) and moved
+ * before it (GN8C's) and a write after G-TWIN2-PW's push (GN2C's); and before the unit, an export declaration before
+ * G-TWIN-TS-NAMED's first import declaration and a write before G-TWIN2-PW's AC2 case head - as another outside with
+ * its twin's unit edit; the "unit" form - a second import declaration of G-TWIN-TS-NAMED's planted text edited, and
+ * G-TWIN2-PW's planted text with one line before its push - as this file's outside and another unit; the "dropped" form
+ * - G-TWIN-TS-NAMED's planted text with its last import declaration, the census helpers', removed - as another outside
+ * and another unit (its parts not this file's one for one); and the "parts" form - G-TWIN2-PW's planted text with its
+ * push removed, so that the part unitParts cuts is not the text's twinUnit - as parts other than twinUnit's;
+ * (E) readingEdit reads each READING_EDIT_WITNESSES text through the shared readers - this file's text with its
+ * node:crypto import moved after its node:url import, with its node:path and node:url imports swapped, and with its
+ * node:fs import repeated - as exactly the edit READING_EDITS names for it, the moved, swapped and repeated entries inside
+ * that edit; and each of those edits and each twin's, applied to this file's reading (applyEdit: the entries before the
+ * edit's index, then the entries it adds, then the reading's entries after the ones it drops, which must be the
+ * reading's at that index), gives back the text's reading.
+ * As far as the roster holds wb-mcoj's plants, (C) and (D) make each twin's planted text this file's text with
+ * wb-mcoj's plant of that id in its unit's place - an import twin's unit (its planted import declarations, the shared
+ * readers' load set aside) that plant's text, and G-TWIN2-PW's two lines before its push that plant's two statements (a
+ * sink declared, then its length written through an object pattern property with a computed key) - and this file's own
+ * import declarations, the shared readers' load set aside, P-RECORD (the cut #5 block wb-mcoj's census plants), its
+ * reading the record's first seven entries, the shared readers' load the eighth. Falsifiers, each measured red on this
+ * census by the cut #8 battery: the gate narrowing each twin witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS,
+ * GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied to the shared module, hides its twin from the leg
+ * and reds that twin's row and rows (B) and (C); an edit of a twin's plant inside its unit reds (C); one outside its
+ * unit reds (D), with the twin's TWIN_READINGS entry changed to match (refusal #7's GN1C, GN3C, GN7C, GN8C and GN2C) or
+ * kept (their one-literal forms GN1, GN3, GN7, GN8 and GN2, which red (B) as well); readingEdit narrowed to the entries
+ * one reading has and the other lacks (refusal #7's N-RE-SET) reds (E); a twin member removed from every literal of this
+ * file reds (A); an edit of the roster's digest of a twin or of P-RECORD reds (C), and so does this file's shared
+ * readers' load moved to the head of its import block with its record entry and TWIN_READINGS' import indices moved with
+ * it (refusal #7's GN5C). NOT CLAIMED by this census, as at the final cut: what the readers of the modules loaded, the
+ * property writes and the uses of expect output on any other text - a form or combination neither their rows, the
+ * planted members nor the witnesses of rows (D) and (E) plant, G-MI-NSEXPORT's export * as <name> included (the shared
+ * module's readings of wb-mcoj's plants are that census's claims, not this one's) - and the test context's own expect, a
+ * member named expect (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0; wb-mcoj's named residual R-CTX-EXPECT,
+ * whose two quiet rows read this file). NOT CLAIMED by this census either (the restatement's scope at cut #8): what
+ * unitParts, unitCut, plantReading, readingEdit and applyEdit return for any text but this file's, the twins' planted
+ * texts and the witnesses rows (D) and (E) plant; and wb-mcoj's census itself - (C) matches each unit to the roster's
+ * digest and never reads that census, so a twin's plant, its roster digest and wb-mcoj's plant of it changed together are
+ * that census's rows' to refuse, not this one's.
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -2157,7 +2186,8 @@ const TWIN_ID = /^(G|GP9)-TWIN/;
  * The restatement (R-B309; cut #7 after refusal #6 U1 and U3): for each twin planted member, the one edit its plant
  * makes in this file's reading through the shared readers (sharedReading: moduleImports' entries, then propertyWrites'
  * with each write's line counted from the AC2 case head), as readingEdit gives it - "<id>: at <index>: <the entries it
- * adds> <- <the entries it drops>", every entry before the index and after the edit the same and in the same order.
+ * adds> <- <the entries it drops>", every entry before the index and after the edit the same and in the same order
+ * (row (E): applyEdit gives back each twin's reading from this file's and the twin's edit).
  */
 const TWIN_READINGS: readonly string[] = [
   "G-TWIN-TS-NAMED: at 4: typescript | default as ts, type Node <- typescript | default as ts",
@@ -2208,9 +2238,12 @@ function sharedReading(text: string): readonly string[] {
   return [...moduleImports(SELF, text), ...propertyWrites(SELF, text).map(fromHead)];
 }
 /**
- * The restatement (R-B309; cut #7, refusal #6 U3): the one edit that turns one reading into another, as "at <index>:
- * <the entries it adds> <- <the entries it drops>" - index the first entry that differs, every entry before it and
- * after the edit the same and in the same order, so a moved, reordered or repeated entry reads inside the edit.
+ * The restatement (R-B309; cut #7, refusal #6 U3; cut #8, refusal #7 U2): the one edit that turns one reading into
+ * another, as "at <index>: <the entries it adds> <- <the entries it drops>" - index the first entry that differs, every
+ * entry before it and after the edit the same and in the same order. CLAIMED as rows (B) and (E) pin it: on each twin's
+ * reading (TWIN_READINGS) and on row (E)'s witnesses, whose moved, swapped and repeated entries read inside their edits
+ * as READING_EDITS names them, each edit applied by applyEdit to this file's reading giving back the other; on any other
+ * pair of readings it is NOT CLAIMED.
  */
 function readingEdit(own: readonly string[], read: readonly string[]): string {
   let head = 0;
@@ -2218,6 +2251,130 @@ function readingEdit(own: readonly string[], read: readonly string[]): string {
   let tail = 0;
   while (tail < own.length - head && tail < read.length - head && own[own.length - 1 - tail] === read[read.length - 1 - tail]) tail += 1;
   return `at ${head}: ${read.slice(head, read.length - tail).join(" ;; ") || "(nothing)"} <- ${own.slice(head, own.length - tail).join(" ;; ") || "(nothing)"}`;
+}
+/**
+ * The restatement (cut #8, refusal #7 U1): where twinUnit takes a text's unit from - its parts, as [start, end) offsets in
+ * source order: for a twin the modules loaded refuse, each import declaration but the shared readers' load, from its first
+ * token to its end; for a twin the property writes refuse, one part, the lines after the text's AC2 case head through
+ * that case's push.
+ */
+function unitParts(text: string, writes: boolean): readonly (readonly [number, number])[] {
+  if (!writes) {
+    const sf = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    return sf.statements
+      .filter(ts.isImportDeclaration)
+      .filter(statement => !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== SHARED_READERS)
+      .map(statement => [statement.getStart(sf), statement.getEnd()] as const);
+  }
+  const lines = text.split("\n");
+  const head = lines.findIndex(line => line.startsWith(AC2_HEAD));
+  const push = lines.findIndex((line, index) => index > head && line === AC2_PUSH);
+  const start = head < 0 ? 0 : lines.slice(0, head + 1).join("\n").length + 1;
+  return [[start, start + lines.slice(head + 1, push + 1).join("\n").length]];
+}
+/** The restatement (cut #8): a text cut at its unit's parts (unitCut). */
+interface UnitCut {
+  /** The parts' texts, in order. */
+  readonly parts: readonly string[];
+  /** The text before the first part, between each two parts and after the last, in order. */
+  readonly outside: readonly string[];
+  /** Whether the parts, joined as twinUnit joins them, are the text's twinUnit. */
+  readonly asTwinUnit: boolean;
+}
+/** The restatement (cut #8, refusal #7 U1): a text cut at the parts unitParts gives, held to the text's twinUnit. */
+function unitCut(text: string, writes: boolean): UnitCut {
+  const spans = unitParts(text, writes);
+  const parts = spans.map(([start, end]) => text.slice(start, end));
+  const ends = [0, ...spans.map(([, end]) => end)];
+  return {
+    parts,
+    outside: [...spans.map(([start], index) => text.slice(ends[index], start)), text.slice(ends.at(-1))],
+    asTwinUnit: (writes ? [MCOJ_AC2_HEAD, ...parts, MCOJ_AC2_CLOSE] : parts).join("\n") === twinUnit(text, writes),
+  };
+}
+/**
+ * The restatement (cut #8, refusal #7 U1): row (D)'s reading of a planted text's cut against this file's, as "<outside>
+ * | <unit>": "this file's outside" when the two outsides are the same, piece for piece, else "another outside"; then "one
+ * import declaration edited" when an import twin's parts are this file's one for one with exactly one changed, "two
+ * lines added before its push" when G-TWIN2-PW's part is this file's lines with exactly two lines added before the last
+ * (the push), else "another unit". A cut whose parts are not its text's twinUnit reads "parts other than twinUnit's".
+ */
+function plantReading(own: UnitCut, planted: UnitCut, writes: boolean): string {
+  if (!own.asTwinUnit || !planted.asTwinUnit) return "parts other than twinUnit's";
+  const outside = planted.outside.length === own.outside.length && planted.outside.every((piece, index) => piece === own.outside[index]) ? "this file's outside" : "another outside";
+  if (!writes) return `${outside} | ${planted.parts.length === own.parts.length && planted.parts.filter((part, index) => part !== own.parts[index]).length === 1 ? "one import declaration edited" : "another unit"}`;
+  const before = (own.parts[0] ?? "").split("\n");
+  const after = (planted.parts[0] ?? "").split("\n");
+  return `${outside} | ${after.length === before.length + 2 && before.every((line, index) => line === after[index === before.length - 1 ? index + 2 : index]) ? "two lines added before its push" : "another unit"}`;
+}
+/** The restatement (cut #8): the import lines rows (D) and (E) edit, each a fragment whose first occurrence in the text it edits is the import it names. */
+const TS_NAMED_IMPORT = 'import ts, { type Node } from "typescript";';
+const TYPEONLY_IMPORT = 'import { type Dirent, readFileSync } from "node:fs";';
+const SHARED_IMPORT = `import { moduleImports, propertyWrites, spelledAnywhere } from "${SHARED_READERS}";`;
+const CRYPTO_IMPORT = 'import { createHash } from "node:crypto";';
+const PATH_IMPORT = 'import { basename, dirname, join } from "node:path";';
+const URL_IMPORT = 'import { fileURLToPath } from "node:url";';
+const CENSUS_IMPORT = 'import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";';
+/**
+ * The restatement (cut #8, refusal #7 U1): row (D)'s witnesses, each a twin's planted text edited once more - the
+ * "outside" form, content added outside the twin's unit - in the form of one coordinated member of refusal #7 (O:1923:
+ * GN1C, GN3C, GN7C, GN8C and GN2C, in this order), then before each kind of twin's unit; the "unit" form, the twin's unit given a second edit; the "dropped"
+ * form, an import declaration of the twin's planted text removed; the "parts" form, G-TWIN2-PW's planted text with its
+ * push removed, so the part unitParts cuts is not that text's twinUnit.
+ */
+const OUTSIDE_WITNESSES: readonly { readonly id: string; readonly twin: string; readonly form: "outside" | "unit" | "dropped" | "parts"; readonly plant: (planted: string) => string }[] = [
+  { id: "W-OUT-REEXPORT", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(TS_NAMED_IMPORT, `${TS_NAMED_IMPORT}\nexport * from "node:os";`) },
+  { id: "W-OUT-TYPEONLY-REEXPORT", twin: "GP9-TWIN-NODE-TYPEONLY", form: "outside", plant: replacingFirst(TYPEONLY_IMPORT, `${TYPEONLY_IMPORT}\nexport { statSync } from "node:fs";`) },
+  { id: "W-OUT-SHARED-REPEATED", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(TS_NAMED_IMPORT, `${TS_NAMED_IMPORT}\n${SHARED_IMPORT}`) },
+  { id: "W-OUT-SHARED-MOVED", twin: "G-TWIN-TS-NAMED", form: "outside", plant: both(replacingFirst(`\n${SHARED_IMPORT}`, ""), replacingFirst(TS_NAMED_IMPORT, `${SHARED_IMPORT}\n${TS_NAMED_IMPORT}`)) },
+  { id: "W-OUT-AFTER-PUSH", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(AC2_PUSH, `${AC2_PUSH}\n    sink.length = 2;`) },
+  { id: "W-OUT-BEFORE-IMPORTS", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(CRYPTO_IMPORT, `export * from "node:os";\n${CRYPTO_IMPORT}`) },
+  { id: "W-OUT-BEFORE-HEAD", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(AC2_HEAD, `  const early = { length: 0 };\n  early.length = 1;\n${AC2_HEAD}`) },
+  { id: "W-UNIT-SECOND-EDIT", twin: "G-TWIN-TS-NAMED", form: "unit", plant: replacingFirst(FS_IMPORT, 'import { readFileSync, statSync } from "node:fs";') },
+  { id: "W-UNIT-ONE-LINE", twin: "G-TWIN2-PW", form: "unit", plant: replacingFirst("    const sink = { length: 1 };\n", "") },
+  { id: "W-DROPPED-LAST-IMPORT", twin: "G-TWIN-TS-NAMED", form: "dropped", plant: replacingFirst(`\n${CENSUS_IMPORT}`, "") },
+  { id: "W-PARTS-NO-PUSH", twin: "G-TWIN2-PW", form: "parts", plant: replacingFirst(`\n${AC2_PUSH}`, "") },
+];
+/** The restatement (cut #8): OUTSIDE_WITNESSES' frozen shape (rule 16) - each witness with its twin and its form. */
+const OUTSIDE_WITNESSES_SHAPE: readonly string[] = [
+  "W-OUT-REEXPORT:G-TWIN-TS-NAMED:outside",
+  "W-OUT-TYPEONLY-REEXPORT:GP9-TWIN-NODE-TYPEONLY:outside",
+  "W-OUT-SHARED-REPEATED:G-TWIN-TS-NAMED:outside",
+  "W-OUT-SHARED-MOVED:G-TWIN-TS-NAMED:outside",
+  "W-OUT-AFTER-PUSH:G-TWIN2-PW:outside",
+  "W-OUT-BEFORE-IMPORTS:G-TWIN-TS-NAMED:outside",
+  "W-OUT-BEFORE-HEAD:G-TWIN2-PW:outside",
+  "W-UNIT-SECOND-EDIT:G-TWIN-TS-NAMED:unit",
+  "W-UNIT-ONE-LINE:G-TWIN2-PW:unit",
+  "W-DROPPED-LAST-IMPORT:G-TWIN-TS-NAMED:dropped",
+  "W-PARTS-NO-PUSH:G-TWIN2-PW:parts",
+];
+/**
+ * The restatement (cut #8, refusal #7 U2): row (E)'s witnesses - this file's text with an entry of its reading moved,
+ * two entries swapped and an entry repeated - and the edit readingEdit is pinned to read for each (READING_EDITS).
+ */
+const READING_EDIT_WITNESSES: readonly { readonly id: string; readonly plant: (text: string) => string }[] = [
+  { id: "E-MOVED", plant: both(replacingFirst(`${CRYPTO_IMPORT}\n`, ""), replacingFirst(URL_IMPORT, `${URL_IMPORT}\n${CRYPTO_IMPORT}`)) },
+  { id: "E-SWAPPED", plant: replacingFirst(`${PATH_IMPORT}\n${URL_IMPORT}`, `${URL_IMPORT}\n${PATH_IMPORT}`) },
+  { id: "E-REPEATED", plant: replacingFirst(FS_IMPORT, `${FS_IMPORT}\n${FS_IMPORT}`) },
+];
+const READING_EDITS: readonly string[] = [
+  "E-MOVED: at 0: node:fs | readFileSync ;; node:path | basename, dirname, join ;; node:url | fileURLToPath ;; node:crypto | createHash <- node:crypto | createHash ;; node:fs | readFileSync ;; node:path | basename, dirname, join ;; node:url | fileURLToPath",
+  "E-SWAPPED: at 2: node:url | fileURLToPath ;; node:path | basename, dirname, join <- node:path | basename, dirname, join ;; node:url | fileURLToPath",
+  "E-REPEATED: at 2: node:fs | readFileSync <- (nothing)",
+];
+/**
+ * The restatement (cut #8, refusal #7 U2): readingEdit's edit applied to the reading it was taken from - the entries
+ * before its index, then the entries it adds, then the reading's entries after the ones it drops - or undefined when the
+ * edit does not read so or the entries it drops are not the reading's at its index.
+ */
+function applyEdit(own: readonly string[], edit: string): readonly string[] | undefined {
+  const parsed = /^at (\d+): (.*) <- (.*)$/s.exec(edit);
+  if (parsed === null) return undefined;
+  const entries = (part: string | undefined): readonly string[] => (part === undefined || part === "(nothing)" ? [] : part.split(" ;; "));
+  const index = Number(parsed[1]);
+  const drops = entries(parsed[3]);
+  return drops.every((entry, offset) => own[index + offset] === entry) ? [...own.slice(0, index), ...entries(parsed[2]), ...own.slice(index + drops.length)] : undefined;
 }
 /**
  * R717 (wb-ouo3 cut #4): the planted members - refusal #3's members (M:13504), the died respin seat's W-BODY-RETURN-BARE,
@@ -2362,37 +2519,37 @@ const PLANTED_MEMBERS: readonly PlantedMember[] = [
   },
   {
     id: "G-TWIN-TS-NAMED",
-    what: "the restatement (refusal #4 U1 (a)'s twin, wb-mcoj's MI-DEFAULT-NAMED plant): a type-only named binding added to this file's default import of typescript (1 edit in the import block)",
+    what: "the restatement (refusal #4 U1 (a)'s twin, wb-mcoj's MI-DEFAULT-NAMED plant): a type-only named binding added to this file's default import of typescript (one of this file's import declarations edited, as row (D) reads it)",
     plant: replacingFirst(TS_IMPORT, 'import ts, { type Node } from "typescript";'),
     refusedBy: ["the modules loaded"],
   },
   {
     id: "G-TWIN2-NS",
-    what: "the restatement (refusal #4 U1 (b)'s twin, wb-mcoj's MI-DEFAULT-NS plant): a namespace binding added to this file's default import of typescript (1 edit in the import block)",
+    what: "the restatement (refusal #4 U1 (b)'s twin, wb-mcoj's MI-DEFAULT-NS plant): a namespace binding added to this file's default import of typescript (one of this file's import declarations edited, as row (D) reads it)",
     plant: replacingFirst(TS_IMPORT, 'import ts, * as tstx from "typescript";'),
     refusedBy: ["the modules loaded"],
   },
   {
     id: "GP9-TWIN-NODE-ALIAS2",
-    what: "the restatement (refusal #5 U1's twin, wb-mcoj's MI-NODE-ALIAS plant): an aliased specifier of a second export added to this file's node:fs import (1 edit in the import block)",
+    what: "the restatement (refusal #5 U1's twin, wb-mcoj's MI-NODE-ALIAS plant): an aliased specifier of a second export added to this file's node:fs import (one of this file's import declarations edited, as row (D) reads it)",
     plant: replacingFirst(FS_IMPORT, 'import { existsSync as exists, readFileSync } from "node:fs";'),
     refusedBy: ["the modules loaded"],
   },
   {
     id: "GP9-TWIN-NODE-ALIAS",
-    what: "the restatement (refusal #5 U1's second twin, wb-mcoj's MI-NODE-ALIAS plant): readFileSync bound again under an alias in this file's node:fs import (1 edit in the import block)",
+    what: "the restatement (refusal #5 U1's second twin, wb-mcoj's MI-NODE-ALIAS plant): readFileSync bound again under an alias in this file's node:fs import (one of this file's import declarations edited, as row (D) reads it)",
     plant: replacingFirst(FS_IMPORT, 'import { readFileSync, readFileSync as readText } from "node:fs";'),
     refusedBy: ["the modules loaded"],
   },
   {
     id: "GP9-TWIN-NODE-TYPEONLY",
-    what: "the restatement (refusal #5 U2's twin, wb-mcoj's MI-NODE-TYPEONLY plant): an inline type-only specifier added to this file's node:fs import (1 edit in the import block)",
+    what: "the restatement (refusal #5 U2's twin, wb-mcoj's MI-NODE-TYPEONLY plant): an inline type-only specifier added to this file's node:fs import (one of this file's import declarations edited, as row (D) reads it)",
     plant: replacingFirst(FS_IMPORT, 'import { type Dirent, readFileSync } from "node:fs";'),
     refusedBy: ["the modules loaded"],
   },
   {
     id: "G-TWIN2-PW",
-    what: "the restatement (refusal #4 U1 (c)'s twin as wb-mcoj's PW-COMPUTED-KEY row plants it; cut #7, refusal #6 U1): that plant's two statements before its AC2 case's push - a sink declared, then its length written through an object pattern property with a computed key - added in this file's AC2 case before its push",
+    what: "the restatement (refusal #4 U1 (c)'s twin as wb-mcoj's PW-COMPUTED-KEY row plants it; cut #7, refusal #6 U1): that plant's two statements before its AC2 case's push - a sink declared, then its length written through an object pattern property with a computed key - added in this file's AC2 case before its push (two lines, as row (D) reads it)",
     plant: replacingFirst(AC2_PUSH, `    const sink = { length: 1 };\n    ({ ["length"]: sink.length } = { length: 0 });\n${AC2_PUSH}`),
     refusedBy: ["the property writes"],
   },
@@ -2494,12 +2651,17 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     ).toEqual([...TWIN_READINGS]);
   });
 
-  it("the restatement (R-B309), row (C): each twin's unit and its reading through the shared reader of its table hash with the twin's id to the sha256 wb-mcoj's roster pins for that plant, and this file's import block, the shared readers' load set aside, hashes so to P-RECORD's, read as the record less that load", () => {
+  it("the restatement (R-B309), row (C): each twin's unit and its reading through the shared reader of its table hash with the twin's id to the sha256 wb-mcoj's roster pins for that plant, and this file's import block, the shared readers' load set aside, hashes so to P-RECORD's, read as the record less that load, and the record ends with that load as its eighth entry", () => {
     const roster = JSON.parse(readRepo(MCOJ_ROSTER)) as { readonly rows: readonly { readonly plants: readonly { readonly id: string; readonly sha256: string }[] }[] };
     const pinned = roster.rows.flatMap(row => row.plants.map(plant => `${plant.id} | sha256 ${plant.sha256}`));
     const text = readRepo(SELF);
     const page = twinUnit(text, false);
     expect(moduleImports("P-RECORD.ts", page), "this file's import block, the shared readers' load set aside: the record less that load").toEqual(MODULE_IMPORTS_OF_RECORD.filter(entry => !entry.startsWith(`${SHARED_READERS} | `)));
+    expect(
+      MODULE_IMPORTS_OF_RECORD.map(entry => (entry.startsWith(`${SHARED_READERS} | `) ? "(the shared readers' load)" : entry)),
+      "the record: P-RECORD's reading, then the shared readers' load as its eighth entry, last (cut #8, refusal #7 F1)",
+    ).toEqual([...moduleImports("P-RECORD.ts", page), "(the shared readers' load)"]);
+    expect(unitCut(text, false).outside.at(-1)?.split("\n").slice(0, 2), "this file's text: the shared readers' load is the line right after its last other import declaration").toEqual(["", SHARED_IMPORT]);
     const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
     const units = [
       `P-RECORD | sha256 ${rosterDigest("P-RECORD", page, moduleImports("P-RECORD.ts", page))}`,
@@ -2512,6 +2674,57 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     expect(units, "P-RECORD and each twin's unit, by the digest of its id, unit and reading").toEqual(
       ["P-RECORD", ...members.map(member => member.id)].map(id => pinned.find(line => line.startsWith(`${id} | `)) ?? `${id} | (no plant of the roster)`),
     );
+  });
+
+  it("the restatement (cut #8), row (D): each twin's planted text is this file's text outside the twin's unit, piece for piece, and its unit this file's with one edit - one import declaration edited, or two lines added before G-TWIN2-PW's push", () => {
+    const text = readRepo(SELF);
+    const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
+    const own = { imports: unitCut(text, false), writes: unitCut(text, true) };
+    expect(
+      members.map(member => {
+        const writes = member.refusedBy.includes("the property writes");
+        return `${member.id}: ${plantReading(writes ? own.writes : own.imports, unitCut(member.plant(text), writes), writes)}`;
+      }),
+      "each twin's planted text against this file's: its outside, then its unit's edit",
+    ).toEqual(members.map(member => `${member.id}: this file's outside | ${member.refusedBy.includes("the property writes") ? "two lines added before its push" : "one import declaration edited"}`));
+  });
+
+  it("the restatement (cut #8), row (D) witnesses: each OUTSIDE_WITNESSES text - a twin's planted text with content added outside its unit in a coordinated member's form of refusal #7, its unit edited a second time, an import declaration removed or its push removed - reads as its form names", () => {
+    const text = readRepo(SELF);
+    const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
+    const own = { imports: unitCut(text, false), writes: unitCut(text, true) };
+    expect(
+      OUTSIDE_WITNESSES.map(witness => `${witness.id}:${witness.twin}:${witness.form}`),
+      "OUTSIDE_WITNESSES, frozen: each witness with its twin and its form",
+    ).toEqual([...OUTSIDE_WITNESSES_SHAPE]);
+    expect(
+      OUTSIDE_WITNESSES.map(witness => {
+        const twin = members.find(member => member.id === witness.twin);
+        const writes = twin?.refusedBy.includes("the property writes") ?? false;
+        return `${witness.id}: ${twin === undefined ? "(no twin of that id)" : plantReading(writes ? own.writes : own.imports, unitCut(witness.plant(twin.plant(text)), writes), writes)}`;
+      }),
+      "each witness's text against this file's: its outside, then its unit's edit",
+    ).toEqual(
+      OUTSIDE_WITNESSES.map(witness => {
+        const edit = members.find(member => member.id === witness.twin)?.refusedBy.includes("the property writes") === true ? "two lines added before its push" : "one import declaration edited";
+        return `${witness.id}: ${witness.form === "outside" ? `another outside | ${edit}` : witness.form === "unit" ? "this file's outside | another unit" : witness.form === "dropped" ? "another outside | another unit" : "parts other than twinUnit's"}`;
+      }),
+    );
+  });
+
+  it("the restatement (cut #8), row (E): readingEdit reads this file's text with an entry moved, two entries swapped and an entry repeated as exactly the edits READING_EDITS names, and each of those edits and each twin's, applied to this file's reading, gives back the text's reading", () => {
+    const text = readRepo(SELF);
+    const own = sharedReading(text);
+    const witnesses = READING_EDIT_WITNESSES.map(witness => ({ id: witness.id, reading: sharedReading(witness.plant(text)) }));
+    expect(
+      witnesses.map(({ id, reading }) => `${id}: ${readingEdit(own, reading)}`),
+      "each witness's edit of this file's reading",
+    ).toEqual([...READING_EDITS]);
+    const read = [...witnesses, ...PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id)).map(member => ({ id: member.id, reading: sharedReading(member.plant(text)) }))];
+    expect(
+      read.map(({ id, reading }) => [id, applyEdit(own, readingEdit(own, reading)) ?? "(not applied)"]),
+      "each edit applied to this file's reading",
+    ).toEqual(read.map(({ id, reading }) => [id, reading]));
   });
 
   it.each(PLANTED_MEMBERS)("R717 planted member $id: the leg refuses this file's text with the member planted in memory, naming exactly the readings it changes", LEG, member => {
