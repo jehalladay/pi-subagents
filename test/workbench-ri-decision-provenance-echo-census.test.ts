@@ -64,11 +64,12 @@
  * which readRoster reads before any other statement of this file's module body runs (THE ORDER) and freezes through every member (THE
  * FREEZE), so no in-place write this file makes changes what they are held to; ROWS and the object and list constants held to it are
  * frozen where they are declared too (THE FREEZE, wb-5333), and each of them, like the strings, the titles and the patterns, is one
- * top-level const whose initializer THE FORM reads clean (wb-26dh's bindingsRead, read here since wb-5333 cut #5), that no statement
- * of this file re-assigns and that the judged set re-binds by no declaration the SELF-READ reads (THE BINDINGS and the binding rule,
- * wb-5333 cut #3). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each
- * acceptance clause is exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in
- * its notes.
+ * top-level const whose initializer THE FORM reads clean (wb-26dh's bindingsRead, read here since wb-5333 cut #5), the deepFrozen it
+ * calls being this file's own one top-level function declaration, named nowhere else but as a call's callee (THE FREEZER, wb-5333 cut
+ * #6), that no statement of this file re-assigns and that the judged set re-binds by no declaration the SELF-READ reads (THE BINDINGS
+ * and the binding rule, wb-5333 cut #3). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row
+ * wb-tz4r.3): each acceptance clause is exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating
+ * artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
  * wb-z3ft.2 form) - row A's the title's condition (after its tag, up to the parenthesis that closes before ", Pi shall"), rows
  * B-D's their clauses - so a pin removed from ROWS, the frozen literal, IMPL and the roster together leaves its part of the
@@ -194,7 +195,8 @@
  * judged set with 'Assignment to constant variable.') - so no statement of this file re-assigns an in-file side, none is bound as a
  * global, an import, an enum or a value no code is emitted for (`declare const`), and none is computed when the file runs in a form
  * these pins spell: from a source its initializer names as an identifier (another side, the bead export's reader, the roster file's
- * reader or path, a helper, an accessor's name); through no identifier but deepFrozen and TRIGGER (TRIGGER composed outside row A's
+ * reader or path, a helper, an accessor's name, or a deepFrozen that is not this file's own: THE FREEZER, below); through no
+ * identifier but deepFrozen and TRIGGER (TRIGGER composed outside row A's
  * label, a dynamic import read through its members, a string-keyed accessor: the wb-5333 gate's X5b, X3k, X1k, X4k and X2k forms,
  * which cut #4's names test read clean and its header named NOT CLAIMED); or through a value named inside an instantiation expression
  * or a class expression's heritage clause (the wb-5333 gate's E1, E2, E3 and E4, refusal #4's members, which cut #4's names test read
@@ -210,19 +212,49 @@
  * (another side, the bead export's reader, the roster file's reader and path, a helper and an accessor's name); the sides computed
  * through no identifier but deepFrozen and TRIGGER (the wb-5333 gate's X5b, X3k, X1k, X4k and X2k forms; cut #4 pinned them as reading
  * clean); the sides naming a value inside an instantiation expression (the wb-5333 gate's E1, E2 and E4 forms) and INVOCATION spread
- * from a new class expression extending an in-file class (its E3 form); and the control, every side a top-level const of literals and
- * the cache a let. Every in-file side of these sources that a line of its own does not declare is a top-level const of a string.
+ * from a new class expression extending an in-file class (its E3 form); and the control, every side a top-level const of literals, the
+ * cache a let and deepFrozen the source's one top-level function declaration (PLANTED_FREEZER, THE FREEZER). Every in-file side of
+ * these sources that a line of its own does not declare is a top-level const of a string.
  * Measured on the wb-5333 cut #2, each 0 failed there and failing at collection now: la1-la7 and g01 (la2, a let INVOCATION assigned,
  * refused by the typing step there; the halves la1h, la2h and g01h, the edit without the assignment or the shadow, 1 failed there
  * each), and this seat's d01 - INVOCATION computed from a roster file read afresh through JSON.parse and readFileSync, beside that
  * roster's task edited (its half, the roster edit alone, 1 failed there). Measured on the wb-5333 cut #4 (bce0de7f), each 0 failed
  * there and failing at collection now, each applied in place: refusal #3's X1, X1k, X2, X2k, X3k, X4k and X4 (X1, X2 and X4 beside
  * their roster edits), X5b (QUOTE_PIN's line), and refusal #4's E1, E1k, E2, E2k, E3, E3k and E4 (E1, E2 and E3 beside theirs); their
- * halves, the roster edits alone, still fail 1 each at the judged set. So THE FREEZE, the binding rule and THE BINDINGS refuse, for an
- * in-file side, an in-place write, a re-binding by the judged set through any declaration the SELF-READ reads, a re-assignment, a
- * declaration other than one top-level const that is not ambient, and an initializer THE FORM does not read clean, in each form these
- * pins spell; a reading on any other initializer form is NOT CLAIMED by this census (above), what replaces the runtime is R-RUNTIME,
- * and an edit of the reader itself is NOT CLAIMED (below).
+ * halves, the roster edits alone, still fail 1 each at the judged set.
+ * THE FREEZER (wb-5333 cut #6, refusal #5's U1: the wb-5333 gate's DF-IMPORT family - this file's deepFrozen declaration removed and
+ * deepFrozen imported from a test helper that freezes every input as this file's does and answers the ROWS literal (pins without a
+ * witness) with the roster file's rows - beside row B's label cut (CT2's edit), D3 removed from ROWS (CT1's) or D3's quote cut to 'to
+ * any' (the wb-b93c gate's e12), stayed 0 failed | 18 passed on the wb-5333 cut #5, lint- and type-clean there, since THE FORM reads a
+ * deepFrozen call by its callee's name alone): in a source shaped like this file, the SELF-READ also reads it with freezerRead, which
+ * refuses a deepFrozen not bound by exactly one top-level function declaration with a body, each naming of deepFrozen other than as a
+ * call's callee (an import's binding or property name, another declaration's name, an assignment's target, or a read of it as a value -
+ * an argument, a member access's object, an array element, a type query - anywhere in the source, the describe block included), and
+ * each naming of eval (a direct eval re-binds this module's names through a string the SELF-READ does not parse). So the deepFrozen
+ * every in-file side's initializer calls is this file's own: not imported (named, under an alias, as a default or a namespace, or
+ * through an import alias), not a global (a declare global block, an ambient function, or none declared here while another module sets
+ * one), not bound by a var, a let, a const, a class, an enum or a namespace, not declared twice or in a block, and not re-bound while
+ * declared (assigned at the top level, through a destructuring assignment or in the judged set, or through a direct eval), nor read as
+ * a value, in each form these pins spell. Seven planted sources pin it beside THE BINDINGS' control (whose sides call the one
+ * declaration plantedSides writes, PLANTED_FREEZER): deepFrozen imported from a helper, its declaration removed (the b2 form); a global
+ * another module sets, the source declaring none; imported otherwise or declared ambient (under an alias, as a default, as a namespace,
+ * through an import alias, in a declare global block and as an ambient function); bound by another declaration (a var, a let, a const,
+ * a class, an enum and a namespace); declared twice at the top level and again in a top-level block; and, the declaration kept,
+ * re-bound (assigned at the top level, through a destructuring assignment and in the judged set, and through a direct eval); and, the
+ * declaration kept, read as a value (passed as an argument, read through a member access, held in an array literal and named in a type
+ * query). Measured on the wb-5333 cut #5 (3f70164e), each on a throwaway copy, each 0 failed | 18 passed there and lint- and type-clean
+ * there (biome rc 0, tsc 0 errors), and failing at collection now, at THE GUARD: the gate's b2 (beside row B's label cut), b2-ct1
+ * (beside D3 removed from ROWS), b2-e12 (beside D3's quote cut) and b2k (the import alone), and this seat's b2a (imported under an
+ * alias), b2d (a default import), b2g (a global another module sets), b2s (re-assigned, its TS2630 and noFunctionAssign suppressed) and
+ * b2v (re-bound through a direct eval), each beside row B's label cut; the gate's named twin b2n (another helper's name called in
+ * ROWS's initializer) stays refused at THE GUARD by THE FORM. A binding re-written through the runtime's own debugging interface
+ * (node:inspector) is NOT CLAIMED by this census.
+ * So THE FREEZE, the binding rule, THE BINDINGS and THE FREEZER refuse, for an in-file side, an in-place write, a re-binding by the
+ * judged set through any declaration the SELF-READ reads, a re-assignment, a declaration other than one top-level const that is not
+ * ambient, an initializer THE FORM does not read clean, and a deepFrozen that is not this file's own one top-level function declaration
+ * or is named other than as a call's callee (or eval named), in each form these pins spell; a reading on any other initializer form is
+ * NOT CLAIMED by this census (above), what replaces the runtime is R-RUNTIME, and an edit of the reader itself, deepFrozen's own body
+ * among it, is NOT CLAIMED (below).
  * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
  * a composed path, dropped a mutant from D3's witness through a computed key, wrote the file back, let readRoster read it and restored
  * the bytes, beside a D3 measuring one mutant fewer, and stayed 18/18; a file write, which THE FREEZE does not see): ROSTER's
@@ -269,11 +301,13 @@
  * assertion kept 18/18). So is readRoster replaced or removed (wb-5333 cut #2): imported from a module that forges D3's witness
  * beside READ_FIRST, or deleted together with ROSTER's declaration while ROSTER is a global such a module sets and another file
  * declares (measured on the wb-5333 cut #2, each beside D3's mutant line deleted: 18/18). Likewise THE BINDINGS (wb-5333 cut #3;
- * wb-26dh's helper since cut #5): the helper edited (bindingsRead, THE FORM or IN_FILE_SIDES - what wb-26dh's bindings census holds
- * of it is its own claim), this file's import of it replaced, or deepFrozen's own body edited (what it returns), is a change of the
- * reader, and a source without a readRoster of its own (readRoster replaced or removed, above) is not this file's shape, so THE
- * BINDINGS read nothing there; and INVOCATION is Pi's own invocation, this fixture's choice like the placements and the probes, so
- * INVOCATION and its roster key changed together is a change these two files make, which nothing outside them reads (measured: the
+ * wb-26dh's helper since cut #5) and THE FREEZER (wb-5333 cut #6): the helper edited (bindingsRead, THE FORM or IN_FILE_SIDES - what
+ * wb-26dh's bindings census holds of it is its own claim), this file's import of it replaced, freezerRead or FREEZER edited, or
+ * deepFrozen's own body edited (what it reads, freezes or returns, a call it makes to an imported function included; THE FREEZER holds
+ * its declaration, never its body), is a change of the reader, and a source without a readRoster of its own (readRoster replaced or
+ * removed, above) is not this file's shape, so THE BINDINGS and THE FREEZER read nothing there; and INVOCATION is Pi's own invocation,
+ * this fixture's choice like the placements and the probes, so INVOCATION and its roster key changed together is a change these two
+ * files make, which nothing outside them reads (measured: the
  * judged set's roster comparison alone holds INVOCATION's task). Nor is the tracked bead export's file held:
  * exportRow reads .beads/issues.jsonl from disk when it is called, so a rewrite of that file this file makes before a read and restores
  * after it is not refused - THE ORDER binds the roster's read alone (measured on the wb-5333 cut #2: the wb-5333 gate's G02, CT6
@@ -560,7 +594,8 @@ function envelopeOf(value: unknown, name: string): Envelope {
 
 /**
  * THE FREEZE (wb-b93c F1): `value` returned as given, with it and every object and list reached from it through its members frozen;
- * applied to the roster at read and, where they are declared, to ROWS, the constants and the patterns (wb-5333 F1).
+ * applied to the roster at read and, where they are declared, to ROWS, the constants and the patterns (wb-5333 F1). THE FREEZER
+ * (wb-5333 cut #6) holds this declaration as this file's one deepFrozen, named elsewhere only as a call's callee.
  */
 function deepFrozen<T>(value: T): T {
   const members: readonly unknown[] = Array.isArray(value) ? value : isObject(value) ? Object.values(value) : [];
@@ -1464,6 +1499,33 @@ function describeReads(file: ts.SourceFile, block: ts.CallExpression, topLevel: 
   visit(block, "describe");
   return found;
 }
+/** THE FREEZER (wb-5333 cut #6): the one function an in-file side's initializer may call (the FREEZER of wb-26dh's THE FORM). */
+const FREEZER = "deepFrozen";
+/**
+ * THE FREEZER (wb-5333 cut #6, refusal #5's U1: the wb-5333 gate's DF-IMPORT family - this file's deepFrozen removed and deepFrozen
+ * imported from a test helper that freezes every input as this file's does and answers the ROWS literal with the roster file's rows,
+ * beside row B's label cut, D3 removed from ROWS or D3's quote cut, stayed 0 failed | 18 passed on the wb-5333 cut #5, lint- and
+ * type-clean there, since THE FORM reads a deepFrozen call by its callee's name alone): in a source shaped like this file, deepFrozen
+ * is bound by exactly one top-level function declaration with a body and named nowhere else in the source but as a call's callee, so no
+ * import, global, other declaration or assignment binds it; and eval is named nowhere in the source (a direct eval re-binds this
+ * module's names through a string the SELF-READ does not parse). Returns the refused reads: the declaration's, then each top-level
+ * statement's other naming in source order, by owner.
+ */
+function freezerRead(file: ts.SourceFile): string[] {
+  const found: string[] = [];
+  const own = file.statements.filter((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === FREEZER && statement.body !== undefined);
+  if (own.length !== 1) found.push(`${FREEZER} is not one top-level function declaration with a body`);
+  const declaration = own.length === 1 ? own[0]?.name : undefined;
+  for (const statement of file.statements) {
+    const visit = (node: ts.Node): void => {
+      if (ts.isIdentifier(node) && node.text === FREEZER && node !== declaration && !isCallee(node)) found.push(`${ownerOf(statement)} names ${FREEZER} other than as a call's callee`);
+      if (ts.isIdentifier(node) && node.text === "eval") found.push(`${ownerOf(statement)} names eval`);
+      ts.forEachChild(node, visit);
+    };
+    visit(statement);
+  }
+  return found;
+}
 /**
  * THE SELF-READ (wb-3xmr F2, wb-hiwv F1, wb-yi2o F1) over a source text, this file's or a planted one. Outside the describe block:
  * every IMPL case names one of READERS; IMPL, rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH only in
@@ -1472,7 +1534,7 @@ function describeReads(file: ts.SourceFile, block: ts.CallExpression, topLevel: 
  * expect only as a call's callee, and a hook only in the HOOKS statements; and in a source that declares ROSTER, THE ORDER (wb-5333
  * F2): no statement before that declaration but an import, an interface or a type alias, and the declaration READ_FIRST, while a
  * source that declares readRoster declares ROSTER (wb-5333 cut #2), and a source that declares both is read by THE BINDINGS (wb-5333
- * cut #3). Inside it,
+ * cut #3) and THE FREEZER (wb-5333 cut #6). Inside it,
  * describeReads. Returns the refused reads, by
  * declaration (an IMPL case as IMPL.<pin>) or by region.
  */
@@ -1494,8 +1556,9 @@ function selfRead(text: string): string[] {
   // readRoster), no module-scope name is a let or a var but the native descriptor cache, and each in-file side is one top-level const
   // whose initializer THE FORM reads clean, so none is re-assigned, a global or computed when the file runs in a form the planted
   // sources and wb-26dh's bindings census spell (the cut #3 seat's la1-la7 and g01, each 18/18 on the wb-5333 cut #2; the wb-5333
-  // gate's X and E members, each 0 failed on cut #4).
-  if (declared !== undefined && reader) found.push(...bindingsRead(file));
+  // gate's X and E members, each 0 failed on cut #4), and deepFrozen, the one call THE FORM admits, is this source's own (THE FREEZER,
+  // wb-5333 cut #6: the wb-5333 gate's DF-IMPORT family, each 0 failed on cut #5).
+  if (declared !== undefined && reader) found.push(...bindingsRead(file), ...freezerRead(file));
   for (const statement of file.statements) {
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
     const call = ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) ? statement.expression : undefined;
@@ -1543,13 +1606,16 @@ const FORGED_RECORD_LINES: readonly string[] = ["MEASURED.D3 = ROSTER.rows[3]?.p
 function plantedJudgedSet(lines: readonly string[], context = ""): string {
   return ['describe("planted", () => {', `  it(JUDGED_TITLE, (${context}) => {`, ...lines.map(line => `    ${line}`), "  });", "});", ""].join("\n");
 }
+/** THE FREEZER's one form in a planted source (wb-5333 cut #6): deepFrozen declared once, a top-level function with a body that calls itself. */
+const PLANTED_FREEZER = "function deepFrozen<T>(value: T): T {\n  for (const member of Array.isArray(value) ? value : []) deepFrozen(member);\n  return value;\n}";
 /**
- * A planted source shaped like this file (THE BINDINGS, wb-5333 cut #3): ROSTER read first, readRoster declared, and each in-file side
- * a top-level const of a string (wb-5333 cut #5: THE FORM refuses a number, wb-26dh's K1), `lines` standing in place of the sides
- * they name, `after` following.
+ * A planted source shaped like this file (THE BINDINGS, wb-5333 cut #3): ROSTER read first, readRoster declared, deepFrozen declared
+ * by `freezer` (THE FREEZER, wb-5333 cut #6: PLANTED_FREEZER, unless a source binds deepFrozen otherwise), and each in-file side a
+ * top-level const of a string (wb-5333 cut #5: THE FORM refuses a number, wb-26dh's K1), `lines` standing in place of the sides they
+ * name, `after` following.
  */
-function plantedSides(lines: Readonly<Record<string, string>> = {}, after = ""): string {
-  return `${[READ_FIRST, "function readRoster(): unknown {", "  return null;", "}", ...IN_FILE_SIDES.map(side => lines[side] ?? `const ${side} = "${side.toLowerCase()}";`)].join("\n")}\n${after}`;
+function plantedSides(lines: Readonly<Record<string, string>> = {}, after = "", freezer = PLANTED_FREEZER): string {
+  return `${[READ_FIRST, "function readRoster(): unknown {", "  return null;", "}", ...(freezer === "" ? [] : [freezer]), ...IN_FILE_SIDES.map(side => lines[side] ?? `const ${side} = "${side.toLowerCase()}";`)].join("\n")}\n${after}`;
 }
 /** THE SELF-READ's pins outside the describe block: planted sources showing each refusal, beside the HOOKS reading clean. */
 const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
@@ -1735,6 +1801,85 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
       ].join("\n"),
     ),
     reads: ["INVOCATION is not one top-level const of literals"],
+  },
+  // THE FREEZER (wb-5333 cut #6, refusal #5's U1: the wb-5333 gate's DF-IMPORT family - this file's deepFrozen removed and deepFrozen
+  // imported from a test helper that answers the ROWS literal with the roster file's rows, beside row B's label cut, D3 removed from
+  // ROWS or D3's quote cut, stayed 0 failed | 18 passed on the wb-5333 cut #5, since THE FORM reads a deepFrozen call by its callee's
+  // name alone): in a source shaped like this file deepFrozen is bound by exactly one top-level function declaration with a body and
+  // named nowhere else but as a call's callee, and eval is named nowhere.
+  "deepFrozen imported from a helper, its declaration removed (the wb-5333 gate's DF-IMPORT: b2 and b2k)": {
+    source: `import { deepFrozen } from "./helpers/frozen.js";\n${plantedSides({ ROWS: 'const ROWS = deepFrozen([{ id: "B", label: "(a) adoption fixture" }]);' }, "", "")}`,
+    reads: ["deepFrozen is not one top-level function declaration with a body", "<statement> names deepFrozen other than as a call's callee"],
+  },
+  "deepFrozen a global another module sets, the source declaring none": {
+    source: `import "./helpers/frozen-global.js";\n${plantedSides({ ROWS: 'const ROWS = deepFrozen([{ id: "B", label: "(a) adoption fixture" }]);' }, "", "")}`,
+    reads: ["deepFrozen is not one top-level function declaration with a body"],
+  },
+  "deepFrozen imported otherwise or declared ambient, its declaration removed: under an alias, as a default, as a namespace, through an import alias, in a declare global block and as an ambient function": {
+    source: [
+      'import { rowsFrozen as deepFrozen } from "./helpers/frozen.js";',
+      'import deepFrozen from "./helpers/frozen-default.js";',
+      'import * as deepFrozen from "./helpers/frozen-namespace.js";',
+      plantedSides(
+        {},
+        "",
+        ['import deepFrozen = require("./helpers/frozen.cjs");', "declare global {", "  function deepFrozen<T>(value: T): T;", "}", "declare function deepFrozen<T>(value: T): T;"].join("\n"),
+      ),
+    ].join("\n"),
+    reads: [
+      "deepFrozen is not one top-level function declaration with a body",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "deepFrozen names deepFrozen other than as a call's callee",
+    ],
+  },
+  "deepFrozen bound by another declaration, its function declaration removed: a var, a let, a const, a class, an enum and a namespace": {
+    source: plantedSides(
+      {},
+      "",
+      [
+        "var deepFrozen = <T>(value: T): T => value;",
+        "let deepFrozen = <T>(value: T): T => value;",
+        "const deepFrozen = <T>(value: T): T => value;",
+        "class deepFrozen {}",
+        'enum deepFrozen {\n  Frozen = "frozen",\n}',
+        "namespace deepFrozen {}",
+      ].join("\n"),
+    ),
+    reads: [
+      "deepFrozen is bound by let or var",
+      "deepFrozen is bound by let or var",
+      "deepFrozen is not one top-level function declaration with a body",
+      "deepFrozen names deepFrozen other than as a call's callee",
+      "deepFrozen names deepFrozen other than as a call's callee",
+      "deepFrozen names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+      "<statement> names deepFrozen other than as a call's callee",
+    ],
+  },
+  "deepFrozen declared twice at the top level, and again in a top-level block": {
+    source: plantedSides({}, "{\n  function deepFrozen<T>(value: T): T {\n    return value;\n  }\n}\n", `${PLANTED_FREEZER}\n${PLANTED_FREEZER}`),
+    reads: ["deepFrozen is not one top-level function declaration with a body", "deepFrozen names deepFrozen other than as a call's callee", "deepFrozen names deepFrozen other than as a call's callee", "<statement> names deepFrozen other than as a call's callee"],
+  },
+  "the declaration kept and deepFrozen re-bound: assigned at the top level, through a destructuring assignment and in the judged set, and through a direct eval": {
+    source: plantedSides(
+      {},
+      [
+        "deepFrozen = <T>(value: T): T => value;",
+        "[deepFrozen] = [<T>(value: T): T => value];",
+        'eval("deepFrozen = (value) => value");',
+        plantedJudgedSet(["deepFrozen = <T>(value: T): T => value;", "expect(ROWS).toHaveLength(1);"]),
+      ].join("\n"),
+    ),
+    reads: ["<statement> names deepFrozen other than as a call's callee", "<statement> names deepFrozen other than as a call's callee", "<statement> names eval", "<statement> names deepFrozen other than as a call's callee"],
+  },
+  "deepFrozen read as a value, the declaration kept: passed as an argument, read through a member access, held in an array literal and named in a type query": {
+    source: plantedSides({}, ["Object.assign(deepFrozen, { frozen: true });", "deepFrozen.call(undefined, null);", "const FREEZERS = [deepFrozen];", "type Frozen = typeof deepFrozen;"].join("\n")),
+    reads: ["<statement> names deepFrozen other than as a call's callee", "<statement> names deepFrozen other than as a call's callee", "FREEZERS names deepFrozen other than as a call's callee", "<statement> names deepFrozen other than as a call's callee"],
   },
   "every side one top-level const of literals reading deepFrozen and TRIGGER alone, and the native descriptor cache a let (control)": {
     source: plantedSides(
