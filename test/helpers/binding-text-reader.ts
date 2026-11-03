@@ -1,6 +1,7 @@
 /**
  * wb-jwc.10 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R7, program-triage-2026-10-17; the rule-19 structural-exit child of wb-jwc.7,
- * orchestrator rulings R-B92 and R-B115): census text readers that resolve an identifier by its BINDING, never by its name.
+ * orchestrator rulings R-B92 and R-B115): the claim of the binding text reader census, part by part, and the gate members
+ * folded into this bead.
  *
  * WHY. wb-jwc.7's census (test/workbench-rf-stderr-receipt-capture-census.test.ts on its machine branch, not on trunk) reads an
  * identifier through every same-file const of its name, whatever binding the identifier has. A let or a parameter that shadows a
@@ -9,19 +10,20 @@
  * program with an unresolvable part reads as its resolvable part (refusal #4's E1 and E2), and a registration id whose
  * reactivefiber.* alternative is not its first readable side registers nothing (refusal #4's R-ALT1, R-ALT2 and R-ALT4).
  *
- * WHAT. bindingTextReader(path, text) parses one module, binds it with TypeScript's checker in a program over that module
- * alone, and reads its expressions as BINDING_TEXT_CLAIM states, part by part (BINDING_FORMS, TEXT_FORMS and READING_FORMS),
- * each part claimed over exactly the forms its census row plants; RESIDUAL_FORMS names the families no row plants (NOT
- * CLAIMED, each with a quiet row). Cut #4 (R-B233, the fail-closed core) narrows BINDING (3) and (5), TEXT (12) and READINGS
- * (2), (3) and (5) to their planted sub-forms and names the rest NOT CLAIMED in the part itself: refusal #3's U1a to U1d and
- * U2, whose coverage is deferred to wb-jwc.13, the child R-B233 files, and the same-class forms the cutting seat's probes
- * found beside them. The census test/workbench-rf-binding-text-reader-census.test.ts holds the claim byte-for-byte and pins
- * every part with planted modules. wb-jwc.7's census (blocked by this bead, R-B115) can take these readers in place of its own
- * nameResolved, textsOf, commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling
- * R-B115's, refusal #1's and refusal #2's), each bound to the part whose row pins it.
+ * WHAT. The reader is test/helpers/rf-binding-text-reader.ts (bindingTextReader), which wb-jwc.13 landed (landing 881, merge
+ * f729dd40): ruling R-B263 parked this bead behind that child, and the child moved this bead's cut #4 reader there, its code
+ * byte for byte. This file holds the claim the census test/workbench-rf-binding-text-reader-census.test.ts makes of that
+ * reader: BINDING_TEXT_CLAIM states it part by part (BINDING_FORMS, TEXT_FORMS and READING_FORMS), each part claimed over
+ * exactly the forms its census row plants; RESIDUAL_FORMS names the families no row plants (NOT CLAIMED, each with a quiet
+ * row). Cut #4 (R-B233, the fail-closed core) narrowed BINDING (3) and (5), TEXT (12) and READINGS (2), (3) and (5) to their
+ * planted sub-forms, refusal #3's U1a to U1d and U2 deferred to wb-jwc.13. Cut #5, the post-inversion restatement over the
+ * landed reader, claims READINGS (1) only for the expressions its row reads, and READINGS (2) and (3) for two or more
+ * alternatives (and READINGS (2) for an opaque one) only as their rows read them, naming the rest NOT CLAIMED in the part
+ * itself: refusal #4's U1a to U1d, whose pins wb-jwc.13's landed sub-form census holds, and the same-class forms beside them. The census holds the claim byte-for-byte and pins every part with planted modules. wb-jwc.7's census (blocked by this
+ * bead, R-B115) can take the reader in place of its own nameResolved, textsOf, commandText and rfRegistrations; MEMBERS names
+ * the gate members folded into this bead (ruling R-B115's, refusal #1's and refusal #2's), each bound to the part whose row
+ * pins it.
  */
-import ts from "typescript";
-
 /** One part of the claim: the id the census rows answer, and its words. */
 export interface ClaimPart<T extends string> {
   readonly id: T;
@@ -96,14 +98,17 @@ export const TEXT_FORMS: readonly ClaimPart<TextFormId>[] = [
 
 /** READINGS: what a census reads from those alternatives. */
 export const READING_FORMS: readonly ClaimPart<ReadingFormId>[] = [
-  { id: "texts", text: "an expression's texts: its alternatives' texts, in order, when none is opaque; unresolved otherwise" },
+  {
+    id: "texts",
+    text: "an expression's texts - its alternatives' texts, in order, when none is opaque, and unresolved otherwise - claimed only for the three expressions its row's page reads: \"only\" reading [\"only\"], c ? \"a\" : \"b\" reading [\"a\",\"b\"] and p ?? \"b\", p a parameter, reading unresolved; the texts of any other expression are NOT CLAIMED",
+  },
   {
     id: "words",
-    text: "a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \\s class matches), quotes (\" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \\ and a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words row page plants, .bat and .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty word included, in order of first appearance; unresolved when any alternative is opaque",
+    text: "a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \\s class matches), quotes (\" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \\ and a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words row page plants, .bat and .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty word included, in order of first appearance (whether two words that differ only in letter case are both kept is NOT CLAIMED); unresolved when any alternative is opaque; a command of two or more alternatives, or with an opaque one, is claimed only for the two its row's pages read, c ? \"rf x\" : \"rf y\" reading rf x y and p ?? \"rf\", p a parameter, reading unresolved (the words of any other such command are NOT CLAIMED, and so are the words of a text command in a block, a function body among them, where no words row page puts one; this census writes unresolved for no words, so a words list holding only the word unresolved reads alike, and which of the two the reader returns is NOT CLAIMED)",
   },
   {
     id: "program",
-    text: "a launch program: when every alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it (a program expression whose source text holds a whitespace character other than a space, a line break among them, is NOT CLAIMED)",
+    text: "a launch program: when every alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it (a program expression whose source text holds a whitespace character other than a space, a line break among them, is NOT CLAIMED); a program of two or more alternatives is claimed only for the three its row's pages read, c ? \"rf\" : \"git\" reading git|rf, c ? \"git a\" : \"git b\" reading git and process.env.PI_VCS ?? \"git\" reading <opaque process.env.PI_VCS ?? \"git\"> (any other program of two or more alternatives is NOT CLAIMED)",
   },
   {
     id: "properties",
@@ -186,297 +191,3 @@ export const MEMBERS: readonly { readonly id: string; readonly form: FormId; rea
   { id: "M15", form: "registration", source: "refusal #2 U1e (m15, O:1546)" },
 ];
 
-/** What a binding that does not resolve is (BINDING_FORMS kinds). */
-export type BindingKind =
-  | "let"
-  | "var"
-  | "using"
-  | "parameter"
-  | "catch"
-  | "destructuring"
-  | "function"
-  | "class"
-  | "enum"
-  | "namespace"
-  | "import"
-  | "no-initializer"
-  | "ambient"
-  | "merged"
-  | "unbound"
-  | "other";
-
-/** What an identifier resolves to: a const and its initializer, or why it does not resolve. */
-export type Resolution =
-  | { readonly kind: "const"; readonly declaration: ts.VariableDeclaration; readonly initializer: ts.Expression }
-  | { readonly kind: BindingKind | "with" | "eval" };
-
-/** One alternative of an expression: an exact text, or an opaque part's label. */
-export type Alternative = { readonly text: string } | { readonly opaque: string };
-
-/** An object literal's fields (READING_FORMS properties): each field's last resolved route, and the opaque members that may set one. */
-export interface Fields {
-  readonly values: ReadonlyMap<string, ts.Expression>;
-  /** field name -> the label of an opaque member that may set it after its last resolved route; "*" for a member that may set every field. */
-  readonly opaque: ReadonlyMap<string, string>;
-}
-
-export interface BindingTextReader {
-  readonly path: string;
-  readonly source: ts.SourceFile;
-  resolve(identifier: ts.Identifier): Resolution;
-  alternatives(node: ts.Expression): readonly Alternative[];
-  /** Every exact text, or undefined when any alternative is opaque. */
-  exact(node: ts.Expression): readonly string[] | undefined;
-  words(node: ts.Expression): readonly string[] | undefined;
-  program(node: ts.Expression): string;
-  fields(object: ts.ObjectLiteralExpression): Fields;
-  registration(object: ts.ObjectLiteralExpression): readonly string[] | undefined;
-  /** Every registration entry of the module (each object literal's, in turn), sorted. */
-  registrations(): readonly string[];
-}
-
-const MAX_COMBINATIONS = 64;
-const MAX_DEPTH = 16;
-const MAX_SPREADS = 8;
-
-/** A node's source text with each run of the characters \s matches read as one space. */
-export function sourceText(node: ts.Node): string {
-  return node.getText().replace(/\s+/g, " ");
-}
-/** An alternative as a census reads it: a text as its JSON string, an opaque part as <opaque LABEL>. */
-export function rendered(alternatives: readonly Alternative[]): string {
-  return alternatives.map((alternative) => ("text" in alternative ? JSON.stringify(alternative.text) : `<opaque ${alternative.opaque}>`)).join(" | ");
-}
-/** A command line's words: split at whitespace runs, quotes and shell operators, each cut after its last / or \ (.exe/.cmd dropped). */
-export function commandWords(command: string): string[] {
-  return command
-    .split(/[\s"'`;&|()<>]+/)
-    .filter(Boolean)
-    .map((word) => (word.split(/[\\/]/).pop() ?? word).replace(/\.(?:exe|cmd)$/i, ""));
-}
-function unwrapped(node: ts.Expression): ts.Expression {
-  let at = node;
-  while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isNonNullExpression(at) || ts.isTypeAssertionExpression(at) || ts.isAwaitExpression(at))
-    at = at.expression;
-  return at;
-}
-function isAmbient(node: ts.Node): boolean {
-  for (let at: ts.Node | undefined = node; at !== undefined; at = at.parent)
-    if (ts.canHaveModifiers(at) && (ts.getModifiers(at) ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.DeclareKeyword)) return true;
-  return false;
-}
-function isExported(statement: ts.Node): boolean {
-  return ts.canHaveModifiers(statement) && (ts.getModifiers(statement) ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword);
-}
-/** The kind of a single declaration an identifier binds to (BINDING_FORMS const and kinds). */
-export function bindingKindOf(declaration: ts.Declaration): BindingKind | "const" {
-  if (ts.isVariableDeclaration(declaration)) {
-    if (ts.isCatchClause(declaration.parent)) return "catch";
-    const list = declaration.parent;
-    if (!ts.isVariableDeclarationList(list)) return "other";
-    const scoped = list.flags & ts.NodeFlags.BlockScoped;
-    if (scoped === ts.NodeFlags.Let) return "let";
-    if (scoped === 0) return "var";
-    if (scoped !== ts.NodeFlags.Const) return "using";
-    if (declaration.initializer === undefined) return "no-initializer";
-    if (isAmbient(declaration)) return "ambient";
-    if (ts.isVariableStatement(list.parent) && isExported(list.parent) && ts.isModuleBlock(list.parent.parent)) return "namespace";
-    return "const";
-  }
-  if (ts.isParameter(declaration)) return "parameter";
-  if (ts.isBindingElement(declaration)) return "destructuring";
-  if (ts.isFunctionDeclaration(declaration) || ts.isFunctionExpression(declaration)) return "function";
-  if (ts.isClassDeclaration(declaration) || ts.isClassExpression(declaration)) return "class";
-  if (ts.isEnumDeclaration(declaration) || ts.isEnumMember(declaration)) return "enum";
-  if (ts.isModuleDeclaration(declaration)) return "namespace";
-  return "other";
-}
-function propertyText(name: ts.PropertyName): string | undefined {
-  if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name) || ts.isPrivateIdentifier(name) || ts.isNoSubstitutionTemplateLiteral(name)) return name.text;
-  if (ts.isComputedPropertyName(name)) {
-    const key = unwrapped(name.expression);
-    return ts.isStringLiteralLike(key) ? key.text : undefined;
-  }
-  return undefined;
-}
-function visit(node: ts.Node, visitor: (node: ts.Node) => void): void {
-  visitor(node);
-  ts.forEachChild(node, (child) => visit(child, visitor));
-}
-
-const readers = new Map<string, BindingTextReader>();
-
-/** A reader over one module (BINDING_TEXT_CLAIM): parsed, and bound by TypeScript's checker in a program over that module alone. */
-export function bindingTextReader(path: string, text: string): BindingTextReader {
-  const key = `${path}\n${text}`;
-  const known = readers.get(key);
-  if (known !== undefined) return known;
-  const extension = /\.(?:[cm]?[jt]s|[jt]sx)$/i.exec(path)?.[0]?.toLowerCase() ?? ".ts";
-  const name = `binding-text-reader-module${extension}`;
-  const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true);
-  const options: ts.CompilerOptions = { noLib: true, noResolve: true, allowJs: true, types: [], target: ts.ScriptTarget.Latest };
-  const host = ts.createCompilerHost(options);
-  host.getSourceFile = (file) => (file === name ? source : undefined);
-  host.fileExists = (file) => file === name;
-  host.readFile = (file) => (file === name ? text : undefined);
-  const checker = ts.createProgram({ rootNames: [name], options, host }).getTypeChecker();
-  let evaluates = false;
-  visit(source, (node) => {
-    if (ts.isCallExpression(node)) {
-      const callee = unwrapped(node.expression);
-      if (ts.isIdentifier(callee) && callee.text === "eval") evaluates = true;
-    }
-  });
-
-  const resolve = (identifier: ts.Identifier): Resolution => {
-    if (evaluates) return { kind: "eval" };
-    let child: ts.Node = identifier;
-    for (let at: ts.Node | undefined = identifier.parent; at !== undefined; at = at.parent) {
-      if (ts.isWithStatement(at) && at.statement === child) return { kind: "with" };
-      child = at;
-    }
-    const parent = identifier.parent;
-    const symbol = parent !== undefined && ts.isShorthandPropertyAssignment(parent) && parent.name === identifier ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(identifier);
-    if (symbol === undefined) return { kind: "unbound" };
-    if ((symbol.flags & ts.SymbolFlags.Alias) !== 0) return { kind: "import" };
-    const declarations = symbol.declarations ?? [];
-    if (declarations.length === 0) return { kind: "unbound" };
-    if (declarations.length > 1) return { kind: "merged" };
-    const declaration = declarations[0];
-    const kind = bindingKindOf(declaration);
-    if (kind === "const" && ts.isVariableDeclaration(declaration) && declaration.initializer !== undefined) return { kind, declaration, initializer: declaration.initializer };
-    return { kind: kind === "const" ? "other" : kind };
-  };
-
-  const alternativesAt = (node: ts.Expression, depth: number, active: ReadonlySet<ts.Declaration>): Alternative[] => {
-    if (depth > MAX_DEPTH) return [{ opaque: `${sourceText(node)}:bound` }];
-    if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node) || ts.isAwaitExpression(node))
-      return alternativesAt(node.expression, depth + 1, active);
-    if (ts.isStringLiteralLike(node)) return [{ text: node.text }];
-    if (ts.isIdentifier(node)) {
-      const resolution = resolve(node);
-      if (resolution.kind !== "const") return [{ opaque: `${node.text}:${resolution.kind}` }];
-      if (active.has(resolution.declaration)) return [{ opaque: `${node.text}:cycle` }];
-      return alternativesAt(resolution.initializer, depth + 1, new Set([...active, resolution.declaration]));
-    }
-    const combined = (parts: readonly (readonly Alternative[])[]): Alternative[] => {
-      let combinations: Alternative[][] = [[]];
-      for (const part of parts) {
-        combinations = combinations.flatMap((prefix) => part.map((alternative) => [...prefix, alternative]));
-        if (combinations.length > MAX_COMBINATIONS) return [{ opaque: `${sourceText(node)}:bound` }];
-      }
-      return once(combinations.map((combination) => combination.find((alternative) => "opaque" in alternative) ?? { text: combination.map((alternative) => ("text" in alternative ? alternative.text : "")).join("") }));
-    };
-    if (ts.isTemplateExpression(node))
-      return combined([[{ text: node.head.text }], ...node.templateSpans.flatMap((span) => [alternativesAt(span.expression, depth + 1, active), [{ text: span.literal.text }]])]);
-    if (ts.isConditionalExpression(node)) return once([...alternativesAt(node.whenTrue, depth + 1, active), ...alternativesAt(node.whenFalse, depth + 1, active)]);
-    if (ts.isBinaryExpression(node)) {
-      const operator = node.operatorToken.kind;
-      if (operator === ts.SyntaxKind.PlusToken) return combined([alternativesAt(node.left, depth + 1, active), alternativesAt(node.right, depth + 1, active)]);
-      if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken || operator === ts.SyntaxKind.AmpersandAmpersandToken)
-        return once([...alternativesAt(node.left, depth + 1, active), ...alternativesAt(node.right, depth + 1, active)]);
-    }
-    return [{ opaque: sourceText(node) }];
-  };
-  const alternatives = (node: ts.Expression): readonly Alternative[] => alternativesAt(node, 0, new Set());
-
-  const fieldsAt = (object: ts.ObjectLiteralExpression, depth: number): Fields => {
-    const values = new Map<string, ts.Expression>();
-    const opaque = new Map<string, string>();
-    const set = (name: string, value: ts.Expression): void => {
-      values.set(name, value);
-      opaque.delete(name);
-    };
-    const everyField = (label: string): void => {
-      for (const name of [...values.keys(), ...opaque.keys()]) if (name !== "*") opaque.set(name, label);
-      opaque.set("*", label);
-    };
-    for (const member of object.properties) {
-      if (ts.isSpreadAssignment(member)) {
-        const spread = unwrapped(member.expression);
-        const resolution = ts.isIdentifier(spread) ? resolve(spread) : undefined;
-        const literal = resolution?.kind === "const" ? unwrapped(resolution.initializer) : undefined;
-        const inner = literal !== undefined && ts.isObjectLiteralExpression(literal) && depth < MAX_SPREADS ? fieldsAt(literal, depth + 1) : undefined;
-        if (inner === undefined || inner.opaque.size > 0) everyField(`...${sourceText(member.expression)}`);
-        else for (const [name, value] of inner.values) set(name, value);
-      } else if (ts.isShorthandPropertyAssignment(member)) set(member.name.text, member.name);
-      else {
-        const name = member.name === undefined ? undefined : propertyText(member.name);
-        if (ts.isPropertyAssignment(member)) {
-          if (name === undefined) everyField(sourceText(member.name));
-          else set(name, member.initializer);
-        } else {
-          const label = `${ts.isGetAccessorDeclaration(member) ? "get " : ts.isSetAccessorDeclaration(member) ? "set " : ""}${name ?? sourceText(member.name)}${ts.isMethodDeclaration(member) ? "()" : ""}`;
-          if (name === undefined) everyField(label);
-          else opaque.set(name, label);
-        }
-      }
-    }
-    return { values, opaque };
-  };
-  const fields = (object: ts.ObjectLiteralExpression): Fields => fieldsAt(object, 0);
-
-  const registration = (object: ts.ObjectLiteralExpression): readonly string[] | undefined => {
-    const read = fields(object);
-    const id = read.values.get("id");
-    const ids = id === undefined ? [] : alternatives(id);
-    if (!ids.some((alternative) => "text" in alternative && alternative.text.startsWith("reactivefiber."))) return undefined;
-    const label = (field: string): string | undefined => read.opaque.get(field) ?? (read.values.has(field) ? undefined : read.opaque.get("*"));
-    const idLabel = label("id");
-    const idEntries =
-      idLabel !== undefined
-        ? [`<opaque ${idLabel}>`]
-        : ids.flatMap((alternative) => ("opaque" in alternative ? [`<opaque ${alternative.opaque}>`] : alternative.text.startsWith("reactivefiber.") ? [alternative.text] : []));
-    const effectLabel = label("effectClass");
-    const effect = read.values.get("effectClass");
-    const effectText =
-      effectLabel !== undefined
-        ? `<opaque ${effectLabel}>`
-        : effect === undefined
-          ? "<none>"
-          : [...new Set(alternatives(effect).map((alternative) => ("text" in alternative ? alternative.text : `<opaque ${alternative.opaque}>`)))].sort().join("|");
-    return [...new Set(idEntries)].sort().map((entry) => `${entry}:${effectText}`);
-  };
-
-  const reader: BindingTextReader = {
-    path,
-    source,
-    resolve,
-    alternatives,
-    exact: (node) => {
-      const read = alternatives(node);
-      return read.every((alternative) => "text" in alternative) ? read.map((alternative) => ("text" in alternative ? alternative.text : "")) : undefined;
-    },
-    words: (node) => {
-      const read = alternatives(node);
-      if (read.some((alternative) => "opaque" in alternative)) return undefined;
-      return [...new Set(read.flatMap((alternative) => ("text" in alternative ? commandWords(alternative.text) : [])))];
-    },
-    program: (node) => {
-      const firsts = alternatives(node).map((alternative) => ("text" in alternative ? commandWords(alternative.text)[0] : undefined));
-      return firsts.some((first) => first === undefined) ? `<opaque ${sourceText(node)}>` : [...new Set(firsts)].sort().join("|");
-    },
-    fields,
-    registration,
-    registrations: () => {
-      const entries: string[] = [];
-      visit(source, (node) => {
-        if (ts.isObjectLiteralExpression(node)) entries.push(...(registration(node) ?? []));
-      });
-      return entries.sort();
-    },
-  };
-  readers.set(key, reader);
-  return reader;
-}
-
-/** Alternatives each once, in order: a text by its text, an opaque part by its label. */
-function once(alternatives: readonly Alternative[]): Alternative[] {
-  const seen = new Set<string>();
-  return alternatives.filter((alternative) => {
-    const key = "text" in alternative ? `t${alternative.text}` : `o${alternative.opaque}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}

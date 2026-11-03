@@ -5,21 +5,31 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #4 IS THE FAIL-CLOSED CORE the rule-19 structural exit R-B233 binds (the orchestrator's ruling at refusal #3, O:1611;
- * child wb-jwc.13). It stands on cut #3, the ENUMERATE-THE-RESOLVABLE FORM the second-stage cap R-B189 bound (rule 19(c), the
- * R739 terminal form), and narrows each claim word refusal #3 measured wider than its pins to exactly the planted sub-forms,
- * naming the rest NOT CLAIMED in the part itself: every edit narrows a claim word or names a form NOT CLAIMED, no form is
- * newly claimed and no page is newly planted, so every row, pin and page of cut #3 stands byte for byte. THIS CENSUS CLAIMS
- * EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the falsifier roster
- * naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row
- * a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is not claimed, and
- * no row's silence about a form is a claim about it.
+ * CUT #5 IS THE POST-INVERSION RESTATEMENT over the landed carrier wb-jwc.13. Refusal #4 (O:1685) of cut #4 took the
+ * dependency inversion R-B233 pre-bound: ruling R-B263 parked this bead behind its child wb-jwc.13 and folded refusal #4's
+ * members into that child. wb-jwc.13 landed at landing 881 (merge f729dd40) with this census's reader, cut #4's code moved
+ * byte for byte, as test/helpers/rf-binding-text-reader.ts, which its own sub-form census
+ * test/workbench-rf-binding-text-reader-subforms-census.test.ts pins. Cut #5 restates cut #4 over that reader: this census
+ * reads the landed reader, test/helpers/binding-text-reader.ts keeps only the claim's parts and MEMBERS, and READINGS (1), (2)
+ * and (3) are narrowed to the alternatives their rows' pages plant (REFUSAL #4 below). Every row, pin, page and reading of cut
+ * #4 stands byte for byte: no form is newly claimed and no page is newly planted. THIS CENSUS CLAIMS EXACTLY ITS PINS. Each
+ * part of the claim claims its words over exactly the forms its row's pages plant, the falsifier roster naming them pin by
+ * pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row a pinned quiet row
+ * that reads one form of the family as the reader reads it today. A form no page plants is not claimed, and no row's silence
+ * about a form is a claim about it.
  *
- * WHAT IS DELIVERED. The readers are test/helpers/binding-text-reader.ts (bindingTextReader), shared so a census rides them:
- * wb-jwc.7's census (blocked by this bead, R-B115; not on trunk) can take their resolve, alternatives, exact, words, program,
- * fields and registration in place of its own nameResolved, textsOf, commandText, resolvedProperties and rfRegistrations. This
- * census pins the readers with planted modules, each a string parsed in memory (no file is written), and reads today's src
- * with them (LIVE); src is only read.
+ * CUT #4 WAS THE FAIL-CLOSED CORE the rule-19 structural exit R-B233 binds (the orchestrator's ruling at refusal #3, O:1611;
+ * child wb-jwc.13). It stood on cut #3, the ENUMERATE-THE-RESOLVABLE FORM the second-stage cap R-B189 bound (rule 19(c), the
+ * R739 terminal form), and narrowed each claim word refusal #3 measured wider than its pins to exactly the planted sub-forms,
+ * naming the rest NOT CLAIMED in the part itself: every edit narrowed a claim word or named a form NOT CLAIMED, no form was
+ * newly claimed and no page newly planted, so every row, pin and page of cut #3 stood byte for byte.
+ *
+ * WHAT IS DELIVERED. The reader is test/helpers/rf-binding-text-reader.ts (bindingTextReader), wb-jwc.13's landed bytes,
+ * shared so a census rides it: wb-jwc.7's census (blocked by this bead, R-B115; not on trunk) can take its resolve,
+ * alternatives, exact, words, program, fields and registration in place of its own nameResolved, textsOf, commandText,
+ * resolvedProperties and rfRegistrations. test/helpers/binding-text-reader.ts holds the claim's parts (BINDING_TEXT_CLAIM and
+ * its BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS) and MEMBERS. This census pins the reader with planted
+ * modules, each a string parsed in memory (no file is written), and reads today's src with it (LIVE); src is only read.
  *
  * A READING (each pin's witness): a pin plants one module, its page, at a src-shaped path (the paths probe at each of its paths),
  * and reads it with one probe:
@@ -56,7 +66,7 @@
  *  name. MEMBERS sit in their parts' rows: R-B115's R-ALT1 to R-ALT4 in registration, E1 to E3 in program and A10 in scope;
  *  refusal #1's G01, G08 and G09 in kinds, G02 in with, G03 in eval, G04 in cycle, G05, G06 and G07 in bounds and G10 in
  *  opaque-part; refusal #2's (below) in theirs; each pinned by the twin page its refusal names (the gate's evidence, byte for
- *  byte), read as the delivered reader reads it.
+ *  byte), read as the reader reads it.
  *
  * REFUSAL #2 (gate-prep-1, run g10-gate-s161, O:1546), ITS UNMET ITEMS AND HOW EACH IS CURED: U1a's six eval contexts by M61
  * (a with body, at a .js path), M62 (an object literal's method), M63 (a template substitution), M64 (an arrow function's
@@ -86,6 +96,27 @@
  * with one argument other than a string literal (beside U1a), a catch variable annotated other than unknown (beside U1c), a
  * spread's, a computed key's and an accessor's label read raw (beside U2, READINGS (5)) and a program label collapsing runs of
  * spaces only (beside U2, READINGS (3)); each such sub-form is NOT CLAIMED in its part.
+ *
+ * REFUSAL #4 (gate-prep-24, run g10-gate-s175, O:1685), ITS UNMET ITEMS AND HOW CUT #5 NARROWS EACH (no new pin; ruling R-B263
+ * folded the members into wb-jwc.13, whose landed sub-form census pins each by the gate's twin page): U1a (q06 and q06b,
+ * exact() checking only the first alternative for a text; that census's row R4-U1a) and U1d (p08 and q05, exact() sorting its
+ * texts; R4-U1d) by READINGS (1) claiming only the three expressions its row's page reads, any other expression NOT CLAIMED;
+ * U1b (q07, words() unresolved only for an opaque first alternative; R4-U1b) by READINGS (2) claiming a command of two or more
+ * alternatives, or with an opaque one, only for the two its row's pages read; U1c (q08 and q08b, program() opaque only for a
+ * first alternative with no first word; R4-U1c) by READINGS (3) claiming a program of two or more alternatives only for the
+ * three its row's pages read; the U1-R668 rider by the roster's XT-TEXTS and XW-WORDS entries naming the orders their pages
+ * plant (R4-R668 reads the same two pages). Found by this cut's own probes, replaying on the landed reader the reader-only
+ * members of wb-jwc.13's refusal #4 PREP (GP14) and of its gate-prep-9 LEG 2 (GP9), each reading 0 failed | 164 passed on this
+ * census, whose rows, pins and pages are cut #4's: beside U1a to U1d, words() reordering the words of two or more alternatives
+ * (GP14-H-WSORT-MULTI, GP14-H-WALT-SORT, GP14-H-WTAIL-MULTI, GP9-H-W-SORT-SPACED and GP9-H-W-LOCALE-MULTI) and exact() reading
+ * a text that holds a space or texts of unequal length (GP14-H-XSPLIT, GP14-H-XFIRST, GP14-H-XLEN and GP14-H-XTRIMRUN), NOT
+ * CLAIMED by the same narrowing; words() keeping one of two words that differ only in letter case (GP9-H-W-CASEFOLD), words()
+ * reversed for a command in a block (GP9-H-W-REV-FIRST-STMT, GP9-H-W-REV-LAST-STMT, GP9-H-W-REV-INBLOCK,
+ * GP9-H-W-REV-THIRD-STMT and GP9-F-WREV-SECOND) and a words list holding only the word unresolved in place of no words
+ * (GP9-F-L2-W2), each NOT CLAIMED in READINGS (2); and words() reversed after the same reader read exact()
+ * (GP9-H-S-REV-AFTER-EXACT), NOT CLAIMED below. GP9-F-q07, GP9-F-WSORT-MULTI, GP9-F-WALT-SORT and GP9-F-WTAIL-MULTI are
+ * gate-authored forms of members named here, and GP14-H-XSET (exact() deduplicating its texts) reads every page alike,
+ * alternatives() already reading each alternative once.
  *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
@@ -145,39 +176,48 @@
  * each whitespace run read as TEXT (10) reads it (a bound expression whose source text holds a whitespace run other than one
  * space, a line break among them, is NOT CLAIMED); (13) the alternatives are listed in source order (a left side's or a true
  * branch's first, a combination's by its parts, the first part varying slowest), each once, a text and an opaque part with the
- * same label being two alternatives. READINGS: (1) an expression's texts: its alternatives' texts, in order, when none is
- * opaque; unresolved otherwise; (2) a command's words: every alternative's text split at each run of whitespace (the
- * characters JavaScript's \s class matches), quotes (" ' and `, at a word's end or inside it) and the shell operators ; & | (
- * ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text
- * after its last / or \ and a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words
- * row page plants, .bat and .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty
- * word included, in order of first appearance; unresolved when any alternative is opaque; (3) a launch program: when every
- * alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted,
- * each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as
- * TEXT (10) reads it (a program expression whose source text holds a whitespace character other than a space, a line break
- * among them, is NOT CLAIMED); (4) an object literal's fields, member by member in source order, a later member overriding: a
- * property assignment whose key is a name, a string or numeric literal, or a computed key whose expression, inside any of the
- * wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and so does a shorthand property; a
- * method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside any of those
- * wrappers, is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an object literal
- * whose own fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep) sets the fields
- * it holds; any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque
- * and may set every field; (5) a registration: an object literal whose id field has a text alternative starting reactivefiber.
- * (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such
- * text), read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each
- * once, ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque
- * LABEL>), sorted, joined by |, or <none> when it has no effectClass field (how EFFECT reads two alternatives that render
- * alike, a text spelling an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an opaque member may set after its last
- * setting, or in place of one, reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread,
- * its key's source text, or get name, set name or name() for an accessor or method; a label whose source text holds a
- * whitespace run other than one space is NOT CLAIMED). Each part claims its words over exactly the forms its census row's
- * pages plant, the roster naming them pin by pin. NOT CLAIMED (named residuals, each read today by its quiet row): (1) an eval
- * call at a position no eval row page plants, whose quiet row reads a module calling eval in a switch statement's head; (2) a
- * JavaScript module's require declaration in a form no const or import page plants, whose quiet row reads a require reached
- * through a comma expression; (3) a path in a form no scope page plants, whose quiet row reads the JavaScript page at a path
- * ending .Mjs; (4) an expression kind no other row page plants, whose quiet row reads a JSX element and fragment in a .tsx
- * module; (5) a character no words row page plants, whose quiet row reads a command word holding a letter outside ASCII. No
- * reading claims more than these parts state.
+ * same label being two alternatives. READINGS: (1) an expression's texts - its alternatives' texts, in order, when none is
+ * opaque, and unresolved otherwise - claimed only for the three expressions its row's page reads: "only" reading ["only"], c ?
+ * "a" : "b" reading ["a","b"] and p ?? "b", p a parameter, reading unresolved; the texts of any other expression are NOT
+ * CLAIMED; (2) a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \s
+ * class matches), quotes (" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other
+ * printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \ and
+ * a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words row page plants, .bat and
+ * .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty word included, in order of
+ * first appearance (whether two words that differ only in letter case are both kept is NOT CLAIMED); unresolved when any
+ * alternative is opaque; a command of two or more alternatives, or with an opaque one, is claimed only for the two its row's
+ * pages read, c ? "rf x" : "rf y" reading rf x y and p ?? "rf", p a parameter, reading unresolved (the words of any other such
+ * command are NOT CLAIMED, and so are the words of a text command in a block, a function body among them, where no words row
+ * page puts one; this census writes unresolved for no words, so a words list holding only the word unresolved reads alike, and
+ * which of the two the reader returns is NOT CLAIMED); (3) a launch program: when every alternative is a text with a first
+ * word (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise
+ * <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it (a program
+ * expression whose source text holds a whitespace character other than a space, a line break among them, is NOT CLAIMED); a
+ * program of two or more alternatives is claimed only for the three its row's pages read, c ? "rf" : "git" reading git|rf, c ?
+ * "git a" : "git b" reading git and process.env.PI_VCS ?? "git" reading <opaque process.env.PI_VCS ?? "git"> (any other
+ * program of two or more alternatives is NOT CLAIMED); (4) an object literal's fields, member by member in source order, a
+ * later member overriding: a property assignment whose key is a name, a string or numeric literal, or a computed key whose
+ * expression, inside any of the wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and
+ * so does a shorthand property; a method, getter or setter with such a key makes its own field opaque; a spread whose
+ * expression, inside any of those wrappers, is an identifier BINDING resolves to a const whose initializer, inside any of
+ * those wrappers, is an object literal whose own fields hold no opaque member (a method, getter or setter included; spreads
+ * nested at most 8 deep) sets the fields it holds; any other member (a spread of anything else, or a member with any other
+ * key, a computed number included) is opaque and may set every field; (5) a registration: an object literal whose id field has
+ * a text alternative starting reactivefiber. (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a
+ * text with a leading space start no such text), read as one ID:EFFECT entry per such text and per opaque alternative of that
+ * id, the object's entries sorted, each once, ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a
+ * text as itself, an opaque one as <opaque LABEL>), sorted, joined by |, or <none> when it has no effectClass field (how
+ * EFFECT reads two alternatives that render alike, a text spelling an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an
+ * opaque member may set after its last setting, or in place of one, reads <opaque MEMBER>, MEMBER the label of the last such
+ * member (...expression for a spread, its key's source text, or get name, set name or name() for an accessor or method; a
+ * label whose source text holds a whitespace run other than one space is NOT CLAIMED). Each part claims its words over exactly
+ * the forms its census row's pages plant, the roster naming them pin by pin. NOT CLAIMED (named residuals, each read today by
+ * its quiet row): (1) an eval call at a position no eval row page plants, whose quiet row reads a module calling eval in a
+ * switch statement's head; (2) a JavaScript module's require declaration in a form no const or import page plants, whose quiet
+ * row reads a require reached through a comma expression; (3) a path in a form no scope page plants, whose quiet row reads the
+ * JavaScript page at a path ending .Mjs; (4) an expression kind no other row page plants, whose quiet row reads a JSX element
+ * and fragment in a .tsx module; (5) a character no words row page plants, whose quiet row reads a command word holding a
+ * letter outside ASCII. No reading claims more than these parts state.
  *
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title, description items and Acceptance
  * line) for S1, S2, S3, PREMISE and ACCEPTANCE; the helper's BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS for
@@ -185,15 +225,18 @@
  * the K- pins; the falsifier roster (test/fixtures/binding-text-reader-roster.json) for every row's pins, each with its page's
  * digest and the claim words its page plants; and src, read by LIVE. FROZEN SHAPE (standing rule 16): ROWS pins
  * `${id}:${pins.length}` as a literal and PAGES pins each pin's `${id}:${sha256/16 of its page}`.
- * NOT CLAIMED: how wb-jwc.7's census reads once it rides these readers (its file is not on trunk; the cutting seat's run of
- * its refusal #4 members through these readers is a delivery-note receipt, not a pin); which calls load or launch a module
- * (the loads and programs probes above are this census's own locators, by callee name, and a riding census keeps its own);
- * what a module does at run time beyond its source text (a CommonJS exports object reassigned, a prototype patched, source
- * evaluated), which the readers never see; any form outside the planted ones, the claim's named residuals among them; the
+ * NOT CLAIMED: how wb-jwc.7's census reads once it rides this reader (its file is not on trunk; the cutting seat's run of its
+ * refusal #4 members through this reader is a delivery-note receipt, not a pin); which calls load or launch a module (the
+ * loads and programs probes above are this census's own locators, by callee name, and a riding census keeps its own); what a
+ * module does at run time beyond its source text (a CommonJS exports object reassigned, a prototype patched, source
+ * evaluated), which the reader never sees; any form outside the planted ones, the claim's named residuals among them; the
  * sub-forms cut #4's narrowed parts name NOT CLAIMED (refusal #3's U1a to U1d and U2, whose coverage wb-jwc.13 carries, and
- * the same-class forms beside them); and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's and #2's
- * members by naming each one's source (the tracker export carries their notes in the bead's notes field), and this census
- * reads only the export's title and description, never its notes.
+ * the same-class forms beside them); the sub-forms cut #5's narrowed READINGS (1), (2) and (3) name NOT CLAIMED (refusal #4's
+ * U1a to U1d, whose pins wb-jwc.13's landed sub-form census holds, and the same-class forms beside them); a reading the reader
+ * gives after it has read the same module with another probe (each pin reads its page on a fresh reader, with its one probe);
+ * and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's and #2's members by naming each one's source
+ * (the tracker export carries their notes in the bead's notes field), and this census reads only the export's title and
+ * description, never its notes.
  */
 
 import { createHash } from "node:crypto";
@@ -205,16 +248,13 @@ import { describe, expect, it } from "vitest";
 import {
   BINDING_FORMS,
   BINDING_TEXT_CLAIM,
-  type BindingTextReader,
-  bindingKindOf,
-  bindingTextReader,
   type ClaimPart,
   MEMBERS,
   READING_FORMS,
   RESIDUAL_FORMS,
-  rendered,
   TEXT_FORMS,
 } from "./helpers/binding-text-reader.js";
+import { type BindingTextReader, bindingKindOf, bindingTextReader, rendered } from "./helpers/rf-binding-text-reader.js";
 
 const SELF = fileURLToPath(import.meta.url);
 const REPO = join(dirname(SELF), "..");
@@ -1899,7 +1939,7 @@ function expected(at: Pin): readonly string[] {
 
 /* ------------------------------------------------------------------ the census */
 
-describe("wb-jwc.10 binding text reader census (test/helpers/binding-text-reader.ts)", () => {
+describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-reader.ts)", () => {
   for (const row of ROWS)
     describe(`${row.id}: ${row.label}`, () => {
       for (const at of row.pins)

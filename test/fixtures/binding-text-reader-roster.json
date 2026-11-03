@@ -735,7 +735,7 @@
     {
      "pin": "XT-TEXTS",
      "page": "17ff55942c562568",
-     "falsifies": "texts are read when no alternative is opaque, and are unresolved otherwise"
+     "falsifies": "one text (\"only\") and two texts in sorted source order (c ? \"a\" : \"b\") are read in that order, and an opaque alternative before a text (p ?? \"b\") reads unresolved"
     }
    ]
   },
@@ -746,7 +746,7 @@
     {
      "pin": "XW-WORDS",
      "page": "8dd3d5171b8ea99e",
-     "falsifies": "a path and .EXE reduce to rf; ; | ( ) > < and & split context, render, tee, log, out, in and bg; a quote at a word's end (' \" and `) splits q, d and b; a Windows path with .cmd reduces to rf; a conditional's two texts read their words each once, in order (rf x y); an opaque alternative reads unresolved"
+     "falsifies": "a path and .EXE reduce to rf; ; | ( ) > < and & split context, render, tee, log, out, in and bg; a quote at a word's end (' \" and `) splits q, d and b; a Windows path with .cmd reduces to rf; a conditional's two texts, whose words' order of first appearance is also their sorted order, read their words each once, in order (rf x y); an opaque alternative before a text (p ?? \"rf\") reads unresolved"
     },
     {
      "pin": "XW-FORMS",
