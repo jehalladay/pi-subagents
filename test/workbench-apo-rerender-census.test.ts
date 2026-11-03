@@ -251,8 +251,9 @@
  * parameter; and a rest parameter typed by a type parameter constrained to [], which the checker does not type as the empty
  * tuple), where, with no type argument written, the this parameter is never read: a hole, named in R-THIS-BINDING with its
  * quiet pages pinned beside the first-overload twins that refuse. F3: Function.prototype.bind handed the function and the
- * value by call with no type argument written (final cut #4) types the value any (the untyped Function interface's bind) and
- * reads quiet; R-THIS-BINDING and DISPATCH
+ * value by call with no type argument written (final cut #4) reads quiet, the call it is handed by typing the value by its
+ * own type (wb-py8n: the untyped Function interface's members declare their this argument any, and the call the checker
+ * instantiates types the value any only where such a member is itself applied or called); R-THIS-BINDING and DISPATCH
  * name it, and R-THIS-BINDING pins it with Function.prototype.bind's apply, Function.prototype.call's and
  * Function.prototype.apply's call, Function.prototype.call's bind and Reflect.apply over Function.prototype.bind. F4
  * (CT6-v, the coordinated hollow of R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT
@@ -604,6 +605,135 @@
  * LTT1t 0 of 91. Measured on src: the live reach map and src's forms and refused uses read byte for byte the same under this
  * cut's helper as under trunk d8cb84b's (25 modules, of 117 src files; the four refused uses are detached-control's).
  *
+ * WB-PY8N (the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6 leads, F7 and F8 ride; record precision, in the
+ * R-B60 posture: no reading of the helper is edited). WB-97AH's shape stands: 0 rows added or removed, 0 pins removed or
+ * changed; one anchor row is added (INTO ANY, below), and the R-THIS-BINDING label's into-any clause, its RESIDUALS
+ * sentence, DISPATCH's exception item and the WB-VGRI RESPIN 2 paragraph's F3 clause are restated to what the checker
+ * instantiates. F6 (the into-any clause said the untyped Function interface's bind, call and apply type the value any at
+ * every page it pins, true of those members' declarations - thisArg: any, argArray: any[] - while the call the checker
+ * instantiates types the value any at 3 of the 13 pages): the clause states the declarations, then the two typings page by
+ * page - any where that member is itself applied or called (Function.prototype.bind by apply, Function.prototype.call bound
+ * by bind and then called, Reflect.apply given Function.prototype.bind), and the value's own type where it is handed the
+ * function and the value by call (Function.prototype.bind, call and apply each so handed: that call's rest parameter is
+ * inferred from the value, as at a function's own call) - and every page still reads quiet as pinned. INTO ANY holds the
+ * into-any pages (R-THIS-BINDING's cases written in that form) to its table, each page's typing to the pinned typescript's
+ * checker (an anchor outside this file and its roster) and the two labels to that split (as byte-for-byte copies of the
+ * frozen phrases, wb-py8n final cut #5), with the three written-type-argument pages, which the checker types by the this
+ * parameter's type (R-THIS-BINDING pins them refused since WB-97AH), as its control. F7 (CT6-v, the coordinated hollow of
+ * R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT CLAIMED. F8 (the written-index
+ * reading at an ordinary call's argument and at an argument after the this argument with a written rest type argument,
+ * against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is not cured here: the claims it names are
+ * trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and bead
+ * wb-021.10 is its home. Re-cut after refusal #1 (gate run g10-gate-s187: U1, the cut known-dirty against landing 817,
+ * wb-97ah; ruling R-B333): trunk 2e5a6d8 is merged into the branch, the conflicting hunks of the three files are resolved
+ * to WB-97AH's landed text, and the two label restatements are re-applied on top of it - DISPATCH's exception item before
+ * WB-97AH's member-call receiver and hole clause, R-THIS-BINDING's into-any clause before WB-97AH's closed-hole sentence;
+ * on the merged tree INTO ANY reads the same thirteen pages and typings (WB-97AH's twenty-five pages add no page written
+ * in the into-any form). No reading of the helper is edited by this cut, so src's live reach map, forms and refused uses
+ * read as at WB-97AH.
+ *
+ * WB-PY8N RESPIN 2 (cut #3, the respin of refusal #2, gate run g10-gate-s187: U1-U5 under standing rule 16 LEG 2, R514/R515
+ * with R668 - INTO ANY claimed wider than it pinned; the class guard that refusal binds holds every INTO ANY claim to a pin
+ * that reds when the claim is falsified, or narrows the claim to its pinned readings; in the R-B60 posture: narrow the claim,
+ * never widen the reader, and no reading of the helper is edited). WB-PY8N's shape stands: 0 rows added or removed, 0 pins
+ * removed or changed, 89 tests, the two labels and the roster's rows unchanged (only the roster's INTO ANY title is
+ * restated). INTO ANY's title states its pinned readings exactly, and the row gains refused controls and a frozen phrase
+ * literal. U1 (the label lists reading): the clause's four parts - its opening, the declaration fact, the any list's
+ * opening and the own list's - stand once each byte for byte and in that order, the any list runs from its own opening and
+ * the own list to the end of its sentence, and a page's words count, byte for byte, only in the list of its typing, each
+ * held by planted labels whose answers are literals: the two lists' exact bounds; pages named in their own list, in the
+ * clause before the lists, before the clause, after the own list's sentence, in both lists and in the other list only; and
+ * a label refused for each part doubled, for the declaration fact before the clause and after the any list, and for the
+ * any list before the clause. U2 (DISPATCH's phrases): three refused DISPATCH texts written as literals - the by-call
+ * members after the turn into any, the into-any members dropped, the withdrawn wording kept - read [0, 1, 0], [1, 0, 0]
+ * and [0, 0, 1]. U3 and U4 (the selection's member combinations and the call's position): INTO_ANY_FORM selects each of
+ * the nine Function.prototype.<m>.<n>( spellings (m and n each bind, call or apply) and Reflect.apply given each of the
+ * three, written opening the used initializer, nested inside it in an array or as an argument, after a line break, or in a
+ * statement before it. U5 (the spellings the selection does not read): the claim is narrowed to the dotted spelling and
+ * held both ways - a type argument written (at a member's call and at Reflect.apply), a function's own call, Reflect.apply
+ * given the function itself, and the parenthesized, element-access, spaced and broken spellings of an into-any call each
+ * select nothing - and those spellings are NOT CLAIMED below. The phrases the two label readings count (the clause's
+ * parts, the two withdrawn wordings, DISPATCH's two phrases and INTO_ANY's naming words) are frozen as a literal (rule
+ * 16), so a one-edit change to any of them reds INTO ANY (a change to a constant; a label's copy of a phrase written in
+ * another spelling is NOT CLAIMED, wb-py8n final cut #5). On the merged tree (trunk a9a10bb merged into the branch) INTO
+ * ANY reads the same thirteen pages and typings, and src, the helper and the two labels read as at WB-PY8N's re-cut.
+ *
+ * WB-PY8N RESPIN 3 (cut #4, the respin of refusal #3, gate run g10-gate-s193: U1-U3 under standing rule 16 LEG 2, R514/R515
+ * with R668 - new members of the class refusal #2 guards, found after its named members were cured; the orchestrator's
+ * second-stage cap R-B384 froze that class, so this cut is authored enumerate-the-resolvable: each surviving member is pinned
+ * with its witness, the title claims exactly the pinned set, and no reading of the helper is edited). WB-PY8N's shape
+ * stands: 0 rows added or removed, 0 pins removed or changed, 89 tests, the helper, the two labels and the roster's rows
+ * unchanged (only the roster's INTO ANY title is restated). U1 (the clause's four parts once each, byte for byte): a label
+ * refused for each part missing - the clause's opening, the declaration fact, the any list's opening and the own list's -
+ * joins respin 2's labels refused for each part doubled, so each part's byte-for-byte count is held at one both ways; the
+ * clause's opening, whose presence the order check never reads, is held by the once-check through its missing label. U2
+ * (DISPATCH's phrases once each, byte for byte): refused DISPATCH texts written as literals, the by-call phrase twice and
+ * the into-any phrase twice, read [2, 1, 0] and [1, 2, 0], so the reading counts each phrase's byte-for-byte copies and
+ * never reads presence. U3 (where the into-any phrase stands): the title's position word is restated to the doc's, the
+ * into-any phrase running from that turn, and is held by a reading that reads it - the turn into any (DISPATCH_TURN,
+ * frozen) ends the by-call phrase and opens the into-any phrase, and dispatchTurnReading counts the byte-for-byte copies
+ * of the two phrases written joined at it, once in DISPATCH's label; refused texts written as literals read there 1 and 1
+ * (each phrase twice), 0 (the into-any phrase before the turn), 0 (after the turn but apart from it) and 2 (the two joined
+ * twice). Found by this seat at cut time inside the same class and pinned here, each realized first by a one-edit
+ * instrument with a real-tree witness at 0 failed | 89 passed: the selection's text reading (the module text read at its
+ * used line only, with a page whose call stands after a line break inside the used initializer) and R-THIS-BINDING's
+ * withdrawn-wording count (the counted phrase swapped, with the wording planted outside the lists); each now reads through
+ * a named reading its planted controls share - intoAnySelects (the selected and unselected spellings planted as a case's
+ * module text, and a call in another planted file only, not selected) and withdrawnReading (planted labels with the
+ * wording once outside the lists, once inside the any list and twice read 1, 1 and 2). On the merged tree (trunks 59e24e4
+ * and 8eaafa2 merged into the branch) INTO ANY reads the same thirteen pages and typings, and src, the helper and the two
+ * labels read as at WB-PY8N's re-cut. RESIDUAL: none added - this cut claims no residual family.
+ *
+ * WB-PY8N FINAL CUT #5 (the fail-closed core: the rule-19 structural exit R-B417 at refusal #4, gate run g10-gate-s193 -
+ * U1-U3 under standing rule 16 LEG 2, R514/R515 with R668: the title's claim words did not restrict spelling while the
+ * label readings were pinned on byte-for-byte copies of the frozen phrases only, and seven gate-authored witnesses that
+ * write a frozen phrase in another spelling - a sentence-initial capital, a doubled space, the withdrawn wording without
+ * its leading 'or' - kept the census green where each exact counterpart reds it; the child wb-ldqu owns the
+ * spelling-robust readings). This cut narrows the claim and never widens the reader: each claim word of INTO ANY's label
+ * readings - in its title and the roster's, in this header's WB-PY8N paragraphs, in the readings' docs, in the lists
+ * reading's refusal message and in the row's assertion messages and comments - now claims byte-for-byte copies of the
+ * frozen phrases only, and a copy written in any other spelling, and how a reading counts one, is NOT CLAIMED (below). U1
+ * ('neither label holds its withdrawn wording'): neither label holds its withdrawn wording byte for byte -
+ * INTO_ANY_WITHDRAWN in R-THIS-BINDING's, DISPATCH_WITHDRAWN in DISPATCH's. U2 (DISPATCH's two phrases 'once each'): the
+ * by-call phrase and the into-any phrase, each byte for byte exactly once. U3 (the clause's four parts 'each once'): the
+ * clause's opening, the declaration fact, the any list's opening and the own list's opening, each byte for byte exactly
+ * once and in that order. No reading's logic, control, pin, planted text or label is edited: the helper, the two labels
+ * and the roster's rows are byte-identical to the merged tree's, 92 tests, 0 rows added or removed, 0 pins removed or
+ * changed, and only the roster's INTO ANY title is restated. Trunks fc4ced8 and 8db5de0 are merged into the branch, and
+ * neither changes a src file after cut #4's base 8eaafa2; 8db5de0 lands wb-021.10 (landing 864: REACH
+ * THIS-PARAMETER-ARGUMENTS, TAGGED-TEMPLATE-ARGUMENTS and R-INFERRED-LITERAL), whose header paragraphs stand before the
+ * WB-PY8N paragraphs (the one conflicting hunk, resolved landed-first), and it leaves R-THIS-BINDING's and DISPATCH's
+ * labels unchanged, so INTO ANY reads the same thirteen pages and typings. RESIDUAL: none added - this cut claims no
+ * residual family.
+ *
+ * WB-LDQU (bead wb-ldqu, the rule-19 structural-exit child of wb-py8n: ruling R-B417 at refusal #4 filed it to own INTO ANY's
+ * spelling-robust readings, and ruling R-B449's dependency inversion at refusal #5 folded that refusal's U1 into it and parks
+ * wb-py8n until it lands). This cut carries wb-py8n's final cut #5 bytes (tip 732aac32, refused and never landed: the INTO ANY
+ * row with its readings, the WB-PY8N paragraphs above and the two label restatements) onto trunk afab763a, and restates the
+ * row's readings and their claims in the R-B60 posture. After that cut's base d8cb84b no src file changed and only wb-021.7's
+ * landing 890 changed the three census files, so the carried bytes are merged onto the landed files landed-first: the
+ * WB-021.7 paragraph stands before the WB-PY8N paragraphs, FROZEN SHAPE keeps wb-021.7's retired-kinds clause before INTO
+ * ANY's, the roster's restated fail-closed title stands before INTO ANY's, and DISPATCH's label keeps wb-021.7's landed text
+ * with its exception item restated as wb-py8n restated it; the helper, the two labels and the roster's rows read as so merged
+ * (95 tests; this cut restates only the roster's INTO ANY title). Refusal #4 U1-U3 (the label readings counted the frozen
+ * phrases byte for byte while the claim words did not restrict spelling, and seven gate-authored witnesses kept the census
+ * green): every phrase a label
+ * reading counts is read through copies and copyAt - the phrase's words, its leading conjunction ('or ' or 'and ') not read,
+ * matched with each letter in either case (the regular expression's i flag; every frozen phrase is ASCII) and each space as a
+ * run of one or more whitespace characters (\s+) - and the own list ends at its first full stop followed by whitespace, so a
+ * copy written with a sentence-initial capital (W21-X-case, W21-D2-case), a doubled space (W21-X-space, W21-DW-space,
+ * W21-D1-space, W21-L-space) or its leading 'or' dropped (W21-DW-conj) is counted and each of the seven reds INTO ANY. Each
+ * frozen phrase is pinned by spellingsOf (as frozen, in capitals, in small letters, with a sentence-initial capital, each one
+ * space doubled, every space a tab, a line break or a no-break space, and the leading conjunction dropped or written as 'or'
+ * or 'and': one copy each, and two where written twice), each reading by planted labels written in those spellings, and the
+ * reading itself by a frozen literal, so a reading read byte for byte again, or one axis dropped, reds INTO ANY. Refusal #5
+ * U1 (the title names m and n each bind, call or apply while INTO_ANY_FORM read any member name): INTO_ANY_FORM reads exactly
+ * those three names, each name whole (no identifier character right before Function or Reflect, and none and no backslash
+ * right after m), and INTO_ANY_UNSELECTED holds the other names - toString, constructor, valueOf and name (G16-RW1-RW3 and G16-RW1b),
+ * longer names, a name continued by an escape, Object.prototype's toString (G16-RW1c), and a Function or a Reflect continuing
+ * another name - so G16-RW1-RW3 red INTO ANY. The gerund (W21-X-infl) and every other spelling stay NOT CLAIMED (below).
+ * RESIDUAL: none added - this cut claims no residual family.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -737,7 +867,8 @@
  * text) spells the program, at a file floor.
  * OUTSIDE ANCHORS (each a source of truth outside this file and its roster): src (COVERAGE, NON-RENDER, RENDER TOUCHES,
  * FORMS, CLASS ELEMENTS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS), the pinned typescript's declaration file (CLASS ELEMENTS:
- * the class-element kinds and their SyntaxKinds) and the bead's export row (every table quote, the filing's bytes, the
+ * the class-element kinds and their SyntaxKinds), the pinned typescript's checker (INTO ANY: the type the call it
+ * instantiates gives each into-any page's bound value, wb-py8n) and the bead's export row (every table quote, the filing's bytes, the
  * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
  * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields; and, in its notes, the
  * cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it, in order: wb-vgri; its kinds
@@ -797,9 +928,13 @@
  * function's own call and apply, bind resolved to its second overload and Reflect.apply resolved to its first type it by a
  * type parameter inferred from the value, so with no type argument written the value flows into a type it is and reads
  * quiet whatever its member does (a type argument written as the instance's own class reads the same), Reflect.apply's
- * second overload and the untyped Function interface's bind, call and apply read off Function.prototype and handed the
- * function and the value with no type argument written type it any, which hands nothing, and each pinned value so handed
- * reads quiet, and a member call's receiver is bound by no flow the reading reads and reads quiet, while bind resolved to
+ * second overload types it any, which hands nothing, the untyped Function interface's bind, call and apply read off
+ * Function.prototype, which declare their this argument and their arguments any, handed the function and the value with no
+ * type argument written type it any where that member is itself applied or called (Function.prototype.bind by apply,
+ * Function.prototype.call bound by bind and then called, Reflect.apply given Function.prototype.bind) and by its own type
+ * where that member is handed them by call, that call's rest parameter inferred from the value (wb-py8n, landing 770 F6),
+ * and each pinned value so handed reads quiet, and a member call's receiver is bound by no flow the reading reads and reads
+ * quiet, while bind resolved to
  * its first overload, whose this argument the checker types as the function's this parameter, and a type argument written
  * as the this parameter's type read the value there as at any flow into that type (an
  * instance, a keeping instance or a static side refused, structural-stand-in; an object literal not written where it flows,
@@ -908,14 +1043,42 @@
  * changed in the helper together with its row's pages and the roster; an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
- * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
+ * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); this
+ * header's into-any wording (the R-THIS-BINDING RESIDUALS sentence and the WB-VGRI RESPIN 2 paragraph's F3 clause: INTO ANY
+ * reads the two labels, never this file's text, wb-py8n); an into-any page removed with its INTO_ANY entry, its
+ * frozen-literal elements (the page:typing literal and, since respin 2, its naming words in the frozen phrase literal),
+ * R-THIS-BINDING's rule-16 count and the roster together (INTO ANY anchors each page's typing to the checker, not the page
+ * set, wb-py8n); a page's naming words in INTO_ANY edited together with their element of the frozen phrase literal (no
+ * anchor outside this file names those words; a phrase of DISPATCH's reading so edited still reds INTO ANY where the turn
+ * into any or the into-any members are hollowed, since the three refused DISPATCH texts are literals, wb-py8n respin 2); the
  * legacy (non-inspector) dialog frame, whose spinner and elapsed time read a clock by design and which reads no
- * observation beyond the window total.
+ * observation beyond the window total. Of INTO ANY's selection, a page that writes its into-any call in a spelling
+ * INTO_ANY_FORM does not read - parenthesized, through an element access, or with a space or a line break before a dot or
+ * the open parenthesis - is NOT CLAIMED by this census (the selection reads the dotted spelling only, pinned both ways by
+ * INTO_ANY_SELECTED and INTO_ANY_UNSELECTED; wb-py8n respin 2, refusal #2 U5).
+ * Of INTO ANY's label readings, a copy of a frozen phrase that a label writes in a spelling copies does not read - a word
+ * dropped, added, changed or inflected (a gerund, an inner conjunction swapped), other punctuation (a comma added, a curly
+ * apostrophe), whitespace written where the phrase has none or none where it has a space, a character outside \s standing
+ * between words (a zero-width space), or a look-alike letter (one of another script, or one the i flag pairs with no ASCII
+ * letter) - is NOT CLAIMED by this census, and neither is how a reading counts overlapping copies (wb-ldqu: copies reads the
+ * letter-case, whitespace and leading-conjunction axes only, wb-py8n final cut #5's byte-for-byte narrowing restated).
+ * Of INTO ANY's spelling pins, a page's naming words or a phrase edited, a spelling kind removed from spellingsOf, or the
+ * phrase list emptied, together with its elements of the kinds literal and the spelling counts literal, is NOT CLAIMED by
+ * this census (no anchor outside this file names the phrases' spellings or the kinds; each axis stays read by the planted
+ * labels' controls and the reader's frozen literal, wb-ldqu); and an unselected spelling other than the twelve the runtime's
+ * Function.prototype holds the row to (valueOf, a longer name, a continued name, Object.prototype's, MyFunction, MyReflect,
+ * call.toString), removed with the count, is NOT CLAIMED either.
+ * Of INTO ANY's selection, a member name written through an escape inside it (b\u0069nd for bind) and a Function.prototype
+ * the text does not write as Function.prototype (an alias, globalThis["Function"]) are NOT CLAIMED by this census (wb-ldqu).
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
  * entries, their refused uses and their typed writers, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
  * REQUIREMENT_FIELDS, LIVE_FORMS, CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading, and FAIL_CLOSED with the
  * row that plants each shape refused beside a quiet page (cuts #7 and #8) and RETIRED with the row that pins each reading
- * wb-021.7 gives instead (wb-021.7 cut #5) as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * wb-021.7 gives instead (wb-021.7 cut #5) as literals, and INTO ANY pins the into-any pages
+ * with their typing as a literal (wb-py8n) and the phrases its two label readings count, with INTO_ANY's naming words, as
+ * another (wb-py8n respin 2), the turn into any DISPATCH's turn reading joins its two phrases at as a third (wb-py8n
+ * respin 3), and the spelling copies reads (a phrase's words and pattern) with spellingsOf's kinds as a fourth (wb-ldqu);
+ * test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -1030,7 +1193,9 @@ const FAIL_CLOSED_ANCHOR =
   "anchor: the fail-closed shapes, each with the REACH row that plants it, and the shapes wb-021.7 reads instead, each with the row that pins its reading, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, each set in its order (.beads/issues.jsonl, wb-021.5; wb-vgri; wb-021.7 cut #5)";
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
-const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK]);
+const INTO_ANY_ROW =
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies in the spelling copies reads (the phrase's words, its leading 'or' or 'and' not read, each letter in either case and each space as any run of whitespace), and a copy in any other spelling is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings)";
+const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
 /** The forms src's nodes that expose the projection stand in, as measured at the cut (an outside anchor of RESOLVABLE_FORMS: a form the judge stops reading in src reds FORMS). */
@@ -1170,6 +1335,209 @@ function failClosedRecord(notes: string): string[] {
   const entries = (only[2] ?? "").split(", ");
   if (String(entries.length) !== only[1]) throw new Error(`the record counts ${only[1]} entries and lists ${entries.length}`);
   return entries;
+}
+
+/**
+ * The into-any pages (wb-py8n, the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6): the R-THIS-BINDING cases that
+ * hand Function.prototype's bind, call or apply, or Reflect.apply Function.prototype.bind, the function and the value with no
+ * type argument written - INTO_ANY_FORM, read anywhere in each case's planted module text, in its dotted spelling only:
+ * Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m>, m and n each exactly bind, call or apply and each name
+ * whole - no identifier character right before Function or Reflect, and none and no backslash right after m (wb-ldqu,
+ * refusal #5 U1: the reader read any member name) - and the open parenthesis right after the member's name (the spellings
+ * INTO_ANY_SELECTED and INTO_ANY_UNSELECTED pin it to, respin 2 and wb-ldqu) - in row order, each with the value bound as this
+ * (the one node of the page's used initializer that reads as it), the type the pinned typescript's checker gives that value at
+ * the call it instantiates (any, or own: the value's own type) and the words R-THIS-BINDING's label names the page by in the
+ * list of that typing.
+ */
+const INTO_ANY_FORM = /(?<![\p{ID_Continue}$\u200c\u200d])(?:Function\.prototype\.(?:bind|call|apply)\.(?:bind|call|apply)\(|Reflect\.apply\(Function\.prototype\.(?:bind|call|apply)(?![\p{ID_Continue}$\\\u200c\u200d]))/u;
+type IntoAnyTyping = "any" | "own";
+const INTO_ANY: readonly { readonly module: string; readonly value: string; readonly typed: IntoAnyTyping; readonly named: string }[] = [
+  { module: "src/ui/census-forms-this-function-bind-call.ts", value: "new Holder()", typed: "own", named: "a hiding instance, called and not" },
+  { module: "src/ui/census-forms-this-function-bind-call-called.ts", value: "new Holder()", typed: "own", named: "a hiding instance, called and not" },
+  { module: "src/ui/census-forms-this-function-bind-call-argument.ts", value: "new Holder()", typed: "own", named: "followed by an argument" },
+  { module: "src/ui/census-forms-this-function-bind-call-method.ts", value: "new Holder()", typed: "own", named: "and bound to a method" },
+  { module: "src/ui/census-forms-this-function-bind-call-keeps.ts", value: "new Keeper()", typed: "own", named: "a keeping instance" },
+  { module: "src/ui/census-forms-this-function-bind-call-static.ts", value: "StaticHolder", typed: "own", named: "a class's static side" },
+  { module: "src/ui/census-forms-this-function-bind-call-literal.ts", value: "impl", typed: "own", named: "an object literal not written where it flows" },
+  { module: "src/ui/census-forms-this-function-bind-call-callback.ts", value: "hide", typed: "own", named: "a hiding callback" },
+  { module: "src/ui/census-forms-this-function-bind-apply.ts", value: "new Holder()", typed: "any", named: "Function.prototype.bind by apply" },
+  { module: "src/ui/census-forms-this-function-call-call.ts", value: "new Holder()", typed: "own", named: "Function.prototype.call and Function.prototype.apply each handed them by call" },
+  { module: "src/ui/census-forms-this-function-apply-call.ts", value: "new Holder()", typed: "own", named: "Function.prototype.call and Function.prototype.apply each handed them by call" },
+  { module: "src/ui/census-forms-this-function-call-bind.ts", value: "new Holder()", typed: "any", named: "Function.prototype.call bound to the function by bind and called with the instance" },
+  { module: "src/ui/census-forms-this-reflect-function-bind.ts", value: "new Holder()", typed: "any", named: "Reflect.apply given Function.prototype.bind" },
+];
+/**
+ * The spellings INTO_ANY_FORM selects (respin 2, refusal #2 U3 and U4): each of Function.prototype's bind, call and apply
+ * handed the function and the value by bind, call and apply, Reflect.apply given each, and the call written inside the used
+ * initializer - nested in an array, as an argument, after a line break - or in a statement before it.
+ */
+const INTO_ANY_SELECTED = [
+  "export const used = Function.prototype.bind.bind(use, new Holder())();",
+  "export const used = Function.prototype.bind.call(use, new Holder());",
+  "export const used = Function.prototype.bind.apply(use, [new Holder()]);",
+  "export const used = Function.prototype.call.bind(use)(new Holder());",
+  "export const used = Function.prototype.call.call(use, new Holder());",
+  "export const used = Function.prototype.call.apply(use, [new Holder()]);",
+  "export const used = Function.prototype.apply.bind(use)(new Holder());",
+  "export const used = Function.prototype.apply.call(use, new Holder());",
+  "export const used = Function.prototype.apply.apply(use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.bind, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.call, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.apply, use, [new Holder()]);",
+  "export const used = [Function.prototype.call.apply(use, [new Holder()])][0];",
+  "export const used = keep(Function.prototype.bind.call(use, new Holder()));",
+  "export const used =\n  Function.prototype.bind.call(use, new Holder());",
+  "const held = Function.prototype.bind.call(use, new Holder());\nexport const used = held;",
+  "export const used = globalThis.Function.prototype.bind.call(use, new Holder());",
+];
+/**
+ * The spellings INTO_ANY_FORM selects nothing in: a type argument written (outside the into-any form, as the title says), a
+ * function's own call and Reflect.apply given the function itself (no into-any call), the parenthesized, element-access,
+ * spaced and broken spellings of an into-any call (NOT CLAIMED: the selection reads the dotted spelling, respin 2, U5), and
+ * (wb-ldqu, refusal #5 U1) a member word other than bind, call or apply - another member (each other own member of the
+ * runtime's Function.prototype in both forms, the row holding the list to that outside anchor, and valueOf), a longer name
+ * (bindAll, callAll, binder, bind_, bind$, a name continued by a letter of another script or by an escape),
+ * Object.prototype's member - and a Function or a Reflect that continues another name (MyFunction, MyReflect).
+ */
+const INTO_ANY_UNSELECTED = [
+  "export const used = Function.prototype.bind.call<typeof use, [Holder], [], unknown>(use, new Holder());",
+  "export const used = Reflect.apply<Holder, [], unknown>(Function.prototype.bind, use, [new Holder()]);",
+  "export const used = use.call(new Holder());",
+  "export const used = Reflect.apply(use, new Holder(), []);",
+  "export const used = (Function.prototype.call).apply(use, [new Holder()]);",
+  'export const used = Function.prototype["call"].apply(use, [new Holder()]);',
+  "export const used = Function.prototype.call.apply (use, [new Holder()]);",
+  "export const used = Function.prototype.call\n  .apply(use, [new Holder()]);",
+  "export const used = Function.prototype.toString.call(use, new Holder());",
+  "export const used = Function.prototype.call.toString(use, new Holder());",
+  "export const used = Function.prototype.bindAll.call(use, new Holder());",
+  "export const used = Function.prototype.bind.callAll(use, new Holder());",
+  "export const used = Function.prototype.length.call(use, new Holder());",
+  "export const used = Function.prototype.name.call(use, new Holder());",
+  "export const used = Function.prototype.arguments.call(use, new Holder());",
+  "export const used = Function.prototype.caller.call(use, new Holder());",
+  "export const used = Function.prototype.constructor.call(use, new Holder());",
+  "export const used = Reflect.apply(Function.prototype.length, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.arguments, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.caller, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.toString, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.constructor, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.valueOf, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.name, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.binder, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.bind_, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.bind$, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.bind\u00e9, use, [new Holder()]);",
+  "export const used = Reflect.apply(Function.prototype.bind\\u0041, use, [new Holder()]);",
+  "export const used = Reflect.apply(Object.prototype.toString, use, [new Holder()]);",
+  "export const used = MyFunction.prototype.bind.call(use, new Holder());",
+  "export const used = MyReflect.apply(Function.prototype.bind, use, [new Holder()]);",
+];
+/**
+ * The case reading INTO ANY's selection makes (respin 3): a case is an into-any page when its planted module text, read
+ * whole, holds INTO_ANY_FORM; the row reads R-THIS-BINDING's cases and its planted cases through this one reading.
+ */
+const intoAnySelects = (item: { readonly module: string; readonly plants: Readonly<Record<string, string>> }): boolean => INTO_ANY_FORM.test(item.plants[item.module] ?? "");
+/** R-THIS-BINDING's into-any clause: its opening, the declaration fact it states, the opening of each typed list, and the wording landing 770 F6 withdrew. */
+const INTO_ANY_CLAUSE = "Into any (respin 2, refusal #2 F3; narrowed at final cut #4; restated at wb-py8n, landing 770 F6): ";
+const INTO_ANY_DECLARED = "declare their this argument and their arguments any (thisArg: any, argArray: any[])";
+const INTO_ANY_TYPED: Readonly<Record<IntoAnyTyping, string>> = { any: "pinned typed any (", own: "pinned typed by its own type (" };
+const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
+/**
+ * The spelling every INTO ANY label reading counts a frozen phrase's copies in (wb-ldqu, refusal #4 U1-U3): a copy is the
+ * phrase's words - the phrase with a leading conjunction, 'or ' or 'and ', not read - written with each letter in either case
+ * (the regular expression's i flag; every frozen phrase is ASCII) and each space as a run of one or more whitespace
+ * characters (\s+); a copy in any other spelling is NOT CLAIMED. copies counts a text's copies of a phrase, copyAt finds
+ * where its first one starts, and sentenceEnd finds a sentence's first full stop followed by whitespace.
+ */
+const phraseWords = (phrase: string): string => phrase.replace(/^(?:or|and) /, "");
+const phrasePattern = (phrase: string): RegExp => new RegExp(phraseWords(phrase).replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "\\s+"), "gi");
+const copies = (text: string, phrase: string): number => text.match(phrasePattern(phrase))?.length ?? 0;
+const copyAt = (text: string, phrase: string): number => text.search(phrasePattern(phrase));
+const sentenceEnd = (text: string, from: number): number => {
+  const at = text.slice(from).search(/\.\s/);
+  return at < 0 ? -1 : from + at;
+};
+/**
+ * The spellings of a frozen phrase copies reads as one copy (wb-ldqu): as frozen, in capitals, in small letters, with a
+ * sentence-initial capital, each one space doubled, every space written as a tab, a line break or a no-break space, and the
+ * leading conjunction dropped or written as 'or' or 'and' - refusal #4's seven witnesses each write one of them.
+ */
+function spellingsOf(phrase: string): (readonly [string, string])[] {
+  const gaps: number[] = [];
+  for (let at = phrase.indexOf(" "); at >= 0; at = phrase.indexOf(" ", at + 1)) gaps.push(at);
+  const spaced = (space: string): string => phrase.split(" ").join(space);
+  const words = phraseWords(phrase);
+  return [
+    ["as frozen", phrase],
+    ["in capitals", phrase.toUpperCase()],
+    ["in small letters", phrase.toLowerCase()],
+    ["a sentence-initial capital", `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}`],
+    ...gaps.map((at): readonly [string, string] => [`the space at ${at} doubled`, `${phrase.slice(0, at)} ${phrase.slice(at)}`]),
+    ["every space a tab", spaced("\t")],
+    ["every space a line break", spaced("\n")],
+    ["every space a no-break space", spaced(String.fromCodePoint(0xa0))],
+    ["the leading conjunction dropped", words],
+    ["the leading conjunction 'or'", `or ${words}`],
+    ["the leading conjunction 'and'", `and ${words}`],
+  ];
+}
+/** R-THIS-BINDING's label read for that withdrawn wording (respin 3): how many copies of it, read as copies reads them, stand anywhere in a label (wb-ldqu) - the reading the row and its planted labels share. */
+const withdrawnReading = (label: string): number => copies(label, INTO_ANY_WITHDRAWN);
+/** DISPATCH's exception item: the by-call members among the flows into a type the value is (their phrase ends at the item's turn into any), the applied or called members among the flows into any (their phrase runs from that turn), and the wording landing 770 F6 withdrew. */
+const DISPATCH_INTO_OWN =
+  "or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any";
+const DISPATCH_INTO_ANY = "or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written";
+const DISPATCH_WITHDRAWN = "or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written";
+/** DISPATCH's exception item read by its three phrases, each counted by its copies in the label as copies reads them (wb-ldqu): the by-call phrase, the into-any phrase and the withdrawn wording. */
+const dispatchReading = (label: string): number[] => [DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN].map(phrase => copies(label, phrase));
+/**
+ * The turn into any DISPATCH's two phrases share (respin 3, refusal #3 U3): the by-call phrase ends at it and the into-any
+ * phrase opens with it, so the two phrases written joined there - the turn written once - are the into-any phrase running
+ * from that turn; dispatchTurnReading counts that joined text's copies in a label as copies reads them (wb-ldqu).
+ */
+const DISPATCH_TURN = "or into any";
+const DISPATCH_FROM_TURN = `${DISPATCH_INTO_OWN.slice(0, DISPATCH_INTO_OWN.length - DISPATCH_TURN.length)}${DISPATCH_INTO_ANY}`;
+const dispatchTurnReading = (label: string): number => copies(label, DISPATCH_FROM_TURN);
+/** The type the pinned typescript's checker gives the value bound as this at a planted page (its contextual type there, at the call the checker instantiates): any, own (the value's own type) or that type's name. */
+function boundTyping(rel: string, value: string): string {
+  const program = planted();
+  const source = program.getSourceFile(join(ROOT, rel));
+  if (!source) throw new Error(`${rel} is not a planted module`);
+  const declarations = source.statements.flatMap(statement => (ts.isVariableStatement(statement) ? [...statement.declarationList.declarations] : []));
+  const used = declarations.find(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === "used");
+  const found: ts.Expression[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isExpression(node) && node.getText(source) === value) found.push(node);
+    else ts.forEachChild(node, visit);
+  };
+  if (used?.initializer) visit(used.initializer);
+  const [node] = found;
+  if (found.length !== 1 || !node) throw new Error(`${rel}: ${found.length} nodes of its used initializer read ${value}; the reading takes exactly one`);
+  const checker = program.getTypeChecker();
+  const into = checker.getContextualType(node);
+  if (into === undefined) return "<no contextual type>";
+  if ((into.flags & ts.TypeFlags.Any) !== 0) return "any";
+  return into === checker.getTypeAtLocation(node) ? "own" : checker.typeToString(into);
+}
+/**
+ * A label's into-any clause split at its two typed lists: its four parts - the clause's opening, the declaration fact and
+ * the two lists' openings - each stand as exactly one copy as copies reads it (wb-ldqu), in that order (respin 2: the
+ * declaration fact among them), the any list runs from its own opening to the own list's, and the own list from its opening
+ * to the end of its sentence (its first full stop followed by whitespace, wb-ldqu).
+ */
+function intoAnyLists(label: string): Record<IntoAnyTyping, string> {
+  const parts = [INTO_ANY_CLAUSE, INTO_ANY_DECLARED, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own];
+  const [clause = -1, declared = -1, any = -1, own = -1] = parts.map(part => copyAt(label, part));
+  if (parts.some(part => copies(label, part) !== 1) || !(clause < declared && declared < any && any < own))
+    throw new Error("the label holds no into-any clause with its declaration fact, an any list and then an own list, each once as copies reads it");
+  const end = sentenceEnd(label, own);
+  return { any: label.slice(any, own), own: label.slice(own, end < 0 ? label.length : end) };
+}
+/** Where a label names each page (the judgement (5) reads): whether a copy of the page's words, as copies reads it (wb-ldqu), stands in the list of its typing, and how many stand in the other list. */
+function intoAnyNaming(label: string, pages: readonly { readonly typed: IntoAnyTyping; readonly named: string }[]): (readonly [boolean, number])[] {
+  const lists = intoAnyLists(label);
+  return pages.map(page => [copies(lists[page.typed], page.named) > 0, copies(lists[page.typed === "any" ? "own" : "any"], page.named)] as const);
 }
 
 const plantMembers = (): AdmissionMember[] =>
@@ -1403,6 +1771,297 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(() => failClosedRecord(`LATER NOTE quoting ${planted}`), "the record quoted inside another line").toThrow();
     expect(() => failClosedRecord(planted.replace("2 entries", "3 entries")), "a count its list does not meet").toThrow();
     expect(() => failClosedRecord(`${planted} (rule-16 pinned, 1 entries: spread:SPREADS)`), "two enumerations in the record line").toThrow();
+  });
+
+  it(INTO_ANY_ROW, { timeout: WALK_BUDGET_MS }, () => {
+    const row = REACH.rows.find(entry => entry.id === "R-THIS-BINDING");
+    expect(
+      (row?.cases ?? []).filter(item => INTO_ANY_FORM.test(item.plants[item.module] ?? "")).map(item => item.module),
+      "the into-any pages: R-THIS-BINDING's cases written in the into-any form, in row order",
+    ).toEqual(INTO_ANY.map(page => page.module));
+    // Respin 3: the selection read through intoAnySelects, the case reading the planted cases below share.
+    expect((row?.cases ?? []).filter(intoAnySelects).map(item => item.module), "the into-any pages read through the shared case reading, in row order").toEqual(
+      INTO_ANY.map(page => page.module),
+    );
+    expect(
+      INTO_ANY.map(page => `${page.module}:${boundTyping(page.module, page.value)}`),
+      "the type the pinned typescript's checker gives each page's bound value at the call it instantiates",
+    ).toEqual(INTO_ANY.map(page => `${page.module}:${page.typed}`));
+    expect(INTO_ANY.map(page => `${page.module.replace(/^src\/ui\/census-forms-|\.ts$/g, "")}:${page.typed}`), "the into-any pages and their typing, frozen (rule 16)").toEqual([
+      "this-function-bind-call:own",
+      "this-function-bind-call-called:own",
+      "this-function-bind-call-argument:own",
+      "this-function-bind-call-method:own",
+      "this-function-bind-call-keeps:own",
+      "this-function-bind-call-static:own",
+      "this-function-bind-call-literal:own",
+      "this-function-bind-call-callback:own",
+      "this-function-bind-apply:any",
+      "this-function-call-call:own",
+      "this-function-apply-call:own",
+      "this-function-call-bind:any",
+      "this-reflect-function-bind:any",
+    ]);
+    const label = row?.label ?? "";
+    expect(copies(label, INTO_ANY_WITHDRAWN), "R-THIS-BINDING's label: the withdrawn wording (every page typed any), as copies reads it").toBe(0);
+    expect(copies(label, INTO_ANY_DECLARED), "R-THIS-BINDING's label: the declaration fact, as copies reads it, once").toBe(1);
+    const naming = intoAnyNaming(label, INTO_ANY);
+    for (const [index, page] of INTO_ANY.entries()) {
+      const other: IntoAnyTyping = page.typed === "any" ? "own" : "any";
+      expect(naming[index], `${page.module}: named by INTO_ANY's words, as copies reads them, in the ${page.typed} list, never in the ${other} list`).toEqual([true, 0]);
+    }
+    const dispatch = REACH.rows.find(entry => entry.id === "DISPATCH")?.label ?? "";
+    expect(
+      dispatchReading(dispatch),
+      "DISPATCH's exception item, each phrase as copies reads it: the by-call members into a type the value is, the applied or called members into any, the withdrawn wording",
+    ).toEqual([1, 1, 0]);
+    // Respin 3 (refusal #3 U3): the into-any phrase runs from the turn into any that ends the by-call phrase - the turn frozen (rule 16), the two phrases sharing it, and the label holding them joined there once, as copies reads it (wb-ldqu).
+    expect(
+      [DISPATCH_TURN, DISPATCH_INTO_OWN.endsWith(` - ${DISPATCH_TURN}`), DISPATCH_INTO_ANY.startsWith(`${DISPATCH_TURN} `), dispatchTurnReading(dispatch)],
+      "DISPATCH's exception item at its turn: the turn into any, the by-call phrase ending at it, the into-any phrase opening with it, the two joined there, as copies reads it",
+    ).toEqual(["or into any", true, true, 1]);
+    // Non-vacuity: the same reading at the three Function.prototype pages R-THIS-BINDING's hole pins with type arguments written gives the this parameter's type, so it reads more than any and own.
+    expect(
+      ["bind-call", "call-call", "apply-call"].map(form => boundTyping(`src/ui/census-forms-this-function-${form}-explicit.ts`, "new Holder()")),
+      "the written-type-argument pages",
+    ).toEqual(["Sink", "Sink", "Sink"]);
+    // Non-vacuity: the lists reading refuses a label whose own list is missing or comes first (the declaration fact written, so each refuses for that alone).
+    expect(() => intoAnyLists(`${INTO_ANY_CLAUSE}${INTO_ANY_DECLARED} - ${INTO_ANY_TYPED.any}a plant. `), "an own list missing").toThrow();
+    expect(() => intoAnyLists(`${INTO_ANY_CLAUSE}${INTO_ANY_DECLARED} - ${INTO_ANY_TYPED.own}a plant; ${INTO_ANY_TYPED.any}a plant. `), "the own list first").toThrow();
+    // Respin 2 (refusal #2 U3-U5): the selection reads every member combination and every position the title names, and the dotted spelling only.
+    expect(INTO_ANY_SELECTED.filter(text => !INTO_ANY_FORM.test(text)), "the spellings and positions the selection reads (none unselected)").toEqual([]);
+    expect(INTO_ANY_UNSELECTED.filter(text => INTO_ANY_FORM.test(text)), "the spellings the selection does not read (none selected)").toEqual([]);
+    // Respin 3: the same spellings planted as a case module text and read through intoAnySelects, and a case whose call stands in another planted file only.
+    const plantedCase = (text: string, other: string): { readonly module: string; readonly plants: Readonly<Record<string, string>> } => ({
+      module: "src/ui/planted.ts",
+      plants: { "src/ui/planted.ts": text, "src/ui/other.ts": other },
+    });
+    expect(
+      [
+        INTO_ANY_SELECTED.filter(text => !intoAnySelects(plantedCase(text, ""))),
+        INTO_ANY_UNSELECTED.filter(text => intoAnySelects(plantedCase(text, ""))),
+        intoAnySelects(plantedCase("export const used = use;\n", "export const used = Function.prototype.call.apply(use, [new Holder()]);\n")),
+      ],
+      "planted cases: each selected spelling selected, each unselected one not, and the call in another planted file only not selected",
+    ).toEqual([[], [], false]);
+    // Respin 2 (refusal #2 U1): the bounds of the lists reading and the words of each page in its own list only, on a planted label whose answers are literals.
+    const lead = `${INTO_ANY_CLAUSE}the members ${INTO_ANY_DECLARED}, so a hiding callback reads quiet - `;
+    const anyList = `${INTO_ANY_TYPED.any}applied): an applied page, and a page named twice; `;
+    const ownList = `${INTO_ANY_TYPED.own}handed by call): Function.prototype.call handed them by call, and a page named twice`;
+    const plantedLabel = `Function.prototype.call and Function.prototype.apply each handed them by call. ${lead}${anyList}${ownList}. After it: a class's static side. And on.`;
+    expect(intoAnyLists(plantedLabel), "the any list from its opening to the own list's, the own list to its sentence's end").toEqual({ any: anyList, own: ownList });
+    expect(
+      intoAnyNaming(plantedLabel, [
+        { typed: "any", named: "an applied page" },
+        { typed: "own", named: "Function.prototype.call handed them by call" },
+        { typed: "own", named: "a hiding callback" },
+        { typed: "own", named: "a class's static side" },
+        { typed: "own", named: "Function.prototype.call and Function.prototype.apply each handed them by call" },
+        { typed: "own", named: "a page named twice" },
+        { typed: "any", named: "Function.prototype.call handed them by call" },
+      ]),
+      "pages named in their own list, in the clause before the lists, after the own list's sentence, before the clause, in both lists, in the other list only",
+    ).toEqual([
+      [true, 0],
+      [true, 0],
+      [false, 0],
+      [false, 0],
+      [false, 0],
+      [true, 1],
+      [false, 1],
+    ]);
+    // Respin 2 (refusal #2 U1): the four parts of the clause once each and in order - each planted label below refuses.
+    const refusedLabels: readonly (readonly [string, string])[] = [
+      ["the clause's opening twice", `${INTO_ANY_CLAUSE}${plantedLabel}`],
+      ["the declaration fact twice", plantedLabel.replace("After it:", `After it: ${INTO_ANY_DECLARED};`)],
+      ["a second any list in the own list's sentence", plantedLabel.replace("and a page named twice. After", `and a page named twice, and ${INTO_ANY_TYPED.any}here too): a keeping instance. After`)],
+      ["the own list's opening twice", `${plantedLabel} ${INTO_ANY_TYPED.own}again).`],
+      ["the declaration fact before the clause", `${INTO_ANY_DECLARED}. ${INTO_ANY_CLAUSE}the members, so a hiding callback reads quiet - ${anyList}${ownList}.`],
+      ["the any list before the clause", `${anyList}${INTO_ANY_CLAUSE}the members ${INTO_ANY_DECLARED} - ${ownList}.`],
+      ["the declaration fact after the any list", `${INTO_ANY_CLAUSE}the members - ${anyList}${INTO_ANY_DECLARED}; ${ownList}.`],
+    ];
+    for (const [what, refused] of refusedLabels) expect(() => intoAnyLists(refused), what).toThrow();
+    // Respin 3 (refusal #3 U1): each of the four parts missing - each planted label below refuses, the clause opening among them, whose presence only the once-check reads.
+    const missingParts: readonly (readonly [string, string])[] = [
+      ["the clause opening missing", plantedLabel.replace(INTO_ANY_CLAUSE, "")],
+      ["the declaration fact missing", plantedLabel.replace(INTO_ANY_DECLARED, "")],
+      ["the any list opening missing", plantedLabel.replace(INTO_ANY_TYPED.any, "")],
+      ["the own list opening missing", plantedLabel.replace(INTO_ANY_TYPED.own, "")],
+    ];
+    for (const [what, missing] of missingParts) expect(() => intoAnyLists(missing), what).toThrow();
+    // Respin 3: the withdrawn wording read through withdrawnReading, which the planted labels share - none in the real label, then once outside the lists, once inside the any list, and twice.
+    expect(
+      [
+        label,
+        `${plantedLabel} They type their this argument and their arguments any.`,
+        plantedLabel.replace("an applied page,", "an applied page that they type their this argument and their arguments any,"),
+        `${plantedLabel} They type their this argument and their arguments any, and type their this argument and their arguments any.`,
+      ].map(withdrawnReading),
+      "the withdrawn wording, as copies reads it: none in the R-THIS-BINDING label; planted labels once outside the lists, once inside the any list, twice",
+    ).toEqual([0, 1, 1, 2]);
+    // Respin 2 (refusal #2 U2): the DISPATCH reading on three refused texts, written as literals: the by-call members after the turn into any, the into-any members dropped, the withdrawn wording kept.
+    expect(
+      [
+        "a value bound as a function's this into a type it is - by a function's own call or apply - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written (wb-py8n, landing 770 F6), and a member call's receiver",
+        "a value bound as a function's this into a type it is - by a function's own call or apply, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload (wb-py8n, landing 770 F6), and a member call's receiver",
+        "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload or by Reflect.apply resolved to its first - or into any by Reflect.apply's second overload or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written, and a member call's receiver",
+      ].map(dispatchReading),
+      "refused DISPATCH texts: the by-call members after the turn, the into-any members dropped, the withdrawn wording kept",
+    ).toEqual([
+      [0, 1, 0],
+      [1, 0, 0],
+      [0, 0, 1],
+    ]);
+    // Respin 3 (refusal #3 U2 and U3): five refused DISPATCH texts written as literals - the by-call phrase twice, the into-any phrase twice, the into-any phrase before the turn, the into-any phrase after the turn but apart from it, and the two phrases joined at the turn twice.
+    const refusedTurns = [
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any), and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written), and a member call's receiver",
+      "a value bound as a function's this - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written - into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any (wb-py8n, landing 770 F6), and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any (wb-py8n, landing 770 F6), or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written, and a member call's receiver",
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6; and again or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written), and a member call's receiver",
+    ];
+    expect(refusedTurns.map(dispatchReading), "refused DISPATCH texts read by their phrase counts: each phrase twice, then each once, then both twice").toEqual([
+      [2, 1, 0],
+      [1, 2, 0],
+      [1, 1, 0],
+      [1, 1, 0],
+      [2, 2, 0],
+    ]);
+    expect(refusedTurns.map(dispatchTurnReading), "refused DISPATCH texts read at the turn: joined once where a phrase is doubled, never before the turn or apart from it, twice where joined twice").toEqual([1, 1, 0, 0, 2]);
+    // Respin 2: the phrases the two label readings count, frozen (rule 16), so a one-edit change to any of them reds here.
+    expect(
+      [INTO_ANY_CLAUSE, INTO_ANY_DECLARED, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own, INTO_ANY_WITHDRAWN, DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN, ...INTO_ANY.map(page => page.named)],
+      "the label readings' phrases and INTO_ANY's naming words, frozen (rule 16)",
+    ).toEqual([
+      "Into any (respin 2, refusal #2 F3; narrowed at final cut #4; restated at wb-py8n, landing 770 F6): ",
+      "declare their this argument and their arguments any (thisArg: any, argArray: any[])",
+      "pinned typed any (",
+      "pinned typed by its own type (",
+      "type their this argument and their arguments any",
+      "or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any",
+      "or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written",
+      "or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written",
+      "a hiding instance, called and not",
+      "a hiding instance, called and not",
+      "followed by an argument",
+      "and bound to a method",
+      "a keeping instance",
+      "a class's static side",
+      "an object literal not written where it flows",
+      "a hiding callback",
+      "Function.prototype.bind by apply",
+      "Function.prototype.call and Function.prototype.apply each handed them by call",
+      "Function.prototype.call and Function.prototype.apply each handed them by call",
+      "Function.prototype.call bound to the function by bind and called with the instance",
+      "Reflect.apply given Function.prototype.bind",
+    ]);
+    // wb-ldqu (refusal #4 U1-U3): each frozen phrase read as one copy in each spelling copies reads, set in other text, and as two where written twice.
+    const phrases = [INTO_ANY_CLAUSE, INTO_ANY_DECLARED, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own, INTO_ANY_WITHDRAWN, DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN, DISPATCH_FROM_TURN, ...new Set(INTO_ANY.map(page => page.named))];
+    expect(
+      phrases.flatMap(phrase =>
+        spellingsOf(phrase).flatMap(([how, text]) => (copies(`a planted text; ${text}; and on`, phrase) === 1 && copies(`${text} ${phrase}`, phrase) === 2 ? [] : [`${phrase.slice(0, 32)}: ${how}`])),
+      ),
+      "each frozen phrase: one copy in each of its spellings, two where written twice",
+    ).toEqual([]);
+    expect([phrases.length, ...phrases.map(phrase => spellingsOf(phrase).length)], "the phrases and their spellings, counted (rule 16)").toEqual([20, 28, 21, 13, 16, 17, 40, 29, 27, 57, 15, 13, 14, 12, 13, 17, 12, 12, 17, 21, 12]);
+    expect(
+      [spellingsOf(INTO_ANY_WITHDRAWN).map(([how]) => how), phraseWords(DISPATCH_INTO_ANY), String(phrasePattern("or a (b) c.")), copies("", INTO_ANY_WITHDRAWN), copyAt(`x ${INTO_ANY_WITHDRAWN}`, INTO_ANY_WITHDRAWN)],
+      "the spelling copies reads and spellingsOf's kinds, frozen (rule 16)",
+    ).toEqual([
+      [
+        "as frozen",
+        "in capitals",
+        "in small letters",
+        "a sentence-initial capital",
+        "the space at 4 doubled",
+        "the space at 10 doubled",
+        "the space at 15 doubled",
+        "the space at 24 doubled",
+        "the space at 28 doubled",
+        "the space at 34 doubled",
+        "the space at 44 doubled",
+        "every space a tab",
+        "every space a line break",
+        "every space a no-break space",
+        "the leading conjunction dropped",
+        "the leading conjunction 'or'",
+        "the leading conjunction 'and'",
+      ],
+      "into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written",
+      "/a\\s+\\(b\\)\\s+c\\./gi",
+      0,
+      2,
+    ]);
+    // wb-ldqu: each reading, on planted labels written in the spellings the refusal #4 witnesses wrote - a reading read byte for byte again reds here.
+    expect(
+      [
+        `${plantedLabel} Type their this argument and their arguments any, the members once read.`,
+        `${plantedLabel} They type their this argument and their  arguments any.`,
+        `${plantedLabel} They type their this argument and their\narguments any.`,
+      ].map(withdrawnReading),
+      "the withdrawn wording planted with a sentence-initial capital (W21-X-case), a doubled space (W21-X-space) and a line break",
+    ).toEqual([1, 1, 1]);
+    const plantedDispatch =
+      "a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6), and a member call's receiver";
+    expect(
+      [
+        plantedDispatch,
+        plantedDispatch.replace("(wb-py8n, landing 770 F6)", `(wb-py8n, landing 770 F6; ${DISPATCH_WITHDRAWN.replace("argument written", "argument  written")})`),
+        plantedDispatch.replace(" (wb-py8n, landing 770 F6)", `, ${phraseWords(DISPATCH_WITHDRAWN)} (wb-py8n, landing 770 F6)`),
+        `${plantedDispatch}; ${DISPATCH_INTO_OWN.replace("the function and the value", "the function and  the value")}`,
+        `${plantedDispatch}. O${DISPATCH_INTO_ANY.slice(1)}, as above`,
+      ].map(dispatchReading),
+      "DISPATCH texts planted as delivered, then with the withdrawn wording doubly spaced (W21-DW-space) and without its 'or' (W21-DW-conj), the by-call phrase again doubly spaced (W21-D1-space), the into-any phrase again with a capital (W21-D2-case)",
+    ).toEqual([
+      [1, 1, 0],
+      [1, 1, 1],
+      [1, 1, 1],
+      [2, 1, 0],
+      [1, 2, 0],
+    ]);
+    expect(
+      [plantedDispatch.replace("the function and the value", "the function and  the value"), plantedDispatch.toUpperCase(), `${plantedDispatch}; ${DISPATCH_FROM_TURN.replace("or by the call", "And by the call")}`].map(dispatchTurnReading),
+      "the two phrases joined at the turn, planted doubly spaced, in capitals, and again with another conjunction",
+    ).toEqual([1, 1, 2]);
+    const spelledLabels: readonly (readonly [string, string])[] = [
+      ["the declaration fact again, doubly spaced (W21-L-space)", `${plantedLabel} They declare their this argument and their  arguments any (thisArg: any, argArray: any[]).`],
+      ["the clause's opening again, in capitals", `${INTO_ANY_CLAUSE.toUpperCase()}${plantedLabel}`],
+      ["the any list's opening again, with a capital", `${plantedLabel} Pinned typed any (again).`],
+      ["the own list's opening again, across a line break", `${plantedLabel} pinned typed by its\nown type (again).`],
+    ];
+    for (const [what, refused] of spelledLabels) expect(() => intoAnyLists(refused), what).toThrow();
+    expect(
+      [intoAnyLists(plantedLabel.toUpperCase()), intoAnyLists(plantedLabel.replace("and a page named twice. After it:", "and a page named twice.\nAfter it:"))],
+      "the lists read in capitals, and the own list ending at a full stop before a line break",
+    ).toEqual([
+      { any: anyList.toUpperCase(), own: ownList.toUpperCase() },
+      { any: anyList, own: ownList },
+    ]);
+    expect(
+      intoAnyNaming(plantedLabel.replace("an applied page,", "an applied page, A HIDING CALLBACK,").replace("Function.prototype.call handed them by call,", "Function.prototype.call handed  them by call, or bound to a method,"), [
+        { typed: "own", named: "a hiding callback" },
+        { typed: "own", named: "Function.prototype.call handed them by call" },
+        { typed: "own", named: "and bound to a method" },
+      ]),
+      "pages named in capitals in the other list, doubly spaced in their own list, and with another leading conjunction in their own list",
+    ).toEqual([
+      [false, 1],
+      [true, 0],
+      [true, 0],
+    ]);
+    // wb-ldqu (refusal #5 U1): the selected and unselected spellings, counted (rule 16) - the member-word controls among them, each read above through INTO_ANY_FORM and intoAnySelects.
+    expect([INTO_ANY_SELECTED.length, INTO_ANY_UNSELECTED.length], "the selected and unselected spellings, counted (rule 16)").toEqual([17, 32]);
+    // wb-ldqu: the member-word controls held to an anchor outside this file - each own member of the runtime Function.prototype other than bind, call and apply stands among the unselected spellings in both forms.
+    const otherMembers = Object.getOwnPropertyNames(Function.prototype).filter(name => !["bind", "call", "apply"].includes(name));
+    expect(
+      [
+        otherMembers,
+        otherMembers
+          .flatMap(name => [`export const used = Function.prototype.${name}.call(use, new Holder());`, `export const used = Reflect.apply(Function.prototype.${name}, use, [new Holder()]);`])
+          .filter(text => !INTO_ANY_UNSELECTED.includes(text)),
+      ],
+      "Function.prototype's other own members, each written in both forms among the unselected spellings",
+    ).toEqual([["length", "name", "arguments", "caller", "constructor", "toString"], []]);
   });
 
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
