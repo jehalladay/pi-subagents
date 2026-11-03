@@ -232,6 +232,15 @@
                 "dependencies.edc-sdk",
                 "devDependencies.x",
                 "optionalDependencies.EvidenceDirected"
+              ],
+              "zeroWidthRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "softHyphenLowLine": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "lowLineRepeat": [
+                "src/plant.ts:1 lexeme edc"
               ]
             },
             "words": {
@@ -495,6 +504,183 @@
               "Mc": {
                 "members": true,
                 "departures": {}
+              }
+            },
+            "runs": {
+              "place": "ed|c",
+              "members": {
+                "Cf": "U+200B",
+                "Mn": "U+0332",
+                "Me": "U+20DD"
+              },
+              "forms": [
+                "before Cf: U+0078 U+200B",
+                "after Cf: U+200B U+0078",
+                "before Mn: U+0078 U+0332",
+                "after Mn: U+0332 U+0078",
+                "before Me: U+0078 U+20DD",
+                "after Me: U+20DD U+0078",
+                "twice: U+0078*2",
+                "thrice: U+0078*3"
+              ],
+              "categories": {
+                "Cf": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                },
+                "Mn": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Cf": {},
+                    "before Mn": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Mn": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0327": "e c"
+                    },
+                    "before Me": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "after Me": {},
+                    "twice": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    },
+                    "thrice": {
+                      "U+0307": "e c",
+                      "U+030C": "e c",
+                      "U+0323": "e c",
+                      "U+0327": "e c",
+                      "U+032D": "e c",
+                      "U+0331": "e c"
+                    }
+                  }
+                },
+                "Me": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                }
+              },
+              "named": {
+                "place": "ed|c",
+                "read": 297,
+                "digest": "c338574e7e6abb40",
+                "departures": {}
+              },
+              "contexts": {
+                "stem": {
+                  "place": "ed|c",
+                  "read": 297,
+                  "digest": "c338574e7e6abb40",
+                  "departures": {}
+                },
+                "camelLeft": {
+                  "place": "|Edc",
+                  "read": 297,
+                  "digest": "08c8a7011ec9621d",
+                  "departures": {}
+                },
+                "acronymLast": {
+                  "place": "ED|x",
+                  "read": 297,
+                  "digest": "dc75c054668eb21f",
+                  "departures": {}
+                },
+                "acronymLower": {
+                  "place": "EDA|x",
+                  "read": 297,
+                  "digest": "91d401b94aa497a5",
+                  "departures": {}
+                },
+                "pluralRun": {
+                  "place": "E|s",
+                  "read": 297,
+                  "digest": "fa651daa80d41ea6",
+                  "departures": {}
+                },
+                "pluralFollower": {
+                  "place": "EDCs|",
+                  "read": 297,
+                  "digest": "8414b48890fff794",
+                  "departures": {}
+                },
+                "pluralLeft": {
+                  "place": "|IDs",
+                  "read": 297,
+                  "digest": "5c7a2553925e63c3",
+                  "departures": {}
+                },
+                "pluralSingle": {
+                  "place": "|Cs",
+                  "read": 297,
+                  "digest": "a5a9600c046173f0",
+                  "departures": {}
+                },
+                "insideStem": {
+                  "place": "e|dc",
+                  "read": 297,
+                  "digest": "3aa1da10d78c5735",
+                  "departures": {}
+                },
+                "beforePlural": {
+                  "place": "EDC|s",
+                  "read": 297,
+                  "digest": "2cd9f7d6f47c23c3",
+                  "departures": {}
+                }
+              },
+              "beyond": {
+                "place": "ed|c",
+                "U+00AD U+2060": "edc",
+                "U+0332 U+00AD U+0332": "edc",
+                "U+200B*65": "edc",
+                "camelLeft U+00AD U+2060 U+0045 U+0064 U+0063": "edc",
+                "insideAcronym U+0045 U+0044 U+200B*2 U+0043": "edc"
               }
             }
           }
@@ -1992,6 +2178,9 @@
               "demand",
               "demand",
               "demand",
+              "demand",
+              "demand",
+              "demand",
               "demand"
             ],
             "families": [
@@ -2136,6 +2325,204 @@
               "Mc": {
                 "members": true,
                 "departures": {}
+              }
+            },
+            "runs": {
+              "place": "The context dema|nd rides in the prompt.",
+              "members": {
+                "Cf": "U+200B",
+                "Mn": "U+0332",
+                "Me": "U+20DD"
+              },
+              "forms": [
+                "before Cf: U+0078 U+200B",
+                "after Cf: U+200B U+0078",
+                "before Mn: U+0078 U+0332",
+                "after Mn: U+0332 U+0078",
+                "before Me: U+0078 U+20DD",
+                "after Me: U+20DD U+0078",
+                "twice: U+0078*2",
+                "thrice: U+0078*3"
+              ],
+              "categories": {
+                "Cf": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                },
+                "Mn": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Cf": {},
+                    "before Mn": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Mn": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "before Me": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "after Me": {},
+                    "twice": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    },
+                    "thrice": {
+                      "U+0300": "none",
+                      "U+0301": "none",
+                      "U+0302": "none",
+                      "U+0303": "none",
+                      "U+0304": "none",
+                      "U+0306": "none",
+                      "U+0307": "none",
+                      "U+0308": "none",
+                      "U+0309": "none",
+                      "U+030A": "none",
+                      "U+030C": "none",
+                      "U+030F": "none",
+                      "U+0311": "none",
+                      "U+0323": "none",
+                      "U+0325": "none",
+                      "U+0328": "none",
+                      "U+0340": "none",
+                      "U+0341": "none",
+                      "U+0344": "none"
+                    }
+                  }
+                },
+                "Me": {
+                  "members": true,
+                  "reads": true,
+                  "departures": {
+                    "before Cf": {},
+                    "after Cf": {},
+                    "before Mn": {},
+                    "after Mn": {},
+                    "before Me": {},
+                    "after Me": {},
+                    "twice": {},
+                    "thrice": {}
+                  }
+                }
+              },
+              "named": {
+                "place": "The context dema|nd rides in the prompt.",
+                "read": 297,
+                "digest": "f5c93ae054a91858",
+                "departures": {}
+              },
+              "subject": {
+                "place": "The con|text demand rides in the prompt.",
+                "read": 297,
+                "digest": "0aac5249526bc4e4",
+                "departures": {}
+              },
+              "beyond": {
+                "place": "The context dema|nd rides in the prompt.",
+                "U+00AD U+2060": "demand",
+                "U+0332 U+00AD U+0332": "demand",
+                "U+200B*65": "demand"
               }
             }
           }

@@ -36,6 +36,16 @@
  * read at every ASCII character and at every BMP code point NFKC leaves in place), the removal and kept witnesses of A2 and B4
  * (every member of Cf, Mn, Me and Mc, in every plane), refusal #8's paired-witness pages as A2 routes, an A2 near miss and B4
  * subjects, and its spellings in A2's words witness; what no pin holds is named NOT CLAIMED.
+ * CUT #10 (orchestrator ruling R-B387, 2026-11-03, on refusal #9's U1 and riders F1 and F2: the restated WORDS (2), under a
+ * preamble claiming each rule at every place it matches in a text, claimed the removal at every place - a removed code point
+ * beside another included - at pins that held single inserted code points and the fourteen NFKC-made Mn runs only): the
+ * restatement with every header claim no wider than its pinned reader, in lineage of cut #9 614c3589, in both cure forms. PIN:
+ * A2's and B4's run witness (every member of Cf, Mn and Me right before and right after each of three named members and two and
+ * three times in a row, between the d and the c of edc and between the a and the n of demand; every run of named members from two
+ * to sixty-four long, there, in each sweep context, inside edc, before an acronym's s and inside context) and refusal #9's
+ * paired-witness pages as A2 routes and B4 subjects, each read red-first against the gate's six surviving members of the removal.
+ * NARROW: the WORDS preamble and (2) claim each rule only at the texts and places its pins plant, and every other run of removed
+ * code points is named NOT CLAIMED beside its quiet row (the run witness's beyond row).
  *
  * THE PINNED SET (the claim form): this file's 11 cases in registration order - the judged set (the frozen shape, the roster, the
  * export's title and owner filing, the role places, the producer line and the residual names, each observed equal); A1, A2, B1,
@@ -61,31 +71,58 @@
  * reads MARKER by its "not" and, with the marker removed, a finding of all three families: it is the vocabulary's producer anchor.
  *
  * READINGS
- * - WORDS, rule by rule (each rule at every place it matches in a text, never at its first match only), each claimed at the pins
- *   named with it and no wider. A2's sweep reads one varied code point x in eight contexts - stem (ed x c), camelLeft (x Edc),
- *   acronymLast (ED x x), acronymLower (EDA x x), pluralRun (E x s), pluralFollower (EDCs x), pluralLeft (x IDs) and pluralSingle
- *   (x Cs), each spelled without its spaces - at every ASCII character, each held to its exact words (the roster's ascii
- *   readings), with no x at all (its nothing reading), and at every other code point of the Basic Multilingual Plane (surrogates
- *   aside) that NFKC leaves as it is in its place: each reads as the underscore reads there, or as nothing when the removal (2)
- *   takes it, every departure held (the dotted capital I alone, (6)) and the swept count held to its floor (60000 per context).
- *   An astral code point beside the rules (3)-(6) is NOT CLAIMED by this census.
+ * - WORDS, rule by rule, each rule claimed at the pins named with it and no wider: at the texts those pins spell and at every
+ *   place in them where the rule matches (never the first only: a pin text that holds a rule's match more than once holds it at
+ *   each), and at no other text or place. A2's sweep reads one varied code point x in eight contexts - stem (ed x c), camelLeft
+ *   (x Edc), acronymLast (ED x x), acronymLower (EDA x x), pluralRun (E x s), pluralFollower (EDCs x), pluralLeft (x IDs) and
+ *   pluralSingle (x Cs), each spelled without its spaces - at every ASCII character, each held to its exact words (the roster's
+ *   ascii readings), with no x at all (its nothing reading), and at every other code point of the Basic Multilingual Plane
+ *   (surrogates aside) that NFKC leaves as it is in its place: each reads as the underscore reads there, or as nothing when the
+ *   removal (2) takes it, every departure held (the dotted capital I alone, (6)) and the swept count held to its floor (60000 per
+ *   context). An astral code point beside the rules (3)-(6) is NOT CLAIMED by this census.
  *   (1) NFKC first. Each fullwidth letter and digit folds to its ASCII twin and reads as it, all 62 in every context (the sweep's
  *   fullwidth rows; the fullwidth route and subject). A combining mark that NFKC composes with the letter before it makes one
- *   precomposed letter outside a-z, which parts the words - held at the six marks that compose with the d of edc and the
- *   nineteen that compose with the a of demand (the removal witness's departures), and at an e with a combining acute and an a
- *   with a combining diaeresis after it (the decomposed route and subject: composed before the removal could take the mark). A
- *   precomposed letter NFKC leaves as it is stays one letter outside a-z and parts the words around it (every swept one reads as
- *   the underscore; an e with an acute accent: the precomposed route and subject). Every other change NFKC makes is NOT CLAIMED
- *   by this census.
- *   (2) Then the removal: every code point of the general categories Cf, Mn and Me left in the text is removed - every member of
- *   each category in this runtime's Unicode tables, in every plane, read between the d and the c of edc (A2) and between the a and
- *   the n of demand (B4), each reading as if it were absent there but the composed marks of (1) (the removal witness; member
- *   floors 170, 2059 and 13, Unicode 17.0's counts), and every swept one reads as nothing in each context; refusal #8's pages hold
- *   a soft hyphen and a word joiner inside the stem and inside demand, and a double low line and an enclosing square there too
- *   (routes and subjects). A spacing mark stays and parts the words (Mc, every member in every plane read at both places: the
- *   kept witness, member floor 471; refusal #8's F2: the spacingMark near miss and the visarga subject), as every other swept code
- *   point outside a-z, A-Z and 0-9 does. Whether the removal takes an astral code point outside these four categories is NOT
- *   CLAIMED by this census.
+ *   precomposed letter outside a-z, which parts the words - held at the six marks that compose with the d of edc and the nineteen
+ *   that compose with the a of demand (the removal witness's departures), and at an e with a combining acute and an a with a
+ *   combining diaeresis after it (the decomposed route and subject: composed before the removal could take the mark). In a run of
+ *   (2) the same marks compose with the d and the a right before a named member and two and three times in a row (the six and the
+ *   nineteen), and past the combining low line (combining class 220) those of another class compose too, the canonical order
+ *   moving a lower class before it: U+0307 and U+030C (230) and U+0327 (202) at the d, and the nineteen but U+0323 and U+0325
+ *   (220) at the a; past the zero-width space and the enclosing circle (combining class 0) none composes (the run witness's
+ *   departures). A precomposed letter NFKC leaves as it is stays one letter outside a-z and parts the words around it (every
+ *   swept one reads as the underscore; an e with an acute accent: the precomposed route and subject). Every other change NFKC
+ *   makes is NOT CLAIMED by this census.
+ *   (2) Then the removal, claimed at these pins and no other: a code point of the general categories Cf, Mn and Me left in the
+ *   text is removed. ALONE, with no other removed code point beside it: every member of each category in this runtime's Unicode
+ *   tables, in every plane, read between the d and the c of edc (A2) and between the a and the n of demand (B4), each reading as
+ *   if it were absent there but the composed marks of (1) (the removal witness; member floors 170, 2059 and 13, Unicode 17.0's
+ *   counts; the fourteen Mn members NFKC makes a run of two or three marks are read there too); every swept one reads as nothing
+ *   in each context; two zero-width spaces apart in one text (the invisibles route; B4's two in one sentence); refusal #8's pages
+ *   hold a soft hyphen and a word joiner inside the stem and inside demand, and a double low line and an enclosing square there
+ *   too (routes and subjects). IN A RUN (cut #10, A2's and B4's run witness), with three named members, one of each category -
+ *   the zero-width space U+200B (Cf), the combining low line U+0332 (Mn) and the combining enclosing circle U+20DD (Me): every
+ *   member of each category right before and right after each named member, and every member two and three times in a row, read
+ *   between the d and the c of edc (A2) and between the a and the n of demand (B4); every sequence of the named members of each
+ *   length from two to four and each named member five to sixty-four times in a row, read there, in each of the sweep's eight
+ *   contexts, between the e and the d of edc and between an acronym and its plural s (EDC, the run, s) (A2), and between the n
+ *   and the t of context (B4) - each run reading as if it were absent there but the composed marks of (1) (the run witness's
+ *   departures; the named members held by code point and the eight forms by shape, each category's member floor and its reads,
+ *   one per member and form, held, the named runs' count, 297, and digest held, and every place held by its spelling); and
+ *   refusal #9's pages: a module holding the stem with two zero-width spaces, with a soft hyphen and a combining low line, and
+ *   with two combining low lines between the d and the c (A2's routes zeroWidthRun, softHyphenLowLine and lowLineRepeat), and a
+ *   prompt holding each of those three runs between the a and the n of demand (B4's subjects). Every other run of removed code
+ *   points - every run the run witness and these pages do not read - is NOT CLAIMED by this census: among them a run of two that
+ *   holds no named member and is no member twice, a run of three or more that is no member three times, no sequence of named
+ *   members up to four long and no named member five to sixty-four times, a named member more than sixty-four times, a run of
+ *   named members at any place but these (between the d and the c, the e and the d of edc, an acronym and its s, the sweep's
+ *   eight places, the a and the n of demand and the n and the t of context), and a run holding a member that is not named
+ *   anywhere but between the d and the c of edc and between the a and the n of demand. Its quiet row is the run witness's beyond
+ *   row: one page of these families each, held as it reads today and claiming no other member of them - a soft hyphen and a word
+ *   joiner (at both places, and in camelLeft), a soft hyphen between two combining low lines and sixty-five zero-width spaces (at
+ *   both places), and two zero-width spaces between the D and the C of EDC. A spacing mark stays and parts the words (Mc, every
+ *   member in every plane read at both places: the kept witness, member floor 471; refusal #8's F2: the spacingMark near miss and
+ *   the visarga subject), as every other swept code point outside a-z, A-Z and 0-9 does. Whether the removal takes an astral code
+ *   point outside these four categories is NOT CLAIMED by this census.
  *   (3) An acronym's plural s split off: an acronym is a run of two or more capitals A-Z, and its s splits off unless a lower-case
  *   letter a-z follows it - at the text's end and before every other character the sweep reads (pluralFollower; EDCs_list and
  *   "EDCs ready", an s before a separator: words and routes), after every capital that ends the run (pluralRun) and whatever
@@ -118,14 +155,17 @@
  *   (HTTPSEdcAssembler), invisible and invisibles (e, d and c with one and with two zero-width spaces), fullwidth (a fullwidth E
  *   before DC) and precomposed (edc, then an e with an acute accent), and refusal #8's pages pluralUnderscore (EDCs_list),
  *   pluralSpace ("EDCs ready"), rangeBounds (its nine spellings, one per line), decomposed (edce, then a combining acute),
- *   softHyphen and wordJoiner (e, the control, dc), doubleLowLine and enclosingSquare (ed, the mark, c); A2's near miss
+ *   softHyphen and wordJoiner (e, the control, dc), doubleLowLine and enclosingSquare (ed, the mark, c), and refusal #9's pages
+ *   zeroWidthRun, softHyphenLowLine and lowLineRepeat (ed, the run, c); A2's near miss
  *   spacingMark (ed, a Devanagari visarga, c) names no stem. B4's subjects, each a demand or precision finding read as
  *   the plain words: contextDemand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width space before
  *   the subject and inside a family word, two in one sentence (inside both), the subject in fullwidth letters, a combining low
  *   line and an enclosing circle inside a family word, the subject and a family word parted by an e with an acute accent, and the
  *   gate's two prompt spellings, "Use the parseXml contextDemand." (its second case change) and IContextDemand (its run of one
  *   capital), and refusal #8's prompt pages: demand with an a and a combining diaeresis after it; demand with a word joiner, a
- *   soft hyphen, a double low line and an enclosing square inside it; the subject and demand parted by a Devanagari visarga.
+ *   soft hyphen, a double low line and an enclosing square inside it; the subject and demand parted by a Devanagari visarga; and
+ *   refusal #9's prompt page and its twins: demand with two zero-width spaces, with a soft hyphen and a combining low line, and
+ *   with two combining low lines between its a and its n.
  * - SENTENCES: every text is cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line,
  *   around a table row and a heading line and before a list item - a bullet, or a number with "." or ")" (a sentence wrapped over
  *   lines stays one); each is judged alone (B4's cuts witness: a ".", a "?", a "!" and a ";" before a space, a wrapped line kept
@@ -265,14 +305,16 @@
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
  *    listing, its floors, the frozen pass at the cut's base); A2 the stems, the consumer reader's routes and near misses, the
- *    words witness (WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members), WORDS' sweep and the removal
- *    and kept witnesses between the d and the c of edc (READINGS' WORDS, rule by rule).
+ *    words witness (WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members), WORDS' sweep, the removal
+ *    and kept witnesses and the run witness between the d and the c of edc, the run witness's named runs in each sweep context and
+ *    its beyond row (READINGS' WORDS, rule by rule).
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings
  *    and live quiet readings, floors, the frozen pass) and the code reader's forms (a plant per form, one finding each, its reading
  *    held; the comments witness, the matrices and the after-terminator members; the residual rows); B2 the tool descriptions; B3 the
- *    capability inputs and the boundary; B4 the demand reading itself, the removal and kept witnesses between the a and the n of
- *    demand, and its append quiet row (a note appended after the owner filing block, spelling every vocabulary word, leaves the
- *    whole B4 witness unchanged; read past the block it would empty R-SYNONYM; a block edited in place is refused).
+ *    capability inputs and the boundary; B4 the demand reading itself, the removal and kept witnesses and the run witness (with its
+ *    beyond row) between the a and the n of demand, and its append quiet row (a note appended after the owner filing block,
+ *    spelling every vocabulary word, leaves the whole B4 witness unchanged; read past the block it would empty R-SYNONYM; a block
+ *    edited in place is refused).
  *  C "Artifact: a Pi EDC context-assembly consumer (none exists)": C1 the gate and guard semantics, and a replica consumer read
  *    PRESENT and owed; C2 the live verdict - ONE pass over every surface and in-memory positives (it reads the live tree's
  *    modules, pages and readings plus exactly the positives' own) holds every finding of the positives read alone and, beyond
@@ -1091,6 +1133,114 @@ function categoryWitness(readAt: (x: string) => string, removed: string, kept: s
   }
   return out;
 }
+/** The run witness's named members (cut #10, R-B387; refusal #9's U1): one member of each category the removal takes, each a
+ * constant above - a zero-width space (Cf), a combining low line (Mn) and a combining enclosing circle (Me). */
+type RemovedName = "Cf" | "Mn" | "Me";
+const REMOVED_NAMES: readonly RemovedName[] = ["Cf", "Mn", "Me"];
+const RUN_MEMBERS: Readonly<Record<RemovedName, string>> = { Cf: INVISIBLE, Mn: COMBINING_LOW_LINE, Me: ENCLOSING_CIRCLE };
+/** A run spelled by its code points, each repeated one as label*count. */
+function runLabel(run: string): string {
+  const points = [...run];
+  const parts: string[] = [];
+  for (let at = 0; at < points.length; ) {
+    let end = at;
+    while (end < points.length && points[end] === points[at]) end++;
+    const label = codePointLabel(points[at]?.codePointAt(0) ?? 0);
+    parts.push(end - at === 1 ? label : `${label}*${end - at}`);
+    at = end;
+  }
+  return parts.join(" ");
+}
+/** The runs of named members the run witness reads (cut #10): every sequence of them of each length from two to four, and each one
+ * five to sixty-four times in a row, each labelled by its code points (runLabel). */
+function namedRuns(): readonly string[] {
+  const out: string[] = [];
+  let level: RemovedName[][] = [[]];
+  for (let length = 1; length <= 4; length++) {
+    level = level.flatMap(names => REMOVED_NAMES.map(name => [...names, name]));
+    if (length >= 2) for (const names of level) out.push(names.map(name => RUN_MEMBERS[name]).join(""));
+  }
+  for (const name of REMOVED_NAMES) for (let count = 5; count <= 64; count++) out.push(RUN_MEMBERS[name].repeat(count));
+  return out;
+}
+/** A place a run is read at: the text before it and the text after it. */
+type RunPlace = readonly [before: string, after: string];
+/** The runs of named members at one place: the place, how many runs were read, the digest of the texts read in order (each
+ * labelled by its code points; sha256, 16 hex) and each run that does not read as the place reads with no run in it. */
+function namedRunsAt(read: (text: string) => string, [before, after]: RunPlace): { [key: string]: Json } {
+  const removed = read(`${before}${after}`);
+  const texts = namedRuns().map(run => [run, `${before}${run}${after}`] as const);
+  const departures: { [label: string]: Json } = {};
+  for (const [run, text] of texts) {
+    const reading = read(text);
+    if (reading !== removed) departures[runLabel(run)] = reading;
+  }
+  const digest = createHash("sha256").update(texts.map(([, text]) => runLabel(text)).join("\n"), "utf8").digest("hex").slice(0, 16);
+  return { place: `${before}|${after}`, read: texts.length, digest, departures };
+}
+/** The run witness's forms (cut #10): each puts one member x of a category in a run - right before and right after each named
+ * member, and two and three times in a row; each form's shape is held as the run it makes of the letter x. */
+const RUN_FORMS: readonly (readonly [form: string, make: (x: string) => string])[] = [
+  ...REMOVED_NAMES.flatMap((name): (readonly [string, (x: string) => string])[] => [
+    [`before ${name}`, x => `${x}${RUN_MEMBERS[name]}`],
+    [`after ${name}`, x => `${RUN_MEMBERS[name]}${x}`],
+  ]),
+  ["twice", x => x.repeat(2)],
+  ["thrice", x => x.repeat(3)],
+];
+/** The run witness (cut #10; READINGS' WORDS (2), IN A RUN): runs of the removal's code points read at one place, each a departure
+ * unless it reads `removed` (the reading with no run there) - the named members by code point and the forms by shape; for each
+ * category, every member in every form (its member count against its floor and its reads, one per member and form, held); and
+ * every run of named members (namedRuns: its count and digest held). */
+function runWitness(read: (text: string) => string, place: RunPlace): { [key: string]: Json } {
+  const [before, after] = place;
+  const removed = read(`${before}${after}`);
+  const readAt = (run: string): string => read(`${before}${run}${after}`);
+  const members = categoryMembers();
+  const categories: { [key: string]: Json } = {};
+  for (const name of REMOVED_NAMES) {
+    const departures: { [form: string]: { [label: string]: Json } } = Object.fromEntries(RUN_FORMS.map(([form]) => [form, {}]));
+    let reads = 0;
+    for (const codePoint of members[name]) {
+      const x = String.fromCodePoint(codePoint);
+      for (const [form, make] of RUN_FORMS) {
+        const reading = readAt(make(x));
+        reads++;
+        const held = departures[form];
+        if (reading !== removed && held !== undefined) held[codePointLabel(codePoint)] = reading;
+      }
+    }
+    categories[name] = { members: members[name].length >= FLOORS.categoryMembers[name], reads: reads === members[name].length * RUN_FORMS.length, departures };
+  }
+  return {
+    place: `${before}|${after}`,
+    members: Object.fromEntries(REMOVED_NAMES.map(name => [name, runLabel(RUN_MEMBERS[name])])),
+    forms: RUN_FORMS.map(([form, make]) => `${form}: ${runLabel(make("x"))}`),
+    categories,
+    named: namedRunsAt(read, place),
+  };
+}
+/** The places the run witness reads its named runs at beyond the stem (cut #10): each of the sweep's contexts, between the e and
+ * the d of edc and between an acronym and its plural s. */
+const RUN_PLACES: Readonly<Record<string, RunPlace>> = { ...SWEEP_CONTEXTS, insideStem: ["e", "dc"], beforePlural: ["EDC", "s"] };
+/** The run witness's named runs at each of RUN_PLACES (cut #10): each run of named members in the place, each read against the
+ * place's reading with no code point there. */
+function runContexts(): { [key: string]: Json } {
+  return Object.fromEntries(Object.entries(RUN_PLACES).map(([name, place]) => [name, namedRunsAt(text => words(text).join(" "), place)]));
+}
+/** The run witness's beyond row (cut #10; the quiet row of the runs READINGS' WORDS (2) names NOT CLAIMED): one page of each
+ * unclaimed run family at one place, keyed by its run's code points and read as it reads today, claimed no further - two removed
+ * code points neither of them a named member, a run of three holding another member between two named ones, and sixty-five
+ * zero-width spaces. */
+const BEYOND_RUNS: readonly string[] = [`${SOFT_HYPHEN}${WORD_JOINER}`, `${COMBINING_LOW_LINE}${SOFT_HYPHEN}${COMBINING_LOW_LINE}`, INVISIBLE.repeat(65)];
+function beyondRuns(read: (text: string) => string, [before, after]: RunPlace): { [key: string]: Json } {
+  return { place: `${before}|${after}`, ...Object.fromEntries(BEYOND_RUNS.map(run => [runLabel(run), read(`${before}${run}${after}`)])) };
+}
+/** The run witness's places (cut #10): A2's between the d and the c of edc, B4's between the a and the n of demand and B4's named
+ * runs' between the n and the t of context. */
+const STEM_RUN_PLACE: RunPlace = ["ed", "c"];
+const DEMAND_RUN_PLACE: RunPlace = ["The context dema", "nd rides in the prompt."];
+const SUBJECT_RUN_PLACE: RunPlace = ["The con", "text demand rides in the prompt."];
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
 const HOLE = "$" + "{";
 /** A ReactiveComponents package specifier, assembled from parts at run time: no literal of this file spells the distribution, so
@@ -1367,7 +1517,7 @@ const DECODED_PLANTS: Readonly<Record<string, string>> = {
 /** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
  * filing block. */
 function demandWitness(row: BeadRow): { [key: string]: Json } {
-  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`, `The con${INVISIBLE}text dem${INVISIBLE}and rides in the prompt.`, "Use the parseXml contextDemand.", "IContextDemand", `The context${PRECOMPOSED_E}demand rides in the prompt.`, `The context demanda${COMBINING_DIAERESIS} rides in the prompt.`, `The context dem${WORD_JOINER}and rides in the prompt.`, `The context dem${SOFT_HYPHEN}and rides in the prompt.`, `The context dema${DOUBLE_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_SQUARE}nd rides in the prompt.`, `The context${VISARGA}demand rides in the prompt.`].map(verdict);
+  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`, `The con${INVISIBLE}text dem${INVISIBLE}and rides in the prompt.`, "Use the parseXml contextDemand.", "IContextDemand", `The context${PRECOMPOSED_E}demand rides in the prompt.`, `The context demanda${COMBINING_DIAERESIS} rides in the prompt.`, `The context dem${WORD_JOINER}and rides in the prompt.`, `The context dem${SOFT_HYPHEN}and rides in the prompt.`, `The context dema${DOUBLE_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_SQUARE}nd rides in the prompt.`, `The context${VISARGA}demand rides in the prompt.`, `Set the context dema${INVISIBLE}${INVISIBLE}nd first.`, `Set the context dema${SOFT_HYPHEN}${COMBINING_LOW_LINE}nd first.`, `Set the context dema${COMBINING_LOW_LINE}${COMBINING_LOW_LINE}nd first.`].map(verdict);
   const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
   const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
   const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
@@ -1397,7 +1547,11 @@ function demandWitness(row: BeadRow): { [key: string]: Json } {
   expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
   // Cut #9 (R-B357; refusal #8's U2, U3 and F2): the removal and kept witnesses between the a and the n of demand.
   const categories = categoryWitness(x => verdict(`The context dema${x}nd rides in the prompt.`) ?? "none", "demand", "none");
-  return { subjects, families, carrier, markers, nearMisses, cuts, quiet, categories };
+  // Cut #10 (R-B387; refusal #9's U1): WORDS (2) in a run - the run witness between the a and the n of demand, its named runs
+  // between the n and the t of context, and its beyond row.
+  const readDemand = (text: string): string => verdict(text) ?? "none";
+  const runs = { ...runWitness(readDemand, DEMAND_RUN_PLACE), subject: namedRunsAt(readDemand, SUBJECT_RUN_PLACE), beyond: beyondRuns(readDemand, DEMAND_RUN_PLACE) };
+  return { subjects, families, carrier, markers, nearMisses, cuts, quiet, categories, runs };
 }
 /** A compared value as plain JSON data: its own methods - vitest's equality consults a value's asymmetricMatch before any value
  * check - and every other part that is no data dropped, so no value the reader hands in decides its own equality. */
@@ -1460,6 +1614,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       wordJoiner: consumerOfCode(`export const key = "e${WORD_JOINER}dc";\n`),
       doubleLowLine: consumerOfCode(`export const key = "ed${DOUBLE_LOW_LINE}c";\n`),
       enclosingSquare: consumerOfCode(`export const key = "ed${ENCLOSING_SQUARE}c";\n`),
+      // The cut #9 refusal, U1 (R-B387): two removed code points side by side between the d and the c - two zero-width spaces, a
+      // soft hyphen and a combining low line, two combining low lines - the gate's paired-witness pages in its module shape.
+      zeroWidthRun: consumerOfCode(`export const key = "ed${INVISIBLE}${INVISIBLE}c";\n`),
+      softHyphenLowLine: consumerOfCode(`export const key = "ed${SOFT_HYPHEN}${COMBINING_LOW_LINE}c";\n`),
+      lowLineRepeat: consumerOfCode(`export const key = "ed${COMBINING_LOW_LINE}${COMBINING_LOW_LINE}c";\n`),
       javascript: consumerOfCode("module.exports = { edc: 1 };\n", "src/plant.cjs"),
       manifest: consumerDependencies('{"dependencies":{"edc-sdk":"1.0.0"},"devDependencies":{"x":"file:vendor/evidence-directed-0.1.0.tgz"},"optionalDependencies":{"EvidenceDirected":"*"},"peerDependencies":{"y":"^1"}}'),
     };
@@ -1491,7 +1650,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // the d and the c of edc.
     const sweep = sweepWitness();
     const categories = categoryWitness(x => words(`ed${x}c`).join(" "), "edc", "ed c");
-    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet, sweep, categories };
+    // Cut #10 (R-B387; refusal #9's U1): WORDS (2) in a run - the run witness between the d and the c of edc, its named runs at
+    // each of RUN_PLACES, and its beyond row (the quiet row of the runs (2) names NOT CLAIMED), here also in camelLeft and between
+    // the D and the C of EDC.
+    const readStem = (text: string): string => words(text).join(" ");
+    const [lead = "", tail = ""] = SWEEP_CONTEXTS.camelLeft ?? [];
+    const elsewhere = `${lead}${SOFT_HYPHEN}${WORD_JOINER}${tail}`;
+    const insideAcronym = `ED${INVISIBLE}${INVISIBLE}C`;
+    const beyond = { ...beyondRuns(readStem, STEM_RUN_PLACE), [`camelLeft ${runLabel(elsewhere)}`]: readStem(elsewhere), [`insideAcronym ${runLabel(insideAcronym)}`]: readStem(insideAcronym) };
+    const runs = { ...runWitness(readStem, STEM_RUN_PLACE), contexts: runContexts(), beyond };
+    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet, sweep, categories, runs };
   },
   B1: async () => {
     const real = live();
