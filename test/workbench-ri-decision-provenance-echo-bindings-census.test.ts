@@ -46,20 +46,24 @@
  * - Case SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, every pin with its probe ids, and the rows'
  *   pins in pin order, each held to a literal.
  * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl): (1) wb-26dh's title holds
- *   row X's label as its claim clause, and its description's member paragraph names exactly row X's pins, in order, each with its pin's
- *   quote and side, the side each member probe's reading refuses; (2) in wb-5333's notes, refusal #3 (from its CLAIMS at tip 6dacecc up
- *   to its RED) quotes between apostrophes the declarations row X's pins hold and no other, in pin order - each quotation read whole,
- *   from an apostrophe followed by 'const ' up to the first ';' followed by an apostrophe, and exactly these: X1's, X2's and X3k's,
- *   then X5b's head, the record's elision '...' and X5b's tail - and writes X4k's accessor exactly between 'INVOCATION gets a
- *   string-keyed accessor, ' and the next '. Result'; each of those member probes declares its side by one const line, which is exactly
- *   its pin's declaration (X5b's starting with the head and ending with the tail, X4k's holding the accessor); and refusal #3's CURE
- *   names its red-first members among row X's pins and holds row K's label as cure (a), whose text is exactly row K's pin quotes, in
- *   pin order, joined by the gaps CURE_A_GAPS writes - ', ' (K1 to K2), ' (' (K2 to K3), '), ' (K3 to K4), ', and ' (K4 to K5) and
- *   '; ' (K5 to K6) - with nothing before K1 or after K6; (3) in wb-5333's notes, refusal #4 (from 'refusal #4, on cut #4 bce0de7f' up
- *   to LOOP CAP AND NEXT RUNG) holds row E's label as its reason's cause, names exactly row E's pins with their sides, in order, and
- *   quotes between apostrophes, read as in (2), the declarations row E's pins hold and no other, in pin order, exactly these: E1's,
- *   E2's and E3's, then E4's head, the record's elision '...the three patterns...' and E4's tail - each member probe declaring its
- *   side by one const line, which is exactly its pin's declaration (E4's starting with the head and ending with the tail); (4)
+ *   row X's label as its claim clause, and its description's member paragraph is exactly the text row X's pins compose - each segment
+ *   of MEMBER_SEGMENTS (the ids of the pins it names, joined by ' and ', a space, the one quote those pins hold and the segment's
+ *   result), then MEMBER_TAIL, all joined by '; ' - so the paragraph's member segments name exactly row X's pins, in order, each once
+ *   (X4k and X4 in one segment), each with its pin's quote; and each row X pin's side is the first in-file side its quote names
+ *   (sideIn), the side its member probe's reading refuses; (2) in wb-5333's notes, refusal #3 (from its CLAIMS at tip 6dacecc up to
+ *   its RED) holds as its quotations - each read whole, from an apostrophe followed by 'const ' up to the first ';' followed by an
+ *   apostrophe (QUOTATION) - exactly these declarations of row X's pins, in pin order: X1's, X2's and X3k's, then X5b's head, the
+ *   record's elision '...' and X5b's tail; it writes X4k's accessor exactly between 'INVOCATION gets a string-keyed accessor, ' and
+ *   the next '. Result'; each of those member probes declares its side by one const line, which is exactly its pin's declaration
+ *   (X5b's starting with the head and ending with the tail, X4k's holding the accessor); and refusal #3's CURE names its red-first
+ *   members among row X's pins and holds row K's label as cure (a), whose text is exactly row K's pin quotes, in pin order, joined by
+ *   the gaps CURE_A_GAPS writes - ', ' (K1 to K2), ' (' (K2 to K3), '), ' (K3 to K4), ', and ' (K4 to K5) and '; ' (K5 to K6) - with
+ *   nothing before K1 or after K6; (3) in wb-5333's notes, refusal #4 (from 'refusal #4, on cut #4 bce0de7f' up to LOOP CAP AND NEXT
+ *   RUNG) holds row E's label as its reason's cause; its reason's names (NAMED_E) are exactly row E's pins with their sides, in pin
+ *   order - each pin's id, a space and its side in parentheses, joined by ', ' with ' and ' before the last; and it holds as its
+ *   quotations, read as in (2), exactly these declarations of row E's pins, in pin order: E1's, E2's and E3's, then E4's head, the
+ *   record's elision '...the three patterns...' and E4's tail - each member probe declaring its side by one const line, which is
+ *   exactly its pin's declaration (E4's starting with the head and ending with the tail); (4)
  *   wb-26dh's notes open with the R-B256 fold: their first line is exactly the fold's head and their third its idem line, and their
  *   second, the fold's unmet slug, is exactly the readNames family's - U1-R514-R515-R668-R739, then
  *   READNAMES-NEVER-READS-EXPRESSION-WITH-TYPE-ARGUMENTS, then INSTANTIATION-AND-HERITAGE-IDENTIFIERS, then row E's sides in pin order
@@ -69,13 +73,16 @@
  * changes one reading reds that pin case. (2) Each X and E member is refused by THE FORM where the tip's names test read it clean: the
  * cutting seat runs this census over the tip's reader (RED-0) and reads every X and E pin case red at its member probe, while each
  * named twin reads refused on both readers; a reader mutant that admits one form the K probes spell reds the pin case holding it.
- * (3) The rows with their labels, row X's pins with their quotes and sides, row E's pins with their sides, the declarations of row X's
- * pins but X4 and of row E's pins as their records quote them (X5b's and E4's as the head and the tail around the record's elision,
- * X4k's as its accessor), row K's pin quotes with the gaps between them and the R-B256 fold's lines are the ones the tracker export
- * records, each held by exact equality, its ends included: a row or a pin removed, or one of those labels, quotes, gaps, sides,
+ * (3) The rows with their labels, row X's pins with their quotes and sides (wb-26dh's member paragraph whole, MEMBER_SEGMENTS's
+ * results and MEMBER_TAIL included), row E's pins with their sides (refusal #4's names whole), the declarations of row X's pins but X4
+ * and of row E's pins as their records quote them (X5b's and E4's as the head and the tail around the record's elision, X4k's as its
+ * accessor), row K's pin quotes with the gaps between them and the R-B256 fold's lines are the ones the tracker export records, each
+ * held by exact equality, its ends included: a row or a pin removed, or one of those labels, quotes, results, gaps, sides,
  * declarations or fold lines changed - in one literal or in every literal together, among them a declaration or a row K quote cut at
- * its end or at its front or extended there, emptied, or every declaration emptied together - reds SHAPE or ANCHOR, and a pin's probes
- * exchanged for another pin's in one literal reds SHAPE (standing rule 16's CT1-CT6).
+ * its end or at its front or extended there, emptied, or every declaration emptied together - reds SHAPE or ANCHOR; so does the member
+ * paragraph given one more segment (the gate's dw21-x6-noside) or a pin named a second time (dw21-x1-again-other, dw21-x1-again-same),
+ * and refusal #4's names given one more name with no side or a side spelled otherwise (dw21-e5-noside, dw21-e5-lowerside), each one
+ * edit to an export copy; and a pin's probes exchanged for another pin's in one literal reds SHAPE (standing rule 16's CT1-CT6).
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them a form the K probes do
  * not spell (a satisfies or angle-bracket assertion, a non-null assertion, a numeric key, a boolean or null, an operator other than +, a
@@ -84,20 +91,31 @@
  * parent's: bindingsRead reads the callee's name at a deepFrozen call and never deepFrozen's own declaration, so what deepFrozen returns
  * is NOT CLAIMED by this census (TRIGGER, an in-file side, is read at its own declaration like every side). Whether a side the reader
  * reads clean computes nothing when the source runs is NOT CLAIMED beyond these readings. Row E's pin quotes are this file's
- * descriptions of refusal #4's members (the export anchors their ids, sides and declarations, not the quotes), so a reworded row E
- * quote is NOT CLAIMED by this census; the row ids and row K's pin ids are this file's names, and the export anchors row K's quotes
- * and the gaps between them, but not which probes each row K pin holds, so row K pin ids renamed, or two row K pins' probes exchanged,
- * in every literal together is NOT CLAIMED by this census. A boundary moved between two literals that together compose one text the
- * export is compared with, so that text is kept byte for byte, is NOT CLAIMED by this census, since no export separates it from the
- * census as written - among them a row K quote and the gap beside it, a row's label or X4k's accessor and the bound beside it
- * (TITLE_CLAUSE, CAUSE, CURE_LABEL, ACCESSOR), X5b's or E4's head or tail and its elision, and two parts of the fold's slug. The part
- * of X5b's and E4's member declarations that their records elide, X4k's member declaration but its accessor, and X4's member
- * declaration (its record describes it in prose) are NOT CLAIMED by this census, and neither are the helper and class declarations a
- * probe holds before its sides (row E's in-file helpers, X2n's import). A probe removed together with its SHAPE entry is NOT CLAIMED
- * by this census, and a probe's source replaced with its id and reading kept is NOT CLAIMED by this census but for the member
- * declarations ANCHOR items (2) and (3) hold. The parent census's own header, cases, roster and SELF-READ are NOT CLAIMED by this
- * census. No residual is claimed. The harness itself - the pin cases' loop and their assertion count edited together - is NOT CLAIMED
- * by this census, and the helper's side list edited together with K6's every-side reading is NOT CLAIMED by this census.
+ * descriptions of refusal #4's members (the export anchors their ids, sides and declarations, not the quotes), so a reworded row E quote
+ * is NOT CLAIMED by this census; the row ids and row K's pin ids are this file's names, and the export anchors row K's quotes and the
+ * gaps between them, but not which probes each row K pin holds, so row K pin ids renamed, or two row K pins' probes exchanged, in every
+ * literal together is NOT CLAIMED by this census. A boundary moved between two literals that together compose one text the export is
+ * compared with, so that text is kept byte for byte, is NOT CLAIMED by this census - among them a row K quote and the gap beside it, a
+ * row X quote and its segment's result, the last segment's result and MEMBER_TAIL, a row's label or X4k's accessor and the bound beside
+ * it (TITLE_CLAUSE, CAUSE, CURE_LABEL, ACCESSOR), K1's quote and CURE_A's open bound, X5b's or E4's head or tail and its elision, and
+ * two parts of the fold's slug. An export can separate some of these moves from the census as written: a label, the accessor or K1's
+ * quote cut at its front, with the open bound before it extended by the same text, reads the same on the tracked export, and the export
+ * copies that hold an earlier copy of the shorter open bound - the gate's w21 witnesses beside its bm21 members, and
+ * w4-cure-a-open-twice beside this cut's bm4-k1-cure-a-open - red the census as written and not the moved one; those moves are NOT
+ * CLAIMED by this census all the same. ANCHOR reads wb-26dh's title clause and member paragraph, refusal #3's and #4's records, and the
+ * texts it compares within those records but the quotations, each between the first occurrence of its open bound and the first
+ * occurrence of its close bound after it (between()); it reads the quotations as every match of QUOTATION in a record, wb-26dh's notes
+ * by their first three lines and each bead by its first row in the export. What the export holds outside those texts - a later row of a
+ * bead, or a later copy of a bound and the text after it - is NOT CLAIMED by this census. A declaration a record quotes in another form
+ * - its apostrophe followed by something other than 'const ', or no ';' right before its closing apostrophe - is NOT CLAIMED by this
+ * census. The part of X5b's and E4's member declarations that their records elide, X4k's member declaration but its accessor, and X4's
+ * member declaration (its record describes it in prose) are NOT CLAIMED by this census, and neither are the helper and class
+ * declarations a probe holds before its sides (row E's in-file helpers, X2n's import). A probe removed together with its SHAPE entry is
+ * NOT CLAIMED by this census, and a probe's source replaced with its id and reading kept is NOT CLAIMED by this census but for the
+ * member declarations ANCHOR items (2) and (3) hold. The parent census's own header, cases, roster and SELF-READ are NOT CLAIMED by this
+ * census. No residual is claimed. The harness itself - the pin cases' loop and their assertion count edited together, or one of ANCHOR's
+ * own reads or assertions edited - is NOT CLAIMED by this census, and the helper's side list edited together with K6's every-side
+ * reading is NOT CLAIMED by this census.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read; no src, docs or receipt is edited.
  */
@@ -135,6 +153,17 @@ const FOLD_IDEM = "rule19-invert idem rule19-inversion-M44599-wb-5333-wb-26dh";
 const SLUG = { rules: "U1-R514-R515-R668-R739", family: "READNAMES-NEVER-READS-EXPRESSION-WITH-TYPE-ARGUMENTS", words: "INSTANTIATION-AND-HERITAGE-IDENTIFIERS", count: "0-OF-18" } as const;
 /** The gaps cure (a) writes between row K's pin quotes, in pin order: K1 to K2, K2 to K3, K3 to K4, K4 to K5 and K5 to K6. */
 const CURE_A_GAPS: readonly string[] = [", ", " (", "), ", ", and ", "; "];
+/** wb-26dh's description's member paragraph, segment by segment, in pin order: the pins each member segment names (X4k and X4 share
+ * one quote, so one segment) and the result it writes after their quote ("" when it writes none). */
+const MEMBER_SEGMENTS: readonly { readonly pins: readonly string[]; readonly result: string }[] = [
+  { pins: ["X1"], result: " - 0 | 18 (its half 1 | 17)" },
+  { pins: ["X2"], result: " - 0 | 18 (half 1 | 17)" },
+  { pins: ["X3k"], result: "" },
+  { pins: ["X4k", "X4"], result: "" },
+  { pins: ["X5b"], result: " - each 0 | 18, unrefused" },
+];
+/** The member paragraph's three segments after its member segments, held whole. */
+const MEMBER_TAIL = "every twin that names its source is refused at collection; all pass biome rc 0 and tsc 0 errors; X1 + X2 applied together leave the census at 18/18.";
 
 interface Probe {
   readonly id: string;
@@ -469,18 +498,18 @@ function between(text: string, bounds: { readonly open: string; readonly close: 
 function sideIn(text: string): string | undefined {
   return (text.match(/\b[A-Z][A-Z_]*[A-Z]\b/g) ?? []).find(word => IN_FILE_SIDES.includes(word));
 }
-/** The members a member paragraph names, in order: '<id>[ and <id>] <phrase>[ - <result>]' segments joined by '; ', each with the
- * first in-file side its phrase names; a segment that opens with no id or names no side is not a member's. */
-function membersOf(paragraph: string): { readonly id: string; readonly phrase: string; readonly side: string }[] {
-  const members: { id: string; phrase: string; side: string }[] = [];
-  for (const segment of paragraph.split("; ")) {
-    const match = /^(X\d+[a-z]?(?: and X\d+[a-z]?)*) (.+?)(?: - .*)?$/.exec(segment);
-    const phrase = match?.[2];
-    const side = phrase === undefined ? undefined : sideIn(phrase);
-    if (match?.[1] === undefined || phrase === undefined || side === undefined) continue;
-    for (const id of match[1].split(" and ")) if (!members.some(member => member.id === id)) members.push({ id, phrase, side });
-  }
-  return members;
+/** Items as the records list them: joined by ', ', the last after ' and ' (one item alone; "" for none). */
+function listed(items: readonly string[]): string {
+  return items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+/** The member paragraph row X's pins compose: each MEMBER_SEGMENTS segment as its pins' ids joined by ' and ', a space, its first pin's
+ * quote and its result, then MEMBER_TAIL, joined by '; ' (ANCHOR holds a segment's pins to one quote). */
+function memberParagraph(): string {
+  return [...MEMBER_SEGMENTS.map(segment => `${segment.pins.join(" and ")} ${pinOf(segment.pins[0] ?? "").quote}${segment.result}`), MEMBER_TAIL].join("; ");
+}
+/** The names row E's pins compose: each pin's id, a space and its side in parentheses, listed. */
+function namesOfRowE(): string {
+  return listed(rowOf("E").pins.map(id => `${id} (${pinOf(id).side ?? ""})`));
 }
 /** The declarations a refusal record quotes between apostrophes (QUOTATION), in the record's order. */
 function quotations(record: string): string[] {
@@ -540,24 +569,33 @@ describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bind
     expect(ROWS.flatMap(row => row.pins), "the rows hold every pin once, in pin order").toEqual(PINS.map(pin => pin.id));
   });
 
-  it("ANCHOR: the rows' labels, row X's pins with their quotes, sides and recorded declarations, row E's pins with their sides and recorded declarations, row K's quotes with their gaps and the R-B256 fold are the ones wb-26dh's and wb-5333's tracker-export rows record", () => {
+  it("ANCHOR: the rows' labels, row X's member paragraph whole (its pins with their quotes, results and sides, and its tail) and their recorded declarations, refusal #4's names whole (row E's pins with their sides) and their recorded declarations, row K's quotes with their gaps and the R-B256 fold are the ones wb-26dh's and wb-5333's tracker-export rows record", () => {
     const child = exportRow(CHILD);
     const parent = exportRow(PARENT);
     const rowX = rowOf("X");
     expect(between(child.title, TITLE_CLAUSE), "wb-26dh's title holds row X's label as its claim clause").toBe(rowX.label);
-    const members = membersOf(between(child.description, MEMBER_PARAGRAPH));
     expect(
-      members.map(member => member.id),
-      "wb-26dh's description's member paragraph names exactly row X's pins, in order",
+      MEMBER_SEGMENTS.flatMap(segment => segment.pins),
+      "the member segments name exactly row X's pins, in order, each once",
     ).toEqual(rowX.pins);
-    for (const member of members) {
-      const pin = pinOf(member.id);
-      expect([pin.quote, pin.side], `${pin.id}: the quote and side the description's member paragraph gives it`).toEqual([member.phrase, member.side]);
-      expect([pin.probes[0]?.id, pin.probes[0]?.reading], `${pin.id}: its member probe reads its side refused`).toEqual([pin.id, [refused(member.side)]]);
+    for (const segment of MEMBER_SEGMENTS) {
+      expect(
+        segment.pins.map(id => pinOf(id).quote),
+        `${segment.pins.join(" and ")}: the pins of one member segment hold its one quote`,
+      ).toEqual(segment.pins.map(() => pinOf(segment.pins[0] ?? "").quote));
+    }
+    expect(
+      between(child.description, MEMBER_PARAGRAPH),
+      "wb-26dh's description's member paragraph is exactly row X's member segments, then MEMBER_TAIL, joined by '; '",
+    ).toBe(memberParagraph());
+    for (const id of rowX.pins) {
+      const pin = pinOf(id);
+      expect(pin.side ?? "<none>", `${id}: its side is the first in-file side its quote names`).toBe(sideIn(pin.quote) ?? "<no side>");
+      expect([pin.probes[0]?.id, pin.probes[0]?.reading], `${id}: its member probe reads its side refused`).toEqual([id, [refused(pin.side ?? "")]]);
     }
     const refusal3 = between(parent.notes, REFUSAL_3);
     expect(refusal3.length > 0, "wb-5333's notes hold refusal #3's record").toBe(true);
-    expect(quotations(refusal3), "refusal #3 quotes between apostrophes exactly the declarations row X's pins hold, in pin order").toEqual(recordedOf(rowX.pins));
+    expect(quotations(refusal3), "refusal #3's quotations (QUOTATION) are exactly the declarations row X's pins hold, in pin order").toEqual(recordedOf(rowX.pins));
     for (const id of rowX.pins) {
       const pin = pinOf(id);
       if (pin.quoted?.form === "sentence") expect(between(refusal3, ACCESSOR), `${id}: refusal #3 writes the accessor its pin holds, between its sentence's words`).toBe(pin.quoted.text);
@@ -580,16 +618,14 @@ describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bind
     const rowE = rowOf("E");
     const refusal4 = between(parent.notes, REFUSAL_4);
     expect(between(refusal4, CAUSE), "refusal #4's reason holds row E's label as its cause").toBe(rowE.label);
-    const named = [...between(refusal4, NAMED_E).matchAll(/\b(E\d+) \(([A-Z_]+)\)/g)].map(match => ({ id: match[1] ?? "", side: match[2] ?? "" }));
     expect(
-      named.map(member => member.id),
-      "refusal #4's reason names exactly row E's pins, in order",
-    ).toEqual(rowE.pins);
-    expect(quotations(refusal4), "refusal #4 quotes between apostrophes exactly the declarations row E's pins hold, in pin order").toEqual(recordedOf(rowE.pins));
-    for (const member of named) {
-      const pin = pinOf(member.id);
-      expect(pin.side, `${pin.id}: the side refusal #4 names for it`).toBe(member.side);
-      expect([pin.probes[0]?.id, pin.probes[0]?.reading], `${pin.id}: its member probe reads its side refused`).toEqual([pin.id, [refused(member.side)]]);
+      between(refusal4, NAMED_E),
+      "refusal #4's reason names exactly row E's pins with their sides, in pin order: '<id> (<side>)', joined by ', ' and a last ' and '",
+    ).toBe(namesOfRowE());
+    expect(quotations(refusal4), "refusal #4's quotations (QUOTATION) are exactly the declarations row E's pins hold, in pin order").toEqual(recordedOf(rowE.pins));
+    for (const id of rowE.pins) {
+      const pin = pinOf(id);
+      expect([pin.probes[0]?.id, pin.probes[0]?.reading], `${id}: its member probe reads its side refused`).toEqual([id, [refused(pin.side ?? "")]]);
       expectDeclared(pin);
     }
     const [head, slug, idem] = child.notes.split("\n");
