@@ -2,7 +2,7 @@
  "bead": "wb-jwc.13",
  "census": "test/workbench-rf-binding-text-reader-subforms-census.test.ts",
  "helper": "test/helpers/rf-binding-text-reader.ts",
- "note": "The sub-form census's roster: every row, in order, with its label (an unmet item's label or a finding's PREP head, verbatim from its record), and every pin, in order, with its path (where the census's judge reads its page), its probe (which of the census's six probes reads it), its page's digest (sha256/16), its forms (what its probe reads: each probed argument's source text with its whitespace runs read as one space; for the programs probe the callee's name, a colon and its first argument's; for the registration probes each registering object literal's) and its reading. It states no other words. The census holds its rows, pins, paths, probes, pages and readings to this file, and reads every pin a second time against this file's reading.",
+ "note": "The sub-form census's roster: every row, in order, with its label (an unmet item's label or a finding's PREP head, verbatim from its record), and every pin, in order, with its path (where the census's judge reads its page), its probe (which of the census's six probes reads it), its page's digest (sha256/16), its forms (what its probe reads: each probed argument's source text with its whitespace runs read as one space; for the programs probe the callee's name, a colon and its first argument's; for the registration probes each registering object literal's) and its reading; then the census's PROBES case: the path at which its judge reads the PROBES page, that page's digest, and each of the six probes, in the census's PROBES order, with the forms it reads on that page and its reading. It states no other words. The census holds its rows, pins, paths, probes, pages and readings to this file, reads every pin a second time against this file's reading, and reads the PROBES page a second time against this file's PROBES readings.",
  "rows": [
   {
    "row": "R3-U1a",
@@ -283,6 +283,20 @@
       "undefined",
       "[\"a\",\"b\"]"
      ]
+    },
+    {
+     "pin": "EX-SPACED",
+     "path": "src/workbench/providers/zz-ex-spaced.ts",
+     "probe": "exact",
+     "page": "3afab353ff48c530",
+     "forms": [
+      "c ? \"rf x\" : p",
+      "c ? \"rf x\" : \"rf y\""
+     ],
+     "reading": [
+      "undefined",
+      "[\"rf x\",\"rf y\"]"
+     ]
     }
    ]
   },
@@ -450,6 +464,18 @@
      "reading": [
       "[\"b\",\"c\",\"a\"]",
       "[\"a\",\"B\"]"
+     ]
+    },
+    {
+     "pin": "OR-SPACED",
+     "path": "src/workbench/providers/zz-or-spaced.ts",
+     "probe": "exact",
+     "page": "e30a1cd52d63cc8f",
+     "forms": [
+      "c ? \"rf y\" : \"rf x\""
+     ],
+     "reading": [
+      "[\"rf y\",\"rf x\"]"
      ]
     }
    ]
@@ -619,5 +645,69 @@
     }
    ]
   }
- ]
+ ],
+ "probes": {
+  "path": "src/workbench/providers/zz-probes.ts",
+  "page": "ded776ccd46d9dfe",
+  "probes": [
+   {
+    "probe": "texts",
+    "forms": [
+     "\"rf x\""
+    ],
+    "reading": [
+     "\"rf x\""
+    ]
+   },
+   {
+    "probe": "exact",
+    "forms": [
+     "\"rf x\""
+    ],
+    "reading": [
+     "[\"rf x\"]"
+    ]
+   },
+   {
+    "probe": "words",
+    "forms": [
+     "\"rf x\""
+    ],
+    "reading": [
+     "[\"rf\",\"x\"]"
+    ]
+   },
+   {
+    "probe": "programs",
+    "forms": [
+     "spawn:\"git log\""
+    ],
+    "reading": [
+     "spawn:git"
+    ]
+   },
+   {
+    "probe": "registrations",
+    "forms": [
+     "{ id: \"reactivefiber.b\" }",
+     "{ id: \"reactivefiber.a\" }"
+    ],
+    "reading": [
+     "reactivefiber.a:<none>",
+     "reactivefiber.b:<none>"
+    ]
+   },
+   {
+    "probe": "registration",
+    "forms": [
+     "{ id: \"reactivefiber.b\" }",
+     "{ id: \"reactivefiber.a\" }"
+    ],
+    "reading": [
+     "reactivefiber.b:<none>",
+     "reactivefiber.a:<none>"
+    ]
+   }
+  ]
+ }
 }
