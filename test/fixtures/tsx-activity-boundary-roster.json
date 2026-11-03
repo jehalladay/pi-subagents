@@ -1,0 +1,2300 @@
+{
+  "bead": "wb-km7q.6",
+  "producer": {
+    "repository": "ReactiveFiberTSXSDK",
+    "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+    "beadPin": "e7e6616d3d0842af51ca6fa31164f33ac2d85bf3",
+    "blob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+    "measuredAt": "2026-10-29",
+    "lines": [
+      {
+        "line": 3,
+        "text": "**Date:** 2026-10-17. **Status:** proposed extensions; none of the new exports claimed shipped. **Branch:** main. **Canonical program:** [Adaptive Computation and Control](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-04, AC-10, AC-15.",
+        "sha256": "ec7457829e2137aefb8e88f4451d1155db1d93bf002cd58d6de8b2c1cefef58b"
+      },
+      {
+        "line": 66,
+        "text": "ActivityBoundary ACTIVE/WARM/DORMANT/EVICTED remains separate from QueryView identity and speculative execution ownership. A warm context may precompute only explicitly eligible read-only resources under existing SpeculationBoundary, not call inference/effects. Add tests TSX-RQ1 five-stage TestHealth, TSX-RQ2 ready UNKNOWN vs pending, TSX-RQ3 aborted attempt no registration, TSX-RQ4 query spec scope changes stable hook order, TSX-RQ5 two consumers share one host query view without premature unsubscribe, TSX-RQ6 TS/Python golden, TSX-RQ7 existing ADR-0032 no premature optimizer or component skipping. DevTools only consumes emitted host events.",
+        "sha256": "844542075747acc40157ebf5078077036f308a65c3726caa11d455de66ed00f6"
+      }
+    ],
+    "tip": {
+      "ref": "origin/main",
+      "commit": "94ae52c14aef957a76d05834b1e823cfc67e6996",
+      "blob": "0197095027b82e38d062d334c6858b4c0a2971ff",
+      "package": "@reactive-fiber/tsx",
+      "version": "0.1.668",
+      "exports": [
+        ".",
+        "./jsx-runtime",
+        "./jsx-dev-runtime",
+        "./testing",
+        "./embedding",
+        "./package.json"
+      ],
+      "srcFiles": 159,
+      "subjectSrcFiles": 0,
+      "triage": {
+        "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md",
+        "blob": "df7eec143737781476bedb8ace511a348b5f0628",
+        "line": 87,
+        "text": "- Statement: The shared ADR (next free number per docs/adr/README.md:46-51) MUST define the Activity states ACTIVE/WARM/DORMANT/EVICTED exactly once and MUST record the host as the lifecycle owner, the SDK declaring an ActivityBoundary and reading a status (ruling R-03); ActivityBoundary and SpeculationBoundary MUST be marked PROPOSED (0 files at db7558552).",
+        "sha256": "8f84e594a7ed275985e9be4b53d9d7a03039fce154804a324a348f11322fd49b"
+      }
+    },
+    "reading": "UNSHIPPED"
+  },
+  "vocabulary": {
+    "subject": {
+      "words": [
+        "activityboundary",
+        "activityboundaries"
+      ],
+      "pairs": [
+        [
+          "activity",
+          "boundary"
+        ],
+        [
+          "activity",
+          "boundaries"
+        ]
+      ]
+    },
+    "warm": {
+      "words": [
+        "warm"
+      ],
+      "pairs": []
+    },
+    "state": {
+      "words": [
+        "state",
+        "states",
+        "active",
+        "warm",
+        "dormant",
+        "evicted"
+      ],
+      "pairs": []
+    },
+    "surface": {
+      "words": [
+        "devtools",
+        "inspector",
+        "inspectors"
+      ],
+      "pairs": [
+        [
+          "dev",
+          "tools"
+        ]
+      ]
+    },
+    "families": {
+      "inference": {
+        "words": [
+          "inference",
+          "inferences",
+          "infer",
+          "infers",
+          "inferred",
+          "inferring"
+        ],
+        "pairs": []
+      },
+      "effect": {
+        "words": [
+          "effect",
+          "effects",
+          "effectful"
+        ],
+        "pairs": []
+      },
+      "query-view": {
+        "words": [
+          "queryview",
+          "queryviews"
+        ],
+        "pairs": [
+          [
+            "query",
+            "view"
+          ],
+          [
+            "query",
+            "views"
+          ]
+        ]
+      },
+      "execution": {
+        "words": [],
+        "pairs": [
+          [
+            "speculative",
+            "execution"
+          ],
+          [
+            "speculative",
+            "executions"
+          ],
+          [
+            "execution",
+            "owner"
+          ],
+          [
+            "execution",
+            "ownership"
+          ],
+          [
+            "speculation",
+            "owner"
+          ],
+          [
+            "speculation",
+            "ownership"
+          ]
+        ]
+      },
+      "driving": {
+        "words": [
+          "mutate",
+          "mutates",
+          "mutated",
+          "mutating",
+          "mutation",
+          "mutations",
+          "command",
+          "commands",
+          "commanded",
+          "commanding",
+          "control",
+          "controls",
+          "controlled",
+          "controlling",
+          "write",
+          "writes",
+          "writing",
+          "wrote",
+          "written",
+          "dispatch",
+          "dispatches",
+          "dispatched",
+          "dispatching",
+          "drive",
+          "drives",
+          "driving",
+          "drove",
+          "driven",
+          "transition",
+          "transitions",
+          "transitioned",
+          "transitioning"
+        ],
+        "pairs": []
+      }
+    },
+    "markers": {
+      "A": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot",
+          "refuse",
+          "refuses",
+          "refused",
+          "refusing",
+          "refusal",
+          "reject",
+          "rejects",
+          "rejected",
+          "rejecting"
+        ],
+        "pairs": []
+      },
+      "B": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot",
+          "separate",
+          "separately",
+          "separated",
+          "distinct",
+          "independent",
+          "independently",
+          "apart"
+        ],
+        "pairs": []
+      },
+      "C": {
+        "words": [
+          "not",
+          "no",
+          "never",
+          "nor",
+          "neither",
+          "without",
+          "cannot"
+        ],
+        "pairs": [
+          [
+            "read",
+            "only"
+          ]
+        ]
+      }
+    },
+    "rows": {
+      "A": [
+        "inference",
+        "effect"
+      ],
+      "B": [
+        "query-view",
+        "execution"
+      ],
+      "C": [
+        "driving"
+      ]
+    },
+    "dependency": [
+      "reactive",
+      "fiber"
+    ]
+  },
+  "constants": {
+    "readRoots": [
+      ".agents",
+      ".pi",
+      "docs",
+      "examples",
+      "qa",
+      "src"
+    ],
+    "outside": [
+      ".beads",
+      ".codex",
+      ".github",
+      "media",
+      "new-feedback",
+      "test",
+      "vendor"
+    ],
+    "filing": "Citation: docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:66@",
+    "docs10": "docs/workbench/10-terminal-inspector.md",
+    "docs10ReadOnly": "A read-only rich inspector now offers overview, observed-reference graph, source-interval timeline and evidence/details.",
+    "docs10Controls": "Mutating commands on separate explicit controls require confirmation and per-provider authorization.",
+    "inspector": "src/ui/workflow-inspector.ts",
+    "inspectorHeader": "Read-only terminal inspector over the bounded producer-qualified observation projection."
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "adoption-time falsifier that a WARM precompute attempting inference or an effect is refused",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "adoption-time falsifier",
+          "witness": {
+            "producer": "UNSHIPPED",
+            "producerControls": {
+              "all three flipped": "SHIPPED",
+              "status still proposed": "UNSHIPPED",
+              "status still claims none shipped": "UNSHIPPED",
+              "src still names no subject": "UNSHIPPED",
+              "triage still PROPOSED": "UNSHIPPED",
+              "status still Proposed, capitalized": "UNSHIPPED",
+              "status still PROPOSED, upper case": "UNSHIPPED",
+              "status still pRoPoSeD, mixed case": "UNSHIPPED",
+              "status word proposed before a hyphen": "UNSHIPPED",
+              "status word proposed after a non-ASCII letter": "UNSHIPPED",
+              "status word only holding proposed": "SHIPPED",
+              "status word opening with proposed": "SHIPPED",
+              "status word proposed before a digit": "SHIPPED",
+              "status word proposed after an underscore": "SHIPPED",
+              "status word proposed after a digit": "SHIPPED",
+              "status word proposed before an underscore": "SHIPPED",
+              "status word with the long s for its s": "SHIPPED",
+              "status phrase inside longer words": "UNSHIPPED",
+              "status phrase by its first five words": "SHIPPED",
+              "status phrase without its first word": "SHIPPED",
+              "status phrase without its last word": "SHIPPED",
+              "status phrase capitalized": "SHIPPED",
+              "status phrase with a doubled space": "SHIPPED",
+              "status phrase with a tab for one of its spaces": "SHIPPED",
+              "triage PROPOSED before a hyphen": "UNSHIPPED",
+              "triage PROPOSED after a non-ASCII capital": "UNSHIPPED",
+              "triage reading Proposed, not upper case": "SHIPPED",
+              "triage reading PrOpOsEd, mixed case": "SHIPPED",
+              "triage PROPOSED only inside a longer word": "SHIPPED",
+              "triage word opening with PROPOSED": "SHIPPED",
+              "triage PROPOSED before a digit": "SHIPPED",
+              "triage PROPOSED after a digit": "SHIPPED",
+              "triage PROPOSED after an underscore": "SHIPPED",
+              "triage PROPOSED before an underscore": "SHIPPED"
+            },
+            "adoption": "ABSENT",
+            "anchored": [],
+            "findings": [],
+            "unreadable": [],
+            "tsxDependencies": [],
+            "dependencySeparators": [
+              "0030-0039",
+              "0041-005A",
+              "0061-007A",
+              "00AA",
+              "00B2-00B3",
+              "00B9-00BA",
+              "00BC-00BE",
+              "0130",
+              "0132-0133",
+              "013F-0140",
+              "0149",
+              "017F",
+              "01C4-01CC",
+              "01F1-01F3",
+              "02B0",
+              "02B2-02B3",
+              "02B7-02B8",
+              "02E1-02E3",
+              "0300-0304",
+              "0306-0309",
+              "030C",
+              "030F",
+              "0311",
+              "0323",
+              "0327-0328",
+              "032D",
+              "0330",
+              "0340-0341",
+              "0344",
+              "1D2C",
+              "1D2E",
+              "1D30-1D31",
+              "1D33-1D3A",
+              "1D3C",
+              "1D3E-1D43",
+              "1D47-1D49",
+              "1D4D",
+              "1D4F-1D50",
+              "1D52",
+              "1D56-1D58",
+              "1D5B",
+              "1D62-1D65",
+              "1D9C",
+              "1DA0",
+              "1DBB",
+              "1E9A",
+              "2070-2071",
+              "2074-2079",
+              "207F-2089",
+              "2090-2093",
+              "2095-209C",
+              "20A8",
+              "2100-2103",
+              "2105-2106",
+              "2109-210E",
+              "2110-2113",
+              "2115-2116",
+              "2119-211D",
+              "2120-2122",
+              "2124",
+              "2128",
+              "212A",
+              "212C-212D",
+              "212F-2131",
+              "2133-2134",
+              "2139",
+              "213B",
+              "2145-2149",
+              "2150-217F",
+              "2189",
+              "2460-24EA",
+              "2C7C-2C7D",
+              "3250-325F",
+              "32B1-32CF",
+              "3358-337A",
+              "3380-33FF",
+              "A7F1-A7F4",
+              "FB00-FB06",
+              "FF10-FF19",
+              "FF21-FF3A",
+              "FF41-FF5A"
+            ],
+            "floors": {
+              "files": true,
+              "root": true,
+              "src": true,
+              "docs": true,
+              "qa": true,
+              "examples": true
+            },
+            "positives": [
+              "docs/workbench/zz-plant.md:1 A:inference",
+              "src/zz-plant.ts:1 C:driving"
+            ],
+            "replica": {
+              "listed": [
+                ".agents/plant.md",
+                ".gitignore",
+                ".pi/agents/plant.md",
+                "README.md",
+                "docs/binary.md",
+                "docs/nested/.gitignore",
+                "docs/plant-twin.md",
+                "docs/plant.md",
+                "docs/read.md",
+                "docs/tracked.md",
+                "docs/unanchored.md",
+                "examples/pkg/package.json",
+                "examples/plant.md",
+                "package.json",
+                "qa/plant.mjs",
+                "src/plant.ts"
+              ],
+              "trackedRemoved": false,
+              "adoption": "PRESENT",
+              "anchored": [
+                ".agents/plant.md",
+                ".pi/agents/plant.md",
+                "README.md",
+                "docs/plant-twin.md",
+                "docs/plant.md",
+                "docs/read.md",
+                "docs/tracked.md",
+                "examples/plant.md",
+                "qa/plant.mjs",
+                "src/plant.ts"
+              ],
+              "findings": [
+                ".agents/plant.md:1 C:driving",
+                ".pi/agents/plant.md:1 C:driving",
+                "README.md:1 C:driving",
+                "docs/plant.md:5 A:inference",
+                "docs/read.md:1 A:inference",
+                "docs/tracked.md:1 A:inference",
+                "examples/plant.md:1 B:query-view",
+                "qa/plant.mjs:1 B:execution",
+                "src/plant.ts:2 A:effect"
+              ],
+              "tsxDependencies": [
+                "@reactive-fiber/tsx",
+                "@reactive-fiber/zz-dev",
+                "@reactive-fiber/zz-optional",
+                "@reactive-fiber/zz-peer",
+                "@reactive-\ufb01ber/zz-ligature",
+                "@reactive/fiber-zz-across",
+                "@zz-scope/reactive-fiber",
+                "@zz/XMLReactiveFiber",
+                "IReactiveFiberZz",
+                "REACTIVE.FIBER.ZZ-DOTTED",
+                "RFReactiveFiberZz",
+                "ReactiveFiberZzCamel",
+                "reactive-fiber-zz-unscoped",
+                "reactive_fiber_zz_snake",
+                "zz2ReactiveFiber",
+                "\uff32eactive-fiber-zz-fullwidth"
+              ],
+              "unreadable": [
+                "docs"
+              ]
+            },
+            "quiet": {
+              "R-OUTSIDE-ROOTS": {
+                "unread": {
+                  ".beads/plant.md": false,
+                  ".codex/plant.md": false,
+                  ".github/plant.md": false,
+                  "media/plant.md": false,
+                  "new-feedback/plant.md": false,
+                  "test/plant.md": false,
+                  "vendor/plant.md": false,
+                  "docs/ignored.md": false,
+                  "docs/nested/ignored.md": false,
+                  "docs/excluded.md": false,
+                  "docs/global-ignored.md": false
+                },
+                "binary": [
+                  [
+                    "docs/binary.md"
+                  ],
+                  false
+                ],
+                "twin": [
+                  "docs/read.md:1 A:inference"
+                ]
+              },
+              "R-DEPENDENCY-NAME": {
+                "a folded name": [
+                  [],
+                  [
+                    "reactive-fiber-zz"
+                  ]
+                ],
+                "an alias": [
+                  [],
+                  [
+                    "@reactive-fiber/tsx"
+                  ]
+                ]
+              },
+              "R-DEPENDENCY-FIELD": [
+                [],
+                [
+                  "@reactive-fiber/tsx"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "that a WARM precompute attempting inference",
+          "witness": {
+            "doc": {
+              "A WARM context calls inference.": "A:inference",
+              "A warm context infers the next step.": "A:inference",
+              "The WARM precompute runs inferences for the query.": "A:inference",
+              "A WARM context only calls inference.": "A:inference",
+              "A WARM context never calls inference.": null,
+              "A WARM context cannot call inference.": null,
+              "A WARM precompute attempting inference is refused.": null,
+              "A WARM context doesn't call inference.": null,
+              "An ACTIVE context calls inference.": null,
+              "A WARM context calls the inferential layer.": null,
+              "A WARM context should call inference.": "A:inference",
+              "A WARM context must call inference.": "A:inference",
+              "A WARM context shall call inference.": "A:inference",
+              "A WARM context will call inference.": "A:inference",
+              "If the context is WARM it calls inference.": "A:inference",
+              "When the context is WARM it calls inference.": "A:inference"
+            },
+            "contraction": [
+              null,
+              "A:inference"
+            ],
+            "code": [
+              [
+                "src/plant.ts:2 A:inference"
+              ],
+              [
+                "src/plant.ts:2 A:inference"
+              ],
+              []
+            ],
+            "cuts": {
+              "after .": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after ;": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after !": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after ?": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "at a blank line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "around a table row": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a heading line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "before a list item": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "after . before a tab": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "after . at the line end": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "at a blank line between CRLF line ends": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                [
+                  "docs/cut.txt:3 A:inference"
+                ]
+              ],
+              "around a table row indented by two spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "around a heading of six #": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a heading indented by three spaces": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "around a bare # line": [
+                [
+                  "docs/cut.md:3 A:inference"
+                ],
+                []
+              ],
+              "before a list item numbered 10)": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item indented by two spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "around a table row indented by twenty spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item numbered by twenty digits": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item indented by twenty spaces": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item whose mark a space follows at the line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a list item whose mark a space follows at a CRLF line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ],
+              "before a bare list mark that a lone CR follows at a CRLF line end": [
+                [
+                  "docs/cut.md:4 A:inference"
+                ],
+                []
+              ]
+            },
+            "joined": [
+              [],
+              [],
+              [
+                "docs/cut.md:3 A:inference"
+              ]
+            ],
+            "nearMisses": {
+              "a terminator before a letter": [
+                [],
+                []
+              ],
+              "a heading of seven #": [
+                [],
+                []
+              ],
+              "a heading indented by four spaces": [
+                [],
+                []
+              ],
+              "a # without white space": [
+                [],
+                []
+              ],
+              "a list mark without white space": [
+                [],
+                []
+              ],
+              "a number without its closer": [
+                [],
+                []
+              ],
+              "a pipe inside a line": [
+                [],
+                []
+              ],
+              "a lone carriage return": [
+                [],
+                []
+              ],
+              "a bare list mark before an LF line end": [
+                [],
+                []
+              ],
+              "a bare list number before an LF line end": [
+                [],
+                []
+              ],
+              "a bare list mark before a CRLF line end": [
+                [],
+                []
+              ],
+              "a bare list number before a CRLF line end": [
+                [],
+                []
+              ],
+              "an LF then a CR before a heading indented by three spaces": [
+                [],
+                []
+              ]
+            },
+            "pages": {
+              "docs/cut.md": [
+                "docs/cut.md:3 A:inference"
+              ],
+              "docs/cut.MD": [],
+              "docs/cut.mdx": [],
+              "docs/cut.markdown": [],
+              "docs/cut.mkd": [],
+              "docs/cut.mdown": [],
+              "docs/cut.mdwn": [],
+              "docs/cut.mkdn": [],
+              "docs/cut.mkdown": [],
+              "docs/cut.livemd": [],
+              "docs/cut.ronn": [],
+              "docs/cut.md.txt": [],
+              "docs/cutmd": []
+            },
+            "classes": {
+              "ends a line": [
+                "000A"
+              ],
+              "ends a sentence before a space": [
+                "0021",
+                "002E",
+                "003B",
+                "003F"
+              ],
+              "follows a terminator": [
+                "0009-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "makes a blank line": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "marks a line read alone": [
+                "0023",
+                "007C"
+              ],
+              "marks a list item": [
+                "002A-002B",
+                "002D"
+              ],
+              "indents a table row": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "007C",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "indents a heading": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "0023",
+                "007C",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "follows a heading mark": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "indents a list item": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "follows a list mark": [
+                "0009",
+                "000B-000D",
+                "0020",
+                "00A0",
+                "1680",
+                "2000-200A",
+                "2028-2029",
+                "202F",
+                "205F",
+                "3000",
+                "FEFF"
+              ],
+              "numbers a list item": [
+                "0030-0039"
+              ],
+              "closes a list number": [
+                "0029",
+                "002E"
+              ]
+            },
+            "never": {
+              "A WARM context should call inference.": "A:inference",
+              "A WARM context must call inference.": "A:inference",
+              "A WARM context shall call inference.": "A:inference",
+              "A WARM context will call inference.": "A:inference",
+              "A WARM context may call inference.": "A:inference",
+              "A WARM context might call inference.": "A:inference",
+              "A WARM context can call inference.": "A:inference",
+              "A WARM context could call inference.": "A:inference",
+              "A WARM context would call inference.": "A:inference",
+              "If the context is WARM it calls inference.": "A:inference",
+              "When the context is WARM it calls inference.": "A:inference",
+              "A WARM context only calls inference.": "A:inference"
+            },
+            "quiet": {
+              "R-UNANCHORED": [
+                [],
+                [
+                  "docs/plant.md:3 A:inference"
+                ]
+              ],
+              "R-SPLIT": [
+                [],
+                [
+                  "docs/plant.md:1 A:inference"
+                ]
+              ],
+              "R-PAGE-NAME": [
+                [],
+                [
+                  "docs/cut.md:3 A:inference"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "or an effect is refused",
+          "witness": {
+            "doc": {
+              "A WARM context runs effects.": "A:effect",
+              "The WARM precompute commits an effect.": "A:effect",
+              "A WARM context is effectful.": "A:effect",
+              "A WARM context calls inference and effects.": "A:inference+effect",
+              "A WARM context never runs effects.": null,
+              "A WARM precompute attempting an effect is rejected.": null,
+              "A WARM context is effective.": null,
+              "A DORMANT context runs effects.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 A:effect"
+              ],
+              []
+            ],
+            "quiet": {
+              "R-MARKER-ANYWHERE": {
+                "prose": [
+                  null,
+                  "A:effect"
+                ],
+                "comment": [
+                  [],
+                  [
+                    "src/plant.ts:2 A:effect"
+                  ]
+                ]
+              },
+              "R-PARAPHRASE": {
+                "the model": [
+                  null,
+                  "A:inference"
+                ],
+                "a completion": [
+                  null,
+                  "A:inference"
+                ],
+                "a side job": [
+                  null,
+                  "A:effect"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "that boundary state never aliases QueryView identity or speculative execution ownership",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "that boundary state never aliases QueryView identity",
+          "witness": {
+            "doc": {
+              "ActivityBoundary state is the QueryView identity.": "B:query-view",
+              "The WARM state keys the query view.": "B:query-view",
+              "A DORMANT context reuses the QueryView.": "B:query-view",
+              "ActivityBoundary states share the query views.": "B:query-view",
+              "ActivityBoundary state stays separate from QueryView identity.": null,
+              "The EVICTED state is distinct from the query view.": null,
+              "The state names a query.": null,
+              "The ActivityBoundary reads a view of the query.": null,
+              "The ActivityBoundary is the QueryView identity.": "B:query-view",
+              "The ActivityBoundary is separate from the QueryView identity.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 B:query-view"
+              ],
+              []
+            ],
+            "words": {
+              "case change": "activity boundary",
+              "lower first": "query view",
+              "two capitals": "dev tools",
+              "acronym run": "warm context",
+              "snake case": "activity boundary",
+              "kebab case": "activity boundary",
+              "fullwidth letter": "query view",
+              "a fullwidth capital after a lower-case letter": "query view",
+              "a digit inside a run": "query2view",
+              "a digit closing a run": "activity boundary2",
+              "a digit opening a run": "2warm",
+              "a digit before a capital": "query2 view",
+              "every letter and digit": "abcdefghijklmnopqrstuvwxyz0123456789",
+              "capitals alone": "abcdefghijklmnopqrstuvwxyz"
+            },
+            "nonSeparators": [
+              "0030-0039",
+              "0041-005A",
+              "0061-007A",
+              "00AA",
+              "00B2-00B3",
+              "00B9-00BA",
+              "00BC-00BE",
+              "0130",
+              "0132-0133",
+              "013F-0140",
+              "0149",
+              "017F",
+              "01C4-01CC",
+              "01F1-01F3",
+              "02B0",
+              "02B2-02B3",
+              "02B7-02B8",
+              "02E1-02E3",
+              "1D2C",
+              "1D2E",
+              "1D30-1D31",
+              "1D33-1D3A",
+              "1D3C",
+              "1D3E-1D43",
+              "1D47-1D49",
+              "1D4D",
+              "1D4F-1D50",
+              "1D52",
+              "1D56-1D58",
+              "1D5B",
+              "1D62-1D65",
+              "1D9C",
+              "1DA0",
+              "1DBB",
+              "1E9A",
+              "2070-2071",
+              "2074-2079",
+              "207F-2089",
+              "2090-2093",
+              "2095-209C",
+              "20A8",
+              "2100-2103",
+              "2105-2106",
+              "2109-210E",
+              "2110-2113",
+              "2115-2116",
+              "2119-211D",
+              "2120-2122",
+              "2124",
+              "2128",
+              "212A",
+              "212C-212D",
+              "212F-2131",
+              "2133-2134",
+              "2139",
+              "213B",
+              "2145-2149",
+              "2150-217F",
+              "2189",
+              "2460-24EA",
+              "2C7C-2C7D",
+              "3250-325F",
+              "32B1-32CF",
+              "3358-337A",
+              "3380-33FF",
+              "A7F1-A7F4",
+              "FB00-FB06",
+              "FF10-FF19",
+              "FF21-FF3A",
+              "FF41-FF5A",
+              "107A5",
+              "1CCD6-1CCF9",
+              "1D400-1D454",
+              "1D456-1D49C",
+              "1D49E-1D49F",
+              "1D4A2",
+              "1D4A5-1D4A6",
+              "1D4A9-1D4AC",
+              "1D4AE-1D4B9",
+              "1D4BB",
+              "1D4BD-1D4C3",
+              "1D4C5-1D505",
+              "1D507-1D50A",
+              "1D50D-1D514",
+              "1D516-1D51C",
+              "1D51E-1D539",
+              "1D53B-1D53E",
+              "1D540-1D544",
+              "1D546",
+              "1D54A-1D550",
+              "1D552-1D6A3",
+              "1D7CE-1D7FF",
+              "1F100-1F10A",
+              "1F110-1F12E",
+              "1F130-1F14F",
+              "1F16A-1F16C",
+              "1F190",
+              "1FBF0-1FBF9"
+            ],
+            "contraction": [
+              null,
+              null,
+              "B:query-view"
+            ],
+            "never": {
+              "ActivityBoundary state should alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state must alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state shall alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state will alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state may alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state might alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state can alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state could alias the QueryView identity.": "B:query-view",
+              "ActivityBoundary state would alias the QueryView identity.": "B:query-view",
+              "If the state is WARM it keys the QueryView.": "B:query-view",
+              "When the state is WARM it keys the QueryView.": "B:query-view",
+              "ActivityBoundary state only keys the QueryView.": "B:query-view"
+            },
+            "quiet": {
+              "R-COMPOSED": [
+                [],
+                [
+                  "src/plant.ts:2 B:query-view"
+                ]
+              ],
+              "R-LOOKALIKE": [
+                [
+                  null,
+                  null
+                ],
+                [
+                  "B:query-view",
+                  "B:query-view"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "or speculative execution ownership",
+          "witness": {
+            "doc": {
+              "The WARM state owns the speculative execution.": "B:execution",
+              "ActivityBoundary state decides the execution owner.": "B:execution",
+              "The ACTIVE state holds speculation ownership.": "B:execution",
+              "ActivityBoundary state is the QueryView identity and the speculative execution owner.": "B:query-view+execution",
+              "ActivityBoundary state never aliases speculative execution ownership.": null,
+              "The state stays independent of the speculative execution.": null,
+              "The WARM state runs under the SpeculationBoundary.": null,
+              "The WARM state owns the execution.": null
+            },
+            "code": [
+              [
+                "src/plant.ts:2 B:execution"
+              ]
+            ],
+            "coverage": {
+              "a text read nowhere": [
+                [
+                  "control:state",
+                  "control:inference",
+                  "control:query view",
+                  "control:never"
+                ],
+                []
+              ],
+              "a word read alone": [
+                [
+                  "control:state",
+                  "control:inference",
+                  "control:never"
+                ],
+                []
+              ],
+              "a pair read inside a phrase only": [
+                [
+                  "control:never"
+                ],
+                [
+                  "control:speculative execution",
+                  "control:execution ownership"
+                ]
+              ],
+              "the pairs read apart too": [
+                [
+                  "control:never"
+                ],
+                []
+              ]
+            },
+            "quiet": {
+              "R-SYNONYM": {
+                "synonyms": [
+                  "activity boundaries",
+                  "activityboundaries",
+                  "activityboundary",
+                  "apart",
+                  "cannot",
+                  "command",
+                  "commanded",
+                  "commanding",
+                  "controlled",
+                  "controlling",
+                  "devtools",
+                  "dispatch",
+                  "dispatched",
+                  "dispatches",
+                  "dispatching",
+                  "distinct",
+                  "drive",
+                  "driven",
+                  "drives",
+                  "driving",
+                  "drove",
+                  "effectful",
+                  "execution owner",
+                  "independent",
+                  "independently",
+                  "infer",
+                  "inferences",
+                  "inferred",
+                  "inferring",
+                  "infers",
+                  "inspectors",
+                  "mutate",
+                  "mutated",
+                  "mutates",
+                  "mutation",
+                  "mutations",
+                  "neither",
+                  "nor",
+                  "query views",
+                  "queryview",
+                  "queryviews",
+                  "refusal",
+                  "refuse",
+                  "refuses",
+                  "refusing",
+                  "reject",
+                  "rejected",
+                  "rejecting",
+                  "rejects",
+                  "separated",
+                  "separately",
+                  "speculation owner",
+                  "speculation ownership",
+                  "speculative executions",
+                  "transition",
+                  "transitioned",
+                  "transitioning",
+                  "transitions",
+                  "write",
+                  "writes",
+                  "writing",
+                  "written",
+                  "wrote"
+                ],
+                "load": {
+                  "activity boundary": [
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "warm": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "state": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "states": [
+                    "places",
+                    "roleless"
+                  ],
+                  "active": [
+                    "places",
+                    "roleless"
+                  ],
+                  "dormant": [
+                    "places",
+                    "roleless"
+                  ],
+                  "evicted": [
+                    "places",
+                    "roleless"
+                  ],
+                  "inspector": [
+                    "places",
+                    "roleless"
+                  ],
+                  "dev tools": [
+                    "labels",
+                    "title",
+                    "places",
+                    "roleless"
+                  ],
+                  "inference": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "effect": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "effects": [
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "query view": [
+                    "labels",
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless",
+                    "unspelled"
+                  ],
+                  "speculative execution": [
+                    "places",
+                    "roleless"
+                  ],
+                  "execution ownership": [
+                    "places",
+                    "roleless"
+                  ],
+                  "mutating": [
+                    "places",
+                    "roleless"
+                  ],
+                  "commands": [
+                    "places",
+                    "roleless"
+                  ],
+                  "control": [
+                    "places",
+                    "roleless"
+                  ],
+                  "controls": [
+                    "places",
+                    "roleless"
+                  ],
+                  "not": [
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "no": [
+                    "places",
+                    "roleless"
+                  ],
+                  "never": [
+                    "labels",
+                    "title",
+                    "places",
+                    "roleless"
+                  ],
+                  "without": [
+                    "places",
+                    "roleless"
+                  ],
+                  "refused": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ],
+                  "separate": [
+                    "title",
+                    "producer",
+                    "places",
+                    "roleless"
+                  ],
+                  "read only": [
+                    "labels",
+                    "places",
+                    "roleless"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "and that DevTools-style surfaces stay read-only consumers",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "and that DevTools-style surfaces",
+          "witness": {
+            "doc": {
+              "The inspector transitions the context to WARM.": "C:driving",
+              "DevTools writes the ActivityBoundary state.": "C:driving",
+              "The dev tools panel dispatches a WARM command.": "C:driving",
+              "The inspector controls the boundary.": "C:driving",
+              "DevTools only consumes emitted host events.": null,
+              "The inspector never transitions the context.": null,
+              "The inspector is a read-only view of the controls.": null,
+              "The inspector shows the WARM state.": null,
+              "The inspector writes the WARM context that calls inference.": "A:inference C:driving"
+            },
+            "code": [
+              [
+                "src/plant.ts:2 C:driving"
+              ],
+              []
+            ],
+            "never": {
+              "The inspector should transition the WARM context.": "C:driving",
+              "The inspector must transition the WARM context.": "C:driving",
+              "The inspector shall transition the WARM context.": "C:driving",
+              "The inspector will transition the WARM context.": "C:driving",
+              "The inspector may transition the WARM context.": "C:driving",
+              "The inspector might transition the WARM context.": "C:driving",
+              "The inspector can transition the WARM context.": "C:driving",
+              "The inspector could transition the WARM context.": "C:driving",
+              "The inspector would transition the WARM context.": "C:driving",
+              "If the inspector opens it writes the state.": "C:driving",
+              "When the inspector opens it writes the state.": "C:driving",
+              "The inspector only writes the state.": "C:driving"
+            },
+            "contraction": [
+              null,
+              null,
+              "C:driving"
+            ],
+            "quiet": {
+              "R-SURFACE-OTHER": {
+                "a panel": [
+                  null,
+                  "C:driving"
+                ],
+                "a viewer": [
+                  null,
+                  "C:driving"
+                ],
+                "a dashboard": [
+                  null,
+                  "C:driving"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "stay read-only consumers",
+          "witness": {
+            "surfaces": [
+              "src/ui/workflow-inspector.ts"
+            ],
+            "closures": {
+              "src/ui/workflow-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "@earendil-works/pi-tui",
+                  "typebox/value"
+                ],
+                "direct": [
+                  "../workbench/redaction.js",
+                  "../workbench/timeline.js",
+                  "./workflow-card.js",
+                  "@earendil-works/pi-tui"
+                ],
+                "reaches": true
+              }
+            },
+            "header": "Read-only terminal inspector over the bounded producer-qualified observation projection.",
+            "controls": {
+              "src/ui/devtools/plant-view.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/devtools/plant-view.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-absolute-file-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-absolute-file-inspector.ts:<replica>/src/ui/plant-abs.js",
+                  "src/ui/plant-absolute-file-inspector.ts:<replica>/src/ui/plant-abs.ts"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-absolute-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-absolute-inspector.ts:/plant-abs.js"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-assertion-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-assertion-inspector.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-bare-import-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-bare-import-inspector.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-bare-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-k.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-computed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-declared-inspector.d.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-declared-inspector.d.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-namespace-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-namespace-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-default-typed-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-default-typed-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-deferred-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-deferred-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-dot-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/.plant-dot.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-dynamic-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-dynamic-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-empty-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-empty-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-empty-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-empty-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-equals-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-equals-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-escape-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-escape-inspector.ts:../../../plant-outside.js"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-export-equals-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-export-equals-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.cjs": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.cjs:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.cts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.cts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.js": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.js:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.mjs": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.mjs:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.mts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.mts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-ext-inspector.tsx": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-ext-inspector.tsx:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-fetch-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-global-load-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-handed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-http-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-http-inspector.ts:node:http"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-index-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-d/index.ts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-injected-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/plant-b.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-js-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-j.js:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-loader-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-loader-inspector.ts:node:module"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mixed-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-mixed-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mixed-names-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-mixed-names-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-mts-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-m.mts:node:os"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-namespace-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-namespace-export-inspector.ts:node:net"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-namespace-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-namespace-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-noncandidate-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/a",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/b",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/c",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/d",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/e",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/f",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/g.cjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/h.js",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/i.mjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/j",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/k",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/l",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/m",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/n",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/o",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/p.js",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/q.mjs",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/r.jsx",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/s",
+                  "src/ui/plant-noncandidate-inspector.ts:./plant-nc/t.cjs"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-order-index-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-js-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-mjs-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-order-written-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "fake-io-lib"
+                ]
+              },
+              "src/ui/plant-prefix-only-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-prefix-only-inspector.ts:node:test"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-property-loader-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-reexport-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-reexport-inspector.ts:node:net"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-require-dev-tools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-require-dev-tools.ts:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-root-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-root-inspector.ts:/plant-root.js",
+                  "src/ui/plant-root-inspector.ts:/plant-root.ts"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-scoped-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "@zz-scope/fake-io"
+                ]
+              },
+              "src/ui/plant-stream-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-subpath-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-subpath-inspector.ts:fs/promises"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-subpath-package-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": [
+                  "fake-io-lib/sub"
+                ]
+              },
+              "src/ui/plant-template-dynamic-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-template-dynamic-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-template-require-devtools.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-template-require-devtools.ts:node:child_process"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-type-import-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-default-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-equals-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-names-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-names-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-namespace-export-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-namespace-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-typed-reexport-inspector.ts": {
+                "pure": true,
+                "builtins": [],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-unresolved-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-unresolved-inspector.ts:./missing.js"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-untried-inspector.ts": {
+                "pure": false,
+                "builtins": [],
+                "unresolved": [
+                  "src/ui/plant-untried-inspector.ts:./plant-ut"
+                ],
+                "packages": []
+              },
+              "src/ui/plant-unused-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-unused-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              },
+              "src/ui/plant-value-export-inspector.ts": {
+                "pure": false,
+                "builtins": [
+                  "src/ui/plant-value-export-inspector.ts:node:fs"
+                ],
+                "unresolved": [],
+                "packages": []
+              }
+            },
+            "slash": {
+              "/plant-abs.js": [
+                false,
+                false,
+                true
+              ],
+              "/plant-root.ts": true,
+              "<replica>/src/ui/plant-abs.ts": true
+            },
+            "notSurfaces": {
+              "src/ui/plant-inspector-notes.md": false,
+              "src/ui/plant-inspector-data.json": false,
+              "src/ui/plant-inspector-view.jsx": false,
+              "src/ui/plant-inspector-view.vue": false,
+              "src/ui/plant-inspector-view.svelte": false,
+              "src/ui/plant-inspector-view.astro": false,
+              "qa/plant-inspector.mjs": false
+            },
+            "quiet": {
+              "R-UNNAMED-SURFACE": [
+                false,
+                [
+                  "src/ui/plant-panel.ts:node:fs"
+                ]
+              ],
+              "R-MODULE-NAME": [
+                false,
+                [
+                  "src/ui/plant-inspector-view.vue:node:os"
+                ]
+              ],
+              "R-PACKAGE": [
+                true,
+                false
+              ],
+              "R-UNTRIED-CANDIDATE": [
+                {
+                  "pure": false,
+                  "builtins": [],
+                  "unresolved": [
+                    "src/ui/plant-untried-inspector.ts:./plant-ut"
+                  ],
+                  "packages": []
+                },
+                {
+                  "pure": false,
+                  "builtins": [
+                    "src/ui/plant-d/index.ts:node:os"
+                  ],
+                  "unresolved": [],
+                  "packages": []
+                }
+              ],
+              "R-INJECTED": {
+                "a callback": [
+                  true,
+                  false
+                ],
+                "an object it calls": [
+                  true,
+                  false
+                ]
+              },
+              "R-AMBIENT-IO": {
+                "a global fetch": [
+                  true,
+                  false
+                ],
+                "a process stream": [
+                  true,
+                  false
+                ]
+              },
+              "R-COMPUTED-LOAD": {
+                "a computed specifier": [
+                  true,
+                  false
+                ],
+                "a createRequire loader": [
+                  [
+                    "src/ui/plant-loader-inspector.ts:node:module"
+                  ],
+                  [
+                    "src/ui/plant-require-dev-tools.ts:child_process"
+                  ]
+                ],
+                "a property loader": [
+                  true,
+                  false
+                ],
+                "a global": [
+                  true,
+                  false
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "duty": "a WARM context precomputes only explicitly eligible read-only resources under the existing SpeculationBoundary",
+      "reason": "binds once Pi declares a precompute set: no Pi file names the boundary (A1 reads the adoption ABSENT) and Pi holds no precompute, resource set or SpeculationBoundary, so there is no eligibility to judge; the producer's own triage marks SpeculationBoundary PROPOSED with 0 files. The clause's refusal half (never calls inference or effects) is row A."
+    },
+    {
+      "duty": "gated TSX-RQ7",
+      "reason": "a test the charter asks the TSX SDK to add (line 66's test list); Pi records the producer reading UNSHIPPED in A1 and judges any adoption by rows A-C whatever that producer test reads."
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-DEPENDENCY-NAME",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-DEPENDENCY-FIELD",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-UNANCHORED",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-PAGE-NAME",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "B2"
+    },
+    {
+      "id": "R-SURFACE-OTHER",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-UNNAMED-SURFACE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-MODULE-NAME",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-PACKAGE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-UNTRIED-CANDIDATE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-INJECTED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-AMBIENT-IO",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-COMPUTED-LOAD",
+      "quietPin": "C2"
+    }
+  ]
+}

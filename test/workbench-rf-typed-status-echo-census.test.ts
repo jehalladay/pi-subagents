@@ -78,15 +78,23 @@
  *    refusals #1 and #2 wrote further one-edit narrowings that each kept it at 26 of 26: XS01-XS09, then YO01-YO03 and YC01,
  *    YC03, YC04, YC05 and YC06) claims, from its third cut on, exactly what it pins and nothing wider. (1) Each of the seventeen
  *    KEY_PATH_ADDITIONS_CUT_6 control texts, byte for byte and read alone as a module named control.ts, is caught by exactly one
- *    matcher: a narrowing that drops one reds A1 at its cut-6 key-path assertion, which names it, and the receipt's cut-6 table
- *    (each control's name, reading and text digest) and the roster's keyPathsCut6 (its reading) hold that reading outside this
- *    file's literals. (2) A1's own src walk reads the src unit openHost.sessionClass exactly once among the code units of
+ *    matcher: a narrowing that drops one reds A1 at its cut-6 key-path assertion, which names it, except a narrowing that also
+ *    fails one of A1's earlier assertions, which reds A1 there first (wb-j2cn, the wb-xbwy gate's F1, restoring the second cut's
+ *    exception words: the gate's seven such narrowings, Y12, Y18, Y20, Y22, PG-BM15, PG-BM09 and G12, each drop a landed cut-5
+ *    control too and red A1 at the cut-5 key-path assertion, which names that control), and the receipt's cut-6 table (each
+ *    control's name, reading and text digest) and the roster's keyPathsCut6 (its reading) hold that reading outside this file's
+ *    literals. (2) A1's own src walk reads the src unit openHost.sessionClass exactly once among the code units of
  *    src/workbench/hosts/furnace-hosted.ts (HELD_SRC_UNIT, the unit the cut-5 entry's first-cut Green bullet names read): a
- *    narrowing that leaves that module without the unit, or with it more than once, reds A1 at its held-unit assertion (or
- *    earlier, at the cut-6 key-path assertion, when it drops a control too), and the roster's heldSrcUnitCut6 holds the module,
- *    the unit and its reading. NOT CLAIMED by this census: any other text, whatever syntax it shares with one of the seventeen
- *    (among them each NOT CLAIMED witness the gate's PREPs measured, which the receipt's cut-6 Non-claims bullet lists), and the
- *    reading of any other src unit by this pin;
+ *    narrowing that leaves that module without the unit, or with it more than once, reds A1 at its held-unit assertion, or
+ *    earlier, at the first of A1's earlier assertions it also fails (the cut-6 key-path assertion when it drops a cut-6 control
+ *    too; Y12 and PG-BM09, which drop the unit, red A1 at the cut-5 one); the roster's heldSrcUnitCut6 holds the module, the
+ *    unit and its reading, and (wb-j2cn, the wb-xbwy gate's F2) so does the last row of the receipt's cut-6 table (group
+ *    src.heldUnit: the module and the unit, the reading and no text digest), which A1's record holds after the seventeen
+ *    controls' rows, so the gate's H3 - the held-unit assertion, the witness key and the roster key taken off together beside a
+ *    narrowing that drops the unit - reds A1 at its record hold. NOT CLAIMED by this census: any other text, whatever syntax it
+ *    shares with one of the seventeen (among them each NOT CLAIMED witness the gate's PREPs measured, which the receipt's cut-6
+ *    Non-claims bullet lists), the reading of any other src unit by this pin, and a record entry rewritten to a reading the walk
+ *    did not count;
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -172,7 +180,8 @@
  * the cut-4 controls join both records after the cut-3 ones, each record held to its cut-3 table followed by its cut-4
  * additions table. wb-1709: the cut-5 A1 controls join A1's record after the cut-4 ones, held to the cut-5 additions table
  * after the cut-4 one. wb-xbwy: the cut-6 A1 controls join it after the cut-5 ones, held to the cut-6 additions table after
- * the cut-5 one; the src unit it holds (HELD_SRC_UNIT) is held by A1's assertion and the roster, not by a receipt row.
+ * the cut-5 one; the src unit it holds (HELD_SRC_UNIT) is held by A1's assertion and the roster and (wb-j2cn, the wb-xbwy
+ * gate's F2) by a receipt row as well: it joins A1's record after the cut-6 controls, held to that table's last row.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -1466,7 +1475,9 @@ const SESSION_CLASS_TWIN = [
 
 /** wb-xbwy's third cut (this bead's gate refusal #2, U1: YO01-YO03): the src unit the cut-5 entry's first-cut Green bullet names
  * read, which A1's src walk must read exactly once among the code units of its module. A src change that moves, renames or
- * removes the unit reds A1 at that assertion and owes this pin's update in the same cut. */
+ * removes the unit reds A1 at that assertion and owes this pin's update in the same cut. wb-j2cn (the wb-xbwy gate's F2): the
+ * unit's module, name and reading are also the last row of the receipt's cut-6 table, which A1's record holds, so such a change
+ * reds A1's record hold too, and its update owes the receipt an appended entry, since a landed row is never rewritten. */
 const HELD_SRC_UNIT = { module: "src/workbench/hosts/furnace-hosted.ts", unit: "openHost.sessionClass" } as const;
 
 /** wb-xbwy (the wb-1709 gate's F1, IB01-IB05; its second and third cuts cure this bead's gate refusals #1 and #2): A1's cut-6
@@ -1759,6 +1770,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       heldUnitReads,
       `the src unit ${HELD_SRC_UNIT.unit} of ${HELD_SRC_UNIT.module}, which the cut-5 entry's first-cut Green bullet names read, is not read exactly once by the src walk`,
     ).toBe(1);
+    // wb-j2cn (the wb-xbwy gate's F2: its H3 took the held-unit assertion, the witness key and the roster key off together beside
+    // a narrowing that drops the unit, and the census read 26 of 26): the unit also joins A1's record, after the cut-6 controls,
+    // by its module and name and the reading the walk counts, held to the cut-6 table's last row, outside this file and its roster.
+    ledger.push(["src.heldUnit", `${HELD_SRC_UNIT.module}: ${HELD_SRC_UNIT.unit}`, String(heldUnitReads), "-"]);
     expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4, cut-5 and cut-6 additions").toStrictEqual([
       ...receiptTable(RECEIPT_TABLES.readingControls),
       ...receiptTable(RECEIPT_TABLES.readingControlAdditions),
