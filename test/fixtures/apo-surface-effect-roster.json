@@ -481,11 +481,18 @@
    "text": "// Presents MW adaptive-policy-organizations state.\nexport {};\n"
   },
   "twinProbe": {
-   "text": "\n// APO census twin probe.\nexport const zzCensusTwinProbe = \"APO census twin probe\";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: \"zz.census.twin.probe\" } });\n  registry.register(descriptor);\n  return registry.invoke(\"zz.census.twin.probe\");\n}\n",
+   "text": "\n// APO census twin probe.\nexport const zzCensusTwinProbe = \"APO census twin probe\";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: \"zz.census.twin.probe\" } });\n  registry.register(descriptor);\n  return registry.invoke(\"zz.census.twin.probe\");\n}\nexport const zzCensusTwinFolded = \"A\" + \"PO census twin folded\";\nexport function zzCensusTwinShow(log) {\n  log(\"\\u0041PO census twin argument\");\n  log(`x ${1} \\u0041PO census twin template`);\n}\nregistry.register({ descriptor: { id: \"zz.census.twin.top\" } });\n",
    "registrar": "registerZzCensusTwinProbe",
    "id": "zz.census.twin.probe",
-   "effectClass": "write"
+   "effectClass": "write",
+   "units": {
+    "probe": "cooked",
+    "folded": "folded",
+    "argument": "cooked",
+    "template": "cooked"
+   }
   },
+  "roleTwin": "APO census role twin.",
   "descriptorPlants": [
    {
     "id": "apo.policy.apply",
@@ -1143,6 +1150,7 @@
       "judgedEach": {
        "mentions": [],
        "registrations": [],
+       "registrars": [],
        "reaches": []
       },
       "entriesReadWhole": true,
@@ -1380,7 +1388,8 @@
       ],
       "every APO-role capability": [
        "surfaces",
-       "apoRole"
+       "apoRole",
+       "roleTwin"
       ]
      },
      "witness": {
@@ -1417,7 +1426,8 @@
         "reactivefiber.render.preview:read"
        ]
       },
-      "apoRole": []
+      "apoRole": [],
+      "roleTwin": []
      }
     },
     {

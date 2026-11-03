@@ -11,6 +11,38 @@
  * registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler
  * reaches a non-read registry.invoke."
  *
+ * wb-021.12 CUT #3 (the respin of refusal #2, gate run g10-gate-s198, outbox row O:1927; ruled by R-B443 rung 1 of the
+ * falsifier-word set, a member-level respin, with the class guard bound on both of this bead's claim sets: the
+ * judge-coverage words of A2 and READS and the falsifier words of A3, O1, V1 and O2). Refusal #2's U1-U3: A3's, O1's
+ * and V1's falsifier words claimed a real mention or APO module in every form THE JUDGE claims at real listed paths,
+ * and O2's a real register site in every claimed form, while the twin probe held two forms only, so the gate's members
+ * G198F1 (a folded finding dropped), G198C1 (a call-argument literal dropped), G198T1 (template parts skipped) and
+ * G198R1 (a site whose enclosing name does not begin with register dropped), each scoped to src/workflow/, kept the
+ * census at 0 failed | 25 passed (25) and failed open on real-tree pages (WF1, WC1, WT1, WR1). This cut cures them both
+ * ways. It kills the four: the twin probe adds a chain of two strings initializing an exported const, a string as the
+ * only argument of a call to a plain name in a function body, a one-substitution template's last part passed likewise
+ * and a top-level registration site, and A2 judgedEach reads each cooked and folded unit alone (one judge call per
+ * unit, its matcher narrowed to the unit's own last word) and both probe sites on every listed script; each member now
+ * reads 2 failed | 23 passed (A2, closing), and its page reds A2 under it (WF1, WC1, WT1 and WR1 and their twins under
+ * src/workbench/, two runs each). And it narrows the claims to the pins: every falsifier sentence (A3, O1, O2, C1, C2,
+ * V1, V2 and the ARMED HALF) claims a real surface only as a twin holds one - the twin probe's own texts at the end of
+ * a listed entry, or the role twin's sentence as a catalog descriptor's whole description - and names any other real
+ * text, form, path or field NOT CLAIMED; REDUNDANCY's pages are measurements, not claims. Two readers the twin did not
+ * run now run on twins: the registrar reader reads the twin probe's registrar at the end of each listed provider script
+ * (judgedEach registrars), and the role readers read the role twin (C2 roleTwin: each catalog descriptor at read and at
+ * write). The seat's members W6R1, W6R2 and W6R3, which blind the role reader, the falsifier and hasRole on read
+ * descriptors to an id that begins hyperunix., read 0 failed | 25 passed (25) on cut #2 and red C2 here; under W6R1 and
+ * under W6R3, cut #2 failed open on page WD1 (the role twin's sentence as hyperunix.find's description, computed so
+ * that no file judge reads it). The ride F4 is cured: the filing pin's call keeps a presentation record and pinFiles
+ * counts the blobs it shows handed whole, so G198PJ2 (the seat's: a call holding the pin plant counts and never judges
+ * a src/workflow/ blob) reds A3 (0 failed | 25 passed (25) on cut #2), and G198PJ1 departs on no input (no judge call
+ * this census makes with the bare matcher holds a src/workflow/ entry). F5: THE JUDGE's parenthetical and READS name
+ * the entries each reader judges. G198P1 (a path finding dropped under src/workflow/, the path still handed) reads 0
+ * failed | 25 passed (25) and departs only on a listed path that spells the program, which PATH names NOT CLAIMED. The
+ * carried kills stand on these bytes: 22 of the 24 gate members of refusals #3 and #4 red, GP16P1 and GP16A1 on their
+ * NOT CLAIMED forms; refusal #1's 18 probes 11 red (GP15J1 and GP15J3 now red A3 too) and the other 7 as before; G3 16
+ * of 16; and S4 kills 32 and leaves the same 55, each still named by its tag where it departs.
+ *
  * wb-021.12 CUT #2 (the respin of refusal #1, gate run g10-gate-s193, outbox row O:1887; ruled by R-B407 rung 1 of this
  * bead's own claim set: U1 and U2, the today's-tree words of A2 'every listed file judged' and of READS 'every listed
  * src/ file', wider than the judgedEqualsListed file count that alone pinned them). The gate's members GP15J1
@@ -126,15 +158,29 @@
  * git's raw listing; no finding and no binary; 11 reaches in 8 files, at most two in a file; 8 sites and the one
  * non-literal call; the filing pin's 115 blobs; and on the twin each of those three readers reads every listed entry's
  * probe (A2 judgedEach: none unread), the twin's modules holding three reaches at most. The whole-repository figures
- * above are the carrier cut's, dated at 7466871.
- * THE JUDGE, CLAIMED ON ITS PLANTS (cut #4's form; the carrier cut adds the plants it names, cut #2 the twin). Each
- * sentence below states a reader's rule, which is the code's and is disclosed so that the plants can be followed, and
- * claims that reader only on the plant texts and paths it names (the roster's constants hold each one) and on today's
- * src/ tree (MEASURED) and its twin, each listed entry with the twin probe at its end (A2 judgedEach: the mention
- * judge, the registration reader and the reach reader each judge every listed entry): a text or a path that none of its
- * named plants holds is NOT CLAIMED by that sentence, whatever it spells, and each sentence names the departures that
- * the gate's members and the seat battery S4 still find in its reader. A1's plants are read, the Q rows' plants are
- * not.
+ * above are the carrier cut's, dated at 7466871. Re-taken by cut #3's seat (2026-11-03, at trunk 4eaba53, through the
+ * census's own readers in a throwaway copy, the cut's two files in the worktree; trunk changed no src/ path after
+ * 7466871): the same 117 listed scripts, 14 under src/workflow/; on the twin each listed entry reads cooked, folded and
+ * raw, each probe unit alone in its own form only (the constant, the call argument and the template's last part cooked,
+ * the chain folded), each listed script both probe sites (registerZzCensusTwinProbe and top level) beside its register
+ * call, and each of the four listed provider scripts its probe registrar at its 12th (hyperunix.ts), 15th (forge.ts,
+ * furnace.ts) or 28th (reactivefiber.ts) statement; the catalog's twelve descriptors (four ids over nine surfaces) each
+ * read APO-role by the role twin's sentence at read and at write, the write twin named and the read twin not; and the
+ * filing pin's 115 blobs (14 under src/workflow/) each handed whole.
+ * THE JUDGE, CLAIMED ON ITS PLANTS AND ITS TWINS (cut #4's form; the carrier cut adds the plants it names, cut #2 the
+ * twin, cut #3 the twin's four units, its top-level site and its registrar reading, and the role twin). Each sentence
+ * below states a reader's rule, which is the code's and is disclosed so that the plants can be followed, and claims
+ * that reader only on the plant texts and paths it names (the roster's constants hold each one), on today's src/ tree
+ * and catalog (MEASURED) and on the twins: THE TWIN, each listed entry with the twin probe at its end, in memory only
+ * (A2 judgedEach: the mention judge judges every listed entry, and in a script each probe unit alone; the registration
+ * reader and the reach reader every listed script that holds no NUL byte; the registrar reader every listed script
+ * under src/workbench/providers/), and THE ROLE TWIN, each catalog descriptor with the role twin's sentence as its
+ * whole description, at effect class read and at write (C2 roleTwin). At a listed path or a catalog descriptor a
+ * sentence claims the twins' own texts only: a text, a path, a form or a field that is no named plant's, no listed
+ * entry's as it stands today (MEASURED) and none of the twins' is NOT CLAIMED by that sentence, whatever it spells - a
+ * new file's own text among them (REDUNDANCY's pages are measurements, not claims) - and each sentence names the
+ * departures that the gate's members and the seat battery S4 still find in its reader. A1's plants are read, the Q
+ * rows' plants are not.
  * WORDS: the reader takes a text's runs of letters and digits, splits them again at case changes and at letter-digit
  * boundaries and lower-cases them; claimed on the planted texts only: the slug's three words in a row separated by a space
  * (words), a hyphen (slug), an underscore (constant), a dot (dotted) and a hyphen and a slash (pathAcross), and joined by
@@ -166,9 +212,12 @@
  * mention), each plant text but six under 1 KB and read whole (the six: lateRaw, lateCooked, middleRaw, middleCooked
  * and Q11's late and middle plants), read among the last words of lateRaw (after 100000 padding lines) and among the
  * middle words of middleRaw (after 50000 padding lines, before 40000 more), read in no real src/ file (MEASURED), each
- * listed file's path and whole text handed to the matcher, and read in the twin probe at the end of each listed file
- * (A2 judgedEach). NOT CLAIMED: a mention in any other text or at any other position of a longer text, among them one
- * at its head, and one after more words than lateRaw holds [S4M-head150k].
+ * listed file's path and whole text handed to the matcher, and read in the twin probe's own texts at the end of each
+ * listed file (A2 judgedEach: its comment and its constant raw; in a script its constant, its call argument and its
+ * template's last part cooked and its chain folded, each unit alone). NOT CLAIMED: a mention in any other text or at
+ * any other position of a longer text, among them one at its head, one after more words than lateRaw holds
+ * [S4M-head150k], and at a listed path a mention in any text but the twin probe's, in a spelling or a form that A1's
+ * plants hold among them.
  * A src/ file is read by its path, as one text ("path"); claimed on the path plants only, each at most 51 characters
  * long: the program spelled in the file name (path, src/workbench/apo-graph-view.ts; V2's path handler; Q11's named
  * plant, a NUL-holding file; pathTop, src/apo-graph-view.ts, a file directly under src/), in the parent directory
@@ -177,8 +226,9 @@
  * extension (pathExtension), and every other plant's path and every real src/ path spelling nothing, each listed path
  * handed to the matcher as it is listed, in the one call A1, A3 and O1 read and on the twin (A2 judgedEach). NOT
  * CLAIMED: any other path, among them one spelling the program only in a directory above the grandparent, one longer
- * than 51 characters [GP16P1], and a spelling past a path's 60th character or before its last 50 [S4P-head60,
- * S4P-tail50]; src/ itself spells nothing.
+ * than 51 characters [GP16P1], a spelling past a path's 60th character or before its last 50 [S4P-head60, S4P-tail50],
+ * and a listed path that spells the program, since the twin holds no path form [G198P1, a path finding dropped under
+ * src/workflow/ while the path is still handed, reads the same on every claimed path]; src/ itself spells nothing.
  * Unless it is binary (below), a src/ file is read by its raw text decoded as UTF-8 ("raw"); claimed on the plant texts
  * and on today's src/ files only: each plant whose readings hold raw, read whole (each under 1 KB; text, a .md file,
  * read only raw; Q10 joinedAccent reads U+00F1 as a letter), the end of lateRaw, which spells the program once after
@@ -186,10 +236,10 @@
  * spells it once after 550000 bytes of comment lines and before 440000 more; on today's src/ files the delivered judge
  * reads no raw spelling (MEASURED), each listed file's entry holds every byte lstat counts for its path (A2
  * entriesReadWhole), and its whole text reaches the matcher, in the one call A1, A3 and O1 read and on the twin, where
- * the twin probe at its end is read raw (A2 judgedEach); which positions of a longer text the judge reads is claimed at
- * the plants' positions above and at the twin probe's only. NOT CLAIMED: a raw spelling in any other text or at any
- * other position of a text over 1 KB, among them one at its head, and one only past 1.1 MB [S4R-head1200k reads the
- * same on what is claimed].
+ * the twin probe at its end is read raw by its comment and its constant (A2 judgedEach); which positions of a longer
+ * text the judge reads is claimed at the plants' positions above and at the twin probe's only. NOT CLAIMED: a raw
+ * spelling in any other text or at any other position of a text over 1 KB, among them one at its head, and one only
+ * past 1.1 MB [S4R-head1200k reads the same on what is claimed].
  * A src/ file holding a NUL byte is binary and read by its path only (R-BINARY); claimed at the positions the binary
  * plants place the byte only: the first byte and the ninth of a ten-byte text (Q11 first, early), the last byte of a
  * six-byte text (Q11's named plant), of a 1100010-byte text (Q11 late) and of V2's and O2's NUL-holding .ts plants (each
@@ -204,51 +254,61 @@
  * which spells the program only in a cooked string after 1100000 bytes of comment lines, on the middle of middleCooked,
  * which spells it only in a cooked string after 550000 bytes of comment lines and before 440000 more, on the
  * registration sites and reaches of today's src/ files as O2, V1 and Q9 pin them (MEASURED), and on the twin probe at
- * the end of each listed script, whose constant is read cooked (A2 judgedEach). NOT CLAIMED: a spelling only cooked in
- * any other script or at any other position of a script over 1 KB than those above, among them one at its head, and how
- * much of a longer real script before its twin probe is parsed.
- * Through the AST a script is read ("cooked") by the cooked value of its string-like literals and the cooked text of its
- * template parts; claimed on the planted texts only, whose contexts are these: a string or a substitution-free template
- * initializing an exported const of one declarator (slug, requirement, capability, dotted, digitLetter, escaped,
- * escapedTemplate, the JS and JSX kind plants, lateCooked, middleCooked; V2's cooked handler), a string after an
- * angle-bracket assertion there (kindTs, kindMts, kindCts), a type alias's own literal type (cookedType), the quoted name
- * of the only property of an object literal there (cookedKey), the only element of an array literal there (cookedElement)
- * and the second of two (cookedElementLater), the only argument of a call to a plain name in a function body
- * (cookedArgument) and the second of two (cookedArgumentLater), the string a function returns (O1's view plant) and the
- * value of the first property of an object literal passed as the only argument of a call to a member (O1's tool plant);
- * and a template's head when it holds one substitution (template), the part after its one substitution (templateSpan) and
- * the middle and the last part of a template of two (templateMiddle, templateLast), each initializing an exported const,
- * and the last part of a one-substitution template passed as the only argument of a call to a plain name
- * (templateArgument) and as the second of two (templateArgumentLater). NOT CLAIMED: a literal or a template in any other
- * text, among them one as a third or later argument or element, a later property's name [S4C-prop2], a later declarator
- * [S4C-decl2], a let or var initializer [S4C-let], a member of a union type [S4C-union], a class property [S4C-classprop],
- * an argument of a call to a member [S4C-member, S4T-member], a template's head beside two or more substitutions
- * [S4T-head1], a third or later template part [S4T-spans2] and a returned template [S4T-return].
- * And ("folded") a script is read by the folded value of a "+" chain whose operands are all string-like literals; claimed
- * on the planted texts only, whose forms are these: two operands (folded; foldedTemplate, a string and a substitution-free
- * template), a string and a parenthesized chain of two strings (foldedParenthesized) or three strings nested to the left
- * (foldedLeft: "A" + "P" + "O graph"), each initializing an exported const (and V2's folded handler); a chain of two
- * strings as the left operand of || there (foldedOperand) and of && (foldedAnd), returned (foldedReturn) and passed as the
- * only argument of a call to a plain name (foldedArgument); and a string and a parenthesized chain of two, read whole and
- * the inner chain also on its own (foldedInner: "X" + ("A" + "PO graph")); quiet: a chain nested to the left read only
- * whole (Q10 foldedSuffix: "A" + "PO" + "x" folds to APOx, and its sub-chain is not read alone), a chain with an operand
- * that is not a string-like literal and a chain of another operator (Q4 mixed, otherOperator). NOT CLAIMED: a chain in any
- * other text, among them one of four or more literals nested to the left, one under an operator other than || and &&, ??
- * among them [S4F-qq], an array element [S4F-elem], a later argument [S4F-arg2], a property's value [S4F-propvalue] and an
- * argument of a call to a member [S4F-memberarg].
+ * the end of each listed script, whose constant, call argument and template's last part are read cooked and whose chain
+ * is read folded, each unit alone (A2 judgedEach). NOT CLAIMED: a spelling only cooked in any other script or at any
+ * other position of a script over 1 KB than those above, among them one at its head, and how much of a longer real
+ * script before its twin probe is parsed.
+ * Through the AST a script is read ("cooked") by the cooked value of its string-like literals and the cooked text of
+ * its template parts; claimed on the planted texts only, whose contexts are these: a string or a substitution-free
+ * template initializing an exported const of one declarator (slug, requirement, capability, dotted, digitLetter,
+ * escaped, escapedTemplate, the JS and JSX kind plants, lateCooked, middleCooked; V2's cooked handler), a string after
+ * an angle-bracket assertion there (kindTs, kindMts, kindCts), a type alias's own literal type (cookedType), the quoted
+ * name of the only property of an object literal there (cookedKey), the only element of an array literal there
+ * (cookedElement) and the second of two (cookedElementLater), the only argument of a call to a plain name in a function
+ * body (cookedArgument) and the second of two (cookedArgumentLater), the string a function returns (O1's view plant)
+ * and the value of the first property of an object literal passed as the only argument of a call to a member (O1's tool
+ * plant); and a template's head when it holds one substitution (template), the part after its one substitution
+ * (templateSpan) and the middle and the last part of a template of two (templateMiddle, templateLast), each
+ * initializing an exported const, and the last part of a one-substitution template passed as the only argument of a
+ * call to a plain name (templateArgument) and as the second of two (templateArgumentLater); and at the end of each
+ * listed script on the twin probe's three cooked units only, each read alone (A2 judgedEach): its constant, a string
+ * initializing an exported const; its call argument, a string as the only argument of a call to a plain name in a
+ * function body; and the last part of its one-substitution template passed likewise. NOT CLAIMED: a literal or a
+ * template in any other text - at a listed path any but the twin probe's, in a context the plants above hold among them
+ * - and among them one as a third or later argument or element, a later property's name [S4C-prop2], a later declarator
+ * [S4C-decl2], a let or var initializer [S4C-let], a member of a union type [S4C-union], a class property
+ * [S4C-classprop], an argument of a call to a member [S4C-member, S4T-member], a template's head beside two or more
+ * substitutions [S4T-head1], a third or later template part [S4T-spans2] and a returned template [S4T-return].
+ * And ("folded") a script is read by the folded value of a "+" chain whose operands are all string-like literals;
+ * claimed on the planted texts only, whose forms are these: two operands (folded; foldedTemplate, a string and a
+ * substitution-free template), a string and a parenthesized chain of two strings (foldedParenthesized) or three strings
+ * nested to the left (foldedLeft: "A" + "P" + "O graph"), each initializing an exported const (and V2's folded handler;
+ * and at the end of each listed script the twin probe's chain of two strings initializing an exported const only, read
+ * alone: A2 judgedEach); a chain of two strings as the left operand of || there (foldedOperand) and of && (foldedAnd),
+ * returned (foldedReturn) and passed as the only argument of a call to a plain name (foldedArgument); and a string and
+ * a parenthesized chain of two, read whole and the inner chain also on its own (foldedInner: "X" + ("A" + "PO graph"));
+ * quiet: a chain nested to the left read only whole (Q10 foldedSuffix: "A" + "PO" + "x" folds to APOx, and its
+ * sub-chain is not read alone), a chain with an operand that is not a string-like literal and a chain of another
+ * operator (Q4 mixed, otherOperator). NOT CLAIMED: a chain in any other text - at a listed path any but the twin
+ * probe's, in a form the plants above hold among them - and among them one of four or more literals nested to the left,
+ * one under an operator other than || and &&, ?? among them [S4F-qq], an array element [S4F-elem], a later argument
+ * [S4F-arg2], a property's value [S4F-propvalue] and an argument of a call to a member [S4F-memberarg].
  * A descriptor's ROLE is read by the same MENTION from four fields; claimed on the planted descriptors only, whose
- * placements are these: the id (O1's apo.field.view, the first of three segments, and census.field.apo, the last of three;
- * C1's mw.apo.admit, the middle of three), the description (O1's census.field.description, one sentence, and
- * census.field.description.later, the second of two; C1's workbench.decision.authorize, the slug's words in one sentence;
- * each role ends by its description's 56th character), the contractSource (O1's census.field.contract, mw@0.0.0:APO-020)
- * and the permissions joined by spaces (O1's census.field.permissions, the one permission apo:read;
- * census.field.permissions.middle and census.field.permissions.last, apo:admit as the middle and the last of three; each
- * permission of the form scope:name); a role-less descriptor reads none (census.field.none), and the real catalog's
- * descriptors read none (MEASURED). A descriptor with a role is APO-role. NOT CLAIMED: a role in any other descriptor,
- * among them one in an id segment past the third [S4O-id3], in a description past its second sentence or its 56th
- * character [S4O-desc120], in a permission past the third [S4O-perm4] or with no colon [S4O-perm-colon], in a
- * contractSource without its @ [S4O-cs-at], or in a version, inputSchema, outputSchema or supportedModes; and the
- * falsifier over more descriptors than C1's call holds, real and planted [S4O-viol20].
+ * placements are these: the id (O1's apo.field.view, the first of three segments, and census.field.apo, the last of
+ * three; C1's mw.apo.admit, the middle of three), the description (O1's census.field.description, one sentence, and
+ * census.field.description.later, the second of two; C1's workbench.decision.authorize, the slug's words in one
+ * sentence; each role ends by its description's 56th character), the contractSource (O1's census.field.contract,
+ * mw@0.0.0:APO-020) and the permissions joined by spaces (O1's census.field.permissions, the one permission apo:read;
+ * census.field.permissions.middle and census.field.permissions.last, apo:admit as the middle and the last of three;
+ * each permission of the form scope:name); a role-less descriptor reads none (census.field.none), the real catalog's
+ * descriptors read none (MEASURED), and on the role twin each real catalog descriptor reads its role by its
+ * description, at effect class read and at write (C2 roleTwin; the role twin's sentence is APO census role twin., the
+ * abbreviation its first word). A descriptor with a role is APO-role. NOT CLAIMED: a role in any other descriptor,
+ * among them a real descriptor's role in any text or field but the role twin's sentence as its whole description, one
+ * in an id segment past the third [S4O-id3], in a description past its second sentence or its 56th character
+ * [S4O-desc120], in a permission past the third [S4O-perm4] or with no colon [S4O-perm-colon], in a contractSource
+ * without its @ [S4O-cs-at], or in a version, inputSchema, outputSchema or supportedModes; and the falsifier over more
+ * descriptors than C1's call holds, real and planted [S4O-viol20].
  * A CALLEE is read through its wrappers and A REACH is a call whose callee's member name is invoke or inspect; claimed
  * on V2's plants, and on the real call sites only as V1 pins them: at least eight reaches (V1's floor; MEASURED: 11, at
  * most two in a file), a literal read among them and a computed one, and on the twin probe's reach at the end of each
@@ -269,35 +329,42 @@
  * sites the reader reads beyond V1's pins.
  * The reach reader and the registration reader judge each listed script that holds no NUL byte; claimed on the plants
  * of each script kind (V2's .ts plants, its .mjs plant and its kind plants for .tsx, .mts, .cts, .jsx, .js and .cjs;
- * O2's likewise) and on the real src/ files - each listed script, whose twin probe both read (A2 judgedEach) - and not
- * a NUL-holding .ts plant or a .md plant (V2's and O2's binary and text plants). A judged script with any finding is an
- * APO module, claimed on V2's plants: by its path alone (V2's path handler), its raw text (V2's other APO plants), a
- * cooked literal alone (V2's cooked handler) or a folded chain alone (V2's folded handler), and on the twin's listed
- * scripts, each an APO module by its probe. NOT CLAIMED: any other script, judged or not, and any other module's
- * APO-module reading.
+ * O2's likewise) and on the real src/ files - each listed script, whose twin probe both read: its two sites and its
+ * register call, and its reach (A2 judgedEach) - and not a NUL-holding .ts plant or a .md plant (V2's and O2's binary
+ * and text plants). A judged script with any finding is an APO module, claimed on V2's plants: by its path alone (V2's
+ * path handler), its raw text (V2's other APO plants), a cooked literal alone (V2's cooked handler) or a folded chain
+ * alone (V2's folded handler), and on the twin's listed scripts, each an APO module by its probe. NOT CLAIMED: any
+ * other script, judged or not, and any other module's APO-module reading.
  * A REGISTRATION SITE is a call whose callee's member name is register and whose first argument is an object literal
- * with a property assignment whose name is the identifier descriptor; claimed on O2's plants, on the real src/ files
- * only (MEASURED) and on the twin probe's site and register call at the end of each listed script (A2 judgedEach),
- * whose forms are these: a call of one or two arguments, the descriptor object in the first (O2's first-argument plant;
- * one only in the second argument is non-literal: O2's second-argument plant), the descriptor property first or second
- * among its properties (O2's second plant, after an invoke property), written with an escape too (O2's escaped plant),
- * its value an object literal; a quoted "descriptor" key is no identifier, so that call is non-literal (O2's shorthand
- * plant, beside a shorthand descriptor and an object with no descriptor). Its enclosing function is the nearest
- * function declaration or class method, or arrow function or function expression bound to a variable, by name (O2's
- * function, element, wrapped, arrow, expression, method and callback plants, and the nested plant, whose site sits
- * under its inner function), and none at top level (O2's top-level plant); every other register call is non-literal.
- * NOT CLAIMED: any other register call, among them one of three or more arguments [S4G-arity], a descriptor property
- * whose value is no object literal [S4G-objval], a site under a method of an object literal [S4G-classmethod], a
- * descriptor property past the second, and a function bound otherwise than by a declaration or a variable.
- * The REGISTRARS are the exported function declarations of the scripts in src/workbench/providers/ whose name begins with
- * register; claimed on the real providers (MEASURED: eight, each a top-level "export function register" declaration with a
- * body, within its module's first 26 statements, the longest name 33 characters) and on O2's registrar plants only
- * (listed: an exported one per script kind, one named register alone, one with a lower-case letter after register, and one
- * in a script one directory below providers/, registerPlantNested; not listed: a non-exported one, one whose name only
- * ends in Register, an exported arrow function, a .md file and a file outside providers/). NOT CLAIMED: any other
- * declaration, among them one in a script two or more directories below providers/, a default export [S4E-default], an
- * export beside another modifier, async or declare [S4E-onlyexport], a declaration past its module's 26th statement
- * [S4E-stmts40], a name longer than 33 characters [S4E-name40] and an overload signature with no body [S4E-body].
+ * with a property assignment whose name is the identifier descriptor; claimed on O2's plants, whose forms are these: a
+ * call of one or two arguments, the descriptor object in the first (O2's first-argument plant; one only in the second
+ * argument is non-literal: O2's second-argument plant), the descriptor property first or second among its properties
+ * (O2's second plant, after an invoke property), written with an escape too (O2's escaped plant), its value an object
+ * literal; a quoted "descriptor" key is no identifier, so that call is non-literal (O2's shorthand plant, beside a
+ * shorthand descriptor and an object with no descriptor). Its enclosing function is the nearest function declaration or
+ * class method, or arrow function or function expression bound to a variable, by name (O2's function, element, wrapped,
+ * arrow, expression, method and callback plants, and the nested plant, whose site sits under its inner function), and
+ * none at top level (O2's top-level plant); every other register call is non-literal. On the real src/ files it is
+ * claimed only as MEASURED (eight sites, each in an exported registration function of src/workbench/providers/), and at
+ * the end of each listed script only on the twin probe's two sites - one in its exported registrar,
+ * registerZzCensusTwinProbe, one at top level - and its register call without a descriptor (A2 judgedEach). NOT
+ * CLAIMED: any other register call - at a listed path any site but the twin probe's two, in a form O2's plants hold
+ * among them - and among them one of three or more arguments [S4G-arity], a descriptor property whose value is no
+ * object literal [S4G-objval], a site under a method of an object literal [S4G-classmethod], a descriptor property past
+ * the second, and a function bound otherwise than by a declaration or a variable.
+ * The REGISTRARS are the exported function declarations of the scripts in src/workbench/providers/ whose name begins
+ * with register; claimed on the real providers (MEASURED: eight, each a top-level "export function register"
+ * declaration with a body, within its module's first 26 statements, the longest name 33 characters) and on O2's
+ * registrar plants only (listed: an exported one per script kind, one named register alone, one with a lower-case
+ * letter after register, and one in a script one directory below providers/, registerPlantNested; not listed: a
+ * non-exported one, one whose name only ends in Register, an exported arrow function, a .md file and a file outside
+ * providers/), and at the end of each listed script under src/workbench/providers/ on the twin probe's registrar only
+ * (an exported function declaration with a body after the module's own statements, MEASURED at the 12th, 15th, 15th and
+ * 28th: A2 judgedEach). NOT CLAIMED: any other declaration, among them a registrar at a listed provider path but the
+ * twin probe's, one in a script two or more directories below providers/, a default export [S4E-default], an export
+ * beside another modifier, async or declare [S4E-onlyexport], a declaration past its module's 26th statement but the
+ * twin probe's (at most the 28th) [S4E-stmts40 reads the same on what is claimed], a name longer than 33 characters
+ * [S4E-name40] and an overload signature with no body [S4E-body].
  * THE LISTING: git's src/ listing of a repository (tracked plus untracked-not-ignored, kept when lstat finds it on disk:
  * an index entry deleted from disk dropped, a symbolic link whose target is missing kept) beside a walk of the entries
  * under src/ that lstat does not call a directory (a symbolic link is an entry and is never followed), the walked entries
@@ -317,15 +384,16 @@
  * and a link to a link.
  * The CONTENT-LIVENESS ANCHOR reads a capability id's words in order; claimed on A2's anchor plants (in order read;
  * reordered, partial or split not) and on hyperunix.find in src/workbench/providers/hyperunix.ts as that file stands at
- * the base and at the filing pin (three occurrences in 3947 bytes) only [S4A-phrase-head and GP16A1 read the same there];
- * NOT CLAIMED: any other file or text. O1 FIRES when any real APO module or APO-role catalog descriptor is named; claimed
- * on today's tree and on O1's fired plants (a module alone, a role alone, neither); NOT CLAIMED: any other set of modules
- * or descriptors.
+ * the base and at the filing pin (three occurrences in 3947 bytes) only [S4A-phrase-head and GP16A1 read the same
+ * there]; NOT CLAIMED: any other file or text. O1 FIRES when any real APO module or APO-role catalog descriptor is
+ * named; claimed on today's tree and on O1's fired plants (a module alone, a role alone, neither), its modules and
+ * roles named by the readers the twins pin (the twin's listed scripts, each an APO module by its probe; the role twin's
+ * descriptors, each APO-role); NOT CLAIMED: any other set of modules or descriptors.
  *
- * PINNED READER SET (this file, test/workbench-apo-surface-effect-census.test.ts; each case returns the witness the roster
- * holds for it, and several first assert their outcome with the reason; observed at the base 7466871: 25 passed). Rows A,
- * O, C and V tile ACCEPTANCE in order and each row's pin quotes tile its label. Each pin names its target, its observed
- * result and the falsifier that reds it.
+ * PINNED READER SET (this file, test/workbench-apo-surface-effect-census.test.ts; each case returns the witness the
+ * roster holds for it, and several first assert their outcome with the reason; observed at the base 7466871 and on cut
+ * #3's merge of trunk 4eaba53: 25 passed). Rows A, O, C and V tile ACCEPTANCE in order and each row's pin quotes tile
+ * its label. Each pin names its target, its observed result and the falsifier that reds it.
  * A, "a guard pins today's absence". A1: sixty-one planted spelling forms, two late and two middle plants judged with
  * the real src/ files (THE JUDGE names each), and the list of src/ plants with any finding; observed: each read in
  * exactly its pinned readings, and the plants with a finding exactly the spelling plants, the late and middle plants,
@@ -336,82 +404,101 @@
  * raw-listing agreement, whole entries and findings, every listed file judged (the judge's file count is the listed
  * files plus the plants; and judgedEach, the listed entries a reader left unread, none: each listed path and whole text
  * handed to the mention judge's matcher in the one call A1, A3 and O1 read and on the twin, and on the twin each listed
- * entry's probe read raw and, a script, cooked by the mention judge, its site and register call by the registration
- * reader, and its non-read reach in an APO module by the reach reader), at a file and a script floor, no binary (a NUL
- * byte at a position THE JUDGE's binary sentence claims) - and the content-liveness anchor (the capability id
- * hyperunix.find read in src/workbench/providers/hyperunix.ts through the same judge) with its four anchor plants;
- * observed: as pinned; falsifier: a listing or a walk shrunk, widened or left unsubtracted on today's src/ tree or on
- * the listing plant's entries, by one channel or by the helper both share (GP16L1, GP16L2), an entry read short of its
- * lstat size (GP16E1), a listed entry counted but not judged, or left unread by the mention judge, the registration
- * reader or the reach reader (GP15J1, GP15J3; GP15T1 and GP15T2 at src/index.ts), a link followed or a link with a
- * missing target dropped, a floor missed, a real binary at a claimed position, the anchor unread or read out of order.
- * A3: the real src/ files' findings, and the filing pin's 115 src/ blobs (pinFiles) and their findings beside a pin
- * plant, each in one judge call, with the pin's own content-liveness anchor (hyperunix.find read in its
- * src/workbench/providers/hyperunix.ts); observed: none, the pin plant read, the anchor read; falsifier: the pin's
- * blobs listed short (GP15A3), a real mention in a form THE JUDGE claims (REDUNDANCY's module page among them; ARMED:
- * A3 reds with the reason - the falsifier rows now bind on the real surface).
- * O, "once any APO surface registers". O1: the title's surface kinds, each read on a plant (views: a module's text; node()
- * providers: a descriptor's id; UI handlers: a tool module's text), a descriptor's role from each of its four fields on a
- * plant (the id on two, its first and its last segment; the description on two, one sentence and the second of two; the
- * permissions on three, a single permission and the middle and the last of three), none on a role-less plant, whether any
- * real module or catalog descriptor carries a role, and the fired reading on its three plants; observed: every kind and
- * field read, fired false on the real surfaces, true on a module or a role alone, false on neither; falsifier: a real APO
- * module or APO-role descriptor in a form THE JUDGE claims (fired), a planted role field or placement unread, the fired
- * reading hollowed. O2: the registration sites of the real src/ files and of planted modules (a function declaration, an
- * element-access callee, a non-null callee, an arrow, a function expression, a class method, a callback inside a function,
- * a function nested in another, top level, an escaped descriptor name, a descriptor second among the properties, a
- * descriptor in the first argument, one per script kind; and, judged in the same call, a shorthand descriptor, an object
- * literal with no descriptor, a quoted descriptor key and a descriptor only in the second argument, which are non-literal,
- * and a NUL-holding .ts file and a .md file, which are not read), the registrars of the real providers beside the
- * registrar plants, and the calls of registerNativeProviders's body; observed: eight real sites, each in one of the eight
- * registration functions the catalog runs, the real registrars equal to them, the four native calls among them, each plant
- * site under its enclosing name (top level under none, the nested site under its inner function), four non-literal calls
- * among the plants (three in the shorthand plant, one in the second-argument plant) and the eleven exported registrar
- * plants listed (one a directory below providers/); falsifier: a real register site, an exported registration function or
- * a native composition call outside the catalog's surfaces, each in a form THE JUDGE claims (REDUNDANCY's site page among
- * them), or a planted site form, argument or property position, registrar form or script kind unread.
- * C, "a registry/census falsifier proves every APO-role capability is effectClass read". C1: APO-role descriptor plants of
- * each non-read class, an APO-role read one and a role-less write one, registered through a real registry and judged in
- * one call with the real catalog; observed: the three non-read APO-role plants named, no real descriptor; falsifier: a
- * real APO-role non-read descriptor in a form THE JUDGE's ROLE claims (named beside the plants), a class or a planted role
- * reading hollowed. C2: the real catalog through every registration surface (registerNativeProviders and each of the eight
- * functions), its APO-role set and its violations; observed: four ids, all read, no APO role, no violation; falsifier: a
- * real APO-role non-read descriptor in a form THE JUDGE's ROLE claims, a surface that registers nothing. C3: the
- * registry's effect vocabulary (the EFFECT_CLASSES literal and the CapabilityDescriptor effectClass union of
- * src/workbench/capability-registry.ts) and the falsifier's verdict on an APO-role plant of each class; observed: read,
- * write, external and unknown in both, every class but read a violation; falsifier: a class added to or removed from the
- * registry, the falsifier passing a non-read class.
+ * entry's probe read raw and, a script, each probe unit read alone in its form by the mention judge, its two sites and
+ * its register call by the registration reader, a provider script's probe registrar by the registrar reader, and its
+ * non-read reach in an APO module by the reach reader), at a file and a script floor, no binary (a NUL byte at a
+ * position THE JUDGE's binary sentence claims) - and the content-liveness anchor (the capability id hyperunix.find read
+ * in src/workbench/providers/hyperunix.ts through the same judge) with its four anchor plants; observed: as pinned;
+ * falsifier: a listing or a walk shrunk, widened or left unsubtracted on today's src/ tree or on the listing plant's
+ * entries, by one channel or by the helper both share (GP16L1, GP16L2), an entry read short of its lstat size (GP16E1),
+ * a listed entry counted but not judged, or left unread by the mention judge, the registration reader, the registrar
+ * reader or the reach reader, or a probe unit or site dropped (GP15J1, GP15J3; GP15T1 and GP15T2 at src/index.ts;
+ * G198F1, G198C1, G198T1 and G198R1 under src/workflow/), a link followed or a link with a missing target dropped, a
+ * floor missed, a real binary at a claimed position, the anchor unread or read out of order. A3: the real src/ files'
+ * findings, and the filing pin's 115 src/ blobs and their findings beside a pin plant, each in one judge call, pinFiles
+ * counting the blobs whose path and whole text that call's presentation record shows handed to the judge's matcher,
+ * with the pin's own content-liveness anchor (hyperunix.find read in its src/workbench/providers/hyperunix.ts);
+ * observed: none, the pin plant read, the anchor read; falsifier: the pin's blobs listed short (GP15A3) or counted and
+ * left unjudged (G198PJ2), and a real mention as the twin holds one - the twin probe's own text at the end of a listed
+ * entry, read raw and by each unit (A2 judgedEach) - and no other real text (REDUNDANCY's module page is a measurement,
+ * not a claim; ARMED: A3 reds with the reason - the falsifier rows now bind on the real surface).
+ * O, "once any APO surface registers". O1: the title's surface kinds, each read on a plant (views: a module's text;
+ * node() providers: a descriptor's id; UI handlers: a tool module's text), a descriptor's role from each of its four
+ * fields on a plant (the id on two, its first and its last segment; the description on two, one sentence and the second
+ * of two; the permissions on three, a single permission and the middle and the last of three), none on a role-less
+ * plant, whether any real module or catalog descriptor carries a role, and the fired reading on its three plants;
+ * observed: every kind and field read, fired false on the real surfaces, true on a module or a role alone, false on
+ * neither; falsifier: a real APO module as the twin holds one (a listed script with the twin probe at its end) or a
+ * real APO-role descriptor as the role twin holds one (a catalog descriptor with the role twin's sentence as its whole
+ * description, read or write), and no other real module or descriptor (fired), a planted role field or placement
+ * unread, the fired reading hollowed. O2: the registration sites of the real src/ files and of planted modules (a
+ * function declaration, an element-access callee, a non-null callee, an arrow, a function expression, a class method, a
+ * callback inside a function, a function nested in another, top level, an escaped descriptor name, a descriptor second
+ * among the properties, a descriptor in the first argument, one per script kind; and, judged in the same call, a
+ * shorthand descriptor, an object literal with no descriptor, a quoted descriptor key and a descriptor only in the
+ * second argument, which are non-literal, and a NUL-holding .ts file and a .md file, which are not read), the
+ * registrars of the real providers beside the registrar plants, and the calls of registerNativeProviders's body;
+ * observed: eight real sites, each in one of the eight registration functions the catalog runs, the real registrars
+ * equal to them, the four native calls among them, each plant site under its enclosing name (top level under none, the
+ * nested site under its inner function), four non-literal calls among the plants (three in the shorthand plant, one in
+ * the second-argument plant) and the eleven exported registrar plants listed (one a directory below providers/);
+ * falsifier: outside the catalog's surfaces, a real register site as the twin holds one (the twin probe's site in its
+ * registrar or at top level, at the end of a listed script) and a real exported registration function as the twin holds
+ * one (the twin probe's registrar at the end of a listed provider script), and no other real site or registrar
+ * (REDUNDANCY's site page is a measurement, not a claim), the native composition read on registerNativeProviders's body
+ * as it stands today only (MEASURED: four calls, each a surface; a call added to it is NOT CLAIMED to red O2), or a
+ * planted site form, argument or property position, registrar form or script kind unread.
+ * C, "a registry/census falsifier proves every APO-role capability is effectClass read". C1: APO-role descriptor plants
+ * of each non-read class, an APO-role read one and a role-less write one, registered through a real registry and judged
+ * in one call with the real catalog; observed: the three non-read APO-role plants named, no real descriptor; falsifier:
+ * a real APO-role non-read descriptor as the role twin holds one (named beside the plants), and no other real
+ * descriptor, a class or a planted role reading hollowed. C2: the real catalog through every registration surface
+ * (registerNativeProviders and each of the eight functions), its APO-role set, its violations and its role twin
+ * (roleTwin: the descriptors whose read or write twin the role reader or the falsifier misreads); observed: four ids in
+ * twelve descriptors, all read, no APO role, no violation, no twin misread; falsifier: a real APO-role non-read
+ * descriptor as the role twin holds one, and no other real descriptor, a role or falsifier reading of a real descriptor
+ * hollowed (W6R1, W6R2, W6R3), a surface that registers nothing. C3: the registry's effect vocabulary (the
+ * EFFECT_CLASSES literal and the CapabilityDescriptor effectClass union of src/workbench/capability-registry.ts) and
+ * the falsifier's verdict on an APO-role plant of each class; observed: read, write, external and unknown in both,
+ * every class but read a violation; falsifier: a class added to or removed from the registry, the falsifier passing a
+ * non-read class.
  * V, "and no APO view handler reaches a non-read registry.invoke". V1: the real APO modules, their non-read reaches and
- * the reach reader on the real call sites; observed: no APO module, no violation, 11 reaches (floor 8), a literal read and
- * a computed reach both seen; falsifier: a real APO module (listed) or its non-read reach (named), each in a form THE
- * JUDGE claims, the reader dead on real calls. V2: planted APO handlers - a read reach by a string and by a template, a
- * non-read reach to a write, an external and an unknown-class capability, two to ids registered read and write in either
- * order, an unknown, three computed (an expression, a parenthesized literal, a named constant), two computed inspects (an
- * expression, no argument), an element-access callee by a string key and by a template key, five wrapped callees
- * (parentheses, non-null, as, satisfies, angle-bracket), two optional ones and two receivers (a non-null assertion before
- * invoke, a call before inspect), an APO module by its path alone, by a cooked literal alone and by a folded chain alone,
- * and one handler per further script kind (.mjs, .tsx, .mts, .cts, .jsx, .js, .cjs) - and a role-less computed one, a
- * NUL-holding .ts handler and a .md handler, judged with the real modules; observed: every non-read, unknown and computed
- * reach of an APO plant named by module, the read plant, the role-less one, the NUL-holding one and the .md one quiet, no
- * real module named; falsifier: a real APO module's non-read reach in a form THE JUDGE claims (named beside the plants), a
- * planted callee, receiver, target, verdict, finding form or script-kind reading hollowed.
- * REDUNDANCY (measured on the carrier cut's bytes and again on cut #2's, with the same counts, by seven real-tree
- * falsifiers, each applied in place under src/ and then removed or restored byte-identical, git status equal before and
- * after, each failing the closing case too): an untracked src/workbench/zz-ws04-red-module.ts holding the comment "APO
- * view" reds A3, O1 and V1; an untracked APO module (src/workbench/zz-ws04-red-reach.ts) whose reach targets an id the
- * catalog does not hold reds A3, O1, V1 and V2; the injected-client hyperunix.find descriptor of
+ * the reach reader on the real call sites; observed: no APO module, no violation, 11 reaches (floor 8), a literal read
+ * and a computed reach both seen; falsifier: a real APO module (listed) and its non-read reach (named) as the twin
+ * holds them - a listed script with the twin probe at its end, its reach registry.invoke of an id the twin's class map
+ * holds write (A2 judgedEach) - and no other real module or reach, the reader dead on real calls. V2: planted APO
+ * handlers - a read reach by a string and by a template, a non-read reach to a write, an external and an unknown-class
+ * capability, two to ids registered read and write in either order, an unknown, three computed (an expression, a
+ * parenthesized literal, a named constant), two computed inspects (an expression, no argument), an element-access
+ * callee by a string key and by a template key, five wrapped callees (parentheses, non-null, as, satisfies,
+ * angle-bracket), two optional ones and two receivers (a non-null assertion before invoke, a call before inspect), an
+ * APO module by its path alone, by a cooked literal alone and by a folded chain alone, and one handler per further
+ * script kind (.mjs, .tsx, .mts, .cts, .jsx, .js, .cjs) - and a role-less computed one, a NUL-holding .ts handler and a
+ * .md handler, judged with the real modules; observed: every non-read, unknown and computed reach of an APO plant named
+ * by module, the read plant, the role-less one, the NUL-holding one and the .md one quiet, no real module named;
+ * falsifier: a real APO module's non-read reach as the twin holds one (named beside the plants), no other, a planted
+ * callee, receiver, target, verdict, finding form or script-kind reading hollowed.
+ * REDUNDANCY (measurements, not claims: each page below is a real file whose text no twin holds, so no falsifier
+ * sentence above claims it, and each shows only that the census reds there with its readers; measured on the carrier
+ * cut's bytes, again on cut #2's and again on cut #3's, with the same counts, by seven real-tree falsifiers, each
+ * applied in place under src/ and then removed or restored byte-identical, git status equal before and after, each
+ * failing the closing case too): an untracked src/workbench/zz-ws04-red-module.ts holding the comment "APO view" reds
+ * A3, O1 and V1; an untracked APO module (src/workbench/zz-ws04-red-reach.ts) whose reach targets an id the catalog
+ * does not hold reds A3, O1, V1 and V2; the injected-client hyperunix.find descriptor of
  * src/workbench/providers/hyperunix.ts made APO-role (its description opened with "APO:") and write reds A3, O1, C1,
  * C2, V1 and V2 (V2 through its read plant's hyperunix.find target), and made APO-role and read reds A3, O1, C2 and V1
  * (the armed re-pin); an untracked src/ file whose last byte is a NUL reds A2 alone, an untracked registration site
  * outside the catalog's functions O2 alone, and an untracked non-literal register call Q9 alone. Refusal #1's paired
- * pages, measured on cut #2's bytes (two runs each, removed or restored byte-identical, porcelain equal): an untracked
- * src/workflow/zz-gp15-ja.md holding "Shows the APO view." (WJa) reds A3 and O1, and an untracked view module
- * src/workflow/zz-gp15-jb.ts (WJb) and "// APO view" appended in place to src/workflow/meta.ts (WJc) red A3, O1 and V1;
- * under GP15J1 and GP15J3, which read 0 failed | 25 passed (25) on WJa and GP15J3 on all three before this cut, each
- * page now reds A2 (GP15J1 V1 too on WJb and WJc), and the twins under src/workbench/ (WJat, WJbt) red A2 beside the
- * delivered failures; each page fails the closing case. By construction (both read the one judge call), a quiet, JSX
- * attribute or binary plant that a reader mutant makes read reds its Q row and A1's plant-findings list together, as
- * the battery's kill points on quiet plants show (G3W1-G3W4, G15B1, S4W-low-lbLo, S4W-N-ascii, S4W-neg-Lo, S4W-neg-Lm).
+ * pages, measured on cut #2's bytes and again on cut #3's (two runs each, removed or restored byte-identical, porcelain
+ * equal): an untracked src/workflow/zz-gp15-ja.md holding "Shows the APO view." (WJa) reds A3 and O1, and an untracked
+ * view module src/workflow/zz-gp15-jb.ts (WJb) and "// APO view" appended in place to src/workflow/meta.ts (WJc) red
+ * A3, O1 and V1; under GP15J1 and GP15J3, which read 0 failed | 25 passed (25) on WJa and GP15J3 on all three before
+ * this cut, each page now reds A2 - and on cut #3's bytes A3 too, through the filing pin's presentation record -
+ * (GP15J1 V1 too on WJb and WJc), and the twins under src/workbench/ (WJat, WJbt) red A2 (and A3 on cut #3's) beside
+ * the delivered failures; each page fails the closing case. By construction (both read the one judge call), a quiet,
+ * JSX attribute or binary plant that a reader mutant makes read reds its Q row and A1's plant-findings list together,
+ * as the battery's kill points on quiet plants show (G3W1-G3W4, G15B1, S4W-low-lbLo, S4W-N-ascii, S4W-neg-Lo,
+ * S4W-neg-Lm).
  * Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id,
  * label and pins, every pin's quote, claims and witness, the constants and every registered test title - is held to the
@@ -469,22 +556,27 @@
  * Readings no sentence above names: a role spelled only in a descriptor's version, inputSchema, outputSchema or
  * supportedModes; a reach, a registration or a spelling in a module the readers above do not judge (a NUL-holding
  * file's text, the AST of a file that is not a script) - these designed exclusions only: a listed entry that the
- * mention judge, the registration reader or the reach reader is made to skip otherwise is no reading of (c), it reds A2
- * judgedEach. (d) EQUIVALENT FLOOR: A3's pin floor counts the 115 filing-pin blobs without the pin plant; counting the
- * plant too (116) reads the same against the floor of 100. (e) PLACEMENTS NO PLANT NAMES: a string-like literal, a
- * template or a "+" chain in a syntactic context the sentences above do not list; a role past the third permission; a
- * descriptor property past the second; a spelling only past 1.1 MB into a text, or a NUL byte only past a text's
- * 1100010th byte; a site whose function is bound otherwise than by a declaration or a variable; a titlecase letter,
- * which has a case of its own, beside the program's words; and each form THE JUDGE's sentences name NOT CLAIMED, the S4
- * and GP16 departures among them. (f) THE TWIN: a reader that reads a listed entry otherwise with the twin probe at its
- * end than without it; which positions of a listed entry before its twin probe a reader reads, beyond the pins above
- * (the mention judge is handed each listed path and whole text; what its matcher then reads of a longer text is
- * MENTION's); any entry the twin does not hold (a plant, a filing-pin blob); and the readers the twin does not run: the
- * registrars, read in src/workbench/providers/ only and pinned there by O2, and the content-liveness anchor.
+ * mention judge, the registration reader, the registrar reader or the reach reader is made to skip otherwise is no
+ * reading of (c), it reds A2 judgedEach. (d) EQUIVALENT FLOOR: A3's pin floor counts the 115 filing-pin blobs handed
+ * whole, without the pin plant; counting the plant too (116) reads the same against the floor of 100, though pinFiles
+ * then reds A3. (e) PLACEMENTS NO PLANT NAMES: a string-like literal, a template or a "+" chain in a syntactic context
+ * the sentences above do not list; a role past the third permission; a descriptor property past the second; a spelling
+ * only past 1.1 MB into a text, or a NUL byte only past a text's 1100010th byte; a site whose function is bound
+ * otherwise than by a declaration or a variable; a titlecase letter, which has a case of its own, beside the program's
+ * words; and each form THE JUDGE's sentences name NOT CLAIMED, the S4 and GP16 departures among them. (f) THE TWINS: a
+ * reader that reads a listed entry otherwise with the twin probe at its end than without it, or a catalog descriptor
+ * otherwise with the role twin's sentence as its description than with its own; which positions of a listed entry
+ * before its twin probe a reader reads, beyond the pins above (the mention judge is handed each listed path and whole
+ * text; what its matcher then reads of a longer text is MENTION's); any entry the twin does not hold (a plant, a
+ * filing-pin blob) and any descriptor the role twin does not hold (a plant); and the readers no twin runs: the
+ * content-liveness anchor, read on src/workbench/providers/hyperunix.ts only, and the native composition, read on
+ * registerNativeProviders's body as it stands today only.
  * ARMED HALF: rows C and V already read the real catalog and the real modules at every run; today they find no APO-role
- * descriptor and no APO module, so their real legs are empty and their plants carry the proof. The first surface in a form
- * THE JUDGE claims reds A3 with the reason, and C2 and V1 judge it: a non-read APO-role descriptor or a non-read reach
- * reds there by name.
+ * descriptor and no APO module, so their real legs are empty and their plants carry the proof. A first surface as the
+ * twins hold one reds: a listed entry ending with the twin probe's text reds A3 with the reason and V1 by its non-read
+ * reach, and a catalog descriptor whose description is the role twin's sentence reads APO-role in O1 and C2 and, its
+ * class not read, is named in C2; a first surface in any other text, form or field is NOT CLAIMED to red them
+ * (REDUNDANCY measures seven that do).
  * OVER-READS (disclosed, and claimed only where THE JUDGE claims its readings): the word "apo" - in prose, an identifier,
  * or a base64 run split at a case or digit change (MEASURED: the two dependency locks) - and the three program words in
  * order read as a mention whatever they mean; a member named invoke or inspect is a reach whatever its receiver, claimed
@@ -494,9 +586,10 @@
  * .forge/ and the rest of .gitignore) and files deleted from the worktree are not listed; a symbolic link under src/ is
  * listed and walked as an entry, its target missing or not, and judged by its own link text, never followed (A2's listing
  * plant, and claimed there); src/ holds no link today.
- * READS (contacts): every listed src/ file (A1-A3, O1, O2, V1, V2, Q9, Q11; that the mention judge, the registration
- * reader and the reach reader each judge every one is A2 judgedEach, on the twin among them), the src/ blobs at the
- * filing pin (A3), the tracker export row of wb-021.1 (anchors, Q1), this file and its roster (Q2),
+ * READS (contacts): every listed src/ file (A1-A3, O1, O2, V1, V2, Q9, Q11; that the mention judge judges every one,
+ * the registration reader and the reach reader every one that is a script holding no NUL byte, and the registrar reader
+ * every listed provider script, is A2 judgedEach, on the twin), the src/ blobs at the filing pin (A3, each handed whole
+ * by that call's presentation record), the tracker export row of wb-021.1 (anchors, Q1), this file and its roster (Q2),
  * src/workbench/capability-registry.ts (C3) and the provider and native-module registration sources (O2); the catalog
  * is composed in memory through the real registration functions, whose seams are never invoked. CONTACT: importing the
  * rf provider makes this file an rf reading test to wb-e9dy's census, whose Z3 reads this file and its roster for that
@@ -590,7 +683,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
   O1: { once: ["fired", "firedPlants"], "any APO surface": ["surfaceKinds", "descriptorFields"] },
   O2: { registers: ["registrationSites", "enclosing", "exportedRegistrars", "nativeComposition", "plantSites", "plantNonLiteral", "plantRegistrars"] },
   C1: { "a registry/census falsifier": ["plantViolations", "plantQuiet"] },
-  C2: { proves: ["violations"], "every APO-role capability": ["surfaces", "apoRole"] },
+  C2: { proves: ["violations"], "every APO-role capability": ["surfaces", "apoRole", "roleTwin"] },
   C3: { "is effectClass read": ["vocabulary", "unionMembers", "classVerdicts"] },
   V1: { "and no APO view handler": ["apoModules", "reachesAtFloor", "readSeen", "computedSeen"] },
   V2: { reaches: ["reachVerdicts"], "a non-read registry.invoke": ["handlerViolations", "handlerQuiet"] },
@@ -1184,14 +1277,19 @@ function quietFamily(family: string): { [name: string]: boolean } {
 
 /**
  * A2's twin probe, appended to each listed src/ entry of the twin: a comment and an exported constant that spell the
- * program, a registration site with a descriptor, a register call without one and a reach to an id the twin's class map
- * holds write; written without types, so that it parses at the end of every script kind.
+ * program, a registration site with a descriptor in an exported registrar, a register call without one and a reach to
+ * an id the twin's class map holds write; and (cut #3) a "+" chain of two strings initializing an exported const, a
+ * string as the only argument of a call to a plain name in a function body, the last part of a one-substitution template
+ * passed likewise, and a registration site at top level. Each cooked or folded unit (units: its last word and its form)
+ * ends with its own word and is kept out of the raw reading by a split or an escape, so that judgedEach reads each unit
+ * alone; written without types, so that it parses at the end of every script kind.
  */
 const TWIN_PROBE = {
-  text: '\n// APO census twin probe.\nexport const zzCensusTwinProbe = "APO census twin probe";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: "zz.census.twin.probe" } });\n  registry.register(descriptor);\n  return registry.invoke("zz.census.twin.probe");\n}\n',
+  text: `\n// APO census twin probe.\nexport const zzCensusTwinProbe = "APO census twin probe";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: "zz.census.twin.probe" } });\n  registry.register(descriptor);\n  return registry.invoke("zz.census.twin.probe");\n}\nexport const zzCensusTwinFolded = "A" + "PO census twin folded";\nexport function zzCensusTwinShow(log) {\n  log("\\u0041PO census twin argument");\n  log(\`x \${1} \\u0041PO census twin template\`);\n}\nregistry.register({ descriptor: { id: "zz.census.twin.top" } });\n`,
   registrar: "registerZzCensusTwinProbe",
   id: "zz.census.twin.probe",
   effectClass: "write",
+  units: { probe: "cooked", folded: "folded", argument: "cooked", template: "cooked" },
 } as const;
 /** The twin of today's tree: each listed src/ entry as the listing reads it, with the twin probe at its end (in memory only; A2 judgedEach). */
 const twinEntries = lazy((): Entry[] => srcEntries().map(item => ({ path: item.path, bytes: Buffer.concat([item.bytes, Buffer.from(TWIN_PROBE.text, "utf8")]) })));
@@ -1229,16 +1327,30 @@ function presentation(entries: readonly Entry[]): Presentation {
 interface JudgedEach {
   readonly mentions: readonly string[];
   readonly registrations: readonly string[];
+  readonly registrars: readonly string[];
   readonly reaches: readonly string[];
+}
+/** Whether a presentation record shows an entry's path and (unless the entry holds a NUL byte) its whole text handed to the matcher. */
+function handed(presented: ReadonlyMap<string, readonly string[]>, item: Entry | undefined): boolean {
+  if (item === undefined) return false;
+  const texts = presented.get(item.path) ?? [];
+  return texts.includes(item.path) && (item.bytes.includes(0) || texts.includes(item.bytes.toString("utf8")));
+}
+/** The mention judge's matcher narrowed to one twin probe unit: a text that ends with the unit's own word and mentions the program. */
+function unitMatcher(word: string): Matcher {
+  return text => text.endsWith(` census twin ${word}`) && mentions(text);
 }
 /**
  * The listed entries a reader that judges today's tree left unread (A2 judgedEach: an outside channel beside the file
- * count the judge shares, its expected set the listing itself; claimed on today's src/ tree). The mention judge misses a
- * listed entry whose path, or (unless the entry holds a NUL byte) whose whole text, never reached its matcher in the one
- * call A1, A3 and O1 read, or on the twin, or whose twin probe that judge did not read raw and, for a script, cooked; the
- * registration reader misses a listed script holding no NUL byte whose twin probe site or probe register call it did not
- * read; the reach reader such a script it did not read as an APO module with the probe's non-read reach. Each reader runs
- * on the twin in one call.
+ * count the judge shares, its expected set the listing itself; claimed on today's src/ tree and its twin). The mention
+ * judge misses a listed entry whose path, or (unless the entry holds a NUL byte) whose whole text, never reached its
+ * matcher in the one call A1, A3 and O1 read, or on the twin, or whose twin probe that judge did not read raw and, for a
+ * script, each probe unit alone in its form (one call per unit, its matcher narrowed to that unit: the constant cooked,
+ * the chain folded, the call argument and the template's last part cooked); the registration reader misses a listed
+ * script holding no NUL byte whose two probe sites (in the probe's registrar and at top level) or probe register call it
+ * did not read; the registrar reader a listed script under src/workbench/providers/ whose probe registrar it did not
+ * read; the reach reader a listed script holding no NUL byte it did not read as an APO module with the probe's non-read
+ * reach. Each reader runs on the twin in one call (the mention judge in one more per unit).
  */
 const judgedEach = lazy((): JudgedEach => {
   const real = new Map(srcEntries().map(item => [item.path, item]));
@@ -1246,24 +1358,23 @@ const judgedEach = lazy((): JudgedEach => {
   const twinOf = new Map(twin.map(item => [item.path, item]));
   const watch = presentation(twin);
   const scope = judgeScope(watch.entries, watch.record(mentions));
+  const units = Object.entries(TWIN_PROBE.units).map(([word, form]) => ({ form, scope: judgeScope(twin, unitMatcher(word)) }));
   const registrations = registrationsOf(twin);
+  const registrars = exportedRegistrars(twin);
   const handlers = judgeHandlers(twin, new Map<string, readonly string[]>([[TWIN_PROBE.id, [TWIN_PROBE.effectClass]]]));
-  const handed = (presented: ReadonlyMap<string, readonly string[]>, item: Entry | undefined): boolean => {
-    if (item === undefined) return false;
-    const texts = presented.get(item.path) ?? [];
-    return texts.includes(item.path) && (item.bytes.includes(0) || texts.includes(item.bytes.toString("utf8")));
-  };
   const probeRead = (item: Entry | undefined): boolean => {
     if (item === undefined) return false;
     if (item.bytes.includes(0)) return true;
-    const forms = scope.findings[item.path] ?? [];
-    return forms.includes("raw") && (!SCRIPT.test(item.path) || forms.includes("cooked"));
+    if (!(scope.findings[item.path] ?? []).includes("raw")) return false;
+    return !SCRIPT.test(item.path) || units.every(unit => (unit.scope.findings[item.path] ?? []).includes(unit.form));
   };
+  const sitedAt = (path: string, enclosing: string | null): boolean => registrations.sites.some(site => site.path === path && site.enclosing === enclosing);
   const listed = srcPaths();
   const scripts = listed.filter(path => SCRIPT.test(path) && real.get(path)?.bytes.includes(0) !== true);
   return {
     mentions: listed.filter(path => !handed(srcJudged().presented, real.get(path)) || !handed(watch.presented, twinOf.get(path)) || !probeRead(twinOf.get(path))),
-    registrations: scripts.filter(path => !registrations.sites.some(site => site.path === path && site.enclosing === TWIN_PROBE.registrar) || (registrations.nonLiteral[path] ?? 0) === 0),
+    registrations: scripts.filter(path => !sitedAt(path, TWIN_PROBE.registrar) || !sitedAt(path, null) || (registrations.nonLiteral[path] ?? 0) === 0),
+    registrars: listed.filter(path => path.startsWith(PROVIDERS) && SCRIPT.test(path) && !registrars.some(found => found.path === path && found.name === TWIN_PROBE.registrar)),
     reaches: scripts.filter(path => !(handlers.violations[path] ?? []).includes("non-read")),
   };
 });
@@ -1293,7 +1404,12 @@ const pinBlobs = lazy((): Entry[] => {
     .filter(path => path !== "" && inScope(path));
   return blobsAt(FILING_PIN, paths);
 });
-const pinVerdict = lazy((): ScopeVerdict => judgeScope([...pinBlobs(), entry(PIN_PLANT.path, PIN_PLANT.text)]));
+/** The filing pin's blobs and the pin plant, judged in one call with that call's presentation record (A3 pinFiles: the blobs whose path and whole text the judge handed its matcher). */
+const pinJudged = lazy((): { readonly verdict: ScopeVerdict; readonly presented: ReadonlyMap<string, readonly string[]> } => {
+  const watch = presentation([...pinBlobs(), entry(PIN_PLANT.path, PIN_PLANT.text)]);
+  return { verdict: judgeScope(watch.entries, watch.record(mentions)), presented: watch.presented };
+});
+const pinVerdict = lazy((): ScopeVerdict => pinJudged().verdict);
 
 /** A seam that registration stores and nothing calls: the catalog is read, never invoked. */
 function unreachable(name: string): () => Promise<never> {
@@ -1407,6 +1523,34 @@ function hasRole(descriptor: CapabilityDescriptor): boolean {
 /** THE FALSIFIER: the APO-role descriptors whose effect class is not read, named (claimed on C1's plants, C3's class plants and the real catalog). */
 function effectViolations(descriptors: readonly CapabilityDescriptor[]): string[] {
   return descriptors.filter(descriptor => hasRole(descriptor) && descriptor.effectClass !== READ_CLASS).map(descriptor => `${descriptor.id} declares effectClass ${descriptor.effectClass}`);
+}
+/** The role twin's sentence: one sentence whose first word is the abbreviation (C2 roleTwin). */
+const ROLE_TWIN = "APO census role twin.";
+/** A descriptor registered alone through a real registry and read back from its catalog snapshot, as the catalog's own are. */
+function registered(descriptor: CapabilityDescriptor): CapabilityDescriptor {
+  const registry = new CapabilityRegistry();
+  registry.register({ descriptor, invoke: unreachable(`role twin ${descriptor.id}`) });
+  const [held] = registry.catalogSnapshot();
+  if (held === undefined) throw new Error(`the role twin of ${descriptor.id} did not register`);
+  return held.descriptor;
+}
+/**
+ * C2's role twin: each catalog descriptor twice, in memory only, with the role twin's sentence as its whole description,
+ * once at effect class read and once at write, every other field its own, each registered through its own real registry
+ * and read back from that registry's catalog snapshot; the ids of the descriptors for which the role reader does not read
+ * either twin as APO-role by its description (roleFieldsOf and hasRole, as O1 and C2 read the real catalog), or the
+ * falsifier names the read twin or leaves the write twin unnamed (effectViolations, as C1 and C2 read it): none. Claimed
+ * on the real catalog's descriptors and that sentence only.
+ */
+function roleTwinUnread(descriptors: readonly CapabilityDescriptor[]): string[] {
+  return descriptors
+    .filter(descriptor => {
+      const read = registered({ ...descriptor, description: ROLE_TWIN, effectClass: "read" });
+      const write = registered({ ...descriptor, description: ROLE_TWIN, effectClass: "write" });
+      const roleRead = [read, write].every(twin => roleFieldsOf(twin).includes("description") && hasRole(twin));
+      return !roleRead || effectViolations([read]).length > 0 || !effectViolations([write]).includes(`${descriptor.id} declares effectClass write`);
+    })
+    .map(descriptor => descriptor.id);
 }
 /** O1's fired reading: whether any APO module or APO-role descriptor is named. */
 function firedOf(modules: readonly string[], roles: readonly string[]): boolean {
@@ -1707,12 +1851,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       `ARMED: a src/ file now spells the ${ABBREVIATION} program (${PROGRAM_SLUG}); today's absence ends and the falsifier rows bind on the real surface - every APO-role capability must declare effectClass ${READ_CLASS} (C2) and no APO view handler may reach a non-read registry.invoke (V1); re-pin ${BEAD}'s census with the surfaces it reads`,
     ).toEqual({});
     const pin = pinVerdict();
+    const pinHanded = pinBlobs().filter(blob => handed(pinJudged().presented, blob)).length;
     const pinLive = judgeScope(pinBlobs(), phraseMatcher(LIVENESS_ID));
     return json({
       srcMentions: real,
       filingPin: FILING_PIN,
-      pinFilesAtFloor: pin.files - 1 >= FLOORS.pinFiles,
-      pinFiles: pin.files - 1,
+      pinFilesAtFloor: pinHanded >= FLOORS.pinFiles,
+      pinFiles: pinHanded,
       pinMentions: findingsFor(pin, [PIN_PLANT.path], false),
       pinPlant: [...(pin.findings[PIN_PLANT.path] ?? [])],
       pinLiveness: { [LIVENESS_FILE]: [...(pinLive.findings[LIVENESS_FILE] ?? [])] },
@@ -1789,6 +1934,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       violations,
       surfaces: Object.fromEntries(Object.entries(surfaces).map(([name, list]) => [name, list.map(descriptor => `${descriptor.id}:${descriptor.effectClass}`)])),
       apoRole: descriptors.filter(hasRole).map(descriptor => descriptor.id),
+      roleTwin: roleTwinUnread(descriptors),
     });
   },
   C3: () => {
@@ -1951,6 +2097,7 @@ describe("wb-021.1 APO surface effect census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R
       livenessPlants: LIVENESS_PLANTS,
       pinPlant: PIN_PLANT,
       twinProbe: TWIN_PROBE,
+      roleTwin: ROLE_TWIN,
       descriptorPlants: DESCRIPTOR_PLANTS,
       dualPlants: DUAL_PLANTS,
       fieldPlants: FIELD_PLANTS,
