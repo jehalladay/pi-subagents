@@ -32,8 +32,13 @@
  * leaves unread), pins that context under its own FALSIFIER, checkStream so rebound three block statements deep at its module's
  * top level (the gate's P-DEEP3, byte-identical), and under an 18th NESTINGS member, a block inside a block inside a block (each
  * HOLDER written by &&= and by = nested in it at its module's start and end), with each member's run of blocks read by the
- * parser, and binds each title clause's NESTINGS count to its own clause, leaving the acceptance reading unchanged): each case
- * claims exactly the cells and pins it
+ * parser, and binds each title clause's NESTINGS count to its own clause, leaving the acceptance reading unchanged; and wb-9h7s,
+ * the follow-up landing 941's gate routed (its realized escape: a compound-assignment write of a HOLDER four block statements
+ * deep, which that gate's G23-SF-RUN4 leaves unread, realized by its P-DEEP4-MID2 at a middle top-level statement), pins each
+ * HOLDER written by &&= and by = in an unbroken run of each of four to eight bare block statements (the 5 DEEP_RUNS, from four,
+ * one past the 18th NESTINGS member's run of three, to twice four) at its module's start and end, each write's run of blocks
+ * read by the parser, and binds the title's deep compound depth word and each DEEP_RUNS clause word to a title pin of its own,
+ * leaving the acceptance reading unchanged): each case claims exactly the cells and pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
  * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins,
  * except the realized escape landing 928's gate routed to follow-up wb-qyd6 (a compound-assignment write of a HOLDER at another
@@ -125,8 +130,10 @@
  *      statement writing each of the 8 HOLDERS nested in each of the 18 NESTINGS (each write read by the parser below its module's
  *      top level, in the run of blocks blockRun() reads for its member: none to two, and three in the block inside a block inside a
  *      block) at the start and at the end of its module (288 controls), and in SPELLED_STATEMENTS' plain-assignment statement
- *      writing each of the 8 HOLDERS so nested at the start and at the end of its module (another 288 controls), each departing as
- *      a binding; a spelling
+ *      writing each of the 8 HOLDERS so nested at the start and at the end of its module (another 288 controls), and in each of
+ *      those two statements writing each of the 8 HOLDERS in an unbroken run of bare block statements, each of the 5 DEEP_RUNS
+ *      (four to eight blocks, each write read by the parser in exactly its run and below its module's top level), at the start
+ *      and at the end of its module (160 controls), each departing as a binding; a spelling
  *      of the class holding the StreamChecker HOLDERS in another consulted module departs naming its forms (an identifier in
  *      result.js, that WRITE_FORMS row; a string literal there through a namespace import and a no-substitution template literal
  *      so in protocol/query.js, the 2 CLASS_FORMS; and a statement spelling it in each of those 3 forms at the end of each of the 2
@@ -134,8 +141,8 @@
  *      of the three modules, and a parenthesized callee, a direct eval as well, in protocol/decoder.js; and a statement holding
  *      either form at the end of each of the three modules, 6 controls), through which a direct eval could write a HOLDER or a list
  *      by a name built from a string. Any other statement, form, context or position of these spellings than these plants
- *      (another statement or operand, a nested write by another operator than &&= and = or in another nesting, a run of four or
- *      more blocks among them, a spelling at
+ *      (another statement or operand, a nested write by another operator than &&= and = or in another nesting, a run of four to
+ *      eight blocks that is not all bare block statements, a run of more than eight blocks, a spelling at
  *      another middle top-level statement, a compound, update, destructuring or for-head write of a member target, another member
  *      or key position, an alias of eval, an optional or tagged call) is NOT CLAIMED, its label included; a write
  *      from another consulted module through a checker it reaches without that class's name, or by a name built at run time, is
@@ -348,7 +355,9 @@
  * from the installed package, whose runtime bytes SDK_BYTES pins; TIERS, TIER_WORDS, LOWER_WORDS, QUALIFIERS and TIER_MEMBERS are
  * pinned literally, QUALIFIERS and TIER_MEMBERS deriving from the quoted GC-D13 and statement texts; the HOLDERS are anchored by the
  * SDK's own calls (HELPERS) and the FALSIFIERS' cells by what the acceptance reading reads; COMPOUND_OPERATORS is the TypeScript
- * compiler's compound-assignment token range and each BINDING_STATEMENTS statement is of the form the parser reads in it. LIVENESS: each
+ * compiler's compound-assignment token range and each BINDING_STATEMENTS statement is of the form the parser reads in it; DEEP_RUNS
+ * is the unbroken run from one past the deepest run the parser reads in a NESTINGS member to twice that first run, and each
+ * DEEP_RUNS plant's run is the one the parser reads. LIVENESS: each
  * judgment is one
  * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
@@ -369,8 +378,9 @@
  * writing it, NESTED BINDINGS on a nested callee and on a nested compound write of a member, its context reading on the statement
  * at the top level, MIDDLE SPELLINGS AND BINDINGS on a callee and on a compound write of a member after the module's first
  * top-level statement, its position check on a text planting another statement before its statement, NESTED PLAIN BINDINGS on a
- * nested callee and on a nested plain write of a member, its context reading on the statement at the top level, and the class and
- * eval statements on the class in its own module and on eval spelled as a string). Pure: no HX
+ * nested callee and on a nested plain write of a member, its context reading on the statement at the top level, DEEP RUNS on a
+ * callee four blocks deep and on a compound write of a member there, its run reading on that callee, and the class and eval
+ * statements on the class in its own module and on eval spelled as a string). Pure: no HX
  * binary, scratch directory, clock,
  * network or file write; the files read are the
  * installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES. Display paths added: none
@@ -1228,7 +1238,8 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
  * departure naming its forms, as T2 pins it in its WRITE_FORMS, written, compound, nested compound, middle compound, nested
  * written and deep compound rows, SPELLED_STATEMENTS, BINDING_STATEMENTS (each also after each module's first top-level
  * statement, and the &&=
- * statement of the latter and the plain assignment of the former nested in each of the NESTINGS), CLASS_FORMS, CLASS_STATEMENTS,
+ * statement of the latter and the plain assignment of the former nested in each of the NESTINGS and in each of the DEEP_RUNS),
+ * CLASS_FORMS, CLASS_STATEMENTS,
  * eval, parenthesized-eval and EVAL_STATEMENTS plants only, any other statement NOT CLAIMED); each
  * consulted site is read by its shape, its sets' names read from it; the
  * set the filter tests, the dispatched set and the table the check consults are read as string literals in their declared
@@ -1280,7 +1291,8 @@ function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
   // nested compound, middle compound, nested written and deep compound rows, its SPELLED_STATEMENTS and BINDING_STATEMENTS at each
   // HOLDER module's
   // start, after its first top-level statement and at its end, BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain
-  // assignment nested in each of the NESTINGS there, its CLASS_FORMS and CLASS_STATEMENTS, and its eval rows and EVAL_STATEMENTS
+  // assignment nested in each of the NESTINGS and in each of the DEEP_RUNS there, its CLASS_FORMS and CLASS_STATEMENTS, and its eval
+  // rows and EVAL_STATEMENTS
   // only, any other statement or spelling NOT CLAIMED.
   const spellings = (module: ConsultedModule, name: string): readonly ts.Node[] => spellingsIn(parsedModule(module, texts[module]), name);
   const inHolders = (module: ConsultedModule, node: ts.Node): boolean => HOLDERS.some(({name}) => within(spans[name], module, node.getStart()));
@@ -1580,8 +1592,9 @@ const REFERENCE_FORMS: readonly string[] = ['string', 'template', 'elsewhere', '
  * block inside a block, a block inside a block inside a block (wb-1aei: three blocks deep, the context landing 910's gate found
  * unpinned) and a class static block; T2 also nests BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain assignment in
  * each of them at the start and at the end of each HOLDER's module and reads the run of blocks each member holds the &&= statement
- * in (blockRun(): none to two, three for the block inside a block inside a block). Any other nesting, a run of four or more blocks
- * among them, is NOT CLAIMED. */
+ * in (blockRun(): none to two, three for the block inside a block inside a block), and nests both statements past it in each of
+ * the DEEP_RUNS. Any other nesting, a run of four or more blocks among them other than a DEEP_RUNS run of bare block statements,
+ * is NOT CLAIMED. */
 const NESTINGS: readonly (readonly [label: string, before: string, after: string])[] = [
   ['block', '{\n', '\n}'], ['case', 'switch (0) {\ncase 0:\n', '\n}'], ['default', 'switch (0) {\ndefault:\n', '\n}'], ['label', 'TABLE: {\n', '\n}'],
   ['if', 'if (true) {\n', '\n}'], ['else', 'if (false) {\n}\nelse {\n', '\n}'], ['try', 'try {\n', '\n}\ncatch {\n}'], ['catch', 'try {\n}\ncatch {\n', '\n}'],
@@ -1590,6 +1603,19 @@ const NESTINGS: readonly (readonly [label: string, before: string, after: string
   ['arrow', '(() => {\n', '\n})();'], ['block-in-block', '{\n{\n', '\n}\n}'], ['block-in-block-in-block', '{\n{\n{\n', '\n}\n}\n}'],
   ['static-block', 'class Scope {\nstatic {\n', '\n}\n}\nvoid Scope;'],
 ];
+/** The 5 DEEP_RUNS (wb-9h7s): the runs of bare block statements T2 writes each HOLDER in past the 18 NESTINGS, the unbroken run
+ * from one past the deepest NESTINGS member's run of three (read by the parser) to twice that first run, four to eight blocks, the
+ * depth landing 941's gate found unpinned (its G23-SF-RUN4 reads none of a compound write four blocks deep, and its P-DEEP4-MID2
+ * realizes that); T2 nests BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain assignment in each of them (inBlocks())
+ * at the start and at the end of each HOLDER's module and reads each write's run (160 controls). A run of more than eight blocks,
+ * and a run of four to eight that is not all bare block statements, are NOT CLAIMED. */
+const DEEP_RUNS: readonly number[] = [4, 5, 6, 7, 8];
+/** A statement text nested in an unbroken run of bare block statements, each brace on its own line, as the NESTINGS' block inside
+ * a block inside a block wraps it for a run of three. */
+const inBlocks = (run: number, statement: string): string => `${'{\n'.repeat(run)}${statement}${'\n}'.repeat(run)}`;
+/** The words T2's title spells a run of blocks in, indexed by the run (wb-9h7s: its title pins bind each depth word it states to
+ * the run the parser reads). */
+const RUN_WORDS: readonly string[] = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'];
 /** The 13 ELEMENT_FORMS T2 plants as a member of each of the 9 key lists the acceptance reading reads, each [label, element
  * text], every one but the numeric literal building or reading gate_tier at run time with no tier name spelled: a call, an
  * identifier, a template expression, a no-substitution template literal (an escape spelling its key), a tagged template, a binary
@@ -2566,7 +2592,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell, so in a block statement at its module\'s top level in its nested compound cell and so after its module\'s ANSWER_COVERAGE_REQUIRED declaration, a middle top-level statement, in its middle compound cell, and rebound by a plain assignment in a block statement at its module\'s top level in its nested written cell and by a compound assignment three block statements deep there in its deep compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), each of those 33 statements spelling each of the 8 after its module\'s first top-level statement, a middle one, departing in its own form (264 controls), a statement writing each of the 8 by &&= nested in each of the 18 NESTINGS at its module\'s start and end as a binding (288 controls) and one writing each by = so nested (another 288 controls), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 18 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 91 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM, GP11-NESTED-COMPOUND-LANE, GP12-COMPOUND-MIDDLE, GP12-PLAIN-NESTED and GP12-DEEP3-COMPOUND among them, one in each of the 91 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell, so in a block statement at its module\'s top level in its nested compound cell and so after its module\'s ANSWER_COVERAGE_REQUIRED declaration, a middle top-level statement, in its middle compound cell, and rebound by a plain assignment in a block statement at its module\'s top level in its nested written cell and by a compound assignment three block statements deep there in its deep compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), each of those 33 statements spelling each of the 8 after its module\'s first top-level statement, a middle one, departing in its own form (264 controls), a statement writing each of the 8 by &&= nested in each of the 18 NESTINGS at its module\'s start and end as a binding (288 controls) and one writing each by = so nested (another 288 controls), a statement writing each of the 8 by &&= and one by = in an unbroken run of each of the 5 DEEP_RUNS, four to eight bare block statements, at its module\'s start and end as a binding (160 controls), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 18 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 91 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM, GP11-NESTED-COMPOUND-LANE, GP12-COMPOUND-MIDDLE, GP12-PLAIN-NESTED and GP12-DEEP3-COMPOUND among them, one in each of the 91 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -2822,7 +2848,8 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // The run reading (wb-1aei): the run of blocks each NESTINGS member holds that statement in, read by the parser (blockRun()):
     // none in a case or a default clause, one in each other member's block or body, two in the block inside a block and three in
     // the block inside a block inside a block, the context landing 910's gate found unpinned (its L2-SF-DEEP3 and P-DEEP3); a
-    // statement in a run of four or more blocks is NOT CLAIMED by this census.
+    // statement in a run of four or more blocks is read below in each of the DEEP_RUNS' runs of bare block statements only (DEEP
+    // RUNS), any other such run NOT CLAIMED by this census.
     expect(NESTINGS.map(([label, before, after]) => `${label}:${statementRun(`${before}${nestedStatement}${after}`)}`)).toStrictEqual([
       'block:1', 'case:0', 'default:0', 'label:1', 'if:1', 'else:1', 'try:1', 'catch:1', 'finally:1', 'for:1', 'for-of:1', 'while:1',
       'do:1', 'function:1', 'arrow:1', 'block-in-block:2', 'block-in-block-in-block:3', 'static-block:1']);
@@ -2899,6 +2926,30 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect([spelledMisread('protocol/decoder.js', 'checkStream', '{\n<name>([]);\n}', 'binding', true),
       spelledMisread('protocol/decoder.js', 'checkStream', '{\nglobalThis.<name> = undefined;\n}', 'binding', false),
       statementContext(plainStatement)]).toStrictEqual([true, true, 'top-level']);
+    // DEEP RUNS (wb-9h7s): BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain assignment writing each of the 8 HOLDERS'
+    // names in an unbroken run of bare block statements, for each of the 5 DEEP_RUNS (four to eight blocks: from one past the
+    // deepest run the parser reads in a NESTINGS member, three, to twice that first run; the depth landing 941's gate found
+    // unpinned, its G23-SF-RUN4 and P-DEEP4-MID2), each write read by the parser in exactly that run and below its module's top
+    // level, planted at the start and at the end of its module, departs naming the binding form and only so (160 controls); a run
+    // of more than eight blocks, or one that is not all bare block statements, is NOT CLAIMED by this census.
+    const deepest = Math.max(...NESTINGS.map(([, before, after]) => statementRun(`${before}${nestedStatement}${after}`)));
+    expect(DEEP_RUNS).toStrictEqual(Array.from({length: deepest + 2}, (_, at) => deepest + 1 + at));
+    expect([deepest, ...DEEP_RUNS]).toStrictEqual([3, 4, 5, 6, 7, 8]);
+    expect(NESTINGS.filter(([, before, after]) => `${before}${nestedStatement}${after}` === inBlocks(deepest, nestedStatement))
+      .map(([label]) => label)).toStrictEqual(['block-in-block-in-block']);
+    expect([nestedStatement, plainStatement].flatMap(statement => DEEP_RUNS.map(run =>
+      `${run}:${statementRun(inBlocks(run, statement))}:${statementContext(inBlocks(run, statement))}`)))
+      .toStrictEqual([nestedStatement, plainStatement].flatMap(() => DEEP_RUNS.map(run => `${run}:${run}:nested`)));
+    const deepRunPlants = HOLDERS.flatMap(({module, name}) => [nestedStatement, plainStatement].flatMap(statement => DEEP_RUNS.flatMap(run =>
+      [true, false].map(start => [module, name, inBlocks(run, statement), `${statement === nestedStatement ? '&&=' : '='} ${run}`, start] as const))));
+    expect(deepRunPlants.length).toBe(160);
+    expect(deepRunPlants.filter(([module, name, statement, , start]) => spelledMisread(module, name, statement, 'binding', start))
+      .map(([, name, , label, start]) => `${name} ${label} ${start ? 'start' : 'end'}`)).toStrictEqual([]);
+    // The judges fire: the sweep's on a statement four blocks deep calling the HOLDER and on one compound-assigning it as another
+    // object's member there, and the run reading's on that call, which writes nothing.
+    expect([spelledMisread('protocol/decoder.js', 'checkStream', inBlocks(4, '<name>([]);'), 'binding', false),
+      spelledMisread('protocol/decoder.js', 'checkStream', inBlocks(4, 'globalThis.<name> &&= undefined;'), 'binding', true),
+      statementRun(inBlocks(4, '<name>([]);'))]).toStrictEqual([true, true, -1]);
     // The HOLDERS' class spelled in each of its 3 forms (an identifier, then the 2 CLASS_FORMS) at the end of each other consulted
     // module departs naming exactly that form, and eval in each of the 2 EVAL_STATEMENTS forms at the end of each of the three modules
     // likewise (6 controls each).
@@ -3236,6 +3287,8 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       `one writing each by = so nested (another ${nestedPlainPlants.length} controls)`,
       `a statement writing each of the ${HOLDERS.length} by &&= nested in each of the ${NESTINGS.length} NESTINGS at its module's start and end as a binding (${nestedBoundPlants.length} controls)`,
       `each moved into each of the ${NESTINGS.length} NESTINGS departing`,
+      `by a compound assignment ${RUN_WORDS[compoundRows.filter(({cell}) => cell.startsWith('deep-compound ')).flatMap(runOf)[0] ?? -1] ?? ''} block statements deep there in its deep compound cell`,
+      `a statement writing each of the ${HOLDERS.length} by &&= and one by = in an unbroken run of each of the ${DEEP_RUNS.length} DEEP_RUNS, ${RUN_WORDS[DEEP_RUNS[0] ?? -1] ?? ''} to ${RUN_WORDS[DEEP_RUNS.at(-1) ?? -1] ?? ''} bare block statements, at its module's start and end as a binding (${deepRunPlants.length} controls)`,
       `${MEMBER_FORMS.length} MEMBER_FORMS`]
       .filter(claim => !title.includes(claim))).toStrictEqual([]);
     // The judge can fire both ways: an open body departs from a refusal, and a closed one from a decode.
