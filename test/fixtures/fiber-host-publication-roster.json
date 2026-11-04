@@ -535,13 +535,13 @@
   },
   "reachProbe": {
    "head": {
-    "script": "export const reachHead = [\"fiber_optics\", \"queue_value_publication\"]; spawnSync(\"rf\");",
-    "raw": "fiber_optics queue_value_publication rf",
+    "script": "export const reachHead = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"FiberScheduler\", \"queue_value_publication\", \"flush_value_publications\", \"request_rerender\", \"flush_requested_renders\"]; spawnSync(\"rf\");",
+    "raw": "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
     "launcher": "spawnSync"
    },
    "tail": {
-    "script": "export const reachTail = [\"fiber_optics\", \"queue_value_publication\"]; execFileSync(\"rf\");",
-    "raw": "fiber_optics queue_value_publication rf",
+    "script": "export const reachTail = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"FiberScheduler\", \"queue_value_publication\", \"flush_value_publications\", \"request_rerender\", \"flush_requested_renders\"]; execFileSync(\"rf\");",
+    "raw": "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
     "launcher": "execFileSync"
    }
   },
@@ -554,7 +554,9 @@
    "src/workbench/reach/kind.mjs": "export const kind = 1;\n",
    "src/workbench/reach/kind.cjs": "module.exports = 1;\n",
    "src/workbench/reach/kind.jsx": "export const kind = <b>kind</b>;\n",
-   "src/workbench/reach/notes.txt": "a non-script file\n"
+   "src/workbench/reach/notes.txt": "a non-script file\n",
+   "src/workbench/reach/.dot-named.ts": "export const dotNamed = 1;\n",
+   "src/workbench/reach/.dot-directory/kind.ts": "export const dotDirectory = 1;\n"
   },
   "reachNegative": {
    "files": {
@@ -563,7 +565,9 @@
     "src/reach/tailless.ts": "export const tailless = 1;\n",
     "src/reach/unprobed.ts": "export const unprobed = 1;\n",
     "src/reach/headless.txt": "a raw file\n",
-    "src/reach/tailless.txt": "a raw file\n"
+    "src/reach/tailless.txt": "a raw file\n",
+    "src/reach/partial.ts": "export const reachHead = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"withheld\", \"queue_value_publication\", \"flush_value_publications\", \"withheld\", \"flush_requested_renders\"]; spawnSync(\"rf\");\n",
+    "src/reach/partial.txt": "fiber_optics FiberRuntime FiberGraph withheld queue_value_publication flush_value_publications withheld flush_requested_renders rf\n"
    },
    "withheld": {
     "src/reach/headless.ts": [
@@ -581,6 +585,14 @@
     ],
     "src/reach/tailless.txt": [
      "tail"
+    ],
+    "src/reach/partial.ts": [
+     "head",
+     "tail"
+    ],
+    "src/reach/partial.txt": [
+     "head",
+     "tail"
     ]
    }
   },
@@ -596,6 +608,20 @@
      9
     ]
    },
+   "partial": {
+    "module": "src/workbench/reach/dense-partial.ts",
+    "words": [
+     "fiber_optics",
+     "FiberRuntime",
+     "FiberGraph",
+     "FiberScheduler",
+     "queue_value_publication",
+     "flush_value_publications",
+     "request_rerender",
+     "flush_requested_renders"
+    ],
+    "neutral": "withheld"
+   },
    "filler": "export {};"
   },
   "walkControl": {
@@ -604,14 +630,18 @@
     "src/walked-only.ts": "export const walkedOnly = 1;\n",
     "src/workbench/providers/reactivefiber.ts.orig": "a leftover copy\n",
     "src/workbench/providers/reactivefiber": "a path the provider's path extends\n",
-    "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n"
+    "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n",
+    "src/.walked-hidden.ts": "export const walkedHidden = 1;\n",
+    "src/.hidden/walked-only.ts": "export const hiddenWalked = 1;\n"
    },
    "listed": [
     "src/workbench/providers/reactivefiber.ts",
     "src/listed-only.ts",
     "src/walked-only.ts.orig",
     "src/walked-only",
-    "src/other/walked-only.ts"
+    "src/other/walked-only.ts",
+    "src/.listed-hidden.ts",
+    "src/.hidden/listed-only.ts"
    ]
   },
   "registrationTree": {
@@ -1244,13 +1274,33 @@
       },
       "reach": {
        "head": {
-        "hosting": [],
-        "entries": [],
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
         "launches": []
        },
        "tail": {
-        "hosting": [],
-        "entries": [],
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
         "launches": []
        },
        "onlyWalked": [],
@@ -1259,13 +1309,33 @@
       },
       "reachListed": {
        "head": {
-        "hosting": [],
-        "entries": [],
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
         "launches": []
        },
        "tail": {
-        "hosting": [],
-        "entries": [],
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
         "launches": []
        },
        "onlyWalked": [],
@@ -1274,16 +1344,54 @@
       },
       "reachNegative": {
        "head": {
-        "hosting": [
-         "src/reach/headless.ts",
-         "src/reach/headless.txt",
-         "src/reach/unprobed.ts"
-        ],
-        "entries": [
-         "src/reach/headless.ts",
-         "src/reach/headless.txt",
-         "src/reach/unprobed.ts"
-        ],
+        "hosting": {
+         "fiberoptics": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberruntime": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fibergraph": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberscheduler": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushvaluepublications": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "requestrerender": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushrequestedrenders": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
         "launches": [
          "src/reach/headless.ts",
          "src/reach/headless.txt",
@@ -1291,17 +1399,56 @@
         ]
        },
        "tail": {
-        "hosting": [
-         "src/reach/tailless.ts",
-         "src/reach/tailless.txt",
-         "src/reach/unprobed.ts"
-        ],
-        "entries": [
-         "src/reach/tailless.ts",
-         "src/reach/tailless.txt",
-         "src/reach/unprobed.ts"
-        ],
+        "hosting": {
+         "fiberoptics": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberruntime": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fibergraph": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberscheduler": [
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushvaluepublications": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "requestrerender": [
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushrequestedrenders": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
         "launches": [
+         "src/reach/partial.ts",
          "src/reach/tailless.ts",
          "src/reach/tailless.txt",
          "src/reach/unprobed.ts"
@@ -1314,29 +1461,107 @@
       "dense": {
        "src/workbench/reach/dense.ts": {
         "lines": 6000,
-        "hosting": [],
-        "entries": [],
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
         "launchesMissing": 0
        },
        "src/workbench/reach/dense-withheld.ts": {
         "lines": 9,
-        "hosting": [
-         1,
-         5,
-         9
-        ],
-        "entries": [
-         1,
-         5,
-         9
-        ],
+        "hosting": {
+         "fiberoptics": [
+          1,
+          5,
+          9
+         ],
+         "fiberruntime": [
+          1,
+          5,
+          9
+         ],
+         "fibergraph": [
+          1,
+          5,
+          9
+         ],
+         "fiberscheduler": [
+          1,
+          5,
+          9
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          1,
+          5,
+          9
+         ],
+         "flushvaluepublications": [
+          1,
+          5,
+          9
+         ],
+         "requestrerender": [
+          1,
+          5,
+          9
+         ],
+         "flushrequestedrenders": [
+          1,
+          5,
+          9
+         ]
+        },
         "launchesMissing": 3
+       },
+       "src/workbench/reach/dense-partial.ts": {
+        "lines": 8,
+        "hosting": {
+         "fiberoptics": [
+          1
+         ],
+         "fiberruntime": [
+          2
+         ],
+         "fibergraph": [
+          3
+         ],
+         "fiberscheduler": [
+          4
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          5
+         ],
+         "flushvaluepublications": [
+          6
+         ],
+         "requestrerender": [
+          7
+         ],
+         "flushrequestedrenders": [
+          8
+         ]
+        },
+        "launchesMissing": 0
        },
        "onlyWalked": [],
        "onlyTracked": []
       },
       "walkControl": {
        "onlyWalked": [
+        "src/.hidden/walked-only.ts",
+        "src/.walked-hidden.ts",
         "src/other/reactivefiber.ts",
         "src/walked-only.ts",
         "src/workbench/providers/reactivefiber",
@@ -1346,7 +1571,9 @@
         "src/listed-only.ts",
         "src/walked-only.ts.orig",
         "src/walked-only",
-        "src/other/walked-only.ts"
+        "src/other/walked-only.ts",
+        "src/.listed-hidden.ts",
+        "src/.hidden/listed-only.ts"
        ],
        "providerRead": true,
        "anchors": {

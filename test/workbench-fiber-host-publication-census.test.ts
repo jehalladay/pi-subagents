@@ -21,8 +21,8 @@
  *
  * MEASURED AT BASE (c2695d7, landing 686; seat ws-02, run g10-work-s146, 2026-10-30; cut #1 measured 864dff9, cut #2 04123dc,
  * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, cut #6 08a61f1,
- * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, and cut #7 a14c87f, landing 925, seat ws-05, run g10-work-s208,
- * 2026-11-04, each with the same results,
+ * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, cut #7 a14c87f, landing 925, seat ws-05, run g10-work-s208,
+ * 2026-11-04, and cut #8 3041aac, landing 939, seat ws-06, run g10-work-s209, 2026-11-04, each with the same results,
  * the manifests read being every tracked path outside test/ that the helper's manifestForm selects): no tracked file below
  * src, no tracked dependency manifest, package.json or package-lock.json spells the producer's stem, a hosted class or a
  * publication entry (git grep, 0 rows each), and every tracked file below src (117) is a script module. Pi's one Fiber surface
@@ -84,13 +84,33 @@
  * provider the ANCHOR_NEAR_MISSES texts; A2, A3, A4 and B2 are restated to those pins. Controls and their readings are added;
  * no row, pin or test is.
  *
+ * CUT #8 (the further restatement orchestrator ruling R-B537 orders after refusal #7; seat ws-06, run g10-work-s209): refusal
+ * #7 (BIND 2026-11-04T15:15:05Z, gate-prep-3, run g10-gate-s210) found three one-edit members of this file's own code that kept
+ * it green inside cut #7's words: readSrc's hosting and entry scans reading a subset of their needle sets, because no tree read
+ * through readSrc held FiberScheduler, request_rerender or flush_requested_renders (U1), and walkFiles dropping dot-named
+ * entries, because no walk-only control and no plant readSrc walks was dot-named (U2). Claims equal pins here: REACH_PROBE's
+ * head and tail lines each hold every HOSTING_NEEDLES and ENTRY_NEEDLES needle, and the reach and dense readings name, per scan
+ * and per needle, the copied files (or the lines) that needle's hit is missing from, beside partial controls that withhold
+ * needle words (REACH_NEGATIVE's, one word of each set; REACH_DENSE's, one word per line); REACH_CONTROLS gain a dot-named
+ * module and a module below a dot-named directory; WALK_CONTROL gains a dot-named file and a file below a dot-named directory
+ * on each side of the compare; THE VOCABULARY, A2, B2 and walkFiles' own words are restated to those pins. Controls and their
+ * readings are added; no row, pin or test is.
+ *
  * THE VOCABULARY (the helper's fold, segmentFolds, needlesIn and needle sets; their rules are the helper's, stated in its header
- * and claimed by the readers censuses). Every reading compares the segmented fold of a text with three needle sets, and this
- * census's plants hold the forms it reads: fiber_optics, fiber-optics, FiberOptics, "@fiber-optics/sdk" and FiberOpticsSDK
- * each hold the stem, rf's workspace layout ".reactive-fiber/graphs" holds no FiberGraph, and a needle's words split by a
- * space or a slash ("Fiber Optics", "fiber graph", "fiber/optics") hold none (Q7). STEM, the title's distribution word (the
+ * and claimed by the readers censuses). The needles are the folds of three word lists: STEM, the title's distribution word (the
  * one word after "hosts") with its SDK suffix dropped, held to every DISTRIBUTIONS name; HOSTED_CLASSES (FiberRuntime,
- * FiberGraph, FiberScheduler); PUBLICATION_ENTRIES (the four queue/request and flush entries).
+ * FiberGraph, FiberScheduler); PUBLICATION_ENTRIES (the four queue/request and flush entries). The helper's scan sets are
+ * HOSTING_NEEDLES (STEM and the three HOSTED_CLASSES folds) and ENTRY_NEEDLES (the four PUBLICATION_ENTRIES folds). This
+ * census's own readings compare a text's segmented fold with them as follows, each needle of each set pinned where it is read:
+ * readSrc's hosting scan with HOSTING_NEEDLES and its entry scan with ENTRY_NEEDLES, every needle of both sets on every REACH
+ * probe line (A2's REACH names, per scan and per needle, the files a needle's hit is missing from); A2's SOURCE_CONTROLS
+ * reading with HOSTING_NEEDLES and B2's ENTRY_CONTROLS reading with ENTRY_NEEDLES, the controls' pinned hits naming every
+ * needle of the set. A1's manifest readers (STEM alone) and A3's registry and descriptor readers (both sets) are the helper's,
+ * claimed as the readers censuses claim them (the composed-readers NOT CLAIMED entry below). The needle set a quiet row
+ * compares with (Q1, Q2, Q3's hits and outside counts, Q7) is NOT CLAIMED by this census beyond the readings the roster pins.
+ * This census's plants hold the forms it reads: fiber_optics, fiber-optics, FiberOptics, "@fiber-optics/sdk" and
+ * FiberOpticsSDK each hold the stem, rf's workspace layout ".reactive-fiber/graphs" holds no FiberGraph, and a needle's words
+ * split by a space or a slash ("Fiber Optics", "fiber graph", "fiber/optics") hold none (Q7).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  A, the trigger ("before any Fiber-hosting capability registers"), absent today, and the title's artifact.
@@ -112,45 +132,62 @@
  *    pins them; the tree's comment lists its plants); MANIFEST_CONTROLS' hit counts (one planted dependency per dependency list
  *    and a nested value read, two near misses quiet); SHADOWED_MANIFEST read parsed (no hit) and with its raw text (one hit);
  *    and LOCK_CONTROLS' hit counts (a lock path and a lock name read, a quiet path).
- *    A2 THE SRC FILES, read by readSrc: git's listing of src is held both ways to a filesystem walk of src that records and
- *    never follows a symlink (an exact path compare each way), clears FLOORS (modules, judged texts, through clearsFloor and
- *    A1's floor controls) and holds the provider (readsProvider), whose SOURCE_ANCHORS texts are read (an anchor is read when
- *    one of the provider's judged texts equals it). WALK_CONTROL, read the same way, is their negative control: its walk-only
- *    files (one beside the listing, one extending a listed path, one a listed path's prefix, one holding a listed file's base
- *    name in another directory) and its listing-only files (one beside the walk, one extending a walked path, one a walked
- *    path's prefix, one holding a walked file's base name in another directory) are named; its provider path, holding every
- *    ANCHOR_NEAR_MISSES text (each anchor's first and last part, the anchor extended at its end and at its front, in upper
+ *    A2 THE SRC FILES, read by readSrc: git's listing of src is held both ways to a filesystem walk of src (walkFiles, which
+ *    records and never follows a symlink) by an exact path compare each way, clears FLOORS (modules, judged texts, through
+ *    clearsFloor and A1's floor controls) and holds the provider (readsProvider), whose SOURCE_ANCHORS texts are read (an anchor
+ *    is read when one of the provider's judged texts equals it). WALK_CONTROL, read the same way, is their negative control: its
+ *    walk-only files (one beside the listing, one extending a listed path, one a listed path's prefix, one holding a listed
+ *    file's base name in another directory, a dot-named file and a file below a dot-named directory) and its listing-only files
+ *    (one beside the walk, one extending a walked path, one a walked path's prefix, one holding a walked file's base name in
+ *    another directory, a dot-named file and a file below the walked dot-named directory) are named; its provider path, holding
+ *    every ANCHOR_NEAR_MISSES text (each anchor's first and last part, the anchor extended at its end and at its front, in upper
  *    case and wrapped in spaces) as a judged text of its own, reads every anchor unread; and the pipeline tree, which holds no
- *    provider, reads as not holding it. A walk and a listing that differ by another relation of two paths (letter case, for
- *    one) and a provider text related to an anchor another way are NOT CLAIMED by this census.
+ *    provider, reads as not holding it. The walk is claimed for the entries those pins hold: the tracked or planted files of each
+ *    tree this census reads through readSrc (the live tree; the two reach copies, REACH_CONTROLS' dot-named module and module
+ *    below a dot-named directory among them; and the negative, dense, pipeline and walk control trees, WALK_CONTROL's walk-only
+ *    files among them). A walk that leaves out an entry none of those trees holds by another property of its name, place or
+ *    content (another extension or name form, a deeper directory, an empty file), a walk and a listing that differ by another
+ *    relation of two paths (letter case, for one) and a provider text related to an anchor another way are NOT CLAIMED by this
+ *    census.
  *    Each file is read as the helper's isScript decides: a script module through its TypeScript AST (sourceTexts, the
  *    helper's judgedText of each node; a comment is never read, Q2), any other file as raw lines; how far into each file the
- *    three scans (hosting here, entries in B2, launches in A4) read is claimed only as REACH states it. REACH: two scratch
- *    copies of src, one holding exactly the files git lists below src (the live walk's own size and order) and one with
- *    REACH_CONTROLS beside them (a module of each SCRIPT_KINDS extension and a .txt file), plant each file's own text between
- *    REACH_PROBE's head line (the file's first) and its tail line (its last) for its kind; each line holds the stem, a
- *    publication entry and an rf launch (the head launching with spawnSync, the tail with execFileSync, launchers no file
- *    below src launches rf with, A4's roster). Each copy is read through readSrc, and each scan gives every copied file the
- *    head probe's hit on its first line and the tail probe's on its last (probeHit; the roster pins, per copy, the six empty
- *    lists of files missing one, the copy's walk held to its listing, and liveWalk: the first copy's walk is the live walk's
- *    files in order, the second copy's is not). REACH_NEGATIVE (modules probed at both lines, at
- *    the tail only, at the head only and at neither, and a raw file at either line only), read the same way, names in each
- *    position's lists exactly the files that position withholds. REACH_DENSE (a module of REACH_DENSE.lines lines, every one
- *    the head probe, and its negative control, a module whose withheld lines hold a filler in the probe's place), read the
- *    same way in one scratch src, gives the hosting and entry scans the probe's hit on every probe line and the launch scan a
- *    launch per probe line: the reading names no line of the dense module and exactly the negative control's withheld lines
- *    (and counts them for the launch scan), each module's planted line count beside. So a scan that skips a listed file (by
- *    its path or directory, by its place in the walk, by the walk's size, or by its kind: each SCRIPT_KINDS extension and .txt
- *    in the copies, .py and .json in the scratch src tree below), that reads a file only up to some line or only from some
- *    line on (keyed on a line number alone, or on the file's path, directory or kind, its place in the walk or the walk's
- *    size besides), or that drops a line by its number alone, the same in every file of every walk, up to REACH_DENSE.lines,
- *    reds A2. NOT CLAIMED by this census: a skip or a cut keyed on another kind no control holds (.md, for one), on anything a
- *    copied file does not share with its listed original (the root a reading is handed, the probes and the lines they add)
- *    or on a file's own text; a drop of a judged text by its index in the file or its place on its line, rather than of a
- *    whole line; and a drop of a line strictly between a listed file's first and its last line keyed on that file (its path,
- *    kind, size or text) or on the walk it is read in (its size, its root). The live
- *    reading's hosting hits (a STEM or HOSTED_CLASSES fold) are none (hits are pinned, never the list of files, so an
- *    unrelated file a later cut adds below src reds nothing); the walk and git's
+ *    three scans (hosting here, entries in B2, launches in A4) read, and with which needles, is claimed only as REACH states it.
+ *    REACH: two scratch copies of src, one holding exactly the files git lists below src (the live walk's own size and order)
+ *    and one with REACH_CONTROLS beside them (a module of each SCRIPT_KINDS extension, a .txt file, a dot-named module and a
+ *    module below a dot-named directory), plant each file's own text between REACH_PROBE's head line (the file's first) and its
+ *    tail line (its last) for its kind; each line holds every needle of HOSTING_NEEDLES and ENTRY_NEEDLES, spelled as the
+ *    producer spells it (fiber_optics, FiberRuntime, FiberGraph, FiberScheduler, queue_value_publication,
+ *    flush_value_publications, request_rerender and flush_requested_renders: in a script module one string literal each, in any
+ *    other file one word each), and an rf launch (the head launching with spawnSync, the tail with execFileSync, launchers no
+ *    file below src launches rf with, A4's roster). Each copy is read through readSrc, and the hosting and entry scans give
+ *    every copied file the hit of each needle of their set on its first line (the head probe's) and on its last (the tail
+ *    probe's), and the launch scan the head probe's launch and the tail probe's (needleHit and probeLaunch; the roster pins, per
+ *    copy and position, the empty list of files missing each needle's hit, per scan and needle, and the empty list of files
+ *    missing the launch, the copy's walk held to its listing, and liveWalk: the first copy's walk is the live walk's files in
+ *    order, the second copy's is not). REACH_NEGATIVE (modules probed at both lines, at the tail only, at the head only and at
+ *    neither, a raw file at either line only, and a module and a raw file probed at neither whose one line is the head probe's
+ *    with FiberScheduler and request_rerender replaced by a neutral word), read the same way, names in each position's lists,
+ *    for every needle of each set and for the launch, exactly the files that position withholds it from. REACH_DENSE (a module
+ *    of REACH_DENSE.lines lines, every one the head probe; its negative control, a module whose withheld lines hold a filler in
+ *    the probe's place; and its partial control, a module whose line k is the head probe with its k-th needle word, in set
+ *    order, replaced by the neutral word), read the same way in one scratch src, gives the hosting and entry scans each
+ *    needle's hit on every probe line and the launch scan a launch per probe line: the reading names, per scan and per needle,
+ *    no line of the dense module, exactly the negative control's withheld lines (and counts them for the launch scan) and
+ *    exactly the partial control's line withholding that needle's word, each module's planted line count beside. So a scan that
+ *    reads a subset of its needle set (in every file, or keyed on a file's path, directory or kind, its place in the walk or
+ *    the walk's size), that skips a listed file (by its path or directory, by its place in the walk, by the walk's size, or by
+ *    its kind: each SCRIPT_KINDS extension and .txt in the copies, .py and .json in the scratch src tree below, a dot-named
+ *    file and a file below a dot-named directory in the second copy), that reads a file only up to some line or only from some
+ *    line on (keyed on a line number alone, or on the file's path, directory or kind, its place in the walk or the walk's size
+ *    besides), or that drops a line, or reads a subset of its needles on a line, by the line's number alone, the same in every
+ *    file of every walk, up to REACH_DENSE.lines, reds A2. NOT CLAIMED by this census: a skip, a cut or a needle subset keyed on
+ *    a property no copied file holds (another kind, .md for one; a directory deeper than the copies' deepest), on anything a
+ *    copied file does not share with its listed original (the root a reading is handed, the probes and the lines they add), on
+ *    a file's own text or on a judged text's own spelling (a needle spelled otherwise than the probes spell it); a drop of a
+ *    judged text by its index in the file or its place on its line, rather than of a whole line; and a drop of a line strictly
+ *    between a listed file's first and its last line keyed on that file (its path, kind, size or text) or on the walk it is read
+ *    in (its size, its root). The live reading's hosting hits (a HOSTING_NEEDLES fold: STEM or a HOSTED_CLASSES fold) are none
+ *    (hits are pinned, never the list of files, so an unrelated file a later cut adds below src reds nothing); the walk and git's
  *    listing both list a non-script file (the roster); the planted modules read in the positions they hold (SOURCE_CONTROLS:
  *    a named import, a dynamic import, a require call, a spawn argument, a constructed class, a type, a template, a regular
  *    expression, a private name, JSX text, a class in a path string, template head, middle, tail and no-substitution parts,
@@ -214,11 +251,11 @@
  *    result.render_id, result.ephemeral false, result.commit_seq, result.work.storage_write_count 1; the bead notes name three
  *    of them) is refused by the native preview on both arms as transport, never returned, while the noncommitted fixture is
  *    returned: zero publications reach Pi through its one Fiber surface.
- *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src names a PUBLICATION_ENTRIES fold in the A2 reading (each
- *    listed file reaching the entry scan as A2's REACH states it, and no further), so no host publication and no flush exist
- *    for the rule to judge; planted
- *    calls read (snake, camel, string key, destructured, and the
- *    scratch tree's Python sidecar), near misses (flush, publish, render, requestRender) quiet.
+ *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src names a PUBLICATION_ENTRIES fold (an ENTRY_NEEDLES needle) in
+ *    the A2 reading (each listed file reaching the entry scan, for each of the four needles, as A2's REACH states it, and no
+ *    further), so no host publication and no flush exist for the rule to judge; planted calls read (snake, camel, string key,
+ *    destructured, and the scratch tree's Python sidecar; the four entries named among them), near misses (flush, publish,
+ *    render, requestRender) quiet.
  *  C, "a query change alone produces zero publication or inference side effects".
  *    C1 NO REACTIVE ENTRY: the registry's members (its prototype chain, an instance's own keys, so a class field, and the static
  *    members along its constructor chain) and the two preview providers' own keys ({descriptor, invoke}) hold no
@@ -260,7 +297,8 @@
  * (node_modules/fiber-optics and node_modules/alias, with their fillers and quiet paths), so a lock
  * package holding the stem in another segment of its path (node_modules/fiber-optics/node_modules/left-pad, which lockReading
  * reads here and refusal #5's F3 member GP12-A1-LOCK-LASTSEG, reading a path by its last segment only, does not) is claimed
- * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5, at cut #6 and again at cut #7:
+ * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5, at cut #6, at cut #7 and again at
+ * cut #8:
  * - refusal #4's carrier members H-A3-CARRIER-WEAK (isCarrier reads every contract ending with a space and --no-commit as the
  *   carrier) and H-A3-CARRIER (every contract the carrier) keep this census 0 failed | 17 passed: it reads isCarrier on the
  *   two live legs only. A registered preview whose contract meets the same four criteria and ends with a space and
@@ -590,17 +628,31 @@ const PIPELINE_TREE: Readonly<Record<string, string>> = {
 };
 /**
  * A2's reach probes, by position: the head line leads each probed file of a reach copy and the tail line ends it (a script
- * module gets the statement, any other file the raw line), so nothing in the file's own text can swallow either. Each holds the
- * stem, a publication entry and an rf launch; the head launches rf with spawnSync and the tail with execFileSync, launchers no
- * file below src launches rf with (A4's roster), so a script module's launch by either name is that probe's own.
+ * module gets the statement, any other file the raw line), so nothing in the file's own text can swallow either. Each holds
+ * every HOSTING_NEEDLES and ENTRY_NEEDLES needle as the producer spells it (a string literal each in the statement, a word each
+ * on the raw line) and an rf launch; the head launches rf with spawnSync and the tail with execFileSync, launchers no file
+ * below src launches rf with (A4's roster), so a script module's launch by either name is that probe's own.
  */
 const REACH_PROBE = {
-  head: { script: 'export const reachHead = ["fiber_optics", "queue_value_publication"]; spawnSync("rf");', raw: "fiber_optics queue_value_publication rf", launcher: "spawnSync" },
-  tail: { script: 'export const reachTail = ["fiber_optics", "queue_value_publication"]; execFileSync("rf");', raw: "fiber_optics queue_value_publication rf", launcher: "execFileSync" },
+  head: {
+    script:
+      'export const reachHead = ["fiber_optics", "FiberRuntime", "FiberGraph", "FiberScheduler", "queue_value_publication", "flush_value_publications", "request_rerender", "flush_requested_renders"]; spawnSync("rf");',
+    raw: "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
+    launcher: "spawnSync",
+  },
+  tail: {
+    script:
+      'export const reachTail = ["fiber_optics", "FiberRuntime", "FiberGraph", "FiberScheduler", "queue_value_publication", "flush_value_publications", "request_rerender", "flush_requested_renders"]; execFileSync("rf");',
+    raw: "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
+    launcher: "execFileSync",
+  },
 } as const;
 /** A reach probe's position: the head probe's line (a probed file's first) or the tail probe's (its last). */
 type ReachPosition = keyof typeof REACH_PROBE;
-/** The reach copy's controls, probed and copied beside the listed files: one module per SCRIPT_KINDS extension and a non-script file. */
+/**
+ * The reach copy's controls, probed and copied beside the listed files: one module per SCRIPT_KINDS extension, a non-script
+ * file, a dot-named module and a module below a dot-named directory.
+ */
 const REACH_CONTROLS: Readonly<Record<string, string>> = {
   "src/workbench/reach/kind.ts": "export const kind = 1;\n",
   "src/workbench/reach/kind.mts": "export const kind = 1;\n",
@@ -611,14 +663,17 @@ const REACH_CONTROLS: Readonly<Record<string, string>> = {
   "src/workbench/reach/kind.cjs": "module.exports = 1;\n",
   "src/workbench/reach/kind.jsx": "export const kind = <b>kind</b>;\n",
   "src/workbench/reach/notes.txt": "a non-script file\n",
+  "src/workbench/reach/.dot-named.ts": "export const dotNamed = 1;\n",
+  "src/workbench/reach/.dot-directory/kind.ts": "export const dotDirectory = 1;\n",
 };
 /**
  * A2's walk control: a src tree read through readSrc with a listing that differs from its walk by near misses. Walk-only files:
  * one beside the listing, one extending a listed path (the provider's path and .orig), one a listed path's prefix (the
- * provider's path without its extension) and one holding a listed file's base name in another directory; listing-only files:
- * one beside the walk, one extending a walked path, one a walked path's prefix and one holding a walked file's base name in
- * another directory; each is named. The provider's path is walked, its text holding every ANCHOR_NEAR_MISSES text as a judged
- * text of its own, and every anchor reads unread.
+ * provider's path without its extension), one holding a listed file's base name in another directory, a dot-named file and a
+ * file below a dot-named directory; listing-only files: one beside the walk, one extending a walked path, one a walked path's
+ * prefix, one holding a walked file's base name in another directory, a dot-named file and a file below the walked dot-named
+ * directory; each is named. The provider's path is walked, its text holding every ANCHOR_NEAR_MISSES text as a judged text of
+ * its own, and every anchor reads unread.
  */
 const WALK_CONTROL = {
   files: {
@@ -627,13 +682,18 @@ const WALK_CONTROL = {
     "src/workbench/providers/reactivefiber.ts.orig": "a leftover copy\n",
     "src/workbench/providers/reactivefiber": "a path the provider's path extends\n",
     "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n",
+    "src/.walked-hidden.ts": "export const walkedHidden = 1;\n",
+    "src/.hidden/walked-only.ts": "export const hiddenWalked = 1;\n",
   },
-  listed: [PROVIDER_MODULE, "src/listed-only.ts", "src/walked-only.ts.orig", "src/walked-only", "src/other/walked-only.ts"],
+  listed: [PROVIDER_MODULE, "src/listed-only.ts", "src/walked-only.ts.orig", "src/walked-only", "src/other/walked-only.ts", "src/.listed-hidden.ts", "src/.hidden/listed-only.ts"],
 } as const;
 /**
  * The reach reading's negative control, read the same way: modules probed at both lines, at the tail only, at the head only and
- * at neither, and a raw file probed at its tail only and one at its head only; for each position and scan the reading names
- * exactly the files that position withholds.
+ * at neither, a raw file probed at its tail only and one at its head only, and a module and a raw file probed at neither whose
+ * one line is the head probe's with FiberScheduler and request_rerender replaced by the neutral word; for each position, per scan
+ * and per needle the reading names exactly the files that position withholds that needle's hit from, and for the launch exactly
+ * the files it withholds the launch from (the partial module's one line launches with spawnSync, so it reads launched at the head
+ * only; the partial raw file's line names rf, so it reads launched at both).
  */
 const REACH_NEGATIVE = {
   files: {
@@ -643,6 +703,8 @@ const REACH_NEGATIVE = {
     "src/reach/unprobed.ts": "export const unprobed = 1;\n",
     "src/reach/headless.txt": "a raw file\n",
     "src/reach/tailless.txt": "a raw file\n",
+    "src/reach/partial.ts": `${REACH_PROBE.head.script.replace('"FiberScheduler"', '"withheld"').replace('"request_rerender"', '"withheld"')}\n`,
+    "src/reach/partial.txt": `${REACH_PROBE.head.raw.replace("FiberScheduler", "withheld").replace("request_rerender", "withheld")}\n`,
   },
   withheld: {
     "src/reach/headless.ts": ["head"],
@@ -650,19 +712,30 @@ const REACH_NEGATIVE = {
     "src/reach/unprobed.ts": ["head", "tail"],
     "src/reach/headless.txt": ["head"],
     "src/reach/tailless.txt": ["tail"],
+    "src/reach/partial.ts": ["head", "tail"],
+    "src/reach/partial.txt": ["head", "tail"],
   },
 } as const;
 /**
  * A2's dense reach modules, read the same way in one scratch src: REACH_DENSE.module, REACH_DENSE.lines lines each REACH_PROBE's
- * head statement, so a scan that drops a line by its number gives one of its probe lines no hit; and its negative control,
- * REACH_DENSE.negative, whose withheld lines hold the filler (an export holding no judged text) in the probe's place. The
- * reading names, per module, its planted line count, the lines the hosting and entry scans give no probe hit and the count of
- * lines the launch scan reads no launch for: none of the dense module's, and exactly the negative control's withheld lines.
+ * head statement, so a scan that drops a line by its number, or reads a subset of its needles on a line by its number, gives one
+ * of its probe lines no hit of a needle; its negative control, REACH_DENSE.negative, whose withheld lines hold the filler (an
+ * export holding no judged text) in the probe's place; and its partial control, REACH_DENSE.partial, whose line k is the head
+ * statement with REACH_DENSE.partial.words[k - 1] (one word per HOSTING_NEEDLES and ENTRY_NEEDLES needle, in set order) replaced
+ * by the neutral word. The reading names, per module, its planted line count, per scan and per needle the lines the hosting and
+ * entry scans give no hit of that needle, and the count of lines the launch scan reads no launch for: none of the dense
+ * module's, exactly the negative control's withheld lines, and for each needle exactly the partial control's line withholding
+ * its word (no launch missing).
  */
 const REACH_DENSE = {
   module: "src/workbench/reach/dense.ts",
   lines: 6000,
   negative: { module: "src/workbench/reach/dense-withheld.ts", lines: 9, withheld: [1, 5, 9] },
+  partial: {
+    module: "src/workbench/reach/dense-partial.ts",
+    words: ["fiber_optics", "FiberRuntime", "FiberGraph", "FiberScheduler", "queue_value_publication", "flush_value_publications", "request_rerender", "flush_requested_renders"],
+    neutral: "withheld",
+  },
   filler: "export {};",
 } as const;
 /** A2's symlink control: a link below the pipeline tree's src to a directory outside it that holds a needle; the walk records the link and never follows it. */
@@ -1034,7 +1107,10 @@ function rfLaunches(text: string, module: string): string[] {
   return out;
 }
 
-/** Every regular file below a directory, in name order, root-relative; a symlink is recorded and never followed. */
+/**
+ * The walk of a directory: its regular files (dot-named ones and those below a dot-named directory among them), in name order,
+ * root-relative, and its symlinks, each recorded and never followed; what this census claims of it is bounded by A2's words.
+ */
 function walkFiles(root: string, directory: string): { files: string[]; symlinks: string[] } {
   const files: string[] = [];
   const symlinks: string[] = [];
@@ -1125,17 +1201,32 @@ function probedText(module: string, text: string, withheld: readonly string[]): 
   const body = text.length === 0 || text.endsWith("\n") ? text : `${text}\n`;
   return `${withheld.includes("head") ? "" : `${REACH_PROBE.head[kind]}\n`}${body}${withheld.includes("tail") ? "" : `${REACH_PROBE.tail[kind]}\n`}`;
 }
-/** The hit a scan gives a probe on its line: `<module>:<line>: <needle>`, and a script module's launch `<module>: <launcher>`. */
-function probeHit(scan: string, module: string, line: number, position: ReachPosition): string {
-  if (scan === "hosting") return `${module}:${line}: ${STEM}`;
-  if (scan === "entries") return `${module}:${line}: ${ENTRY_NEEDLES[0]}`;
+/** The needle sets of the hosting and entry scans, by scan: a probe line gets one hit per needle of its scan's set. */
+const SCAN_NEEDLES: Readonly<Record<string, readonly string[]>> = { hosting: HOSTING_NEEDLES, entries: ENTRY_NEEDLES };
+/** The hit a hosting or entry scan gives a needle on a line: `<module>:<line>: <needle>`. */
+function needleHit(module: string, line: number, needle: string): string {
+  return `${module}:${line}: ${needle}`;
+}
+/** The launch the launch scan gives a probe: a script module's `<module>: <launcher>`, any other file's `<module>:<line>: rf`. */
+function probeLaunch(module: string, line: number, position: ReachPosition): string {
   return isScript(module) ? `${module}: ${REACH_PROBE[position].launcher}` : `${module}:${line}: rf`;
+}
+/** Per scan and per needle of its set (SCAN_NEEDLES), the items whose hit of that needle (`hitOf`) the scan's hits lack. */
+function missingByNeedle<Item>(
+  hits: { readonly [scan: string]: ReadonlySet<string> },
+  items: readonly Item[],
+  hitOf: (item: Item, needle: string) => string,
+): { [scan: string]: { [needle: string]: Item[] } } {
+  return Object.fromEntries(
+    Object.entries(SCAN_NEEDLES).map(([scan, needles]) => [scan, Object.fromEntries(needles.map(needle => [needle, items.filter(item => hits[scan]?.has(hitOf(item, needle)) !== true)]))]),
+  );
 }
 /**
  * A2's reach of a tree: each file planted in scratch as probedText gives it and read through readSrc, the reader the live tree
- * is read by; for each position and scan, the files the scan does not give that probe's hit (probeHit, on the file's first line
- * for the head and its last line for the tail), the walk held to the listing, and whether the walk is the live walk's own (its
- * files, in order).
+ * is read by; for each position, per scan and per needle of its set the files the scan does not give that needle's hit
+ * (needleHit, on the file's first line for the head and its last line for the tail), the files the launch scan does not give
+ * that probe's launch (probeLaunch), the walk held to the listing, and whether the walk is the live walk's own (its files, in
+ * order).
  */
 function reachOf(files: Readonly<Record<string, string>>, withheld: Readonly<Record<string, readonly string[]>>): JsonValue {
   const root = scratchDir("fiber-host-publication-reach-");
@@ -1143,15 +1234,20 @@ function reachOf(files: Readonly<Record<string, string>>, withheld: Readonly<Rec
   plantTree(root, planted);
   const listed = Object.keys(files).sort();
   const read = readSrc(root, listed);
-  const scans: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries), launches: new Set(read.launches) };
+  const hits: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries) };
+  const launches: ReadonlySet<string> = new Set(read.launches);
   const lineOf = (module: string, position: ReachPosition): number => (position === "head" ? 1 : (planted[module] ?? "").split("\n").length - 1);
   const unreached = (position: ReachPosition): JsonValue =>
-    json(Object.fromEntries(Object.entries(scans).map(([scan, hits]) => [scan, listed.filter(module => !hits.has(probeHit(scan, module, lineOf(module, position), position)))])));
+    json({
+      ...missingByNeedle(hits, listed, (module, needle) => needleHit(module, lineOf(module, position), needle)),
+      launches: listed.filter(module => !launches.has(probeLaunch(module, lineOf(module, position), position))),
+    });
   return json({ head: unreached("head"), tail: unreached("tail"), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked, liveWalk: JSON.stringify(read.modules) === JSON.stringify(srcReading().modules) });
 }
 /**
- * A2's dense reach: REACH_DENSE's two modules planted in one scratch src and read through readSrc; per module, the lines the
- * hosting and entry scans give no probe hit, and the lines the launch scan reads no launch for (its lines less its launches).
+ * A2's dense reach: REACH_DENSE's three modules planted in one scratch src and read through readSrc; per module, per scan and per
+ * needle of its set the lines the hosting and entry scans give no hit of that needle (needleHit), and the lines the launch scan
+ * reads no launch for (its lines less its launches, probeLaunch).
  */
 function denseReach(): JsonValue {
   const root = scratchDir("fiber-host-publication-dense-");
@@ -1159,15 +1255,20 @@ function denseReach(): JsonValue {
   const modules: { [module: string]: string[] } = {
     [REACH_DENSE.module]: Array.from({ length: REACH_DENSE.lines }, () => REACH_PROBE.head.script),
     [REACH_DENSE.negative.module]: Array.from({ length: REACH_DENSE.negative.lines }, (_, index) => (withheld.includes(index + 1) ? REACH_DENSE.filler : REACH_PROBE.head.script)),
+    [REACH_DENSE.partial.module]: REACH_DENSE.partial.words.map(word => REACH_PROBE.head.script.replace(`"${word}"`, `"${REACH_DENSE.partial.neutral}"`)),
   };
   plantTree(root, Object.fromEntries(Object.entries(modules).map(([module, lines]) => [module, `${lines.join("\n")}\n`])));
   const read = readSrc(root, Object.keys(modules).sort());
-  const scans: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries) };
+  const hits: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries) };
   const reading = (module: string, lines: readonly string[]): JsonValue =>
     json({
       lines: lines.length,
-      ...Object.fromEntries(Object.entries(scans).map(([scan, hits]) => [scan, lines.flatMap((_, index) => (hits.has(probeHit(scan, module, index + 1, "head")) ? [] : [index + 1]))])),
-      launchesMissing: lines.length - read.launches.filter(hit => hit === probeHit("launches", module, 0, "head")).length,
+      ...missingByNeedle(
+        hits,
+        lines.map((_, index) => index + 1),
+        (line, needle) => needleHit(module, line, needle),
+      ),
+      launchesMissing: lines.length - read.launches.filter(hit => hit === probeLaunch(module, 0, "head")).length,
     });
   return json({ ...Object.fromEntries(Object.entries(modules).map(([module, lines]) => [module, reading(module, lines)])), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked });
 }
