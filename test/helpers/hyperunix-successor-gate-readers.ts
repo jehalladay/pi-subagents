@@ -52,6 +52,11 @@
  * #5 gate (gate-prep-23, PASS) recorded on these readers' ROUTES loader name and WRITES reflection words, and checks refusal
  * #4's paired twin pages in as TWIN rows; the Vocabulary below quotes each new plant, marked (wb-cl20), and those forms leave
  * the NOT CLAIMED sentences.
+ * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 F2: the census pinned each NONVALUE_PLACES, JSX_PLACES and
+ * CALLEE_WRAPPERS entry by count only) changes no reader code and no plant: the VOCABULARY QUOTES block below lists, by label,
+ * the plant of each entry of those three catalogs as the Vocabulary quotes it, and the census's QUOTES rows bind every entry
+ * to its quote; the Vocabulary now quotes the four import plants and the variable declaration's binding-key plant whole, and
+ * quotes the satisfies and <T> wrappers in a call.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
@@ -80,15 +85,18 @@
  * type LgT = { name(): void }; the name of the enum member in export enum LgE { name = 1, }, and (wb-cl20) in export enum LgE {
  * name, }; the property name of the binding element (the key before its colon) in the arrow function parameter's object binding
  * pattern of export const lgW = ({ name: lgV }: Record<string, unknown>): unknown => lgV, and (wb-cl20) in the variable
- * declaration's object binding pattern of const { name: lgV } = lgO; the whole name of the type reference in export type LgT =
- * name, and (wb-cl20) in the parameter's annotation of export const lgW = (lgP: name): unknown => lgP, and the whole operand of
+ * declaration's object binding pattern of const { name: lgV } = lgO; void lgV (the plant's two statements); the whole name of
+ * the type reference in export type LgT = name, and (wb-cl20) in the parameter's annotation of export const lgW = (lgP: name):
+ * unknown => lgP, and the whole operand of
  * the type query in export type LgT = typeof name (never the left of typeof Proxy.revocable); the label of the labeled for
  * statement and of its break in name: for (;;) break name, and of its continue in name: for (;;) continue name, and (wb-cl20) of
  * the labeled block and of its break in name: { break name; }; the name of the JSX attribute in export const lgW = <lgX name={1}
  * /> and (wb-cl20) in export const lgW = <lgX name /> (a .tsx module); the names of the import specifiers in
- * import { name } and import { name as lgV }, the name of the import clause in import name and of the namespace import in
- * import * as name, each from "./lg-x.js"; the names of the export specifiers in export { name } from "./lg-x.js" and export {
- * name as lgV } from "./lg-x.js"; and the exported name after as in const lgV = 1; export { lgV as name }.
+ * import { name } from "./lg-x.js"; export const lgW = 1 and in import { name as lgV } from "./lg-x.js"; export const lgW = lgV,
+ * the name of the import clause in import name from "./lg-x.js"; export const lgW = 1 and of the namespace import in
+ * import * as name from "./lg-x.js"; export const lgW = 1 (each plant's two statements); the names of the export specifiers in
+ * export { name } from "./lg-x.js" and export { name as lgV } from "./lg-x.js"; and the exported name after as in const lgV = 1;
+ * export { lgV as name }.
  * An identifier is read as a value in these plants and catalog entries only: each FREE_PLACES place as its plant writes it (the
  * shorthand property in export const lgW = { name } among them); the left of the qualified name in export type LgT = typeof
  * name.lgX, typeof name.lgX.lgY, export type LgT = name.LgX and name.LgX.LgY, the expression of the implements clause in export
@@ -105,7 +113,8 @@
  * assertion to a function type in (require as (lgS: string) => unknown)("./lg-x.js"), behind a non-null assertion in
  * require!("./lg-x.js"), as the expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js`
  * and require`lg`; and (wb-cl20) behind each of the census's CALLEE_WRAPPERS (5 wrappers) - a pair of parentheses, an as
- * assertion, a satisfies expression and a <T> assertion, each to the function type (lgS: string) => unknown, and a non-null
+ * assertion, a satisfies expression as in (require satisfies (lgS: string) => unknown)("./lg-x.js") and a <T> assertion as in
+ * (<(lgS: string) => unknown>require)("./lg-x.js"), each to the function type (lgS: string) => unknown, and a non-null
  * assertion - and behind each ordered pair of them (25 pairs, the second written around the first; ((require)) and (require!)
  * among them), each in a call of ("./lg-x.js") and in a call of no argument; behind an as assertion to the function type () =>
  * unknown in (require as () => unknown)("./lg-x.js") and (require as () => unknown)(); as the expression of new require with
@@ -119,6 +128,62 @@
  * shorthand and a string key among them; an object assignment pattern on the left of a destructuring =, nested object, array
  * and spread patterns, a default's own pattern, a for-of and a for-in head that declares nothing, a shorthand key, a string key
  * and a shorthand key holding a default.
+ * VOCABULARY QUOTES (wb-3uxh, the R694 follow-up of wb-cl20's landing-925 F2; no reader code and no plant changes): the
+ * Vocabulary above quotes each entry of three of the census's catalogs, and this block lists each such quote after its
+ * catalog and the entry's label, one line per entry, in catalog order: the plant the census writes for the entry, with the
+ * identifier written name (for a CALLEE_WRAPPERS entry, require behind the wrapper, called with ("./lg-x.js")), its lines
+ * joined by one space. Each quote below, a final semicolon aside, stands in the Vocabulary above as written, and the census's
+ * QUOTES rows hold every entry's plant byte-equal to its quote here, so an entry re-pointed at another text reds its row; no
+ * entry of another catalog is quoted here.
+ *   NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;
+ *   NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;
+ *   NONVALUE_PLACES "the right of a qualified name": export type LgT = typeof lgO.name;
+ *   NONVALUE_PLACES "a property key": export const lgW = { name: 1 };
+ *   NONVALUE_PLACES "an object method key": export const lgW = { name(): number { return 1; } };
+ *   NONVALUE_PLACES "a get accessor key": export const lgW = { get name(): number { return 1; } };
+ *   NONVALUE_PLACES "a set accessor key": export const lgW = { set name(lgV: number) { void lgV; } };
+ *   NONVALUE_PLACES "a class field key": export class LgC { name = 1; }
+ *   NONVALUE_PLACES "a class method key": export class LgC { name(): void {} }
+ *   NONVALUE_PLACES "a property signature key": export interface LgI { name: number; }
+ *   NONVALUE_PLACES "a method signature key": export interface LgI { name(): void; }
+ *   NONVALUE_PLACES "an enum member": export enum LgE { name = 1, }
+ *   NONVALUE_PLACES "a binding key": export const lgW = ({ name: lgV }: Record<string, unknown>): unknown => lgV;
+ *   NONVALUE_PLACES "a type reference": export type LgT = name;
+ *   NONVALUE_PLACES "a type query": export type LgT = typeof name;
+ *   NONVALUE_PLACES "a break label": name: for (;;) break name;
+ *   NONVALUE_PLACES "a continue label": name: for (;;) continue name;
+ *   NONVALUE_PLACES "an import specifier": import { name } from "./lg-x.js"; export const lgW = 1;
+ *   NONVALUE_PLACES "an aliased import specifier": import { name as lgV } from "./lg-x.js"; export const lgW = lgV;
+ *   NONVALUE_PLACES "a default import": import name from "./lg-x.js"; export const lgW = 1;
+ *   NONVALUE_PLACES "a namespace import": import * as name from "./lg-x.js"; export const lgW = 1;
+ *   NONVALUE_PLACES "a re-exported name": export { name } from "./lg-x.js";
+ *   NONVALUE_PLACES "an aliased re-exported name": export { name as lgV } from "./lg-x.js";
+ *   NONVALUE_PLACES "the right of a qualified name in a type reference": export type LgT = lgO.name;
+ *   NONVALUE_PLACES "a class get accessor key": export class LgC { get name(): number { return 1; } }
+ *   NONVALUE_PLACES "a class set accessor key": export class LgC { set name(lgV: number) { void lgV; } }
+ *   NONVALUE_PLACES "an interface get accessor key": export interface LgI { get name(): number; }
+ *   NONVALUE_PLACES "an exported alias": const lgV = 1; export { lgV as name };
+ *   NONVALUE_PLACES "a declaration's binding key": const { name: lgV } = lgO; void lgV;
+ *   NONVALUE_PLACES "a call argument's property key": export const lgW = String({ name: 1 });
+ *   NONVALUE_PLACES "a nested property key": export const lgW = { lgO: { name: 1 } };
+ *   NONVALUE_PLACES "a type literal property signature key": export type LgT = { name: number };
+ *   NONVALUE_PLACES "a type literal method signature key": export type LgT = { name(): void };
+ *   NONVALUE_PLACES "a type literal get accessor key": export type LgT = { get name(): number };
+ *   NONVALUE_PLACES "an interface set accessor key": export interface LgI { set name(lgV: number); }
+ *   NONVALUE_PLACES "a type literal set accessor key": export type LgT = { set name(lgV: number) };
+ *   NONVALUE_PLACES "a class expression field key": export const LgC = class { name = 1; };
+ *   NONVALUE_PLACES "a class expression method key": export const LgC = class { name(): void {} };
+ *   NONVALUE_PLACES "an enum member with no initializer": export enum LgE { name, }
+ *   NONVALUE_PLACES "a parameter's type reference": export const lgW = (lgP: name): unknown => lgP;
+ *   NONVALUE_PLACES "a block label": name: { break name; }
+ *   JSX_PLACES "a JSX attribute's name": export const lgW = <lgX name={1} />;
+ *   JSX_PLACES "a JSX attribute's value": export const lgW = <lgX lgK={name} />;
+ *   JSX_PLACES "a JSX attribute's name with no value": export const lgW = <lgX name />;
+ *   CALLEE_WRAPPERS "a pair of parentheses": (require)("./lg-x.js")
+ *   CALLEE_WRAPPERS "an as assertion": (require as (lgS: string) => unknown)("./lg-x.js")
+ *   CALLEE_WRAPPERS "a satisfies expression": (require satisfies (lgS: string) => unknown)("./lg-x.js")
+ *   CALLEE_WRAPPERS "a <T> assertion": (<(lgS: string) => unknown>require)("./lg-x.js")
+ *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")
  * PINNED by wb-cl20 (R-B438), by name, the forms refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) records surviving, each a plant
  * the Vocabulary above quotes (marked wb-cl20) and each of the gate's paired twin pages a TWIN row: require behind a <T>
  * assertion, behind a satisfies expression and behind two pairs of parentheses as a callee (GP9C4-REQ-CALLEE-ANGLE,

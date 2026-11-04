@@ -79,6 +79,17 @@
  * seat adds one sibling, a type literal's property signature. FROZEN SHAPE gains the 12 TWIN rows and grows 6 MEMBERS pin
  * counts (ROUTES:loader name pieces 1, 4, 10 and 12; WRITES:reflection pieces 1 and 2) and loses none; ANCHOR gains
  * CALLEE_WRAPPERS among the stated catalog sizes and the TW9C4- ids among the twins the helper header names.
+ * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 PASS-WITH-FINDING, F2, gate cmd_fbf51e40e9e0; a first cut) is read
+ * here as: F2 found NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS pinned by count only (FROZEN SHAPE's pin counts and
+ * ANCHOR's catalog sizes), so an entry's text re-pointed at an unrelated passing case, its label, flags and counts kept, left
+ * this census green at 0|477 (GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP, GP2-CT3x-JSX-NOVALUE-SWAP and, on
+ * an entry landed before wb-cl20, GP2-CT3x-OLD-CLASSSET-SWAP), and so did each swap beside the reader hollowing its entry
+ * alone pinned (GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS, GP2-CT3xP-JSXNOVALUE and GP2-CT3xP-LN-JSX). This cut changes no
+ * reader code, no plant, no pin and no row of this census: it adds the QUOTES rows, which bind every entry of those three
+ * catalogs (41, 3 and 5), by its label, to the quote the helper header's VOCABULARY QUOTES block lists for it - an anchor
+ * outside this census's literals - and each listed quote to the helper header's Vocabulary (the helper's comment-only edit
+ * quotes the four import plants and the variable declaration's binding-key plant whole and the satisfies and <T> wrappers in
+ * a call). FROZEN SHAPE gains the four QUOTES rows and loses none.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -155,8 +166,14 @@
  *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census. Cut #4 adds TYPE_PLACES,
  *   ACCESS_BASES, EXPORT_PLACES and JSX_PLACES to those catalogs and the TW9- ids to the twins the helper header must name.
  *   wb-cl20 adds CALLEE_WRAPPERS to those catalogs and the TW9C4- ids to the twins the helper header must name.
+ *  QUOTES (wb-3uxh; standing rule 16 CT3, CT5 and CT6, outside this census): one row per catalog the helper header's
+ *   VOCABULARY QUOTES block quotes - NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS - holds every entry's plant, the
+ *   identifier written name (a CALLEE_WRAPPERS entry: require behind the wrapper, called with ("./lg-x.js")) and its lines
+ *   joined by one space, byte-equal to the quote the block lists after the entry's catalog and label, in catalog order, each
+ *   such quote, a final semicolon aside, standing in the helper header's Vocabulary; one row holds the block's catalogs equal
+ *   to those rows' catalogs, in order, every line of the block's quote run a quote line.
  *  FROZEN SHAPE (standing rule 16): one literal pins every row as table:id - a GATE or TWIN row with its pin keys, a MEMBERS row
- *   with its claim, its place among that claim's pieces and its pin count.
+ *   with its claim, its place among that claim's pieces and its pin count, a QUOTES catalog row with its entry count.
  *
  * PINNED READER SET (wb-tz2.21's cut; every case is in this file, test/workbench-hyperunix-successor-gate-readers-census.test.ts,
  * and reads as pinned on the delivered readers; each falsifier named is a gate-authored hollowing of the helper, replayed
@@ -268,6 +285,14 @@
  *    -DOUBLE-PAREN; TW9C4-B1 to TW9C4-B9 (B8 aside) read none and, under their GP9C4-VR- members, a finding, TW9C4-B1P through
  *    WRITES reflection).
  *  - "ANCHOR" names, catalogs, carrier-items and twins (above). Falsifiers: CT5 and CT6 of the seat's CT-BATTERY v2 line.
+ *  - "QUOTES NONVALUE_PLACES", "QUOTES JSX_PLACES" and "QUOTES CALLEE_WRAPPERS" (wb-3uxh): every entry of the three catalogs (41,
+ *    3 and 5), read as the row title says; target: the helper header's VOCABULARY QUOTES block, entry by entry, and its
+ *    Vocabulary's text. "QUOTES: the helper header's VOCABULARY QUOTES block quotes exactly the catalogs": the block's catalogs
+ *    and quote lines. Falsifiers: F2's census swaps GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP,
+ *    GP2-CT3x-JSX-NOVALUE-SWAP and GP2-CT3x-OLD-CLASSSET-SWAP and its pairs GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS,
+ *    GP2-CT3xP-JSXNOVALUE and GP2-CT3xP-LN-JSX (gate; census hollowings, replayed verbatim from the wb-cl20 PREP specs);
+ *    SP3U-NV-BLOCKLABEL-SWAP, SP3U-NV-IMPORT-SWAP, SP3U-JSX-VALUE-SWAP, SP3U-WRAP-ANGLE-SWAP, SP3U-WRAP-PAREN-SWAP,
+ *    SP3U-VOCAB-DROP, SP3U-BLOCK-UNPARSED and SP3U-BLOCK-DROP-LINE (seat; the last three edit the helper header).
  * NOT CLAIMED: each mode the helper header's NOT CLAIMED block names NOT CLAIMED is NOT CLAIMED by this census, and so is every
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
  * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee; a
@@ -279,9 +304,15 @@
  * type no plant writes, or in a call of another argument list; require behind any wrapper as the expression of a new
  * expression, and as a tag behind any wrapper but one pair of parentheses; and a binding element's key in any pattern but the
  * arrow parameter's and the variable declaration's (refusal #4's fifteen forms are pins of this census now, none NOT CLAIMED).
+ * Past wb-3uxh's QUOTES rows (a scope sentence, no residual): the text of an entry of any other catalog (FREE_PLACES,
+ * DECLARATIONS, TYPE_PLACES, ACCESS_BASES, EXPORT_PLACES, DESTRUCTURINGS and the rest) is bound by no QUOTES row and is NOT
+ * CLAIMED by this census beyond its catalog's count and the readings its MEMBERS pins hold; an entry's text written with any
+ * identifier but name (a CALLEE_WRAPPERS entry: around any callee but require) is NOT CLAIMED by the QUOTES rows, and neither
+ * are a plant's line breaks and indentation (the rows read a plant flattened).
  * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family: every
  * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are pins (wb-cl20), as
- * are the cut #5 gate's boundary members on those sets; none is a residual.
+ * are the cut #5 gate's boundary members on those sets; none is a residual. wb-3uxh names no residual: F2's class is pinned
+ * for the three catalogs F2 names, and every other catalog's text is the scope sentence above.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -2545,6 +2576,44 @@ const TWIN_ROWS: readonly TwinRow[] = [
   carrierRefusal4("TW9C4-B9", "GP9C4-VR-LABEL-LOOP-ONLY", [suiteTwin("require: {\n  break require;\n}")], {}),
 ];
 
+// ---- wb-3uxh (the R694 follow-up of wb-cl20's landing-925 F2): QUOTES ----------------------------------------------------
+// F2 found NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS pinned by count only: an entry's text re-pointed at an unrelated
+// passing case, its label, flags and counts kept, left this census green. Each entry's plant is now bound, by its label, to
+// the quote the helper header's VOCABULARY QUOTES block lists for it - outside this census's literals - and each listed quote
+// is bound to the helper header's Vocabulary.
+
+/** A catalog the QUOTES rows bind: each entry's label and its plant, the identifier written name (a CALLEE_WRAPPERS entry:
+ * require behind the wrapper, called with ("./lg-x.js")). */
+interface QuoteRow {
+  readonly catalog: string;
+  readonly plants: readonly (readonly [label: string, plant: string])[];
+}
+const QUOTE_ROWS: readonly QuoteRow[] = [
+  { catalog: "NONVALUE_PLACES", plants: NONVALUE_PLACES.map(([label, text]) => [label, text("name")]) },
+  { catalog: "JSX_PLACES", plants: JSX_PLACES.map(([label, text]) => [label, text("name")]) },
+  { catalog: "CALLEE_WRAPPERS", plants: CALLEE_WRAPPERS.map(([label, wrap]) => [label, `${wrap("require")}("./lg-x.js")`]) },
+];
+/** A text with its lines joined by one space and every run of white space one space, as the helper header quotes a plant. */
+const flat = (text: string): string => text.replace(/\s+/g, " ").trim();
+/** The helper header's VOCABULARY QUOTES block: its heading line, then its prose, then one quote line per entry. */
+const QUOTES_AT = HEADER.findIndex(line => line.startsWith(" * VOCABULARY QUOTES ("));
+/** The helper header's Vocabulary: from its first "Vocabulary (" line to the VOCABULARY QUOTES block, flattened. */
+const VOCABULARY_PROSE = flat(HEADER.slice(HEADER.findIndex(line => line.startsWith(" * Vocabulary (")), QUOTES_AT < 0 ? 0 : QUOTES_AT).map(line => line.replace(/^ \* ?/, "")).join(" "));
+/** A quote line of the block: three spaces, the catalog, the label in double quotes, a colon and the quote. */
+const QUOTE_LINE = /^ \* {3}([A-Z_]+) "([^"]+)": (.+)$/;
+/** Every quote line of the block, as [catalog, label, quote]: the run of lines opening with three spaces after its prose
+ * (a line of that run that is no quote line reads as the catalog UNPARSED). */
+const VOCABULARY_QUOTES: readonly (readonly [catalog: string, label: string, quote: string])[] = (() => {
+  if (QUOTES_AT < 0) return [];
+  const start = HEADER.findIndex((line, index) => index > QUOTES_AT && line.startsWith(" *   "));
+  const quotes: [string, string, string][] = [];
+  for (let index = start; start > QUOTES_AT && index < HEADER.length && (HEADER[index] ?? "").startsWith(" *   "); index += 1) {
+    const match = QUOTE_LINE.exec(HEADER[index] ?? "");
+    quotes.push(match === null ? ["UNPARSED", HEADER[index] ?? "", ""] : [match[1] ?? "", match[2] ?? "", match[3] ?? ""]);
+  }
+  return quotes;
+})();
+
 /** MEMBERS rows with their place among their claim's pieces. */
 const PLACED = MEMBER_ROWS.map((row, index) => ({ ...row, place: MEMBER_ROWS.slice(0, index).filter(other => other.key === row.key).length + 1 }));
 /** FROZEN SHAPE (standing rule 16): every row - a GATE row with its pin keys, a MEMBERS row with its place and pin count. */
@@ -2629,6 +2698,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "CLAIM:header", "CLAIM:forms",
   "TILE:pieces", "TILE:keys",
   "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins",
+  "QUOTES:NONVALUE_PLACES:41", "QUOTES:JSX_PLACES:3", "QUOTES:CALLEE_WRAPPERS:5", "QUOTES:catalogs",
 ];
 const ROW_IDS: readonly string[] = [
   ...["BASE:import", "BASE:channel", "BASE:run", "BASE:c", "BASE:setup"],
@@ -2637,6 +2707,8 @@ const ROW_IDS: readonly string[] = [
   ...PLACED.map(row => `MEMBERS:${row.key}:${row.place}:${row.pins.length}`),
   ...TWIN_ROWS.map(row => `TWIN:${row.id}:${Object.keys(row.pins).sort().join(",")}`),
   ...["CLAIM:header", "CLAIM:forms", "TILE:pieces", "TILE:keys", "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins"],
+  ...QUOTE_ROWS.map(row => `QUOTES:${row.catalog}:${row.plants.length}`),
+  "QUOTES:catalogs",
 ];
 /** wb-tz2.21's unmet items (refusal #3 on wb-tz2.17, verbatim in its description) and the rows answering each. */
 const CARRIER_ITEMS: Readonly<Record<string, readonly string[]>> = {
@@ -2798,6 +2870,14 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   });
   it("TILE: every MEMBERS row is keyed to a claim the header makes, in the header's order", () => {
     expect([...new Set(MEMBER_ROWS.map(row => row.key))]).toEqual(CLAIMS.map(([key]) => key));
+  });
+  it.each(QUOTE_ROWS)("QUOTES $catalog: each entry's plant, the identifier written name (a wrapper's callee require, called with (\"./lg-x.js\")) and its lines joined by one space, is byte-equal to the quote the helper header's VOCABULARY QUOTES block lists after the entry's catalog and label, in catalog order, and that quote, a final semicolon aside, stands in the helper header's Vocabulary", row => {
+    expect(row.plants.map(([label, plant]) => `${label}: ${flat(plant)}`)).toEqual(
+      VOCABULARY_QUOTES.filter(([catalog]) => catalog === row.catalog).map(([, label, quote]) => `${label}: ${VOCABULARY_PROSE.includes(quote.replace(/;$/, "")) ? quote : `${quote} (no quote of the Vocabulary)`}`),
+    );
+  });
+  it("QUOTES: the helper header's VOCABULARY QUOTES block quotes exactly the catalogs the QUOTES rows read, in their order, and every line of its quote run is a quote line", () => {
+    expect(VOCABULARY_QUOTES.map(([catalog]) => catalog).filter((catalog, index, all) => all.indexOf(catalog) === index)).toEqual(QUOTE_ROWS.map(row => row.catalog));
   });
   it("FROZEN SHAPE: every row is pinned, a GATE row with its pin keys and a MEMBERS row with its place and pin count", () => {
     expect(ROW_IDS).toEqual(FROZEN_SHAPE);
