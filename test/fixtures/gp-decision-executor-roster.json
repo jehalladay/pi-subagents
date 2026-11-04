@@ -14043,6 +14043,7 @@
       "contextPlants": {
         "F1": {
           "assignments": 65536,
+          "distinct": 65536,
           "carried": {
             "first call": {
               "first": {
@@ -14103,10 +14104,12 @@
             "third": 8192,
             "last": 8192
           },
+          "misread": 0,
           "mismatched": []
         },
         "F2": {
           "assignments": 65536,
+          "distinct": 65536,
           "carried": {
             "first call": {
               "first": {
@@ -14167,10 +14170,12 @@
             "third": 8192,
             "last": 8192
           },
+          "misread": 0,
           "mismatched": []
         },
         "F3": {
           "assignments": 65536,
+          "distinct": 65536,
           "carried": {
             "first call": {
               "first": {
@@ -14231,10 +14236,12 @@
             "third": 8192,
             "last": 8192
           },
+          "misread": 0,
           "mismatched": []
         },
         "F4": {
           "assignments": 65536,
+          "distinct": 65536,
           "carried": {
             "first call": {
               "first": {
@@ -14295,10 +14302,12 @@
             "third": 8192,
             "last": 8192
           },
+          "misread": 0,
           "mismatched": []
         },
         "F5": {
           "assignments": 65536,
+          "distinct": 65536,
           "carried": {
             "first call": {
               "first": {
@@ -14359,7 +14368,1217 @@
             "third": 8192,
             "last": 8192
           },
+          "misread": 0,
           "mismatched": []
+        }
+      },
+      "contextControls": {
+        "X01's form": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 11536,
+          "mismatched": [
+            "first call own, own, own, own; second call both, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call both, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "X02's form": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 7936,
+          "mismatched": [
+            "first call own, own, own, own; second call both, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call both, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "X03's form": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 4096,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 4096,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, both: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call own, other, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
+            "first call own, both, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call own, neither, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "X04's form": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 8192,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 8192,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 8192,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 8192,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 27120,
+          "mismatched": [
+            "first call other, own, both, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call neither, own, both, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, other, both, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
+            "first call neither, other, both, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]"
+          ]
+        },
+        "X05's form": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 4397,
+          "mismatched": [
+            "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
+            "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ]
+        },
+        "an own request unread": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 12288,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 12288,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 7168,
+          "mismatched": [
+            "first call own, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
+            "first call both, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "the shared ids reversed": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 5168,
+          "mismatched": [
+            "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
+            "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ]
+        },
+        "the first shared id misspelled": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 0,
+            "second": 1024,
+            "third": 1920,
+            "last": 2704
+          },
+          "misread": 27120,
+          "mismatched": [
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1x\"], named [\"F1\"]",
+            "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]",
+            "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1x\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
+            "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]"
+          ]
+        },
+        "the second shared id misspelled": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 7168,
+            "third": 6400,
+            "last": 5840
+          },
+          "misread": 5168,
+          "mismatched": [
+            "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]",
+            "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a2-t2x\"], named [\"F1\"]",
+            "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2x\"], named [\"F1\"]",
+            "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2x\",\"inv-F1-188-exec-a2-t2\"], named [\"F1\"]"
+          ]
+        },
+        "the third shared id misspelled": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8064,
+            "last": 7856
+          },
+          "misread": 464,
+          "mismatched": [
+            "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2x\"], named [\"F1\"]",
+            "first call other, other, own, other; second call own, own, own, own: carried [[false,false,true,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
+            "first call other, own, other, other; second call own, own, own, own: carried [[false,true,false,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
+            "first call own, other, other, other; second call own, own, own, own: carried [[true,false,false,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]"
+          ]
+        },
+        "the fourth shared id misspelled": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8176
+          },
+          "misread": 16,
+          "mismatched": [
+            "first call other, other, other, other; second call own, own, own, own: carried [[false,false,false,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
+            "first call own, other, other, other; second call other, own, own, own: carried [[true,false,false,false],[false,true,true,true]], shared [\"inv-F1-187-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
+            "first call other, own, other, other; second call own, other, own, own: carried [[false,true,false,false],[true,false,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-187-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
+            "first call own, own, other, other; second call other, other, own, own: carried [[true,true,false,false],[false,false,true,true]], shared [\"inv-F1-187-exec-a1-t1\",\"inv-F1-187-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]"
+          ]
+        },
+        "the last shared id dropped": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 2704,
+            "second": 1920,
+            "third": 1024,
+            "last": 0
+          },
+          "misread": 27120,
+          "mismatched": [
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "an extra carried row": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 65536,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "the first call's row one value longer": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 65536,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]"
+          ]
+        },
+        "the second call's row one value longer": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 65536,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,false]], shared [], named [\"F1\"]",
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+            "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [], named [\"F1\"]",
+            "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [], named [\"F1\"]"
+          ]
+        },
+        "the name twice": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 65536,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F1\"]",
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\",\"F1\"]",
+            "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F1\"]",
+            "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F1\"]"
+          ]
+        },
+        "the name misspelled": {
+          "assignments": 65536,
+          "distinct": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "misread": 65536,
+          "mismatched": [
+            "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1x\"]",
+            "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1x\"]",
+            "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1x\"]",
+            "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1x\"]"
+          ]
         }
       }
     },

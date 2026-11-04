@@ -63,9 +63,10 @@
  *    the snapshot's order: wb-vuoz cut #3's), at each position of either call and in the contexts the plants spell
  *    (A3's serial, serial plants and context plants sentences name them, the forms of the gate's drive pages D01-D06
  *    on the drives over every fixture among them, D03-D06 wb-vuoz's, and, at 187 then 188 under each of those names,
- *    every assignment of the four kinds' forms to the eight requests of the two calls, so each request beside every
- *    kind of request before and after it in its call and at each position of the other call: wb-vuoz cut #4's context
- *    plants; every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
+ *    every assignment of the four kinds' forms to the eight requests of the two calls, each handed to the serial
+ *    reading once, so each request beside every kind of request before and after it in its call and at each position
+ *    of the other call: wb-vuoz cut #4's context plants, their counts and check pinned by wb-vuoz cut #5's counts and
+ *    context controls; every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
  *    under a name or with a candidate no drive spells, a serial reading keyed on which candidate a call holds at a
  *    position where no plant holds that candidate in that form, and a serial reading keyed on a request's context,
  *    the other requests of its call or of the other call, in a context no plant spells are NOT CLAIMED); the check
@@ -231,12 +232,23 @@
  *    back) and the context plants (wb-vuoz cut #4's: at serials 187 then 188, the width the drives' own serials run in,
  *    under each of F1 to F5, two calls of four requests over the snapshot's candidates in its order, every
  *    invocationId in plantedId's form of one of the four kinds as the rotations spell it, in every one of the 65536
- *    assignments of the kinds to the eight requests: each request reads carried exactly when it is of the own kind,
- *    whatever kinds the other seven hold before and after it in its call and at each position of the other call; the
- *    first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either
- *    order; the name reads named once; per call, position and kind the requests read carried in 16384 assignments for
- *    the own kind and in none for the other three, the first call's ids read shared in 8192 per position, and no
- *    assignment reads otherwise); the serial reading is claimed in these forms only, at these serials, under these
+ *    assignments of the kinds to the eight requests, each handed to the serial reading once (65536 handed, 65536
+ *    distinct lists of the eight invocationIds: wb-vuoz cut #5's counts): each request reads carried exactly when it is
+ *    of the own kind, whatever kinds the other seven hold before and after it in its call and at each position of the
+ *    other call; the first call's id at a position reads shared exactly when the two calls hold an own and an other
+ *    there, in either order, those ids in the first call's order and no other; the name reads named once; per call,
+ *    position and kind the requests read carried in 16384 assignments for the own kind and in none for the other
+ *    three, the first call's ids read shared in 8192 per position, and no assignment reads otherwise: contextReading
+ *    checks each assignment's whole reading, its two rows of one value per request, each request's carried, the shared
+ *    ids and the name, against the reading constructed from its kinds alone, and counts none read otherwise; wb-vuoz
+ *    cut #5's context controls pin that check: seventeen misreaders, each the reading constructed from the planted
+ *    requests' kinds with one deviation where its context holds (the gate's witness forms X01 to X05 and an own
+ *    request read not carried, each keyed on the kinds of the requests around it; the shared ids reversed wherever
+ *    two or more are shared, the id at each index misspelled wherever that index is shared, the last dropped wherever
+ *    one or more are; a third row, each call's row one value longer, the name twice and the name misspelled, in every
+ *    assignment), each read by contextReading in serialOf's place under F1 at 187 then 188 and read otherwise in
+ *    exactly the assignments its context holds, counted arithmetically, the first four of them the four constructed
+ *    for it); the serial reading is claimed in these forms only, at these serials, under these
  *    names and in these contexts: that call's
  *    serial at a segment other
  *    than the third, the other call's at a segment no plant holds it at (the plants hold it as the third, as the fourth
@@ -322,7 +334,10 @@
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
  * outside this cut names the residual families before its delivery note lands); a pin's case, or one reading inside it,
- * replaced by one that echoes its roster witness. wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
+ * replaced by one that echoes its roster witness; and contextReading's distinct count taken from anything but the lists of
+ * invocationIds it hands the reading (its counter's kinds, or the pass count), a hollow of the count alone that leaves every
+ * reading the census judges in place, the context controls' counts reading each assignment beside it (wb-vuoz cut #5).
+ * wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
  * #4 left unplanted) pins them in
  * A3's forms, split, mix and order controls; every effect-unrequested form A3 does not plant stays NOT CLAIMED, among
  * them: a receipt whose read fields a record splits across three or more requests, a split beside a second handed
@@ -555,6 +570,31 @@
  * another order) is NOT CLAIMED. No reader changes: violations(), answers(), serialOf(), carriesSerial() and
  * serialPlants() are byte-unchanged, and so are every existing plant, call and witness entry; the frozen literal
  * gains CALLS, and the roster's A3 witness gains the context plants' measured readings. Display paths added: none.
+ * Cut #5 (refusal #4 of cut #4, gate-prep-10 / g10-gate-s210: unmet U1 and U2, claims wider than pins in cut #4's own
+ * contextReading; ruling R-B550 binds the class guard on both request-context claim sets and names the cure, negative
+ * controls with claims equal to pins): the context plants' expect held per-slot and same-position tallies, the
+ * assignment count and the first mismatches, and no anchor counted the assignments handed or ran a misreader through
+ * contextReading, so the gate's H01 to H04 (kindAt reading another slot's kind, so only 1024, 4096, 16384 or 256
+ * distinct assignments were handed under each name), H05 (the shared ids compared as a set) and H06 (no mismatch
+ * recorded) kept the census green while their witnesses X01 to X05 (serialOf misreading a request by the kinds of the
+ * requests around it, or the shared ids in reverse) red it alone, and H01 to H03 were realized FAIL-OPEN on the
+ * drives' own calls by its pages P01 to P03. U1: contextReading counts the distinct lists of the eight invocationIds
+ * it hands the reading (distinct), and the context plants' expect holds them, as it holds the assignments, to
+ * SERIAL_KINDS.length to the eighth, constructed (65536), so each of H01 to H04 reds A3 there; U1 and U2: A3's context
+ * controls (CONTEXT_MISREADERS, each the reading constructed from the planted requests' kinds with one deviation, which
+ * reads no request through serialOf: the gate's X01 to X05 forms, an own request read not carried, and eleven misreaders
+ * altering what no tally holds wherever the alteration can occur: the shared ids' order, the id at each index and their
+ * count, the rows, each row's length, and the name's count and spelling) are read by contextReading in serialOf's place, each read otherwise
+ * in exactly the assignments its context holds (misread, counted arithmetically) and recording first the four
+ * constructed for it, so H01 to H04 (contexts unread), H05 (the reversed orders unseen) and H06 (nothing recorded) red
+ * A3 at the context controls' expect, alone and composed with their witnesses and pages.
+ * contextReading takes the reading as a fourth parameter, serialOf by default, and counts the assignments read
+ * otherwise (misread, 0 in the context plants' expect). The CHECKS parenthetical's serial clause, A3's context plants
+ * sentence, the docs of ContextReading and contextReading, and A3's context plants and context controls messages name
+ * the counts and the controls. No reader changes: violations(), answers(), serialOf(), carriesSerial() and
+ * serialPlants() are byte-unchanged, and so are every existing plant, call and witness entry but the context plants',
+ * which gain the two counts; the frozen literal gains the context controls' table (each label, constructed count and
+ * first four), and the roster's A3 witness gains the context controls' measured readings. Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1140,29 +1180,38 @@ function serialPlantsByName(candidates: readonly string[], serials: readonly [nu
 }
 /** The two calls of A3's context plants, in the order asked: the labels its reading keys each call's tallies by (wb-vuoz cut #4). */
 const CALLS = ["first call", "second call"] as const;
-/** A type alias, not an interface, so the reading is a Json witness as it stands: A3's context plants read under one name (wb-vuoz cut #4). */
+/** A serial reading of two calls in a row, from the invocationIds each was returned and each call's serial: serialOf, or one of A3's context misreaders, which contextReading reads in serialOf's place (wb-vuoz cut #5). */
+type SerialReader = (returned: readonly (readonly { readonly invocationId: string }[])[], serials: readonly number[]) => SerialReading;
+/** A type alias, not an interface, so the reading is a Json witness as it stands: A3's context plants read under one name, by serialOf or by one of A3's context misreaders (wb-vuoz cut #4; distinct and misread wb-vuoz cut #5's). */
 type ContextReading = {
-  /** How many assignments of SERIAL_KINDS to the two calls' eight requests the serial reading read: every one. */
+  /** How many assignments of SERIAL_KINDS to the two calls' eight requests contextReading handed the reading: one per pass of its counter. */
   readonly assignments: number;
-  /** Per call, per position and per kind of the request there: in how many of the assignments the serial reading reads that request carried. */
+  /** How many of those assignments were distinct, counted by the list of the eight invocationIds handed to the reading, in the order handed (wb-vuoz cut #5). */
+  readonly distinct: number;
+  /** Per call, per position and per kind of the request there: in how many of the assignments the reading reads that request carried. */
   readonly carried: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, number>>>>>>;
-  /** Per position: in how many of the assignments the serial reading reads the first call's invocationId there shared. */
+  /** Per position: in how many of the assignments the reading reads the first call's invocationId there shared. */
   readonly shared: Readonly<Record<string, number>>;
-  /** The first assignments, at most four, whose serial reading differs from the reading constructed from their kinds alone, each with what was read. */
+  /** In how many of the assignments the reading differs from the reading constructed from their kinds alone (wb-vuoz cut #5). */
+  readonly misread: number;
+  /** The first of those assignments, at most four, in the order handed, each spelled by its kinds and with what was read. */
   readonly mismatched: readonly string[];
 };
 /**
  * A3's context plants under one name (wb-vuoz cut #4): two calls of four requests over the snapshot's candidates in its
  * order, at the given serials, every invocationId in plantedId's form of one of SERIAL_KINDS (that call's serial alone,
- * the other call's alone, both as D01's page spells them in the first call, or neither as D02's page spells it), read by
- * the serial reading in EVERY assignment of the kinds to the eight requests, SERIAL_KINDS.length to the eighth: each
- * request, at each position of either call, is read beside every combination of kinds the other seven requests can
- * hold, before and after it in its call and at every position of the other call. The reading each assignment must give
- * is constructed from its kinds alone: a request is carried exactly when it is of the own kind; the first call's
- * invocationId at a position is shared exactly when the two calls hold an own and an other there, in either order (the
- * one id both calls were returned); and the name is named once. The tallies count what the serial reading read.
+ * the other call's alone, both as D01's page spells them in the first call, or neither as D02's page spells it), handed
+ * to the reading (serialOf unless another is given: wb-vuoz cut #5's context controls give their misreaders) once per
+ * pass of a counter over the eight requests' kinds, SERIAL_KINDS.length to the eighth passes (the assignments each
+ * context control flags first are the ones spelledAssignment spells for it); the distinct lists of the eight
+ * invocationIds handed are counted. Each assignment's whole reading is checked against the reading constructed from its
+ * kinds alone: two rows, one per call, of one value per request; a request carried exactly when it is of the own kind;
+ * the first call's invocationId at a position shared exactly when the two calls hold an own and an other there, in
+ * either order (the one id both calls were returned), those ids in the first call's order and no other; and the one
+ * name. The tallies count what the reading read; misread counts the assignments read otherwise, and mismatched records
+ * the first four of them.
  */
-function contextReading(candidates: readonly string[], serials: readonly [number, number], name: string): ContextReading {
+function contextReading(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader = serialOf): ContextReading {
   const [first, second] = serials;
   const serialsOf = (call: number): readonly [number, number] => (call === 0 ? [first, second] : [second, first]);
   const requestsOf = CALLS.map((_, call) => candidates.map(candidate => SERIAL_KINDS.map(kind => ({ invocationId: plantedId(name, kindSerials(kind, ...serialsOf(call)), candidate) }))));
@@ -1172,13 +1221,16 @@ function contextReading(candidates: readonly string[], serials: readonly [number
   const tally = CALLS.map(() => candidates.map(() => SERIAL_KINDS.map(() => 0)));
   const sharedAt = candidates.map(() => 0);
   const mismatched: string[] = [];
+  const distinctLists = new Set<string>();
   const kinds = Array.from({ length: slots }, () => 0);
   let assignments = 0;
+  let misread = 0;
   for (let remaining = SERIAL_KINDS.length ** slots; remaining > 0; remaining -= 1) {
     const kindAt = (call: number, at: number): number => kinds[call * candidates.length + at] ?? 0;
     const returned = CALLS.map((_, call) => candidates.map((_, at) => requestsOf[call]?.[at]?.[kindAt(call, at)] ?? { invocationId: "" }));
-    const { carried, shared, named } = serialOf(returned, serials);
+    const { carried, shared, named } = read(returned, serials);
     assignments += 1;
+    distinctLists.add(returned.flat().map(request => request.invocationId).join(" "));
     const constructedShared = candidates.flatMap((_, at) => {
       const [held, heldAcross] = [kindAt(0, at), kindAt(1, at)];
       return (held === ownKind && heldAcross === otherKind) || (held === otherKind && heldAcross === ownKind) ? [returned[0]?.[at]?.invocationId ?? ""] : [];
@@ -1199,6 +1251,7 @@ function contextReading(candidates: readonly string[], serials: readonly [number
     candidates.forEach((_, at) => {
       if (shared.includes(returned[0]?.[at]?.invocationId ?? "")) sharedAt[at] = (sharedAt[at] ?? 0) + 1;
     });
+    if (!readRight) misread += 1;
     if (!readRight && mismatched.length < 4) {
       const spelled = CALLS.map((label, call) => `${label} ${candidates.map((_, at) => SERIAL_KINDS[kindAt(call, at)] ?? "").join(", ")}`).join("; ");
       mismatched.push(`${spelled}: carried ${JSON.stringify(carried)}, shared ${JSON.stringify(shared)}, named ${JSON.stringify(named)}`);
@@ -1210,11 +1263,180 @@ function contextReading(candidates: readonly string[], serials: readonly [number
   }
   return {
     assignments,
+    distinct: distinctLists.size,
     carried: Object.fromEntries(CALLS.map((label, call) => [label, Object.fromEntries(POSITIONS.map((position, at) => [position, Object.fromEntries(SERIAL_KINDS.map((kind, index) => [kind, tally[call]?.[at]?.[index] ?? 0]))]))])),
     shared: Object.fromEntries(POSITIONS.map((position, at) => [position, sharedAt[at] ?? 0])),
+    misread,
     mismatched,
   };
 }
+/** The kinds plantedKind has read, by the two serials and the invocationId (wb-vuoz cut #5). */
+const PLANTED_KINDS = new Map<string, SerialKind>();
+/** The kind of a planted request in the call holding `serial`, read from its invocationId as carriesSerial reads it, once per invocationId and pair of serials: that serial alone (own), the other call's alone (other), both, or neither (wb-vuoz cut #5: A3's context misreaders read their contexts and their readings from it). */
+function plantedKind(invocationId: string, serial: number, otherSerial: number): SerialKind {
+  const key = `${serial} ${otherSerial} ${invocationId}`;
+  const known = PLANTED_KINDS.get(key);
+  if (known !== undefined) return known;
+  const ownSerial = carriesSerial(invocationId, serial);
+  const otherCallSerial = carriesSerial(invocationId, otherSerial);
+  const kind: SerialKind = ownSerial ? (otherCallSerial ? "both" : "own") : otherCallSerial ? "other" : "neither";
+  PLANTED_KINDS.set(key, kind);
+  return kind;
+}
+/**
+ * A context misreader (wb-vuoz cut #5): the reading constructed from the planted requests' kinds alone (plantedKind), as
+ * contextReading constructs the reading each assignment must give (a request carried exactly when it is of the own kind;
+ * the first call's invocationId at a position shared exactly when the two calls hold an own and an other there; the
+ * first invocationId's second segment named), altered by `alter`, given each request's kind by call and position
+ * (undefined past a call's last request). It reads no request through serialOf, so a plant in serialOf leaves it as it is.
+ */
+function misreading(alter: (reading: SerialReading, kindOf: (call: number, at: number) => SerialKind | undefined) => SerialReading): SerialReader {
+  return (returned, serials) => {
+    const kinds = returned.map((requests, call) => requests.map(request => plantedKind(request.invocationId, serials[call] ?? 0, serials[1 - call] ?? 0)));
+    const kindOf = (call: number, at: number): SerialKind | undefined => kinds[call]?.[at];
+    const [first = [], second = []] = kinds;
+    const sharesAt = (at: number): boolean => (first[at] === "own" && second[at] === "other") || (first[at] === "other" && second[at] === "own");
+    const constructed: SerialReading = {
+      carried: kinds.map(row => row.map(kind => kind === "own")),
+      shared: (returned[0] ?? []).filter((_, at) => sharesAt(at)).map(request => request.invocationId),
+      named: [returned[0]?.[0]?.invocationId.split("-")[1] ?? ""],
+    };
+    return alter(constructed, kindOf);
+  };
+}
+/** How many assignments of SERIAL_KINDS to the two calls' eight requests there are, constructed: SERIAL_KINDS.length to the eighth (wb-vuoz cut #5). */
+const ASSIGNMENTS = SERIAL_KINDS.length ** (CALLS.length * POSITIONS.length);
+/** How many pairs of kinds two requests can hold (wb-vuoz cut #5). */
+const KIND_PAIRS = SERIAL_KINDS.length ** 2;
+/**
+ * Of the assignments whose four position pairs (the first call's request and the second's at one position) each hold one
+ * of `pairs` kind pairs, `sharing` of which share that position's id, those sharing `least` positions or more,
+ * constructed: per count of positions sharing, the ways to choose them, times the kind pairs they and the rest can hold
+ * (wb-vuoz cut #5).
+ */
+const sharingAtLeast = (least: number, pairs: number, sharing: number): number => {
+  let count = 0;
+  let ways = 1;
+  for (let shares = 0; shares <= POSITIONS.length; shares += 1) {
+    if (shares >= least) count += ways * sharing ** shares * (pairs - sharing) ** (POSITIONS.length - shares);
+    ways = (ways * (POSITIONS.length - shares)) / (shares + 1);
+  }
+  return count;
+};
+/** An assignment by its index n (from 0), spelled as contextReading's mismatched entries spell one: per call, its four requests' kinds, the request at slot call * 4 + position holding the kind whose index is that slot's base-4 digit of n (wb-vuoz cut #5: the context controls name the assignments they flag first by index). */
+const spelledAssignment = (index: number): string =>
+  CALLS.map((label, call) => `${label} ${POSITIONS.map((_, at) => SERIAL_KINDS[Math.floor(index / SERIAL_KINDS.length ** (call * POSITIONS.length + at)) % SERIAL_KINDS.length] ?? "").join(", ")}`).join("; ");
+/** A context misreader reading the shared id at `index` with an x after it, wherever that many ids are shared (wb-vuoz cut #5). */
+const sharedMisspelledAt = (index: number): SerialReader =>
+  misreading(reading => (reading.shared.length > index ? { ...reading, shared: reading.shared.map((id, at) => (at === index ? `${id}x` : id)) } : reading));
+/** One of A3's context controls (wb-vuoz cut #5). */
+type ContextMisreader = {
+  /** The misreader contextReading reads in serialOf's place. */
+  readonly read: SerialReader;
+  /** In how many assignments it reads otherwise than the reading constructed from the kinds alone: the assignments its context holds, counted arithmetically. */
+  readonly misread: number;
+  /** The first four of those assignments in contextReading's order, by index (spelledAssignment spells each). */
+  readonly flagged: readonly number[];
+};
+/**
+ * A3's context controls (wb-vuoz cut #5; ruling R-B550's negative controls): seventeen misreaders, each the reading
+ * constructed from the planted requests' kinds (misreading) with one deviation where its context holds, which A3 has
+ * contextReading read in serialOf's place under F1 at 187 then 188; each must be read otherwise in exactly the
+ * assignments its context holds (misread, counted arithmetically), the first four of them in contextReading's order
+ * (flagged, by index). The gate's witness forms X01 to X05 (refusal #4: each misreads
+ * by the kinds of the requests around it) open the table, then an own request read not carried beside a neither request
+ * (the carried tallies hold every request's reading by kind besides); the other eleven alter what no tally holds, wherever
+ * the alteration can occur: the shared ids' order (reversed where two or more are shared), the id at each index (with an
+ * x after it where that index is shared: the shared tallies count membership per position, which a reading keyed on its
+ * context can keep while it changes an id) and their count (the last dropped where one or more are), and, in every
+ * assignment, the two calls' rows (a third), each call's row length (one value longer), and the name's count (twice) and
+ * spelling (an x after it).
+ */
+const CONTEXT_MISREADERS: Readonly<Record<string, ContextMisreader>> = {
+  // In the second call, a both request reads carried where the first call's request one position on is of the own kind: three request pairs, each flagged by one kind pair.
+  "X01's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && kindOf(1, at) === "both" && kindOf(0, at + 1) === "own"))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 3) * (KIND_PAIRS - 1) ** 3,
+    flagged: [512, 513, 514, 515],
+  },
+  // The same where the first call's request two positions on is of the own kind: two request pairs.
+  "X02's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && kindOf(1, at) === "both" && kindOf(0, at + 2) === "own"))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 2) * (KIND_PAIRS - 1) ** 2,
+    flagged: [512, 513, 514, 515],
+  },
+  // The second call's last request, of the both kind, reads carried where the first call's first is of the own kind: one request pair.
+  "X03's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && at === row.length - 1 && kindOf(1, at) === "both" && kindOf(0, 0) === "own"))) })),
+    misread: ASSIGNMENTS / KIND_PAIRS,
+    flagged: [32768, 32772, 32776, 32780],
+  },
+  // In either call, from the third position on, a both request reads carried where the request two before is of the other or the neither kind: four request pairs, each flagged by two kind pairs.
+  "X04's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (at >= 2 && kindOf(call, at) === "both" && (kindOf(call, at - 2) === "other" || kindOf(call, at - 2) === "neither")))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 4) * (KIND_PAIRS - 2) ** 4,
+    flagged: [33, 35, 37, 39],
+  },
+  // The shared ids read in reverse where two or more are shared and the first call holds a request of the own kind: those sharing two or more, less those among them whose first call holds no own request (one kind pair of the twelve left shares).
+  "X05's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, shared: reading.shared.length > 1 && POSITIONS.some((_, at) => kindOf(0, at) === "own") ? [...reading.shared].reverse() : reading.shared })),
+    misread: sharingAtLeast(2, KIND_PAIRS, 2) - sharingAtLeast(2, KIND_PAIRS - SERIAL_KINDS.length, 1),
+    flagged: [5, 17, 20, 21],
+  },
+  // An own request at the first call's first or second position reads not carried where the second call's first request is of the neither kind: those assignments, less those whose first call's first two requests are both of another kind.
+  "an own request unread": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value && !(call === 0 && at < 2 && kindOf(1, 0) === "neither"))) })),
+    misread: ASSIGNMENTS / SERIAL_KINDS.length - (ASSIGNMENTS / SERIAL_KINDS.length ** 3) * (SERIAL_KINDS.length - 1) ** 2,
+    flagged: [768, 769, 770, 771],
+  },
+  // The shared ids read in reverse wherever two or more are shared.
+  "the shared ids reversed": {
+    read: misreading(reading => (reading.shared.length > 1 ? { ...reading, shared: [...reading.shared].reverse() } : reading)),
+    misread: sharingAtLeast(2, KIND_PAIRS, 2),
+    flagged: [5, 17, 20, 21],
+  },
+  // The id at each index of the shared ids misspelled wherever that index is shared: every assignment sharing at least one, two, three or four positions.
+  "the first shared id misspelled": { read: sharedMisspelledAt(0), misread: sharingAtLeast(1, KIND_PAIRS, 2), flagged: [1, 4, 5, 6] },
+  "the second shared id misspelled": { read: sharedMisspelledAt(1), misread: sharingAtLeast(2, KIND_PAIRS, 2), flagged: [5, 17, 20, 21] },
+  "the third shared id misspelled": { read: sharedMisspelledAt(2), misread: sharingAtLeast(3, KIND_PAIRS, 2), flagged: [21, 69, 81, 84] },
+  "the fourth shared id misspelled": { read: sharedMisspelledAt(3), misread: sharingAtLeast(4, KIND_PAIRS, 2), flagged: [85, 340, 1105, 1360] },
+  // The last shared id dropped wherever one or more are shared: every assignment but those sharing none.
+  "the last shared id dropped": {
+    read: misreading(reading => (reading.shared.length > 0 ? { ...reading, shared: reading.shared.slice(0, -1) } : reading)),
+    misread: sharingAtLeast(1, KIND_PAIRS, 2),
+    flagged: [1, 4, 5, 6],
+  },
+  // A third row of carried, the second call's again, in every assignment.
+  "an extra carried row": {
+    read: misreading(reading => ({ ...reading, carried: [...reading.carried, reading.carried[1] ?? []] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The first call's row one value longer, a fifth value not carried, in every assignment.
+  "the first call's row one value longer": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 0 ? [...row, false] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The second call's row one value longer, a fifth value not carried, in every assignment.
+  "the second call's row one value longer": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 1 ? [...row, false] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The name named twice, in every assignment.
+  "the name twice": {
+    read: misreading(reading => ({ ...reading, named: [...reading.named, ...reading.named] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The name read with an x after it, in every assignment.
+  "the name misspelled": {
+    read: misreading(reading => ({ ...reading, named: reading.named.map(entry => `${entry}x`) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+};
 /** One case of A3's decision records over a record (wb-kbh1 cut #3): one handed decision per entry of `fellows`, each a permit of its own minted for the recorded request at that position, but the one at `foreignAt`, when set, minted for `stranger`'s request the record does not hold (a candidate's, or the request at `base` in a derived form). */
 type DecisionCase = { readonly key: string; readonly fellows: readonly number[]; readonly base: number; readonly foreignAt?: number; readonly stranger?: string };
 /**
@@ -2356,15 +2578,22 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests in plantedId's form or in a drive page's (serials 7 then 8), a request at any position of either call, in the contexts these plants hold it in (the rotations' cyclic order of the kinds, each page's calls in one form throughout), reads carried when its third segment is that call's serial, alone or before 9 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000 (neither, D02's page), or its third and fourth segments are the two calls' serials, in either order (both, D01's page, the ids both calls were returned); on D03's to D06's pages (wb-vuoz), a request carrying its call's serial third reads carried when the next serial it carries as the last of seven segments (D03's), the first of seven (D04's) or the fifth of eight (D05's) is not the other call's (the second call) and not carried when it is (the first call), and a request carrying its serial only as the third segment's leading part reads not carried in either call (D06's); each planted id both calls were returned, at any positions, reads shared, in the first call's order, and an id only one call was returned, twice, does not; each name the planted ids carry as their second segment, at any position of either call, reads named once, in the order first named (a serial reading keyed on a request's context in a context no plant spells is NOT CLAIMED; at 187 then 188 the context plants read every context of the four kinds)").toEqual(
       Object.fromEntries(Object.entries(plants).map(([label, { returned, reading }]) => [label, { returned, ...reading }])),
     );
+    const controls = Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, contextReading(candidates, THREE_DIGIT_SERIALS, "F1", control.read)]));
+    expect(
+      Object.fromEntries(Object.entries(controls).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }])),
+      "wb-vuoz cut #5 context controls: under F1 at serials 187 then 188, contextReading, reading each of the seventeen context misreaders in serialOf's place (each the reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it; the shared ids reversed wherever two or more are shared, the id at each index misspelled wherever that index is shared, the last dropped wherever one or more are; a third row, each call's row one value longer, the name twice, the name misspelled, in every assignment), hands it 65536 assignments, 65536 distinct, reads each misreader otherwise in exactly the assignments its context holds, counted arithmetically, and records first the four constructed for it, in contextReading's order",
+    ).toEqual(Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }])));
     const contexts = Object.fromEntries(DRIVE_NAMES.map(name => [name, contextReading(candidates, THREE_DIGIT_SERIALS, name)]));
     const everyAssignment = SERIAL_KINDS.length ** (CALLS.length * candidates.length);
     const constructedContexts = {
       assignments: everyAssignment,
+      distinct: everyAssignment,
       carried: Object.fromEntries(CALLS.map(label => [label, Object.fromEntries(POSITIONS.map(position => [position, Object.fromEntries(SERIAL_KINDS.map(kind => [kind, kind === "own" ? everyAssignment / SERIAL_KINDS.length : 0]))]))])),
       shared: Object.fromEntries(POSITIONS.map(position => [position, (2 * everyAssignment) / SERIAL_KINDS.length ** 2])),
+      misread: 0,
       mismatched: [],
     };
-    expect(contexts, "wb-vuoz cut #4 context plants: at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are read in every one of the 65536 assignments of the four kinds to the eight requests: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), in the first call's order; the name reads named once; and no assignment reads otherwise (a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
+    expect(contexts, "wb-vuoz cut #4 context plants (the distinct and misread counts wb-vuoz cut #5's): at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are handed to the serial reading in 65536 assignments, 65536 distinct lists of the eight invocationIds, so in every one of the 65536 assignments of the four kinds to the eight requests, each once: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), in the first call's order and no other; the name reads named once; and no assignment reads otherwise (misread 0: each assignment's whole reading checked against the reading constructed from its kinds alone; a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
     const threeDigitPlants = serialPlants(candidates, THREE_DIGIT_SERIALS);
     const threeDigitSerialPlanted = Object.fromEntries(
       Object.entries(threeDigitPlants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), THREE_DIGIT_SERIALS) }]),
@@ -2486,6 +2715,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       serialPlantsByName: serialPlantsUnderNames,
       threeDigitSerialPlantsByName: threeDigitSerialPlantsUnderNames,
       contextPlants: contexts,
+      contextControls: controls,
     };
   },
   A4: () => {
@@ -2707,6 +2937,25 @@ describe(SUITE, () => {
     expect(ECHOED).toEqual(["scope", "principal", "target", "action", "invocationId", "requestedAt"]);
     expect(POSITIONS).toEqual(["first", "second", "third", "last"]);
     expect(CALLS).toEqual(["first call", "second call"]);
+    expect(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => `${label}:${misread}:${flagged.join(",")}`)).toEqual([
+      "X01's form:11536:512,513,514,515",
+      "X02's form:7936:512,513,514,515",
+      "X03's form:4096:32768,32772,32776,32780",
+      "X04's form:27120:33,35,37,39",
+      "X05's form:4397:5,17,20,21",
+      "an own request unread:7168:768,769,770,771",
+      "the shared ids reversed:5168:5,17,20,21",
+      "the first shared id misspelled:27120:1,4,5,6",
+      "the second shared id misspelled:5168:5,17,20,21",
+      "the third shared id misspelled:464:21,69,81,84",
+      "the fourth shared id misspelled:16:85,340,1105,1360",
+      "the last shared id dropped:27120:1,4,5,6",
+      "an extra carried row:65536:0,1,2,3",
+      "the first call's row one value longer:65536:0,1,2,3",
+      "the second call's row one value longer:65536:0,1,2,3",
+      "the name twice:65536:0,1,2,3",
+      "the name misspelled:65536:0,1,2,3",
+    ]);
     expect(Object.keys(STRING_FORMS)).toEqual(["gaining a final ~", "gaining a leading ~", "in another case", "without its last character", "without its first character"]);
     expect(Object.keys(MIXES)).toEqual(["the other request's invocationId", "the other request's target", "the principal's role dropped"]);
     expect(ORDERS).toEqual({ snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] });
