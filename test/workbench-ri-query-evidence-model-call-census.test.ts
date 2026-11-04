@@ -67,19 +67,37 @@
  * CLAIMED, THE GATE and the findingsOf doc still claimed and for THE READ SET's wide-probe cap words, is removed; CARRIER
  * CUT #4 states the narrowed claim.)
  *
- * CARRIER CUT #4 (wb-km7q.13 refusal #3, O:1875, and R-B396: the rule-19 structural exit, its child wb-km7q.18; this cut is
- * the FAIL-CLOSED CORE, the final cut). The census claims exactly the fail-closed subset its pins hold: C1's reading of a
- * module is claimed only for THE PINNED TEXTS, each read as a whole module at the place its pin writes it (READINGS THE READ
- * SET), and THE READ SET's probes claim only their own readings. Refusal #3's six realized members are NOT CLAIMED by this
- * census and carried by wb-km7q.18: GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and GP9-SEAM-GENERATED
+ * CARRIER CUT #4 (wb-km7q.13 refusal #3, O:1875, and R-B396: the rule-19 structural exit, its child wb-km7q.18; that cut was
+ * the FAIL-CLOSED CORE, wb-km7q.13's final cut). The census claims exactly the fail-closed subset its pins hold: C1's reading
+ * of a module is claimed only for THE PINNED TEXTS, each read as a whole module at the place its pin writes it (READINGS THE
+ * READ SET), and THE READ SET's probes claim only their own readings. At that cut refusal #3's six realized members were NOT
+ * CLAIMED and carried by wb-km7q.18: GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and GP9-SEAM-GENERATED
  * (findingsOf reading nothing of a module whose text opens with #!, holds a carriage return before a line feed, opens with
  * U+FEFF, holds a NUL character or holds an @generated marker) and GP9-S-SEGCAP6 (readSubjects reading only a text's first
- * six segments). Each still reads 0 failed | 9 passed, and with its paired real-tree twin planted this census reds 3 failed
- * | 6 passed (C1, C2, records) while the member stays at 0 | 9 (measured at this cut). The words that claimed them are
+ * six segments); each read 0 failed | 9 passed, and with its paired real-tree twin planted the census red 3 failed | 6
+ * passed (C1, C2, records) while the member stayed at 0 | 9 (measured at that cut). The words that claimed them were
  * narrowed: row C1, CLAIMED, THE GATE, THE READ SET, the findingsOf, readSubjects, textSubjects and coverageProbesOf docs and
- * seamReading's manifest comment. Refusal #3's three survivors in NOT CLAIMED scope (GP9-W-CASE-AFTER2, GP9-J-FUSED-LEN20
- * and GP9-F-PAIR-NEXT-ONLY-COMMENT) stay NOT CLAIMED. Comments only: no code line, row, pin, witness, test title or roster
- * byte changes at this cut.
+ * seamReading's manifest comment; refusal #3's three survivors in NOT CLAIMED scope (GP9-W-CASE-AFTER2, GP9-J-FUSED-LEN20
+ * and GP9-F-PAIR-NEXT-ONLY-COMMENT) stayed NOT CLAIMED. That cut changed comments only; EXIT CHILD CUT below pins all nine.
+ *
+ * EXIT CHILD CUT (wb-km7q.18: the rule-19 structural-exit child R-B396 filed at wb-km7q.13's refusal #3, O:1875, with the
+ * R739 terminal enumerate obligations; its first cut). Refusal #3's six realized members (O:1875 U1 and U2) and its three
+ * survivors in NOT CLAIMED scope (F4) are pinned red-first: each member reads 0 failed | 9 passed on the cut #4 bytes and
+ * reds this census 2 failed | 7 passed (C1, records) on these (measured at this cut). Each new plant is its gate twin's text
+ * verbatim (gate-prep-9's twins). GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and GP9-SEAM-GENERATED red
+ * through the content plants shebangLead, crlfLines, bomLead, nulContent and generatedMarker, and GP9-SEAM-SHEBANG also
+ * through THE READ SET's content mirror (contentMirrorOf, the cure O:1875 U1 names: each listed module's own text, a line
+ * feed and PROBE_SUBJECT at its listed path, the '#!'-led qa/workbench modules the live tree lists among them);
+ * GP9-S-SEGCAP6 through the arrayTail plant and THE READ SET's segmented probe (the cure O:1875 U2 names: a line whose
+ * subject lies past more segments than any listed line holds, sized at every run; its twin coverage-segmented-lead.ts holds
+ * a cap on a line's last segments); GP9-W-CASE-AFTER2 through the WORDS sweep's leadLowerOrDigit
+ * class (its a member spells the twin's segment aQuery view), GP9-J-FUSED-LEN20 through fusedLong and
+ * GP9-F-PAIR-NEXT-ONLY-COMMENT through templateContinued. The control GP9-SR-SHEBANG (the '#!' predicate in seamReading)
+ * reds through the coverage tree's shebangLead module and the content mirror. The words cut #4 narrowed now name these
+ * rows, each form claimed only as its row spells it (READINGS WORDS, SUBJECTS, SEGMENTS and THE READ SET, and the
+ * findingsOf, readSubjects and coverageProbesOf docs); every other form stays NOT CLAIMED. The reader's own code (wordsOf
+ * through seamReading) is unchanged at this cut; the C1 runner adds the eight plants, the sweep class, the two segmented
+ * probes (coverageProbesOf) and the content mirror, read through seamReading in a scratch git repository of its own.
  *
  * PINNED READER SET (this file, describe "wb-km7q.8 query evidence and model calls: the adoption-time falsifier
  * (INF-RQ1..INF-RQ5)"; each pin case's output is held to its witness in test/fixtures/ri-query-evidence-model-call-roster.json;
@@ -101,9 +119,9 @@
  * - "B2 retains the QueryView source witness as typed provenance" asserts witnessViolations over the retained witness and each
  *   hollowing fixture, with R-SAME-VALUE's quiet row; observed pass.
  * - "C1 If Pi ever composes ..." asserts the live seam ABSENT, the read set's extensions, the seam reading over a planted git
- *   tree, the reader's listing of the live tree, the live seam recomputed apart and the seam reading over THE READ SET's
- *   coverage tree, each reader plant PRESENT, each member of the WORDS sweep and of the SEGMENTS sweep read, each quiet row
- *   and each role place; observed pass.
+ *   tree, the reader's listing of the live tree, the live seam recomputed apart, the seam reading over THE READ SET's
+ *   coverage tree and over its content mirror, each reader plant PRESENT, each member of the WORDS sweep and of the SEGMENTS
+ *   sweep read, each quiet row and each role place; observed pass.
  * - "C2 (gated INF-RQ1..INF-RQ5)" asserts every vendored line's sha256, the range ids, producerGateOf NOT-PASSED, gateOf CLOSED
  *   and the near misses; observed pass.
  * - "records: ..." asserts that every pin ran once to its witness, that every named residual has a quiet row in a pin's
@@ -191,32 +209,36 @@
  * - WORDS (claimed at the C1 plants and the WORDS sweep named here, each read as the plant spells it; wb-km7q.13 cut #3,
  *   O:1829 U2): a break at a change from a lower-case letter or a digit to a capital, and before the last capital of a
  *   capital run that a capitalized word follows, then lower case and the runs of a-z. Each break is claimed at the plant
- *   that spells it, which reads its subject only while that break holds: the title's names (ReactiveQuerySDK reads reactive
- *   query sdk: the vocabulary the C1 witness holds), snake (reactive_inference reads reactive inference: lower case and the
- *   runs of a-z), capitalRun (InferenceSDKQuery: the break before the Q after the run SDK), casePair (dataReactiveQuery: the
- *   change from a to R) and runPair (ABCInference SDK: the break before the I after the run ABC). The WORDS sweep (held to
- *   the roster as the members whose plant reads its subject) claims each member of each class at the one partner its plant
- *   spells, the first change or run of its segment: each of a-z and 0-9 before the Q of Query (afterLowerOrDigit: X, the
- *   member, then Query view), each of A-Z after the w of view (beforeCapital: Query view, the member, then x), each of A-Z
- *   as the last capital of a run, there a run of one, before the Qu of Query (runLast: the member, then Query view), each
- *   of A-Z as the capital that opens the word after the run VIEW, x its second letter (runNext: Query VIEW, the member, then
- *   x) and each of a-z as the second letter of the word that K opens after the run VIEW (runNextSecond: Query VIEWK, then
- *   the member). A second change and a second run in one segment break too where a plant spells them: identifier
- *   (reactiveInferenceClient, its second change, before Client) and capitalRunSecond ("IOStream XQuery view", its second
- *   run, before Query). NOT CLAIMED by this census: a member of a class at any partner but the one its plant spells (a
- *   change from a letter or digit to any capital, or a run's break before any word, but those the plants above spell, among
- *   them), a break that a plant's fused reading holds either way (the change from e to Q of dataReactiveQuery and from e to
- *   S of InferenceSDKQuery, among them), a third or later change or run in one segment, any second one but those two plants
- *   spell, and whether a digit, or a letter that no vocabulary word holds, is read inside a word's run.
+ *   that spells it, which reads its subject only while that break holds: the title's names (ReactiveQuerySDK reads
+ *   reactive query sdk: the vocabulary the C1 witness holds), snake (reactive_inference reads reactive inference: lower
+ *   case and the runs of a-z), capitalRun (InferenceSDKQuery: the break before the Q after the run SDK), casePair
+ *   (dataReactiveQuery: the change from a to R) and runPair (ABCInference SDK: the break before the I after the run ABC).
+ *   The WORDS sweep (held to the roster as the members whose plant reads its subject) claims each member of each class at
+ *   the one partner its plant spells, the first change or run of its segment: each of a-z and 0-9 before the Q of Query
+ *   (afterLowerOrDigit: X, the member, then Query view), each of a-z and 0-9 opening its segment before the Q of Query
+ *   (leadLowerOrDigit: the member, then Query view; wb-km7q.18, O:1875 F4), each of A-Z after the w of view
+ *   (beforeCapital: Query view, the member, then x), each of A-Z as the last capital of a run, there a run of one, before
+ *   the Qu of Query (runLast: the member, then Query view), each of A-Z as the capital that opens the word after the run
+ *   VIEW, x its second letter (runNext: Query VIEW, the member, then x) and each of a-z as the second letter of the word
+ *   that K opens after the run VIEW (runNextSecond: Query VIEWK, then the member). A second change and a second run in one
+ *   segment break too where a plant spells them: identifier (reactiveInferenceClient, its second change, before Client)
+ *   and capitalRunSecond ("IOStream XQuery view", its second run, before Query). NOT CLAIMED by this census: a member of a
+ *   class at any partner but the one its plant spells (a change from a letter or digit to any capital, or a run's break
+ *   before any word, but those the plants above spell, among them), a member after any text of its segment but the one its
+ *   plant spells (a lower-case letter after a space, x aQuery view, among them; wb-km7q.18), a break that a plant's fused
+ *   reading holds either way (the change from e to Q of dataReactiveQuery and from e to S of InferenceSDKQuery, among
+ *   them), a third or later change or run in one segment, any second one but those two plants spell, and whether a digit,
+ *   or a letter that no vocabulary word holds, is read inside a word's run.
  * - SUBJECTS (never a literal here: vocabularyOf derives them from the bead title): the title's CamelCase names
  *   (ReactiveQuerySDK, ReactiveInferenceSDK, QueryView) cut into words; the subject words are what one SDK-suffixed name spells
  *   and the other does not (query, inference); the vocabulary is every adjacent word pair of a name holding a subject word
  *   (reactive query, query sdk, query view, reactive inference, inference sdk), held by the C1 witness. Claimed readings,
  *   each as the plant named spells it: the pairs reactive query (splitLine), query view (comment), reactive inference
  *   (identifier, snake) and inference sdk (inferenceSdk, splitBlock) read as adjacent words, each of the five pairs, query
- *   sdk among them, read on its own as the SEGMENTS sweep spells it (wb-km7q.13 cut #3), and the fused word
- *   reactivequerysdk reads query (fused). NOT CLAIMED by this census: the fused reading of any word but reactivequerysdk
- *   (among them a word holding reactivequery or querysdk elsewhere in it, and a fused queryview, reactiveinference or
+ *   sdk among them, read on its own as the SEGMENTS sweep spells it (wb-km7q.13 cut #3), and the fused words
+ *   reactivequerysdk (fused) and myreactivequerysdkclient (fusedLong: 24 letters holding reactivequery and querysdk;
+ *   wb-km7q.18, O:1875 F4) read query. NOT CLAIMED by this census: the fused reading of any word but those two (among them
+ *   another word holding reactivequery or querysdk elsewhere in it, and a fused queryview, reactiveinference or
  *   inferencesdk). A word alone (query, inference, view) reads no subject as the quiet rows projectionQuery and
  *   typeInference spell it (Pi's projection answers query(), and "type inference" is prose); a word alone in any other
  *   spelling is NOT CLAIMED by this census.
@@ -236,42 +258,69 @@
  *   and each join on its own in a plant that spells two; "?" or ":" in any spelling but those two quiet rows'; whether a
  *   digit, a non-ASCII letter or white space other than a space joins one; and whether any character other than "?" and
  *   ":" ends one. A pair split across one line break is read at its first line, the two lines joined by a space, when the
- *   next line opens with the comment marker // (splitLine), /* (blockContinued), * (splitBlock) or # (hashContinued); the
- *   space keeps a capital-run word at a line's end apart from the next line's first word (capsContinued: REACTIVE, then
- *   query on the next line). A pair split by more than one line break, and a continued pair in any spelling but those
- *   plants hold, are NOT CLAIMED by this census.
- * - THE READ SET (C1; claimed at the rows named here, each as the row spells it; wb-km7q.13 cut #4, the fail-closed core):
- *   the reader's listing of the live tree (listedCode) equals the read set listed apart (readSetListedApart: git's own listing
- *   of every tracked, or untracked and not ignored, file, filtered by its own spelling of the eight extensions, the three code
- *   roots and the root; the listing's falsifier), and the live seam's reading equals its reading recomputed apart from
- *   seamReading (findingsOf over each listed module's text, then manifestFindings and findingsOf over the root package.json;
- *   the live reading's falsifier), so each module the live tree lists is read as findingsOf reads its text. What findingsOf
- *   reads of a module is claimed only for THE PINNED TEXTS, each read as a whole module at the place its pin writes it, each
- *   reading held to the roster's C1 witness (its falsifier): PROBE_SUBJECT (`export const engine = "reactive-query-sdk";` and
- *   a line feed) at every listed path (the mirror, each reading query on its line 1) and at one path per extension (.d.ts
- *   among them) below each code root and at the root (the matrix, each reading query); each C1 code plant's text at
- *   src/plants/<plant>.ts, and the WORDS sweep's and the SEGMENTS sweep's texts at src/plants/wordsSweep.ts and
- *   src/plants/segmentsSweep.ts, each reading as findingsOf reads that text as src/plant.ts; three probes below src/, sized at
- *   every run from the listed texts and each reading query: coverage-long.ts, one line longer than the longest listed module,
- *   PROBE_SUBJECT on its last line; coverage-large.ts, larger than the largest listed module, PROBE_SUBJECT after that many
- *   bytes; and coverage-wide.ts, a single line wider than the widest listed line, PROBE_SUBJECT's text at its end and no line
- *   break after it (so the line-pair reading never holds it); and the planted tree's modules (a one-line engine export at
- *   src/tracked.ts, src/untracked.ts, qa/q.mjs, examples/e.tsx and root.ts) and its package.json (a subject on a script line
- *   and in a dependency name), as row C1 names them. The mirror, the matrix, the plant and sweep modules and the three probes
- *   are THE READ SET's coverage tree (coverageProbesOf), a scratch git repository built at every run from the listing and its
- *   texts and read through seamReading where the live tree spells no subject. C1's plants and quiet rows are claimed as C1
- *   reads them directly (findingsOf as src/plant.ts, manifestFindings over each manifest plant, selectCode over
- *   R-OUTSIDE-ROOTS' paths). NOT CLAIMED by this census (wb-km7q.13 cut #4; refusal #3's realized members, O:1875 U1 and U2,
- *   are carried by wb-km7q.18): what findingsOf or manifestFindings reads of any text but THE PINNED TEXTS, or of a pinned
- *   text at any other place or inside another module's text; a listed module's own content, since the mirror spells
- *   PROBE_SUBJECT at each listed path and never the module's own text, so a reading that drops, cuts or changes a listed
- *   module, or a line or a segment of it, for what its own text holds (a first line opening #!, a carriage return, a U+FEFF
- *   lead, a NUL character or an @generated marker: GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and
- *   GP9-SEAM-GENERATED, among them) or for where it sits; and which reader edits the probes hold beyond each probe's own
- *   reading: a cap on how many segments of a text (GP9-S-SEGCAP6, the first six), words of a segment or subjects of a text
- *   are read, a cap on a line's decoded reading or on a line-pair reading (the wide probe carries neither an escape nor a
- *   pair), a cap on one segment's or one word's width (wb-km7q.13 cut #3, O:1829 F4), and a cap or a skip that turns on a
- *   module's text or place, among them.
+ *   next line opens with the comment marker // (splitLine), /* (blockContinued), * (splitBlock) or # (hashContinued), and
+ *   when it opens with none as templateContinued spells it (a template literal's handed to the reactive, then query engine
+ *   on the next line; wb-km7q.18, O:1875 F4); the space keeps a capital-run word at a line's end apart from the next line's
+ *   first word (capsContinued: REACTIVE, then query on the next line). A pair split by more than one line break, and a
+ *   continued pair in any spelling but those plants hold, are NOT CLAIMED by this census.
+ * - THE READ SET (C1; claimed at the rows named here, each as the row spells it; wb-km7q.13 cut #4, the fail-closed core,
+ *   and wb-km7q.18): the reader's listing of the live tree (listedCode) equals the read set listed apart
+ *   (readSetListedApart: git's own listing of every tracked, or untracked and not ignored, file, filtered by its own
+ *   spelling of the eight extensions, the three code roots and the root; the listing's falsifier), and the live seam's
+ *   reading equals its reading recomputed apart from seamReading (findingsOf over each listed module's text, then
+ *   manifestFindings and findingsOf over the root package.json; the live reading's falsifier), so each module the live
+ *   tree lists is read as findingsOf reads its text. What findingsOf reads of a module is claimed only for THE PINNED
+ *   TEXTS, each read as a whole module at the place its pin writes it, each reading held to the roster's C1 witness (its
+ *   falsifier): PROBE_SUBJECT (`export const engine = "reactive-query-sdk";` and a line feed) at every listed path (the
+ *   mirror, each reading query on its line 1) and at one path per extension (.d.ts among them) below each code root and at
+ *   the root (the matrix, each reading query); each C1 code plant's text at src/plants/<plant>.ts, and the WORDS sweep's
+ *   and the SEGMENTS sweep's texts at src/plants/wordsSweep.ts and src/plants/segmentsSweep.ts, each reading as findingsOf
+ *   reads that text as src/plant.ts; five probes below src/, sized at every run from the listed texts and each reading
+ *   query: coverage-long.ts, one line longer than the longest listed module, PROBE_SUBJECT on its last line;
+ *   coverage-large.ts, larger than the largest listed module, PROBE_SUBJECT after that many bytes; coverage-wide.ts, a
+ *   single line wider than the widest listed line, PROBE_SUBJECT's text at its end and no line break after it (so the
+ *   line-pair reading never holds it); and coverage-segmented.ts and coverage-segmented-lead.ts (wb-km7q.18), each a
+ *   single line of PROBE_SUBJECT's text and one-letter segments, one more of them than the widest listed line's
+ *   compatibility fold has characters, the segments before the text in the first (each ended by "(") and after it in the
+ *   second (each opened by "("), and no line break after either (a line holds at most one segment more than its fold has
+ *   characters, so the first probe's subject lies past as many segments as any listed line holds and the second's has that
+ *   many behind it); the planted tree's modules (a one-line engine export at src/tracked.ts, src/untracked.ts, qa/q.mjs,
+ *   examples/e.tsx and root.ts) and its package.json (a subject on a script line and in a dependency name), as row C1
+ *   names them; and the content mirror (wb-km7q.18): every listed path holding that module's own text, then a line feed
+ *   and PROBE_SUBJECT, each copy reading query on PROBE_SUBJECT's line (one past the line feeds the module's text holds
+ *   and the one added, counted apart from findingsOf) and nothing else, held to the roster as the copies that read
+ *   otherwise (none). The mirror, the matrix, the plant and sweep modules and the five probes are THE READ SET's coverage
+ *   tree (coverageProbesOf), and the content mirror (contentMirrorOf) is a second tree, each a scratch git repository
+ *   built at every run from the listing and its texts and read through seamReading where the live tree spells no subject.
+ *   C1's plants and quiet rows are claimed as C1 reads them directly (findingsOf as src/plant.ts, manifestFindings over
+ *   each manifest plant, selectCode over R-OUTSIDE-ROOTS' paths). So a reading that drops a module whose text one of THE
+ *   PINNED TEXTS spells, or cuts its reading short of that text's subject, reds this census (wb-km7q.18; refusal #3's
+ *   realized members, O:1875 U1 and U2, each pinned): the content plants hold a module dropped for a #!/usr/bin/env node
+ *   first line (shebangLead), a carriage return before each line feed (crlfLines), a U+FEFF lead (bomLead), a NUL
+ *   character in a string (nulContent) or a // @generated by a tool line (generatedMarker), each beside PROBE_SUBJECT's
+ *   line and each as its plant spells it (GP9-SEAM-SHEBANG, GP9-SEAM-CRLF, GP9-SEAM-BOM, GP9-SEAM-NUL and
+ *   GP9-SEAM-GENERATED); the content mirror holds a listed module's copy dropped, or its reading cut short of
+ *   PROBE_SUBJECT's line, for what the copy holds or where it sits (GP9-SEAM-SHEBANG and GP9-SR-SHEBANG through the
+ *   '#!'-led qa/workbench modules the live tree lists, among them); and the segmented probes hold a cap that reads only
+ *   the first segments of a line's written reading (coverage-segmented.ts) or only its last (coverage-segmented-lead.ts),
+ *   each at every count up to the most segments a listed line holds, and arrayTail a cap that reads only its first
+ *   segments at every count below ten (GP9-S-SEGCAP6, the first six, among them). NOT CLAIMED by this census: what
+ *   findingsOf or manifestFindings reads of any text but THE PINNED TEXTS, or of a pinned text at any other place or
+ *   inside another module's text; what findingsOf reads of a listed module's own lines (a copy holds a subject only on
+ *   PROBE_SUBJECT's line after them, so a line, a pair or a segment of a module's own text dropped, cut or changed for
+ *   what it holds or where the module sits, while its copy's PROBE_SUBJECT line still reads, is not held); a reading keyed
+ *   on what a copy does not share with its module's text (how the text ends, its length or its count of lines, which the
+ *   added line feed and PROBE_SUBJECT change, among them); each content form in any spelling but its plant's, or at any
+ *   place but its plant's and a content-mirror copy's (another interpreter line after #!, a lone carriage return, a U+FEFF
+ *   anywhere but a text's start, and a NUL character or an @generated marker on a subject's own line, among them); and
+ *   which reader edits the probes hold beyond each probe's own reading: any other selection of a line's segments (both
+ *   ends at once, a window or a stride, among them), a cap on how many segments are read that spares a line's written
+ *   reading (one on a decoded reading or on a line-pair reading alone, among them), a cap on how many words of a segment
+ *   or subjects of a text are read, a cap on a line's decoded reading or on a line-pair reading (the wide and segmented
+ *   probes carry neither an escape nor a pair), a cap on one segment's or one word's width at which every plant, sweep and
+ *   probe still reads its subject (wb-km7q.13 cut #3, O:1829 F4; fusedLong's 24-letter word reds a cap that skips the
+ *   fused reading of every word of N letters or more, for any N up to 24, GP9-J-FUSED-LEN20's 20 among them), and a cap or
+ *   a skip that turns on a module's text or place, but as the content plants and the content mirror hold it, among them.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
  *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
@@ -366,12 +415,14 @@
  *    the root, a module below docs/ and one below test/, and a package.json whose subject sits on a script line and in a
  *    dependency name, each finding held to the roster) and THE READ SET's rows (the reader's listing of the live tree held to
  *    the read set listed apart and the live seam to its reading recomputed apart from seamReading; the coverage tree's
- *    mirror, matrix, plant modules and long, large and wide probes, each held to the roster); the reader's plants read
- *    PRESENT (among them a dependency name and a dependency spec in each of the four fields, a dependency spec as an npm
- *    alias, a file tarball and a git spec, the escaped, invisible-split, comment-continued, entity, percent, dot- and
- *    slash-joined, fullwidth and capital-run spellings, an escape read as a space and a decoded capital, each between a word
- *    and the pair, a capital-run word continued across a line break, and the second escape, reference, percent escape,
- *    invisible and capital run the Second plants spell, and the case change and the run's break casePair and runPair spell)
+ *    mirror, matrix, plant modules, long, large and wide probes and two segmented probes, and the content mirror's copies,
+ *    each held to the roster); the reader's plants read PRESENT (among them a dependency name and a dependency spec in
+ *    each of the four fields, a dependency spec as an npm alias, a file tarball and a git spec, the escaped, invisible-split,
+ *    comment-continued, entity, percent, dot- and slash-joined, fullwidth and capital-run spellings, an escape read as a
+ *    space and a decoded capital, each between a word and the pair, a capital-run word continued across a line break, and
+ *    the second escape, reference, percent escape, invisible and capital run the Second plants spell, the case change and
+ *    the run's break casePair and runPair spell, and the content plants' modules, arrayTail's tenth segment, fusedLong's
+ *    24-letter fused word and templateContinued's pair on a next line with no comment marker)
  *    and so does each member of the WORDS sweep and of the SEGMENTS sweep (each joining member between the two words of each
  *    vocabulary pair), its quiet rows
  *    (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL, R-SEPARATOR, R-ENCODED, and the case rows lowerUnicode,
@@ -424,9 +475,10 @@
  *
  * Display paths added: none. Test-only: no src file is edited. Scratch directories are allocated only through
  * test/helpers/scratch.ts (makeScratch and removeScratch, the leak guard installed at module scope): one for B1's planted
- * tsconfig.json program and one per plantedSeam reading (C1's planted tree and THE READ SET's coverage tree), each removed
- * in a finally block; the projection, the host and the counting query live in memory, the host's cwd is the repository
- * root (which it only checks), the in-memory plant programs read no file, and every stand-in lives in this file.
+ * tsconfig.json program and one per plantedSeam reading (C1's planted tree, THE READ SET's coverage tree and its content
+ * mirror), each removed in a finally block; the projection, the host and the counting query live in memory, the host's cwd
+ * is the repository root (which it only checks), the in-memory plant programs read no file, and every stand-in lives in
+ * this file.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -665,8 +717,10 @@ function subjectsIn(words: readonly string[], vocabulary: readonly SubjectPair[]
  * them, so `config.query ?? sdkQuery` reads no "query sdk" while "the reactive query engine", "@acme/reactive-query",
  * "reactive.query" and "reactive/query" do; a joining member or an ending character in any other spelling, and what else of
  * the class below joins one beyond the words' own ASCII letters, is NOT CLAIMED. How many of a text's segments, a segment's
- * words or a text's subjects are read is claimed only as THE PINNED TEXTS spell them (READINGS THE READ SET): a cap on any
- * of them (refusal #3's GP9-S-SEGCAP6, the first six segments, carried by wb-km7q.18) is NOT CLAIMED.
+ * words or a text's subjects are read is claimed only as THE PINNED TEXTS spell them (READINGS THE READ SET): a cap that
+ * reads only the first segments of a line's written reading, or only its last, reds a segmented probe at every count up to
+ * the most segments a listed line holds, and arrayTail a cap on its first segments at every count below ten (refusal #3's
+ * GP9-S-SEGCAP6, the first six, among them; wb-km7q.18); every other cap or selection on them is NOT CLAIMED.
  */
 function readSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
   const segments = visibleOf(text).split(/[^\p{L}\p{N}\s_./-]+/u);
@@ -718,9 +772,12 @@ const COMMENT_LEAD = /^\s*(?:\/\/+|\/\*+|\*+|#+)\s?/;
 /**
  * `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line,
  * the two lines joined by a space; READINGS SEGMENTS names the continuations this census claims, one plant each). This census
- * claims it only for THE PINNED TEXTS at their places (READINGS THE READ SET): a module, a line or a pair in any other text or
- * place, a listed module's own content among them (a first line opening #!, a carriage return, a U+FEFF lead, a NUL character
- * or an @generated marker: refusal #3's five whole-module members, carried by wb-km7q.18), is NOT CLAIMED.
+ * claims it only for THE PINNED TEXTS at their places (READINGS THE READ SET), among them refusal #3's five whole-module
+ * forms as the content plants spell them (a #!/usr/bin/env node first line, a carriage return before each line feed, a
+ * U+FEFF lead, a NUL character in a string and a // @generated by a tool line, each beside PROBE_SUBJECT's line;
+ * wb-km7q.18) and each listed module's own text as its content-mirror copy spells it (the text, a line feed, then
+ * PROBE_SUBJECT): a module, a line or a pair in any other text or place, a listed module's own lines among them, is NOT
+ * CLAIMED.
  */
 function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair[]): string[] {
   const lines = text.split(/\r?\n/);
@@ -1599,6 +1656,10 @@ const SOFT_HYPHEN = String.fromCodePoint(0x00ad);
 const GRAPHEME_JOINER = String.fromCodePoint(0x034f);
 /** U+FF0D FULLWIDTH HYPHEN-MINUS: a compatibility form whose NFKC fold is "-". */
 const FULLWIDTH_HYPHEN = String.fromCodePoint(0xff0d);
+/** U+FEFF ZERO WIDTH NO-BREAK SPACE, a byte order mark when it opens a text: a format character visibleOf removes. */
+const BYTE_ORDER_MARK = String.fromCodePoint(0xfeff);
+/** U+0000 NULL: a control character, which ends a segment. */
+const NUL = String.fromCodePoint(0x0000);
 /** A printable ASCII text in its fullwidth compatibility form (each character moved to U+FF01..U+FF5E). */
 function fullwidthOf(text: string): string {
   return [...text].map(character => String.fromCodePoint((character.codePointAt(0) ?? 0) + 0xfee0)).join("");
@@ -1639,15 +1700,19 @@ interface CoverageProbes {
   readonly longLines: number;
   readonly large: string;
   readonly wide: string;
+  readonly segmented: string;
+  readonly segmentedLead: string;
 }
 const PROBE_SUBJECT = 'export const engine = "reactive-query-sdk";\n';
 /**
  * THE READ SET's coverage tree for a live listing and its texts (READINGS THE READ SET): PROBE_SUBJECT at every listed path
- * (the mirror; never the listed module's own text) and at one path per extension (.d.ts among them) below each code root and
- * at the root (the matrix), one module per plant text (each verbatim), a module one line longer than the longest listed
- * module with its subject on its last line, a module larger than the largest with its subject after that many bytes, and a
- * module of one line, wider than the widest listed line, with its subject at the line's end and no line break after it. Each
- * module spells a subject; the package.json spells none.
+ * (the mirror; never the listed module's own text, which the content mirror carries) and at one path per extension (.d.ts
+ * among them) below each code root and at the root (the matrix), one module per plant text (each verbatim), a module one
+ * line longer than the longest listed module with its subject on its last line, a module larger than the largest with its
+ * subject after that many bytes, a module of one line, wider than the widest listed line, with its subject at the line's end
+ * and no line break after it, and two modules of one line each, its subject and one-letter segments, one more of them than
+ * the widest listed line's compatibility fold has characters, the subject at the line's end in the first and at its start
+ * in the second, with no line break after it (wb-km7q.18). Each module spells a subject; the package.json spells none.
  */
 function coverageProbesOf(listed: readonly string[], texts: readonly string[], plantTexts: Readonly<Record<string, string>>): CoverageProbes {
   const tree: Record<string, string> = { "package.json": '{ "name": "km7q13-coverage" }\n' };
@@ -1659,16 +1724,44 @@ function coverageProbesOf(listed: readonly string[], texts: readonly string[], p
   const long = "src/coverage-long.ts";
   const large = "src/coverage-large.ts";
   const wide = "src/coverage-wide.ts";
+  const segmented = "src/coverage-segmented.ts";
+  const segmentedLead = "src/coverage-segmented-lead.ts";
   const longLines = Math.max(...texts.map(text => text.split("\n").length)) + 1;
   const largeBytes = Math.max(...texts.map(text => Buffer.byteLength(text, "utf8"))) + 1;
   const wideWidth = Math.max(...texts.flatMap(text => text.split("\n").map(line => line.length))) + 1;
+  const segmentWidth = Math.max(...texts.flatMap(text => text.split("\n").map(line => line.normalize("NFKC").length))) + 1;
   for (const path of [...listed, ...matrix]) tree[path] = PROBE_SUBJECT;
   for (const [plant, path] of Object.entries(plants)) tree[path] = plantTexts[plant];
   tree[long] = `${"\n".repeat(longLines - 1)}${PROBE_SUBJECT}`;
   tree[large] = `${`${"x".repeat(99)}\n`.repeat(Math.ceil(largeBytes / 100))}${PROBE_SUBJECT}`;
   // No line break after the wide line: the line-pair reading never reaches it, so only the line's own reading holds it.
   tree[wide] = `${"x".repeat(wideWidth)} ${PROBE_SUBJECT.trimEnd()}`;
-  return { tree, mirror: [...listed], matrix, plants, long, longLines, large, wide };
+  // wb-km7q.18: a line's segments number at most one more than the characters of its compatibility fold, so segmentWidth
+  // one-letter segments, each ended by "(", before PROBE_SUBJECT's text put its subject past as many segments as any listed
+  // line holds, and the same segments after it put that many behind it. No line break after either line: only the line's
+  // own reading holds it.
+  tree[segmented] = `${"x(".repeat(segmentWidth)}${PROBE_SUBJECT.trimEnd()}`;
+  tree[segmentedLead] = `${PROBE_SUBJECT.trimEnd()}${"(x".repeat(segmentWidth)}`;
+  return { tree, mirror: [...listed], matrix, plants, long, longLines, large, wide, segmented, segmentedLead };
+}
+interface ContentMirror {
+  readonly tree: Readonly<Record<string, string>>;
+  readonly lines: Readonly<Record<string, number>>;
+}
+/**
+ * THE READ SET's content mirror for a live listing and its texts (READINGS THE READ SET; wb-km7q.18, the cure O:1875 U1
+ * names): every listed path holding that module's own text, then a line feed and PROBE_SUBJECT, whose line is one past the
+ * line feeds the module's text holds and the one added (`lines`, counted here apart from findingsOf). The package.json
+ * spells no subject.
+ */
+function contentMirrorOf(listed: readonly string[], texts: readonly string[]): ContentMirror {
+  const tree: Record<string, string> = { "package.json": '{ "name": "km7q18-content-mirror" }\n' };
+  const lines: Record<string, number> = {};
+  listed.forEach((path, index) => {
+    tree[path] = `${texts[index]}\n${PROBE_SUBJECT}`;
+    lines[path] = texts[index].split("\n").length + 1;
+  });
+  return { tree, lines };
 }
 const BEAD_ROW = beadRow();
 const VOCABULARY = vocabularyOf(BEAD_ROW.title);
@@ -2114,6 +2207,23 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       // (runPair); each reads its subject only while the break between the two holds.
       casePair: 'const n = "dataReactiveQuery";',
       runPair: 'const n = "ABCInference SDK";',
+      // wb-km7q.18 (R-B396; O:1875 U1 and U2): refusal #3's realized members, each plant its gate twin's text verbatim
+      // (gate-prep-9): a module that opens with #! (shebangLead), ends its lines with a carriage return and a line feed
+      // (crlfLines), opens with U+FEFF (bomLead), holds a NUL character (nulContent) or an @generated marker
+      // (generatedMarker), each beside PROBE_SUBJECT's line, and a subject in a line's tenth segment (arrayTail); each content
+      // plant reads its subject only while findingsOf reads a module that holds its form, and arrayTail only while
+      // readSubjects reads a line's tenth segment.
+      shebangLead: `#!/usr/bin/env node\n${PROBE_SUBJECT}`,
+      crlfLines: `// crlf twin\r\n${PROBE_SUBJECT.replace("\n", "\r\n")}`,
+      bomLead: `${BYTE_ORDER_MARK}${PROBE_SUBJECT}`,
+      nulContent: `export const nulTwin = "${NUL}";\n${PROBE_SUBJECT}`,
+      generatedMarker: `// @generated by a tool\n${PROBE_SUBJECT}`,
+      arrayTail: 'export const t = [1, 2, 3, 4, 5, 6, "reactive-query-sdk"];\n',
+      // wb-km7q.18 (O:1875 F4): two of the three escapes refusal #3 found in NOT CLAIMED scope, each plant its gate twin's
+      // text verbatim: a fused word of 24 letters (fusedLong) and a pair continued on a next line that opens with no
+      // comment marker (templateContinued); the WORDS sweep's leadLowerOrDigit class holds the third (GP9-W-CASE-AFTER2).
+      fusedLong: 'export const pkg = "myreactivequerysdkclient";\n',
+      templateContinued: "export const s = `handed to the reactive\nquery engine`;\n",
     };
     const plants: { [key: string]: Json } = {
       ...Object.fromEntries(Object.entries(codePlants).map(([plant, text]) => [plant, read(text)])),
@@ -2132,13 +2242,21 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     // READINGS WORDS, member by member: one plant per member of each class of the case breaks (the WORDS sweep).
     const sweeps: Readonly<Record<string, readonly [string, (member: string) => string]>> = {
       afterLowerOrDigit: [`${LOWER_LETTERS}${DIGITS}`, member => `const n = "X${member}Query view";`],
+      leadLowerOrDigit: [`${LOWER_LETTERS}${DIGITS}`, member => `const n = "${member}Query view";`],
       beforeCapital: [CAPITALS, member => `const n = "Query view${member}x";`],
       runLast: [CAPITALS, member => `const n = "${member}Query view";`],
       runNext: [CAPITALS, member => `const n = "Query VIEW${member}x";`],
       runNextSecond: [LOWER_LETTERS, member => `const n = "Query VIEWK${member}";`],
     };
     const words = Object.fromEntries(Object.entries(sweeps).map(([sweep, [members, plant]]) => [sweep, [...members].filter(member => read(plant(member)).length > 0).join("")]));
-    expect(words).toEqual({ afterLowerOrDigit: `${LOWER_LETTERS}${DIGITS}`, beforeCapital: CAPITALS, runLast: CAPITALS, runNext: CAPITALS, runNextSecond: LOWER_LETTERS });
+    expect(words).toEqual({
+      afterLowerOrDigit: `${LOWER_LETTERS}${DIGITS}`,
+      leadLowerOrDigit: `${LOWER_LETTERS}${DIGITS}`,
+      beforeCapital: CAPITALS,
+      runLast: CAPITALS,
+      runNext: CAPITALS,
+      runNextSecond: LOWER_LETTERS,
+    });
     const sweepText = Object.values(sweeps)
       .flatMap(([members, plant]) => [...members].map(plant))
       .join("\n");
@@ -2207,7 +2325,7 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     expect(live.findings, "the live seam reads as its reading recomputed apart from seamReading").toEqual(apart);
     const seamTexts = { ...codePlants, wordsSweep: sweepText, segmentsSweep: segmentsSweepText };
     const probes = coverageProbesOf(listed, texts, seamTexts);
-    const probePaths = [...probes.matrix, ...Object.values(probes.plants), probes.long, probes.large, probes.wide];
+    const probePaths = [...probes.matrix, ...Object.values(probes.plants), probes.long, probes.large, probes.wide, probes.segmented, probes.segmentedLead];
     expect(probePaths.filter(path => listed.includes(path)), "no probe path is a listed path").toEqual([]);
     const covered = plantedSeam(probes.tree, ["package.json"], VOCABULARY);
     const at = (path: string): string[] => covered.findings.filter(finding => finding.startsWith(`${path}:`)).map(finding => finding.slice(path.length + 1));
@@ -2217,6 +2335,12 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     const throughSeam = Object.fromEntries(Object.keys(seamTexts).map(plant => [plant, at(probes.plants[plant])]));
     const direct = Object.fromEntries(Object.entries(seamTexts).map(([plant, text]) => [plant, read(text).map(finding => finding.slice("src/plant.ts:".length))]));
     expect(throughSeam, "each plant text reads alike as a module of the coverage tree").toEqual(direct);
+    // wb-km7q.18: the content mirror, a scratch git repository of its own: each listed path holds its module's own text, a
+    // line feed and PROBE_SUBJECT, and reads query on PROBE_SUBJECT's line and nothing else (the live seam reads ABSENT).
+    const mirrored = contentMirrorOf(listed, texts);
+    const copies = plantedSeam(mirrored.tree, ["package.json"], VOCABULARY);
+    expect(copies.modules, "the content mirror's every module is listed").toBe(listed.length);
+    const copyAt = (path: string): string[] => copies.findings.filter(finding => finding.startsWith(`${path}:`)).map(finding => finding.slice(path.length + 1));
     const { wordsSweep, segmentsSweep, ...plantsThroughSeam } = throughSeam;
     const coverage = {
       mirror: probes.mirror.filter(path => at(path).join(" ") !== "1 query"),
@@ -2227,6 +2351,9 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       long: subjectsAt(probes.long),
       large: subjectsAt(probes.large),
       wide: subjectsAt(probes.wide),
+      segmented: subjectsAt(probes.segmented),
+      segmentedLead: subjectsAt(probes.segmentedLead),
+      contentMirror: listed.filter(path => copyAt(path).join(" ") !== `${mirrored.lines[path]} query`),
     };
     const quiet: { [key: string]: Json } = {
       projectionQuery: read("projection.query({ scope, limit: 64 });"),
