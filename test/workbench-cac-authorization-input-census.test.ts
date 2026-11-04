@@ -48,7 +48,14 @@
  * refusal #6's record and its disposition after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block,
  * refusal #4's member lines and refusal #5's UNMET record unchanged; refusal #6's UNMET record, which this cut reads, is among the
  * additions), and the absence census still names that roster, all this census reads of it; every count below re-measured equal at
- * a9a10bbaa2fa. wb-rdlh.4's cut (row D pinned) read them again at 36cb64856c54 (landing 892, trunk at its claim) and at
+ * a9a10bbaa2fa. wb-vx6i's cut (the R694 follow-up of this census's landing 846) merged trunk cb2e7c450358 (landing 875), then
+ * 4eaba5334b89 (landing 877) and 418a654f08d1 (landing 878): from a9a10bbaa2fa to cb2e7c450358, of the paths this census reads, no
+ * src path and not the docs page changed (src's file count and the principal and status line counts below re-measured equal there);
+ * this census, its roster and the provenance test's clause (a) block landed (landing 846); the absence census changed and still names
+ * that roster, all this census reads of it; and the bead export changed: this row closed and gained notes after every line this
+ * census reads, and wb-vx6i's row, whose first F1 and F2 lines this cut reads, was added; from cb2e7c450358 to 418a654f08d1, of those
+ * paths only the bead export changed (wb-vx6i's status at 4eaba5334b89; its notes and this row byte-equal at both).
+ * wb-rdlh.4's cut (row D pinned) read them again at 36cb64856c54 (landing 892, trunk at its claim) and at
  * fbe12f0274af (landing 894, merged into the branch; of the paths this census reads only the bead export changed between the two, and
  * not this row): of the paths this census reads, that cut edits docs/workbench/12-security.md (clause (d)'s bullet, after the eighth)
  * and the wb-gs2.3 census test/workbench-docs12-authorization.census.ts (its ninth AUTH_MARKDOWN entry), and every count below
@@ -237,14 +244,18 @@
  * thirteen witnesses and escapes this census holds, each by its id (W- a provenance form, E- an R-UNREAD-PROVENANCE escape,
  * W-MEMBER-SWAP- an R-PLANT-EDIT swap, WX an appended-note witness); refusal #6's UNMET record in the same row's notes (its '| U1-'
  * line through its '| U2-' line, the first such block: a later quotation appended is not read) names the ten witnesses this census
- * holds as binding placements, each by its id (W- or WD-); the absence roster's vendored lines yield the records, their
- * members and the statuses; the src tree yields the admission/decision set;
+ * holds as binding placements, each by its id (W- or WD-); wb-vx6i's row in the same export (the R694 follow-up filed at this
+ * census's landing 846; its first '[leads] - F1' line and its first '[rides] - F2' line, read at run time: a later line appended is not
+ * read) names the six identity swaps and the eight sub-form witnesses this census holds, each by its id (SC7- an identity swap, WT7- a
+ * sub-form control); the absence roster's vendored lines yield the records, their members and the statuses; the src tree yields the
+ * admission/decision set;
  * and the docs page's section yields D1's frozen shape.
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct
  * identifiers only, R-HOLLOW-IMPL); each pin's witness carries the digest of its own quote; the records case requires every pin and
  * every quiet row to have run to its end; the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
- * keys and the roster's; and the binding placements this header's PROVENANCE placement sentence names, in order, must equal
- * BINDING_PLACEMENTS'. PROVENANCE: this file's source, parsed as TypeScript and judged four ways, each at the forms the case's
+ * keys and the roster's; the binding placements this header's PROVENANCE placement sentence names, in order, must equal
+ * BINDING_PLACEMENTS'; and the sub-form controls its sub-form sentence names, in order, must equal SUB_FORMS'. PROVENANCE: this file's
+ * source, parsed as TypeScript and judged four ways, each at the forms the case's
  * controls hold: its one import declaration of the section-source reader binds exactly sectionSource and termsStated as values (a
  * type-only specifier or a type-only import declaration of the reader binds none); docsBinding calls both by name (a call outside
  * docsBinding is not read as one); no function, variable or class declaration, parameter or binding element of this file takes
@@ -260,21 +271,48 @@
  * too); a declaration of either name at any other placement,
  * in any other form or with any other modifier (for one: a generator, async or overload function, a using declaration, a rest
  * element or parameter, a function type's parameter, a declaration nested deeper than its placement) is NOT CLAIMED by this census;
+ * at nine of those placements a sub-form control declares the name, at that placement's frozen shape, in a second sub-form, the
+ * parts it differs from the placement's binding control in (SUB_FORMS, each made once with each name): a function declaration with no
+ * return type (WT7-FUNCDECL-UNTYPED, at W-FUNCDECL), a const with a type annotation (WT7-VARDECL-TYPED, at W-VARDECL), a catch
+ * clause's variable with one (WT7-CATCH-TYPED, at W-CATCH), a parameter with no type annotation of an arrow function with no return
+ * type (WT7-ARROW-PARAM-UNTYPED, at WD-ARROW-PARAM), a shorthand element with a default (WT7-BINDING-DEFAULT, at W-BINDING), a class
+ * with no member (WT7-CLASS-EMPTY, at W-CLASS2), and a const with no type annotation in an arrow function with no return type
+ * (WT7-ARROW-UNTYPED, at WD-ARROW), in a method with none (WT7-METHOD-UNTYPED, at W-METHOD-BODY) and in a function expression with
+ * none (SF-FUNCEXPR-UNTYPED, at W-FUNCEXPR-BODY); the first eight are wb-vx6i's sub-form witnesses, each spelled as gate s191 spelled
+ * it and bound by its id; at every placement the binding judgement is claimed only at the declarations its controls make, as they
+ * spell them, so a declaration at a binding placement spelled otherwise than every control there (for one: a function declaration
+ * with no parameter, a class with a heritage clause, a let with a type annotation) is NOT CLAIMED by this census;
  * and no import declaration of this file names marked (a named value, type-only, type-only specifier, namespace, default or
  * side-effect import of it each reds). The controls are the synthetic module and one edit of this file's own source per form, made in
  * memory (the forms of refusal #5's gate witnesses W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3 and W-VALUES-TYPE and of
  * refusal #6's WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM and WD-NESTED-PATTERN among them, each bound by its id), each held to the
- * judgements it reds; each binding placement is made with the two names the reader's import binds, and the declaration it makes is
- * read back (placementShape: its form and the functions and blocks around it) and held to its row's frozen shape, alike with either
- * name; the forms' shape is a frozen literal, and refusal #5's and refusal #6's records hold their witnesses (OUTSIDE ANCHORS); the
+ * judgements it reds; each binding placement and each sub-form control is made with the two names the reader's import binds, and
+ * placementShape reads back the declaration it makes, alike with either name, and holds it to its placement's frozen shape (a sub-form
+ * control to the shape of the placement it stands at); placementShape reads two parts of a declaration: its form, one of the twelve
+ * the frozen shape spells (a function, class, parameter, const, let or var, a for-of head's const, a catch clause's variable, a
+ * shorthand, renamed or array-pattern element, or a shorthand element of a pattern nested in an element), and, outward to this
+ * file's top level, each arrow function, function expression, method, lone block (a block statement directly in a block) and function
+ * declaration (by its name) around it, or none (top); subFormOf reads back, alike with either name, the sub-form parts each sub-form
+ * control differs from its placement's binding control in (a function declaration's return type, a variable declaration's or a
+ * parameter's type annotation, a binding element's default, a class's members, and the return type of each arrow function, function
+ * expression and method around it), each pair held to a frozen literal. A part of a control neither reads (for one: a modifier, the
+ * keyword of the declaration a binding element's pattern belongs to, a block an if, loop, try or other statement owns, the object
+ * literal or class a method belongs to, whether a call or a return holds a function around it, a function's parameters) is NOT
+ * CLAIMED as read back by this census: the placement and sub-form sentences' words for such a part (a const's pattern, an object
+ * literal's method, a function its return calls, a body or the top level as the block a declaration sits in directly, the absence of
+ * a modifier) say how each control is spelled, and wb-vx6i's six identity swaps (SC7-W-VARDECL-IN-IF, SC7-W-FUNCDECL-ASYNC,
+ * SC7-W-TOP-EXPORT, SC7-W-BINDING-LET, SC7-W-METHOD-AS-CLASS-METHOD and SC7-WD-ARROW-UNCALLED), each its gate's respelling of a
+ * binding control in such a part, read their placement's frozen shape alike. The forms' shape is a frozen literal, and refusal #5's
+ * and refusal #6's records hold their witnesses and wb-vx6i's record its identity swaps and sub-form witnesses (OUTSIDE ANCHORS); the
  * forms the case does not read are R-UNREAD-PROVENANCE.
  * CASES (the pinned reader set, in registration order): 'judged set, frozen shape', 'judged set, roster', 'judged set, outside
  * anchors: the owner filing ...', 'judged set, outside anchors: refusal #4's UNMET members ...', 'judged set, outside anchors: every
  * witness and escape refusal #5's UNMET record names ...', 'judged set, outside anchors: every witness refusal #6's UNMET record
- * names ...', 'judged set, self-read', 'judged set, provenance', the nine pins (A1-A3,
+ * names ...', 'judged set, outside anchors: every identity swap and sub-form witness wb-vx6i's record names ...', 'judged set,
+ * self-read', 'judged set, provenance', the nine pins (A1-A3,
  * B1-B3, C1-C2 and D1, each titled by its id under its row's label), the ten quiet rows under 'residuals: each named family's quiet
  * row', and 'records'.
- * NOT CLAIMED (scope sentences of the DOCS reading and one of PROVENANCE's; each bounds what its case reads and names no residual):
+ * NOT CLAIMED (scope sentences of the DOCS reading and three of PROVENANCE's; each bounds what its case reads and names no residual):
  * - The shared view's text at the nine placements refusal #4's member (a) measured without terms (a table nested in a list item or a
  *   block quote, a list inside a block quote nested in a list item or a block quote: the wb-aalz family) is NOT CLAIMED by the rendered
  *   check: D1 holds every other check of those nine plants exactly, and each reds by source and by terms.
@@ -290,6 +328,12 @@
  *   a lone surrogate, are NOT CLAIMED by this census (no page here reaches either).
  * - A declaration of either name at a placement PROVENANCE does not name (each binding control makes one placement, once with each
  *   name) is NOT CLAIMED by the provenance case's binding judgement.
+ * - A declaration at a binding placement spelled otherwise than every control there (BINDING_PLACEMENTS and SUB_FORMS; for one: a
+ *   function declaration with no parameter, a class with a heritage clause, a let with a type annotation) is NOT CLAIMED by the
+ *   provenance case's binding judgement.
+ * - A part of a control that neither placementShape nor subFormOf reads is NOT CLAIMED as read back (wb-vx6i's six identity swaps
+ *   read their placement's frozen shape alike), and placementShape's and subFormOf's own reading of this file's declarations (each
+ *   reads every declaration of the name in the source it is given, this file's own included) is NOT CLAIMED by this census.
  * RESIDUALS (named families, each with a pinned quiet row in QUIET): R-OTHER-PRODUCER row B reads rf's refusal only; R-SHARED-NAME
  * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole, as a literal or
  * as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment
@@ -1424,6 +1468,18 @@ function refusal6Witnesses(notes: string = beadNotes(BEAD)): string[] {
 /** A later quotation of refusal #6's record, appended in memory (this census's control of refusal6Witnesses' first block). */
 const APPENDED_RECORD6 =
   "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-DEPTH-FORMS-UNPINNED: a later quotation of the record.\n| - WD-QUOTED-ONLY: a quoted witness.\n| U2-LOW-CONFIRMED-R514-R515-R668-PROVENANCE-VARIABLE-DECLARATION-FORMS-UNPINNED: quoted.";
+/** The R694 follow-up of this census's landing 846, whose row in the tracked export names the gate's identity swaps (its F1 line) and
+ * sub-form witnesses (its F2 line). */
+const FOLLOW_UP = "wb-vx6i";
+const F1_LEAD = "[leads] - F1 LOW LEADS:";
+const F2_LEAD = "[rides] - F2 LOW RIDES:";
+/** The ids the first line of wb-vx6i's notes that opens with the lead names, by their prefix, in order, each once: its F1 line's SC7-
+ * swaps or its F2 line's WT7- witnesses (bd appends a later note after them, so the first such line stays the record's). */
+function followUpIds(lead: string, prefix: string, notes: string = beadNotes(FOLLOW_UP)): string[] {
+  const line = notes.split("\n").find(entry => entry.startsWith(lead));
+  if (line === undefined) throw new Error(`${EXPORT_FILE}'s ${FOLLOW_UP} notes carry no line opening ${lead}`);
+  return [...new Set(line.match(new RegExp(`\\b${prefix}-[A-Z0-9]+(?:-[A-Z0-9]+)*\\b`, "g")) ?? [])];
+}
 /** The nine placements refusal #4's member (a) measured without terms: the shared view's text there is NOT CLAIMED (the wb-aalz
  * family), so D1 pins every check of those plants but rendered. */
 const AT_DEPTH: ReadonlySet<string> = new Set(MEMBERS.measured.map(([id]) => id));
@@ -1487,7 +1543,10 @@ const provenanceDefects = (read: Provenance): string[] =>
 /** What a binding placement declares, read back from its edited source: for each declaration of the name the walk would collect (the
  * five kinds), its form (a function, class, parameter, const, let or var, a for-of head's const, a catch clause's variable, or a
  * shorthand, renamed or array-pattern element, nested when its pattern is an element's) and, outward to this file's top level, each
- * arrow function, function expression, method, lone block and function declaration (by its name) around it ('top' when none is). */
+ * arrow function, function expression, method, lone block and function declaration (by its name) around it ('top' when none is). It
+ * reads no other part of the declaration or of what is around it (for one: a modifier, the keyword of the declaration a binding
+ * element's pattern belongs to, a block an if, loop, try or other statement owns, the object literal or class a method belongs to, a
+ * call or a return around a function). */
 function placementShape(text: string, name: string): string[] {
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const form = (node: ts.Node): string => {
@@ -1526,6 +1585,42 @@ function placementShape(text: string, name: string): string[] {
   visit(source);
   return shapes;
 }
+/** The sub-form part a control makes, read back from its edited source for each declaration of the name the walk would collect (the
+ * five kinds), in placementShape's order: a function declaration's return type, a variable declaration's or a parameter's type
+ * annotation, a binding element's default or a class's members, then, outward to this file's top level, the return type of each arrow
+ * function, function expression and method around it. It reads no other part (a function's parameters, a class's heritage, a
+ * variable's initializer, a modifier). */
+function subFormOf(text: string, name: string): string[] {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const own = (node: ts.Node): string => {
+    if (ts.isFunctionDeclaration(node)) return node.type === undefined ? "no return type" : "a return type";
+    if (ts.isClassDeclaration(node)) return node.members.length === 0 ? "no member" : "members";
+    if (ts.isBindingElement(node)) return node.initializer === undefined ? "no default" : "a default";
+    if (ts.isParameter(node) || ts.isVariableDeclaration(node)) return node.type === undefined ? "no type annotation" : "a type annotation";
+    return "other";
+  };
+  const around = (node: ts.Node): string[] => {
+    const scopes: string[] = [];
+    for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
+      if (ts.isArrowFunction(at) || ts.isFunctionExpression(at) || ts.isMethodDeclaration(at)) {
+        const kind = ts.isArrowFunction(at) ? "an arrow function" : ts.isFunctionExpression(at) ? "a function expression" : "a method";
+        scopes.push(`in ${kind} with ${at.type === undefined ? "no return type" : "a return type"}`);
+      }
+    }
+    return scopes;
+  };
+  const parts: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === name) {
+      const declaration = node.parent;
+      const declares = ts.isClassDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isBindingElement(declaration) || ts.isParameter(declaration) || ts.isVariableDeclaration(declaration);
+      if (declares && declaration.name === node) parts.push([own(declaration), ...around(declaration)].join(" "));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return parts;
+}
 /** One edit of this file's own source: an anchor the source spells once (lines of this file), and what replaces it. */
 type SourceEdit = readonly [string, string];
 /** This file's own source with each edit made in turn, in memory, never on disk. */
@@ -1544,6 +1639,12 @@ const AT_TILED = "    tiled: read.tiled,\n";
 const AT_TERMS = "    terms: termsStated(read.source, PARKED_TERMS),\n";
 const AT_TOKENS = "  readonly tokens: readonly string[];\n  /** The parked sentence's terms the source spells out, in PARKED_TERMS order (termsStated). */\n";
 const AT_PLANT_EDIT = "function plantEdit(id: string): PageEdit {\n  const found = DOCS_PLANTS.find(([plant]) => plant === id);\n";
+// The spans wb-vx6i's sub-form witnesses edit, where gate s191 placed them, and this cut's SF- control: docsBinding's shared-view line
+// (four insert after it), its bound line (three, and the SF- control, rewrite it) and plantEdit's lookup (one inserts after it); each
+// spelled once in this file.
+const AT_SECTION = "  const section = docsSection(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);\n";
+const AT_BOUND = "    bound: read.ok,\n";
+const AT_PLANT_FOUND = `${AT_PLANT_EDIT}  if (found === undefined) throw new Error(\`no docs plant \${id}\`);\n`;
 // docsBinding's return, from the reader's call to its first member and from the terms to the function's end: the spans the block,
 // arrow, function expression and method placements edit; each spelled once in this file.
 const AT_RETURN = `${AT_SOURCE_READ}  return {\n    view: section.ok,\n`;
@@ -1554,10 +1655,12 @@ const LOCAL_TERMS = 'const flat = text.replace(/\\s+/g, " ").toLowerCase(); retu
 const localCopy = (keyword: string, name: string, indent: string): string =>
   `${indent}${keyword} ${name} = (text: string, terms: readonly string[]): string[] => {\n${indent}  const flat = text.replace(/\\s+/g, " ").toLowerCase();\n${indent}  return terms.filter(term => flat.includes(term.toLowerCase()));\n${indent}};\n`;
 /** The placements the binding judgement is claimed at (PROVENANCE's placement sentence names each, in this order): each one edit (or two)
- * of this file's own source that declares the name once, at one placement and in one form (placementShape reads both back), made in
- * memory with each of the reader's two names. The placements of refusal #5's gate witnesses (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2)
- * and of refusal #6's (WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM, WD-NESTED-PATTERN) are among them, each bound by its id, the
- * judgement it reds and the declaration it makes; each further placement is one PROVENANCE names. */
+ * of this file's own source that declares the name once, at one placement and in one form (placementShape reads back its form and the
+ * arrow functions, function expressions, methods, lone blocks and function declarations around it, the two parts its row's frozen
+ * shape spells, and no other part), made in memory with each of the reader's two names. The placements of refusal #5's gate witnesses
+ * (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2) and of refusal #6's (WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM, WD-NESTED-PATTERN) are
+ * among them, each bound by its id, the judgement it reds and the declaration it makes; each further placement is one PROVENANCE
+ * names. */
 const BINDING_PLACEMENTS: readonly (readonly [string, (name: string) => readonly SourceEdit[]])[] = [
   ["W-FUNCDECL", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  function ${name}(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  }\n`]]],
   [
@@ -1621,6 +1724,84 @@ const BINDING_PLACEMENTS: readonly (readonly [string, (name: string) => readonly
 ];
 /** The reader's two names, each a binding placement is made with. */
 const READER_NAMES = ["termsStated", "sectionSource"] as const;
+/** A binding placement's control, by its id. */
+function placementEdits(placement: string): (name: string) => readonly SourceEdit[] {
+  const found = BINDING_PLACEMENTS.find(([id]) => id === placement);
+  if (found === undefined) throw new Error(`no binding placement ${placement}`);
+  return found[1];
+}
+/** What a reading of the declaration reads of a control made with each of the reader's two names: its distinct readings, joined. */
+const alike = (read: (text: string, name: string) => string[], place: (name: string) => readonly SourceEdit[]): string =>
+  [...new Set(READER_NAMES.flatMap(name => read(edited(place(name)), name)))].join("; ");
+/** termsStated's reading over two lines at the indent (the bodies of wb-vx6i's sub-form witnesses spell it so). */
+const localLines = (indent: string): string =>
+  `${indent}const flat = text.replace(/\\s+/g, " ").toLowerCase();\n${indent}return terms.filter(term => flat.includes(term.toLowerCase()));\n`;
+/** The binding judgement's second sub-forms (wb-vx6i F2; PROVENANCE's sub-form sentence names each, in this order): at nine binding
+ * placements, one edit of this file's own source that declares the name once, at the frozen shape of the placement it stands at
+ * (placementShape) and in sub-form parts its placement's binding control does not make (subFormOf), made in memory with each of the
+ * reader's two names; each entry its id, the placement it stands at and its edit. The first eight are the gate's paired real-tree
+ * witnesses of wb-vx6i's F2 record (gate s191 LEG 2), each spelled as that gate spelled it and bound by its id; the ninth (SF-) is this
+ * cut's, for the third kind of function a placement's declaration sits in. */
+const SUB_FORMS: readonly (readonly [string, string, (name: string) => readonly SourceEdit[]])[] = [
+  ["WT7-FUNCDECL-UNTYPED", "W-FUNCDECL", name => [[AT_SECTION, `${AT_SECTION}  function ${name}(text: string, terms: readonly string[]) {\n${localLines("    ")}  }\n`]]],
+  [
+    "WT7-VARDECL-TYPED",
+    "W-VARDECL",
+    name => [[AT_SECTION, `${AT_SECTION}  const ${name}: (text: string, terms: readonly string[]) => string[] = (text, terms) => {\n${localLines("    ")}  };\n`]],
+  ],
+  ["WT7-CATCH-TYPED", "W-CATCH", name => [[AT_SECTION, `${AT_SECTION}  try {\n    void markdown;\n  } catch (${name}: unknown) {\n    void ${name};\n  }\n`]]],
+  ["WT7-ARROW-PARAM-UNTYPED", "WD-ARROW-PARAM", name => [[AT_BOUND, `    bound: (${name} => ${name})(read.ok),\n`]]],
+  [
+    "WT7-BINDING-DEFAULT",
+    "W-BINDING",
+    name => [
+      [
+        AT_SECTION,
+        `${AT_SECTION}  const { ${name} = (text: string, terms: readonly string[]): string[] => {\n${localLines("    ")}  } }: { ${name}?: (text: string, terms: readonly string[]) => string[] } = {};\n`,
+      ],
+    ],
+  ],
+  ["WT7-CLASS-EMPTY", "W-CLASS2", name => [[AT_PLANT_FOUND, `${AT_PLANT_FOUND}  class ${name} {}\n  void ${name};\n`]]],
+  ["WT7-ARROW-UNTYPED", "WD-ARROW", name => [[AT_BOUND, `    bound: (() => {\n      const ${name} = read.ok;\n      return ${name};\n    })(),\n`]]],
+  ["WT7-METHOD-UNTYPED", "W-METHOD-BODY", name => [[AT_BOUND, `    bound: {\n      probe() {\n        const ${name} = read.ok;\n        return ${name};\n      },\n    }.probe(),\n`]]],
+  ["SF-FUNCEXPR-UNTYPED", "W-FUNCEXPR-BODY", name => [[AT_BOUND, `    bound: (function () {\n      const ${name} = read.ok;\n      return ${name};\n    })(),\n`]]],
+];
+/** wb-vx6i's six identity swaps (gate s191 LEG 2, its F1 record, by id): each the gate's respelling of one binding control in a part
+ * placementShape does not read (an if block around the const, an async function, an exported const, a let's pattern, a class's method
+ * for an object literal's, an arrow its return does not call), spelled as that gate spelled it (SC7-WD-ARROW-UNCALLED without the
+ * gate's second edit, a no-op that replaced the return's end with itself); each entry its id, the placement whose control it respells
+ * and its edits. Each reads that placement's frozen shape alike: the part it changes is NOT CLAIMED as read back. */
+const IDENTITY_SWAPS: readonly (readonly [string, string, (name: string) => readonly SourceEdit[]])[] = [
+  [
+    "SC7-W-VARDECL-IN-IF",
+    "W-VARDECL",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  if (read.ok) {\n    const ${name} = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n  }\n`]],
+  ],
+  [
+    "SC7-W-FUNCDECL-ASYNC",
+    "W-FUNCDECL",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  async function ${name}(text: string, terms: readonly string[]): Promise<string[]> {\n    ${LOCAL_TERMS}\n  }\n`]],
+  ],
+  ["SC7-W-TOP-EXPORT", "W-TOP", name => [[AT_URL_IMPORT, `${AT_URL_IMPORT}export const ${name} = 0;\n`]]],
+  [
+    "SC7-W-BINDING-LET",
+    "W-BINDING",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  let { ${name} } = { ${name}: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]],
+  ],
+  [
+    "SC7-W-METHOD-AS-CLASS-METHOD",
+    "W-METHOD-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return new (class {\n    reading(): DocsReading {\n${localCopy("const", name, "      ")}      return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n    }\n  })().reading();\n}\n`],
+    ],
+  ],
+  [
+    "SC7-WD-ARROW-UNCALLED",
+    "WD-ARROW",
+    name => [[AT_RETURN, `${AT_SOURCE_READ}  const unused = (): void => {\n${localCopy("const", name, "    ")}  };\n  void unused;\n  return {\n    view: section.ok,\n`]],
+  ],
+];
 /** The forms the four judgements are claimed at, each one edit (or two) of this file's own source with the judgements it reds: the binding
  * placements made with termsStated (BINDING_PLACEMENTS), the forms of refusal #5's gate witnesses W-TYPEIMPORT3 and W-VALUES-TYPE (each
  * bound by its id and the judgements it reds), and one more for each further form PROVENANCE names. */
@@ -2150,6 +2331,13 @@ function headerPlacements(text: string = readFileSync(HERE, "utf8")): string[] {
   const sentence = /the binding controls make \(BINDING_PLACEMENTS, each made once with each name\): ([\s\S]*?); a declaration of either name at any other placement/.exec(header)?.[1] ?? "";
   return [...new Set(sentence.match(/\bWD?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
 }
+/** The sub-form controls this file's header claims, in order: the WT7- and SF- ids its PROVENANCE paragraph's sub-form sentence names
+ * (from '(SUB_FORMS, each made once with each name): ' to '; the first eight are'), read with the comment's line breaks joined. */
+function headerSubForms(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = (/^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "").replace(/\n \* */g, " ");
+  const sentence = /\(SUB_FORMS, each made once with each name\): ([\s\S]*?); the first eight are/.exec(header)?.[1] ?? "";
+  return [...new Set(sentence.match(/\b(?:WT7|SF)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
 /** The labels tile the clause when each follows the last with only white space, commas, semicolons and list markers between. */
 const LIST_SEPARATOR = /^(?:[\s,;]|\([a-z]\)(?=\s))*$/;
 /** A row's pin quotes tile its label with the same separators and a spaced hyphen. */
@@ -2246,6 +2434,20 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     const placements = BINDING_PLACEMENTS.map(([placement]) => placement);
     expect(named.filter(id => !placements.includes(id)), "each a binding placement (W- or WD-)").toEqual([]);
     expect(refusal6Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD6}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
+  });
+
+  it("judged set, outside anchors: every identity swap and sub-form witness wb-vx6i's record names is an identity swap or a sub-form control this census holds", () => {
+    const swaps = followUpIds(F1_LEAD, "SC7");
+    const witnesses = followUpIds(F2_LEAD, "WT7");
+    expect([swaps.length, witnesses.length], "wb-vx6i's F1 line names six identity swaps and its F2 line eight sub-form witnesses").toEqual([6, 8]);
+    expect(swaps, "each an identity swap this census holds, in the record's order").toEqual(IDENTITY_SWAPS.map(([swap]) => swap));
+    expect(witnesses, "each a sub-form control this census holds, in the record's order (the ninth control, SF-, is this census's own)").toEqual(
+      SUB_FORMS.map(([form]) => form).filter(form => form.startsWith("WT7-")),
+    );
+    const later = `${beadNotes(FOLLOW_UP)}\n\n${F1_LEAD} a later quotation (SC7-QUOTED-ONLY).\n${F2_LEAD} a later quotation (WT7-QUOTED-ONLY).`;
+    expect([followUpIds(F1_LEAD, "SC7", later), followUpIds(F2_LEAD, "WT7", later)], "a later line appended is not read: the first such line").toEqual([swaps, witnesses]);
+    const quoting = `a note quoting ${F1_LEAD} (SC7-MIDLINE-ONLY) and ${F2_LEAD} (WT7-MIDLINE-ONLY)\n${beadNotes(FOLLOW_UP)}`;
+    expect([followUpIds(F1_LEAD, "SC7", quoting), followUpIds(F2_LEAD, "WT7", quoting)], "a line quoting a lead after other text is not read: the line opens with it").toEqual([swaps, witnesses]);
   });
 
   it("judged set, self-read: every IMPL entry names a reader and not the roster", () => {
@@ -2346,6 +2548,47 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
       "W-TOP: const in top",
     ]);
     expect(headerPlacements(), "the header's placement sentence claims exactly the binding placements, in order").toEqual(BINDING_PLACEMENTS.map(([placement]) => placement));
+    expect(headerSubForms(), "the header's sub-form sentence claims exactly the sub-form controls, in order").toEqual(SUB_FORMS.map(([form]) => form));
+    expect(
+      SUB_FORMS.map(([form, , make]) => [
+        form,
+        READER_NAMES.map(name => {
+          const placed = provenance(edited(make(name)));
+          return [placed.declared.filter(declared => declared === name).length, provenanceDefects(placed)];
+        }),
+      ]),
+      "each sub-form control, made once with each of the reader's two names, declares that name once and reds the binding judgement alone",
+    ).toEqual(SUB_FORMS.map(([form]) => [form, READER_NAMES.map(() => [1, ["binding"]])]));
+    expect(
+      SUB_FORMS.map(([form, , make]) => `${form}: ${alike(placementShape, make)}`),
+      "each sub-form control declares, alike with either name, at the frozen shape of the placement it stands at (placementShape)",
+    ).toEqual(SUB_FORMS.map(([form, placement]) => `${form}: ${alike(placementShape, placementEdits(placement))}`));
+    expect(
+      SUB_FORMS.map(([form, placement, make]) => `${form} at ${placement}: ${alike(subFormOf, placementEdits(placement))} -> ${alike(subFormOf, make)}`),
+      "each sub-form control differs from its placement's binding control in the sub-form parts subFormOf reads, alike with either name",
+    ).toEqual([
+      "WT7-FUNCDECL-UNTYPED at W-FUNCDECL: a return type -> no return type",
+      "WT7-VARDECL-TYPED at W-VARDECL: no type annotation -> a type annotation",
+      "WT7-CATCH-TYPED at W-CATCH: no type annotation -> a type annotation",
+      "WT7-ARROW-PARAM-UNTYPED at WD-ARROW-PARAM: a type annotation in an arrow function with a return type -> no type annotation in an arrow function with no return type",
+      "WT7-BINDING-DEFAULT at W-BINDING: no default -> a default",
+      "WT7-CLASS-EMPTY at W-CLASS2: members -> no member",
+      "WT7-ARROW-UNTYPED at WD-ARROW: no type annotation in an arrow function with a return type -> no type annotation in an arrow function with no return type",
+      "WT7-METHOD-UNTYPED at W-METHOD-BODY: no type annotation in a method with a return type -> no type annotation in a method with no return type",
+      "SF-FUNCEXPR-UNTYPED at W-FUNCEXPR-BODY: no type annotation in a function expression with a return type -> no type annotation in a function expression with no return type",
+    ]);
+    expect(
+      IDENTITY_SWAPS.map(([swap, placement, make]) => [swap, READER_NAMES.every(name => edited(make(name)) !== edited(placementEdits(placement)(name))), alike(placementShape, make)]),
+      "each of wb-vx6i's identity swaps respells its placement's binding control and reads that placement's frozen shape alike (placementShape reads no part a swap changes: NOT CLAIMED as read back)",
+    ).toEqual(IDENTITY_SWAPS.map(([swap, placement]) => [swap, true, alike(placementShape, placementEdits(placement))]));
+    expect(IDENTITY_SWAPS.map(([swap, placement]) => `${swap}:${placement}`), "the identity swaps' frozen shape").toEqual([
+      "SC7-W-VARDECL-IN-IF:W-VARDECL",
+      "SC7-W-FUNCDECL-ASYNC:W-FUNCDECL",
+      "SC7-W-TOP-EXPORT:W-TOP",
+      "SC7-W-BINDING-LET:W-BINDING",
+      "SC7-W-METHOD-AS-CLASS-METHOD:W-METHOD-BODY",
+      "SC7-WD-ARROW-UNCALLED:WD-ARROW",
+    ]);
     expect(
       ["W-VALUES-TYPE", "W-READER-TYPE-ONLY"].map(form => provenance(edited(formEdits(form))).reader),
       "a type-only specifier of the reader, and a type-only import declaration of it, bind no value",
