@@ -14039,6 +14039,328 @@
             ]
           }
         }
+      },
+      "contextPlants": {
+        "F1": {
+          "assignments": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "mismatched": []
+        },
+        "F2": {
+          "assignments": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "mismatched": []
+        },
+        "F3": {
+          "assignments": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "mismatched": []
+        },
+        "F4": {
+          "assignments": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "mismatched": []
+        },
+        "F5": {
+          "assignments": 65536,
+          "carried": {
+            "first call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            },
+            "second call": {
+              "first": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "second": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "third": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              },
+              "last": {
+                "own": 16384,
+                "other": 0,
+                "both": 0,
+                "neither": 0
+              }
+            }
+          },
+          "shared": {
+            "first": 8192,
+            "second": 8192,
+            "third": 8192,
+            "last": 8192
+          },
+          "mismatched": []
+        }
       }
     },
     "A4": {
