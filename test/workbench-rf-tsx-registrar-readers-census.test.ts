@@ -3,35 +3,38 @@
  * folded wb-8avz's refusal #4 member into it). SUBJECT: two readers of test/helpers/rf-tsx-registrar-readers.ts -
  * registrarBindings() and tierReadingOf() (which reports what refusedVitestImports() names) - moved byte for byte from
  * wb-8avz's FINAL cut #4 (tip b8cfd428). The parent's census at that tip differs from trunk's, which is the census its re-cut
- * landed (landing 800, tip 9497cb2d); its roster at that tip (test/fixtures/rf-tsx-remote-hook-roster.json) is trunk's byte
- * for byte since that landing. Neither is added nor
- * edited here; trunk's test/workbench-rf-tsx-remote-hook-census.test.ts, whose C2 imports tierReadingOf() from the helper
- * since the parent's R-B218 re-cut landed, is not read by this census. wb-ffz5, the R694 follow-up of wb-6fr4's landing 780
- * (its findings F3 and F4), anchors row R's pins to refusal #4 and the R-B218 fold and adds M2's probe after a leading vitest
- * import. Its cut #2, the respin of wb-ffz5's refusal #1, reads each pin's statement whole, up to its delimiter, holds ANCHOR's
- * checks to the nine witness plants of refusal #1 (Case READERS), and narrows ANCHOR's claims to the export as it stands and
- * those plants. wb-60qs, the R694 follow-up of wb-ffz5's landing 839 (its findings F7 and F8), holds each pin case's probe loop
- * and READERS' plant loop to their lists from inside the case, and narrows claims (3) and (4) to what ANCHOR reads on the
- * export as it stands and READERS on the nine plants with this file's code as written. Its cut #2, the respin of wb-60qs's
- * refusal #1, holds the probes each pin case's loop takes, and the plants and edits READERS' loops take, each whole rather than
- * by its id, and narrows what claims (1) and (4) hold against an edit of those cases' own code to those lists and the cases'
- * assertion counts.
+ * landed (landing 800, tip 9497cb2d); its roster at that tip (test/fixtures/rf-tsx-remote-hook-roster.json) is trunk's byte for
+ * byte since that landing. Neither is added nor edited here; trunk's test/workbench-rf-tsx-remote-hook-census.test.ts, whose C2
+ * imports tierReadingOf() from the helper since the parent's R-B218 re-cut landed, is not read by this census. wb-ffz5, the
+ * R694 follow-up of wb-6fr4's landing 780 (its findings F3 and F4), anchors row R's pins to refusal #4 and the R-B218 fold and
+ * adds M2's probe after a leading vitest import. Its cut #2, the respin of wb-ffz5's refusal #1, reads each pin's statement
+ * whole, up to its delimiter, holds ANCHOR's checks to the nine witness plants of refusal #1 (Case READERS), and narrows
+ * ANCHOR's claims to the export as it stands and those plants. wb-60qs, the R694 follow-up of wb-ffz5's landing 839 (its
+ * findings F7 and F8), holds each pin case's probe loop and READERS' plant loop to their lists from inside the case, and
+ * narrows claims (3) and (4) to what ANCHOR reads on the export as it stands and READERS on the nine plants with this file's
+ * code as written. Its cut #2, the respin of wb-60qs's refusal #1, holds the probes each pin case's loop takes, and the plants
+ * and edits READERS' loops take, each whole rather than by its id, and narrows what claims (1) and (4) hold against an edit of
+ * those cases' own code to those lists and the cases' assertion counts. Its cut #3, the respin of wb-60qs's refusal #2 and the
+ * frozen-shape cut the rule-19 cap orders (the enumerate-the-resolvable form), freezes at load every object, list and function
+ * PINS, ROWS, CHECKS, PLANTS and READERS reach, so that a write in place by the cases' own code to what the pin cases' and
+ * READERS' holds compare against throws instead of rewriting it (refusal #2's GY01-GY05), holds that freeze in Case FREEZE, and
+ * claims what the holds pin with it.
  *
  * PINNED READER SET (this file, test/workbench-rf-tsx-registrar-readers-census.test.ts; observed at the cut: every case passes
  * on the moved readers, and each named member, applied to a copy of the helper with its refusal gate's own edit, reds the pin
  * case named after it). Each pin case is named "<member id>: <quote>" and asserts, for every probe its loop takes, that the
  * reader beside the probe returns exactly the literal reading written here (toEqual over the reader's whole output); then it
  * holds the probes its loop took - each whole, once each and in order - to the probes of the PINS entry its id names (pinOf();
- * toStrictEqual), and its assertion count to one per probe of that entry and one more (expect.assertions()). A probe is a
- * synthetic module text read as test/probe.test.ts: the bindings reader is registrarBindings() over it (its rows, suites and
- * namespaces sets, each sorted) and the tier reader is tierReadingOf() over it (titles, unaccounted, claims). The probes
- * dStmtFirst, dStmtFirstStep, dConstFirst, dOtherModuleFirst, dDefaultCombined, dDefaultCombinedStep and dDefaultNsCombined
- * hold refusal #3 PREP's diagnostic sources, and dConstRow, dConstTwoRows, dDirectiveRow, dOtherModuleRow, dDefaultBesideRow,
- * dStmtShadowPlant, dOtherShadowPlant and dDefaultShadowPlant refusal #4 PREP's, as each wrote them; the three d*ShadowPlant
- * probes carry the form of the live tier plants P-STMT, P-OTHER and P-DEFAULT. 'scan after the leading run',
- * twoRefusedBesideRow and lateSuiteImportBesideRow are wb-6fr4's own and 'scan after the leading run and otherNamed' is
- * wb-ffz5's. The refusal text a tier probe reads ('... a vitest import declaration C2 refuses (...): NOT CLAIMED, wb-6fr4') is
- * the parent tip's reason string, held as the reader returns it.
+ * toStrictEqual), which THE FREEZE keeps from a write in place (Case FREEZE), and its assertion count to one per probe of that
+ * entry and one more (expect.assertions()). A probe is a synthetic module text read as test/probe.test.ts: the bindings reader
+ * is registrarBindings() over it (its rows, suites and namespaces sets, each sorted) and the tier reader is tierReadingOf()
+ * over it (titles, unaccounted, claims). The probes dStmtFirst, dStmtFirstStep, dConstFirst, dOtherModuleFirst,
+ * dDefaultCombined, dDefaultCombinedStep and dDefaultNsCombined hold refusal #3 PREP's diagnostic sources, and dConstRow,
+ * dConstTwoRows, dDirectiveRow, dOtherModuleRow, dDefaultBesideRow, dStmtShadowPlant, dOtherShadowPlant and dDefaultShadowPlant
+ * refusal #4 PREP's, as each wrote them; the three d*ShadowPlant probes carry the form of the live tier plants P-STMT, P-OTHER
+ * and P-DEFAULT. 'scan after the leading run', twoRefusedBesideRow and lateSuiteImportBesideRow are wb-6fr4's own and 'scan
+ * after the leading run and otherNamed' is wb-ffz5's. The refusal text a tier probe reads ('... a vitest import declaration C2
+ * refuses (...): NOT CLAIMED, wb-6fr4') is the parent tip's reason string, held as the reader returns it.
  * - Row M, the registrarBindings() import-scan members of wb-8avz's refusal #3 that wb-6fr4's description carries. M1 (the
  *   import scan stops at the first statement that is no import declaration): eleven bindings probes, ten 'scan after <kind>'
  *   placing 'import { describe as test, it as describe } from "vitest";' after one statement that is no import declaration
@@ -57,6 +60,14 @@
  * - Case SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, every pin with its probe ids, the
  *   rows' pins in pin order, and every plant as `${id}:${the beads it edits}:${the checks that fail on it}`, each held to a
  *   literal.
+ * - Case FREEZE (THE FREEZE, wb-60qs cut #3): one statement after PLANTS' definition, deepFreeze([PINS, ROWS, CHECKS, PLANTS,
+ *   READERS]), freezes at load, before any case is collected or runs, every object, list and function those five reach, each
+ *   after its members - each pin with its probes and their readings, each row with its pins, the checks, each plant with its
+ *   edits and checks, and the reader record with its two reader functions. FREEZE reads through unfrozen(), a walk written
+ *   apart from deepFreeze(), that none of them is unfrozen, and on sixteen of them - PINS, pin M1, its probe list, the probe
+ *   dStmtShadowPlant, the scan probes' reading and its rows, ROWS, row M, its pin list, CHECKS, PLANTS, plant W-A7, its edits,
+ *   its first edit, its checks and READERS - it writes in place a value each already holds there: Object.assign throws a
+ *   TypeError and Reflect.set returns false on each. Its assertion count is two per write and one more (expect.assertions()).
  * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl and never retyped as
  *   the expectation): on the export as it stands anchorFailures() returns no check. It runs twelve checks over wb-6fr4's row
  *   and wb-8avz's row, in this order. (1) items: the ids of wb-6fr4's description lines numbered '<n>. M<n>' are row M's pins,
@@ -89,36 +100,46 @@
  *   verdict opening, closed by a RED line, written just before that opening (the gate's witness wrote it at the start of the
  *   notes). On each plant anchorFailures() returns exactly the checks written beside it; READERS then holds the plants its
  *   plant loop took to PLANTS and the edits its edit loop took to PLANTS' edits - each whole, once each and in order
- *   (toStrictEqual) - and its assertion count to the witness check, one per plant edit, one per plant and those two checks
- *   (expect.assertions()).
+ *   (toStrictEqual), PLANTS and its edits kept from a write in place by THE FREEZE (Case FREEZE) - and its assertion count to
+ *   the witness check, one per plant edit, one per plant and those two checks (expect.assertions()).
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here:
  * with this file's code as written, a reader edit that changes one reading reds that pin case. Each pin case holds the probes
  * its loop took, each whole (its id, reader, source, plant and reading), once each and in order, to the probes of the PINS
  * entry its id names, so a loop that takes a list other than those probes reds that pin case - its probe list cut to its first
  * or its last probe (wb-60qs, the landing-839 F8 members GH09 and GH10), or a probe's reader, source or reading changed under
- * its id, in one PINS entry or in every one (wb-60qs refusal #1's GX04 and GX04b) - and a case that makes fewer reading
- * assertions than that entry holds probes reds it at its assertion count. (2) Each named member changes a reading of its own
- * pin's probes: the cutting seat applies each member's own edit (its refusal gate's find and replace, verbatim, over a copy of
- * the helper) and reads the pin case named after it red; a pin whose probes stopped holding its form would read green there.
- * (3) The tracker export records each pin's id, unmet item, grade and quote, the order of each row's pins, row R's label, the
- * plants wb-6fr4's description items name (P-STMT for M1, P-OTHER for M2) and the plants the cut #4 note names for row R's
- * claim (P-STMT, P-OTHER and P-DEFAULT, each in every row R pin's probes): with this file's code as written, a row or a pin
- * removed, one of these changed - a quote lengthened or shortened among them, since each statement is read whole - or one of
- * these plants removed from those probes, in one literal or in every literal together, reds SHAPE, ANCHOR or READERS (standing
- * rule 16's CT1-CT6 among them). Each ANCHOR or READERS red there is a reading ANCHOR or READERS makes on the export as it
- * stands or on the nine plants against the edited literals, by this file's code, and that code is held only through those
- * readings (see NOT CLAIMED). (4) On the export as it stands no ANCHOR check fails, and on each READERS plant exactly the
- * checks written beside it fail: with this file's code as written, an anchorFailures() edit that changes which checks fail on
- * one of these ten inputs reds ANCHOR or READERS, and a plant removed from PLANTS and from SHAPE's literal together reds
- * READERS, because refusal #1 still names it. READERS holds the plants its plant loop took to PLANTS and the edits its edit
- * loop took to PLANTS' edits, each whole (a plant's id, edits and checks; an edit's bead, find and write), once each and in
- * order, so a loop that takes a list other than those reds READERS - its plant list cut to its first plant (wb-60qs, the
- * landing-839 F7 member GH08), or W-A8's edits replaced by W-A1's under W-A8's id (wb-60qs refusal #1's GX11). The cutting seat
- * applied refusal #1's nine reader members GA1-GA9 (its gate's archived edits, each carried onto the line of anchorFailures()
- * or sectionOf() that makes the same read) and read READERS red under each, where the cut #1 census read each at 0 failed; and
- * its five quote members GQ-N-A1, GQ-N-A3, GQ-M1, GQ-M2 and GQ-M3 (each pin's quote lengthened to the words its record holds
- * before the record's next delimiter) read ANCHOR and READERS red.
+ * its id, in one PINS entry or in every one, in new objects the loop takes (wb-60qs refusal #1's GX04 and GX04b) - and a case
+ * that makes fewer reading assertions than that entry holds probes reds it at its assertion count. Made in place instead, on
+ * PINS' own entries or probes, the same change is a write THE FREEZE refuses (claim (5)): the write throws a TypeError, which
+ * fails the file as its cases are collected when the pin case loop makes it (wb-60qs refusal #2's GY01 and GY02) and the pin
+ * case when its probe loop makes it (refusal #2's GY05). (2) Each named member changes a reading of its own pin's probes: the
+ * cutting seat applies each member's own edit (its refusal gate's find and replace, verbatim, over a copy of the helper) and
+ * reads the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) The tracker
+ * export records each pin's id, unmet item, grade and quote, the order of each row's pins, row R's label, the plants wb-6fr4's
+ * description items name (P-STMT for M1, P-OTHER for M2) and the plants the cut #4 note names for row R's claim (P-STMT,
+ * P-OTHER and P-DEFAULT, each in every row R pin's probes): with this file's code as written, a row or a pin removed, one of
+ * these changed - a quote lengthened or shortened among them, since each statement is read whole - or one of these plants
+ * removed from those probes, in one literal or in every literal together, reds SHAPE, ANCHOR or READERS (standing rule 16's
+ * CT1-CT6 among them). Each ANCHOR or READERS red there is a reading ANCHOR or READERS makes on the export as it stands or on
+ * the nine plants against the edited literals, by this file's code, and that code is held only through those readings (see NOT
+ * CLAIMED). (4) On the export as it stands no ANCHOR check fails, and on each READERS plant exactly the checks written beside
+ * it fail: with this file's code as written, an anchorFailures() edit that changes which checks fail on one of these ten inputs
+ * reds ANCHOR or READERS, and a plant removed from PLANTS and from SHAPE's literal together reds READERS, because refusal #1
+ * still names it. READERS holds the plants its plant loop took to PLANTS and the edits its edit loop took to PLANTS' edits,
+ * each whole (a plant's id, edits and checks; an edit's bead, find and write), once each and in order, so a loop that takes a
+ * list other than those reds READERS - its plant list cut to its first plant (wb-60qs, the landing-839 F7 member GH08), or
+ * W-A8's edits replaced by W-A1's under W-A8's id in a new plant the loop takes (wb-60qs refusal #1's GX11). Made in place
+ * instead, on PLANTS' own plant or edit (wb-60qs refusal #2's GY03, W-A8's edits replaced by W-A1's, and GY04, W-A8's edit's
+ * write rewritten), the same change is a write THE FREEZE refuses (claim (5)): the write throws a TypeError, which fails
+ * READERS. The cutting seat applied refusal #1's nine reader members GA1-GA9 (its gate's archived edits, each carried onto the
+ * line of anchorFailures() or sectionOf() that makes the same read) and read READERS red under each, where the cut #1 census
+ * read each at 0 failed; and its five quote members GQ-N-A1, GQ-N-A3, GQ-M1, GQ-M2 and GQ-M3 (each pin's quote lengthened to
+ * the words its record holds before the record's next delimiter) read ANCHOR and READERS red. (5) THE FREEZE: with this file's
+ * code as written, every object, list and function PINS, ROWS, CHECKS, PLANTS and READERS reach is frozen when Case FREEZE
+ * runs, and each of its sixteen writes in place is refused (Object.assign throws a TypeError, Reflect.set returns false): the
+ * freeze statement removed, one of the five left out of it, or deepFreeze() made to leave a member, a list, a function or
+ * itself unfrozen reds FREEZE at its unfrozen() walk, and a write target that is not frozen - one of the sixteen replaced by an
+ * unfrozen copy - reds it at that write.
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them a vitest
  * import declaration after a statement or module specifier the probes do not spell (a class, a let declaration, a call with an
@@ -148,13 +169,23 @@
  * containment, refusal #1's witness ids read only among PLANTS' ids, a description item's plant found in any pin's probes and
  * the falsifier plants read in the first row R pin's probes only (wb-60qs, the landing-839 F7 members GH01-GH07). The pin
  * cases' probe loop and READERS' plant and edit loops are not that code: against an edit of those cases' own code, claims (1)
- * and (4) hold only the lists those loops take and the cases' assertion counts. An edit of a comparison's own code in a pin
- * case, ANCHOR or READERS, the comparison kept - its expected side (the expected reading taken from the reader, or the expected
- * checks taken from anchorFailures(): wb-60qs refusal #1's GX03 and GX10), its actual side or its matcher - is NOT CLAIMED by
- * this census, and neither is how READERS makes a plant from the edits its loop took (the row each edit is made on, where and
- * what it writes, and its check that the row holds the text the edit replaces), which PINS entries the case loop makes a pin
- * case for (refusal #1's GX05), nor two edits of those cases' own code made together. The parent census's own header,
- * cases and roster are NOT CLAIMED by this census. No residual is claimed.
+ * and (4) hold only the lists those loops take, the writes THE FREEZE refuses (claim (5)) and the cases' assertion counts. An
+ * edit of a comparison's own code in a pin case, ANCHOR or READERS, the comparison kept - its expected side (the expected
+ * reading taken from the reader, or the expected checks taken from anchorFailures(): wb-60qs refusal #1's GX03 and GX10), its
+ * actual side or its matcher - is NOT CLAIMED by this census, and neither is how READERS makes a plant from the edits its loop
+ * took (the row each edit is made on, where and what it writes, and its check that the row holds the text the edit replaces),
+ * which PINS entries the case loop makes a pin case for, and under which id (refusal #1's GX05; a case made under an id that
+ * names no PINS entry holds its loop's list to no probe), nor two edits of those cases' own code made together. A write in
+ * place to anything THE FREEZE does not reach is NOT CLAIMED by this census - among them this file's regular expression
+ * UNMET_ID, the lists AFTER_STATEMENTS and AFTER_OTHER_IMPORTS (PINS holds their probes in lists of its own), the export rows
+ * exportRow() returns, the records and lists the cases build (READERS' rows, planted, checked and made, a pin case's read), the
+ * typescript module object, the helper's own state, a built-in or a global (Object, Reflect and Array.prototype among them) and
+ * vitest's expect. An edit of THE FREEZE's own code that leaves every object, list and function of the five frozen when Case
+ * FREEZE runs - deepFreeze() or its statement changed, moved or delayed: when the freeze runs is held only through FREEZE's
+ * readings and the throws a write made after it meets - and an edit of Case FREEZE's own code (its walk unfrozen(), its writes
+ * or its count) are NOT CLAIMED by this census, nor is either made together with an edit claims (1), (4) or (5) name. The
+ * parent census's own header, cases and roster are NOT CLAIMED by this census. No residual is claimed: every mode NOT CLAIMED
+ * names is a scope sentence (no follow-up bead).
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant is built in
  * memory; no src, docs or receipt is edited.
@@ -460,6 +491,25 @@ const PLANTS: readonly Plant[] = [
   },
 ];
 
+/** value frozen through every object, list and function it reaches, each after its members; returned as given. */
+const deepFreeze = <T>(value: T): T => {
+  if ((typeof value === "object" && value !== null) || typeof value === "function") {
+    for (const member of Object.values(value) as unknown[]) deepFreeze(member);
+    Object.freeze(value);
+  }
+  return value;
+};
+/** The paths of the objects, lists and functions value reaches that are not frozen, value's own first (path names value): Case
+ * FREEZE's walk, written apart from deepFreeze() so that an edit of one is read by the other. */
+const unfrozen = (value: unknown, path: string): string[] => {
+  if (typeof value !== "function" && (typeof value !== "object" || value === null)) return [];
+  const own = Object.isFrozen(value) ? [] : [path];
+  return [...own, ...Object.entries(value).flatMap(([key, member]: [string, unknown]) => unfrozen(member, `${path}.${key}`))];
+};
+/** THE FREEZE, at load, before any case runs: the pins with their probes and readings, the rows, the checks, the plants with their
+ * edits and checks, and the reader record, so no case's code can rewrite in place what the holds compare against. */
+deepFreeze([PINS, ROWS, CHECKS, PLANTS, READERS]);
+
 const pinOf = (id: string): Pin | undefined => PINS.find(pin => pin.id === id);
 /** A bead's description and notes, as its row in the tracked tracker export holds them. */
 interface ExportRow {
@@ -560,7 +610,7 @@ function anchorFailures(child: ExportRow, parent: ExportRow): Check[] {
   return CHECKS.filter(check => failed.has(check));
 }
 
-describe("wb-6fr4 registrar readers census (test/helpers/rf-tsx-registrar-readers.ts): five pin cases, each holding literal registrarBindings() or tierReadingOf() probe readings its named wb-8avz member changes, with SHAPE, ANCHOR on the tracker export as it stands and READERS on refusal #1's nine witness plants", () => {
+describe("wb-6fr4 registrar readers census (test/helpers/rf-tsx-registrar-readers.ts): five pin cases, each holding literal registrarBindings() or tierReadingOf() probe readings its named wb-8avz member changes, with SHAPE, FREEZE on what the holds compare against, ANCHOR on the tracker export as it stands and READERS on refusal #1's nine witness plants", () => {
   it("SHAPE: the rows, their pins, each pin's probe ids and the plants stay frozen", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["M:3", "R:2"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.map(probe => probe.id).join(",")}`)).toEqual([
@@ -582,6 +632,37 @@ describe("wb-6fr4 registrar readers census (test/helpers/rf-tsx-registrar-reader
       "W-A5:wb-8avz:(4) statements",
       "W-A9:wb-8avz:(4) members+(4) statements+(4) fold+(4) grades",
     ]);
+  });
+
+  it("FREEZE: every object, list and function PINS, ROWS, CHECKS, PLANTS and READERS reach is frozen, and on sixteen of them a write in place is refused - Object.assign throws a TypeError and Reflect.set returns false", () => {
+    const targets: readonly (readonly [string, object, string])[] = [
+      ["PINS", PINS, "0"],
+      ["pin M1", PINS[0], "probes"],
+      ["pin M1's probes", PINS[0].probes, "0"],
+      ["probe dStmtShadowPlant", STMT_PLANT, "source"],
+      ["the scan probes' reading", SCAN_READING, "rows"],
+      ["the scan probes' reading's rows", SCAN_READING.rows, "0"],
+      ["ROWS", ROWS, "0"],
+      ["row M", ROWS[0], "pins"],
+      ["row M's pins", ROWS[0].pins, "0"],
+      ["CHECKS", CHECKS, "0"],
+      ["PLANTS", PLANTS, "0"],
+      ["plant W-A7", PLANTS[4], "edits"],
+      ["plant W-A7's edits", PLANTS[4].edits, "0"],
+      ["plant W-A7's first edit", PLANTS[4].edits[0], "write"],
+      ["plant W-A7's checks", PLANTS[4].fails, "0"],
+      ["READERS", READERS, "bindings"],
+    ];
+    expect.assertions(1 + 2 * targets.length);
+    expect(
+      [...unfrozen(PINS, "PINS"), ...unfrozen(ROWS, "ROWS"), ...unfrozen(CHECKS, "CHECKS"), ...unfrozen(PLANTS, "PLANTS"), ...unfrozen(READERS, "READERS")],
+      "the objects, lists and functions PINS, ROWS, CHECKS, PLANTS and READERS reach that are not frozen",
+    ).toEqual([]);
+    for (const [what, target, key] of targets) {
+      const value: unknown = Reflect.get(target, key);
+      expect(() => Object.assign(target, { [key]: value }), `${what}: Object.assign of its ${key} throws`).toThrow(TypeError);
+      expect(Reflect.set(target, key, value), `${what}: Reflect.set of its ${key} is refused`).toBe(false);
+    }
   });
 
   it("ANCHOR: on the tracker export as it stands no ANCHOR check fails - wb-6fr4's description items and their plants, refusal #3's row M statements and UNMET ids, the cut #4 note's row R clause and falsifier plants, refusal #4's N-A ids, row R statements and UNMET ids and the R-B218 fold's ids hold row M's and row R's pins with their unmet items, grades and quotes, row R's label and the plants those records name", () => {
