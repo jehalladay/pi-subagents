@@ -125,6 +125,13 @@
  * EFFECT-ELEMENT and JUDGE-EFFECT; JUDGE-VIEW's fences; JUDGE-TEMPLATE's escapes; and (cut #6, PLACE_FORMS; cut #7 adds the counts,
  * positions, parameters, depths, heading levels and indentations those titles now name) the place enumerations of FOLDED-CV, FOLDED-EC,
  * JUDGE-OWES and JUDGE-EFFECT.
+ * BUDGET (wb-coyr, the R694 follow-up of F4 at the wb-021.9 landing-912 gate, cmd_5da3b69d9465): ANCHOR is registered with a
+ * 60000 ms budget (ANCHOR_BUDGET_MS) and holds its own task's timeout, as vitest's task tree states it, to 60000, so an ANCHOR
+ * registered with any other budget, vitest's default 5000 ms among them, reds. Its wall is mostly its two reads of the bead
+ * export (exportRow reads and parses the whole export for each row it returns) under the host's load; the budget does not
+ * shorten it. A run-time write to a task's timeout (vitest binds a test's budget when it collects the test, so such a write
+ * changes the task tree, not the budget) and an edit of ANCHOR_BUDGET_MS and the pin's literal together are NOT CLAIMED by this
+ * census; nor is any other case's budget.
  * NOT CLAIMED by this census: any form of a reader that its case's title does not name (among them an after-phrase after another
  * separator or with another or a doubled kind inside it, an as, satisfies or angle assertion with another type, a fence of five or more
  * marks or indented by a tab, an html block of another element or of more lines, a table whose rows open with '|', a JSDoc comment's
@@ -1045,6 +1052,18 @@ const spelled = (names: readonly string[], last: string): string => (names.lengt
 /** A literal under one typed wrapper as a title spells it: an as or satisfies clause follows it, an angle assertion leads it. */
 const wrapped = (literal: string, form: string): string => (form.startsWith("<") ? `${form}${literal}` : `${literal} ${form}`);
 
+/**
+ * ANCHOR's budget (wb-coyr: F4 of the wb-021.9 landing-912 gate, cmd_5da3b69d9465). ANCHOR reads the bead export through
+ * exportRow twice (wb-021.9's row, then wb-021.6's), and each call reads and parses the whole export, so its wall follows the
+ * export's size and the host's load, not its judgements. Measured: 1030 ms file-alone at load1 about 26 (base 4bfe0ac1, an
+ * export of 82704321 bytes and 1225 rows; the two whole-export reads alone took 909-994 ms in a plain node run, three runs at
+ * load1 about 16); 1686 ms in that gate's merge-tree targeted run (187 files, load1 73.84 at start); 5152 ms in the merge-tree
+ * targeted run of wb-021.9's refusal #6 (178 files, load1 129.71 at start), where it timed out at vitest's default 5000 ms
+ * (refusal #6 F3). 60000 ms is 11.6 x that 5152 ms wall. vitest fails a synchronous body that outran its budget only once the
+ * body has finished, so the budget decides whether a finished ANCHOR fails; it never stops or shortens one.
+ */
+const ANCHOR_BUDGET_MS = 60_000;
+
 describe("APO judge census (wb-021.9 cut #7): the five clauses, the three folded members and the refusal #1, #2, #5 and #6 witnesses over the landed judge", () => {
   it("SHAPE: the rows, each case's title digest and probe ids with text digests, the MUTANTS pairs and the probe count equal their frozen literals", () => {
     expect(ROWS.map(row => `${row.id} ${row.label}:${row.pins.join(",")}`)).toEqual(FROZEN_ROWS);
@@ -1058,7 +1077,8 @@ describe("APO judge census (wb-021.9 cut #7): the five clauses, the three folded
     expect(Object.values(MUTANTS)).toEqual(memberPins);
   });
 
-  it("ANCHOR: U1..U5 match wb-021.9's description (clause quotes, G16 counts, the 8000); the G16 pairs match refusal #4's member record in wb-021.6's notes; R-B205 and G24 match wb-021.9's notes (the fold record, the refusal #1 witness ids); MUTANTS names match wb-021.6's notes; the W17 probes match refusal #6's UNMET list and F5 in wb-021.9's notes", () => {
+  it("ANCHOR: U1..U5 match wb-021.9's description (clause quotes, G16 counts, the 8000); the G16 pairs match refusal #4's member record in wb-021.6's notes; R-B205 and G24 match wb-021.9's notes (the fold record, the refusal #1 witness ids); MUTANTS names match wb-021.6's notes; the W17 probes match refusal #6's UNMET list and F5 in wb-021.9's notes", { timeout: ANCHOR_BUDGET_MS }, ({ task }) => {
+    expect(task.timeout, "ANCHOR's own budget (wb-coyr): 60000 ms, never vitest's default 5000 ms").toBe(60_000);
     const { description, notes } = exportRow("wb-021.9");
     expect(description, "wb-021.9 description").not.toBe("");
     const clauses = description.split("\n").filter(line => /^- U[1-5] /.test(line));
