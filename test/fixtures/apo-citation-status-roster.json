@@ -229,7 +229,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the carriers, the citation, the filing tree and the producer lines; the src registry binds the effect classes",
-  "the landed judge: landedChecks reads this file and test/helpers/apo-citation-status-judge.ts whole by their paths and its stand-in tree by one call; no top-level declaration of this file that declaredNames reads names an export of that module, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS and name only its exports, landedChecks reads its stand-in tree as listed, and the two readers read their 27 and 8 stand-ins as listed",
+  "the landed judge: landedChecks reads its stand-in tree as listed, and its reading of the live tree's test/helpers/apo-citation-status-judge.ts and this file by the same call holds judgeFiles, causesOf, bindingOf and READS among the module's exports and this file's imports of it, no shadowed name and no foreign import, claimed only as its result there; the two readers read their 27 and 8 stand-ins as listed",
   "P1",
   "E1",
   "E2",
@@ -999,6 +999,10 @@
           "text": "Text.\n"
          },
          {
+          "path": "docs/workbench/0.md",
+          "text": "Text.\n"
+         },
+         {
           "path": "docs/workbench/a.md",
           "text": "# A\n\nText.\n"
          },
@@ -1099,6 +1103,7 @@
         ],
         "reading": {
          "pages": [
+          "docs/workbench/0.md",
           "docs/workbench/a.md",
           "docs/workbench/b.md",
           "docs/workbench/c.md",
@@ -1127,6 +1132,7 @@
           "docs/workbench/receipts/zz.md"
          ],
          "headingless": [
+          "docs/workbench/0.md",
           "docs/workbench/b.md",
           "docs/workbench/c.md",
           "docs/workbench/d.md",
