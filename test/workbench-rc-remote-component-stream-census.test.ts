@@ -241,7 +241,8 @@ const ROOT_FLOORS: Readonly<Record<string, number>> = {
 /** Every computed load at base f8afbef (BOUND VALUES), each judged by hand: Pi's own dist modules (the headless census child, the
  * live operator receipt); the detached host's trusted local provider (a digest-pinned module path from the reviewed launch
  * manifest) and its dependency pinner (each relative source literal of that provider, checked just before it is resolved); a
- * module beside an installed package (the isolated-provider e2e); a scratch module the git-stamp test writes. None is the
+ * module beside an installed package (the isolated-provider e2e); a hollowed copy of the EDC static-reach readers helper the
+ * wb-pyel.9 census writes to scratch (its KILLS case); a scratch module the git-stamp test writes. None is the
  * distribution. A new one is a red until it is judged and added here and to the roster. */
 const COMPUTED_LOADS = [
   "qa/workbench/headless-census-child.mjs: import() entryUrl",
@@ -252,6 +253,7 @@ const COMPUTED_LOADS = [
   "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
   "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
   "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+  "test/workbench-edc-static-reach-readers-census.test.ts: import() pathToFileURL(file).href",
   "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
   "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
 ];
