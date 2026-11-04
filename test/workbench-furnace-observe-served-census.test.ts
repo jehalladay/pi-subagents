@@ -35,8 +35,13 @@
  * GP10-H01 (type-inner-zero-width's type swapped to "image" with its finding, its id kept) kept the census at 0|17. This cut
  * takes the pin option of each: J2 PINNED FORMS gain five INNER forms judged for T; J2 OTHER-TEXT FORMS, seven values judged
  * for expected texts holding a precomposed letter, a format character or a letter outside ASCII, tell GP10-T13, GP10-T21 and
- * GP10-T22 from ===, which no J2 value judged for T did; A0 gains three value forms; and F1 freezes the value of every
- * fixture of every table (FROZEN SHAPE). MEMBERS records what each member reads on these bytes.
+ * GP10-T22 from ===, which no J2 value judged for T did; A0 gains three value forms; and F1 freezes the digest of every
+ * fixture of every table, the digest of frozenValue's rendering of its value (FROZEN SHAPE). Its refusal #1 (O:2047; U1: the
+ * data bullet of CLAIMS claimed, of every judge that removes only some of the format characters or of the characters outside
+ * printable ASCII, that it still reads the finding at the plain JSON reply and that J2 reds under it) is cured by narrowing:
+ * the data bullet names GP10-T14's and GP10-T17's removals only, and NOT CLAIMED states every other partial removal; and the
+ * refusal's rider on FROZEN SHAPE's value-swap words by narrowing them to a value with another digest. MEMBERS records what
+ * each member reads on these bytes.
  *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
@@ -210,9 +215,10 @@
  *   so: judged for sanitizeWorkbenchJsonText(R) it reads exactly its one text finding (C3, C4). So a served reply of the
  *   reading's plain JSON text reds C3 and C4 (the witness GP8-W01, MEMBERS); a judge that removes every format character
  *   (Unicode category Cf) from both texts, or every character outside printable ASCII, before === reads no finding there and
- *   reds C3 and C4 too (GP8-M01 and GP8-M02, MEMBERS), and J2 reds under each at its INNER forms; a judge that removes only
- *   some of them (U+FEFF alone, GP10-T14, or U+00AD, U+2060 and U+FEFF, GP10-T17) still reads the finding there, and J2 reds
- *   under it at the INNER form of each character it removes (MEMBERS).
+ *   reds C3 and C4 too (GP8-M01 and GP8-M02, MEMBERS), and J2 reds under each at its INNER forms; a judge that removes from
+ *   both texts only U+FEFF (GP10-T14), or only U+00AD, U+2060 and U+FEFF (GP10-T17), still reads the finding there, and J2
+ *   reds under it at the INNER form of each character it removes (MEMBERS). No other partial removal is claimed here (NOT
+ *   CLAIMED below).
  * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M)), M
  *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
  *
@@ -224,6 +230,10 @@
  *   content, element, type or text; among them a text or a type differing from the expected one at an inner character other
  *   than the INNER forms'), and a result judged for any other expected text in a form J2 OTHER-TEXT FORMS does not list. Of a
  *   served reply the census claims the [] its row's case asserts, and not what that [] says of the reply.
+ * - A judge that removes from both texts only some of the format characters or of the characters outside printable ASCII,
+ *   other than GP10-T14's and GP10-T17's removals (CLAIMS, data), is NOT CLAIMED by this census: neither what it reads at C3's
+ *   and C4's plain JSON reply nor whether J2 reds under it. MEMBERS records what the census reads under the removals its
+ *   members make, wb-rldu's refusal #1's four among them.
  * - Which other spellings of the data reply's text the census tells from textResult(sanitizeWorkbenchJsonText(R)) is NOT
  *   CLAIMED by this census: it claims the plain JSON reply (C3, C4) and the judge's reading for T at J2's values, and no other
  *   text of R.
@@ -254,8 +264,10 @@
  * - Tools other than furnace_observe are NOT CLAIMED by this census: their names are read only to count furnace_observe.
  *
  * RESIDUALS: none named. Every named member of both refusals and of wb-rldu's three findings reds the census on these bytes
- * (MEMBERS); a judge or anchor reading at a value or form no case writes is outside this cut's claims (NOT CLAIMED above), so
- * no claimed reading rests on prose.
+ * (MEMBERS); of wb-rldu's refusal #1, U1's PREP1-L2-ZWNJ-FOLD and PREP1-L2-ZWJ-FOLD and the FROZEN SHAPE rider's
+ * PREP1-L2-H-DETAILS-NEGZERO and PREP1-L2-H-RESULT-FN-BODY keep it green, each outside this cut's claims (NOT CLAIMED above;
+ * FROZEN SHAPE). A judge or anchor reading at a value or form no case writes is outside this cut's claims (NOT CLAIMED
+ * above), so no claimed reading rests on prose.
  *
  * MEMBERS (the members of record; each src plant is applied to src/index.ts in the cutting seat's worktree and the census run
  * on it, src restored by sha256 after; the counts are the seat's receipts in the delivery note):
@@ -333,23 +345,40 @@
  *   wb-rldu's seat sweep (the delivery note holds the counts): beside the gate's, one-edit text folds - NFC of the item side
  *   only, NFD, NFKC of both sides, U+FEFF, U+00AD or U+2060 removed alone, format characters replaced by a space, characters
  *   outside printable ASCII replaced by a space, those replaced by "?" on the item side only, and a compare of the character
- *   sets - each red J2; a fixture value swapped with its id kept, in each of J0, J1, J2, J2 OTHER-TEXT, S0 and A0, reds F1,
+ *   sets - each red J2; a fixture value swapped with its id kept, in each of J0, J1, J2, J2 OTHER-TEXT, S0 and A0, each for a
+ *   value frozenValue renders differently, reds F1,
  *   and double-paren-template-value hollowed to one parenthesis leaves GP10-A01 red at F1 alone. The type test's NFC fold,
  *   format-to-U+FFFD fold and outside-ASCII-to-"?" fold read clean and are EQUIVALENT by construction: each reads a type as
  *   "text" only when it is "text".
+ * - wb-rldu's refusal #1 (O:2047; each gate member, witness and hollow read as data from the gate-prep-1 PREP archive and
+ *   applied verbatim to these bytes, the witnesses to src/index.ts's textResult): U1's PREP1-L2-ZWNJ-FOLD and
+ *   PREP1-L2-ZWJ-FOLD (U+200C, or U+200D, alone removed from both texts) keep the census green, since no J2 form writes
+ *   either character, and their witnesses PREP1-L2-W-ZWNJ-INNER-TEXT and PREP1-L2-W-ZWJ-INNER-TEXT (that character after the
+ *   first character of textResult's text) red C1-C5 under the delivered census and keep it green under their member; U1's
+ *   PREP1-L2-INVISIBLE-ONLY-FOLD (U+202E alone removed from both texts) reds J2 at text-inner-invisible, C3 and C4, as
+ *   GP10-T01-BIDI-FOLD (the bidi controls removed) does; each of these four removals is NOT CLAIMED above. The FROZEN SHAPE
+ *   rider's PREP1-L2-H-DETAILS-NEGZERO (details-zero's details written -0) and PREP1-L2-H-RESULT-FN-BODY (result-function's
+ *   arrow function returning null in place of undefined) keep the census green: frozenValue renders each alike (FROZEN
+ *   SHAPE). Its F3 probe PREP1-INFO-COORDINATED-J2-FIXTURE-HOLLOW (text-inner-transposed removed together with its id and
+ *   its FROZEN_J2 line) keeps the census green, alone and beside GP10-T15-ANAGRAM: a removal NOT CLAIMED (FROZEN SHAPE).
  *
  * FROZEN SHAPE (standing rule 16): F1 pins ROWS as `${id}:${pins.length}` and its clauses, the case ids, SCENARIO_IDS,
  * J0_NAMES, the ids of the J1, J2, J2 OTHER-TEXT and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals; and
- * (wb-rldu F3) every fixture's value, as the cut-time literals FROZEN_J0 (J0's values, `${index}:${digest}`), FROZEN_J1,
+ * (wb-rldu F3) every fixture's digest, as the cut-time literals FROZEN_J0 (J0's values, `${index}:${digest}`), FROZEN_J1,
  * FROZEN_J2, FROZEN_J2_OTHER, FROZEN_S0 and FROZEN_A0 (each fixture as `${id}:${digest}`), digest being digestOf: the first 16
- * hex digits of the sha256 of frozenValue's rendering of the whole fixture, which renders a primitive by its type and value,
- * and an object or a function by its typeof, each own key in Reflect.ownKeys order with its enumerability and value (an
- * accessor by whether it has a getter and a setter) and its prototype, named when it is Object.prototype, Array.prototype,
- * Function.prototype, String.prototype or the async function prototype and rendered the same way otherwise (a value already
- * on the path renders as a cycle). So a fixture whose value is swapped with its id kept reds F1 (GP10-H01, MEMBERS); a swap
- * made together with its digest line is NOT CLAIMED by this census (the digests are this file's own literals, as its id
- * literals are). A1 holds the rows to src/index.ts outside this file: the one furnace_observe literal stands for the
- * registration row and its four textResult sites for the four reply rows, in order.
+ * hex digits of the sha256 of frozenValue's rendering of the whole fixture. frozenValue renders a string by its JSON text, a
+ * symbol by its description and whether the Symbol.for registry holds it, a bigint by its decimal text, and any other
+ * primitive by its type and String(value), so -0 renders as 0; and an object or a function by its typeof, each own key in
+ * Reflect.ownKeys order with its enumerability and value (an accessor by whether it has a getter and a setter) and its
+ * prototype, named when it is Object.prototype, Array.prototype, Function.prototype, String.prototype or the async function
+ * prototype and rendered the same way otherwise (a value already on the path renders as a cycle). It never reads a
+ * function's source text, so two functions differing only in their bodies render alike. So a fixture whose value is swapped,
+ * with its id (J0's: its index) kept, for a value with another digest reds F1 (GP10-H01, MEMBERS). NOT CLAIMED by this
+ * census: a swap for a value frozenValue renders alike (0 for -0, as PREP1-L2-H-DETAILS-NEGZERO writes, and one function body
+ * for another, as PREP1-L2-H-RESULT-FN-BODY writes; MEMBERS), a swap made together with its digest line, a fixture removed
+ * together with its id and digest lines (the ids and the digests are this file's own literals), and frozenValue's rendering
+ * of a value no fixture holds. A1 holds the rows to src/index.ts outside this file: the one furnace_observe literal stands
+ * for the registration row and its four textResult sites for the four reply rows, in order.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -849,9 +878,12 @@ const NAMED_PROTOTYPES: readonly (readonly [object | null, string])[] = [
   [String.prototype, "String.prototype"],
   [Reflect.getPrototypeOf(async () => undefined), "AsyncFunction.prototype"],
 ];
-/** F1's rendering of a fixture value (wb-rldu F3; the header's FROZEN SHAPE): a primitive by its type and value; an object or a function
- * by its typeof, each own key in Reflect.ownKeys order with its enumerability and value (an accessor by whether it has a getter and a
- * setter), and its prototype, named when NAMED_PROTOTYPES holds it and rendered the same way otherwise; a value on the path is a cycle. */
+/** F1's rendering of a fixture value (wb-rldu F3; the header's FROZEN SHAPE): a string by its JSON text, a symbol by its description
+ * and whether the Symbol.for registry holds it, a bigint by its decimal text and any other primitive by its type and String(value) (so
+ * -0 renders as 0); an object or a function by its typeof, each own key in Reflect.ownKeys order with its enumerability and value (an
+ * accessor by whether it has a getter and a setter), and its prototype, named when NAMED_PROTOTYPES holds it and rendered the same way
+ * otherwise; a value on the path is a cycle. It never reads a function's source text, so two functions differing only in their bodies
+ * render alike. */
 function frozenValue(value: unknown, path: readonly object[] = []): string {
   if (typeof value === "string") return `string ${JSON.stringify(value)}`;
   if (typeof value === "symbol") return `symbol ${Symbol.keyFor(value) === undefined ? "" : "for "}${JSON.stringify(value.description ?? null)}`;
@@ -873,8 +905,9 @@ function frozenValue(value: unknown, path: readonly object[] = []): string {
 /** The first 16 hex digits of the sha256 of frozenValue's rendering of value. */
 const digestOf = (value: unknown): string => createHash("sha256").update(frozenValue(value)).digest("hex").slice(0, 16);
 
-/** F1's frozen fixture values (wb-rldu F3): the cut-time `${id}:${digestOf(fixture)}` of each fixture (J0's values by index), in table
- * order; a fixture whose value is swapped with its id kept no longer reads its line. */
+/** F1's frozen fixture digests (wb-rldu F3): the cut-time `${id}:${digestOf(fixture)}` of each fixture (J0's values by index), in table
+ * order; a fixture whose value is swapped, with its id kept, for a value with another digest no longer reads its line (a value
+ * frozenValue renders alike keeps it: the header's FROZEN SHAPE). */
 const FROZEN_J0: readonly string[] = [
   "0:3215673080c87790",
   "1:8bf543c39dc3f887",
@@ -1460,8 +1493,9 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "double-paren-string-value",
       "escaped-template-value",
     ]);
-    // wb-rldu (F3): every fixture's value, so a value swapped with its id kept reds here (GP10-H01). Cut-time digests of
-    // frozenValue's rendering of each whole fixture (J0's values by index), not a hash recomputed from a second copy.
+    // wb-rldu (F3): every fixture's digest, so a value swapped, with its id kept, for one with another digest reds here (GP10-H01;
+    // a value frozenValue renders alike does not: the header's FROZEN SHAPE). Cut-time digests of frozenValue's rendering of each
+    // whole fixture (J0's values by index), not a hash recomputed from a second copy.
     expect(J0_VALUES.map((value, index) => `${index}:${digestOf(value)}`)).toStrictEqual(FROZEN_J0);
     expect(J1_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_J1);
     expect(J2_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_J2);
