@@ -138,19 +138,33 @@
  *     the committing capability unregistered - src's own registration, which registers no committing rf capability - or
  *     registered as this file's test-only stand-in at each member of src's CapabilityDescriptor effectClass union (read through
  *     that helper's srcUnion, as the landed honesty census reads it). Every ACK FORMS acknowledgement, every override after one
- *     and the FED SET's evidence action are decided under each triple of the three (seventy-five today); each of those
- *     decisions crosses this file's one decideReconcile seam (decideAtSeam, wb-x3h8), which records the deps object it hands
- *     src, read off that very object (the task's status, the committing capability's class its registry answers, and the task
- *     object's SEAM SHAPE, below), and hands src that same object; every triple's decisions must carry exactly that triple (the
- *     DECISION-INPUT LIVENESS), so an input dropped or changed at decideUnder's call into the seam reds (measured: the task
- *     object handed over without its journal path, the gate's GP17-C4, or with its journal path undefined, its status replaced
- *     or the committing capability's class replaced), and so does a task object taskOf builds whose own enumerable keys,
- *     observation scope (its keys in order and their values) or journal path differ from its TASK SHAPE's SEAM SHAPE. The
- *     seam's own decideReconcile call is this file's judging code: an edit there that hands src another object than the one
- *     the seam records is NOT CLAIMED by this census (R-SELF-ANCHORED). The input that helper decides under - a completed task
- *     in that helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(), decision for
- *     decision: N checks both, H the first. N's and H acceptance.3.1's witnesses list each distinct outcome text once, after the
- *     inputs that give it.
+ *     and the FED SET's evidence action are decided under each triple of the three (seventy-five today), each through
+ *     decideUnder; each of those decisions crosses decideAtSeam (wb-x3h8), the one of this file's six decideReconcile call sites
+ *     that records a decision's input: it records the deps object it hands src, read off that very object (the task's status,
+ *     the committing capability's class its registry answers, and the task object's SEAM SHAPE, below), and hands src that same
+ *     object. The other five call sites record nothing and decide with this file's deps() alone (a completed task in the
+ *     no-journal-path shape, the committing stand-in at write), never under the other DECISION INPUTS (wb-fnui, landing 898 F3;
+ *     the six as read at the cut, not by this test): previewReceipt()'s evidence action (S's runtime receipt, H acceptance.3.2's
+ *     two synthetic reads and R-ECHO's read), acknowledgeWith()'s acknowledgement and overrideAfter()'s two overrides (R-ECHO's),
+ *     and the inspect of S's runtime pin. That helper's previewReceipt() (behind every FED SET receipt) and its acknowledgeWith()
+ *     and overrideAfter() (the reference decisions N and H compare decision for decision, below) call src's decideReconcile in
+ *     that helper and cross no seam of this file. Every triple's decisions must carry exactly that triple (the DECISION-INPUT
+ *     LIVENESS), so an input dropped or changed at decideUnder's call into the seam, in a deps object that gives the seam's reads
+ *     and src's the same answers, reds (measured: the task object handed over without its journal path, the gate's GP17-C4, or
+ *     with its journal path undefined, its status replaced or the committing capability's class replaced), and so does a task
+ *     object taskOf builds whose own enumerable keys, observation scope (its keys in order and their values) or journal path
+ *     differ from its TASK SHAPE's SEAM SHAPE. The seam's own decideReconcile call is this file's judging code: an edit there
+ *     that hands src another object than the one the seam records is NOT CLAIMED by this census (R-SELF-ANCHORED). A deps
+ *     object that gives the seam's reads and src's different answers is NOT CLAIMED by this census either (wb-fnui, landing 898
+ *     F1 and F2, routed for the owner's weigh-in): the seam reads the task and the committing capability's class before src
+ *     does, and no reader here compares the two reads, so a decisionDeps.task accessor answering the seam's two reads with the
+ *     task taskOf built and src's one read with that task without its journal path (the gate's X8; X8c, the same accessor at
+ *     decideUnder's call argument), or a currentEffectClass answering the seam's ask for the committing capability with its
+ *     class and src's later asks with unregistered (X9; X9c at the call argument), keeps this census green (measured; X8 and
+ *     X8c also keep it green beside the src plant G20-JP2, which alone reds it). The input that helper decides under - a
+ *     completed task in that helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(),
+ *     decision for decision: N checks both, H the first. N's and H acceptance.3.1's witnesses list each distinct outcome text
+ *     once, after the inputs that give it.
  *   TASK SHAPES (refusal #8 U1, R-B345): the task objects a decision is made with, each built from its request context; the
  *     three shapes are this file's own literals (R-SELF-ANCHORED), the two keyed ones typed against src's ReconcileDeps task
  *     with every key required, so a key src adds to that task fails typecheck:test. That helper's shape (no-journal-path): its
@@ -322,6 +336,12 @@
  *   seam (decideAtSeam), read off the deps object handed to src, and the task object's shape is judged against SEAM_SHAPES,
  *   declared apart from taskOf with this file's one journal path threaded in: GP17-C4 now reds N and H acceptance.3.1, alone
  *   and with G20-JP2. The decisions, the N and H witnesses, the pin lines and every other reader are unchanged.
+ * wb-fnui (the R694 follow-up of landing 898, wb-x3h8's PASS; comments only): F3 - the DECISION INPUTS paragraph's seam words
+ *   are restated to the file's six decideReconcile call sites: decideAtSeam is the one that records a decision's input, and the
+ *   paragraph names the other five, which record nothing, and that helper's three, which cross no seam of this file. F1 and F2
+ *   (routed for the owner's weigh-in): the DECISION-INPUT LIVENESS words are narrowed to a deps object that gives the seam's
+ *   reads and src's the same answers, and a stateful one (the gate's X8, X8c, X9 and X9c) is named NOT CLAIMED. The seam, its
+ *   records, the decisions and every reader, pin line and witness are unchanged.
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
  *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
  *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
