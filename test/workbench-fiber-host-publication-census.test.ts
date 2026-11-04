@@ -20,8 +20,9 @@
  * and the crate fiber-optics-replay-observer (rust/replay_observer/Cargo.toml). The roster vendors line 17 with its SHA256.
  *
  * MEASURED AT BASE (c2695d7, landing 686; seat ws-02, run g10-work-s146, 2026-10-30; cut #1 measured 864dff9, cut #2 04123dc,
- * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, and cut #6 08a61f1,
- * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, each with the same results,
+ * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, cut #6 08a61f1,
+ * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, and cut #7 a14c87f, landing 925, seat ws-05, run g10-work-s208,
+ * 2026-11-04, each with the same results,
  * the manifests read being every tracked path outside test/ that the helper's manifestForm selects): no tracked file below
  * src, no tracked dependency manifest, package.json or package-lock.json spells the producer's stem, a hosted class or a
  * publication entry (git grep, 0 rows each), and every tracked file below src (117) is a script module. Pi's one Fiber surface
@@ -70,6 +71,19 @@
  * the files no scan reached; the three checks gain negative controls; the composed-readers entry names the lock path neither
  * landed readers census claims (refusal #5's F3). Controls and their readings are added; no row, pin or test is.
  *
+ * CUT #7 (the further restatement orchestrator ruling R-B516 orders after refusal #6; seat ws-05, run g10-work-s208): refusal
+ * #6 (BIND 2026-11-04T08:15:10Z, gate-prep-10, run g10-gate-s206) found six one-edit members of this file's own code that kept
+ * it green inside cut #6's words: the hosting, entry and launch scans cut to a file's first lines, which cut #6's leading
+ * probe alone could not see (U1), missingIds compared by prefix (U2), the walk held to the listing by prefix (U3) and the
+ * provider anchors read by reversed containment (U4); its F4 rider read a skip keyed on the live walk's size as NOT CLAIMED.
+ * Claims equal pins here: A2's REACH probes each copied file at its first and at its last line (a head and a tail probe whose
+ * launches name different launchers), reads a copy holding exactly the listed files (the live walk's size, F4) beside the copy
+ * with REACH_CONTROLS, reads REACH_DENSE (a module whose every line is a probe, beside a negative control whose withheld lines
+ * are not) and gives each probe position a negative control; missingIds gains id-substitution legs (NEAR_MISS_IDS);
+ * WALK_CONTROL gains near-miss paths both ways and its
+ * provider the ANCHOR_NEAR_MISSES texts; A2, A3, A4 and B2 are restated to those pins. Controls and their readings are added;
+ * no row, pin or test is.
+ *
  * THE VOCABULARY (the helper's fold, segmentFolds, needlesIn and needle sets; their rules are the helper's, stated in its header
  * and claimed by the readers censuses). Every reading compares the segmented fold of a text with three needle sets, and this
  * census's plants hold the forms it reads: fiber_optics, fiber-optics, FiberOptics, "@fiber-optics/sdk" and FiberOpticsSDK
@@ -99,21 +113,42 @@
  *    and a nested value read, two near misses quiet); SHADOWED_MANIFEST read parsed (no hit) and with its raw text (one hit);
  *    and LOCK_CONTROLS' hit counts (a lock path and a lock name read, a quiet path).
  *    A2 THE SRC FILES, read by readSrc: git's listing of src is held both ways to a filesystem walk of src that records and
- *    never follows a symlink, clears FLOORS (modules, judged texts, through clearsFloor and A1's floor controls) and holds the
- *    provider (readsProvider), whose SOURCE_ANCHORS texts are read. WALK_CONTROL, read the same way, is their negative control:
- *    its walk-only and listing-only files are named, its provider path without the anchors reads every anchor unread, and the
- *    pipeline tree, which holds no provider, reads as not holding it;
- *    each file is read as the helper's isScript decides, a script module through its TypeScript AST (sourceTexts: every node's
- *    judgedText, never a comment), any other file as raw lines. REACH: every file git lists below src reaches the three scans
- *    (hosting here, entries in B2, launches in A4). A scratch copy of src holding each listed file's own text led by
- *    REACH_PROBE's line for its kind (each line holds the stem, a publication entry and an rf launch), with REACH_CONTROLS
- *    probed the same way beside them (a module of each SCRIPT_KINDS extension and a .txt file), is read through readSrc, and
- *    every copied file gives a hit in each scan (the roster pins the three empty lists of files without one, and the copy's
- *    walk held to its listing); its negative control, REACH_NEGATIVE (a probed and an unprobed module read the same way),
- *    names the unprobed module in each list. So a skip of a listed file by its path or directory, by its place in the walk,
- *    or by its kind (each SCRIPT_KINDS extension and .txt in the copy, .py and .json in the scratch src tree below) reds A2;
- *    a skip keyed on another kind no control holds (.md, for one), on anything a copied file does not share with its listed
- *    original (the root a reading is handed, the probe) or on a file's own text is NOT CLAIMED by this census. The live
+ *    never follows a symlink (an exact path compare each way), clears FLOORS (modules, judged texts, through clearsFloor and
+ *    A1's floor controls) and holds the provider (readsProvider), whose SOURCE_ANCHORS texts are read (an anchor is read when
+ *    one of the provider's judged texts equals it). WALK_CONTROL, read the same way, is their negative control: its walk-only
+ *    files (one beside the listing, one extending a listed path, one a listed path's prefix, one holding a listed file's base
+ *    name in another directory) and its listing-only files (one beside the walk, one extending a walked path, one a walked
+ *    path's prefix, one holding a walked file's base name in another directory) are named; its provider path, holding every
+ *    ANCHOR_NEAR_MISSES text (each anchor's first and last part, the anchor extended at its end and at its front, in upper
+ *    case and wrapped in spaces) as a judged text of its own, reads every anchor unread; and the pipeline tree, which holds no
+ *    provider, reads as not holding it. A walk and a listing that differ by another relation of two paths (letter case, for
+ *    one) and a provider text related to an anchor another way are NOT CLAIMED by this census.
+ *    Each file is read as the helper's isScript decides: a script module through its TypeScript AST (sourceTexts, the
+ *    helper's judgedText of each node; a comment is never read, Q2), any other file as raw lines; how far into each file the
+ *    three scans (hosting here, entries in B2, launches in A4) read is claimed only as REACH states it. REACH: two scratch
+ *    copies of src, one holding exactly the files git lists below src (the live walk's own size and order) and one with
+ *    REACH_CONTROLS beside them (a module of each SCRIPT_KINDS extension and a .txt file), plant each file's own text between
+ *    REACH_PROBE's head line (the file's first) and its tail line (its last) for its kind; each line holds the stem, a
+ *    publication entry and an rf launch (the head launching with spawnSync, the tail with execFileSync, launchers no file
+ *    below src launches rf with, A4's roster). Each copy is read through readSrc, and each scan gives every copied file the
+ *    head probe's hit on its first line and the tail probe's on its last (probeHit; the roster pins, per copy, the six empty
+ *    lists of files missing one, the copy's walk held to its listing, and liveWalk: the first copy's walk is the live walk's
+ *    files in order, the second copy's is not). REACH_NEGATIVE (modules probed at both lines, at
+ *    the tail only, at the head only and at neither, and a raw file at either line only), read the same way, names in each
+ *    position's lists exactly the files that position withholds. REACH_DENSE (a module of REACH_DENSE.lines lines, every one
+ *    the head probe, and its negative control, a module whose withheld lines hold a filler in the probe's place), read the
+ *    same way in one scratch src, gives the hosting and entry scans the probe's hit on every probe line and the launch scan a
+ *    launch per probe line: the reading names no line of the dense module and exactly the negative control's withheld lines
+ *    (and counts them for the launch scan), each module's planted line count beside. So a scan that skips a listed file (by
+ *    its path or directory, by its place in the walk, by the walk's size, or by its kind: each SCRIPT_KINDS extension and .txt
+ *    in the copies, .py and .json in the scratch src tree below), that reads a file only up to some line or only from some
+ *    line on (keyed on a line number alone, or on the file's path, directory or kind, its place in the walk or the walk's
+ *    size besides), or that drops a line by its number alone, the same in every file of every walk, up to REACH_DENSE.lines,
+ *    reds A2. NOT CLAIMED by this census: a skip or a cut keyed on another kind no control holds (.md, for one), on anything a
+ *    copied file does not share with its listed original (the root a reading is handed, the probes and the lines they add)
+ *    or on a file's own text; a drop of a judged text by its index in the file or its place on its line, rather than of a
+ *    whole line; and a drop of a line strictly between a listed file's first and its last line keyed on that file (its path,
+ *    kind, size or text) or on the walk it is read in (its size, its root). The live
  *    reading's hosting hits (a STEM or HOSTED_CLASSES fold) are none (hits are pinned, never the list of files, so an
  *    unrelated file a later cut adds below src reds nothing); the walk and git's
  *    listing both list a non-script file (the roster); the planted modules read in the positions they hold (SOURCE_CONTROLS:
@@ -126,8 +161,11 @@
  *    claims the helper's judgedText to its own bounds).
  *    A3 THE REGISTERED CAPABILITIES (the title's artifact, "(none exists)"), read with the helper's registryReading,
  *    descriptorReading and registrationSites. The native registration and the four injected-client registrations each hold
- *    every REQUIRED_DESCRIPTORS id (the census's own check, missingIds; its negative controls, four injected legs each
- *    withholding one id's registration, read as missing exactly that id). registryReading of each leg states no needle hit
+ *    every REQUIRED_DESCRIPTORS id (the census's own check, missingIds, an exact id compare; its negative controls: four
+ *    injected legs each withholding one id's registration, and sixteen legs each registering one id's own provider under a
+ *    NEAR_MISS_IDS id in its place, through SubstitutingRegistry: the id extended by a segment at its end and at its front,
+ *    and the id less its last and its first character; each leg read as missing exactly that id. An id related to a required
+ *    id another way is NOT CLAIMED by this census). registryReading of each leg states no needle hit
  *    of any set and
  *    one Fiber-family member, the read preview, as the roster pins it: criteria id, permission, contract and rf-contract,
  *    effectClass read, supportedModes [invoke], carrier true, no publishing reason and the leg's own description, so a leg read
@@ -147,8 +185,9 @@
  *    of a name its module declares or imports, a namespace member), whose declaration is read where it is declared, and a
  *    registration performed by code outside src (a namespace member or an imported function called with the registry, an
  *    alias bound outside src).
- *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster, as rfLaunches reads it, is the
- *    provider alone, and through a stand-in rf (the ONLY PATH entry, logging each argv) both input arms of the native preview
+ *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster, as rfLaunches reads it over the A2
+ *    reading (each listed file reaching the launch scan as A2's REACH states it), is the provider alone, and through a
+ *    stand-in rf (the ONLY PATH entry, logging each argv) both input arms of the native preview
  *    spawn exactly one render each, every argv `context render ... --no-commit --no-input --json`. rfLaunches' rule (what the
  *    code does, claimed only as far as the next sentence bounds it): in a script module, a call whose callee is an identifier
  *    or a property access named by a LAUNCHERS entry and whose first argument is a string-like literal rf; in any other file
@@ -162,8 +201,10 @@
  *    cp.spawn?.("rf", ...), optionalChain cp?.spawn("rf", ...), typeArguments cp.spawn<void>("rf", ...), and
  *    propertyReceiver holder.cp.spawn("rf", ...) through const holder = { cp }); a Python and a shell launch read as raw
  *    lines; and the near misses quiet (another binary given rf as an argument, rf-like words on a raw line). Not read (Q7 pins
- *    it quiet): a launch whose first argument is not a literal rf (a command string, a constant holding rf). A launch written
- *    in any form no control plants is NOT CLAIMED by this census, whether or not rfLaunches reads it: among them an identifier
+ *    it quiet): a launch whose first argument is not a literal rf (a command string, a constant holding rf). A2's REACH_PROBE
+ *    lines (spawnSync("rf") and execFileSync("rf"), an identifier callee and a single argument) are read the same way, as
+ *    A2's REACH pins them. A launch written in any other form no control plants is NOT CLAIMED by this census, whether or not
+ *    rfLaunches reads it: among them an identifier
  *    callee with ?. or type arguments, those shapes or another receiver for a launcher other than spawn, a launcher imported
  *    from another module, a single-quoted or template rf, another argument list, an element-access callee
  *    (cp["spawn"]("rf", ...)) and an aliased launcher import (import { spawn as run }, then run("rf", ...)), refusal #4's F3
@@ -173,8 +214,9 @@
  *    result.render_id, result.ephemeral false, result.commit_seq, result.work.storage_write_count 1; the bead notes name three
  *    of them) is refused by the native preview on both arms as transport, never returned, while the noncommitted fixture is
  *    returned: zero publications reach Pi through its one Fiber surface.
- *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src (the A2 reading, each listed file reaching the entry scan by
- *    A2's REACH) names a PUBLICATION_ENTRIES fold, so no host publication and no flush exist for the rule to judge; planted
+ *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src names a PUBLICATION_ENTRIES fold in the A2 reading (each
+ *    listed file reaching the entry scan as A2's REACH states it, and no further), so no host publication and no flush exist
+ *    for the rule to judge; planted
  *    calls read (snake, camel, string key, destructured, and the
  *    scratch tree's Python sidecar), near misses (flush, publish, render, requestRender) quiet.
  *  C, "a query change alone produces zero publication or inference side effects".
@@ -218,7 +260,7 @@
  * (node_modules/fiber-optics and node_modules/alias, with their fillers and quiet paths), so a lock
  * package holding the stem in another segment of its path (node_modules/fiber-optics/node_modules/left-pad, which lockReading
  * reads here and refusal #5's F3 member GP12-A1-LOCK-LASTSEG, reading a path by its last segment only, does not) is claimed
- * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5 and again at cut #6:
+ * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5, at cut #6 and again at cut #7:
  * - refusal #4's carrier members H-A3-CARRIER-WEAK (isCarrier reads every contract ending with a space and --no-commit as the
  *   carrier) and H-A3-CARRIER (every contract the carrier) keep this census 0 failed | 17 passed: it reads isCarrier on the
  *   two live legs only. A registered preview whose contract meets the same four criteria and ends with a space and
@@ -265,7 +307,8 @@
  * and none exists. A cut that adds, moves or removes a text the helper's static reading reads below src (a registration
  * through the native or an injected-client registration among them), changes what registryReading states for a
  * registration leg (a Fiber-family member, its criteria, carrier or publishing reasons, a needle hit), or names a needle where
- * the A1 or A2 readings read one, changes a pinned reading and reds A (or B2) by design, and must bring that falsifier with
+ * the A1 or A2 readings read one (A2's as far as its REACH states), changes a pinned reading and reds A (or B2) by design, and
+ * must bring that falsifier with
  * it; where the helper's readers read is the landed readers censuses' claim (the NOT CLAIMED entry above), and the forms row
  * Q pins quiet are read by none of them. wb-jwc.5 holds the committing-render posture if the rf commit path is the vehicle.
  *
@@ -370,8 +413,28 @@ const LATE_MS = 600_000;
 const FLOORS = { modules: 100, texts: 60000, manifestTexts: 80, lockPackages: 300 } as const;
 /** The four ids the registrations must hold, native and injected alike. */
 const REQUIRED_DESCRIPTORS = ["forge.gate.status", "furnace.run.inspect", "hyperunix.find", PREVIEW_ID] as const;
+/**
+ * missingIds' substitution controls: for each REQUIRED_DESCRIPTORS id, the near-miss ids a leg registers that id's own provider
+ * under in its place (the id extended by a segment at its end and at its front, and the id less its last and its first character).
+ */
+const NEAR_MISS_IDS: Readonly<Record<string, readonly string[]>> = {
+  "forge.gate.status": ["forge.gate.status.typed", "typed.forge.gate.status", "forge.gate.statu", "orge.gate.status"],
+  "furnace.run.inspect": ["furnace.run.inspect.typed", "typed.furnace.run.inspect", "furnace.run.inspec", "urnace.run.inspect"],
+  "hyperunix.find": ["hyperunix.find.typed", "typed.hyperunix.find", "hyperunix.fin", "yperunix.find"],
+  "reactivefiber.render.preview": ["reactivefiber.render.preview.typed", "typed.reactivefiber.render.preview", "reactivefiber.render.previe", "eactivefiber.render.preview"],
+};
 /** Texts of the provider module A2's reader must see, so a reader that reads nothing reds on the live tree. */
 const SOURCE_ANCHORS = ["rf", NO_COMMIT, "nativeReactiveFiberRender", "fiber_signal_count"] as const;
+/**
+ * WALK_CONTROL's provider texts: for each SOURCE_ANCHORS anchor, its first and its last part, the anchor extended at its end and
+ * at its front, in upper case and wrapped in spaces; an exact compare reads none of them as the anchor.
+ */
+const ANCHOR_NEAR_MISSES: Readonly<Record<string, readonly string[]>> = {
+  rf: ["r", "f", "rfx", "xrf", "RF", " rf "],
+  "--no-commit": ["--no", "commit", "--no-commitx", "x--no-commit", "--NO-COMMIT", " --no-commit "],
+  nativeReactiveFiberRender: ["nativeReactive", "FiberRender", "nativeReactiveFiberRenderx", "xnativeReactiveFiberRender", "NATIVEREACTIVEFIBERRENDER", " nativeReactiveFiberRender "],
+  fiber_signal_count: ["fiber_", "signal_count", "fiber_signal_countx", "xfiber_signal_count", "FIBER_SIGNAL_COUNT", " fiber_signal_count "],
+};
 /** The delivery record's residual lines (cut #1's delivery note), each read at its first occurrence in the bead's notes. */
 const RECORD_FINDINGS = "FINDINGS (each a named residual with a pinned quiet row";
 const RECORD_RESIDUALS = "OTHER RESIDUALS (quiet rows pinned)";
@@ -525,16 +588,18 @@ const PIPELINE_TREE: Readonly<Record<string, string>> = {
   "src/providers/value-host.json": '{ "runtime": "FiberGraph" }\n',
   "src/providers/rf-layout.json": '{ "graphs": ".reactive-fiber/graphs" }\n',
 };
-/** A2's symlink control: a link below the pipeline tree's src to a directory outside it that holds a needle; the walk records the link and never follows it. */
 /**
- * A2's reach probe: the first line of each probed file of the reach copy (a script module gets the statement, any other file
- * the raw line), ahead of the file's own text so nothing in that text can swallow it; each holds the stem, a publication entry
- * and an rf launch, so a probed file a scan gives no hit never reached it.
+ * A2's reach probes, by position: the head line leads each probed file of a reach copy and the tail line ends it (a script
+ * module gets the statement, any other file the raw line), so nothing in the file's own text can swallow either. Each holds the
+ * stem, a publication entry and an rf launch; the head launches rf with spawnSync and the tail with execFileSync, launchers no
+ * file below src launches rf with (A4's roster), so a script module's launch by either name is that probe's own.
  */
 const REACH_PROBE = {
-  script: 'export const reachProbe = ["fiber_optics", "queue_value_publication"]; spawn("rf");',
-  raw: "fiber_optics queue_value_publication rf",
+  head: { script: 'export const reachHead = ["fiber_optics", "queue_value_publication"]; spawnSync("rf");', raw: "fiber_optics queue_value_publication rf", launcher: "spawnSync" },
+  tail: { script: 'export const reachTail = ["fiber_optics", "queue_value_publication"]; execFileSync("rf");', raw: "fiber_optics queue_value_publication rf", launcher: "execFileSync" },
 } as const;
+/** A reach probe's position: the head probe's line (a probed file's first) or the tail probe's (its last). */
+type ReachPosition = keyof typeof REACH_PROBE;
 /** The reach copy's controls, probed and copied beside the listed files: one module per SCRIPT_KINDS extension and a non-script file. */
 const REACH_CONTROLS: Readonly<Record<string, string>> = {
   "src/workbench/reach/kind.ts": "export const kind = 1;\n",
@@ -548,19 +613,59 @@ const REACH_CONTROLS: Readonly<Record<string, string>> = {
   "src/workbench/reach/notes.txt": "a non-script file\n",
 };
 /**
- * A2's walk control: a src tree holding the provider's path without its anchors and a file its listing leaves out, read with a
- * listing that names a file the tree lacks: each walk-only and listing-only file is named, the provider is walked and every
- * anchor reads unread.
+ * A2's walk control: a src tree read through readSrc with a listing that differs from its walk by near misses. Walk-only files:
+ * one beside the listing, one extending a listed path (the provider's path and .orig), one a listed path's prefix (the
+ * provider's path without its extension) and one holding a listed file's base name in another directory; listing-only files:
+ * one beside the walk, one extending a walked path, one a walked path's prefix and one holding a walked file's base name in
+ * another directory; each is named. The provider's path is walked, its text holding every ANCHOR_NEAR_MISSES text as a judged
+ * text of its own, and every anchor reads unread.
  */
 const WALK_CONTROL = {
-  files: { [PROVIDER_MODULE]: "export const other = 1;\n", "src/walked-only.ts": "export const walkedOnly = 1;\n" },
-  listed: [PROVIDER_MODULE, "src/listed-only.ts"],
+  files: {
+    [PROVIDER_MODULE]: `export const anchorNearMisses = ${JSON.stringify(Object.values(ANCHOR_NEAR_MISSES).flat())};\n`,
+    "src/walked-only.ts": "export const walkedOnly = 1;\n",
+    "src/workbench/providers/reactivefiber.ts.orig": "a leftover copy\n",
+    "src/workbench/providers/reactivefiber": "a path the provider's path extends\n",
+    "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n",
+  },
+  listed: [PROVIDER_MODULE, "src/listed-only.ts", "src/walked-only.ts.orig", "src/walked-only", "src/other/walked-only.ts"],
 } as const;
-/** The reach reading's negative control: a probed and an unprobed module read the same way; the reading names the unprobed one for every scan. */
+/**
+ * The reach reading's negative control, read the same way: modules probed at both lines, at the tail only, at the head only and
+ * at neither, and a raw file probed at its tail only and one at its head only; for each position and scan the reading names
+ * exactly the files that position withholds.
+ */
 const REACH_NEGATIVE = {
-  files: { "src/reach/probed.ts": "export const probed = 1;\n", "src/reach/unprobed.ts": "export const unprobed = 1;\n" },
-  unprobed: "src/reach/unprobed.ts",
+  files: {
+    "src/reach/probed.ts": "export const probed = 1;\n",
+    "src/reach/headless.ts": "export const headless = 1;\n",
+    "src/reach/tailless.ts": "export const tailless = 1;\n",
+    "src/reach/unprobed.ts": "export const unprobed = 1;\n",
+    "src/reach/headless.txt": "a raw file\n",
+    "src/reach/tailless.txt": "a raw file\n",
+  },
+  withheld: {
+    "src/reach/headless.ts": ["head"],
+    "src/reach/tailless.ts": ["tail"],
+    "src/reach/unprobed.ts": ["head", "tail"],
+    "src/reach/headless.txt": ["head"],
+    "src/reach/tailless.txt": ["tail"],
+  },
 } as const;
+/**
+ * A2's dense reach modules, read the same way in one scratch src: REACH_DENSE.module, REACH_DENSE.lines lines each REACH_PROBE's
+ * head statement, so a scan that drops a line by its number gives one of its probe lines no hit; and its negative control,
+ * REACH_DENSE.negative, whose withheld lines hold the filler (an export holding no judged text) in the probe's place. The
+ * reading names, per module, its planted line count, the lines the hosting and entry scans give no probe hit and the count of
+ * lines the launch scan reads no launch for: none of the dense module's, and exactly the negative control's withheld lines.
+ */
+const REACH_DENSE = {
+  module: "src/workbench/reach/dense.ts",
+  lines: 6000,
+  negative: { module: "src/workbench/reach/dense-withheld.ts", lines: 9, withheld: [1, 5, 9] },
+  filler: "export {};",
+} as const;
+/** A2's symlink control: a link below the pipeline tree's src to a directory outside it that holds a needle; the walk records the link and never follows it. */
 const PIPELINE_LINK = { path: "src/linked", target: "../outside", files: { "outside/value.ts": "export const runtime = new FiberRuntime();\n" } } as const;
 /**
  * A3's static reading's planted src tree: a new exported injected-client capability whose descriptor lives in a constant; each
@@ -1014,18 +1119,57 @@ function pipelineReading(): SrcReading {
   return pipelineCache;
 }
 
+/** A file's reach-copy text: its own text led by REACH_PROBE's head line and ended by its tail line for the file's kind, a position `withheld` names left out. */
+function probedText(module: string, text: string, withheld: readonly string[]): string {
+  const kind = isScript(module) ? "script" : "raw";
+  const body = text.length === 0 || text.endsWith("\n") ? text : `${text}\n`;
+  return `${withheld.includes("head") ? "" : `${REACH_PROBE.head[kind]}\n`}${body}${withheld.includes("tail") ? "" : `${REACH_PROBE.tail[kind]}\n`}`;
+}
+/** The hit a scan gives a probe on its line: `<module>:<line>: <needle>`, and a script module's launch `<module>: <launcher>`. */
+function probeHit(scan: string, module: string, line: number, position: ReachPosition): string {
+  if (scan === "hosting") return `${module}:${line}: ${STEM}`;
+  if (scan === "entries") return `${module}:${line}: ${ENTRY_NEEDLES[0]}`;
+  return isScript(module) ? `${module}: ${REACH_PROBE[position].launcher}` : `${module}:${line}: rf`;
+}
 /**
- * A2's reach of a tree: each file's own text led by REACH_PROBE's line for its kind (the unprobed ones as written), planted
- * in scratch and read through readSrc, the reader the live tree is read by; for each scan, the files it gave no hit, and the
- * walk held to the listing.
+ * A2's reach of a tree: each file planted in scratch as probedText gives it and read through readSrc, the reader the live tree
+ * is read by; for each position and scan, the files the scan does not give that probe's hit (probeHit, on the file's first line
+ * for the head and its last line for the tail), the walk held to the listing, and whether the walk is the live walk's own (its
+ * files, in order).
  */
-function reachOf(files: Readonly<Record<string, string>>, unprobed: readonly string[]): { [scan: string]: string[] } {
+function reachOf(files: Readonly<Record<string, string>>, withheld: Readonly<Record<string, readonly string[]>>): JsonValue {
   const root = scratchDir("fiber-host-publication-reach-");
-  plantTree(root, Object.fromEntries(Object.entries(files).map(([module, text]) => [module, unprobed.includes(module) ? text : `${isScript(module) ? REACH_PROBE.script : REACH_PROBE.raw}\n${text}`])));
+  const planted = Object.fromEntries(Object.entries(files).map(([module, text]) => [module, probedText(module, text, withheld[module] ?? [])]));
+  plantTree(root, planted);
   const listed = Object.keys(files).sort();
   const read = readSrc(root, listed);
-  const unreached = (hits: readonly string[]): string[] => listed.filter(module => !hits.some(hit => hit.startsWith(`${module}:`)));
-  return { hosting: unreached(read.hosting), entries: unreached(read.entries), launches: unreached(read.launches), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked };
+  const scans: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries), launches: new Set(read.launches) };
+  const lineOf = (module: string, position: ReachPosition): number => (position === "head" ? 1 : (planted[module] ?? "").split("\n").length - 1);
+  const unreached = (position: ReachPosition): JsonValue =>
+    json(Object.fromEntries(Object.entries(scans).map(([scan, hits]) => [scan, listed.filter(module => !hits.has(probeHit(scan, module, lineOf(module, position), position)))])));
+  return json({ head: unreached("head"), tail: unreached("tail"), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked, liveWalk: JSON.stringify(read.modules) === JSON.stringify(srcReading().modules) });
+}
+/**
+ * A2's dense reach: REACH_DENSE's two modules planted in one scratch src and read through readSrc; per module, the lines the
+ * hosting and entry scans give no probe hit, and the lines the launch scan reads no launch for (its lines less its launches).
+ */
+function denseReach(): JsonValue {
+  const root = scratchDir("fiber-host-publication-dense-");
+  const withheld: readonly number[] = REACH_DENSE.negative.withheld;
+  const modules: { [module: string]: string[] } = {
+    [REACH_DENSE.module]: Array.from({ length: REACH_DENSE.lines }, () => REACH_PROBE.head.script),
+    [REACH_DENSE.negative.module]: Array.from({ length: REACH_DENSE.negative.lines }, (_, index) => (withheld.includes(index + 1) ? REACH_DENSE.filler : REACH_PROBE.head.script)),
+  };
+  plantTree(root, Object.fromEntries(Object.entries(modules).map(([module, lines]) => [module, `${lines.join("\n")}\n`])));
+  const read = readSrc(root, Object.keys(modules).sort());
+  const scans: { [scan: string]: ReadonlySet<string> } = { hosting: new Set(read.hosting), entries: new Set(read.entries) };
+  const reading = (module: string, lines: readonly string[]): JsonValue =>
+    json({
+      lines: lines.length,
+      ...Object.fromEntries(Object.entries(scans).map(([scan, hits]) => [scan, lines.flatMap((_, index) => (hits.has(probeHit(scan, module, index + 1, "head")) ? [] : [index + 1]))])),
+      launchesMissing: lines.length - read.launches.filter(hit => hit === probeHit("launches", module, 0, "head")).length,
+    });
+  return json({ ...Object.fromEntries(Object.entries(modules).map(([module, lines]) => [module, reading(module, lines)])), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked });
 }
 /** Whether a src reading walked the provider module. */
 function readsProvider(reading: SrcReading): boolean {
@@ -1067,6 +1211,19 @@ class RecordingRegistry extends CapabilityRegistry {
     super.register(provider);
   }
 }
+/** A registry that registers each provider it is handed, the one holding `substituted` under `nearMiss` in its place: missingIds' substitution control. */
+class SubstitutingRegistry extends CapabilityRegistry {
+  readonly substituted: string;
+  readonly nearMiss: string;
+  constructor(substituted: string, nearMiss: string) {
+    super();
+    this.substituted = substituted;
+    this.nearMiss = nearMiss;
+  }
+  override register(provider: CapabilityProvider): void {
+    super.register(provider.descriptor.id === this.substituted ? { ...provider, descriptor: { ...provider.descriptor, id: this.nearMiss } } : provider);
+  }
+}
 let native: Promise<CapabilityRegistry> | undefined;
 /** The registry the native registration fills (loaded once per file). */
 function nativeRegistry(): Promise<CapabilityRegistry> {
@@ -1077,9 +1234,11 @@ function nativeRegistry(): Promise<CapabilityRegistry> {
   });
   return native;
 }
-/** The registry the four injected-client registrations fill; given a REQUIRED_DESCRIPTORS id, the leg that withholds that id's registration (missingIds' negative control). */
-function injectedRegistry(withheld?: string): CapabilityRegistry {
-  const registry = new CapabilityRegistry();
+/**
+ * The registry the four injected-client registrations fill; given a REQUIRED_DESCRIPTORS id, the leg that withholds that id's
+ * registration, and given a SubstitutingRegistry, the leg it fills (missingIds' negative controls).
+ */
+function injectedRegistry(withheld?: string, registry: CapabilityRegistry = new CapabilityRegistry()): CapabilityRegistry {
   if (withheld !== "forge.gate.status") registerForgeGateStatus(registry, FORGE_CLIENT, "0.1.0");
   if (withheld !== "hyperunix.find") registerHyperUnixFind(registry, HX_READER, REPO);
   if (withheld !== "furnace.run.inspect") registerFurnaceRunInspect(registry, FURNACE_CLIENT, REPO);
@@ -1434,8 +1593,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       hosting: src.hosting,
       listsNonScript: { walk: walkFiles(REPO, "test/fixtures").files.includes(ROSTER_FILE), git: trackedFiles("test/fixtures").includes(ROSTER_FILE) },
       pipeline: { modules: tree.modules, nonScript: tree.nonScript, symlinks: tree.symlinks, onlyWalked: tree.onlyWalked, onlyTracked: tree.onlyTracked, hosting: tree.hosting },
-      reach: reachOf({ ...listedTexts(), ...REACH_CONTROLS }, []),
-      reachNegative: reachOf(REACH_NEGATIVE.files, [REACH_NEGATIVE.unprobed]),
+      reach: reachOf({ ...listedTexts(), ...REACH_CONTROLS }, {}),
+      reachListed: reachOf(listedTexts(), {}),
+      reachNegative: reachOf(REACH_NEGATIVE.files, REACH_NEGATIVE.withheld),
+      dense: denseReach(),
       walkControl: walkControlReading(),
       controls: plantedHits(SOURCE_CONTROLS, HOSTING_NEEDLES),
     });
@@ -1448,6 +1609,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       artifact: ARTIFACT,
       missing: { native: missingIds(nativeLeg), injected: missingIds(injectedLeg) },
       missingControls: Object.fromEntries(REQUIRED_DESCRIPTORS.map(id => [id, missingIds(injectedRegistry(id))])),
+      substitutionControls: Object.fromEntries(
+        REQUIRED_DESCRIPTORS.map(id => [id, Object.fromEntries((NEAR_MISS_IDS[id] ?? []).map(nearMiss => [nearMiss, missingIds(injectedRegistry(undefined, new SubstitutingRegistry(id, nearMiss)))]))]),
+      ),
       native: registryReading(nativeLeg),
       injected: registryReading(injectedLeg),
       staticSites: registrationSites(REPO, trackedFiles("src")),
@@ -1682,7 +1846,9 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         floors: FLOORS,
         scriptKinds: Object.keys(SCRIPT_KINDS),
         requiredDescriptors: REQUIRED_DESCRIPTORS,
+        nearMissIds: NEAR_MISS_IDS,
         sourceAnchors: SOURCE_ANCHORS,
+        anchorNearMisses: ANCHOR_NEAR_MISSES,
         recordLines: [RECORD_FINDINGS, RECORD_RESIDUALS],
         manifestControls: MANIFEST_CONTROLS,
         lockControls: LOCK_CONTROLS,
@@ -1697,6 +1863,7 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         reachProbe: REACH_PROBE,
         reachControls: REACH_CONTROLS,
         reachNegative: REACH_NEGATIVE,
+        reachDense: REACH_DENSE,
         walkControl: WALK_CONTROL,
         registrationTree: REGISTRATION_TREE,
         descriptorControls: DESCRIPTOR_CONTROLS,

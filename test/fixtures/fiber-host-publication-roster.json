@@ -184,12 +184,72 @@
    "hyperunix.find",
    "reactivefiber.render.preview"
   ],
+  "nearMissIds": {
+   "forge.gate.status": [
+    "forge.gate.status.typed",
+    "typed.forge.gate.status",
+    "forge.gate.statu",
+    "orge.gate.status"
+   ],
+   "furnace.run.inspect": [
+    "furnace.run.inspect.typed",
+    "typed.furnace.run.inspect",
+    "furnace.run.inspec",
+    "urnace.run.inspect"
+   ],
+   "hyperunix.find": [
+    "hyperunix.find.typed",
+    "typed.hyperunix.find",
+    "hyperunix.fin",
+    "yperunix.find"
+   ],
+   "reactivefiber.render.preview": [
+    "reactivefiber.render.preview.typed",
+    "typed.reactivefiber.render.preview",
+    "reactivefiber.render.previe",
+    "eactivefiber.render.preview"
+   ]
+  },
   "sourceAnchors": [
    "rf",
    "--no-commit",
    "nativeReactiveFiberRender",
    "fiber_signal_count"
   ],
+  "anchorNearMisses": {
+   "rf": [
+    "r",
+    "f",
+    "rfx",
+    "xrf",
+    "RF",
+    " rf "
+   ],
+   "--no-commit": [
+    "--no",
+    "commit",
+    "--no-commitx",
+    "x--no-commit",
+    "--NO-COMMIT",
+    " --no-commit "
+   ],
+   "nativeReactiveFiberRender": [
+    "nativeReactive",
+    "FiberRender",
+    "nativeReactiveFiberRenderx",
+    "xnativeReactiveFiberRender",
+    "NATIVEREACTIVEFIBERRENDER",
+    " nativeReactiveFiberRender "
+   ],
+   "fiber_signal_count": [
+    "fiber_",
+    "signal_count",
+    "fiber_signal_countx",
+    "xfiber_signal_count",
+    "FIBER_SIGNAL_COUNT",
+    " fiber_signal_count "
+   ]
+  },
   "recordLines": [
    "FINDINGS (each a named residual with a pinned quiet row",
    "OTHER RESIDUALS (quiet rows pinned)"
@@ -474,8 +534,16 @@
    }
   },
   "reachProbe": {
-   "script": "export const reachProbe = [\"fiber_optics\", \"queue_value_publication\"]; spawn(\"rf\");",
-   "raw": "fiber_optics queue_value_publication rf"
+   "head": {
+    "script": "export const reachHead = [\"fiber_optics\", \"queue_value_publication\"]; spawnSync(\"rf\");",
+    "raw": "fiber_optics queue_value_publication rf",
+    "launcher": "spawnSync"
+   },
+   "tail": {
+    "script": "export const reachTail = [\"fiber_optics\", \"queue_value_publication\"]; execFileSync(\"rf\");",
+    "raw": "fiber_optics queue_value_publication rf",
+    "launcher": "execFileSync"
+   }
   },
   "reachControls": {
    "src/workbench/reach/kind.ts": "export const kind = 1;\n",
@@ -491,18 +559,59 @@
   "reachNegative": {
    "files": {
     "src/reach/probed.ts": "export const probed = 1;\n",
-    "src/reach/unprobed.ts": "export const unprobed = 1;\n"
+    "src/reach/headless.ts": "export const headless = 1;\n",
+    "src/reach/tailless.ts": "export const tailless = 1;\n",
+    "src/reach/unprobed.ts": "export const unprobed = 1;\n",
+    "src/reach/headless.txt": "a raw file\n",
+    "src/reach/tailless.txt": "a raw file\n"
    },
-   "unprobed": "src/reach/unprobed.ts"
+   "withheld": {
+    "src/reach/headless.ts": [
+     "head"
+    ],
+    "src/reach/tailless.ts": [
+     "tail"
+    ],
+    "src/reach/unprobed.ts": [
+     "head",
+     "tail"
+    ],
+    "src/reach/headless.txt": [
+     "head"
+    ],
+    "src/reach/tailless.txt": [
+     "tail"
+    ]
+   }
+  },
+  "reachDense": {
+   "module": "src/workbench/reach/dense.ts",
+   "lines": 6000,
+   "negative": {
+    "module": "src/workbench/reach/dense-withheld.ts",
+    "lines": 9,
+    "withheld": [
+     1,
+     5,
+     9
+    ]
+   },
+   "filler": "export {};"
   },
   "walkControl": {
    "files": {
-    "src/workbench/providers/reactivefiber.ts": "export const other = 1;\n",
-    "src/walked-only.ts": "export const walkedOnly = 1;\n"
+    "src/workbench/providers/reactivefiber.ts": "export const anchorNearMisses = [\"r\",\"f\",\"rfx\",\"xrf\",\"RF\",\" rf \",\"--no\",\"commit\",\"--no-commitx\",\"x--no-commit\",\"--NO-COMMIT\",\" --no-commit \",\"nativeReactive\",\"FiberRender\",\"nativeReactiveFiberRenderx\",\"xnativeReactiveFiberRender\",\"NATIVEREACTIVEFIBERRENDER\",\" nativeReactiveFiberRender \",\"fiber_\",\"signal_count\",\"fiber_signal_countx\",\"xfiber_signal_count\",\"FIBER_SIGNAL_COUNT\",\" fiber_signal_count \"];\n",
+    "src/walked-only.ts": "export const walkedOnly = 1;\n",
+    "src/workbench/providers/reactivefiber.ts.orig": "a leftover copy\n",
+    "src/workbench/providers/reactivefiber": "a path the provider's path extends\n",
+    "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n"
    },
    "listed": [
     "src/workbench/providers/reactivefiber.ts",
-    "src/listed-only.ts"
+    "src/listed-only.ts",
+    "src/walked-only.ts.orig",
+    "src/walked-only",
+    "src/other/walked-only.ts"
    ]
   },
   "registrationTree": {
@@ -1134,31 +1243,110 @@
        ]
       },
       "reach": {
-       "hosting": [],
-       "entries": [],
-       "launches": [],
+       "head": {
+        "hosting": [],
+        "entries": [],
+        "launches": []
+       },
+       "tail": {
+        "hosting": [],
+        "entries": [],
+        "launches": []
+       },
        "onlyWalked": [],
-       "onlyTracked": []
+       "onlyTracked": [],
+       "liveWalk": false
+      },
+      "reachListed": {
+       "head": {
+        "hosting": [],
+        "entries": [],
+        "launches": []
+       },
+       "tail": {
+        "hosting": [],
+        "entries": [],
+        "launches": []
+       },
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "liveWalk": true
       },
       "reachNegative": {
-       "hosting": [
-        "src/reach/unprobed.ts"
-       ],
-       "entries": [
-        "src/reach/unprobed.ts"
-       ],
-       "launches": [
-        "src/reach/unprobed.ts"
-       ],
+       "head": {
+        "hosting": [
+         "src/reach/headless.ts",
+         "src/reach/headless.txt",
+         "src/reach/unprobed.ts"
+        ],
+        "entries": [
+         "src/reach/headless.ts",
+         "src/reach/headless.txt",
+         "src/reach/unprobed.ts"
+        ],
+        "launches": [
+         "src/reach/headless.ts",
+         "src/reach/headless.txt",
+         "src/reach/unprobed.ts"
+        ]
+       },
+       "tail": {
+        "hosting": [
+         "src/reach/tailless.ts",
+         "src/reach/tailless.txt",
+         "src/reach/unprobed.ts"
+        ],
+        "entries": [
+         "src/reach/tailless.ts",
+         "src/reach/tailless.txt",
+         "src/reach/unprobed.ts"
+        ],
+        "launches": [
+         "src/reach/tailless.ts",
+         "src/reach/tailless.txt",
+         "src/reach/unprobed.ts"
+        ]
+       },
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "liveWalk": false
+      },
+      "dense": {
+       "src/workbench/reach/dense.ts": {
+        "lines": 6000,
+        "hosting": [],
+        "entries": [],
+        "launchesMissing": 0
+       },
+       "src/workbench/reach/dense-withheld.ts": {
+        "lines": 9,
+        "hosting": [
+         1,
+         5,
+         9
+        ],
+        "entries": [
+         1,
+         5,
+         9
+        ],
+        "launchesMissing": 3
+       },
        "onlyWalked": [],
        "onlyTracked": []
       },
       "walkControl": {
        "onlyWalked": [
-        "src/walked-only.ts"
+        "src/other/reactivefiber.ts",
+        "src/walked-only.ts",
+        "src/workbench/providers/reactivefiber",
+        "src/workbench/providers/reactivefiber.ts.orig"
        ],
        "onlyTracked": [
-        "src/listed-only.ts"
+        "src/listed-only.ts",
+        "src/walked-only.ts.orig",
+        "src/walked-only",
+        "src/other/walked-only.ts"
        ],
        "providerRead": true,
        "anchors": {
@@ -1241,6 +1429,64 @@
        "reactivefiber.render.preview": [
         "reactivefiber.render.preview"
        ]
+      },
+      "substitutionControls": {
+       "forge.gate.status": {
+        "forge.gate.status.typed": [
+         "forge.gate.status"
+        ],
+        "typed.forge.gate.status": [
+         "forge.gate.status"
+        ],
+        "forge.gate.statu": [
+         "forge.gate.status"
+        ],
+        "orge.gate.status": [
+         "forge.gate.status"
+        ]
+       },
+       "furnace.run.inspect": {
+        "furnace.run.inspect.typed": [
+         "furnace.run.inspect"
+        ],
+        "typed.furnace.run.inspect": [
+         "furnace.run.inspect"
+        ],
+        "furnace.run.inspec": [
+         "furnace.run.inspect"
+        ],
+        "urnace.run.inspect": [
+         "furnace.run.inspect"
+        ]
+       },
+       "hyperunix.find": {
+        "hyperunix.find.typed": [
+         "hyperunix.find"
+        ],
+        "typed.hyperunix.find": [
+         "hyperunix.find"
+        ],
+        "hyperunix.fin": [
+         "hyperunix.find"
+        ],
+        "yperunix.find": [
+         "hyperunix.find"
+        ]
+       },
+       "reactivefiber.render.preview": {
+        "reactivefiber.render.preview.typed": [
+         "reactivefiber.render.preview"
+        ],
+        "typed.reactivefiber.render.preview": [
+         "reactivefiber.render.preview"
+        ],
+        "reactivefiber.render.previe": [
+         "reactivefiber.render.preview"
+        ],
+        "eactivefiber.render.preview": [
+         "reactivefiber.render.preview"
+        ]
+       }
       },
       "native": {
        "hosting": [],
