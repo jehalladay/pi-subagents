@@ -224,6 +224,24 @@
  * statement and control literals, each in double quotes); and an escape at any other place (a double-quoted argv
  * element among them) (measured at this cut: a reader for each of these keeps the census at 109/109).
  *
+ * THE wb-qobo FOLLOW-UP (R694 of landing 920; gate of record cmd_8b3832367b52, PREP F1 leads). F1: statementWordsOf's
+ * JSDoc read a literal alike in each quote spelling as a whole and called that reading pinned, while five one-edit
+ * readers at statementWordsOf's own level kept the census at 109/109 at this cut's base by giving an unpinned quote form
+ * no words: a one-word shell line in single quotes (gate GN-SQ-ONEWORD-LINE) or as a template literal
+ * (GN-TPL-ONEWORD-LINE), a single-quoted shell line under spawnSync (GN-SQ-SPAWN-LINE), a single-quoted binary and
+ * argv under execSync (GN-SQ-EXEC-ARGV) and a single-quoted binary with an argv of one element (GN-SQ-ARGV-ONE-ELEMENT);
+ * so did the template-literal twins of the last three (measured at this cut's base). The F row of the class-level
+ * member readings now pins a reading at each of those four forms in single quotes and as a template literal without
+ * substitutions, the two spellings reading alike - execSync('bd'); and its template twin as execSync and bd,
+ * spawnSync('bd close wb-x'); and execSync('bd', ['close', 'wb-x']); and their template twins as the launcher, bd,
+ * close and wb-x, and spawnSync('bd', ['close']); and its template twin as spawnSync, bd and close - so each of those
+ * eight readers reds that F row (measured at this cut). The JSDoc now claims statementWordsOf's quote reading exactly at
+ * that F row's probes, and THE QUOTE CLAIM, AS PINNED (wb-kmab F1) holds at these eight probes as well. NOT CLAIMED by
+ * this census: a quote spelling read at statementWordsOf's own level at any statement but that F row's probes (a
+ * single-quoted shell line of two words, a single-quoted binary with an empty argv and a binary with an argv of three
+ * elements as template literals among them) (measured at this cut: a reader for each of these keeps the census at
+ * 109/109).
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
 import { createHash } from "node:crypto";
@@ -2329,9 +2347,12 @@ function namesShape(named: string, shape: string): boolean {
 /**
  * A residual member's statement or control as plain words (wb-yxkq F2), read without the census's own launch reading: the
  * callee of its one call, then its first argument - a shell line split at white space, or a binary followed by its argv
- * array's elements. Any other shape (a second statement, a non-literal argument, a third argument) reads as no words. A
- * literal reads alike in double quotes, in single quotes and as a template literal without substitutions, and a template
- * with a substitution is no literal (wb-kmab F1: each pinned by the F row, as are the readers over this one).
+ * array's elements. Any other shape (a second statement, a non-literal argument, a third argument) reads as no words. At
+ * the probes of the F row of the class-level member readings, each spelled byte for byte as its probe, a literal reads
+ * as the words its probe lists - in double quotes, in single quotes and as a template literal without substitutions -
+ * and a template with a substitution is no literal (wb-kmab F1, wb-qobo F1). That quote reading is claimed exactly at
+ * those probes: a quote spelling at any other statement is NOT CLAIMED by this census (the header's wb-qobo sentence),
+ * and the readers over this one are claimed likewise at their own pinned launches alone.
  */
 function statementWordsOf(statement: string): readonly string[] {
   const source = ts.createSourceFile("member.ts", statement, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
@@ -2945,6 +2966,20 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     expect(statementWordsOf("execSync(` a\\nb  c `);"), "a shell line as a template literal without substitutions").toEqual(["execSync", "a", "b", "c"]);
     expect(statementWordsOf("spawnSync(`bd`, [`close`, `wb\\x2dx`]);"), "a binary and its argv as template literals without substitutions, an escape read as its character").toEqual(["spawnSync", "bd", "close", "wb-x"]);
     expect(statementWordsOf("spawnSync(\"bd\", ['close', `wb-x`]);"), "a binary and its argv mixing the three spellings").toEqual(["spawnSync", "bd", "close", "wb-x"]);
+    const quoteForms: readonly (readonly [string, readonly string[]])[] = [
+      ["execSync('bd');", ["execSync", "bd"]],
+      ["execSync(`bd`);", ["execSync", "bd"]],
+      ["spawnSync('bd close wb-x');", ["spawnSync", "bd", "close", "wb-x"]],
+      ["spawnSync(`bd close wb-x`);", ["spawnSync", "bd", "close", "wb-x"]],
+      ["execSync('bd', ['close', 'wb-x']);", ["execSync", "bd", "close", "wb-x"]],
+      ["execSync(`bd`, [`close`, `wb-x`]);", ["execSync", "bd", "close", "wb-x"]],
+      ["spawnSync('bd', ['close']);", ["spawnSync", "bd", "close"]],
+      ["spawnSync(`bd`, [`close`]);", ["spawnSync", "bd", "close"]],
+    ];
+    expect(
+      quoteForms.map(([statement]) => statementWordsOf(statement)),
+      "a one-word shell line, a shell line under spawnSync, a binary and its argv under execSync and a binary with an argv of one element, each in single quotes and as a template literal without substitutions, the two spellings alike (wb-qobo F1)",
+    ).toEqual(quoteForms.map(form => form[1]));
     expect(
       ['spawnSync("bd", ["close", id]);', 'spawnSync("bd", argv);', 'spawnSync("bd", ["close"], {});', "execSync(line);", '(0, execSync)("a");', 'void execSync("a");', 'const out = execSync("a");', 'execSync("a"); execSync("b");', "", `execSync(\`a \${b}\`);`, `spawnSync("bd", [\`close \${id}\`]);`].map(statementWordsOf),
       "any other shape reads as no words, a template with a substitution as a shell line or an argv element among them (wb-kmab F1)",

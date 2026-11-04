@@ -4,8 +4,10 @@
  * descriptor judge of test/helpers/rf-session-lifecycle-readers.ts - readTree() (B1), launchInventory() (A1), verbInventory()
  * (C1), stateInventory() (B2) and the judge descriptorJudgeOf() builds (C1's descriptor judge) - moved byte for byte from
  * wb-khhg's FINAL cut #4 (tip b6182e1b). The parent's census and roster at that tip are not on trunk and are neither added nor
- * edited here; trunk's test/workbench-rf-session-lifecycle-census.test.ts keeps its own readers and is not read by this census.
- * The parent stays parked until this lands, and its later re-cut can import the helper.
+ * edited here. The parent stayed parked until this census landed (landing 893, merge 29a99c4c). Its cut #5 re-cut its census
+ * to import the helper, and since its cut #6 landed (landing 926, merge 441ad3ba), trunk's
+ * test/workbench-rf-session-lifecycle-census.test.ts imports these four readers and descriptorJudgeOf from the helper and
+ * declares none of them; this census does not read that file.
  *
  * CUT #2 (wb-4zgj refusal #1, its BIND verdict of 2026-11-02 in the bead's notes; carrier identity R-B368): the nine carried
  * members stay killed. Refusal #1's U1 (one edit skipping every case at collection left this file at 0 passed, 12 skipped, rc 0,
