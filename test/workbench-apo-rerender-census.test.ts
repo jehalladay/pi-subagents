@@ -784,6 +784,38 @@
  * files.
  * RESIDUAL: none added - this cut claims no residual family.
  *
+ * WB-LDQU CUT #4 (respin 3 of wb-ldqu: refusal #3 U1 and U2 - the own list's end was claimed at any whitespace character
+ * the runtime trims while each swept context was read with one of them, so sentence ends keyed on No, Mrs, e.g or i.e or on
+ * an em dash at one whitespace character (GP1-I1, GP1-I2, GP1-I3 and GP1-I6) kept the census green; and the label claims'
+ * copies were claimed wherever they stand while every swept copy stood after '; ' or at a text's start, so a copies line
+ * that skips a quoted copy (GP1-I4) kept it green). Ruling R-B546 bound the second-stage cap: the claims-wider-than-pins
+ * class on INTO ANY's own claim words is frozen, and this cut is authored in the enumerate-the-resolvable form - every
+ * member family of the two claim sets is killed by a pin of this cut or stands beyond the claim words, named in NOT
+ * CLAIMED. Cut #3's shape stands: 0 pins removed or changed, no reader, label, case or row edited, added or removed (95
+ * tests), and only the roster's INTO ANY title is restated; the cut appends one block to INTO ANY that reads its own
+ * runtime whitespace and shares nothing with cut #2's or cut #3's blocks. U1: every code point below U+10000 is read with
+ * each of the runtime's 25 whitespace characters right after the full stop, standing alone after the whitespace (a before
+ * the full stop) and before the full stop (b after the whitespace), and every code point from U+10000 with U+0020 besides
+ * the one cut #2's sweep pairs it with (2686976 pairs); every one to three printable ASCII characters (866495 contexts) is
+ * read with each of the 25 on each side against the trim-reading scan (21662375 pairs); a full stop after a is read
+ * followed by each run of one or two of the 25 (650) and by the 25 in code point order to each length up to the longer
+ * label's, before b; and planted labels end the own list, read from the own list's opening, at cut #3's ten planted
+ * abbreviations, initialisms and initials, at seven honorifics (No., Mr., Mrs., Ms., Dr., St. and Prof.) and before each
+ * dash the runtime holds (\p{Pd}), each with each of the 25 right after the full stop, and at a full stop followed by each
+ * run of one or two of them before 'After it:' and before 'after it:', each answering with literals (the any list as
+ * planted, the own list's tail as planted, the page named once after the end and outside the own list); the honorifics
+ * are held to the row's title, which the roster holds outside this file, and the dashes to the runtime (GP1-I1, GP1-I2,
+ * GP1-I3 and GP1-I6 red INTO ANY). U2: each frozen phrase in each spelling spellingsOf writes reads one copy, found
+ * where it stands, with each of the 119 printable ASCII and whitespace characters right before it and, apart, right after
+ * it, and after a planted text longer than the longer label; the phrase as frozen reads one with each punctuation code
+ * point the runtime holds (\p{P}) right before it and, apart, right after it; one phrase reads one after each number of x's
+ * up to the longer label's length; and each withdrawn wording appended to a planted label between two copies of any one of
+ * those characters reads one, so a quoted, bracketed or set-off copy is counted (GP1-I4 reds INTO ANY). An end or a copy
+ * beyond these stays NOT CLAIMED (below). Trunk 5c35d3f is merged into the branch; after 846ba20 it changes no src file
+ * and none of the three census files.
+ * RESIDUAL: none added - every family refusal #3 and ruling R-B546 name is killed by a pin of this cut or stands beyond the
+ * claim words as a NOT CLAIMED scope sentence.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -1124,6 +1156,24 @@
  * which one is not printable ASCII, or any context on the other side than the small letter the sweeps write there (a
  * before the full stop, b after the whitespace) - is NOT CLAIMED by this census beyond the planted ends (wb-ldqu cut #3,
  * refusal #2 U1: G6-I1, G6-I2 and G6-I5 red through the swept contexts and the planted ends).
+ * Of INTO ANY's own-list end, sentenceEnd edited alone so that it reads an end differently only at a whitespace
+ * character, a run or an offset the row does not sweep - a code point at or above U+10000 with a whitespace character
+ * other than U+0020 and the one cut #2's sweep pairs it with, a run of three or more whitespace characters after the full
+ * stop other than the runtime's whitespace in code point order (between a and b) and the runs a swept context writes
+ * after the whitespace, a run after a planted label's own list other than one or two characters before 'After it:' or
+ * 'after it:', a planted end read with a run, or an end read from an offset other than its text's start outside the
+ * planted labels - is NOT CLAIMED by this census (wb-ldqu cut #4, refusal #3 U1: GP1-I1, GP1-I2, GP1-I3 and GP1-I6 red
+ * through the swept whitespace and the planted ends).
+ * Of INTO ANY's label readings, copies or copyAt edited alone so that it reads a copy differently only in surroundings the
+ * row does not sweep - a copy in a spelling spellingsOf does not write (a one-letter or alternating case spelling, a run
+ * or a letter pair) standing anywhere but where the row writes it (after 'a planted text; ' and before '; and on', and,
+ * but for the one phrase's longer runs, at a text's start), a copy standing right after or right before any other
+ * character (for the spellings spellingsOf writes, one outside printable ASCII and the runtime's whitespace; for the
+ * phrase as frozen and the appended withdrawn wordings, one outside those and the punctuation code points the runtime
+ * holds, a symbol outside printable ASCII among them), a copy read differently by two or more characters standing before
+ * or after it other than the planted texts' own, or a copy past the planted texts' lengths other than after the planted
+ * text longer than the longer label (and the swept phrase after each number of x's up to that length) - is NOT CLAIMED
+ * by this census (wb-ldqu cut #4, refusal #3 U2: GP1-I4 reds through the swept surroundings).
  * Of INTO ANY's spelling pins, a page's naming words or a phrase edited, a spelling kind removed from spellingsOf, or the
  * phrase list emptied, together with its elements of the kinds literal and the spelling counts literal, is NOT CLAIMED by
  * this census (no anchor outside this file names the phrases' spellings or the kinds; the whitespace and letter-case axes
@@ -1133,7 +1183,9 @@
  * scan, its printable ASCII contexts, its runs or its letter pairs - narrowed, edited or removed, alone or together with
  * its elements of the runtime literals (the code points, the planted ends' count, the case spellings' counts and the
  * probe's case spellings; the contexts' and runs' counts, the letter pairs' counts, the probe's letter pairs and the
- * planted context ends' answers) and a reader (wb-ldqu cuts #2 and #3); and an unselected spelling other than the
+ * planted context ends' answers; and cut #4's whitespace pairings, runs, planted ends, surroundings, offsets and appended
+ * wordings, with the planted ends' count, the spellings' counts, the required quotation marks and brackets, the filler's
+ * length and the swept phrase) and a reader (wb-ldqu cuts #2, #3 and #4); and an unselected spelling other than the
  * twelve the runtime's
  * Function.prototype holds the row to (valueOf, a longer name, a continued name, Object.prototype's, MyFunction, MyReflect,
  * call.toString), removed with the count, is NOT CLAIMED either.
@@ -1149,7 +1201,8 @@
  * respin 3), and the spelling copies reads (a phrase's words and pattern) with spellingsOf's kinds as a fourth (wb-ldqu),
  * and the runtime's whitespace with the planted ends' and the case spellings' counts as a fifth (wb-ldqu cut #2), and
  * the contexts' characters and count, the runs' and letter pairs' counts with the probe's letter pairs and the planted
- * context ends' answers as a sixth (wb-ldqu cut #3);
+ * context ends' answers as a sixth (wb-ldqu cut #3), and the runtime's whitespace count, the planted ends' count, the
+ * required quotation marks and brackets, the filler's length and the swept phrase as a seventh (wb-ldqu cut #4);
  * test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
@@ -1266,7 +1319,7 @@ const FAIL_CLOSED_ANCHOR =
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const INTO_ANY_ROW =
-  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies as copies reads them, claimed at the spellings the row sweeps (the phrase's words, its leading 'or' or 'and' not read, held to the runtime - whitespace is each character its String.prototype.trim removes and a letter's two cases are as it pairs them: the phrase as frozen, in capitals or in small letters, each with up to two letters in their other case, or with every letter in alternating case; each space alone, or every space, as any run of one or two whitespace characters; every space as a run of the runtime's whitespace in code point order, from its first character to all of it; and one phrase's every space as that order repeated to each length up to the longer label's), and a copy in any other spelling is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, as a scan reading whitespace as the runtime's String.prototype.trim does finds it, at the ends the row sweeps: any one code point, or any one to three printable ASCII characters standing alone, before the full stop with the small letter b after the whitespace, or after the whitespace with the small letter a before the full stop, and the planted abbreviations and initialisms before the full stop (etc., e.g., i.e., cf., vs., U.S. and A.B.) and initialisms and initials after the whitespace (A.B, X. and E.g.); an end read with any other context is NOT CLAIMED) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2 and claimed at the swept ends and spellings at cut #3)";
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies as copies reads them, claimed at the spellings and in the surroundings the row sweeps (the phrase's words, its leading 'or' or 'and' not read, held to the runtime - whitespace is each character its String.prototype.trim removes and a letter's two cases are as it pairs them: the phrase as frozen, in capitals or in small letters, each with up to two letters in their other case, or with every letter in alternating case; each space alone, or every space, as any run of one or two whitespace characters; every space as a run of the runtime's whitespace in code point order, from its first character to all of it; and one phrase's every space as that order repeated to each length up to the longer label's; each spelling read after 'a planted text; ' and before '; and on', and, but for the one phrase's longer runs, at a text's start before a space and the phrase as frozen; the phrase as frozen, in capitals, in small letters or with a sentence-initial capital, with one space doubled, with every space a tab, a line break or a no-break space, or with its leading conjunction dropped or written 'or' or 'and', each read besides with each printable ASCII or whitespace character right before it and, apart, right after it there, and after a planted text longer than the longer label; the phrase as frozen with each punctuation code point the runtime holds (\\p{P}) right before it and, apart, right after it there; one phrase after each number of x's up to the longer label's length; and each withdrawn wording appended to a planted label with any one of those characters right before it and again right after it), and a copy in any other spelling or surroundings is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, as a scan reading whitespace as the runtime's String.prototype.trim does finds it, at the ends the row sweeps, each with every whitespace character the runtime trims, in turn, right after the full stop: any one code point (one at or above U+10000 with U+0020 and with the one the sweep pairs it with only), or any one to three printable ASCII characters, standing alone and read from its text's start, before the full stop with the small letter b after the whitespace, or after the whitespace with the small letter a before the full stop; a run of one or two of those characters, or those characters in code point order to each length up to the longer label's, between a full stop after the small letter a and the small letter b; and, read from the own list's opening in a planted label, the planted abbreviations and initialisms before the full stop (etc., e.g., i.e., cf., vs., U.S. and A.B.) and initialisms and initials after the whitespace (A.B, X. and E.g.), the planted honorifics before the full stop (No., Mr., Mrs., Ms., Dr., St. and Prof.) and each dash the runtime holds (\\p{Pd}) after the whitespace, and the planted 'After it:' and 'after it:' after a run of one or two of those characters; an end read with any other context, whitespace, run or offset is NOT CLAIMED) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2, claimed at the swept ends and spellings at cut #3, and at every whitespace character and the swept surroundings at cut #4)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
@@ -1519,9 +1572,10 @@ const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
  * The spelling every INTO ANY label reading counts a frozen phrase's copies in (wb-ldqu, refusal #4 U1-U3): a copy is the
  * phrase's words - the phrase with a leading conjunction, 'or ' or 'and ', not read - written with each letter in either case
  * (the regular expression's i flag; every frozen phrase is ASCII) and each space as a run of one or more whitespace
- * characters (\s+); the row claims it at the spellings INTO ANY sweeps (wb-ldqu cut #3), and a copy in any other spelling
- * is NOT CLAIMED. copies counts a text's copies of a phrase, copyAt finds where its first one starts, and sentenceEnd finds
- * a sentence's first full stop followed by whitespace (claimed at the ends INTO ANY sweeps, wb-ldqu cut #3).
+ * characters (\s+); the row claims it at the spellings and in the surroundings INTO ANY sweeps (wb-ldqu cuts #3 and #4),
+ * and a copy in any other spelling or surroundings is NOT CLAIMED. copies counts a text's copies of a phrase, copyAt finds
+ * where its first one starts, and sentenceEnd finds a sentence's first full stop followed by whitespace (claimed at the
+ * ends INTO ANY sweeps, each with every whitespace character the runtime trims, wb-ldqu cuts #3 and #4).
  */
 const phraseWords = (phrase: string): string => phrase.replace(/^(?:or|and) /, "");
 const phrasePattern = (phrase: string): RegExp => new RegExp(phraseWords(phrase).replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "\\s+"), "gi");
@@ -2371,6 +2425,212 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
         ["in small letters, the letters at 1 and 2 in their other case", "aBC"],
       ],
     ]);
+    // wb-ldqu cut #4 (refusal #3 U1 and U2, in the enumerate-the-resolvable form ruling R-B546 binds): every swept end read with each whitespace character the runtime trims right after its full stop, the runs after the full stop, the planted ends with each of those characters; and each frozen phrase read with what stands right before and right after it and past the longer label - this block reads its own runtime whitespace and shares nothing with the blocks of cut #2 and cut #3.
+    const spaces4 = runtimeWhitespace();
+    const scan4 = (text: string): number => {
+      for (let at = 0; at + 1 < text.length; at += 1) if (text.charAt(at) === "." && text.charAt(at + 1).trim() === "") return at;
+      return -1;
+    };
+    const codeOf4 = (text: string): string => [...text].map(char => `U+${char.codePointAt(0)?.toString(16)}`).join(" ");
+    const pointMisreads4: string[] = [];
+    let pointPairs4 = 0;
+    for (let code = 0; code < 0x110000; code += 1) {
+      const point = String.fromCodePoint(code);
+      for (const space of code < 0x10000 ? spaces4 : [" "]) {
+        pointPairs4 += 1;
+        if (sentenceEnd(`a.${space}${point}`, 0) !== 1) pointMisreads4.push(`${codeOf4(point)} after ${codeOf4(space)}`);
+        if (sentenceEnd(`${point}.${space}b`, 0) !== point.length) pointMisreads4.push(`${codeOf4(point)} before ${codeOf4(space)}`);
+      }
+    }
+    expect(
+      [pointPairs4 === 0x10000 * spaces4.length + (0x110000 - 0x10000), pointPairs4, pointMisreads4.length, pointMisreads4.slice(0, 8)],
+      "every code point below U+10000 with each whitespace character the runtime trims right after the full stop, and every other with U+0020: an end, standing alone after the whitespace with the small letter a before the full stop, or before the full stop with the small letter b after the whitespace",
+    ).toEqual([true, 2686976, 0, []]);
+    const printable4 = Array.from({ length: 0x80 }, (_, code) => String.fromCodePoint(code)).filter(char => !/\p{Cc}/u.test(char));
+    const contextMisreads4: string[] = [];
+    let contextPairs4 = 0;
+    const readContexts4 = (stem: string, depth: number): void => {
+      for (const char of printable4) {
+        const context = `${stem}${char}`;
+        for (const space of spaces4) {
+          contextPairs4 += 1;
+          const ended4 = `${context}.${space}b`;
+          if (sentenceEnd(ended4, 0) !== scan4(ended4)) contextMisreads4.push(`before ${JSON.stringify(context)} ${codeOf4(space)}`);
+          if (sentenceEnd(`a.${space}${context}`, 0) !== 1) contextMisreads4.push(`after ${JSON.stringify(context)} ${codeOf4(space)}`);
+        }
+        if (depth > 1) readContexts4(context, depth - 1);
+      }
+    };
+    readContexts4("", 3);
+    expect(
+      [printable4.length, contextPairs4 === (printable4.length + printable4.length ** 2 + printable4.length ** 3) * spaces4.length, contextPairs4, contextMisreads4.length, contextMisreads4.slice(0, 8)],
+      "every one to three printable ASCII characters standing alone before the full stop with the small letter b after the whitespace, against a scan reading whitespace as the runtime trims it, and after the whitespace with the small letter a before the full stop, an end at that full stop, each with every whitespace character the runtime trims right after the full stop",
+    ).toEqual([95, true, 21662375, 0, []]);
+    // Runs after the full stop: each run of one or two of the whitespace characters the runtime trims, and those characters in code point order to each length up to the longer label.
+    const runs4 = spaces4.flatMap(first => [first, ...spaces4.map(second => `${first}${second}`)]);
+    const longest4 = Math.max(label.length, dispatch.length);
+    const order4 = spaces4.join("").repeat(Math.ceil(longest4 / spaces4.length)).slice(0, longest4);
+    const runMisreads4: string[] = [];
+    let runReads4 = 0;
+    for (const run of runs4) {
+      runReads4 += 1;
+      if (sentenceEnd(`a.${run}b`, 0) !== 1) runMisreads4.push(`a run ${codeOf4(run)}`);
+    }
+    let orderReads4 = 0;
+    for (let length = 1; length <= longest4; length += 1) {
+      orderReads4 += 1;
+      if (sentenceEnd(`a.${order4.slice(0, length)}b`, 0) !== 1) runMisreads4.push(`the runtime order to ${length}`);
+    }
+    expect(
+      [runs4.length === spaces4.length + spaces4.length ** 2, runReads4, order4.length === longest4, orderReads4 === longest4, runMisreads4.length, runMisreads4.slice(0, 8)],
+      "a full stop after the small letter a followed by each run of one or two whitespace characters the runtime trims, and by the runtime's whitespace in code point order to each length up to the longer label's, before the small letter b: an end at the full stop",
+    ).toEqual([true, 650, true, true, 0, []]);
+    // Planted labels ending the own list, read from the opening of the own list: each planted abbreviation, initialism and initial, each honorific and each dash the runtime holds, with every whitespace character right after the full stop; and After it: and after it: after each run of one or two of them.
+    const dashes4: string[] = [];
+    const marks4: string[] = [];
+    for (let code = 0; code < 0x110000; code += 1) {
+      const char = String.fromCodePoint(code);
+      if (/\p{Pd}/u.test(char)) dashes4.push(char);
+      if (/\p{P}/u.test(char)) marks4.push(char);
+    }
+    const plantedEnds4: readonly (readonly [string, string])[] = [
+      [", etc. After it:", ", etc"],
+      [", e.g. After it:", ", e.g"],
+      [", i.e. After it:", ", i.e"],
+      [", cf. After it:", ", cf"],
+      [" vs. After it:", " vs"],
+      [" U.S. After it:", " U.S"],
+      [" A.B. After it:", " A.B"],
+      [". A.B after it:", ""],
+      [". X. after it:", ""],
+      [". E.g. after it:", ""],
+      [", No. After it:", ", No"],
+      [", Mr. After it:", ", Mr"],
+      [", Mrs. After it:", ", Mrs"],
+      [", Ms. After it:", ", Ms"],
+      [", Dr. After it:", ", Dr"],
+      [", St. After it:", ", St"],
+      [", Prof. After it:", ", Prof"],
+    ];
+    const endsOf4 = [...plantedEnds4, ...dashes4.map((dash): readonly [string, string] => [`. ${dash} after it:`, ""])];
+    const endRow4 = (end: string): string => {
+      const ended = plantedLabel.replace(". After it:", end);
+      const lists = intoAnyLists(ended);
+      return JSON.stringify([
+        lists.any === anyList,
+        lists.own.startsWith(ownList) ? lists.own.slice(ownList.length) : `<${lists.own}>`,
+        intoAnyNaming(ended, [{ typed: "own", named: "a class's static side" }])[0],
+        copies(ended.slice(ended.indexOf(end)), "a class's static side"),
+      ]);
+    };
+    const endMisreads4: string[] = [];
+    let endReads4 = 0;
+    for (const [end, tail] of endsOf4) {
+      for (const space of spaces4) {
+        endReads4 += 1;
+        if (endRow4(end.replace(". ", `.${space}`)) !== JSON.stringify([true, tail, [false, 0], 1])) endMisreads4.push(`${JSON.stringify(end)} ${codeOf4(space)}`);
+      }
+    }
+    for (const run of runs4) {
+      for (const end of [`.${run}After it:`, `.${run}after it:`]) {
+        endReads4 += 1;
+        if (endRow4(end) !== JSON.stringify([true, "", [false, 0], 1])) endMisreads4.push(`${end.slice(-9)} ${codeOf4(run)}`);
+      }
+    }
+    expect(
+      [endsOf4.length === plantedEnds4.length + dashes4.length, endReads4 === endsOf4.length * spaces4.length + runs4.length * 2, endMisreads4.length, endMisreads4.slice(0, 8), dashes4.length > 0],
+      "planted labels ending the own list at each planted abbreviation, initialism and initial, each honorific and before each dash the runtime holds, with every whitespace character right after the full stop, and at a full stop followed by each run of one or two of them before 'After it:' and 'after it:': the any list as planted, the own list's tail as planted, and the page named once after the end, outside the own list",
+    ).toEqual([true, true, 0, [], true]);
+    // The planted ends held to the title of the row (the roster holds it outside this file) and the dashes to the runtime.
+    const namedContexts4 = (where: string): string[] => (new RegExp(`${where} \\(([^)]+)\\)`).exec(INTO_ANY_ROW)?.[1] ?? "").split(/, | and /);
+    const plantedContext4 = (end: string): string => end.replace(/^(?:, | |\. )/, "").replace(/ [Aa]fter it:$/, "");
+    expect(
+      [
+        namedContexts4("initialisms before the full stop"),
+        namedContexts4("initials after the whitespace"),
+        namedContexts4("honorifics before the full stop"),
+        INTO_ANY_ROW.includes("each dash the runtime holds (\\p{Pd}) after the whitespace"),
+        ["-", String.fromCodePoint(0x2013), String.fromCodePoint(0x2014)].filter(dash => !dashes4.includes(dash)),
+        dashes4.every(dash => marks4.includes(dash)),
+      ],
+      "the planted ends held to the row's title (the roster holds it outside this file) - the abbreviations and initialisms, the initialisms and initials, the honorifics, each planted in that order - and the dashes to the runtime's \\p{Pd}, the hyphen-minus, the en dash and the em dash among them",
+    ).toEqual([plantedEnds4.slice(0, 7).map(([end]) => plantedContext4(end)), plantedEnds4.slice(7, 10).map(([end]) => plantedContext4(end)), plantedEnds4.slice(10).map(([end]) => plantedContext4(end)), true, [], true]);
+    // Each frozen phrase with what stands right before and right after it: one copy, found where it stands.
+    const around4 = [...new Set([...printable4, ...spaces4])];
+    const lead4 = (text: string): number => /^(?:or|and)\s+/i.exec(text)?.[0].length ?? 0;
+    const planted4 = "a planted text; ";
+    const beside4 = (phrase: string, text: string, char: string): boolean => {
+      const preceded = `${planted4}${char}${text}; and on`;
+      const followed = `${planted4}${text}${char}; and on`;
+      return copies(preceded, phrase) === 1 && copyAt(preceded, phrase) === planted4.length + char.length + lead4(text) && copies(followed, phrase) === 1 && copyAt(followed, phrase) === planted4.length + lead4(text);
+    };
+    const besideMisreads4: string[] = [];
+    const markMisreads4: string[] = [];
+    let besideReads4 = 0;
+    let markReads4 = 0;
+    for (const phrase of phrases) {
+      for (const [how, text] of spellingsOf(phrase)) {
+        for (const char of around4) {
+          besideReads4 += 1;
+          if (!beside4(phrase, text, char)) besideMisreads4.push(`${phrase.slice(0, 32)}: ${how}, ${codeOf4(char)}`);
+        }
+      }
+      for (const mark of marks4) {
+        markReads4 += 1;
+        if (!beside4(phrase, phrase, mark)) markMisreads4.push(`${phrase.slice(0, 32)}: ${codeOf4(mark)}`);
+      }
+    }
+    const spellingsRead4 = phrases.reduce((sum, phrase) => sum + spellingsOf(phrase).length, 0);
+    expect(
+      [around4.length, besideReads4 === spellingsRead4 * around4.length, markReads4 === phrases.length * marks4.length, besideMisreads4.length, besideMisreads4.slice(0, 8), markMisreads4.length, markMisreads4.slice(0, 8)],
+      "each frozen phrase in each spelling spellingsOf writes, with each printable ASCII or whitespace character right before it and, apart, right after it, and the phrase as frozen with each punctuation code point the runtime holds there: one copy, found where it stands",
+    ).toEqual([119, true, true, 0, [], 0, []]);
+    // Each frozen phrase past the length of the longer label, and one phrase after each number of x characters up to it.
+    const filler4 = planted4.repeat(Math.ceil((longest4 + 1) / planted4.length));
+    const farMisreads4: string[] = [];
+    let farReads4 = 0;
+    for (const phrase of phrases) {
+      for (const [how, text] of spellingsOf(phrase)) {
+        farReads4 += 1;
+        const far = `${filler4}${text}; and on`;
+        if (copies(far, phrase) !== 1 || copyAt(far, phrase) !== filler4.length + lead4(text)) farMisreads4.push(`${phrase.slice(0, 32)}: ${how}`);
+      }
+    }
+    const swept4 = "a keeping instance";
+    const offsetMisreads4: number[] = [];
+    let offsetReads4 = 0;
+    for (let offset = 0; offset <= longest4; offset += 1) {
+      offsetReads4 += 1;
+      const text = `${"x".repeat(offset)}${swept4}; and on`;
+      if (copies(text, swept4) !== 1 || copyAt(text, swept4) !== offset) offsetMisreads4.push(offset);
+    }
+    expect(
+      [filler4.length > longest4, phrases.filter(phrase => copies(filler4, phrase) !== 0), farReads4 === spellingsRead4, offsetReads4 === longest4 + 1, farMisreads4.length, farMisreads4.slice(0, 8), offsetMisreads4.length, offsetMisreads4.slice(0, 8)],
+      "each frozen phrase in each spelling spellingsOf writes after a planted text longer than the longer label, and one phrase after each number of x's up to that length: one copy, found where it stands",
+    ).toEqual([true, [], true, true, 0, [], 0, []]);
+    // Each withdrawn wording appended to a planted label with any one of those characters right before it and again right after it - quoted, bracketed or set off: one copy.
+    const quoted4 = [...new Set([...around4, ...marks4])];
+    const quoteMisreads4: string[] = [];
+    let quoteReads4 = 0;
+    for (const mark of quoted4) {
+      quoteReads4 += 1;
+      if (withdrawnReading(`${plantedLabel} They no longer ${mark}${INTO_ANY_WITHDRAWN}${mark}.`) !== 1 || JSON.stringify(dispatchReading(`${plantedDispatch}; ${mark}${DISPATCH_WITHDRAWN}${mark}`)) !== "[1,1,1]") quoteMisreads4.push(codeOf4(mark));
+    }
+    expect(
+      [quoted4.length === around4.length + marks4.length - marks4.filter(mark => around4.includes(mark)).length, quoteReads4 === quoted4.length, quoteMisreads4.length, quoteMisreads4.slice(0, 8)],
+      "each withdrawn wording appended to a planted label between two copies of any one printable ASCII, whitespace or punctuation character: one copy as each label reading reads it",
+    ).toEqual([true, true, 0, []]);
+    // The shapes of the cut #4 sweeps, frozen (rule 16), and the quotation marks and brackets among the punctuation code points the runtime holds.
+    expect(
+      [
+        spaces4.length,
+        plantedEnds4.length,
+        ["22", "27", "28", "29", "5b", "5d", "7b", "7d", "ab", "bb", "2018", "2019", "201a", "201c", "201d", "201e", "2039", "203a", "300c", "300d"].filter(hex => !marks4.includes(String.fromCodePoint(Number.parseInt(hex, 16)))),
+        planted4,
+        swept4,
+      ],
+      "the runtime's whitespace, the planted ends and the punctuation code points read from the runtime (the quotation marks and brackets among them), the planted text and the swept phrase, frozen (rule 16)",
+    ).toEqual([25, 17, [], "a planted text; ", "a keeping instance"]);
   });
 
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
