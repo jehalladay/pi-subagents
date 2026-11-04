@@ -2,12 +2,13 @@
  * wb-26dh: THE BINDINGS reader of the wb-tz4r.3 ri-decision-provenance-echo census, bindingsRead, as wb-5333's FINAL cut #4 wrote
  * it (machine/flywheel/wb-5333 tip bce0de7f9462269ac80b39fc31f771f65bdaf315, test/workbench-ri-decision-provenance-echo-census.test.ts),
  * moved here so that a census can hold its readings (test/workbench-ri-decision-provenance-echo-bindings-census.test.ts), with
- * THE FORM below in place of the tip's names test. Under the rule-19 dependency inversion R-B256 the parent wb-5333 is parked and
- * waits on wb-26dh; its later re-cut can import bindingsRead from here. Copied byte for byte from that tip: lines 1272-1282
- * (boundNames), 1284-1289 (importedNames), 1291-1293 (declaredBy), 1300-1309 (hoistedNames), 1334-1355 (IN_FILE_SIDES), 1357
- * (MUTABLE_BINDINGS) and 1377-1391 (bindingsRead) but line 1388, whose test readNames(initializer) over LITERAL_READS becomes
- * isLiteralSide(side, initializer). The tip's doc comments above those declarations are left out: they state the parent census's
- * own pins and NOT CLAIMED list, none of which is on trunk. What this module is held to is the bindings census's pinned probes.
+ * THE FORM below in place of the tip's names test. Under the rule-19 dependency inversion R-B256 the parent wb-5333 was parked behind
+ * wb-26dh until this landed (landing 860); its re-cut, wb-5333 cut #5, imports bindingsRead and IN_FILE_SIDES from here (and restates
+ * this sentence). Copied byte for byte from that tip: lines 1272-1282 (boundNames), 1284-1289 (importedNames), 1291-1293 (declaredBy),
+ * 1300-1309 (hoistedNames), 1334-1355 (IN_FILE_SIDES), 1357 (MUTABLE_BINDINGS) and 1377-1391 (bindingsRead) but line 1388, whose test
+ * readNames(initializer) over LITERAL_READS becomes isLiteralSide(side, initializer). The tip's doc comments above those declarations
+ * are left out: they state the parent census's own pins and NOT CLAIMED list at that tip, none of which was on trunk when this module
+ * was cut. What this module is held to is the bindings census's pinned probes.
  * Test-only: no src, docs or receipt is read or written here.
  */
 import ts from "typescript";
