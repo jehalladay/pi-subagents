@@ -183,6 +183,26 @@
      "pin": "C-JS-ALIAS",
      "page": "dd5bf708ed8d9f39",
      "falsifies": "in a JavaScript module a let, a var, an accessed require, a template specifier, a const in a function, an array pattern element and a defaulted object pattern element initialized by require read import; an exported, a parenthesized, a joined-argument, a two-argument, a module.require and a JSDoc-typed require declaration read their initializers, and a nested pattern's element reads destructuring"
+    },
+    {
+     "pin": "GP17-C1",
+     "page": "e1828d47d3e43dd4",
+     "falsifies": "refusal #6 U1a member GP17-C1 (a const in the body of an exported function declared at the top level does not resolve): its twin page gp17-c1-0, const X = \"a\" declared in that body and probed there, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP17-C1-PROGRAM",
+     "page": "1b608336d601515e",
+     "falsifies": "refusal #6 U1a member GP17-C1's second twin page gp17-c1-1: a launch program held by a const in the body of an exported function declared at the top level, spawn(PROGRAM, []) there, reads spawn:rf, never spawn:<opaque PROGRAM>"
+    },
+    {
+     "pin": "GP17-C1-SHADOW",
+     "page": "51637dd4c9432fd1",
+     "falsifies": "refusal #6 U1a member GP17-C1's third twin page gp17-c1-2: a const in the body of an exported function declared at the top level, shadowing a same-named top-level const, reads its own initializer \"inner\" inside its scope and the outer one's \"outer\" outside it"
+    },
+    {
+     "pin": "C-TYPED",
+     "page": "3cae82edcc2d0a6c",
+     "falsifies": "a const with a type annotation and an initializer, alone in its declaration list, resolves through its initializer at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
     }
    ]
   },
@@ -339,6 +359,56 @@
      "pin": "GP6-K13",
      "page": "b61b896956eece82",
      "falsifies": "refusal #5 U1f member GP6-K13 (a var in a for-of head reads using): its twin page gp6-k13-0, a var declared in a for-of statement's head at the top level, reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-D1",
+     "page": "4db59603be96c0bc",
+     "falsifies": "refusal #6 U1b member GP17-D1 (an array pattern element with no default reads other): its twin page gp17-d1-0, a simple element of a plain const declaration's array pattern at the top level, const [A] = list, reads <opaque A:destructuring>"
+    },
+    {
+     "pin": "GP17-D2",
+     "page": "c0a6e81a74dd37cf",
+     "falsifies": "refusal #6 U1c member GP17-D2 (a rest element reads other): its twin page gp17-d2-0, the rest elements of a plain const declaration's object and array patterns at the top level, read <opaque R:destructuring> and <opaque S:destructuring>"
+    },
+    {
+     "pin": "GP17-V1",
+     "page": "6dc39b44feb3d38e",
+     "falsifies": "refusal #6 U1d member GP17-V1 (a var with no initializer reads other): its twin page gp17-v1-0, a plain var declaration with no initializer at the top level, reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-V1-FUNCTION",
+     "page": "5a24218e37d82219",
+     "falsifies": "refusal #6 U1d member GP17-V1's second twin page gp17-v1-1: a var declaration with no initializer in the body of a plain function declared at the top level reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-V1-NAMESPACE",
+     "page": "f2638fe172b66c0e",
+     "falsifies": "refusal #6 U1d member GP17-V1's third twin page gp17-v1-2: a var with no initializer exported from the body of a plain namespace declared at the top level reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-L1",
+     "page": "08b3f92af384a4e6",
+     "falsifies": "refusal #6 U1e member GP17-L1 (a let with no initializer in a function's body reads other): its twin page gp17-l1-0, a let declaration with no initializer in the body of an exported function declared at the top level, reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-L1-ASYNC",
+     "page": "19493c1dc760b763",
+     "falsifies": "refusal #6 U1e member GP17-L1's second twin page gp17-l1-1: a let declaration with no initializer in the body of an exported async function declared at the top level reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-L2",
+     "page": "465a6061821a1efe",
+     "falsifies": "refusal #6 U1e member GP17-L2 (a let with no initializer exported from a namespace body reads other): its twin page gp17-l2-0, a let with no initializer exported from the body of a plain namespace declared at the top level, reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-P1",
+     "page": "795df80f7676ffca",
+     "falsifies": "refusal #6 U1f member GP17-P1 (a defaulted parameter of a function declaration reads other): its twin page gp17-p1-0, a defaulted parameter of a plain function declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP17-P2",
+     "page": "6819d811ff1b8804",
+     "falsifies": "refusal #6 U1f member GP17-P2 (an optional parameter reads other): its twin page gp17-p2-0, an optional parameter of a plain function declared at the top level, reads <opaque X:parameter>"
     }
    ]
   },

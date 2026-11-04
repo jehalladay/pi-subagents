@@ -5,16 +5,30 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #6 IS THE SECOND RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B470 of refusal #5
- * (O:1964): claims equal to pins. It pins refusal #5's eleven surviving reader mutants with the gate's own twin pages, byte for
- * byte (the helper's MEMBERS GP6-W1, GP6-W3 and the nine GP6-K members; REFUSAL #5 below), claims BINDING (2) and (3) only for
- * the declaration positions and modifiers their words now name, kind by kind, which are the ones the census's pages plant, and
- * READINGS (2)'s dropped extensions only in the five spellings its pages plant, and gives P2-PROGRAM a path of its own, so that
- * each pin reads its page on a fresh reader (FRESH READERS holds it). Every other row, pin, page and reading of cut #5 stands
- * byte for byte. THIS CENSUS CLAIMS EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's
- * pages plant, the falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the
- * claim's NOT CLAIMED section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A
- * form no page plants is not claimed, and no row's silence about a form is a claim about it.
+ * CUT #7 IS THE THIRD RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B496 of refusal #6
+ * (O:1993): claims equal to pins, kill-or-pin per member. It pins refusal #6's eight surviving reader mutants with every twin
+ * page the gate names for them, byte for byte (the helper's MEMBERS GP17-C1 in const and GP17-D1, GP17-D2, GP17-V1, GP17-L1,
+ * GP17-L2, GP17-P1 and GP17-P2 in kinds, a member's further twin pages pinned beside it as its twins name them; REFUSAL #6
+ * below), and claims BINDING (3)'s import, merged, destructuring, let, var and parameter entries only in the sub-forms the
+ * census's pages plant (an initializer or none, an element's default, rest or renaming, a parameter's default, question token
+ * or rest, a require call's argument and access, a merged binding's declarations), BINDING (3)'s closing clause naming every
+ * other sub-form NOT CLAIMED in the part itself. It also plants C-TYPED in the const row (a const with a type annotation at
+ * each position BINDING (2) names, so that part is claimed with or without one) and claims BINDING (2) and (3) only for a
+ * variable declaration alone in its declaration list, BINDING (3)'s closing clause holding a declaration's type annotation, or
+ * its absence, to the census pages that plant it so. Every pin of cut #6 stands with its page, path and expected reading byte
+ * for byte; the ACCEPTANCE checks MEMBER-PINS and KIND-PINS now also read each member's further twin pins. THIS CENSUS CLAIMS
+ * EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the falsifier roster
+ * naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row
+ * a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is not claimed, and
+ * no row's silence about a form is a claim about it.
+ *
+ * CUT #6 WAS THE SECOND RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B470 of refusal #5
+ * (O:1964): claims equal to pins. It pinned refusal #5's eleven surviving reader mutants with the gate's own twin pages, byte
+ * for byte (the helper's MEMBERS GP6-W1, GP6-W3 and the nine GP6-K members; REFUSAL #5 below), claimed BINDING (2) and (3) only
+ * for the declaration positions and modifiers their words name, kind by kind, which are the ones the census's pages plant, and
+ * READINGS (2)'s dropped extensions only in the five spellings its pages plant, and gave P2-PROGRAM a path of its own, so that
+ * each pin reads its page on a fresh reader (FRESH READERS holds it). Every row, pin, page and reading of cut #5 stood byte for
+ * byte.
  *
  * CUT #5 WAS THE POST-INVERSION RESTATEMENT over the landed carrier wb-jwc.13. Refusal #4 (O:1685) of cut #4 took the
  * dependency inversion R-B233 pre-bound: ruling R-B263 parked this bead behind its child wb-jwc.13 and folded refusal #4's
@@ -62,18 +76,21 @@
  *  (refusal #3 of wb-jwc.7, O:1346) and this census's controls.
  *  ACCEPTANCE: the export's Acceptance line, verbatim: CLAIM-HEADER (this header's claim paragraph equals BINDING_TEXT_CLAIM
  *  byte-for-byte), CLAIM-ROWS (the claim rows are exactly the claim's parts, its NOT CLAIMED residuals included, in order),
- *  EXPORT-ROWS (the export rows are the export's title, items and Acceptance line), MEMBER-PINS (each of the helper's
- *  MEMBERS, the gate members folded into this bead, is a pin of its part's row), KIND-PINS (the kinds row holds exactly one
- *  K- pin per kind the claim names, in the claim's order, then the kinds part's MEMBERS, in their order) and FALSIFIER-ROSTER
- *  (every row's pins, in order, are the ones test/fixtures/binding-text-reader-roster.json lists, each there with its page's
- *  digest and the claim words its page plants).
+ *  EXPORT-ROWS (the export rows are the export's title, items and Acceptance line), MEMBER-PINS (each of the helper's MEMBERS,
+ *  the gate members folded into this bead, is a pin of its part's row, and so is each further twin pin a member's twins name),
+ *  KIND-PINS (the kinds row holds exactly one K- pin per kind the claim names, in the claim's order, then the kinds part's
+ *  MEMBERS, in their order, each member's pin followed by the further twin pins its twins name, in their order) and
+ *  FALSIFIER-ROSTER (every row's pins, in order, are the ones test/fixtures/binding-text-reader-roster.json lists, each there
+ *  with its page's digest and the claim words its page plants).
  *  One row per part of the claim (labelled `SECTION (n) id`, NOT CLAIMED (n) for a residual): its pins, each a planted page
  *  held to the reading the part's words give it, or, in a residual's row, its quiet row. The roster states, per pin, the claim
  *  words its page plants, no wider, and the census claims a pin for no word the roster's entry for that pin does not name.
  *  MEMBERS sit in their parts' rows: R-B115's R-ALT1 to R-ALT4 in registration, E1 to E3 in program and A10 in scope; refusal
  *  #1's G01, G08 and G09 in kinds, G02 in with, G03 in eval, G04 in cycle, G05, G06 and G07 in bounds and G10 in opaque-part;
  *  refusal #2's (below) in theirs; refusal #5's GP6-W1 and GP6-W3 in words and GP6-K3, GP6-K1, GP6-K2, GP6-K4, GP6-K8, GP6-K5,
- *  GP6-K6, GP6-K12 and GP6-K13 in kinds; each pinned by the twin page its refusal names (the gate's evidence, byte for byte),
+ *  GP6-K6, GP6-K12 and GP6-K13 in kinds; refusal #6's GP17-C1 in const, with its further twin pins GP17-C1-PROGRAM and
+ *  GP17-C1-SHADOW, and GP17-D1, GP17-D2, GP17-V1 (with GP17-V1-FUNCTION and GP17-V1-NAMESPACE), GP17-L1 (with GP17-L1-ASYNC),
+ *  GP17-L2, GP17-P1 and GP17-P2 in kinds; each pinned by the twin page its refusal names (the gate's evidence, byte for byte),
  *  read as the reader reads it.
  *
  * REFUSAL #2 (gate-prep-1, run g10-gate-s161, O:1546), ITS UNMET ITEMS AND HOW EACH IS CURED: U1a's six eval contexts by M61
@@ -145,6 +162,28 @@
  * page at P2's path on the reader P2 had read) by P2-PROGRAM's own path, src/workbench/providers/zz-gp1-p2-program.ts (its page
  * and reading unchanged), with the FRESH READERS case holding that no two pins read one page at one path.
  *
+ * REFUSAL #6 (gate-prep-17, run g10-gate-s203, O:1993; disposition R-B496), ITS UNMET ITEMS AND HOW CUT #7 CURES EACH (each
+ * twin page is the gate's, byte for byte, its sha256/16 its PAGES digest; kill-or-pin per member): U1a (GP17-C1, a const in the
+ * body of an exported function declared at the top level not resolving, the position's one page E2 reading alike either way) by
+ * GP17-C1 (twin gp17-c1-0, const X = "a" probed in that body reading "a"), GP17-C1-PROGRAM (twin gp17-c1-1, a const PROGRAM =
+ * "rf" there launched by spawn reading spawn:rf) and GP17-C1-SHADOW (twin gp17-c1-2, that const shadowing a top-level X,
+ * reading "inner" inside its scope and "outer" outside it: BINDING (2)'s shadowing sentence at the position); U1b (GP17-D1, an
+ * array pattern element with no default reading other) by GP17-D1 (twin gp17-d1-0, const [A] = list); U1c (GP17-D2, a rest
+ * element reading other) by GP17-D2 (twin gp17-d2-0, the rest elements of an object and an array pattern); U1d (GP17-V1, a var
+ * with no initializer reading other) by GP17-V1, GP17-V1-FUNCTION and GP17-V1-NAMESPACE (twins gp17-v1-0, gp17-v1-1 and
+ * gp17-v1-2: at the top level, in a plain function's body and exported from a plain namespace's body); U1e (GP17-L1 and
+ * GP17-L2, a let with no initializer in an exported or an exported async function's body, or exported from a namespace's body,
+ * reading other) by GP17-L1, GP17-L1-ASYNC and GP17-L2 (twins gp17-l1-0, gp17-l1-1 and gp17-l2-0); U1f (GP17-P1 and GP17-P2, a
+ * defaulted and an optional parameter of a function declaration reading other) by GP17-P1 and GP17-P2 (twins gp17-p1-0 and
+ * gp17-p2-0, each a plain function's); the class item U1 beside its members by BINDING (3)'s import, merged, destructuring,
+ * let, var and parameter entries naming, position by position, the sub-forms the census's pages plant (an initializer or none,
+ * a simple, a defaulted or a rest element, simple meaning no default, rest or renaming, a simple, a defaulted, an optional or a
+ * rest parameter, a require call's argument and access, a merged binding's declarations) and its closing clause holding every
+ * entry to the sub-forms it names, to a declaration alone in its list and to the type annotations the pages plant, any other
+ * NOT CLAIMED in the part itself (BINDING (2) likewise claimed alone in its list, with or without an annotation, C-TYPED
+ * planting the annotated const at each of its positions), so no claim word rests on this header's blanket sentence and the
+ * record's COUNTER-READING is not relied on.
+ *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
@@ -158,48 +197,63 @@
  * plain or exported, in a block at the top level or in a block nested in one, in the body of a plain, an exported or an
  * exported async function declared at the top level, in the body of a plain namespace declared at the top level or in a for
  * statement's head at the top level (plain naming a declaration with no modifier, exported one with the export modifier alone,
- * async one with the async modifier alone and exported async one with those two alone), a const declared at any other position
- * being NOT CLAIMED here; (3) any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND
- * the first of these that names the binding: import (a binding the checker binds as an alias: an import or import-equals at the
- * top level, merged or not, and in a JavaScript module a require declaration at the top level, or a const one in the body of a
- * plain function declared at the top level - a const, let or var declaration, or a top-level element of its object or array
- * pattern, a defaulted one included, initialized directly by require with one string or no-substitution template argument or by
- * a property access of such a call, not exported - while an exported, parenthesized, joined-argument, two-argument,
- * nested-pattern, module.require or JSDoc-typed require declaration is no alias); unbound (no declaration in the module, a
- * type's name in a value position included); merged (more than one declaration, each at the top level); destructuring (an
- * element of a destructuring pattern, whatever declares the pattern: a plain const declaration's object or array pattern at the
- * top level or an object pattern nested in one, a plain let or var declaration's object pattern at the top level, a const's
- * object pattern in a for-of statement's head at the top level, an object pattern parameter of a plain function declared at the
- * top level or an object pattern catch clause variable of a try at the top level); let (a plain let declaration at the top
- * level, with or without an initializer, or a declare one, a let declaration in the body of an exported or an exported async
- * function declared at the top level, one exported from the body of a plain namespace declared at the top level or one in a
- * for-of statement's head at the top level); var (a plain var declaration at the top level or a declare one, a var declaration
- * in the body of a plain function declared at the top level, one exported from the body of a plain namespace declared at the
- * top level or one in a for-of statement's head at the top level); using (a using declaration in a block at the top level, or
- * an await using declaration in the body of an async function declared at the top level); catch (a catch clause variable of a
- * try at the top level with no type annotation, or of a try in the body of an exported function declared at the top level with
- * the annotation unknown, while one with any other annotation is NOT CLAIMED); no-initializer (a const with no initializer: in
- * a for-of or for-in statement's head at the top level, a declare const at the top level, or one exported from the body of a
- * plain or a declare namespace declared at the top level); ambient (a const in an ambient context: a declare const at the top
- * level, a const in a declare global block at the top level, or one exported from the body of a declare namespace declared at
- * the top level or of a plain namespace nested in one); namespace (a plain namespace declared at the top level, or an exported
- * one in the body of an exported namespace declared at the top level, or a const exported from the body of a plain namespace
- * declared at the top level, of an exported namespace nested in an exported one declared at the top level or of an exported
- * dotted namespace, export namespace C.D); parameter (a parameter of a plain, an exported or an exported async function
- * declared at the top level, a rest parameter of a plain one included, a defaulted parameter of an arrow function initializing
- * a plain const at the top level, a public parameter property of a constructor of a plain class declared at the top level, or a
- * parameter of a method or of a set accessor of an exported class declared at the top level); function (a function declaration
- * at the top level, plain, async, generator or declare, one exported from the body of a plain namespace declared at the top
- * level or one in the body of an exported function declared at the top level, or a named function expression's own name, read
- * in its own body, the expression initializing a plain const at the top level); class (a class declaration at the top level,
- * plain or declare, one exported from the body of a plain namespace declared at the top level or one in the body of an exported
- * function declared at the top level, or a named class expression's own name, read in its own method, the expression
- * initializing a plain const at the top level); enum (an enum declaration at the top level, plain, const or declare, one
+ * async one with the async modifier alone and exported async one with those two alone), with or without a type annotation and
+ * alone in its declaration list, a const declared at any other position, or beside another declaration in its list, being NOT
+ * CLAIMED here; (3) any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first
+ * of these that names the binding: import (a binding the checker binds as an alias: an import at the top level, a named import
+ * merged with a namespace or not, a namespace import, a default import or an import-equals, and in a JavaScript module a
+ * require declaration, not exported, initialized directly by require with one string argument: a const, let or var declaration
+ * at the top level, a const one in the body of a plain function declared at the top level, or a simple or a defaulted element
+ * of a top-level const declaration's object pattern or a simple element of its array pattern, a simple element being one with
+ * no default, no rest and no property name of its own (no a: B renaming) and a defaulted one being one with a default and no
+ * property name of its own, a const declaration at the top level also when that argument is a no-substitution template or when
+ * a property access of such a call initializes it - while an exported, parenthesized, joined-argument, two-argument,
+ * nested-pattern, module.require or JSDoc-typed require const declaration at the top level is no alias); unbound (no
+ * declaration in the module, a type's name in a value position included); merged (more than one declaration, each at the top
+ * level: two var declarations of one name, a const declaration and a type alias, a function's overload and its implementation,
+ * two var declarations' object pattern elements of one name or two namespace declarations); destructuring (an element of a
+ * destructuring pattern, whatever declares the pattern, simple and defaulted elements as the import entry names them, and a
+ * rest element: a simple, a defaulted or a rest element of a plain const declaration's object or array pattern at the top
+ * level, a simple element of an object pattern nested in one, a simple or a defaulted element of a plain let declaration's
+ * object pattern at the top level, or a simple element of a plain var declaration's object pattern at the top level, of a
+ * const's object pattern in a for-of statement's head at the top level, of an object pattern parameter of a plain function
+ * declared at the top level or of an object pattern catch clause variable of a try at the top level); let (a let declaration
+ * with or without an initializer, plain at the top level, in the body of an exported or an exported async function declared at
+ * the top level or exported from the body of a plain namespace declared at the top level, a declare let at the top level or a
+ * let in a for-of statement's head at the top level); var (a var declaration with or without an initializer, plain at the top
+ * level, in the body of a plain function declared at the top level or exported from the body of a plain namespace declared at
+ * the top level, a declare var at the top level or a var in a for-of statement's head at the top level); using (a using
+ * declaration in a block at the top level, or an await using declaration in the body of an async function declared at the top
+ * level); catch (a catch clause variable of a try at the top level with no type annotation, or of a try in the body of an
+ * exported function declared at the top level with the annotation unknown, while one with any other annotation is NOT CLAIMED);
+ * no-initializer (a const with no initializer: in a for-of or for-in statement's head at the top level, a declare const at the
+ * top level, or one exported from the body of a plain or a declare namespace declared at the top level); ambient (a const in an
+ * ambient context: a declare const at the top level, a const in a declare global block at the top level, or one exported from
+ * the body of a declare namespace declared at the top level or of a plain namespace nested in one); namespace (a plain
+ * namespace declared at the top level, or an exported one in the body of an exported namespace declared at the top level, or a
+ * const exported from the body of a plain namespace declared at the top level, of an exported namespace nested in an exported
+ * one declared at the top level or of an exported dotted namespace, export namespace C.D); parameter (a parameter of a plain
+ * function declared at the top level, a simple, a defaulted, an optional or a rest one, a simple parameter being one with no
+ * default and no question token that is no rest parameter, a simple parameter of an exported or an exported async function
+ * declared at the top level, a defaulted parameter of an arrow function initializing a plain const at the top level, a simple
+ * public parameter property of a constructor of a plain class declared at the top level, or a simple parameter of a method or
+ * of a set accessor of an exported class declared at the top level); function (a function declaration at the top level, plain,
+ * async, generator or declare, one exported from the body of a plain namespace declared at the top level or one in the body of
+ * an exported function declared at the top level, or a named function expression's own name, read in its own body, the
+ * expression initializing a plain const at the top level); class (a class declaration at the top level, plain or declare, one
  * exported from the body of a plain namespace declared at the top level or one in the body of an exported function declared at
- * the top level, or a member of a plain enum declared at the top level, read in that enum); other (a declaration of any other
- * kind, claimed only for a type alias declaration that no module holds) - each kind is claimed only for the declarations its
- * entry names, at the positions it names, each declaration plain where its entry names no modifier of it (plain, exported and
- * async as BINDING (2) reads them), and a declaration at any other position or with any other modifiers is NOT CLAIMED; (4) an
+ * the top level, or a named class expression's own name, read in its own method, the expression initializing a plain const at
+ * the top level); enum (an enum declaration at the top level, plain, const or declare, one exported from the body of a plain
+ * namespace declared at the top level or one in the body of an exported function declared at the top level, or a member of a
+ * plain enum declared at the top level, read in that enum); other (a declaration of any other kind, claimed only for a type
+ * alias declaration that no module holds) - each kind is claimed only for the declarations its entry names, at the positions it
+ * names, each declaration plain where its entry names no modifier of it (plain, exported and async as BINDING (2) reads them)
+ * and, where its entry names the sub-forms a declaration takes (an initializer or none, an element's default, rest or renaming,
+ * a parameter's default, question token or rest, a require call's argument and access, or a merged binding's declarations),
+ * only in those sub-forms, each declaration of a declaration list alone in its list, and each variable declaration and each
+ * parameter claimed with a type annotation only where a census page plants it with one, and without one only where a census
+ * page plants it without one, at that position and in that sub-form, and a declaration at any other position, with any other
+ * modifiers, in any other sub-form, beside another declaration in its list or with any other annotation is NOT CLAIMED; (4) an
  * identifier inside a with statement's body, at any depth (nested blocks, functions, classes and with statements included),
  * reads as <opaque NAME:with>, whatever it binds; (5) every identifier of a module that calls eval by name reads as <opaque
  * NAME:eval>, whatever it binds, a with statement's body included: a call, optional or not, with no argument or with one string
@@ -294,11 +348,12 @@
  * beside them); the sub-forms cut #5's narrowed READINGS (1), (2) and (3) name NOT CLAIMED (refusal #4's U1a to U1d, whose pins
  * wb-jwc.13's landed sub-form census holds, and the same-class forms beside them); the declaration positions and modifiers and
  * the extension spellings cut #6's narrowed BINDING (2), BINDING (3) and READINGS (2) name NOT CLAIMED (beside refusal #5's
- * members, whose twin pages the rows pin); a reading the reader gives after it has read the same module with another probe
- * (each pin reads its page on a fresh reader, with its one probe: no two pins read one page at one path, as FRESH READERS
- * holds); and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's, #2's and #5's members by naming each
- * one's source (the tracker export carries their notes in the bead's notes field), and this census reads only the export's
- * title and description, never its notes.
+ * members, whose twin pages the rows pin); the sub-forms, declaration lists and type annotations cut #7's narrowed BINDING (2)
+ * and (3) name NOT CLAIMED (beside refusal #6's members, whose twin pages the rows pin); a reading the reader gives after it
+ * has read the same module with another probe (each pin reads its page on a fresh reader, with its one probe: no two pins read
+ * one page at one path, as FRESH READERS holds); and the gate members' notes: MEMBERS anchors R-B115's members and refusal
+ * #1's, #2's, #5's and #6's members by naming each one's source (the tracker export carries their notes in the bead's notes
+ * field), and this census reads only the export's title and description, never its notes.
  */
 
 import { createHash } from "node:crypto";
@@ -777,6 +832,10 @@ const ROWS: readonly Row[] = [
         ],
         "src/workbench/zz-c-js-alias.js",
       ),
+      pin("GP17-C1", "texts", page("declare function probe(value: unknown): void;", "export function f(): void {", '  const X = "a";', "  probe(X);", "}"), ['"a"'], "src/workbench/providers/zz-gp17-c1-0.ts"),
+      pin("GP17-C1-PROGRAM", "programs", page("declare function spawn(program: string, args: string[]): void;", "export function launch(): void {", '  const PROGRAM = "rf";', "  spawn(PROGRAM, []);", "}"), ["spawn:rf"], "src/workbench/providers/zz-gp17-c1-1.ts"),
+      pin("GP17-C1-SHADOW", "texts", page("declare function probe(value: unknown): void;", 'const X = "outer";', "export function f(): void {", '  const X = "inner";', "  probe(X);", "}", "probe(X);"), ['"inner"', '"outer"'], "src/workbench/providers/zz-gp17-c1-2.ts"),
+      pin("C-TYPED", "texts", page("declare function probe(value: unknown): void;", 'const A: string = "a";', "probe(A);", 'export const B: string = "b";', "probe(B);", "{", '  const C: string = "c";', "  probe(C);", "  {", '    const D: string = "d";', "    probe(D);", "  }", "}", "function f(): void {", '  const E: string = "e";', "  probe(E);", "}", "export function g(): void {", '  const F: string = "f";', "  probe(F);", "}", "export async function h(): Promise<void> {", '  const G: string = "g";', "  probe(G);", "}", "namespace N {", '  const H: string = "h";', "  probe(H);", "}", 'for (const I: string = "i"; ; ) {', "  probe(I);", "  break;", "}", "f();"), ['"a"', '"b"', '"c"', '"d"', '"e"', '"f"', '"g"', '"h"', '"i"'], "src/workbench/providers/zz-c-typed.ts"),
     ],
   },
   {
@@ -1053,6 +1112,16 @@ const ROWS: readonly Row[] = [
       pin("GP6-K6", "texts", page("declare function probe(value: unknown): void;", "export class C {", "  set s(X: string) {", "    probe(X);", "  }", "}"), ["<opaque X:parameter>"], "src/workbench/providers/zz-gp6-k6-0.ts"),
       pin("GP6-K12", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "for (let L of list) probe(L);", "export {};"), ["<opaque L:let>"], "src/workbench/providers/zz-gp6-k12-0.ts"),
       pin("GP6-K13", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "for (var V of list) probe(V);", "export {};"), ["<opaque V:var>"], "src/workbench/providers/zz-gp6-k13-0.ts"),
+      pin("GP17-D1", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "const [A] = list;", "probe(A);", "export {};"), ["<opaque A:destructuring>"], "src/workbench/providers/zz-gp17-d1-0.ts"),
+      pin("GP17-D2", "texts", page("declare function probe(value: unknown): void;", "declare const o: { a: string; b: string };", "declare const list: string[];", "const { a, ...R } = o;", "const [first, ...S] = list;", "probe(R);", "probe(S);", "export { a, first };"), ["<opaque R:destructuring>", "<opaque S:destructuring>"], "src/workbench/providers/zz-gp17-d2-0.ts"),
+      pin("GP17-V1", "texts", page("declare function probe(value: unknown): void;", "var V: string | undefined;", "probe(V);", "export {};"), ["<opaque V:var>"], "src/workbench/providers/zz-gp17-v1-0.ts"),
+      pin("GP17-V1-FUNCTION", "texts", page("declare function probe(value: unknown): void;", "function f(): void {", "  var V: string | undefined;", "  probe(V);", "}", "f();", "export {};"), ["<opaque V:var>"], "src/workbench/providers/zz-gp17-v1-1.ts"),
+      pin("GP17-V1-NAMESPACE", "texts", page("declare function probe(value: unknown): void;", "namespace N {", "  export var V: string | undefined;", "  probe(V);", "}", "export {};"), ["<opaque V:var>"], "src/workbench/providers/zz-gp17-v1-2.ts"),
+      pin("GP17-L1", "texts", page("declare function probe(value: unknown): void;", "export function f(): void {", "  let X: string | undefined;", "  probe(X);", "}"), ["<opaque X:let>"], "src/workbench/providers/zz-gp17-l1-0.ts"),
+      pin("GP17-L1-ASYNC", "texts", page("declare function probe(value: unknown): void;", "export async function f(): Promise<void> {", "  let X: string | undefined;", "  probe(X);", "}"), ["<opaque X:let>"], "src/workbench/providers/zz-gp17-l1-1.ts"),
+      pin("GP17-L2", "texts", page("declare function probe(value: unknown): void;", "namespace N {", "  export let X: string | undefined;", "  probe(X);", "}", "export {};"), ["<opaque X:let>"], "src/workbench/providers/zz-gp17-l2-0.ts"),
+      pin("GP17-P1", "texts", page("declare function probe(value: unknown): void;", 'function f(X = "a"): void {', "  probe(X);", "}", "f();", "export {};"), ["<opaque X:parameter>"], "src/workbench/providers/zz-gp17-p1-0.ts"),
+      pin("GP17-P2", "texts", page("declare function probe(value: unknown): void;", "function f(X?: string): void {", "  probe(X);", "}", "f();", "export {};"), ["<opaque X:parameter>"], "src/workbench/providers/zz-gp17-p2-0.ts"),
     ],
   },
   {
@@ -1971,7 +2040,8 @@ function reading(row: Row, at: Pin): readonly string[] {
   if (at.probe === "claim-header") return [headerClaim()];
   if (at.probe === "claim-rows") return ROWS.filter((each) => each.from === "claim").map((each) => each.label);
   if (at.probe === "export-rows") return [STATEMENT, ...ROWS.filter((each) => each.from === "export").map((each) => each.label)];
-  if (at.probe === "member-pins") return MEMBERS.map((member) => `${member.id}:${ROWS.find((each) => each.pins.some((held) => held.id === member.id))?.id ?? "no row"}`);
+  if (at.probe === "member-pins")
+    return MEMBERS.flatMap((member) => [member.id, ...(member.twins ?? [])].map((id) => `${id}:${ROWS.find((each) => each.pins.some((held) => held.id === id))?.id ?? "no row"}`));
   if (at.probe === "kind-pins") return (ROWS.find((each) => each.id === "kinds")?.pins ?? []).map((held) => held.id);
   if (at.probe === "falsifier-roster") return ROWS.map((each) => `${each.id}:${each.pins.map((held) => `${held.id}@${digest(held.page)}`).join(",")}`);
   if (at.probe === "kind") return [bindingKindOf(ts.factory.createTypeAliasDeclaration(undefined, "TA", undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)))];
@@ -2007,8 +2077,8 @@ function expected(at: Pin): readonly string[] {
   if (at.probe === "claim-header") return [BINDING_TEXT_CLAIM];
   if (at.probe === "claim-rows") return claimLabels();
   if (at.probe === "export-rows") return exportRequirements();
-  if (at.probe === "member-pins") return MEMBERS.map((member) => `${member.id}:${member.form}`);
-  if (at.probe === "kind-pins") return [...claimKinds().map((kind) => `K-${kind}`), ...MEMBERS.filter((member) => member.form === "kinds").map((member) => member.id)];
+  if (at.probe === "member-pins") return MEMBERS.flatMap((member) => [member.id, ...(member.twins ?? [])].map((id) => `${id}:${member.form}`));
+  if (at.probe === "kind-pins") return [...claimKinds().map((kind) => `K-${kind}`), ...MEMBERS.filter((member) => member.form === "kinds").flatMap((member) => [member.id, ...(member.twins ?? [])])];
   if (at.probe === "falsifier-roster") return rosterRows();
   return at.expect;
 }
@@ -2026,7 +2096,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FROZEN SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:6", "const:3", "kinds:30", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
+      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:6", "const:7", "kinds:40", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "S1:8afd84e55bb80436", "S1-LITERAL:6dc9075e02c6c569", "S1C:44deb751ea6881c2", "S1-OUTER:a5260da7eaa52c80",
@@ -2036,6 +2106,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "MEMBER-PINS:e3b0c44298fc1c14", "KIND-PINS:e3b0c44298fc1c14", "FALSIFIER-ROSTER:e3b0c44298fc1c14", "SC-SHADOW:1549c1ad35d1b87e",
       "SC-SHORTHAND:06d879e5de557160", "A10:bd4719f6c7ced09c", "SC-PATHS:3991d4983ea4679e", "M21:d75e035c4e9d50e7",
       "M21-TS:d75e035c4e9d50e7", "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98", "C-JS-ALIAS:dd5bf708ed8d9f39",
+      "GP17-C1:e1828d47d3e43dd4", "GP17-C1-PROGRAM:1b608336d601515e", "GP17-C1-SHADOW:51637dd4c9432fd1", "C-TYPED:3cae82edcc2d0a6c",
       "K-import:ea1106db3623af7b", "K-unbound:898c0f5c16093308", "K-merged:3d30bd72f99bdbe2", "K-destructuring:9a68584bb451311b",
       "K-let:af08458a5a933a9a", "K-var:2282675695032160", "K-using:e30364b542bb8a82", "K-catch:611bd19b2f472b5f",
       "K-no-initializer:aa4e8e93b77301e0", "K-ambient:0dd6b9fc15fa96a5", "K-namespace:f125b607ca7f49a2", "K-parameter:4a1bf4f67e7dfa5c",
@@ -2045,6 +2116,9 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "GP6-K3:4034e4a19b8db124", "GP6-K1:e3ab6a3ac8faf8dc", "GP6-K2:162e5392eb8854e8", "GP6-K4:6dfda9426f8292f5",
       "GP6-K8:afe91a64c166c41e", "GP6-K5:326b22114cf469e1", "GP6-K6:2c959bd23bf7daf2", "GP6-K12:7ed19c1a940b447a",
       "GP6-K13:b61b896956eece82",
+      "GP17-D1:4db59603be96c0bc", "GP17-D2:c0a6e81a74dd37cf", "GP17-V1:6dc39b44feb3d38e", "GP17-V1-FUNCTION:5a24218e37d82219",
+      "GP17-V1-NAMESPACE:f2638fe172b66c0e", "GP17-L1:08b3f92af384a4e6", "GP17-L1-ASYNC:19493c1dc760b763", "GP17-L2:465a6061821a1efe",
+      "GP17-P1:795df80f7676ffca", "GP17-P2:6819d811ff1b8804",
       "W-SCRIPT:2bb4edcbd2c23a76", "W-MODULE:2bb4edcbd2c23a76", "G02:a9cb49d86853c407",
       "W-NESTED:a3d74edfb3cb49f9", "V-EVAL:4f56a5ea6d326840", "V-WRAPPED:834efdc279613272", "V-AWAIT:4f9d587dfcb20493",
       "V-WITH:0d7debb6fe26cb27", "V-INDIRECT:d65ac9ce97754577", "G03:1f21c5326c209bf4", "V-BARE:ef2878be4c039a49",
@@ -2082,7 +2156,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FRESH READERS: no two pins read one page at one path, so each pin reads its page on a fresh reader, with its one probe", () => {
     const keys = ROWS.flatMap((row) => row.pins.filter((at) => at.page !== "" && at.probe !== "kind").flatMap((at) => (at.probe === "paths" ? (at.paths ?? []) : [at.path]).map((path) => `${path}\n${at.page}`)));
-    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(186);
+    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(200);
     expect(keys.filter((key, index) => keys.indexOf(key) !== index)).toEqual([]);
   });
 
