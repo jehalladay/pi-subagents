@@ -1,7 +1,8 @@
 /**
  * wb-km7q.4 (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R12, program-triage-2026-10-18 child of wb-km7q), the
- * CoverageWitness adoption census (cut #6, ruling R-B140's restatement of B1 over the landed member reader, THE MEMBER CHECK
- * below). Statement (the bead's export title, read at run time): "If Pi ever consumes a
+ * CoverageWitness adoption census (cut #7, ruling R-B487's restatement of cut #6, which restated B1 over the landed member reader
+ * under ruling R-B140: THE MEMBER CHECK's SELF-READ holds what its words claim, below). Statement (the bead's export title, read
+ * at run time): "If Pi ever consumes a
  * CoverageWitness (gated RL-RQ1..RL-RQ8; 'coverage is not freshness' amendment), the adapter carries all eight typed fields
  * (collection identity through invalidation conditions); a freshness witness never proves enumeration coverage, an
  * old-generation seal is stale for today's task, and source-only 'no records observed' never certifies absence." Acceptance
@@ -95,29 +96,41 @@
  *     THE MEMBER CHECK holds the event members to the entries the member reader reads of ObservationEvent (sourceSequence aside,
  *     fed as a number, a string and absent), and the restated trace and interval to that list's trace and interval entries.
  *     A failed read (markStale) after a complete refresh reads stale and unknown.
- *   THE MEMBER CHECK (B1, fail closed; it runs before any journey and B1 throws when it fails). It reads the text of
- *     src/workbench/observation.ts and nothing else, and hands it, as the one argument, to observationMembers, the member reader
- *     test/helpers/observation-members.ts exports (wb-km7q.11's reader, landed by its carrier wb-km7q.16 at landing 876), so every
- *     reading word of that reader is on (its default reading). The reader returns two lists of entries, NativeSnapshot's and
- *     ObservationEvent's. What it reads of a module text - which declarations of a read name it reads (same-module merges among
- *     them), which forms read `?` or `<member>.?`, and what it does not read - is that helper's header's claim, bounded by its
- *     CLAIMED FORMS and pinned by test/workbench-observation-members-census.test.ts; it is NOT CLAIMED by this census beyond the
- *     outcomes MEMBER_PROBES pins. B1 throws when the snapshot list's entries other than coverage, each cut to its first segment,
- *     differ as a set from the restated refresh members; when those entries differ from the restated refresh values as paths
- *     (each member, or `<member>.<key>` for each key of the restated trace and interval); when the event list's entries other
- *     than sourceSequence differ from the event members; or when the event list's `trace.<key>` and `interval.<key>` entries, read
- *     as their keys, differ from the restated trace's and the restated interval's keys (each pair compared as sorted lists, the
- *     first after its duplicates are dropped). The check runs today on 38 module texts (MEMBER_PROBES, each the real text with one
- *     plant spliced in at a position read from its own syntax tree) and pins each outcome. Accepted (4): the real text; two other
- *     names (an interface and a class); a type alias, an extends clause and an implements clause that name read names; a leaf
- *     union. Refused (34): the class merges into NativeSnapshot and ObservationTrace and the augmentation block (the forms of the
- *     gate's refusal-#4 plants O7, O15 and O8); a declare global block; a namespace, an interface inside a namespace, a function
- *     and a variable of a read name; an escaped class merge; a second declaration; an extends clause; type parameters; a missing
- *     interface; a method, a quoted member and an index signature; a member added to each of the four interfaces and to the node
- *     literal; an intersection, a union arm, a type alias, a class and an enum of the module, an imported type, an inner union
- *     arm, a generic argument, a type query, a mapped type, a qualified name, an import type and a lib type (ReadonlyArray) as a
- *     member's type. A probe read otherwise throws, and the three U1 probes are held to the bead export (OUTSIDE ANCHOR); the
- *     SELF-READ (FROZEN SHAPE below) holds that B1 reads through the landed reader.
+ *   THE MEMBER CHECK (B1, fail closed; it runs before any journey and B1 throws when it fails). B1's first three statements are
+ *     `const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8");`, `const members = observationMembers(text);` and
+ *     `holdMembers(members);`: B1 calls observationMembers, the member reader test/helpers/observation-members.ts exports
+ *     (wb-km7q.11's reader, landed by its carrier wb-km7q.16 at landing 876), with one argument, the identifier text, which the
+ *     first statement binds to the read of OBSERVATION_MODULE (the helper's export) below REPO as UTF-8, and hands holdMembers
+ *     what the reader returns; with no second argument the reader takes its default reading (the helper's ReadOptions: every
+ *     word when words is absent). The probes reach the reader through memberOutcome, whose call is `observationMembers(text)` on
+ *     its own parameter text, the probe text. The SELF-READ (FROZEN SHAPE below) holds those three statements, the text of each
+ *     call of the reader by that bare name and the declarations of the names those statements and calls read, as source text
+ *     read from this file's AST; it runs none of them (LIMITS). The reader returns two lists of entries, NativeSnapshot's
+ *     and ObservationEvent's. What it reads of a module text - which declarations of a read name it reads (same-module merges
+ *     among them), which forms read `?` or `<member>.?`, and what it does not read - is that helper's header's claim, bounded by
+ *     its CLAIMED FORMS and pinned by test/workbench-observation-members-census.test.ts; it is NOT CLAIMED by this census beyond
+ *     the outcomes MEMBER_PROBES pins. B1 throws when the snapshot list's entries other than coverage, each cut to its first
+ *     segment, differ as a set from the restated refresh members; when those entries differ from the restated refresh values as
+ *     paths (each member, or `<member>.<key>` for each key of the restated trace and interval); when the event list's entries
+ *     other than sourceSequence differ from the event members; or when the event list's `trace.<key>` and `interval.<key>`
+ *     entries, read as their keys, differ from the restated trace's and the restated interval's keys (each pair compared as
+ *     sorted lists, the first after its duplicates are dropped; the probes redeclaredTrace and redeclaredInterval, each a member
+ *     the reader reads twice, are refused at each of the other four comparisons their duplicate reaches). The words "other than
+ *     coverage" and "other than sourceSequence" set aside the entry equal to that name: an expansion of it is compared (the probes
+ *     coverageExpanded and sourceSequenceExpanded pin `coverage.region` and `sourceSequence.region`). The check runs today on 42
+ *     module texts (MEMBER_PROBES: the real text, and 41 texts each the real text with its plant appended at the end, spliced in
+ *     at a position read from the text's own syntax tree, or both) and pins each outcome. Accepted (4): the real text; two
+ *     other names (an interface and a class); a type alias, an extends clause and an implements clause that name read names; a
+ *     leaf union. Refused (38): the class merges into NativeSnapshot and
+ *     ObservationTrace and the augmentation block (the forms of the gate's refusal-#4 plants O7, O15 and O8); a declare global
+ *     block; a namespace, an interface inside a namespace, a function and a variable of a read name; an escaped class merge; a
+ *     second declaration of ObservationEvent with a member of its own; a second declaration of ObservationTrace and one of
+ *     Interval, each redeclaring one of its members (spanId, endedAt); an extends clause; type parameters; a missing interface; a
+ *     method, a quoted member and an index signature; a member added to each of the four interfaces and to the node literal;
+ *     coverage and sourceSequence each retyped as a type literal; an intersection, a union arm, a type alias, a class and an
+ *     enum of the module, an imported type, an inner union arm, a generic argument, a type query, a mapped type, a qualified
+ *     name, an import type and a lib type (ReadonlyArray) as a member's type. A probe read otherwise throws, and the three U1
+ *     probes are held to the bead export (OUTSIDE ANCHOR).
  *   B2 "never reads complete", on two readers that state a coverage reading; B2 feeds exactly the inputs below and pins each
  *     reading. The rf preview reader (reactivefiberTopology), every render with its one observation row fresh and observed: the
  *     clean render (one block in result.blocks, one include-true decision in result.necessity) reads complete. It reads partial
@@ -184,11 +197,24 @@
  * and UNBATTERIED, the payload digests, VERDICTS, the battery, the residual table, adoption() and every pin's witness are held to
  * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ: no IMPL member names ROSTER (direct
  * identifiers only), the roster is deep-frozen when loaded, the registration check reads this file's static imports and
- * adoption()'s identifiers, and a registered module's exports, from their ASTs, and THE MEMBER CHECK's reader is the landed one:
- * B1's IMPL member names observationMembers, the one static import that binds the name is test/helpers/observation-members.ts's,
- * and both of this file's calls of it pass one argument (MEMBER_READER, memberReaderCalls). RECORDS: the last case holds that every
- * registered pin ran to its compare and re-digests each witness against its roster witness, that every falsifier refused an
- * adapter in the adoption judge, and that the HX reader read the precedent's licensed and unlicensed complete-empty answers.
+ * adoption()'s identifiers, and a registered module's exports, from their ASTs, and THE MEMBER CHECK's reader is held as source
+ * text read from this file's AST, each field of memberReaderRead equal to the judged set's literal (MEMBER_READER): B1's IMPL
+ * member names observationMembers (named), and the one static import that binds the name is test/helpers/observation-members.ts's
+ * (imported); the calls of observationMembers by that bare name are exactly two, in source order memberOutcome's and B1's, each
+ * written `observationMembers(text)`: one argument, the identifier text, with no spread and no second argument (calls); the
+ * identifier observationMembers stands exactly three times in this file, in its import and in the two calls (occurrences), so,
+ * with calls, any other reference to the name, an alias among them, reds; B1's first three statements are the three THE MEMBER
+ * CHECK names (b1); and each name those calls and statements read has exactly one declaration where the SELF-READ searches for
+ * it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a function, a class, an
+ * enum, a namespace or an import binding): inside memberOutcome, text (the name its call reads) has its parameter
+ * `text: string`; inside B1, text and members have B1's first two statements; and in this whole file each other name B1's three
+ * statements read, and each name a variable's initializer among those declarations reads in turn, has one: readFileSync, join,
+ * dirname and fileURLToPath the static imports of node:fs, node:path and node:url, OBSERVATION_MODULE and observationMembers the
+ * helper's static import (each imported under its own name), REPO `const REPO = join(HERE, "..")`, HERE
+ * `const HERE = dirname(fileURLToPath(import.meta.url))` and holdMembers its function declaration. RECORDS: the last case holds
+ * that every registered pin ran to its compare and re-digests each witness against its roster witness, that every falsifier
+ * refused an adapter in the adoption judge, and that the HX reader read the precedent's licensed and unlicensed complete-empty
+ * answers.
  * RESIDUALS (named; each has pinned quiet rows and a live twin among the planted inputs of its pin, read in that pin's case; for
  * the B1, B2 and C2 residuals and C1's R-CAPTURE-NOTATION those inputs are stand-in readers, while R-EVENT-KEEPS-SEAL's are C1
  * journeys: a stand-in reads as the real reader does except on its region, where it reads its family's escape, and it reads loud
@@ -264,16 +290,27 @@
  * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
  * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
  * adapter's read; the export check counts ES export syntax); ORACLE is a lookup and proves only that the battery can be passed;
- * a filtered run (-t) reds the records case by design. THE MEMBER CHECK reads observation.ts's text alone, through the landed
- * reader, and what that reader does not read reds no comparison: its header's NOT READ (a declaration in another module's text,
+ * a filtered run (-t) reds the records case by design. The SELF-READ of THE MEMBER CHECK's reader reads source text and runs
+ * nothing: what node:fs's readFileSync, node:path's join and dirname, node:url's fileURLToPath and the helper's OBSERVATION_MODULE
+ * and observationMembers return or hold is NOT CLAIMED by it, and neither is what holdMembers and memberDiffers compare
+ * (MEMBER_PROBES pins memberDiffers' outcome on each probe text through memberOutcome, and B1's witness pins the lists the reader
+ * reads of the real text). THE MEMBER CHECK hands the landed reader
+ * observation.ts's text (B1) or that text with one probe's plant (memberOutcome), and what that reader does not read reds no
+ * comparison: its header's NOT READ (a declaration in another module's text,
  * such as a `declare module` augmentation of observation.ts written in another file; an expanded property's own members, such as
  * Presentation's under node.presentation; a required member of a root, such as NativeSnapshot's source and ObservationEvent's
  * kind; the members of the global interface behind a LEAF form, String for string and ReadonlyArray for readonly T[], a declare
  * global block of the module augmenting it included), each a named residual that helper's census pins, is NOT CLAIMED by this
- * census, and neither is a form outside that helper's CLAIMED FORMS. B1's comparisons set the snapshot list's coverage entries
- * and the event list's sourceSequence entries aside, so an entry of either text the reader reads, however often, is not compared
- * (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and absent).
- * MEASURED (seat records, read-only; not assertions): cut #6 over trunk 38ce23b0, 2026-11-03: 192 judged files (src 117, qa 67,
+ * census, and neither is a form outside that helper's CLAIMED FORMS. B1's comparisons set aside the snapshot list's entries equal
+ * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
+ * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
+ * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
+ * MEASURED (seat records, read-only; not assertions): cut #7 over trunk 08a61f18, 2026-11-04: 192 judged files (src 117, qa 67,
+ * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value; the
+ * four new member probes read redeclaredTrace refused snapshotPaths,event,trace, redeclaredInterval refused
+ * snapshotPaths,event,interval, coverageExpanded refused snapshot,snapshotPaths and sourceSequenceExpanded refused event, and every
+ * other pin's witness, and B1's member lists, journeys and other 38 probe outcomes, equal cut #6's. Cut #6 over trunk 38ce23b0,
+ * 2026-11-03: 192 judged files (src 117, qa 67,
  * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value; of
  * the 38 member probes two read otherwise under the landed reader than under cut #5's own reader (declaredTwice refused event, not
  * refused event,trace,interval; libType refused snapshotPaths, not accepted), B1's member lists and journeys read as at cut #5,
@@ -1176,17 +1213,135 @@ function selfRead(): SelfRead {
 }
 /** THE MEMBER CHECK's reader module: the landed member reader this file imports observationMembers from (SELF-READ). */
 const MEMBER_READER = "test/helpers/observation-members.ts";
-/** The argument count of every call of observationMembers in this file, in source order, parsed from its AST (SELF-READ: B1 takes
- * the reader's default reading, the module text its one argument). */
-function memberReaderCalls(): number[] {
-  const source = ts.createSourceFile(SELF, readFileSync(join(REPO, SELF), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const counts: number[] = [];
+/** THE MEMBER CHECK's reader as the SELF-READ reads it from this file's AST, every text as source text (FROZEN SHAPE): whether B1's
+ * IMPL member names observationMembers; the modules of the static imports that bind the name; each call of observationMembers by
+ * that bare name, in source order, as `<holder>: <the call's text>`, its holder the IMPL member or const whose function holds it;
+ * how often the identifier observationMembers stands in this file; B1's first three statements; and, by name, every declaration of
+ * each name those calls and statements read (declarationsOf), each as `<kind> <its text>`: inside the call's holder for a call's
+ * names, inside B1 for the names its statements declare, and in the whole file for the rest and, in turn, for each name a
+ * variable's initializer among those declarations reads. */
+interface MemberReaderRead {
+  readonly named: boolean;
+  readonly imported: readonly string[];
+  readonly calls: readonly string[];
+  readonly occurrences: number;
+  readonly b1: readonly string[];
+  readonly declarations: Readonly<Record<string, readonly string[]>>;
+}
+/** The names a node reads: each identifier in it but a property access's, a property assignment's or a meta property's name. */
+function namesRead(node: ts.Node): string[] {
+  const names = new Set<string>();
+  const visit = (inner: ts.Node): void => {
+    const parent = inner.parent;
+    const isName = ((ts.isPropertyAccessExpression(parent) || ts.isPropertyAssignment(parent)) && parent.name === inner) || ts.isMetaProperty(parent);
+    if (ts.isIdentifier(inner) && !isName) names.add(inner.text);
+    ts.forEachChild(inner, visit);
+  };
+  visit(node);
+  return [...names].sort(byName);
+}
+type Declared =
+  | ts.VariableDeclaration
+  | ts.ParameterDeclaration
+  | ts.BindingElement
+  | ts.FunctionDeclaration
+  | ts.FunctionExpression
+  | ts.ClassDeclaration
+  | ts.ClassExpression
+  | ts.EnumDeclaration
+  | ts.ModuleDeclaration
+  | ts.ImportSpecifier
+  | ts.ImportClause
+  | ts.NamespaceImport
+  | ts.ImportEqualsDeclaration;
+const isDeclared = (node: ts.Node): node is Declared =>
+  ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) ||
+  ts.isClassExpression(node) || ts.isEnumDeclaration(node) || ts.isModuleDeclaration(node) || ts.isImportSpecifier(node) || ts.isImportClause(node) || ts.isNamespaceImport(node) ||
+  ts.isImportEqualsDeclaration(node);
+/** Every declaration inside `scope` whose identifier name is `name` (a variable, a parameter, a binding element, a function, a class,
+ * an enum, a namespace or an import binding), in source order. */
+function declarationsOf(scope: ts.Node, name: string): Declared[] {
+  const found: Declared[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "observationMembers") counts.push(node.arguments.length);
+    if (isDeclared(node) && node.name !== undefined && ts.isIdentifier(node.name) && node.name.text === name) found.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(scope);
+  return found;
+}
+/** A declaration as `<kind> <its text>`: a variable with its keyword (catch for a catch clause's), an import binding with its braces
+ * and module, a parameter, a binding element, and a function, class, enum or namespace by its name. */
+function declarationText(node: Declared): string {
+  if (ts.isVariableDeclaration(node)) {
+    const list = node.parent;
+    const keyword = !ts.isVariableDeclarationList(list) ? "catch" : (list.flags & ts.NodeFlags.Const) !== 0 ? "const" : (list.flags & ts.NodeFlags.Let) !== 0 ? "let" : "var";
+    return `${keyword} ${node.getText()}`;
+  }
+  if (ts.isImportSpecifier(node) || ts.isImportClause(node) || ts.isNamespaceImport(node)) {
+    let at: ts.Node = node;
+    while (!ts.isImportDeclaration(at)) at = at.parent;
+    const binding = ts.isImportSpecifier(node) ? `{ ${node.getText()} }` : ts.isNamespaceImport(node) ? node.getText() : (node.name?.text ?? "");
+    return `import ${binding} from ${at.moduleSpecifier.getText()}`;
+  }
+  if (ts.isParameter(node)) return `parameter ${node.getText()}`;
+  if (ts.isBindingElement(node)) return `binding ${node.getText()}`;
+  if (ts.isImportEqualsDeclaration(node)) return node.getText();
+  const kind = ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) ? "function" : ts.isClassDeclaration(node) || ts.isClassExpression(node) ? "class" : ts.isEnumDeclaration(node) ? "enum" : "namespace";
+  return `${kind} ${node.name?.getText() ?? ""}`;
+}
+/** The name of the IMPL member or const whose function holds `node`, with that function (null when no function holds it). */
+function holderOf(node: ts.Node): { readonly name: string; readonly fn: ts.Node } | null {
+  for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
+    if (ts.isArrowFunction(at) || ts.isFunctionExpression(at) || ts.isFunctionDeclaration(at) || ts.isMethodDeclaration(at)) {
+      const parent = at.parent;
+      const named = ts.isFunctionDeclaration(at) || ts.isMethodDeclaration(at) ? at.name?.getText() : ts.isPropertyAssignment(parent) || ts.isVariableDeclaration(parent) ? parent.name.getText() : undefined;
+      return { name: named ?? "?", fn: at };
+    }
+  }
+  return null;
+}
+/** THE MEMBER CHECK's reader, read from this file's AST (SELF-READ; MemberReaderRead). */
+function memberReaderRead(self: SelfRead): MemberReaderRead {
+  const source = ts.createSourceFile(SELF, readFileSync(join(REPO, SELF), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const calls: string[] = [];
+  const declarations: Record<string, readonly string[]> = {};
+  let occurrences = 0;
+  let b1: readonly ts.Statement[] = [];
+  let b1Function: ts.Node | undefined;
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "observationMembers") occurrences += 1;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "observationMembers") {
+      const holder = holderOf(node);
+      const at = holder?.name ?? "?";
+      calls.push(`${at}: ${node.getText()}`);
+      for (const name of node.arguments.flatMap(argument => namesRead(argument))) declarations[`${at} ${name}`] = holder === null ? [] : declarationsOf(holder.fn, name).map(declarationText);
+    }
+    const list = node.parent?.parent;
+    if (ts.isPropertyAssignment(node) && node.name.getText() === "B1" && list !== undefined && ts.isVariableDeclaration(list) && list.name.getText() === "IMPL" && ts.isArrowFunction(node.initializer) && ts.isBlock(node.initializer.body)) {
+      b1 = node.initializer.body.statements.slice(0, 3);
+      b1Function = node.initializer;
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return counts;
+  const locals = b1.flatMap(statement => (ts.isVariableStatement(statement) ? statement.declarationList.declarations.map(declaration => declaration.name.getText()) : []));
+  for (const name of locals) declarations[`B1 ${name}`] = b1Function === undefined ? [] : declarationsOf(b1Function, name).map(declarationText);
+  const queue = b1.flatMap(statement => namesRead(statement)).filter(name => !locals.includes(name));
+  for (let index = 0; index < queue.length; index += 1) {
+    const name = queue[index] ?? "";
+    if (Object.hasOwn(declarations, name)) continue;
+    const found = declarationsOf(source, name);
+    declarations[name] = found.map(declarationText);
+    for (const declaration of found) if (ts.isVariableDeclaration(declaration) && declaration.initializer !== undefined) queue.push(...namesRead(declaration.initializer));
+  }
+  return {
+    named: self.impl.B1?.includes("observationMembers") ?? false,
+    imported: self.imports.filter(entry => entry.locals.includes("observationMembers")).map(entry => entry.module),
+    calls,
+    occurrences,
+    b1: b1.map(statement => statement.getText()),
+    declarations,
+  };
 }
 /** Why a registration is refused, or null: its module must sit below src/, hold a trigger hit, be imported statically by this file
  * with a value binding, and adoption()'s body must name a binding that import introduces. */
@@ -1484,6 +1639,8 @@ const MEMBER_PROBES: Readonly<Record<string, Plant>> = {
   variableOfName: appended('export const Interval = "interval";'),
   escapedClassMerge: appended("export declare class Native\\u0053napshot { region?: string }"),
   declaredTwice: appended("export interface ObservationEvent { region?: string }"),
+  redeclaredTrace: appended("export interface ObservationTrace { spanId?: string }"),
+  redeclaredInterval: appended("export interface Interval { endedAt?: string }"),
   // The shape of a read name's declaration.
   extendsClause: both(afterName("NativeSnapshot", " extends Base"), appended("interface Base { region?: string }")),
   typeParameters: afterName("ObservationTrace", "<T = string>"),
@@ -1497,6 +1654,9 @@ const MEMBER_PROBES: Readonly<Record<string, Plant>> = {
   traceMember: withMember("ObservationTrace", "traceState?: string;"),
   intervalMember: withMember("Interval", "durationMs?: number;"),
   nodeMember: retyped("ObservationEvent", "node", "{ presentation: Presentation; definitionDigest?: string; label?: string }"),
+  // The two members the comparisons set aside, each retyped as a type literal: an expansion of either is compared.
+  coverageExpanded: retyped("NativeSnapshot", "coverage", "{ region?: string }"),
+  sourceSequenceExpanded: retyped("ObservationEvent", "sourceSequence", "{ region?: string }"),
   // A member retyped by another type form, a lib type (ReadonlyArray) last.
   intersectionType: retyped("NativeSnapshot", "trace", "ObservationTrace & { traceState?: string }"),
   unionArm: retyped("NativeSnapshot", "subjectBasis", "string | { region?: string }"),
@@ -1697,7 +1857,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   B1: async () => {
     // Fail closed (THE MEMBER CHECK): the journeys restate, and state, exactly the entries the landed member reader reads of the
-    // module's text (coverage and sourceSequence aside).
+    // module's text (coverage and sourceSequence aside). The SELF-READ holds these first three statements as written (memberReaderRead).
     const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8");
     const members = observationMembers(text);
     holdMembers(members);
@@ -1832,13 +1992,31 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     expect(Object.keys(identifiers).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
     expect(Object.entries(identifiers).filter(([, names]) => names.includes("ROSTER")).map(([id]) => id)).toEqual([]);
     expect([Object.isFrozen(ROSTER), Object.isFrozen(ROSTER.rows), ROSTER.rows.every(row => row.pins.every(pin => Object.isFrozen(pin)))]).toEqual([true, true, true]);
-    // SELF-READ, THE MEMBER CHECK: B1 reads through the landed reader - its IMPL member names observationMembers, the one static
-    // import binding that name is the helper's, and every call hands the reader one argument, the module text (its default reading).
-    expect({
-      named: identifiers.B1?.includes("observationMembers") ?? false,
-      imported: selfRead().imports.filter(entry => entry.locals.includes("observationMembers")).map(entry => entry.module),
-      calls: memberReaderCalls(),
-    }).toEqual({ named: true, imported: [MEMBER_READER], calls: [1, 1] });
+    // SELF-READ, THE MEMBER CHECK (FROZEN SHAPE): its reader as this file's AST writes it, every text as source text - B1's IMPL member
+    // names observationMembers, the helper's static import binds it, the two calls by that bare name are memberOutcome's and B1's,
+    // each observationMembers(text), the identifier stands three times, B1's first three statements, and the one declaration each
+    // name of those calls and statements resolves to (the key "observationMembers" is quoted: occurrences counts every identifier).
+    expect(memberReaderRead(selfRead())).toEqual({
+      named: true,
+      imported: [MEMBER_READER],
+      calls: ["memberOutcome: observationMembers(text)", "B1: observationMembers(text)"],
+      occurrences: 3,
+      b1: ['const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8");', "const members = observationMembers(text);", "holdMembers(members);"],
+      declarations: {
+        "memberOutcome text": ["parameter text: string"],
+        "B1 text": ['const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8")'],
+        "B1 members": ["const members = observationMembers(text)"],
+        OBSERVATION_MODULE: ['import { OBSERVATION_MODULE } from "./helpers/observation-members.js"'],
+        REPO: ['const REPO = join(HERE, "..")'],
+        join: ['import { join } from "node:path"'],
+        readFileSync: ['import { readFileSync } from "node:fs"'],
+        "observationMembers": ['import { observationMembers } from "./helpers/observation-members.js"'],
+        holdMembers: ["function holdMembers"],
+        HERE: ["const HERE = dirname(fileURLToPath(import.meta.url))"],
+        dirname: ['import { dirname } from "node:path"'],
+        fileURLToPath: ['import { fileURLToPath } from "node:url"'],
+      },
+    });
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
