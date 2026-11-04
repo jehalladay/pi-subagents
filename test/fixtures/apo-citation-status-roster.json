@@ -229,6 +229,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the carriers, the citation, the filing tree and the producer lines; the src registry binds the effect classes",
+  "the landed judge: this file's top-level declarations name no export of test/helpers/apo-citation-status-judge.ts, its named imports from that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their stand-ins as listed",
   "P1",
   "E1",
   "E2",
@@ -707,6 +708,28 @@
         "causes": [
          "effect-class:write"
         ]
+       },
+       {
+        "id": "P-EC-THIS",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport class V {\n  effectClass?: string;\n  constructor() {\n    this.effectClass = \"write\";\n  }\n}\n",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "P-EC-CHAIN",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const R = { d: { effectClass: \"read\" } };\nR.d.effectClass = \"write\";\n",
+        "causes": [
+         "effect-class:write"
+        ]
+       },
+       {
+        "id": "P-EC-CASE-KEY",
+        "path": "src/x.ts",
+        "text": "// The APO view module.\nexport const D = { EffectClass: \"write\" };\n",
+        "causes": []
        }
       ]
      }
@@ -843,6 +866,54 @@
       "unitFloor": 6700,
       "pagesOpenH1": true,
       "receiptsOpenTitle": true,
+      "liveStandIns": {
+       "pages": [
+        {
+         "path": "docs/workbench/a.md",
+         "text": "# A\n\nText.\n"
+        },
+        {
+         "path": "docs/workbench/b.md",
+         "text": "## B\n\nText.\n"
+        },
+        {
+         "path": "docs/workbench/c.md",
+         "text": "Text first.\n\n# C\n"
+        },
+        {
+         "path": "docs/workbench/d.md",
+         "text": "#D\n"
+        }
+       ],
+       "headingless": [
+        "docs/workbench/b.md",
+        "docs/workbench/c.md",
+        "docs/workbench/d.md"
+       ],
+       "receipts": [
+        {
+         "path": "docs/workbench/receipts/wb-x.md",
+         "text": "# wb-x: A title\n\n## 2026-11-04 entry\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-y.md",
+         "text": "# wb-x: A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-z.md",
+         "text": "# wb-z A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-w.md",
+         "text": "## wb-w: A title\n"
+        }
+       ],
+       "untitled": [
+        "docs/workbench/receipts/wb-y.md",
+        "docs/workbench/receipts/wb-z.md",
+        "docs/workbench/receipts/wb-w.md"
+       ]
+      },
       "findings": [
        "docs/workbench/zz-wb-021.6-plant.md:3 status",
        "docs/workbench/zz-wb-021.6-plant.md:3 scope"
@@ -1289,6 +1360,43 @@
       "schemaLiteralHolders": [
        "src/workbench/identity.ts"
       ],
+      "schemaStandIns": {
+       "files": [
+        {
+         "path": "src/a.ts",
+         "text": "export const S = \"workflow-script/v1\";\n"
+        },
+        {
+         "path": "src/b.ts",
+         "text": "export const S = \"workflow-script/v1 extra\";\n"
+        },
+        {
+         "path": "src/c.ts",
+         "text": "// workflow-script/v1\nexport const S = 1;\n"
+        },
+        {
+         "path": "qa/d.mjs",
+         "text": "export const S = \"workflow-script/v1\";\n"
+        },
+        {
+         "path": "src/e.ts",
+         "text": "export const S = `workflow-script/v1`;\n"
+        },
+        {
+         "path": "src/f.ts",
+         "text": "export const S = \"workflow\\u002dscript/v1\";\n"
+        },
+        {
+         "path": "src/g.md",
+         "text": "workflow-script/v1\n"
+        }
+       ],
+       "holders": [
+        "src/a.ts",
+        "src/e.ts",
+        "src/f.ts"
+       ]
+      },
       "findings": [
        "src/zz-wb-021.6-plant.ts:1 status",
        "src/zz-wb-021.6-plant.ts:1 scope"
@@ -2106,6 +2214,71 @@
         "causes": [
          "status"
         ]
+       },
+       {
+        "id": "P-CV-STRUCK-WHOLE",
+        "path": "docs/workbench/x.md",
+        "text": "~~Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).~~\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "P-CV-QUOTE-STRUCK",
+        "path": "docs/workbench/x.md",
+        "text": "> Pi reads the adaptive-policy-organizations-2026-10-18 program (~~design-stage~~, non-effectful).\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "P-CV-LINK-ONLY",
+        "path": "docs/workbench/x.md",
+        "text": "[Pi reads the program](https://example.invalid/adaptive-policy-organizations-2026-10-18/design-stage/non-effectful)\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "P-CV-QUOTE-COMMENT",
+        "path": "docs/workbench/x.md",
+        "text": "> Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful). <!-- design-stage -->\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "P-CV-QUOTE-ELEMENT",
+        "path": "docs/workbench/x.md",
+        "text": "> Pi reads the adaptive-policy-organizations-2026-10-18 program (non-effectful). <span hidden>design-stage</span>\n",
+        "causes": [
+         "status",
+         "scope"
+        ]
+       },
+       {
+        "id": "P-CV-EM-STRUCK",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (*~~design-stage~~*, non-effectful).\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "P-CV-QUOTE-LINK-TITLE",
+        "path": "docs/workbench/x.md",
+        "text": "> Pi reads the [adaptive-policy-organizations-2026-10-18 program](https://example.invalid \"design-stage\") (non-effectful).\n",
+        "causes": [
+         "status"
+        ]
+       },
+       {
+        "id": "P-CV-QUOTE-TWIN",
+        "path": "docs/workbench/x.md",
+        "text": "> Pi reads the adaptive-policy-organizations-2026-10-18 program (design-stage, non-effectful).\n",
+        "causes": []
        }
       ]
      }
@@ -2326,6 +2499,28 @@
         "causes": [
          "scope"
         ]
+       },
+       {
+        "id": "P-SC-LIT-DOC",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (Status: accepted design direction; documentation only).\n",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "P-SC-LIT-SRC",
+        "path": "src/x.ts",
+        "text": "export const T = \"The adaptive-policy-organizations-2026-10-18 view (Status: accepted design direction; documentation only)\";\n",
+        "causes": [
+         "scope"
+        ]
+       },
+       {
+        "id": "P-SC-LIT-TWIN",
+        "path": "docs/workbench/x.md",
+        "text": "Pi reads the adaptive-policy-organizations-2026-10-18 program (Status: accepted design direction; documentation only; non-effectful).\n",
+        "causes": []
        }
       ]
      }
