@@ -147,6 +147,11 @@
  * whose matched member a later spread or property may set, is not read by B2; R15 ASSIGNED-ARRAY-PATTERN - an array
  * assignment pattern, or a for-of whose target is an assignment pattern rather than a declaration, that binds matched from a
  * selection is not read by B2 (an object assignment pattern is, MS25; an array declaration pattern is, MS28).
+ * BUDGET (wb-mrk7): the judged set is registered with a 60000 ms budget (JUDGED_SET_BUDGET_MS) and holds its own task's
+ * timeout, as vitest's task tree states it, to 60000, so a judged set registered with any other budget, vitest's default
+ * 5000 ms among them, reds. Its wall is its reads of the bead export under the host's load; the budget does not shorten it.
+ * A run-time write to a task's timeout (vitest binds a test's budget when it collects the test, so such a write changes the
+ * task tree, not the budget) is NOT CLAIMED by this census; nor is each pin's budget or the record's.
  * SCOPE: the three rules are this cut's reading of the filing; the producer facts above are measured at the builds named and
  * are not re-read here (the census is hermetic: no rf runs, the stand-in rf answers from the roster). docs are not read: the
  * acceptance clauses name the argv builder, the projection and the exit-3 typing. A later cut that adds a context show reader
@@ -1877,6 +1882,17 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 };
 
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the landed record, the follow-up's probes and the cases agree";
+/**
+ * The judged set's budget (wb-mrk7: F2 of the wb-pyel.2 landing-867 gate, cmd_2d70d456baaf). The judged set reads the bead
+ * export through exportAnchors twice, and each call reads and parses the whole export three times (exportRow once per anchor
+ * row), so its wall follows the export's size and the host's load, not its judgements. Measured: 2710 ms file-alone at load1
+ * about 29 (base e7937d96, an 80 MB export of 1219 rows); 3187 and 3364 ms file-alone at load1 about 52 (that gate's PREP);
+ * 5579 ms in that gate's probe union at load1 113.65 -> 66.99, where vitest's default 5000 ms failed it ('Test timed out in
+ * 5000ms.'), as it had failed 40 gate test steps from 2026-10-27 to 2026-11-01. 60000 ms is 10.75 x that 5579 ms wall.
+ * vitest fails a synchronous body that outran its budget only once the body has finished, so the budget decides whether a
+ * finished judged set fails; it never stops or shortens one.
+ */
+const JUDGED_SET_BUDGET_MS = 60_000;
 const RECORD_TITLE = "the record: every registered test is in run mode and ran, every pin reached its end with its pinned assertion count, and every src-walk pin walked src";
 /** Each pin's witness, held to the roster a second time by the record. */
 const WITNESSED: Record<string, Json> = {};
@@ -1884,7 +1900,8 @@ const WITNESSED: Record<string, Json> = {};
 const REACHED: string[] = [];
 
 describe("wb-pfxo.9 context show instance census (RF-COMPOSITIONAL-ASSEMBLY-R10, absent-today leg)", () => {
-  it(JUDGED_TITLE, () => {
+  it(JUDGED_TITLE, { timeout: JUDGED_SET_BUDGET_MS }, ({ task }) => {
+    expect(task.timeout, "the judged set's own budget (wb-mrk7): 60000 ms, never vitest's default 5000 ms").toBe(60_000);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "A:4", "B:3", "C:3", "F:1", "M:50", "R:15"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
