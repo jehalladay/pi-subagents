@@ -59,7 +59,13 @@
  * fbe12f0274af (landing 894, merged into the branch; of the paths this census reads only the bead export changed between the two, and
  * not this row): of the paths this census reads, that cut edits docs/workbench/12-security.md (clause (d)'s bullet, after the eighth)
  * and the wb-gs2.3 census test/workbench-docs12-authorization.census.ts (its ninth AUTH_MARKDOWN entry), and every count below
- * re-measured equal, each docs count on the parked page (DOCS below). Not pinned:
+ * re-measured equal, each docs count on the parked page (DOCS below). Its re-cut merged trunk 59b8f4b225b6 (landing 909; wb-vx6i's
+ * landing 900 among the landings since), then 08a61f18e90f (landing 912), into the branch: from fbe12f0274af to 59b8f4b225b6, of
+ * the paths this census reads only the bead export and this file changed (this file by wb-vx6i's landed cut, the paragraph above,
+ * whose readings the merge keeps beside this cut's), and from 59b8f4b225b6 to 08a61f18e90f only the bead export; in the export this
+ * row is byte-equal at all three, and wb-vx6i's row closed and gained notes after its first F1 and F2 lines, each byte-equal at all
+ * three (the whole row byte-equal at the last two); every count below re-measured equal on the merged tree, each docs count on the
+ * parked page. Not pinned:
  * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
  * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
