@@ -54,7 +54,7 @@
  * the NOT CLAIMED sentences.
  * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 F2: the census pinned each NONVALUE_PLACES, JSX_PLACES and
  * CALLEE_WRAPPERS entry by count only) changes no reader code and no plant: the VOCABULARY QUOTES block below lists, by label,
- * the plant of each entry of those three catalogs as the Vocabulary quotes it, and the census's QUOTES rows bind every entry
+ * the plant of each entry of those three catalogs as the Vocabulary quotes it, and the census's QUOTES reading binds every entry
  * to its quote; the Vocabulary now quotes the four import plants and the variable declaration's binding-key plant whole, and
  * quotes the satisfies and <T> wrappers in a call.
  * Vocabulary (refusal #2 F2): where a claim names a
@@ -130,11 +130,20 @@
  * and a shorthand key holding a default.
  * VOCABULARY QUOTES (wb-3uxh, the R694 follow-up of wb-cl20's landing-925 F2; no reader code and no plant changes): the
  * Vocabulary above quotes each entry of three of the census's catalogs, and this block lists each such quote after its
- * catalog and the entry's label, one line per entry, in catalog order: the plant the census writes for the entry, with the
- * identifier written name (for a CALLEE_WRAPPERS entry, require behind the wrapper, called with ("./lg-x.js")), its lines
- * joined by one space. Each quote below, a final semicolon aside, stands in the Vocabulary above as written, and the census's
- * QUOTES rows hold every entry's plant byte-equal to its quote here, so an entry re-pointed at another text reds its row; no
- * entry of another catalog is quoted here.
+ * catalog and the entry's label, one line per entry, in catalog order: the entry's text written with the identifier name (a
+ * CALLEE_WRAPPERS entry: require behind the wrapper, called with ("./lg-x.js")) on one line - its lines, each without its
+ * leading and trailing white space, the empty ones dropped, joined by one space, every other white space as written. The
+ * census's QUOTES reading (cut #2, after refusal #1, gate-prep-24, O:2063) holds this heading line and the Vocabulary's
+ * opening line (the one line opening "Vocabulary (refusal #2 on wb-tz2.21; ") one each in this header, then: every line of
+ * the quote run below (the lines opening with three spaces after the asterisk, directly after this prose, whose every line
+ * opens with one) equal to its entry's line, position by position; each entry's text, a final semicolon aside, standing
+ * whole in the Vocabulary's definitions (the lines from that opening line to this heading); each entry written with a second
+ * identifier (require; a CALLEE_WRAPPERS entry, name) as its text with that identifier for the first; and this block naming
+ * the census's QUOTES controls in the census's order. Each control runs the same reading over one planted mismatch: QC-PLANT,
+ * QC-LABEL, QC-ORDER, QC-CATALOG, QC-CASE, QC-SPACE-ENTRY, QC-SPACE-QUOTE, QC-CATORDER, QC-UNPARSED, QC-MISSING, QC-EXTRA,
+ * QC-PROSE-BREAK, QC-VOCAB-DROP, QC-VOCAB-ABOVE, QC-VOCAB-BELOW, QC-VOCAB-SECOND, QC-VOCAB-HEAD, QC-VOCAB-AFTER,
+ * QC-VOCAB-BEFORE, QC-HARDCODE, QC-HEADING-TWICE, QC-HEADING-NONE, QC-OPENING-TWICE, QC-OPENING-NONE, QC-NAMES,
+ * QC-NAMES-ORDER, QC-NAMES-ABOVE and QC-NAMES-BELOW. No entry of another catalog is quoted here.
  *   NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;
  *   NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;
  *   NONVALUE_PLACES "the right of a qualified name": export type LgT = typeof lgO.name;

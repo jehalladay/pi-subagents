@@ -79,17 +79,25 @@
  * seat adds one sibling, a type literal's property signature. FROZEN SHAPE gains the 12 TWIN rows and grows 6 MEMBERS pin
  * counts (ROUTES:loader name pieces 1, 4, 10 and 12; WRITES:reflection pieces 1 and 2) and loses none; ANCHOR gains
  * CALLEE_WRAPPERS among the stated catalog sizes and the TW9C4- ids among the twins the helper header names.
- * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 PASS-WITH-FINDING, F2, gate cmd_fbf51e40e9e0; a first cut) is read
- * here as: F2 found NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS pinned by count only (FROZEN SHAPE's pin counts and
- * ANCHOR's catalog sizes), so an entry's text re-pointed at an unrelated passing case, its label, flags and counts kept, left
- * this census green at 0|477 (GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP, GP2-CT3x-JSX-NOVALUE-SWAP and, on
- * an entry landed before wb-cl20, GP2-CT3x-OLD-CLASSSET-SWAP), and so did each swap beside the reader hollowing its entry
- * alone pinned (GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS, GP2-CT3xP-JSXNOVALUE and GP2-CT3xP-LN-JSX). This cut changes no
- * reader code, no plant, no pin and no row of this census: it adds the QUOTES rows, which bind every entry of those three
- * catalogs (41, 3 and 5), by its label, to the quote the helper header's VOCABULARY QUOTES block lists for it - an anchor
- * outside this census's literals - and each listed quote to the helper header's Vocabulary (the helper's comment-only edit
- * quotes the four import plants and the variable declaration's binding-key plant whole and the satisfies and <T> wrappers in
- * a call). FROZEN SHAPE gains the four QUOTES rows and loses none.
+ * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 PASS-WITH-FINDING, F2, gate cmd_fbf51e40e9e0) is read here as: F2
+ * found NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS pinned by count only (FROZEN SHAPE's pin counts and ANCHOR's catalog
+ * sizes), so an entry's text re-pointed at an unrelated passing case, its label, flags and counts kept, left this census green
+ * at 0|477 (GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP, GP2-CT3x-JSX-NOVALUE-SWAP and, on an entry landed
+ * before wb-cl20, GP2-CT3x-OLD-CLASSSET-SWAP), and so did each swap beside the reader hollowing its entry alone pinned
+ * (GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS, GP2-CT3xP-JSXNOVALUE and GP2-CT3xP-LN-JSX). Cut #1 (465b174b) bound each entry
+ * to the quote the helper header's VOCABULARY QUOTES block lists for it and each quote to the helper header's Vocabulary;
+ * refusal #1 (gate-prep-24, O:2063) found those checks pinned only by their live reading - U1 the entry comparison
+ * (GP24-M-PLANT, -LABEL and -ORDER; and its 'byte-equal' words against a reading that collapsed every run of white space,
+ * GP24-B-WS), U2 the Vocabulary leg (GP24-M-REGION and -SEMI; supplementary, a quote standing only as the head of a longer
+ * plant, GP24-B-PREFIX-TYPEREF and -TYPEQUERY) and U3 the block shape (GP24-M-CATSET and -UNPARSED) - and U4 the block's
+ * heading never asserted unique (GP24-B-DUPHEAD); its F1, riding with this respin, found an entry written with name whatever
+ * identifier it is handed reading green (GP24-B-HARDCODE). Read here, in cut #2, as: one reading, quotesReading, holds every
+ * check; the QUOTES reading row runs it over the delivered helper header and catalogs and finds nothing, and each of the 28
+ * QUOTES controls runs it over one planted mismatch (the gate's witnesses among them) and holds exactly the findings that
+ * mismatch earns, so a check hollowed in the reading reds the control planting what that check finds. This cut changes no
+ * reader code, no plant, no landed pin and no landed row: the reading row and the controls replace cut #1's four QUOTES rows,
+ * the helper header's block states the reading and names the controls, and FROZEN SHAPE pins the reading row with its
+ * catalogs' entry counts and each control with its finding count.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -166,14 +174,25 @@
  *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census. Cut #4 adds TYPE_PLACES,
  *   ACCESS_BASES, EXPORT_PLACES and JSX_PLACES to those catalogs and the TW9- ids to the twins the helper header must name.
  *   wb-cl20 adds CALLEE_WRAPPERS to those catalogs and the TW9C4- ids to the twins the helper header must name.
- *  QUOTES (wb-3uxh; standing rule 16 CT3, CT5 and CT6, outside this census): one row per catalog the helper header's
- *   VOCABULARY QUOTES block quotes - NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS - holds every entry's plant, the
- *   identifier written name (a CALLEE_WRAPPERS entry: require behind the wrapper, called with ("./lg-x.js")) and its lines
- *   joined by one space, byte-equal to the quote the block lists after the entry's catalog and label, in catalog order, each
- *   such quote, a final semicolon aside, standing in the helper header's Vocabulary; one row holds the block's catalogs equal
- *   to those rows' catalogs, in order, every line of the block's quote run a quote line.
+ *  QUOTES (wb-3uxh cut #2; standing rule 16 CT3, CT5 and CT6, outside this census): quotesReading reads a helper header (its
+ *   leading comment, line by line), the NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS entries and the census's control ids,
+ *   and finds, in order: the count of lines opening " * VOCABULARY QUOTES (" and of lines opening " * Vocabulary (refusal #2 on
+ *   wb-tz2.21; " when either is not one, and then nothing else; the quote-run lines (the lines opening " *   " after the
+ *   block's heading and prose, each without that indent) that differ, position by position, from the entries' lines - the
+ *   catalog, the label in double quotes, a colon, a space and the entry's text written with name (a CALLEE_WRAPPERS entry:
+ *   require behind the wrapper, called with ("./lg-x.js")) on one line, its lines each without leading and trailing white
+ *   space, the empty ones dropped, joined by one space - reported as their count with the first differing line, what it reads
+ *   and the entry's line it is owed; each entry whose one-line text, its final semicolon aside, stands nowhere whole in the
+ *   Vocabulary's definitions (the lines from the opening line to the heading, each without its leading " * " or " *", joined
+ *   by one space; whole: after the text's start, a space or an opening parenthesis, and before the text's end, a space, a
+ *   comma, a semicolon, a closing parenthesis or a full stop the text's end or a space follows); each entry whose text written
+ *   with require (a CALLEE_WRAPPERS entry: name) is not its one-line text with that identifier for each occurrence of name
+ *   (require); and the QC- ids the block's heading and prose name when they differ, position by position, from the census's
+ *   control ids. The QUOTES reading row holds no finding on the delivered tree; each QUOTES control holds exactly the findings
+ *   of its one plant.
  *  FROZEN SHAPE (standing rule 16): one literal pins every row as table:id - a GATE or TWIN row with its pin keys, a MEMBERS row
- *   with its claim, its place among that claim's pieces and its pin count, a QUOTES catalog row with its entry count.
+ *   with its claim, its place among that claim's pieces and its pin count, the QUOTES reading row with its catalogs' entry
+ *   counts and each QUOTES control with its finding count.
  *
  * PINNED READER SET (wb-tz2.21's cut; every case is in this file, test/workbench-hyperunix-successor-gate-readers-census.test.ts,
  * and reads as pinned on the delivered readers; each falsifier named is a gate-authored hollowing of the helper, replayed
@@ -285,14 +304,21 @@
  *    -DOUBLE-PAREN; TW9C4-B1 to TW9C4-B9 (B8 aside) read none and, under their GP9C4-VR- members, a finding, TW9C4-B1P through
  *    WRITES reflection).
  *  - "ANCHOR" names, catalogs, carrier-items and twins (above). Falsifiers: CT5 and CT6 of the seat's CT-BATTERY v2 line.
- *  - "QUOTES NONVALUE_PLACES", "QUOTES JSX_PLACES" and "QUOTES CALLEE_WRAPPERS" (wb-3uxh): every entry of the three catalogs (41,
- *    3 and 5), read as the row title says; target: the helper header's VOCABULARY QUOTES block, entry by entry, and its
- *    Vocabulary's text. "QUOTES: the helper header's VOCABULARY QUOTES block quotes exactly the catalogs": the block's catalogs
- *    and quote lines. Falsifiers: F2's census swaps GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP,
- *    GP2-CT3x-JSX-NOVALUE-SWAP and GP2-CT3x-OLD-CLASSSET-SWAP and its pairs GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS,
- *    GP2-CT3xP-JSXNOVALUE and GP2-CT3xP-LN-JSX (gate; census hollowings, replayed verbatim from the wb-cl20 PREP specs);
- *    SP3U-NV-BLOCKLABEL-SWAP, SP3U-NV-IMPORT-SWAP, SP3U-JSX-VALUE-SWAP, SP3U-WRAP-ANGLE-SWAP, SP3U-WRAP-PAREN-SWAP,
- *    SP3U-VOCAB-DROP, SP3U-BLOCK-UNPARSED and SP3U-BLOCK-DROP-LINE (seat; the last three edit the helper header).
+ *  - "QUOTES: the reading of the delivered helper header and catalogs finds nothing - ..." (wb-3uxh cut #2): target
+ *    quotesReading(HEADER, QUOTE_ROWS, the QUOTE_CONTROLS ids); observed [] (pass). Falsifiers, each red on a throwaway copy of
+ *    this cut: F2's census swaps GP2-CT3x-NONVALUE-SETTYPELIT-SWAP, GP2-CT3x-WRAPPER-SAT-SWAP, GP2-CT3x-JSX-NOVALUE-SWAP and
+ *    GP2-CT3x-OLD-CLASSSET-SWAP and its pairs GP2-CT3xP-SETTYPELIT, GP2-CT3xP-SATNOARGS, GP2-CT3xP-JSXNOVALUE and
+ *    GP2-CT3xP-LN-JSX (replayed verbatim from the wb-cl20 PREP specs); refusal #1's witnesses GP24-W-LABEL, -ORDER,
+ *    -VOCABDROP, -SECONDSTMT, -CATORDER and -UNPARSED-ADD, its swaps GP24-CT3x-NV-ENUMNOINIT, -NV-DECLBINDKEY, -NV-MEMBER,
+ *    -JSX-VALUE and -WRAP-NONNULL, its block edits GP24-PF-NV, -PF-JSX, -PF-CW and -PF-CAT and its boundary probes GP24-B-WS,
+ *    -PREFIX-TYPEREF, -PREFIX-TYPEQUERY, -HARDCODE, -DUPHEAD and -DUPHEAD-ALONE (replayed verbatim from the wb-3uxh PREP specs,
+ *    gate-prep-24).
+ *  - "QUOTES <id>: the reading over <plant> holds exactly the findings that plant earns" (28 rows, QC-PLANT to QC-NAMES-BELOW):
+ *    target quotesReading over the control's one plant; observed exactly its findings (pass). Falsifiers: the 37 one-edit
+ *    hollowings of quotesReading and its constants this cut authored red-first (the seat's SQ2-M- members, refusal #1's
+ *    GP24-M-PLANT, -LABEL, -ORDER, -CATSET, -UNPARSED, -REGION and -SEMI re-authored over the new reading among them as
+ *    SQ2-M-PLANT, -LABEL, -ORDER, -CATSET, -UNPARSED, -REGION and -SEMI), each red on at least one control, and the seat's
+ *    CT-BATTERY v2 line.
  * NOT CLAIMED: each mode the helper header's NOT CLAIMED block names NOT CLAIMED is NOT CLAIMED by this census, and so is every
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
  * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee; a
@@ -304,15 +330,22 @@
  * type no plant writes, or in a call of another argument list; require behind any wrapper as the expression of a new
  * expression, and as a tag behind any wrapper but one pair of parentheses; and a binding element's key in any pattern but the
  * arrow parameter's and the variable declaration's (refusal #4's fifteen forms are pins of this census now, none NOT CLAIMED).
- * Past wb-3uxh's QUOTES rows (a scope sentence, no residual): the text of an entry of any other catalog (FREE_PLACES,
+ * Past wb-3uxh's QUOTES reading (a scope sentence, no residual): the text of an entry of any other catalog (FREE_PLACES,
  * DECLARATIONS, TYPE_PLACES, ACCESS_BASES, EXPORT_PLACES, DESTRUCTURINGS and the rest) is bound by no QUOTES row and is NOT
- * CLAIMED by this census beyond its catalog's count and the readings its MEMBERS pins hold; an entry's text written with any
- * identifier but name (a CALLEE_WRAPPERS entry: around any callee but require) is NOT CLAIMED by the QUOTES rows, and neither
- * are a plant's line breaks and indentation (the rows read a plant flattened).
+ * CLAIMED by this census beyond its catalog's count and the readings its MEMBERS pins hold; an entry written with an
+ * identifier other than name and require (a CALLEE_WRAPPERS entry: around a callee other than require and name) is NOT
+ * CLAIMED by the QUOTES reading, nor are a plant's line breaks and the white space leading or trailing each of its lines (the
+ * reading writes an entry on one line); the characters a whole quote stands between are pinned, at the type reference's
+ * quote, for every printable ASCII character directly before or after it (QC-VOCAB-BEFORE, QC-VOCAB-AFTER), and a character
+ * outside printable ASCII there is NOT CLAIMED, as is a quote standing whole only as the head or tail of a longer plant it
+ * meets across a character the reading accepts (export type LgT = name | lgO, say); an entry and its quote line re-pointed
+ * together at another plant the Vocabulary quotes are NOT CLAIMED (the Vocabulary binds plant texts, not labels: refusal #1's
+ * F2, GP24-B-COORD, reads 0 failed); and a control's plant words, past its id and its findings, are NOT CLAIMED.
  * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family: every
  * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are pins (wb-cl20), as
  * are the cut #5 gate's boundary members on those sets; none is a residual. wb-3uxh names no residual: F2's class is pinned
- * for the three catalogs F2 names, and every other catalog's text is the scope sentence above.
+ * for the three catalogs F2 names, refusal #1's U1-U4 forms are QUOTES controls, and every other form is the scope sentence
+ * above.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -2578,41 +2611,188 @@ const TWIN_ROWS: readonly TwinRow[] = [
 
 // ---- wb-3uxh (the R694 follow-up of wb-cl20's landing-925 F2): QUOTES ----------------------------------------------------
 // F2 found NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS pinned by count only: an entry's text re-pointed at an unrelated
-// passing case, its label, flags and counts kept, left this census green. Each entry's plant is now bound, by its label, to
-// the quote the helper header's VOCABULARY QUOTES block lists for it - outside this census's literals - and each listed quote
-// is bound to the helper header's Vocabulary.
+// passing case, its label, flags and counts kept, left this census green. Each entry is bound, by its label, to the quote the
+// helper header's VOCABULARY QUOTES block lists for it, and its text to the helper header's Vocabulary - both outside this
+// census's literals. Refusal #1 (gate-prep-24, O:2063) found cut #1's checks pinned only by their live reading (U1-U3) and the
+// block's heading never asserted unique (U4). Cut #2 runs every check in one reading, quotesReading: the live row runs it over
+// the delivered header and catalogs, and each QUOTES control runs it over one planted mismatch, holding exactly the findings
+// that mismatch earns - so a check hollowed in the reading reds the control that plants what the check finds.
 
-/** A catalog the QUOTES rows bind: each entry's label and its plant, the identifier written name (a CALLEE_WRAPPERS entry:
- * require behind the wrapper, called with ("./lg-x.js")). */
+/** A catalog the QUOTES reading binds: each entry's label and its text written with a given identifier; `quoted` is the
+ * identifier the block's quotes are written with and `other` the identifier each entry is written with a second time. */
 interface QuoteRow {
   readonly catalog: string;
-  readonly plants: readonly (readonly [label: string, plant: string])[];
+  readonly quoted: string;
+  readonly other: string;
+  readonly entries: readonly (readonly [label: string, written: (identifier: string) => string])[];
 }
 const QUOTE_ROWS: readonly QuoteRow[] = [
-  { catalog: "NONVALUE_PLACES", plants: NONVALUE_PLACES.map(([label, text]) => [label, text("name")]) },
-  { catalog: "JSX_PLACES", plants: JSX_PLACES.map(([label, text]) => [label, text("name")]) },
-  { catalog: "CALLEE_WRAPPERS", plants: CALLEE_WRAPPERS.map(([label, wrap]) => [label, `${wrap("require")}("./lg-x.js")`]) },
+  { catalog: "NONVALUE_PLACES", quoted: "name", other: "require", entries: NONVALUE_PLACES.map(([label, text]) => [label, text] as const) },
+  { catalog: "JSX_PLACES", quoted: "name", other: "require", entries: JSX_PLACES.map(([label, text]) => [label, text] as const) },
+  { catalog: "CALLEE_WRAPPERS", quoted: "require", other: "name", entries: CALLEE_WRAPPERS.map(([label, wrap]) => [label, (callee: string) => `${wrap(callee)}("./lg-x.js")`] as const) },
 ];
-/** A text with its lines joined by one space and every run of white space one space, as the helper header quotes a plant. */
-const flat = (text: string): string => text.replace(/\s+/g, " ").trim();
-/** The helper header's VOCABULARY QUOTES block: its heading line, then its prose, then one quote line per entry. */
-const QUOTES_AT = HEADER.findIndex(line => line.startsWith(" * VOCABULARY QUOTES ("));
-/** The helper header's Vocabulary: from its first "Vocabulary (" line to the VOCABULARY QUOTES block, flattened. */
-const VOCABULARY_PROSE = flat(HEADER.slice(HEADER.findIndex(line => line.startsWith(" * Vocabulary (")), QUOTES_AT < 0 ? 0 : QUOTES_AT).map(line => line.replace(/^ \* ?/, "")).join(" "));
-/** A quote line of the block: three spaces, the catalog, the label in double quotes, a colon and the quote. */
-const QUOTE_LINE = /^ \* {3}([A-Z_]+) "([^"]+)": (.+)$/;
-/** Every quote line of the block, as [catalog, label, quote]: the run of lines opening with three spaces after its prose
- * (a line of that run that is no quote line reads as the catalog UNPARSED). */
-const VOCABULARY_QUOTES: readonly (readonly [catalog: string, label: string, quote: string])[] = (() => {
-  if (QUOTES_AT < 0) return [];
-  const start = HEADER.findIndex((line, index) => index > QUOTES_AT && line.startsWith(" *   "));
-  const quotes: [string, string, string][] = [];
-  for (let index = start; start > QUOTES_AT && index < HEADER.length && (HEADER[index] ?? "").startsWith(" *   "); index += 1) {
-    const match = QUOTE_LINE.exec(HEADER[index] ?? "");
-    quotes.push(match === null ? ["UNPARSED", HEADER[index] ?? "", ""] : [match[1] ?? "", match[2] ?? "", match[3] ?? ""]);
+/** An entry's text on one line: its lines, each without its leading and trailing white space, the empty ones dropped, joined by
+ * one space; every other white space stays as the entry writes it. */
+const oneLine = (text: string): string =>
+  text
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line !== "")
+    .join(" ");
+/** `text` with every occurrence of the identifier `from` (an occurrence as the census's occurrences reading counts one) written `to`. */
+const rewritten = (text: string, from: string, to: string): string => text.replace(new RegExp(`(?<![\\w$#])${from}(?![\\w$])`, "g"), to);
+/** The helper header's VOCABULARY QUOTES heading, the opening of its Vocabulary's definitions and a quote line's indent. */
+const QUOTES_HEADING = " * VOCABULARY QUOTES (";
+const VOCABULARY_OPENING = " * Vocabulary (refusal #2 on wb-tz2.21; ";
+const QUOTE_INDENT = " *   ";
+/** What a whole quote stands between in the Vocabulary's text: before it the text's start, a space or an opening
+ * parenthesis; after it the text's end, a space, a comma, a semicolon, a closing parenthesis, or a full stop the text's end
+ * or a space follows. */
+const BEFORE_QUOTE: readonly string[] = [" ", "("];
+const AFTER_QUOTE: readonly string[] = [" ", ",", ";", ")"];
+function standsWhole(text: string, quote: string): boolean {
+  if (quote === "") return false;
+  for (let at = text.indexOf(quote); at >= 0; at = text.indexOf(quote, at + 1)) {
+    const end = at + quote.length;
+    const opens = at === 0 || BEFORE_QUOTE.includes(text.charAt(at - 1));
+    const closes = end === text.length || AFTER_QUOTE.includes(text.charAt(end)) || (text.charAt(end) === "." && (end + 1 === text.length || text.charAt(end + 1) === " "));
+    if (opens && closes) return true;
   }
-  return quotes;
-})();
+  return false;
+}
+/** The QUOTES reading of a helper header (its leading comment, line by line), the catalogs it binds and the census's control
+ * ids, in the census's order: every finding, in order - the heading and opening counts (and then nothing else), the quote
+ * run, the Vocabulary, the second identifier and the control ids. */
+function quotesReading(header: readonly string[], rows: readonly QuoteRow[], controls: readonly string[]): string[] {
+  const headings = header.flatMap((line, index) => (line.startsWith(QUOTES_HEADING) ? [index] : []));
+  const openings = header.flatMap((line, index) => (line.startsWith(VOCABULARY_OPENING) ? [index] : []));
+  if (headings.length !== 1 || openings.length !== 1) return [`VOCABULARY QUOTES heading lines ${headings.length}, Vocabulary opening lines ${openings.length}: one each is owed`];
+  const at = headings[0];
+  let start = at + 1;
+  while (start < header.length && header[start].startsWith(" * ") && !header[start].startsWith(QUOTE_INDENT)) start += 1;
+  let stop = start;
+  while (stop < header.length && header[stop].startsWith(QUOTE_INDENT)) stop += 1;
+  const run = header.slice(start, stop).map(line => line.slice(QUOTE_INDENT.length));
+  const entries = rows.flatMap(row => row.entries.map(([label, written]) => ({ row, label, quote: oneLine(written(row.quoted)), second: oneLine(written(row.other)) })));
+  const lines = entries.map(({ row, label, quote }) => `${row.catalog} "${label}": ${quote}`);
+  const findings: string[] = [];
+  const width = Math.max(run.length, lines.length);
+  const differ = Array.from({ length: width }, (_unused, index) => index).filter(index => run[index] !== lines[index]);
+  if (differ.length > 0) {
+    const first = differ[0];
+    findings.push(`block: ${differ.length} of ${width} quote lines differ from the entries (${run.length} lines, ${lines.length} entries); the first, line ${first + 1}, reads ${run[first] ?? "nothing"} for ${lines[first] ?? "nothing"}`);
+  }
+  const vocabulary = header
+    .slice(openings[0], at)
+    .map(line => line.replace(/^ \* ?/, ""))
+    .join(" ");
+  for (const { row, label, quote } of entries) if (!standsWhole(vocabulary, quote.replace(/;$/, ""))) findings.push(`Vocabulary: ${row.catalog} "${label}" ${quote} stands nowhere whole`);
+  for (const { row, label, quote, second } of entries) {
+    const owed = rewritten(quote, row.quoted, row.other);
+    if (second !== owed) findings.push(`${row.catalog} "${label}" written with ${row.other} reads ${second} for ${owed}`);
+  }
+  const named = [...header.slice(at, start).join(" ").matchAll(/(?<![A-Za-z0-9-])QC-[A-Z0-9-]*[A-Z0-9](?![A-Za-z0-9-])/g)].map(match => match[0]);
+  const astray = Array.from({ length: Math.max(named.length, controls.length) }, (_unused, index) => index).filter(index => named[index] !== controls[index]);
+  if (astray.length > 0) {
+    const first = astray[0];
+    findings.push(`controls: the block names ${named.length}, the census runs ${controls.length}; the first difference, ${first + 1}, names ${named[first] ?? "nothing"} for ${controls[first] ?? "nothing"}`);
+  }
+  return findings;
+}
+/** The helper's leading comment, line by line, from a text of the helper. */
+const headerOf = (text: string): readonly string[] => text.slice(0, text.indexOf("*/")).split("\n");
+/** The helper's header with planted edits, each [old, next] with `old` occurring exactly once (else the plant throws). */
+const plantedHeader = (...edits: readonly (readonly [old: string, next: string])[]): readonly string[] => headerOf(edits.reduce((text, [old, next]) => edit(text, old, next), read(HELPER)));
+/** The catalogs with the entry `label` of `catalog` written by `written` instead, its label kept. */
+const repointed = (catalog: string, label: string, written: (identifier: string) => string): QuoteRow[] =>
+  QUOTE_ROWS.map(row => (row.catalog === catalog ? { ...row, entries: row.entries.map(entry => (entry[0] === label ? ([label, written] as const) : entry)) } : row));
+/** The QUOTES reading over a plant: a planted header (else the delivered one) and planted catalogs (else the delivered ones). */
+const readPlant = (header: readonly string[] = HEADER, rows: readonly QuoteRow[] = QUOTE_ROWS): readonly string[] => quotesReading(header, rows, QUOTE_CONTROLS.map(entry => entry.id));
+/** The printable ASCII characters but the space, each planted once before or after a quote by QC-VOCAB-BEFORE and QC-VOCAB-AFTER. */
+const PRINTABLE: readonly string[] = Array.from({ length: 94 }, (_unused, offset) => String.fromCharCode(0x21 + offset));
+/** The Vocabulary's own plant of NONVALUE_PLACES' type reference, the one whole occurrence of its quote. */
+const TYPE_REFERENCE_PLANT = "the type reference in export type LgT = name, and";
+const TYPE_REFERENCE_NOWHERE = 'Vocabulary: NONVALUE_PLACES "a type reference" export type LgT = name; stands nowhere whole';
+/** GP24-W-VOCABDROP (refusal #1's U2 witness): the <T> wrapper's quote dropped from the Vocabulary's callee sentence. */
+const ANGLE_DROP = [' * (<(lgS: string) => unknown>require)("./lg-x.js"), each to the function type (lgS: string) => unknown, and a non-null\n', " * (the callee written behind it), each to the function type (lgS: string) => unknown, and a non-null\n"] as const;
+const ANGLE_NOWHERE = 'Vocabulary: CALLEE_WRAPPERS "a <T> assertion" (<(lgS: string) => unknown>require)("./lg-x.js") stands nowhere whole';
+/** The block's last eight quote lines (its three JSX_PLACES lines, then its five CALLEE_WRAPPERS lines), as the helper writes them. */
+const QUOTE_TAIL = `${HEADER.filter(line => line.startsWith(`${QUOTE_INDENT}JSX_PLACES "`) || line.startsWith(`${QUOTE_INDENT}CALLEE_WRAPPERS "`)).join("\n")}\n`;
+/** The helper's VOCABULARY QUOTES heading line and its Vocabulary's opening line, each with its line break. */
+const QUOTES_HEADING_LINE = `${HEADER.find(line => line.startsWith(QUOTES_HEADING)) ?? QUOTES_HEADING}\n`;
+const VOCABULARY_OPENING_LINE = `${HEADER.find(line => line.startsWith(VOCABULARY_OPENING)) ?? VOCABULARY_OPENING}\n`;
+/** A QUOTES control: its id, the mismatch it plants, the reading over that plant and the findings the plant earns. */
+interface QuoteControl {
+  readonly id: string;
+  readonly plant: string;
+  readonly reading: () => readonly string[];
+  readonly findings: readonly string[];
+}
+const quoteControl = (id: string, plant: string, reading: () => readonly string[], ...findings: string[]): QuoteControl => ({ id, plant, reading, findings });
+const QUOTE_CONTROLS: readonly QuoteControl[] = [
+  quoteControl("QC-PLANT", "NONVALUE_PLACES' type literal set accessor key re-pointed at a type literal property signature (F2's GP2-CT3x-NONVALUE-SETTYPELIT-SWAP)", () =>
+    readPlant(HEADER, repointed("NONVALUE_PLACES", "a type literal set accessor key", name => `export type LgT = { ${name}: number };\n`)), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 36, reads NONVALUE_PLACES "a type literal set accessor key": export type LgT = { set name(lgV: number) }; for NONVALUE_PLACES "a type literal set accessor key": export type LgT = { name: number };'),
+  quoteControl("QC-LABEL", "the block label's quote line relabelled 'a labeled block' (refusal #1's U1 witness GP24-W-LABEL)", () =>
+    readPlant(plantedHeader([' *   NONVALUE_PLACES "a block label": name: { break name; }\n', ' *   NONVALUE_PLACES "a labeled block": name: { break name; }\n'])), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 41, reads NONVALUE_PLACES "a labeled block": name: { break name; } for NONVALUE_PLACES "a block label": name: { break name; }'),
+  quoteControl("QC-ORDER", "the block's first two quote lines swapped (refusal #1's U1 witness GP24-W-ORDER)", () =>
+    readPlant(plantedHeader([
+      ' *   NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;\n *   NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;\n',
+      ' *   NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;\n *   NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;\n',
+    ])), 'block: 2 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 1, reads NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name; for NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;'),
+  quoteControl("QC-CATALOG", "the pair of parentheses' quote line under the catalog CALLEE_WRAPPER (refusal #1's GP24-PF-CAT)", () =>
+    readPlant(plantedHeader([' *   CALLEE_WRAPPERS "a pair of parentheses": (require)("./lg-x.js")\n', ' *   CALLEE_WRAPPER "a pair of parentheses": (require)("./lg-x.js")\n'])), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 45, reads CALLEE_WRAPPER "a pair of parentheses": (require)("./lg-x.js") for CALLEE_WRAPPERS "a pair of parentheses": (require)("./lg-x.js")'),
+  quoteControl("QC-CASE", "the type query's quote line written export type lgT = typeof name;", () =>
+    readPlant(plantedHeader([' *   NONVALUE_PLACES "a type query": export type LgT = typeof name;\n', ' *   NONVALUE_PLACES "a type query": export type lgT = typeof name;\n'])), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 15, reads NONVALUE_PLACES "a type query": export type lgT = typeof name; for NONVALUE_PLACES "a type query": export type LgT = typeof name;'),
+  quoteControl("QC-SPACE-ENTRY", "NONVALUE_PLACES' property key written with two spaces after its brace (refusal #1's U1 contradiction GP24-B-WS)", () =>
+    readPlant(HEADER, repointed("NONVALUE_PLACES", "a property key", name => `export const lgW = {  ${name}: 1 };\n`)), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 4, reads NONVALUE_PLACES "a property key": export const lgW = { name: 1 }; for NONVALUE_PLACES "a property key": export const lgW = {  name: 1 };', 'Vocabulary: NONVALUE_PLACES "a property key" export const lgW = {  name: 1 }; stands nowhere whole'),
+  quoteControl("QC-SPACE-QUOTE", "the property key's quote line written with two spaces after its brace", () =>
+    readPlant(plantedHeader([' *   NONVALUE_PLACES "a property key": export const lgW = { name: 1 };\n', ' *   NONVALUE_PLACES "a property key": export const lgW = {  name: 1 };\n'])), 'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 4, reads NONVALUE_PLACES "a property key": export const lgW = {  name: 1 }; for NONVALUE_PLACES "a property key": export const lgW = { name: 1 };'),
+  quoteControl("QC-CATORDER", "the block's three JSX_PLACES quote lines moved after its five CALLEE_WRAPPERS lines (refusal #1's U3 witness GP24-W-CATORDER)", () =>
+    readPlant(plantedHeader([QUOTE_TAIL, `${QUOTE_TAIL.split("\n").slice(3, 8).join("\n")}\n${QUOTE_TAIL.split("\n").slice(0, 3).join("\n")}\n`])), `block: 8 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 42, reads CALLEE_WRAPPERS "a pair of parentheses": (require)("./lg-x.js") for JSX_PLACES "a JSX attribute's name": export const lgW = <lgX name={1} />;`),
+  quoteControl("QC-UNPARSED", "a line that is no quote line added to the quote run after the JSX_PLACES lines (refusal #1's U3 witness GP24-W-UNPARSED-ADD)", () =>
+    readPlant(plantedHeader([QUOTE_TAIL, `${QUOTE_TAIL.split("\n").slice(0, 3).join("\n")}\n *   (the CALLEE_WRAPPERS quotes follow, each called with ("./lg-x.js"))\n${QUOTE_TAIL.split("\n").slice(3, 8).join("\n")}\n`])), 'block: 6 of 50 quote lines differ from the entries (50 lines, 49 entries); the first, line 45, reads (the CALLEE_WRAPPERS quotes follow, each called with ("./lg-x.js")) for CALLEE_WRAPPERS "a pair of parentheses": (require)("./lg-x.js")'),
+  quoteControl("QC-MISSING", "the block's last quote line deleted", () =>
+    readPlant(plantedHeader([' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n', ""])), 'block: 1 of 49 quote lines differ from the entries (48 lines, 49 entries); the first, line 49, reads nothing for CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")'),
+  quoteControl("QC-EXTRA", "the block's last quote line written twice", () =>
+    readPlant(plantedHeader([' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n', ' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n'])), 'block: 1 of 50 quote lines differ from the entries (50 lines, 49 entries); the first, line 50, reads CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js") for nothing'),
+  quoteControl("QC-PROSE-BREAK", "a comment line holding only its asterisk inserted after the VOCABULARY QUOTES heading line", () =>
+    readPlant(plantedHeader([QUOTES_HEADING_LINE, `${QUOTES_HEADING_LINE} *\n`])), 'block: 49 of 49 quote lines differ from the entries (0 lines, 49 entries); the first, line 1, reads nothing for NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;', 'controls: the block names 0, the census runs 28; the first difference, 1, names nothing for QC-PLANT'),
+  quoteControl("QC-VOCAB-DROP", "the <T> wrapper's quote dropped from the Vocabulary's callee sentence, the block kept (refusal #1's U2 witness GP24-W-VOCABDROP)", () =>
+    readPlant(plantedHeader(ANGLE_DROP)), ANGLE_NOWHERE),
+  quoteControl("QC-VOCAB-ABOVE", "GP24-W-VOCABDROP with the <T> wrapper's quote written in the line above the Vocabulary's opening", () =>
+    readPlant(plantedHeader(ANGLE_DROP, [" * census pins both forms.\n", ' * census pins both forms, as in (<(lgS: string) => unknown>require)("./lg-x.js").\n'])), ANGLE_NOWHERE),
+  quoteControl("QC-VOCAB-BELOW", "GP24-W-VOCABDROP with the <T> wrapper's quote written in the VOCABULARY QUOTES heading line", () =>
+    readPlant(plantedHeader(ANGLE_DROP, ["no reader code and no plant changes): the\n", 'no reader code and no plant changes, as in (<(lgS: string) => unknown>require)("./lg-x.js")): the\n'])), ANGLE_NOWHERE),
+  quoteControl("QC-VOCAB-SECOND", "the default import plant's second statement dropped from the Vocabulary (refusal #1's U2 witness GP24-W-SECONDSTMT)", () =>
+    readPlant(plantedHeader([' * the name of the import clause in import name from "./lg-x.js"; export const lgW = 1 and of the namespace import in\n', ' * the name of the import clause in import name from "./lg-x.js" and of the namespace import in\n'])), 'Vocabulary: NONVALUE_PLACES "a default import" import name from "./lg-x.js"; export const lgW = 1; stands nowhere whole'),
+  quoteControl("QC-VOCAB-HEAD", "the type reference's and the type query's own Vocabulary plants dropped, so each quote stands only as the head of a longer plant (refusal #1's GP24-B-PREFIX-TYPEREF and -TYPEQUERY)", () =>
+    readPlant(plantedHeader(
+      [" * the type reference in export type LgT = name, and (wb-cl20) in the parameter's annotation of export const lgW = (lgP: name):\n", " * the type reference in the parameter's annotation of export const lgW = (lgP: name):\n"],
+      [" * the type query in export type LgT = typeof name (never the left of typeof Proxy.revocable); the label of the labeled for\n", " * the type query (never the left of typeof Proxy.revocable); the label of the labeled for\n"],
+    )), TYPE_REFERENCE_NOWHERE, 'Vocabulary: NONVALUE_PLACES "a type query" export type LgT = typeof name; stands nowhere whole'),
+  quoteControl("QC-VOCAB-AFTER", "the type reference's Vocabulary plant followed by each printable ASCII character but a comma, a semicolon and a closing parenthesis", () =>
+    PRINTABLE.filter(char => ![",", ";", ")"].includes(char)).map(char => `${char} ${readPlant(plantedHeader([TYPE_REFERENCE_PLANT, `the type reference in export type LgT = name${char}, and`])).join(" | ")}`),
+    ...PRINTABLE.filter(char => ![",", ";", ")"].includes(char)).map(char => `${char} ${TYPE_REFERENCE_NOWHERE}`)),
+  quoteControl("QC-VOCAB-BEFORE", "the type reference's Vocabulary plant preceded by each printable ASCII character but an opening parenthesis", () =>
+    PRINTABLE.filter(char => char !== "(").map(char => `${char} ${readPlant(plantedHeader([TYPE_REFERENCE_PLANT, `the type reference in ${char}export type LgT = name, and`])).join(" | ")}`),
+    ...PRINTABLE.filter(char => char !== "(").map(char => `${char} ${TYPE_REFERENCE_NOWHERE}`)),
+  quoteControl("QC-HARDCODE", "NONVALUE_PLACES' type literal set accessor key written with name whatever identifier it is handed (refusal #1's F1, GP24-B-HARDCODE)", () =>
+    readPlant(HEADER, repointed("NONVALUE_PLACES", "a type literal set accessor key", () => "export type LgT = { set name(lgV: number) };\n")), 'NONVALUE_PLACES "a type literal set accessor key" written with require reads export type LgT = { set name(lgV: number) }; for export type LgT = { set require(lgV: number) };'),
+  quoteControl("QC-HEADING-TWICE", "the VOCABULARY QUOTES heading line written twice (refusal #1's U4, GP24-B-DUPHEAD's decoy heading)", () =>
+    readPlant(plantedHeader([QUOTES_HEADING_LINE, `${QUOTES_HEADING_LINE}${QUOTES_HEADING_LINE}`])), 'VOCABULARY QUOTES heading lines 2, Vocabulary opening lines 1: one each is owed'),
+  quoteControl("QC-HEADING-NONE", "the VOCABULARY QUOTES heading spelled VOCABULARY QUOTE", () =>
+    readPlant(plantedHeader([" * VOCABULARY QUOTES (wb-3uxh", " * VOCABULARY QUOTE (wb-3uxh"])), 'VOCABULARY QUOTES heading lines 0, Vocabulary opening lines 1: one each is owed'),
+  quoteControl("QC-OPENING-TWICE", "the Vocabulary's opening line written twice", () =>
+    readPlant(plantedHeader([VOCABULARY_OPENING_LINE, `${VOCABULARY_OPENING_LINE}${VOCABULARY_OPENING_LINE}`])), 'VOCABULARY QUOTES heading lines 1, Vocabulary opening lines 2: one each is owed'),
+  quoteControl("QC-OPENING-NONE", "the Vocabulary's opening written with a comma for its semicolon", () =>
+    readPlant(plantedHeader([" * Vocabulary (refusal #2 on wb-tz2.21; narrowed", " * Vocabulary (refusal #2 on wb-tz2.21, narrowed"])), 'VOCABULARY QUOTES heading lines 1, Vocabulary opening lines 0: one each is owed'),
+  quoteControl("QC-NAMES", "QC-NAMES dropped from the block's control names", () => readPlant(plantedHeader(["QC-NAMES,\n * QC-NAMES-ORDER", "\n * QC-NAMES-ORDER"])), 'controls: the block names 27, the census runs 28; the first difference, 25, names QC-NAMES-ORDER for QC-NAMES'),
+  quoteControl("QC-NAMES-ORDER", "QC-LABEL and QC-ORDER swapped in the block's control names", () => readPlant(plantedHeader(["QC-LABEL, QC-ORDER", "QC-ORDER, QC-LABEL"])), 'controls: the block names 28, the census runs 28; the first difference, 2, names QC-ORDER for QC-LABEL'),
+  quoteControl("QC-NAMES-ABOVE", "QC-PLANT moved from the block's control names into the helper header above the block", () =>
+    readPlant(plantedHeader(["mismatch: QC-PLANT,\n", "mismatch:\n"], [" * quotes the satisfies and <T> wrappers in a call.\n", " * quotes the satisfies and <T> wrappers in a call (QC-PLANT).\n"])), 'controls: the block names 27, the census runs 28; the first difference, 1, names QC-LABEL for QC-PLANT'),
+  quoteControl("QC-NAMES-BELOW", "QC-NAMES-BELOW moved from the block's control names into the helper header below the block", () =>
+    readPlant(plantedHeader([" and QC-NAMES-BELOW. No entry", ". No entry"], [" * PINNED by wb-cl20 (R-B438), by name,", " * PINNED by wb-cl20 (R-B438; QC-NAMES-BELOW), by name,"])), 'controls: the block names 27, the census runs 28; the first difference, 28, names nothing for QC-NAMES-BELOW'),
+];
 
 /** MEMBERS rows with their place among their claim's pieces. */
 const PLACED = MEMBER_ROWS.map((row, index) => ({ ...row, place: MEMBER_ROWS.slice(0, index).filter(other => other.key === row.key).length + 1 }));
@@ -2698,7 +2878,13 @@ const FROZEN_SHAPE: readonly string[] = [
   "CLAIM:header", "CLAIM:forms",
   "TILE:pieces", "TILE:keys",
   "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins",
-  "QUOTES:NONVALUE_PLACES:41", "QUOTES:JSX_PLACES:3", "QUOTES:CALLEE_WRAPPERS:5", "QUOTES:catalogs",
+  "QUOTES:reading:NONVALUE_PLACES=41,JSX_PLACES=3,CALLEE_WRAPPERS=5",
+  "QUOTES:QC-PLANT:1", "QUOTES:QC-LABEL:1", "QUOTES:QC-ORDER:1", "QUOTES:QC-CATALOG:1", "QUOTES:QC-CASE:1", "QUOTES:QC-SPACE-ENTRY:2",
+  "QUOTES:QC-SPACE-QUOTE:1", "QUOTES:QC-CATORDER:1", "QUOTES:QC-UNPARSED:1", "QUOTES:QC-MISSING:1", "QUOTES:QC-EXTRA:1",
+  "QUOTES:QC-PROSE-BREAK:2", "QUOTES:QC-VOCAB-DROP:1", "QUOTES:QC-VOCAB-ABOVE:1", "QUOTES:QC-VOCAB-BELOW:1", "QUOTES:QC-VOCAB-SECOND:1",
+  "QUOTES:QC-VOCAB-HEAD:2", "QUOTES:QC-VOCAB-AFTER:91", "QUOTES:QC-VOCAB-BEFORE:93", "QUOTES:QC-HARDCODE:1", "QUOTES:QC-HEADING-TWICE:1",
+  "QUOTES:QC-HEADING-NONE:1", "QUOTES:QC-OPENING-TWICE:1", "QUOTES:QC-OPENING-NONE:1", "QUOTES:QC-NAMES:1", "QUOTES:QC-NAMES-ORDER:1",
+  "QUOTES:QC-NAMES-ABOVE:1", "QUOTES:QC-NAMES-BELOW:1",
 ];
 const ROW_IDS: readonly string[] = [
   ...["BASE:import", "BASE:channel", "BASE:run", "BASE:c", "BASE:setup"],
@@ -2707,8 +2893,8 @@ const ROW_IDS: readonly string[] = [
   ...PLACED.map(row => `MEMBERS:${row.key}:${row.place}:${row.pins.length}`),
   ...TWIN_ROWS.map(row => `TWIN:${row.id}:${Object.keys(row.pins).sort().join(",")}`),
   ...["CLAIM:header", "CLAIM:forms", "TILE:pieces", "TILE:keys", "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins"],
-  ...QUOTE_ROWS.map(row => `QUOTES:${row.catalog}:${row.plants.length}`),
-  "QUOTES:catalogs",
+  `QUOTES:reading:${QUOTE_ROWS.map(row => `${row.catalog}=${row.entries.length}`).join(",")}`,
+  ...QUOTE_CONTROLS.map(row => `QUOTES:${row.id}:${row.findings.length}`),
 ];
 /** wb-tz2.21's unmet items (refusal #3 on wb-tz2.17, verbatim in its description) and the rows answering each. */
 const CARRIER_ITEMS: Readonly<Record<string, readonly string[]>> = {
@@ -2871,13 +3057,11 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   it("TILE: every MEMBERS row is keyed to a claim the header makes, in the header's order", () => {
     expect([...new Set(MEMBER_ROWS.map(row => row.key))]).toEqual(CLAIMS.map(([key]) => key));
   });
-  it.each(QUOTE_ROWS)("QUOTES $catalog: each entry's plant, the identifier written name (a wrapper's callee require, called with (\"./lg-x.js\")) and its lines joined by one space, is byte-equal to the quote the helper header's VOCABULARY QUOTES block lists after the entry's catalog and label, in catalog order, and that quote, a final semicolon aside, stands in the helper header's Vocabulary", row => {
-    expect(row.plants.map(([label, plant]) => `${label}: ${flat(plant)}`)).toEqual(
-      VOCABULARY_QUOTES.filter(([catalog]) => catalog === row.catalog).map(([, label, quote]) => `${label}: ${VOCABULARY_PROSE.includes(quote.replace(/;$/, "")) ? quote : `${quote} (no quote of the Vocabulary)`}`),
-    );
+  it("QUOTES: the reading of the delivered helper header and catalogs finds nothing - one VOCABULARY QUOTES heading and one Vocabulary opening, every quote line equal to its entry's line, every entry standing whole in the Vocabulary's definitions and written alike with its second identifier, and the block naming the census's controls in order", () => {
+    expect(quotesReading(HEADER, QUOTE_ROWS, QUOTE_CONTROLS.map(row => row.id))).toEqual([]);
   });
-  it("QUOTES: the helper header's VOCABULARY QUOTES block quotes exactly the catalogs the QUOTES rows read, in their order, and every line of its quote run is a quote line", () => {
-    expect(VOCABULARY_QUOTES.map(([catalog]) => catalog).filter((catalog, index, all) => all.indexOf(catalog) === index)).toEqual(QUOTE_ROWS.map(row => row.catalog));
+  it.each(QUOTE_CONTROLS)("QUOTES $id: the reading over $plant holds exactly the findings that plant earns", row => {
+    expect(row.reading()).toEqual(row.findings);
   });
   it("FROZEN SHAPE: every row is pinned, a GATE row with its pin keys and a MEMBERS row with its place and pin count", () => {
     expect(ROW_IDS).toEqual(FROZEN_SHAPE);
