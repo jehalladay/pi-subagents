@@ -1572,7 +1572,12 @@
    "codeSpanSameNameAfter": "![&sopf; &Copf; `&sopf;`](x.png)",
    "codeSpanPair": "![`wa&sopf;m` `wa&sopf;m`](x.png)",
    "codeSpanFrakturReference": "![`wa&sfr;m`](x.png)",
-   "escapeFrakturReference": "![wa\\&sfr;m](x.png)"
+   "escapeFrakturReference": "![wa\\&sfr;m](x.png)",
+   "codeSpanUnknownAlone": "![`&sopf;`](x.png)",
+   "escapeUnknownAlone": "![\\&sopf;](x.png)",
+   "codeSpanCoreAlone": "![`&Copf;`](x.png)",
+   "codeSpanFrakturAlone": "![`&sfr;`](x.png)",
+   "escapeFrakturAlone": "![\\&sfr;](x.png)"
   },
   "altFormPath": "docs/alt-form.md",
   "imageAlt": "image alt",
@@ -2753,6 +2758,21 @@
        ],
        "escapeFrakturReference": [
         "wb-x32.comments[0].text:1: rendered unknown &sfr;"
+       ],
+       "codeSpanUnknownAlone": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownAlone": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanCoreAlone": [
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;"
+       ],
+       "codeSpanFrakturAlone": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturAlone": [
+        "wb-x32.comments[0].text:1: rendered unknown &sfr;"
        ]
       }
      }
@@ -3083,6 +3103,21 @@
        ],
        "escapeFrakturReference": [
         "escapeFrakturReference:1: rendered unknown &sfr;"
+       ],
+       "codeSpanUnknownAlone": [
+        "codeSpanUnknownAlone:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownAlone": [
+        "escapeUnknownAlone:1: rendered unknown &sopf;"
+       ],
+       "codeSpanCoreAlone": [
+        "codeSpanCoreAlone:1: rendered unknown &Copf;"
+       ],
+       "codeSpanFrakturAlone": [
+        "codeSpanFrakturAlone:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturAlone": [
+        "escapeFrakturAlone:1: rendered unknown &sfr;"
        ]
       }
      }
@@ -5348,6 +5383,21 @@
         "docs/alt-form.md:1: rendered unknown &sfr;"
        ],
        "escapeFrakturReference": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
+       ],
+       "codeSpanUnknownAlone": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "escapeUnknownAlone": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanCoreAlone": [
+        "docs/alt-form.md:1: rendered unknown &Copf;"
+       ],
+       "codeSpanFrakturAlone": [
+        "docs/alt-form.md:1: rendered unknown &sfr;"
+       ],
+       "escapeFrakturAlone": [
         "docs/alt-form.md:1: rendered unknown &sfr;"
        ]
       },
