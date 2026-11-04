@@ -22,9 +22,11 @@
  * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from SHAPE_QUIET's
  * plants, which wb-oddy (the R694 follow-up from wb-4z24's landing 791) holds at five places, one plant per place, each
  * answering the shape-reader survivor the R694 row that filed it names in the tracker export (quietSurvivorsOf); wb-rzqi (the R694
- * follow-up from wb-oddy's landing 830) tries each of quietSurvivorsOf's rules on a line of QUIET_CONTROL of its own, the lines
- * answering the members its own row names before its first Context: line (controlMembersOf, QUIET_CONTROL_ANSWERS), and holds
- * QUIET_BEADS to the R694 follow-up chain that row's title closes.
+ * follow-up from wb-oddy's landing 830) tries each of quietSurvivorsOf's rules on a line of QUIET_CONTROL of its own, on the
+ * form that line writes, the lines answering the members its own row names before its first Context: line (controlMembersOf,
+ * QUIET_CONTROL_ANSWERS), and holds QUIET_BEADS to the R694 follow-up chain that row's title closes; wb-04yp (the R694 follow-up
+ * from wb-rzqi's landing 883) narrows the rules' pins to those forms, and the census checks the answers' one-line and
+ * self-answer words.
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2967,7 +2969,8 @@ export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: stri
 
 // ---- wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757): the code reader's parse kind pinned on each reader itself (F1)
 // and the shape reader's quiet plants (F2), one per place since wb-oddy (the R694 follow-up from its landing 791: F1, F2, F4),
-// and the survivor reader's rules each on a control line of its own since wb-rzqi (the R694 follow-up from wb-oddy's landing 830) ----
+// and the survivor reader's rules each on a control line of its own since wb-rzqi (the R694 follow-up from wb-oddy's landing 830),
+// pinned on the forms those lines write since wb-04yp (the R694 follow-up from wb-rzqi's landing 883) ----
 
 /**
  * PARSE_PLANTS (wb-4z24's F1): one module per live kind of the residual source members, each read by that kind's code reader
@@ -3051,23 +3054,35 @@ export const quietPlacesOf = (plant: QuietPlant): string[] => {
   return places;
 };
 /**
- * A gate survivor's name as an R694 filing note's carried lines write it, a whole word: G or GP<n> (GP and one or more digits),
- * a hyphen, then capitals and digits in hyphen-joined parts (G-P1, GP20-U5-CSK-READS-BINDINGS). QUIET_CONTROL's name-shape line
- * writes five words that are no survivor name, each followed by a kind: N-C10 (another capital than G), GP-C11 (GP with no
- * digit), G-c12 (a small letter), XG-C13 and G-C14x (a name inside a longer word).
+ * A gate survivor's name as an R694 filing note's carried lines write it: G or GP<n> (GP and one or more digits), a hyphen,
+ * then capitals and digits in hyphen-joined parts, between word boundaries (\b, so a hyphen ends a name before a part in
+ * small letters: G-X1-y reads as G-X1). Pinned only on the names the census's readings hold: the survivors QUIET_CONTROL reads
+ * (G-C1, G-C3, GP9-C4, G-C7, G-C8, G-C9, G-C16, G-C17) and wb-4z24's and wb-oddy's rows read (GP20-U5-CSK-READS-TYPE-MEMBERS
+ * and GP20-U5-CSK-READS-BINDINGS, hyphen-joined parts; G-P1, G-P2, G-P3), and the five words QUIET_CONTROL's name-shape line
+ * writes that are no survivor name, each followed by a kind: N-C10 (another capital than G), GP-C11 (GP with no digit), G-c12
+ * (a small letter), XG-C13 and G-C14x (a name inside a longer word; G-C14x read as its prefix G-C1, a name already read,
+ * would read nothing new). A name of a shape none of those lines writes is read by no pin (the census header's NOT CLAIMED
+ * names wb-04yp's G10-R3 members).
  */
 const SURVIVOR_NAME = /\bG(?:P\d+)?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 /**
  * The shape-reader survivors an R694 filing note's carried finding lines name, each with the node kind it makes the code reader
- * read, by six rules, each tried on a line of QUIET_CONTROL of its own: (1) a line is read only when it starts with "[leads] - "
- * or "[rides] - ", never a line of another role, though it quote one of them (G-C5, G-C15); (2) reading stops at the note's
- * first line that starts with "Context: " (so its not-carried lines and every later note are never read), and a "Context: "
- * written inside a line stops nothing (G-C6, G-C17); (3) a survivor name is SURVIVOR_NAME's (GP9-C4, the name-shape line); (4) a
- * survivor's kind is the first QUIET_KINDS kind written after its first mention on the line, inside a longer word as well, and
- * before the line's next mention of another survivor name, a mention of its own name ending nothing (G-C1, G-C2, G-C7, G-C16);
- * (5) a survivor whose first mention on a line has no kind there is not read from that line, its later mentions on the line
- * passed over, and a later line may read it (G-C8); (6) each survivor is read once, the first time a line reads it, in the
- * order the lines read them (G-C1 again).
+ * read, by six rules (the reader's code): (1) a line is read only when it starts with "[leads] - " or "[rides] - ", never a
+ * line of another role, though it quote one of them; (2) reading stops at the note's first line that starts with "Context: "
+ * (so its not-carried lines and every later note are never read), and a "Context: " written inside a line stops nothing; (3) a
+ * survivor name is SURVIVOR_NAME's; (4) a survivor's kind is the first QUIET_KINDS kind written after its first mention on the
+ * line, inside a longer word as well, and before the line's next mention of another survivor name, a mention of its own name
+ * ending nothing; (5) a survivor whose first mention on a line has no kind there is not read from that line, its later
+ * mentions on the line passed over, and a later line may read it; (6) each survivor is read once, the first time a line reads
+ * it, in the order the lines read them. The census pins these rules only on the forms QUIET_CONTROL's lines and wb-4z24's and
+ * wb-oddy's carried lines write, each control line trying one rule on its own form (wb-04yp's F1): (1) on the control's
+ * "[leads] - " and "[rides] - " lines and its two lines of other roles (G-C5, G-C15); (2) on its first "Context: " line, with
+ * G-C6 after it and G-C17's mid-line "Context: " before it; (3) on the names those lines read and the five words of the
+ * name-shape line (SURVIVOR_NAME's docstring); (4) on G-C1, G-C2, G-C7 and G-C16 and the rows' kinds, each kind in its own
+ * case with no letter on its left, ending at most 59 characters after its mention's end with no ";" or ". " before it, and no
+ * window writing its first kind again after the other; (5) on G-C8; (6) on G-C1 again, named on a later line with its first
+ * kind. A reader edit that changes no reading of those lines reads differently only a form none of them writes, and the
+ * census header names such edits NOT CLAIMED.
  */
 export function quietSurvivorsOf(notes: string): { readonly name: string; readonly holds: QuietKind }[] {
   const survivors: { readonly name: string; readonly holds: QuietKind }[] = [];
@@ -3087,12 +3102,14 @@ export function quietSurvivorsOf(notes: string): { readonly name: string; readon
 }
 /**
  * quietSurvivorsOf's control (wb-oddy; wb-rzqi's F1 and F2): an R694-shaped note each of whose lines tries one of the reader's
- * rules, read as quietSurvivorsOf's docstring says - a carried line whose first survivor has two kinds after its first mention
+ * rules on the form that line writes, the rules pinned on those forms only (wb-04yp's F1), read as quietSurvivorsOf's
+ * docstring says - a carried line whose first survivor has two kinds after its first mention
  * (G-C1: the first written counts), whose second has none before the next survivor's mention (G-C2: no survivor) and whose
  * third has one (G-C3); a [rides] line with a GP<n> survivor (GP9-C4) and a second mention of G-C1 (read once); a line of
  * another role (G-C5: not read); a survivor named again before its kind (G-C7: read, its own mention ends nothing); a kindless
  * first mention of G-C8 before G-C9's mention, with a later mention on the line that has a kind (G-C8 not read from that line,
- * G-C9 read), and a later line that reads G-C8; the name-shape line, whose five words are no survivor name (SURVIVOR_NAME); a
+ * G-C9 read), and a later line that reads G-C8; the name-shape line, whose five words are no new survivor name (SURVIVOR_NAME;
+ * G-C14x read as its prefix G-C1, a name already read, would read nothing new); a
  * line of another role quoting "[rides] - " (G-C15: not read); a survivor whose first kind is written inside a longer word and
  * before a second kind (G-C16: BindingElement); a carried line with "Context: " inside it (G-C17: read); the note's first
  * "Context: " line; a carried line after it (G-C6: not read); and a second "Context: " line. QUIET_CONTROL_ANSWERS ties these
@@ -3128,10 +3145,14 @@ export function controlMembersOf(notes: string): string[] {
 }
 /**
  * The QUIET_CONTROL word that answers each member the control's row names (controlMembersOf over QUIET_CONTROL_BEAD's row), in
- * the row's order: each reader mutant of wb-rzqi's F1 line by a word written only on the line that tries the rule it breaks
- * (that line's survivor, or N-C10 on the name-shape line, whose words are no survivor name), a control survivor of its F2 line
- * by itself, and the two kind-order mutants its F2 line names by G-C16, the control's second survivor with two kinds after its
- * first mention (F2: G-C1's second kind was their only exemplar).
+ * the row's order: each reader mutant of wb-rzqi's F1 line by a word the control writes on one line only, on the line this
+ * census chose to try the rule the mutant breaks (that line's survivor, or N-C10 on the name-shape line, whose words are no
+ * survivor name), a control survivor of its F2 line by itself, and the two kind-order mutants its F2 line names by G-C16, the
+ * control's second survivor with two kinds after its first mention (F2: G-C1's second kind was their only exemplar). The
+ * full-surface row checks that each reader mutant's word is written on one control line only and that each control survivor
+ * answers itself; which line tries which rule, and so which word answers a reader mutant or a kind-order mutant, is this
+ * census's own choice, held by this literal and the census's frozen literal of it only (wb-04yp's F2: a re-point to another
+ * word the control writes on one line only, with the answering line removed from every literal, is NOT CLAIMED).
  */
 export const QUIET_CONTROL_ANSWERS: readonly { readonly name: string; readonly survivor: string }[] = [
   { name: "G2-QS-SAME-NAME-BOUND", survivor: "G-C7" },
