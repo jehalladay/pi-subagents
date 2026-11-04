@@ -128,6 +128,20 @@
  * edit at one site's hand-off leaves the other site reading the plant's own raw text. Nothing else changes: no row, pin id,
  * test, channel or reader is added, and the helper is untouched.
  *
+ * THE wb-zdwo CUT #3 (refusal #2 on cut #2, O:2069, gate-refused M:56383; rung 1, needsRuling false): refusal #2 found the
+ * raw-less key-value facet with one call site and no negative control. Every KEY_VALUE_FIELD_PLANTS value is hit-free, so no
+ * declared reading changed when the census handed the reader another value, and two gate-authored one-edit census members at
+ * the N-ROOT-READERS witness's fieldKeyValues hand-off kept this census green: GP5-C01 (each fiber-optics value handed as an
+ * empty string) and GP5-C02 (each value handed as its JSON text), each hiding a helper hollowing this census otherwise reds
+ * (GP5-H01: textsOf reads a key holding a value other than a string only in a top-level overrides object or under
+ * package.json; GP5-H02: manifestHits drops such a key from the raw-less parsed reading of a manifest without an overrides
+ * object). The clause's other raw-less key-value table, KEY_VALUE_PLANTS (its overrides plants, the keyValues hand-off), had
+ * the same shape. This cut takes the kill at a second call site. THE RAW-LESS DIRECT READ: the judged-set case reads every
+ * KEY_VALUE_PLANTS and every KEY_VALUE_FIELD_PLANTS plant again through manifestHits under its own label with no raw text
+ * handed and holds each reading to its declared hit, so each raw-less key-value plant is read at two call sites, and a census
+ * edit at one site's hand-off leaves the other site reading the plant itself. Nothing else changes: no row, pin id, test,
+ * plant, channel, claim word or reader is added, and the roster and the helper are untouched.
+ *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
  *     L3-M1 requirements.pip, L3-M4 an extensionless requirements, L3-M2 requirements/base.pip, the paired .txt controls L3-Mc1
@@ -296,8 +310,8 @@
  * plant spells it. Edits of this
  * file and the roster together: a plant removed from its table and the
  * roster together where no outside anchor names it, a pin a later cut adds beyond the export's member lists and the
- * claims, removed whole, and one edit of a raw-handed text's hand-off made at both of its call sites (the N-ROOT-READERS
- * witness and the direct read) together are NOT CLAIMED.
+ * claims, removed whole, and one edit of a raw-handed text's or a raw-less key-value plant's hand-off made at both of its
+ * call sites (the N-ROOT-READERS witness and the direct read) together are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
  * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
  * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
@@ -2103,6 +2117,9 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     const keyValues = objectAt(rootReaders.keyValues);
     for (const name of Object.keys(KEY_VALUE_PLANTS)) {
       expect(keyValues[name], `N-ROOT-READERS: a key in a top-level field's object is read holding its ${name} value`).toEqual([`${name}.overrides{fiber-optics}: fiberoptics`]);
+      expect(manifestHits(KEY_VALUE_PLANTS[name], undefined, name), `the raw-less direct read: ${name}, with no raw text handed at this second call site, gives its declared hit`).toStrictEqual([
+        `${name}.overrides{fiber-optics}: fiberoptics`,
+      ]);
     }
     const spacedChannels = objectAt(rootReaders.spacedChannels);
     expect(Object.keys(CHANNEL_SPACINGS), "N-ROOT-READERS: the CHANNEL_SPACINGS forms, in order").toEqual(["spaced field ahead", "spaced field behind", "spaced tokens", "split stem field ahead"]);
@@ -2123,6 +2140,10 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     for (const field of KEY_VALUE_FIELDS) {
       for (const name of Object.keys(KEY_VALUE_PLANTS)) {
         expect(fieldKeyValues[`${field} ${name}`], `N-ROOT-READERS: a key in ${field}'s object is read holding its ${name} value`).toEqual([`${field} ${name}.${field}{fiber-optics}: fiberoptics`]);
+        expect(
+          manifestHits(KEY_VALUE_FIELD_PLANTS[`${field} ${name}`], undefined, `${field} ${name}`),
+          `the raw-less direct read: ${field} ${name}, with no raw text handed at this second call site, gives its declared hit`,
+        ).toStrictEqual([`${field} ${name}.${field}{fiber-optics}: fiberoptics`]);
         expect(channelKeyValues[`${field} ${name}`], `N-ROOT-READERS: the escaped key in ${field}'s object is read under package.json, its raw text handed, holding its ${name} value`).toEqual([`package.json.${field}{fiber-optics}: fiberoptics`]);
         expect(
           channelKeyValues[`${field} ${name}, beside a raw-line stem`],
@@ -2130,6 +2151,9 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
         ).toEqual([`package.json.${field}{fiber-optics}: fiberoptics`, "package.json:1: fiberoptics"]);
       }
     }
+    expect(Object.keys(KEY_VALUE_FIELD_PLANTS), "N-ROOT-READERS: the key-value field plants are each field's key holding each value, in order").toEqual(
+      KEY_VALUE_FIELDS.flatMap(field => Object.keys(KEY_VALUE_PLANTS).map(name => `${field} ${name}`)),
+    );
     expect(Object.keys(KEY_VALUE_CHANNELS), "N-ROOT-READERS: the key-value channel texts are each field's key holding each value, alone and beside a raw-line stem, in order").toEqual(
       KEY_VALUE_FIELDS.flatMap(field => Object.keys(KEY_VALUE_PLANTS).flatMap(name => [`${field} ${name}`, `${field} ${name}, beside a raw-line stem`])),
     );
