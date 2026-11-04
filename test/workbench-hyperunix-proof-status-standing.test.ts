@@ -110,10 +110,15 @@
  *      twin (read off the probe's own record of the readings it judged: one judgement per variant, each the reading of the variant
  *      at its turn, pairwise distinct; and off the same record, the verdict it gave on each: the probe and its registration twin,
  *      frozen, the very list the control holds from its call at that turn; a record the control reads only through a copy, frozen
- *      and fresh on each read, each [reading, verdict] pair in it frozen), and the field-less reading with them set fires the twin
- *      alone, so a reading at the exemplar's values beside a planted status fires the probe the legs read quiet; for each of R2's,
- *      the channel reads or detects the planted member of a traced reading while the tracer records nothing (util.inspect shows it,
- *      util.types.isProxy tells the proxy, a structured clone refuses it while the plain reading clones with the member).
+ *      and fresh on each read, each [reading, verdict] pair in it frozen; each recorded reading a copy fired took at the call, not
+ *      the reading it was handed, frozen at every depth; and, before the control runs, the probe list fired filters frozen, each
+ *      probe and its expected list too, and the variants list the control rebuilds its readings from frozen, each variant at every
+ *      depth), and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted
+ *      status fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced
+ *      reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone
+ *      refuses it while the plain reading clones with the member), and R2's rows, and the channels the quiet rows visit, equal the
+ *      out-of-file trap roster test/fixtures/hyperunix-proof-status-trap-roster.json (each family's id and channels), both ways and
+ *      in order.
  * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
  * pinned by its quiet row in Q): for K1's judge, R-INFLECTED an inflection of "prove" that drops its final e (proving, provable,
  * unprovable); R-SYNONYM a word of the same reading built on no named stem (unconfirmed, falsified, certified, attested, untrusted,
@@ -177,8 +182,23 @@
  * serialization has an odd length). The record is now kept in a list only the probe's closure holds, one frozen [reading, verdict]
  * pair per call, and the control reads it only through record(), a fresh frozen copy of that list on each read; the control also
  * checks that the copy it read is frozen and is not the copy a second read returns, and that each pair it read is frozen.
+ * wb-68s5 (the R694 follow-up of landing 921, its gate's F1 and F2): the data fired judges could still be written from Q's scope, the
+ * probe list it filters (plain objects, readonly only in the type) and the reading the control hands it, so one edit at the control's
+ * call that swapped the probe list for the call (the gate's PSWAP), rewrote the exemplar probe's expected list for it (PMUT), or
+ * padded the handed reading for it and removed the pad after (RMUT) read green beside a probe hollow the control otherwise reds (L05,
+ * L06, HODD). The probe list, each probe and each probe's expected list are now frozen, and so is the variants list, each variant at
+ * every depth (P5 rebuilds each judged reading from it, and L06 reads it), each read frozen before the control runs (P13); and fired
+ * judges and records a copy of the handed reading taken at the call, its serialization parsed back and frozen at every depth, which
+ * the control reads off the record as not the handed reading and frozen at every depth (P14). R2's rows were anchored only by this
+ * file's literals (F2: the gate's CT6T removed structuredClone from R-PROXY-AWARE's row, the frozen-shape literal's count and the
+ * channels literal together and read green); they and the channels the quiet rows visit are now judged against the trap roster. An
+ * edit that replaces a builtin the control's pins or fired read through, beside a probe hollow, is NOT CLAIMED by this census. An
+ * edit at the control's call that writes the cell, the host context or this file's module-level tables (among them K3_PLACES and
+ * MEMBERS, which fired reads through valuesOf and planted), beside a probe hollow that reads them, is NOT CLAIMED by this census. A
+ * coordinated hollow of one of K1's word-residual rows across this file's literals is NOT CLAIMED by this census: those rows have no
+ * anchor outside this file, as before this cut.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
- * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2). */
+ * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. */
 import {readFileSync} from 'node:fs';
 import {inspect, types} from 'node:util';
 import {
@@ -325,6 +345,12 @@ const TRAP_RESIDUALS: readonly (readonly [string, readonly string[]])[] = [
   ['R-UNTRAPPED', ['util.inspect']],
   ['R-PROXY-AWARE', ['util.types.isProxy', 'structuredClone']],
 ];
+/** R2's rows held out of this file (wb-68s5, the hk9l / R660 roster pattern): each family's id and channels, in this file's order. */
+interface TrapRoster {
+  readonly comment: string;
+  readonly residuals: readonly {readonly id: string; readonly channels: readonly string[]}[];
+}
+const TRAP_ROSTER = new URL('fixtures/hyperunix-proof-status-trap-roster.json', import.meta.url);
 /** K1 (a)'s residual: the joint readings its variant leg does not set beside a planted status, each family's exemplars (Q). None sets the
  * result-coverage body incomplete, the value every cell already carries there. */
 const JOINT_RESIDUALS: readonly (readonly [string, readonly K3[]])[] = [
@@ -383,6 +409,11 @@ function deepFreeze<T>(value: T): T {
     for (const child of children) deepFreeze(child);
   }
   return value;
+}
+/** Whether a tree is frozen at every depth: the value itself and each object and list it holds (Q, wb-68s5). */
+function frozenThrough(value: unknown): boolean {
+  if (typeof value !== 'object' || value === null) return true;
+  return Object.isFrozen(value) && Object.values(value).every(frozenThrough);
 }
 /** A member's value: the status itself, or one proposed Claims record (01:4) carrying it. */
 const memberValue = (member: string, value: string): JsonValue => member === 'claims'
@@ -1230,6 +1261,13 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       }
     }
     expect(channels).toStrictEqual(['util.inspect', 'util.types.isProxy', 'structuredClone']);
+    // R2's rows are also held out of this file (wb-68s5): the trap roster names each family's id and channels, and TRAP_RESIDUALS and
+    // the channels the quiet rows visited are judged against it exactly, both ways and in order. So a channel removed from its row, from
+    // the frozen-shape literal's count and from the channels literal together (the gate's CT6T) reds here, at the roster.
+    const roster = JSON.parse(readFileSync(TRAP_ROSTER, 'utf8')) as TrapRoster;
+    expect(Object.keys(roster), '(the trap roster\'s members)').toStrictEqual(['comment', 'residuals']);
+    expect(TRAP_RESIDUALS.map(([id, names]) => ({id, channels: [...names]})), '(R2\'s rows against the trap roster)').toStrictEqual(roster.residuals);
+    expect(channels, '(the channels the quiet rows visited against the trap roster)').toStrictEqual(roster.residuals.flatMap(row => row.channels));
     // K1 (a)'s: on the same cell, K1 (a)'s own legs (k3Legs) run over probes in place of the readers. The exemplar's probe moves only
     // on the exemplar's values exactly (at each place the exemplar's value, else the cell's own) beside a planted status, and reads
     // quiet through both legs; its twins are flagged: the same values without a planted status by the registration leg (at the
@@ -1248,6 +1286,9 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     const variants = [...variantsOf(cell.reading)];
     expect(planted(cell.reading)).toBe(false);
     expect(variants.filter(variant => !planted(variant.reading)).map(variant => variant.label)).toStrictEqual([]);
+    // The variants list is frozen, each variant at every depth (wb-68s5): the positive control rebuilds the reading each turn must have
+    // judged from it (P5), so an edit at the control's call can neither rewrite the variant P5 rebuilds from nor extend the list.
+    deepFreeze(variants);
     interface Probe {
       readonly id: string;
       readonly values: string;
@@ -1275,16 +1316,28 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     }
     expect(probes.map(probe => probe.expected.length > 0)).toStrictEqual(JOINT_RESIDUALS.flatMap(([, joints]) =>
       joints.flatMap(joint => [false, true, ...joint.map(() => true)])));
+    // The probe list fired filters is frozen, each probe in it and each probe's expected list too (wb-68s5), so an edit at the control's
+    // call can neither swap the list for probes its reading fires (the gate's PSWAP) nor rewrite a probe (PMUT): each throws. P13 reads
+    // both freezes, this one and the variants', before the control runs.
+    deepFreeze(probes);
+    expect([Object.isFrozen(probes), probes.filter(probe => !Object.isFrozen(probe) || !Object.isFrozen(probe.expected)).map(probe => probe.id),
+      Object.isFrozen(variants), variants.filter(variant => !frozenThrough(variant)).map(variant => variant.label)],
+    '(P13: the probe list, a probe or its expected list, or the variants list or a variant at some depth, not frozen before the control)')
+      .toStrictEqual([true, [], true, []]);
     // fired records each reading it is given beside its verdict on that reading (the ids of the probes the reading fires, frozen) and
     // returns that same list, in call order, so the positive control below reads the readings it judged off the probe's own record, not
     // off the readings it built (wb-i3iu), and its verdict on each off that record too, not only off the value its assertion holds; and
     // the list the control holds from each call is that recorded list itself (wb-w6yw). The record is no longer a list the control
     // holds (wb-sidb): kept is a list only this closure holds, of one frozen [reading, verdict] pair per call, and the control reads it
-    // only through record(), which returns a fresh frozen copy of kept on each read.
+    // only through record(), which returns a fresh frozen copy of kept on each read. And the reading fired judges and records is not the
+    // one it is handed (wb-68s5): it is a copy taken at the call, the handed reading's serialization parsed back and frozen at every
+    // depth, so an edit at the control's call that writes the handed reading for the call and restores it after (the gate's RMUT)
+    // leaves that write in the reading fired judged and recorded, where P5 reads it.
     const {fired, record} = (() => {
       const kept: (readonly [JsonValue, readonly string[]])[] = [];
       return {
-        fired: (reading: JsonValue): readonly string[] => {
+        fired: (handed: JsonValue): readonly string[] => {
+          const reading = deepFreeze(json(handed));
           const values = valuesOf(reading);
           const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
           kept.push(Object.freeze([reading, verdict] as const));
@@ -1301,7 +1354,8 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     // judged reading is read off the same record (wb-w6yw): at each variant's turn, the probe and its registration twin (compared by
     // serialization), frozen, and the very list the control holds from its call at that turn (compared by identity); and the record
     // is read only through record() (wb-sidb): the copy the control reads is frozen and is not the copy a second read returns, and
-    // each [reading, verdict] pair in it is frozen. So the probe the legs read quiet is one such a reading fires: a probe whose values
+    // each [reading, verdict] pair in it is frozen; and each reading in it is a copy fired took at the call, not the reading the control
+    // handed it, frozen at every depth (wb-68s5, P14). So the probe the legs read quiet is one such a reading fires: a probe whose values
     // no reading holds, or that fired never reports, reds here, where the legs alone read it quiet.
     let controlled = 0;
     for (const [id, joints] of JOINT_RESIDUALS) {
@@ -1339,6 +1393,10 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
           .toStrictEqual([true, true]);
         const unsealed = variants.filter((_, index) => !Object.isFrozen(pairs[index]));
         expect(unsealed.map(variant => variant.label), `${label} (positive control, a variant whose recorded pair is not frozen)`).toStrictEqual([]);
+        const copies = pairs.map(([reading]) => reading);
+        const uncopied = variants.filter((_, index) => copies[index] === readings[index] || !frozenThrough(copies[index]));
+        expect(uncopied.map(variant => variant.label), `${label} (positive control, P14: a variant whose recorded reading is the one handed at its call or not frozen at every depth)`)
+          .toStrictEqual([]);
       }
     }
     expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
