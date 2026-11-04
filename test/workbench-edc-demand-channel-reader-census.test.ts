@@ -58,7 +58,15 @@
  * holds the real inputs to none, and the controls case holds each check to exactly the contradictions one edit of a real input
  * makes - for every paired witness refusal #1's U1, U2 and U3 lines and its F5 line name (the tracker export: wb-u6ho's first notes
  * lines with those prefixes), a control of that name in that witness's shape, beside further controls the case lists, which its
- * frozen literal of the controls alone holds (no outside anchor names them, and no claim here names them).
+ * frozen literal of the controls alone holds (no outside anchor names them, and no claim here names them). Cut #9 (wb-u6ho respin
+ * 2: refusal #2's U1-U5, orchestrator ruling R-B555, which binds a guard on each of refusal #1's three claim sets) gives the
+ * dimensions refusal #2's members edit negative controls, the helper, every table, the claims and the kills still unchanged: for
+ * every paired witness refusal #2's U1, U2, U3 and U4 lines name (wb-u6ho's first notes lines with those prefixes), a control of
+ * that name in that witness's shape; the controls case's two export reads become checks that take their inputs, each with its own
+ * controls (lineTwoContradictions and witnessContradictions); the row K list check also reads the list's '.' last; and the
+ * controls' frozen literal holds every control's payload - its name and the exact contradictions its check reads -, so one
+ * control's row swapped for another input reds the census (refusal #2's U5). Further controls beside them, named in neither
+ * refusal's witness form, are held by that literal alone (no outside anchor names them, and no claim here names them).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -73,7 +81,10 @@
  * witness refusal #1 names for it: a receiver its plant writes in another case (W-RECV-UPPER) or with other white space
  * (W-RECV-SPACED), the claim probe's receivers the clause names for a key (W-PROBE-KEY) and for an index (W-PROBE-INDEX), a name
  * shortened (W-NAME-SHORT), two names swapped (W-NAME-SWAP), a name ending in '.' (W-NAME-DOT) and the list opened twice
- * (W-MARK-TWICE).
+ * (W-MARK-TWICE); and in the shape of each paired witness refusal #2's U1 and U2 lines name for it: the words before the claim
+ * probe's receivers reworded (WR-PROBEWORD), a name in another case (WN-CASE), with other white space (WN-WS), in other quotes
+ * (WN-QUOTE) or under another id (WN-ID), a part's pin id in another case (WP-CASE) and the list's marker reworded before its
+ * 'other' (WM-SCOPE).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness - every plant's findings,
  * its LIVE QUIET entries and the texts of its access and import readings, so bare()'s text is held byte for byte - held to the
@@ -159,9 +170,18 @@
  * marker reworded (W-CONTROL-ITS), a mutant's paired receiver (W-CODE-RECV) and the control's (W-CTRL-RECV), a mutant killed at
  * another pin (W-KILLED-ELSEWHERE) and a two-digit id beside the line (W-ID-TWODIGIT: none, GP2_ID reads one digit); KILLS'
  * order check (killsOrderContradictions) to the first mutant at which the control moved before GP2-I2 makes the lines and KILLS
- * differ (W-KILLS-ORDER); and firstLine to a decoy line with its prefix before line 2 (W-FIRST-DECOY). The paired witnesses
- * refusal #1's U1, U2, U3 and F5 lines name (wb-u6ho's first notes lines with those prefixes) are exactly the controls named
- * 'W-...'. The TypeScript compiler anchors T-TOKENS,
+ * differ (W-KILLS-ORDER); and firstLine to a decoy line with its prefix before line 2 (W-FIRST-DECOY). It holds the line check in
+ * the shape of each paired witness refusal #2's U3 line names too: a bracket after an earlier ': ' inside a mutant's clause
+ * (WC-COLON), an earlier mention of its id with '): ' and a bracket before its clause (WC-EARLY), a code in another case
+ * (WS-CASE), with other white space (WS-WS) or in other quotes (WS-QUOTE), and a mutant KILLS kills at two other pins
+ * (WK-MULTI). wb-u6ho's F1 line is its notes line 2, the first notes line that starts with its prefix (lineTwoContradictions;
+ * WE-LINE: a line inserted before it). The paired witnesses refusal #1's U1, U2, U3 and F5 lines name - each 'W-' id, its parts
+ * capitals and digits joined by '-' - and those refusal #2's U1, U2, U3 and U4 lines name - each id of 'W', a capital and more
+ * capitals or digits, then '-' parts of capitals and digits -, each line read after its first ': ' (wb-u6ho's first notes
+ * lines with those prefixes), are exactly the controls whose names start with an id of that form (witnessContradictions;
+ * WW-EXTRA: a line naming one id more).
+ * The controls' frozen literal holds every control, table by table, by its name and the exact contradictions its check reads
+ * (firstLine's: the line it reads). The TypeScript compiler anchors T-TOKENS,
  * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
  * and for the identifier, private name and keyword classes, each comment run right after its own token in the compiler's token
@@ -268,6 +288,11 @@ const G23_ID = /\bG23-K\d\d\b/g;
 const SUB_CARRY = "wb-u6ho";
 /** A gate mutant id as that F1 line spells it. */
 const GP2_ID = /\bGP2-[A-Z]\d\b/g;
+/** A paired witness id as wb-u6ho's refusal #1 lines spell it: "W-", then parts of capitals and digits joined by "-". */
+const REFUSAL1_WITNESS = /\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
+/** A paired witness id as wb-u6ho's refusal #2 lines spell it: "W", a capital and more capitals or digits, then one or more
+ * "-" parts of capitals and digits. */
+const REFUSAL2_WITNESS = /\bW[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
 const PLANT_TSX = "src/plant.tsx";
@@ -1256,8 +1281,8 @@ function firstDiffering(left: readonly string[], right: readonly string[]): numb
  * and the receiver its plant has (accessReceiver) unless that is, byte for byte, the claim probe's receiver the clause names for
  * its form's site ("beside the claim probe's receiver, <a key's> for a key and <an index's> for an index"); no name holds the
  * list's separators (", ", "; " or a "." last); no other pin, witness, key or index. Returns the contradictions: a list opened
- * other than once, alone; else each name holding a separator, then the first part whose pin differs or else each pin's first
- * name that differs. */
+ * other than once, alone; a list not ending in its ".", alone (wb-u6ho refusal #2's further control LIST-NODOT); else each name
+ * holding a separator, then the first part whose pin differs or else each pin's first name that differs. */
 function kListContradictions(asWritten: string, plants: KPlants): string[] {
   const listMark = "no other key or index of those seven forms is claimed: ";
   const marks = asWritten.split(listMark).length - 1;
@@ -1272,8 +1297,9 @@ function kListContradictions(asWritten: string, plants: KPlants): string[] {
     }),
   ]);
   const separated = planted.flatMap(([pin, names]) => names.filter(name => name.includes(", ") || name.includes("; ") || name.endsWith(".")).map(name => `${pin} ${name}: the name holds the list's separators`));
-  const listed = asWritten
-    .slice(asWritten.indexOf(listMark) + listMark.length)
+  const list = asWritten.slice(asWritten.indexOf(listMark) + listMark.length);
+  if (!list.endsWith(".")) return ["AS-WRITTEN's row K list ends without its '.'"];
+  const listed = list
     .replace(/\.$/, "")
     .split("; ")
     .map((part): [string, string[]] => [part.slice(0, part.indexOf(" ")), part.slice(part.indexOf(" ") + 1).split(", ")]);
@@ -1341,6 +1367,30 @@ function killsOrderContradictions(named: readonly string[], kills: Kills): strin
   const held = Object.keys(kills);
   const at = firstDiffering(named, held);
   return at === undefined ? [] : [`KILLS' mutant ${at + 1} is ${held[at] ?? "missing"} where the lines name ${named[at] ?? "none"}`];
+}
+/** The paired witnesses refusal lines name, held both ways to the controls of their form (wb-u6ho refusal #2's U4: the controls
+ * case's export anchors had no negative control): in each line's text after its first ": " (its own id token before it never
+ * counts), every distinct id of the form, against every control whose name starts with an id of that form. Returns the
+ * contradictions: each line not found (an empty line), alone; else each id the lines name that no control has, then each control
+ * of the form that no line names. */
+function witnessContradictions(lines: readonly string[], controls: readonly string[], form: RegExp): string[] {
+  const missing = lines.flatMap((line, index) => (line === "" ? [`the refusal line ${index + 1} is not in the notes`] : []));
+  if (missing.length > 0) return missing;
+  const leading = new RegExp(`^(?:${form.source})`);
+  const named = [...new Set(lines.flatMap(line => line.slice(line.indexOf(": ") + 2).match(form) ?? []))];
+  const own = controls.filter(control => leading.test(control));
+  return [
+    ...named.filter(id => !own.includes(id)).map(id => `the refusal lines name ${id}, which is no control`),
+    ...own.filter(id => !named.includes(id)).map(id => `the control ${id} is named by no refusal line`),
+  ];
+}
+/** wb-u6ho's F1 line held to its place in its notes (wb-u6ho refusal #2's U4: the check read every line after the first as line 2):
+ * notes line 2 is the first line that starts with the F1 prefix. Returns the contradiction: no line starts with the prefix, or the
+ * first that does is another line. */
+function lineTwoContradictions(notes: string, prefix: string): string[] {
+  const at = notes.split("\n").findIndex(line => line.startsWith(prefix));
+  if (at === -1) return ["wb-u6ho's notes hold no line that starts with the F1 prefix"];
+  return at === 1 ? [] : [`wb-u6ho's first line with the F1 prefix is notes line ${at + 1}, not line 2`];
 }
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
@@ -1870,6 +1920,121 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ],
       ["W-MARK-TWICE", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand. Again, no other key or index of those seven forms is claimed: none."), K_PLANTS, ["AS-WRITTEN opens its row K list 2 times, not once"]],
       ["MARK-MISSING", edited(asWritten, "is claimed: K-TEMPLATE", "is held: K-TEMPLATE"), K_PLANTS, ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      // refusal #2's U1 and U2: the claim probe's opener words, a name's case, white space, quotes and id, a pin id's case and the
+      // list's marker
+      [
+        "WR-PROBEWORD",
+        edited(asWritten, "(beside the claim probe's receiver, ", "(beside the gate's receiver, "),
+        K_PLANTS,
+        [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+        ],
+      ],
+      ["WN-CASE", edited(asWritten, "R4 Demand,", "R4 demand,"), K_PLANTS, ["K-TYPE-REFERENCE: the list names R4 demand where its plant writes R4 Demand"]],
+      ["WP-CASE", edited(asWritten, "; K-NUMBER-TYPE L1 0", "; k-number-type L1 0"), K_PLANTS, ["the list's part 6 is k-number-type where K pin 6 is K-NUMBER-TYPE"]],
+      ["WN-WS", edited(asWritten, 'C7 "de" +\n  "mand"', 'C7 "de" + "mand"'), K_PLANTS, ['K-CONCATENATION: the list names C7 "de" + "mand" where its plant writes C7 "de" +\n  "mand"']],
+      ["WN-QUOTE", edited(asWritten, "C2 'de' + 'mand'", 'C2 "de" + "mand"'), K_PLANTS, [`K-CONCATENATION: the list names C2 "de" + "mand" where its plant writes C2 'de' + 'mand'`]],
+      ["WN-ID", edited(asWritten, "R6 keys.demand,", "R8 keys.demand,"), K_PLANTS, ["K-TYPE-REFERENCE: the list names R8 keys.demand where its plant writes R6 keys.demand"]],
+      ["WM-SCOPE", edited(asWritten, "; no other key or index of those seven forms is claimed: ", "; every other key or index of those seven forms is claimed: "), K_PLANTS, ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      // further controls: each probe marker's first and last character, the list marker's first character, the list's '.' last, the
+      // separators, a pin's or a name's text extended, doubled or moved, and receivers around, inside or beside the claim probe's
+      [
+        "PROBE-KEY-OPENER",
+        edited(asWritten, "(beside the claim probe's receiver, ", "(Beside the claim probe's receiver, "),
+        K_PLANTS,
+        [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+        ],
+      ],
+      [
+        "PROBE-KEY-CLOSER",
+        edited(asWritten, "(context.inner) for a key and ", "(context.inner) for a kex and "),
+        K_PLANTS,
+        [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+          'K-PARENTHESIZED: the list names P1 ("demand") where its plant writes P1 ("demand") under Opts<Context.Inner>',
+          "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>",
+          "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
+        ],
+      ],
+      [
+        "PROBE-INDEX-OPENER",
+        edited(asWritten, "(context.inner) for a key and ", "(context.inner)_for a key and "),
+        K_PLANTS,
+        [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+          'K-PARENTHESIZED: the list names P1 ("demand") where its plant writes P1 ("demand") under Opts<Context.Inner>',
+          "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>",
+          "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
+        ],
+      ],
+      [
+        "PROBE-INDEX-CLOSER",
+        edited(asWritten, " for an index, or after", " for an indez, or after"),
+        K_PLANTS,
+        [
+          'K-PARENTHESIZED: the list names P1 ("demand") where its plant writes P1 ("demand") under Opts<Context.Inner>',
+          "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>",
+          "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
+        ],
+      ],
+      ["MARK-FIRST", edited(asWritten, "; no other key or index", "; No other key or index"), K_PLANTS, ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      ["LIST-NODOT", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand"), K_PLANTS, ["AS-WRITTEN's row K list ends without its '.'"]],
+      ["LIST-DOTS", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand.."), K_PLANTS, ["K-TYPE-REFERENCE: the list names GP2-R2 demand. where its plant writes GP2-R2 demand"]],
+      ["NAME-SPACE-AFTER", edited(asWritten, "T1 `demand`, T2", "T1 `demand` , T2"), K_PLANTS, ["K-TEMPLATE: the list names T1 `demand`  where its plant writes T1 `demand`"]],
+      ["NAME-SPACE-BEFORE", edited(asWritten, "T1 `demand`, T2", "T1 `demand`,  T2"), K_PLANTS, ["K-TEMPLATE: the list names  T2 `de\\x6dand` where its plant writes T2 `de\\x6dand`"]],
+      ["NAME-COMMA-NOSPACE", edited(asWritten, "T1 `demand`, T2", "T1 `demand`,T2"), K_PLANTS, ["K-TEMPLATE: the list names T1 `demand`,T2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["PART-SEMI-NOSPACE", edited(asWritten, "`demand now`; K-CONCATENATION", "`demand now`;K-CONCATENATION"), K_PLANTS, ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      [
+        "PIN-SWAP",
+        edited(
+          asWritten,
+          '; K-NUMBER-TYPE L1 0, L2 1.5, L3 0x10, L4 -1, L5 1e3, GP2-L1 -1.5, GP2-L2 0xff; K-TYPE-REFERENCE R1 Key, R2 Keys.Demand, R3 Key<X>, R4 Demand, R5 Pick<"demand">, R6 keys.demand, GP2-R1 A.B.Demand, GP2-R2 demand.',
+          '; K-TYPE-REFERENCE R1 Key, R2 Keys.Demand, R3 Key<X>, R4 Demand, R5 Pick<"demand">, R6 keys.demand, GP2-R1 A.B.Demand, GP2-R2 demand; K-NUMBER-TYPE L1 0, L2 1.5, L3 0x10, L4 -1, L5 1e3, GP2-L1 -1.5, GP2-L2 0xff.',
+        ),
+        K_PLANTS,
+        ["the list's part 6 is K-TYPE-REFERENCE where K pin 6 is K-NUMBER-TYPE"],
+      ],
+      ["PIN-EXTENDED", edited(asWritten, "; K-TYPE-REFERENCE R1", "; K-TYPE-REFERENCES R1"), K_PLANTS, ["the list's part 7 is K-TYPE-REFERENCES where K pin 7 is K-TYPE-REFERENCE"]],
+      ["NAME-EXTENDED", edited(asWritten, "R6 keys.demand,", "R6 keys.demands,"), K_PLANTS, ["K-TYPE-REFERENCE: the list names R6 keys.demands where its plant writes R6 keys.demand"]],
+      ["NAME-DOUBLED", edited(asWritten, "T1 `demand`, T2", "T1 `demand`, T1 `demand`, T2"), K_PLANTS, ["K-TEMPLATE: the list names T1 `demand` where its plant writes T2 `de\\x6dand`"]],
+      ["PART-DOUBLED", edited(asWritten, "; K-IDENTIFIER I1", "; K-NUMBER N1 0; K-IDENTIFIER I1"), K_PLANTS, ["the list's part 4 is K-NUMBER where K pin 4 is K-IDENTIFIER"]],
+      ["PART-AFTER", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand; extra X1 foo."), K_PLANTS, ["the list's part 8 is extra where K pin 8 is missing"]],
+      [
+        "PART-DROPPED",
+        edited(asWritten, '; K-TYPE-REFERENCE R1 Key, R2 Keys.Demand, R3 Key<X>, R4 Demand, R5 Pick<"demand">, R6 keys.demand, GP2-R1 A.B.Demand, GP2-R2 demand.', "."),
+        K_PLANTS,
+        ["the list's part 7 is missing where K pin 7 is K-TYPE-REFERENCE"],
+      ],
+      ["RECV-UPPER-INDEX", asWritten, swapped("K-NUMBER-TYPE", "L1", "export type Value = opts<Context.Inner>[0];\n"), ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under opts<Context.Inner>"]],
+      ["RECV-SPACED-KEY", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "( context.inner)")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under ( context.inner)"]],
+      ["RECV-PREFIX-INDEX", asWritten, swapped("K-NUMBER-TYPE", "L1", "export type Value = Opts[0];\n"), ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts"]],
+      ["RECV-SUFFIX-KEY", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "f(context.inner)")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under f(context.inner)"]],
+      ["RECV-LINE-END", asWritten, swapped("K-NUMBER-TYPE", "L1", "export type Value = Opts<Context.\nInner>[0];\n"), ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.\nInner>"]],
+      ["PROBE-KEY-PADDED", edited(asWritten, "(context.inner) for a key and ", "(context.inner)  for a key and "), K_PLANTS, [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+      ]],
+      ["PROBE-INDEX-PADDED", edited(asWritten, "Opts<Context.Inner> for an index", "Opts<Context.Inner>  for an index"), K_PLANTS, [
+          'K-PARENTHESIZED: the list names P1 ("demand") where its plant writes P1 ("demand") under Opts<Context.Inner>',
+          "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>",
+          "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
+      ]],
+      ["PART-SEMI-TWOSPACE", edited(asWritten, "`demand now`; K-CONCATENATION", "`demand now`;  K-CONCATENATION"), K_PLANTS, ["the list's part 2 is  where K pin 2 is K-CONCATENATION"]],
     ];
     expect(kListContradictions(asWritten, K_PLANTS), "the row K list check reads no contradiction in the real clause and plants").toEqual([]);
     for (const [control, clause, plants, contradictions] of listControls) expect(kListContradictions(clause, plants), `${control}: the row K list check reports exactly this edit's contradictions`).toEqual(contradictions);
@@ -1913,6 +2078,62 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["UNPLANTED", subLine, replanted("K-TEMPLATE", witnesses => witnesses.filter(([id]) => id !== "GP2-T2")), KILLS, ["GP2-T2: row K plants no witness under its id"]],
       ["W-KILLED-ELSEWHERE", subLine, K_PLANTS, { ...KILLS, "GP2-T2": ["K-CONCATENATION"] }, ["GP2-T2 is not killed at K-TEMPLATE"]],
       ["W-ID-TWODIGIT", edited(subLine, "All 16 are hypothetical", "All 16 (and none of GP2-X12) are hypothetical"), K_PLANTS, KILLS, []],
+      // refusal #2's U3: where a mutant's code is read (WC-COLON, WC-EARLY), its spelling (WS-CASE, WS-WS, WS-QUOTE) and its kill pin
+      // (WK-MULTI)
+      [
+        "WC-COLON",
+        edited(subLine, "GP2-L1 (a negative decimal fraction joins as its text): [-1.5], text only.", "GP2-L1 (a negative: [-1.5] decimal fraction joins as its text): [-1.25], text only."),
+        K_PLANTS,
+        KILLS,
+        ["GP2-L1: K-NUMBER-TYPE's witness does not spell [-1.25]"],
+      ],
+      [
+        "WC-EARLY",
+        edited(subLine, "1 -> 0. GP2-L1 (a negative decimal fraction joins as its text): [-1.5], text only.", "1 -> 0. GP2-L1): [-1.5]. GP2-L1 (a negative decimal fraction joins as its text): [-1.25], text only."),
+        K_PLANTS,
+        KILLS,
+        ["GP2-L1: K-NUMBER-TYPE's witness does not spell [-1.25]"],
+      ],
+      ["WS-CASE", edited(subLine, "[A.B.Demand]", "[A.B.demand]"), K_PLANTS, KILLS, ["GP2-R1: K-TYPE-REFERENCE's witness does not spell [A.B.demand]"]],
+      ["WS-WS", edited(subLine, '[("demand" /* c */)]', '[("demand"/* c */)]'), K_PLANTS, KILLS, [`GP2-P2: K-PARENTHESIZED's witness does not spell [("demand"/* c */)]`]],
+      ["WS-QUOTE", edited(subLine, `['de' + "mand"]`, '["de" + "mand"]'), K_PLANTS, KILLS, [`GP2-C1: K-CONCATENATION's witness does not spell ["de" + "mand"]`]],
+      ["WK-MULTI", subLine, K_PLANTS, { ...KILLS, "GP2-T2": ["K-CONCATENATION", "K-NUMBER"] }, ["GP2-T2 is not killed at K-TEMPLATE"]],
+      // further controls: a clause's start and end, its code's first bracket and first character, the control's 'under', the kill
+      // pin's place among a mutant's pins and a pin with no kills, a witness planted twice, the marker's case and its two sides, the
+      // count's opener, closer and text, and ids beside the line in other shapes than GP2_ID's
+      [
+        "CODE-NEXT-MENTION",
+        edited(subLine, "GP2-L1 (a negative decimal fraction joins as its text): [-1.5]", "GP2-L1 (a negative decimal fraction joins as its text, as GP2-L2 does not): [-1.5]"),
+        K_PLANTS,
+        KILLS,
+        [],
+      ],
+      ["CODE-TWO-BRACKETS", edited(subLine, "): [-1.5], text only.", "): [-1.5] [0], text only."), K_PLANTS, KILLS, []],
+      ["CODE-AFTER-ALL", edited(subLine, "): [demand], 0 -> 1. All 16 are hypothetical", ", 0 -> 1. All 16 are hypothetical): [demand]"), K_PLANTS, KILLS, ["GP2-R2: the line pairs it with no witness"]],
+      ["CODE-FIRST-CHAR", edited(subLine, "witness (demand.inner)[`context`]", "witness ((demand.inner)[`context`]"), K_PLANTS, KILLS, ["GP2-T1: K-TEMPLATE's witness does not spell ((demand.inner)[`context`]"]],
+      [
+        "CLAUSE-LATER-MENTION",
+        edited(subLine, "GP2-L2 (a hex with a letter digit): [0xff], text only.", "GP2-L2 (a hex with a letter digit, unlike GP2-L1 (its sibling)): [0xff], text only."),
+        K_PLANTS,
+        KILLS,
+        [],
+      ],
+      ["CTRL-UNDER-WORD", edited(subLine, "[context] under (demand.inner)", "[context] beside (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["KILLED-SECOND", subLine, K_PLANTS, { ...KILLS, "GP2-T2": ["K-CONCATENATION", "K-TEMPLATE"] }, []],
+      ["KILLS-MISSING", subLine, K_PLANTS, Object.fromEntries(Object.entries(KILLS).filter(([mutant]) => mutant !== "GP2-T2")), ["GP2-T2 is not killed at K-TEMPLATE"]],
+      ["PLANTED-TWICE", subLine, added("K-CONCATENATION", "GP2-C3", "GP2-T2", keyPlant("`\\x64emand`")), KILLS, []],
+      ["MARK-LOWER", edited(subLine, " The control GP2-I1", " the control GP2-I1"), K_PLANTS, KILLS, ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["MARK-CONTROLLING", edited(subLine, " The control GP2-I1", " The controlling GP2-I1"), K_PLANTS, KILLS, ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["MARK-BEFORE", edited(subLine, ". The control GP2-I1", ".The control GP2-I1"), K_PLANTS, KILLS, ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["COUNT-OPENER", edited(subLine, "generically. 16 gate-authored", "generically: 16 gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-CLOSER", edited(subLine, "16 gate-authored", "16 gate-made"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-WORDS", edited(subLine, ". 16 gate-authored", ". sixteen gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts NaN"]],
+      ["COUNT-SUFFIX", edited(subLine, ". 16 gate-authored", ". 16x gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts NaN"]],
+      ["ID-TWOLETTER", edited(subLine, "All 16 are hypothetical", "All 16 (and none of GP2-XY1) are hypothetical"), K_PLANTS, KILLS, []],
+      ["ID-GLUED", edited(subLine, "All 16 are hypothetical", "All 16 (and none of XGP2-X1) are hypothetical"), K_PLANTS, KILLS, []],
+      ["ID-TRAILING", edited(subLine, "All 16 are hypothetical", "All 16 (and none of GP2-X1a) are hypothetical"), K_PLANTS, KILLS, []],
+      ["COUNT-TAB", edited(subLine, ". 16 gate-authored", ". 16\tgate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-NOSPACE", edited(subLine, "generically. 16 gate-authored", "generically.16 gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
     ];
     expect(subLineContradictions(subLine, K_PLANTS, KILLS), "the wb-u6ho line check reads no contradiction in the real line, plants and kills").toEqual([]);
     for (const [control, line, plants, kills, contradictions] of lineControls) expect(subLineContradictions(line, plants, kills), `${control}: the wb-u6ho line check reports exactly this edit's contradictions`).toEqual(contradictions);
@@ -1934,65 +2155,202 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["FIRST-INSIDE", [`${lines[0] ?? ""} ${decoy}`, ...lines.slice(1)].join("\n"), subLine],
       ["FIRST-NONE", lines.filter(line => !line.startsWith(prefix)).join("\n"), ""],
     ];
-    expect([subLine.startsWith(prefix), lines.indexOf(subLine)], "firstLine reads wb-u6ho's notes line 2, the first with the prefix").toEqual([true, 1]);
     for (const [control, text, first] of firstControls) expect(firstLine(text, prefix), `${control}: firstLine reads the first line that starts with its prefix`).toBe(first);
-    // the controls' own shape, and the paired witnesses refusal #1's U1, U2, U3 and F5 lines name (wb-u6ho's first notes lines with
-    // those prefixes): exactly the controls named "W-..."
-    const controls = [...listControls.map(([control]) => control), ...lineControls.map(([control]) => control), ...killsControls.map(([control]) => control), ...firstControls.map(([control]) => control)];
-    expect(controls, "the controls, table by table").toEqual([
-      "W-RECV-UPPER",
-      "W-RECV-SPACED",
-      "RECV-AROUND",
-      "RECV-AFTER",
-      "RECV-INSIDE",
-      "W-PROBE-KEY",
-      "W-PROBE-INDEX",
-      "W-NAME-SHORT",
-      "W-NAME-SWAP",
-      "NAME-ADDED",
-      "NAME-DROPPED",
-      "PIN-RENAMED",
-      "W-NAME-DOT",
-      "NAME-COMMA",
-      "NAME-SEMICOLON",
-      "W-MARK-TWICE",
-      "MARK-MISSING",
-      "W-COUNT-15",
-      "COUNT-17",
-      "W-CONTROL-ITS",
-      "CONTROL-WORD",
-      "MARKER-TWICE",
-      "W-CODE-RECV",
-      "CODE-KEY",
-      "W-CTRL-RECV",
-      "CONTROL-KEY",
-      "CONTROL-COUNTED",
-      "CONTROL-SECOND",
-      "UNPAIRED",
-      "UNPLANTED",
-      "W-KILLED-ELSEWHERE",
-      "W-ID-TWODIGIT",
-      "W-KILLS-ORDER",
-      "KILLS-DROPPED",
-      "KILLS-ADDED",
-      "W-FIRST-DECOY",
-      "FIRST-INSIDE",
-      "FIRST-NONE",
-    ]);
+    // wb-u6ho's F1 line is notes line 2, the first with its prefix (refusal #2's U4: that check read every line after the first as
+    // line 2): lineTwoContradictions
+    const lineTwoControls: readonly (readonly [control: string, text: string, contradictions: readonly string[]])[] = [
+      ["WE-LINE", [lines[0] ?? "", "A line inserted before the F1 line.", ...lines.slice(1)].join("\n"), ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      ["LINE-FIRST", lines.slice(1).join("\n"), ["wb-u6ho's first line with the F1 prefix is notes line 1, not line 2"]],
+      ["LINE-NONE", lines.filter(line => !line.startsWith(prefix)).join("\n"), ["wb-u6ho's notes hold no line that starts with the F1 prefix"]],
+      ["LINE-COPIED", [...lines, subLine].join("\n"), []],
+      ["LINE-INSIDE", [`${lines[0] ?? ""} ${prefix}`, ...lines.slice(1)].join("\n"), []],
+    ];
+    expect(lineTwoContradictions(notes, prefix), "firstLine reads wb-u6ho's notes line 2, the first with the prefix").toEqual([]);
+    for (const [control, text, contradictions] of lineTwoControls) expect(lineTwoContradictions(text, prefix), `${control}: the line-2 check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // the paired witnesses refusal #1's U1, U2, U3 and F5 lines name (their "W-..." ids) and refusal #2's U1, U2, U3 and U4 lines
+    // name (their ids of the form "W", a capital and its parts), each line read after its first ": " (wb-u6ho's first notes lines
+    // with those prefixes): exactly the controls of those forms (witnessContradictions; refusal #2's U4: no negative control)
     const refused = [
       "- U1-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-RECEIVER-WORDS-",
       "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-NAME-ORDER-SEPARATOR-WORDS-",
       "- U3-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-WB-U6HO-F1-LINE-ANCHOR-WORDS-",
       "- F5 INFO: [record.prep F5 verbatim after this bracket; PREP grade INFO kept] F5 INFO (non-members among the census-local survivors).",
     ].map(start => firstLine(notes, start));
+    const refused2 = [
+      "- U1-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL2-ROW-K-LIST-PROBE-RECEIVER-OPENER-WORDS-",
+      "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL2-ROW-K-LIST-NAME-PIN-MARKER-WORDS-",
+      "- U3-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL2-WB-U6HO-F1-LINE-PAIRING-WORDS-",
+      "- U4-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-CONTROLS-CASE-EXPORT-ANCHOR-WORDS-",
+    ].map(start => firstLine(notes, start));
+    const witnessControls: readonly (readonly [control: string, texts: readonly string[], form: RegExp, contradictions: readonly string[], extra: readonly string[]])[] = [
+      ["WW-EXTRA", [`${refused[0] ?? ""} W-EXTRA`, ...refused.slice(1)], REFUSAL1_WITNESS, ["the refusal lines name W-EXTRA, which is no control"], []],
+      ["IDS-EXTRA-TWICE", [`${refused[0] ?? ""} W-EXTRA W-EXTRA`, ...refused.slice(1)], REFUSAL1_WITNESS, ["the refusal lines name W-EXTRA, which is no control"], []],
+      ["IDS-MULTIPART", [`${refused[0] ?? ""} W-RECV-UPPER-TWO`, ...refused.slice(1)], REFUSAL1_WITNESS, ["the refusal lines name W-RECV-UPPER-TWO, which is no control"], []],
+      ["IDS-UNNAMED", [edited(refused[0] ?? "", "Witness W-RECV-SPACED:", "Witness RECV-SPACED:"), ...refused.slice(1)], REFUSAL1_WITNESS, ["the control W-RECV-SPACED is named by no refusal line"], []],
+      ["IDS-NO-LINE", ["", ...refused.slice(1)], REFUSAL1_WITNESS, ["the refusal line 1 is not in the notes"], []],
+      ["IDS-OWN-PARTIAL", refused, REFUSAL1_WITNESS, ["the control W-RECV-UPPER x is named by no refusal line"], ["W-RECV-UPPER x"]],
+      ["IDS-OWN-INSIDE", refused, REFUSAL1_WITNESS, [], ["X-W-EXTRA"]],
+      [
+        "IDS2-MULTIPART",
+        [edited(refused2[0] ?? "", "Witness WR-PROBEWORD:", "Witness WR-PROBEWORD-TWO:"), ...refused2.slice(1)],
+        REFUSAL2_WITNESS,
+        ["the refusal lines name WR-PROBEWORD-TWO, which is no control", "the control WR-PROBEWORD is named by no refusal line"],
+        [],
+      ],
+      ["IDS2-BODY-START", [edited(refused2[0] ?? "", "-FAIL-CLOSED: U1 LOW, fail-closed: ", "-FAIL-CLOSED: WX-START U1 LOW, fail-closed: "), ...refused2.slice(1)], REFUSAL2_WITNESS, ["the refusal lines name WX-START, which is no control"], []],
+      ["IDS2-DIGITS", [...refused2.slice(0, 3), `${refused2[3] ?? ""} WX-A1`], REFUSAL2_WITNESS, ["the refusal lines name WX-A1, which is no control"], []],
+      ["IDS-GLUED", [`${refused[0] ?? ""} XW-EXTRA`, ...refused.slice(1)], REFUSAL1_WITNESS, [], []],
+      ["IDS-TRAILING", [`${refused[0] ?? ""} W-EXTRAx`, ...refused.slice(1)], REFUSAL1_WITNESS, [], []],
+      ["IDS2-GLUED", [...refused2.slice(0, 3), `${refused2[3] ?? ""} XWX-A`], REFUSAL2_WITNESS, [], []],
+      ["IDS2-TRAILING", [...refused2.slice(0, 3), `${refused2[3] ?? ""} WX-Ab`], REFUSAL2_WITNESS, [], []],
+    ];
+    const controls = [
+      ...listControls.map(([control]) => control),
+      ...lineControls.map(([control]) => control),
+      ...killsControls.map(([control]) => control),
+      ...firstControls.map(([control]) => control),
+      ...lineTwoControls.map(([control]) => control),
+      ...witnessControls.map(([control]) => control),
+    ];
+    expect(witnessContradictions(refused, controls, REFUSAL1_WITNESS), "the paired witnesses refusal #1's U1, U2, U3 and F5 lines name are exactly the controls named 'W-...'").toEqual([]);
     expect(
-      refused.map(line => line !== ""),
-      "wb-u6ho's notes hold refusal #1's U1, U2, U3 and F5 lines",
-    ).toEqual([true, true, true, true]);
-    expect(
-      [...new Set(refused.flatMap(line => line.match(/\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? []))].sort(),
-      "the paired witnesses refusal #1's U1, U2, U3 and F5 lines name are exactly the controls named 'W-...'",
-    ).toEqual(controls.filter(control => control.startsWith("W-")).sort());
+      witnessContradictions(refused2, controls, REFUSAL2_WITNESS),
+      "the paired witnesses refusal #2's U1, U2, U3 and U4 lines name are exactly the controls named 'W', a capital and its parts",
+    ).toEqual([]);
+    for (const [control, texts, form, contradictions, extra] of witnessControls) expect(witnessContradictions(texts, [...controls, ...extra], form), `${control}: the witness check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // the controls' payloads (refusal #2's U5: the frozen literal held the controls' names only, so one control's row swapped for
+    // another passing input read green): every control, table by table, by its name and the exact contradictions its check reads
+    // (firstLine's controls: the line it reads, "the F1 line" or "no line")
+    const readings: (readonly [control: string, payload: readonly string[]])[] = [
+      ...listControls.map(([control, clause, plants]): readonly [string, readonly string[]] => [control, kListContradictions(clause, plants)]),
+      ...lineControls.map(([control, line, plants, kills]): readonly [string, readonly string[]] => [control, subLineContradictions(line, plants, kills)]),
+      ...killsControls.map(([control, kills]): readonly [string, readonly string[]] => [control, killsOrderContradictions(named, kills)]),
+      ...firstControls.map(([control, text]): readonly [string, readonly string[]] => {
+        const first = firstLine(text, prefix);
+        return [control, [first === subLine ? "the F1 line" : first === "" ? "no line" : first]];
+      }),
+      ...lineTwoControls.map(([control, text]): readonly [string, readonly string[]] => [control, lineTwoContradictions(text, prefix)]),
+      ...witnessControls.map(([control, texts, form, , extra]): readonly [string, readonly string[]] => [control, witnessContradictions(texts, [...controls, ...extra], form)]),
+    ];
+    expect(readings, "the controls, table by table, each with its payload").toEqual([
+      ["W-RECV-UPPER", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (Context.inner)"]],
+      ["W-RECV-SPACED", ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts< Context.Inner>"]],
+      ["RECV-AROUND", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under ((context.inner))"]],
+      ["RECV-AFTER", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner).x"]],
+      ["RECV-INSIDE", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under context.inner"]],
+      ["W-PROBE-KEY", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)"]],
+      ["W-PROBE-INDEX", ["K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
+      ["W-NAME-SHORT", ["K-TEMPLATE: the list names T4 `dem` where its plant writes T4 `dem and`"]],
+      ["W-NAME-SWAP", ["K-TEMPLATE: the list names T2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["NAME-ADDED", ["K-TYPE-REFERENCE: the list names R7 Other where its plant writes nothing"]],
+      ["NAME-DROPPED", ["K-TYPE-REFERENCE: the list names nothing where its plant writes GP2-R2 demand"]],
+      ["PIN-RENAMED", ["the list's part 7 is K-TYPE-REF where K pin 7 is K-TYPE-REFERENCE"]],
+      ["W-NAME-DOT", ["K-NUMBER N9 1.: the name holds the list's separators"]],
+      ["NAME-COMMA", ["K-TEMPLATE T9 `de, mand`: the name holds the list's separators", "K-TEMPLATE: the list names T9 `de where its plant writes T9 `de, mand`"]],
+      ["NAME-SEMICOLON", ["K-TEMPLATE T9 `de; mand`: the name holds the list's separators", "the list's part 2 is mand where K pin 2 is K-CONCATENATION"]],
+      ["W-MARK-TWICE", ["AS-WRITTEN opens its row K list 2 times, not once"]],
+      ["MARK-MISSING", ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      ["WR-PROBEWORD", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)"]],
+      ["WN-CASE", ["K-TYPE-REFERENCE: the list names R4 demand where its plant writes R4 Demand"]],
+      ["WP-CASE", ["the list's part 6 is k-number-type where K pin 6 is K-NUMBER-TYPE"]],
+      ["WN-WS", ["K-CONCATENATION: the list names C7 \"de\" + \"mand\" where its plant writes C7 \"de\" +\n  \"mand\""]],
+      ["WN-QUOTE", ["K-CONCATENATION: the list names C2 \"de\" + \"mand\" where its plant writes C2 'de' + 'mand'"]],
+      ["WN-ID", ["K-TYPE-REFERENCE: the list names R8 keys.demand where its plant writes R6 keys.demand"]],
+      ["WM-SCOPE", ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      ["PROBE-KEY-OPENER", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)"]],
+      ["PROBE-KEY-CLOSER", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)", "K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
+      ["PROBE-INDEX-OPENER", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)", "K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
+      ["PROBE-INDEX-CLOSER", ["K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
+      ["MARK-FIRST", ["AS-WRITTEN opens its row K list 0 times, not once"]],
+      ["LIST-NODOT", ["AS-WRITTEN's row K list ends without its '.'"]],
+      ["LIST-DOTS", ["K-TYPE-REFERENCE: the list names GP2-R2 demand. where its plant writes GP2-R2 demand"]],
+      ["NAME-SPACE-AFTER", ["K-TEMPLATE: the list names T1 `demand`  where its plant writes T1 `demand`"]],
+      ["NAME-SPACE-BEFORE", ["K-TEMPLATE: the list names  T2 `de\\x6dand` where its plant writes T2 `de\\x6dand`"]],
+      ["NAME-COMMA-NOSPACE", ["K-TEMPLATE: the list names T1 `demand`,T2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["PART-SEMI-NOSPACE", ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      ["PIN-SWAP", ["the list's part 6 is K-TYPE-REFERENCE where K pin 6 is K-NUMBER-TYPE"]],
+      ["PIN-EXTENDED", ["the list's part 7 is K-TYPE-REFERENCES where K pin 7 is K-TYPE-REFERENCE"]],
+      ["NAME-EXTENDED", ["K-TYPE-REFERENCE: the list names R6 keys.demands where its plant writes R6 keys.demand"]],
+      ["NAME-DOUBLED", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T2 `de\\x6dand`"]],
+      ["PART-DOUBLED", ["the list's part 4 is K-NUMBER where K pin 4 is K-IDENTIFIER"]],
+      ["PART-AFTER", ["the list's part 8 is extra where K pin 8 is missing"]],
+      ["PART-DROPPED", ["the list's part 7 is missing where K pin 7 is K-TYPE-REFERENCE"]],
+      ["RECV-UPPER-INDEX", ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under opts<Context.Inner>"]],
+      ["RECV-SPACED-KEY", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under ( context.inner)"]],
+      ["RECV-PREFIX-INDEX", ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts"]],
+      ["RECV-SUFFIX-KEY", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under f(context.inner)"]],
+      ["RECV-LINE-END", ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.\nInner>"]],
+      ["PROBE-KEY-PADDED", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)"]],
+      ["PROBE-INDEX-PADDED", ["K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
+      ["PART-SEMI-TWOSPACE", ["the list's part 2 is  where K pin 2 is K-CONCATENATION"]],
+      ["W-COUNT-15", ["wb-u6ho's F1 line names 16 mutants before its control and counts 15"]],
+      ["COUNT-17", ["wb-u6ho's F1 line names 16 mutants before its control and counts 17"]],
+      ["W-CONTROL-ITS", ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["CONTROL-WORD", []],
+      ["MARKER-TWICE", ["wb-u6ho's F1 line names GP2-I2, GP2-R1, GP2-R2, GP2-I1 from its control marker on, not one control beside its counted mutants", "GP2-I2: the line pairs it with no witness", "GP2-R1: the line pairs it with no witness", "GP2-R2: the line pairs it with no witness"]],
+      ["W-CODE-RECV", ["GP2-T1: K-TEMPLATE's witness does not spell (other.inner)[`context`]"]],
+      ["CODE-KEY", ["GP2-T2: K-TEMPLATE's witness does not spell [`\\x65emand`]"]],
+      ["W-CTRL-RECV", ["GP2-I1: K-IDENTIFIER's witness does not spell (other.inner)[context]"]],
+      ["CONTROL-KEY", ["GP2-I1: K-IDENTIFIER's witness does not spell (demand.inner)[contexts]"]],
+      ["CONTROL-COUNTED", ["wb-u6ho's F1 line names GP2-T1 from its control marker on, not one control beside its counted mutants", "GP2-T1: K-TEMPLATE's witness does not spell (demand.inner)[context]"]],
+      ["CONTROL-SECOND", ["wb-u6ho's F1 line names GP2-I1, GP2-X9 from its control marker on, not one control beside its counted mutants", "GP2-X9: the line pairs it with no witness", "GP2-X9: row K plants no witness under its id"]],
+      ["UNPAIRED", ["GP2-N1: the line pairs it with no witness"]],
+      ["UNPLANTED", ["GP2-T2: row K plants no witness under its id"]],
+      ["W-KILLED-ELSEWHERE", ["GP2-T2 is not killed at K-TEMPLATE"]],
+      ["W-ID-TWODIGIT", []],
+      ["WC-COLON", ["GP2-L1: K-NUMBER-TYPE's witness does not spell [-1.25]"]],
+      ["WC-EARLY", ["GP2-L1: K-NUMBER-TYPE's witness does not spell [-1.25]"]],
+      ["WS-CASE", ["GP2-R1: K-TYPE-REFERENCE's witness does not spell [A.B.demand]"]],
+      ["WS-WS", ["GP2-P2: K-PARENTHESIZED's witness does not spell [(\"demand\"/* c */)]"]],
+      ["WS-QUOTE", ["GP2-C1: K-CONCATENATION's witness does not spell [\"de\" + \"mand\"]"]],
+      ["WK-MULTI", ["GP2-T2 is not killed at K-TEMPLATE"]],
+      ["CODE-NEXT-MENTION", []],
+      ["CODE-TWO-BRACKETS", []],
+      ["CODE-AFTER-ALL", ["GP2-R2: the line pairs it with no witness"]],
+      ["CODE-FIRST-CHAR", ["GP2-T1: K-TEMPLATE's witness does not spell ((demand.inner)[`context`]"]],
+      ["CLAUSE-LATER-MENTION", []],
+      ["CTRL-UNDER-WORD", ["GP2-I1: the line pairs it with no witness"]],
+      ["KILLED-SECOND", []],
+      ["KILLS-MISSING", ["GP2-T2 is not killed at K-TEMPLATE"]],
+      ["PLANTED-TWICE", []],
+      ["MARK-LOWER", ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["MARK-CONTROLLING", ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["MARK-BEFORE", ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["COUNT-OPENER", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-CLOSER", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-WORDS", ["wb-u6ho's F1 line names 16 mutants before its control and counts NaN"]],
+      ["COUNT-SUFFIX", ["wb-u6ho's F1 line names 16 mutants before its control and counts NaN"]],
+      ["ID-TWOLETTER", []],
+      ["ID-GLUED", []],
+      ["ID-TRAILING", []],
+      ["COUNT-TAB", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["COUNT-NOSPACE", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["W-KILLS-ORDER", ["KILLS' mutant 40 is GP2-I1 where the lines name GP2-I2"]],
+      ["KILLS-DROPPED", ["KILLS' mutant 48 is missing where the lines name GP2-I1"]],
+      ["KILLS-ADDED", ["KILLS' mutant 49 is GP2-X9 where the lines name none"]],
+      ["W-FIRST-DECOY", ["[leads] - F1 LOW LEADS: a decoy leads line."]],
+      ["FIRST-INSIDE", ["the F1 line"]],
+      ["FIRST-NONE", ["no line"]],
+      ["WE-LINE", ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      ["LINE-FIRST", ["wb-u6ho's first line with the F1 prefix is notes line 1, not line 2"]],
+      ["LINE-NONE", ["wb-u6ho's notes hold no line that starts with the F1 prefix"]],
+      ["LINE-COPIED", []],
+      ["LINE-INSIDE", []],
+      ["WW-EXTRA", ["the refusal lines name W-EXTRA, which is no control"]],
+      ["IDS-EXTRA-TWICE", ["the refusal lines name W-EXTRA, which is no control"]],
+      ["IDS-MULTIPART", ["the refusal lines name W-RECV-UPPER-TWO, which is no control"]],
+      ["IDS-UNNAMED", ["the control W-RECV-SPACED is named by no refusal line"]],
+      ["IDS-NO-LINE", ["the refusal line 1 is not in the notes"]],
+      ["IDS-OWN-PARTIAL", ["the control W-RECV-UPPER x is named by no refusal line"]],
+      ["IDS-OWN-INSIDE", []],
+      ["IDS2-MULTIPART", ["the refusal lines name WR-PROBEWORD-TWO, which is no control", "the control WR-PROBEWORD is named by no refusal line"]],
+      ["IDS2-BODY-START", ["the refusal lines name WX-START, which is no control"]],
+      ["IDS2-DIGITS", ["the refusal lines name WX-A1, which is no control"]],
+      ["IDS-GLUED", []],
+      ["IDS-TRAILING", []],
+      ["IDS2-GLUED", []],
+      ["IDS2-TRAILING", []],
+    ]);
   });
 
   for (const row of ROWS) {
