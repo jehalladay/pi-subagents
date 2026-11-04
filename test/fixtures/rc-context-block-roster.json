@@ -433,6 +433,8 @@
    "numeral-infinity-callee-method",
    "static-numeral-named-class-expression-method",
    "near-maximum-numeral-infinity-callee-methods",
+   "mid-band-numeral-infinity-callee-method",
+   "upper-case-exponent-numeral-infinity-callee-method",
    "code-point-escaped-string-named-method",
    "hex-escaped-string-named-method",
    "identity-escaped-string-named-method",
@@ -783,6 +785,8 @@
     "numeral-infinity-callee-method": "617232a3fb836b16",
     "static-numeral-named-class-expression-method": "e394472b51eaa8c3",
     "near-maximum-numeral-infinity-callee-methods": "6e9e5d7675c98b66",
+    "mid-band-numeral-infinity-callee-method": "be20ae14f13583df",
+    "upper-case-exponent-numeral-infinity-callee-method": "3e66f0b0d573f865",
     "code-point-escaped-string-named-method": "efe50f5d7eaac215",
     "hex-escaped-string-named-method": "05d3aa61c031f0e5",
     "identity-escaped-string-named-method": "8948f4be321860ff",
@@ -2399,6 +2403,12 @@
          "5 declaration unpinned",
          "8 declaration unpinned",
          "11 declaration unpinned"
+        ],
+        "mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "upper-case-exponent-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
         ],
         "code-point-escaped-string-named-method": [
          "3 member blocks"

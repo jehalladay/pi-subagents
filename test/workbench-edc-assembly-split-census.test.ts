@@ -129,8 +129,9 @@
  * onto a plain array of length 2^32 - 1 - and X05 = C03 + C05 + GK02 kept the census green) is cured by the finding's first
  * cure: each K-SPLIT content reading of row S3c's indexOrder witness - the ORDER_KEYS blocks, each dense blocks array
  * plain, behind the probe and behind the probe at length 2^32 - 1, and each content twin - pins beside its findings the
- * length, the listing and three absent reads of the very array it read, taken after it (THE INDEX ORDER, below), so a
- * content reading moved off its array's length, off the probe or off its listing reds row S3c (the landed analog C07, the
+ * length, the listing and three absent reads of the very array it read (that it read that very array is WB-ZG1K's read,
+ * below), taken after it (THE INDEX ORDER, below), so a content reading moved off its array's length, off the probe or off
+ * its listing reds row S3c (the landed analog C07, the
  * probed dense content control moved off the probe, among them). F2 (the clause and the WB-VM56 paragraph defined the twin
  * by a property, a last-block text that is not its subject's source, while the pin held one text per array, so the gate's
  * K07 SOURCE-PREFIX6-AT-LIMIT and K10 SOURCE-INCLUDES-SOURCE-AT-LIMIT kept the census green) is cured both ways: each
@@ -142,6 +143,23 @@
  * content reading, moved onto another array on which its own reading reads the same, are NOT CLAIMED by this census to red
  * (THE INDEX ORDER). The pinned reader set is still this file's case S3c: to query providers, mint coverage or admit work;
  * these controls add no registered case, mutant, row or title.
+ *
+ * WB-ZG1K (seat ws-04, run g10-work-s205; the R694 follow-up of landing 895's PASS-WITH-FINDING, gate cmd_04682fc514da,
+ * whose F1 leads): F1 (claim precision: the WB-Y3YO cure pins the length, the listing and the absent reads of the array
+ * each content reading is handed, while no pinned value showed that the content reading read that array, so the gate's
+ * one-expression edits of contentOn's content reading - G01 a plain copy of the handed array's present items, G02 that
+ * copy behind the probe at its own count, G03 that copy at the handed array's length - kept the census green and masked
+ * the gate's reader member K12, a content reading that returns no finding on a blocks array behind a proxy, under G01
+ * and G03) is cured by the finding's first cure, the coupling witnessed beside the findings: K-SPLIT's content reading
+ * reads its document's blocks once and records the findings it returns under that very array (CONTENT_READS, a WeakMap
+ * no check reads), and each content reading of row S3c's indexOrder witness pins read beside its findings - true only
+ * when that record holds, under the very array contentOn was handed, the very findings the reading returned - so a
+ * content reading handed any other array reads read false and reds row S3c, whatever its findings, length, listing and
+ * absent reads read. A content reading that reads another array as well as the handed one and returns the handed
+ * array's findings reads the very array it claims, so it is no escape. A witness expression of contentOn replaced by the
+ * value it reads (read: true among them) is the header's NOT CLAIMED class, a pin's case replaced by one that returns its
+ * roster witness. The pinned reader set is still this file's case S3c: to query providers, mint coverage or admit work;
+ * this control adds no registered case, mutant, row or title.
  *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
@@ -225,10 +243,12 @@
  *  each dense subjects array of length 2^32 - 1, three reads of absent indices (has, get and own descriptor: the third is
  *  probed) - no control walks an array of length 2^32 - 1 - so a listing control that left the probe or its listing reds,
  *  and so does an absent-read control that left the probe. Each K-SPLIT content reading above (wb-y3yo) pins beside its
- *  findings the length, the listing and three absent reads (from its first absent index) of the very array it read, taken
- *  after it - on a plain array all three end; behind the probe the third is probed, so the content reading probed none of
- *  that array's absent indices - and each twin also the last block's text read back from its array, so a content reading
- *  moved off its array's length, the probe or its listing reds too. Any other control - presentItems', itemsOf's, the
+ *  findings read (wb-zg1k: the content reading's own record of the array it read, CONTENT_READS, holds under the very
+ *  array it was handed the very findings it returned) and the length, the listing and three absent reads (from its first
+ *  absent index) of that very array, taken after it - on a plain array all three end; behind the probe the third is
+ *  probed, so the content reading probed none of that array's absent indices - and each twin also the last block's text
+ *  read back from its array, so a content reading handed another array, or moved off its array's length, the probe or its
+ *  listing, reds too. Any other control - presentItems', itemsOf's, the
  *  walk's, the listing's, the absent reads', K-DEMAND's placement and demand readings' and the judge's - moved onto another
  *  array on which its own reading reads the same (the in-order placement control behind the probe moved off it, or a
  *  listing or absent-read control moved to another length, among them) is NOT CLAIMED by this census to red. Every other
@@ -1061,11 +1081,17 @@ function guarded(name: string, read: () => readonly string[]): readonly string[]
     return [`unreadable:${name}`];
   }
 }
+/** wb-zg1k F1: each K-SPLIT content reading's own record of the blocks array it read - the very array value it read once from its document,
+ * never a copy - holding the findings it returned for it. Only row S3c's indexOrder witness reads it (contentOn's read); no check reads it,
+ * and a WeakMap keeps no array alive. */
+const CONTENT_READS = new WeakMap<object, readonly string[]>();
 /** K-SPLIT's reading of one document's content: each block carries its subject's evidence (deep strict) and source verbatim, and a demanded
- * subject is a block exactly when its evidence and source are both in hand (a block a hole or a non-object leaves out is the shape reading's). */
+ * subject is a block exactly when its evidence and source are both in hand (a block a hole or a non-object leaves out is the shape reading's).
+ * It reads its document's blocks once, and records the findings it returns under that very array (CONTENT_READS, wb-zg1k F1). */
 function contentFindings(document: ContextDocument, request: Request): string[] {
   const findings: string[] = [];
-  const blocks = presentItems(document.blocks).filter(block => typeof block === "object" && block !== null);
+  const handed = document.blocks;
+  const blocks = presentItems(handed).filter(block => typeof block === "object" && block !== null);
   const blockSubjects = blocks.map(block => block.subject);
   for (const block of blocks) {
     if (!isDeepStrictEqual(block.evidence, request.evidence.filter(item => item.subject === block.subject))) findings.push(`evidence:${block.subject}`);
@@ -1075,6 +1101,7 @@ function contentFindings(document: ContextDocument, request: Request): string[] 
     const answerable = request.evidence.some(item => item.subject === subject) && request.sources.some(item => item.subject === subject);
     if (answerable !== blockSubjects.includes(subject)) findings.push(`placement:${subject}`);
   }
+  CONTENT_READS.set(handed, findings);
   return findings;
 }
 /** K-DEMAND's reading of a wiring's demand: the owner is the host, and the subjects are the request's, in its order (a hole in the subjects is an entry
@@ -1456,7 +1483,8 @@ const TWIN_TEXTS: readonly { readonly id: string; readonly text: (subject: strin
  * On the dense arrays behind the probe at length 2^32 - 1, presentItems, itemsOf's holes, the listing, the absent reads and K-SPLIT's content
  * (wb-vm56: the blocks with no finding; wb-y3yo: their four content twins, TWIN_TEXTS, each with source:<subject>) read them; K-DEMAND's
  * placement and demand readings read the dense arrays plain and behind the probe only. Each K-SPLIT content reading here pins, beside its
- * findings, the length, the listing and the absent reads of the array it read (contentOn, wb-y3yo F1). */
+ * findings, that it read the very array it was handed (read, wb-zg1k F1) and that array's length, listing and absent reads (contentOn,
+ * wb-y3yo F1). */
 function indexOrderReadings(): unknown {
   const named = (count: number): string[] => Array.from({ length: count }, (_, index) => `s${index + 1}`);
   const requestOf = (subjects: readonly string[]): Request => ({
@@ -1507,10 +1535,13 @@ function indexOrderReadings(): unknown {
   /** K-SPLIT's content on one blocks array, beside that very array's length, listing and three absent reads from at (its first absent index), each
    * taken after the content reading (wb-y3yo F1): on a plain array all three end; behind the probe the third is probed, so the content reading
    * probed none of its absent indices. A content control moved off its array's length, the probe or its listing reds here even where its
-   * findings read the same on every variant. */
+   * findings read the same on every variant. read is the coupling (wb-zg1k F1): the content reading's own record of the array it read
+   * (CONTENT_READS) holds, under this very array, the very findings it returned, so a content reading handed any other array - a copy of
+   * its present items, plain, behind the probe at their own count or at this array's length (the gate's G01-G03) - reads read false and
+   * reds here, and so does one whose returned findings are another reading's. */
   const contentOn = (blocks: readonly Block[], request: Request, at: number) => {
     const findings = contentFindings({ blocks, unmet: [] }, request);
-    return { findings, length: blocks.length, listing: listingOf(blocks), absent: absentReads(blocks, at) };
+    return { findings, read: CONTENT_READS.get(blocks) === findings, length: blocks.length, listing: listingOf(blocks), absent: absentReads(blocks, at) };
   };
   /** A content twin's reading (wb-y3yo F2): the last block's text, read back from the twin's array once contentOn has read it, beside that reading. */
   const twinOn = (blocks: readonly Block[], request: Request, at: number) => {
