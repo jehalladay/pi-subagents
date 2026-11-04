@@ -55,14 +55,21 @@
  *    exportedPushInside; wb-8cgw F2), and, with that nest, in four more places, each exactly as one of its controls writes
  *    it: inside the launch's argv argument in the concise body of an arrow function a variable declaration binds
  *    (arrowConcisePushInside); as the left operand of the parenthesized comma expression that is the whole concise body of
- *    such an arrow function, its right operand the launch (arrowConciseCommaPushInside; wb-sp4w) or, the variable statement
- *    exported, the argv itself, the arrow launching nothing (arrowConciseCommaPushReturned; wb-sp4w cut #2); in the block
- *    body of a nested arrow function an exported function declaration declares and then calls, the declaration then
- *    returning the launch (nestedFunctionPushInside; wb-2l05 F3) or the argv itself, launching nothing
- *    (nestedFunctionPushReturned; wb-sp4w cut #2); and in the block body of an anonymous function expression such a
- *    declaration binds to a const and then calls, the declaration then returning the launch
+ *    such an arrow function, its right operand the launch (arrowConciseCommaPushInside; wb-sp4w) or the argv itself, the
+ *    arrow launching nothing, its variable statement exported by its own export keyword and declared by const
+ *    (arrowConciseCommaPushReturned; wb-sp4w cut #2), let (arrowConciseCommaPushLet) or var (arrowConciseCommaPushVar;
+ *    wb-sp4w cut #3); in the block body of a nested arrow function an exported function declaration binds to a const and
+ *    then calls, the declaration then returning the launch (nestedFunctionPushInside; wb-2l05 F3) or the argv itself,
+ *    launching nothing (nestedFunctionPushReturned; wb-sp4w cut #2); and in the block body of an anonymous function
+ *    expression such a declaration binds to a const and then calls, the declaration then returning the launch
  *    (nestedFunctionExpressionPushInside; wb-sp4w) or the argv itself, launching nothing
- *    (nestedFunctionExpressionPushReturned; wb-sp4w cut #2),
+ *    (nestedFunctionExpressionPushReturned; wb-sp4w cut #2) - each host returning the argv itself exported by export
+ *    function (those two controls), by export default function with its name (nestedFunctionPushDefault and
+ *    nestedFunctionExpressionPushDefault) or by export default function with no name (nestedFunctionPushDefaultAnonymous
+ *    and nestedFunctionExpressionPushDefaultAnonymous; wb-sp4w cut #3); each place is claimed only with the keywords,
+ *    modifiers, type annotations and declarators one of its controls writes there (an async or generator function, a
+ *    return type, a variable's type annotation, a type parameter, a parameter annotation left out and a further
+ *    declarator are NOT CLAIMED),
  *    and a later function's push stays out for each parameter a quiet control spells, the later function exactly where that
  *    control spells it, in a host holding exactly the members that control writes (a later top-level function in a file of
  *    the parameter's statement and that function, or with a third statement between them for threeStatementScoped; or for
@@ -210,16 +217,21 @@
  * spells it (a push statement in the body, after its F3 nest parameter, of an arrow function a variable declaration
  * binds, a class's method or an exported function declaration; a push inside the launch's argv argument in the concise
  * body of such an arrow function; a push as the left operand of the parenthesized comma expression that is such an arrow
- * function's whole concise body, its right operand the launch or, the variable statement exported, the argv itself; a
- * push statement in a nested arrow function such an exported function declaration declares and then calls, or in an
- * anonymous function expression such a declaration binds to a const and then calls, the declaration then returning the
- * launch or the argv itself; a push in another parameter's default, in any other concise body (a push as a comma's right
- * operand, beside a right operand other than the launch or the argv itself, beside the argv itself in a variable
- * statement not exported, or in a comma nested in another among them) or in any other nested function - a named
- * function expression, one bound other than to a const and called after it, a nested function declaration, a nested
- * function in another host, one never called, or one whose host's body is anything but exactly its declaration, its
- * call and then a return of the launch or of the argv itself (a host returning nothing or anything else, or holding a
- * further statement, among them) - is not pinned); nor a later
+ * function's whole concise body, its right operand the launch or the argv itself, the variable statement then exported
+ * by its own export keyword and declared by const, let or var; a push statement in a nested arrow function or an
+ * anonymous function expression such an exported function declaration binds to a const and then calls, the declaration
+ * then returning the launch or the argv itself, a host returning the argv itself exported by export function, by export
+ * default function with its name or by export default function with no name; a push in another parameter's default, in
+ * any other concise body (a push as a comma's right operand, beside a right operand other than the launch or the argv
+ * itself, beside the argv itself in a variable statement without its own export keyword, one exported only by a separate
+ * export statement included, or in a comma nested in another among them) or in any other nested function - a
+ * named function expression, one bound other than to a const and called after it, a nested function declaration, a
+ * nested function in another host (a function declaration exported only by a separate export statement among them), one
+ * never called, or one whose host's body is anything but exactly its declaration, its call and then a return of the
+ * launch or of the argv itself (a host returning nothing or anything else, or holding a further statement, among them) -
+ * or in any of those places written otherwise than one of its controls writes its keywords, modifiers, type annotations
+ * and declarators (an async or generator function, a return type, a variable's type annotation, a type parameter, a
+ * parameter annotation left out and a further declarator among them) is not pinned); nor a later
  * function's push kept out of a quiet control's parameter anywhere but where that control spells the later function, or in
  * a host holding members other than those its control writes (a later argument of the same call, a later property of the
  * same object literal, and a class, array literal, statement or file holding a fourth member, or a third member anywhere
@@ -1553,6 +1565,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       nestedFunctionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
       nestedFunctionExpressionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
       arrowConciseCommaPushReturned: control('export const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      // wb-sp4w cut #3 (refusal #2 O:2046, ruling R-B533: U1 and U2 owed, each a new claim set at rung 1): six more rows,
+      // each a launch-less control above with its declaration keyword or its export form changed (render 1, uncommitted 1,
+      // launches 0), so a reader that keeps a launch-less place's push only for the keyword or the export form the controls
+      // above write reds A1: GP2-C-CONSTONLY (the push-record line drops a comma's left-operand push beside a right operand
+      // that is no call, outside a call's argument, unless its variable declaration list is const) reds
+      // arrowConciseCommaPushLet and arrowConciseCommaPushVar (arrowConciseCommaPushReturned declared by let and by var), and
+      // GP2-AN-NODEFAULT (the later-push filter drops a push inside a function nested in the declaring function when that host
+      // is a default-exported function declaration) reds nestedFunctionPushDefault and nestedFunctionExpressionPushDefault
+      // (nestedFunctionPushReturned and nestedFunctionExpressionPushReturned exported as export default function f) and their
+      // twins with no name (nestedFunctionPushDefaultAnonymous and nestedFunctionExpressionPushDefaultAnonymous).
+      arrowConciseCommaPushLet: control('export let f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      arrowConciseCommaPushVar: control('export var f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      nestedFunctionPushDefault: control('export default function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionPushDefaultAnonymous: control('export default function ([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushDefault: control('export default function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushDefaultAnonymous: control('export default function ([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1628,6 +1656,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       nestedFunctionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       nestedFunctionExpressionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       arrowConciseCommaPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushLet: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushVar: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushDefaultAnonymous: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushDefaultAnonymous: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
