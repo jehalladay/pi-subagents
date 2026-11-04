@@ -208,16 +208,19 @@
  *      these 11 kinds are the bodies this file calls closed; its exported ENVELOPE_KEYS constant, which the 27 shipped modules spell
  *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
  *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
- *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot; cut #6, the restatement with
- *      claims equal to pins ruling R-B452 binds at refusal #5 of cut #5, the restatement over the landed carrier wb-rv3o, landing
- *      865, that ruling R-B286 bound at the dependency inversion on refusal #4 of cut #4, the fail-closed core ruling R-B270 bound on
- *      refusal #3 of the enumerate-the-resolvable cut #3 ruling R-B238 bound): T2 claims exactly the readings (1)-(4) below of the
- *      package this file and the provider execute, each pinned with its falsifiers, and no wider conclusion. The frame readings read
+ *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot; cut #7, the restatement with
+ *      claims equal to pins ruling R-B486 binds at refusal #6 of cut #6, the restatement ruling R-B452 bound at refusal #5 of cut #5,
+ *      the restatement over the landed carrier wb-rv3o, landing 865, that ruling R-B286 bound at the dependency inversion on refusal
+ *      #4 of cut #4, the fail-closed core ruling R-B270 bound on refusal #3 of the enumerate-the-resolvable cut #3 ruling R-B238
+ *      bound): T2 claims exactly the readings (1)-(4) below of the package this file and the provider execute, each pinned with its
+ *      falsifiers, and no wider conclusion. The frame readings read
  *      the TEXT of a stack's FRAME-FORM LINES (the lines of Error.stack that start, after four spaces, with 'at '), never where a
  *      frame's code lies and whatever wrote the line: the realm writes the error's name and message, then one FRAME LINE for each
  *      frame, and a line of that name or message, or a piece of a frame line that holds a line break, that starts so is a frame-form
- *      line too and is read like any other (T2's controls: a thrown error whose message carries two such lines, one whose name does,
- *      and a frame line of a function whose name holds them after a line break); a stack is WRITTEN WHOLE when each of its frame-form
+ *      line too and is read like any other (T2's controls: a thrown error whose message carries two such lines, one whose name does
+ *      after its first line, one whose name's first line is one, so that its stack's first line is (wb-b9ot refusal #6's gate member
+ *      G10-R-LINE0 read the stack from its second line), and a frame line of a function whose name holds them after a line break); a
+ *      stack is WRITTEN WHOLE when each of its frame-form
  *      lines is a frame line the realm writes whole for one frame. Each reading places a frame-form line by its READ LOCATION:
  *      firstFrame() reads the first frame-form line only in the form 'at <function> (<location>:<line>:<column>)', with a <function>
  *      holding no white space and a <location> that starts 'file:///' and holds no ')', that <location> being its read location, and
@@ -226,14 +229,27 @@
  *      final ')' allowed, when that text holds no white space and no ')', that being its read location, and a frame-form line without
  *      one names no location. THE PACKAGE'S MODULES (the pinned modules) are the 27 SDK_BYTES pins (its dist/ keys): the frame
  *      readings count a frame-form line as the package's only when its read location is one of those modules' own file: URLs under
- *      SDK_DIST, compared whole, as text (pinnedModuleAt(); T2's controls read result.js's and protocol/decoder.js's own URLs as
- *      those modules and as none each of 15 near spellings of result.js's URL: with a suffix (gate member GP9-PREFIX's
- *      result.js-gp18.mjs), a query (W6-SURL-QUERY's ?q=1), a fragment, its name's case changed (G16-CASE-PAGE's RESULT.JS), another
- *      extension, a './', a '../' or a doubled '/' segment, its scheme upper-cased, a percent-encoded '.', a trailing space, as its
- *      path, as its directory, as a name it starts with, and as another copy's URL), and THE BYTES, spelledIn() and T1 read the .js
+ *      SDK_DIST, compared whole, as text (pinnedModuleAt(), its comparison held as written by THE READERS' TEXT below; T2's controls
+ *      read result.js's and protocol/decoder.js's own URLs as those modules and as none each of 18 near spellings of result.js's URL:
+ *      with a suffix (gate member GP9-PREFIX's result.js-gp18.mjs), a query (W6-SURL-QUERY's ?q=1), an empty query (G10-EMPTYQ-PAGE's
+ *      bare '?'), a fragment, an empty fragment (G10-EMPTYF-PAGE's bare '#'), its name's case changed (G16-CASE-PAGE's RESULT.JS),
+ *      another extension, a './', a '../' or a doubled '/' segment, its scheme upper-cased, its file://localhost/ form
+ *      (G10-HOST-PAGE's), a percent-encoded '.', a trailing space, as its path, as its directory, as a name it starts with, and as
+ *      another copy's URL), and THE BYTES, spelledIn() and T1 read the .js
  *      files under dist/ (T1 also the .d.ts files), so a file under dist/ outside the 27 is never the package's: a .js or .d.ts one
  *      reds T1's count (a .js one THE BYTES too), and one of any other extension (an .mjs shim, a source map) is read by no case, a
- *      frame-form line whose read location is its URL reading by that location. (1) SDK_DIST, the dist/ directory import.meta.resolve
+ *      frame-form line whose read location is its URL reading by that location. THE READERS' TEXT: the frame readers' declarations
+ *      (thrown(), pinnedModuleAt(), firstFrame(), located(), callerOf(), raisedFrom() and registrationRaised()) and four of the
+ *      constants they read (SDK_DIST, ROOT, SELF and BUILT_IN_FRAME; SDK_BYTES, whose dist/ keys pinnedModuleAt() reads, is held by
+ *      THE BYTES), each the one top-level statement declaring its name in this file's own source (import.meta.url's file, read with
+ *      the TypeScript parser), equal READER_TEXT, one sha256 of each statement's
+ *      whole text (its doc comment aside), so an edit anywhere in one (a location rewritten inside pinnedModuleAt()'s comparison or at
+ *      the call that hands it the location, a stack line dropped before a reader reads it) reds T2 whatever the edited reader then
+ *      reads (T2's controls: that source with pinnedModuleAt()'s comparison edited reads another digest for it alone, and with
+ *      located() declared a second time reads its count); the reading of the decoder refusal in (3) is raisedFrom()'s, and THE
+ *      READERS' TEXT holds no other statement of this file (T2's own, which call the readers, and the stand-in registration
+ *      included).
+ *      (1) SDK_DIST, the dist/ directory import.meta.resolve
  *      names for this file's '@hyperunix/sdk' (Node's resolution from test/, where a git-ignored test/node_modules copy would resolve
  *      first; a test-config alias or plugin, which it does not see, is left to (2) and (3)), is SDK_INSTALLED
  *      (../node_modules/@hyperunix/sdk/dist/), compared by real path. (2) Each value this file's import declaration names (read with
@@ -433,8 +449,10 @@
  * at the top level, and the class and eval statements on the class in its own module and on eval spelled as a string), firstFrame()
  * (a first frame-form line whose read location is another copy's URL or a file under
  * SDK_DIST outside the pinned modules reads as that URL, one whose read location is a pinned module's own URL by its path from
- * SDK_DIST), pinnedModuleAt() (result.js's and protocol/decoder.js's own URLs read as those modules, and each of 15 near spellings of
- * result.js's URL as none), callerOf() (a caller location outside the repository reads whole, one in it by its path from the root, a
+ * SDK_DIST), pinnedModuleAt() (result.js's and protocol/decoder.js's own URLs read as those modules, and each of 18 near spellings of
+ * result.js's URL as none), readerTexts() (this file's source with pinnedModuleAt()'s comparison edited reads another digest for it
+ * alone, and with located() declared a second time reads its count), callerOf() (a caller location outside the repository reads
+ * whole, one in it by its path from the root, a
  * file under SDK_DIST outside the pinned modules included, a built-in's frame-form line is skipped, an eval frame line that names no
  * location reads as the caller, and a stack with no caller location outside the pinned modules reads as none), substituted() (a
  * substituted binding reads
@@ -444,7 +462,8 @@
  * runtime version at another label than the neutral word's deviates at exactly the 1040 runtime.version cells) and unheld() (with no
  * residual, every unread refusal and relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file
  * write; the files read are the installed SDK's package.json, shipped declaration files and modules, the three READER_MODULES (their
- * code and their import and export declarations), this file's own source (its import declaration), and the real paths of SDK_DIST,
+ * code and their import and export declarations), this file's own source (its import declaration and THE READERS' TEXT's
+ * declarations), and the real paths of SDK_DIST,
  * SDK_INSTALLED and the package.json Node resolves for the provider. Display paths added: none (test-only). */
 import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync, realpathSync} from 'node:fs';
@@ -540,6 +559,8 @@ const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file or the provider execute
   + 'installed copy, so remove the other copy and re-read';
 const SDK_IMPORTS = 'wb-b9ot: a reader module other than the provider now imports @hyperunix/sdk, or the provider imports other names; pin '
   + "that module's resolution and frames as the provider's are pinned before re-pinning this roster";
+const READERS_MOVED = "wb-b9ot: a frame reader's declaration in this file moved (THE READERS' TEXT); re-read THE SAME VIEW's claims against "
+  + 'its new text and re-run their falsifiers before re-pinning READER_TEXT';
 
 /** The words of a name: split at each run of characters other than letters and digits, at each lower-to-upper camelCase step and
  * inside an upper run before its last capital (XTier), each word lowercased. */
@@ -964,8 +985,9 @@ const spelledIn = (text: string): Record<string, number> => Object.fromEntries(s
   .map(name => [name, readFileSync(new URL(name, SDK_DIST), 'utf8').split(text).length - 1] as const).filter(([, count]) => count > 0));
 /** THE PACKAGE'S MODULES (wb-b9ot cut #3): the module a frame-form line's read location is (the location firstFrame() or callerOf()
  * reads in the line), by its path from SDK_DIST, when it is the own file: URL of one of the 27 modules SDK_BYTES pins (its dist/
- * keys), compared whole, as text (cut #6: T2's controls read result.js's and protocol/decoder.js's own URLs as those modules and 15
- * near spellings of result.js's URL as none), else none, so a location naming a file under SDK_DIST outside them (an .mjs shim) is
+ * keys), compared whole, as text (cut #7: T2's controls read result.js's and protocol/decoder.js's own URLs as those modules and 18
+ * near spellings of result.js's URL as none, and THE READERS' TEXT holds this declaration as written), else none, so a location
+ * naming a file under SDK_DIST outside them (an .mjs shim) is
  * never the package's here, as it is not in THE BYTES; a frame line of other code whose read location is a pinned module's URL reads
  * as the package's (cut #5: NOT CLAIMED, whatever the line holds before its last '('; the landed carrier wb-rv3o's census pins such
  * frames over a reader of their call sites). */
@@ -1081,6 +1103,33 @@ function sdkBindings(): string[] {
       const bindings = statement.importClause?.namedBindings;
       return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text) : [];
     });
+}
+/** THE READERS' TEXT (wb-b9ot cut #7): THE SAME VIEW's frame readers' declarations and four of the constants they read, each the one
+ * top-level statement of this file's own source declaring its name (a function, or a const), by the sha256 of that statement's whole
+ * text as written (its doc comment aside). T2 holds this file's source to it, so an edit anywhere in one reds T2 whatever the edited
+ * reader then reads. */
+const READER_TEXT: Readonly<Record<string, string>> = {
+  SDK_DIST: '54662c018f540eb422045518357a78c6b4e8573bef24cc554a60ec2f2c126aff',
+  ROOT: '651efb901fd77902bdcea5e0c9307065f864b153aad7c9ace561ab2ce0c0b349',
+  thrown: '109e74a3731427c1bc2ae86be3dfa701533adb5f91231347a190a70c8e4d4fe2',
+  pinnedModuleAt: '5a8d6e89318e6060c0e0863f6e6ca2151e165b854ca0499159bdfeab8415f93f',
+  firstFrame: '5388a46e2edaf402eca23d6d1e6a081b4037a6820f32ad9dafc76212cbba8dee',
+  located: '2fe3d00fd4729d0b984e79a0760a5c2c68fe81a89ebcd1e6c3cf5b70b75549ca',
+  SELF: 'e2b8c5670aa12dacfed9e4dab004d2acdbf11308549345fb64ddf9fc4bb70579',
+  BUILT_IN_FRAME: '0c8921070d6580348aad295a6460b851b1d1df197db4eb3a7c3f848cc5f42f8d',
+  callerOf: '05caa385a32b7c9c49d30e90617dee26db538c47511e5f04b2b9f9cb8178b741',
+  raisedFrom: '27a8bd652526671f4f715d37fe057e0973d4ed0841ccde442c18259d4c82bde1',
+  registrationRaised: 'd45be629939c08f3aa465b72507203f7bada602194f1c8269f9bfe5a45180442',
+};
+/** The sha256 of the whole text of each READER_TEXT name's top-level declaration in a source (read with the TypeScript parser), a
+ * name declared other than once read as its count of declarations. */
+function readerTexts(source: string): Record<string, string> {
+  const file = ts.createSourceFile('self.ts', source, ts.ScriptTarget.Latest, true);
+  return Object.fromEntries(Object.keys(READER_TEXT).map(name => {
+    const found = file.statements.filter(statement => ts.isFunctionDeclaration(statement) ? statement.name?.text === name
+      : ts.isVariableStatement(statement) && statement.declarationList.declarations.some(declaration => declaration.name.getText() === name));
+    return [name, found.length === 1 ? sha256(Buffer.from(found[0].getText(), 'utf8')) : `${found.length} declarations`] as const;
+  }));
 }
 /** The installed @hyperunix/sdk's runtime bytes, one sha256 each: its package.json and its 27 shipped modules. T2 fails closed over
  * them: a changed byte reds T2. */
@@ -2838,7 +2887,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell and so in a block statement at its module\'s top level in its nested compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), a statement writing each of the 8 by &&= nested in each of the 17 NESTINGS at its module\'s start and end as a binding (272 controls), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 17 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 88 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM and GP11-NESTED-COMPOUND-LANE among them, one in each of the 88 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, Node\'s resolution of this file\'s @hyperunix/sdk (import.meta.resolve) names the installed copy, each value it imports is the export vi.importActual loads from that copy\'s index.js URL, and each function it imports and a decoder refusal throw with first frame lines read at its modules\' URLs, the first caller location (the text after a frame line\'s last opening parenthesis) outside its 27 pinned modules\' URLs this file\'s, and for the provider, the one of the three reader modules importing it, Node\'s resolution from its path (findPackageJSON) names that package and its registration\'s resultToJson throws with a first frame line read at that copy\'s result.js URL, the first caller location outside the pinned modules\' URLs the provider\'s, and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
+  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell and so in a block statement at its module\'s top level in its nested compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), a statement writing each of the 8 by &&= nested in each of the 17 NESTINGS at its module\'s start and end as a binding (272 controls), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 17 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 88 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM and GP11-NESTED-COMPOUND-LANE among them, one in each of the 88 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, Node\'s resolution of this file\'s @hyperunix/sdk (import.meta.resolve) names the installed copy, each value it imports is the export vi.importActual loads from that copy\'s index.js URL, and each function it imports and a decoder refusal throw with first frame lines read at its modules\' URLs, the first caller location (the text after a frame line\'s last opening parenthesis) outside its 27 pinned modules\' URLs this file\'s, and for the provider, the one of the three reader modules importing it, Node\'s resolution from its path (findPackageJSON) names that package and its registration\'s resultToJson throws with a first frame line read at that copy\'s result.js URL, the first caller location outside the pinned modules\' URLs the provider\'s, and its package.json and 27 shipped modules equal SDK_BYTES, and the frame readers\' declarations in this file\'s own source equal READER_TEXT; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
     // THE SAME VIEW (wb-b9ot: gate plant G13, refusal #1's S1-S3, refusal #2's G21-S5 and G21-S6): exactly these readings of the package
     // this file and the provider execute. (1) Node's resolution of this file's import (import.meta.resolve) names the installed copy
     // (a git-ignored test/node_modules copy would resolve first; real paths, so a symlinked node_modules reads as its target).
@@ -2859,9 +2908,10 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // or vm.Script filename that is one or holds one after its last '(') is NOT CLAIMED: the landed carrier wb-rv3o's census pins
     // those members. Nor is a stack that is not written whole (refusal #5's G16-INJ and G16-INJ-OUT: their thrown errors' messages
     // carry frame-form lines, which the readers read like any other), or one with a frame line of other code before the substitute's.
+    // The refusal is read by raisedFrom() (cut #7), a reader THE READERS' TEXT holds.
     const refusal = thrown(() => decodeResultStream(envelopeStream({unknown_key: 'r1'})));
-    expect([refusal instanceof ProtocolError, refusal instanceof Error ? `${firstFrame(refusal.stack ?? '')} from ${callerOf(refusal.stack ?? '')}`
-      : 'not an Error'], SAME_VIEW).toStrictEqual([true, `StreamChecker.fail protocol/decoder.js from ${SELF}`]);
+    expect([refusal instanceof ProtocolError, raisedFrom(() => { throw refusal; })], SAME_VIEW)
+      .toStrictEqual([true, `StreamChecker.fail protocol/decoder.js from ${SELF}`]);
     const raised: Record<string, string> = {
       decodeResultStream: raisedFrom(() => decodeResultStream(null as unknown as string)),
       assembleQueryResult: raisedFrom(() => assembleQueryResult('find', null as unknown as ProcessResult, WS)),
@@ -2901,33 +2951,57 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       callerOf(`${inCopy}\n    at decodeResultStream (${new URL('zz-shim.mjs', SDK_DIST).href}:5:6)`), callerOf(`${inCopy}\n    ${evalFrame}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
       callerOf(inCopy)]).toStrictEqual(['file:///elsewhere/shim/index.js', PROVIDER, 'node_modules/@hyperunix/sdk/dist/zz-shim.mjs', `unread: ${evalFrame}`,
       'no caller frame']);
-    // pinnedModuleAt() compares a read location whole, as text (cut #6, refusal #5's U2): result.js's and protocol/decoder.js's own
-    // URLs read as those modules and each of these 15 near spellings of result.js's URL as none, among them the labels of the plants
-    // on which refusal #5's one-edit hollowings diverge: GP9-PREFIX's result.js-gp18.mjs (HV-G2, a prefix match), W6-SURL-QUERY's
-    // ?q=1 (G16-QRY, the query and fragment cut before the comparison) and G16-CASE-PAGE's RESULT.JS (G16-CASE, case folded).
+    // pinnedModuleAt() compares a read location whole, as text (cut #6, refusal #5's U2; cut #7, refusal #6's U1): result.js's and
+    // protocol/decoder.js's own URLs read as those modules and each of these 18 near spellings of result.js's URL as none, among them
+    // the labels of the plants on which refusal #5's and refusal #6's one-edit hollowings diverge: GP9-PREFIX's result.js-gp18.mjs
+    // (HV-G2, a prefix match), W6-SURL-QUERY's ?q=1 (G16-QRY, the query and fragment cut before the comparison), G16-CASE-PAGE's
+    // RESULT.JS (G16-CASE, case folded), G10-EMPTYQ-PAGE's bare '?' (G10-EMPTYQ, an empty query removed), G10-EMPTYF-PAGE's bare '#'
+    // (G10-EMPTYF, an empty fragment removed) and G10-HOST-PAGE's file://localhost/ form (G10-HOST, read as file:///).
     const resultUrl = new URL('result.js', SDK_DIST).href;
     const nearSpellings: Record<string, string> = {suffix: `${SDK_DIST.href}result.js-gp18.mjs`, query: `${resultUrl}?q=1`,
-      fragment: `${resultUrl}#q`, nameCase: `${SDK_DIST.href}RESULT.JS`, extension: `${SDK_DIST.href}result.mjs`, dotSegment: `${SDK_DIST.href}./result.js`,
-      dotDotSegment: `${SDK_DIST.href}protocol/../result.js`, doubledSlash: `${SDK_DIST.href}/result.js`, schemeCase: `FILE${resultUrl.slice('file'.length)}`,
-      percentDot: `${SDK_DIST.href}result%2Ejs`, trailingSpace: `${resultUrl} `, path: fileURLToPath(resultUrl), directory: SDK_DIST.href,
-      nameStart: `${SDK_DIST.href}result`, otherCopy: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'};
+      emptyQuery: `${resultUrl}?`, fragment: `${resultUrl}#q`, emptyFragment: `${resultUrl}#`, nameCase: `${SDK_DIST.href}RESULT.JS`,
+      extension: `${SDK_DIST.href}result.mjs`, dotSegment: `${SDK_DIST.href}./result.js`, dotDotSegment: `${SDK_DIST.href}protocol/../result.js`,
+      doubledSlash: `${SDK_DIST.href}/result.js`, schemeCase: `FILE${resultUrl.slice('file'.length)}`,
+      localhost: `file://localhost${new URL(resultUrl).pathname}`, percentDot: `${SDK_DIST.href}result%2Ejs`, trailingSpace: `${resultUrl} `,
+      path: fileURLToPath(resultUrl), directory: SDK_DIST.href, nameStart: `${SDK_DIST.href}result`,
+      otherCopy: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'};
     expect([pinnedModuleAt(resultUrl), pinnedModuleAt(new URL('protocol/decoder.js', SDK_DIST).href),
       Object.fromEntries(Object.entries(nearSpellings).map(([spelling, location]) => [spelling, pinnedModuleAt(location) ?? 'none']))])
-      .toStrictEqual(['result.js', 'protocol/decoder.js', {suffix: 'none', query: 'none', fragment: 'none', nameCase: 'none', extension: 'none',
-        dotSegment: 'none', dotDotSegment: 'none', doubledSlash: 'none', schemeCase: 'none', percentDot: 'none', trailingSpace: 'none', path: 'none',
-        directory: 'none', nameStart: 'none', otherCopy: 'none'}]);
+      .toStrictEqual(['result.js', 'protocol/decoder.js', {suffix: 'none', query: 'none', emptyQuery: 'none', fragment: 'none',
+        emptyFragment: 'none', nameCase: 'none', extension: 'none', dotSegment: 'none', dotDotSegment: 'none', doubledSlash: 'none',
+        schemeCase: 'none', localhost: 'none', percentDot: 'none', trailingSpace: 'none', path: 'none', directory: 'none', nameStart: 'none',
+        otherCopy: 'none'}]);
     // The readers read a frame-form line whatever wrote it (cut #6, refusal #5's U1: a stack that is not written whole is NOT
     // CLAIMED): an error this file's code throws whose message carries a result.js frame-form line and a line at the provider's path,
-    // one whose name carries them, and one thrown by a function whose name holds them after a line break each read as raised from
-    // result.js and the provider, as refusal #5's G16-INJ family reads.
+    // one whose name carries them after its first line, one whose name's first line is the result.js line, so that its stack's first
+    // line is a frame-form line (cut #7, refusal #6's U2: gate member G10-R-LINE0 read the stack from its second line, as on its page
+    // G10-R-LINE0-PAGE, whose name ends in a 'TypeError' line as this one does: vitest's stack formatter writes the header as
+    // '<name>: <message>' even for an empty message), and one thrown by a function whose name holds them after a line break each read
+    // as raised from result.js and the provider, as refusal #5's G16-INJ family reads.
     const injected = `decodeResultStream (${resultUrl}:1:2)\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:3:4`;
     const namedError = new TypeError('null');
     namedError.name = `TypeError\n    at ${injected}\nTypeError`;
+    const firstLineError = new TypeError('');
+    firstLineError.name = `    at ${injected}\nTypeError`;
+    expect(firstLineError.stack?.split('\n')[0]).toBe(`    at decodeResultStream (${resultUrl}:1:2)`);
     const namedThrower = (): never => { throw new TypeError('null'); };
     Object.defineProperty(namedThrower, 'name', {value: `${injected}\n    at namedThrower`});
     const fromProvider = `decodeResultStream result.js from ${PROVIDER}`;
     expect({message: raisedFrom(() => { throw new TypeError(`null\n    at ${injected}`); }), name: raisedFrom(() => { throw namedError; }),
-      functionName: raisedFrom(namedThrower)}).toStrictEqual({message: fromProvider, name: fromProvider, functionName: fromProvider});
+      firstLine: raisedFrom(() => { throw firstLineError; }), functionName: raisedFrom(namedThrower)})
+      .toStrictEqual({message: fromProvider, name: fromProvider, firstLine: fromProvider, functionName: fromProvider});
+    // THE READERS' TEXT (cut #7, refusal #6's U1 and U2): each frame reader's declaration in this file's own source is the text
+    // READER_TEXT pins, so an edit anywhere in one reds here whatever the edited reader then reads (G10-EMPTYQ, G10-EMPTYF and G10-HOST
+    // rewrite the location inside pinnedModuleAt()'s comparison and G10-R-LINE0 drops raisedFrom()'s first stack line, as would the
+    // same rewrite at the call that hands pinnedModuleAt() its location or the same drop in callerOf() or registrationRaised()); that
+    // source with the comparison edited reads another digest for pinnedModuleAt() alone, and with located() declared a second time
+    // reads its count.
+    const ownSource = readFileSync(new URL(import.meta.url), 'utf8');
+    expect(readerTexts(ownSource), READERS_MOVED).toStrictEqual(READER_TEXT);
+    const readersAt = ownSource.indexOf('function pinnedModuleAt(');
+    const editedReaders = readerTexts(`${ownSource.slice(0, readersAt)}${ownSource.slice(readersAt).replace('=== location)', '=== location.trim())')}`);
+    expect([Object.keys(READER_TEXT).filter(name => editedReaders[name] !== READER_TEXT[name]),
+      readerTexts(`${ownSource}\nfunction located(): void {}\n`).located]).toStrictEqual([['pinnedModuleAt'], '2 declarations']);
     expect(sdkImportsOf("import {a, type b} from '@hyperunix/sdk'; import type {c} from '@hyperunix/sdk'; import d, * as e from '@hyperunix/sdk/raw';\n"
       + "import '@hyperunix/sdk/protocol'; export {f, type g} from '@hyperunix/sdk'; export * from '@hyperunix/sdk'; export type {h} from '@hyperunix/sdk';\n"
       + "const i = import('@hyperunix/sdk'); import {j} from '@hyperunix/sdkx'; import {k} from 'other';"))
