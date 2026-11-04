@@ -1,8 +1,9 @@
 /**
  * wb-km7q.4 (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R12, program-triage-2026-10-18 child of wb-km7q), the
- * CoverageWitness adoption census (cut #7, ruling R-B487's restatement of cut #6, which restated B1 over the landed member reader
- * under ruling R-B140: THE MEMBER CHECK's SELF-READ holds what its words claim, below). Statement (the bead's export title, read
- * at run time): "If Pi ever consumes a
+ * CoverageWitness adoption census (cut #8, ruling R-B513's restatement of cut #7, ruling R-B487's restatement of cut #6, which
+ * restated B1 over the landed member reader under ruling R-B140: the SELF-READ reads the one module-scope IMPL, and THE MEMBER
+ * CHECK's SELF-READ holds what its words claim, below). Statement (the bead's export title, read at run time): "If Pi ever
+ * consumes a
  * CoverageWitness (gated RL-RQ1..RL-RQ8; 'coverage is not freshness' amendment), the adapter carries all eight typed fields
  * (collection identity through invalidation conditions); a freshness witness never proves enumeration coverage, an
  * old-generation seal is stale for today's task, and source-only 'no records observed' never certifies absence." Acceptance
@@ -103,9 +104,11 @@
  *     first statement binds to the read of OBSERVATION_MODULE (the helper's export) below REPO as UTF-8, and hands holdMembers
  *     what the reader returns; with no second argument the reader takes its default reading (the helper's ReadOptions: every
  *     word when words is absent). The probes reach the reader through memberOutcome, whose call is `observationMembers(text)` on
- *     its own parameter text, the probe text. The SELF-READ (FROZEN SHAPE below) holds those three statements, the text of each
- *     call of the reader by that bare name and the declarations of the names those statements and calls read, as source text
- *     read from this file's AST; it runs none of them (LIMITS). The reader returns two lists of entries, NativeSnapshot's
+ *     its own parameter text, the probe text. The SELF-READ (FROZEN SHAPE below) holds those three statements of the B1 member
+ *     of the module-scope IMPL (the one IMPL this file declares, BINDINGS), the text of each call of the reader by that bare name
+ *     with its holder (that B1 member or the module-scope memberOutcome) and the declarations of the names those statements and
+ *     calls read, as source text read from this file's AST; it runs none of them (LIMITS). The reader returns two lists of
+ *     entries, NativeSnapshot's
  *     and ObservationEvent's. What it reads of a module text - which declarations of a read name it reads (same-module merges
  *     among them), which forms read `?` or `<member>.?`, and what it does not read - is that helper's header's claim, bounded by
  *     its CLAIMED FORMS and pinned by test/workbench-observation-members-census.test.ts; it is NOT CLAIMED by this census beyond
@@ -195,18 +198,30 @@
  *     one of those probes removed from every literal and the roster, or read accepted, reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, TERMS, the carrier map, the gate list
  * and UNBATTERIED, the payload digests, VERDICTS, the battery, the residual table, adoption() and every pin's witness are held to
- * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ: no IMPL member names ROSTER (direct
- * identifiers only), the roster is deep-frozen when loaded, the registration check reads this file's static imports and
- * adoption()'s identifiers, and a registered module's exports, from their ASTs, and THE MEMBER CHECK's reader is held as source
- * text read from this file's AST, each field of memberReaderRead equal to the judged set's literal (MEMBER_READER): B1's IMPL
- * member names observationMembers (named), and the one static import that binds the name is test/helpers/observation-members.ts's
- * (imported); the calls of observationMembers by that bare name are exactly two, in source order memberOutcome's and B1's, each
- * written `observationMembers(text)`: one argument, the identifier text, with no spread and no second argument (calls); the
- * identifier observationMembers stands exactly three times in this file, in its import and in the two calls (occurrences), so,
- * with calls, any other reference to the name, an alias among them, reds; B1's first three statements are the three THE MEMBER
- * CHECK names (b1); and each name those calls and statements read has exactly one declaration where the SELF-READ searches for
- * it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a function, a class, an
- * enum, a namespace or an import binding): inside memberOutcome, text (the name its call reads) has its parameter
+ * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ (each part read from this file's AST; it runs
+ * nothing): BINDINGS - every declaration in this file of IMPL, adoption, memberOutcome and Object is held (every declaration of the
+ * name counts, as in declarations below): IMPL, adoption and memberOutcome have exactly one each, their module-scope
+ * `const IMPL = Object.freeze({ ... })`, `function adoption` and `const memberOutcome` (topLevel), and Object has none, so each of
+ * those three names denotes that one declaration wherever this file names it, and Object the runtime's global (bindings); the
+ * SELF-READ reads that IMPL's object literal, the one argument of Object.freeze in its initializer, and no other object literal
+ * (moduleImpl; a module-scope IMPL written in another form reads no member), and the judged set holds Object.isFrozen(IMPL), so no
+ * member of IMPL can be replaced after that literal: an Object.assign, an Object.defineProperty or an assignment that tries throws
+ * where it runs (LIMITS: what Object.freeze and Object.isFrozen do is the runtime's); no member of that literal names ROSTER (direct
+ * identifiers only), the roster is deep-frozen when loaded, the registration check reads this file's static imports and the
+ * identifiers of the module-scope adoption's body, and a registered module's exports, from their ASTs, and THE MEMBER CHECK's
+ * reader is held as source text, each field of memberReaderRead equal to the judged set's literal (MEMBER_READER): that literal's
+ * B1 member names observationMembers (named); this file's static imports of test/helpers/observation-members.ts - every import
+ * declaration whose specifier resolves to that module, type-only ones included, whatever names they bind - are exactly one, as the
+ * literal writes it, and it binds the name (imported); the calls of observationMembers by that bare name are exactly two, in
+ * source order memberOutcome's and B1's, each written `observationMembers(text)`: one argument, the identifier text, with no spread
+ * and no second argument, a call's holder being the innermost function holding it, read as memberOutcome only when that is the
+ * module-scope const memberOutcome's arrow function, as B1 only when it is the IMPL literal's B1 member and as `other <its name>`
+ * otherwise (calls); the identifier observationMembers stands exactly three times in this file, in its import and in the two calls
+ * (occurrences), so, with calls, any other identifier reference to the name reds; that B1 member's first three statements are the
+ * three THE MEMBER CHECK names (b1); and each name those calls and statements read has exactly one declaration where the
+ * SELF-READ searches for it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a
+ * function, a class, an enum, a namespace or an import binding): inside memberOutcome, text (the name its call reads) has its
+ * parameter
  * `text: string`; inside B1, text and members have B1's first two statements; and in this whole file each other name B1's three
  * statements read, and each name a variable's initializer among those declarations reads in turn, has one: readFileSync, join,
  * dirname and fileURLToPath the static imports of node:fs, node:path and node:url, OBSERVATION_MODULE and observationMembers the
@@ -294,7 +309,10 @@
  * nothing: what node:fs's readFileSync, node:path's join and dirname, node:url's fileURLToPath and the helper's OBSERVATION_MODULE
  * and observationMembers return or hold is NOT CLAIMED by it, and neither is what holdMembers and memberDiffers compare
  * (MEMBER_PROBES pins memberDiffers' outcome on each probe text through memberOutcome, and B1's witness pins the lists the reader
- * reads of the real text). THE MEMBER CHECK hands the landed reader
+ * reads of the real text); a reference to the helper module that is not a static import declaration (a dynamic import
+ * expression, which reaches the reader through a string, not an identifier) is NOT CLAIMED by the SELF-READ; and what the runtime's
+ * Object.freeze and Object.isFrozen do is NOT CLAIMED by this census (BINDINGS holds that this file declares no Object; this
+ * file's code rewriting a member of the global Object at run time is not detected). THE MEMBER CHECK hands the landed reader
  * observation.ts's text (B1) or that text with one probe's plant (memberOutcome), and what that reader does not read reds no
  * comparison: its header's NOT READ (a declaration in another module's text,
  * such as a `declare module` augmentation of observation.ts written in another file; an expanded property's own members, such as
@@ -305,7 +323,10 @@
  * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
  * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
  * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
- * MEASURED (seat records, read-only; not assertions): cut #7 over trunk 08a61f18, 2026-11-04: 192 judged files (src 117, qa 67,
+ * MEASURED (seat records, read-only; not assertions): cut #8 over trunk a14c87f8, 2026-11-04: 192 judged files (src 117, qa 67,
+ * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value; the
+ * roster is cut #7's byte for byte (cut #8 changes the SELF-READ, the judged set's SELF-READ checks and IMPL's initializer, and no
+ * pin's witness). Cut #7 over trunk 08a61f18, 2026-11-04: 192 judged files (src 117, qa 67,
  * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value; the
  * four new member probes read redeclaredTrace refused snapshotPaths,event,trace, redeclaredInterval refused
  * snapshotPaths,event,interval, coverageExpanded refused snapshot,snapshotPaths and sourceSequenceExpanded refused event, and every
@@ -332,7 +353,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { lstatSync, readFileSync } from "node:fs";
+import { lstatSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -1169,11 +1190,51 @@ function adoptionJson(): JsonValue {
   const registered = adoption();
   return registered === null ? null : { module: registered.module };
 }
-/** One static value import of this file: its module (a repository path when the specifier is relative) and its local bindings. */
+/** One static value import of this file: its module (importedModule: the repository path of the file its specifier resolves to, or
+ * the specifier) and its local bindings. */
 interface SelfImport { readonly module: string; readonly locals: readonly string[] }
-interface SelfRead { readonly impl: Readonly<Record<string, readonly string[]>>; readonly imports: readonly SelfImport[]; readonly adoptionNames: readonly string[] }
-/** The SELF-READ, parsed from this file's AST: each IMPL member's direct identifiers, every static import that binds a value, and
- * the identifiers adoption()'s body names. */
+interface SelfRead {
+  readonly impl: Readonly<Record<string, readonly string[]>>;
+  readonly imports: readonly SelfImport[];
+  readonly adoptionNames: readonly string[];
+  readonly bindings: Readonly<Record<string, readonly string[]>>;
+}
+/** TypeScript's module resolution with this repository's settings (moduleResolution bundler, as tsconfig.json sets it). */
+const RESOLUTION: ts.CompilerOptions = { module: ts.ModuleKind.ES2022, moduleResolution: ts.ModuleResolutionKind.Bundler };
+/** A static import's module: the repository path of the file its specifier resolves to under TypeScript's module resolution
+ * (RESOLUTION; both paths read through realpath), whatever spelling reaches it, or the specifier when it resolves to no file. */
+function importedModule(specifier: string): string {
+  const resolved = ts.resolveModuleName(specifier, join(REPO, SELF), RESOLUTION, ts.sys).resolvedModule?.resolvedFileName;
+  return resolved === undefined ? specifier : posix.relative(realpathSync(REPO), realpathSync(resolved));
+}
+/** The module-scope declaration of `name`: its declaration in a top-level const statement, or a top-level function declaration of
+ * that name (undefined when there is neither). */
+function topLevel(source: ts.SourceFile, name: string): ts.VariableDeclaration | ts.FunctionDeclaration | undefined {
+  for (const statement of source.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name?.text === name) return statement;
+    if (ts.isVariableStatement(statement) && (statement.declarationList.flags & ts.NodeFlags.Const) !== 0) {
+      const found = statement.declarationList.declarations.find(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === name);
+      if (found !== undefined) return found;
+    }
+  }
+  return undefined;
+}
+/** The object literal of the module-scope `const IMPL = Object.freeze({ ... })`, the one IMPL the SELF-READ reads: the one argument of
+ * Object.freeze in that const's initializer (undefined when the module-scope IMPL is written otherwise). */
+function moduleImpl(source: ts.SourceFile): ts.ObjectLiteralExpression | undefined {
+  const declaration = topLevel(source, "IMPL");
+  const initializer = declaration !== undefined && ts.isVariableDeclaration(declaration) ? declaration.initializer : undefined;
+  if (initializer === undefined || !ts.isCallExpression(initializer) || initializer.expression.getText() !== "Object.freeze" || initializer.arguments.length !== 1) return undefined;
+  const literal = initializer.arguments[0];
+  return literal !== undefined && ts.isObjectLiteralExpression(literal) ? literal : undefined;
+}
+/** BINDINGS: the names the SELF-READ reads by their module-scope declaration (IMPL, adoption, memberOutcome) and the global the IMPL
+ * initializer and the judged set's freeze check name (Object). */
+const BOUND_NAMES: readonly string[] = ["IMPL", "adoption", "memberOutcome", "Object"];
+/** The SELF-READ, parsed from this file's AST: each member's direct identifiers of the module-scope IMPL's literal (moduleImpl), every
+ * static import that binds a value, the identifiers the module-scope function adoption's body names, and every declaration in this
+ * file of each of BOUND_NAMES (declarationsOf), as `module <kind> <name>` for its module-scope declaration (topLevel) and as
+ * `other <kind> <name>` for any other. */
 function selfRead(): SelfRead {
   const text = readFileSync(join(REPO, SELF), "utf8");
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -1181,7 +1242,13 @@ function selfRead(): SelfRead {
     if (ts.isIdentifier(node)) into.add(node.text);
     ts.forEachChild(node, inner => identifiersOf(inner, into));
   };
-  const impl: Record<string, string[]> = {};
+  const properties: readonly ts.ObjectLiteralElementLike[] = moduleImpl(source)?.properties ?? [];
+  const impl = Object.fromEntries(properties.map(property => {
+    const names = new Set<string>();
+    identifiersOf(property, names);
+    const name = property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) ? property.name.text : "?";
+    return [name, [...names].sort(byName)] as const;
+  }));
   const imports: SelfImport[] = [];
   const adoptionNames = new Set<string>();
   for (const statement of source.statements) {
@@ -1192,33 +1259,23 @@ function selfRead(): SelfRead {
     const bindings = clause?.namedBindings;
     if (bindings !== undefined && ts.isNamespaceImport(bindings)) locals.push(bindings.name.text);
     if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) if (!element.isTypeOnly) locals.push(element.name.text);
-    const specifier = statement.moduleSpecifier.text;
-    const module = specifier.startsWith(".") ? posix.normalize(posix.join(posix.dirname(SELF), specifier)).replace(/\.js$/u, ".ts") : specifier;
-    if (locals.length > 0) imports.push({ module, locals });
+    if (locals.length > 0) imports.push({ module: importedModule(statement.moduleSpecifier.text), locals });
   }
-  const visit = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
-      for (const property of node.initializer.properties) {
-        const name = property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) ? property.name.text : "?";
-        const names = new Set<string>();
-        identifiersOf(property, names);
-        impl[name] = [...names].sort(byName);
-      }
-    }
-    if (ts.isFunctionDeclaration(node) && node.name?.text === "adoption" && node.body !== undefined) identifiersOf(node.body, adoptionNames);
-    ts.forEachChild(node, visit);
-  };
-  visit(source);
-  return { impl, imports, adoptionNames: [...adoptionNames].sort(byName) };
+  const adoptionFunction = topLevel(source, "adoption");
+  if (adoptionFunction !== undefined && ts.isFunctionDeclaration(adoptionFunction) && adoptionFunction.body !== undefined) identifiersOf(adoptionFunction.body, adoptionNames);
+  const bound = Object.fromEntries(BOUND_NAMES.map(name => [name, declarationsOf(source, name).map(node => `${node === topLevel(source, name) ? "module" : "other"} ${declarationText(node).split(" ")[0] ?? ""} ${name}`)] as const));
+  return { impl, imports, adoptionNames: [...adoptionNames].sort(byName), bindings: bound };
 }
 /** THE MEMBER CHECK's reader module: the landed member reader this file imports observationMembers from (SELF-READ). */
 const MEMBER_READER = "test/helpers/observation-members.ts";
-/** THE MEMBER CHECK's reader as the SELF-READ reads it from this file's AST, every text as source text (FROZEN SHAPE): whether B1's
- * IMPL member names observationMembers; the modules of the static imports that bind the name; each call of observationMembers by
- * that bare name, in source order, as `<holder>: <the call's text>`, its holder the IMPL member or const whose function holds it;
- * how often the identifier observationMembers stands in this file; B1's first three statements; and, by name, every declaration of
- * each name those calls and statements read (declarationsOf), each as `<kind> <its text>`: inside the call's holder for a call's
- * names, inside B1 for the names its statements declare, and in the whole file for the rest and, in turn, for each name a
+/** THE MEMBER CHECK's reader as the SELF-READ reads it from this file's AST, every text as source text (FROZEN SHAPE): whether the
+ * module-scope IMPL literal's B1 member names observationMembers; every static import declaration whose specifier resolves to the
+ * helper module, as written; each call of observationMembers by that bare name, in source order, as `<holder>: <the call's text>`,
+ * its holder the innermost function holding it, read as B1 when that is the IMPL literal's B1 member, as memberOutcome when it is
+ * the module-scope const memberOutcome's arrow function and as `other <its name>` otherwise (holderOf); how often the identifier
+ * observationMembers stands in this file; that B1 member's first three statements; and, by name, every declaration of each name
+ * those calls and statements read (declarationsOf), each as `<kind> <its text>`: inside the call's holder for a call's names,
+ * inside that B1 member for the names its statements declare, and in the whole file for the rest and, in turn, for each name a
  * variable's initializer among those declarations reads. */
 interface MemberReaderRead {
   readonly named: boolean;
@@ -1289,7 +1346,7 @@ function declarationText(node: Declared): string {
   const kind = ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) ? "function" : ts.isClassDeclaration(node) || ts.isClassExpression(node) ? "class" : ts.isEnumDeclaration(node) ? "enum" : "namespace";
   return `${kind} ${node.name?.getText() ?? ""}`;
 }
-/** The name of the IMPL member or const whose function holds `node`, with that function (null when no function holds it). */
+/** The innermost function holding `node`, with the name of the property, variable or declaration it is (null when no function holds it). */
 function holderOf(node: ts.Node): { readonly name: string; readonly fn: ts.Node } | null {
   for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
     if (ts.isArrowFunction(at) || ts.isFunctionExpression(at) || ts.isFunctionDeclaration(at) || ts.isMethodDeclaration(at)) {
@@ -1303,23 +1360,21 @@ function holderOf(node: ts.Node): { readonly name: string; readonly fn: ts.Node 
 /** THE MEMBER CHECK's reader, read from this file's AST (SELF-READ; MemberReaderRead). */
 function memberReaderRead(self: SelfRead): MemberReaderRead {
   const source = ts.createSourceFile(SELF, readFileSync(join(REPO, SELF), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const b1Member = moduleImpl(source)?.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText() === "B1");
+  const b1Function = b1Member !== undefined && ts.isArrowFunction(b1Member.initializer) ? b1Member.initializer : undefined;
+  const b1: readonly ts.Statement[] = b1Function !== undefined && ts.isBlock(b1Function.body) ? b1Function.body.statements.slice(0, 3) : [];
+  const outcome = topLevel(source, "memberOutcome");
+  const outcomeFunction = outcome !== undefined && ts.isVariableDeclaration(outcome) && outcome.initializer !== undefined && ts.isArrowFunction(outcome.initializer) ? outcome.initializer : undefined;
   const calls: string[] = [];
   const declarations: Record<string, readonly string[]> = {};
   let occurrences = 0;
-  let b1: readonly ts.Statement[] = [];
-  let b1Function: ts.Node | undefined;
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node) && node.text === "observationMembers") occurrences += 1;
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "observationMembers") {
       const holder = holderOf(node);
-      const at = holder?.name ?? "?";
+      const at = holder === null ? "?" : holder.fn === b1Function ? "B1" : holder.fn === outcomeFunction ? "memberOutcome" : `other ${holder.name}`;
       calls.push(`${at}: ${node.getText()}`);
       for (const name of node.arguments.flatMap(argument => namesRead(argument))) declarations[`${at} ${name}`] = holder === null ? [] : declarationsOf(holder.fn, name).map(declarationText);
-    }
-    const list = node.parent?.parent;
-    if (ts.isPropertyAssignment(node) && node.name.getText() === "B1" && list !== undefined && ts.isVariableDeclaration(list) && list.name.getText() === "IMPL" && ts.isArrowFunction(node.initializer) && ts.isBlock(node.initializer.body)) {
-      b1 = node.initializer.body.statements.slice(0, 3);
-      b1Function = node.initializer;
     }
     ts.forEachChild(node, visit);
   };
@@ -1336,7 +1391,7 @@ function memberReaderRead(self: SelfRead): MemberReaderRead {
   }
   return {
     named: self.impl.B1?.includes("observationMembers") ?? false,
-    imported: self.imports.filter(entry => entry.locals.includes("observationMembers")).map(entry => entry.module),
+    imported: source.statements.filter(statement => ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && importedModule(statement.moduleSpecifier.text) === MEMBER_READER).map(statement => statement.getText()),
     calls,
     occurrences,
     b1: b1.map(statement => statement.getText()),
@@ -1769,7 +1824,7 @@ const rosterConstants = (): JsonValue => ({
   battery: BATTERY.map(entry => ({ ...entry })),
 });
 
-const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
+const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = Object.freeze({
   A1: async () => {
     holdResiduals("A1", a1Loud);
     const paths = listedPaths();
@@ -1897,7 +1952,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return [name, `${renderShape(envelope)}: ${rfReading(envelope)}`];
     }));
   },
-};
+});
 
 const REACHED = new Map<string, string>();
 
@@ -1987,18 +2042,23 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     expect(Object.entries(STAND_INS_OF).map(([pin, ids]) => `${pin}: ${ids.filter(id => !(LOUD_OF[pin]?.(id) ?? false)).sort(byName).join(", ")}`)).toEqual(
       Object.entries(STAND_INS_OF).map(([pin, ids]) => `${pin}: ${quietOf(pin).filter(id => ids.includes(id)).sort(byName).join(", ")}`),
     );
-    // SELF-READ: no pin body names the roster, and the roster cannot be rewritten in memory.
-    const identifiers = selfRead().impl;
-    expect(Object.keys(identifiers).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
-    expect(Object.entries(identifiers).filter(([, names]) => names.includes("ROSTER")).map(([id]) => id)).toEqual([]);
-    expect([Object.isFrozen(ROSTER), Object.isFrozen(ROSTER.rows), ROSTER.rows.every(row => row.pins.every(pin => Object.isFrozen(pin)))]).toEqual([true, true, true]);
-    // SELF-READ, THE MEMBER CHECK (FROZEN SHAPE): its reader as this file's AST writes it, every text as source text - B1's IMPL member
-    // names observationMembers, the helper's static import binds it, the two calls by that bare name are memberOutcome's and B1's,
-    // each observationMembers(text), the identifier stands three times, B1's first three statements, and the one declaration each
-    // name of those calls and statements resolves to (the key "observationMembers" is quoted: occurrences counts every identifier).
-    expect(memberReaderRead(selfRead())).toEqual({
+    // SELF-READ, BINDINGS: IMPL, adoption and memberOutcome each have one declaration in this file, the module-scope one the SELF-READ
+    // reads (IMPL's written `const IMPL = Object.freeze({ ... })`), and Object none, so each name denotes that declaration (Object
+    // the runtime's global) wherever this file names it.
+    const self = selfRead();
+    expect(self.bindings).toEqual({ IMPL: ["module const IMPL"], adoption: ["module function adoption"], memberOutcome: ["module const memberOutcome"], Object: [] });
+    // SELF-READ: no member of that IMPL's literal names the roster, and neither IMPL nor the roster can be rewritten in memory.
+    expect(Object.keys(self.impl).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
+    expect(Object.entries(self.impl).filter(([, names]) => names.includes("ROSTER")).map(([id]) => id)).toEqual([]);
+    expect([Object.isFrozen(IMPL), Object.isFrozen(ROSTER), Object.isFrozen(ROSTER.rows), ROSTER.rows.every(row => row.pins.every(pin => Object.isFrozen(pin)))]).toEqual([true, true, true, true]);
+    // SELF-READ, THE MEMBER CHECK (FROZEN SHAPE): its reader as this file's AST writes it, every text as source text - the IMPL literal's
+    // B1 member names observationMembers, the helper module's one static import (as written) binds it, the two calls by that bare
+    // name are held by the module-scope memberOutcome and that B1 member, each observationMembers(text), the identifier stands three
+    // times, the B1 member's first three statements, and the one declaration each name of those calls and statements resolves to
+    // (the key "observationMembers" is quoted: occurrences counts every identifier).
+    expect(memberReaderRead(self)).toEqual({
       named: true,
-      imported: [MEMBER_READER],
+      imported: ['import { OBSERVATION_MODULE, type ObservationMembers, observationMembers } from "./helpers/observation-members.js";'],
       calls: ["memberOutcome: observationMembers(text)", "B1: observationMembers(text)"],
       occurrences: 3,
       b1: ['const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8");', "const members = observationMembers(text);", "holdMembers(members);"],
