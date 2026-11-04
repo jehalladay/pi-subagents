@@ -123,6 +123,21 @@
  * CLAIMED rather than claimed without a pin. The new CARRIER REFUSAL #3 ANCHOR reads the members, and the new FAIL-CLOSED
  * SHAPES case reads the narrowing of every C7 SHAPE FORMS entry line. No reader code changes: the helper differs from cut #3 in
  * its header words only.
+ * wb-tz2.24 cut #5 answers this carrier's own refusal #4 (gate-prep-4 / g10-gate-s211, O:2066; rung 1 of the carrier's own
+ * L056, L057, L058, L059 and L060 claim sets, needsRuling false): U1's fifteen members on L056's override member words, U2's
+ * six on L057's override destructuring words, U3's seven on L058's override destructuring assignment words, U4's eight on
+ * L059's override object key words and U5's eight on L060's override in words, and the five members its F1 finding names on
+ * L056, L059 and L060 (claimed only through the VALUES composition), which ride with this respin. Each member is a
+ * CARRIER_SURVIVORS_4 row on its line with its item and the sub-form the verdict states; its witness, replayed verbatim from
+ * the verdict's own text (each \n read as a line break, the verdict's convention), is a GP4W SUB-READINGS row pinned on that
+ * line, so the member's hollowing reds this census. Every claim entry line the earlier cuts left unnarrowed - L005 to L007,
+ * L018, L030, L032, L033, L038, L039, L041, L048 to L051, L056 to L060, L084 to L093 and L096 to L102 - narrows, in place, to
+ * its pinned pages as a clause of its own (L056 without its words 'on any receiver'), so a form of an entry line that no row
+ * plants is NOT CLAIMED rather than claimed without a pin; the RESIDUALS families (L105 to L107) are no claim and stay as
+ * they are. The new CARRIER REFUSAL #4 ANCHOR reads the members, and by name the four members refusal #4's F3 finding states
+ * red on cut #4 (CARRIER_RED_4), and the new FAIL-CLOSED ENTRIES case reads the narrowing of every entry line before the
+ * RESIDUALS heading, with L056's dropped words 'on any receiver' read as a widening word on any line. No reader code
+ * changes: the helper differs from cut #4 in its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -197,8 +212,8 @@
  *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
  *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence,
- *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 to #4) the UNMET slugs of its own refusal #1,
- *   refusal #2 and refusal #3 verdicts.
+ *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 to #5) the UNMET slugs of its own refusal #1,
+ *   refusal #2, refusal #3 and refusal #4 verdicts.
  *  CHILD REFUSAL #4 ANCHOR (wb-tz2.24, outside this census): the members that fold note lists under its U1 and U2 items, each
  *   with its line and in order, are exactly the CHILD_SURVIVORS_4 rows; each member's witness, as the note states its kind, its
  *   text (white space folded) and its delivered reading, is its row's G1W SUB-READINGS row and a pin of its line's CLAIM_LINES
@@ -220,6 +235,13 @@
  *   Routing line is one of them; each member's witness, as the verdict states its kind, its text (white space folded) and its
  *   delivered reading, is its row's GP12W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows
  *   to its pinned pages as a clause of its own.
+ *  CARRIER REFUSAL #4 ANCHOR (wb-tz2.24 cut #5, outside this census): the members this carrier's own refusal #4 verdict lists
+ *   on its UNMET item and finding lines - U1 to U5 and its F1 finding - each with its item (read from its line), its line, its
+ *   sub-form and in order, are exactly the CARRIER_SURVIVORS_4 rows, and every other GP4 member id the verdict names up to its
+ *   Routing line is one of the four its F3 finding states red (CARRIER_RED_4, in that finding's order); each member's witness,
+ *   as the verdict states its kind, its text (each \n a line break, white space folded) and its delivered reading, is its
+ *   row's GP4W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows to its pinned pages as a
+ *   clause of its own.
  *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
  *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
  *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
@@ -227,6 +249,9 @@
  *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
  *   entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078, narrows to its pinned pages
  *   as a clause of its own.
+ *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
+ *   entry line of the claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS,
+ *   C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own.
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -289,6 +314,16 @@
  * line outside the C7 SHAPE FORMS block is NOT CLAIMED by the FAIL-CLOSED SHAPES case (it reads that block's "- " lines only);
  * and a GP12 id the verdict names after its Routing line is NOT CLAIMED by the CARRIER REFUSAL #3 ANCHOR (it reads the verdict
  * up to that line).
+ * wb-tz2.24 cut #5: on L005 to L007, L018, L030, L032, L033, L038, L039, L041, L048 to L051, L056 to L060, L084 to L093 and
+ * L096 to L102, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own words say so), among
+ * them each position, receiver, key kind, declaration kind and target shape of an override form that no pinned page plants;
+ * that a GP4W page plants the very sub-form its CARRIER_SURVIVORS_4 row names is NOT CLAIMED by an anchor outside this census
+ * (the CARRIER REFUSAL #4 ANCHOR holds each member's item, line and sub-form words and its witness's kind, text and delivered
+ * reading as the verdict states them; the sub-form a page's text plants is this census's own reading); that a CARRIER_RED_4
+ * member reds this census is NOT CLAIMED by this census (its F3 finding states it; the anchor reads only its id); a GP4 id the
+ * verdict names after its Routing line is NOT CLAIMED by the CARRIER REFUSAL #4 ANCHOR (it reads the verdict up to that
+ * line); and a line after the RESIDUALS heading is NOT CLAIMED by the FAIL-CLOSED ENTRIES case (it reads the entry lines
+ * before that heading only).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -813,10 +848,42 @@ function carrierMentions3(block: string): string[] {
   const routing = block.indexOf("\nRouting:");
   return [...new Set([...(routing < 0 ? block : block.slice(0, routing)).matchAll(/GP12-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]))];
 }
-/** Whether a claim line narrows to its pinned pages as a clause of its own (wb-tz2.24, refusal #4 F2): the phrase at the line's start or after an entry colon, a semicolon, a comma, "for it" or "(POSITIONS;", and before a comma, a dash, a parenthesis or "only,"; and the line spells none of the widening words every page, every other page, beyond them, beyond its pinned pages, not only on its pinned pages and on its pinned pages and. */
+/** The members refusal #4's verdict lists (wb-tz2.24 cut #5), in order: on each of its lines that is an UNMET item ('U<n>: U<n>-<grade>-CONFIRMED-') or a finding ('- F<n> '), each '<id> (<line>, <sub-form>)' head with its item read from that line, and the first '<text>' => <delivered reading> vs <mutant reading> after its "witness drivers " or "Witness drivers ", each \n of the text read as a line break (the verdict's own convention: "a \n in a witness text is a line break"). */
+function carrierMembers4(block: string): CarrierMember3[] {
+  return block.split("\n").flatMap(span => {
+    const item = /^(U\d+): U\d+-[A-Z]+-CONFIRMED-/.exec(span)?.[1] ?? /^- (F\d+) /.exec(span)?.[1];
+    if (item === undefined) return [];
+    const heads = [...span.matchAll(/(GP4-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\)[:.] /g)];
+    return heads.map((head, at): CarrierMember3 => {
+      const body = span.slice((head.index ?? 0) + head[0].length, heads[at + 1]?.index ?? span.length);
+      const witness = /[Ww]itness (drivers) '(.*?)' => (\[[^\]]*\]) vs \[[^\]]*\]/.exec(body);
+      const delivered: unknown = JSON.parse(witness?.[3] ?? "[]");
+      return {
+        id: head[1] ?? "",
+        item,
+        line: head[2] ?? "",
+        subForm: head[3] ?? "",
+        kind: witness?.[1] ?? "",
+        text: (witness?.[2] ?? "").split("\\n").join("\n"),
+        delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
+      };
+    });
+  });
+}
+/** Every GP4 member id refusal #4's verdict names, in any form, up to its Routing line (wb-tz2.24 cut #5): the anchor holds each to a parsed member or to a member its F3 finding states red, so a member the item reading misses reds it. */
+function carrierMentions4(block: string): string[] {
+  const routing = block.indexOf("\nRouting:");
+  return [...new Set([...(routing < 0 ? block : block.slice(0, routing)).matchAll(/GP4-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]))];
+}
+/** The GP4 member ids refusal #4's F3 finding states red on cut #4, in its order: its "<n> red: ..." clause, up to ". <m> survive". */
+function carrierRed4(block: string): string[] {
+  const clause = /\d+ red: (.*?)\. \d+ survive/.exec(bulletOf(block, "F3 "))?.[1] ?? "";
+  return [...clause.matchAll(/GP4-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]);
+}
+/** Whether a claim line narrows to its pinned pages as a clause of its own (wb-tz2.24, refusal #4 F2): the phrase at the line's start or after an entry colon, a semicolon, a comma, "for it" or "(POSITIONS;", and before a comma, a dash, a parenthesis or "only,"; and the line spells none of the widening words every page, every other page, beyond them, beyond its pinned pages, not only on its pinned pages, on its pinned pages and, or (wb-tz2.24 cut #5, refusal #4: the words L056 dropped) on any receiver. */
 function narrowsToPinnedPages(line: string): boolean {
   const clause = /(?:^On|(?:: |; |, | for it |\(POSITIONS; )on) its pinned pages(?:, | - | \(| only, )/.test(line);
-  const widened = /every (?:other )?page|beyond (?:them|its pinned pages)|not only on its pinned pages|on its pinned pages and /.test(line);
+  const widened = /every (?:other )?page|beyond (?:them|its pinned pages)|not only on its pinned pages|on its pinned pages and |on any receiver/.test(line);
   return clause && !widened;
 }
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
@@ -2619,6 +2686,55 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "GP12W-DKEY-NOCOMPUTED", claim: "wb-tz2.24 cut #4: refusal #3 GP12-DKEY-NOCOMPUTED witness (L067 destructuring, U6), a computed key", kind: "shapes", text: "declare const o: Record<string, number>; export const { [\"kill\"]: k } = o;\n", expected: ["F1:destructuring"] },
   { id: "GP12W-IMPS-NOTYPEONLY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-IMPS-NOTYPEONLY witness (L069 import, U7), a type-only specifier", kind: "shapes", text: "import { type kill } from \"node:process\"; export type K = typeof kill;\n", expected: ["F1:import"] },
   { id: "GP12W-EKEY-NOPAREN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-EKEY-NOPAREN witness (L065 element key, F1), a parenthesized key value", kind: "shapes", text: "declare const o: Record<string, () => void>; o[(\"kill\")](); export {};\n", expected: ["F1:element key", "F1:kill name literal"] },
+  { id: "GP4W-OVM-NOCALLARG", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOCALLARG witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a call argument", kind: "drivers", text: "declare function use(value: unknown): void;\nuse(process.env.HYPERUNIX_HX);\n", expected: ["override"] },
+  { id: "GP4W-OVM-NORETURN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NORETURN witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a return value", kind: "drivers", text: "export function bin(): string | undefined {\n  return process.env.HYPERUNIX_HX;\n}\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOARROWBODY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOARROWBODY witness (L056 override member, U1), HYPERUNIX_HX as a member name read as an arrow body", kind: "drivers", text: "export const bin = (): string | undefined => process.env.HYPERUNIX_HX;\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOCONDITIONAL", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOCONDITIONAL witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a conditional branch", kind: "drivers", text: "export const bin = (on: boolean): string | undefined => (on ? process.env.HYPERUNIX_HX : undefined);\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOPROPVALUE", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOPROPVALUE witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a property value", kind: "drivers", text: "export const config = { bin: process.env.HYPERUNIX_HX };\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOTEMPLATESPAN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOTEMPLATESPAN witness (L056 override member, U1), HYPERUNIX_HX as a member name read in a template span", kind: "drivers", text: "export const line = `bin=$" + "{process.env.HYPERUNIX_HX}`;\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOIF", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOIF witness (L056 override member, U1), HYPERUNIX_HX as a member name read as an if condition", kind: "drivers", text: "if (process.env.HYPERUNIX_HX) console.log(\"set\");\n", expected: ["override"] },
+  { id: "GP4W-OVM-NODELETE", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NODELETE witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a delete operand", kind: "drivers", text: "delete process.env.HYPERUNIX_HX;\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOTYPEOF", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOTYPEOF witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a typeof operand", kind: "drivers", text: "export const kind = typeof process.env.HYPERUNIX_HX;\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOARRAY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOARRAY witness (L056 override member, U1), HYPERUNIX_HX as a member name read as an array element", kind: "drivers", text: "export const bins = [process.env.HYPERUNIX_HX];\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOPARAMDEFAULT", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOPARAMDEFAULT witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a parameter default", kind: "drivers", text: "export function run(bin = process.env.HYPERUNIX_HX): void {\n  console.log(bin);\n}\n", expected: ["override"] },
+  { id: "GP4W-OVM-NOCASE", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-NOCASE witness (L056 override member, U1), HYPERUNIX_HX as a member name read as a case label", kind: "drivers", text: "export function pick(bin: string): number {\n  switch (bin) {\n    case process.env.HYPERUNIX_HX:\n      return 1;\n  }\n  return 0;\n}\n", expected: ["override"] },
+  { id: "GP4W-OVM-IDRECEIVER", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-IDRECEIVER witness (L056 override member, U1), HYPERUNIX_HX as a member name on a receiver that is a plain name", kind: "drivers", text: "declare const settings: { HYPERUNIX_HX: string };\nexport const bin = settings.HYPERUNIX_HX;\n", expected: ["override"] },
+  { id: "GP4W-OVM-ELEM-IDRECEIVER", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-ELEM-IDRECEIVER witness (L056 override member, U1), HYPERUNIX_HX as an element key value on a receiver that is a plain name", kind: "drivers", text: "declare const settings: Record<string, string>;\nexport const bin = settings[\"HYPERUNIX_HX\"];\n", expected: ["override"] },
+  { id: "GP4W-OVM-TYPEREF", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-TYPEREF witness (L056 override member, U1), HYPERUNIX_HX as a type member in a type reference", kind: "drivers", text: "declare namespace Env {\n  type HYPERUNIX_HX = string;\n}\nexport type Bin = Env.HYPERUNIX_HX;\n", expected: ["override"] },
+  { id: "GP4W-OVD-SHORTHAND", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-SHORTHAND witness (L057 override destructuring, U2), HYPERUNIX_HX as a shorthand destructuring key", kind: "drivers", text: "const { HYPERUNIX_HX } = process.env;\nconsole.log(HYPERUNIX_HX);\n", expected: ["override"] },
+  { id: "GP4W-OVD-COMPUTED", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-COMPUTED witness (L057 override destructuring, U2), HYPERUNIX_HX as a computed destructuring key", kind: "drivers", text: "const { [\"HYPERUNIX_HX\"]: bin } = process.env;\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVD-STRINGKEY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-STRINGKEY witness (L057 override destructuring, U2), HYPERUNIX_HX as a string destructuring key", kind: "drivers", text: "const { \"HYPERUNIX_HX\": bin } = process.env;\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVD-LETVAR", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-LETVAR witness (L057 override destructuring, U2), HYPERUNIX_HX as a destructuring key of a let or var declaration", kind: "drivers", text: "let { HYPERUNIX_HX: bin } = process.env;\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVD-ARROWPARAM", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-ARROWPARAM witness (L057 override destructuring, U2), HYPERUNIX_HX as a destructuring key of an arrow function parameter", kind: "drivers", text: "export const binOf = ({ HYPERUNIX_HX: bin }: Record<string, string | undefined>): string | undefined => bin;\n", expected: ["override"] },
+  { id: "GP4W-OVD-INARRAY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVD-INARRAY witness (L057 override destructuring, U2), HYPERUNIX_HX as a destructuring key inside an array pattern", kind: "drivers", text: "const [{ HYPERUNIX_HX: bin }] = [process.env];\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-COMPUTED", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-COMPUTED witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a computed destructuring-assignment key", kind: "drivers", text: "let bin: string | undefined;\n({ [\"HYPERUNIX_HX\"]: bin } = process.env);\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-STRINGKEY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-STRINGKEY witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a string destructuring-assignment key", kind: "drivers", text: "let bin: string | undefined;\n({ \"HYPERUNIX_HX\": bin } = process.env);\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-SHORTDEFAULT", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-SHORTDEFAULT witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a shorthand destructuring-assignment key with a default", kind: "drivers", text: "let HYPERUNIX_HX: string | undefined;\n({ HYPERUNIX_HX = \"/usr/local/bin/hx\" } = process.env);\nconsole.log(HYPERUNIX_HX);\n", expected: ["override"] },
+  { id: "GP4W-OVA-RENAMEDDEFAULT", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-RENAMEDDEFAULT witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a destructuring-assignment key whose target has a default", kind: "drivers", text: "let bin: string | undefined;\n({ HYPERUNIX_HX: bin = \"/usr/local/bin/hx\" } = process.env);\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-NESTED", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-NESTED witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a nested destructuring-assignment key", kind: "drivers", text: "let bin: string | undefined;\n({ env: { HYPERUNIX_HX: bin } } = process);\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-FOROF", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-FOROF witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a destructuring-assignment key of a for-of target", kind: "drivers", text: "let bin: string | undefined;\nfor ({ HYPERUNIX_HX: bin } of [process.env]) console.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVA-INARRAY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVA-INARRAY witness (L058 override destructuring assignment, U3), HYPERUNIX_HX as a destructuring-assignment key inside an array target", kind: "drivers", text: "let bin: string | undefined;\n[{ HYPERUNIX_HX: bin }] = [process.env];\nconsole.log(bin);\n", expected: ["override"] },
+  { id: "GP4W-OVK-COMPUTEDLIT", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-COMPUTEDLIT witness (L059 override object key, U4), HYPERUNIX_HX as a computed object key spelled as a string", kind: "drivers", text: "export const env = { [\"HYPERUNIX_HX\"]: \"/usr/local/bin/hx\" };\n", expected: ["override"] },
+  { id: "GP4W-OVK-SPREADSIBLING", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-SPREADSIBLING witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal that also spreads another object", kind: "drivers", text: "export const env = { ...process.env, HYPERUNIX_HX: \"/usr/local/bin/hx\" };\n", expected: ["override"] },
+  { id: "GP4W-OVK-NESTED", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-NESTED witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal that is a property value", kind: "drivers", text: "export const config = { env: { HYPERUNIX_HX: \"/usr/local/bin/hx\" } };\n", expected: ["override"] },
+  { id: "GP4W-OVK-CALLARG", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-CALLARG witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal passed as a call argument", kind: "drivers", text: "declare function runWith(env: Record<string, string>): void;\nrunWith({ HYPERUNIX_HX: \"/usr/local/bin/hx\" });\n", expected: ["override"] },
+  { id: "GP4W-OVK-RETURN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-RETURN witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal returned", kind: "drivers", text: "export function env(): Record<string, string> {\n  return { HYPERUNIX_HX: \"/usr/local/bin/hx\" };\n}\n", expected: ["override"] },
+  { id: "GP4W-OVK-ARROWBODY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-ARROWBODY witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal that is a parenthesized arrow body", kind: "drivers", text: "export const env = (): Record<string, string> => ({ HYPERUNIX_HX: \"/usr/local/bin/hx\" });\n", expected: ["override"] },
+  { id: "GP4W-OVK-INARRAY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-INARRAY witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal that is an array element", kind: "drivers", text: "export const envs = [{ HYPERUNIX_HX: \"/usr/local/bin/hx\" }];\n", expected: ["override"] },
+  { id: "GP4W-OVK-ASOPERAND", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-ASOPERAND witness (L059 override object key, U4), HYPERUNIX_HX as a key of an object literal under an as assertion", kind: "drivers", text: "export const env = { HYPERUNIX_HX: \"/usr/local/bin/hx\" } as Record<string, string>;\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOIF", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOIF witness (L060 override in, U5), HYPERUNIX_HX in as an if condition", kind: "drivers", text: "if (\"HYPERUNIX_HX\" in process.env) console.log(\"set\");\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOPAREN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOPAREN witness (L060 override in, U5), HYPERUNIX_HX in, as a parenthesized negation operand", kind: "drivers", text: "export const unset = !(\"HYPERUNIX_HX\" in process.env);\n", expected: ["override"] },
+  { id: "GP4W-OVI-NORETURN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NORETURN witness (L060 override in, U5), HYPERUNIX_HX in as a return value", kind: "drivers", text: "export function set(): boolean {\n  return \"HYPERUNIX_HX\" in process.env;\n}\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOARROWBODY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOARROWBODY witness (L060 override in, U5), HYPERUNIX_HX in as an arrow body", kind: "drivers", text: "export const set = (): boolean => \"HYPERUNIX_HX\" in process.env;\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOLOGICAL", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOLOGICAL witness (L060 override in, U5), HYPERUNIX_HX in as a logical operand", kind: "drivers", text: "export const set = \"HYPERUNIX_HX\" in process.env && process.platform === \"linux\";\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOCONDITIONAL", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOCONDITIONAL witness (L060 override in, U5), HYPERUNIX_HX in as a conditional test", kind: "drivers", text: "export const state = \"HYPERUNIX_HX\" in process.env ? \"set\" : \"unset\";\n", expected: ["override"] },
+  { id: "GP4W-OVI-NOCALLARG", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-NOCALLARG witness (L060 override in, U5), HYPERUNIX_HX in as a call argument", kind: "drivers", text: "declare function record(set: boolean): void;\nrecord(\"HYPERUNIX_HX\" in process.env);\n", expected: ["override"] },
+  { id: "GP4W-OVI-ENVONLY", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-ENVONLY witness (L060 override in, U5), HYPERUNIX_HX in an object other than process.env", kind: "drivers", text: "declare const env: Record<string, string>;\nexport const set = \"HYPERUNIX_HX\" in env;\n", expected: ["override"] },
+  { id: "GP4W-OVM-KEY-TEMPLATE", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-KEY-TEMPLATE witness (L056 override member, F1), HYPERUNIX_HX as an element key value written as a no-substitution template", kind: "drivers", text: "export const bin = process.env[`HYPERUNIX_HX`];\n", expected: ["override"] },
+  { id: "GP4W-OVM-KEY-PAREN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVM-KEY-PAREN witness (L056 override member, F1), HYPERUNIX_HX as an element key value in parentheses", kind: "drivers", text: "export const bin = process.env[(\"HYPERUNIX_HX\")];\n", expected: ["override"] },
+  { id: "GP4W-OVK-COMPUTEDTPL", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-COMPUTEDTPL witness (L059 override object key, F1), HYPERUNIX_HX as a computed object key spelled as a no-substitution template", kind: "drivers", text: "export const env = { [`HYPERUNIX_HX`]: \"/usr/local/bin/hx\" };\n", expected: ["override"] },
+  { id: "GP4W-OVI-LEFTPAREN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-LEFTPAREN witness (L060 override in, F1), HYPERUNIX_HX in with the left operand in parentheses", kind: "drivers", text: "export const set = (\"HYPERUNIX_HX\") in process.env;\n", expected: ["override"] },
+  { id: "GP4W-OVI-LEFTAS", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-LEFTAS witness (L060 override in, F1), HYPERUNIX_HX in with the left operand under an as assertion", kind: "drivers", text: "export const set = \"HYPERUNIX_HX\" as string in process.env;\n", expected: ["override"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -3012,7 +3128,61 @@ const CARRIER_SURVIVORS_3: readonly CarrierSurvivor3[] = [
   { id: "GP12-IMPS-NOTYPEONLY", item: "U7", line: "L069", subForm: "a type-only specifier", witness: "GP12W-IMPS-NOTYPEONLY" },
   { id: "GP12-EKEY-NOPAREN", item: "F1", line: "L065", subForm: "a parenthesized key value", witness: "GP12W-EKEY-NOPAREN" },
 ];
-/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3) and refusal #3 verdict (cut #4)). */
+/** wb-tz2.24 cut #5: the members of this carrier's own refusal #4 (gate-prep-4 / g10-gate-s211, O:2066) on the lines its verdict names (U1 to U5, and F1 for the five members its F1 finding names, which ride), each with its item, the sub-form the verdict states and its GP4W witness (CarrierSurvivor3's shape). */
+const CARRIER_SURVIVORS_4: readonly CarrierSurvivor3[] = [
+  { id: "GP4-OVM-NOCALLARG", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a call argument", witness: "GP4W-OVM-NOCALLARG" },
+  { id: "GP4-OVM-NORETURN", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a return value", witness: "GP4W-OVM-NORETURN" },
+  { id: "GP4-OVM-NOARROWBODY", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as an arrow body", witness: "GP4W-OVM-NOARROWBODY" },
+  { id: "GP4-OVM-NOCONDITIONAL", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a conditional branch", witness: "GP4W-OVM-NOCONDITIONAL" },
+  { id: "GP4-OVM-NOPROPVALUE", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a property value", witness: "GP4W-OVM-NOPROPVALUE" },
+  { id: "GP4-OVM-NOTEMPLATESPAN", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read in a template span", witness: "GP4W-OVM-NOTEMPLATESPAN" },
+  { id: "GP4-OVM-NOIF", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as an if condition", witness: "GP4W-OVM-NOIF" },
+  { id: "GP4-OVM-NODELETE", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a delete operand", witness: "GP4W-OVM-NODELETE" },
+  { id: "GP4-OVM-NOTYPEOF", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a typeof operand", witness: "GP4W-OVM-NOTYPEOF" },
+  { id: "GP4-OVM-NOARRAY", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as an array element", witness: "GP4W-OVM-NOARRAY" },
+  { id: "GP4-OVM-NOPARAMDEFAULT", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a parameter default", witness: "GP4W-OVM-NOPARAMDEFAULT" },
+  { id: "GP4-OVM-NOCASE", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name read as a case label", witness: "GP4W-OVM-NOCASE" },
+  { id: "GP4-OVM-IDRECEIVER", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a member name on a receiver that is a plain name", witness: "GP4W-OVM-IDRECEIVER" },
+  { id: "GP4-OVM-ELEM-IDRECEIVER", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as an element key value on a receiver that is a plain name", witness: "GP4W-OVM-ELEM-IDRECEIVER" },
+  { id: "GP4-OVM-TYPEREF", item: "U1", line: "L056", subForm: "HYPERUNIX_HX as a type member in a type reference", witness: "GP4W-OVM-TYPEREF" },
+  { id: "GP4-OVD-SHORTHAND", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a shorthand destructuring key", witness: "GP4W-OVD-SHORTHAND" },
+  { id: "GP4-OVD-COMPUTED", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a computed destructuring key", witness: "GP4W-OVD-COMPUTED" },
+  { id: "GP4-OVD-STRINGKEY", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a string destructuring key", witness: "GP4W-OVD-STRINGKEY" },
+  { id: "GP4-OVD-LETVAR", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a destructuring key of a let or var declaration", witness: "GP4W-OVD-LETVAR" },
+  { id: "GP4-OVD-ARROWPARAM", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a destructuring key of an arrow function parameter", witness: "GP4W-OVD-ARROWPARAM" },
+  { id: "GP4-OVD-INARRAY", item: "U2", line: "L057", subForm: "HYPERUNIX_HX as a destructuring key inside an array pattern", witness: "GP4W-OVD-INARRAY" },
+  { id: "GP4-OVA-COMPUTED", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a computed destructuring-assignment key", witness: "GP4W-OVA-COMPUTED" },
+  { id: "GP4-OVA-STRINGKEY", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a string destructuring-assignment key", witness: "GP4W-OVA-STRINGKEY" },
+  { id: "GP4-OVA-SHORTDEFAULT", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a shorthand destructuring-assignment key with a default", witness: "GP4W-OVA-SHORTDEFAULT" },
+  { id: "GP4-OVA-RENAMEDDEFAULT", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a destructuring-assignment key whose target has a default", witness: "GP4W-OVA-RENAMEDDEFAULT" },
+  { id: "GP4-OVA-NESTED", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a nested destructuring-assignment key", witness: "GP4W-OVA-NESTED" },
+  { id: "GP4-OVA-FOROF", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a destructuring-assignment key of a for-of target", witness: "GP4W-OVA-FOROF" },
+  { id: "GP4-OVA-INARRAY", item: "U3", line: "L058", subForm: "HYPERUNIX_HX as a destructuring-assignment key inside an array target", witness: "GP4W-OVA-INARRAY" },
+  { id: "GP4-OVK-COMPUTEDLIT", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a computed object key spelled as a string", witness: "GP4W-OVK-COMPUTEDLIT" },
+  { id: "GP4-OVK-SPREADSIBLING", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal that also spreads another object", witness: "GP4W-OVK-SPREADSIBLING" },
+  { id: "GP4-OVK-NESTED", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal that is a property value", witness: "GP4W-OVK-NESTED" },
+  { id: "GP4-OVK-CALLARG", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal passed as a call argument", witness: "GP4W-OVK-CALLARG" },
+  { id: "GP4-OVK-RETURN", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal returned", witness: "GP4W-OVK-RETURN" },
+  { id: "GP4-OVK-ARROWBODY", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal that is a parenthesized arrow body", witness: "GP4W-OVK-ARROWBODY" },
+  { id: "GP4-OVK-INARRAY", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal that is an array element", witness: "GP4W-OVK-INARRAY" },
+  { id: "GP4-OVK-ASOPERAND", item: "U4", line: "L059", subForm: "HYPERUNIX_HX as a key of an object literal under an as assertion", witness: "GP4W-OVK-ASOPERAND" },
+  { id: "GP4-OVI-NOIF", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as an if condition", witness: "GP4W-OVI-NOIF" },
+  { id: "GP4-OVI-NOPAREN", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in, as a parenthesized negation operand", witness: "GP4W-OVI-NOPAREN" },
+  { id: "GP4-OVI-NORETURN", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as a return value", witness: "GP4W-OVI-NORETURN" },
+  { id: "GP4-OVI-NOARROWBODY", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as an arrow body", witness: "GP4W-OVI-NOARROWBODY" },
+  { id: "GP4-OVI-NOLOGICAL", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as a logical operand", witness: "GP4W-OVI-NOLOGICAL" },
+  { id: "GP4-OVI-NOCONDITIONAL", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as a conditional test", witness: "GP4W-OVI-NOCONDITIONAL" },
+  { id: "GP4-OVI-NOCALLARG", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in as a call argument", witness: "GP4W-OVI-NOCALLARG" },
+  { id: "GP4-OVI-ENVONLY", item: "U5", line: "L060", subForm: "HYPERUNIX_HX in an object other than process.env", witness: "GP4W-OVI-ENVONLY" },
+  { id: "GP4-OVM-KEY-TEMPLATE", item: "F1", line: "L056", subForm: "HYPERUNIX_HX as an element key value written as a no-substitution template", witness: "GP4W-OVM-KEY-TEMPLATE" },
+  { id: "GP4-OVM-KEY-PAREN", item: "F1", line: "L056", subForm: "HYPERUNIX_HX as an element key value in parentheses", witness: "GP4W-OVM-KEY-PAREN" },
+  { id: "GP4-OVK-COMPUTEDTPL", item: "F1", line: "L059", subForm: "HYPERUNIX_HX as a computed object key spelled as a no-substitution template", witness: "GP4W-OVK-COMPUTEDTPL" },
+  { id: "GP4-OVI-LEFTPAREN", item: "F1", line: "L060", subForm: "HYPERUNIX_HX in with the left operand in parentheses", witness: "GP4W-OVI-LEFTPAREN" },
+  { id: "GP4-OVI-LEFTAS", item: "F1", line: "L060", subForm: "HYPERUNIX_HX in with the left operand under an as assertion", witness: "GP4W-OVI-LEFTAS" },
+];
+/** wb-tz2.24 cut #5: the four GP4 members refusal #4's F3 finding states red on cut #4 (through carried rows), in its order: named by the verdict, no survivor. */
+const CARRIER_RED_4: readonly string[] = ["GP4-OVM-NOBINARY", "GP4-OVM-NOWRITE", "GP4-OVM-KEY-CONSTNAME", "GP4-OVD-DEFAULT"];
+/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4) and refusal #4 verdict (cut #5)). */
 const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   {
     key: "wb-tz2.24 ACCEPTANCE",
@@ -3031,6 +3201,11 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-tz2.24 refusal #3 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-DESTRUCTURING-ASSIGNMENT-KEY-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L068" },
   { key: "wb-tz2.24 refusal #3 U6", source: "notes", text: "U6-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-DESTRUCTURING-KEY-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2592-L067" },
   { key: "wb-tz2.24 refusal #3 U7", source: "notes", text: "U7-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-IMPORT-SPECIFIER-NAME-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2592-L069" },
+  { key: "wb-tz2.24 refusal #4 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-MEMBER-WORDS-15-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L056" },
+  { key: "wb-tz2.24 refusal #4 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-DESTRUCTURING-KEY-WORDS-6-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L057" },
+  { key: "wb-tz2.24 refusal #4 U3", source: "notes", text: "U3-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-DESTRUCTURING-ASSIGNMENT-KEY-WORDS-7-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L058" },
+  { key: "wb-tz2.24 refusal #4 U4", source: "notes", text: "U4-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-OBJECT-KEY-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L059" },
+  { key: "wb-tz2.24 refusal #4 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-IN-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L060" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -3174,9 +3349,9 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L002", line: "program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope", pins: ["SUB:U1-F1", "SUB:U1-F2"] },
   { id: "L003", line: "never answers for it (refusal #3 U1, refusal #4 U1); an expando entry the binder records for a property write (f.tag = v)", pins: ["SUB:U1-F4", "SUB:S1203"] },
   { id: "L004", line: "is no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:", pins: ["SUB:S0587", "BINDING:import", "SUB:T0076", "SUB:T0077"] },
-  { id: "L005", line: "- import: the symbol is declared in the file by an import (named, default or namespace) or an import-equals", pins: ["BINDING:import", "SUB:U1-F5", "SUB:U1-F6", "SUB:T0081"] },
-  { id: "L006", line: "- global: the symbol has no declaration in the file, or only declarations in an ambient context", pins: ["BINDING:global", "SUB:A01", "SUB:A02", "SUB:A03d", "SUB:S0589", "SUB:S0591", "SUB:T0078", "SUB:T0079", "SUB:T0080"] },
-  { id: "L007", line: "- local: any other declaration in the file", pins: ["BINDING:local", "SUB:A04", "SUB:A06", "SUB:T0043"] },
+  { id: "L005", line: "- import: on its pinned pages, the symbol is declared in the file by an import (named, default or namespace) or an import-equals", pins: ["BINDING:import", "SUB:U1-F5", "SUB:U1-F6", "SUB:T0081"] },
+  { id: "L006", line: "- global: on its pinned pages, the symbol has no declaration in the file, or only declarations in an ambient context", pins: ["BINDING:global", "SUB:A01", "SUB:A02", "SUB:A03d", "SUB:S0589", "SUB:S0591", "SUB:T0078", "SUB:T0079", "SUB:T0080"] },
+  { id: "L007", line: "- local: on its pinned pages, any other declaration in the file", pins: ["BINDING:local", "SUB:A04", "SUB:A06", "SUB:T0043"] },
   { id: "L008", line: "VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const", pins: ["VALUES", "SUB:A14", "SUB:S1284"] },
   { id: "L009", line: "declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), through a chain of such names (a cycle reads no value); parentheses, as,", pins: ["SUB:A15", "SUB:S1082", "SUB:A10", "SUB:T0131", "SUB:T0132", "SUB:T0133", "SUB:WV1", "SUB:WV1c"] },
   { id: "L010", line: "satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,", pins: ["SUB:A11", "SUB:A12", "SUB:A13", "SUB:S1284"] },
@@ -3187,7 +3362,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
   { id: "L016", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
   { id: "L017", line: "- initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)", pins: ["ROOT:initializer", "SUB:GP22W-INIT-FIRSTDECL", "SUB:GP22W-INIT-NOFOR", "SUB:GP22W-INIT-NOPAREN", "SUB:GP22W-INIT-NOSATISFIES", "SUB:GP22W-INIT-NONONNULL", "SUB:GP22W-INIT-NOMEMBER", "SUB:GP22W-INIT-NOELEMENT", "SUB:GP22W-INIT-NOIMPORTNAME", "SUB:GP22S-INIT-TYPEASSERT", "SUB:GP22S-INIT-PARENAS", "SUB:GP22S-INIT-DOUBLEPAREN", "SUB:GP22S-INIT-GLOBALMEMBER", "SUB:GP22S-INIT-LOCALMEMBER", "SUB:GP22S-INIT-DEEPMEMBER", "SUB:GP22S-INIT-GLOBALTHIS", "SUB:GP22S-INIT-GLOBALELEMENT", "SUB:GP22S-INIT-NAMEKEY", "SUB:GP22S-INIT-TEMPLATEKEY", "SUB:GP22S-INIT-OPTIONAL", "SUB:GP22S-INIT-NAMESPACENAME", "SUB:GP22S-INIT-DEFAULTNAME", "SUB:GP22S-INIT-EQUALSNAME", "SUB:GP22S-INIT-USING", "SUB:GP22S-INIT-AWAITUSING", "SUB:GP22S-INIT-STATICBLOCK", "SUB:GP22S-INIT-CASE", "SUB:GP22S-INIT-EXPORTLIST", "SUB:GP22S-INIT-FORLATER", "SUB:GP22S-INIT-IF", "SUB:GP22S-INIT-TRY", "SUB:GP22S-INIT-WHILE", "SUB:GP22S-INIT-LABEL", "SUB:GP22S-INIT-METHOD", "SUB:GP22S-INIT-FUNCDECL"] },
-  { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
+  { id: "L018", line: "- reassignment: on its pinned pages, for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
   { id: "L019", line: "- destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040", "SUB:WR7", "SUB:WR7c", "SUB:G1W-P-DESTR-IDX2", "SUB:G1S-P-DESTR-NOHOLE-IDX2"] },
   { id: "L020", line: "- for-of element: on its pinned pages, a for-of variable's elements when the iterable is an array literal, directly or through a const name (a fourth or later element of the array literal, a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034", "SUB:G5W-O-RF-FORIN", "SUB:G5C-O-RF-FORIN", "SUB:X3-FORIN-CONST", "SUB:G1W-P-FOROF-IDX2", "SUB:G1S-P-FOROF-CONST-IDX2"] },
   { id: "L021", line: "- parameter default: on its pinned pages, a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter, and the default of a third or later parameter, are NOT CLAIMED)", pins: ["ROOT:parameter default", "SUB:GP3W-PDEFAULT-FIRSTONLY", "SUB:GP3W-PDEFAULT-NAMEONLY", "SUB:GP3W-PDEFAULT-NOGLOBALMEMBER", "SUB:GP3W-PDEFAULT-NOELEMENT", "SUB:GP3W-PDEFAULT-NOIMPORTNAME", "SUB:GP3W-PDEFAULT-NOLOCALNAME", "SUB:GP3W-PDEFAULT-NOTYPED", "SUB:GP3W-PDEFAULT-TOPONLY"] },
@@ -3199,37 +3374,37 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L027", line: "", pins: [] },
   { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
   { id: "L029", line: "- spy: on its pinned pages, a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\") (with one or two later arguments too, each the string \"get\" or \"set\" as those pages spell it; three or more later arguments, a later argument that is a name, and a later argument of any other value are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014", "SUB:G5W-A-SPY-ARITY", "SUB:G5C-A-SPY-ARITY", "SUB:G5W-A-SPY-SECONDRECV", "SUB:G5C-A-SPY-SECONDRECV", "SUB:X3-SPY-TWO"] },
-  { id: "L030", line: "- global stub: a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52", "SUB:WC16", "SUB:WC16c", "SUB:W-GS-CHAIN", "SUB:C-GS-CHAIN", "LOCATED:global stub"] },
+  { id: "L030", line: "- global stub: on its pinned pages, a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52", "SUB:WC16", "SUB:WC16c", "SUB:W-GS-CHAIN", "SUB:C-GS-CHAIN", "LOCATED:global stub"] },
   { id: "L031", line: "- watched reference: on its pinned pages, a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a call's third or later argument, a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26", "SUB:WC3", "SUB:WC3b", "SUB:WC3c", "LOCATED:watched reference", "SUB:G1W-A-WATCHED-LATERARG"] },
-  { id: "L032", line: "- destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)", pins: ["C2:destructured watched", "SUB:A54", "SUB:A55", "SUB:W28", "SUB:T0050", "SUB:T0051", "SUB:T0053", "SUB:T0138", "SUB:Z0006", "LOCATED:destructured watched"] },
-  { id: "L033", line: "- destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)", pins: ["C2:destructuring-assigned watched", "SUB:S0880", "SUB:S0881", "SUB:S1102", "SUB:T0052", "SUB:T0137", "SUB:W-DAW-NESTED", "SUB:C-DAW-NESTED", "SUB:Z0001", "SUB:Z0002", "SUB:Z0003", "SUB:Z0004", "SUB:Z0005", "LOCATED:destructuring-assigned watched"] },
+  { id: "L032", line: "- destructured watched: on its pinned pages, a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)", pins: ["C2:destructured watched", "SUB:A54", "SUB:A55", "SUB:W28", "SUB:T0050", "SUB:T0051", "SUB:T0053", "SUB:T0138", "SUB:Z0006", "LOCATED:destructured watched"] },
+  { id: "L033", line: "- destructuring-assigned watched: on its pinned pages, a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)", pins: ["C2:destructuring-assigned watched", "SUB:S0880", "SUB:S0881", "SUB:S1102", "SUB:T0052", "SUB:T0137", "SUB:W-DAW-NESTED", "SUB:C-DAW-NESTED", "SUB:Z0001", "SUB:Z0002", "SUB:Z0003", "SUB:Z0004", "SUB:Z0005", "LOCATED:destructuring-assigned watched"] },
   { id: "L034", line: "- assignment: on its pinned pages, = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest), a pattern in parentheses and a nested pattern with a default too, each element read once, in the shapes those pages spell: the target alone, [x, y], [a, x], [[x]], [...x], [x = v], { a, b: x }, { a: { k: x } }, { ...x }, { x }, ([x]), (([x])), ({ k: x }), [([x])], [[x] = []], [[[x] = []] = []] and { k: [x] = [] } (an as, satisfies, non-null or <T> assertion around a pattern is NOT CLAIMED, and so is any other shape, among them an element after a hole, a fourth or later element, an element under a computed key, an element under a string key, a shorthand element with a default, a pattern nested three deep and an object pattern with a default nested in an array)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056", "LOCATED:assignment", "SUB:Y0309", "SUB:G5W-D-NOBARE", "SUB:G5W-D-DEFAULT-NESTED", "SUB:X3-ASG-PAREN-OBJECT", "SUB:X3-ASG-PAREN-NESTED", "SUB:X3-ASG-PAREN-TWICE", "SUB:X3-ASG-DEFAULT-OBJECT", "SUB:X3-ASG-DEFAULT-DEEP"] },
   { id: "L035", line: "- compound operator: on its pinned pages, an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target (a destructuring pattern as its target, and an operator or a target those pages do not spell, are NOT CLAIMED)", pins: ["C2:compound operator", "SUB:A61", "SUB:A62", "SUB:A63", "SUB:A63b", "SUB:T0054", "SUB:T0057", "LOCATED:compound operator"] },
   { id: "L036", line: "- for-of target: on its pinned pages, an outside for-of assignment target, alone or as the one element of the patterns those pages spell, [x], { k: x }, [[x]], [...x] and { ...x } (a for await...of loop, a target in parentheses or written as an element access, and any other pattern shape, among them an element after a hole, a later element, an element under a computed or a string key, a shorthand element and an element with a default, are NOT CLAIMED)", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058", "SUB:WC17", "SUB:WC17c", "LOCATED:for-of target", "SUB:Y0301", "SUB:Y0302", "SUB:Y0303", "SUB:Y0304", "SUB:Y0305"] },
   { id: "L037", line: "- for-in target: on its pinned pages, an outside for-in assignment target, alone or as the one element of the patterns those pages spell, [x], { k: x }, [[x]], [...x] and { ...x } (a target in parentheses or written as an element access, and any other pattern shape, among them an element after a hole, a later element, an element under a computed or a string key, a shorthand element and an element with a default, are NOT CLAIMED)", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059", "LOCATED:for-in target", "SUB:W6-T-FORIN-PATTERN", "SUB:W6-T-FORIN-OBJPATTERN", "SUB:W6-T-FORIN-ARRONLY", "SUB:Y0306", "SUB:Y0307", "SUB:Y0308"] },
-  { id: "L038", line: "- delete: delete of an outside chain (an optional chain and an operand in parentheses are NOT CLAIMED)", pins: ["C2:delete", "SUB:A73", "SUB:S0735", "SUB:T0060", "LOCATED:delete"] },
-  { id: "L039", line: "- update: ++ or -- (prefix or postfix) of an outside chain", pins: ["C2:update", "SUB:A64", "SUB:A64b", "SUB:A65", "SUB:T0061", "LOCATED:update"] },
+  { id: "L038", line: "- delete: on its pinned pages, delete of an outside chain (an optional chain and an operand in parentheses are NOT CLAIMED)", pins: ["C2:delete", "SUB:A73", "SUB:S0735", "SUB:T0060", "LOCATED:delete"] },
+  { id: "L039", line: "- update: on its pinned pages, ++ or -- (prefix or postfix) of an outside chain", pins: ["C2:update", "SUB:A64", "SUB:A64b", "SUB:A65", "SUB:T0061", "LOCATED:update"] },
   { id: "L040", line: "- mutator call: on its pinned pages, a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - and a call of a member, an arity or an argument spelling those pages do not spell, a spread argument among them, are NOT CLAIMED)", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064", "SUB:WC15", "SUB:WC15c", "LOCATED:mutator call", "SUB:W6-T-MUT-SECOND", "SUB:C6-T-MUT-SECOND", "SUB:Y0008"] },
-  { id: "L041", line: "- legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140", "SUB:WC14", "SUB:WC14c", "LOCATED:legacy accessor definer"] },
+  { id: "L041", line: "- legacy accessor definer: on its pinned pages, __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140", "SUB:WC14", "SUB:WC14c", "LOCATED:legacy accessor definer"] },
   { id: "L042", line: "On its pinned pages, a write whose target is a bare name bound to a local let, var, const, parameter, destructured, catch clause or for-of variable declaration (another kind is NOT CLAIMED), written alone or in parentheses, or, in the assignment, compound operator, for-of target and for-in target forms, as a pattern element ([local], { key: local }, { local }, [[local]], [...local] or { ...local }), rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c", "SUB:Y0201", "SUB:Y0202", "SUB:Y0203", "SUB:Y0204", "SUB:Y0205", "SUB:Y0206", "SUB:Y0207", "REBIND:let", "REBIND:var", "REBIND:const", "REBIND:parameter", "REBIND:destructured", "REBIND:catch clause", "REBIND:for-of variable"] },
   { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it on its pinned pages (any other page is NOT CLAIMED, among them a declaration of another spelling or place - an arrow function's parameter, a method's or constructor's parameter, a function expression's parameter, a parameter without a default, a declaration below the top level, an array destructuring declaration, a const destructuring declaration, a destructured parameter, a destructured catch variable, a const or var for-of variable and a name declared twice - a target in two pairs of parentheses and a later array-pattern element ([other, local])).", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6", "SUB:W6-T-RB-FORIN", "SUB:C6-T-RB-FORIN", "SUB:W6-T-RB-DELETE", "SUB:C6-T-RB-DELETE", "WRITE:assignment | alone", "WRITE:assignment | in parentheses", "WRITE:assignment | an array pattern", "WRITE:assignment | an object pattern", "WRITE:assignment | a shorthand", "WRITE:assignment | a nested pattern", "WRITE:assignment | a spread", "WRITE:assignment | a rest", "WRITE:compound operator | alone", "WRITE:compound operator | in parentheses", "WRITE:compound operator | an array pattern", "WRITE:compound operator | an object pattern", "WRITE:compound operator | a shorthand", "WRITE:compound operator | a nested pattern", "WRITE:compound operator | a spread", "WRITE:compound operator | a rest", "WRITE:for-of target | alone", "WRITE:for-of target | in parentheses", "WRITE:for-of target | an array pattern", "WRITE:for-of target | an object pattern", "WRITE:for-of target | a shorthand", "WRITE:for-of target | a nested pattern", "WRITE:for-of target | a spread", "WRITE:for-of target | a rest", "WRITE:for-in target | alone", "WRITE:for-in target | in parentheses", "WRITE:for-in target | an array pattern", "WRITE:for-in target | an object pattern", "WRITE:for-in target | a shorthand", "WRITE:for-in target | a nested pattern", "WRITE:for-in target | a spread", "WRITE:for-in target | a rest", "WRITE:delete | alone", "WRITE:delete | in parentheses", "WRITE:update | alone", "WRITE:update | in parentheses", "SUB:G5W-C-PATELEM-FOROF", "SUB:G5C-C-PATELEM-FOROF", "SUB:G5W-C-PATELEM-FORIN", "SUB:G5C-C-PATELEM-FORIN", "SUB:G5W-C-PATELEM-COMPOUND", "SUB:G5C-C-PATELEM-COMPOUND"] },
   { id: "L044", line: "MOCKS (moduleMockSpecifiers): on its pinned pages, every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, a callee spelled as an element access or reached through an alias of the mock, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142", "SUB:WC13", "SUB:WC13c", "SUB:Y0011"] },
   { id: "L045", line: "or of the import() its first argument is, on its pinned pages (a template argument, and an import() of an arity or an argument spelling those pages do not spell, are NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066", "SUB:Y0012"] },
   { id: "L046", line: "", pins: [] },
   { id: "L047", line: "C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):", pins: ["DRIVER:value import", "SUB:A113", "SUB:W37b", "SUB:W38b", "SUB:W63", "SUB:T0109", "SUB:T0110", "SUB:T0111", "SUB:T0112", "SUB:T0113", "SUB:T0114", "SUB:T0115", "SUB:T0116", "SUB:T0117", "SUB:T0118", "SUB:T0119"] },
-  { id: "L048", line: "- value import [import]: an import declaration of an HX module with a clause that is not type-only", pins: ["DRIVER:value import", "SUB:A80", "SUB:A81", "SUB:A82", "SUB:A83", "SUB:S0911", "SUB:S0913", "SUB:W-VI-DEFAULT", "SUB:C-VI-DEFAULT", "SUB:Z0007", "LOCATED:value import"] },
-  { id: "L049", line: "- side-effect import [import]: an import declaration of an HX module with no clause", pins: ["DRIVER:side-effect import", "SUB:T0122", "SUB:Z0008", "LOCATED:side-effect import"] },
-  { id: "L050", line: "- export-from [import]: an export declaration from an HX module that is not type-only, named or namespace", pins: ["DRIVER:export-from", "SUB:A84", "SUB:A85", "SUB:A86", "SUB:S0917", "SUB:S0920", "SUB:S0924", "SUB:W40", "SUB:Z0009", "LOCATED:export-from"] },
-  { id: "L051", line: "- import-equals [import]: an import-equals of an HX module value that is not type-only", pins: ["DRIVER:import-equals", "SUB:A87", "SUB:S0928", "SUB:T0123", "SUB:W-IEQ-EXPORT", "SUB:C-IEQ-EXPORT", "SUB:Z0010", "LOCATED:import-equals"] },
+  { id: "L048", line: "- value import [import]: on its pinned pages, an import declaration of an HX module with a clause that is not type-only", pins: ["DRIVER:value import", "SUB:A80", "SUB:A81", "SUB:A82", "SUB:A83", "SUB:S0911", "SUB:S0913", "SUB:W-VI-DEFAULT", "SUB:C-VI-DEFAULT", "SUB:Z0007", "LOCATED:value import"] },
+  { id: "L049", line: "- side-effect import [import]: on its pinned pages, an import declaration of an HX module with no clause", pins: ["DRIVER:side-effect import", "SUB:T0122", "SUB:Z0008", "LOCATED:side-effect import"] },
+  { id: "L050", line: "- export-from [import]: on its pinned pages, an export declaration from an HX module that is not type-only, named or namespace", pins: ["DRIVER:export-from", "SUB:A84", "SUB:A85", "SUB:A86", "SUB:S0917", "SUB:S0920", "SUB:S0924", "SUB:W40", "SUB:Z0009", "LOCATED:export-from"] },
+  { id: "L051", line: "- import-equals [import]: on its pinned pages, an import-equals of an HX module value that is not type-only", pins: ["DRIVER:import-equals", "SUB:A87", "SUB:S0928", "SUB:T0123", "SUB:W-IEQ-EXPORT", "SUB:C-IEQ-EXPORT", "SUB:Z0010", "LOCATED:import-equals"] },
   { id: "L052", line: "- dynamic import [import]: on its pinned pages, an import() call whose first argument is an HX module value (an import() call of an arity or an argument spelling those pages do not spell is NOT CLAIMED)", pins: ["DRIVER:dynamic import", "SUB:S0935", "LOCATED:dynamic import", "SUB:Y0009"] },
   { id: "L053", line: "- loader call [import]: on its pinned pages, a LOADERS call (read through calleeChains) whose first argument is an HX module value (a callee spelled as an element access, and a call of a member, an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:loader call", "SUB:A89", "SUB:A90", "SUB:A91", "SUB:S0939", "SUB:W75", "LOCATED:loader call", "SUB:Y0015"] },
   { id: "L054", line: "- created require [import]: on its pinned pages, a call of a call, or of a name whose own binding is a const initialized by a call, whose first argument is an HX module value (refusal #4 F2; an inner call whose callee is not the bare name createRequire, an optional call, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:created require", "SUB:A92", "SUB:S0949", "SUB:S1280", "SUB:W89", "SUB:T0120", "SUB:WD9", "SUB:WD9c", "LOCATED:created require", "SUB:Y0010"] },
   { id: "L055", line: "- invoke [invoke]: on its pinned pages, a call whose callee chains end .invoke and whose first argument's value is hyperunix.find (a callee spelled as an element access or through an optional member, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED)", pins: ["DRIVER:invoke", "SUB:A93", "SUB:A94", "SUB:S0960", "SUB:T0125", "SUB:T0126", "SUB:WD3", "SUB:WD3c", "LOCATED:invoke", "SUB:W6-D-INVOKE-ANYARG", "SUB:C6-D-INVOKE-ANYARG", "SUB:Y0007"] },
-  { id: "L056", line: "- override member [override]: HYPERUNIX_HX as a member name, an element key value or a type member on any receiver (one read through an optional chain is NOT CLAIMED)", pins: ["DRIVER:override member", "SUB:A95", "SUB:S0964", "SUB:S0965", "LOCATED:override member"] },
-  { id: "L057", line: "- override destructuring [override]: HYPERUNIX_HX as a destructuring key", pins: ["DRIVER:override destructuring", "SUB:S0973", "LOCATED:override destructuring", "SUB:Z0018", "SUB:Z0019", "SUB:Z0020", "SUB:Z0021"] },
-  { id: "L058", line: "- override destructuring assignment [override]: HYPERUNIX_HX as a destructuring-assignment key", pins: ["DRIVER:override destructuring assignment", "SUB:S0977", "LOCATED:override destructuring assignment"] },
-  { id: "L059", line: "- override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127", "SUB:WD6", "SUB:WD6b", "SUB:WD6c", "LOCATED:override object key"] },
-  { id: "L060", line: "- override in [override]: HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993", "LOCATED:override in"] },
+  { id: "L056", line: "- override member [override]: on its pinned pages, HYPERUNIX_HX as a member name, an element key value or a type member (one read through an optional chain is NOT CLAIMED)", pins: ["DRIVER:override member", "SUB:A95", "SUB:S0964", "SUB:S0965", "LOCATED:override member", "SUB:GP4W-OVM-NOCALLARG", "SUB:GP4W-OVM-NORETURN", "SUB:GP4W-OVM-NOARROWBODY", "SUB:GP4W-OVM-NOCONDITIONAL", "SUB:GP4W-OVM-NOPROPVALUE", "SUB:GP4W-OVM-NOTEMPLATESPAN", "SUB:GP4W-OVM-NOIF", "SUB:GP4W-OVM-NODELETE", "SUB:GP4W-OVM-NOTYPEOF", "SUB:GP4W-OVM-NOARRAY", "SUB:GP4W-OVM-NOPARAMDEFAULT", "SUB:GP4W-OVM-NOCASE", "SUB:GP4W-OVM-IDRECEIVER", "SUB:GP4W-OVM-ELEM-IDRECEIVER", "SUB:GP4W-OVM-TYPEREF", "SUB:GP4W-OVM-KEY-TEMPLATE", "SUB:GP4W-OVM-KEY-PAREN"] },
+  { id: "L057", line: "- override destructuring [override]: on its pinned pages, HYPERUNIX_HX as a destructuring key", pins: ["DRIVER:override destructuring", "SUB:S0973", "LOCATED:override destructuring", "SUB:Z0018", "SUB:Z0019", "SUB:Z0020", "SUB:Z0021", "SUB:GP4W-OVD-SHORTHAND", "SUB:GP4W-OVD-COMPUTED", "SUB:GP4W-OVD-STRINGKEY", "SUB:GP4W-OVD-LETVAR", "SUB:GP4W-OVD-ARROWPARAM", "SUB:GP4W-OVD-INARRAY"] },
+  { id: "L058", line: "- override destructuring assignment [override]: on its pinned pages, HYPERUNIX_HX as a destructuring-assignment key", pins: ["DRIVER:override destructuring assignment", "SUB:S0977", "LOCATED:override destructuring assignment", "SUB:GP4W-OVA-COMPUTED", "SUB:GP4W-OVA-STRINGKEY", "SUB:GP4W-OVA-SHORTDEFAULT", "SUB:GP4W-OVA-RENAMEDDEFAULT", "SUB:GP4W-OVA-NESTED", "SUB:GP4W-OVA-FOROF", "SUB:GP4W-OVA-INARRAY"] },
+  { id: "L059", line: "- override object key [override]: on its pinned pages, HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127", "SUB:WD6", "SUB:WD6b", "SUB:WD6c", "LOCATED:override object key", "SUB:GP4W-OVK-COMPUTEDLIT", "SUB:GP4W-OVK-SPREADSIBLING", "SUB:GP4W-OVK-NESTED", "SUB:GP4W-OVK-CALLARG", "SUB:GP4W-OVK-RETURN", "SUB:GP4W-OVK-ARROWBODY", "SUB:GP4W-OVK-INARRAY", "SUB:GP4W-OVK-ASOPERAND", "SUB:GP4W-OVK-COMPUTEDTPL"] },
+  { id: "L060", line: "- override in [override]: on its pinned pages, HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993", "LOCATED:override in", "SUB:GP4W-OVI-NOIF", "SUB:GP4W-OVI-NOPAREN", "SUB:GP4W-OVI-NORETURN", "SUB:GP4W-OVI-NOARROWBODY", "SUB:GP4W-OVI-NOLOGICAL", "SUB:GP4W-OVI-NOCONDITIONAL", "SUB:GP4W-OVI-NOCALLARG", "SUB:GP4W-OVI-ENVONLY", "SUB:GP4W-OVI-LEFTPAREN", "SUB:GP4W-OVI-LEFTAS"] },
   { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
   { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
   { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
@@ -3253,25 +3428,25 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L081", line: "modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,", pins: ["SUB:R:COMMAND_SEPARATOR:semicolon", "SUB:H28", "SUB:S0143", "SUB:W33c", "SUB:W33d", "SUB:T0086", "SUB:T0087", "SUB:W-F3-SQ", "SUB:C-F3-SQ", "SUB:Z0015"] },
   { id: "L082", line: "double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes VAR=value words and SHELL_KEYWORDS, and", pins: ["SUB:H32", "SUB:S1122", "SUB:R:SHELL_KEYWORDS:!", "SUB:T0068", "SUB:T0083", "SUB:T0084", "SUB:T0085", "SUB:WH1", "SUB:WH1b", "SUB:WH9", "SUB:WH9b", "SUB:Z0016"] },
   { id: "L083", line: "reads a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:", pins: ["SUB:H07", "FLAG:option argument", "SUB:WH3", "SUB:WH3b", "SUB:WH3s", "SUB:WH3c"] },
-  { id: "L084", line: "- lone dash: a lone \"-\" among a wrapper's options is a flag (su's --login, env's -i)", pins: ["FLAG:lone dash", "SUB:H34"] },
-  { id: "L085", line: "- options end: \"--\" ends a wrapper's options, so a dash word after it is the command head", pins: ["FLAG:options end", "SUB:H10", "SUB:H35", "SUB:T0089"] },
-  { id: "L086", line: "- option argument: an option of a wrapper's table taking an argument takes the next word", pins: ["FLAG:option argument", "SUB:H03", "SUB:H38"] },
-  { id: "L087", line: "- attached argument: a short option taking an argument takes the rest of its word when the word continues (-uroot; a rest starting with a digit or a punctuation mark is NOT CLAIMED)", pins: ["FLAG:attached argument", "SUB:WH7", "SUB:WH7c"] },
-  { id: "L088", line: "- long value: a long option written --name=value carries its value in its word", pins: ["FLAG:long value", "SUB:H21", "SUB:H39", "SUB:T0090"] },
-  { id: "L089", line: "- short cluster: a word of short flags is read letter by letter, an option taking an argument or a command ending it", pins: ["FLAG:short cluster", "SUB:H33", "SUB:T0091"] },
-  { id: "L090", line: "- command option: an option of a wrapper's command table reads its argument, attached or the next word, as a command", pins: ["FLAG:command option", "SUB:H11", "SUB:H14", "SUB:H22", "SUB:T0092", "SUB:T0097"] },
-  { id: "L091", line: "- shell command flag: a shell's first command flag (a dash word holding c, --command, or --command=) reads the first operand after the shell's options as a command", pins: ["FLAG:shell command flag", "SUB:H06", "SUB:S0367", "SUB:S0383", "SUB:T0093", "SUB:T0094", "SUB:T0095", "SUB:T0096"] },
-  { id: "L092", line: "- shell options end: \"--\" or a lone \"-\" among a shell's options ends them, so the next word is the command even when it starts with a dash", pins: ["FLAG:shell options end", "SUB:H42"] },
-  { id: "L093", line: "- shell option argument: a shell's -o, +o, -O, +O, --rcfile and --init-file take the next word", pins: ["FLAG:shell option argument", "SUB:H29", "SUB:H30", "SUB:H40", "SUB:H41"] },
+  { id: "L084", line: "- lone dash: on its pinned pages, a lone \"-\" among a wrapper's options is a flag (su's --login, env's -i)", pins: ["FLAG:lone dash", "SUB:H34"] },
+  { id: "L085", line: "- options end: on its pinned pages, \"--\" ends a wrapper's options, so a dash word after it is the command head", pins: ["FLAG:options end", "SUB:H10", "SUB:H35", "SUB:T0089"] },
+  { id: "L086", line: "- option argument: on its pinned pages, an option of a wrapper's table taking an argument takes the next word", pins: ["FLAG:option argument", "SUB:H03", "SUB:H38"] },
+  { id: "L087", line: "- attached argument: on its pinned pages, a short option taking an argument takes the rest of its word when the word continues (-uroot; a rest starting with a digit or a punctuation mark is NOT CLAIMED)", pins: ["FLAG:attached argument", "SUB:WH7", "SUB:WH7c"] },
+  { id: "L088", line: "- long value: on its pinned pages, a long option written --name=value carries its value in its word", pins: ["FLAG:long value", "SUB:H21", "SUB:H39", "SUB:T0090"] },
+  { id: "L089", line: "- short cluster: on its pinned pages, a word of short flags is read letter by letter, an option taking an argument or a command ending it", pins: ["FLAG:short cluster", "SUB:H33", "SUB:T0091"] },
+  { id: "L090", line: "- command option: on its pinned pages, an option of a wrapper's command table reads its argument, attached or the next word, as a command", pins: ["FLAG:command option", "SUB:H11", "SUB:H14", "SUB:H22", "SUB:T0092", "SUB:T0097"] },
+  { id: "L091", line: "- shell command flag: on its pinned pages, a shell's first command flag (a dash word holding c, --command, or --command=) reads the first operand after the shell's options as a command", pins: ["FLAG:shell command flag", "SUB:H06", "SUB:S0367", "SUB:S0383", "SUB:T0093", "SUB:T0094", "SUB:T0095", "SUB:T0096"] },
+  { id: "L092", line: "- shell options end: on its pinned pages, \"--\" or a lone \"-\" among a shell's options ends them, so the next word is the command even when it starts with a dash", pins: ["FLAG:shell options end", "SUB:H42"] },
+  { id: "L093", line: "- shell option argument: on its pinned pages, a shell's -o, +o, -O, +O, --rcfile and --init-file take the next word", pins: ["FLAG:shell option argument", "SUB:H29", "SUB:H30", "SUB:H40", "SUB:H41"] },
   { id: "L094", line: "PREFILTER (passesPrefilter): a source is parsed when its text, raw or unescaped, holds DRIVER_NEEDLE (hyperunix, any case).", pins: ["SUB:A190", "SUB:A192", "PREFILTER:hex escape"] },
   { id: "L095", line: "unescaped decodes, in one pass, UNESCAPE_FORMS:", pins: ["PREFILTER:hex escape", "SUB:T0028"] },
-  { id: "L096", line: "- hex escape: a backslash, x and two hex digits", pins: ["PREFILTER:hex escape", "SUB:S0001", "SUB:S0002"] },
-  { id: "L097", line: "- unicode escape: a backslash, u and four hex digits", pins: ["PREFILTER:unicode escape", "SUB:S0006", "SUB:S0007"] },
-  { id: "L098", line: "- braced unicode escape: a backslash, u and one to six hex digits in braces", pins: ["PREFILTER:braced unicode escape", "SUB:S0010", "SUB:A193", "SUB:T0021", "SUB:T0022"] },
-  { id: "L099", line: "- legacy octal escape: a backslash and one to three octal digits", pins: ["PREFILTER:legacy octal escape", "SUB:S0020", "SUB:W13", "SUB:T0023", "SUB:T0024"] },
-  { id: "L100", line: "- line continuation: a backslash before a line terminator, which reads as nothing", pins: ["PREFILTER:line continuation", "SUB:A195", "SUB:A196", "SUB:S0025", "SUB:S0027", "SUB:S0029", "SUB:T0025", "SUB:T0026"] },
-  { id: "L101", line: "- escaped character: a backslash before any other character, which reads as that character (b, f, n, r, t and v as their controls)", pins: ["PREFILTER:escaped character", "SUB:S0037", "SUB:S0051", "SUB:W12", "SUB:T0016", "SUB:T0017", "SUB:T0018", "SUB:T0019", "SUB:T0020"] },
-  { id: "L102", line: "- percent escape: a percent sign and two hex digits, decoded after the backslash escapes", pins: ["PREFILTER:percent escape", "SUB:A190", "SUB:S0041", "SUB:S0042", "SUB:T0027", "SUB:T0029", "SUB:T0136", "SUB:W-PF-PCT-ORDER", "SUB:C-PF-PCT-ORDER"] },
+  { id: "L096", line: "- hex escape: on its pinned pages, a backslash, x and two hex digits", pins: ["PREFILTER:hex escape", "SUB:S0001", "SUB:S0002"] },
+  { id: "L097", line: "- unicode escape: on its pinned pages, a backslash, u and four hex digits", pins: ["PREFILTER:unicode escape", "SUB:S0006", "SUB:S0007"] },
+  { id: "L098", line: "- braced unicode escape: on its pinned pages, a backslash, u and one to six hex digits in braces", pins: ["PREFILTER:braced unicode escape", "SUB:S0010", "SUB:A193", "SUB:T0021", "SUB:T0022"] },
+  { id: "L099", line: "- legacy octal escape: on its pinned pages, a backslash and one to three octal digits", pins: ["PREFILTER:legacy octal escape", "SUB:S0020", "SUB:W13", "SUB:T0023", "SUB:T0024"] },
+  { id: "L100", line: "- line continuation: on its pinned pages, a backslash before a line terminator, which reads as nothing", pins: ["PREFILTER:line continuation", "SUB:A195", "SUB:A196", "SUB:S0025", "SUB:S0027", "SUB:S0029", "SUB:T0025", "SUB:T0026"] },
+  { id: "L101", line: "- escaped character: on its pinned pages, a backslash before any other character, which reads as that character (b, f, n, r, t and v as their controls)", pins: ["PREFILTER:escaped character", "SUB:S0037", "SUB:S0051", "SUB:W12", "SUB:T0016", "SUB:T0017", "SUB:T0018", "SUB:T0019", "SUB:T0020"] },
+  { id: "L102", line: "- percent escape: on its pinned pages, a percent sign and two hex digits, decoded after the backslash escapes", pins: ["PREFILTER:percent escape", "SUB:A190", "SUB:S0041", "SUB:S0042", "SUB:T0027", "SUB:T0029", "SUB:T0136", "SUB:W-PF-PCT-ORDER", "SUB:C-PF-PCT-ORDER"] },
   { id: "L103", line: "A hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).", pins: ["SUB:S0018", "SUB:S0066", "SUB:S0067", "SUB:W05a", "SUB:W07", "SUB:T0001", "SUB:T0002", "SUB:T0003", "SUB:T0004"] },
   { id: "L104", line: "RESIDUALS (RESIDUAL_FAMILIES; families these readers do not read, each with a pinned quiet row and a loud control in the census):", pins: ["RESIDUAL:R-WRAPPER"] },
   { id: "L105", line: "- R-WRAPPER: a process-table tool run through a word outside WRAPPERS, SHELL_KEYWORDS and SHELLS (a leading redirection included), by a script file a shell runs, or inside another language's inline program reads as no command head", pins: ["RESIDUAL:R-WRAPPER"] },
@@ -3314,6 +3489,12 @@ const SCOPE_LINES: readonly string[] = [
   "L075, L076 and L078 claim sets) plants the witnesses of that refusal's 42 members, and of the one member its F1 finding",
   "names on L065, each on the line it defeats, and narrows, in place, to its pinned pages every C7 SHAPE FORMS entry line not",
   "narrowed before, L064 to L076 and L078, as a clause of its own; no reader code changes.",
+  "wb-tz2.24 cut #5 (this carrier's own refusal #4, gate-prep-4 / g10-gate-s211, O:2066: rung 1 of its L056, L057, L058, L059",
+  "and L060 claim sets) plants the witnesses of that refusal's 44 members, and of the five members its F1 finding names on L056,",
+  "L059 and L060, each on the line it defeats, and narrows, in place, to its pinned pages, as a clause of its own, every claim",
+  "entry line not narrowed before - L005 to L007, L018, L030, L032, L033, L038, L039, L041, L048 to L051, L056 to L060 (L056",
+  "without its words 'on any receiver'), L084 to L093 and L096 to L102; the RESIDUALS families are no claim and stay as they",
+  "are; no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -4776,6 +4957,55 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:GP12W-DKEY-NOCOMPUTED:ab2964657591",
   "SUB_READINGS:GP12W-IMPS-NOTYPEONLY:67f86ae1c9fc",
   "SUB_READINGS:GP12W-EKEY-NOPAREN:9d5559759cd6",
+  "SUB_READINGS:GP4W-OVM-NOCALLARG:2e157c3368db",
+  "SUB_READINGS:GP4W-OVM-NORETURN:d61a6572949c",
+  "SUB_READINGS:GP4W-OVM-NOARROWBODY:9382c43541b5",
+  "SUB_READINGS:GP4W-OVM-NOCONDITIONAL:804960e200b2",
+  "SUB_READINGS:GP4W-OVM-NOPROPVALUE:de44252b54bc",
+  "SUB_READINGS:GP4W-OVM-NOTEMPLATESPAN:cbb9281bd474",
+  "SUB_READINGS:GP4W-OVM-NOIF:a3bfb9352147",
+  "SUB_READINGS:GP4W-OVM-NODELETE:60fd2c39f765",
+  "SUB_READINGS:GP4W-OVM-NOTYPEOF:986a8c38094e",
+  "SUB_READINGS:GP4W-OVM-NOARRAY:2c05c8d036c8",
+  "SUB_READINGS:GP4W-OVM-NOPARAMDEFAULT:1365d28e812b",
+  "SUB_READINGS:GP4W-OVM-NOCASE:a7009d03af43",
+  "SUB_READINGS:GP4W-OVM-IDRECEIVER:91f02d653cc4",
+  "SUB_READINGS:GP4W-OVM-ELEM-IDRECEIVER:02bff56ed396",
+  "SUB_READINGS:GP4W-OVM-TYPEREF:31cf3071e31b",
+  "SUB_READINGS:GP4W-OVD-SHORTHAND:bcf41084e451",
+  "SUB_READINGS:GP4W-OVD-COMPUTED:db75a74c2980",
+  "SUB_READINGS:GP4W-OVD-STRINGKEY:4958e2d1c5ac",
+  "SUB_READINGS:GP4W-OVD-LETVAR:40d503c2cad0",
+  "SUB_READINGS:GP4W-OVD-ARROWPARAM:4e2c63ef4d7d",
+  "SUB_READINGS:GP4W-OVD-INARRAY:d2d338b75e56",
+  "SUB_READINGS:GP4W-OVA-COMPUTED:b32197847647",
+  "SUB_READINGS:GP4W-OVA-STRINGKEY:b2ca51cda5f7",
+  "SUB_READINGS:GP4W-OVA-SHORTDEFAULT:4b1c07559966",
+  "SUB_READINGS:GP4W-OVA-RENAMEDDEFAULT:3471ea1575e7",
+  "SUB_READINGS:GP4W-OVA-NESTED:116d3f00199d",
+  "SUB_READINGS:GP4W-OVA-FOROF:a55d94335b58",
+  "SUB_READINGS:GP4W-OVA-INARRAY:11ba98d49a3d",
+  "SUB_READINGS:GP4W-OVK-COMPUTEDLIT:ef28cc949658",
+  "SUB_READINGS:GP4W-OVK-SPREADSIBLING:ddb481bd70a3",
+  "SUB_READINGS:GP4W-OVK-NESTED:ce790f806f6b",
+  "SUB_READINGS:GP4W-OVK-CALLARG:d2ef85b62e9a",
+  "SUB_READINGS:GP4W-OVK-RETURN:c450927492f8",
+  "SUB_READINGS:GP4W-OVK-ARROWBODY:0a1b33b71d47",
+  "SUB_READINGS:GP4W-OVK-INARRAY:6e3f207deaea",
+  "SUB_READINGS:GP4W-OVK-ASOPERAND:423f1c0794ed",
+  "SUB_READINGS:GP4W-OVI-NOIF:56e8d9e25fe3",
+  "SUB_READINGS:GP4W-OVI-NOPAREN:e64f0e7e5e3d",
+  "SUB_READINGS:GP4W-OVI-NORETURN:df6101a35dca",
+  "SUB_READINGS:GP4W-OVI-NOARROWBODY:e35b99be52e8",
+  "SUB_READINGS:GP4W-OVI-NOLOGICAL:7b2694c8bb69",
+  "SUB_READINGS:GP4W-OVI-NOCONDITIONAL:64f771aab905",
+  "SUB_READINGS:GP4W-OVI-NOCALLARG:66ad466a5fd1",
+  "SUB_READINGS:GP4W-OVI-ENVONLY:3c30a22dcbbd",
+  "SUB_READINGS:GP4W-OVM-KEY-TEMPLATE:c91709b9b95c",
+  "SUB_READINGS:GP4W-OVM-KEY-PAREN:2ae6b6b6b44b",
+  "SUB_READINGS:GP4W-OVK-COMPUTEDTPL:a191f8e8c710",
+  "SUB_READINGS:GP4W-OVI-LEFTPAREN:5e2c91e80b3c",
+  "SUB_READINGS:GP4W-OVI-LEFTAS:b8389bd9cac6",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -4889,9 +5119,9 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L002:b84e12a4c993",
   "CLAIM_LINES:L003:b3bb8d52d731",
   "CLAIM_LINES:L004:f7eaeb419722",
-  "CLAIM_LINES:L005:61a290e9d8d9",
-  "CLAIM_LINES:L006:32967b116f62",
-  "CLAIM_LINES:L007:5e4f8125e724",
+  "CLAIM_LINES:L005:acb3ce471f55",
+  "CLAIM_LINES:L006:73dc9398bcb5",
+  "CLAIM_LINES:L007:756970f80293",
   "CLAIM_LINES:L008:d7af9d88c849",
   "CLAIM_LINES:L009:e02d947ce53c",
   "CLAIM_LINES:L010:ddb0f335d63b",
@@ -4902,7 +5132,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L015:c391a9b942e4",
   "CLAIM_LINES:L016:9e65049274e3",
   "CLAIM_LINES:L017:51921069bc65",
-  "CLAIM_LINES:L018:1b1b1c9895e7",
+  "CLAIM_LINES:L018:f7a2b0ce62b4",
   "CLAIM_LINES:L019:57eb86c41b09",
   "CLAIM_LINES:L020:1f0c79f2751a",
   "CLAIM_LINES:L021:d2098fba1642",
@@ -4914,37 +5144,37 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L027:40d747567628",
   "CLAIM_LINES:L028:9267de5ddc50",
   "CLAIM_LINES:L029:9d82d99c4f3c",
-  "CLAIM_LINES:L030:e031a71a5e8f",
+  "CLAIM_LINES:L030:0eb2b6a90fad",
   "CLAIM_LINES:L031:372c29bf3ce6",
-  "CLAIM_LINES:L032:4618911f276a",
-  "CLAIM_LINES:L033:4f47ad2aa528",
+  "CLAIM_LINES:L032:94c8c7263294",
+  "CLAIM_LINES:L033:c38477c79a06",
   "CLAIM_LINES:L034:f9dc43e0d1f0",
   "CLAIM_LINES:L035:4af3c4703b7b",
   "CLAIM_LINES:L036:21ce9e3b3994",
   "CLAIM_LINES:L037:9e706e798059",
-  "CLAIM_LINES:L038:e23f24e83501",
-  "CLAIM_LINES:L039:e5a644938955",
+  "CLAIM_LINES:L038:b943b443a653",
+  "CLAIM_LINES:L039:da131386787a",
   "CLAIM_LINES:L040:4e0f193fa47b",
-  "CLAIM_LINES:L041:6831125633e9",
+  "CLAIM_LINES:L041:ec491072f6a9",
   "CLAIM_LINES:L042:09629410ea6f",
   "CLAIM_LINES:L043:655b60d89745",
   "CLAIM_LINES:L044:f25fe45a459b",
   "CLAIM_LINES:L045:dafb7fd3eeb7",
   "CLAIM_LINES:L046:ed80aed8078d",
   "CLAIM_LINES:L047:94bd841e1b70",
-  "CLAIM_LINES:L048:d182bff65852",
-  "CLAIM_LINES:L049:76068ac43ba8",
-  "CLAIM_LINES:L050:4f3c143821e7",
-  "CLAIM_LINES:L051:51783a7a16da",
+  "CLAIM_LINES:L048:238ec7d5337b",
+  "CLAIM_LINES:L049:b35ddb084416",
+  "CLAIM_LINES:L050:75172e899b20",
+  "CLAIM_LINES:L051:a2a79e6525c0",
   "CLAIM_LINES:L052:4fe6131694e0",
   "CLAIM_LINES:L053:f0f0711d23a8",
   "CLAIM_LINES:L054:978780bca576",
   "CLAIM_LINES:L055:5c451256ffa1",
-  "CLAIM_LINES:L056:960f4c2b1bc7",
-  "CLAIM_LINES:L057:b013e38ffc2d",
-  "CLAIM_LINES:L058:2005cf1da543",
-  "CLAIM_LINES:L059:0001efdb6287",
-  "CLAIM_LINES:L060:5094e778a4ee",
+  "CLAIM_LINES:L056:55f251740ef2",
+  "CLAIM_LINES:L057:f8b489f32bca",
+  "CLAIM_LINES:L058:a28a7663483f",
+  "CLAIM_LINES:L059:6b20df845a5f",
+  "CLAIM_LINES:L060:444581432f68",
   "CLAIM_LINES:L061:de3eeb25a821",
   "CLAIM_LINES:L062:61ec54d8c773",
   "CLAIM_LINES:L063:70676d295d9c",
@@ -4968,25 +5198,25 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L081:cfac3b4d2b7b",
   "CLAIM_LINES:L082:02b00772c674",
   "CLAIM_LINES:L083:2d15a3a4e4bb",
-  "CLAIM_LINES:L084:93e29749fd0f",
-  "CLAIM_LINES:L085:80126fee528e",
-  "CLAIM_LINES:L086:aea334370746",
-  "CLAIM_LINES:L087:da01370d2a19",
-  "CLAIM_LINES:L088:f170393f68a4",
-  "CLAIM_LINES:L089:40d14fa8fc2f",
-  "CLAIM_LINES:L090:769ac8fda456",
-  "CLAIM_LINES:L091:af8844500955",
-  "CLAIM_LINES:L092:b1b7ea8a33f5",
-  "CLAIM_LINES:L093:0212368e060b",
+  "CLAIM_LINES:L084:6de55a10fb80",
+  "CLAIM_LINES:L085:9aad199317b9",
+  "CLAIM_LINES:L086:5f711dccbd34",
+  "CLAIM_LINES:L087:f8dee2df2037",
+  "CLAIM_LINES:L088:613820404719",
+  "CLAIM_LINES:L089:02586c11ab0f",
+  "CLAIM_LINES:L090:b18fa9224b8c",
+  "CLAIM_LINES:L091:e706b751b940",
+  "CLAIM_LINES:L092:42cd39bdcf5f",
+  "CLAIM_LINES:L093:cc38a65b7baf",
   "CLAIM_LINES:L094:1c5c591c43e6",
   "CLAIM_LINES:L095:1bfe028e561e",
-  "CLAIM_LINES:L096:a170054559e4",
-  "CLAIM_LINES:L097:fc04f6845aff",
-  "CLAIM_LINES:L098:2dfa1be02cfe",
-  "CLAIM_LINES:L099:5afd85dc7276",
-  "CLAIM_LINES:L100:5e74431c497b",
-  "CLAIM_LINES:L101:827ad638286b",
-  "CLAIM_LINES:L102:f1787d932e80",
+  "CLAIM_LINES:L096:1798df703cde",
+  "CLAIM_LINES:L097:30458f45f3d6",
+  "CLAIM_LINES:L098:2ae1dd2b8195",
+  "CLAIM_LINES:L099:95ecd95e1de5",
+  "CLAIM_LINES:L100:29512b9707d6",
+  "CLAIM_LINES:L101:74224518c015",
+  "CLAIM_LINES:L102:0e72f8a84f7f",
   "CLAIM_LINES:L103:4dfeb58a71b3",
   "CLAIM_LINES:L104:89be55de36a5",
   "CLAIM_LINES:L105:b4c4bef10db9",
@@ -5284,6 +5514,11 @@ const FROZEN: readonly string[] = [
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U5:8c7539b13ee3",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U6:9ed1f009034d",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U7:865f5c63a49a",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U1:968c51f1ae33",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U2:37faa1010114",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U3:757ea0ed36f3",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U4:7f58a2cb26e2",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U5:45cc189f94b7",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-FIRSTONLY:591b0c832bdd",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NAMEONLY:9ce2827aa53c",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOGLOBALMEMBER:be82470fb489",
@@ -5344,6 +5579,55 @@ const FROZEN: readonly string[] = [
   "CARRIER_SURVIVORS_3:GP12-DKEY-NOCOMPUTED:ad44dc1804e0",
   "CARRIER_SURVIVORS_3:GP12-IMPS-NOTYPEONLY:8f169829ebef",
   "CARRIER_SURVIVORS_3:GP12-EKEY-NOPAREN:f2acae771b00",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOCALLARG:b0e464092d16",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NORETURN:da1db386ba93",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOARROWBODY:7a7171a53f99",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOCONDITIONAL:fbf1f8159042",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOPROPVALUE:79a335ef1c3f",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOTEMPLATESPAN:d8839fc96518",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOIF:58dc1d256b6a",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NODELETE:0ebb3b74e397",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOTYPEOF:b4fc14a48dd8",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOARRAY:e3da7734090e",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOPARAMDEFAULT:ae256f6720e3",
+  "CARRIER_SURVIVORS_4:GP4-OVM-NOCASE:2c4d9345f79a",
+  "CARRIER_SURVIVORS_4:GP4-OVM-IDRECEIVER:5da60f9ba5cf",
+  "CARRIER_SURVIVORS_4:GP4-OVM-ELEM-IDRECEIVER:70372370f98f",
+  "CARRIER_SURVIVORS_4:GP4-OVM-TYPEREF:f79d5e00db05",
+  "CARRIER_SURVIVORS_4:GP4-OVD-SHORTHAND:bef004486100",
+  "CARRIER_SURVIVORS_4:GP4-OVD-COMPUTED:f96ff4dc7665",
+  "CARRIER_SURVIVORS_4:GP4-OVD-STRINGKEY:20136b1901a7",
+  "CARRIER_SURVIVORS_4:GP4-OVD-LETVAR:aa3026cf18eb",
+  "CARRIER_SURVIVORS_4:GP4-OVD-ARROWPARAM:6f547b5d3c7f",
+  "CARRIER_SURVIVORS_4:GP4-OVD-INARRAY:78d724c94e3c",
+  "CARRIER_SURVIVORS_4:GP4-OVA-COMPUTED:9fdcf1dac754",
+  "CARRIER_SURVIVORS_4:GP4-OVA-STRINGKEY:c5304561c395",
+  "CARRIER_SURVIVORS_4:GP4-OVA-SHORTDEFAULT:cde430a86535",
+  "CARRIER_SURVIVORS_4:GP4-OVA-RENAMEDDEFAULT:ddc449b11900",
+  "CARRIER_SURVIVORS_4:GP4-OVA-NESTED:f8954e145d19",
+  "CARRIER_SURVIVORS_4:GP4-OVA-FOROF:643dce42af75",
+  "CARRIER_SURVIVORS_4:GP4-OVA-INARRAY:3b94dad10f0a",
+  "CARRIER_SURVIVORS_4:GP4-OVK-COMPUTEDLIT:9080ec4f3b33",
+  "CARRIER_SURVIVORS_4:GP4-OVK-SPREADSIBLING:b8f98ffa5f7e",
+  "CARRIER_SURVIVORS_4:GP4-OVK-NESTED:d02358bcfb0d",
+  "CARRIER_SURVIVORS_4:GP4-OVK-CALLARG:94b1cdd57bb2",
+  "CARRIER_SURVIVORS_4:GP4-OVK-RETURN:2ead3b500b1a",
+  "CARRIER_SURVIVORS_4:GP4-OVK-ARROWBODY:9b73af54f415",
+  "CARRIER_SURVIVORS_4:GP4-OVK-INARRAY:889c450a05ff",
+  "CARRIER_SURVIVORS_4:GP4-OVK-ASOPERAND:98a0c4b9d06b",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOIF:77f5978a3f9b",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOPAREN:a80907ddf6de",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NORETURN:516485079431",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOARROWBODY:fabd1d280ba2",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOLOGICAL:c5c60aa71bb6",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOCONDITIONAL:33f53676e7b0",
+  "CARRIER_SURVIVORS_4:GP4-OVI-NOCALLARG:0d2d807d9659",
+  "CARRIER_SURVIVORS_4:GP4-OVI-ENVONLY:a44460e4df8e",
+  "CARRIER_SURVIVORS_4:GP4-OVM-KEY-TEMPLATE:a37a15a00e92",
+  "CARRIER_SURVIVORS_4:GP4-OVM-KEY-PAREN:c2a11109fbfb",
+  "CARRIER_SURVIVORS_4:GP4-OVK-COMPUTEDTPL:cd06e38bf511",
+  "CARRIER_SURVIVORS_4:GP4-OVI-LEFTPAREN:eb5dea63ebe3",
+  "CARRIER_SURVIVORS_4:GP4-OVI-LEFTAS:bb44010dc302",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -5830,7 +6114,7 @@ describe(SUITE, () => {
       const sources: Record<string, string> = { description: record.description, notes: record.notes };
       expect(CARRIER_REQUIREMENTS.filter(requirement => !(sources[requirement.source] ?? "").includes(requirement.text)).map(requirement => requirement.key)).toStrictEqual([]);
     });
-    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3) and refusal #3 verdict (cut #4), in both directions", () => {
+    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4) and refusal #4 verdict (cut #5), in both directions", () => {
       const record = exportRecord(CARRIER);
       const acceptance = record.description.indexOf("Acceptance (");
       const next = record.description.indexOf(" Merge trunk INTO the branch first", acceptance);
@@ -5853,6 +6137,10 @@ describe(SUITE, () => {
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
           ...carrierVerdictBlock(3)
+            .split("\n")
+            .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
+            .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
+          ...carrierVerdictBlock(4)
             .split("\n")
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
@@ -5964,6 +6252,37 @@ describe(SUITE, () => {
           return sub === undefined ? `${row.id} <no witness row ${row.witness}>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
         }),
         unparsed: [],
+        unpinned: [],
+        unnarrowed: [],
+      });
+    });
+  });
+
+  describe("CARRIER REFUSAL #4 ANCHOR (wb-tz2.24 cut #5, outside this census): this carrier's own refusal #4 verdict in the tracker export", () => {
+    it("the members its UNMET item and finding lines list (U1 to U5 and F1), each with its item, its line, its sub-form and in order, are the CARRIER_SURVIVORS_4 rows, and every other GP4 member id it names up to its Routing line is one of the four its F3 finding states red (CARRIER_RED_4, in that finding's order); each member's witness, by the kind, text (each \\n a line break, white space folded) and delivered reading the verdict states, is its row's GP4W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows to its pinned pages as a clause of its own", () => {
+      const block = carrierVerdictBlock(4);
+      const listed = carrierMembers4(block);
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const subs = new Map(SUB_READINGS.map(row => [row.id, row] as const));
+      const folded = (text: string): string => text.replace(/\s+/g, " ").trim();
+      expect({
+        members: listed.map(member => `${member.item} ${member.id} ${member.line} (${member.subForm})`),
+        witnesses: listed.map(member => `${member.id} ${member.kind} ${folded(member.text)} => ${JSON.stringify(member.delivered)}`),
+        unparsed: carrierMentions4(block)
+          .filter(id => !listed.some(member => member.id === id))
+          .sort(),
+        red: carrierRed4(block),
+        unpinned: CARRIER_SURVIVORS_4.filter(row => !(pins.get(row.line) ?? []).includes(`SUB:${row.witness}`)).map(row => row.id),
+        unnarrowed: CARRIER_SURVIVORS_4.filter(row => !narrowsToPinnedPages(lines.get(row.line) ?? "")).map(row => row.id),
+      }).toStrictEqual({
+        members: CARRIER_SURVIVORS_4.map(row => `${row.item} ${row.id} ${row.line} (${row.subForm})`),
+        witnesses: CARRIER_SURVIVORS_4.map(row => {
+          const sub = subs.get(row.witness);
+          return sub === undefined ? `${row.id} <no witness row ${row.witness}>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+        }),
+        unparsed: [...CARRIER_RED_4].sort(),
+        red: CARRIER_RED_4,
         unpinned: [],
         unnarrowed: [],
       });
@@ -6089,6 +6408,15 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
+    it("FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, refusal #4): every '- ' entry line of the claim block before the RESIDUALS heading - each entry of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own (the RESIDUALS families after that heading are no claim)", () => {
+      const lines = helperClaimLines();
+      const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
+      const entries = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line.startsWith("- "));
+      expect({ entries: entries.map(entry => entry.id), unnarrowed: entries.filter(entry => !narrowsToPinnedPages(entry.line)).map(entry => entry.id) }).toStrictEqual({
+        entries: ["L005", "L006", "L007", "L017", "L018", "L019", "L020", "L021", "L022", "L023", "L024", "L029", "L030", "L031", "L032", "L033", "L034", "L035", "L036", "L037", "L038", "L039", "L040", "L041", "L048", "L049", "L050", "L051", "L052", "L053", "L054", "L055", "L056", "L057", "L058", "L059", "L060", "L061", "L062", "L064", "L065", "L066", "L067", "L068", "L069", "L070", "L071", "L072", "L073", "L074", "L075", "L076", "L077", "L078", "L084", "L085", "L086", "L087", "L088", "L089", "L090", "L091", "L092", "L093", "L096", "L097", "L098", "L099", "L100", "L101", "L102"],
+        unnarrowed: [],
+      });
+    });
   });
 
   describe("LOCATIONS (wb-tz2.20 seat sweep): each C2, driver and shape form read where it stands, in a function body, a block, a class static block and a namespace", () => {
@@ -6173,6 +6501,7 @@ describe(SUITE, () => {
         ...rows("CARRIER_SURVIVORS_1", CARRIER_SURVIVORS_1),
         ...rows("CARRIER_SURVIVORS_2", CARRIER_SURVIVORS_2),
         ...rows("CARRIER_SURVIVORS_3", CARRIER_SURVIVORS_3),
+        ...rows("CARRIER_SURVIVORS_4", CARRIER_SURVIVORS_4),
       ]).toStrictEqual(FROZEN);
     });
   });
