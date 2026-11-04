@@ -136,17 +136,17 @@
     {
      "pin": "SC-SHADOW",
      "page": "1549c1ad35d1b87e",
-     "falsifies": "by scope: a block const shadowing a const reads its own text, the outer reads outside, and a function's later const binds its earlier reference"
+     "falsifies": "by scope: a block const shadowing a const reads its own text, the outer reads outside, and a function's later const binds its earlier reference (a read before the declaration, a read BINDING (1) does not name, held as this pin reads it)"
     },
     {
      "pin": "SC-SHORTHAND",
      "page": "06d879e5de557160",
-     "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not"
+     "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not (the parameter's read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
     },
     {
      "pin": "A10",
      "page": "bd4719f6c7ced09c",
-     "falsifies": "O:1399 U1(c) member a10: a const with an unresolvable initializer shadowing a resolvable same-named const reads opaque, not the outer text"
+     "falsifies": "O:1399 U1(c) member a10: a const with an unresolvable initializer shadowing a resolvable same-named const reads opaque, not the outer text (its read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
     },
     {
      "pin": "SC-PATHS",
@@ -162,6 +162,16 @@
      "pin": "M21-TS",
      "page": "d75e035c4e9d50e7",
      "falsifies": "the same page t21.js read next at a .ts path reads <opaque require(\"node:fs\")>: each path keeps its own reader"
+    },
+    {
+     "pin": "SC-ORDER",
+     "page": "afda28a20a97b663",
+     "falsifies": "BINDING (1)'s reads for a name declared at the top level, in a TypeScript module: each top-level declaration form (2) and (3) name (a const, plain or exported, with no annotation or the annotation string; an import of each form; each merged pair; each destructuring element; a let, a var, each with or without an initializer and declared; a declare const with and without an initializer; a plain namespace; a function, plain, async, generator and declared; a class, plain and declared; an enum, plain, const and declared) reads alike at its read in the statement right after its declaration's (after the last, for a merged pair) and at its read in a later statement of the module's statement list"
+    },
+    {
+     "pin": "SC-ORDER-JS",
+     "page": "2f6bb02e367b20a4",
+     "falsifies": "BINDING (1)'s reads for a name declared at the top level, in a JavaScript module: each top-level require declaration form (3)'s import entry names (a const, a let and a var initialized by require, a simple and a defaulted element of a const's object pattern and a simple element of its array pattern, a no-substitution template argument and a property access of the call) reads <opaque NAME:import> at its read in the statement right after its declaration's and at its read in a later statement"
     }
    ]
   },
@@ -192,7 +202,7 @@
     {
      "pin": "GP17-C1-PROGRAM",
      "page": "1b608336d601515e",
-     "falsifies": "refusal #6 U1a member GP17-C1's second twin page gp17-c1-1: a launch program held by a const in the body of an exported function declared at the top level, spawn(PROGRAM, []) there, reads spawn:rf, never spawn:<opaque PROGRAM>"
+     "falsifies": "refusal #6 U1a member GP17-C1's second twin page gp17-c1-1: a launch program held by a const in the body of an exported function declared at the top level, spawn(PROGRAM, []) there, reads spawn:rf, never spawn:<opaque PROGRAM> (the first of the call's two arguments, a read BINDING (1) does not name, held as this pin reads it)"
     },
     {
      "pin": "GP17-C1-SHADOW",
@@ -202,7 +212,7 @@
     {
      "pin": "C-TYPED",
      "page": "3cae82edcc2d0a6c",
-     "falsifies": "a const with the type annotation string and an initializer, alone in its declaration list, resolves through its initializer at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+     "falsifies": "a const with the type annotation string and an initializer, alone in its declaration list, resolves through its initializer, read in the statement right after its declaration's (the first statement of the for statement's body), at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
     },
     {
      "pin": "GP13-T1",
@@ -247,27 +257,102 @@
     {
      "pin": "C-ANNOTATED",
      "page": "f50cd40becde54ad",
-     "falsifies": "a const with an initializer, alone in its declaration list, annotated with each form BINDING (2) names beside the keyword string (the keyword unknown, a string literal type, a union of two string literal types, the union string | undefined, the reference Name to the top-level type alias of string, and a type literal of one string property, required and optional), resolves through its initializer at each of the nine positions BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+     "falsifies": "a const with an initializer, alone in its declaration list, annotated with each of seven forms beside the keyword string that BINDING (2) does not claim, each held as this pin reads it (the keyword unknown, a string literal type, a union of two string literal types, the union string | undefined, the reference Name to the top-level type alias of string, and a type literal of one string property, required and optional), resolves through its initializer, read in the statement right after its declaration's (the first statement of the for statement's body), at each of the nine positions BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
     },
     {
      "pin": "C-SHADOWS",
      "page": "f2d9546ee5e72ff8",
-     "falsifies": "at each BINDING (2) position other than the top level (a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head), a const with no annotation and with each annotation form BINDING (2) names, shadowing a plain unannotated same-named const declared at the top level with no other declaration of that name, reads its own initializer at a read inside its scope, and the top-level const reads its own at a read at the top level"
+     "falsifies": "at each BINDING (2) position other than the top level (a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head), a const with no annotation, with the annotation string and with each of seven forms BINDING (2) does not claim (each held as this pin reads it), shadowing a plain unannotated same-named const declared at the top level with no other declaration of that name, reads its own initializer at its read in the statement right after its declaration's (the first statement of the for statement's body), and the top-level const reads its own at a read at the top level"
     },
     {
      "pin": "C-NESTED",
      "page": "9619b928dbd096a1",
-     "falsifies": "in a TypeScript module, a simple element of an object pattern that is, with no default, an element of a plain top-level const declaration's object pattern (a: { B }) or array pattern ({ C }) reads <opaque NAME:destructuring>"
+     "falsifies": "in a TypeScript module, the one simple element of a one-element object pattern that is, with no default, the one element of a plain top-level const declaration's object pattern, under the identifier property name a (a: { B }), or of its array pattern ({ C }) reads <opaque NAME:destructuring>"
     },
     {
      "pin": "C-NESTED-JS",
      "page": "9619b928dbd096a1",
-     "falsifies": "in a JavaScript module, the same page: a simple element of an object pattern that is, with no default, an element of a plain top-level const declaration's object pattern (a: { B }) or array pattern ({ C }) reads <opaque NAME:destructuring>"
+     "falsifies": "in a JavaScript module, the same page: the one simple element of a one-element object pattern that is, with no default, the one element of a plain top-level const declaration's object pattern, under the identifier property name a (a: { B }), or of its array pattern ({ C }) reads <opaque NAME:destructuring>"
     },
     {
      "pin": "C-PARAMETER",
      "page": "9bc2ca340ef73e76",
-     "falsifies": "a simple parameter annotated object of an exported function declared at the top level, the declaration form M19's and M26's pages plant (a parameter alone in its list and the first and the second of two), does not resolve: it reads <opaque NAME:parameter>, never a text and never <opaque NAME:other>"
+     "falsifies": "a simple parameter annotated object of an exported function declared at the top level, the declaration form M19's and M26's pages plant (a parameter alone in its list and the first and the second of two, the second's read, probe(b) after probe(a), a read BINDING (1) does not name, held as this pin reads it), does not resolve: it reads <opaque NAME:parameter>, never a text and never <opaque NAME:other>"
+    },
+    {
+     "pin": "GP22-SH2",
+     "page": "0aa8e4693c05be67",
+     "falsifies": "refusal #8 U1a member GP22-SH2 (a const shadowing a same-named top-level const, read in a block nested in its own block, reads the top-level one's initializer): its twin page gp22-sh2-0, a const in a block at the top level, read in a block nested in that block, reads its own initializer \"inner\", and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH2-FUNCTION",
+     "page": "4b45d2b9286ece59",
+     "falsifies": "refusal #8 U1a member GP22-SH2's second twin page gp22-sh2-1: a const in the body of an exported function declared at the top level, shadowing a same-named top-level const and read in an if statement's block in that body, reads its own initializer \"inner\", and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH3",
+     "page": "ace21b4892521b24",
+     "falsifies": "refusal #8 U1a member GP22-SH3 (a const in a for statement's head, shadowing a same-named top-level const and read in that statement's condition, reads the top-level one's initializer): its twin page gp22-sh3-0, that const reads its own initializer \"inner\" in the condition, and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH4",
+     "page": "fa6b564ef0ddc260",
+     "falsifies": "refusal #8 U1a member GP22-SH4 (a const in the body of a plain namespace, shadowing a same-named top-level const and read in a namespace nested in that body, reads the top-level one's initializer): its twin page gp22-sh4-0, that const reads its own initializer \"inner\" in the nested namespace, and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS1",
+     "page": "e2fa48b203577845",
+     "falsifies": "refusal #8 U1b member GP22-RS1 (a const at a BINDING (2) position other than the top level, read inside a function-like nested in its scope, reads other): its twin page gp22-rs1-0, a const in the body of an exported function declared at the top level, read in an arrow function passed to a call in that body, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS1-BLOCK",
+     "page": "4db89fe0131f8a6d",
+     "falsifies": "refusal #8 U1b member GP22-RS1's second twin page gp22-rs1-1: a const in a block at the top level, read in the expression body of an arrow function initializing another const of that block, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS3",
+     "page": "fca2b4eab95a7636",
+     "falsifies": "refusal #8 U1b member GP22-RS3 (a const in a for statement's head, read in that statement's condition, reads other): its twin page gp22-rs3-0, for (const Z = \"z\"; probe(Z); ) at the top level, reads \"z\", never <opaque Z:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS5",
+     "page": "d3903635db69e547",
+     "falsifies": "refusal #8 U1b member GP22-RS5 (a const in the body of a plain namespace, read inside a function declared in that body, reads other): its twin page gp22-rs5-0, the const read in an exported function of the namespace body, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN1",
+     "page": "b9d534ec9e605579",
+     "falsifies": "refusal #8 U1c member GP22-AN1 (a const annotated with a parenthesized union does not resolve): its twin page gp22-an1-0, a plain const declared at the top level with the annotation (\"a\" | \"b\"), reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN2",
+     "page": "daae9c12b5567f3a",
+     "falsifies": "refusal #8 U1c member GP22-AN2 (a const annotated with a union whose first member is undefined does not resolve): its twin page gp22-an2-0, a plain const declared at the top level with the annotation undefined | string, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN3",
+     "page": "e5c6ffd721f0b57e",
+     "falsifies": "refusal #8 U1c member GP22-AN3 (a const annotated with a type literal whose property key is a string literal does not resolve): its twin page gp22-an3-0, a plain const declared at the top level with the annotation { \"v\": string }, reads <opaque { v: \"a\" }>, never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN4",
+     "page": "cc52146aa001c2e2",
+     "falsifies": "refusal #8 U1c member GP22-AN4 (a const annotated with a type literal of one readonly property does not resolve): its twin page gp22-an4-0, a plain const declared at the top level with the annotation { readonly v: string }, reads <opaque { v: \"a\" }>, never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN5",
+     "page": "646319a10dff708a",
+     "falsifies": "refusal #8 U1c member GP22-AN5 (a const annotated with a reference to an exported type alias does not resolve): its twin page gp22-an5-0, a plain const declared at the top level annotated Name, a reference to the exported top-level type alias export type Name = string, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN6",
+     "page": "18f832ff8e293e48",
+     "falsifies": "refusal #8 U1c member GP22-AN6 (a const annotated with a reference to a type alias declared after it does not resolve): its twin page gp22-an6-0, a plain const declared at the top level annotated Name, the top-level type alias type Name = string declared after it, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN7",
+     "page": "1b29dd12fdaf8fcc",
+     "falsifies": "refusal #8 U1c member GP22-AN7 (a const annotated with a single-quoted string literal type does not resolve): its twin page gp22-an7-0, a plain const declared at the top level with the annotation 'a', reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
     }
    ]
   },
@@ -479,6 +564,21 @@
      "pin": "GP13-D3",
      "page": "adf6649f2e5f55d6",
      "falsifies": "refusal #7 U1d member GP13-D3 (a simple element of an object pattern nested in a top-level const's array pattern reads other): its twin page gp13-d3-0, const [{ B }] = list at the top level, reads <opaque B:destructuring>, never <opaque B:other>"
+    },
+    {
+     "pin": "GP22-NP1",
+     "page": "6900907a5d593ac6",
+     "falsifies": "refusal #8 U1d member GP22-NP1 (a simple element of an object pattern that is the second element of a top-level const's array pattern reads other): its twin page gp22-np1-0, const [{ C }, { D }] = list at the top level, reads <opaque C:destructuring> and <opaque D:destructuring>, never <opaque D:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-NP2",
+     "page": "11bbb954f5a873be",
+     "falsifies": "refusal #8 U1d member GP22-NP2 (the simple elements of a two-element object pattern nested in a top-level const's object pattern read other): its twin page gp22-np2-0, const { a: { B, C } } = o at the top level, reads <opaque B:destructuring> and <opaque C:destructuring>, never <opaque NAME:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-NP3",
+     "page": "6eb5b7c10c0a0b92",
+     "falsifies": "refusal #8 U1d member GP22-NP3 (a simple element of an object pattern nested under a quoted key of a top-level const's object pattern reads other): its twin page gp22-np3-0, const { \"a\": { B } } = o at the top level, reads <opaque B:destructuring>, never <opaque B:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
     }
    ]
   },
