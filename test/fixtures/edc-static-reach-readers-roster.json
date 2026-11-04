@@ -22,6 +22,14 @@
         ]
       }
     ],
+    "settings": [
+      {
+        "words": "a clause claims a reading only in a setting its pinned forms spell it in, a setting being everything in a module beside the spelling the clause names: the node that holds the read node and every node enclosing it, the statement, block, function and scope around it, the module's other statements, a call's other arguments and the texts of its literals and names; F-SPELLING-MATRIX's setting rows set a launch call in each of fifteen settings and its rider rows give that call each of nine riders, each with each of the eight LAUNCH_CALLS names (the launch-call reader's first clause and the tracer's held-member call clause name them); where a clause names a cross (F-SPELLING-MATRIX's names, spellings, receivers, keys, command and specifier forms, settings and riders; the position roster's positions), it claims every cell of the cross and no other cell, and along every other dimension its words (every, each, any, whichever) range only over the values its pinned forms spell: another setting of a named spelling, name, key or form is NOT CLAIMED by this census",
+        "falsifiers": [
+          "F-SPELLING-MATRIX"
+        ]
+      }
+    ],
     "specifiers": [
       {
         "words": "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and the first argument of every loader call the loader reader reads (in the spellings its first clause names) through resolution (every candidate, sorted), <expression> when it does not resolve or is absent; F-SPELLING-MATRIX spells every one of those loader spellings with its first argument in each of five forms (a string literal, a no-substitution template, a conditional of two string literals, a name a module const binds to a string literal, or a literal index into a module const array literal of string literals that is only read), so those are the first-argument forms claimed for every loader spelling, and another first-argument form only in a spelling a pinned form spells it with",
@@ -166,7 +174,7 @@
         ]
       },
       {
-        "words": "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a string or a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; F-SPELLING-MATRIX spells every one of these spellings with each of the eight LAUNCH_CALLS members off a namespace import's name (a bound name: one a const declaration binds to its member) with its command in each of the five forms the launch-call reader's first clause names, so those are the member names and command forms claimed for every spelling, and another held value, command form or argument list only in a spelling a pinned form spells it with; and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name), F-SPELLING-MATRIX spelling each of those with each of the eight LAUNCH_CALLS members off the namespace import's name (an unresolved command: a name nothing in the module binds, and a parameter), so those are the member names claimed there, and another unresolved command form only in a spelling a pinned form spells it with",
+        "words": "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings and settings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a string or a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; F-SPELLING-MATRIX spells every one of these spellings with each of the eight LAUNCH_CALLS members off a namespace import's name (a bound name: one a const declaration binds to its member) with its command in each of the five forms the launch-call reader's first clause names, each call a module-level expression statement, so those are the member names and command forms claimed for every spelling there; its setting rows spell a plain call of a member read by name off the namespace import's name (cp), its two arguments a string-literal command and an empty array literal, with each of the eight members in each of the fifteen settings the launch-call reader's first clause names, and its rider rows spell that call as a module-level expression statement with each of the eight members and each of the nine riders that clause names, so those are the settings and riders claimed for each member; another held value, command form, argument list, setting or rider is claimed only where a pinned form spells it with that spelling and member (the settings clause); and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name), F-SPELLING-MATRIX spelling each of those with each of the eight LAUNCH_CALLS members off the namespace import's name (an unresolved command: a name nothing in the module binds, a module-level expression statement, and a parameter, a statement in a function body; no command: a module-level expression statement), so those are the member names claimed there, and another unresolved command form or setting only where a pinned form spells it with that spelling and member",
         "falsifiers": [
           "LAUNCH_CALLS@consume#1",
           "isWrapper@consume#1",
@@ -230,7 +238,7 @@
     ],
     "launches": [
       {
-        "words": "the launch-call reader reads every call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped; F-SPELLING-MATRIX spells every one of these spellings with each of the eight LAUNCH_CALLS names, each but the name's read off a name and off a member read by name, with its command (the first of two arguments) in each of five forms (a string literal, a no-substitution template, a conditional of two string literals, a name a module const binds to a string literal, or a literal index into a module const array literal of string literals that is only read), so those are the callee names, receivers and command forms claimed for every spelling, and another receiver, command form or argument list only in a spelling a pinned form spells it with",
+        "words": "the launch-call reader reads a call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling and a setting its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped; F-SPELLING-MATRIX spells every one of these spellings with each of the eight LAUNCH_CALLS names, each but the name's read off a name and off a member read by name, with its command (the first of two arguments) in each of five forms (a string literal, a no-substitution template, a conditional of two string literals, a name a module const binds to a string literal, or a literal index into a module const array literal of string literals that is only read), each call a module-level expression statement, so those are the callee names, receivers and command forms claimed for every spelling there; its setting rows spell a plain call of a property name read off a name (api), unwrapped, its two arguments a string-literal command and an empty array literal, with each of the eight names in each of fifteen settings (a const declaration's initializer, a return in a function body, an = assignment's right side, either arm of a conditional, an array literal's element, an export default (one module per name), an object literal property's value, the only argument of a plain call of a name, an await operand in an async function body, an arrow function's body, a statement in a function body, a statement in an if statement's block, the receiver of a member read off its result, a void operand and a parameter's default), and its rider rows spell that call as a module-level expression statement with each of the eight names and each of nine riders (a third argument, a single argument, the command parenthesized, under as, under satisfies, under a <T> assertion or under !, a conditional command with a conditional in its false arm, and one with a conditional in its true arm), so those are the settings and riders claimed for each name; another receiver, command form, argument list, setting or rider is claimed only where a pinned form spells it with that spelling and name (the settings clause)",
         "falsifiers": [
           "LAUNCH_CALLS@launchSitesAt#1",
           "unwrap@calleeName#1",
@@ -246,7 +254,7 @@
         ]
       },
       {
-        "words": "and, its command <expression>, every such call spelled with a property name (unwrapped, in a plain call) that sits in a namespace body or an enum declaration and whose command does not resolve, or whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read), and every such call spelled with a name (unwrapped, in a plain call) whose command resolves only through an index into a const array that is not only read; F-SPELLING-MATRIX spells each of these routes with each of the eight LAUNCH_CALLS names (a property name read off a name: in a namespace body with a module const's name and with a parameter as the command, in an enum declaration with a module const's name, with an ambient const's name, and with an index into a const array that an assignment or a call reaches; a name with that index), so those are the callee names claimed on every route, and another receiver or command form only on a route a pinned form spells it with",
+        "words": "and, its command <expression>, a call of such a callee spelled with a property name (unwrapped, in a plain call) that sits in a namespace body or an enum declaration and whose command does not resolve, or whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read), and a call of such a callee spelled with a name (unwrapped, in a plain call) whose command resolves only through an index into a const array that is not only read, in the settings its pinned forms hold for the route; F-SPELLING-MATRIX spells each of these routes with each of the eight LAUNCH_CALLS names (a property name read off a name: in a namespace body with a module const's name as the command, a statement of the body, and with a parameter as the command, a statement of a function the body declares; in an enum declaration with a module const's name, the receiver of a member read off its result in a member's initializer; with an ambient const's name and with an index into a const array that an assignment or a call reaches, a module-level expression statement; a name with that index, a module-level expression statement), so those are the callee names claimed on every route in those settings, and another receiver, command form or setting only on a route where a pinned form spells it with that name (the settings clause)",
         "falsifiers": [
           "NS2",
           "F-MERGED",
@@ -2006,6 +2014,421 @@
       "twins": [
         "t-gp23-te-fork-unresolved"
       ]
+    },
+    "LC-spawn-VAR": {
+      "hollows": "launchSitesAt skips spawn when the call is a variable declaration's initializer (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"spawn\" && ts.isVariableDeclaration(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-spawn-var",
+        "w-gp16-tc-spawn-var",
+        "sm-launch-set-const",
+        "sm-held-set-const"
+      ],
+      "twins": [
+        "t-gp16-lc-spawn-var"
+      ]
+    },
+    "LC-fork-RET": {
+      "hollows": "launchSitesAt skips fork when the call is a return statement's expression (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"fork\" && ts.isReturnStatement(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-fork-ret",
+        "sm-launch-set-return",
+        "sm-held-set-return"
+      ],
+      "twins": [
+        "t-gp16-lc-fork-ret"
+      ]
+    },
+    "LC-exec-ASSIGN": {
+      "hollows": "launchSitesAt skips exec when the call is a binary expression's right operand (an assignment's right side) (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"exec\" && ts.isBinaryExpression(node.parent) && node.parent.right === node) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-exec-assign",
+        "sm-launch-set-assign",
+        "sm-held-set-assign"
+      ],
+      "twins": [
+        "t-gp16-lc-exec-assign"
+      ]
+    },
+    "LC-execFile-CONDARM": {
+      "hollows": "launchSitesAt skips execFile when the call is a conditional's arm (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execFile\" && ts.isConditionalExpression(node.parent) && node.parent.condition !== node) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execfile-condarm",
+        "sm-launch-set-arms",
+        "sm-held-set-arms"
+      ],
+      "twins": [
+        "t-gp16-lc-execfile-condarm"
+      ]
+    },
+    "LC-execSync-ELEMENT": {
+      "hollows": "launchSitesAt skips execSync when the call is an array literal's element (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execSync\" && ts.isArrayLiteralExpression(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execsync-element",
+        "sm-launch-set-element",
+        "sm-held-set-element"
+      ],
+      "twins": [
+        "t-gp16-lc-execsync-element"
+      ]
+    },
+    "LC-spawnSync-EXPORTDEF": {
+      "hollows": "launchSitesAt skips spawnSync when the call is an export default's expression (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"spawnSync\" && ts.isExportAssignment(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-spawnsync-exportdef",
+        "sm-launch-set-export-default-spawnsync",
+        "sm-held-set-export-default-spawnsync"
+      ],
+      "twins": [
+        "t-gp16-lc-spawnsync-exportdef"
+      ]
+    },
+    "LC-execve-PROPVAL": {
+      "hollows": "launchSitesAt skips execve when the call is a property assignment's value (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execve\" && ts.isPropertyAssignment(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execve-propval",
+        "sm-launch-set-property",
+        "sm-held-set-property"
+      ],
+      "twins": [
+        "t-gp16-lc-execve-propval"
+      ]
+    },
+    "LC-execFileSync-ARG": {
+      "hollows": "launchSitesAt skips execFileSync when the call is another call's argument (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execFileSync\" && ts.isCallExpression(node.parent) && node.parent.expression !== node) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execfilesync-arg",
+        "sm-launch-set-argument",
+        "sm-held-set-argument"
+      ],
+      "twins": [
+        "t-gp16-lc-execfilesync-arg"
+      ]
+    },
+    "LC-fork-AWAIT": {
+      "hollows": "launchSitesAt skips fork when the call is an await operand (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"fork\" && ts.isAwaitExpression(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-fork-await",
+        "sm-launch-set-await",
+        "sm-held-set-await"
+      ],
+      "twins": [
+        "t-gp16-lc-fork-await"
+      ]
+    },
+    "LC-execve-ARROW": {
+      "hollows": "launchSitesAt skips execve when the call is an arrow function's body (refusal #7 U1)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execve\" && ts.isArrowFunction(node.parent)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execve-arrow",
+        "sm-launch-set-arrow",
+        "sm-held-set-arrow"
+      ],
+      "twins": [
+        "t-gp16-lc-execve-arrow"
+      ]
+    },
+    "LC-spawn-ARGC3": {
+      "hollows": "launchSitesAt skips spawn when the call has more than two arguments (refusal #7 U2)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"spawn\" && node.arguments.length > 2) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-spawn-argc3",
+        "sm-launch-rider-third-argument",
+        "sm-held-rider-third-argument"
+      ],
+      "twins": [
+        "t-gp16-lc-spawn-argc3"
+      ]
+    },
+    "LC-fork-CMDAS": {
+      "hollows": "launchSitesAt skips fork when its command is an as expression (refusal #7 U2)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"fork\" && node.arguments[0] !== undefined && ts.isAsExpression(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-fork-cmdwrap",
+        "sm-launch-rider-as-command",
+        "sm-held-rider-as-command"
+      ],
+      "twins": [
+        "t-gp16-lc-fork-cmdwrap"
+      ]
+    },
+    "LC-execve-CMDNESTCOND": {
+      "hollows": "launchSitesAt skips execve when its command is a conditional with a conditional arm (refusal #7 U2)",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (callee === \"execve\" && node.arguments[0] !== undefined && ts.isConditionalExpression(node.arguments[0]) && (ts.isConditionalExpression(node.arguments[0].whenTrue) || ts.isConditionalExpression(node.arguments[0].whenFalse))) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-lc-execve-cmdnestcond",
+        "sm-launch-rider-nested-false-arm",
+        "sm-launch-rider-nested-true-arm",
+        "sm-held-rider-nested-false-arm",
+        "sm-held-rider-nested-true-arm"
+      ],
+      "twins": [
+        "t-gp16-lc-execve-cmdnestcond"
+      ]
+    },
+    "TC2-spawn-VAR": {
+      "hollows": "consume refuses a call of the held member spawn that is a variable declaration's initializer (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"spawn\" && ts.isVariableDeclaration(parent.parent)) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-spawn-var",
+        "sm-held-set-const"
+      ],
+      "twins": [
+        "t-gp16-tc-spawn-var"
+      ]
+    },
+    "TC2-exec-RET": {
+      "hollows": "consume refuses a call of the held member exec that is a return statement's expression (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"exec\" && ts.isReturnStatement(parent.parent)) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-exec-ret",
+        "sm-held-set-return"
+      ],
+      "twins": [
+        "t-gp16-tc-exec-ret"
+      ]
+    },
+    "TC2-fork-ARG": {
+      "hollows": "consume refuses a call of the held member fork that is another call's argument (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"fork\" && ts.isCallExpression(parent.parent) && parent.parent.expression !== parent) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-fork-arg",
+        "sm-held-set-argument"
+      ],
+      "twins": [
+        "t-gp16-tc-fork-arg"
+      ]
+    },
+    "TC2-execFile-ARGC3": {
+      "hollows": "consume refuses a call of the held member execFile with more than two arguments (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"execFile\" && parent.arguments.length > 2) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-execfile-argc3",
+        "sm-held-rider-third-argument"
+      ],
+      "twins": [
+        "t-gp16-tc-execfile-argc3"
+      ]
+    },
+    "TC2-spawnSync-ASSIGN": {
+      "hollows": "consume refuses a call of the held member spawnSync that is a binary expression's right operand (an assignment's right side) (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"spawnSync\" && ts.isBinaryExpression(parent.parent) && parent.parent.right === parent) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-spawnsync-assign",
+        "sm-held-set-assign"
+      ],
+      "twins": [
+        "t-gp16-tc-spawnsync-assign"
+      ]
+    },
+    "TC2-execSync-AWAIT": {
+      "hollows": "consume refuses a call of the held member execSync that is an await operand (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"execSync\" && ts.isAwaitExpression(parent.parent)) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-execsync-await",
+        "sm-held-set-await"
+      ],
+      "twins": [
+        "t-gp16-tc-execsync-await"
+      ]
+    },
+    "TC2-fork-ARROW": {
+      "hollows": "consume refuses a call of the held member fork that is an arrow function's body (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"fork\" && ts.isArrowFunction(parent.parent)) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-fork-arrow",
+        "sm-held-set-arrow"
+      ],
+      "twins": [
+        "t-gp16-tc-fork-arrow"
+      ]
+    },
+    "TC2-execFileSync-RESULTMEMBER": {
+      "hollows": "consume refuses a call of the held member execFileSync whose result a member is read off (refusal #7 U3)",
+      "edits": [
+        {
+          "from": "      const first = parent.arguments[0];\n",
+          "to": "      const first = parent.arguments[0];\n      if (member === \"execFileSync\" && ts.isPropertyAccessExpression(parent.parent) && parent.parent.expression === parent) { add(parent, pathLabel(path), \"<reference>\"); return; }\n"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp16-tc-execfilesync-resultmember",
+        "sm-held-set-result-member"
+      ],
+      "twins": [
+        "t-gp16-tc-execfilesync-resultmember"
+      ]
     }
   },
   "constants": {
@@ -2608,6 +3031,48 @@
       "t-gp23-tn-execsync-bound-optcall": "import * as cp from \"node:child_process\";\n\nexport function gp23TnExecSyncBoundOptTwin(): void {\n  const go = cp.spawn;\n  go?.(\"rf\", []);\n}\n",
       "w-gp23-te-fork-unresolved": "import * as cp from \"node:child_process\";\n\nexport function gp23TeForkUnresolved(modulePath: string): void {\n  cp.fork(modulePath, []);\n}\n",
       "t-gp23-te-fork-unresolved": "import * as cp from \"node:child_process\";\n\nexport function gp23TeForkUnresolvedTwin(modulePath: string): void {\n  cp.spawn(modulePath, []);\n}\n",
+      "w-gp16-lc-spawn-var": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcSpawnVar(api: Launch): unknown {\n  const pid = api.spawn(\"rf\", []);\n  return pid;\n}\n",
+      "t-gp16-lc-spawn-var": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcSpawnVar(api: Launch): unknown {\n  api.spawn(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-lc-fork-ret": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcForkRet(api: Launch): unknown {\n  return api.fork(\"rf\", []);\n}\n",
+      "t-gp16-lc-fork-ret": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcForkRet(api: Launch): unknown {\n  api.fork(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-lc-exec-assign": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecAssign(api: Launch): unknown {\n  let result: unknown;\n  result = api.exec(\"rf\", []);\n  return result;\n}\n",
+      "t-gp16-lc-exec-assign": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecAssign(api: Launch): unknown {\n  api.exec(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-lc-execfile-condarm": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecFileCond(api: Launch, ready: boolean): unknown {\n  return ready ? api.execFile(\"rf\", []) : undefined;\n}\n",
+      "t-gp16-lc-execfile-condarm": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecFileCond(api: Launch, ready: boolean): unknown {\n  api.execFile(\"rf\", []);\n  return ready;\n}\n",
+      "w-gp16-lc-execsync-element": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecSyncElement(api: Launch): unknown[] {\n  return [api.execSync(\"rf\", [])];\n}\n",
+      "t-gp16-lc-execsync-element": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecSyncElement(api: Launch): unknown[] {\n  api.execSync(\"rf\", []);\n  return [];\n}\n",
+      "w-gp16-lc-spawnsync-exportdef": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nconst api = {} as Launch;\nexport default api.spawnSync(\"rf\", []);\n",
+      "t-gp16-lc-spawnsync-exportdef": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nconst api = {} as Launch;\napi.spawnSync(\"rf\", []);\nexport default api;\n",
+      "w-gp16-lc-execve-propval": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecvePropval(api: Launch): { readonly pid: unknown } {\n  return { pid: api.execve(\"rf\", []) };\n}\n",
+      "t-gp16-lc-execve-propval": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecvePropval(api: Launch): { readonly pid: unknown } {\n  api.execve(\"rf\", []);\n  return { pid: undefined };\n}\n",
+      "w-gp16-lc-execfilesync-arg": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecFileSyncArg(api: Launch): string {\n  return String(api.execFileSync(\"rf\", []));\n}\n",
+      "t-gp16-lc-execfilesync-arg": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecFileSyncArg(api: Launch): string {\n  api.execFileSync(\"rf\", []);\n  return String(undefined);\n}\n",
+      "w-gp16-lc-fork-await": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport async function gp16LcForkAwait(api: Launch): Promise<unknown> {\n  const child = await api.fork(\"rf\", []);\n  return child;\n}\n",
+      "t-gp16-lc-fork-await": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport async function gp16LcForkAwait(api: Launch): Promise<unknown> {\n  api.fork(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-lc-execve-arrow": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport const gp16LcExecveArrow = (api: Launch): unknown => api.execve(\"rf\", []);\n",
+      "t-gp16-lc-execve-arrow": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport const gp16LcExecveArrow = (api: Launch): unknown => {\n  api.execve(\"rf\", []);\n  return undefined;\n};\n",
+      "w-gp16-lc-spawn-argc3": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[], options?: { cwd: string }) => T>;\n\nexport function gp16LcSpawnArgc3(api: Launch): void {\n  api.spawn(\"rf\", [], { cwd: \".\" });\n}\n",
+      "t-gp16-lc-spawn-argc3": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[], options?: { cwd: string }) => T>;\n\nexport function gp16LcSpawnArgc3(api: Launch): void {\n  api.spawn(\"rf\", []);\n}\n",
+      "w-gp16-lc-fork-cmdwrap": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcForkCmdwrap(api: Launch): void {\n  api.fork(\"rf\" as string, []);\n}\n",
+      "t-gp16-lc-fork-cmdwrap": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcForkCmdwrap(api: Launch): void {\n  api.fork(\"rf\", []);\n}\n",
+      "w-gp16-lc-execve-cmdnestcond": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecveNestcond(api: Launch, fast: boolean, quiet: boolean): void {\n  api.execve(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\n}\n",
+      "t-gp16-lc-execve-cmdnestcond": "type Launch = Record<\"spawn\" | \"spawnSync\" | \"exec\" | \"execSync\" | \"execFile\" | \"execFileSync\" | \"fork\" | \"execve\", <T>(command: string, args: string[]) => T>;\n\nexport function gp16LcExecveNestcond(api: Launch, fast: boolean, quiet: boolean): void {\n  api.execve(fast ? \"rf\" : \"hx\", []);\n  api.execve(quiet ? \"rf\" : \"git\", []);\n}\n",
+      "w-gp16-tc-spawn-var": "import * as cp from \"node:child_process\";\n\nexport function gp16TcSpawnVar(): number | undefined {\n  const child = cp.spawn(\"rf\", []);\n  return child.pid;\n}\n",
+      "t-gp16-tc-spawn-var": "import * as cp from \"node:child_process\";\n\nexport function gp16TcSpawnVar(): number | undefined {\n  cp.spawn(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-tc-exec-ret": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecRet(): cp.ChildProcess {\n  return cp.exec(\"rf --version\");\n}\n",
+      "t-gp16-tc-exec-ret": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecRet(): void {\n  cp.exec(\"rf --version\");\n}\n",
+      "w-gp16-tc-fork-arg": "import * as cp from \"node:child_process\";\n\nfunction keep(value: unknown): void {\n  void value;\n}\nexport function gp16TcForkArg(): void {\n  keep(cp.fork(\"worker.js\", []));\n}\n",
+      "t-gp16-tc-fork-arg": "import * as cp from \"node:child_process\";\n\nfunction keep(value: unknown): void {\n  void value;\n}\nexport function gp16TcForkArg(): void {\n  cp.fork(\"worker.js\", []);\n  keep(undefined);\n}\n",
+      "w-gp16-tc-execfile-argc3": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecFileArgc3(): void {\n  cp.execFile(\"rf\", [], { cwd: \".\" });\n}\n",
+      "t-gp16-tc-execfile-argc3": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecFileArgc3(): void {\n  cp.execFile(\"rf\", []);\n}\n",
+      "w-gp16-tc-spawnsync-assign": "import * as cp from \"node:child_process\";\n\nexport function gp16TcSpawnSyncAssign(): unknown {\n  let result: unknown;\n  result = cp.spawnSync(\"rf\", []);\n  return result;\n}\n",
+      "t-gp16-tc-spawnsync-assign": "import * as cp from \"node:child_process\";\n\nexport function gp16TcSpawnSyncAssign(): unknown {\n  cp.spawnSync(\"rf\", []);\n  return undefined;\n}\n",
+      "w-gp16-tc-execsync-await": "import * as cp from \"node:child_process\";\n\nexport async function gp16TcExecSyncAwait(): Promise<unknown> {\n  const output = await cp.execSync(\"rf --version\");\n  return output;\n}\n",
+      "t-gp16-tc-execsync-await": "import * as cp from \"node:child_process\";\n\nexport async function gp16TcExecSyncAwait(): Promise<unknown> {\n  cp.execSync(\"rf --version\");\n  return undefined;\n}\n",
+      "w-gp16-tc-fork-arrow": "import * as cp from \"node:child_process\";\n\nexport const gp16TcForkArrow = (): cp.ChildProcess => cp.fork(\"worker.js\", []);\n",
+      "t-gp16-tc-fork-arrow": "import * as cp from \"node:child_process\";\n\nexport const gp16TcForkArrow = (): void => {\n  cp.fork(\"worker.js\", []);\n};\n",
+      "w-gp16-tc-execfilesync-resultmember": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecFileSyncMember(): string {\n  return cp.execFileSync(\"rf\", []).toString();\n}\n",
+      "t-gp16-tc-execfilesync-resultmember": "import * as cp from \"node:child_process\";\n\nexport function gp16TcExecFileSyncMember(): string {\n  cp.execFileSync(\"rf\", []);\n  return \"\";\n}\n",
       "sm-launch-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nspawn(\"rf\", []);\nspawn(`hx`, []);\nspawn(flag ? \"git\" : \"forge\", []);\nspawn(TOOL, []);\nspawn(TOOLS[0], []);\nspawnSync(\"rf\", []);\nspawnSync(`hx`, []);\nspawnSync(flag ? \"git\" : \"forge\", []);\nspawnSync(TOOL, []);\nspawnSync(TOOLS[0], []);\nexec(\"rf\", []);\nexec(`hx`, []);\nexec(flag ? \"git\" : \"forge\", []);\nexec(TOOL, []);\nexec(TOOLS[0], []);\nexecSync(\"rf\", []);\nexecSync(`hx`, []);\nexecSync(flag ? \"git\" : \"forge\", []);\nexecSync(TOOL, []);\nexecSync(TOOLS[0], []);\nexecFile(\"rf\", []);\nexecFile(`hx`, []);\nexecFile(flag ? \"git\" : \"forge\", []);\nexecFile(TOOL, []);\nexecFile(TOOLS[0], []);\nexecFileSync(\"rf\", []);\nexecFileSync(`hx`, []);\nexecFileSync(flag ? \"git\" : \"forge\", []);\nexecFileSync(TOOL, []);\nexecFileSync(TOOLS[0], []);\nfork(\"rf\", []);\nfork(`hx`, []);\nfork(flag ? \"git\" : \"forge\", []);\nfork(TOOL, []);\nfork(TOOLS[0], []);\nexecve(\"rf\", []);\nexecve(`hx`, []);\nexecve(flag ? \"git\" : \"forge\", []);\nexecve(TOOL, []);\nexecve(TOOLS[0], []);\n",
       "sm-launch-prop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.spawn(\"rf\", []);\napi.spawn(`hx`, []);\napi.spawn(flag ? \"git\" : \"forge\", []);\napi.spawn(TOOL, []);\napi.spawn(TOOLS[0], []);\napi.spawnSync(\"rf\", []);\napi.spawnSync(`hx`, []);\napi.spawnSync(flag ? \"git\" : \"forge\", []);\napi.spawnSync(TOOL, []);\napi.spawnSync(TOOLS[0], []);\napi.exec(\"rf\", []);\napi.exec(`hx`, []);\napi.exec(flag ? \"git\" : \"forge\", []);\napi.exec(TOOL, []);\napi.exec(TOOLS[0], []);\napi.execSync(\"rf\", []);\napi.execSync(`hx`, []);\napi.execSync(flag ? \"git\" : \"forge\", []);\napi.execSync(TOOL, []);\napi.execSync(TOOLS[0], []);\napi.execFile(\"rf\", []);\napi.execFile(`hx`, []);\napi.execFile(flag ? \"git\" : \"forge\", []);\napi.execFile(TOOL, []);\napi.execFile(TOOLS[0], []);\napi.execFileSync(\"rf\", []);\napi.execFileSync(`hx`, []);\napi.execFileSync(flag ? \"git\" : \"forge\", []);\napi.execFileSync(TOOL, []);\napi.execFileSync(TOOLS[0], []);\napi.fork(\"rf\", []);\napi.fork(`hx`, []);\napi.fork(flag ? \"git\" : \"forge\", []);\napi.fork(TOOL, []);\napi.fork(TOOLS[0], []);\napi.execve(\"rf\", []);\napi.execve(`hx`, []);\napi.execve(flag ? \"git\" : \"forge\", []);\napi.execve(TOOL, []);\napi.execve(TOOLS[0], []);\n",
       "sm-launch-prop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.spawn(\"rf\", []);\nholder.api.spawn(`hx`, []);\nholder.api.spawn(flag ? \"git\" : \"forge\", []);\nholder.api.spawn(TOOL, []);\nholder.api.spawn(TOOLS[0], []);\nholder.api.spawnSync(\"rf\", []);\nholder.api.spawnSync(`hx`, []);\nholder.api.spawnSync(flag ? \"git\" : \"forge\", []);\nholder.api.spawnSync(TOOL, []);\nholder.api.spawnSync(TOOLS[0], []);\nholder.api.exec(\"rf\", []);\nholder.api.exec(`hx`, []);\nholder.api.exec(flag ? \"git\" : \"forge\", []);\nholder.api.exec(TOOL, []);\nholder.api.exec(TOOLS[0], []);\nholder.api.execSync(\"rf\", []);\nholder.api.execSync(`hx`, []);\nholder.api.execSync(flag ? \"git\" : \"forge\", []);\nholder.api.execSync(TOOL, []);\nholder.api.execSync(TOOLS[0], []);\nholder.api.execFile(\"rf\", []);\nholder.api.execFile(`hx`, []);\nholder.api.execFile(flag ? \"git\" : \"forge\", []);\nholder.api.execFile(TOOL, []);\nholder.api.execFile(TOOLS[0], []);\nholder.api.execFileSync(\"rf\", []);\nholder.api.execFileSync(`hx`, []);\nholder.api.execFileSync(flag ? \"git\" : \"forge\", []);\nholder.api.execFileSync(TOOL, []);\nholder.api.execFileSync(TOOLS[0], []);\nholder.api.fork(\"rf\", []);\nholder.api.fork(`hx`, []);\nholder.api.fork(flag ? \"git\" : \"forge\", []);\nholder.api.fork(TOOL, []);\nholder.api.fork(TOOLS[0], []);\nholder.api.execve(\"rf\", []);\nholder.api.execve(`hx`, []);\nholder.api.execve(flag ? \"git\" : \"forge\", []);\nholder.api.execve(TOOL, []);\nholder.api.execve(TOOLS[0], []);\n",
@@ -2639,6 +3104,37 @@
       "sm-launch-optcall-inst-paren-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.spawn<F>)?.(\"rf\", []);\n(holder.api.spawn<F>)?.(`hx`, []);\n(holder.api.spawn<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.spawn<F>)?.(TOOL, []);\n(holder.api.spawn<F>)?.(TOOLS[0], []);\n(holder.api.spawnSync<F>)?.(\"rf\", []);\n(holder.api.spawnSync<F>)?.(`hx`, []);\n(holder.api.spawnSync<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.spawnSync<F>)?.(TOOL, []);\n(holder.api.spawnSync<F>)?.(TOOLS[0], []);\n(holder.api.exec<F>)?.(\"rf\", []);\n(holder.api.exec<F>)?.(`hx`, []);\n(holder.api.exec<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.exec<F>)?.(TOOL, []);\n(holder.api.exec<F>)?.(TOOLS[0], []);\n(holder.api.execSync<F>)?.(\"rf\", []);\n(holder.api.execSync<F>)?.(`hx`, []);\n(holder.api.execSync<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.execSync<F>)?.(TOOL, []);\n(holder.api.execSync<F>)?.(TOOLS[0], []);\n(holder.api.execFile<F>)?.(\"rf\", []);\n(holder.api.execFile<F>)?.(`hx`, []);\n(holder.api.execFile<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.execFile<F>)?.(TOOL, []);\n(holder.api.execFile<F>)?.(TOOLS[0], []);\n(holder.api.execFileSync<F>)?.(\"rf\", []);\n(holder.api.execFileSync<F>)?.(`hx`, []);\n(holder.api.execFileSync<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.execFileSync<F>)?.(TOOL, []);\n(holder.api.execFileSync<F>)?.(TOOLS[0], []);\n(holder.api.fork<F>)?.(\"rf\", []);\n(holder.api.fork<F>)?.(`hx`, []);\n(holder.api.fork<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.fork<F>)?.(TOOL, []);\n(holder.api.fork<F>)?.(TOOLS[0], []);\n(holder.api.execve<F>)?.(\"rf\", []);\n(holder.api.execve<F>)?.(`hx`, []);\n(holder.api.execve<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.execve<F>)?.(TOOL, []);\n(holder.api.execve<F>)?.(TOOLS[0], []);\n",
       "sm-launch-targs-prop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.spawn<F>(\"rf\", []);\napi.spawn<F>(`hx`, []);\napi.spawn<F>(flag ? \"git\" : \"forge\", []);\napi.spawn<F>(TOOL, []);\napi.spawn<F>(TOOLS[0], []);\napi.spawnSync<F>(\"rf\", []);\napi.spawnSync<F>(`hx`, []);\napi.spawnSync<F>(flag ? \"git\" : \"forge\", []);\napi.spawnSync<F>(TOOL, []);\napi.spawnSync<F>(TOOLS[0], []);\napi.exec<F>(\"rf\", []);\napi.exec<F>(`hx`, []);\napi.exec<F>(flag ? \"git\" : \"forge\", []);\napi.exec<F>(TOOL, []);\napi.exec<F>(TOOLS[0], []);\napi.execSync<F>(\"rf\", []);\napi.execSync<F>(`hx`, []);\napi.execSync<F>(flag ? \"git\" : \"forge\", []);\napi.execSync<F>(TOOL, []);\napi.execSync<F>(TOOLS[0], []);\napi.execFile<F>(\"rf\", []);\napi.execFile<F>(`hx`, []);\napi.execFile<F>(flag ? \"git\" : \"forge\", []);\napi.execFile<F>(TOOL, []);\napi.execFile<F>(TOOLS[0], []);\napi.execFileSync<F>(\"rf\", []);\napi.execFileSync<F>(`hx`, []);\napi.execFileSync<F>(flag ? \"git\" : \"forge\", []);\napi.execFileSync<F>(TOOL, []);\napi.execFileSync<F>(TOOLS[0], []);\napi.fork<F>(\"rf\", []);\napi.fork<F>(`hx`, []);\napi.fork<F>(flag ? \"git\" : \"forge\", []);\napi.fork<F>(TOOL, []);\napi.fork<F>(TOOLS[0], []);\napi.execve<F>(\"rf\", []);\napi.execve<F>(`hx`, []);\napi.execve<F>(flag ? \"git\" : \"forge\", []);\napi.execve<F>(TOOL, []);\napi.execve<F>(TOOLS[0], []);\n",
       "sm-launch-targs-prop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.spawn<F>(\"rf\", []);\nholder.api.spawn<F>(`hx`, []);\nholder.api.spawn<F>(flag ? \"git\" : \"forge\", []);\nholder.api.spawn<F>(TOOL, []);\nholder.api.spawn<F>(TOOLS[0], []);\nholder.api.spawnSync<F>(\"rf\", []);\nholder.api.spawnSync<F>(`hx`, []);\nholder.api.spawnSync<F>(flag ? \"git\" : \"forge\", []);\nholder.api.spawnSync<F>(TOOL, []);\nholder.api.spawnSync<F>(TOOLS[0], []);\nholder.api.exec<F>(\"rf\", []);\nholder.api.exec<F>(`hx`, []);\nholder.api.exec<F>(flag ? \"git\" : \"forge\", []);\nholder.api.exec<F>(TOOL, []);\nholder.api.exec<F>(TOOLS[0], []);\nholder.api.execSync<F>(\"rf\", []);\nholder.api.execSync<F>(`hx`, []);\nholder.api.execSync<F>(flag ? \"git\" : \"forge\", []);\nholder.api.execSync<F>(TOOL, []);\nholder.api.execSync<F>(TOOLS[0], []);\nholder.api.execFile<F>(\"rf\", []);\nholder.api.execFile<F>(`hx`, []);\nholder.api.execFile<F>(flag ? \"git\" : \"forge\", []);\nholder.api.execFile<F>(TOOL, []);\nholder.api.execFile<F>(TOOLS[0], []);\nholder.api.execFileSync<F>(\"rf\", []);\nholder.api.execFileSync<F>(`hx`, []);\nholder.api.execFileSync<F>(flag ? \"git\" : \"forge\", []);\nholder.api.execFileSync<F>(TOOL, []);\nholder.api.execFileSync<F>(TOOLS[0], []);\nholder.api.fork<F>(\"rf\", []);\nholder.api.fork<F>(`hx`, []);\nholder.api.fork<F>(flag ? \"git\" : \"forge\", []);\nholder.api.fork<F>(TOOL, []);\nholder.api.fork<F>(TOOLS[0], []);\nholder.api.execve<F>(\"rf\", []);\nholder.api.execve<F>(`hx`, []);\nholder.api.execve<F>(flag ? \"git\" : \"forge\", []);\nholder.api.execve<F>(TOOL, []);\nholder.api.execve<F>(TOOLS[0], []);\n",
+      "sm-launch-set-const": "const valueSpawn = api.spawn(\"rf\", []);\nconst valueSpawnSync = api.spawnSync(\"rf\", []);\nconst valueExec = api.exec(\"rf\", []);\nconst valueExecSync = api.execSync(\"rf\", []);\nconst valueExecFile = api.execFile(\"rf\", []);\nconst valueExecFileSync = api.execFileSync(\"rf\", []);\nconst valueFork = api.fork(\"rf\", []);\nconst valueExecve = api.execve(\"rf\", []);\n",
+      "sm-launch-set-return": "function returnSpawn(): unknown {\n  return api.spawn(\"rf\", []);\n}\nfunction returnSpawnSync(): unknown {\n  return api.spawnSync(\"rf\", []);\n}\nfunction returnExec(): unknown {\n  return api.exec(\"rf\", []);\n}\nfunction returnExecSync(): unknown {\n  return api.execSync(\"rf\", []);\n}\nfunction returnExecFile(): unknown {\n  return api.execFile(\"rf\", []);\n}\nfunction returnExecFileSync(): unknown {\n  return api.execFileSync(\"rf\", []);\n}\nfunction returnFork(): unknown {\n  return api.fork(\"rf\", []);\n}\nfunction returnExecve(): unknown {\n  return api.execve(\"rf\", []);\n}\n",
+      "sm-launch-set-assign": "let assigned: unknown;\nassigned = api.spawn(\"rf\", []);\nassigned = api.spawnSync(\"rf\", []);\nassigned = api.exec(\"rf\", []);\nassigned = api.execSync(\"rf\", []);\nassigned = api.execFile(\"rf\", []);\nassigned = api.execFileSync(\"rf\", []);\nassigned = api.fork(\"rf\", []);\nassigned = api.execve(\"rf\", []);\n",
+      "sm-launch-set-arms": "flag ? api.spawn(\"rf\", []) : api.spawn(\"rf\", []);\nflag ? api.spawnSync(\"rf\", []) : api.spawnSync(\"rf\", []);\nflag ? api.exec(\"rf\", []) : api.exec(\"rf\", []);\nflag ? api.execSync(\"rf\", []) : api.execSync(\"rf\", []);\nflag ? api.execFile(\"rf\", []) : api.execFile(\"rf\", []);\nflag ? api.execFileSync(\"rf\", []) : api.execFileSync(\"rf\", []);\nflag ? api.fork(\"rf\", []) : api.fork(\"rf\", []);\nflag ? api.execve(\"rf\", []) : api.execve(\"rf\", []);\n",
+      "sm-launch-set-element": "[api.spawn(\"rf\", [])];\n[api.spawnSync(\"rf\", [])];\n[api.exec(\"rf\", [])];\n[api.execSync(\"rf\", [])];\n[api.execFile(\"rf\", [])];\n[api.execFileSync(\"rf\", [])];\n[api.fork(\"rf\", [])];\n[api.execve(\"rf\", [])];\n",
+      "sm-launch-set-export-default-spawn": "export default api.spawn(\"rf\", []);\n",
+      "sm-launch-set-export-default-spawnsync": "export default api.spawnSync(\"rf\", []);\n",
+      "sm-launch-set-export-default-exec": "export default api.exec(\"rf\", []);\n",
+      "sm-launch-set-export-default-execsync": "export default api.execSync(\"rf\", []);\n",
+      "sm-launch-set-export-default-execfile": "export default api.execFile(\"rf\", []);\n",
+      "sm-launch-set-export-default-execfilesync": "export default api.execFileSync(\"rf\", []);\n",
+      "sm-launch-set-export-default-fork": "export default api.fork(\"rf\", []);\n",
+      "sm-launch-set-export-default-execve": "export default api.execve(\"rf\", []);\n",
+      "sm-launch-set-property": "({ value: api.spawn(\"rf\", []) });\n({ value: api.spawnSync(\"rf\", []) });\n({ value: api.exec(\"rf\", []) });\n({ value: api.execSync(\"rf\", []) });\n({ value: api.execFile(\"rf\", []) });\n({ value: api.execFileSync(\"rf\", []) });\n({ value: api.fork(\"rf\", []) });\n({ value: api.execve(\"rf\", []) });\n",
+      "sm-launch-set-argument": "keep(api.spawn(\"rf\", []));\nkeep(api.spawnSync(\"rf\", []));\nkeep(api.exec(\"rf\", []));\nkeep(api.execSync(\"rf\", []));\nkeep(api.execFile(\"rf\", []));\nkeep(api.execFileSync(\"rf\", []));\nkeep(api.fork(\"rf\", []));\nkeep(api.execve(\"rf\", []));\n",
+      "sm-launch-set-await": "async function awaitSpawn(): Promise<void> {\n  await api.spawn(\"rf\", []);\n}\nasync function awaitSpawnSync(): Promise<void> {\n  await api.spawnSync(\"rf\", []);\n}\nasync function awaitExec(): Promise<void> {\n  await api.exec(\"rf\", []);\n}\nasync function awaitExecSync(): Promise<void> {\n  await api.execSync(\"rf\", []);\n}\nasync function awaitExecFile(): Promise<void> {\n  await api.execFile(\"rf\", []);\n}\nasync function awaitExecFileSync(): Promise<void> {\n  await api.execFileSync(\"rf\", []);\n}\nasync function awaitFork(): Promise<void> {\n  await api.fork(\"rf\", []);\n}\nasync function awaitExecve(): Promise<void> {\n  await api.execve(\"rf\", []);\n}\n",
+      "sm-launch-set-arrow": "const arrowSpawn = (): unknown => api.spawn(\"rf\", []);\nconst arrowSpawnSync = (): unknown => api.spawnSync(\"rf\", []);\nconst arrowExec = (): unknown => api.exec(\"rf\", []);\nconst arrowExecSync = (): unknown => api.execSync(\"rf\", []);\nconst arrowExecFile = (): unknown => api.execFile(\"rf\", []);\nconst arrowExecFileSync = (): unknown => api.execFileSync(\"rf\", []);\nconst arrowFork = (): unknown => api.fork(\"rf\", []);\nconst arrowExecve = (): unknown => api.execve(\"rf\", []);\n",
+      "sm-launch-set-body": "function bodySpawn(): void {\n  api.spawn(\"rf\", []);\n}\nfunction bodySpawnSync(): void {\n  api.spawnSync(\"rf\", []);\n}\nfunction bodyExec(): void {\n  api.exec(\"rf\", []);\n}\nfunction bodyExecSync(): void {\n  api.execSync(\"rf\", []);\n}\nfunction bodyExecFile(): void {\n  api.execFile(\"rf\", []);\n}\nfunction bodyExecFileSync(): void {\n  api.execFileSync(\"rf\", []);\n}\nfunction bodyFork(): void {\n  api.fork(\"rf\", []);\n}\nfunction bodyExecve(): void {\n  api.execve(\"rf\", []);\n}\n",
+      "sm-launch-set-block": "if (flag) {\n  api.spawn(\"rf\", []);\n}\nif (flag) {\n  api.spawnSync(\"rf\", []);\n}\nif (flag) {\n  api.exec(\"rf\", []);\n}\nif (flag) {\n  api.execSync(\"rf\", []);\n}\nif (flag) {\n  api.execFile(\"rf\", []);\n}\nif (flag) {\n  api.execFileSync(\"rf\", []);\n}\nif (flag) {\n  api.fork(\"rf\", []);\n}\nif (flag) {\n  api.execve(\"rf\", []);\n}\n",
+      "sm-launch-set-result-member": "api.spawn(\"rf\", []).pid;\napi.spawnSync(\"rf\", []).pid;\napi.exec(\"rf\", []).pid;\napi.execSync(\"rf\", []).pid;\napi.execFile(\"rf\", []).pid;\napi.execFileSync(\"rf\", []).pid;\napi.fork(\"rf\", []).pid;\napi.execve(\"rf\", []).pid;\n",
+      "sm-launch-set-void": "void api.spawn(\"rf\", []);\nvoid api.spawnSync(\"rf\", []);\nvoid api.exec(\"rf\", []);\nvoid api.execSync(\"rf\", []);\nvoid api.execFile(\"rf\", []);\nvoid api.execFileSync(\"rf\", []);\nvoid api.fork(\"rf\", []);\nvoid api.execve(\"rf\", []);\n",
+      "sm-launch-set-default": "function defaultSpawn(value = api.spawn(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultSpawnSync(value = api.spawnSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExec(value = api.exec(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecSync(value = api.execSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecFile(value = api.execFile(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecFileSync(value = api.execFileSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultFork(value = api.fork(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecve(value = api.execve(\"rf\", [])): unknown {\n  return value;\n}\n",
+      "sm-launch-rider-third-argument": "api.spawn(\"rf\", [], { cwd: \".\" });\napi.spawnSync(\"rf\", [], { cwd: \".\" });\napi.exec(\"rf\", [], { cwd: \".\" });\napi.execSync(\"rf\", [], { cwd: \".\" });\napi.execFile(\"rf\", [], { cwd: \".\" });\napi.execFileSync(\"rf\", [], { cwd: \".\" });\napi.fork(\"rf\", [], { cwd: \".\" });\napi.execve(\"rf\", [], { cwd: \".\" });\n",
+      "sm-launch-rider-one-argument": "api.spawn(\"rf\");\napi.spawnSync(\"rf\");\napi.exec(\"rf\");\napi.execSync(\"rf\");\napi.execFile(\"rf\");\napi.execFileSync(\"rf\");\napi.fork(\"rf\");\napi.execve(\"rf\");\n",
+      "sm-launch-rider-paren-command": "api.spawn((\"rf\"), []);\napi.spawnSync((\"rf\"), []);\napi.exec((\"rf\"), []);\napi.execSync((\"rf\"), []);\napi.execFile((\"rf\"), []);\napi.execFileSync((\"rf\"), []);\napi.fork((\"rf\"), []);\napi.execve((\"rf\"), []);\n",
+      "sm-launch-rider-as-command": "api.spawn(\"rf\" as string, []);\napi.spawnSync(\"rf\" as string, []);\napi.exec(\"rf\" as string, []);\napi.execSync(\"rf\" as string, []);\napi.execFile(\"rf\" as string, []);\napi.execFileSync(\"rf\" as string, []);\napi.fork(\"rf\" as string, []);\napi.execve(\"rf\" as string, []);\n",
+      "sm-launch-rider-sat-command": "api.spawn(\"rf\" satisfies string, []);\napi.spawnSync(\"rf\" satisfies string, []);\napi.exec(\"rf\" satisfies string, []);\napi.execSync(\"rf\" satisfies string, []);\napi.execFile(\"rf\" satisfies string, []);\napi.execFileSync(\"rf\" satisfies string, []);\napi.fork(\"rf\" satisfies string, []);\napi.execve(\"rf\" satisfies string, []);\n",
+      "sm-launch-rider-ta-command": "api.spawn(<string>\"rf\", []);\napi.spawnSync(<string>\"rf\", []);\napi.exec(<string>\"rf\", []);\napi.execSync(<string>\"rf\", []);\napi.execFile(<string>\"rf\", []);\napi.execFileSync(<string>\"rf\", []);\napi.fork(<string>\"rf\", []);\napi.execve(<string>\"rf\", []);\n",
+      "sm-launch-rider-nn-command": "api.spawn(\"rf\"!, []);\napi.spawnSync(\"rf\"!, []);\napi.exec(\"rf\"!, []);\napi.execSync(\"rf\"!, []);\napi.execFile(\"rf\"!, []);\napi.execFileSync(\"rf\"!, []);\napi.fork(\"rf\"!, []);\napi.execve(\"rf\"!, []);\n",
+      "sm-launch-rider-nested-false-arm": "api.spawn(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.spawnSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.exec(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.execSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.execFile(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.execFileSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.fork(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\napi.execve(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\n",
+      "sm-launch-rider-nested-true-arm": "api.spawn(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.spawnSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.exec(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.execSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.execFile(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.execFileSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.fork(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\napi.execve(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\n",
       "sm-expr-namespace": "const TOOL = \"mp\";\nnamespace Tools {\n  api.spawn(TOOL, []);\n  api.spawnSync(TOOL, []);\n  api.exec(TOOL, []);\n  api.execSync(TOOL, []);\n  api.execFile(TOOL, []);\n  api.execFileSync(TOOL, []);\n  api.fork(TOOL, []);\n  api.execve(TOOL, []);\n  export function run(command: string): void {\n    api.spawn(command, []);\n    api.spawnSync(command, []);\n    api.exec(command, []);\n    api.execSync(command, []);\n    api.execFile(command, []);\n    api.execFileSync(command, []);\n    api.fork(command, []);\n    api.execve(command, []);\n  }\n}\n",
       "sm-expr-enum": "const TOOL = \"mp\";\nenum Tools {\n  Spawn = api.spawn(TOOL, []).length,\n  SpawnSync = api.spawnSync(TOOL, []).length,\n  Exec = api.exec(TOOL, []).length,\n  ExecSync = api.execSync(TOOL, []).length,\n  ExecFile = api.execFile(TOOL, []).length,\n  ExecFileSync = api.execFileSync(TOOL, []).length,\n  Fork = api.fork(TOOL, []).length,\n  Execve = api.execve(TOOL, []).length,\n}\n",
       "sm-expr-ambient": "declare const TOOL = \"git\";\napi.spawn(TOOL, []);\napi.spawnSync(TOOL, []);\napi.exec(TOOL, []);\napi.execSync(TOOL, []);\napi.execFile(TOOL, []);\napi.execFileSync(TOOL, []);\napi.fork(TOOL, []);\napi.execve(TOOL, []);\n",
@@ -2659,6 +3155,37 @@
       "sm-held-unresolved-strkey": "import * as cp from \"node:child_process\";\ncp[\"spawn\"](command, []);\ncp[\"spawnSync\"](command, []);\ncp[\"exec\"](command, []);\ncp[\"execSync\"](command, []);\ncp[\"execFile\"](command, []);\ncp[\"execFileSync\"](command, []);\ncp[\"fork\"](command, []);\ncp[\"execve\"](command, []);\nexport function run(path: string): void {\n  cp[\"spawn\"](path, []);\n  cp[\"spawnSync\"](path, []);\n  cp[\"exec\"](path, []);\n  cp[\"execSync\"](path, []);\n  cp[\"execFile\"](path, []);\n  cp[\"execFileSync\"](path, []);\n  cp[\"fork\"](path, []);\n  cp[\"execve\"](path, []);\n}\n",
       "sm-held-unresolved-optcall-optprop": "import * as cp from \"node:child_process\";\ncp?.spawn?.(command, []);\ncp?.spawnSync?.(command, []);\ncp?.exec?.(command, []);\ncp?.execSync?.(command, []);\ncp?.execFile?.(command, []);\ncp?.execFileSync?.(command, []);\ncp?.fork?.(command, []);\ncp?.execve?.(command, []);\nexport function run(path: string): void {\n  cp?.spawn?.(path, []);\n  cp?.spawnSync?.(path, []);\n  cp?.exec?.(path, []);\n  cp?.execSync?.(path, []);\n  cp?.execFile?.(path, []);\n  cp?.execFileSync?.(path, []);\n  cp?.fork?.(path, []);\n  cp?.execve?.(path, []);\n}\n",
       "sm-held-absent-member": "import * as cp from \"node:child_process\";\ncp.spawn();\ncp.spawnSync();\ncp.exec();\ncp.execSync();\ncp.execFile();\ncp.execFileSync();\ncp.fork();\ncp.execve();\n",
+      "sm-held-set-const": "import * as cp from \"node:child_process\";\nconst valueSpawn = cp.spawn(\"rf\", []);\nconst valueSpawnSync = cp.spawnSync(\"rf\", []);\nconst valueExec = cp.exec(\"rf\", []);\nconst valueExecSync = cp.execSync(\"rf\", []);\nconst valueExecFile = cp.execFile(\"rf\", []);\nconst valueExecFileSync = cp.execFileSync(\"rf\", []);\nconst valueFork = cp.fork(\"rf\", []);\nconst valueExecve = cp.execve(\"rf\", []);\n",
+      "sm-held-set-return": "import * as cp from \"node:child_process\";\nfunction returnSpawn(): unknown {\n  return cp.spawn(\"rf\", []);\n}\nfunction returnSpawnSync(): unknown {\n  return cp.spawnSync(\"rf\", []);\n}\nfunction returnExec(): unknown {\n  return cp.exec(\"rf\", []);\n}\nfunction returnExecSync(): unknown {\n  return cp.execSync(\"rf\", []);\n}\nfunction returnExecFile(): unknown {\n  return cp.execFile(\"rf\", []);\n}\nfunction returnExecFileSync(): unknown {\n  return cp.execFileSync(\"rf\", []);\n}\nfunction returnFork(): unknown {\n  return cp.fork(\"rf\", []);\n}\nfunction returnExecve(): unknown {\n  return cp.execve(\"rf\", []);\n}\n",
+      "sm-held-set-assign": "import * as cp from \"node:child_process\";\nlet assigned: unknown;\nassigned = cp.spawn(\"rf\", []);\nassigned = cp.spawnSync(\"rf\", []);\nassigned = cp.exec(\"rf\", []);\nassigned = cp.execSync(\"rf\", []);\nassigned = cp.execFile(\"rf\", []);\nassigned = cp.execFileSync(\"rf\", []);\nassigned = cp.fork(\"rf\", []);\nassigned = cp.execve(\"rf\", []);\n",
+      "sm-held-set-arms": "import * as cp from \"node:child_process\";\nflag ? cp.spawn(\"rf\", []) : cp.spawn(\"rf\", []);\nflag ? cp.spawnSync(\"rf\", []) : cp.spawnSync(\"rf\", []);\nflag ? cp.exec(\"rf\", []) : cp.exec(\"rf\", []);\nflag ? cp.execSync(\"rf\", []) : cp.execSync(\"rf\", []);\nflag ? cp.execFile(\"rf\", []) : cp.execFile(\"rf\", []);\nflag ? cp.execFileSync(\"rf\", []) : cp.execFileSync(\"rf\", []);\nflag ? cp.fork(\"rf\", []) : cp.fork(\"rf\", []);\nflag ? cp.execve(\"rf\", []) : cp.execve(\"rf\", []);\n",
+      "sm-held-set-element": "import * as cp from \"node:child_process\";\n[cp.spawn(\"rf\", [])];\n[cp.spawnSync(\"rf\", [])];\n[cp.exec(\"rf\", [])];\n[cp.execSync(\"rf\", [])];\n[cp.execFile(\"rf\", [])];\n[cp.execFileSync(\"rf\", [])];\n[cp.fork(\"rf\", [])];\n[cp.execve(\"rf\", [])];\n",
+      "sm-held-set-export-default-spawn": "import * as cp from \"node:child_process\";\nexport default cp.spawn(\"rf\", []);\n",
+      "sm-held-set-export-default-spawnsync": "import * as cp from \"node:child_process\";\nexport default cp.spawnSync(\"rf\", []);\n",
+      "sm-held-set-export-default-exec": "import * as cp from \"node:child_process\";\nexport default cp.exec(\"rf\", []);\n",
+      "sm-held-set-export-default-execsync": "import * as cp from \"node:child_process\";\nexport default cp.execSync(\"rf\", []);\n",
+      "sm-held-set-export-default-execfile": "import * as cp from \"node:child_process\";\nexport default cp.execFile(\"rf\", []);\n",
+      "sm-held-set-export-default-execfilesync": "import * as cp from \"node:child_process\";\nexport default cp.execFileSync(\"rf\", []);\n",
+      "sm-held-set-export-default-fork": "import * as cp from \"node:child_process\";\nexport default cp.fork(\"rf\", []);\n",
+      "sm-held-set-export-default-execve": "import * as cp from \"node:child_process\";\nexport default cp.execve(\"rf\", []);\n",
+      "sm-held-set-property": "import * as cp from \"node:child_process\";\n({ value: cp.spawn(\"rf\", []) });\n({ value: cp.spawnSync(\"rf\", []) });\n({ value: cp.exec(\"rf\", []) });\n({ value: cp.execSync(\"rf\", []) });\n({ value: cp.execFile(\"rf\", []) });\n({ value: cp.execFileSync(\"rf\", []) });\n({ value: cp.fork(\"rf\", []) });\n({ value: cp.execve(\"rf\", []) });\n",
+      "sm-held-set-argument": "import * as cp from \"node:child_process\";\nkeep(cp.spawn(\"rf\", []));\nkeep(cp.spawnSync(\"rf\", []));\nkeep(cp.exec(\"rf\", []));\nkeep(cp.execSync(\"rf\", []));\nkeep(cp.execFile(\"rf\", []));\nkeep(cp.execFileSync(\"rf\", []));\nkeep(cp.fork(\"rf\", []));\nkeep(cp.execve(\"rf\", []));\n",
+      "sm-held-set-await": "import * as cp from \"node:child_process\";\nasync function awaitSpawn(): Promise<void> {\n  await cp.spawn(\"rf\", []);\n}\nasync function awaitSpawnSync(): Promise<void> {\n  await cp.spawnSync(\"rf\", []);\n}\nasync function awaitExec(): Promise<void> {\n  await cp.exec(\"rf\", []);\n}\nasync function awaitExecSync(): Promise<void> {\n  await cp.execSync(\"rf\", []);\n}\nasync function awaitExecFile(): Promise<void> {\n  await cp.execFile(\"rf\", []);\n}\nasync function awaitExecFileSync(): Promise<void> {\n  await cp.execFileSync(\"rf\", []);\n}\nasync function awaitFork(): Promise<void> {\n  await cp.fork(\"rf\", []);\n}\nasync function awaitExecve(): Promise<void> {\n  await cp.execve(\"rf\", []);\n}\n",
+      "sm-held-set-arrow": "import * as cp from \"node:child_process\";\nconst arrowSpawn = (): unknown => cp.spawn(\"rf\", []);\nconst arrowSpawnSync = (): unknown => cp.spawnSync(\"rf\", []);\nconst arrowExec = (): unknown => cp.exec(\"rf\", []);\nconst arrowExecSync = (): unknown => cp.execSync(\"rf\", []);\nconst arrowExecFile = (): unknown => cp.execFile(\"rf\", []);\nconst arrowExecFileSync = (): unknown => cp.execFileSync(\"rf\", []);\nconst arrowFork = (): unknown => cp.fork(\"rf\", []);\nconst arrowExecve = (): unknown => cp.execve(\"rf\", []);\n",
+      "sm-held-set-body": "import * as cp from \"node:child_process\";\nfunction bodySpawn(): void {\n  cp.spawn(\"rf\", []);\n}\nfunction bodySpawnSync(): void {\n  cp.spawnSync(\"rf\", []);\n}\nfunction bodyExec(): void {\n  cp.exec(\"rf\", []);\n}\nfunction bodyExecSync(): void {\n  cp.execSync(\"rf\", []);\n}\nfunction bodyExecFile(): void {\n  cp.execFile(\"rf\", []);\n}\nfunction bodyExecFileSync(): void {\n  cp.execFileSync(\"rf\", []);\n}\nfunction bodyFork(): void {\n  cp.fork(\"rf\", []);\n}\nfunction bodyExecve(): void {\n  cp.execve(\"rf\", []);\n}\n",
+      "sm-held-set-block": "import * as cp from \"node:child_process\";\nif (flag) {\n  cp.spawn(\"rf\", []);\n}\nif (flag) {\n  cp.spawnSync(\"rf\", []);\n}\nif (flag) {\n  cp.exec(\"rf\", []);\n}\nif (flag) {\n  cp.execSync(\"rf\", []);\n}\nif (flag) {\n  cp.execFile(\"rf\", []);\n}\nif (flag) {\n  cp.execFileSync(\"rf\", []);\n}\nif (flag) {\n  cp.fork(\"rf\", []);\n}\nif (flag) {\n  cp.execve(\"rf\", []);\n}\n",
+      "sm-held-set-result-member": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\", []).pid;\ncp.spawnSync(\"rf\", []).pid;\ncp.exec(\"rf\", []).pid;\ncp.execSync(\"rf\", []).pid;\ncp.execFile(\"rf\", []).pid;\ncp.execFileSync(\"rf\", []).pid;\ncp.fork(\"rf\", []).pid;\ncp.execve(\"rf\", []).pid;\n",
+      "sm-held-set-void": "import * as cp from \"node:child_process\";\nvoid cp.spawn(\"rf\", []);\nvoid cp.spawnSync(\"rf\", []);\nvoid cp.exec(\"rf\", []);\nvoid cp.execSync(\"rf\", []);\nvoid cp.execFile(\"rf\", []);\nvoid cp.execFileSync(\"rf\", []);\nvoid cp.fork(\"rf\", []);\nvoid cp.execve(\"rf\", []);\n",
+      "sm-held-set-default": "import * as cp from \"node:child_process\";\nfunction defaultSpawn(value = cp.spawn(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultSpawnSync(value = cp.spawnSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExec(value = cp.exec(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecSync(value = cp.execSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecFile(value = cp.execFile(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecFileSync(value = cp.execFileSync(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultFork(value = cp.fork(\"rf\", [])): unknown {\n  return value;\n}\nfunction defaultExecve(value = cp.execve(\"rf\", [])): unknown {\n  return value;\n}\n",
+      "sm-held-rider-third-argument": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\", [], { cwd: \".\" });\ncp.spawnSync(\"rf\", [], { cwd: \".\" });\ncp.exec(\"rf\", [], { cwd: \".\" });\ncp.execSync(\"rf\", [], { cwd: \".\" });\ncp.execFile(\"rf\", [], { cwd: \".\" });\ncp.execFileSync(\"rf\", [], { cwd: \".\" });\ncp.fork(\"rf\", [], { cwd: \".\" });\ncp.execve(\"rf\", [], { cwd: \".\" });\n",
+      "sm-held-rider-one-argument": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\");\ncp.spawnSync(\"rf\");\ncp.exec(\"rf\");\ncp.execSync(\"rf\");\ncp.execFile(\"rf\");\ncp.execFileSync(\"rf\");\ncp.fork(\"rf\");\ncp.execve(\"rf\");\n",
+      "sm-held-rider-paren-command": "import * as cp from \"node:child_process\";\ncp.spawn((\"rf\"), []);\ncp.spawnSync((\"rf\"), []);\ncp.exec((\"rf\"), []);\ncp.execSync((\"rf\"), []);\ncp.execFile((\"rf\"), []);\ncp.execFileSync((\"rf\"), []);\ncp.fork((\"rf\"), []);\ncp.execve((\"rf\"), []);\n",
+      "sm-held-rider-as-command": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\" as string, []);\ncp.spawnSync(\"rf\" as string, []);\ncp.exec(\"rf\" as string, []);\ncp.execSync(\"rf\" as string, []);\ncp.execFile(\"rf\" as string, []);\ncp.execFileSync(\"rf\" as string, []);\ncp.fork(\"rf\" as string, []);\ncp.execve(\"rf\" as string, []);\n",
+      "sm-held-rider-sat-command": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\" satisfies string, []);\ncp.spawnSync(\"rf\" satisfies string, []);\ncp.exec(\"rf\" satisfies string, []);\ncp.execSync(\"rf\" satisfies string, []);\ncp.execFile(\"rf\" satisfies string, []);\ncp.execFileSync(\"rf\" satisfies string, []);\ncp.fork(\"rf\" satisfies string, []);\ncp.execve(\"rf\" satisfies string, []);\n",
+      "sm-held-rider-ta-command": "import * as cp from \"node:child_process\";\ncp.spawn(<string>\"rf\", []);\ncp.spawnSync(<string>\"rf\", []);\ncp.exec(<string>\"rf\", []);\ncp.execSync(<string>\"rf\", []);\ncp.execFile(<string>\"rf\", []);\ncp.execFileSync(<string>\"rf\", []);\ncp.fork(<string>\"rf\", []);\ncp.execve(<string>\"rf\", []);\n",
+      "sm-held-rider-nn-command": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\"!, []);\ncp.spawnSync(\"rf\"!, []);\ncp.exec(\"rf\"!, []);\ncp.execSync(\"rf\"!, []);\ncp.execFile(\"rf\"!, []);\ncp.execFileSync(\"rf\"!, []);\ncp.fork(\"rf\"!, []);\ncp.execve(\"rf\"!, []);\n",
+      "sm-held-rider-nested-false-arm": "import * as cp from \"node:child_process\";\ncp.spawn(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.spawnSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.exec(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.execSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.execFile(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.execFileSync(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.fork(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\ncp.execve(fast ? \"rf\" : quiet ? \"hx\" : \"git\", []);\n",
+      "sm-held-rider-nested-true-arm": "import * as cp from \"node:child_process\";\ncp.spawn(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.spawnSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.exec(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.execSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.execFile(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.execFileSync(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.fork(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\ncp.execve(fast ? quiet ? \"rf\" : \"hx\" : \"git\", []);\n",
       "sm-key-string": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[\"spawn\"](\"rf\", []);\ncp?.[\"spawn\"](\"rf\", []);\ncp[(\"spawn\")](\"rf\", []);\ncp?.[(\"spawn\")](\"rf\", []);\ncp[\"spawn\" as string](\"rf\", []);\ncp?.[\"spawn\" as string](\"rf\", []);\ncp[\"spawn\" satisfies string](\"rf\", []);\ncp?.[\"spawn\" satisfies string](\"rf\", []);\ncp[<string>\"spawn\"](\"rf\", []);\ncp?.[<string>\"spawn\"](\"rf\", []);\ncp[\"spawn\"!](\"rf\", []);\ncp?.[\"spawn\"!](\"rf\", []);\ncp[\"spawn\"<F>](\"rf\", []);\ncp?.[\"spawn\"<F>](\"rf\", []);\n",
       "sm-key-template": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[`spawn`](\"rf\", []);\ncp?.[`spawn`](\"rf\", []);\ncp[(`spawn`)](\"rf\", []);\ncp?.[(`spawn`)](\"rf\", []);\ncp[`spawn` as string](\"rf\", []);\ncp?.[`spawn` as string](\"rf\", []);\ncp[`spawn` satisfies string](\"rf\", []);\ncp?.[`spawn` satisfies string](\"rf\", []);\ncp[<string>`spawn`](\"rf\", []);\ncp?.[<string>`spawn`](\"rf\", []);\ncp[`spawn`!](\"rf\", []);\ncp?.[`spawn`!](\"rf\", []);\ncp[`spawn`<F>](\"rf\", []);\ncp?.[`spawn`<F>](\"rf\", []);\n",
       "sm-key-const": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[KEY](\"rf\", []);\ncp?.[KEY](\"rf\", []);\ncp[(KEY)](\"rf\", []);\ncp?.[(KEY)](\"rf\", []);\ncp[KEY as string](\"rf\", []);\ncp?.[KEY as string](\"rf\", []);\ncp[KEY satisfies string](\"rf\", []);\ncp?.[KEY satisfies string](\"rf\", []);\ncp[<string>KEY](\"rf\", []);\ncp?.[<string>KEY](\"rf\", []);\ncp[KEY!](\"rf\", []);\ncp?.[KEY!](\"rf\", []);\ncp[KEY<F>](\"rf\", []);\ncp?.[KEY<F>](\"rf\", []);\n",
@@ -4388,6 +4915,48 @@
         "t-gp23-tn-execsync-bound-optcall",
         "w-gp23-te-fork-unresolved",
         "t-gp23-te-fork-unresolved",
+        "w-gp16-lc-spawn-var",
+        "t-gp16-lc-spawn-var",
+        "w-gp16-lc-fork-ret",
+        "t-gp16-lc-fork-ret",
+        "w-gp16-lc-exec-assign",
+        "t-gp16-lc-exec-assign",
+        "w-gp16-lc-execfile-condarm",
+        "t-gp16-lc-execfile-condarm",
+        "w-gp16-lc-execsync-element",
+        "t-gp16-lc-execsync-element",
+        "w-gp16-lc-spawnsync-exportdef",
+        "t-gp16-lc-spawnsync-exportdef",
+        "w-gp16-lc-execve-propval",
+        "t-gp16-lc-execve-propval",
+        "w-gp16-lc-execfilesync-arg",
+        "t-gp16-lc-execfilesync-arg",
+        "w-gp16-lc-fork-await",
+        "t-gp16-lc-fork-await",
+        "w-gp16-lc-execve-arrow",
+        "t-gp16-lc-execve-arrow",
+        "w-gp16-lc-spawn-argc3",
+        "t-gp16-lc-spawn-argc3",
+        "w-gp16-lc-fork-cmdwrap",
+        "t-gp16-lc-fork-cmdwrap",
+        "w-gp16-lc-execve-cmdnestcond",
+        "t-gp16-lc-execve-cmdnestcond",
+        "w-gp16-tc-spawn-var",
+        "t-gp16-tc-spawn-var",
+        "w-gp16-tc-exec-ret",
+        "t-gp16-tc-exec-ret",
+        "w-gp16-tc-fork-arg",
+        "t-gp16-tc-fork-arg",
+        "w-gp16-tc-execfile-argc3",
+        "t-gp16-tc-execfile-argc3",
+        "w-gp16-tc-spawnsync-assign",
+        "t-gp16-tc-spawnsync-assign",
+        "w-gp16-tc-execsync-await",
+        "t-gp16-tc-execsync-await",
+        "w-gp16-tc-fork-arrow",
+        "t-gp16-tc-fork-arrow",
+        "w-gp16-tc-execfilesync-resultmember",
+        "t-gp16-tc-execfilesync-resultmember",
         "sm-launch-name",
         "sm-launch-prop-name",
         "sm-launch-prop-member",
@@ -4419,6 +4988,37 @@
         "sm-launch-optcall-inst-paren-member",
         "sm-launch-targs-prop-name",
         "sm-launch-targs-prop-member",
+        "sm-launch-set-const",
+        "sm-launch-set-return",
+        "sm-launch-set-assign",
+        "sm-launch-set-arms",
+        "sm-launch-set-element",
+        "sm-launch-set-export-default-spawn",
+        "sm-launch-set-export-default-spawnsync",
+        "sm-launch-set-export-default-exec",
+        "sm-launch-set-export-default-execsync",
+        "sm-launch-set-export-default-execfile",
+        "sm-launch-set-export-default-execfilesync",
+        "sm-launch-set-export-default-fork",
+        "sm-launch-set-export-default-execve",
+        "sm-launch-set-property",
+        "sm-launch-set-argument",
+        "sm-launch-set-await",
+        "sm-launch-set-arrow",
+        "sm-launch-set-body",
+        "sm-launch-set-block",
+        "sm-launch-set-result-member",
+        "sm-launch-set-void",
+        "sm-launch-set-default",
+        "sm-launch-rider-third-argument",
+        "sm-launch-rider-one-argument",
+        "sm-launch-rider-paren-command",
+        "sm-launch-rider-as-command",
+        "sm-launch-rider-sat-command",
+        "sm-launch-rider-ta-command",
+        "sm-launch-rider-nn-command",
+        "sm-launch-rider-nested-false-arm",
+        "sm-launch-rider-nested-true-arm",
         "sm-expr-namespace",
         "sm-expr-enum",
         "sm-expr-ambient",
@@ -4439,6 +5039,37 @@
         "sm-held-unresolved-strkey",
         "sm-held-unresolved-optcall-optprop",
         "sm-held-absent-member",
+        "sm-held-set-const",
+        "sm-held-set-return",
+        "sm-held-set-assign",
+        "sm-held-set-arms",
+        "sm-held-set-element",
+        "sm-held-set-export-default-spawn",
+        "sm-held-set-export-default-spawnsync",
+        "sm-held-set-export-default-exec",
+        "sm-held-set-export-default-execsync",
+        "sm-held-set-export-default-execfile",
+        "sm-held-set-export-default-execfilesync",
+        "sm-held-set-export-default-fork",
+        "sm-held-set-export-default-execve",
+        "sm-held-set-property",
+        "sm-held-set-argument",
+        "sm-held-set-await",
+        "sm-held-set-arrow",
+        "sm-held-set-body",
+        "sm-held-set-block",
+        "sm-held-set-result-member",
+        "sm-held-set-void",
+        "sm-held-set-default",
+        "sm-held-rider-third-argument",
+        "sm-held-rider-one-argument",
+        "sm-held-rider-paren-command",
+        "sm-held-rider-as-command",
+        "sm-held-rider-sat-command",
+        "sm-held-rider-ta-command",
+        "sm-held-rider-nn-command",
+        "sm-held-rider-nested-false-arm",
+        "sm-held-rider-nested-true-arm",
         "sm-key-string",
         "sm-key-template",
         "sm-key-const",
@@ -5152,7 +5783,10 @@
       "refusal6u1": "U1 HIGH (rule 16 LEG 2, R514/R515/R668 claims wider than pins, the callee-name dimension, REALIZED fail-open): ",
       "refusal6u2": "U2 HIGH (rule 16 LEG 2, same class, the callee-name dimension of the <expression> routes, REALIZED fail-open): ",
       "refusal6u3": "U3 LOW (rule 16 LEG 2, same class, the held-member-name dimension, REALIZED, fail-closed): ",
-      "refusal6u4": "U4 LOW (rule 16 LEG 2, same class, the held-member-name dimension of the <expression> reading, REALIZED, fail-closed): "
+      "refusal6u4": "U4 LOW (rule 16 LEG 2, same class, the held-member-name dimension of the <expression> reading, REALIZED, fail-closed): ",
+      "refusal7u1": "U1 HIGH (rule 16 LEG 2, R514/R515/R668 claims wider than pins, the call-context dimension of the launch-call reader, REALIZED fail-open): ",
+      "refusal7u2": "U2 HIGH (rule 16 LEG 2, same class, the rider dimension of the launch-call reader (argument list, command form), REALIZED fail-open): ",
+      "refusal7u3": "U3 LOW (rule 16 LEG 2, same class, the call-context and argument-list dimensions of the tracer's held-member call clause, REALIZED, fail-closed): "
     },
     "carriedCounts": {
       "reachForms": 139,
@@ -8739,6 +9373,208 @@
               "tracer spawn <expression>",
               "union spawn <expression>"
             ],
+            "w-gp16-lc-spawn-var": [
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp16-lc-spawn-var": [
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp16-lc-fork-ret": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "t-gp16-lc-fork-ret": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "w-gp16-lc-exec-assign": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp16-lc-exec-assign": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp16-lc-execfile-condarm": [
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "t-gp16-lc-execfile-condarm": [
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "w-gp16-lc-execsync-element": [
+              "named execSync rf",
+              "union execSync rf"
+            ],
+            "t-gp16-lc-execsync-element": [
+              "named execSync rf",
+              "union execSync rf"
+            ],
+            "w-gp16-lc-spawnsync-exportdef": [
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "t-gp16-lc-spawnsync-exportdef": [
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "w-gp16-lc-execve-propval": [
+              "named execve rf",
+              "union execve rf"
+            ],
+            "t-gp16-lc-execve-propval": [
+              "named execve rf",
+              "union execve rf"
+            ],
+            "w-gp16-lc-execfilesync-arg": [
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
+            "t-gp16-lc-execfilesync-arg": [
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
+            "w-gp16-lc-fork-await": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "t-gp16-lc-fork-await": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "w-gp16-lc-execve-arrow": [
+              "named execve rf",
+              "union execve rf"
+            ],
+            "t-gp16-lc-execve-arrow": [
+              "named execve rf",
+              "union execve rf"
+            ],
+            "w-gp16-lc-spawn-argc3": [
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp16-lc-spawn-argc3": [
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp16-lc-fork-cmdwrap": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "t-gp16-lc-fork-cmdwrap": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "w-gp16-lc-execve-cmdnestcond": [
+              "named execve git|hx|rf",
+              "union execve git|hx|rf"
+            ],
+            "t-gp16-lc-execve-cmdnestcond": [
+              "named execve hx|rf",
+              "named execve git|rf",
+              "union execve hx|rf",
+              "union execve git|rf"
+            ],
+            "w-gp16-tc-spawn-var": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp16-tc-spawn-var": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp16-tc-exec-ret": [
+              "specifier node:child_process",
+              "tracer exec rf --version",
+              "named exec rf --version",
+              "union exec rf --version"
+            ],
+            "t-gp16-tc-exec-ret": [
+              "specifier node:child_process",
+              "tracer exec rf --version",
+              "named exec rf --version",
+              "union exec rf --version"
+            ],
+            "w-gp16-tc-fork-arg": [
+              "specifier node:child_process",
+              "tracer fork worker.js",
+              "named fork worker.js",
+              "union fork worker.js"
+            ],
+            "t-gp16-tc-fork-arg": [
+              "specifier node:child_process",
+              "tracer fork worker.js",
+              "named fork worker.js",
+              "union fork worker.js"
+            ],
+            "w-gp16-tc-execfile-argc3": [
+              "specifier node:child_process",
+              "tracer execFile rf",
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "t-gp16-tc-execfile-argc3": [
+              "specifier node:child_process",
+              "tracer execFile rf",
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "w-gp16-tc-spawnsync-assign": [
+              "specifier node:child_process",
+              "tracer spawnSync rf",
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "t-gp16-tc-spawnsync-assign": [
+              "specifier node:child_process",
+              "tracer spawnSync rf",
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "w-gp16-tc-execsync-await": [
+              "specifier node:child_process",
+              "tracer execSync rf --version",
+              "named execSync rf --version",
+              "union execSync rf --version"
+            ],
+            "t-gp16-tc-execsync-await": [
+              "specifier node:child_process",
+              "tracer execSync rf --version",
+              "named execSync rf --version",
+              "union execSync rf --version"
+            ],
+            "w-gp16-tc-fork-arrow": [
+              "specifier node:child_process",
+              "tracer fork worker.js",
+              "named fork worker.js",
+              "union fork worker.js"
+            ],
+            "t-gp16-tc-fork-arrow": [
+              "specifier node:child_process",
+              "tracer fork worker.js",
+              "named fork worker.js",
+              "union fork worker.js"
+            ],
+            "w-gp16-tc-execfilesync-resultmember": [
+              "specifier node:child_process",
+              "tracer execFileSync rf",
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
+            "t-gp16-tc-execfilesync-resultmember": [
+              "specifier node:child_process",
+              "tracer execFileSync rf",
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
             "sm-launch-name": [
               "named spawn rf",
               "named spawn hx",
@@ -11281,6 +12117,468 @@
               "union execve mp",
               "union execve bd"
             ],
+            "sm-launch-set-const": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-return": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-assign": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-arms": [
+              "named spawn rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named fork rf",
+              "named execve rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union fork rf",
+              "union execve rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-element": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-export-default-spawn": [
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "sm-launch-set-export-default-spawnsync": [
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "sm-launch-set-export-default-exec": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "sm-launch-set-export-default-execsync": [
+              "named execSync rf",
+              "union execSync rf"
+            ],
+            "sm-launch-set-export-default-execfile": [
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "sm-launch-set-export-default-execfilesync": [
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
+            "sm-launch-set-export-default-fork": [
+              "named fork rf",
+              "union fork rf"
+            ],
+            "sm-launch-set-export-default-execve": [
+              "named execve rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-property": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-argument": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-await": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-arrow": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-body": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-block": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-result-member": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-void": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-set-default": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-third-argument": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-one-argument": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-paren-command": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-as-command": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-sat-command": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-ta-command": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-nn-command": [
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-launch-rider-nested-false-arm": [
+              "named spawn git|hx|rf",
+              "named spawnSync git|hx|rf",
+              "named exec git|hx|rf",
+              "named execSync git|hx|rf",
+              "named execFile git|hx|rf",
+              "named execFileSync git|hx|rf",
+              "named fork git|hx|rf",
+              "named execve git|hx|rf",
+              "union spawn git|hx|rf",
+              "union spawnSync git|hx|rf",
+              "union exec git|hx|rf",
+              "union execSync git|hx|rf",
+              "union execFile git|hx|rf",
+              "union execFileSync git|hx|rf",
+              "union fork git|hx|rf",
+              "union execve git|hx|rf"
+            ],
+            "sm-launch-rider-nested-true-arm": [
+              "named spawn git|hx|rf",
+              "named spawnSync git|hx|rf",
+              "named exec git|hx|rf",
+              "named execSync git|hx|rf",
+              "named execFile git|hx|rf",
+              "named execFileSync git|hx|rf",
+              "named fork git|hx|rf",
+              "named execve git|hx|rf",
+              "union spawn git|hx|rf",
+              "union spawnSync git|hx|rf",
+              "union exec git|hx|rf",
+              "union execSync git|hx|rf",
+              "union execFile git|hx|rf",
+              "union execFileSync git|hx|rf",
+              "union fork git|hx|rf",
+              "union execve git|hx|rf"
+            ],
             "sm-expr-namespace": [
               "named spawn <expression>",
               "named spawnSync <expression>",
@@ -12687,6 +13985,699 @@
               "union execFileSync <expression>",
               "union fork <expression>",
               "union execve <expression>"
+            ],
+            "sm-held-set-const": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-return": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-assign": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-arms": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named fork rf",
+              "named execve rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union fork rf",
+              "union execve rf",
+              "union execve rf"
+            ],
+            "sm-held-set-element": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-export-default-spawn": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "sm-held-set-export-default-spawnsync": [
+              "specifier node:child_process",
+              "tracer spawnSync rf",
+              "named spawnSync rf",
+              "union spawnSync rf"
+            ],
+            "sm-held-set-export-default-exec": [
+              "specifier node:child_process",
+              "tracer exec rf",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "sm-held-set-export-default-execsync": [
+              "specifier node:child_process",
+              "tracer execSync rf",
+              "named execSync rf",
+              "union execSync rf"
+            ],
+            "sm-held-set-export-default-execfile": [
+              "specifier node:child_process",
+              "tracer execFile rf",
+              "named execFile rf",
+              "union execFile rf"
+            ],
+            "sm-held-set-export-default-execfilesync": [
+              "specifier node:child_process",
+              "tracer execFileSync rf",
+              "named execFileSync rf",
+              "union execFileSync rf"
+            ],
+            "sm-held-set-export-default-fork": [
+              "specifier node:child_process",
+              "tracer fork rf",
+              "named fork rf",
+              "union fork rf"
+            ],
+            "sm-held-set-export-default-execve": [
+              "specifier node:child_process",
+              "tracer execve rf",
+              "named execve rf",
+              "union execve rf"
+            ],
+            "sm-held-set-property": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-argument": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-await": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-arrow": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-body": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-block": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-result-member": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-void": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-set-default": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-third-argument": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-one-argument": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-paren-command": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-as-command": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-sat-command": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-ta-command": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-nn-command": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawnSync rf",
+              "tracer exec rf",
+              "tracer execSync rf",
+              "tracer execFile rf",
+              "tracer execFileSync rf",
+              "tracer fork rf",
+              "tracer execve rf",
+              "named spawn rf",
+              "named spawnSync rf",
+              "named exec rf",
+              "named execSync rf",
+              "named execFile rf",
+              "named execFileSync rf",
+              "named fork rf",
+              "named execve rf",
+              "union spawn rf",
+              "union spawnSync rf",
+              "union exec rf",
+              "union execSync rf",
+              "union execFile rf",
+              "union execFileSync rf",
+              "union fork rf",
+              "union execve rf"
+            ],
+            "sm-held-rider-nested-false-arm": [
+              "specifier node:child_process",
+              "tracer spawn git|hx|rf",
+              "tracer spawnSync git|hx|rf",
+              "tracer exec git|hx|rf",
+              "tracer execSync git|hx|rf",
+              "tracer execFile git|hx|rf",
+              "tracer execFileSync git|hx|rf",
+              "tracer fork git|hx|rf",
+              "tracer execve git|hx|rf",
+              "named spawn git|hx|rf",
+              "named spawnSync git|hx|rf",
+              "named exec git|hx|rf",
+              "named execSync git|hx|rf",
+              "named execFile git|hx|rf",
+              "named execFileSync git|hx|rf",
+              "named fork git|hx|rf",
+              "named execve git|hx|rf",
+              "union spawn git|hx|rf",
+              "union spawnSync git|hx|rf",
+              "union exec git|hx|rf",
+              "union execSync git|hx|rf",
+              "union execFile git|hx|rf",
+              "union execFileSync git|hx|rf",
+              "union fork git|hx|rf",
+              "union execve git|hx|rf"
+            ],
+            "sm-held-rider-nested-true-arm": [
+              "specifier node:child_process",
+              "tracer spawn git|hx|rf",
+              "tracer spawnSync git|hx|rf",
+              "tracer exec git|hx|rf",
+              "tracer execSync git|hx|rf",
+              "tracer execFile git|hx|rf",
+              "tracer execFileSync git|hx|rf",
+              "tracer fork git|hx|rf",
+              "tracer execve git|hx|rf",
+              "named spawn git|hx|rf",
+              "named spawnSync git|hx|rf",
+              "named exec git|hx|rf",
+              "named execSync git|hx|rf",
+              "named execFile git|hx|rf",
+              "named execFileSync git|hx|rf",
+              "named fork git|hx|rf",
+              "named execve git|hx|rf",
+              "union spawn git|hx|rf",
+              "union spawnSync git|hx|rf",
+              "union exec git|hx|rf",
+              "union execSync git|hx|rf",
+              "union execFile git|hx|rf",
+              "union execFileSync git|hx|rf",
+              "union fork git|hx|rf",
+              "union execve git|hx|rf"
             ],
             "sm-key-string": [
               "specifier node:child_process",
