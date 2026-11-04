@@ -1,28 +1,29 @@
 /**
  * wb-gnj9 (the rule-19 structural-exit child of wb-byfw, R-B394; the dependency inversion R-B422 folded wb-byfw refusal #4's
- * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #4: the restatement, after this
- * bead's refusal #3 (R-B523: rung 1 for both of its claim sets, a member-level respin; claims equal to pins), of cut #3
- * (351d9e84, refused), the restatement, after refusal #2 (R-B501: rung 1, a new claim set at its first failure), of cut #2
- * (77237305, refused), the respin, after refusal #1 (R-B475: rung 1, a member-level respin), of carrier cut #1 (04160327,
- * refused), which carried wb-byfw's census - itself never landed: wb-byfw's cut #4, 524d3b6c, the R-B394 fail-closed core over
- * cut #3, the enumerate-the-resolvable form the second-stage cap R-B362 bound for refusal #2's frozen claim sets (U1, the W7
- * Proxy forms; U3, each judged row's case text - its probe's and its present's initializers as this file spells them - anchored
- * outside this file) - and pinned the W3 and W7 run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found that the anchor
- * read each row's case text and never the row a case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps hid P-TV3ANY,
- * E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP); refusal #4 found the W9 reader's words wider than its pages (four reader hollows:
- * trailing spaces, tabs, CRLF line breaks, line comments) and a spread in a row's own literal giving it another row's case
- * (GP24-SPREAD, GP24-SPREAD-W7). Cut #1 froze each W3 and W7 table as its declaration evaluates it (asSpelled, W10), made each W3
- * and W7 case check that it runs its table's own row under its id, made caseReading read 'absent' for a row with a spread, a
- * computed key or a method and read a list declared through a call (W9), and gave W9 a page for each spacing and comment form its
- * words named. This bead's refusal #1 found the run-time route open through a table declared through a callee that caseReading
- * does not read (U1: GP8-DCALLEE-W3, GP8-DCALLEE-W7 and GP8-ACALLEE-W3, a name a binding pattern binds), W9's spacing and comment
- * words wider than its pages (U2: nine reader hollows - a leading and a trailing tab, a run of three spaces, a doc comment and a
- * block comment across a line break, a comment-only line, and a trailing space, a CRLF line break and a line comment after a
- * semicolon) and W9's callee and element rules pinned at one shape each (U3: a reader that keeps one list's callee,
- * GP8-CR-ONE-CALLEE-M, and one that reads a row whose spread another property follows, GP8-CR-SPREAD-MID-M), with two riders: a
- * probe's function object took an own property (F3, GP8-RT-FNPROPS) and a reader that follows names three steps kept every
- * reading (F4, GP8-CR-DEPTH3-M). Cut #2's seat also found the route open through a table declared by let or var and rebound at
- * the top level to a frozen copy with C13 given C14's case (S5-LET-W3, S5-VAR-W3 and S5-LET-W7, which hid P-TV3ANY and
+ * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #5: the restatement, after this
+ * bead's refusal #4 (R-B544: a member-level respin with the guard bound on W9's naming-words claim set; claims equal to pins), of
+ * cut #4 (c4319c28, refused), the restatement, after refusal #3 (R-B523: rung 1 for both of its claim sets, a member-level
+ * respin), of cut #3 (351d9e84, refused), the restatement, after refusal #2 (R-B501: rung 1, a new claim set at its first
+ * failure), of cut #2 (77237305, refused), the respin, after refusal #1 (R-B475: rung 1, a member-level respin), of carrier
+ * cut #1 (04160327, refused), which carried wb-byfw's census - itself never landed: wb-byfw's cut #4, 524d3b6c, the R-B394
+ * fail-closed core over cut #3, the enumerate-the-resolvable form the second-stage cap R-B362 bound for refusal #2's frozen claim
+ * sets (U1, the W7 Proxy forms; U3, each judged row's case text - its probe's and its present's initializers as this file spells
+ * them - anchored outside this file) - and pinned the W3 and W7 run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found
+ * that the anchor read each row's case text and never the row a case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps
+ * hid P-TV3ANY, E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP); refusal #4 found the W9 reader's words wider than its pages (four
+ * reader hollows: trailing spaces, tabs, CRLF line breaks, line comments) and a spread in a row's own literal giving it another
+ * row's case (GP24-SPREAD, GP24-SPREAD-W7). Cut #1 froze each W3 and W7 table as its declaration evaluates it (asSpelled, W10),
+ * made each W3 and W7 case check that it runs its table's own row under its id, made caseReading read 'absent' for a row with a
+ * spread, a computed key or a method and read a list declared through a call (W9), and gave W9 a page for each spacing and
+ * comment form its words named. This bead's refusal #1 found the run-time route open through a table declared through a callee
+ * that caseReading does not read (U1: GP8-DCALLEE-W3, GP8-DCALLEE-W7 and GP8-ACALLEE-W3, a name a binding pattern binds), W9's
+ * spacing and comment words wider than its pages (U2: nine reader hollows - a leading and a trailing tab, a run of three spaces,
+ * a doc comment and a block comment across a line break, a comment-only line, and a trailing space, a CRLF line break and a line
+ * comment after a semicolon) and W9's callee and element rules pinned at one shape each (U3: a reader that keeps one list's
+ * callee, GP8-CR-ONE-CALLEE-M, and one that reads a row whose spread another property follows, GP8-CR-SPREAD-MID-M), with two
+ * riders: a probe's function object took an own property (F3, GP8-RT-FNPROPS) and a reader that follows names three steps kept
+ * every reading (F4, GP8-CR-DEPTH3-M). Cut #2's seat also found the route open through a table declared by let or var and rebound
+ * at the top level to a frozen copy with C13 given C14's case (S5-LET-W3, S5-VAR-W3 and S5-LET-W7, which hid P-TV3ANY and
  * H-PX-NESTED-SKIP). Cut #2 made caseReading read a list only from its one const declaration and through a call only of a name
  * one of the source's top-level declarations declares, each rule failing closed to no rows (W9 Q22-Q27), made asSpelled also
  * freeze each function a row holds (W10), gave W9 a page for each form refusal #1 named (Q29-Q35), and made ROSTER pin the
@@ -36,30 +37,43 @@
  * (Q36-Q39) and for each of them, and a class, as a list's callee (Q40-Q44). This bead's refusal #3 found two more of W9's
  * sentences false as written: its naming words, which said that a name after a dot or a property assignment's name names no
  * declaration, while namedIn leaves out only a property access's name and a property assignment's identifier key (U1: a qualified
- * name's right side in a type query and in a type reference, a meta-property's name, an object literal method's and getter's
+ * name's right side in a type query and in a type annotation, a meta-property's name, an object literal method's and getter's
  * name, a type literal property signature's name, a class field's name, an object binding pattern's key and a named tuple
  * member's label - the gate's GP16-A1, GP16-A1b, GP16-A2 and six GP16-A3 readings), and its element rule, which named a spread, a
  * computed key and a method as the properties that make an element read 'absent', while plainElement reads 'absent' for every
  * element with a property other than a property assignment keyed by an identifier or a reserved word (U2: a numeric-literal key,
- * the gate's two GP16-A4 readings). Here W9's naming and element sentences state namedIn's and plainElement's rules; W9's pages
- * carry each position refusal #3 named, a parameter's name and an identifier inside a computed key as names of a declaration
- * (Q45-Q55), a comment, a string literal and a private name as names of none (Q56, Q57), each property form plainElement reads
- * 'absent' - a numeric-literal key last and first, a quoted and a bigint-literal key, a getter and a setter, and a shorthand
- * property (Q58-Q63) - and a reserved word as a key, which it reads (Q64); caseReading and every other reader statement are
- * unchanged. The census pins the readings of twinWalk (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix
- * result-corpus census's walk in test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header)
- * with at most one of the gate's refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the
- * namespace of wb-ulnv's R-HIDDEN plant from machine/flywheel/wb-ulnv tip c53028b4: hiddenPlant's held, loadCases and binding
- * lines copied byte for byte but WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults
- * to WRAPPED; WRAPPED copied; Vault without its static reader, which no twin reads; the planted module entries and the release
- * around the namespace left out, as no twin reads a release's bytes; and over one-form namespaces (W3, W7). It also pins
- * headerReading, its reader of the result-corpus census's header (W5, W8), and caseReading, its reader of this file's own source
- * (W9, ROSTER). wb-ulnv refusal #3 (gate-prep-23, run g10-gate-s167) found that cut's census-side prototype channel wider than
- * TV3 (GV3X: an array prototype carrying the documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled
- * JSON); refusal #4 (gate-prep-21, run g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called
- * the plant's functions (GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's
- * reading is the walk itself with that twin's change; no walk calls a function-valued binding of the plant (W6) or a function a
- * W3 row plants as a data property (W3), and TV4 enters such a function as an object.
+ * the gate's two GP16-A4 readings). Cut #4 made W9's naming and element sentences state namedIn's and plainElement's rules and
+ * gave W9 pages for each position refusal #3 named, a parameter's name and an identifier as a computed key as names of a
+ * declaration (Q45-Q55), a comment, a string literal and a private name as names of none (Q56, Q57), each property form
+ * plainElement reads 'absent' - a numeric-literal key last and first, a quoted and a bigint-literal key, a getter and a setter,
+ * and a shorthand property (Q58-Q63) - and a reserved word as a key, which it reads (Q64). This bead's refusal #4 found W9's
+ * naming words still false as written at TypeScript's heritage clauses: they glossed the excluded property access's name as the
+ * name after the dot of an expression and named a qualified name's right side in a type reference as a name of a declaration,
+ * while namedIn leaves out the name of every property access TypeScript parses, and TypeScript parses each entry of a class's
+ * implements clause and of an interface's extends clause - clauses that list types - as an expression with type arguments, a
+ * dotted entry as one over a property access, so the right side of an implemented or an interface-extended dotted type name names
+ * none (U1: the gate's GP7-H1, GP7-H2, GP7-H6, GP7-H7 and GP7-H8 readings). Here W9's naming words define a property access's
+ * name as namedIn reads it, and each position they name has a page: an implemented and an interface-extended dotted type name's
+ * right side in a row's initializer and in a shared declaration's statement (Q65, Q66, Q67 and Q69), a nested implemented dotted
+ * type name's second and third names (Q68), a class's extended dotted name's right side (Q70), a dotted expression's second and
+ * third names (Q73) and a property access's name inside an object literal's and a type literal's computed key (Q74, Q75), each
+ * naming none, beside a plain implemented name and a qualified name's right side in an implemented type's type argument (Q71,
+ * Q72), which name one; Q46's and Q55's titles are restated to the words (a type annotation, an identifier as a computed key);
+ * caseReading and every other reader statement are unchanged. The census pins the readings of twinWalk
+ * (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus census's walk in
+ * test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header) with at most one of the gate's
+ * refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the namespace of wb-ulnv's R-HIDDEN plant
+ * from machine/flywheel/wb-ulnv tip c53028b4: hiddenPlant's held, loadCases and binding lines copied byte for byte but
+ * WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults to WRAPPED; WRAPPED copied;
+ * Vault without its static reader, which no twin reads; the planted module entries and the release around the namespace left out,
+ * as no twin reads a release's bytes; and over one-form namespaces (W3, W7). It also pins headerReading, its reader of the
+ * result-corpus census's header (W5, W8), and caseReading, its reader of this file's own source (W9, ROSTER). wb-ulnv refusal #3
+ * (gate-prep-23, run g10-gate-s167) found that cut's census-side prototype channel wider than TV3 (GV3X: an array prototype
+ * carrying the documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled JSON); refusal #4 (gate-prep-21,
+ * run g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called the plant's functions
+ * (GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's reading is the walk
+ * itself with that twin's change; no walk calls a function-valued binding of the plant (W6) or a function a W3 row plants as a
+ * data property (W3), and TV4 enters such a function as an object.
  *
  * FORM WORDS (every W3 and W7 row id and every claim below): a binding is an own property of the namespace a row plants, the
  * walks' top level; a property below the top level is an own property of the plain object a row holds in an enumerable
@@ -181,15 +195,23 @@
  *   a var, a using and an await using declaration a row's probe names are shared declarations (Q36, Q37, Q38 and Q39), as are the
  *   let, var, using, await using and class declarations a list's callee names (Q40-Q44). A probe's or a present's initializer, or
  *   a shared declaration's statement, names a top-level declaration through each identifier of its code whose name is that
- *   declaration's, wherever the identifier stands, but two: a property access's name, the name after the dot of an expression,
- *   and a property assignment's key that is an identifier (Q4). So a shorthand property (Q5), a name before a dot and a name
- *   indexed (Q20) name one, as do a qualified name's right side in a type query and in a type reference (Q45, Q46), a
+ *   declaration's, wherever the identifier stands, but two: a property access's name and a property assignment's key that is an
+ *   identifier (Q4). A property access's name is the identifier after the dot of a property access, and namedIn leaves out the
+ *   name of every property access TypeScript parses, wherever it stands: in an expression (Q4), as a dotted expression's second
+ *   and third names (Q73), inside a computed key, an object literal's (Q74) and a type literal's (Q75), and in a heritage
+ *   clause - a class's extends clause (Q70), a class's implements clause and an interface's extends clause - each of whose
+ *   entries TypeScript parses as an expression with type arguments, so the right side of an implemented or an interface-extended
+ *   dotted type name names none, in a row's initializer (Q65, Q66) and in a shared declaration's statement (Q67, Q69), as do a
+ *   nested implemented dotted type name's second and third names (Q68). So a shorthand property (Q5), a dotted expression's first
+ *   name and a name indexed (Q20) name one, as do a plain implemented name (Q71), a qualified name's right side - a qualified
+ *   name being a dotted name TypeScript parses as one, as it parses a type query's operand (Q45), a type annotation's type (Q46)
+ *   and an implemented type's type argument (Q72), and never a heritage clause entry's dotted name or a computed key's - a
  *   meta-property's name (Q47), an object literal method's and getter's name (Q48, Q49), a type literal property signature's name
  *   (Q50), a class field's name (Q51), an object binding pattern's key (Q52), a named tuple member's label (Q53), a parameter's
- *   name (Q54) and an identifier inside a computed key (Q55); a block, a doc or a line comment (Q56), a string literal and a
- *   private name (Q57) name none, as none is an identifier of the code. Falsifier: a reader that changes any spacing or comment
- *   form inside a probe's or a present's initializer (collapses a run of spaces, drops a block, doc or line comment, strips a
- *   trailing space or tab, reads a tab as spaces or a CRLF as LF, strips indentation), reads part or only the first line of an
+ *   name (Q54) and an identifier as a computed key (Q55); a block, a doc or a line comment (Q56), a string literal and a private
+ *   name (Q57) name none, as none is an identifier of the code. Falsifier: a reader that changes any spacing or comment form
+ *   inside a probe's or a present's initializer (collapses a run of spaces, drops a block, doc or line comment, strips a trailing
+ *   space or tab, reads a tab as spaces or a CRLF as LF, strips indentation), reads part or only the first line of an
  *   initializer, reads a decoy list or a list declared inside a function, reads either of two declarations of the list, reads a
  *   list a let or a var declaration declares, keeps an id's quotes, reads an element with a property other than a property
  *   assignment keyed by an identifier or a reserved word (a spread, a computed key, a method, a numeric-literal, a quoted or a
@@ -197,16 +219,19 @@
  *   reserved word, reads no rows through a call of a top-level declaration's name (of any kind above), reads rows through a call
  *   of a name no top-level declaration declares, leaves the called name out of the shared declarations or reads into a call's
  *   call, digests a statement with the comment before it, misses a shorthand, a class, a let, a var, a using or an await using
- *   declaration, a name before a dot, a name indexed or a transitive name (at any depth), counts a property access's name or a
- *   property assignment's identifier key, misses any other identifier whose name is a declaration's (a qualified name's right
- *   side, a meta-property's name, an object literal method's or getter's name, a property signature's or a class field's name, a
- *   binding pattern's key, a tuple member's label, a parameter's name or an identifier inside a computed key), counts a name that
- *   a comment, a string literal or a private name spells, or orders the shared declarations other than by source. Each such
- *   reader is an edit of the reader's text, so ROSTER's reader pin reds it too, at a form or position no page carries as at one a
- *   page carries (refusal #1's nine GP8W9 reader members, GP8-CR-ONE-CALLEE-M, GP8-CR-SPREAD-MID-M and GP8-CR-DEPTH3-M among
- *   them, refusal #2's GP20-S-READER-TO-WORDS, a reader that leaves every variable declaration but a const one out of the shared
- *   declarations, which reds Q36-Q43 as well, and refusal #3's GP16-B-KR-QNAME-EXCLUDED, a reader that also leaves a qualified
- *   name's right side out, which reds Q45 and Q46 as well).
+ *   declaration, a dotted expression's first name, a name indexed or a transitive name (at any depth), counts a property access's
+ *   name (in an expression, as a dotted expression's later name, inside a computed key or in a heritage clause, an implemented or
+ *   an interface-extended dotted type name's right side among them) or a property assignment's identifier key, misses any other
+ *   identifier whose name is a declaration's (a plain implemented name, a qualified name's right side, a meta-property's name, an
+ *   object literal method's or getter's name, a property signature's or a class field's name, a binding pattern's key, a tuple
+ *   member's label, a parameter's name or an identifier as a computed key), counts a name that a comment, a string literal or a
+ *   private name spells, or orders the shared declarations other than by source. Each such reader is an edit of the reader's
+ *   text, so ROSTER's reader pin reds it too, at a form or position no page carries as at one a page carries (refusal #1's nine
+ *   GP8W9 reader members, GP8-CR-ONE-CALLEE-M, GP8-CR-SPREAD-MID-M and GP8-CR-DEPTH3-M among them, refusal #2's
+ *   GP20-S-READER-TO-WORDS, a reader that leaves every variable declaration but a const one out of the shared declarations, which
+ *   reds Q36-Q43 as well, refusal #3's GP16-B-KR-QNAME-EXCLUDED, a reader that also leaves a qualified name's right side out,
+ *   which reds Q45, Q46 and Q72 as well, and refusal #4's GP7-KR-HERITAGE-COUNTED, a reader that also counts an implemented or an
+ *   interface-extended dotted type name's right side, which reds Q65-Q69 as well).
  * W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS are frozen, and so is each of their rows and each array and each function a row
  *   holds (its probe and its present): asSpelled froze them as their const declarations evaluated them, and a const binding is
  *   never rebound (a table declared by let or var, which a later statement could rebind to another frozen copy as cut #2's
@@ -313,11 +338,16 @@
  *   the var and the let callee routes (GP20-C-VARCALLEE-W3-PAIR, GP20-C-LETCALLEE-W7-PAIR); and this bead's refusal #3 members U1
  *   (W9's former naming words, false as written for a qualified name's right side, a meta-property's name, four property-name
  *   positions, a binding pattern's key and a tuple member's label: the gate's GP16-A1, GP16-A1b, GP16-A2 and six GP16-A3
- *   readings, now the words' own) by W9's Q45-Q53, with Q54 and Q55 for a parameter's name and an identifier inside a computed
- *   key and Q56 and Q57 for the forms that name none, and U2 (W9's former element rule, false as written for a numeric-literal
- *   key: the gate's two GP16-A4 readings, now the words' own) by W9's Q58 and Q59, with Q60-Q63 for the other property forms
+ *   readings, now the words' own) by W9's Q45-Q53, with Q54 and Q55 for a parameter's name and an identifier as a computed key
+ *   and Q56 and Q57 for the forms that name none, and U2 (W9's former element rule, false as written for a numeric-literal key:
+ *   the gate's two GP16-A4 readings, now the words' own) by W9's Q58 and Q59, with Q60-Q63 for the other property forms
  *   plainElement reads 'absent' and Q64 for a reserved word as a key; a reader built to the former naming words (refusal #3's
- *   GP16-B-KR-QNAME-EXCLUDED) reds Q45 and Q46 beside ROSTER's reader pin.
+ *   GP16-B-KR-QNAME-EXCLUDED) reds Q45, Q46 and Q72 beside ROSTER's reader pin; and this bead's refusal #4 member U1 (W9's former
+ *   naming words, false as written for an implemented and an interface-extended dotted type name's right side: the gate's GP7-H1,
+ *   GP7-H2, GP7-H6, GP7-H7 and GP7-H8 readings, now the words' own) by W9's Q65-Q69, with Q70 for a class's extended dotted name,
+ *   Q71 and Q72 for the heritage positions that name a declaration, and Q73-Q75 for a dotted expression's second and third names
+ *   and a property access's name inside an object literal's and a type literal's computed key; a reader built to the former
+ *   heritage reading (refusal #4's GP7-KR-HERITAGE-COUNTED) reds Q65-Q69 beside ROSTER's reader pin.
  * Display paths added: none. Test-only: it reads files, spawns nothing and writes no file.
  */
 import { createHash } from "node:crypto";
@@ -1263,7 +1293,9 @@ function listLiteral(initializer: ts.Expression | undefined, callees: string[], 
   return argument;
 }
 /** W9: the top-level declarations a node names: every identifier of its code whose name is one's, wherever it stands, but a
- * property access's name (the name after the dot of an expression) and a property assignment's identifier key. */
+ * property access's name - the identifier after the dot of every property access TypeScript parses, an expression's and a
+ * heritage clause entry's alike (TypeScript parses an implemented or an interface-extended dotted type name as a property
+ * access, so its right side names none) - and a property assignment's identifier key. */
 function namedIn(node: ts.Node, declared: ReadonlyMap<string, ts.Statement>): string[] {
   const names: string[] = [];
   const visit = (child: ts.Node): void => {
@@ -1742,7 +1774,7 @@ const CASE_PAGES: readonly CasePage[] = [
     shared: [BASE_SHARED, MAKE_SHARED, { name: "cases", digest: sha256("const cases = 0;") }],
   },
   {
-    id: "Q46 a qualified name's right side in a type reference names a declaration",
+    id: "Q46 a qualified name's right side in a type annotation names a declaration",
     edits: [
       ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
       ["present: (ns: object) => [ns],", "present: (ns: BASE.cases) => [ns],"],
@@ -1802,7 +1834,7 @@ const CASE_PAGES: readonly CasePage[] = [
     shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("const UNUSED = 1;") }],
   },
   {
-    id: "Q55 an identifier inside a computed key names a declaration",
+    id: "Q55 an identifier as a computed key names a declaration",
     edits: [["probe: () => ({ value: 2 }),", "probe: () => ({ [UNUSED]: 2 }),"]],
     rows: [ROW_ONE, { ...ROW_TWO, probe: sha256("() => ({ [UNUSED]: 2 })") }],
     shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("const UNUSED = 1;") }],
@@ -1882,6 +1914,105 @@ const CASE_PAGES: readonly CasePage[] = [
     id: "Q64 a row with a reserved word as a key",
     edits: [[ROW_ONE_TEXT, '{ id: "one", probe: () => make(1), present: (ns: object) => ns, default: 0 }']],
     rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q65 an implemented dotted type name's right side names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => [new (class implements BASE.cases {})()],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => [new (class implements BASE.cases {})()]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q66 an interface-extended dotted type name's right side names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => {\n      interface Shape extends BASE.cases {}\n      return [ns];\n    },"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => {\n      interface Shape extends BASE.cases {}\n      return [ns];\n    }") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q67 a shared class declaration's implemented dotted type name's right side names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;\nclass Holder implements BASE.cases {}"],
+      ["probe: () => ({ value: 2 }),", "probe: () => new Holder(),"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, probe: sha256("() => new Holder()") }],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "Holder", digest: sha256("class Holder implements BASE.cases {}") }],
+  },
+  {
+    id: "Q68 a nested implemented dotted type name's second and third names name no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;\nconst more = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => [new (class implements BASE.cases.more {})()],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => [new (class implements BASE.cases.more {})()]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q69 a shared function's local interface-extended dotted type name's right side names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;\nfunction shape(): number {\n  interface Shape extends BASE.cases {}\n  return 0;\n}"],
+      ["probe: () => ({ value: 2 }),", "probe: () => shape(),"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, probe: sha256("() => shape()") }],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "shape", digest: sha256("function shape(): number {\n  interface Shape extends BASE.cases {}\n  return 0;\n}") }],
+  },
+  {
+    id: "Q70 a class-extended dotted name's right side names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => [new (class extends BASE.cases {})()],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => [new (class extends BASE.cases {})()]") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q71 a plain implemented name names a declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => [new (class implements cases {})()],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => [new (class implements cases {})()]") }],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "cases", digest: sha256("const cases = 0;") }],
+  },
+  {
+    id: "Q72 a qualified name's right side in an implemented type's type argument names a declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: object) => [new (class implements Iterable<BASE.cases> {})()],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: object) => [new (class implements Iterable<BASE.cases> {})()]") }],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "cases", digest: sha256("const cases = 0;") }],
+  },
+  {
+    id: "Q73 a dotted expression's second and third names name no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;\nconst more = 0;"],
+      ["probe: () => ({ value: 2 }),", "probe: () => BASE.cases.more,"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, probe: sha256("() => BASE.cases.more") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q74 a property access's name inside an object literal's computed key names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["probe: () => ({ value: 2 }),", "probe: () => ({ [BASE.cases]: 2 }),"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, probe: sha256("() => ({ [BASE.cases]: 2 })") }],
+    shared: [BASE_SHARED, MAKE_SHARED],
+  },
+  {
+    id: "Q75 a property access's name inside a type literal's computed key names no declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nconst cases = 0;"],
+      ["present: (ns: object) => [ns],", "present: (ns: { [BASE.cases]: number }) => [ns],"],
+    ],
+    rows: [ROW_ONE, { ...ROW_TWO, present: sha256("(ns: { [BASE.cases]: number }) => [ns]") }],
     shared: [BASE_SHARED, MAKE_SHARED],
   },
 ];
@@ -2224,7 +2355,7 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         "Q43 the list declared through a call of an await using declaration:2:3",
         "Q44 the list declared through a call of a class declaration:2:3",
         "Q45 a qualified name's right side in a type query names a declaration:2:3",
-        "Q46 a qualified name's right side in a type reference names a declaration:2:3",
+        "Q46 a qualified name's right side in a type annotation names a declaration:2:3",
         "Q47 a meta-property's name names a declaration:2:3",
         "Q48 an object literal method's name names a declaration:2:3",
         "Q49 an object literal getter's name names a declaration:2:3",
@@ -2233,7 +2364,7 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         "Q52 an object binding pattern's key names a declaration:2:3",
         "Q53 a named tuple member's label names a declaration:2:3",
         "Q54 a parameter's name names a declaration:2:3",
-        "Q55 an identifier inside a computed key names a declaration:2:3",
+        "Q55 an identifier as a computed key names a declaration:2:3",
         "Q56 a block, a doc and a line comment name no declaration:2:2",
         "Q57 a string literal and a private name name no declaration:2:2",
         "Q58 a row with a numeric-literal key:2:0",
@@ -2243,6 +2374,17 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         "Q62 a row with a getter and a row with a setter:2:0",
         "Q63 a row with a shorthand property:2:0",
         "Q64 a row with a reserved word as a key:2:2",
+        "Q65 an implemented dotted type name's right side names no declaration:2:2",
+        "Q66 an interface-extended dotted type name's right side names no declaration:2:2",
+        "Q67 a shared class declaration's implemented dotted type name's right side names no declaration:2:3",
+        "Q68 a nested implemented dotted type name's second and third names name no declaration:2:2",
+        "Q69 a shared function's local interface-extended dotted type name's right side names no declaration:2:3",
+        "Q70 a class-extended dotted name's right side names no declaration:2:2",
+        "Q71 a plain implemented name names a declaration:2:3",
+        "Q72 a qualified name's right side in an implemented type's type argument names a declaration:2:3",
+        "Q73 a dotted expression's second and third names name no declaration:2:2",
+        "Q74 a property access's name inside an object literal's computed key names no declaration:2:2",
+        "Q75 a property access's name inside a type literal's computed key names no declaration:2:2",
       ],
     });
     RAN.add("FROZEN SHAPE");

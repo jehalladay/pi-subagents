@@ -1,5 +1,5 @@
 {
-  "comment": "wb-gnj9 cut #4 (the restatement of cut #3 after its refusal #3, R-B523 rung 1 for both of its claim sets, claims equal to pins; cut #3 was the restatement of cut #2 after its refusal #2, R-B501 rung 1; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
+  "comment": "wb-gnj9 cut #5 (the restatement of cut #4 after its refusal #4, R-B544 a member-level respin with the guard bound on W9's naming-words claim set, claims equal to pins; cut #4 was the restatement of cut #3 after its refusal #3, R-B523 rung 1 for both of its claim sets; cut #3 was the restatement of cut #2 after its refusal #2, R-B501 rung 1; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
   "controls": [
     {
       "id": "TV1 an enumerable symbol-keyed data binding",
@@ -1030,7 +1030,7 @@
       "digest": "d1b360f504034ea642bda991ab2e05cb6993b90351063dfa4ed383d24b78fc8a"
     },
     {
-      "id": "Q46 a qualified name's right side in a type reference names a declaration",
+      "id": "Q46 a qualified name's right side in a type annotation names a declaration",
       "rows": 2,
       "shared": 3,
       "digest": "c55e74c367506e22e24714dad2a60fcd6eb8f33a04d94988dfb2e72da4549fa3"
@@ -1084,7 +1084,7 @@
       "digest": "b8d0469c8950ff77e927783b0af05f170dbe9bd115b20e991aac3b5960c5fbf2"
     },
     {
-      "id": "Q55 an identifier inside a computed key names a declaration",
+      "id": "Q55 an identifier as a computed key names a declaration",
       "rows": 2,
       "shared": 3,
       "digest": "5c3e3c4e7f0aa3d143d456eed0bcb14f773b864862d9a7623557a2dfc70518d8"
@@ -1142,6 +1142,72 @@
       "rows": 2,
       "shared": 2,
       "digest": "1b7e470399ac2d80479383e4a9a577995367d8b11de9ce72ed63ac85afab0e17"
+    },
+    {
+      "id": "Q65 an implemented dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "d11a3c1f6b22e3514963cbdf87577f65963fd84b70998509c0d6f8e48e2e0161"
+    },
+    {
+      "id": "Q66 an interface-extended dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "52c98b5046d2d8968c36b90165b9293298a9bbfc646ba3ff34e4b8a4e09b110b"
+    },
+    {
+      "id": "Q67 a shared class declaration's implemented dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "ec392ed157b9dc9fad5042422da978d1b5c9b1f0ac5998997742b59705e21833"
+    },
+    {
+      "id": "Q68 a nested implemented dotted type name's second and third names name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "fe6a5ed2292bfef70664cf0d1ac35e49addbfca7982252ebf2d6982c3ecb7762"
+    },
+    {
+      "id": "Q69 a shared function's local interface-extended dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "7ef60205de2f2fa84e0243bd9439de778497fa988a529629fda1e873735b3a6e"
+    },
+    {
+      "id": "Q70 a class-extended dotted name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "bbef632f4dd19ed2e662d36193ac064bb219ee76519763354d23e76bd2be9bd7"
+    },
+    {
+      "id": "Q71 a plain implemented name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "7623d41ed9cae35bb1484b240686fd96777de9392d711c334dbdc9033ce3e332"
+    },
+    {
+      "id": "Q72 a qualified name's right side in an implemented type's type argument names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "0062e3f2a8b7a7225171ce2cdf519d4ef077e8082ccd9a23a87c327dfa3fbf37"
+    },
+    {
+      "id": "Q73 a dotted expression's second and third names name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "e7afca1cc5976fe38852863b310479237cbc06d9a18875a948005d41ecf7748f"
+    },
+    {
+      "id": "Q74 a property access's name inside an object literal's computed key names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "eac4cef848b4b00663d796364ccf03177603aa2250877faacdd6b3e2e13bfd4d"
+    },
+    {
+      "id": "Q75 a property access's name inside a type literal's computed key names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "733ea003769751dae359c60387c63e2ed8fa93773c561cdbdf861f74f491d0af"
     }
   ],
   "shared": [
