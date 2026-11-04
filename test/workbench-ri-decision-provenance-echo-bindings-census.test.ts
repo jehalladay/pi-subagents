@@ -3,9 +3,10 @@
  * R-B256 folded wb-5333's refusal #4 members into it). SUBJECT: one reader of test/helpers/ri-decision-provenance-echo-bindings.ts,
  * bindingsRead() - THE BINDINGS of the wb-tz4r.3 ri-decision-provenance-echo census - moved byte for byte from wb-5333's FINAL cut #4
  * (tip bce0de7f) with THE FORM in place of that tip's names test (the helper's header lists the lines). The parent's census and roster
- * at that tip are not on trunk and are neither added nor edited here; trunk's test/workbench-ri-decision-provenance-echo-census.test.ts
- * carries no THE BINDINGS reader and is not read by this census. The parent stays parked until this lands, and its later re-cut can
- * import bindingsRead.
+ * at that tip are neither added nor edited here, and trunk's test/workbench-ri-decision-provenance-echo-census.test.ts is not read by
+ * this census. When this census was cut, neither was on trunk, trunk's census carried no THE BINDINGS reader and the parent was parked
+ * behind this bead; once this landed (landing 860) the parent's re-cut, wb-5333 cut #5, imported bindingsRead and IN_FILE_SIDES from
+ * the helper (wb-5333 cut #5 restates this sentence).
  *
  * PINNED READER SET (this file, test/workbench-ri-decision-provenance-echo-bindings-census.test.ts; observed at the cut: 18 cases, every
  * case passes on the helper, and on the tip's own reader - the helper with the tip's names test restored - the X, E, K1 and K3-K6 pin
