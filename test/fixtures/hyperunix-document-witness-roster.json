@@ -1,5 +1,5 @@
 {
-  "comment": "wb-gnj9 cut #3 (the restatement of cut #2 after its refusal #2, R-B501 rung 1, claims equal to pins; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
+  "comment": "wb-gnj9 cut #4 (the restatement of cut #3 after its refusal #3, R-B523 rung 1 for both of its claim sets, claims equal to pins; cut #3 was the restatement of cut #2 after its refusal #2, R-B501 rung 1; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
   "controls": [
     {
       "id": "TV1 an enumerable symbol-keyed data binding",
@@ -1022,6 +1022,126 @@
       "rows": 2,
       "shared": 3,
       "digest": "79dfe4103886876dde7b718ecdf570c9236987c316f0003ed5923d052ebc79fc"
+    },
+    {
+      "id": "Q45 a qualified name's right side in a type query names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "d1b360f504034ea642bda991ab2e05cb6993b90351063dfa4ed383d24b78fc8a"
+    },
+    {
+      "id": "Q46 a qualified name's right side in a type reference names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "c55e74c367506e22e24714dad2a60fcd6eb8f33a04d94988dfb2e72da4549fa3"
+    },
+    {
+      "id": "Q47 a meta-property's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "15297d5b4538438b3508d0dc19894379167dcbcd5507e1a5a3aa2cbf4261d71a"
+    },
+    {
+      "id": "Q48 an object literal method's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "b2fe957afa3094e80cf8d43a09bd63c185bb58e83b6199ce836e5e20f7bb2f38"
+    },
+    {
+      "id": "Q49 an object literal getter's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "f973137391ee2cc0986d180c617d623780caaa5c58fb518a5957e4b5095a8f58"
+    },
+    {
+      "id": "Q50 a type literal property signature's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "ea096c9c0d04a3bb09e6f65e62ceb027effdcea2ddc577bb3aaf35b7cd98d3bf"
+    },
+    {
+      "id": "Q51 a class field's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "8ac28f3b604a2a35488ad210d913ed387dbc0fa72c8d657e21427311d44620c2"
+    },
+    {
+      "id": "Q52 an object binding pattern's key names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "2270ea703bdb6eeb5901bd6b884eb8fde5ec8e965ec1f930c3c299ac96f27c83"
+    },
+    {
+      "id": "Q53 a named tuple member's label names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "196ee99159725c4cb38df6f6c43c3eb2d23d076c442ea73921946755fc528d83"
+    },
+    {
+      "id": "Q54 a parameter's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "b8d0469c8950ff77e927783b0af05f170dbe9bd115b20e991aac3b5960c5fbf2"
+    },
+    {
+      "id": "Q55 an identifier inside a computed key names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "5c3e3c4e7f0aa3d143d456eed0bcb14f773b864862d9a7623557a2dfc70518d8"
+    },
+    {
+      "id": "Q56 a block, a doc and a line comment name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "2acc94bc4ed64e090ab8b00ce10a04050e221cc367033d407900b62ae32f063d"
+    },
+    {
+      "id": "Q57 a string literal and a private name name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "060f3018a16f8f09cdcae78da65a4ac4c706d334e619d2a3ae7c1056b0eecb14"
+    },
+    {
+      "id": "Q58 a row with a numeric-literal key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "d82a0136656a9e286801df1fadff5c088b58c7df24e88c17ef4d795b8198a1c2"
+    },
+    {
+      "id": "Q59 a row with a numeric-literal key before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "f4d296cc03f5a6bc1647fcc50f53a05ab61b409729e3fba72534005aecf8b9c5"
+    },
+    {
+      "id": "Q60 a row with a quoted key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "70c7eecbb43010630ea005a680211ec20ebf6cfc7cc344fac569e8035359c6cd"
+    },
+    {
+      "id": "Q61 a row with a bigint-literal key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "691057751d58944180820b1259636cfa9ffbf9d47b02b809315b277003ae3d60"
+    },
+    {
+      "id": "Q62 a row with a getter and a row with a setter",
+      "rows": 2,
+      "shared": 0,
+      "digest": "75d6d20320942021879881e9bdf3801cbfc5a01b28f294f9b5c3a18bacff513a"
+    },
+    {
+      "id": "Q63 a row with a shorthand property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "a33066696c852c8dc9d3b5f0e1373023714ececbace7a238df7ec9cf285e3021"
+    },
+    {
+      "id": "Q64 a row with a reserved word as a key",
+      "rows": 2,
+      "shared": 2,
+      "digest": "1b7e470399ac2d80479383e4a9a577995367d8b11de9ce72ed63ac85afab0e17"
     }
   ],
   "shared": [
