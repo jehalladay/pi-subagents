@@ -55,7 +55,7 @@
  * the out-of-file roster and the cases agree', A1, A2, A3, B1, B2, B3, C1, C2, D1 and 'registration: every judged pin registered
  * once, ran in run mode, was not inverted and reached its witness'. Each judged case's assertion target is its witness in
  * test/fixtures/speculative-inference-roster.json, compared by toStrictEqual; at 525939979d9e every case matched (11 passed of
- * 11).
+ * 11), and at f4cd56eddcdd with the JUDGED-SET ANCHOR below (wb-3ox2) every case matched again (11 passed of 11).
  * CLAIM RULE: this census claims exactly its witnesses, each held to that roster, and nothing wider:
  *  (1) REAL-TREE READINGS: each reading of the modules the walk reads, of the three cores, of the two real prototypes and of the
  *      installed packages, at the tree this census runs on, equals its witness - A1; A2's sites, topLevel and module floor; B1;
@@ -261,6 +261,20 @@
  * C1). The last case walks this file's vitest task tree against the roster's test list. The two acceptance requirements of C/D
  * also equal the filing's Acceptance clauses in the tracked .beads/issues.jsonl export: deleting D everywhere, including its
  * roster, still reds that anchor.
+ * JUDGED-SET ANCHOR (wb-3ox2, the landing-875 F1 follow-up of the carrier cut; no reader, control, plant, witness, row or roster
+ * entry changes): the judged set is also held outside this file and the roster, to the filing's pinned reader set - the first
+ * line of the filing's notes that opens with "PINNED READER SET " (cut #4's delivery note), whose case list pinnedSetOf reads
+ * between "test/workbench-speculative-inference-census.test.ts cases " and ", each judged case": the judged-set case, A1, A2, A3,
+ * B1, B2, B3, C1, C2, D1 and the registration case. The judged-set case holds ROWS' pins, in order, to that list's pin ids, the
+ * frozen shape to the shape those ids imply by their row letters (shapeOf: A:3, B:3, C:2, D:1) and this file's registered test
+ * titles to the list, in order; the last case holds its walked titles to the list too. Their falsifiers, each measured on a
+ * throwaway copy: a row or a pin removed from every literal of this file and the roster (ROWS, the frozen-shape literal, IMPL
+ * and the roster's rows and tests) reds both cases, at each of rows A, B, C and D and pins A1-A3, B1-B3, C1, C2 and D1; pin B3
+ * moved into row A in the same literals reds both cases; row A renamed in ROWS, the frozen-shape literal and the roster reds the
+ * judged-set case at the shape; the last case removed, with or without its roster title, reds the judged-set case at the
+ * titles; the judged-set case removed with its roster title reds the last case at the titles; and a pinned-reader-set line that
+ * pinnedSetOf cannot find, or whose list it cannot parse, reads as no cases and no pins, which reds both cases. The filing's
+ * later notes lines and every other row of the export are NOT CLAIMED as a judged-set anchor by this census.
  * NOT CLAIMED: a causal/dynamic proof that model-side or injected calls are never driven by plane changes is NOT CLAIMED by this
  * census; C1 proves the module-closure reading, not dynamic effect reachability. An arbitrary future seam appearing without a
  * model binding or /specul/i vocabulary in a plant's form at the plant's places is NOT CLAIMED. D1 is an until-then tripwire, not
@@ -1823,27 +1837,80 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   },
 };
 
+/** The filing this census anchors on outside its own literals: wb-km7q.7's row in the tracked export, read by exact id (undefined
+ * when the export holds no such row). */
+function filingRow(): unknown {
+  return readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")
+    .filter(line => line.includes('"id":"wb-km7q.7"'))
+    .map((line): unknown => JSON.parse(line))
+    .find(entry => isObject(entry) && entry.id === "wb-km7q.7");
+}
+/** The words around this file's case list in the filing's pinned reader set (wb-km7q.7 cut #4's delivery note). */
+const PINNED_LEAD = "PINNED READER SET ";
+const PINNED_OPEN = "test/workbench-speculative-inference-census.test.ts cases ";
+const PINNED_CLOSE = ", each judged case";
+/** A pinned reader set as the filing names it: its cases in its order (a quoted title, the pin ids, a quoted title) and its pins. */
+interface PinnedSet {
+  readonly cases: readonly string[];
+  readonly pins: readonly string[];
+}
+/** Reads the case list of the first line of the filing's notes that opens with PINNED_LEAD: the text between PINNED_OPEN and
+ * PINNED_CLOSE, in the form `'<title>', <pin>, ..., <pin> and '<title>'`. A filing, line or list that is missing or does not parse
+ * reads as no cases and no pins. */
+function pinnedSetOf(filing: unknown): PinnedSet {
+  const notes = isObject(filing) && typeof filing.notes === "string" ? filing.notes : "";
+  const line = notes.split("\n").find(entry => entry.startsWith(PINNED_LEAD)) ?? "";
+  const open = line.indexOf(PINNED_OPEN);
+  const close = open < 0 ? -1 : line.indexOf(PINNED_CLOSE, open);
+  const list = close < 0 ? "" : line.slice(open + PINNED_OPEN.length, close);
+  const found = /^'([^']+)', ((?:[A-Z]\d+, )*[A-Z]\d+) and '([^']+)'$/.exec(list);
+  if (found?.[1] === undefined || found[2] === undefined || found[3] === undefined) return { cases: [], pins: [] };
+  const pins = found[2].split(", ");
+  return { cases: [found[1], ...pins, found[3]], pins };
+}
+/** The frozen shape a pin list implies: its pins counted by the row letter that opens each id, rows in first-seen order, as
+ * `${row}:${count}`. */
+function shapeOf(pins: readonly string[]): string[] {
+  const counts = new Map<string, number>();
+  for (const pin of pins) {
+    const row = pin.replace(/\d+$/, "");
+    counts.set(row, (counts.get(row) ?? 0) + 1);
+  }
+  return [...counts].map(([row, count]) => `${row}:${count}`);
+}
+
 /** The judged pins whose case reached its witness assertion; the last case reads it. */
 const REACHED = new Set<string>();
 
 describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:1"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     // An external requirement anchor: coordinated row/roster deletion must not delete the filing's acceptance clause.
-    const filing = readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")
-      .filter(line => line.includes('"id":"wb-km7q.7"'))
-      .map((line): unknown => JSON.parse(line))
-      .find(entry => isObject(entry) && entry.id === "wb-km7q.7");
+    const filing = filingRow();
     expect(isObject(filing) && typeof filing.notes === "string").toBe(true);
     const notes = isObject(filing) && typeof filing.notes === "string" ? filing.notes : "";
     const acceptance = /Acceptance: ([^\n]+)\./.exec(notes)?.[1] ?? "";
     expect(acceptance.length).toBeGreaterThan(0);
     expect(ROWS.flatMap(row => row.requirement === undefined ? [] : [row.requirement]))
       .toEqual(acceptance.split(", plus "));
+    // The judged-set anchor outside this file and the roster (wb-3ox2): the filing's pinned reader set names every case of this
+    // file, so a row or a pin removed from every literal here and in the roster reds this case.
+    const pinned = pinnedSetOf(filing);
+    expect(ROWS.flatMap(row => row.pins), "the judged pins, in order, are the pin ids the filing's pinned reader set names").toEqual([...pinned.pins]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`), "the frozen shape is the one those pin ids imply by their row letters").toEqual(shapeOf(pinned.pins));
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered, "this file's registered tests are the cases the filing's pinned reader set names, in its order").toEqual([...pinned.cases]);
 
     expect({
       launchExports: LAUNCH_EXPORTS, providerPackages: PROVIDER_PACKAGES, wholeSubpaths: WHOLE_SUBPATHS, turnMembers: TURN_MEMBERS,
@@ -1888,6 +1955,7 @@ describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist cens
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles, "every registered test of this file, exactly and in the order the filing's pinned reader set names its cases").toEqual([...pinnedSetOf(filingRow()).cases]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
