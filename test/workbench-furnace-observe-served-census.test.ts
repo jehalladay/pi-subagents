@@ -17,12 +17,31 @@
  * and GP8-M02 with the GP8-W01 witness red under the delivered census), or kill the members, or name the inner-character
  * identity a residual with a pinned quiet row and narrow the data clause's 'plain JSON text differs' words to the pinned J2
  * forms. A newly discovered escape is a residual-list addition, not a refusal, unless it contradicts a pinned claim; a
- * prose-only residual is a floor (R624); claims no wider than pins (rule 16 LEG 2)." This cut takes the first option, by pins:
+ * prose-only residual is a floor (R624); claims no wider than pins (rule 16 LEG 2)." wb-bk8a's cut took the first option, by pins:
  * J2 PINNED FORMS gain a text and a type that differ from the expected one at an inner character (the INNER forms below), C3
  * and C4 judge a reply of the reading's plain JSON text, and A0 writes the template literal under every wrapper its value
  * clause names (refusal #4's U1). Each claim below names exactly the pinned facts it rests on (THE PINNED READER SET, J2 PINNED
  * FORMS and CLAIMS), a value or form no case writes is NOT CLAIMED, and MEMBERS records the members of record, both refusals'
  * among them, with what each reads on these bytes.
+ *
+ * wb-rldu (the R694 follow-up the fold filed at wb-bk8a's landing 908, a PASS-WITH-FINDING of gate cmd_f1c670e3013e: F1 LEADS,
+ * F2 and F3 RIDE) is this cut. F1: seven one-edit members of judgeReply's text and type tests kept the census at 0 failed | 17
+ * passed on two runs: GP10-T13 (an NFC fold), GP10-T14 (U+FEFF removed), GP10-T15 (sorted characters compared), GP10-T17
+ * (U+00AD, U+2060 and U+FEFF removed), GP10-T21 (format characters replaced by U+FFFD), GP10-T22 (characters outside printable
+ * ASCII replaced by "?") and GP10-Y02 (the type NFKC-folded), four of them realized by src/index.ts witnesses (W-T14, W-T17,
+ * W-T15, W-Y02) that red C1-C5. F2: three members of sourceAnchors' value test kept it at 0|17: GP10-A01 and GP10-A02 (the
+ * template and the string literal under two parentheses read) and GP10-A03 (the template literal spelled with an escape
+ * read), beside witnesses W-A01, W-A02 and W-A03 that red A1. F3: F1 froze the J2 and A0 fixture ids but not their values, so
+ * GP10-H01 (type-inner-zero-width's type swapped to "image" with its finding, its id kept) kept the census at 0|17. This cut
+ * takes the pin option of each: J2 PINNED FORMS gain five INNER forms judged for T; J2 OTHER-TEXT FORMS, seven values judged
+ * for expected texts holding a precomposed letter, a format character or a letter outside ASCII, tell GP10-T13, GP10-T21 and
+ * GP10-T22 from ===, which no J2 value judged for T did; A0 gains three value forms; and F1 freezes the digest of every
+ * fixture of every table, the digest of frozenValue's rendering of its value (FROZEN SHAPE). Its refusal #1 (O:2047; U1: the
+ * data bullet of CLAIMS claimed, of every judge that removes only some of the format characters or of the characters outside
+ * printable ASCII, that it still reads the finding at the plain JSON reply and that J2 reds under it) is cured by narrowing:
+ * the data bullet names GP10-T14's and GP10-T17's removals only, and NOT CLAIMED states every other partial removal; and the
+ * refusal's rider on FROZEN SHAPE's value-swap words by narrowing them to a value with another digest. MEMBERS records what
+ * each member reads on these bytes.
  *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
@@ -39,9 +58,11 @@
  *   wrapper hands on; and each of two names is appended before its value reaches a stub that reads the recorder's list as it is
  *   called.
  * - J1 [registered]: target judgeRegistrations over the nine J1 fixtures; observed: each fixture's findings, exactly.
- * - J2 [grant, identity, data, error]: target judgeReply over the 82 J2 fixtures, each judged for the text T; observed: each
- *   fixture's findings, exactly. The values the fixtures write are J2 PINNED FORMS below; the census claims the judge's reading
- *   for T at those values and at no other value.
+ * - J2 [grant, identity, data, error]: target judgeReply over the 87 J2 fixtures, each judged for the text T, and the 7 J2
+ *   OTHER-TEXT fixtures, each judged for the expected text it names; observed: each fixture's findings, exactly, and that
+ *   composed-decomposed's text is COMPOSED's canonical decomposition. The values the fixtures write are J2 PINNED FORMS and J2
+ *   OTHER-TEXT FORMS below; the census claims the judge's reading for T at the first list's values and for each named text at
+ *   its own values, and at no other value.
  * - S0 [registered, grant, identity, data, error]: target isServedTool over the 13 S0 fixtures; observed: true for the five
  *   objects whose execute is a function (an own arrow function, an own async arrow function, one inherited from the prototype,
  *   a class method, and an own one on a null-prototype object), and false for an object without execute, one whose execute is
@@ -83,14 +104,15 @@
  * - C5 [error]: the same boot's served execute called with { runId: "frn-run-census-failing" } while the fake plays the failing
  *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census observer
  *   rejects the same Run with.
- * - A0 []: target sourceAnchors over the 31 A0 fixtures (planted texts); observed: each fixture's literal count and reply
+ * - A0 []: target sourceAnchors over the 34 A0 fixtures (planted texts); observed: each fixture's literal count and reply
  *   sites, exactly. The fixtures write these forms of the reader header's sourceAnchors reading, each by the spellings named,
  *   and the census claims the reading at them and at no other: the keys (the identifiers name and execute and the string
  *   literals "name" and "execute" read, each also spelled with a \u escape; the computed key ["name"], a shorthand name, a
  *   method execute and the computed key ["execute"] do not), the value (the string literal "furnace_observe" reads, also
- *   spelled with a \u escape; the template literal `furnace_observe` bare, and the string literal "furnace_observe" and the
- *   template literal `furnace_observe` each under parentheses, under satisfies string, as const or as string, under a <string>
- *   type assertion or a ! non-null assertion, the identifier NAME, the concatenation "furnace_" + "observe", the call
+ *   spelled with a \u escape; the template literal `furnace_observe` bare and also spelled with a \u escape, and the string
+ *   literal "furnace_observe" and the template literal `furnace_observe` each under parentheses, under two parentheses, under
+ *   satisfies string, as const or as string, under a <string> type assertion or a ! non-null assertion, the identifier NAME,
+ *   the concatenation "furnace_" + "observe", the call
  *   String("furnace_observe"), and the strings "Furnace_Observe", "furnace_observer", " furnace_observe", "furnace_observe ",
  *   "furnace_observ" and "xfurnace_observe" do not; a literal holding the property name: "workflow_observe" before it still
  *   counts), which literal (the first of two, the outer of two nested), which execute (the first of two; no site without one),
@@ -106,7 +128,7 @@
  * - F1 []: target the tables; observed: the frozen shape (standing rule 16) below.
  * - J3 []: target ROWS and CASES; observed: each row's pins are exactly the cases naming it, and every case is registered once.
  *
- * J2 PINNED FORMS (the 82 values the J2 fixtures write, each judged for the text T = "the expected text", findings exactly as
+ * J2 PINNED FORMS (the 87 values the J2 fixtures write, each judged for the text T = "the expected text", findings exactly as
  * each fixture states; the census claims the judge's reading for T at these values and at no other value. "the element" is
  * { type: "text", text: T }, and "the element with ..." is that object with the fields named spread over it):
  * - the result: undefined (not-an-object), null (result-null), the string T (result-string), the number 0 (result-number),
@@ -138,30 +160,45 @@
  * - its type, against "text": "image" (item-type), "Text" (type-case), "text " (type-padded), " text" (type-leading-padded),
  *   "plaintext" (type-ends-with), new String("text") (type-wrapped) and ["text"] (type-array); and, INNER, "text" with one
  *   character inserted after "te", the zero-width space U+200B (type-inner-zero-width, GP8-WT3's spelling) or the letter U+00E9
- *   (type-inner-non-ascii), each read "item type: <JSON>".
+ *   (type-inner-non-ascii), and "text" with its "e" replaced by the fullwidth letter U+FF45 (type-inner-fullwidth, W-Y02's
+ *   letter), each read "item type: <JSON>".
  * - its text, against T: T followed by "!" (text-differs), T upper-cased (text-case), T followed by a space (text-padded), a
  *   space followed by T (text-leading-padded), "x" followed by T (text-ends-with), T's first five characters (text-prefix),
  *   new String(T) (text-wrapped), [T] (text-array), and the element { type: "text" } without text (text-absent); and, INNER,
  *   each reading "item text: <JSON>": T with one character inserted after "the ex", INVISIBLE U+202E (text-inner-invisible,
  *   the character I1's reading holds), the zero-width space U+200B (text-inner-zero-width), the letter U+00E9
- *   (text-inner-non-ascii) or the control U+0007 (text-inner-control); T with the combining acute accent U+0301 inserted after
- *   "the expe" (text-inner-combining); T with a second space after "the " (text-inner-space); T with the "e" after "the "
- *   replaced by the fullwidth letter U+FF45 (text-inner-fullwidth); and T with the "e" after "the expect" replaced by "a"
- *   (text-inner-letter).
+ *   (text-inner-non-ascii), the control U+0007 (text-inner-control), the byte order mark U+FEFF (text-inner-bom, W-T14's
+ *   character), the soft hyphen U+00AD (text-inner-soft-hyphen, W-T17's character) or the word joiner U+2060
+ *   (text-inner-word-joiner); T with the combining acute accent U+0301 inserted after "the expe" (text-inner-combining); T with
+ *   a second space after "the " (text-inner-space); T with the "e" after "the " replaced by the fullwidth letter U+FF45
+ *   (text-inner-fullwidth); T with the "e" after "the expect" replaced by "a" (text-inner-letter); and T with the "x" and the
+ *   "p" of "expected" in each other's place (text-inner-transposed).
  * - the result { content: [the element], details: undefined } (exact) reads no finding; the order of the findings and the
  *   points where a reading ends: all-findings, ends-at-content, ends-at-count and ends-at-item, and every fixture above that
  *   reads two findings.
+ *
+ * J2 OTHER-TEXT FORMS (the 7 values the J2 OTHER-TEXT fixtures write, each judged for the expected text E it names, findings
+ * exactly as each fixture states; the census claims the judge's reading for each E at its own values and at no other value).
+ * Each E holds a character an NFC fold, a fold of the format characters to U+FFFD or a fold of every character outside
+ * printable ASCII to "?" changes, and "the element" is { type: "text", text: E }:
+ * - COMPOSED, T with the "e" after "the exp" replaced by the letter U+00E9: the element reads no finding (composed-exact); with
+ *   COMPOSED's canonical decomposition, that letter written as "e" followed by the combining acute accent U+0301, as its text
+ *   (composed-decomposed) it reads "item text: <JSON>".
+ * - FORMAT, T with the zero-width space U+200B inserted after "the ex": the element reads no finding (format-exact); with
+ *   INVISIBLE U+202E in U+200B's place (format-swapped) it reads "item text: <JSON>".
+ * - NON_ASCII, T with the letter U+00E9 inserted after "the ex": the element reads no finding (non-ascii-exact); with "?" in
+ *   U+00E9's place (non-ascii-replaced) or the letter U+00E8 in its place (non-ascii-swapped) it reads "item text: <JSON>".
  *
  * CLAIMS (each claims exactly the pinned facts it names and no wider; its falsifiers are the cases named). "A result judgeReply
  * reads as textResult(X)" is a result for which judgeReply(result, X) returns [], no finding: each reply row's case asserts
  * exactly that of the served reply to its pinned call, and the reply rows claim nothing more of the served replies. What a
  * finding, or its absence, says of a result is the judge's reading, which the reader header describes at every value and the
- * census claims at two places only: for T at the 82 values J2 PINNED FORMS lists, where judgeReply returns exactly the
- * fixture's findings, in order (J2); and at THE PLAIN JSON REPLY of C3's and C4's reading R, judged for
- * sanitizeWorkbenchJsonText(R), where it returns exactly the one text finding C3 and C4 state (C3, C4). At any other value the
- * reading is NOT CLAIMED (below). "Served" is the reader's isServedTool, claimed at S0's 13 values (S0); what bootServed's
- * serves and call do with an entry is claimed at the entries B0 plants (B0), and each pinned boot serves an execute under
- * furnace_observe (C0).
+ * census claims at three places only: for T at the 87 values J2 PINNED FORMS lists and for each expected text J2 OTHER-TEXT
+ * FORMS names at its own values, where judgeReply returns exactly the fixture's findings, in order (J2); and at THE PLAIN JSON
+ * REPLY of C3's and C4's reading R, judged for sanitizeWorkbenchJsonText(R), where it returns exactly the one text finding C3
+ * and C4 state (C3, C4). At any other value the reading is NOT CLAIMED (below). "Served" is the reader's isServedTool, claimed
+ * at S0's 13 values (S0); what bootServed's serves and call do with an entry is claimed at the entries B0 plants (B0), and each
+ * pinned boot serves an execute under furnace_observe (C0).
  * - registered: the pinned boot, booted once without the furnace:inspect grant and once with it, its settings read back, hands
  *   the harness's registerTool exactly one tool named furnace_observe as the recorder and the count read it, so the harness
  *   serves that tool under the name (C0; J0, J1, S0, B0, K1): for each boot, judgeRegistrations finds nothing for
@@ -176,19 +213,27 @@
  *   textResult(sanitizeWorkbenchJsonText(R)), R being the census observer's reading of that Run (C3, C4; J2, S0, B0, K1, I1);
  *   and for each of those two Runs the plain JSON reply, whose text JSON.stringify(R) holds INVISIBLE (C3, C4), does not read
  *   so: judged for sanitizeWorkbenchJsonText(R) it reads exactly its one text finding (C3, C4). So a served reply of the
- *   reading's plain JSON text reds C3 and C4 (the witness GP8-W01, MEMBERS); a judge that folds the text's format characters,
- *   or keeps only its printable ASCII, before === reads no finding there and reds C3 and C4 too (GP8-M01 and GP8-M02,
- *   MEMBERS), and J2 reds under each at its INNER forms.
+ *   reading's plain JSON text reds C3 and C4 (the witness GP8-W01, MEMBERS); a judge that removes every format character
+ *   (Unicode category Cf) from both texts, or every character outside printable ASCII, before === reads no finding there and
+ *   reds C3 and C4 too (GP8-M01 and GP8-M02, MEMBERS), and J2 reds under each at its INNER forms; a judge that removes from
+ *   both texts only U+FEFF (GP10-T14), or only U+00AD, U+2060 and U+FEFF (GP10-T17), still reads the finding there, and J2
+ *   reds under it at the INNER form of each character it removes (MEMBERS). No other partial removal is claimed here (NOT
+ *   CLAIMED below).
  * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M)), M
  *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
  *
  * NOT CLAIMED (scope sentences; no residual semantics; no follow-up bead):
- * - The judge's reading anywhere but for T at the 82 J2 values and at C3's and C4's plain JSON reply is NOT CLAIMED by this
- *   census: a result judged for a row's own text X (REFUSALS.grant, REFUSALS.identity, sanitizeWorkbenchJsonText(R) or
- *   sanitizeWorkbenchText(M)) in any form but the plain JSON reply is outside them, and so is a result judged for T in a form
- *   J2 PINNED FORMS does not list (another key, details value, content, element, type or text; among them a text or a type
- *   differing from the expected one at an inner character other than the INNER forms'). Of a served reply the census claims
- *   the [] its row's case asserts, and not what that [] says of the reply.
+ * - The judge's reading anywhere but for T at the 87 J2 values, for each J2 OTHER-TEXT expected text at its own values and at
+ *   C3's and C4's plain JSON reply is NOT CLAIMED by this census: a result judged for a row's own text X (REFUSALS.grant,
+ *   REFUSALS.identity, sanitizeWorkbenchJsonText(R) or sanitizeWorkbenchText(M)) in any form but the plain JSON reply is
+ *   outside them, and so is a result judged for T in a form J2 PINNED FORMS does not list (another key, details value,
+ *   content, element, type or text; among them a text or a type differing from the expected one at an inner character other
+ *   than the INNER forms'), and a result judged for any other expected text in a form J2 OTHER-TEXT FORMS does not list. Of a
+ *   served reply the census claims the [] its row's case asserts, and not what that [] says of the reply.
+ * - A judge that removes from both texts only some of the format characters or of the characters outside printable ASCII,
+ *   other than GP10-T14's and GP10-T17's removals (CLAIMS, data), is NOT CLAIMED by this census: neither what it reads at C3's
+ *   and C4's plain JSON reply nor whether J2 reds under it. MEMBERS records what the census reads under the removals its
+ *   members make, wb-rldu's refusal #1's four among them.
  * - Which other spellings of the data reply's text the census tells from textResult(sanitizeWorkbenchJsonText(R)) is NOT
  *   CLAIMED by this census: it claims the plain JSON reply (C3, C4) and the judge's reading for T at J2's values, and no other
  *   text of R.
@@ -218,9 +263,11 @@
  * - A served execute that tells this census's calls from others is NOT CLAIMED by this census.
  * - Tools other than furnace_observe are NOT CLAIMED by this census: their names are read only to count furnace_observe.
  *
- * RESIDUALS: none named. Every named member of both refusals reds the census on these bytes (MEMBERS); a judge or anchor
- * reading at a value or form no case writes is outside this cut's claims (NOT CLAIMED above), so no claimed reading rests on
- * prose.
+ * RESIDUALS: none named. Every named member of both refusals and of wb-rldu's three findings reds the census on these bytes
+ * (MEMBERS); of wb-rldu's refusal #1, U1's PREP1-L2-ZWNJ-FOLD and PREP1-L2-ZWJ-FOLD and the FROZEN SHAPE rider's
+ * PREP1-L2-H-DETAILS-NEGZERO and PREP1-L2-H-RESULT-FN-BODY keep it green, each outside this cut's claims (NOT CLAIMED above;
+ * FROZEN SHAPE). A judge or anchor reading at a value or form no case writes is outside this cut's claims (NOT CLAIMED
+ * above), so no claimed reading rests on prose.
  *
  * MEMBERS (the members of record; each src plant is applied to src/index.ts in the cutting seat's worktree and the census run
  * on it, src restored by sha256 after; the counts are the seat's receipts in the delivery note):
@@ -256,8 +303,9 @@
  * - wb-g20x's refusal #3 (O:1873; each gate member and witness read as data from the gate-prep-8 PREP archive and applied
  *   verbatim to these bytes, the witnesses to src/index.ts): GP8-M01-TEXT-FORMAT-FOLD and GP8-M02-TEXT-PRINTABLE-FOLD (the
  *   judge's text test with Unicode format characters, or every character outside printable ASCII, removed from both sides
- *   first) red J2, C3 and C4: J2 at text-inner-invisible and text-inner-zero-width under both, and at text-inner-non-ascii,
- *   text-inner-control and text-inner-combining under GP8-M02; C3 and C4 at the plain JSON reply. The witness
+ *   first) red J2, C3 and C4: J2 at text-inner-invisible, text-inner-zero-width, text-inner-bom, text-inner-soft-hyphen,
+ *   text-inner-word-joiner and format-swapped under both, and at text-inner-non-ascii, text-inner-control,
+ *   text-inner-combining and non-ascii-swapped under GP8-M02 too; C3 and C4 at the plain JSON reply. The witness
  *   GP8-W01-PLAIN-JSON-REPLY (the data reply of the reading's plain JSON text) reds C3 and C4 under the delivered census, and
  *   J2, C3 and C4 under each. The riding F3's GP8-M03-TYPE-FORMAT-FOLD (the same fold of the type test) reds J2 at
  *   type-inner-zero-width, and its witness GP8-WT3-TYPE-ZWSP (textResult's type spelled with an inner U+200B) reds C1-C5 under
@@ -272,23 +320,68 @@
  *   G195-K02-A0-PAREN-STRING (at wrapped-value) and G195-K03-A0-WRAPPED-STRING (at wrapped-value, as-value and
  *   assertion-values) red A0, and the control witness G195-W04 (("furnace_observe")) reds A1 under the delivered census and A0
  *   under G195-K02.
- * - this cut's seat sweep (one-edit members of the judge's text and type tests and of the anchor's value test, each run on
- *   these bytes; the delivery note holds the counts): each INNER form is the one J2 fixture that reds under a fold of its test:
- *   text-inner-invisible under removing the bidi controls U+202A-U+202E and U+2066-U+2069 (which reds C3 and C4 too),
- *   text-inner-zero-width under removing U+200B-U+200D, text-inner-non-ascii under removing every non-ASCII letter,
- *   text-inner-control under removing every control character, text-inner-combining under NFD with the combining marks
- *   removed, text-inner-space under collapsing each whitespace run to one space, text-inner-fullwidth under NFKC,
- *   text-inner-letter under skipping the eleventh character, and type-inner-non-ascii under removing every non-ASCII letter of
- *   the type (type-inner-zero-width is GP8-M03's); and each of template-wrapped-values (satisfies; parentheses is G195-M01's),
- *   template-as-values (as) and template-assertion-values (a <T> type assertion; a ! non-null assertion) is the one A0 fixture
- *   that reds under an anchor that also counts the template literal under the wrapper named.
+ * - wb-bk8a's seat sweep (one-edit members of the judge's text and type tests and of the anchor's value test, each run on
+ *   these bytes; wb-bk8a's and wb-rldu's delivery notes hold the counts): each landed INNER form is the one J2 PINNED FORM that
+ *   reds under a fold of its test: text-inner-invisible under removing the bidi controls U+202A-U+202E and U+2066-U+2069
+ *   (which reds C3 and C4 too), text-inner-zero-width under removing U+200B-U+200D, text-inner-non-ascii under removing every
+ *   non-ASCII letter, text-inner-control under removing every control character, text-inner-combining under NFD with the
+ *   combining marks removed, text-inner-space under collapsing each whitespace run to one space, text-inner-fullwidth under
+ *   NFKC, text-inner-letter under skipping the eleventh character, and type-inner-non-ascii under removing every non-ASCII
+ *   letter of the type (type-inner-zero-width is GP8-M03's); of the J2 OTHER-TEXT forms, non-ascii-swapped reds too under the
+ *   non-ASCII-letter fold and under the NFD fold with the marks removed, and composed-decomposed under that NFD fold and under
+ *   NFKC; and each of template-wrapped-values (satisfies; parentheses is G195-M01's), template-as-values (as) and
+ *   template-assertion-values (a <T> type assertion; a ! non-null assertion) is the one A0 fixture that reds under an anchor
+ *   that also counts the template literal under the wrapper named.
+ * - wb-bk8a's landing 908 (gate cmd_f1c670e3013e, PASS-WITH-FINDING; each gate member, witness and hollow read as data from
+ *   the gate-prep-10 PREP archive and applied verbatim to these bytes, the witnesses to src/index.ts), wb-rldu's F1-F3: F1's
+ *   GP10-T13-NFC-FOLD reds J2 at composed-decomposed, GP10-T14-BOM-FOLD at text-inner-bom, GP10-T15-ANAGRAM at
+ *   text-inner-transposed, GP10-T17-SHY-WJ-BOM-FOLD at text-inner-bom, text-inner-soft-hyphen and text-inner-word-joiner,
+ *   GP10-T21-CF-TO-REPLACEMENT-FOLD at format-swapped, GP10-T22-NON-PRINTABLE-TO-QMARK at format-swapped, non-ascii-replaced
+ *   and non-ascii-swapped, and GP10-Y02-TYPE-NFKC-FOLD at type-inner-fullwidth; the witnesses W-T14, W-T17, W-T15 and W-Y02 red
+ *   C1-C5 under the delivered census and J2 under their member. F2's GP10-A01-DOUBLE-PAREN-TEMPLATE,
+ *   GP10-A02-DOUBLE-PAREN-STRING and GP10-A03-ESCAPED-TEMPLATE red A0 at double-paren-template-value,
+ *   double-paren-string-value and escaped-template-value; the witnesses W-A01, W-A02 and W-A03 red A1 under the delivered
+ *   census and A0 under their member. F3's GP10-H01-INNER-TYPE-VALUE-HOLLOW reds F1, alone and beside GP10-Y01 or GP8-M03.
+ *   wb-rldu's seat sweep (the delivery note holds the counts): beside the gate's, one-edit text folds - NFC of the item side
+ *   only, NFD, NFKC of both sides, U+FEFF, U+00AD or U+2060 removed alone, format characters replaced by a space, characters
+ *   outside printable ASCII replaced by a space, those replaced by "?" on the item side only, and a compare of the character
+ *   sets - each red J2; a fixture value swapped with its id kept, in each of J0, J1, J2, J2 OTHER-TEXT, S0 and A0, each for a
+ *   value frozenValue renders differently, reds F1,
+ *   and double-paren-template-value hollowed to one parenthesis leaves GP10-A01 red at F1 alone. The type test's NFC fold,
+ *   format-to-U+FFFD fold and outside-ASCII-to-"?" fold read clean and are EQUIVALENT by construction: each reads a type as
+ *   "text" only when it is "text".
+ * - wb-rldu's refusal #1 (O:2047; each gate member, witness and hollow read as data from the gate-prep-1 PREP archive and
+ *   applied verbatim to these bytes, the witnesses to src/index.ts's textResult): U1's PREP1-L2-ZWNJ-FOLD and
+ *   PREP1-L2-ZWJ-FOLD (U+200C, or U+200D, alone removed from both texts) keep the census green, since no J2 form writes
+ *   either character, and their witnesses PREP1-L2-W-ZWNJ-INNER-TEXT and PREP1-L2-W-ZWJ-INNER-TEXT (that character after the
+ *   first character of textResult's text) red C1-C5 under the delivered census and keep it green under their member; U1's
+ *   PREP1-L2-INVISIBLE-ONLY-FOLD (U+202E alone removed from both texts) reds J2 at text-inner-invisible, C3 and C4, as
+ *   GP10-T01-BIDI-FOLD (the bidi controls removed) does; each of these four removals is NOT CLAIMED above. The FROZEN SHAPE
+ *   rider's PREP1-L2-H-DETAILS-NEGZERO (details-zero's details written -0) and PREP1-L2-H-RESULT-FN-BODY (result-function's
+ *   arrow function returning null in place of undefined) keep the census green: frozenValue renders each alike (FROZEN
+ *   SHAPE). Its F3 probe PREP1-INFO-COORDINATED-J2-FIXTURE-HOLLOW (text-inner-transposed removed together with its id and
+ *   its FROZEN_J2 line) keeps the census green, alone and beside GP10-T15-ANAGRAM: a removal NOT CLAIMED (FROZEN SHAPE).
  *
  * FROZEN SHAPE (standing rule 16): F1 pins ROWS as `${id}:${pins.length}` and its clauses, the case ids, SCENARIO_IDS,
- * J0_NAMES, the ids of the J1, J2 and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals. A1 holds the rows to
- * src/index.ts outside this file: the one furnace_observe literal stands for the registration row and its four textResult
- * sites for the four reply rows, in order.
+ * J0_NAMES, the ids of the J1, J2, J2 OTHER-TEXT and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals; and
+ * (wb-rldu F3) every fixture's digest, as the cut-time literals FROZEN_J0 (J0's values, `${index}:${digest}`), FROZEN_J1,
+ * FROZEN_J2, FROZEN_J2_OTHER, FROZEN_S0 and FROZEN_A0 (each fixture as `${id}:${digest}`), digest being digestOf: the first 16
+ * hex digits of the sha256 of frozenValue's rendering of the whole fixture. frozenValue renders a string by its JSON text, a
+ * symbol by its description and whether the Symbol.for registry holds it, a bigint by its decimal text, and any other
+ * primitive by its type and String(value), so -0 renders as 0; and an object or a function by its typeof, each own key in
+ * Reflect.ownKeys order with its enumerability and value (an accessor by whether it has a getter and a setter) and its
+ * prototype, named when it is Object.prototype, Array.prototype, Function.prototype, String.prototype or the async function
+ * prototype and rendered the same way otherwise (a value already on the path renders as a cycle). It never reads a
+ * function's source text, so two functions differing only in their bodies render alike. So a fixture whose value is swapped,
+ * with its id (J0's: its index) kept, for a value with another digest reds F1 (GP10-H01, MEMBERS). NOT CLAIMED by this
+ * census: a swap for a value frozenValue renders alike (0 for -0, as PREP1-L2-H-DETAILS-NEGZERO writes, and one function body
+ * for another, as PREP1-L2-H-RESULT-FN-BODY writes; MEMBERS), a swap made together with its digest line, a fixture removed
+ * together with its id and digest lines (the ids and the digests are this file's own literals), and frozenValue's rendering
+ * of a value no fixture holds. A1 holds the rows to src/index.ts outside this file: the one furnace_observe literal stands
+ * for the registration row and its four textResult sites for the four reply rows, in order.
  */
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readFileSync, realpathSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -381,7 +474,7 @@ const CASES = {
   J1: { rows: ["registered"], title: "over J1's received lists the registration judge counts only names === furnace_observe: case variants, longer, shorter, padded and non-string names are other names" },
   J2: {
     rows: ["grant", "identity", "data", "error"],
-    title: "at each J2 PINNED FORM, the 82 values its fixtures write, each judged for the text T, the reply judge's findings are exactly the fixture's, in its order",
+    title: "at each J2 PINNED FORM, the 87 values judged for the text T, and each J2 OTHER-TEXT FORM, the 7 values judged for the text each names, the reply judge's findings are exactly the fixture's, in its order",
   },
   S0: { rows: ["registered", "grant", "identity", "data", "error"], title: "over S0's values the served-tool predicate holds for an object whose execute, own or inherited, is a function, and not for an array, a function or a primitive" },
   B0: {
@@ -473,10 +566,19 @@ const NON_ASCII_LETTER = String.fromCodePoint(0xe9);
 const CONTROL = String.fromCodePoint(0x07);
 const COMBINING_ACUTE = String.fromCodePoint(0x301);
 const FULLWIDTH_E = String.fromCodePoint(0xff45);
+/** The characters wb-rldu's INNER forms add (F1: W-T14's U+FEFF, W-T17's U+00AD and the third character GP10-T17 removes), each
+ * built from its code point (standing rule 5). */
+const BOM = String.fromCodePoint(0xfeff);
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
+const WORD_JOINER = String.fromCodePoint(0x2060);
+/** U+00E8, the letter non-ascii-swapped writes in NON_ASCII_LETTER's place (wb-rldu). */
+const OTHER_NON_ASCII_LETTER = String.fromCodePoint(0xe8);
 /** T with character inserted after its first `at` characters. */
 const inserted = (at: number, character: string): string => `${T.slice(0, at)}${character}${T.slice(at)}`;
 /** T with its character at `at` replaced by `by`. */
 const replaced = (at: number, by: string): string => `${T.slice(0, at)}${by}${T.slice(at + 1)}`;
+/** T with its characters at `at` and `at + 1` in each other's place (wb-rldu). */
+const transposed = (at: number): string => `${T.slice(0, at)}${T.charAt(at + 1)}${T.charAt(at)}${T.slice(at + 2)}`;
 /** J2: results and the reply judge's findings for the text T (refusal #1 U1's words and their class from text-wrapped on). */
 const J2_FIXTURES: readonly { readonly id: string; readonly result: unknown; readonly findings: readonly string[] }[] = [
   { id: "exact", result: { content: [item({})], details: undefined }, findings: [] },
@@ -585,6 +687,31 @@ const J2_FIXTURES: readonly { readonly id: string; readonly result: unknown; rea
   { id: "text-inner-letter", result: { content: [item({ text: replaced(10, "a") })], details: undefined }, findings: [`item text: ${JSON.stringify(replaced(10, "a"))}`] },
   { id: "type-inner-zero-width", result: { content: [item({ type: `te${ZERO_WIDTH}xt` })], details: undefined }, findings: [`item type: ${JSON.stringify(`te${ZERO_WIDTH}xt`)}`] },
   { id: "type-inner-non-ascii", result: { content: [item({ type: `te${NON_ASCII_LETTER}xt` })], details: undefined }, findings: [`item type: ${JSON.stringify(`te${NON_ASCII_LETTER}xt`)}`] },
+  // wb-rldu (F1; wb-bk8a landing 908, gate cmd_f1c670e3013e): the INNER forms GP10-T14 (U+FEFF removed), GP10-T17 (U+00AD, U+2060
+  // and U+FEFF removed), GP10-T15 (sorted characters compared) and GP10-Y02 (the type NFKC-folded) read no finding at.
+  { id: "text-inner-bom", result: { content: [item({ text: inserted(6, BOM) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, BOM))}`] },
+  { id: "text-inner-soft-hyphen", result: { content: [item({ text: inserted(6, SOFT_HYPHEN) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, SOFT_HYPHEN))}`] },
+  { id: "text-inner-word-joiner", result: { content: [item({ text: inserted(6, WORD_JOINER) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, WORD_JOINER))}`] },
+  { id: "text-inner-transposed", result: { content: [item({ text: transposed(5) })], details: undefined }, findings: [`item text: ${JSON.stringify(transposed(5))}`] },
+  { id: "type-inner-fullwidth", result: { content: [item({ type: `t${FULLWIDTH_E}xt` })], details: undefined }, findings: [`item type: ${JSON.stringify(`t${FULLWIDTH_E}xt`)}`] },
+];
+/** The expected texts the J2 OTHER-TEXT forms are judged for (wb-rldu F1), each holding a character an NFC fold, a fold of the
+ * format characters to U+FFFD or a fold of every character outside printable ASCII to "?" changes: COMPOSED, T with the "e" after
+ * "the exp" replaced by U+00E9; FORMAT, T with U+200B inserted after "the ex"; NON_ASCII, T with U+00E9 inserted after "the ex". */
+const COMPOSED = replaced(7, NON_ASCII_LETTER);
+const FORMAT = inserted(6, ZERO_WIDTH);
+const NON_ASCII = inserted(6, NON_ASCII_LETTER);
+/** J2 OTHER-TEXT: results, the expected text each is judged for, and the reply judge's findings (GP10-T13, GP10-T21 and GP10-T22 read
+ * no finding at the second value of their text). */
+const J2_OTHER_FIXTURES: readonly { readonly id: string; readonly expected: string; readonly result: unknown; readonly findings: readonly string[] }[] = [
+  { id: "composed-exact", expected: COMPOSED, result: { content: [item({ text: COMPOSED })], details: undefined }, findings: [] },
+  // COMPOSED's canonical decomposition: its U+00E9 written as "e" followed by the combining acute accent U+0301 (J2 asserts it).
+  { id: "composed-decomposed", expected: COMPOSED, result: { content: [item({ text: inserted(8, COMBINING_ACUTE) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(8, COMBINING_ACUTE))}`] },
+  { id: "format-exact", expected: FORMAT, result: { content: [item({ text: FORMAT })], details: undefined }, findings: [] },
+  { id: "format-swapped", expected: FORMAT, result: { content: [item({ text: inserted(6, INVISIBLE) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, INVISIBLE))}`] },
+  { id: "non-ascii-exact", expected: NON_ASCII, result: { content: [item({ text: NON_ASCII })], details: undefined }, findings: [] },
+  { id: "non-ascii-replaced", expected: NON_ASCII, result: { content: [item({ text: inserted(6, "?") })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, "?"))}`] },
+  { id: "non-ascii-swapped", expected: NON_ASCII, result: { content: [item({ text: inserted(6, OTHER_NON_ASCII_LETTER) })], details: undefined }, findings: [`item text: ${JSON.stringify(inserted(6, OTHER_NON_ASCII_LETTER))}`] },
 ];
 
 const run = (): undefined => undefined;
@@ -736,6 +863,223 @@ const A0_FIXTURES: readonly { readonly id: string; readonly text: string; readon
     literals: 0,
     sites: [],
   },
+  // wb-rldu (F2; wb-bk8a landing 908): the template and the string literal under two parentheses, and the template literal spelled
+  // with an escape; none is read (GP10-A01, GP10-A02, GP10-A03).
+  { id: "double-paren-template-value", text: 'x({ name: ((`furnace_observe`)), execute: async () => textResult("t") });', literals: 0, sites: [] },
+  { id: "double-paren-string-value", text: 'x({ name: (("furnace_observe")), execute: async () => textResult("s") });', literals: 0, sites: [] },
+  { id: "escaped-template-value", text: 'x({ name: `furnace\\u005fobserve`, execute: async () => textResult("e") });', literals: 0, sites: [] },
+];
+
+/** The prototypes frozenValue names instead of rendering (wb-rldu F3; the header's FROZEN SHAPE). */
+const NAMED_PROTOTYPES: readonly (readonly [object | null, string])[] = [
+  [Object.prototype, "Object.prototype"],
+  [Array.prototype, "Array.prototype"],
+  [Function.prototype, "Function.prototype"],
+  [String.prototype, "String.prototype"],
+  [Reflect.getPrototypeOf(async () => undefined), "AsyncFunction.prototype"],
+];
+/** F1's rendering of a fixture value (wb-rldu F3; the header's FROZEN SHAPE): a string by its JSON text, a symbol by its description
+ * and whether the Symbol.for registry holds it, a bigint by its decimal text and any other primitive by its type and String(value) (so
+ * -0 renders as 0); an object or a function by its typeof, each own key in Reflect.ownKeys order with its enumerability and value (an
+ * accessor by whether it has a getter and a setter), and its prototype, named when NAMED_PROTOTYPES holds it and rendered the same way
+ * otherwise; a value on the path is a cycle. It never reads a function's source text, so two functions differing only in their bodies
+ * render alike. */
+function frozenValue(value: unknown, path: readonly object[] = []): string {
+  if (typeof value === "string") return `string ${JSON.stringify(value)}`;
+  if (typeof value === "symbol") return `symbol ${Symbol.keyFor(value) === undefined ? "" : "for "}${JSON.stringify(value.description ?? null)}`;
+  if (typeof value === "bigint") return `bigint ${value}`;
+  if (typeof value !== "object" && typeof value !== "function") return `${typeof value} ${String(value)}`;
+  if (value === null) return "null";
+  if (path.includes(value)) return "cycle";
+  const inner = [...path, value];
+  const keys = Reflect.ownKeys(value).map(key => {
+    const descriptor = Reflect.getOwnPropertyDescriptor(value, key);
+    const shown = descriptor === undefined ? "absent" : "value" in descriptor ? frozenValue(descriptor.value, inner) : `accessor ${descriptor.get !== undefined} ${descriptor.set !== undefined}`;
+    return `${descriptor?.enumerable === true ? "" : "hidden "}${typeof key === "symbol" ? frozenValue(key) : JSON.stringify(key)}: ${shown}`;
+  });
+  const prototype = Reflect.getPrototypeOf(value);
+  const named = NAMED_PROTOTYPES.find(([candidate]) => candidate === prototype);
+  const above = prototype === null ? "null" : (named?.[1] ?? frozenValue(prototype, inner));
+  return `${typeof value} {${keys.join(", ")}} proto ${above}`;
+}
+/** The first 16 hex digits of the sha256 of frozenValue's rendering of value. */
+const digestOf = (value: unknown): string => createHash("sha256").update(frozenValue(value)).digest("hex").slice(0, 16);
+
+/** F1's frozen fixture digests (wb-rldu F3): the cut-time `${id}:${digestOf(fixture)}` of each fixture (J0's values by index), in table
+ * order; a fixture whose value is swapped, with its id kept, for a value with another digest no longer reads its line (a value
+ * frozenValue renders alike keeps it: the header's FROZEN SHAPE). */
+const FROZEN_J0: readonly string[] = [
+  "0:3215673080c87790",
+  "1:8bf543c39dc3f887",
+  "2:e6d8061a0d36d20d",
+  "3:e6d8061a0d36d20d",
+  "4:96cc45562ec075d2",
+  "5:d7bec0620197d52c",
+  "6:e757dd330072f680",
+  "7:e816dea633058e8d",
+  "8:22055898e739c736",
+  "9:907ab6a0913bb221",
+  "10:74234e98afe7498f",
+];
+const FROZEN_J1: readonly string[] = [
+  "none:6c8630f89f2b45cf",
+  "one:e77d9d150b7ce3bd",
+  "among-others:d23c20200e08a8fb",
+  "twice:ec50d1ab883fdf7d",
+  "thrice:bbd1d4cec5c53236",
+  "case-variants:eae812f43c588df7",
+  "longer-shorter:5b1ddbe0758cd818",
+  "padded:9d759af501d50790",
+  "not-strings:cb36fe26373367f2",
+];
+const FROZEN_J2: readonly string[] = [
+  "exact:7e06584c2ae3af56",
+  "text-differs:f9b6aa93ead5bb06",
+  "text-case:be9c4f9816fc9e60",
+  "text-padded:427ae94a56fb0775",
+  "text-prefix:ab692f233766464d",
+  "two-items:775ba4731e6940d6",
+  "no-items:6a3911d363ca200c",
+  "content-not-array:f025cec2852a7f45",
+  "item-not-object:caafdd6e96bdae63",
+  "details-defined:9ac015678f80c142",
+  "details-null:ec13e2cc9d91c437",
+  "details-absent:c5014f7c276695d6",
+  "extra-result-key:edc9ec9fd724fda5",
+  "item-extra-key:edddc664b8ef27c0",
+  "item-type:e28dc1d3347b2963",
+  "not-an-object:479f0dd0ea17dc5d",
+  "an-array:cc352de4d3829bda",
+  "text-wrapped:a7355949d1cd7d31",
+  "text-array:f2e364c7632141f8",
+  "text-absent:bf8fad3b88ed62bb",
+  "type-wrapped:e1027e8524cb9369",
+  "type-array:b732e12abeff934b",
+  "type-case:88b90a9cbcda00d2",
+  "type-padded:2878f048d3ba62c3",
+  "item-array:7762a7852bb4ffbf",
+  "item-function:672ec0ca36c2d9a5",
+  "item-null:892ff7b1d56c677e",
+  "result-array-shaped:ce9027a36b38f994",
+  "result-function:0fd0e2780625fc58",
+  "result-null:cf969a433a937398",
+  "content-array-like:8478d1882c018a35",
+  "result-key-order:36f62ae4b4aac4f4",
+  "item-key-order:d957a1c1490c5e20",
+  "result-inherited-keys:5a08c345a22937f9",
+  "item-inherited-keys:048e90bcf1b65a93",
+  "inherited-details:61e3d700a4ec73a1",
+  "unread-keys:cd8d6b20e1d0be8e",
+  "all-findings:64226d84a9406aed",
+  "ends-at-content:3387727649b0671a",
+  "ends-at-count:3d98862790f8d112",
+  "ends-at-item:f9aa5af103123859",
+  "result-key-before-content:fe9d0cf7f432f18f",
+  "result-underscore-key:1260de358e1345ef",
+  "result-key-between:4519c11ec4cf4b51",
+  "result-key-defined-first:843ab19d88ed60ce",
+  "result-dollar-key:04ce54102ce0180e",
+  "result-digit-key:a98e81cb34aefa17",
+  "result-empty-key:6311b9185b3a5666",
+  "result-key-case:a089c6faa25e70ea",
+  "result-key-padded:dc8c605e5bbf6bc4",
+  "content-absent:19aa11b55fb5ff6b",
+  "content-null:a0e43f2dd1ab81a7",
+  "item-key-after-type:0a4bf08f360b847a",
+  "item-key-between:9cc2fc5451de6243",
+  "item-underscore-key:b5491cd5ab50e0b2",
+  "item-key-case:e16652c4c089d11c",
+  "details-zero:e1fc68afecaacde4",
+  "details-empty-string:712d196ef4fad36c",
+  "details-false:53d558f0922644d0",
+  "details-function:7f5842fd888ea138",
+  "details-symbol:4792d76de3d78a56",
+  "details-bigint:cbb8f62394ffb219",
+  "inherited-primitive-details:a6209460f567c31f",
+  "text-leading-padded:5a1439dd1ea3934b",
+  "text-ends-with:de316fc6e62a693c",
+  "type-leading-padded:6c80b7398a18c83c",
+  "type-ends-with:d53da281cdeb7bf5",
+  "result-string:cadb380b90269470",
+  "result-number:311ad06cd7bdde00",
+  "result-boolean:d86cd70690f24e32",
+  "result-symbol:d1d838d8862ef29c",
+  "result-bigint:d3d501d818c80d49",
+  "text-inner-invisible:fd0a8ee30a0771e1",
+  "text-inner-zero-width:44110f251a1a1672",
+  "text-inner-non-ascii:47a4f2989a6ecac7",
+  "text-inner-control:5c111c2142c7b683",
+  "text-inner-combining:b52ad614ac554b62",
+  "text-inner-space:b152960e3fec744c",
+  "text-inner-fullwidth:6ab672bf43622a00",
+  "text-inner-letter:1e8851de68a0dc12",
+  "type-inner-zero-width:6af03a72eb676cba",
+  "type-inner-non-ascii:2765b7b36da31f70",
+  "text-inner-bom:35081d7e08f8ec36",
+  "text-inner-soft-hyphen:f2deba76f1735dfc",
+  "text-inner-word-joiner:55bf9fb64d8d9aaf",
+  "text-inner-transposed:2d4d0722161bb674",
+  "type-inner-fullwidth:ad95930838a16b37",
+];
+const FROZEN_J2_OTHER: readonly string[] = [
+  "composed-exact:713f6a2924dc153f",
+  "composed-decomposed:b6df2d9d332e7f56",
+  "format-exact:76679f9a153ad1a5",
+  "format-swapped:899a5e38b583f305",
+  "non-ascii-exact:af84d9ba0fd2486e",
+  "non-ascii-replaced:9144ccfad180bf5f",
+  "non-ascii-swapped:5eb5d30fddc8e0ba",
+];
+const FROZEN_S0: readonly string[] = [
+  "own-execute:b686a51a528a8799",
+  "async-execute:b14f664fe6f7bb78",
+  "inherited-execute:6b2f369483260efe",
+  "class-method:30c4ced343f2a6ea",
+  "null-prototype:971dc43dfe3bef84",
+  "no-execute:093b9f9c813d7560",
+  "execute-string:62a384f7f5227550",
+  "execute-object:32c1c158b7c0ed7c",
+  "array-tool:850c19e88fbf0db4",
+  "function-tool:bbbdc1afeec7072d",
+  "null:d70ce717cd88fd34",
+  "undefined:a605da61c2c2aeca",
+  "string:3674ebd7b3036dc2",
+];
+const FROZEN_A0: readonly string[] = [
+  "plain:3b775437cd981e49",
+  "first-of-two:0d328a8824e09e30",
+  "quoted-keys:d5bc8d34ffd3c821",
+  "escaped-keys:6cb633dc554e2e83",
+  "escaped-value:e684eaaa540e9ad9",
+  "computed-key:2f2c066406c043cc",
+  "template-value:e8d70c2d45981f87",
+  "wrapped-value:e353cfb125e6f10f",
+  "other-names:fd559f5437bf4b8f",
+  "first-execute:fe07474a8237d1a7",
+  "no-execute:389ffa546e404baf",
+  "nested-order:81852016e2abcbf3",
+  "other-sites:bd1120b242dc35dd",
+  "not-textresult:95705c52f42fff7e",
+  "quoted-escaped-keys:9d6fe62fb962baa2",
+  "shorthand-name:83c5f251fcc923b5",
+  "method-execute:a638dd2aa8f83221",
+  "computed-execute:d3e0ed6c0fa6ea76",
+  "second-name-key:cc90e47c5f371184",
+  "as-value:ea4469fab26cab00",
+  "assertion-values:4c136e458625974a",
+  "computed-values:3d8dec8fc195a580",
+  "other-values:465db61003e3a991",
+  "nested-literals:a3ed8f72d3483d8f",
+  "callee-forms:a488bb06c074d8d8",
+  "nested-in-argument:4718ff9e37b3e0d0",
+  "argument-forms:756bbaf19f26cfcc",
+  "other-trivia:a6766411a80a3496",
+  "template-wrapped-values:5d47820e936888ba",
+  "template-as-values:c160012fb1fa3b7f",
+  "template-assertion-values:b59c7b8cccaea7f9",
+  "double-paren-template-value:3e907c36573c369f",
+  "double-paren-string-value:412f0f09b4b9c8c7",
+  "escaped-template-value:2b9a570f2504aaad",
 ];
 
 /** Boots the extension with the fake furnace first on PATH, runs read, and restores both. */
@@ -805,6 +1149,8 @@ describe("wb-g20x: the furnace_observe served census", () => {
 
   pinned("J2", () => {
     for (const fixture of J2_FIXTURES) expect(judgeReply(fixture.result, T), fixture.id).toStrictEqual([...fixture.findings]);
+    expect(COMPOSED.normalize("NFD"), "composed-decomposed writes COMPOSED's canonical decomposition").toBe(inserted(8, COMBINING_ACUTE));
+    for (const fixture of J2_OTHER_FIXTURES) expect(judgeReply(fixture.result, fixture.expected), fixture.id).toStrictEqual([...fixture.findings]);
   });
 
   pinned("S0", () => {
@@ -1089,7 +1435,13 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "text-inner-letter",
       "type-inner-zero-width",
       "type-inner-non-ascii",
+      "text-inner-bom",
+      "text-inner-soft-hyphen",
+      "text-inner-word-joiner",
+      "text-inner-transposed",
+      "type-inner-fullwidth",
     ]);
+    expect(J2_OTHER_FIXTURES.map(fixture => fixture.id)).toStrictEqual(["composed-exact", "composed-decomposed", "format-exact", "format-swapped", "non-ascii-exact", "non-ascii-replaced", "non-ascii-swapped"]);
     expect(S0_FIXTURES.map(fixture => `${fixture.id}:${fixture.served}`)).toStrictEqual([
       "own-execute:true",
       "async-execute:true",
@@ -1137,7 +1489,19 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "template-wrapped-values",
       "template-as-values",
       "template-assertion-values",
+      "double-paren-template-value",
+      "double-paren-string-value",
+      "escaped-template-value",
     ]);
+    // wb-rldu (F3): every fixture's digest, so a value swapped, with its id kept, for one with another digest reds here (GP10-H01;
+    // a value frozenValue renders alike does not: the header's FROZEN SHAPE). Cut-time digests of frozenValue's rendering of each
+    // whole fixture (J0's values by index), not a hash recomputed from a second copy.
+    expect(J0_VALUES.map((value, index) => `${index}:${digestOf(value)}`)).toStrictEqual(FROZEN_J0);
+    expect(J1_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_J1);
+    expect(J2_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_J2);
+    expect(J2_OTHER_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_J2_OTHER);
+    expect(S0_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_S0);
+    expect(A0_FIXTURES.map(fixture => `${fixture.id}:${digestOf(fixture)}`)).toStrictEqual(FROZEN_A0);
   });
 
   pinned("J3", () => {
