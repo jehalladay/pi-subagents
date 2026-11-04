@@ -77,6 +77,16 @@
  * AU63 write - a declaration with no parameter, declared before judgeTsxRow and annotated to return string[] or { findings:
  * string[] }, each call of it plain, bare and passing no argument, the two bodies and the two push statements as written - and
  * every other form is NOT CLAIMED (recursion, below); no probe, claim item, reason or frozen literal is added or removed.
+ * Cut #6 (seat ws-06, g10-work-s205; the post-ladder disposition R-B494 at refusal #5: a further restatement in the same lineage,
+ * its claims equal to its pins) answers refusal #5 (gate-prep-15, g10-gate-s203: R514/R515/R668, claim words wider than their
+ * pins, on cut #5): its seven unmet members (U1 G5-H-HOLDERUNTYPED; U2 G5-E-RETARRAY, G5-E-LITERAL, G5-H-SPREADREAD and
+ * G5-H-ARRAYVALUE; U3 G5-E-ADJACENT and G5-H-ADJACENT) kept this census green while a holder with a type annotation, a returned
+ * array literal, a string literal, a holder's findings read or a findings array literal inside parentheses or a type assertion,
+ * and a declaration written further before judgeTsxRow read otherwise. The REFUSED recursive-flow item is narrowed to exactly the
+ * two sources armProbe() writes for AU15 and AU63, each probe's declaration and code quoted character for character (each
+ * white-space run one space), and every other source is NOT CLAIMED (recursion, below); T-ARMS-CLAIMS now also holds the item's
+ * four quotes to AU15's and AU63's declaration and code as ARM_FORMS writes them, so a quote that drifts from its probe reds this
+ * census; no probe, claim item, reason or frozen literal is added or removed.
  * HOST: every probe is written into the guard's own source (test/workbench-w10-stamped-claim-guard.test.ts, read from disk),
  * whose judge reads as 26 arms and no unread entry (T-ARMS-LIVE). The guard's own rows (the pins that draw its arms, T-ARMS,
  * T-ROSTER) stay the guard's and are NOT CLAIMED by this census.
@@ -229,17 +239,15 @@
  * arrow's expression body, in a method or a static block of a module-level class, in a method of a module-level object literal,
  * or directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try
  * block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow [AU31, AU70, AU71,
- * AU113, AU115, AU116, AU129]; a return without a value in a function T-ARMS enters [AU38]; a recursive flow back into itself,
- * and into no other function, of a plain module-level function declaration with no parameter, declared before judgeTsxRow and
- * called in judgeTsxRow's own body, in exactly these two forms, each call of the function in them (in judgeTsxRow's body and in
- * its own) a plain call, not optional, with no argument and no type argument, written bare, with no parentheses or type assertion
- * (as, satisfies, the non-null !, <T>) around it, and no other recursive flow claimed: a push statement of judgeTsxRow's body on
- * its traced list whose one argument spreads a call of the function, the function annotated to return string[] and its body one
- * return statement of an array literal of two elements, a spread of a call of its own name, then a string literal; or a push
- * statement of judgeTsxRow's body on its traced list whose one argument spreads the findings, read plain, of a holder of
- * judgeTsxRow bound to a call of the function, the function annotated to return { findings: string[] } and its body two
- * statements, a const holder of its own bound to a call of its own name, then a return statement of an object literal whose one
- * member, findings, a property assignment, is an array literal whose one element spreads that holder's findings, read plain
+ * AU113, AU115, AU116, AU129]; a return without a value in a function T-ARMS enters [AU38]; a recursive flow back into itself in
+ * exactly the two sources armProbe() writes for the probes AU15 and AU63, and in no other source: the guard's source with that
+ * probe's declaration and code written in, each character for character as ARM_FORMS writes it (quoted below with each
+ * white-space run one space), the declaration as the top-level statement directly before judgeTsxRow, after the doc comment the
+ * guard writes above judgeTsxRow, and the code directly before the last statement of judgeTsxRow's body, no other name, string
+ * text, comment, white space, type annotation, parentheses, type assertion, statement or place claimed: for AU15, the declaration
+ * `function probe_AU15(): string[] { return [...probe_AU15(), "probe AU15"]; }` and the code `findings.push(...probe_AU15());`;
+ * for AU63, the declaration `function probe_AU63(): { findings: string[] } { const again = probe_AU63(); return { findings:
+ * [...again.findings] }; }` and the code `const probe_AU63_read = probe_AU63(); findings.push(...probe_AU63_read.findings);`
  * [AU15, AU63]; a list read inside its own flow [AU22]; a diagnosis reached through more than 64 calls, holder calls
  * and const references [AU24, AU81]; PARAMETER SCOPE: in each of these places in the guard (inside judgeTsxRow, inside a function
  * it enters, in a module-level class, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or
@@ -301,6 +309,15 @@
  * only a call that is itself a spread's operand): in each form the narrowed recursive-flow item names, the function declares no
  * parameter and each call of it is plain, passes no argument and is written bare, so all six read it as the delivered reader does
  * and keep this census green; they differ only on forms NOT CLAIMED (recursion) names.
+ * Refusal #5's seven unmet members are equivalent within these claims: G5-H-HOLDERUNTYPED (held() refusing a recursion only where
+ * the holder's declaration carries no type annotation), G5-E-RETARRAY (enter() refusing only where the call's spread is an
+ * element of an array literal a return statement returns bare), G5-E-LITERAL (only where that array literal's second element is a
+ * bare string literal), G5-H-SPREADREAD (held() refusing only where the holder's findings read is itself a spread's operand),
+ * G5-H-ARRAYVALUE (only where the array literal spreading that read is a property assignment's bare value), and G5-E-ADJACENT and
+ * G5-H-ADJACENT (enter() and held() refusing only where the function's declaration ends where judgeTsxRow's begins): in the two
+ * sources the narrowed recursive-flow item names, the holder carries no type annotation, each of those nodes is written bare and
+ * the declaration is the statement directly before judgeTsxRow, so all seven read both sources as the delivered reader does and
+ * keep this census green; they differ only on sources NOT CLAIMED (recursion) names.
  * NOT CLAIMED (pin grain): a T-ARMS-FORMS probe removed from every literal of this file stays cited by the header's claim lists,
  * which T-ARMS-CLAIMS reads outside the literals; removed together with its claim-list item and the header's words for it, it
  * leaves this file green unless it is an AU probe raising a reason no other probe raises, which T-ARMS-REASONS reds. Beside
@@ -321,24 +338,31 @@
  * closures deep in its top-level function; a PARAMETER SCOPE name with more than nine syntax nodes between it and its parameter
  * or inside a fourth nested parameter list. Each figure is the longest or deepest form its cited probes write, and a one-edit
  * reader member that reads exactly as far as a figure keeps this census green: it is equivalent within these claims.
- * NOT CLAIMED (recursion; refusals #3 and #4, rulings R-B290 and R-B297): the recursive-flow item claims the two self-recursions
- * AU15 and AU63 write, in exactly the words of its two forms, and no other recursive flow. A recursive flow that closes through a
- * second function is NOT CLAIMED by this census: a cycle of two or more functions, through calls, holder calls or both, in a list
- * or a diagnosis position (refusal #3's witnesses GW2-MR-LIST, GW2-MR-THREE, GW2-MR-HELD, GW2-MR-MIX and GW2-MR-ITEM write cycles
- * of two and three). Nor is a self-recursion written in any other form claimed by this census: a declaration with a parameter, a
- * defaulted one included, or a call of the function passing an argument (refusal #4's W-ARGS-CALL, W-PARAM-NOARG-CALL,
- * W-ARGS-HELD and W-PARAM-NOARG-HELD); an optional call of the function or an optional read of a holder's findings
- * (A-OPT-HOLDCALL, A-OPT-CALL, A-OPT-READ); a call of it inside parentheses or a type assertion (A-PAREN-CALL); a return whose
- * array literal is anything but the call's spread followed by one string literal (W-SPREAD-SECOND spreads it second,
- * W-SPREAD-ALONE alone), a body with any statement before its return (W-BODY-CONST), a push with another argument (W-PUSH-TWO),
- * or a findings literal holding anything but the holder's spread (W-HELD-MORE); a function annotated to return any other type, or
- * a holder read through any property but findings (X-HELD-OTHER); a recursion into judgeTsxRow (X-INTO-JUDGE); a self-recursion
- * of a function another entered function calls or holds (X-DEEPER-CALL, X-DEEPER-HELD), of a function declared inside judgeTsxRow
- * (X-NESTED), of a const arrow or function expression (X-CONST-ARROW, X-CONST-HELD), of an exported or generic function or one
- * without its return type annotation (X-EXPORTED, X-TYPEARGS, X-UNTYPED-ARROW, X-UNTYPED-HELD), or one written in any form but
- * the item's two. The witnesses named here are probes of test/workbench-w10-tsx-judge-arms-recursion-census.test.ts, which
- * wb-37o9, the structural-exit child, landed at landing 897 beside this reader; this census claims nothing of that census's
- * reading.
+ * NOT CLAIMED (recursion; refusals #3, #4 and #5, rulings R-B290, R-B297 and R-B494): the recursive-flow item claims the two
+ * sources armProbe() writes for AU15 and AU63, character for character, and no other source and no other recursive flow. A
+ * recursive flow that closes through a second function is NOT CLAIMED by this census: a cycle of two or more functions, through
+ * calls, holder calls or both, in a list or a diagnosis position (refusal #3's witnesses GW2-MR-LIST, GW2-MR-THREE, GW2-MR-HELD,
+ * GW2-MR-MIX and GW2-MR-ITEM write cycles of two and three). Nor is a self-recursion written in any other source claimed by this
+ * census: a declaration or code that differs from AU15's or AU63's in a name, a string text, a comment or white space, or that is
+ * written in another place (refusal #5's IW-F1-TOP and IW-F2-TOP declare the function after the guard's imports, IW-F1-MID and
+ * IW-F2-MID before w10View, and IW-F1F2-BOTH writes both forms together); a holder with a type annotation (IW-F2-HOLDTYPED); any
+ * node of the two forms inside parentheses or a type assertion (IW-F1-RETAS, IW-F1-RETSAT and IW-F1-RETPAREN around the returned
+ * array literal, IW-F1-LITPAREN and IW-F1-LITAS around the string literal, IW-F2-READAS, IW-F2-READSAT, IW-F2-READPAREN and
+ * IW-F2-READNONNULL around the holder's findings read, IW-F2-ARRPAREN and IW-F2-ARRAS around the findings array literal); a
+ * declaration with a parameter, a defaulted one included, or a call of the function passing an argument (refusal #4's
+ * W-ARGS-CALL, W-PARAM-NOARG-CALL, W-ARGS-HELD and W-PARAM-NOARG-HELD); an optional call of the function or an optional read of a
+ * holder's findings (A-OPT-HOLDCALL, A-OPT-CALL, A-OPT-READ); a call of it inside parentheses or a type assertion (A-PAREN-CALL);
+ * a return whose array literal is anything but the call's spread followed by one string literal (W-SPREAD-SECOND spreads it
+ * second, W-SPREAD-ALONE alone), a body with any statement before its return (W-BODY-CONST), a push with another argument
+ * (W-PUSH-TWO), or a findings literal holding anything but the holder's spread (W-HELD-MORE); a function annotated to return any
+ * other type, or a holder read through any property but findings (X-HELD-OTHER); a recursion into judgeTsxRow (X-INTO-JUDGE); a
+ * self-recursion of a function another entered function calls or holds (X-DEEPER-CALL, X-DEEPER-HELD), of a function declared
+ * inside judgeTsxRow (X-NESTED), of a const arrow or function expression (X-CONST-ARROW, X-CONST-HELD), of an exported or generic
+ * function or one without its return type annotation (X-EXPORTED, X-TYPEARGS, X-UNTYPED-ARROW, X-UNTYPED-HELD), or one written in
+ * any other source. The W-, A-, X- and GW2-MR witnesses named here are probes of
+ * test/workbench-w10-tsx-judge-arms-recursion-census.test.ts, which wb-37o9, the structural-exit child, landed at landing 897
+ * beside this reader; the IW witnesses are refusal #5's gate's (gate-prep-15, g10-gate-s203), written into the guard in its own
+ * measurement and never here; this census claims nothing of either's reading.
  * FORWARD (lander obligations, bounded to what this census proves): a change to what readJudgeArms() reads or refuses, or to a
  * figure the claim lists name, owes the matching claim-list item, its ARM_CLAIMS row and a T-ARMS-FORMS probe (T-ARMS-CLAIMS reds
  * a header or table mismatch or an uncited probe, T-ARMS-REASONS a reason no probe raises); a change to the guard's judge that
@@ -2745,7 +2769,7 @@ const ARM_CLAIMS: readonly ArmClaim[] = [
   { list: "refused", item: "a reference to a function declaration T-ARMS enters (judgeTsxRow, a function entered through a call, a holder's callee), plain, exported, with a type parameter or without a return type annotation, among its first 23 references, outside type positions, at module level, in judgeTsxRow or in a function it enters, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow, other than as the callee of a call, plain or optional: an identifier the checker binds to it, reassigned, rebound in a class's extends expression, named in an instantiation expression or passed as an argument of a call, or an export specifier whose local target it is, plain or aliased, to its own name included", probes: ["AU32", "AU41", "AU51", "AU78", "AU49", "AU50", "AU74", "AU119", "AU149", "AU154"] },
   { list: "refused", item: "a call whose callee, its parentheses and type assertions (as, satisfies, the non-null !, <T>) aside, up to four of them, is the name eval, an optional call included, in each of these places in the guard: in judgeTsxRow, in another function, at module level, in a parameter's default value, in a class's field initializer or static block, in an object literal's method, in an arrow's expression body, in a method or a static block of a module-level class, in a method of a module-level object literal, or directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow", probes: ["AU31", "AU70", "AU71", "AU113", "AU115", "AU116", "AU129"] },
   { list: "refused", item: "a return without a value in a function T-ARMS enters", probes: ["AU38"] },
-  { list: "refused", item: "a recursive flow back into itself, and into no other function, of a plain module-level function declaration with no parameter, declared before judgeTsxRow and called in judgeTsxRow's own body, in exactly these two forms, each call of the function in them (in judgeTsxRow's body and in its own) a plain call, not optional, with no argument and no type argument, written bare, with no parentheses or type assertion (as, satisfies, the non-null !, <T>) around it, and no other recursive flow claimed: a push statement of judgeTsxRow's body on its traced list whose one argument spreads a call of the function, the function annotated to return string[] and its body one return statement of an array literal of two elements, a spread of a call of its own name, then a string literal; or a push statement of judgeTsxRow's body on its traced list whose one argument spreads the findings, read plain, of a holder of judgeTsxRow bound to a call of the function, the function annotated to return { findings: string[] } and its body two statements, a const holder of its own bound to a call of its own name, then a return statement of an object literal whose one member, findings, a property assignment, is an array literal whose one element spreads that holder's findings, read plain", probes: ["AU15", "AU63"] },
+  { list: "refused", item: "a recursive flow back into itself in exactly the two sources armProbe() writes for the probes AU15 and AU63, and in no other source: the guard's source with that probe's declaration and code written in, each character for character as ARM_FORMS writes it (quoted below with each white-space run one space), the declaration as the top-level statement directly before judgeTsxRow, after the doc comment the guard writes above judgeTsxRow, and the code directly before the last statement of judgeTsxRow's body, no other name, string text, comment, white space, type annotation, parentheses, type assertion, statement or place claimed: for AU15, the declaration `function probe_AU15(): string[] { return [...probe_AU15(), \"probe AU15\"]; }` and the code `findings.push(...probe_AU15());`; for AU63, the declaration `function probe_AU63(): { findings: string[] } { const again = probe_AU63(); return { findings: [...again.findings] }; }` and the code `const probe_AU63_read = probe_AU63(); findings.push(...probe_AU63_read.findings);`", probes: ["AU15", "AU63"] },
   { list: "refused", item: "a list read inside its own flow", probes: ["AU22"] },
   { list: "refused", item: "a diagnosis reached through more than 64 calls, holder calls and const references", probes: ["AU24", "AU81"] },
   { list: "refused", item: "PARAMETER SCOPE: in each of these places in the guard (inside judgeTsxRow, inside a function it enters, in a module-level class, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow), a name in the parameter list of a function declaration or expression, plain, generator or async, an arrow, plain or async, a method of a class or an object literal, plain, generator or async, a constructor or a setter, and these too: a function declaration, a function expression, an arrow and a class method each with a type parameter or without a return type annotation, a named function expression, an optional class method, a private constructor's parameter property, a static setter's destructured parameter and a function declaration's rest parameter pattern, in an initializer, the parameter's own or a binding element's, at any depth of its expressions, with up to nine syntax nodes between the name and the parameter (a conditional, an array or an object literal, a template, plain or tagged, parentheses or a type assertion, a unary or a binary operator, a new expression, an element access, a comma expression, typeof, void, a spread argument, an optional call), in a computed key of its binding pattern or in a closure created there (an arrow; a function expression, plain, async, generator or named; a class expression's method, static method, constructor, accessor, field initializer, static field or static block; an object literal's method or accessor; a function or a class declared inside one of them), that the checker binds to a declaration in the body of a function whose parameter list encloses it, up to three such parameter lists nested one inside another (a host created in another host's parameter list), a name a parameter and a var of that body both declare included, and a shorthand property name, the checker binding it as its value, in an arrow, a function expression or an object literal's method created there", probes: ["AU42", "AU43", "AU44", "AU45", "AU46", "AU47", "AU48", "AU62", "AU64", "AU65", "AU66", "AU67", "AU68", "AU76", "AU77", "AU101", "AU102", "AU103", "AU104", "AU105", "AU106", "AU107", "AU117", "AU121", "AU122", "AU127", "AU141", "AU142", "AU155"] },
@@ -2974,6 +2998,14 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       "residual [AR1, AR3]",
       "residual [AR2]",
     ]);
+    const quoted = (text: string | undefined): string => `\`${(text ?? "").replace(/\s+/g, " ")}\``;
+    expect(
+      ARM_CLAIMS.filter((claim) => claim.probes.includes("AU15") || claim.probes.includes("AU63")).map((claim) => [
+        claim.probes.join(", "),
+        ...["AU15", "AU63"].flatMap((id) => [forms.get(id)?.declaration, forms.get(id)?.code].map((text) => claim.item.includes(quoted(text)))),
+      ]),
+      "the recursive-flow item cites AU15 and AU63 and quotes each one's ARM_FORMS declaration and code, each white-space run one space",
+    ).toEqual([["AU15, AU63", true, true, true, true]]);
   });
 
   it("T-ARMS-REASONS (outside anchor, readJudgeArms()'s own refusals): every reason the reader can raise, read from the reader module's source, is raised by a T-ARMS-FORMS probe or the bare source, and every reason a probe expects is one the reader can raise", () => {
