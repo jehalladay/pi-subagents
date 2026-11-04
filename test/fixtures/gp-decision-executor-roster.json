@@ -1065,6 +1065,20 @@
         "the fifth of eight segments": true,
         "a segment's leading part": false
       },
+      "threeDigitSegments": {
+        "its own segment": true,
+        "a longer number": false,
+        "a shorter number": false,
+        "inside another segment": false,
+        "the first segment": true,
+        "the last segment": true,
+        "beside another serial": true,
+        "with a leading zero": false,
+        "the last of seven segments": true,
+        "the first of seven segments": true,
+        "the fifth of eight segments": true,
+        "a segment's leading part": false
+      },
       "replays": {
         "first": {
           "minting": [],
@@ -6690,6 +6704,20 @@
         "the fifth of eight segments": "inv-F1-86-x-87-exec-a1-t1",
         "a segment's leading part": "inv-F1-87x-exec-a1-t1"
       },
+      "threeDigitSegmentPlants": {
+        "its own segment": "inv-F1-187-exec-a1-t1",
+        "a longer number": "inv-F1-1870-exec-a1-t1",
+        "a shorter number": "inv-F1-18-exec-a1-t1",
+        "inside another segment": "inv-F1-x187-exec-a1-t1",
+        "the first segment": "187-inv-F1-exec-a1-t1",
+        "the last segment": "inv-F1-exec-a1-t1-187",
+        "beside another serial": "inv-F1-186-187-exec-a1-t1",
+        "with a leading zero": "inv-F1-0187-exec-a1-t1",
+        "the last of seven segments": "inv-F1-186-exec-a1-t1-187",
+        "the first of seven segments": "187-F1-186-x-exec-a1-t1",
+        "the fifth of eight segments": "inv-F1-186-x-187-exec-a1-t1",
+        "a segment's leading part": "inv-F1-187x-exec-a1-t1"
+      },
       "serialPlants": {
         "the kinds from own": {
           "returned": [
@@ -7125,6 +7153,470 @@
               "inv-N7-8-exec-a1-t2",
               "inv-N6-8-exec-a2-t2",
               "inv-N5-8-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "N4",
+            "N3",
+            "N2",
+            "N1",
+            "N8",
+            "N7",
+            "N6",
+            "N5"
+          ]
+        }
+      },
+      "threeDigitSerialPlants": {
+        "the kinds from own": {
+          "returned": [
+            [
+              "inv-F1-187-exec-a1-t1",
+              "inv-F1-188-exec-a1-t2",
+              "inv-F1-187-188-exec-a2-t2",
+              "inv-F1-1187-exec-a2-t3"
+            ],
+            [
+              "inv-F1-187-exec-a1-t1",
+              "inv-F1-188-187-exec-a1-t2",
+              "inv-F1-1188-exec-a2-t2",
+              "inv-F1-188-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              true,
+              false,
+              false,
+              false
+            ],
+            [
+              false,
+              false,
+              false,
+              true
+            ]
+          ],
+          "shared": [
+            "inv-F1-187-exec-a1-t1"
+          ],
+          "named": [
+            "F1"
+          ]
+        },
+        "the kinds from other": {
+          "returned": [
+            [
+              "inv-F1-188-exec-a1-t1",
+              "inv-F1-187-188-exec-a1-t2",
+              "inv-F1-1187-exec-a2-t2",
+              "inv-F1-187-exec-a2-t3"
+            ],
+            [
+              "inv-F1-188-187-exec-a1-t1",
+              "inv-F1-1188-exec-a1-t2",
+              "inv-F1-188-exec-a2-t2",
+              "inv-F1-187-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              true
+            ],
+            [
+              false,
+              false,
+              true,
+              false
+            ]
+          ],
+          "shared": [
+            "inv-F1-187-exec-a2-t3"
+          ],
+          "named": [
+            "F1"
+          ]
+        },
+        "the kinds from both": {
+          "returned": [
+            [
+              "inv-F1-187-188-exec-a1-t1",
+              "inv-F1-1187-exec-a1-t2",
+              "inv-F1-187-exec-a2-t2",
+              "inv-F1-188-exec-a2-t3"
+            ],
+            [
+              "inv-F1-1188-exec-a1-t1",
+              "inv-F1-188-exec-a1-t2",
+              "inv-F1-187-exec-a2-t2",
+              "inv-F1-188-187-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              true,
+              false
+            ],
+            [
+              false,
+              true,
+              false,
+              false
+            ]
+          ],
+          "shared": [
+            "inv-F1-187-exec-a2-t2"
+          ],
+          "named": [
+            "F1"
+          ]
+        },
+        "the kinds from neither": {
+          "returned": [
+            [
+              "inv-F1-1187-exec-a1-t1",
+              "inv-F1-187-exec-a1-t2",
+              "inv-F1-188-exec-a2-t2",
+              "inv-F1-187-188-exec-a2-t3"
+            ],
+            [
+              "inv-F1-188-exec-a1-t1",
+              "inv-F1-187-exec-a1-t2",
+              "inv-F1-188-187-exec-a2-t2",
+              "inv-F1-1188-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              true,
+              false,
+              false
+            ],
+            [
+              true,
+              false,
+              false,
+              false
+            ]
+          ],
+          "shared": [
+            "inv-F1-187-exec-a1-t2"
+          ],
+          "named": [
+            "F1"
+          ]
+        },
+        "D01's page": {
+          "returned": [
+            [
+              "inv-F1-187-188-exec-a1-t1",
+              "inv-F1-187-188-exec-a1-t2",
+              "inv-F1-187-188-exec-a2-t2",
+              "inv-F1-187-188-exec-a2-t3"
+            ],
+            [
+              "inv-F1-188-189-exec-a1-t1",
+              "inv-F1-188-189-exec-a1-t2",
+              "inv-F1-188-189-exec-a2-t2",
+              "inv-F1-188-189-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D02's page": {
+          "returned": [
+            [
+              "inv-F1-1187-exec-a1-t1",
+              "inv-F1-1187-exec-a1-t2",
+              "inv-F1-1187-exec-a2-t2",
+              "inv-F1-1187-exec-a2-t3"
+            ],
+            [
+              "inv-F1-1188-exec-a1-t1",
+              "inv-F1-1188-exec-a1-t2",
+              "inv-F1-1188-exec-a2-t2",
+              "inv-F1-1188-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D03's page": {
+          "returned": [
+            [
+              "inv-F1-187-exec-a1-t1-188",
+              "inv-F1-187-exec-a1-t2-188",
+              "inv-F1-187-exec-a2-t2-188",
+              "inv-F1-187-exec-a2-t3-188"
+            ],
+            [
+              "inv-F1-188-exec-a1-t1-189",
+              "inv-F1-188-exec-a1-t2-189",
+              "inv-F1-188-exec-a2-t2-189",
+              "inv-F1-188-exec-a2-t3-189"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D04's page": {
+          "returned": [
+            [
+              "188-F1-187-x-exec-a1-t1",
+              "188-F1-187-x-exec-a1-t2",
+              "188-F1-187-x-exec-a2-t2",
+              "188-F1-187-x-exec-a2-t3"
+            ],
+            [
+              "189-F1-188-x-exec-a1-t1",
+              "189-F1-188-x-exec-a1-t2",
+              "189-F1-188-x-exec-a2-t2",
+              "189-F1-188-x-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D05's page": {
+          "returned": [
+            [
+              "inv-F1-187-x-188-exec-a1-t1",
+              "inv-F1-187-x-188-exec-a1-t2",
+              "inv-F1-187-x-188-exec-a2-t2",
+              "inv-F1-187-x-188-exec-a2-t3"
+            ],
+            [
+              "inv-F1-188-x-189-exec-a1-t1",
+              "inv-F1-188-x-189-exec-a1-t2",
+              "inv-F1-188-x-189-exec-a2-t2",
+              "inv-F1-188-x-189-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "D06's page": {
+          "returned": [
+            [
+              "inv-F1-187x-exec-a1-t1",
+              "inv-F1-187x-exec-a1-t2",
+              "inv-F1-187x-exec-a2-t2",
+              "inv-F1-187x-exec-a2-t3"
+            ],
+            [
+              "inv-F1-188x-exec-a1-t1",
+              "inv-F1-188x-exec-a1-t2",
+              "inv-F1-188x-exec-a2-t2",
+              "inv-F1-188x-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "four ids both calls were returned": {
+          "returned": [
+            [
+              "inv-F1-187-188-exec-a1-t1",
+              "inv-F1-187-188-exec-a1-t2",
+              "inv-F1-187-188-exec-a2-t2",
+              "inv-F1-187-188-exec-a2-t3"
+            ],
+            [
+              "inv-F1-187-188-exec-a2-t3",
+              "inv-F1-187-188-exec-a2-t2",
+              "inv-F1-187-188-exec-a1-t2",
+              "inv-F1-187-188-exec-a1-t1"
+            ]
+          ],
+          "carried": [
+            [
+              false,
+              false,
+              false,
+              false
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "shared": [
+            "inv-F1-187-188-exec-a1-t1",
+            "inv-F1-187-188-exec-a1-t2",
+            "inv-F1-187-188-exec-a2-t2",
+            "inv-F1-187-188-exec-a2-t3"
+          ],
+          "named": [
+            "F1"
+          ]
+        },
+        "an id one call was returned twice": {
+          "returned": [
+            [
+              "inv-F1-187-exec-a1-t1",
+              "inv-F1-187-exec-a1-t1",
+              "inv-F1-187-exec-a1-t2",
+              "inv-F1-187-exec-a2-t2"
+            ],
+            [
+              "inv-F1-188-exec-a1-t1",
+              "inv-F1-188-exec-a1-t2",
+              "inv-F1-188-exec-a2-t2",
+              "inv-F1-188-exec-a2-t3"
+            ]
+          ],
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "a name at each position": {
+          "returned": [
+            [
+              "inv-N4-187-exec-a1-t1",
+              "inv-N3-187-exec-a1-t2",
+              "inv-N2-187-exec-a2-t2",
+              "inv-N1-187-exec-a2-t3"
+            ],
+            [
+              "inv-N8-188-exec-a1-t1",
+              "inv-N7-188-exec-a1-t2",
+              "inv-N6-188-exec-a2-t2",
+              "inv-N5-188-exec-a2-t3"
             ]
           ],
           "carried": [
