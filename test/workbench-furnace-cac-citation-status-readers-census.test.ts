@@ -13,6 +13,18 @@
  * page does as residuals with quiet rows (R1, R3 and R4 below), and writes the id-form words as the cases their pages pin;
  * readAnchor, its patterns and the helper are unchanged.
  *
+ * wb-ectn (the R694 follow-up from landing 884's F1) adds READERS pages over three cuts. Its cut #1 adds ten, for the ten one-edit
+ * readAnchor forms (G15-I01, G15-K02, G15-K03, G15-F03, G15-C01, G15-C02, G15-C03, G15-C04, G15-W03 and G15-W04) that the
+ * landing-884 gate read as keeping this census green on forms the field and id-form words named and no page carried. Its cut #2,
+ * the respin of its refusal #1 under ruling R-B514, adds seventeen, for the seventeen such forms of that refusal's LEG 2 (GP4-K01
+ * to GP4-K04, GP4-C01 to GP4-C07, GP4-I01 to GP4-I03, GP4-W01, GP4-W02 and GP4-F01). Its cut #3, the respin of its refusal #2 under
+ * ruling R-B535, adds eleven, for that refusal's eleven claimed LEG 2 forms (GP18-C01 to GP18-C07, GP18-I01, GP18-F01, GP18-W01 and
+ * GP18-K01), and writes the words of ANCHOR's six fields and THE ID FORMS below as exact lists: each list names the forms the
+ * READERS pages and the real rows hold, each form with the page that holds it, and ends with a NOT CLAIMED sentence for every other
+ * form. Each page of cuts #2 and #3 carries the form of the real-tree witness that refusal's gate planted for its member (for
+ * GP18-W01 and GP18-K01, whose plants that gate read as unrealized, the form it planted). readAnchor, its patterns and the helper
+ * are unchanged.
+ *
  * PINNED READER SET (this file, test/workbench-furnace-cac-citation-status-readers-census.test.ts; observed at the cut: every case
  * passes on the moved readers and on readAnchor, and each named mutant, applied to a copy of the helper, reds the pin case named
  * after it). Each pin case is named "<mutant id>: <quote>" and asserts, for every probe it holds, that the reader beside the probe
@@ -47,52 +59,117 @@
  *   reds SHAPE.
  * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl and never retyped as the
  *   expectation): readAnchor's reading of wb-t8my's row and wb-pnn8's row, by the keys the literals give (KEYS), equals the reading
- *   the literals give (expectedReading), compared whole by one toEqual. Its fields, each with the expectation it is held to:
- *   (1) clauses - wb-t8my's description lines that open '- U<digit> (', in order, each read by CLAUSE as '- <id> (<severity>)
- *   <label>: <count> <noun> <claim>' (the claim its first word and the quoted or parenthesized span after it; that span ends at
- *   its first closing quote or parenthesis, so a later quoted or parenthesized span on the line is not read into the claim,
- *   AR-QUIET-CLAUSE-SECOND-QUOTE and AR-QUIET-CLAUSE-SECOND-PAREN) or kept as its whole line when CLAUSE does not read it: rows
- *   U1-U3, in order, each as its id, severity, label, the count word of its pin count, the noun and its claim; (2) members - the
- *   lines between the R-B202 fold's opening words 'members folded into wb-t8my' and its 'rule19-invert idem' line in wb-t8my's
- *   notes, in order, each read by FOLD as '<lead><rulings>-<label>-<mutant ids>-0-47-WITNESSES-GW19-<witness numbers>' or kept
- *   whole (a blank line among them is a member, kept whole as the empty line, AR-FOLD-BLANK-LINE): rows V1 and V2, in order, each
- *   as its lead, rulings, label, the mutant ids built from its pins and its pins' GW19 probe numbers; (3) refusals - in wb-pnn8's
- *   notes, refusal #3's verdict opening (with its full tip f53aa719) is present and refusal #4's (full tip ad5195cd) comes after
- *   it: both true; (4) unmet - for each U row, the first line after refusal #3's opening that opens with '<id> <severity>
- *   CONFIRMED', read for its G12 ids and its GW12 ids (for each, the distinct tokens of that id form, in the order they first
- *   occur) and, for each of the row's pins, the quote of the pin's first citation, '<id> (<quote>)' to the balancing parenthesis
- *   or '<id>, <quote>:' to the next colon (an occurrence glued to a preceding letter, digit or hyphen, or followed by neither
- *   form, is passed over: AR-BASE's 'XGP19-C-ONE' and 'GP19-C-ONE-TWIN', AR-CITATION-GLUED; one after an underscore is a
- *   citation, '_G12-A-ONE', AR-CITATION-UNDERSCORE): the row's pins as its G12 ids, its pins' GW12 probe ids as its GW12 ids, and
- *   its pins' quotes; (5) verdict - the quote of each V pin's first citation in refusal #4's verdict (its opening up to WHAT
- *   STANDS; a V pin cited only after WHAT STANDS reads an empty quote, AR-VERDICT-AFTER-WHAT-STANDS), read the same way: each V
- *   pin's quote; (6) ids and witnesses - in refusal #4's F5 finding (its head '- F5 INFO: (<row S's label>, CONFIRMED)' up to the
- *   next '- F6 ' head; a head grading the label PLAUSIBLE is no such head, so nothing is read, AR-F5-HEAD-OTHER-GRADE), the
- *   distinct tokens of the row S id form, in the order they first occur, and the witnesses its clause 'Their witnesses <first> /
- *   <next> ... red' names, split at ' / ' only (a list without the spaced separator is one witness, 'WS-W-ONE/-TWO',
- *   AR-WITNESS-UNSPACED): row S's pins, and its WS-W probes as '<first id> / -<suffix> ...'.
- *   THE ID FORMS (readAnchor's G12_ID, GW12_ID and S_ID; each word below holds through the READERS pages named beside it, not
- *   beyond them): a G12 id is 'G12-' and words joined by '-', each of upper-case letters (AR-BASE; an extra id, AR-W1-G12-EXTRA)
- *   or of upper-case letters then one digit, as its first word ('G12-A2-EXTRA', AR-G12-DIGIT-WORD) or a later one ('G12-A-B2',
- *   AR-G12-LATER-DIGIT-WORD); a G12 token glued to a letter or a digit before it is not read - an upper-case letter
- *   ('XG12-A-GLUED', AR-QUIET-G12-GLUED), a lower-case letter ('xG12-A-NEW', AR-QUIET-G12-LOWER-GLUED) or a digit ('5G12-A-NEW',
- *   AR-QUIET-G12-DIGIT-GLUED) - and one whose last word runs into a lower-case letter is read to its last word boundary
- *   ('G12-A-ONEx' as 'G12-A', AR-G12-GLUED-AFTER). A GW12 id is 'GW12-' and its digits, pinned at one, two and three digits
- *   (AR-W4-GW12-ONE-DIGIT, AR-BASE, AR-W3-GW12-THREE-DIGITS); a GW12 token glued to a letter or a digit before it is not read - an
- *   upper-case letter ('XGW12-07', AR-QUIET-GW12-GLUED), a lower-case letter ('xGW12-07', AR-QUIET-GW12-LOWER-GLUED) or a digit
- *   ('5GW12-07', AR-QUIET-GW12-DIGIT-GLUED) - nor one whose digits run into a letter, lower-case ('GW12-4b', AR-QUIET-GW12-LETTER)
- *   or upper-case ('GW12-4B', AR-QUIET-GW12-UPPER-LETTER). A row S id is one upper-case letter and one or more words, each led by
- *   '-' and each of upper-case letters (AR-BASE; a single word, AR-W7-S-ID-ONE-WORD; a one-letter word, 'T-A-KEPT',
- *   AR-S-ONE-CHAR-WORD) or of upper-case letters then one digit ('T-STAR-RUN2-KEPT', AR-W5-S-ID-DIGIT), with no letter, digit or
- *   hyphen touching it (pinned by a hyphen before it, AR-BASE's 'WS-W-ONE', and by a letter before and after it, a digit before
- *   it, a hyphen after it and a digit run into a letter after it, AR-QUIET-S-GLUED); an underscore before it is no such touch, and
- *   the id after it is read ('_T-STAR-KEPT', AR-S-UNDERSCORE-BEFORE). Any other word shape or place (among them a word that opens
- *   with a digit, holds only digits or holds two or more digits after its letters, and a one-letter word after an id's first
- *   word) and any other character at a token's edge (among them an underscore or a hyphen before or after a G12 or GW12 token,
- *   and an underscore after a row S id) are NOT CLAIMED by this census. So, on the real rows, each U row's UNMET line's tokens of
- *   the G12 form are exactly the row's pins and its tokens of the GW12 form exactly its pins' GW12 probes, and the F5 finding's
- *   tokens of the row S form are exactly row S's pins, each in order of first occurrence.
- * - Cases READERS (60 cases, "<page id>: <what>"; the PAGES table): readAnchor, by PAGE_KEYS, reads each page exactly as the
+ *   the literals give (expectedReading), compared whole by one toEqual. Its six fields follow, each with the expectation it is held
+ *   to. Each field's forms are written as exact lists: a form listed is held by the READERS page named beside it, and read there as
+ *   that page's literal reading, or by the real rows, and read there as ANCHOR's expectation; each list ends with the sentence that
+ *   every other form is NOT CLAIMED by this census.
+ *   (1) clauses - wb-t8my's description lines that open '- U<digit> (' (pinned for exactly the openings '- U1 (', '- U2 (' and
+ *   '- U3 (' that AR-BASE, AR-CLAUSE-EXTRA and the real rows hold, an opening with any other digit NOT CLAIMED by this census; R1
+ *   below), in order (AR-CLAUSE-ORDER), each read by CLAUSE into six fields, '- <id> (<severity>) <label>: <count> <noun> <claim>',
+ *   the claim being its first word and the quoted or parenthesized span after it, up to that span's first closing quote or
+ *   parenthesis, or kept as its whole line when CLAUSE does not read it. The lines pinned are exactly these. Read into the six
+ *   fields: AR-BASE's two clauses ('- U1 (MEDIUM) cells: two mutants against 'a cell claim' (:1) survive.' and '- U2 (LOW) prose:
+ *   one mutant survives (a prose claim)'), AR-CLAUSE-EXTRA's third ('- U3 (LOW) lead: one mutant against 'a lead claim'
+ *   survives.'), the U1 clause with the claim 'a cell 2 claim' (AR-CLAUSE-QUOTE-DIGIT), the U1 clause with a later quoted span,
+ *   '(:1) and 'more' survive.' (AR-QUIET-CLAUSE-SECOND-QUOTE), and the U2 clause with a later parenthesized span, '(a prose claim)
+ *   (a later part)' (AR-QUIET-CLAUSE-SECOND-PAREN), each later span left out of the claim (R4 below), and the real rows' U1-U3
+ *   lines (ANCHOR). Kept whole: AR-CLAUSE-UNREAD's third ('- U3 (LOW) a clause without its colon'), the U1 clause with the claims
+ *   'a cell's claim' (AR-CLAUSE-QUOTE-INNER), 'an A'B claim' (AR-CLAUSE-QUOTE-UPPER-INNER) and 'a '9 claim'
+ *   (AR-CLAUSE-QUOTE-DIGIT-INNER), each closed at its inner apostrophe, and the U2 clause with the claims '(a (nested) claim)'
+ *   (AR-CLAUSE-PAREN-NESTED), '(a (NESTED) claim)' (AR-CLAUSE-PAREN-NESTED-UPPER) and '(a (two words) claim)'
+ *   (AR-CLAUSE-PAREN-NESTED-PHRASE), each holding a nested group. A clause line of any other text - any other id, severity, label,
+ *   count word, noun, claim or span, or any other character in one of them - is NOT CLAIMED by this census. Expectation: rows
+ *   U1-U3, in order, each as its id, severity, label, the count word of its pin count, the noun and its claim.
+ *   (2) members - the lines between the R-B202 fold's opening words 'members folded into wb-t8my' and its 'rule19-invert idem' line
+ *   in wb-t8my's notes (none without the opening words, AR-NO-FOLD), in order (AR-W2-FOLD-SWAPPED), each read by FOLD into five
+ *   fields, '<lead><rulings>-<label>-<mutant ids>-0-47-WITNESSES-GW19-<witness numbers>', or kept as its whole line when FOLD does
+ *   not read it. The member lines pinned are exactly these. Read into the five fields: AR-BASE's two
+ *   ('U1-MEDIUM-CONFIRMED-R514-R-B159-ALPHA-LABEL-GP19-C-ONE-AND-TWIN-0-47-WITNESSES-GW19-01-02' and
+ *   'U2-LOW-CONFIRMED-R515-BETA-GP19-D-ONE-0-47-WITNESSES-GW19-03', in either order), AR-FOLD-EXTRA's third
+ *   ('U3-LOW-CONFIRMED-R668-GAMMA-GP19-E-ONE-0-47-WITNESSES-GW19-04') and the real rows' V1 and V2 lines (ANCHOR). Kept whole:
+ *   AR-FOLD-UNREAD's third ('U3-LOW-CONFIRMED-R668-GAMMA'), an empty line between AR-BASE's two (AR-FOLD-BLANK-LINE) and after the
+ *   second (AR-FOLD-TRAILING-BLANK-LINE), a line of two spaces between them (AR-FOLD-SPACES-LINE, kept as its two spaces), and
+ *   AR-BASE's U2 line with one trailing space as the last member line (AR-FOLD-TRAILING-SPACE, kept with its space). A member line
+ *   of any other text, or a listed line in any other place - among them an empty line before the first member line or after another
+ *   empty line, a line of two spaces in any other place, a line of any other whitespace, and a member line with any other character
+ *   before or after it - is NOT CLAIMED by this census. Expectation: rows V1 and V2, in order, each as its lead, rulings, label,
+ *   the mutant ids built from its pins and its pins' GW19 probe numbers.
+ *   (3) refusals - in wb-pnn8's notes, whether refusal #3's verdict opening (with its full tip f53aa719) is present and whether
+ *   refusal #4's (full tip ad5195cd) comes after it, pinned for exactly AR-BASE (both true), AR-NO-REFUSAL-3, AR-NO-REFUSAL-4,
+ *   AR-REFUSAL-4-EARLIER and AR-REFUSAL-3-AT-START (each read as written beside it) and the real row (ANCHOR). Expectation: both
+ *   true.
+ *   (4) unmet - for each U row, the first line after refusal #3's opening that opens with '<id> <severity> CONFIRMED' (a later such
+ *   line is not read, AR-LATER-UNMET-LINE; R2 below), read for its G12 ids and its GW12 ids (THE ID FORMS below; for each, the
+ *   distinct tokens of that id form, in the order they first occur) and, for each of the row's pins, the quote of the pin's first
+ *   citation (the first of two is read, AR-EARLIER-CITATION, and a later one changes nothing, AR-LATER-CITATION). THE CITATIONS. A
+ *   citation is an occurrence of the pin's id in one of two forms, '<id> (<quote>)', its quote read up to the parenthesis that
+ *   balances the opening one, or '<id>, <quote>:', its quote read up to the next colon. The occurrences pinned are exactly these.
+ *   Read as citations: an occurrence after a space, pinned for exactly the five AR-BASE holds ('G12-A-ONE (the first quote)',
+ *   'G12-A-TWO (a quote (with a nested part) here)', 'G12-B-ONE, the comma quote:', 'GP19-C-ONE-TWIN, the twin quote:' and
+ *   'GP19-C-ONE (the V quote)'), the ones the pages THE QUOTES names hold in their place, and the real rows' first citations
+ *   (ANCHOR); an occurrence after an underscore ('_G12-A-ONE (an underscore-glued quote)', AR-CITATION-UNDERSCORE, and '_G12-B-ONE,
+ *   an underscore comma quote:', AR-CITATION-UNDERSCORE-COMMA-FORM); and one after a period ('.G12-A-ONE (a period-glued quote)',
+ *   AR-CITATION-PERIOD, and '.G12-B-ONE, a period comma quote:', AR-CITATION-PERIOD-COMMA-FORM). Passed over: an occurrence glued
+ *   to the character before it - the upper-case letters X (AR-BASE's 'XGP19-C-ONE') and Q ('QG12-A-ONE', AR-CITATION-UPPER-GLUED),
+ *   the lower-case letters x ('xG12-A-ONE', AR-CITATION-LOWER-GLUED) and y ('yG12-A-ONE', AR-CITATION-LOWER-GLUED-Y), the digits 5
+ *   ('5G12-A-ONE', AR-CITATION-GLUED) and 7 ('7G12-A-ONE', AR-CITATION-DIGIT-GLUED) and a hyphen ('X-G12-A-ONE',
+ *   AR-CITATION-GLUED) - and an occurrence followed by neither form - a hyphen (AR-BASE's 'GP19-C-ONE-TWIN', for GP19-C-ONE) and a
+ *   comma with no space after it before a lower-case t ('G12-B-ONE,the', AR-CITATION-COMMA-UNSPACED) or an upper-case T
+ *   ('G12-B-ONE,The', AR-CITATION-COMMA-UNSPACED-UPPER) - a pin with no citation reading an empty quote. An occurrence in any other
+ *   context - after any other character or at the text's start, glued to any other character, or followed by any other text that is
+ *   neither form - is NOT CLAIMED by this census. THE QUOTES. A citation's quote is pinned for exactly these quotes, each read
+ *   whole as written. In the parenthesized form: 'the first quote', 'a quote (with a nested part) here' and 'the V quote'
+ *   (AR-BASE), 'an earlier quote' (AR-EARLIER-CITATION), 'an underscore-glued quote' (AR-CITATION-UNDERSCORE), 'a period-glued
+ *   quote' (AR-CITATION-PERIOD), 'the first quote2 planted' (AR-QUOTE-PAREN-DIGIT), 'the first quote: planted'
+ *   (AR-QUOTE-PAREN-COLON), 'the V quote', a line break and 'planted' (AR-QUOTE-PAREN-LINE-BREAK), the empty quote of 'G12-A-ONE
+ *   ()' (AR-QUOTE-PAREN-EMPTY), and the real rows' quotes of the eight U pins and of the V pins GP19-O-OPENING-TAG-IGNORED and
+ *   GP19-R-RULES-DEDUPED (ANCHOR; the PINS literal's quotes). In the comma form: 'the comma quote' and 'the twin quote' (AR-BASE),
+ *   'the comma. quote' (AR-CITATION-COMMA-PERIOD), 'the comma.Quote' (AR-CITATION-COMMA-PERIOD-UPPER), 'a period comma quote'
+ *   (AR-CITATION-PERIOD-COMMA-FORM), 'an underscore comma quote' (AR-CITATION-UNDERSCORE-COMMA-FORM), 'the twin quote2 planted'
+ *   (AR-QUOTE-COMMA-DIGIT), 'the twin quote', a line break and 'planted' (AR-QUOTE-COMMA-LINE-BREAK), the empty quote of
+ *   'GP19-C-ONE-TWIN, :' (AR-QUOTE-COMMA-EMPTY), and the real row's quote of the V pin GP19-O-OPENING-TAG-IGNORED-ANCHOR, 'applied
+ *   by anchorProse only' (ANCHOR). A quote of any other content, in either form - any other text, character, digit, punctuation
+ *   mark, line break, length or arrangement of parentheses in it - is NOT CLAIMED by this census. Expectation: the row's pins as
+ *   its G12 ids, its pins' GW12 probe ids as its GW12 ids, and its pins' quotes.
+ *   (5) verdict - the quote of each V pin's first citation in refusal #4's verdict, its opening up to WHAT STANDS (a V pin cited
+ *   only after WHAT STANDS reads an empty quote, AR-VERDICT-AFTER-WHAT-STANDS), read as (4) reads a citation: its occurrences and
+ *   quotes are those (4)'s THE CITATIONS and THE QUOTES list in a verdict (AR-BASE's, AR-QUOTE-COMMA-DIGIT's,
+ *   AR-QUOTE-COMMA-LINE-BREAK's, AR-QUOTE-PAREN-LINE-BREAK's and AR-QUOTE-COMMA-EMPTY's, and the real verdict's), and every other
+ *   is NOT CLAIMED by this census. Expectation: each V pin's quote.
+ *   (6) ids and witnesses - in refusal #4's F5 finding, from its head '- F5 INFO: (<row S's label>, CONFIRMED)' up to the next
+ *   '- F6 ' head (an F5 finding before refusal #4's opening is not read, AR-EARLIER-F5), the distinct tokens of the row S id form
+ *   (THE ID FORMS below), in the order they first occur, and the witnesses its clause 'Their witnesses <list> red' names, the list
+ *   split at ' / '. The F5 heads pinned are exactly these. Read: AR-BASE's '- F5 INFO: (THE CELLS, measured part, CONFIRMED)' and
+ *   the real row's '- F5 INFO: (THE HOLES, seat-measured part, CONFIRMED)' (ANCHOR). No F5 head, so no row S id or witness is read:
+ *   AR-BASE's head with PLAUSIBLE in place of CONFIRMED (AR-F5-HEAD-OTHER-GRADE), with ', again' after CONFIRMED
+ *   (AR-F5-HEAD-RUN-ON) and with '; again' after CONFIRMED (AR-F5-HEAD-SEMICOLON-RUN-ON). A head of any other text is NOT CLAIMED
+ *   by this census. The witness lists pinned are exactly these, each read as written beside it: 'WS-W-ONE / -TWO' as 'WS-W-ONE' and
+ *   '-TWO' (AR-BASE), 'WS-W-TWO / -ONE' as 'WS-W-TWO' and '-ONE' (AR-WITNESS-ORDER), 'WS-W-ONE / -TWO / -THREE' as its three
+ *   (AR-WITNESS-EXTRA), 'WS-W-ONE/-TWO' as one witness (AR-WITNESS-UNSPACED), 'WS-W-ONE/TWO' as one witness
+ *   (AR-WITNESS-UNSPACED-UPPER), 'WS-W-ONE / -TWO2/-X' as 'WS-W-ONE' and '-TWO2/-X' (AR-WITNESS-SLASH-AFTER-DIGIT),
+ *   'WS-W-ONE  /  -TWO' (two spaces on each side of its slash) as no such clause, so one empty witness (AR-WITNESS-WIDE-SPACED),
+ *   and the real row's 'WS-W-STRONG-CELL / -UNDERSCORE-CELL / -COLLAPSED-REF' as its three (ANCHOR). A witness list of any other
+ *   text - any other witness, spacing, slash, character or count - is NOT CLAIMED by this census. Expectation: row S's pins, and
+ *   its WS-W probes as '<first id> / -<suffix> ...'.
+ *   THE ID FORMS (readAnchor's G12_ID, GW12_ID and S_ID). Each form's reading is pinned for exactly the tokens below, each read as
+ *   written beside it. G12 ids read whole: AR-BASE's 'G12-A-ONE', 'G12-A-TWO' and 'G12-B-ONE', 'G12-A-EXTRA' (AR-W1-G12-EXTRA),
+ *   'G12-A2-EXTRA' (AR-G12-DIGIT-WORD), 'G12-A-B2' (AR-G12-LATER-DIGIT-WORD), 'G12-A-NINELONGS' (AR-G12-NINE-LETTER-WORD),
+ *   'G12-ABC-EXTRA' (AR-G12-THREE-LETTER-FIRST-WORD), 'G12-A-BC2' (AR-G12-TWO-LETTER-DIGIT-WORD), 'G12-A-NINELONGS-EXTRA'
+ *   (AR-G12-NINE-LETTER-MIDDLE-WORD), 'G12-B-ONE-TWO-SIX-TEN-EXTRA' (AR-G12-SIX-WORDS) and the real rows' eight U pins (ANCHOR: on
+ *   each U row's UNMET line the tokens of the G12 form are exactly the row's pins). Read short of the token: 'G12-A-ONEx' as
+ *   'G12-A' (AR-G12-GLUED-AFTER). Not read: 'g12-a-low' (AR-QUIET-G12-LOWER), 'XG12-A-GLUED' (AR-QUIET-G12-GLUED), 'xG12-A-NEW'
+ *   (AR-QUIET-G12-LOWER-GLUED) and '5G12-A-NEW' (AR-QUIET-G12-DIGIT-GLUED). GW12 ids read whole: AR-BASE's 'GW12-01', 'GW12-02' and
+ *   'GW12-03', 'GW12-100' (AR-W3-GW12-THREE-DIGITS), 'GW12-5' (AR-W4-GW12-ONE-DIGIT) and the real rows' GW12 probes (ANCHOR: on
+ *   each U row's UNMET line the tokens of the GW12 form are exactly its pins' GW12 probes). Not read: 'GW12-4b'
+ *   (AR-QUIET-GW12-LETTER), 'GW12-4B' (AR-QUIET-GW12-UPPER-LETTER), 'XGW12-07' (AR-QUIET-GW12-GLUED), 'xGW12-07'
+ *   (AR-QUIET-GW12-LOWER-GLUED) and '5GW12-07' (AR-QUIET-GW12-DIGIT-GLUED). Row S ids read whole: AR-BASE's 'T-ONE-ID' and
+ *   'P-TWO-ID', 'T-STAR-RUN2-KEPT' (AR-W5-S-ID-DIGIT), 'T-STAR' (AR-W7-S-ID-ONE-WORD), 'T-A-KEPT' (AR-S-ONE-CHAR-WORD),
+ *   'T-STAR-KEPT' after an underscore (AR-S-UNDERSCORE-BEFORE) and the real row's four (ANCHOR: the F5 finding's tokens of the row
+ *   S form are exactly row S's pins). Not read: AR-BASE's 'WS-W-ONE' (no row S id in it), 'WS-STAR-KEPT' (AR-QUIET-S-TWO-LETTER),
+ *   'T-star-kept' and 't-STAR-KEPT' (AR-QUIET-S-LOWER), and 'xT-STAR-KEPT', 'T-STAR-KEPTx', '5T-STAR-KEPT', 'T-STAR-KEPT-' and
+ *   'T-STAR-KEPT5x' (AR-QUIET-S-GLUED). A token of any other text in any of the three forms - any other word, word shape, word
+ *   count, digit count, letter case, or character before or after it - is NOT CLAIMED by this census.
+ * - Cases READERS (98 cases, "<page id>: <what>"; the PAGES table): readAnchor, by PAGE_KEYS, reads each page exactly as the
  *   literal reading written beside it (toEqual over the whole reading). AR-BASE is a synthetic wb-t8my row and wb-pnn8 row written
  *   in the shapes the real rows give the six fields; every other page is AR-BASE with one edit. The pages carry refusal #2's
  *   members' forms: an extra G12 id in an UNMET line (AR-W1-G12-EXTRA, witness W1's form), the fold's two member lines swapped
@@ -101,37 +178,90 @@
  *   AR-W7-S-ID-ONE-WORD, witnesses W5 and W7). The others carry: the clauses, G12 ids, GW12 ids, row S ids and witnesses each in
  *   another order; an extra clause, an extra member line and an extra witness, each read, and a clause and a member line their
  *   patterns do not read, each kept whole; a G12 id whose word holds a digit, and a G12 token glued after; an earlier and a later
- *   citation of one pin, citations glued to a preceding hyphen or digit, and repeated GW12 and row S ids; citations before
- *   refusal #3's opening, a later line opening with a U lead and an F5 finding before refusal #4's opening, none of them read; the
- *   fold's opening and each refusal's opening absent, refusal #4's opening also written before refusal #3's, and refusal #3's
- *   opening at the notes' first character; and the residuals' quiet rows (RESIDUALS below). wb-dlot's seventeen pages close the
- *   table, in the order of the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row (CLAIMS (4)
- *   names each): a G12 id whose later word holds a digit, a row S id after an underscore and one with a one-letter word, a
- *   citation after an underscore, a V pin cited only after WHAT STANDS, a witness list without the spaced separator, a blank line
- *   in the fold and an F5 head graded PLAUSIBLE, each read as written beside it, and nine quiet rows (R1, R3 and R4).
+ *   citation of one pin, citations glued to a preceding hyphen or digit, and repeated GW12 and row S ids; citations before refusal
+ *   #3's opening, a later line opening with a U lead and an F5 finding before refusal #4's opening, none of them read; the fold's
+ *   opening and each refusal's opening absent, refusal #4's opening also written before refusal #3's, and refusal #3's opening at
+ *   the notes' first character; and the residuals' quiet rows (RESIDUALS below). wb-dlot's seventeen pages follow, in the order of
+ *   the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row (CLAIMS (4) names each): a G12 id
+ *   whose later word holds a digit, a row S id after an underscore and one with a one-letter word, a citation after an underscore,
+ *   a V pin cited only after WHAT STANDS, a witness list without the spaced separator, a blank line in the fold and an F5 head
+ *   graded PLAUSIBLE, each read as written beside it, and nine quiet rows (R1, R3 and R4). wb-ectn's ten pages follow, in the order
+ *   of the landing-884 gate's F1 forms (CLAIMS (4) names each): a later G12 word of nine letters, an apostrophe between two letters
+ *   of a quoted claim, a nested parenthesized word in a parenthesized claim, a line of two spaces in the fold, a citation after a
+ *   period and one glued to a lower-case letter, a comma with no space after it, a period inside a comma-form quote, an F5 head
+ *   running on past CONFIRMED and a witness list with two spaces on each side of its slash, each read as written beside it.
+ *   wb-ectn's cut #2 seventeen pages follow, in the order of wb-ectn refusal #1's GP4 members (CLAIMS (4) names each): an
+ *   apostrophe between two upper-case letters and one after a space before a digit inside a quoted claim, a nested upper-case word
+ *   and a nested group of two lower-case words in a parenthesized claim, citations glued to an upper-case Q, a lower-case y and a
+ *   digit 7, comma-form citations after a period and after an underscore, a comma with no space after it before an upper-case
+ *   letter, a period before an upper-case letter inside a comma-form quote, G12 ids with a three-letter first word, with a later
+ *   word of two letters then one digit and with a nine-letter word before another word, an F5 head running on past CONFIRMED after
+ *   a semicolon, a witness list whose unspaced slash comes before an upper-case letter, and a blank line after the fold's last
+ *   member line, each read as written beside it.
+ *   wb-ectn's cut #3 eleven pages close the table, in the order of wb-ectn refusal #2's GP18 members (CLAIMS (4) names each):
+ *   parenthesized quotes holding a digit run into a word and a colon, comma-form V quotes holding a digit run into a word and a
+ *   line break, a parenthesized V quote holding a line break, an empty parenthesized quote and an empty comma-form quote each
+ *   before the pin's other citation, a six-word G12 id extending U2's pin, the fold's last member line with one trailing space, a
+ *   witness list whose last witness holds a digit and then a slash with no space on either side, and a quoted claim holding a
+ *   digit, each read as written beside it.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here: a
  * reader edit that changes one reading reds that pin case. (2) Each named mutant changes a reading of its own pin's probes: the
- * cutting seat applies each mutant's own edit (the gate's and the cut #4 seat's edits, executed over a copy of the helper) and reads
- * the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) Each field ANCHOR's
- * expectation is built from is held whole: the U rows' ids, severities, labels, claims and count words; the V rows' leads, rulings,
- * labels, pins and GW19 probe ids; the U rows' pins and their GW12 probe ids; the U and V pins' quotes; row S's label, pins and
- * WS-W probe ids. So such a field removed, swapped, relabelled or shortened at either end - in one literal or in every literal
- * together - reds ANCHOR, and a pin or a row removed or swapped in one literal reds SHAPE as well (standing rule 16's CT1-CT6).
- * (4) On each READERS page readAnchor returns exactly the literal reading written beside it: an edit of readAnchor, or of a reader
- * or pattern it calls, that changes its reading of one page reds that page's case. Refusal #2's U1 members are such edits, in
- * their forms on readAnchor: C2-G12-FILTER's (the G12 ids filtered by the key's pins) reds AR-W1-G12-EXTRA, AR-G12-GLUED-AFTER and
- * AR-G12-DIGIT-WORD, and C3-FOLD-SORTED's (the member readings sorted) reds AR-W2-FOLD-SWAPPED. Refusal #2's U2 forms are read as
- * ids: a GW12 id read in cut #2's narrower form (two digits) reds AR-W3-GW12-THREE-DIGITS and AR-W4-GW12-ONE-DIGIT, and a row S id
- * read in cut #2's narrower form (a letter and two or more digit-free words) reds AR-W5-S-ID-DIGIT and AR-W7-S-ID-ONE-WORD.
- * The landing-831 gate's fifteen forms (its family B: one edit each of G12_ID, GW12_ID, S_ID, CLAUSE_LINE, the citation glue
- * test, the verdict end, the witness split, CLAUSE's quoted span, the member lines and the F5 head) are such edits, each red at
- * its own page's case alone: B01 at AR-G12-LATER-DIGIT-WORD, B02 at AR-QUIET-G12-DIGIT-GLUED, B03 at AR-QUIET-GW12-DIGIT-GLUED,
- * B04 at AR-QUIET-GW12-UPPER-LETTER, B05 at AR-S-UNDERSCORE-BEFORE, B06 at AR-S-ONE-CHAR-WORD, B07 at AR-QUIET-PLUS-ROW, B08 at
- * AR-CITATION-UNDERSCORE, B09 at AR-VERDICT-AFTER-WHAT-STANDS, B10 at AR-WITNESS-UNSPACED, B11 at AR-QUIET-CLAUSE-SECOND-QUOTE,
- * B12 at AR-FOLD-BLANK-LINE, B13 at AR-F5-HEAD-OTHER-GRADE, B14 at AR-QUIET-G12-LOWER-GLUED and B15 at
- * AR-QUIET-GW12-LOWER-GLUED; CLAUSE's parenthesized span read to the line's last closing parenthesis (B11's twin) is red at
- * AR-QUIET-CLAUSE-SECOND-PAREN alone, and CLAUSE_LINE read after leading spaces is red at AR-QUIET-INDENTED-ROW alone.
+ * cutting seat applies each mutant's own edit (the gate's and the cut #4 seat's edits, executed over a copy of the helper) and
+ * reads the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) Each field
+ * ANCHOR's expectation is built from is held whole: the U rows' ids, severities, labels, claims and count words; the V rows' leads,
+ * rulings, labels, pins and GW19 probe ids; the U rows' pins and their GW12 probe ids; the U and V pins' quotes; row S's label,
+ * pins and WS-W probe ids. So such a field removed, swapped, relabelled or shortened at either end - in one literal or in every
+ * literal together - reds ANCHOR, and a pin or a row removed or swapped in one literal reds SHAPE as well (standing rule 16's
+ * CT1-CT6). (4) On each READERS page readAnchor returns exactly the literal reading written beside it: an edit of readAnchor, or of
+ * a reader or pattern it calls, that changes its reading of one page reds that page's case. Refusal #2's U1 members are such edits,
+ * in their forms on readAnchor: C2-G12-FILTER's (the G12 ids filtered by the key's pins) reds the nine pages that add a G12 id to
+ * an UNMET line (AR-W1-G12-EXTRA, AR-G12-GLUED-AFTER, AR-G12-DIGIT-WORD, AR-G12-LATER-DIGIT-WORD, AR-G12-NINE-LETTER-WORD,
+ * AR-G12-THREE-LETTER-FIRST-WORD, AR-G12-TWO-LETTER-DIGIT-WORD, AR-G12-NINE-LETTER-MIDDLE-WORD and AR-G12-SIX-WORDS), and
+ * C3-FOLD-SORTED's (the member readings sorted) reds AR-W2-FOLD-SWAPPED and the three pages with an empty or a two-space member
+ * line (AR-FOLD-BLANK-LINE, AR-FOLD-SPACES-LINE and AR-FOLD-TRAILING-BLANK-LINE). Refusal #2's U2 forms are read as ids: a GW12 id
+ * read in cut #2's narrower form (two digits) reds AR-W3-GW12-THREE-DIGITS and AR-W4-GW12-ONE-DIGIT, and a row S id read in cut
+ * #2's narrower form (a letter and two or more digit-free words) reds AR-W5-S-ID-DIGIT and AR-W7-S-ID-ONE-WORD. The landing-831
+ * gate's fifteen forms (its family B: one edit each of G12_ID, GW12_ID, S_ID, CLAUSE_LINE, the citation glue test, the verdict end,
+ * the witness split, CLAUSE's quoted span, the member lines and the F5 head) are such edits, each red at its own page's case alone
+ * except six, each red at wb-ectn's pages of the same form as well (B01 at AR-G12-TWO-LETTER-DIGIT-WORD, B08 at
+ * AR-CITATION-UNDERSCORE-COMMA-FORM, B10 at AR-WITNESS-UNSPACED-UPPER and wb-ectn cut #3's AR-WITNESS-SLASH-AFTER-DIGIT, B11 at
+ * AR-CLAUSE-QUOTE-INNER, AR-CLAUSE-QUOTE-UPPER-INNER and AR-CLAUSE-QUOTE-DIGIT-INNER, B12 at AR-FOLD-TRAILING-BLANK-LINE, and B13
+ * at AR-F5-HEAD-RUN-ON and AR-F5-HEAD-SEMICOLON-RUN-ON): B01 at AR-G12-LATER-DIGIT-WORD, B02 at AR-QUIET-G12-DIGIT-GLUED, B03 at
+ * AR-QUIET-GW12-DIGIT-GLUED, B04 at AR-QUIET-GW12-UPPER-LETTER, B05 at AR-S-UNDERSCORE-BEFORE, B06 at AR-S-ONE-CHAR-WORD, B07 at
+ * AR-QUIET-PLUS-ROW, B08 at AR-CITATION-UNDERSCORE, B09 at AR-VERDICT-AFTER-WHAT-STANDS, B10 at AR-WITNESS-UNSPACED, B11 at
+ * AR-QUIET-CLAUSE-SECOND-QUOTE, B12 at AR-FOLD-BLANK-LINE, B13 at AR-F5-HEAD-OTHER-GRADE, B14 at AR-QUIET-G12-LOWER-GLUED and B15
+ * at AR-QUIET-GW12-LOWER-GLUED; CLAUSE's parenthesized span read to the line's last closing parenthesis (B11's twin) is red at
+ * AR-QUIET-CLAUSE-SECOND-PAREN and at wb-ectn's AR-CLAUSE-PAREN-NESTED, AR-CLAUSE-PAREN-NESTED-UPPER and
+ * AR-CLAUSE-PAREN-NESTED-PHRASE, and CLAUSE_LINE read after leading spaces is red at AR-QUIET-INDENTED-ROW alone. The landing-884
+ * gate's ten F1 forms (one edit each of G12_ID, CLAUSE's quoted span and its parenthesized span, the member lines, the citation
+ * glue test (two), the citation's comma form, the comma quote's end, the F5 head and the witness clause) are such edits, each red
+ * at its own page's case and, for eight of them, at wb-ectn cut #2's pages of the same form: G15-I01 at AR-G12-NINE-LETTER-WORD and
+ * AR-G12-NINE-LETTER-MIDDLE-WORD, G15-K02 at AR-CLAUSE-QUOTE-INNER, AR-CLAUSE-QUOTE-UPPER-INNER and AR-CLAUSE-QUOTE-DIGIT-INNER,
+ * G15-K03 at AR-CLAUSE-PAREN-NESTED, AR-CLAUSE-PAREN-NESTED-UPPER and AR-CLAUSE-PAREN-NESTED-PHRASE, G15-F03 at AR-FOLD-SPACES-LINE
+ * alone, G15-C01 at AR-CITATION-PERIOD and AR-CITATION-PERIOD-COMMA-FORM, G15-C02 at AR-CITATION-LOWER-GLUED and
+ * AR-CITATION-LOWER-GLUED-Y, G15-C03 at AR-CITATION-COMMA-UNSPACED and AR-CITATION-COMMA-UNSPACED-UPPER, G15-C04 at
+ * AR-CITATION-COMMA-PERIOD and AR-CITATION-COMMA-PERIOD-UPPER, G15-W03 at AR-F5-HEAD-RUN-ON and AR-F5-HEAD-SEMICOLON-RUN-ON, and
+ * G15-W04 at AR-WITNESS-WIDE-SPACED alone. wb-ectn refusal #1's seventeen claimed LEG 2 forms (gate-prep-4's GP4 members: one edit
+ * each of CLAUSE's quoted span (two) and its parenthesized span (two), the citation glue test (five), the citation's comma form,
+ * the comma quote's end, G12_ID (three), the F5 head, the witness split and the member lines) are such edits, each red at its own
+ * wb-ectn cut #2 page's case alone: GP4-K01 at AR-CLAUSE-QUOTE-UPPER-INNER, GP4-K02 at AR-CLAUSE-QUOTE-DIGIT-INNER, GP4-K03 at
+ * AR-CLAUSE-PAREN-NESTED-UPPER, GP4-K04 at AR-CLAUSE-PAREN-NESTED-PHRASE, GP4-C01 at AR-CITATION-UPPER-GLUED, GP4-C02 at
+ * AR-CITATION-LOWER-GLUED-Y, GP4-C03 at AR-CITATION-DIGIT-GLUED, GP4-C04 at AR-CITATION-PERIOD-COMMA-FORM, GP4-C05 at
+ * AR-CITATION-UNDERSCORE-COMMA-FORM, GP4-C06 at AR-CITATION-COMMA-UNSPACED-UPPER, GP4-C07 at AR-CITATION-COMMA-PERIOD-UPPER,
+ * GP4-I01 at AR-G12-THREE-LETTER-FIRST-WORD, GP4-I02 at AR-G12-TWO-LETTER-DIGIT-WORD, GP4-I03 at AR-G12-NINE-LETTER-MIDDLE-WORD,
+ * GP4-W01 at AR-F5-HEAD-SEMICOLON-RUN-ON, GP4-W02 at AR-WITNESS-UNSPACED-UPPER and GP4-F01 at AR-FOLD-TRAILING-BLANK-LINE; that
+ * gate's two NOT CLAIMED controls (a fold line of three spaces dropped, GP4-N01, and citation glue on '!', GP4-N02) stay green, as
+ * the field (2) and (4) NOT CLAIMED sentences say. wb-ectn refusal #2's eleven claimed LEG 2 forms (gate-prep-18's GP18 members:
+ * one edit each of the parenthesized quote's end (four: at a digit, at a colon, at a line break, and an empty quote passed over),
+ * the comma quote's end (three: at a digit, at a line break, and an empty quote passed over), G12_ID (an id read to at most five
+ * words), FOLD's end (one trailing space allowed), the witness split (also at a slash after a digit) and CLAUSE's quoted span (no
+ * digit in it)) are such edits, each red at its own wb-ectn cut #3 page's case alone: GP18-C01 at AR-QUOTE-PAREN-DIGIT, GP18-C02 at
+ * AR-QUOTE-PAREN-COLON, GP18-C03 at AR-QUOTE-COMMA-DIGIT, GP18-C04 at AR-QUOTE-COMMA-LINE-BREAK, GP18-C05 at
+ * AR-QUOTE-PAREN-LINE-BREAK, GP18-C06 at AR-QUOTE-PAREN-EMPTY, GP18-C07 at AR-QUOTE-COMMA-EMPTY, GP18-I01 at AR-G12-SIX-WORDS,
+ * GP18-F01 at AR-FOLD-TRAILING-SPACE, GP18-W01 at AR-WITNESS-SLASH-AFTER-DIGIT and GP18-K01 at AR-CLAUSE-QUOTE-DIGIT; that gate's
+ * NOT CLAIMED control (an occurrence right after a line break passed over as a citation, GP18-N01) stays green, as field (4)'s NOT
+ * CLAIMED sentence on citation contexts says.
  *
  * RESIDUALS (named families within readAnchor's reading, each with pinned quiet rows among the READERS pages; a quiet row's reading
  * is AR-BASE's, so it reds when its page starts to reach the reading):
@@ -160,26 +290,27 @@
  * markup (an image, an autolink, a character reference, an escaped pipe), an element in a block of more than one line or with an
  * upper-case tag name, a near lead or an NFKC-folding character other than the ones probed, and every reading the parent census's
  * header lists beyond these probes. The parent census's own in-case controls and header are NOT CLAIMED by this census. A probe's
- * text edited - alone or together with its literal reading - in a way that keeps this census passing is NOT CLAIMED by this
- * census (the mutant replay is what shows that each probe still holds its form). Row S's pin quotes are this file's descriptions
- * of the seat's mutants and no outside anchor holds them: an edit of one is NOT CLAIMED by this census. The row ids V1, V2 and S
- * are this file's own names and no field ANCHOR reads holds them: one relabelled in every literal together is NOT CLAIMED by this
- * census (SHAPE reds a one-literal relabel). The control probes (every probe whose id opens neither GW12-, GW19- nor WS-W-) are
- * this file's own names and no field ANCHOR reads holds them: one removed or relabelled in every literal together is NOT CLAIMED
- * by this census (SHAPE reds a one-literal edit). The READERS pages - their ids, what texts and edits, PAGE_KEYS and the base
- * rows - are this file's own names and text and no field ANCHOR reads holds them: a page removed or relabelled in every literal
- * together is NOT CLAIMED by this census (SHAPE reds a one-literal edit). readAnchor's reading of any text that is neither the
- * two real rows nor a READERS page is NOT CLAIMED by this census: the field and id-form words above say what readAnchor reads,
- * and each holds through ANCHOR on the real rows and through the READERS pages named for it, not beyond them (a GW12 id of four
- * or more digits and every token form no page carries among them). The text of a description clause after its claim (R4 pins only
- * that a later quoted or parenthesized span is not read into the claim), and the text of an UNMET line, of refusal #4's verdict
- * and of its F5 finding beyond the ids, quotes and witness clause read above, are NOT CLAIMED by this census. Each block is found
- * by a fixed locator (the description clauses' opening '- U<digit> (', the fold's opening and idem lines, the two verdict
- * openings with their full tips, each UNMET line's opening '<id> <severity> CONFIRMED', refusal #4's WHAT STANDS end, the F5 head
- * and the next bullet head): a locator edited so that it still finds the same block reads the same fields and is NOT CLAIMED by
- * this census (on AR-VERDICT-AFTER-WHAT-STANDS a verdict read past WHAT STANDS, and on AR-F5-HEAD-OTHER-GRADE an F5 head found by
- * its label alone, finds another block). The citation judges' use of shownText (their carrier view) is NOT CLAIMED by this
- * census.
+ * text edited - alone or together with its literal reading - in a way that keeps this census passing is NOT CLAIMED by this census
+ * (the mutant replay is what shows that each probe still holds its form). Row S's pin quotes are this file's descriptions of the
+ * seat's mutants and no outside anchor holds them: an edit of one is NOT CLAIMED by this census. The row ids V1, V2 and S are this
+ * file's own names and no field ANCHOR reads holds them: one relabelled in every literal together is NOT CLAIMED by this census
+ * (SHAPE reds a one-literal relabel). The control probes (every probe whose id opens neither GW12-, GW19- nor WS-W-) are this
+ * file's own names and no field ANCHOR reads holds them: one removed or relabelled in every literal together is NOT CLAIMED by this
+ * census (SHAPE reds a one-literal edit). The READERS pages - their ids, what texts and edits, PAGE_KEYS and the base rows - are
+ * this file's own names and text and no field ANCHOR reads holds them: a page removed or relabelled in every literal together is
+ * NOT CLAIMED by this census (SHAPE reds a one-literal edit). readAnchor's reading of any text that is neither the two real rows
+ * nor a READERS page is NOT CLAIMED by this census: the words of ANCHOR's six fields and THE ID FORMS above are exact lists of the
+ * forms the real rows and the READERS pages hold, each list ended by its own NOT CLAIMED sentence (a GW12 id of four or more digits
+ * and every token form no page carries among them). The text of a description clause after its claim (R4 pins only that a later
+ * quoted or parenthesized span is not read into the claim), and the text of an UNMET line, of refusal #4's verdict and of its F5
+ * finding beyond the ids, quotes and witness clause read above, are NOT CLAIMED by this census. Each block is found by a fixed
+ * locator (the description clauses' opening '- U<digit> (', the fold's opening and idem lines, the two verdict openings with their
+ * full tips, each UNMET line's opening '<id> <severity> CONFIRMED', refusal #4's WHAT STANDS end, the F5 head and the next bullet
+ * head): a locator edited so that it still finds the same block reads the same fields and is NOT CLAIMED by this census (on
+ * AR-VERDICT-AFTER-WHAT-STANDS a verdict read past WHAT STANDS, on AR-F5-HEAD-OTHER-GRADE an F5 head found by its label alone, on
+ * AR-F5-HEAD-RUN-ON one found by its label alone or without its closing parenthesis, and on AR-F5-HEAD-SEMICOLON-RUN-ON one found
+ * by its label alone, without its closing parenthesis or also with a semicolon after CONFIRMED, finds another block). The citation
+ * judges' use of shownText (their carrier view) is NOT CLAIMED by this census.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read; no src, docs or receipt is edited.
  */
@@ -614,7 +745,7 @@ function pageRows(edit: readonly [Where, string, string] | null): { readonly chi
   if (where === "child notes") return { child: { ...BASE_CHILD, notes: text }, parent: BASE_PARENT };
   return { child: BASE_CHILD, parent: { ...BASE_PARENT, notes: text } };
 }
-/** The READERS pages: the base page, then pages one edit from it, each with readAnchor's whole reading of it written as a literal; the pages whose ids open AR-QUIET- are the residuals' quiet rows (their reading is the base page's); wb-dlot's seventeen pages close the table, in the order of the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row. */
+/** The READERS pages: the base page, then pages one edit from it, each with readAnchor's whole reading of it written as a literal; the pages whose ids open AR-QUIET- are the residuals' quiet rows (their reading is the base page's); wb-dlot's seventeen pages follow, in the order of the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row, wb-ectn's ten pages follow, in the order of the landing-884 gate's F1 forms G15-I01, G15-K02, G15-K03, G15-F03, G15-C01, G15-C02, G15-C03, G15-C04, G15-W03 and G15-W04, wb-ectn's cut #2 seventeen pages follow, in the order of wb-ectn refusal #1's GP4 members GP4-K01 to GP4-K04, GP4-C01 to GP4-C07, GP4-I01 to GP4-I03, GP4-W01, GP4-W02 and GP4-F01, and wb-ectn's cut #3 eleven pages close the table, in the order of wb-ectn refusal #2's GP18 members GP18-C01 to GP18-C07, GP18-I01, GP18-F01, GP18-W01 and GP18-K01. */
 const PAGES: readonly PageSpec[] = [
   { id: "AR-BASE", what: "the base page's clauses, fold lines, UNMET lines, V verdict and F5 finding are read as written", edit: null, reading: BASE_READING },
   {
@@ -938,9 +1069,231 @@ const PAGES: readonly PageSpec[] = [
     edit: ["description", U2_CLAUSE, `${U2_CLAUSE}\n - U3 (LOW) extra form: one mutant against 'a reading' (:1) survives.`],
     reading: BASE_READING,
   },
+  {
+    id: "AR-G12-NINE-LETTER-WORD", what: "an extra G12 id whose later word holds nine letters ('G12-A-NINELONGS', landing 884's G15-I01 form) is read whole as a third G12 id",
+    edit: ["parent notes", "G12-A-TWO (a quote (with a nested part) here).", "G12-A-TWO (a quote (with a nested part) here), G12-A-NINELONGS (a nine-letter later word)."],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, g12: ["G12-A-ONE", "G12-A-TWO", "G12-A-NINELONGS"] }, BASE_U2] },
+  },
+  {
+    id: "AR-CLAUSE-QUOTE-INNER", what: "an apostrophe between two letters of a quoted claim ('a cell's claim', landing 884's G15-K02 form) ends the claim's span there, so CLAUSE does not read the line and it is kept whole",
+    edit: ["description", U1_CLAUSE, "- U1 (MEDIUM) cells: two mutants against 'a cell's claim' (:1) survive."],
+    reading: {
+      ...BASE_READING,
+      clauses: [["- U1 (MEDIUM) cells: two mutants against 'a cell's claim' (:1) survive."], ["U2", "LOW", "prose", "one", "mutant", "survives (a prose claim)"]],
+    },
+  },
+  {
+    id: "AR-CLAUSE-PAREN-NESTED", what: "a parenthesized claim holding a nested parenthesized word ('(a (nested) claim)', landing 884's G15-K03 form) is not read by CLAUSE, so the line is kept whole",
+    edit: ["description", U2_CLAUSE, "- U2 (LOW) prose: one mutant survives (a (nested) claim)"],
+    reading: {
+      ...BASE_READING,
+      clauses: [["U1", "MEDIUM", "cells", "two", "mutants", "against 'a cell claim'"], ["- U2 (LOW) prose: one mutant survives (a (nested) claim)"]],
+    },
+  },
+  {
+    id: "AR-FOLD-SPACES-LINE", what: "a line of two spaces between the fold's member lines (landing 884's G15-F03 form) is read as a member, kept whole as its two spaces",
+    edit: ["child notes", `${U1_LINE}\n${U2_LINE}`, `${U1_LINE}\n  \n${U2_LINE}`],
+    reading: {
+      ...BASE_READING,
+      members: [
+        ["U1-MEDIUM-CONFIRMED-", "R514-R-B159", "ALPHA-LABEL", "GP19-C-ONE-AND-TWIN", "01-02"],
+        ["  "],
+        ["U2-LOW-CONFIRMED-", "R515", "BETA", "GP19-D-ONE", "03"],
+      ],
+    },
+  },
+  {
+    id: "AR-CITATION-PERIOD", what: "an occurrence of G12-A-ONE after a period ('.G12-A-ONE', landing 884's G15-C01 form) is its first citation, and its quote is read",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: .G12-A-ONE (a period-glued quote) and G12-A-ONE (the first quote)"],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, quotes: ["a period-glued quote", "a quote (with a nested part) here"] }, BASE_U2] },
+  },
+  {
+    id: "AR-CITATION-LOWER-GLUED", what: "an occurrence of G12-A-ONE glued to a preceding lower-case letter ('xG12-A-ONE', landing 884's G15-C02 form) is passed over as a citation; its quote is its own first citation's",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: xG12-A-ONE (a lower-glued quote) and G12-A-ONE (the first quote)"],
+    reading: BASE_READING,
+  },
+  {
+    id: "AR-CITATION-COMMA-UNSPACED", what: "G12-B-ONE followed by a comma with no space after it ('G12-B-ONE,the comma quote:', landing 884's G15-C03 form) is neither citation form: its quote reads empty",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", "G12-B-ONE,the comma quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: [""] }] },
+  },
+  {
+    id: "AR-CITATION-COMMA-PERIOD", what: "a comma-form quote holding a period ('G12-B-ONE, the comma. quote:', landing 884's G15-C04 form) is read on past the period to the next colon",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", "G12-B-ONE, the comma. quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: ["the comma. quote"] }] },
+  },
+  {
+    id: "AR-F5-HEAD-RUN-ON", what: "an F5 head whose parenthesis runs on past CONFIRMED ('(THE CELLS, measured part, CONFIRMED, again)', landing 884's G15-W03 form) is no F5 head: no row S id or witness is read",
+    edit: ["parent notes", "- F5 INFO: (THE CELLS, measured part, CONFIRMED)", "- F5 INFO: (THE CELLS, measured part, CONFIRMED, again)"],
+    reading: { ...BASE_READING, ids: [], witnesses: [""] },
+  },
+  {
+    id: "AR-WITNESS-WIDE-SPACED", what: "an F5 witness list with two spaces on each side of its slash ('WS-W-ONE  /  -TWO', landing 884's G15-W04 form) is no witness clause: one empty witness is read",
+    edit: ["parent notes", "Their witnesses WS-W-ONE / -TWO red", "Their witnesses WS-W-ONE  /  -TWO red"],
+    reading: { ...BASE_READING, witnesses: [""] },
+  },
+  {
+    id: "AR-CLAUSE-QUOTE-UPPER-INNER", what: "an apostrophe between two upper-case letters of a quoted claim ('an A'B claim', wb-ectn refusal #1's GP4-K01 form) ends the claim's span there, so CLAUSE does not read the line and it is kept whole",
+    edit: ["description", U1_CLAUSE, "- U1 (MEDIUM) cells: two mutants against 'an A'B claim' (:1) survive."],
+    reading: {
+      ...BASE_READING,
+      clauses: [["- U1 (MEDIUM) cells: two mutants against 'an A'B claim' (:1) survive."], ["U2", "LOW", "prose", "one", "mutant", "survives (a prose claim)"]],
+    },
+  },
+  {
+    id: "AR-CLAUSE-QUOTE-DIGIT-INNER", what: "an apostrophe after a space and before a digit inside a quoted claim ('a '9 claim', wb-ectn refusal #1's GP4-K02 form) ends the claim's span there, so CLAUSE does not read the line and it is kept whole",
+    edit: ["description", U1_CLAUSE, "- U1 (MEDIUM) cells: two mutants against 'a '9 claim' (:1) survive."],
+    reading: {
+      ...BASE_READING,
+      clauses: [["- U1 (MEDIUM) cells: two mutants against 'a '9 claim' (:1) survive."], ["U2", "LOW", "prose", "one", "mutant", "survives (a prose claim)"]],
+    },
+  },
+  {
+    id: "AR-CLAUSE-PAREN-NESTED-UPPER", what: "a parenthesized claim holding a nested upper-case word ('(a (NESTED) claim)', wb-ectn refusal #1's GP4-K03 form) is not read by CLAUSE, so the line is kept whole",
+    edit: ["description", U2_CLAUSE, "- U2 (LOW) prose: one mutant survives (a (NESTED) claim)"],
+    reading: {
+      ...BASE_READING,
+      clauses: [["U1", "MEDIUM", "cells", "two", "mutants", "against 'a cell claim'"], ["- U2 (LOW) prose: one mutant survives (a (NESTED) claim)"]],
+    },
+  },
+  {
+    id: "AR-CLAUSE-PAREN-NESTED-PHRASE", what: "a parenthesized claim holding a nested group of two lower-case words ('(a (two words) claim)', wb-ectn refusal #1's GP4-K04 form) is not read by CLAUSE, so the line is kept whole",
+    edit: ["description", U2_CLAUSE, "- U2 (LOW) prose: one mutant survives (a (two words) claim)"],
+    reading: {
+      ...BASE_READING,
+      clauses: [["U1", "MEDIUM", "cells", "two", "mutants", "against 'a cell claim'"], ["- U2 (LOW) prose: one mutant survives (a (two words) claim)"]],
+    },
+  },
+  {
+    id: "AR-CITATION-UPPER-GLUED", what: "an occurrence of G12-A-ONE glued to a preceding upper-case Q ('QG12-A-ONE', wb-ectn refusal #1's GP4-C01 form) is passed over as a citation; its quote is its own first citation's",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: QG12-A-ONE (a Q-glued quote) and G12-A-ONE (the first quote)"],
+    reading: BASE_READING,
+  },
+  {
+    id: "AR-CITATION-LOWER-GLUED-Y", what: "an occurrence of G12-A-ONE glued to a preceding lower-case y ('yG12-A-ONE', wb-ectn refusal #1's GP4-C02 form) is passed over as a citation; its quote is its own first citation's",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: yG12-A-ONE (a y-glued quote) and G12-A-ONE (the first quote)"],
+    reading: BASE_READING,
+  },
+  {
+    id: "AR-CITATION-DIGIT-GLUED", what: "an occurrence of G12-A-ONE glued to a preceding digit 7 ('7G12-A-ONE', wb-ectn refusal #1's GP4-C03 form) is passed over as a citation; its quote is its own first citation's",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: 7G12-A-ONE (a 7-glued quote) and G12-A-ONE (the first quote)"],
+    reading: BASE_READING,
+  },
+  {
+    id: "AR-CITATION-PERIOD-COMMA-FORM", what: "a comma-form occurrence of G12-B-ONE after a period ('.G12-B-ONE, a period comma quote:', wb-ectn refusal #1's GP4-C04 form) is its first citation, and its quote is read",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", ".G12-B-ONE, a period comma quote: then G12-B-ONE, the comma quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: ["a period comma quote"] }] },
+  },
+  {
+    id: "AR-CITATION-UNDERSCORE-COMMA-FORM", what: "a comma-form occurrence of G12-B-ONE after an underscore ('_G12-B-ONE, an underscore comma quote:', wb-ectn refusal #1's GP4-C05 form) is its first citation, and its quote is read",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", "_G12-B-ONE, an underscore comma quote: then G12-B-ONE, the comma quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: ["an underscore comma quote"] }] },
+  },
+  {
+    id: "AR-CITATION-COMMA-UNSPACED-UPPER", what: "G12-B-ONE followed by a comma with an upper-case letter and no space after it ('G12-B-ONE,The comma quote:', wb-ectn refusal #1's GP4-C06 form) is neither citation form: its quote reads empty",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", "G12-B-ONE,The comma quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: [""] }] },
+  },
+  {
+    id: "AR-CITATION-COMMA-PERIOD-UPPER", what: "a comma-form quote holding a period before an upper-case letter ('G12-B-ONE, the comma.Quote:', wb-ectn refusal #1's GP4-C07 form) is read on past the period to the next colon",
+    edit: ["parent notes", "G12-B-ONE, the comma quote: it survives.", "G12-B-ONE, the comma.Quote: it survives."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, quotes: ["the comma.Quote"] }] },
+  },
+  {
+    id: "AR-G12-THREE-LETTER-FIRST-WORD", what: "an extra G12 id whose first word holds three letters ('G12-ABC-EXTRA', wb-ectn refusal #1's GP4-I01 form) is read whole as a third G12 id",
+    edit: ["parent notes", "G12-A-TWO (a quote (with a nested part) here).", "G12-A-TWO (a quote (with a nested part) here), G12-ABC-EXTRA (a three-letter first word)."],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, g12: ["G12-A-ONE", "G12-A-TWO", "G12-ABC-EXTRA"] }, BASE_U2] },
+  },
+  {
+    id: "AR-G12-TWO-LETTER-DIGIT-WORD", what: "an extra G12 id whose later word is two letters then one digit ('G12-A-BC2', wb-ectn refusal #1's GP4-I02 form) is read whole as a third G12 id",
+    edit: ["parent notes", "G12-A-TWO (a quote (with a nested part) here).", "G12-A-TWO (a quote (with a nested part) here), G12-A-BC2 (a two-letter digit word)."],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, g12: ["G12-A-ONE", "G12-A-TWO", "G12-A-BC2"] }, BASE_U2] },
+  },
+  {
+    id: "AR-G12-NINE-LETTER-MIDDLE-WORD", what: "an extra G12 id whose nine-letter word is followed by another word ('G12-A-NINELONGS-EXTRA', wb-ectn refusal #1's GP4-I03 form) is read whole as a third G12 id",
+    edit: ["parent notes", "G12-A-TWO (a quote (with a nested part) here).", "G12-A-TWO (a quote (with a nested part) here), G12-A-NINELONGS-EXTRA (a nine-letter middle word)."],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, g12: ["G12-A-ONE", "G12-A-TWO", "G12-A-NINELONGS-EXTRA"] }, BASE_U2] },
+  },
+  {
+    id: "AR-F5-HEAD-SEMICOLON-RUN-ON", what: "an F5 head whose parenthesis runs on past CONFIRMED after a semicolon ('(THE CELLS, measured part, CONFIRMED; again)', wb-ectn refusal #1's GP4-W01 form) is no F5 head: no row S id or witness is read",
+    edit: ["parent notes", "- F5 INFO: (THE CELLS, measured part, CONFIRMED)", "- F5 INFO: (THE CELLS, measured part, CONFIRMED; again)"],
+    reading: { ...BASE_READING, ids: [], witnesses: [""] },
+  },
+  {
+    id: "AR-WITNESS-UNSPACED-UPPER", what: "an F5 witness list whose slash, with no space on either side, comes before an upper-case letter ('WS-W-ONE/TWO', wb-ectn refusal #1's GP4-W02 form) is read as one witness",
+    edit: ["parent notes", "Their witnesses WS-W-ONE / -TWO red", "Their witnesses WS-W-ONE/TWO red"],
+    reading: { ...BASE_READING, witnesses: ["WS-W-ONE/TWO"] },
+  },
+  {
+    id: "AR-FOLD-TRAILING-BLANK-LINE", what: "a blank line after the fold's last member line (wb-ectn refusal #1's GP4-F01 form) is read as a member, kept whole as the empty line",
+    edit: ["child notes", `${U2_LINE}\nrule19-invert idem`, `${U2_LINE}\n\nrule19-invert idem`],
+    reading: {
+      ...BASE_READING,
+      members: [
+        ["U1-MEDIUM-CONFIRMED-", "R514-R-B159", "ALPHA-LABEL", "GP19-C-ONE-AND-TWIN", "01-02"],
+        ["U2-LOW-CONFIRMED-", "R515", "BETA", "GP19-D-ONE", "03"],
+        [""],
+      ],
+    },
+  },
+  {
+    id: "AR-QUOTE-PAREN-DIGIT", what: "a parenthesized quote holding a digit run into its last word, then a space and a word ('G12-A-ONE (the first quote2 planted)', wb-ectn refusal #2's GP18-C01 witness form), is read whole to its balancing parenthesis",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: G12-A-ONE (the first quote2 planted)"],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, quotes: ["the first quote2 planted", "a quote (with a nested part) here"] }, BASE_U2] },
+  },
+  {
+    id: "AR-QUOTE-PAREN-COLON", what: "a parenthesized quote holding a colon, then a space and a word ('G12-A-ONE (the first quote: planted)', wb-ectn refusal #2's GP18-C02 witness form), is read whole to its balancing parenthesis",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: G12-A-ONE (the first quote: planted)"],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, quotes: ["the first quote: planted", "a quote (with a nested part) here"] }, BASE_U2] },
+  },
+  {
+    id: "AR-QUOTE-COMMA-DIGIT", what: "a V pin's comma-form quote holding a digit run into its last word, then a space and a word ('GP19-C-ONE-TWIN, the twin quote2 planted:', wb-ectn refusal #2's GP18-C03 witness form), is read on to the next colon",
+    edit: ["parent notes", "GP19-C-ONE-TWIN, the twin quote: are named first", "GP19-C-ONE-TWIN, the twin quote2 planted: are named first"],
+    reading: { ...BASE_READING, verdict: ["the V quote", "the twin quote2 planted"] },
+  },
+  {
+    id: "AR-QUOTE-COMMA-LINE-BREAK", what: "a V pin's comma-form quote holding a line break before its last word ('GP19-C-ONE-TWIN, the twin quote', a line break, 'planted:', wb-ectn refusal #2's GP18-C04 witness form) is read on to the next colon",
+    edit: ["parent notes", "GP19-C-ONE-TWIN, the twin quote: are named first", "GP19-C-ONE-TWIN, the twin quote\nplanted: are named first"],
+    reading: { ...BASE_READING, verdict: ["the V quote", "the twin quote\nplanted"] },
+  },
+  {
+    id: "AR-QUOTE-PAREN-LINE-BREAK", what: "a V pin's parenthesized quote holding a line break before its last word ('GP19-C-ONE (the V quote', a line break, 'planted)', wb-ectn refusal #2's GP18-C05 witness form) is read whole to its balancing parenthesis",
+    edit: ["parent notes", "then GP19-C-ONE (the V quote).", "then GP19-C-ONE (the V quote\nplanted)."],
+    reading: { ...BASE_READING, verdict: ["the V quote\nplanted", "the twin quote"] },
+  },
+  {
+    id: "AR-QUOTE-PAREN-EMPTY", what: "an empty parenthesized quote before the pin's other citation ('G12-A-ONE () G12-A-ONE (the first quote)', wb-ectn refusal #2's GP18-C06 witness form) is the first citation, and its quote reads empty",
+    edit: ["parent notes", "WHAT FAILS: G12-A-ONE (the first quote)", "WHAT FAILS: G12-A-ONE () G12-A-ONE (the first quote)"],
+    reading: { ...BASE_READING, unmet: [{ ...BASE_U1, quotes: ["", "a quote (with a nested part) here"] }, BASE_U2] },
+  },
+  {
+    id: "AR-QUOTE-COMMA-EMPTY", what: "an empty comma-form quote before the V pin's other citation ('GP19-C-ONE-TWIN, : GP19-C-ONE-TWIN, the twin quote:', wb-ectn refusal #2's GP18-C07 witness form) is the first citation, and its quote reads empty",
+    edit: ["parent notes", "GP19-C-ONE-TWIN, the twin quote: are named first", "GP19-C-ONE-TWIN, : GP19-C-ONE-TWIN, the twin quote: are named first"],
+    reading: { ...BASE_READING, verdict: ["the V quote", ""] },
+  },
+  {
+    id: "AR-G12-SIX-WORDS", what: "an extra G12 id of six words extending U2's pin, at the end of U2's UNMET line ('G12-B-ONE-TWO-SIX-TEN-EXTRA', wb-ectn refusal #2's GP18-I01 witness form), is read whole as a second G12 id",
+    edit: ["parent notes", "Witness: GW12-03 'c'.", "Witness: GW12-03 'c'. G12-B-ONE-TWO-SIX-TEN-EXTRA (a planted id)."],
+    reading: { ...BASE_READING, unmet: [BASE_U1, { ...BASE_U2, g12: ["G12-B-ONE", "G12-B-ONE-TWO-SIX-TEN-EXTRA"] }] },
+  },
+  {
+    id: "AR-FOLD-TRAILING-SPACE", what: "the fold's last member line with one trailing space (wb-ectn refusal #2's GP18-F01 witness form) is not FOLD's form and is kept whole, its space kept",
+    edit: ["child notes", `${U2_LINE}\nrule19-invert idem`, `${U2_LINE} \nrule19-invert idem`],
+    reading: { ...BASE_READING, members: [["U1-MEDIUM-CONFIRMED-", "R514-R-B159", "ALPHA-LABEL", "GP19-C-ONE-AND-TWIN", "01-02"], [`${U2_LINE} `]] },
+  },
+  {
+    id: "AR-WITNESS-SLASH-AFTER-DIGIT", what: "an F5 witness list whose last witness holds a digit, then a slash with no space on either side before a hyphen ('WS-W-ONE / -TWO2/-X', wb-ectn refusal #2's GP18-W01 witness form), is read as two witnesses, the second '-TWO2/-X'",
+    edit: ["parent notes", "Their witnesses WS-W-ONE / -TWO red", "Their witnesses WS-W-ONE / -TWO2/-X red"],
+    reading: { ...BASE_READING, witnesses: ["WS-W-ONE", "-TWO2/-X"] },
+  },
+  {
+    id: "AR-CLAUSE-QUOTE-DIGIT", what: "a quoted claim holding a digit between two of its words ('a cell 2 claim', wb-ectn refusal #2's GP18-K01 witness form) is read by CLAUSE as written",
+    edit: ["description", U1_CLAUSE, "- U1 (MEDIUM) cells: two mutants against 'a cell 2 claim' (:1) survive."],
+    reading: { ...BASE_READING, clauses: [["U1", "MEDIUM", "cells", "two", "mutants", "against 'a cell 2 claim'"], ["U2", "LOW", "prose", "one", "mutant", "survives (a prose claim)"]] },
+  },
 ];
 
-describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-readers.ts and this file's readAnchor): fifteen pin cases holding literal probe readings their named wb-pnn8 reader mutants change, SHAPE, ANCHOR (readAnchor's reading of the two tracker-export rows equals the literals' reading) and sixty READERS pages (readAnchor's literal readings of synthetic one-edit pages)", () => {
+describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-readers.ts and this file's readAnchor): fifteen pin cases holding literal probe readings their named wb-pnn8 reader mutants change, SHAPE, ANCHOR (readAnchor's reading of the two tracker-export rows equals the literals' reading) and ninety-eight READERS pages (readAnchor's literal readings of synthetic one-edit pages)", () => {
   it("SHAPE: the rows, their pins, each pin's probe ids and the READERS page ids are each held to a literal (a one-literal edit reds here)", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["U1:4", "U2:3", "U3:1", "V1:2", "V2:1", "S:4"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.map(probe => probe.id).join(",")}`)).toEqual([
@@ -1022,6 +1375,44 @@ describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-reade
       "AR-QUIET-GW12-LOWER-GLUED",
       "AR-QUIET-CLAUSE-SECOND-PAREN",
       "AR-QUIET-INDENTED-ROW",
+      "AR-G12-NINE-LETTER-WORD",
+      "AR-CLAUSE-QUOTE-INNER",
+      "AR-CLAUSE-PAREN-NESTED",
+      "AR-FOLD-SPACES-LINE",
+      "AR-CITATION-PERIOD",
+      "AR-CITATION-LOWER-GLUED",
+      "AR-CITATION-COMMA-UNSPACED",
+      "AR-CITATION-COMMA-PERIOD",
+      "AR-F5-HEAD-RUN-ON",
+      "AR-WITNESS-WIDE-SPACED",
+      "AR-CLAUSE-QUOTE-UPPER-INNER",
+      "AR-CLAUSE-QUOTE-DIGIT-INNER",
+      "AR-CLAUSE-PAREN-NESTED-UPPER",
+      "AR-CLAUSE-PAREN-NESTED-PHRASE",
+      "AR-CITATION-UPPER-GLUED",
+      "AR-CITATION-LOWER-GLUED-Y",
+      "AR-CITATION-DIGIT-GLUED",
+      "AR-CITATION-PERIOD-COMMA-FORM",
+      "AR-CITATION-UNDERSCORE-COMMA-FORM",
+      "AR-CITATION-COMMA-UNSPACED-UPPER",
+      "AR-CITATION-COMMA-PERIOD-UPPER",
+      "AR-G12-THREE-LETTER-FIRST-WORD",
+      "AR-G12-TWO-LETTER-DIGIT-WORD",
+      "AR-G12-NINE-LETTER-MIDDLE-WORD",
+      "AR-F5-HEAD-SEMICOLON-RUN-ON",
+      "AR-WITNESS-UNSPACED-UPPER",
+      "AR-FOLD-TRAILING-BLANK-LINE",
+      "AR-QUOTE-PAREN-DIGIT",
+      "AR-QUOTE-PAREN-COLON",
+      "AR-QUOTE-COMMA-DIGIT",
+      "AR-QUOTE-COMMA-LINE-BREAK",
+      "AR-QUOTE-PAREN-LINE-BREAK",
+      "AR-QUOTE-PAREN-EMPTY",
+      "AR-QUOTE-COMMA-EMPTY",
+      "AR-G12-SIX-WORDS",
+      "AR-FOLD-TRAILING-SPACE",
+      "AR-WITNESS-SLASH-AFTER-DIGIT",
+      "AR-CLAUSE-QUOTE-DIGIT",
     ]);
   });
 
