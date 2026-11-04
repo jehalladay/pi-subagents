@@ -333,7 +333,14 @@
       "test/fixtures/zz-observer-boundary.json": "{ \"plant\": 0 }\n",
       "config/zz-observer-boundary.yml": "plant: 0\n",
       "config/zz-observer-boundary.toml": "plant = 0\n",
-      "media/zz-observer-boundary.bin": "\u0000binary bytes\n"
+      "media/zz-observer-boundary.bin": "\u0000binary bytes\n",
+      "zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observers-boundaries.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer_boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "src/workbench/zz-boundary-identifier-function.ts": "export function Furnace\\u004fbserverBoundaryV0(): number {\n  return 0;\n}\n",
+      "src/workbench/zz-boundary-identifier-return.ts": "export function n(): number {\n  return Furnace\\u004fbserverBoundaryV0;\n}\n",
+      "src/workbench/zz-boundary-template-array.ts": "export const n = (a: string): string[] => [`x${a}Furnace\\u004fbserverBoundaryV0`];\n",
+      "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x${a}Furnace\\u004fbserverBoundaryV0`);\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4942,6 +4949,27 @@
               ],
               "media/zz-observer-boundary.bin": [
                 "path"
+              ],
+              "zz-observer-boundary.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observers-boundaries.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer_boundary.md": [
+                "path"
+              ],
+              "src/workbench/zz-boundary-identifier-function.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-return.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-array.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-call.ts": [
+                "cooked"
               ]
             },
             "decodings": {
