@@ -16,13 +16,20 @@
  * each row's id against the word its UNMET item opens with (G21-L2-50 SHAPE-ROWID-REFUSAL-ONLY); F3, sectionOf's reading of a text
  * lacking its open or its close is NOT CLAIMED (G21-L2-40 SECTION-NOCLOSE-EMPTY, G21-L2-41 SECTION-NOOPEN-WHOLE).
  *
+ * wb-ceq3, the R694 follow-up of wb-rlhi's landing 885 (gate cmd_ee24857e0dae PASS-WITH-FINDING), answers that gate's F1 and F2 by
+ * the pin route and narrows one NOT CLAIMED sentence: F1, each pin case next holds its loop entry to be the PINS entry its id names,
+ * the one object (G12-A05 TL2B-ID-SWAP); F2, holdAnchor ends with REACH, which holds the pins and rows its two loops reached against
+ * ROWS (G12-E01 CITE-FIRST-PIN-ONLY, G12-E04 ROWS-LOOP-FIRST-FOUR); and which of PINS's own objects the pin-case loop runs is NOT
+ * CLAIMED (G12-A03 LOOP-DROP-GP23, G12-A04 LOOP-DROP-FIRST).
+ *
  * PINNED READER SET (this file, test/workbench-urr-alt-read-census.test.ts; observed at the cut: 13 passed (13)):
  * - The nine pin cases, each named by its member's cite (the words with which the member's refusal record names it). Each first
- *   holds the probe ids it reads against the probe ids of the PINS entry its id names (looked up in PINS by that id), then holds, in
- *   one toEqual over the pin's probes in order, each probe's id with the reading inlineRendered() returns over the inline tokens of
- *   the probe's one paragraph (marked's lexer, 18.0.11 at the cut) - its pieces, the records it collects and the extras it collects -
- *   against the literal reading written here. Observed: each passes. A probe's text is a witness that its row's UNMET item quotes,
- *   decoded from the record's notation (<backslash>, <line feed>, <two spaces>).
+ *   holds the probe ids it reads against the probe ids of the PINS entry its id names (looked up in PINS by that id), then holds its
+ *   loop entry to be that PINS entry itself, the one object (toBe), then holds, in one toEqual over the pin's probes in order, each
+ *   probe's id with the reading inlineRendered() returns over the inline tokens of the probe's one paragraph (marked's lexer, 18.0.11
+ *   at the cut) - its pieces, the records it collects and the extras it collects - against the literal reading written here.
+ *   Observed: each passes. A probe's text is a witness that its row's UNMET item quotes, decoded from the record's notation
+ *   (<backslash>, <line feed>, <two spaces>).
  *   - Row R3-U1 (wb-nnm7 refusal #3's U1): pin GP9-L2-12 SPACED-TRIM over trimBackslash, trimSpaces and trimDecision, each a hard
  *     break opening an image's alt (a backslash one, a two-space one, and the backslash one in a decision text), each read with the
  *     image piece "\nsm" in place and the one record image alt "sm".
@@ -53,8 +60,10 @@
  *   the row's id is "R<refusal>-" and the word that item opens with (after "- " up to " (" for refusal #3, after "- [" up to its
  *   first "-" for refusal #4); and that item holds each of the row's pins' cites after a space and before ":", ",", " (" or ".", each
  *   cite opening with its pin's id; (4) the witnesses that item quotes (each single-quoted text holding "](x.png)"), decoded, against
- *   the row's probes' texts in the order the row's pins first hold them. And (5) the W ids that the two UNMET item lines of wb-gmj9's
- *   refusal #1 record name (each "-W<nn>" before "-" or ".") equal the plants' ids, in that order. Observed: passes.
+ *   the row's probes' texts in the order the row's pins first hold them; and REACH, last: the pins and rows holdAnchor's two loops
+ *   reached - each pin recorded once its cite check passes, each row once its witness check passes - against ROWS, each row's pins in
+ *   order and then the row, row by row. And (5) the W ids that the two UNMET item lines of wb-gmj9's refusal #1 record name (each
+ *   "-W<nn>" before "-" or ".") equal the plants' ids, in that order. Observed: passes.
  * - Case READERS (refusal #1's cure, by the pin route): twelve plants, each the two export rows ANCHOR reads with one edit applied in
  *   memory, never to a file - refusal #1's paired witnesses as its gate wrote them: W01 the description list's two items swapped; W02
  *   a third item appended to that list; W03 the fold's first two lines swapped; W04 a fourth fold line; W08 the first two witness
@@ -73,23 +82,30 @@
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader returns exactly the literal reading written here: a reader edit that
  * changes one probe's reading reds that pin case. A pin case left reading fewer probes than its PINS entry holds reds that case too:
- * its reading side cut alone (refusal #1's F1 rider TL2) at its reading assertion, and the loop's entries cut so that both of its
- * sides read fewer (the landing-835 gate's G21-L2-47 TL2B) at its first assertion, which holds the probe ids it reads against those
- * of the PINS entry its id names. (2) Each named member of wb-nnm7's refusals changes the reading of every probe of its own pin: the
- * cutting seat applied each member's own edit (its refusal gate's archived find and replace, verbatim, over a copy of the helper),
- * read the pin case named after it red and read each of that pin's probes changed; a pin whose probes stopped holding its form would
- * read green there. (3) The rows with their ids and unmet items, each row's pins, each pin's cite, each row's probe texts and the
- * plants' ids are held to the tracker export: a row or a pin removed or added, a row renamed or its unmet item changed, a pin's cite
- * shortened, a probe removed, added, moved to another row or given another text, or a plant removed - in one literal or in every
- * literal together - reds SHAPE, ANCHOR or READERS (standing rule 16's CT1-CT6 among them). A row renamed in every literal together
- * reds ANCHOR's id check beside SHAPE's, so a SHAPE edit that reads the id against itself (the landing-835 gate's G21-L2-50) leaves
- * it red; a plant removed in every literal together reds ANCHOR's check (5), whose exactness claim (5) holds. (4) On each plant the
- * first holdAnchor check that fails is the one READERS holds it to, and on the unedited rows none fails: a holdAnchor edit that
- * changes the check a plant fails first, or lets a plant pass, reds READERS. The cutting seat applied each of refusal #1's twelve
- * members M01-M12 (its gate's archived find and replace, verbatim, over a copy of this census) and read READERS red under each on the
- * real export, where the cut #1 census read each at 0 failed. (5) Check (5) reads refusal #1's W ids exactly and in order: it fails
- * on each of IDS's four copies, so check (5) read as a superset, a subset, a set or order-free reds IDS (the landing-835 gate's
- * G21-L2-38 C5-SET reads it as a superset).
+ * its reading side cut alone (refusal #1's F1 rider TL2) at its reading assertion, the loop's entries cut so that both of its sides
+ * read fewer (the landing-835 gate's G21-L2-47 TL2B) at its first assertion, which holds the probe ids it reads against those of the
+ * PINS entry its id names, and a loop entry so cut and given another pin's id as well (the landing-885 gate's G12-A05 TL2B-ID-SWAP)
+ * at its second assertion, which holds the case's loop entry to be the PINS entry its id names, the one object. So a loop entry that
+ * is not one of PINS's own objects reds its case whatever it keeps or changes of an entry's id, cite or probes: at the first
+ * assertion when its id names no PINS entry or its probe ids differ from that entry's, at the second otherwise. (2) Each named member
+ * of wb-nnm7's refusals changes the reading of every probe of its own pin: the cutting seat applied each member's own edit (its
+ * refusal gate's archived find and replace, verbatim, over a copy of the helper), read the pin case named after it red and read each
+ * of that pin's probes changed; a pin whose probes stopped holding its form would read green there. (3) The rows with their ids and
+ * unmet items, each row's pins, each pin's cite, each row's probe texts and the plants' ids are held to the tracker export: a row or
+ * a pin removed or added, a row renamed or its unmet item changed, a pin's cite shortened, a probe removed, added, moved to another
+ * row or given another text, or a plant removed - in one literal or in every literal together - reds SHAPE, ANCHOR or READERS
+ * (standing rule 16's CT1-CT6 among them). A row renamed in every literal together reds ANCHOR's id check beside SHAPE's, so a SHAPE
+ * edit that reads the id against itself (the landing-835 gate's G21-L2-50) leaves it red; a plant removed in every literal together
+ * reds ANCHOR's check (5), whose exactness claim (5) holds. Those checks run on every row and on every pin of each row: REACH holds
+ * the pins and rows holdAnchor's loops reached against ROWS, so its row loop or its cite loop cut to fewer rows or pins (the
+ * landing-885 gate's G12-E04 ROWS-LOOP-FIRST-FOUR and G12-E01 CITE-FIRST-PIN-ONLY) reds ANCHOR and READERS, alone and with
+ * GP23-L2-03's or GP9-L2-21's cite shortened or GP23-L2-03 removed from every literal. (4) On each plant the first holdAnchor check
+ * that fails is the one READERS holds it to, and on the unedited rows none fails: a holdAnchor edit that changes the check a plant
+ * fails first, or lets a plant pass, reds READERS. The cutting seat applied each of refusal #1's twelve members M01-M12 (its gate's
+ * archived find and replace, verbatim, over a copy of this census) and read READERS red under each on the real export, where the cut
+ * #1 census read each at 0 failed. (5) Check (5) reads refusal #1's W ids exactly and in order: it fails on each of IDS's four
+ * copies, so check (5) read as a superset, a subset, a set or order-free reds IDS (the landing-835 gate's G21-L2-38 C5-SET reads it
+ * as a superset).
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them a white space run at
  * an alt's close, a hard break opening an emphasis, a link or an image inside the alt, any other inline html markup in an alt (a
@@ -99,28 +115,31 @@
  * the reader's own call to marked's Parser and TextRenderer. A pin's cite lengthened to words its record holds before one of the four
  * ends is NOT CLAIMED by this census. A probe's id is this file's own name: one renamed in every literal together is NOT CLAIMED by
  * this census, nor which pin of its row holds a probe, changed in every literal together (the member replay is what shows each pin's
- * probes red its member). A reader edit made together with the literal readings it changes is NOT CLAIMED by this census. An edit of
- * the loop's entries other than one that cuts a pin's probe list (another text, another literal reading or another probe) is NOT
- * CLAIMED by this census. Gate members of wb-nnm7's refusals #3 and #4 other than the nine pinned are no pin (the seat replayed
- * GP9-L2-01, -02, -04, -05, -10 and -18 and GP23-L2-04, -05, -07, -08, -09 and -10 from the gates' archived definitions), and whether
- * this census reds any of them is NOT CLAIMED. The parent census's own header, cases and roster are NOT CLAIMED by this census.
- * ANCHOR's readings (its checks (1)-(4) above) are claimed on two kinds of input only: the tracker export as it stands, and READERS'
- * twelve plants, each the one edit with the one text written here. On any other export they are NOT CLAIMED by this census: every
- * other order, position, count, spelling, bound or occurrence of the description's list, the fold's lines, the records, their UNMET
- * sections and items, the item openings, the cites and the witness quotes - among them an item, line or quote added at another
- * position or with another text, repeated, left empty, written with other white space, removed or changed; any row's item duplicated
- * or broken in another way, moved out of its UNMET section, or its opening written elsewhere in a line; a record's BIND STEPS bound
- * moved or removed; a witness quote written without its "]" or with another destination, and a list item holding "]"; another
- * near-miss of an opening; another character after a cite or joined to it; a record repeated elsewhere in the notes; and an export
- * holding two rows for one bead. Which edit a plant carries, changed to another edit that fails the same check first (W06's and
- * W07's; W05's, W10's and W12's), is NOT CLAIMED by this census (the member replay is what shows each plant red under its paired
- * member). The W ids of check (5) are read on the export as it stands and on IDS's four copies; that read on any other export is NOT
- * CLAIMED by this census, nor which edit an IDS copy carries, changed to another edit check (5) refuses, nor an IDS copy removed in
- * every literal together. sectionOf's reading of a text that lacks its open or its close is NOT CLAIMED by this census. memberIds is
- * claimed on the five rows' items, each naming one "GP<n>" family; an item naming two families is NOT CLAIMED by this census (refusal
- * #1's F1 rider M13). The order PINS lists the pins in, changed in every literal together, is NOT CLAIMED by this census (its F1
- * rider M14: a single literal edit that reorders the rows, a row's pins or PINS reds SHAPE, ANCHOR or READERS through their other
- * literals, with SHAPE's pin-order line read order-free). No residual is claimed.
+ * probes red its member). A reader edit made together with the literal readings it changes is NOT CLAIMED by this census. Which of
+ * PINS's own objects the loop runs, how often and in what order - an entry left out (the landing-885 gate's G12-A03 LOOP-DROP-GP23
+ * and G12-A04 LOOP-DROP-FIRST), run twice, or run in another's place - is NOT CLAIMED by this census: claim (1) speaks of the cases
+ * the loop runs. REACH holds which rows and pins holdAnchor's loops reached, not which checks run in a loop's body before its
+ * records: a body edit that keeps the records is NOT CLAIMED by this census beyond claim (4)'s first failures. Gate members of
+ * wb-nnm7's refusals #3 and #4 other than the nine pinned are no pin (the seat replayed GP9-L2-01, -02, -04, -05, -10 and -18 and
+ * GP23-L2-04, -05, -07, -08, -09 and -10 from the gates' archived definitions), and whether this census reds any of them is NOT
+ * CLAIMED. The parent census's own header, cases and roster are NOT CLAIMED by this census. ANCHOR's readings (its checks (1)-(4)
+ * above) are claimed on two kinds of input only: the tracker export as it stands, and READERS' twelve plants, each the one edit with
+ * the one text written here. On any other export they are NOT CLAIMED by this census: every other order, position, count, spelling,
+ * bound or occurrence of the description's list, the fold's lines, the records, their UNMET sections and items, the item openings,
+ * the cites and the witness quotes - among them an item, line or quote added at another position or with another text, repeated, left
+ * empty, written with other white space, removed or changed; any row's item duplicated or broken in another way, moved out of its
+ * UNMET section, or its opening written elsewhere in a line; a record's BIND STEPS bound moved or removed; a witness quote written
+ * without its "]" or with another destination, and a list item holding "]"; another near-miss of an opening; another character after
+ * a cite or joined to it; a record repeated elsewhere in the notes; and an export holding two rows for one bead. Which edit a plant
+ * carries, changed to another edit that fails the same check first (W06's and W07's; W05's, W10's and W12's), is NOT CLAIMED by this
+ * census (the member replay is what shows each plant red under its paired member). The W ids of check (5) are read on the export as
+ * it stands and on IDS's four copies; that read on any other export is NOT CLAIMED by this census, nor which edit an IDS copy
+ * carries, changed to another edit check (5) refuses, nor an IDS copy removed in every literal together. sectionOf's reading of a
+ * text that lacks its open or its close is NOT CLAIMED by this census. memberIds is claimed on the five rows' items, each naming one
+ * "GP<n>" family; an item naming two families is NOT CLAIMED by this census (refusal #1's F1 rider M13). The order PINS lists the
+ * pins in, changed in every literal together, is NOT CLAIMED by this census (its F1 rider M14: a single literal edit that reorders
+ * the rows, a row's pins or PINS reds SHAPE, ANCHOR or READERS through their other literals, with SHAPE's pin-order line read
+ * order-free). No residual is claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant and IDS copy is
  * built in memory; no src, docs or receipt is edited.
@@ -434,6 +453,8 @@ function citeCheck(row: Row, pin: Pin): string {
 function witnessCheck(row: Row): string {
   return `${row.id}: the witnesses the item quotes against the row's probes' texts`;
 }
+/** REACH's message: the pins and rows holdAnchor's two loops reached, against ROWS (wb-ceq3). */
+const REACH_CHECK = "REACH: holdAnchor's loops reach each row's pins in order and then the row, for every row of ROWS in order";
 
 /** text with its one occurrence of old replaced; a plant refuses a text holding old more than once or not at all. */
 function replacedOnce(text: string, old: string, replacement: string): string {
@@ -578,7 +599,7 @@ const PLANT_ID_EDITS: readonly PlantIdEdit[] = [
   { id: "C5-SWAPPED", edit: child => plantItemsEdited(child, W06_W07, "-W07-W06-") },
 ];
 
-describe("wb-gmj9 alt-read census (test/helpers/urr-alt-read.ts): nine pin cases holding their PINS entries' probe ids and literal inlineRendered() readings of the record-quoted witness probes their wb-nnm7 gate members change, SHAPE, ANCHOR over the tracker export as it stands, READERS holding the first failed ANCHOR check on each of refusal #1's twelve witness plants, and IDS holding ANCHOR's W-id check exact on four in-memory copies of wb-gmj9's row", () => {
+describe("wb-gmj9 alt-read census (test/helpers/urr-alt-read.ts): nine pin cases holding their PINS entries' probe ids, the PINS entries themselves and literal inlineRendered() readings of the record-quoted witness probes their wb-nnm7 gate members change, SHAPE, ANCHOR over the tracker export as it stands with REACH over every row and pin, READERS holding the first failed ANCHOR check on each of refusal #1's twelve witness plants, and IDS holding ANCHOR's W-id check exact on four in-memory copies of wb-gmj9's row", () => {
   /** ANCHOR's checks over the two export rows (claims (3)-(4) of its case in the header); a failed check throws its message. */
   function holdAnchor(child: ExportRow, parent: ExportRow): void {
     const listed = sectionOf(child.description, UNMET_LIST, "]\n").slice(UNMET_LIST.length);
@@ -586,6 +607,8 @@ describe("wb-gmj9 alt-read census (test/helpers/urr-alt-read.ts): nine pin cases
     expect(described, LIST_CHECK).toEqual(ROWS.filter(row => row.refusal === 3).map(row => row.unmet));
     const folded = sectionOf(child.notes, FOLD_OPEN, FOLD_CLOSE).slice(FOLD_OPEN.length).split("\n");
     expect(folded, FOLD_CHECK).toEqual(ROWS.filter(row => row.refusal === 4).map(row => row.unmet));
+    /** Each pin as its cite check passes ("<row id> <pin id>"), then the row as its witness check passes. */
+    const reached: string[] = [];
     for (const row of ROWS) {
       expect(row.pins, pinsCheck(row)).toEqual(memberIds(row.unmet));
       const record = sectionOf(parent.notes, RECORD_OPENS[row.refusal], RECORD_END);
@@ -603,12 +626,15 @@ describe("wb-gmj9 alt-read census (test/helpers/urr-alt-read.ts): nine pin cases
           CITE_ENDS.some(end => item.includes(` ${pin.cite}${end}`)),
           citeCheck(row, pin),
         ).toBe(true);
+        reached.push(`${row.id} ${pin.id}`);
       }
       expect(
         [...item.matchAll(WITNESS_QUOTE)].map(match => decoded(match[1] ?? "")),
         witnessCheck(row),
       ).toEqual(rowProbes(row).map(probe => probe.text));
+      reached.push(row.id);
     }
+    expect(reached, REACH_CHECK).toEqual(ROWS.flatMap(row => [...row.pins.map(id => `${row.id} ${id}`), row.id]));
   }
   /** Check (5) of ANCHOR's case in the header, over wb-gmj9's row (IDS runs it on four copies too); a failed check throws its message. */
   function holdPlantIds(child: ExportRow): void {
@@ -715,6 +741,7 @@ describe("wb-gmj9 alt-read census (test/helpers/urr-alt-read.ts): nine pin cases
         pin.probes.map(probe => probe.id),
         `${pin.id}: the case reads the probe ids of the PINS entry its id names`,
       ).toEqual(pinOf(pin.id).probes.map(probe => probe.id));
+      expect(pin, `${pin.id}: the case's loop entry is the PINS entry its id names, the one object`).toBe(pinOf(pin.id));
       expect(
         pin.probes.map(probe => ({ id: probe.id, reading: altRead(probe.text) })),
         `${pin.id}: inlineRendered() reads each of its probes exactly as written here`,
