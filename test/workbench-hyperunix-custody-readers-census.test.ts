@@ -92,6 +92,25 @@
  * too, and the CHILD REFUSAL #3 and #4 ANCHORS and the new CARRIER REFUSAL #1 ANCHOR read a row's words as governed by the NOT
  * CLAIMED predicate of their own parenthesis, not by placement inside it (refusal #1 F1). No reader code changes: the helper
  * differs from cut #1 in its header words only.
+ * wb-tz2.24 cut #3 answers this carrier's own refusal #2 (gate-prep-22 / g10-gate-s202, O:1997; rung 1 of the carrier's own
+ * L017 and L077 claim sets, needsRuling false): U1's eight members on L017's initializer words and U2's one on L077's pid name
+ * literal words. Each member is a CARRIER_SURVIVORS_2 row on its line with the sub-form the verdict states; each witness the
+ * verdict states for it, replayed verbatim from the PREP archive (specs/spec-C.json), is a GP22W SUB-READINGS row pinned on
+ * that line, so the member's hollowing reds this census. The seat's own sweep GP22S plants pin, on the same two lines, the
+ * further sub-forms its two rounds (on cut #2's bytes, then on this cut's) measured green under a one-edit hollowing of those
+ * two readers, and the await using form beside the using one: an initializer read through a <T> assertion, an as assertion in
+ * parentheses and two pairs of parentheses; a member chain on a global, a local or a globalThis root and a chain of two
+ * members; an element access on a global root, by a const name and by a template key; an optional member chain; a namespace
+ * import's, a default import's and an import-equals name; a using and an await using declaration; a later declarator of an
+ * exported list and of a for statement; a declaration in a class static block, a switch case, an if statement, a try block,
+ * a while loop, a labeled block, a method and a function declaration; and a pid in a template middle and tail, as a
+ * spawner's argument, an array element, a property value, a binary operand, a return value, a case label, a parameter
+ * default, an arrow body, a literal type and a conditional branch. L017 and L077 narrow, in place, to their pinned pages as a clause
+ * of their own, L017 naming NOT CLAIMED on its line the initializer of a third or later declarator of a declaration list,
+ * the place past the one the FIRSTDECL witness plants. The FAIL-CLOSED CARRY case reads L017 and L077 too, and the CHILD
+ * REFUSAL #3 and #4 ANCHORS and the CARRIER REFUSAL #1 and #2 ANCHORS read a row's words only as a whole item of the list
+ * the NOT CLAIMED predicate governs, with no exception word between (refusal #2 F1). No reader code changes: the helper
+ * differs from cut #2 in its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -158,12 +177,16 @@
  *   stand, on one of its lines, in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2,
  *   refusal #1 F1: inside that parenthesis and in the clause of it that holds them, before the clause's "is NOT CLAIMED" or
  *   "are NOT CLAIMED" with no other "is" or "are" between, or after its "NOT CLAIMED, among them"; placement inside the
- *   parenthesis alone reads as not narrowed).
+ *   parenthesis alone reads as not narrowed; cut #3, refusal #2 F1: and only as a whole item of that list - at the clause's
+ *   start or after ", ", " and ", ", and ", " - " or ", among them ", and before ", ", " and ", ", and ", " - ", the
+ *   predicate or, after "among them", the clause's end - with none of the exception words except, but, unlike, save, while,
+ *   whereas, other than or claimed between the words and the predicate or the clause's end).
  *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every claim line
  *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
- *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence and
- *   the U1 and U2 slugs of the R-B424 fold note in its notes.
+ *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence,
+ *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 and #3) the UNMET slugs of its own refusal #1 and
+ *   refusal #2 verdicts.
  *  CHILD REFUSAL #4 ANCHOR (wb-tz2.24, outside this census): the members that fold note lists under its U1 and U2 items, each
  *   with its line and in order, are exactly the CHILD_SURVIVORS_4 rows; each member's witness, as the note states its kind, its
  *   text (white space folded) and its delivered reading, is its row's G1W SUB-READINGS row and a pin of its line's CLAIM_LINES
@@ -173,10 +196,16 @@
  *   witness, as the verdict states its kind, its text (white space folded) and its delivered reading, is its row's GP3W
  *   SUB-READINGS row and a pin of its line's CLAIM_LINES row; and its line narrows to its pinned pages as a clause of its own,
  *   naming NOT CLAIMED, in a list the predicate of its own parenthesis governs, the place a row names past its witness.
+ *  CARRIER REFUSAL #2 ANCHOR (wb-tz2.24 cut #3, outside this census): the members this carrier's own refusal #2 verdict lists
+ *   under its U1 and U2 items, each with its item, its line, its sub-form and in order, are exactly the CARRIER_SURVIVORS_2
+ *   rows; each witness the verdict states for a member, as it states its kind, its text (white space folded) and its delivered
+ *   reading, in order, is one of its row's GP22W SUB-READINGS rows and a pin of its line's CLAIM_LINES row; and its line narrows
+ *   to its pinned pages as a clause of its own, naming NOT CLAIMED, as a whole item of the list the predicate governs, the
+ *   place a row names past its witness.
  *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
  *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
- *   value, narrows to its pinned pages as a clause of its own; the FAIL-CLOSED CORE case reads its 17 lines the same way
- *   (refusal #4 F2).
+ *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
+ *   FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -221,6 +250,14 @@
  * so), among them the default of a third or later parameter, named so on the line; and that a CARRIER_SURVIVORS_1 row's past
  * words name the first place past its witness is NOT CLAIMED by an anchor outside this census (the CARRIER REFUSAL #1 ANCHOR
  * holds each member, its line, its sub-form and its witness; the words are this census's own).
+ * wb-tz2.24 cut #3: on L017 and L077, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own
+ * words say so), among them the initializer of a third or later declarator of a declaration list, named so on L017; that a
+ * CARRIER_SURVIVORS_2 row's past words name the first place past its witness is NOT CLAIMED by an anchor outside this census
+ * (the CARRIER REFUSAL #2 ANCHOR holds each member, its line, its sub-form and its witnesses; the words are this census's
+ * own); that a GP22S plant stays is NOT CLAIMED by an anchor outside this census (they are its own literals, like the G1S
+ * plants); and a re-claiming word other than the exception words the item reading names, standing between two later items
+ * of a NOT CLAIMED list, is NOT CLAIMED by the anchors that read it (they read an item's place and those words, not the
+ * list's meaning).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -595,7 +632,9 @@ function childMembers3(block: string, item: NarrowedSurvivor["item"]): string[] 
   const span = block.slice(start, Math.min(block.length, ...ends));
   return [...span.matchAll(/^ {2}- (G7-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3})(?:-(L\d{3}))?, /gm)].map(match => [match[1], match[2], match[3]].filter(part => part !== undefined).join(" "));
 }
-/** Whether the words stand on the line in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2, refusal #1 F1): inside the innermost parenthesis around them and in the clause of it that holds them (between that parenthesis's own semicolons), either before the clause's "is NOT CLAIMED" or "are NOT CLAIMED" with no other "is" or "are" between, or after its "NOT CLAIMED, among them" with no "is" or "are" from that list's start to the clause's end; placement inside the parenthesis alone reads as not narrowed. */
+/** wb-tz2.24 cut #3 (refusal #2 F1): the exception words that, between a row's words and the predicate (or after "among them"), read the words as excepted from the list rather than listed in it. */
+const EXCEPTING = /\b(?:except|but|unlike|save|while|whereas|other than|claimed)\b/;
+/** Whether the words stand on the line in a list the NOT CLAIMED predicate of their own parenthesis governs (wb-tz2.24 cut #2, refusal #1 F1): inside the innermost parenthesis around them and in the clause of it that holds them (between that parenthesis's own semicolons), either before the clause's "is NOT CLAIMED" or "are NOT CLAIMED" with no other "is" or "are" between, or after its "NOT CLAIMED, among them" with no "is" or "are" from that list's start to the clause's end; placement inside the parenthesis alone reads as not narrowed. Cut #3 (refusal #2 F1): and only as a whole item of that list - at the clause's start or after ", ", " and ", ", and ", " - " or ", among them ", and before ", ", " and ", ", and ", " - ", the predicate or, after "among them", the clause's end - with no EXCEPTING word between the words and the predicate, or in the list after "among them". */
 function notClaimedHolds(line: string, words: string): boolean {
   for (let at = line.indexOf(words); at >= 0; at = line.indexOf(words, at + 1)) {
     let open = -1;
@@ -627,11 +666,15 @@ function notClaimedHolds(line: string, words: string): boolean {
     }
     const before = line.slice(from, at);
     const after = line.slice(at + words.length, to);
+    const startsItem = /(?:^ ?|, |,? and | - |, among them )$/.test(before);
     const predicate = after.search(/ (?:is|are) NOT CLAIMED\b/);
-    const listedBefore = predicate >= 0 && !/ (?:is|are) /.test(after.slice(0, predicate));
+    const between = predicate >= 0 ? after.slice(0, predicate) : "";
+    const listedBefore = predicate >= 0 && /^(?:,? (?:is|are) NOT CLAIMED\b|, |,? and | - )/.test(after) && !/ (?:is|are) /.test(between) && !EXCEPTING.test(between);
     const among = before.lastIndexOf(", among them ");
-    const listedAfter = among >= 0 && before.slice(0, among).includes("NOT CLAIMED") && !/ (?:is|are) /.test(before.slice(among)) && !/ (?:is|are) /.test(after);
-    if (listedBefore || listedAfter) return true;
+    const listed = among < 0 ? "" : before.slice(among);
+    const listedAfter =
+      among >= 0 && before.slice(0, among).includes("NOT CLAIMED") && /^(?:$|, |,? and | - )/.test(after) && !/ (?:is|are) /.test(listed) && !/ (?:is|are) /.test(after) && !EXCEPTING.test(listed) && !EXCEPTING.test(after);
+    if (startsItem && (listedBefore || listedAfter)) return true;
   }
   return false;
 }
@@ -686,6 +729,30 @@ function carrierMembers(block: string): (FoldedMember & { readonly subForm: stri
       text: match[5] ?? "",
       delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
     };
+  });
+}
+/** The members refusal #2's verdict lists under its UNMET U1 and U2 items (wb-tz2.24 cut #3), in order: each '<id> (<line>, <sub-form>)' head, and every '<text>' => <delivered reading> vs <mutant reading> of the "; "-joined run after its first "witness <kind> " or "Witness <kind> ". */
+function carrierMembers2(block: string): CarrierMember2[] {
+  return (["U1", "U2"] as const).flatMap(item => {
+    const start = block.indexOf(`\n${item}: ${item}-MEDIUM-CONFIRMED-`);
+    if (start < 0) return [];
+    const end = block.indexOf("\n", start + 1);
+    const span = block.slice(start, end < 0 ? block.length : end);
+    const heads = [...span.matchAll(/(GP22-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\)[:.] /g)];
+    return heads.map((head, at): CarrierMember2 => {
+      const body = span.slice((head.index ?? 0) + head[0].length, heads[at + 1]?.index ?? span.length);
+      const lead = /[Ww]itness (tampers|tamperlines|shapes) /.exec(body);
+      const witnesses: { readonly text: string; readonly delivered: readonly string[] }[] = [];
+      const pattern = /'(.*?)' => (\[[^\]]*\]) vs \[[^\]]*\]/y;
+      pattern.lastIndex = lead === null ? body.length : lead.index + lead[0].length;
+      for (let match = pattern.exec(body); match !== null; match = pattern.exec(body)) {
+        const delivered: unknown = JSON.parse(match[2] ?? "[]");
+        witnesses.push({ text: match[1] ?? "", delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [] });
+        if (!body.startsWith("; '", pattern.lastIndex)) break;
+        pattern.lastIndex += 2;
+      }
+      return { id: head[1] ?? "", item, line: head[2] ?? "", subForm: head[3] ?? "", kind: lead?.[1] ?? "", witnesses };
+    });
   });
 }
 /** Whether a claim line narrows to its pinned pages as a clause of its own (wb-tz2.24, refusal #4 F2): the phrase at the line's start or after an entry colon, a semicolon, a comma, "for it" or "(POSITIONS;", and before a comma, a dash, a parenthesis or "only,"; and the line spells none of the widening words every page, every other page, beyond them, beyond its pinned pages, not only on its pinned pages and on its pinned pages and. */
@@ -921,6 +988,24 @@ interface CarrierSurvivor {
   readonly line: string;
   readonly subForm: string;
   readonly witness: string;
+  readonly past: string;
+}
+/** wb-tz2.24 cut #3: a member as refusal #2's verdict lists it - its item, line and sub-form, the kind of its witnesses and each witness's text and delivered reading. */
+interface CarrierMember2 {
+  readonly id: string;
+  readonly item: "U1" | "U2";
+  readonly line: string;
+  readonly subForm: string;
+  readonly kind: string;
+  readonly witnesses: readonly { readonly text: string; readonly delivered: readonly string[] }[];
+}
+/** wb-tz2.24 cut #3: a member of this carrier's own refusal #2 (gate-prep-22 / g10-gate-s202, O:1997) on the line its verdict names, with its item, the sub-form the verdict states, its GP22W witnesses (one per witness the verdict states for it, in order) and the words its line names NOT CLAIMED past the place its first witness plants ("" when its sub-form is a form, not a place). */
+interface CarrierSurvivor2 {
+  readonly id: string;
+  readonly item: "U1" | "U2";
+  readonly line: string;
+  readonly subForm: string;
+  readonly witnesses: readonly string[];
   readonly past: string;
 }
 interface LocationRow {
@@ -2367,6 +2452,54 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "GP3W-PDEFAULT-NOLOCALNAME", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOLOCALNAME witness (L021 parameter default, gate-prep-3 archive), a default that is a local name", kind: "tampers", text: "const J = JSON;\nfunction patch(target = J): void {\n  target.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
   { id: "GP3W-PDEFAULT-NOTYPED", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-NOTYPED witness (L021 parameter default, gate-prep-3 archive), the default of a parameter with a type annotation", kind: "tampers", text: "function patch(target: { parse?: unknown } = JSON): void {\n  target.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
   { id: "GP3W-PDEFAULT-TOPONLY", claim: "wb-tz2.24 cut #2: refusal #1 GP3-PDEFAULT-TOPONLY witness (L021 parameter default, gate-prep-3 archive), the default of a function declared in another function's body", kind: "tampers", text: "export function outer(): void {\n  function patch(target = JSON): void {\n    target.parse = forged;\n  }\n  patch();\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-FIRSTDECL", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-FIRSTDECL witness (L017 initializer, gate-prep-22 archive), the initializer of a later declarator in a declaration list", kind: "tampers", text: "const a = 1, J = JSON;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-NOFOR", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOFOR witness (L017 initializer, gate-prep-22 archive), the initializer of a for statement's variable", kind: "tampers", text: "for (let J = JSON; ; ) {\n  J.parse = forged;\n  break;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-NOPAREN", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOPAREN witness (L017 initializer, gate-prep-22 archive), a parenthesized initializer", kind: "tampers", text: "const J = (JSON);\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-NOSATISFIES", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOSATISFIES witness (L017 initializer, gate-prep-22 archive), a satisfies-asserted initializer", kind: "tampers", text: "const J = JSON satisfies object;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-NONONNULL", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NONONNULL witness (L017 initializer, gate-prep-22 archive), a non-null-asserted initializer", kind: "tampers", text: "const J = JSON!;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22W-INIT-NOMEMBER", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOMEMBER witness (L017 initializer, gate-prep-22 archive), an initializer that is a member chain", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst H = hx.HyperUnix;\nH.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22W-INIT-NOELEMENT", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOELEMENT witness (L017 initializer, gate-prep-22 archive), an initializer that is an element access", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst H = hx[\"HyperUnix\"];\nH.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22W-INIT-NOIMPORTNAME", claim: "wb-tz2.24 cut #3: refusal #2 GP22-INIT-NOIMPORTNAME witness (L017 initializer, gate-prep-22 archive), an initializer that is an imported name", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nconst H = HyperUnix;\nH.open = forged;\n", expected: ["HyperUnix.open assigned"] },
+  { id: "GP22W-SHAPE-PID-NOTEMPLATE", claim: "wb-tz2.24 cut #3: refusal #2 GP22-SHAPE-PID-NOTEMPLATE witness (L077 pid name literal, gate-prep-22 archive), a pid in a no-substitution template", kind: "shapes", text: "export const f = `pid`;\n", expected: ["F2:pid name literal"] },
+  { id: "GP22W-SHAPE-PID-NOTEMPLATE-HEAD", claim: "wb-tz2.24 cut #3: refusal #2 GP22-SHAPE-PID-NOTEMPLATE witness (L077 pid name literal, gate-prep-22 archive), a pid in a template head", kind: "shapes", text: "export const g = (x: string): string => `pid$" + "{x}`;\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-INIT-TYPEASSERT", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer read through a <T> assertion", kind: "tampers", text: "const J = <{ parse: unknown }>JSON;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-PARENAS", claim: "wb-tz2.24 cut #3 seat sweep (L017): an as-asserted initializer in parentheses", kind: "tampers", text: "const J = (JSON as { parse: unknown });\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-DOUBLEPAREN", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer in two pairs of parentheses", kind: "tampers", text: "const J = ((JSON));\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-GLOBALMEMBER", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a member chain on a global root", kind: "tampers", text: "const P = JSON.parse;\nP.x = forged;\n", expected: ["JSON.parse.x assigned"] },
+  { id: "GP22S-INIT-LOCALMEMBER", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a member chain on a local root", kind: "tampers", text: "const A = JSON;\nconst P = A.parse;\nP.x = forged;\n", expected: ["JSON.parse.x assigned"] },
+  { id: "GP22S-INIT-DEEPMEMBER", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a chain of two members", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst O = hx.HyperUnix.open;\nO.x = forged;\n", expected: ["hx.HyperUnix.open.x assigned"] },
+  { id: "GP22S-INIT-GLOBALTHIS", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a member of globalThis", kind: "tampers", text: "const J = globalThis.JSON;\nJ.parse = forged;\n", expected: ["globalThis.JSON.parse assigned"] },
+  { id: "GP22S-INIT-GLOBALELEMENT", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is an element access on a global root", kind: "tampers", text: "const P = JSON[\"parse\"];\nP.x = forged;\n", expected: ["JSON.parse.x assigned"] },
+  { id: "GP22S-INIT-NAMEKEY", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is an element access by a const name", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst KEY = \"HyperUnix\";\nconst H = hx[KEY];\nH.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22S-INIT-TEMPLATEKEY", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is an element access by a template key", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst H = hx[`HyperUnix`];\nH.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22S-INIT-OPTIONAL", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is an optional member chain", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst H = hx?.HyperUnix;\nH.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22S-INIT-NAMESPACENAME", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a namespace import's name", kind: "tampers", text: "import * as hx from \"@hyperunix/sdk\";\nconst H = hx;\nH.HyperUnix.open = forged;\n", expected: ["hx.HyperUnix.open assigned"] },
+  { id: "GP22S-INIT-DEFAULTNAME", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is a default import's name", kind: "tampers", text: "import hxDefault from \"@hyperunix/sdk\";\nconst H = hxDefault;\nH.open = forged;\n", expected: ["hxDefault.open assigned"] },
+  { id: "GP22S-INIT-EQUALSNAME", claim: "wb-tz2.24 cut #3 seat sweep (L017): an initializer that is an import-equals name", kind: "tampers", text: "import hxEquals = require(\"@hyperunix/sdk\");\nconst H = hxEquals;\nH.open = forged;\n", expected: ["hxEquals.open assigned"] },
+  { id: "GP22S-INIT-USING", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a using declaration", kind: "tampers", text: "using J = JSON;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-AWAITUSING", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of an await using declaration", kind: "tampers", text: "await using J = JSON;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-STATICBLOCK", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a class static block", kind: "tampers", text: "export class C {\n  static {\n    const J = JSON;\n    J.parse = forged;\n  }\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-CASE", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a switch case", kind: "tampers", text: "declare const n: number;\nswitch (n) {\n  case 1:\n    const J = JSON;\n    J.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-EXPORTLIST", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a later declarator of an exported declaration list", kind: "tampers", text: "export const a = 1, J = JSON;\nJ.parse = forged;\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-FORLATER", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a later declarator of a for statement", kind: "tampers", text: "for (let i = 0, J = JSON; ; ) {\n  J.parse = forged;\n  break;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-IF", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in an if statement", kind: "tampers", text: "declare const n: number;\nif (n > 0) {\n  const J = JSON;\n  J.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-TRY", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a try block", kind: "tampers", text: "try {\n  const J = JSON;\n  J.parse = forged;\n} catch {}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-WHILE", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a while loop", kind: "tampers", text: "declare const n: number;\nwhile (n > 0) {\n  const J = JSON;\n  J.parse = forged;\n  break;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-LABEL", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a labeled block", kind: "tampers", text: "outer: {\n  const J = JSON;\n  J.parse = forged;\n  break outer;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-METHOD", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a method", kind: "tampers", text: "export class C {\n  patch(): void {\n    const J = JSON;\n    J.parse = forged;\n  }\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-INIT-FUNCDECL", claim: "wb-tz2.24 cut #3 seat sweep (L017): the initializer of a declaration in a function declaration", kind: "tampers", text: "export function patch(): void {\n  const J = JSON;\n  J.parse = forged;\n}\n", expected: ["JSON.parse assigned"] },
+  { id: "GP22S-SHAPE-PID-MIDDLE", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid in a template middle", kind: "shapes", text: "export const g = (x: string, y: string): string => `$" + "{x} pid $" + "{y}`;\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-TAIL", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid in a template tail", kind: "shapes", text: "export const g = (x: string): string => `$" + "{x}pid`;\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-SPAWN", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a spawner's argument", kind: "shapes", text: "import { execSync } from \"node:child_process\";\nexport const r = execSync(\"pid\");\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-ARRAY", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as an array element", kind: "shapes", text: "export const a = [\"pid\"];\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-PROPVALUE", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a property value", kind: "shapes", text: "export const o = { field: \"pid\" };\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-BINARY", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a binary operand", kind: "shapes", text: "export const m = (name: string): boolean => name === \"pid\";\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-RETURN", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a return value", kind: "shapes", text: "export function f(): string {\n  return \"pid\";\n}\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-CASE", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a case label", kind: "shapes", text: "export function f(name: string): number {\n  switch (name) {\n    case \"pid\":\n      return 1;\n  }\n  return 0;\n}\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-PARAMDEFAULT", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a parameter default", kind: "shapes", text: "export function f(name = \"pid\"): string {\n  return name;\n}\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-ARROWBODY", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as an arrow body", kind: "shapes", text: "export const f = (): string => \"pid\";\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-TYPE", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a literal type", kind: "shapes", text: "export type T = \"pid\";\n", expected: ["F2:pid name literal"] },
+  { id: "GP22S-SHAPE-PID-CONDITIONAL", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"pid\" : \"tid\");\n", expected: ["F2:pid name literal"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -2702,7 +2835,19 @@ const CARRIER_SURVIVORS_1: readonly CarrierSurvivor[] = [
   { id: "GP3-PDEFAULT-NOTYPED", item: "U1", line: "L021", subForm: "the default of a parameter with a type annotation", witness: "GP3W-PDEFAULT-NOTYPED", past: "" },
   { id: "GP3-PDEFAULT-TOPONLY", item: "U1", line: "L021", subForm: "the default of a function declared below the file's top level", witness: "GP3W-PDEFAULT-TOPONLY", past: "" },
 ];
-/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and, cut #2, the UNMET slug of its own refusal #1 verdict). */
+/** wb-tz2.24 cut #3: this carrier's own refusal #2 members (gate-prep-22 / g10-gate-s202, O:1997; U1, eight fail-open on L017's initializer words, and U2, one on L077's pid name literal words) as its verdict lists them, each with its item, the sub-form the verdict states, its GP22W witnesses and the words its line names NOT CLAIMED past the place its first witness plants. */
+const CARRIER_SURVIVORS_2: readonly CarrierSurvivor2[] = [
+  { id: "GP22-INIT-FIRSTDECL", item: "U1", line: "L017", subForm: "the initializer of a later declarator in a declaration list", witnesses: ["GP22W-INIT-FIRSTDECL"], past: "the initializer of a third or later declarator of a declaration list" },
+  { id: "GP22-INIT-NOFOR", item: "U1", line: "L017", subForm: "the initializer of a for statement's variable", witnesses: ["GP22W-INIT-NOFOR"], past: "" },
+  { id: "GP22-INIT-NOPAREN", item: "U1", line: "L017", subForm: "a parenthesized initializer", witnesses: ["GP22W-INIT-NOPAREN"], past: "" },
+  { id: "GP22-INIT-NOSATISFIES", item: "U1", line: "L017", subForm: "a satisfies-asserted initializer", witnesses: ["GP22W-INIT-NOSATISFIES"], past: "" },
+  { id: "GP22-INIT-NONONNULL", item: "U1", line: "L017", subForm: "a non-null-asserted initializer", witnesses: ["GP22W-INIT-NONONNULL"], past: "" },
+  { id: "GP22-INIT-NOMEMBER", item: "U1", line: "L017", subForm: "an initializer that is a member chain", witnesses: ["GP22W-INIT-NOMEMBER"], past: "" },
+  { id: "GP22-INIT-NOELEMENT", item: "U1", line: "L017", subForm: "an initializer that is an element access", witnesses: ["GP22W-INIT-NOELEMENT"], past: "" },
+  { id: "GP22-INIT-NOIMPORTNAME", item: "U1", line: "L017", subForm: "an initializer that is an imported name", witnesses: ["GP22W-INIT-NOIMPORTNAME"], past: "" },
+  { id: "GP22-SHAPE-PID-NOTEMPLATE", item: "U2", line: "L077", subForm: "a pid in a template: a no-substitution template or a template part", witnesses: ["GP22W-SHAPE-PID-NOTEMPLATE", "GP22W-SHAPE-PID-NOTEMPLATE-HEAD"], past: "" },
+];
+/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2) and refusal #2 verdict (cut #3)). */
 const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   {
     key: "wb-tz2.24 ACCEPTANCE",
@@ -2712,6 +2857,8 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-tz2.24 R-B424 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-FINAL-CUT-4-UNNARROWED-ARGUMENT-POSITION-WORDS-4-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2518-L022-L023-L024-L031" },
   { key: "wb-tz2.24 R-B424 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-FINAL-CUT-4-UNNARROWED-ELEMENT-POSITION-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2518-L019-L020" },
   { key: "wb-tz2.24 refusal #1 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-1-UNNARROWED-PARAMETER-DEFAULT-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2534-L021" },
+  { key: "wb-tz2.24 refusal #2 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-2-UNNARROWED-INITIALIZER-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2543-L017" },
+  { key: "wb-tz2.24 refusal #2 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-2-UNNARROWED-PID-NAME-LITERAL-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2543-L077" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -2867,7 +3014,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L014", line: "initialized by a member chain or a name, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032"] },
   { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
   { id: "L016", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
-  { id: "L017", line: "- initializer: a variable's initializer", pins: ["ROOT:initializer"] },
+  { id: "L017", line: "- initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)", pins: ["ROOT:initializer", "SUB:GP22W-INIT-FIRSTDECL", "SUB:GP22W-INIT-NOFOR", "SUB:GP22W-INIT-NOPAREN", "SUB:GP22W-INIT-NOSATISFIES", "SUB:GP22W-INIT-NONONNULL", "SUB:GP22W-INIT-NOMEMBER", "SUB:GP22W-INIT-NOELEMENT", "SUB:GP22W-INIT-NOIMPORTNAME", "SUB:GP22S-INIT-TYPEASSERT", "SUB:GP22S-INIT-PARENAS", "SUB:GP22S-INIT-DOUBLEPAREN", "SUB:GP22S-INIT-GLOBALMEMBER", "SUB:GP22S-INIT-LOCALMEMBER", "SUB:GP22S-INIT-DEEPMEMBER", "SUB:GP22S-INIT-GLOBALTHIS", "SUB:GP22S-INIT-GLOBALELEMENT", "SUB:GP22S-INIT-NAMEKEY", "SUB:GP22S-INIT-TEMPLATEKEY", "SUB:GP22S-INIT-OPTIONAL", "SUB:GP22S-INIT-NAMESPACENAME", "SUB:GP22S-INIT-DEFAULTNAME", "SUB:GP22S-INIT-EQUALSNAME", "SUB:GP22S-INIT-USING", "SUB:GP22S-INIT-AWAITUSING", "SUB:GP22S-INIT-STATICBLOCK", "SUB:GP22S-INIT-CASE", "SUB:GP22S-INIT-EXPORTLIST", "SUB:GP22S-INIT-FORLATER", "SUB:GP22S-INIT-IF", "SUB:GP22S-INIT-TRY", "SUB:GP22S-INIT-WHILE", "SUB:GP22S-INIT-LABEL", "SUB:GP22S-INIT-METHOD", "SUB:GP22S-INIT-FUNCDECL"] },
   { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
   { id: "L019", line: "- destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040", "SUB:WR7", "SUB:WR7c", "SUB:G1W-P-DESTR-IDX2", "SUB:G1S-P-DESTR-NOHOLE-IDX2"] },
   { id: "L020", line: "- for-of element: on its pinned pages, a for-of variable's elements when the iterable is an array literal, directly or through a const name (a fourth or later element of the array literal, a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034", "SUB:G5W-O-RF-FORIN", "SUB:G5C-O-RF-FORIN", "SUB:X3-FORIN-CONST", "SUB:G1W-P-FOROF-IDX2", "SUB:G1S-P-FOROF-CONST-IDX2"] },
@@ -2927,7 +3074,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L074", line: "- literal: a string or template part that is no key and holds the ESRCH word", pins: ["SHAPE:literal", "SUB:S1047", "SUB:S1076", "SUB:T0071", "SUB:T0072", "SUB:T0074", "SUB:T0153", "SUB:W-SH-LIT-HEAD", "SUB:C-SH-LIT-HEAD", "SUB:Z0011", "LOCATED:literal"] },
   { id: "L075", line: "- /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word", pins: ["SHAPE:/proc path", "SUB:S1037", "SUB:S1043", "SUB:S1167", "SUB:S1168", "SUB:S1171", "SUB:S1212", "SUB:T0154", "SUB:T0155", "SUB:W-SH-PROC-TPL", "SUB:C-SH-PROC-TPL", "SUB:Z0012", "SUB:Z0013", "SUB:Z0014", "LOCATED:/proc path"] },
   { id: "L076", line: "- kill name literal: a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)", pins: ["SHAPE:kill name literal", "SUB:A210", "SUB:S1067", "SUB:S1068", "SUB:S1069", "SUB:S1214", "SUB:W30", "SUB:T0073", "SUB:T0146", "SUB:T0147", "LOCATED:kill name literal"] },
-  { id: "L077", line: "- pid name literal: a plain text pid (trimmed)", pins: ["SHAPE:pid name literal", "SUB:A212", "SUB:S1045", "LOCATED:pid name literal"] },
+  { id: "L077", line: "- pid name literal: on its pinned pages, a plain text pid (trimmed)", pins: ["SHAPE:pid name literal", "SUB:A212", "SUB:S1045", "LOCATED:pid name literal", "SUB:GP22W-SHAPE-PID-NOTEMPLATE", "SUB:GP22W-SHAPE-PID-NOTEMPLATE-HEAD", "SUB:GP22S-SHAPE-PID-MIDDLE", "SUB:GP22S-SHAPE-PID-TAIL", "SUB:GP22S-SHAPE-PID-SPAWN", "SUB:GP22S-SHAPE-PID-ARRAY", "SUB:GP22S-SHAPE-PID-PROPVALUE", "SUB:GP22S-SHAPE-PID-BINARY", "SUB:GP22S-SHAPE-PID-RETURN", "SUB:GP22S-SHAPE-PID-CASE", "SUB:GP22S-SHAPE-PID-PARAMDEFAULT", "SUB:GP22S-SHAPE-PID-ARROWBODY", "SUB:GP22S-SHAPE-PID-TYPE", "SUB:GP22S-SHAPE-PID-CONDITIONAL"] },
   { id: "L078", line: "- process-table command: any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool", pins: ["SHAPE:process-table command", "SUB:S1049", "SUB:S1209", "SUB:S1301", "SUB:W115", "SUB:T0075", "SUB:T0082", "SUB:T0156", "LOCATED:process-table command"] },
   { id: "L079", line: "F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read", pins: ["FLAG:lone dash", "SUB:S0174"] },
   { id: "L080", line: "(failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The", pins: ["SUB:S0180", "SUB:S0426", "SUB:T0098", "SUB:T0099", "SUB:T0100", "SUB:T0101", "SUB:T0102", "SUB:T0103", "SUB:T0104", "SUB:T0105", "SUB:T0106", "SUB:T0107", "SUB:T0108"] },
@@ -2986,6 +3133,11 @@ const SCOPE_LINES: readonly string[] = [
   "the witnesses of that refusal's eight members on L021, the line they defeat, and narrows L021, in place, to its pinned",
   "pages, naming NOT CLAIMED on it the default of a third or later parameter, the place past the one its position witness",
   "plants; no reader code changes.",
+  "wb-tz2.24 cut #3 (this carrier's own refusal #2, gate-prep-22 / g10-gate-s202, O:1997: rung 1 of its L017 and L077 claim",
+  "sets) plants the witnesses of that refusal's nine members, and the seat sweep's plants of the further sub-forms a one-edit",
+  "hollowing of those two readers left green, on L017 and L077, the lines they defeat, and narrows L017 and L077, in place, to",
+  "their pinned pages, naming NOT CLAIMED on L017 the initializer of a third or later declarator of a declaration list, the",
+  "place past the one its position witness plants; no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -4357,6 +4509,54 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:GP3W-PDEFAULT-NOLOCALNAME:ea545504af82",
   "SUB_READINGS:GP3W-PDEFAULT-NOTYPED:4c7daadb879a",
   "SUB_READINGS:GP3W-PDEFAULT-TOPONLY:b4e7781c09d6",
+  "SUB_READINGS:GP22W-INIT-FIRSTDECL:f68a39b09026",
+  "SUB_READINGS:GP22W-INIT-NOFOR:4c7c35303e1c",
+  "SUB_READINGS:GP22W-INIT-NOPAREN:81a336d839d3",
+  "SUB_READINGS:GP22W-INIT-NOSATISFIES:b41351282baf",
+  "SUB_READINGS:GP22W-INIT-NONONNULL:13ef5a46e091",
+  "SUB_READINGS:GP22W-INIT-NOMEMBER:6b7802a58869",
+  "SUB_READINGS:GP22W-INIT-NOELEMENT:bb012c891e4a",
+  "SUB_READINGS:GP22W-INIT-NOIMPORTNAME:81ba8fb2d538",
+  "SUB_READINGS:GP22W-SHAPE-PID-NOTEMPLATE:db52d89b7166",
+  "SUB_READINGS:GP22W-SHAPE-PID-NOTEMPLATE-HEAD:a1ba602bbf7b",
+  "SUB_READINGS:GP22S-INIT-TYPEASSERT:f8fd1cdd56e7",
+  "SUB_READINGS:GP22S-INIT-PARENAS:70651ab53619",
+  "SUB_READINGS:GP22S-INIT-DOUBLEPAREN:8b1ea7a56a23",
+  "SUB_READINGS:GP22S-INIT-GLOBALMEMBER:159fff1e54b2",
+  "SUB_READINGS:GP22S-INIT-LOCALMEMBER:e1e1011b8b3f",
+  "SUB_READINGS:GP22S-INIT-DEEPMEMBER:6ce4efb02f3d",
+  "SUB_READINGS:GP22S-INIT-GLOBALTHIS:07823ab1a505",
+  "SUB_READINGS:GP22S-INIT-GLOBALELEMENT:8dee10f067cf",
+  "SUB_READINGS:GP22S-INIT-NAMEKEY:55288487deb4",
+  "SUB_READINGS:GP22S-INIT-TEMPLATEKEY:6ec73f99835c",
+  "SUB_READINGS:GP22S-INIT-OPTIONAL:2109b538c9b9",
+  "SUB_READINGS:GP22S-INIT-NAMESPACENAME:aa8e8d3ed0e3",
+  "SUB_READINGS:GP22S-INIT-DEFAULTNAME:ff83f27f35e1",
+  "SUB_READINGS:GP22S-INIT-EQUALSNAME:ecbf6d9a3214",
+  "SUB_READINGS:GP22S-INIT-USING:5eb4bb731543",
+  "SUB_READINGS:GP22S-INIT-AWAITUSING:57fbac546ab6",
+  "SUB_READINGS:GP22S-INIT-STATICBLOCK:799724d06270",
+  "SUB_READINGS:GP22S-INIT-CASE:bd8cfc79ca01",
+  "SUB_READINGS:GP22S-INIT-EXPORTLIST:be50c319fb9e",
+  "SUB_READINGS:GP22S-INIT-FORLATER:db0844ff9124",
+  "SUB_READINGS:GP22S-INIT-IF:ebbf09415e8e",
+  "SUB_READINGS:GP22S-INIT-TRY:3cc2e9888ac0",
+  "SUB_READINGS:GP22S-INIT-WHILE:081e9ef0ed5e",
+  "SUB_READINGS:GP22S-INIT-LABEL:b0af8c8416ee",
+  "SUB_READINGS:GP22S-INIT-METHOD:2a9f27803894",
+  "SUB_READINGS:GP22S-INIT-FUNCDECL:1cc8011c028b",
+  "SUB_READINGS:GP22S-SHAPE-PID-MIDDLE:df6c38c4291f",
+  "SUB_READINGS:GP22S-SHAPE-PID-TAIL:0bc9bb82514c",
+  "SUB_READINGS:GP22S-SHAPE-PID-SPAWN:3e0cbf89f66b",
+  "SUB_READINGS:GP22S-SHAPE-PID-ARRAY:f3d22bd616da",
+  "SUB_READINGS:GP22S-SHAPE-PID-PROPVALUE:5a59c1357296",
+  "SUB_READINGS:GP22S-SHAPE-PID-BINARY:69294080e4ed",
+  "SUB_READINGS:GP22S-SHAPE-PID-RETURN:edc104590a46",
+  "SUB_READINGS:GP22S-SHAPE-PID-CASE:3471ee965a53",
+  "SUB_READINGS:GP22S-SHAPE-PID-PARAMDEFAULT:58bbb7f0a86c",
+  "SUB_READINGS:GP22S-SHAPE-PID-ARROWBODY:38b0e5df7ce4",
+  "SUB_READINGS:GP22S-SHAPE-PID-TYPE:12507bc090e0",
+  "SUB_READINGS:GP22S-SHAPE-PID-CONDITIONAL:63ca0016f9c6",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -4482,7 +4682,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L014:981b4577cfc0",
   "CLAIM_LINES:L015:c391a9b942e4",
   "CLAIM_LINES:L016:9e65049274e3",
-  "CLAIM_LINES:L017:66455025707b",
+  "CLAIM_LINES:L017:51921069bc65",
   "CLAIM_LINES:L018:1b1b1c9895e7",
   "CLAIM_LINES:L019:57eb86c41b09",
   "CLAIM_LINES:L020:1f0c79f2751a",
@@ -4542,7 +4742,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L074:e8f2a6d7dcc5",
   "CLAIM_LINES:L075:87897d0a0a86",
   "CLAIM_LINES:L076:1c56196b5b6f",
-  "CLAIM_LINES:L077:04e5df9c7b64",
+  "CLAIM_LINES:L077:486eb23799d1",
   "CLAIM_LINES:L078:2c0ee4920e7b",
   "CLAIM_LINES:L079:30a93aa4a003",
   "CLAIM_LINES:L080:f5a44d48ff0e",
@@ -4856,6 +5056,8 @@ const FROZEN: readonly string[] = [
   "CARRIER_REQUIREMENTS:wb-tz2.24 R-B424 U1:a60e9671aaa9",
   "CARRIER_REQUIREMENTS:wb-tz2.24 R-B424 U2:32c9beba306e",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #1 U1:89a36276a0aa",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #2 U1:fda653b9cf58",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #2 U2:42b22c3763f7",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-FIRSTONLY:591b0c832bdd",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NAMEONLY:9ce2827aa53c",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOGLOBALMEMBER:be82470fb489",
@@ -4864,6 +5066,15 @@ const FROZEN: readonly string[] = [
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOLOCALNAME:efeeffdeb4f6",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOTYPED:08439d961cd6",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-TOPONLY:92e380a4cfcf",
+  "CARRIER_SURVIVORS_2:GP22-INIT-FIRSTDECL:83d08a8659c5",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOFOR:c46ef158cac8",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOPAREN:0b10ea08da18",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOSATISFIES:c0585b8718b6",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NONONNULL:c43a3b06c4b8",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOMEMBER:bd849b2f4433",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOELEMENT:289e7ec3fe6d",
+  "CARRIER_SURVIVORS_2:GP22-INIT-NOIMPORTNAME:e55018b3e74c",
+  "CARRIER_SURVIVORS_2:GP22-SHAPE-PID-NOTEMPLATE:c6acea9de42e",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -5350,7 +5561,7 @@ describe(SUITE, () => {
       const sources: Record<string, string> = { description: record.description, notes: record.notes };
       expect(CARRIER_REQUIREMENTS.filter(requirement => !(sources[requirement.source] ?? "").includes(requirement.text)).map(requirement => requirement.key)).toStrictEqual([]);
     });
-    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and (cut #2) the UNMET slugs of the carrier's own refusal #1 verdict, in both directions", () => {
+    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2) and refusal #2 verdict (cut #3), in both directions", () => {
       const record = exportRecord(CARRIER);
       const acceptance = record.description.indexOf("Acceptance (");
       const next = record.description.indexOf(" Merge trunk INTO the branch first", acceptance);
@@ -5368,6 +5579,10 @@ describe(SUITE, () => {
             .split("\n")
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*\. MEMBERS/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.indexOf(". MEMBERS"))),
+          ...carrierVerdictBlock(2)
+            .split("\n")
+            .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
+            .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
         ],
       });
     });
@@ -5418,6 +5633,36 @@ describe(SUITE, () => {
         witnesses: CARRIER_SURVIVORS_1.map(row => {
           const sub = subs.get(row.witness);
           return sub === undefined ? `${row.id} <no witness row>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+        }),
+        unpinned: [],
+        unnarrowed: [],
+      });
+    });
+  });
+
+  describe("CARRIER REFUSAL #2 ANCHOR (wb-tz2.24 cut #3, outside this census): this carrier's own refusal #2 verdict in the tracker export", () => {
+    it("the members its U1 and U2 items list, each with its item, its line, its sub-form and in order, are the CARRIER_SURVIVORS_2 rows; each witness the verdict states for a member, by the kind, text (white space folded) and delivered reading the verdict states and in order, is one of its row's SUB-READINGS rows and a pin of its line's CLAIM_LINES row; and its line narrows to its pinned pages as a clause of its own, naming NOT CLAIMED, as a whole item of the list the predicate of its own parenthesis governs, the place its row names past its witness", () => {
+      const listed = carrierMembers2(carrierVerdictBlock(2));
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const subs = new Map(SUB_READINGS.map(row => [row.id, row] as const));
+      const folded = (text: string): string => text.replace(/\s+/g, " ").trim();
+      expect({
+        members: listed.map(member => `${member.item} ${member.id} ${member.line} (${member.subForm})`),
+        witnesses: listed.map(member => `${member.id} ${member.witnesses.map(witness => `${member.kind} ${folded(witness.text)} => ${JSON.stringify(witness.delivered)}`).join(" | ")}`),
+        unpinned: CARRIER_SURVIVORS_2.flatMap(row => row.witnesses.filter(witness => !(pins.get(row.line) ?? []).includes(`SUB:${witness}`)).map(witness => `${row.id} ${witness}`)),
+        unnarrowed: CARRIER_SURVIVORS_2.filter(row => {
+          const line = lines.get(row.line) ?? "";
+          return !narrowsToPinnedPages(line) || (row.past !== "" && !notClaimedHolds(line, row.past));
+        }).map(row => row.id),
+      }).toStrictEqual({
+        members: CARRIER_SURVIVORS_2.map(row => `${row.item} ${row.id} ${row.line} (${row.subForm})`),
+        witnesses: CARRIER_SURVIVORS_2.map(row => {
+          const read = row.witnesses.map(id => {
+            const sub = subs.get(id);
+            return sub === undefined ? `<no witness row ${id}>` : `${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+          });
+          return `${row.id} ${read.join(" | ")}`;
         }),
         unpinned: [],
         unnarrowed: [],
@@ -5526,11 +5771,11 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cut #2): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cuts #2 and #3): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value, a variable's initializer or a plain text pid narrows to its pinned pages as a clause of its own", () => {
       const lines = helperClaimLines();
-      const placed = lines.filter(entry => /a parameter's position|a parameter's default value|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
+      const placed = lines.filter(entry => /a parameter's position|a parameter's default value|a variable's initializer|a plain text pid|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
       expect({ placed, unnarrowed: placed.filter(id => !narrowsToPinnedPages(lines.find(entry => entry.id === id)?.line ?? "")) }).toStrictEqual({
-        placed: ["L019", "L020", "L021", "L022", "L023", "L024", "L031"],
+        placed: ["L017", "L019", "L020", "L021", "L022", "L023", "L024", "L031", "L077"],
         unnarrowed: [],
       });
     });
@@ -5616,6 +5861,7 @@ describe(SUITE, () => {
         ...rows("CHILD_SURVIVORS_4", CHILD_SURVIVORS_4),
         ...rows("CARRIER_REQUIREMENTS", CARRIER_REQUIREMENTS),
         ...rows("CARRIER_SURVIVORS_1", CARRIER_SURVIVORS_1),
+        ...rows("CARRIER_SURVIVORS_2", CARRIER_SURVIVORS_2),
       ]).toStrictEqual(FROZEN);
     });
   });

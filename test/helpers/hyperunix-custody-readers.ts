@@ -34,6 +34,11 @@
  * the witnesses of that refusal's eight members on L021, the line they defeat, and narrows L021, in place, to its pinned
  * pages, naming NOT CLAIMED on it the default of a third or later parameter, the place past the one its position witness
  * plants; no reader code changes.
+ * wb-tz2.24 cut #3 (this carrier's own refusal #2, gate-prep-22 / g10-gate-s202, O:1997: rung 1 of its L017 and L077 claim
+ * sets) plants the witnesses of that refusal's nine members, and the seat sweep's plants of the further sub-forms a one-edit
+ * hollowing of those two readers left green, on L017 and L077, the lines they defeat, and narrows L017 and L077, in place, to
+ * their pinned pages, naming NOT CLAIMED on L017 the initializer of a third or later declarator of a declaration list, the
+ * place past the one its position witness plants; no reader code changes.
  *
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
@@ -51,7 +56,7 @@
  * initialized by a member chain or a name, as that chain's spellings too.
  * ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in
  * (a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
- * - initializer: a variable's initializer
+ * - initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)
  * - reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)
  * - destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)
  * - for-of element: on its pinned pages, a for-of variable's elements when the iterable is an array literal, directly or through a const name (a fourth or later element of the array literal, a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)
@@ -111,7 +116,7 @@
  * - literal: a string or template part that is no key and holds the ESRCH word
  * - /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word
  * - kill name literal: a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)
- * - pid name literal: a plain text pid (trimmed)
+ * - pid name literal: on its pinned pages, a plain text pid (trimmed)
  * - process-table command: any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool
  * F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read
  * (failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The
