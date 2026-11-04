@@ -1344,9 +1344,9 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * test/helpers/docs06-leg-readers.ts - moduleImports, and propertyWrites composing spelledAnywhere over WRITER_ROUTE,
  * cut #5's code byte for byte - with its own census, test/workbench-docs06-leg-readers-census.test.ts, which pins that
  * code and those readers' readings of its plants. The restatement (the parent's re-cut over its landed carrier: cut
- * #6, cut #7 after refusal #6 (O:1885, R-B406), cut #8 after refusal #7 (O:1923, R-B436) and cut #9 after refusal #8
- * (O:1968, R-B474)) rides that module: this file imports moduleImports, propertyWrites and spelledAnywhere from it, and
- * its modules-loaded record holds that load.
+ * #6, cut #7 after refusal #6 (O:1885, R-B406), cut #8 after refusal #7 (O:1923, R-B436), cut #9 after refusal #8
+ * (O:1968, R-B474) and cut #10 after refusal #9 (O:2012, R-B508)) rides that module: this file imports moduleImports,
+ * propertyWrites and spelledAnywhere from it, and its modules-loaded record holds that load.
  * Through those readers this census claims exactly the readings its own rows take: of this file's text (its loads as
  * the record; no member write and no writer API; no prototype or reflective route spelled), of the "the modules loaded"
  * row's loads.ts, the "the property writes" row's writes.ts and the two route rows' texts, of each planted member's text
@@ -1386,15 +1386,29 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * outside and another unit, the "dropped" form (an import declaration of the unit removed) as another outside and
  * another unit (its parts not this file's one for one) and the "parts" form (G-TWIN2-PW's push removed, so that the
  * part unitParts cuts is not the text's twinUnit) as parts other than twinUnit's; OUTSIDE_WITNESSES_SHAPE freezes each
- * witness's id, twin and form. What each witness's plant writes is the witness roster's, not this header's (the
- * witness roster row, cut #9): each OUTSIDE_WITNESSES witness's id, twin, form and line edit of its twin's planted text
- * (lineEdit: the line the edit follows, the lines it removes and the lines it adds), and each READING_EDIT_WITNESSES
- * witness's id and line edit of this file's text, are the entries test/fixtures/docs06-conformance-witness-roster.json
- * records, in order. Among the "outside" witnesses the roster records a blank line, a line comment and a trailing space
- * after G-TWIN-TS-NAMED's edited import (W-OUT-BLANK-LINE, W-OUT-LINE-COMMENT, W-OUT-TRAILING-SPACE), and a blank line
- * and a line comment after G-TWIN2-PW's push and a trailing space on the line after it (W-OUT-PW-BLANK-LINE,
- * W-OUT-PW-LINE-COMMENT, W-OUT-PW-TRAILING-SPACE), beside the "outside" witnesses that add a line of code, so the
- * witnesses row holds the outside comparison to read an outside with any of those added as another outside;
+ * witness's id, twin and form. What each witness's plant writes, and where, is the witness roster's, not this header's
+ * (the witness roster row, cut #9 and cut #10): each OUTSIDE_WITNESSES witness's id, twin, form and line edit of its
+ * twin's planted text (lineEdit: the line the edit follows, the lines it removes, the lines it adds and the line it
+ * precedes), and each READING_EDIT_WITNESSES witness's id and line edit of this file's text, are the entries
+ * test/fixtures/docs06-conformance-witness-roster.json records, in order; and each witness's base text (its twin's
+ * planted text, or this file's) holds the line its edit follows or the line it precedes once (placeHeld), so each
+ * witness's entry fixes where its edit is (cut #10, refusal #9 U2). The "outside" witnesses add a line of code, a blank
+ * line, a line comment or a trailing space at the places the roster records: each of the four after G-TWIN-TS-NAMED's
+ * edited import (W-OUT-REEXPORT and W-OUT-SHARED-REPEATED, W-OUT-BLANK-LINE, W-OUT-LINE-COMMENT, W-OUT-TRAILING-SPACE)
+ * and after G-TWIN2-PW's push or on the line after it (W-OUT-AFTER-PUSH, W-OUT-PW-BLANK-LINE, W-OUT-PW-LINE-COMMENT,
+ * W-OUT-PW-TRAILING-SPACE); a line of code after GP9-TWIN-NODE-TYPEONLY's edited import (W-OUT-TYPEONLY-REEXPORT),
+ * before the first import declaration (W-OUT-BEFORE-IMPORTS) and before the AC2 case head (W-OUT-BEFORE-HEAD); and,
+ * from cut #10 (refusal #9 U1), each of the four deep inside an outside piece, away from the edges of the unit and of
+ * the piece - after HOOK_TIMEOUT_CONSTS' doc line (DEEP_DOC) in G-TWIN-TS-NAMED's piece after the imports
+ * (W-OUT-DEEP-CODE, W-OUT-DEEP-BLANK-LINE, W-OUT-DEEP-LINE-COMMENT, W-OUT-DEEP-TRAILING-SPACE) and in G-TWIN2-PW's piece
+ * after its push (W-OUT-PW-DEEP-CODE, W-OUT-PW-DEEP-BLANK-LINE, W-OUT-PW-DEEP-LINE-COMMENT, W-OUT-PW-DEEP-TRAILING-SPACE),
+ * and after duplicatePins' doc line (EARLY_DOC) in G-TWIN2-PW's piece before its AC2 case head (W-OUT-PW-EARLY-CODE,
+ * W-OUT-PW-EARLY-BLANK-LINE, W-OUT-PW-EARLY-LINE-COMMENT, W-OUT-PW-EARLY-TRAILING-SPACE); W-OUT-SHARED-MOVED moves the
+ * shared readers' load from after the last import declaration to before G-TWIN-TS-NAMED's edited import. So the
+ * witnesses row holds the outside comparison to read a twin's planted text with one of those kinds added at a place
+ * where a witness of that twin adds it as another outside, and the comparison narrowed to each piece's edges reds that
+ * row (refusal #9's GP24-P1-EDGES3,
+ * each piece's first and last three lines, and GP24-P2-EDGES400, its first and last 400 characters);
  * (E) readingEdit reads each READING_EDIT_WITNESSES text through the shared readers - this file's text with its
  * node:crypto import moved after its node:url import, with its node:path and node:url imports swapped, and with its
  * node:fs import repeated, each witness's line edit of this file's text the witness roster's - as exactly the edit
@@ -1408,19 +1422,31 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * sink declared, then its length written through an object pattern property with a computed key) - and this file's own
  * import declarations, the shared readers' load set aside, P-RECORD (the cut #5 block wb-mcoj's census plants), its
  * reading the record's first seven entries, the shared readers' load the eighth. Falsifiers, each measured red on this
- * census by the cut #9 battery: the gate narrowing each twin witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS,
+ * census by the cut #10 battery: the gate narrowing each twin witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS,
  * GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied to the shared module, hides its twin from the leg
  * and reds that twin's row and rows (B) and (C); an edit of a twin's plant inside its unit reds (C); one outside its
- * unit - a line of code, a blank line, a line comment or a trailing space added - reds (D), with the twin's
+ * unit, of a kind and at a place one of that twin's "outside" witnesses adds it - a line of code, a blank line, a line
+ * comment or a trailing space added next to the unit, after DEEP_DOC or after EARLY_DOC - reds (D), with the twin's
  * TWIN_READINGS entry changed to match (refusal #7's GN1C, GN3C, GN7C, GN8C and GN2C) or kept (their one-literal forms
- * GN1, GN3, GN7, GN8 and GN2, which red (B) as well, and refusal #8's GP4-TS-BLANK, GP4-PW-BLANK and GP4-TS-COMMENT and
- * this cut's X9-TS-TSPACE, X9-PW-TSPACE and X9-PW-COMMENT, which do not); plantReading's outside comparison narrowed to
- * trimmed pieces (refusal #8's GP4-N-OUT-TRIM), to pieces with their line comments dropped (GP4-N-OUT-NOCOMMENT), to
- * pieces with their blank lines dropped (this cut's X9-N-OUT-NOBLANK) or to lines with their trailing spaces dropped
- * (X9-N-OUT-TRIMEND) reds row (D) witnesses, alone and paired with a twin plant it would hide; a witness's plant
- * edited (refusal #8's GP4-W1 to GP4-W11, and GP4-E1C and GP4-E2C with their READING_EDITS entries), a witness
- * removed from its table and its frozen-shape or READING_EDITS entry (GP4-WC5, GP4-EC5), or a table's witnesses
- * removed from every literal of this file (GP4-WC6, GP4-EC6), reds the witness roster row; readingEdit narrowed to the entries one reading has and the other lacks (refusal #7's N-RE-SET) reds (E);
+ * GN1, GN3, GN7, GN8 and GN2, which red (B) as well, and refusal #8's GP4-TS-BLANK, GP4-PW-BLANK and GP4-TS-COMMENT,
+ * cut #9's X9-TS-TSPACE, X9-PW-TSPACE and X9-PW-COMMENT and this cut's X10-TS-DEEP-CODE, X10-TS-DEEP-TSPACE,
+ * X10-PW-DEEP-COMMENT and X10-PW-EARLY-BLANK, which do not); plantReading's outside comparison narrowed to trimmed
+ * pieces (refusal #8's GP4-N-OUT-TRIM), to pieces with their line comments dropped (GP4-N-OUT-NOCOMMENT), to pieces
+ * with their blank lines dropped (cut #9's X9-N-OUT-NOBLANK), to lines with their trailing spaces dropped
+ * (X9-N-OUT-TRIMEND), to the set of each piece's lines (this cut's X10-P-LINE-SET) or to each piece's edges (refusal
+ * #9's GP24-P1-EDGES3 and GP24-P2-EDGES400, and this cut's X10-P-EDGES-100-LINES, each piece's first and last hundred
+ * lines, and X10-P-EDGES3+COUNT, its first and last three lines and its line count) reds row (D) witnesses, alone and
+ * paired with a twin plant it would hide; a witness's plant edited (refusal #8's GP4-W1 to GP4-W11, this cut's
+ * X10-N-DEEP-CODE-TO-EDGE, X10-N-PWEARLY-BLANK-TO-COMMENT, X10-N-PWDEEP-TSPACE-EMPTY, X10-N-DEEP-DOC-SWAP and
+ * X10-N-EARLY-DOC-SWAP, and GP4-E1C and GP4-E2C with their READING_EDITS entries) or moved to another place (refusal
+ * #9's GP24-R1 and GP24-R2: W-OUT-BEFORE-IMPORTS' and W-OUT-BEFORE-HEAD's plants written after another line of the text
+ * each follows; this cut's X10-R-DEEP-BLANK-RELOCATED: W-OUT-DEEP-BLANK-LINE's written after EARLY_DOC), a witness
+ * removed from its table and its frozen-shape or READING_EDITS entry (GP4-WC5, GP4-EC5), or a table's witnesses removed
+ * from every literal of this file (GP4-WC6, GP4-EC6), reds the witness roster row, and so do lineEdit's precedes
+ * narrowed (this cut's X10-L-PRECEDES-NULL, X10-L-PRECEDES-AS-FOLLOWS, X10-L-PRECEDES-OFF-BY-ONE; precedes read from
+ * the second text, X10-L-PRECEDES-FROM-TO, is the same line by the tail loop's own condition and stays green) and
+ * placeHeld narrowed (X10-H-ALWAYS, X10-H-FOLLOWS-ONLY, X10-H-PRECEDES-ONLY, X10-H-AT-LEAST-ONCE, X10-H-BOTH);
+ * readingEdit narrowed to the entries one reading has and the other lacks (refusal #7's N-RE-SET) reds (E);
  * a twin member removed from every literal of this file reds (A); an edit of the roster's digest of a twin or of
  * P-RECORD reds (C), and so does this file's shared readers' load moved to the head of its import block with its record
  * entry and TWIN_READINGS' import indices moved with it (refusal #7's GN5C). NOT CLAIMED by this census, as at the
@@ -1429,11 +1455,15 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * planted members nor the witnesses of rows (D) and (E) plant, G-MI-NSEXPORT's export * as <name> included (the shared
  * module's readings of wb-mcoj's plants are that census's claims, not this one's) - and the test context's own expect, a
  * member named expect (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0; wb-mcoj's named residual R-CTX-EXPECT,
- * whose two quiet rows read this file). NOT CLAIMED by this census either (the restatement's scope at cut #9): what
+ * whose two quiet rows read this file). NOT CLAIMED by this census either (the restatement's scope at cut #10): what
  * unitParts, unitCut, plantReading, readingEdit and applyEdit return for any text but this file's, the twins' planted
- * texts and the witnesses rows (D) and (E) plant, and what lineEdit returns for any pair of texts but a witness's and
- * its base text; what plantReading's outside comparison reads for an outside that differs from this file's in a way no
- * witness plants (a block comment, a tab, a letter's case or a line ending among them); a witness's plant and its
+ * texts and the witnesses rows (D) and (E) plant, what lineEdit returns for any pair of texts but a witness's and its
+ * base text and PLACE_CONTROL's, and what placeHeld reads for any but those; what plantReading's outside comparison
+ * reads for an outside that differs from this file's in a way or at a place no witness plants (a block comment, a tab,
+ * a letter's case, a line ending, a line changed in place or lines reordered among the ways; one of the four kinds
+ * added to a twin's planted text where no "outside" witness of that twin adds that kind among the places - inside
+ * this file's opening doc comment, say, after EARLY_DOC in G-TWIN-TS-NAMED's, or anywhere in GP9-TWIN-NODE-TYPEONLY's
+ * but a line of code after its edited import); a witness's plant and its
  * witness roster entry changed or removed together - the witness roster is the witnesses' record, as the docs section
  * is the TABLE's; and wb-mcoj's census itself - (C) matches each unit to the roster's digest and never reads that
  * census, so a twin's plant, its roster digest and wb-mcoj's plant of it changed together are that census's rows' to
@@ -2311,14 +2341,16 @@ function unitCut(text: string, writes: boolean): UnitCut {
   };
 }
 /**
- * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U2): row (D)'s reading of a planted text's cut against this
- * file's, as "<outside> | <unit>": "this file's outside" when the two outsides are the same, piece for piece, as
- * written, else "another outside" - CLAIMED as row (D)'s witnesses pin it: an outside with a line of code, a blank
- * line, a line comment or a trailing space added reads "another outside"; for an outside that differs in any other way
- * it is NOT CLAIMED; then "one import declaration edited" when an import twin's parts are this file's one for one
- * with exactly one changed, "two lines added before its push" when G-TWIN2-PW's part is this file's lines with exactly
- * two lines added before the last (the push), else "another unit". A cut whose parts are not its text's twinUnit
- * reads "parts other than twinUnit's".
+ * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U2; cut #10, refusal #9 U1): row (D)'s reading of a
+ * planted text's cut against this file's, as "<outside> | <unit>": "this file's outside" when the two outsides are the
+ * same, piece for piece, as written, else "another outside" - CLAIMED as row (D)'s witnesses pin it: a twin's planted
+ * text with a line of code, a blank line, a line comment or a trailing space added to its outside at a place where one
+ * of that twin's "outside" witnesses adds that kind (the places the witness roster records: next to the twin's unit,
+ * and deep inside an outside piece after DEEP_DOC or EARLY_DOC) reads "another outside"; for an outside that differs in
+ * any other way or at any other place it is NOT CLAIMED; then "one import declaration edited" when an import twin's
+ * parts are this file's one for one with exactly one changed, "two lines added before its push" when G-TWIN2-PW's
+ * part is this file's lines with exactly two lines added before the last (the push), else "another unit". A cut whose
+ * parts are not its text's twinUnit reads "parts other than twinUnit's".
  */
 function plantReading(own: UnitCut, planted: UnitCut, writes: boolean): string {
   if (!own.asTwinUnit || !planted.asTwinUnit) return "parts other than twinUnit's";
@@ -2337,12 +2369,22 @@ const PATH_IMPORT = 'import { basename, dirname, join } from "node:path";';
 const URL_IMPORT = 'import { fileURLToPath } from "node:url";';
 const CENSUS_IMPORT = 'import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";';
 /**
- * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U1 and U2): row (D)'s witnesses, each a twin's planted
- * text edited once more by the witness's plant - the "outside" form, content added outside the twin's unit; the "unit"
- * form, the twin's unit given a second edit; the "dropped" form, an import declaration of the twin's planted text
- * removed; the "parts" form, G-TWIN2-PW's planted text with its push removed, so the part unitParts cuts is not that
- * text's twinUnit. What each plant writes is the witness roster's entry for it - its line edit of the twin's planted
- * text - not this doc's.
+ * The restatement (cut #10, refusal #9 U1): the two lines of this file's text row (D)'s "deep" witnesses add their
+ * content after, each deep inside its twins' outside pieces, away from the edges of a unit and of a piece -
+ * HOOK_TIMEOUT_CONSTS' doc line (in G-TWIN-TS-NAMED's piece after the imports and in G-TWIN2-PW's piece after its push)
+ * and duplicatePins' doc line (in G-TWIN2-PW's piece before its AC2 case head) - each a fragment whose first
+ * occurrence in the text it edits is that line.
+ */
+const DEEP_DOC = "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */";
+const EARLY_DOC = '/** Every (file, title) a half pins more than once, as "bullet/half: file > title"; the frozen table holds none. */';
+/**
+ * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U1 and U2; cut #10, refusal #9 U1): row (D)'s witnesses,
+ * each a twin's planted text edited once more by the witness's plant - the "outside" form, content added outside the
+ * twin's unit (from cut #10 the "deep" witnesses add theirs deep inside an outside piece, after DEEP_DOC or
+ * EARLY_DOC); the "unit" form, the twin's unit given a second edit; the "dropped" form, an import declaration of the
+ * twin's planted text removed; the "parts" form, G-TWIN2-PW's planted text with its push removed, so the part
+ * unitParts cuts is not that text's twinUnit. What each plant writes, and where, is the witness roster's entry for it -
+ * its line edit of the twin's planted text - not this doc's.
  */
 const OUTSIDE_WITNESSES: readonly { readonly id: string; readonly twin: string; readonly form: "outside" | "unit" | "dropped" | "parts"; readonly plant: (planted: string) => string }[] = [
   { id: "W-OUT-REEXPORT", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(TS_NAMED_IMPORT, `${TS_NAMED_IMPORT}\nexport * from "node:os";`) },
@@ -2358,12 +2400,24 @@ const OUTSIDE_WITNESSES: readonly { readonly id: string; readonly twin: string; 
   { id: "W-OUT-PW-BLANK-LINE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(AC2_PUSH, `${AC2_PUSH}\n`) },
   { id: "W-OUT-PW-LINE-COMMENT", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(AC2_PUSH, `${AC2_PUSH}\n    // a line comment`) },
   { id: "W-OUT-PW-TRAILING-SPACE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(`${AC2_PUSH}\n    const verdicts = judge(`, `${AC2_PUSH}\n    const verdicts = judge( `) },
+  { id: "W-OUT-DEEP-CODE", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\nvoid 0;`) },
+  { id: "W-OUT-DEEP-BLANK-LINE", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\n`) },
+  { id: "W-OUT-DEEP-LINE-COMMENT", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\n// a line comment`) },
+  { id: "W-OUT-DEEP-TRAILING-SPACE", twin: "G-TWIN-TS-NAMED", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC} `) },
+  { id: "W-OUT-PW-DEEP-CODE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\nvoid 0;`) },
+  { id: "W-OUT-PW-DEEP-BLANK-LINE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\n`) },
+  { id: "W-OUT-PW-DEEP-LINE-COMMENT", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC}\n// a line comment`) },
+  { id: "W-OUT-PW-DEEP-TRAILING-SPACE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(DEEP_DOC, `${DEEP_DOC} `) },
+  { id: "W-OUT-PW-EARLY-CODE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(EARLY_DOC, `${EARLY_DOC}\nvoid 0;`) },
+  { id: "W-OUT-PW-EARLY-BLANK-LINE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(EARLY_DOC, `${EARLY_DOC}\n`) },
+  { id: "W-OUT-PW-EARLY-LINE-COMMENT", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(EARLY_DOC, `${EARLY_DOC}\n// a line comment`) },
+  { id: "W-OUT-PW-EARLY-TRAILING-SPACE", twin: "G-TWIN2-PW", form: "outside", plant: replacingFirst(EARLY_DOC, `${EARLY_DOC} `) },
   { id: "W-UNIT-SECOND-EDIT", twin: "G-TWIN-TS-NAMED", form: "unit", plant: replacingFirst(FS_IMPORT, 'import { readFileSync, statSync } from "node:fs";') },
   { id: "W-UNIT-ONE-LINE", twin: "G-TWIN2-PW", form: "unit", plant: replacingFirst("    const sink = { length: 1 };\n", "") },
   { id: "W-DROPPED-LAST-IMPORT", twin: "G-TWIN-TS-NAMED", form: "dropped", plant: replacingFirst(`\n${CENSUS_IMPORT}`, "") },
   { id: "W-PARTS-NO-PUSH", twin: "G-TWIN2-PW", form: "parts", plant: replacingFirst(`\n${AC2_PUSH}`, "") },
 ];
-/** The restatement (cut #8; cut #9): OUTSIDE_WITNESSES' frozen shape (rule 16) - each witness's id, twin and form, the triple it pins; what each witness's plant writes is the witness roster's. */
+/** The restatement (cut #8; cut #9; cut #10): OUTSIDE_WITNESSES' frozen shape (rule 16) - each witness's id, twin and form, the triple it pins; what each witness's plant writes, and where, is the witness roster's. */
 const OUTSIDE_WITNESSES_SHAPE: readonly string[] = [
   "W-OUT-REEXPORT:G-TWIN-TS-NAMED:outside",
   "W-OUT-TYPEONLY-REEXPORT:GP9-TWIN-NODE-TYPEONLY:outside",
@@ -2378,6 +2432,18 @@ const OUTSIDE_WITNESSES_SHAPE: readonly string[] = [
   "W-OUT-PW-BLANK-LINE:G-TWIN2-PW:outside",
   "W-OUT-PW-LINE-COMMENT:G-TWIN2-PW:outside",
   "W-OUT-PW-TRAILING-SPACE:G-TWIN2-PW:outside",
+  "W-OUT-DEEP-CODE:G-TWIN-TS-NAMED:outside",
+  "W-OUT-DEEP-BLANK-LINE:G-TWIN-TS-NAMED:outside",
+  "W-OUT-DEEP-LINE-COMMENT:G-TWIN-TS-NAMED:outside",
+  "W-OUT-DEEP-TRAILING-SPACE:G-TWIN-TS-NAMED:outside",
+  "W-OUT-PW-DEEP-CODE:G-TWIN2-PW:outside",
+  "W-OUT-PW-DEEP-BLANK-LINE:G-TWIN2-PW:outside",
+  "W-OUT-PW-DEEP-LINE-COMMENT:G-TWIN2-PW:outside",
+  "W-OUT-PW-DEEP-TRAILING-SPACE:G-TWIN2-PW:outside",
+  "W-OUT-PW-EARLY-CODE:G-TWIN2-PW:outside",
+  "W-OUT-PW-EARLY-BLANK-LINE:G-TWIN2-PW:outside",
+  "W-OUT-PW-EARLY-LINE-COMMENT:G-TWIN2-PW:outside",
+  "W-OUT-PW-EARLY-TRAILING-SPACE:G-TWIN2-PW:outside",
   "W-UNIT-SECOND-EDIT:G-TWIN-TS-NAMED:unit",
   "W-UNIT-ONE-LINE:G-TWIN2-PW:unit",
   "W-DROPPED-LAST-IMPORT:G-TWIN-TS-NAMED:dropped",
@@ -2412,12 +2478,14 @@ function applyEdit(own: readonly string[], edit: string): readonly string[] | un
   return drops.every((entry, offset) => own[index + offset] === entry) ? [...own.slice(0, index), ...entries(parsed[2]), ...own.slice(index + drops.length)] : undefined;
 }
 /**
- * The restatement (cut #9, refusal #8 U1): the out-of-file record of rows (D) and (E)'s witnesses - each witness's id,
- * for row (D)'s its twin and form too, and its line edit (lineEdit) of its base text: its twin's planted text for row
- * (D)'s, this file's text for row (E)'s. The witness roster row holds what each witness's plant writes to this record.
+ * The restatement (cut #9, refusal #8 U1; cut #10, refusal #9 U2): the out-of-file record of rows (D) and (E)'s
+ * witnesses - each witness's id, for row (D)'s its twin and form too, and its line edit (lineEdit) of its base text:
+ * its twin's planted text for row (D)'s, this file's text for row (E)'s. The witness roster row holds what each
+ * witness's plant writes, and where - the line its edit follows and the line it precedes, one of which its base text
+ * holds once (placeHeld) - to this record.
  */
 const WITNESS_ROSTER = "test/fixtures/docs06-conformance-witness-roster.json";
-/** The restatement (cut #9): a line edit, as the witness roster records it. */
+/** The restatement (cut #9; cut #10, refusal #9 U2): a line edit, as the witness roster records it - what it writes, and where. */
 interface LineEdit {
   /** The last line the two texts share before the edit, or null when the edit opens the text. */
   readonly follows: string | null;
@@ -2425,12 +2493,15 @@ interface LineEdit {
   readonly removes: readonly string[];
   /** The lines the second text has there, in order. */
   readonly adds: readonly string[];
+  /** The first line the two texts share after the edit, or null when the edit closes the text (cut #10). */
+  readonly precedes: string | null;
 }
 /**
- * The restatement (cut #9, refusal #8 U1): the one line edit that turns a text into another - the lines the two share
- * at their start and the lines they share at their end set aside (the end's never reaching back into the start's),
- * the line the rest follows, then the rest of each, as LineEdit. CLAIMED as the witness roster row pins it, on each
- * witness's text against its base text; on any other pair of texts it is NOT CLAIMED.
+ * The restatement (cut #9, refusal #8 U1; cut #10, refusal #9 U2): the one line edit that turns a text into another -
+ * the lines the two share at their start and the lines they share at their end set aside (the end's never reaching
+ * back into the start's), the line the rest follows, the rest of each, and the line the rest precedes, as LineEdit.
+ * CLAIMED as the witness roster row pins it, on each witness's text against its base text and on PLACE_CONTROL's; on
+ * any other pair of texts it is NOT CLAIMED.
  */
 function lineEdit(text: string, edited: string): LineEdit {
   const from = text.split("\n");
@@ -2439,8 +2510,21 @@ function lineEdit(text: string, edited: string): LineEdit {
   while (head < from.length && head < to.length && from[head] === to[head]) head += 1;
   let tail = 0;
   while (tail < from.length - head && tail < to.length - head && from[from.length - 1 - tail] === to[to.length - 1 - tail]) tail += 1;
-  return { follows: head === 0 ? null : (from[head - 1] ?? null), removes: from.slice(head, from.length - tail), adds: to.slice(head, to.length - tail) };
+  return { follows: head === 0 ? null : (from[head - 1] ?? null), removes: from.slice(head, from.length - tail), adds: to.slice(head, to.length - tail), precedes: tail === 0 ? null : (from[from.length - tail] ?? null) };
 }
+/**
+ * The restatement (cut #10, refusal #9 U2): whether a line edit's place is held by its base text - the line it follows
+ * or the line it precedes is a line that text holds exactly once, so the edit sits right after or right before that
+ * one line. CLAIMED as the witness roster row pins it, on each witness's line edit of its base text and on
+ * PLACE_CONTROL's; for any other text and edit it is NOT CLAIMED.
+ */
+function placeHeld(base: string, edit: LineEdit): boolean {
+  const lines = base.split("\n");
+  const once = (line: string | null): boolean => line !== null && lines.filter(other => other === line).length === 1;
+  return once(edit.follows) || once(edit.precedes);
+}
+/** The restatement (cut #10): placeHeld's control - this file's text with a line of code written between the line closing its AC2 case and the blank line before its AC4 case head, two lines this file's text holds more than once. */
+const PLACE_CONTROL = replacingFirst('  });\n\n  it("AC4: the live-tier case', '  });\nvoid 0;\n\n  it("AC4: the live-tier case');
 /**
  * R717 (wb-ouo3 cut #4): the planted members - refusal #3's members (M:13504), the died respin seat's W-BODY-RETURN-BARE,
  * and one or more members of every other class; from the restatement (R-B309), the six gate twins of refusals #4 and #5
@@ -2754,7 +2838,7 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     ).toEqual(members.map(member => `${member.id}: this file's outside | ${member.refusedBy.includes("the property writes") ? "two lines added before its push" : "one import declaration edited"}`));
   });
 
-  it("the restatement (cut #8, cut #9), row (D) witnesses: each OUTSIDE_WITNESSES text - its twin's planted text with the witness's plant applied - reads as its form names, and the witnesses, each with its twin and its form, are the frozen list", () => {
+  it("the restatement (cut #8, cut #9, cut #10), row (D) witnesses: each OUTSIDE_WITNESSES text - its twin's planted text with the witness's plant applied - reads as its form names, and the witnesses, each with its twin and its form, are the frozen list", () => {
     const text = readRepo(SELF);
     const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
     const own = { imports: unitCut(text, false), writes: unitCut(text, true) };
@@ -2792,7 +2876,7 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     ).toEqual(read.map(({ id, reading }) => [id, reading]));
   });
 
-  it("the restatement (cut #9), the witness roster: each OUTSIDE_WITNESSES witness - its id, twin and form and its line edit of its twin's planted text - and each READING_EDIT_WITNESSES witness - its id and its line edit of this file's text - is the entry test/fixtures/docs06-conformance-witness-roster.json records for it, in order", () => {
+  it("the restatement (cut #9, cut #10), the witness roster: each OUTSIDE_WITNESSES witness - its id, twin and form and its line edit of its twin's planted text - and each READING_EDIT_WITNESSES witness - its id and its line edit of this file's text - is the entry test/fixtures/docs06-conformance-witness-roster.json records for it, in order, and each witness's base text holds the line its edit follows or the line it precedes once", () => {
     const text = readRepo(SELF);
     const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
     const outside = OUTSIDE_WITNESSES.map(witness => {
@@ -2803,6 +2887,15 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     });
     const readingEdits = READING_EDIT_WITNESSES.map(witness => ({ id: witness.id, ...lineEdit(text, witness.plant(text)) }));
     expect(JSON.parse(readRepo(WITNESS_ROSTER)) as unknown, "the witness roster: this file's witnesses, each with its line edit, in order").toEqual({ bead: "wb-ouo3", census: SELF, outside, readingEdits });
+    const places = [
+      ...OUTSIDE_WITNESSES.map(witness => {
+        const planted = members.find(member => member.id === witness.twin)?.plant(text);
+        return { id: witness.id, held: planted !== undefined && placeHeld(planted, lineEdit(planted, witness.plant(planted))) };
+      }),
+      ...READING_EDIT_WITNESSES.map(witness => ({ id: witness.id, held: placeHeld(text, lineEdit(text, witness.plant(text))) })),
+    ];
+    expect(places.filter(place => !place.held).map(place => place.id), "each witness's place: its base text holds the line its edit follows or the line it precedes once").toEqual([]);
+    expect(placeHeld(text, lineEdit(text, PLACE_CONTROL(text))), "PLACE_CONTROL: an edit between two lines this file's text holds more than once is not held").toBe(false);
   });
 
   it.each(PLANTED_MEMBERS)("R717 planted member $id: the leg refuses this file's text with the member planted in memory, naming exactly the readings it changes", LEG, member => {
