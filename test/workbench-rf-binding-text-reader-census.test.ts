@@ -5,13 +5,35 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #9 IS THE FIFTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B540 of refusal #8
- * (O:2057): claims equal to pins, kill-or-pin per member group, the words narrowed to the pinned forms. It pins refusal #8's
+ * CUT #10 IS THE SIXTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B558 of refusal #9
+ * (O:2083): claims equal to pins, kill-or-pin per member group, and BINDING (1) narrowed to exactly the reads the census's pins
+ * read. It pins refusal #9's nineteen surviving reader mutants with every twin page the gate names for them, byte for byte and
+ * at the gate's paths (the helper's MEMBERS S211-H-LET, S211-H-VAR, S211-H-FUNCTION, S211-H-CLASS, S211-H-ENUM,
+ * S211-H-NOINIT-PLAIN, S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT, S211-B1-FOR-CONST-NONBLOCK-BODY, with its further twin pin
+ * S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW, S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST, S211-B2-NOINIT-FOROF, S211-B2-NOINIT-FORIN,
+ * S211-B2-DESTRUCTURING, S211-B2-LET, S211-B2-VAR, S211-C1-ARROW-PARAMETER-BLOCK-BODY, S211-X1-VOID-CALL, S211-X1-WRAPPED-CALL,
+ * S211-X4-LET-VAR-STATEMENT and S211-T-UNION-VAR-READ-LATER, all in scope, the part whose read-site words they sit on; REFUSAL
+ * #9 below), each read as the reader reads it, and it narrows BINDING (1)'s read-site words in the part itself instead of
+ * adding words beside them: (1), (2) and (3) claim a name's reading only on a census page, a module one of the census's pins
+ * plants (at that pin's path, or at each of its paths), and there only at a read of the name that the page's pin reads, at one
+ * of the sites (1) lists; a read on any module that is no census page, a read on a census page that its pin does not read and
+ * every other read on a census page are NOT CLAIMED by these parts. So every read (1), (2) and (3) claim for a binding is, by
+ * (1)'s own words, a read some pin plants and reads, and no read of another module is claimed. The other direction is not
+ * claimed: pins that read a name at a site (1) does not list (a read in a block, a function-like or a namespace nested in the
+ * declaration's scope, in a for statement's head, before the declaration or inside another expression, among them) keep their
+ * readings as pins beyond the words. Every pin of cut #9 stands with its page, path and expected reading byte for byte. THIS
+ * CENSUS CLAIMS EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the
+ * falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED
+ * section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is
+ * not claimed, and no row's silence about a form is a claim about it.
+ *
+ * CUT #9 WAS THE FIFTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B540 of refusal #8
+ * (O:2057): claims equal to pins, kill-or-pin per member group, the words narrowed to the pinned forms. It pinned refusal #8's
  * sixteen surviving reader mutants with every twin page the gate names for them, byte for byte (the helper's MEMBERS GP22-SH2,
  * with its further twin pin GP22-SH2-FUNCTION, GP22-SH3, GP22-SH4, GP22-RS1, with GP22-RS1-BLOCK, GP22-RS3, GP22-RS5 and
- * GP22-AN1 to GP22-AN7 in const and GP22-NP1 to GP22-NP3 in kinds; REFUSAL #8 below), and narrows the three word groups they
- * sit on instead of adding words beside them: BINDING (1) now names the reads (1), (2) and (3) claim, each the only argument of
- * a call that is the whole of an expression statement (as probe(X); is), that statement right after the declaration's, first in
+ * GP22-AN1 to GP22-AN7 in const and GP22-NP1 to GP22-NP3 in kinds; REFUSAL #8 below), and narrowed the three word groups they
+ * sit on instead of adding words beside them: BINDING (1) named the reads (1), (2) and (3) claim, each the only argument of a
+ * call that is the whole of an expression statement (as probe(X); is), that statement right after the declaration's, first in
  * the body that holds the declaration or, at the top level, after it, beside a top-level const's reads inside the module's own
  * expression and variable statements, every other read NOT CLAIMED (a read in a block, a function-like, a class or a namespace
  * nested in the declaration's scope and a read in a for statement's head among them); BINDING (2) claims no type annotation or
@@ -19,17 +41,14 @@
  * #8's members read seven more forms and their spellings, as pins beyond the words), and its shadowing sentence claims the
  * reads (1) names; and BINDING (3) names its nested object pattern exactly as C-NESTED, C-NESTED-JS, C-JS-ALIAS and GP13-D3
  * plant it, the one simple element of a one-element object pattern that is the one element of a plain top-level const's object
- * pattern, under an identifier property name, or of its array pattern. The read sites were measured before the words were
- * written: an instrumented copy of the reader logged every read of every pin, and every read (1) names for a binding is a read
- * some pin plants for it; the pins that read a name at a site (1) does not name keep their readings as pins, their roster
- * entries saying so. SC-ORDER and SC-ORDER-JS, two new scope-row pins, read each top-level declaration form (2) and (3) name
- * both in the statement right after its declaration's and in a later one, so the top level's 'after its declaration' is planted
- * form by form (the seat's probes on the first draft found four kinds read only right after: a plain namespace, a class, a
- * declare const and an ambient declare const). Every pin of cut #8 stands with its page, path and expected reading byte for
- * byte. THIS CENSUS CLAIMS EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages
- * plant, the falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's
- * NOT CLAIMED section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A form no
- * page plants is not claimed, and no row's silence about a form is a claim about it.
+ * pattern, under an identifier property name, or of its array pattern. Its header said that every read (1) named for a binding
+ * was a read some pin plants for it; refusal #9 measured that false (its U2: the instrumented log it cited had measured only
+ * the other direction, that the pins' reads fall inside (1), and the gate's read-site map found reads (1) named, for forms (2)
+ * and (3) claim, with no planted read), and cut #10 narrows (1) to the reads the census's pins read instead. SC-ORDER and
+ * SC-ORDER-JS, two scope-row pins it added, read each top-level declaration form (2) and (3) name both in the statement right
+ * after its declaration's and in a later one (the seat's probes on its first draft found four kinds read only right after: a
+ * plain namespace, a class, a declare const and an ambient declare const). Every pin of cut #8 stood with its page, path and
+ * expected reading byte for byte.
  *
  * CUT #8 WAS THE FOURTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B519 of refusal #7
  * (O:2026): claims equal to pins, kill-or-pin per member group. It pinned refusal #7's eight surviving reader mutants with
@@ -130,8 +149,13 @@
  *  GP17-C1-SHADOW, and GP17-D1, GP17-D2, GP17-V1 (with GP17-V1-FUNCTION and GP17-V1-NAMESPACE), GP17-L1 (with GP17-L1-ASYNC),
  *  GP17-L2, GP17-P1 and GP17-P2 in kinds; refusal #7's GP13-T1 (with GP13-T1-FUNCTION), GP13-T2, GP13-T3, GP13-T4, GP13-T5,
  *  GP13-S1 and GP13-S2 in const and GP13-D3 in kinds; refusal #8's GP22-SH2 (with GP22-SH2-FUNCTION), GP22-SH3, GP22-SH4,
- *  GP22-RS1 (with GP22-RS1-BLOCK), GP22-RS3, GP22-RS5 and GP22-AN1 to GP22-AN7 in const and GP22-NP1 to GP22-NP3 in kinds; each
- *  pinned by the twin page its refusal names (the gate's evidence, byte for byte), read as the reader reads it.
+ *  GP22-RS1 (with GP22-RS1-BLOCK), GP22-RS3, GP22-RS5 and GP22-AN1 to GP22-AN7 in const and GP22-NP1 to GP22-NP3 in kinds;
+ *  refusal #9's S211-H-LET, S211-H-VAR, S211-H-FUNCTION, S211-H-CLASS, S211-H-ENUM, S211-H-NOINIT-PLAIN,
+ *  S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT, S211-B1-FOR-CONST-NONBLOCK-BODY (with S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW),
+ *  S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST, S211-B2-NOINIT-FOROF, S211-B2-NOINIT-FORIN, S211-B2-DESTRUCTURING, S211-B2-LET,
+ *  S211-B2-VAR, S211-C1-ARROW-PARAMETER-BLOCK-BODY, S211-X1-VOID-CALL, S211-X1-WRAPPED-CALL, S211-X4-LET-VAR-STATEMENT and
+ *  S211-T-UNION-VAR-READ-LATER in scope; each pinned by the twin page its refusal names (the gate's evidence, byte for byte),
+ *  read as the reader reads it.
  *
  * REFUSAL #2 (gate-prep-1, run g10-gate-s161, O:1546), ITS UNMET ITEMS AND HOW EACH IS CURED: U1a's six eval contexts by M61
  * (a with body, at a .js path), M62 (an object literal's method), M63 (a template substitution), M64 (an arrow function's
@@ -271,15 +295,41 @@
  * each reads at a site BINDING (1) does not name. The record's COUNTER-READINGS are not relied on: the narrowed words sit in
  * BINDING (1), (2) and (3) themselves.
  *
+ * REFUSAL #9 (gate-prep-13, run g10-gate-s211, O:2083; disposition R-B558), ITS UNMET ITEMS AND HOW CUT #10 CURES EACH (each
+ * twin page is the gate's, byte for byte and at the gate's path, its sha256/16 its PAGES digest; kill-or-pin per member group,
+ * and BINDING (1) narrowed to the reads the census's pins read): U1a (S211-H-LET, S211-H-VAR, S211-H-FUNCTION, S211-H-CLASS,
+ * S211-H-ENUM and S211-H-NOINIT-PLAIN, and S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT for the five non-const kinds at once: a
+ * let, a var, a function, a class, an enum or a no-initializer const exported from a plain namespace's body, read in the first
+ * statement of the body of a later plain namespace declaration of that namespace, reading other) by those seven pins (twins
+ * s211-h-let-0 to s211-h-any-kind-but-const-ambient-noinit-0), each reading the exported kind at its reads; U1b
+ * (S211-B1-FOR-CONST-NONBLOCK-BODY, a for statement's head const at the top level read as the for statement's non-block body
+ * reading other) by that pin (twin s211-b1-for-const-nonblock-body-0, reading "a") with S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW
+ * (twin s211-b1-for-const-nonblock-body-1, that const shadowing a top-level const, reading "inner" in the body and "outer"
+ * after it); U1c (S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST and the five S211-B2 forms beside it: a no-initializer const of a for-of
+ * or a for-in head, a simple element of a for-of head const's object pattern, and a let or a var of a for-of head, read first
+ * in the for statement's block body, reading other) by those six pins, each reading its kind; U1d
+ * (S211-C1-ARROW-PARAMETER-BLOCK-BODY, an arrow function's defaulted parameter read first in its block body reading other) by
+ * that pin, reading <opaque Q:parameter>; U1e (S211-X1-VOID-CALL, S211-X1-WRAPPED-CALL and S211-X4-LET-VAR-STATEMENT, a
+ * top-level const read in a probe call wrapped by void, await, parentheses, unary !, ?? or an assignment, or initializing a let
+ * or a var, reading other) by those three pins, each reading "a" at each read; U1f (S211-T-UNION-VAR-READ-LATER, a top-level
+ * var annotated string | undefined read later than right after reading other) by that pin, reading <opaque V:var> at both
+ * reads; the class item U1 beside its members by BINDING (1)'s narrowed words, a name's reading claimed only on a census page
+ * and only at a read the page's pin reads, so no read (1) names stands without a pin that plants and reads it; and U2 by this
+ * header's cut #10 paragraph and the delivery note claiming the reads (1) names only as reads the census's pins plant and read,
+ * the other direction NOT CLAIMED. S211-X2 and S211-X3, which S1-OUTER, S2-OUTER and the three PREMISE pins kill (S211-X2 now
+ * also S211-X4-LET-VAR-STATEMENT, S211-X3 also S3-OUTER, SC-SHORTHAND and five properties pins), stand killed.
+ *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
  * own module alone (no lib, no module resolution), and a shorthand property's name through the binding of its value; the module
  * is parsed as JavaScript at a path ending .js, .cjs, .mjs or .jsx, in lower or upper case or as .Js, and as TypeScript at a
  * path ending .ts, .cts, .mts, .tsx, .TS, .json, .d.ts or .js.txt, or with no extension; and this part, (2) and (3) claim a
- * name's reading only at these reads of it, each the only argument of a call that is the whole of an expression statement (as
- * probe(X); is): for a name declared at the top level, or with no declaration or more than one, such a statement of the
- * module's own statement list after its declaration (after the last, for more than one); for a name declared anywhere else (an
+ * name's reading only on a census page, a module one of the census's pins plants (read at that pin's path, or at each of its
+ * paths), and there only at a read of the name that the page's pin reads (its probe reading the name's binding at that read)
+ * and that is one of these reads, each the only argument of a call that is the whole of an expression statement (as
+ * probe(X); is): for a name declared at the top level, or with no declaration or more than one, such a statement of the page's
+ * own statement list after its declaration (after the last, for more than one); for a name declared anywhere else (an
  * element of a destructuring pattern taking its pattern's declaration), the statement right after its declaration's statement
  * in the statement list that holds it, or the first statement of the body of the for statement whose head declares it (that
  * body itself where it is no block), of the body of the function whose parameter it is (the call itself where that body is an
@@ -288,11 +338,13 @@
  * initializer of the next member of its enum; for a name declared in a declare global block at the top level, such a statement
  * at the top level right after that block; and for a name exported from a namespace body, also the first statement of the body
  * of a later plain namespace declaration of that namespace at the top level (namespace N, or namespace DA.DB for one nested in
- * a declare namespace DA); a const declared at the top level is also claimed at any read of it after its declaration inside an
- * expression statement or a variable statement of the module's own statement list, outside any function-like, class or block
- * inside that statement, each TEXT and READINGS part reading it there as that part states; every other read (one before the
+ * a declare namespace DA); a const declared at the top level is also claimed, on a census page, at a read of it after its
+ * declaration, one the page's pin reads, inside an expression statement or a variable statement of the page's own statement
+ * list, outside any function-like, class or block inside that statement, each TEXT and READINGS part reading it there as that
+ * part states; a read on any module that is no census page, a read on a census page that its pin does not read, and every other
+ * read on a census page (one before the
  * declaration, in a block, a function-like, a class or a namespace nested in a scope that holds the declaration, in a for
- * statement's head, in any other statement, or not such a call's only argument) is NOT CLAIMED by these parts, the MEMBERS'
+ * statement's head, in any other statement, or not such a call's only argument) are NOT CLAIMED by these parts, the MEMBERS'
  * pins reading some such reads as the reader reads them; (2) it resolves only when that binding is exactly one declaration, a
  * const with an initializer that declares the name itself (an element of a destructuring pattern never resolves) and that the
  * checker binds as no alias, outside an ambient (declare) context and not exported from a namespace body, and it then reads as
@@ -1222,6 +1274,26 @@ const ROWS: readonly Row[] = [
         ],
         "src/workbench/zz-sc-order.js",
       ),
+      pin("S211-H-LET", "texts", page("declare function probe(value: unknown): void;", 'namespace N { export let X = "a"; probe(X); }', "namespace N { probe(X); }", "export {};"), ["<opaque X:let>", "<opaque X:let>"], "src/workbench/providers/zz-s211-h-let-0.ts"),
+      pin("S211-H-VAR", "texts", page("declare function probe(value: unknown): void;", 'namespace N { export var X = "a"; probe(X); }', "namespace N { probe(X); }", "export {};"), ["<opaque X:var>", "<opaque X:var>"], "src/workbench/providers/zz-s211-h-var-0.ts"),
+      pin("S211-H-FUNCTION", "texts", page("declare function probe(value: unknown): void;", "namespace N { export function F() {} probe(F); }", "namespace N { probe(F); }", "export {};"), ["<opaque F:function>", "<opaque F:function>"], "src/workbench/providers/zz-s211-h-function-0.ts"),
+      pin("S211-H-CLASS", "texts", page("declare function probe(value: unknown): void;", "namespace N { export class C {} probe(C); }", "namespace N { probe(C); }", "export {};"), ["<opaque C:class>", "<opaque C:class>"], "src/workbench/providers/zz-s211-h-class-0.ts"),
+      pin("S211-H-ENUM", "texts", page("declare function probe(value: unknown): void;", "namespace N { export enum E { A } probe(E); }", "namespace N { probe(E); }", "export {};"), ["<opaque E:enum>", "<opaque E:enum>"], "src/workbench/providers/zz-s211-h-enum-0.ts"),
+      pin("S211-H-NOINIT-PLAIN", "texts", page("declare function probe(value: unknown): void;", "namespace N { export const Z: string; probe(Z); }", "namespace N { probe(Z); }", "export {};"), ["<opaque Z:no-initializer>", "<opaque Z:no-initializer>"], "src/workbench/providers/zz-s211-h-noinit-plain-0.ts"),
+      pin("S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT", "texts", page("declare function probe(value: unknown): void;", 'namespace N { export let X = "a"; probe(X); export var Y = "y"; probe(Y); export function F() {} probe(F); export class C {} probe(C); export enum E { A } probe(E); }', "namespace N { probe(X); probe(Y); probe(F); probe(C); probe(E); }", "export {};"), ["<opaque X:let>", "<opaque Y:var>", "<opaque F:function>", "<opaque C:class>", "<opaque E:enum>", "<opaque X:let>", "<opaque Y:var>", "<opaque F:function>", "<opaque C:class>", "<opaque E:enum>"], "src/workbench/providers/zz-s211-h-any-kind-but-const-ambient-noinit-0.ts"),
+      pin("S211-B1-FOR-CONST-NONBLOCK-BODY", "texts", page("declare function probe(value: unknown): void;", 'for (const X = "a"; ; ) probe(X);', "export {};"), ['"a"'], "src/workbench/providers/zz-s211-b1-for-const-nonblock-body-0.ts"),
+      pin("S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW", "texts", page("declare function probe(value: unknown): void;", 'const X = "outer";', 'for (const X = "inner"; ; ) probe(X);', "probe(X);", "export {};"), ['"inner"', '"outer"'], "src/workbench/providers/zz-s211-b1-for-const-nonblock-body-1.ts"),
+      pin("S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (const X of list) {", "  probe(X);", "}", "for (const K in o) {", "  probe(K);", "}", "for (const { F } of objs) {", "  probe(F);", "}", "for (let LL of list) {", "  probe(LL);", "}", "for (var V of list) {", "  probe(V);", "}", "export {};"), ["<opaque X:no-initializer>", "<opaque K:no-initializer>", "<opaque F:destructuring>", "<opaque LL:let>", "<opaque V:var>"], "src/workbench/providers/zz-s211-b2-forof-forin-block-body-first-0.ts"),
+      pin("S211-B2-NOINIT-FOROF", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (const X of list) {", "  probe(X);", "}", "export {};"), ["<opaque X:no-initializer>"], "src/workbench/providers/zz-s211-b2-noinit-forof-0.ts"),
+      pin("S211-B2-NOINIT-FORIN", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (const K in o) {", "  probe(K);", "}", "export {};"), ["<opaque K:no-initializer>"], "src/workbench/providers/zz-s211-b2-noinit-forin-0.ts"),
+      pin("S211-B2-DESTRUCTURING", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (const { F } of objs) {", "  probe(F);", "}", "export {};"), ["<opaque F:destructuring>"], "src/workbench/providers/zz-s211-b2-destructuring-0.ts"),
+      pin("S211-B2-LET", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (let LL of list) {", "  probe(LL);", "}", "export {};"), ["<opaque LL:let>"], "src/workbench/providers/zz-s211-b2-let-0.ts"),
+      pin("S211-B2-VAR", "texts", page("declare function probe(value: unknown): void;", "declare const list: string[];", "declare const o: object;", "declare const objs: { F: string }[];", "for (var V of list) {", "  probe(V);", "}", "export {};"), ["<opaque V:var>"], "src/workbench/providers/zz-s211-b2-var-0.ts"),
+      pin("S211-C1-ARROW-PARAMETER-BLOCK-BODY", "texts", page("declare function probe(value: unknown): void;", 'const g = (Q = "q") => {', "  probe(Q);", "};", "export {};"), ["<opaque Q:parameter>"], "src/workbench/providers/zz-s211-c1-arrow-parameter-block-body-0.ts"),
+      pin("S211-X1-VOID-CALL", "texts", page("declare function probe(value: unknown): unknown;", 'const X = "a";', "void probe(X);", "export {};"), ['"a"'], "src/workbench/providers/zz-s211-x1-void-call-0.ts"),
+      pin("S211-X1-WRAPPED-CALL", "texts", page("declare function probe(value: unknown): unknown;", 'const X = "a";', "void probe(X);", "await probe(X);", "(probe(X));", "!probe(X);", "probe(X) ?? probe(X);", "let r: unknown;", "r = probe(X);", "export {};"), ['"a"', '"a"', '"a"', '"a"', '"a"', '"a"', '"a"'], "src/workbench/providers/zz-s211-x1-wrapped-call-0.ts"),
+      pin("S211-X4-LET-VAR-STATEMENT", "texts", page("declare function probe(value: unknown): string;", 'const X = "a";', "let L = probe(X);", "var V = probe(X);", "export {};"), ['"a"', '"a"'], "src/workbench/providers/zz-s211-x4-let-var-statement-0.ts"),
+      pin("S211-T-UNION-VAR-READ-LATER", "texts", page("declare function probe(value: unknown): void;", "var V: string | undefined;", "probe(V);", "probe(V);", "export {};"), ["<opaque V:var>", "<opaque V:var>"], "src/workbench/providers/zz-s211-t-union-var-read-later-0.ts"),
     ],
   },
   {
@@ -2600,7 +2672,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FROZEN SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:8", "const:35", "kinds:44", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
+      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:28", "const:35", "kinds:44", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "S1:8afd84e55bb80436", "S1-LITERAL:6dc9075e02c6c569", "S1C:44deb751ea6881c2", "S1-OUTER:a5260da7eaa52c80",
@@ -2609,7 +2681,28 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "P-PARAMETER-SHADOW:9c209ba2166739dd", "CLAIM-HEADER:e3b0c44298fc1c14", "CLAIM-ROWS:e3b0c44298fc1c14", "EXPORT-ROWS:e3b0c44298fc1c14",
       "MEMBER-PINS:e3b0c44298fc1c14", "KIND-PINS:e3b0c44298fc1c14", "FALSIFIER-ROSTER:e3b0c44298fc1c14", "SC-SHADOW:1549c1ad35d1b87e",
       "SC-SHORTHAND:06d879e5de557160", "A10:bd4719f6c7ced09c", "SC-PATHS:3991d4983ea4679e", "M21:d75e035c4e9d50e7",
-      "M21-TS:d75e035c4e9d50e7", "SC-ORDER:afda28a20a97b663", "SC-ORDER-JS:2f6bb02e367b20a4", "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98", "C-JS-ALIAS:dd5bf708ed8d9f39",
+      "M21-TS:d75e035c4e9d50e7", "SC-ORDER:afda28a20a97b663", "SC-ORDER-JS:2f6bb02e367b20a4",
+      "S211-H-LET:74474e3b3af09c53",
+      "S211-H-VAR:872574b87cdb88f6",
+      "S211-H-FUNCTION:2fc5a602e99d6f6a",
+      "S211-H-CLASS:52cf6968f98740a4",
+      "S211-H-ENUM:45589454004a0945",
+      "S211-H-NOINIT-PLAIN:c36a98f967ed31a0",
+      "S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT:5bf0da1187c350a4",
+      "S211-B1-FOR-CONST-NONBLOCK-BODY:b8d7a9113c1f8338",
+      "S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW:b40d4e7cfd50541a",
+      "S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST:3dacfcc14b7d14c4",
+      "S211-B2-NOINIT-FOROF:82f37bf12b71cc24",
+      "S211-B2-NOINIT-FORIN:d8794dbaa0df8064",
+      "S211-B2-DESTRUCTURING:ff7b1e84bb79e708",
+      "S211-B2-LET:8ca9c7f0c647a1e7",
+      "S211-B2-VAR:c99d89c67b3b7edf",
+      "S211-C1-ARROW-PARAMETER-BLOCK-BODY:46bdcbd713f09fff",
+      "S211-X1-VOID-CALL:a880c7eaefa9a69a",
+      "S211-X1-WRAPPED-CALL:bcc3d79c2b36a0fd",
+      "S211-X4-LET-VAR-STATEMENT:9198af46bec2ad24",
+      "S211-T-UNION-VAR-READ-LATER:7faf56f608ab0907",
+      "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98", "C-JS-ALIAS:dd5bf708ed8d9f39",
       "GP17-C1:e1828d47d3e43dd4", "GP17-C1-PROGRAM:1b608336d601515e", "GP17-C1-SHADOW:51637dd4c9432fd1", "C-TYPED:3cae82edcc2d0a6c",
       "GP13-T1:5fa7d41472719d11", "GP13-T1-FUNCTION:e20b18aa20c44177", "GP13-T2:f641ccb6946ec9a7", "GP13-T3:ce50ec9b4ea095d4",
       "GP13-T4:84d2a01a35aa5fb9", "GP13-T5:8ea1cca22efdce56", "GP13-S1:2a28952c4365a1f7", "GP13-S2:96009448a4dabeed",
@@ -2683,7 +2776,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FRESH READERS: no two pins read one page at one path, so each pin reads its page on a fresh reader, with its one probe", () => {
     const keys = ROWS.flatMap((row) => row.pins.filter((at) => at.page !== "" && at.probe !== "kind").flatMap((at) => (at.probe === "paths" ? (at.paths ?? []) : [at.path]).map((path) => `${path}\n${at.page}`)));
-    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(234);
+    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(254);
     expect(keys.filter((key, index) => keys.indexOf(key) !== index)).toEqual([]);
   });
 

@@ -172,6 +172,106 @@
      "pin": "SC-ORDER-JS",
      "page": "2f6bb02e367b20a4",
      "falsifies": "BINDING (1)'s reads for a name declared at the top level, in a JavaScript module: each top-level require declaration form (3)'s import entry names (a const, a let and a var initialized by require, a simple and a defaulted element of a const's object pattern and a simple element of its array pattern, a no-substitution template argument and a property access of the call) reads <opaque NAME:import> at its read in the statement right after its declaration's and at its read in a later statement"
+    },
+    {
+     "pin": "S211-H-LET",
+     "page": "74474e3b3af09c53",
+     "falsifies": "refusal #9 U1a member S211-H-LET (a let exported from the body of a plain namespace declared at the top level, read in the first statement of the body of a later plain namespace declaration of that namespace, reads other): its twin page s211-h-let-0 reads <opaque X:let> at its read right after its declaration and at that later read, never <opaque X:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-VAR",
+     "page": "872574b87cdb88f6",
+     "falsifies": "refusal #9 U1a member S211-H-VAR (the same later-namespace read of a var exported from a plain namespace's body reads other): its twin page s211-h-var-0 reads <opaque X:var> at both reads, never <opaque X:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-FUNCTION",
+     "page": "2fc5a602e99d6f6a",
+     "falsifies": "refusal #9 U1a member S211-H-FUNCTION (the same later-namespace read of a function declaration exported from a plain namespace's body reads other): its twin page s211-h-function-0 reads <opaque F:function> at both reads, never <opaque F:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-CLASS",
+     "page": "52cf6968f98740a4",
+     "falsifies": "refusal #9 U1a member S211-H-CLASS (the same later-namespace read of a class declaration exported from a plain namespace's body reads other): its twin page s211-h-class-0 reads <opaque C:class> at both reads, never <opaque C:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-ENUM",
+     "page": "45589454004a0945",
+     "falsifies": "refusal #9 U1a member S211-H-ENUM (the same later-namespace read of an enum declaration exported from a plain namespace's body reads other): its twin page s211-h-enum-0 reads <opaque E:enum> at both reads, never <opaque E:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-NOINIT-PLAIN",
+     "page": "c36a98f967ed31a0",
+     "falsifies": "refusal #9 U1a member S211-H-NOINIT-PLAIN (the same later-namespace read of a const with no initializer, annotated string, exported from a plain namespace's body reads other): its twin page s211-h-noinit-plain-0 reads <opaque Z:no-initializer> at both reads, never <opaque Z:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT",
+     "page": "5bf0da1187c350a4",
+     "falsifies": "refusal #9 U1a member S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT (the five non-const kinds at once): its twin page s211-h-any-kind-but-const-ambient-noinit-0 reads a let, a var, a function, a class and an enum exported from a plain namespace's body as <opaque X:let>, <opaque Y:var>, <opaque F:function>, <opaque C:class> and <opaque E:enum>, each right after its declaration and again in a later plain namespace declaration of that namespace, never other; X's later read is the first statement of that body, a read BINDING (1) names, and the other four later reads are reads BINDING (1) does not name, held as this pin reads them"
+    },
+    {
+     "pin": "S211-B1-FOR-CONST-NONBLOCK-BODY",
+     "page": "b8d7a9113c1f8338",
+     "falsifies": "refusal #9 U1b member S211-B1-FOR-CONST-NONBLOCK-BODY (a const declared in a for statement's head at the top level, read as that for statement's body where the body is no block, reads other): its twin page s211-b1-for-const-nonblock-body-0 reads \"a\", never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW",
+     "page": "b40d4e7cfd50541a",
+     "falsifies": "refusal #9 U1b member S211-B1-FOR-CONST-NONBLOCK-BODY's second twin page s211-b1-for-const-nonblock-body-1: that for statement's head const shadowing a plain unannotated top-level const of its name reads its own initializer \"inner\" as the non-block body, and the top-level const reads \"outer\" in a later statement at the top level; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST",
+     "page": "3dacfcc14b7d14c4",
+     "falsifies": "refusal #9 U1c member S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST (a for-of or for-in statement's head declaration at the top level, read first in the for statement's block body, reads other): its twin page s211-b2-forof-forin-block-body-first-0 reads a no-initializer const of a for-of head <opaque X:no-initializer>, one of a for-in head <opaque K:no-initializer>, a simple element of a const's object pattern in a for-of head <opaque F:destructuring>, a let <opaque LL:let> and a var <opaque V:var> of for-of heads, each first in its block body; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-NOINIT-FOROF",
+     "page": "82f37bf12b71cc24",
+     "falsifies": "refusal #9 U1c member S211-B2-NOINIT-FOROF: its twin page s211-b2-noinit-forof-0, a no-initializer const of a for-of head at the top level read first in the block body, reads <opaque X:no-initializer>, never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-NOINIT-FORIN",
+     "page": "d8794dbaa0df8064",
+     "falsifies": "refusal #9 U1c member S211-B2-NOINIT-FORIN: its twin page s211-b2-noinit-forin-0, a no-initializer const of a for-in head at the top level read first in the block body, reads <opaque K:no-initializer>, never <opaque K:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-DESTRUCTURING",
+     "page": "ff7b1e84bb79e708",
+     "falsifies": "refusal #9 U1c member S211-B2-DESTRUCTURING: its twin page s211-b2-destructuring-0, a simple element of a const's object pattern in a for-of head at the top level read first in the block body, reads <opaque F:destructuring>, never <opaque F:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-LET",
+     "page": "8ca9c7f0c647a1e7",
+     "falsifies": "refusal #9 U1c member S211-B2-LET: its twin page s211-b2-let-0, a let of a for-of head at the top level read first in the block body, reads <opaque LL:let>, never <opaque LL:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-VAR",
+     "page": "c99d89c67b3b7edf",
+     "falsifies": "refusal #9 U1c member S211-B2-VAR: its twin page s211-b2-var-0, a var of a for-of head at the top level read first in the block body, reads <opaque V:var>, never <opaque V:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-C1-ARROW-PARAMETER-BLOCK-BODY",
+     "page": "46bdcbd713f09fff",
+     "falsifies": "refusal #9 U1d member S211-C1-ARROW-PARAMETER-BLOCK-BODY (a defaulted parameter of an arrow function initializing a plain const at the top level, read first in the arrow function's block body, reads other): its twin page s211-c1-arrow-parameter-block-body-0 reads <opaque Q:parameter>, never <opaque Q:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X1-VOID-CALL",
+     "page": "a880c7eaefa9a69a",
+     "falsifies": "refusal #9 U1e member S211-X1-VOID-CALL (a top-level const read in a probe call that is a void expression's operand, a whole expression statement at the top level, reads other): its twin page s211-x1-void-call-0 reads \"a\", never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X1-WRAPPED-CALL",
+     "page": "bcc3d79c2b36a0fd",
+     "falsifies": "refusal #9 U1e member S211-X1-WRAPPED-CALL (a top-level const read in a probe call that is the operand of void, await, parentheses or unary !, a side of ?? or an assignment's right side, each a whole expression statement at the top level, reads other): its twin page s211-x1-wrapped-call-0 reads \"a\" at each of its seven reads, never <opaque X:other>; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X4-LET-VAR-STATEMENT",
+     "page": "9198af46bec2ad24",
+     "falsifies": "refusal #9 U1e member S211-X4-LET-VAR-STATEMENT (a top-level const read in a probe call initializing a let or a var statement at the top level reads other): its twin page s211-x4-let-var-statement-0 reads \"a\" at both reads, never <opaque X:other>; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-T-UNION-VAR-READ-LATER",
+     "page": "7faf56f608ab0907",
+     "falsifies": "refusal #9 U1f member S211-T-UNION-VAR-READ-LATER (a var with no initializer and the union annotation string | undefined at the top level, read later than right after its declaration, reads other): its twin page s211-t-union-var-read-later-0 reads <opaque V:var> right after its declaration and in the statement after that, never <opaque V:other>; both are reads BINDING (1) names on this census page"
     }
    ]
   },

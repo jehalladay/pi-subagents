@@ -35,16 +35,20 @@
  * than the top level that shadows a plain unannotated top-level const (its C-SHADOWS pin plants one at each such position with
  * no annotation and with each annotation form) and named BINDING (3)'s nested object pattern as an element of an object or an
  * array pattern (C-JS-ALIAS, C-NESTED, C-NESTED-JS and GP13-D3 plant both). Cut #9, the fifth restatement (the post-ladder
- * disposition R-B540 of refusal #8), adds refusal #8's sixteen members to MEMBERS, each pinned by every twin page the gate
- * names for it, and narrows the words they sit on: BINDING (1) names the reads (1), (2) and (3) claim (the probe-call
+ * disposition R-B540 of refusal #8), added refusal #8's sixteen members to MEMBERS, each pinned by every twin page the gate
+ * named for it, and narrowed the words they sat on: BINDING (1) named the reads (1), (2) and (3) claimed (the probe-call
  * statements the census's pages plant, and a top-level const's reads in the module's own expression and variable statements),
  * BINDING (2) claims no type annotation or the keyword string alone, and BINDING (3) names its nested object pattern exactly as
- * the census's pages plant it; the other forms those members and cut #8's pins plant are pinned beyond the words. The census
- * holds the claim byte-for-byte and pins
- * every part with planted modules. wb-jwc.7's census (blocked by this bead, R-B115) can take the reader in place of its own
- * nameResolved, textsOf, commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling
- * R-B115's, refusal #1's, refusal #2's, refusal #5's, refusal #6's, refusal #7's and refusal #8's), each bound to the part
- * whose row pins it.
+ * the census's pages plant it; the other forms those members and cut #8's pins plant are pinned beyond the words. Cut #10, the
+ * sixth restatement (the post-ladder disposition R-B558 of refusal #9), adds refusal #9's nineteen members to MEMBERS, each
+ * pinned by every twin page the gate names for it (byte for byte, at the gate's paths), and narrows BINDING (1)'s read-site words
+ * in the part itself: (1), (2) and (3) claim a name's reading only on a census page (a module one of the census's pins plants)
+ * and there only at a read of the name that the page's pin reads, at one of the sites (1) lists; a read on any other module, a
+ * read a census page's pin does not read and every other read on a census page are NOT CLAIMED. The census holds the claim
+ * byte-for-byte and pins every part with planted modules. wb-jwc.7's census (blocked by this bead, R-B115) can take the
+ * reader in place of its own nameResolved, textsOf, commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling
+ * R-B115's, refusal #1's, refusal #2's, refusal #5's, refusal #6's, refusal #7's, refusal #8's and refusal #9's), each bound to
+ * the part whose row pins it.
  */
 /** One part of the claim: the id the census rows answer, and its words. */
 export interface ClaimPart<T extends string> {
@@ -62,7 +66,7 @@ export type FormId = BindingFormId | TextFormId | ReadingFormId | ResidualFormId
 export const BINDING_FORMS: readonly ClaimPart<BindingFormId>[] = [
   {
     id: "scope",
-    text: "an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its own module alone (no lib, no module resolution), and a shorthand property's name through the binding of its value; the module is parsed as JavaScript at a path ending .js, .cjs, .mjs or .jsx, in lower or upper case or as .Js, and as TypeScript at a path ending .ts, .cts, .mts, .tsx, .TS, .json, .d.ts or .js.txt, or with no extension; and this part, (2) and (3) claim a name's reading only at these reads of it, each the only argument of a call that is the whole of an expression statement (as probe(X); is): for a name declared at the top level, or with no declaration or more than one, such a statement of the module's own statement list after its declaration (after the last, for more than one); for a name declared anywhere else (an element of a destructuring pattern taking its pattern's declaration), the statement right after its declaration's statement in the statement list that holds it, or the first statement of the body of the for statement whose head declares it (that body itself where it is no block), of the body of the function whose parameter it is (the call itself where that body is an arrow function's expression body), of the block of the catch clause whose variable it is or of the body of the named function expression or of a method of the named class expression whose own name it is, and, for an enum member, the call that is the initializer of the next member of its enum; for a name declared in a declare global block at the top level, such a statement at the top level right after that block; and for a name exported from a namespace body, also the first statement of the body of a later plain namespace declaration of that namespace at the top level (namespace N, or namespace DA.DB for one nested in a declare namespace DA); a const declared at the top level is also claimed at any read of it after its declaration inside an expression statement or a variable statement of the module's own statement list, outside any function-like, class or block inside that statement, each TEXT and READINGS part reading it there as that part states; every other read (one before the declaration, in a block, a function-like, a class or a namespace nested in a scope that holds the declaration, in a for statement's head, in any other statement, or not such a call's only argument) is NOT CLAIMED by these parts, the MEMBERS' pins reading some such reads as the reader reads them",
+    text: "an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its own module alone (no lib, no module resolution), and a shorthand property's name through the binding of its value; the module is parsed as JavaScript at a path ending .js, .cjs, .mjs or .jsx, in lower or upper case or as .Js, and as TypeScript at a path ending .ts, .cts, .mts, .tsx, .TS, .json, .d.ts or .js.txt, or with no extension; and this part, (2) and (3) claim a name's reading only on a census page, a module one of the census's pins plants (read at that pin's path, or at each of its paths), and there only at a read of the name that the page's pin reads (its probe reading the name's binding at that read) and that is one of these reads, each the only argument of a call that is the whole of an expression statement (as probe(X); is): for a name declared at the top level, or with no declaration or more than one, such a statement of the page's own statement list after its declaration (after the last, for more than one); for a name declared anywhere else (an element of a destructuring pattern taking its pattern's declaration), the statement right after its declaration's statement in the statement list that holds it, or the first statement of the body of the for statement whose head declares it (that body itself where it is no block), of the body of the function whose parameter it is (the call itself where that body is an arrow function's expression body), of the block of the catch clause whose variable it is or of the body of the named function expression or of a method of the named class expression whose own name it is, and, for an enum member, the call that is the initializer of the next member of its enum; for a name declared in a declare global block at the top level, such a statement at the top level right after that block; and for a name exported from a namespace body, also the first statement of the body of a later plain namespace declaration of that namespace at the top level (namespace N, or namespace DA.DB for one nested in a declare namespace DA); a const declared at the top level is also claimed, on a census page, at a read of it after its declaration, one the page's pin reads, inside an expression statement or a variable statement of the page's own statement list, outside any function-like, class or block inside that statement, each TEXT and READINGS part reading it there as that part states; a read on any module that is no census page, a read on a census page that its pin does not read, and every other read on a census page (one before the declaration, in a block, a function-like, a class or a namespace nested in a scope that holds the declaration, in a for statement's head, in any other statement, or not such a call's only argument) are NOT CLAIMED by these parts, the MEMBERS' pins reading some such reads as the reader reads them",
   },
   {
     id: "const",
@@ -179,7 +183,10 @@ export const BINDING_TEXT_CLAIM =
  * GP13-T5, GP13-S1, GP13-S2 and GP13-D3, each pinned by every twin page the refusal names for it in the same way) and refusal
  * #8's (gate-prep-22, run g10-gate-s207, outbox row O:2057: the surviving reader mutants of its U1a to U1d as GP22-SH2,
  * GP22-SH3, GP22-SH4, GP22-RS1, GP22-RS3, GP22-RS5, GP22-AN1 to GP22-AN7 and GP22-NP1 to GP22-NP3, each pinned by every twin
- * page the refusal names for it in the same way).
+ * page the refusal names for it in the same way) and refusal #9's (gate-prep-13, run g10-gate-s211, outbox row O:2083: the
+ * surviving reader mutants of its U1a to U1f under the gate's own names, S211-H-LET to S211-T-UNION-VAR-READ-LATER, each
+ * pinned by every twin page the refusal names for it in the same way, at the gate's path, all in scope: the words they sit
+ * on are BINDING (1)'s read sites).
  */
 export const MEMBERS: readonly { readonly id: string; readonly form: FormId; readonly source: string; readonly twins?: readonly string[] }[] = [
   { id: "R-ALT1", form: "registration", source: "R-B115 U1(a)" },
@@ -265,5 +272,24 @@ export const MEMBERS: readonly { readonly id: string; readonly form: FormId; rea
   { id: "GP22-NP1", form: "kinds", source: "refusal #8 U1d (GP22-NP1, O:2057)" },
   { id: "GP22-NP2", form: "kinds", source: "refusal #8 U1d (GP22-NP2, O:2057)" },
   { id: "GP22-NP3", form: "kinds", source: "refusal #8 U1d (GP22-NP3, O:2057)" },
+  { id: "S211-H-LET", form: "scope", source: "refusal #9 U1a (S211-H-LET, O:2083)" },
+  { id: "S211-H-VAR", form: "scope", source: "refusal #9 U1a (S211-H-VAR, O:2083)" },
+  { id: "S211-H-FUNCTION", form: "scope", source: "refusal #9 U1a (S211-H-FUNCTION, O:2083)" },
+  { id: "S211-H-CLASS", form: "scope", source: "refusal #9 U1a (S211-H-CLASS, O:2083)" },
+  { id: "S211-H-ENUM", form: "scope", source: "refusal #9 U1a (S211-H-ENUM, O:2083)" },
+  { id: "S211-H-NOINIT-PLAIN", form: "scope", source: "refusal #9 U1a (S211-H-NOINIT-PLAIN, O:2083)" },
+  { id: "S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT", form: "scope", source: "refusal #9 U1a (S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT, O:2083)" },
+  { id: "S211-B1-FOR-CONST-NONBLOCK-BODY", form: "scope", source: "refusal #9 U1b (S211-B1-FOR-CONST-NONBLOCK-BODY, O:2083)", twins: ["S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW"] },
+  { id: "S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST", form: "scope", source: "refusal #9 U1c (S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST, O:2083)" },
+  { id: "S211-B2-NOINIT-FOROF", form: "scope", source: "refusal #9 U1c (S211-B2-NOINIT-FOROF, O:2083)" },
+  { id: "S211-B2-NOINIT-FORIN", form: "scope", source: "refusal #9 U1c (S211-B2-NOINIT-FORIN, O:2083)" },
+  { id: "S211-B2-DESTRUCTURING", form: "scope", source: "refusal #9 U1c (S211-B2-DESTRUCTURING, O:2083)" },
+  { id: "S211-B2-LET", form: "scope", source: "refusal #9 U1c (S211-B2-LET, O:2083)" },
+  { id: "S211-B2-VAR", form: "scope", source: "refusal #9 U1c (S211-B2-VAR, O:2083)" },
+  { id: "S211-C1-ARROW-PARAMETER-BLOCK-BODY", form: "scope", source: "refusal #9 U1d (S211-C1-ARROW-PARAMETER-BLOCK-BODY, O:2083)" },
+  { id: "S211-X1-VOID-CALL", form: "scope", source: "refusal #9 U1e (S211-X1-VOID-CALL, O:2083)" },
+  { id: "S211-X1-WRAPPED-CALL", form: "scope", source: "refusal #9 U1e (S211-X1-WRAPPED-CALL, O:2083)" },
+  { id: "S211-X4-LET-VAR-STATEMENT", form: "scope", source: "refusal #9 U1e (S211-X4-LET-VAR-STATEMENT, O:2083)" },
+  { id: "S211-T-UNION-VAR-READ-LATER", form: "scope", source: "refusal #9 U1f (S211-T-UNION-VAR-READ-LATER, O:2083)" },
 ];
 
