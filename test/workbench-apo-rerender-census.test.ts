@@ -734,6 +734,26 @@
  * another name - so G16-RW1-RW3 red INTO ANY. The gerund (W21-X-infl) and every other spelling stay NOT CLAIMED (below).
  * RESIDUAL: none added - this cut claims no residual family.
  *
+ * WB-LDQU CUT #2 (respin 1 of wb-ldqu: refusal #1 U1 and U2 - the own list's end and the spelling axes were claimed
+ * wider than they were pinned: the end was pinned only at a full stop followed by a space or a line break and then a
+ * capital, and beyond four whitespace kinds, runs of one or two and four case forms each spelling axis was held only by
+ * the reader's own frozen literal). This cut holds each to the runtime, outside this file; it edits no reader, label or
+ * case and adds or removes no row (95 tests; only the roster's INTO ANY title is restated). runtimeWhitespace reads the
+ * whitespace the claims name from the runtime - every code point whose one-character string String.prototype.trim
+ * removes, the 25 characters \s matches, frozen as a literal - and INTO ANY reads, for every code point, that \s
+ * matches it and that a full stop followed by it ends a sentence exactly when the runtime trims it, and that a full
+ * stop followed by whitespace (each of those characters in turn) ends one whatever follows the whitespace and whatever
+ * precedes the full stop; that planted labels ending the own list at a full stop followed by each of those characters,
+ * before a capital and before a small letter, keep the lists as planted and the page named once after it outside the
+ * own list (U1: G15-I6 and G15-I7 red INTO ANY); and that each frozen phrase reads one copy, and two where written
+ * twice, with every space written as each of those characters and as a run of one to all of them in turn, and with each
+ * letter in its other case alone in the phrase as frozen, in capitals and in small letters, and in alternating case
+ * begun either way (casesOf, each letter's two cases read from the runtime), and that one of them (a keeping instance)
+ * reads one copy with every space written as a run of each length up to the longer of the two labels, so any run a
+ * label can hold reads as one space (U2: G15-I1c, G15-I2c and G15-I4c red INTO ANY). Trunk 08a61f1 is merged into the
+ * branch; after 846ba20 it changes no src file and none of the three census files.
+ * RESIDUAL: none added - this cut claims no residual family.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -1064,8 +1084,12 @@
  * letter-case, whitespace and leading-conjunction axes only, wb-py8n final cut #5's byte-for-byte narrowing restated).
  * Of INTO ANY's spelling pins, a page's naming words or a phrase edited, a spelling kind removed from spellingsOf, or the
  * phrase list emptied, together with its elements of the kinds literal and the spelling counts literal, is NOT CLAIMED by
- * this census (no anchor outside this file names the phrases' spellings or the kinds; each axis stays read by the planted
- * labels' controls and the reader's frozen literal, wb-ldqu); and an unselected spelling other than the twelve the runtime's
+ * this census (no anchor outside this file names the phrases' spellings or the kinds; the whitespace and letter-case axes
+ * are held besides to the runtime, wb-ldqu cut #2, and the leading-conjunction axis stays read by the planted labels'
+ * controls and the reader's frozen literal, wb-ldqu); nor is the runtime reading itself - runtimeWhitespace or casesOf, or
+ * one of INTO ANY's sweeps over the runtime's code points or whitespace - narrowed, edited or removed, alone or together
+ * with its elements of the runtime literal (the code points, the planted ends' count, the case spellings' counts and the
+ * probe's case spellings) and a reader (wb-ldqu cut #2); and an unselected spelling other than the twelve the runtime's
  * Function.prototype holds the row to (valueOf, a longer name, a continued name, Object.prototype's, MyFunction, MyReflect,
  * call.toString), removed with the count, is NOT CLAIMED either.
  * Of INTO ANY's selection, a member name written through an escape inside it (b\u0069nd for bind) and a Function.prototype
@@ -1077,7 +1101,8 @@
  * wb-021.7 gives instead (wb-021.7 cut #5) as literals, and INTO ANY pins the into-any pages
  * with their typing as a literal (wb-py8n) and the phrases its two label readings count, with INTO_ANY's naming words, as
  * another (wb-py8n respin 2), the turn into any DISPATCH's turn reading joins its two phrases at as a third (wb-py8n
- * respin 3), and the spelling copies reads (a phrase's words and pattern) with spellingsOf's kinds as a fourth (wb-ldqu);
+ * respin 3), and the spelling copies reads (a phrase's words and pattern) with spellingsOf's kinds as a fourth (wb-ldqu),
+ * and the runtime's whitespace with the planted ends' and the case spellings' counts as a fifth (wb-ldqu cut #2);
  * test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
@@ -1194,7 +1219,7 @@ const FAIL_CLOSED_ANCHOR =
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const INTO_ANY_ROW =
-  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies in the spelling copies reads (the phrase's words, its leading 'or' or 'and' not read, each letter in either case and each space as any run of whitespace), and a copy in any other spelling is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings)";
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies in the spelling copies reads (the phrase's words, its leading 'or' or 'and' not read, each letter in either case and each space as any run of whitespace - held to the runtime: whitespace is each character its String.prototype.trim removes, a letter's two cases are as it pairs them, and a run is any length up to the longer label's), and a copy in any other spelling is NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, whatever precedes the full stop and whatever follows the whitespace) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
@@ -1480,6 +1505,43 @@ function spellingsOf(phrase: string): (readonly [string, string])[] {
     ["the leading conjunction dropped", words],
     ["the leading conjunction 'or'", `or ${words}`],
     ["the leading conjunction 'and'", `and ${words}`],
+  ];
+}
+/**
+ * The whitespace the INTO ANY label readings claim, read from the runtime rather than written here (wb-ldqu cut #2, refusal
+ * #1 U1 and U2): every code point whose one-character string the runtime's String.prototype.trim removes - ECMAScript's
+ * WhiteSpace and LineTerminator, the characters \s matches - in code point order.
+ */
+function runtimeWhitespace(): string[] {
+  const found: string[] = [];
+  for (let code = 0; code <= 0x10ffff; code += 1) {
+    const text = String.fromCodePoint(code);
+    if (text.trim() === "") found.push(text);
+  }
+  return found;
+}
+/**
+ * The letter-case spellings of a frozen phrase, each letter's two cases read from the runtime (wb-ldqu cut #2, refusal #1
+ * U2): for each letter - a character whose capital and small forms differ - the phrase as frozen, in capitals and in small
+ * letters with that one letter in its other case, and the phrase with its letters in alternating case, begun with a capital
+ * or with a small letter.
+ */
+function casesOf(phrase: string): (readonly [string, string])[] {
+  const chars = [...phrase];
+  const other = (char: string): string => (char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase());
+  const letters = chars.flatMap((char, at) => (char.toUpperCase() === char.toLowerCase() ? [] : [at]));
+  const flipped = (base: readonly string[], at: number): string => base.map((char, index) => (index === at ? other(char) : char)).join("");
+  const capitals = chars.map(char => char.toUpperCase());
+  const small = chars.map(char => char.toLowerCase());
+  const alternating = (first: number): string => chars.map((char, at) => (letters.indexOf(at) % 2 === first ? char.toUpperCase() : char.toLowerCase())).join("");
+  return [
+    ...letters.flatMap((at): (readonly [string, string])[] => [
+      [`the letter at ${at} in its other case`, flipped(chars, at)],
+      [`in capitals, the letter at ${at} small`, flipped(capitals, at)],
+      [`in small letters, the letter at ${at} a capital`, flipped(small, at)],
+    ]),
+    ["alternating case, a capital first", alternating(0)],
+    ["alternating case, a small letter first", alternating(1)],
   ];
 }
 /** R-THIS-BINDING's label read for that withdrawn wording (respin 3): how many copies of it, read as copies reads them, stand anywhere in a label (wb-ldqu) - the reading the row and its planted labels share. */
@@ -2062,6 +2124,82 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       ],
       "Function.prototype's other own members, each written in both forms among the unselected spellings",
     ).toEqual([["length", "name", "arguments", "caller", "constructor", "toString"], []]);
+    // wb-ldqu cut #2 (refusal #1 U1 and U2): the own list's end and the spelling axes held to the runtime, outside this file - its whitespace, every code point it reads, and each letter's two cases.
+    const whitespace = runtimeWhitespace();
+    const trimmed = new Set(whitespace);
+    const sentenceMisreads: string[] = [];
+    let pointsRead = 0;
+    let endsRead = 0;
+    for (let code = 0; code <= 0x10ffff; code += 1) {
+      const point = String.fromCodePoint(code);
+      pointsRead += 1;
+      const endsHere = sentenceEnd(`a.${point}b`, 0) === 1;
+      if (endsHere) endsRead += 1;
+      const hex = code.toString(16);
+      const space = whitespace[code % whitespace.length];
+      if (/\s/.test(point) !== trimmed.has(point)) sentenceMisreads.push(`${hex}: \\s`);
+      if (endsHere !== trimmed.has(point)) sentenceMisreads.push(`${hex}: after the full stop`);
+      if (sentenceEnd(`a.${space}${point}`, 0) !== 1) sentenceMisreads.push(`${hex}: after the whitespace`);
+      if (sentenceEnd(`${point}.${space}b`, 0) !== point.length) sentenceMisreads.push(`${hex}: before the full stop`);
+    }
+    expect(
+      [pointsRead, endsRead, sentenceMisreads],
+      "every code point: \\s matches it exactly when the runtime trims it, a full stop followed by it (and a small letter) ends a sentence exactly then, and a full stop followed by whitespace (each character the runtime trims, in turn) ends one whatever follows the whitespace and whatever precedes the full stop (every code point read, and 25 of them ending one)",
+    ).toEqual([0x110000, 25, []]);
+    // The own list ending at a full stop followed by each whitespace character the runtime trims, before a capital and before a small letter: the lists as planted and the page named once after it, outside the own list.
+    const ends = whitespace.flatMap(space => [`.${space}After it:`, `.${space}after it:`]);
+    const afterPage = "a class's static side";
+    expect(
+      ends.flatMap(end => {
+        const ended = plantedLabel.replace(". After it:", end);
+        const lists = intoAnyLists(ended);
+        const naming = intoAnyNaming(ended, [{ typed: "own", named: afterPage }]);
+        const after = copies(ended.slice(ended.indexOf(end)), afterPage);
+        return lists.any === anyList && lists.own === ownList && JSON.stringify(naming) === "[[false,0]]" && after === 1 ? [] : [`U+${end.codePointAt(1)?.toString(16)} ${end.slice(2, 3)}`];
+      }),
+      "planted labels ending the own list at a full stop followed by each whitespace character the runtime trims, before a capital and before a small letter: the lists as planted, the page named once after it and outside the own list",
+    ).toEqual([]);
+    // Each frozen phrase with every space written as each whitespace character the runtime trims, and as a run of one to all of them in turn: one copy, two where written twice.
+    const held = (phrase: string, text: string): boolean => copies(`a planted text; ${text}; and on`, phrase) === 1 && copies(`${text} ${phrase}`, phrase) === 2;
+    const longest = Math.max(label.length, dispatch.length);
+    const run = whitespace.join("").repeat(Math.ceil(longest / whitespace.length)).slice(0, longest);
+    expect(
+      phrases.flatMap(phrase => [
+        ...whitespace.flatMap(space => (held(phrase, phrase.split(" ").join(space)) ? [] : [`${phrase.slice(0, 32)}: every space U+${space.codePointAt(0)?.toString(16)}`])),
+        ...whitespace.flatMap((_, at) => (held(phrase, phrase.split(" ").join(run.slice(0, at + 1))) ? [] : [`${phrase.slice(0, 32)}: every space a run of ${at + 1}`])),
+      ]),
+      "each frozen phrase with every space written as each whitespace character the runtime trims, and as a run of one to all of them: one copy, two where written twice",
+    ).toEqual([]);
+    // One frozen phrase with every space written as a run of each length up to the longer label: any run a label can hold reads as one space.
+    const swept = "a keeping instance";
+    const lengths = Array.from({ length: longest }, (_, at) => at + 1);
+    expect(
+      [longest > whitespace.length, longest >= label.length && longest >= dispatch.length, swept.split(" ").length, lengths.length === longest, lengths.filter(length => copies(`a planted text; ${swept.split(" ").join(run.slice(0, length))}; and on`, swept) !== 1)],
+      "a frozen phrase's spaces each written as a run of every length up to the longer label's (longer than the runs above, and as long as either label): one copy each",
+    ).toEqual([true, true, 3, true, []]);
+    // Each frozen phrase with each letter in its other case - alone, in the phrase as frozen, in capitals and in small letters - and in alternating case: one copy, two where written twice.
+    expect(
+      phrases.flatMap(phrase => casesOf(phrase).flatMap(([how, text]) => (held(phrase, text) ? [] : [`${phrase.slice(0, 32)}: ${how}`]))),
+      "each frozen phrase with each letter in its other case alone, as frozen, in capitals and in small letters, and in alternating case begun either way: one copy, two where written twice",
+    ).toEqual([]);
+    expect(
+      [whitespace.map(space => space.codePointAt(0)?.toString(16)), ends.length, phrases.map(phrase => casesOf(phrase).length), casesOf("Ab")],
+      "the runtime's whitespace (each code point its String.prototype.trim removes, in order), the planted ends and each phrase's case spellings, counted, and the case spellings of a probe, frozen (rule 16)",
+    ).toEqual([
+      ["9", "a", "b", "c", "d", "20", "a0", "1680", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "200a", "2028", "2029", "202f", "205f", "3000", "feff"],
+      50,
+      [188, 197, 44, 71, 125, 431, 314, 293, 716, 83, 62, 53, 50, 53, 113, 47, 86, 200, 209, 116],
+      [
+        ["the letter at 0 in its other case", "ab"],
+        ["in capitals, the letter at 0 small", "aB"],
+        ["in small letters, the letter at 0 a capital", "Ab"],
+        ["the letter at 1 in its other case", "AB"],
+        ["in capitals, the letter at 1 small", "Ab"],
+        ["in small letters, the letter at 1 a capital", "aB"],
+        ["alternating case, a capital first", "Ab"],
+        ["alternating case, a small letter first", "aB"],
+      ],
+    ]);
   });
 
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
