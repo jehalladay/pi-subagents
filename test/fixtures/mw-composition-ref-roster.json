@@ -627,7 +627,11 @@
       },
       "closed": {
        "src": [],
-       "manifests": [],
+       "manifests": {
+        "package.json": [],
+        "package-lock.json": [],
+        "vendor/dependency-lock.json": []
+       },
        "controls": {
         "manifest-dependency": [
          "scope"
@@ -4001,10 +4005,66 @@
     ],
     "misplaced": []
    },
+   "lead-after-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
    "lead-twice": {
     "runs": [
      "(y)"
     ],
+    "misplaced": []
+   },
+   "lead-empty": {
+    "runs": [
+     "()"
+    ],
+    "misplaced": []
+   },
+   "lead-multi-letter": {
+    "runs": [
+     "(ab)"
+    ],
+    "misplaced": []
+   },
+   "lead-no-open": {
+    "runs": [
+     "x)"
+    ],
+    "misplaced": []
+   },
+   "lead-no-close": {
+    "runs": [
+     "(x"
+    ],
+    "misplaced": []
+   },
+   "lead-no-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
+   "lead-glued": {
+    "runs": [
+     "(x)alpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "lead-two-spaces": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-space-kept": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-no-body": {
+    "runs": [],
     "misplaced": []
    },
    "no-lead": {
@@ -4148,6 +4208,12 @@
     "0029"
    ],
    "leadGap": [
+    "0020"
+   ],
+   "leadSecond": [],
+   "leadBefore": [],
+   "leadAfter": [],
+   "leadGlued": [
     "0020"
    ]
   }
