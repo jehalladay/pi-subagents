@@ -39,6 +39,10 @@
  * hollowing of those two readers left green, on L017 and L077, the lines they defeat, and narrows L017 and L077, in place, to
  * their pinned pages, naming NOT CLAIMED on L017 the initializer of a third or later declarator of a declaration list, the
  * place past the one its position witness plants; no reader code changes.
+ * wb-tz2.24 cut #4 (this carrier's own refusal #3, gate-prep-12 / g10-gate-s207, O:2036: rung 1 of its L067, L068, L069, L074,
+ * L075, L076 and L078 claim sets) plants the witnesses of that refusal's 42 members, and of the one member its F1 finding
+ * names on L065, each on the line it defeats, and narrows, in place, to its pinned pages every C7 SHAPE FORMS entry line not
+ * narrowed before, L064 to L076 and L078, as a clause of its own; no reader code changes.
  *
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
@@ -103,21 +107,21 @@
  * - override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string "a<n>" at every other place n and, for the const form, const KEY = "HYPERUNIX_HX" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)
  * - override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string "a<n>" at every other place n and, for the const form, const KEY = "HYPERUNIX_HX" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)
  * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):
- * - member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)
- * - element key: an element key value read as ["name"] (one read through an optional chain is NOT CLAIMED)
- * - type member: the right side of a qualified name in a type
- * - destructuring: a destructuring key
- * - destructuring assignment: a destructuring-assignment key (a shorthand's default value is no target)
- * - import: an import or export specifier's imported name
- * - bare call: a call of the bare name kill (an optional call is NOT CLAIMED)
- * - identifier: an identifier holding the ESRCH word that is no member key
- * - regular expression: a regular expression holding the ESRCH word (regexText)
- * - key: a key literal holding the ESRCH word that is no member key
- * - literal: a string or template part that is no key and holds the ESRCH word
- * - /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word
- * - kill name literal: a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)
+ * - member: on its pinned pages, a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)
+ * - element key: on its pinned pages, an element key value read as ["name"] (one read through an optional chain is NOT CLAIMED)
+ * - type member: on its pinned pages, the right side of a qualified name in a type
+ * - destructuring: on its pinned pages, a destructuring key
+ * - destructuring assignment: on its pinned pages, a destructuring-assignment key (a shorthand's default value is no target)
+ * - import: on its pinned pages, an import or export specifier's imported name
+ * - bare call: on its pinned pages, a call of the bare name kill (an optional call is NOT CLAIMED)
+ * - identifier: on its pinned pages, an identifier holding the ESRCH word that is no member key
+ * - regular expression: on its pinned pages, a regular expression holding the ESRCH word (regexText)
+ * - key: on its pinned pages, a key literal holding the ESRCH word that is no member key
+ * - literal: on its pinned pages, a string or template part that is no key and holds the ESRCH word
+ * - /proc path: on its pinned pages, a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word
+ * - kill name literal: on its pinned pages, a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)
  * - pid name literal: on its pinned pages, a plain text pid (trimmed)
- * - process-table command: any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool
+ * - process-table command: on its pinned pages, any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool
  * F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read
  * (failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The
  * modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,

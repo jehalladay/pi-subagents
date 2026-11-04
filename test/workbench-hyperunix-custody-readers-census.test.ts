@@ -111,6 +111,18 @@
  * REFUSAL #3 and #4 ANCHORS and the CARRIER REFUSAL #1 and #2 ANCHORS read a row's words only as a whole item of the list
  * the NOT CLAIMED predicate governs, with no exception word between (refusal #2 F1). No reader code changes: the helper
  * differs from cut #2 in its header words only.
+ * wb-tz2.24 cut #4 answers this carrier's own refusal #3 (gate-prep-12 / g10-gate-s207, O:2036; rung 1 of the carrier's own
+ * L067, L068, L069, L074, L075, L076 and L078 claim sets, needsRuling false): U1's eleven members on L076's kill name literal
+ * words, U2's ten on L074's literal words, U3's nine on L075's /proc path words, U4's eight on L078's process-table command
+ * words, U5's two on L068's destructuring-assignment key words, U6's one on L067's destructuring key words and U7's one on
+ * L069's import specifier words, and the one member its F1 finding names on L065's element key words, which rides with this
+ * respin. Each member is a CARRIER_SURVIVORS_3 row on its line with its item and the sub-form the verdict states; its witness,
+ * replayed verbatim from the verdict's own text, is a GP12W SUB-READINGS row pinned on that line, so the member's hollowing
+ * reds this census. Every C7 SHAPE FORMS entry line the earlier cuts left unnarrowed - L064 to L076 and L078 (L077 narrowed at
+ * cut #3) - narrows, in place, to its pinned pages as a clause of its own, so a form of a sister line that no row plants is NOT
+ * CLAIMED rather than claimed without a pin. The new CARRIER REFUSAL #3 ANCHOR reads the members, and the new FAIL-CLOSED
+ * SHAPES case reads the narrowing of every C7 SHAPE FORMS entry line. No reader code changes: the helper differs from cut #3 in
+ * its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -185,8 +197,8 @@
  *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
  *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence,
- *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 and #3) the UNMET slugs of its own refusal #1 and
- *   refusal #2 verdicts.
+ *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 to #4) the UNMET slugs of its own refusal #1,
+ *   refusal #2 and refusal #3 verdicts.
  *  CHILD REFUSAL #4 ANCHOR (wb-tz2.24, outside this census): the members that fold note lists under its U1 and U2 items, each
  *   with its line and in order, are exactly the CHILD_SURVIVORS_4 rows; each member's witness, as the note states its kind, its
  *   text (white space folded) and its delivered reading, is its row's G1W SUB-READINGS row and a pin of its line's CLAIM_LINES
@@ -202,10 +214,19 @@
  *   reading, in order, is one of its row's GP22W SUB-READINGS rows and a pin of its line's CLAIM_LINES row; and its line narrows
  *   to its pinned pages as a clause of its own, naming NOT CLAIMED, as a whole item of the list the predicate governs, the
  *   place a row names past its witness.
+ *  CARRIER REFUSAL #3 ANCHOR (wb-tz2.24 cut #4, outside this census): the members this carrier's own refusal #3 verdict lists
+ *   on its UNMET item and finding lines - U1 to U7 and its F1 finding - each with its item (read from its line), its line, its
+ *   sub-form and in order, are exactly the CARRIER_SURVIVORS_3 rows, and every GP12 member id the verdict names up to its
+ *   Routing line is one of them; each member's witness, as the verdict states its kind, its text (white space folded) and its
+ *   delivered reading, is its row's GP12W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows
+ *   to its pinned pages as a clause of its own.
  *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
  *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
  *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
  *   FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
+ *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
+ *   entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078, narrows to its pinned pages
+ *   as a clause of its own.
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -258,6 +279,16 @@
  * plants); and a re-claiming word other than the exception words the item reading names, standing between two later items
  * of a NOT CLAIMED list, is NOT CLAIMED by the anchors that read it (they read an item's place and those words, not the
  * list's meaning).
+ * wb-tz2.24 cut #4: on L064 to L078, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own
+ * words say so), among them each position, literal kind and key kind of a C7 SHAPE FORMS form that no pinned page plants; a
+ * SUB-READINGS row of kind words or regex pinned on L071 or L072 reads its text through its own reader alone (identifierWords
+ * or regexText), so that text read as a source by a C7 SHAPE FORMS form is NOT CLAIMED by this census (the row is no page of
+ * that form); that a GP12W page plants the very sub-form its CARRIER_SURVIVORS_3 row names is NOT CLAIMED by an anchor outside
+ * this census (the CARRIER REFUSAL #3 ANCHOR holds each member's item, line and sub-form words and its witness's kind, text and
+ * delivered reading as the verdict states them; the position a page's text plants is this census's own reading); and an entry
+ * line outside the C7 SHAPE FORMS block is NOT CLAIMED by the FAIL-CLOSED SHAPES case (it reads that block's "- " lines only);
+ * and a GP12 id the verdict names after its Routing line is NOT CLAIMED by the CARRIER REFUSAL #3 ANCHOR (it reads the verdict
+ * up to that line).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -755,6 +786,33 @@ function carrierMembers2(block: string): CarrierMember2[] {
     });
   });
 }
+/** The members refusal #3's verdict lists (wb-tz2.24 cut #4), in order: on each of its lines that is an UNMET item ('U<n>: U<n>-<grade>-CONFIRMED-') or a finding ('- F<n> '), each '<id> (<line>, <sub-form>)' head with its item read from that line, and the first '<text>' => <delivered reading> vs <mutant reading> after its "witness <kind> " or "Witness <kind> ". */
+function carrierMembers3(block: string): CarrierMember3[] {
+  return block.split("\n").flatMap(span => {
+    const item = /^(U\d+): U\d+-[A-Z]+-CONFIRMED-/.exec(span)?.[1] ?? /^- (F\d+) /.exec(span)?.[1];
+    if (item === undefined) return [];
+    const heads = [...span.matchAll(/(GP12-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\)[:.] /g)];
+    return heads.map((head, at): CarrierMember3 => {
+      const body = span.slice((head.index ?? 0) + head[0].length, heads[at + 1]?.index ?? span.length);
+      const witness = /[Ww]itness (shapes|shapelines) '(.*?)' => (\[[^\]]*\]) vs \[[^\]]*\]/.exec(body);
+      const delivered: unknown = JSON.parse(witness?.[3] ?? "[]");
+      return {
+        id: head[1] ?? "",
+        item,
+        line: head[2] ?? "",
+        subForm: head[3] ?? "",
+        kind: witness?.[1] ?? "",
+        text: witness?.[2] ?? "",
+        delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
+      };
+    });
+  });
+}
+/** Every GP12 member id refusal #3's verdict names, in any form, up to its Routing line (wb-tz2.24 cut #4): the anchor holds each to a parsed member, so a member the item reading misses reds it. */
+function carrierMentions3(block: string): string[] {
+  const routing = block.indexOf("\nRouting:");
+  return [...new Set([...(routing < 0 ? block : block.slice(0, routing)).matchAll(/GP12-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]))];
+}
 /** Whether a claim line narrows to its pinned pages as a clause of its own (wb-tz2.24, refusal #4 F2): the phrase at the line's start or after an entry colon, a semicolon, a comma, "for it" or "(POSITIONS;", and before a comma, a dash, a parenthesis or "only,"; and the line spells none of the widening words every page, every other page, beyond them, beyond its pinned pages, not only on its pinned pages and on its pinned pages and. */
 function narrowsToPinnedPages(line: string): boolean {
   const clause = /(?:^On|(?:: |; |, | for it |\(POSITIONS; )on) its pinned pages(?:, | - | \(| only, )/.test(line);
@@ -1007,6 +1065,24 @@ interface CarrierSurvivor2 {
   readonly subForm: string;
   readonly witnesses: readonly string[];
   readonly past: string;
+}
+/** wb-tz2.24 cut #4: a member as refusal #3's verdict lists it - its item (the UNMET item or finding its line is), line and sub-form, and its witness's kind, text and delivered reading. */
+interface CarrierMember3 {
+  readonly id: string;
+  readonly item: string;
+  readonly line: string;
+  readonly subForm: string;
+  readonly kind: string;
+  readonly text: string;
+  readonly delivered: readonly string[];
+}
+/** wb-tz2.24 cut #4: a member of this carrier's own refusal #3 (gate-prep-12 / g10-gate-s207, O:2036) on the line its verdict names, with its item (an UNMET item, or F1 for the member its F1 finding names, which rides), the sub-form the verdict states and its GP12W witness. */
+interface CarrierSurvivor3 {
+  readonly id: string;
+  readonly item: string;
+  readonly line: string;
+  readonly subForm: string;
+  readonly witness: string;
 }
 interface LocationRow {
   readonly id: string;
@@ -2500,6 +2576,49 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "GP22S-SHAPE-PID-ARROWBODY", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as an arrow body", kind: "shapes", text: "export const f = (): string => \"pid\";\n", expected: ["F2:pid name literal"] },
   { id: "GP22S-SHAPE-PID-TYPE", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a literal type", kind: "shapes", text: "export type T = \"pid\";\n", expected: ["F2:pid name literal"] },
   { id: "GP22S-SHAPE-PID-CONDITIONAL", claim: "wb-tz2.24 cut #3 seat sweep (L077): a pid as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"pid\" : \"tid\");\n", expected: ["F2:pid name literal"] },
+  { id: "GP12W-KILL-NOHEAD", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOHEAD witness (L076 kill name literal, U1), a kill in a template head", kind: "shapes", text: "export const g = (x: string): string => `kill$" + "{x}`;\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOMIDDLE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOMIDDLE witness (L076 kill name literal, U1), a kill in a template middle", kind: "shapes", text: "export const g = (x: string, y: string): string => `$" + "{x} kill $" + "{y}`;\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOTAIL", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOTAIL witness (L076 kill name literal, U1), a kill in a template tail", kind: "shapes", text: "export const g = (x: string): string => `$" + "{x}kill`;\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOPROPVALUE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOPROPVALUE witness (L076 kill name literal, U1), a kill as a property value", kind: "shapes", text: "export const o = { field: \"kill\" };\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOBINARY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOBINARY witness (L076 kill name literal, U1), a kill as a binary operand", kind: "shapes", text: "export const m = (name: string): boolean => name === \"kill\";\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NORETURN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NORETURN witness (L076 kill name literal, U1), a kill as a return value", kind: "shapes", text: "export function f(): string { return \"kill\"; }\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOCASE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOCASE witness (L076 kill name literal, U1), a kill as a case label", kind: "shapes", text: "export function f(name: string): number { switch (name) { case \"kill\": return 1; } return 0; }\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOPARAMDEFAULT", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOPARAMDEFAULT witness (L076 kill name literal, U1), a kill as a parameter default", kind: "shapes", text: "export function f(name = \"kill\"): string { return name; }\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOARROWBODY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOARROWBODY witness (L076 kill name literal, U1), a kill as an arrow body", kind: "shapes", text: "export const f = (): string => \"kill\";\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOTYPE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOTYPE witness (L076 kill name literal, U1), a kill as a literal type", kind: "shapes", text: "export type T = \"kill\";\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-KILL-NOCONDITIONAL", claim: "wb-tz2.24 cut #4: refusal #3 GP12-KILL-NOCONDITIONAL witness (L076 kill name literal, U1), a kill as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"kill\" : \"none\");\n", expected: ["F1:kill name literal"] },
+  { id: "GP12W-LIT-NOARRAY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOARRAY witness (L074 literal, U2), an ESRCH-word text as an array element", kind: "shapes", text: "export const a = [\"esrch\"];\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOPROPVALUE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOPROPVALUE witness (L074 literal, U2), an ESRCH-word text as a property value", kind: "shapes", text: "export const o = { field: \"esrch\" };\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOBINARY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOBINARY witness (L074 literal, U2), an ESRCH-word text as a binary operand", kind: "shapes", text: "export const m = (name: string): boolean => name === \"esrch\";\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NORETURN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NORETURN witness (L074 literal, U2), an ESRCH-word text as a return value", kind: "shapes", text: "export function f(): string { return \"esrch\"; }\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOCASE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOCASE witness (L074 literal, U2), an ESRCH-word text as a case label", kind: "shapes", text: "export function f(name: string): number { switch (name) { case \"esrch\": return 1; } return 0; }\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOPARAMDEFAULT", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOPARAMDEFAULT witness (L074 literal, U2), an ESRCH-word text as a parameter default", kind: "shapes", text: "export function f(name = \"esrch\"): string { return name; }\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOARROWBODY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOARROWBODY witness (L074 literal, U2), an ESRCH-word text as an arrow body", kind: "shapes", text: "export const f = (): string => \"esrch\";\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOTYPE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOTYPE witness (L074 literal, U2), an ESRCH-word text as a literal type", kind: "shapes", text: "export type T = \"esrch\";\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOCONDITIONAL", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOCONDITIONAL witness (L074 literal, U2), an ESRCH-word text as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"esrch\" : \"none\");\n", expected: ["F4:literal"] },
+  { id: "GP12W-LIT-NOCALLARG", claim: "wb-tz2.24 cut #4: refusal #3 GP12-LIT-NOCALLARG witness (L074 literal, U2), an ESRCH-word text as a call argument", kind: "shapes", text: "declare function record(text: string): void; record(\"esrch\"); export {};\n", expected: ["F4:literal"] },
+  { id: "GP12W-PROC-NOARRAY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOARRAY witness (L075 /proc path, U3), a /proc path as an array element", kind: "shapes", text: "export const a = [\"/proc/1\"];\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOBINARY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOBINARY witness (L075 /proc path, U3), a /proc path as a binary operand", kind: "shapes", text: "export const m = (name: string): boolean => name === \"/proc/1\";\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NORETURN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NORETURN witness (L075 /proc path, U3), a /proc path as a return value", kind: "shapes", text: "export function f(): string { return \"/proc/1\"; }\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOCASE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOCASE witness (L075 /proc path, U3), a /proc path as a case label", kind: "shapes", text: "export function f(name: string): number { switch (name) { case \"/proc/1\": return 1; } return 0; }\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOPARAMDEFAULT", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOPARAMDEFAULT witness (L075 /proc path, U3), a /proc path as a parameter default", kind: "shapes", text: "export function f(name = \"/proc/1\"): string { return name; }\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOARROWBODY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOARROWBODY witness (L075 /proc path, U3), a /proc path as an arrow body", kind: "shapes", text: "export const f = (): string => \"/proc/1\";\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOTYPE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOTYPE witness (L075 /proc path, U3), a /proc path as a literal type", kind: "shapes", text: "export type T = \"/proc/1\";\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOCONDITIONAL", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOCONDITIONAL witness (L075 /proc path, U3), a /proc path as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"/proc/1\" : \"none\");\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PROC-NOCALLARG", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PROC-NOCALLARG witness (L075 /proc path, U3), a /proc path as a call argument", kind: "shapes", text: "declare function record(text: string): void; record(\"/proc/1\"); export {};\n", expected: ["F3:/proc path"] },
+  { id: "GP12W-PTC-NOPROPVALUE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOPROPVALUE witness (L078 process-table command, U4), a process-table command as a property value", kind: "shapes", text: "export const o = { field: \"ps -p 1\" };\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOBINARY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOBINARY witness (L078 process-table command, U4), a process-table command as a binary operand", kind: "shapes", text: "export const m = (name: string): boolean => name === \"ps -p 1\";\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NORETURN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NORETURN witness (L078 process-table command, U4), a process-table command as a return value", kind: "shapes", text: "export function f(): string { return \"ps -p 1\"; }\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOCASE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOCASE witness (L078 process-table command, U4), a process-table command as a case label", kind: "shapes", text: "export function f(name: string): number { switch (name) { case \"ps -p 1\": return 1; } return 0; }\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOPARAMDEFAULT", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOPARAMDEFAULT witness (L078 process-table command, U4), a process-table command as a parameter default", kind: "shapes", text: "export function f(name = \"ps -p 1\"): string { return name; }\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOARROWBODY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOARROWBODY witness (L078 process-table command, U4), a process-table command as an arrow body", kind: "shapes", text: "export const f = (): string => \"ps -p 1\";\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOTYPE", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOTYPE witness (L078 process-table command, U4), a process-table command as a literal type", kind: "shapes", text: "export type T = \"ps -p 1\";\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-PTC-NOCONDITIONAL", claim: "wb-tz2.24 cut #4: refusal #3 GP12-PTC-NOCONDITIONAL witness (L078 process-table command, U4), a process-table command as a conditional branch", kind: "shapes", text: "export const f = (b: boolean): string => (b ? \"ps -p 1\" : \"none\");\n", expected: ["F3:process-table command"] },
+  { id: "GP12W-DAKEY-NOCOMPUTED", claim: "wb-tz2.24 cut #4: refusal #3 GP12-DAKEY-NOCOMPUTED witness (L068 destructuring assignment, U5), a computed key", kind: "shapes", text: "declare const o: Record<string, number>; let k = 0; ({ [\"kill\"]: k } = o); export { k };\n", expected: ["F1:destructuring assignment"] },
+  { id: "GP12W-DAKEY-NOSTRINGKEY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-DAKEY-NOSTRINGKEY witness (L068 destructuring assignment, U5), a string key", kind: "shapes", text: "declare const o: Record<string, number>; let k = 0; ({ \"kill\": k } = o); export { k };\n", expected: ["F1:destructuring assignment"] },
+  { id: "GP12W-DKEY-NOCOMPUTED", claim: "wb-tz2.24 cut #4: refusal #3 GP12-DKEY-NOCOMPUTED witness (L067 destructuring, U6), a computed key", kind: "shapes", text: "declare const o: Record<string, number>; export const { [\"kill\"]: k } = o;\n", expected: ["F1:destructuring"] },
+  { id: "GP12W-IMPS-NOTYPEONLY", claim: "wb-tz2.24 cut #4: refusal #3 GP12-IMPS-NOTYPEONLY witness (L069 import, U7), a type-only specifier", kind: "shapes", text: "import { type kill } from \"node:process\"; export type K = typeof kill;\n", expected: ["F1:import"] },
+  { id: "GP12W-EKEY-NOPAREN", claim: "wb-tz2.24 cut #4: refusal #3 GP12-EKEY-NOPAREN witness (L065 element key, F1), a parenthesized key value", kind: "shapes", text: "declare const o: Record<string, () => void>; o[(\"kill\")](); export {};\n", expected: ["F1:element key", "F1:kill name literal"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -2847,7 +2966,53 @@ const CARRIER_SURVIVORS_2: readonly CarrierSurvivor2[] = [
   { id: "GP22-INIT-NOIMPORTNAME", item: "U1", line: "L017", subForm: "an initializer that is an imported name", witnesses: ["GP22W-INIT-NOIMPORTNAME"], past: "" },
   { id: "GP22-SHAPE-PID-NOTEMPLATE", item: "U2", line: "L077", subForm: "a pid in a template: a no-substitution template or a template part", witnesses: ["GP22W-SHAPE-PID-NOTEMPLATE", "GP22W-SHAPE-PID-NOTEMPLATE-HEAD"], past: "" },
 ];
-/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2) and refusal #2 verdict (cut #3)). */
+/** wb-tz2.24 cut #4: this carrier's own refusal #3 members (gate-prep-12 / g10-gate-s207, O:2036; U1 eleven fail-open on L076's kill name literal words, U2 ten on L074's literal words, U3 nine on L075's /proc path words, U4 eight on L078's process-table command words, U5 two on L068's destructuring-assignment key words, U6 one on L067's destructuring key words, U7 one on L069's import specifier words, and F1's one on L065's element key words) as its verdict lists them, each with its item, the sub-form the verdict states and its GP12W witness. */
+const CARRIER_SURVIVORS_3: readonly CarrierSurvivor3[] = [
+  { id: "GP12-KILL-NOHEAD", item: "U1", line: "L076", subForm: "a kill in a template head", witness: "GP12W-KILL-NOHEAD" },
+  { id: "GP12-KILL-NOMIDDLE", item: "U1", line: "L076", subForm: "a kill in a template middle", witness: "GP12W-KILL-NOMIDDLE" },
+  { id: "GP12-KILL-NOTAIL", item: "U1", line: "L076", subForm: "a kill in a template tail", witness: "GP12W-KILL-NOTAIL" },
+  { id: "GP12-KILL-NOPROPVALUE", item: "U1", line: "L076", subForm: "a kill as a property value", witness: "GP12W-KILL-NOPROPVALUE" },
+  { id: "GP12-KILL-NOBINARY", item: "U1", line: "L076", subForm: "a kill as a binary operand", witness: "GP12W-KILL-NOBINARY" },
+  { id: "GP12-KILL-NORETURN", item: "U1", line: "L076", subForm: "a kill as a return value", witness: "GP12W-KILL-NORETURN" },
+  { id: "GP12-KILL-NOCASE", item: "U1", line: "L076", subForm: "a kill as a case label", witness: "GP12W-KILL-NOCASE" },
+  { id: "GP12-KILL-NOPARAMDEFAULT", item: "U1", line: "L076", subForm: "a kill as a parameter default", witness: "GP12W-KILL-NOPARAMDEFAULT" },
+  { id: "GP12-KILL-NOARROWBODY", item: "U1", line: "L076", subForm: "a kill as an arrow body", witness: "GP12W-KILL-NOARROWBODY" },
+  { id: "GP12-KILL-NOTYPE", item: "U1", line: "L076", subForm: "a kill as a literal type", witness: "GP12W-KILL-NOTYPE" },
+  { id: "GP12-KILL-NOCONDITIONAL", item: "U1", line: "L076", subForm: "a kill as a conditional branch", witness: "GP12W-KILL-NOCONDITIONAL" },
+  { id: "GP12-LIT-NOARRAY", item: "U2", line: "L074", subForm: "an ESRCH-word text as an array element", witness: "GP12W-LIT-NOARRAY" },
+  { id: "GP12-LIT-NOPROPVALUE", item: "U2", line: "L074", subForm: "an ESRCH-word text as a property value", witness: "GP12W-LIT-NOPROPVALUE" },
+  { id: "GP12-LIT-NOBINARY", item: "U2", line: "L074", subForm: "an ESRCH-word text as a binary operand", witness: "GP12W-LIT-NOBINARY" },
+  { id: "GP12-LIT-NORETURN", item: "U2", line: "L074", subForm: "an ESRCH-word text as a return value", witness: "GP12W-LIT-NORETURN" },
+  { id: "GP12-LIT-NOCASE", item: "U2", line: "L074", subForm: "an ESRCH-word text as a case label", witness: "GP12W-LIT-NOCASE" },
+  { id: "GP12-LIT-NOPARAMDEFAULT", item: "U2", line: "L074", subForm: "an ESRCH-word text as a parameter default", witness: "GP12W-LIT-NOPARAMDEFAULT" },
+  { id: "GP12-LIT-NOARROWBODY", item: "U2", line: "L074", subForm: "an ESRCH-word text as an arrow body", witness: "GP12W-LIT-NOARROWBODY" },
+  { id: "GP12-LIT-NOTYPE", item: "U2", line: "L074", subForm: "an ESRCH-word text as a literal type", witness: "GP12W-LIT-NOTYPE" },
+  { id: "GP12-LIT-NOCONDITIONAL", item: "U2", line: "L074", subForm: "an ESRCH-word text as a conditional branch", witness: "GP12W-LIT-NOCONDITIONAL" },
+  { id: "GP12-LIT-NOCALLARG", item: "U2", line: "L074", subForm: "an ESRCH-word text as a call argument", witness: "GP12W-LIT-NOCALLARG" },
+  { id: "GP12-PROC-NOARRAY", item: "U3", line: "L075", subForm: "a /proc path as an array element", witness: "GP12W-PROC-NOARRAY" },
+  { id: "GP12-PROC-NOBINARY", item: "U3", line: "L075", subForm: "a /proc path as a binary operand", witness: "GP12W-PROC-NOBINARY" },
+  { id: "GP12-PROC-NORETURN", item: "U3", line: "L075", subForm: "a /proc path as a return value", witness: "GP12W-PROC-NORETURN" },
+  { id: "GP12-PROC-NOCASE", item: "U3", line: "L075", subForm: "a /proc path as a case label", witness: "GP12W-PROC-NOCASE" },
+  { id: "GP12-PROC-NOPARAMDEFAULT", item: "U3", line: "L075", subForm: "a /proc path as a parameter default", witness: "GP12W-PROC-NOPARAMDEFAULT" },
+  { id: "GP12-PROC-NOARROWBODY", item: "U3", line: "L075", subForm: "a /proc path as an arrow body", witness: "GP12W-PROC-NOARROWBODY" },
+  { id: "GP12-PROC-NOTYPE", item: "U3", line: "L075", subForm: "a /proc path as a literal type", witness: "GP12W-PROC-NOTYPE" },
+  { id: "GP12-PROC-NOCONDITIONAL", item: "U3", line: "L075", subForm: "a /proc path as a conditional branch", witness: "GP12W-PROC-NOCONDITIONAL" },
+  { id: "GP12-PROC-NOCALLARG", item: "U3", line: "L075", subForm: "a /proc path as a call argument", witness: "GP12W-PROC-NOCALLARG" },
+  { id: "GP12-PTC-NOPROPVALUE", item: "U4", line: "L078", subForm: "a process-table command as a property value", witness: "GP12W-PTC-NOPROPVALUE" },
+  { id: "GP12-PTC-NOBINARY", item: "U4", line: "L078", subForm: "a process-table command as a binary operand", witness: "GP12W-PTC-NOBINARY" },
+  { id: "GP12-PTC-NORETURN", item: "U4", line: "L078", subForm: "a process-table command as a return value", witness: "GP12W-PTC-NORETURN" },
+  { id: "GP12-PTC-NOCASE", item: "U4", line: "L078", subForm: "a process-table command as a case label", witness: "GP12W-PTC-NOCASE" },
+  { id: "GP12-PTC-NOPARAMDEFAULT", item: "U4", line: "L078", subForm: "a process-table command as a parameter default", witness: "GP12W-PTC-NOPARAMDEFAULT" },
+  { id: "GP12-PTC-NOARROWBODY", item: "U4", line: "L078", subForm: "a process-table command as an arrow body", witness: "GP12W-PTC-NOARROWBODY" },
+  { id: "GP12-PTC-NOTYPE", item: "U4", line: "L078", subForm: "a process-table command as a literal type", witness: "GP12W-PTC-NOTYPE" },
+  { id: "GP12-PTC-NOCONDITIONAL", item: "U4", line: "L078", subForm: "a process-table command as a conditional branch", witness: "GP12W-PTC-NOCONDITIONAL" },
+  { id: "GP12-DAKEY-NOCOMPUTED", item: "U5", line: "L068", subForm: "a computed key", witness: "GP12W-DAKEY-NOCOMPUTED" },
+  { id: "GP12-DAKEY-NOSTRINGKEY", item: "U5", line: "L068", subForm: "a string key", witness: "GP12W-DAKEY-NOSTRINGKEY" },
+  { id: "GP12-DKEY-NOCOMPUTED", item: "U6", line: "L067", subForm: "a computed key", witness: "GP12W-DKEY-NOCOMPUTED" },
+  { id: "GP12-IMPS-NOTYPEONLY", item: "U7", line: "L069", subForm: "a type-only specifier", witness: "GP12W-IMPS-NOTYPEONLY" },
+  { id: "GP12-EKEY-NOPAREN", item: "F1", line: "L065", subForm: "a parenthesized key value", witness: "GP12W-EKEY-NOPAREN" },
+];
+/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3) and refusal #3 verdict (cut #4)). */
 const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   {
     key: "wb-tz2.24 ACCEPTANCE",
@@ -2859,6 +3024,13 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-tz2.24 refusal #1 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-1-UNNARROWED-PARAMETER-DEFAULT-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2534-L021" },
   { key: "wb-tz2.24 refusal #2 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-2-UNNARROWED-INITIALIZER-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2543-L017" },
   { key: "wb-tz2.24 refusal #2 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-2-UNNARROWED-PID-NAME-LITERAL-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2543-L077" },
+  { key: "wb-tz2.24 refusal #3 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-KILL-NAME-LITERAL-WORDS-11-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L076" },
+  { key: "wb-tz2.24 refusal #3 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-LITERAL-WORDS-10-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L074" },
+  { key: "wb-tz2.24 refusal #3 U3", source: "notes", text: "U3-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-PROC-PATH-WORDS-9-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L075" },
+  { key: "wb-tz2.24 refusal #3 U4", source: "notes", text: "U4-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-PROCESS-TABLE-COMMAND-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L078" },
+  { key: "wb-tz2.24 refusal #3 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-DESTRUCTURING-ASSIGNMENT-KEY-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2592-L068" },
+  { key: "wb-tz2.24 refusal #3 U6", source: "notes", text: "U6-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-DESTRUCTURING-KEY-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2592-L067" },
+  { key: "wb-tz2.24 refusal #3 U7", source: "notes", text: "U7-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-3-UNNARROWED-IMPORT-SPECIFIER-NAME-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2592-L069" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -3061,21 +3233,21 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
   { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
   { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
-  { id: "L064", line: "- member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143", "SUB:WS1", "SUB:WS1b", "SUB:WS1c", "LOCATED:member"] },
-  { id: "L065", line: "- element key: an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230", "LOCATED:element key"] },
-  { id: "L066", line: "- type member: the right side of a qualified name in a type", pins: ["SHAPE:type member", "SUB:S1233", "SUB:T0144", "LOCATED:type member"] },
-  { id: "L067", line: "- destructuring: a destructuring key", pins: ["SHAPE:destructuring", "SUB:S1016", "SUB:T0069", "LOCATED:destructuring", "SUB:Z0022", "SUB:Z0023", "SUB:Z0024", "SUB:Z0025"] },
-  { id: "L068", line: "- destructuring assignment: a destructuring-assignment key (a shorthand's default value is no target)", pins: ["SHAPE:destructuring assignment", "SUB:S1128", "SUB:S1132", "SUB:S1134", "SUB:S1240", "LOCATED:destructuring assignment"] },
-  { id: "L069", line: "- import: an import or export specifier's imported name", pins: ["SHAPE:import", "SUB:S1156", "SUB:S1224", "SUB:T0145", "SUB:Z0017", "LOCATED:import"] },
-  { id: "L070", line: "- bare call: a call of the bare name kill (an optional call is NOT CLAIMED)", pins: ["SHAPE:bare call", "SUB:S1182", "SUB:T0150", "LOCATED:bare call"] },
-  { id: "L071", line: "- identifier: an identifier holding the ESRCH word that is no member key", pins: ["SHAPE:identifier", "SUB:S1030", "SUB:S1217", "SUB:S1218", "SUB:S1219", "SUB:T0006", "SUB:T0007", "SUB:T0008", "SUB:T0009", "SUB:T0011", "SUB:T0012", "SUB:T0013", "SUB:T0014", "SUB:T0015", "SUB:T0151", "LOCATED:identifier"] },
-  { id: "L072", line: "- regular expression: a regular expression holding the ESRCH word (regexText)", pins: ["SHAPE:regular expression", "SUB:S1033", "SUB:S1079", "SUB:W08b", "SUB:T0005", "LOCATED:regular expression"] },
-  { id: "L073", line: "- key: a key literal holding the ESRCH word that is no member key", pins: ["SHAPE:key", "SUB:S1042", "SUB:S1159", "SUB:S1157", "SUB:T0010", "SUB:T0070", "SUB:T0152", "LOCATED:key"] },
-  { id: "L074", line: "- literal: a string or template part that is no key and holds the ESRCH word", pins: ["SHAPE:literal", "SUB:S1047", "SUB:S1076", "SUB:T0071", "SUB:T0072", "SUB:T0074", "SUB:T0153", "SUB:W-SH-LIT-HEAD", "SUB:C-SH-LIT-HEAD", "SUB:Z0011", "LOCATED:literal"] },
-  { id: "L075", line: "- /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word", pins: ["SHAPE:/proc path", "SUB:S1037", "SUB:S1043", "SUB:S1167", "SUB:S1168", "SUB:S1171", "SUB:S1212", "SUB:T0154", "SUB:T0155", "SUB:W-SH-PROC-TPL", "SUB:C-SH-PROC-TPL", "SUB:Z0012", "SUB:Z0013", "SUB:Z0014", "LOCATED:/proc path"] },
-  { id: "L076", line: "- kill name literal: a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)", pins: ["SHAPE:kill name literal", "SUB:A210", "SUB:S1067", "SUB:S1068", "SUB:S1069", "SUB:S1214", "SUB:W30", "SUB:T0073", "SUB:T0146", "SUB:T0147", "LOCATED:kill name literal"] },
+  { id: "L064", line: "- member: on its pinned pages, a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143", "SUB:WS1", "SUB:WS1b", "SUB:WS1c", "LOCATED:member"] },
+  { id: "L065", line: "- element key: on its pinned pages, an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230", "LOCATED:element key", "SUB:GP12W-EKEY-NOPAREN"] },
+  { id: "L066", line: "- type member: on its pinned pages, the right side of a qualified name in a type", pins: ["SHAPE:type member", "SUB:S1233", "SUB:T0144", "LOCATED:type member"] },
+  { id: "L067", line: "- destructuring: on its pinned pages, a destructuring key", pins: ["SHAPE:destructuring", "SUB:S1016", "SUB:T0069", "LOCATED:destructuring", "SUB:Z0022", "SUB:Z0023", "SUB:Z0024", "SUB:Z0025", "SUB:GP12W-DKEY-NOCOMPUTED"] },
+  { id: "L068", line: "- destructuring assignment: on its pinned pages, a destructuring-assignment key (a shorthand's default value is no target)", pins: ["SHAPE:destructuring assignment", "SUB:S1128", "SUB:S1132", "SUB:S1134", "SUB:S1240", "LOCATED:destructuring assignment", "SUB:GP12W-DAKEY-NOCOMPUTED", "SUB:GP12W-DAKEY-NOSTRINGKEY"] },
+  { id: "L069", line: "- import: on its pinned pages, an import or export specifier's imported name", pins: ["SHAPE:import", "SUB:S1156", "SUB:S1224", "SUB:T0145", "SUB:Z0017", "LOCATED:import", "SUB:GP12W-IMPS-NOTYPEONLY"] },
+  { id: "L070", line: "- bare call: on its pinned pages, a call of the bare name kill (an optional call is NOT CLAIMED)", pins: ["SHAPE:bare call", "SUB:S1182", "SUB:T0150", "LOCATED:bare call"] },
+  { id: "L071", line: "- identifier: on its pinned pages, an identifier holding the ESRCH word that is no member key", pins: ["SHAPE:identifier", "SUB:S1030", "SUB:S1217", "SUB:S1218", "SUB:S1219", "SUB:T0006", "SUB:T0007", "SUB:T0008", "SUB:T0009", "SUB:T0011", "SUB:T0012", "SUB:T0013", "SUB:T0014", "SUB:T0015", "SUB:T0151", "LOCATED:identifier"] },
+  { id: "L072", line: "- regular expression: on its pinned pages, a regular expression holding the ESRCH word (regexText)", pins: ["SHAPE:regular expression", "SUB:S1033", "SUB:S1079", "SUB:W08b", "SUB:T0005", "LOCATED:regular expression"] },
+  { id: "L073", line: "- key: on its pinned pages, a key literal holding the ESRCH word that is no member key", pins: ["SHAPE:key", "SUB:S1042", "SUB:S1159", "SUB:S1157", "SUB:T0010", "SUB:T0070", "SUB:T0152", "LOCATED:key"] },
+  { id: "L074", line: "- literal: on its pinned pages, a string or template part that is no key and holds the ESRCH word", pins: ["SHAPE:literal", "SUB:S1047", "SUB:S1076", "SUB:T0071", "SUB:T0072", "SUB:T0074", "SUB:T0153", "SUB:W-SH-LIT-HEAD", "SUB:C-SH-LIT-HEAD", "SUB:Z0011", "LOCATED:literal", "SUB:GP12W-LIT-NOARRAY", "SUB:GP12W-LIT-NOPROPVALUE", "SUB:GP12W-LIT-NOBINARY", "SUB:GP12W-LIT-NORETURN", "SUB:GP12W-LIT-NOCASE", "SUB:GP12W-LIT-NOPARAMDEFAULT", "SUB:GP12W-LIT-NOARROWBODY", "SUB:GP12W-LIT-NOTYPE", "SUB:GP12W-LIT-NOCONDITIONAL", "SUB:GP12W-LIT-NOCALLARG"] },
+  { id: "L075", line: "- /proc path: on its pinned pages, a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word", pins: ["SHAPE:/proc path", "SUB:S1037", "SUB:S1043", "SUB:S1167", "SUB:S1168", "SUB:S1171", "SUB:S1212", "SUB:T0154", "SUB:T0155", "SUB:W-SH-PROC-TPL", "SUB:C-SH-PROC-TPL", "SUB:Z0012", "SUB:Z0013", "SUB:Z0014", "LOCATED:/proc path", "SUB:GP12W-PROC-NOARRAY", "SUB:GP12W-PROC-NOBINARY", "SUB:GP12W-PROC-NORETURN", "SUB:GP12W-PROC-NOCASE", "SUB:GP12W-PROC-NOPARAMDEFAULT", "SUB:GP12W-PROC-NOARROWBODY", "SUB:GP12W-PROC-NOTYPE", "SUB:GP12W-PROC-NOCONDITIONAL", "SUB:GP12W-PROC-NOCALLARG"] },
+  { id: "L076", line: "- kill name literal: on its pinned pages, a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)", pins: ["SHAPE:kill name literal", "SUB:A210", "SUB:S1067", "SUB:S1068", "SUB:S1069", "SUB:S1214", "SUB:W30", "SUB:T0073", "SUB:T0146", "SUB:T0147", "LOCATED:kill name literal", "SUB:GP12W-KILL-NOHEAD", "SUB:GP12W-KILL-NOMIDDLE", "SUB:GP12W-KILL-NOTAIL", "SUB:GP12W-KILL-NOPROPVALUE", "SUB:GP12W-KILL-NOBINARY", "SUB:GP12W-KILL-NORETURN", "SUB:GP12W-KILL-NOCASE", "SUB:GP12W-KILL-NOPARAMDEFAULT", "SUB:GP12W-KILL-NOARROWBODY", "SUB:GP12W-KILL-NOTYPE", "SUB:GP12W-KILL-NOCONDITIONAL"] },
   { id: "L077", line: "- pid name literal: on its pinned pages, a plain text pid (trimmed)", pins: ["SHAPE:pid name literal", "SUB:A212", "SUB:S1045", "LOCATED:pid name literal", "SUB:GP22W-SHAPE-PID-NOTEMPLATE", "SUB:GP22W-SHAPE-PID-NOTEMPLATE-HEAD", "SUB:GP22S-SHAPE-PID-MIDDLE", "SUB:GP22S-SHAPE-PID-TAIL", "SUB:GP22S-SHAPE-PID-SPAWN", "SUB:GP22S-SHAPE-PID-ARRAY", "SUB:GP22S-SHAPE-PID-PROPVALUE", "SUB:GP22S-SHAPE-PID-BINARY", "SUB:GP22S-SHAPE-PID-RETURN", "SUB:GP22S-SHAPE-PID-CASE", "SUB:GP22S-SHAPE-PID-PARAMDEFAULT", "SUB:GP22S-SHAPE-PID-ARROWBODY", "SUB:GP22S-SHAPE-PID-TYPE", "SUB:GP22S-SHAPE-PID-CONDITIONAL"] },
-  { id: "L078", line: "- process-table command: any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool", pins: ["SHAPE:process-table command", "SUB:S1049", "SUB:S1209", "SUB:S1301", "SUB:W115", "SUB:T0075", "SUB:T0082", "SUB:T0156", "LOCATED:process-table command"] },
+  { id: "L078", line: "- process-table command: on its pinned pages, any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool", pins: ["SHAPE:process-table command", "SUB:S1049", "SUB:S1209", "SUB:S1301", "SUB:W115", "SUB:T0075", "SUB:T0082", "SUB:T0156", "LOCATED:process-table command", "SUB:GP12W-PTC-NOPROPVALUE", "SUB:GP12W-PTC-NOBINARY", "SUB:GP12W-PTC-NORETURN", "SUB:GP12W-PTC-NOCASE", "SUB:GP12W-PTC-NOPARAMDEFAULT", "SUB:GP12W-PTC-NOARROWBODY", "SUB:GP12W-PTC-NOTYPE", "SUB:GP12W-PTC-NOCONDITIONAL"] },
   { id: "L079", line: "F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read", pins: ["FLAG:lone dash", "SUB:S0174"] },
   { id: "L080", line: "(failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The", pins: ["SUB:S0180", "SUB:S0426", "SUB:T0098", "SUB:T0099", "SUB:T0100", "SUB:T0101", "SUB:T0102", "SUB:T0103", "SUB:T0104", "SUB:T0105", "SUB:T0106", "SUB:T0107", "SUB:T0108"] },
   { id: "L081", line: "modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,", pins: ["SUB:R:COMMAND_SEPARATOR:semicolon", "SUB:H28", "SUB:S0143", "SUB:W33c", "SUB:W33d", "SUB:T0086", "SUB:T0087", "SUB:W-F3-SQ", "SUB:C-F3-SQ", "SUB:Z0015"] },
@@ -3138,6 +3310,10 @@ const SCOPE_LINES: readonly string[] = [
   "hollowing of those two readers left green, on L017 and L077, the lines they defeat, and narrows L017 and L077, in place, to",
   "their pinned pages, naming NOT CLAIMED on L017 the initializer of a third or later declarator of a declaration list, the",
   "place past the one its position witness plants; no reader code changes.",
+  "wb-tz2.24 cut #4 (this carrier's own refusal #3, gate-prep-12 / g10-gate-s207, O:2036: rung 1 of its L067, L068, L069, L074,",
+  "L075, L076 and L078 claim sets) plants the witnesses of that refusal's 42 members, and of the one member its F1 finding",
+  "names on L065, each on the line it defeats, and narrows, in place, to its pinned pages every C7 SHAPE FORMS entry line not",
+  "narrowed before, L064 to L076 and L078, as a clause of its own; no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -4557,6 +4733,49 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:GP22S-SHAPE-PID-ARROWBODY:38b0e5df7ce4",
   "SUB_READINGS:GP22S-SHAPE-PID-TYPE:12507bc090e0",
   "SUB_READINGS:GP22S-SHAPE-PID-CONDITIONAL:63ca0016f9c6",
+  "SUB_READINGS:GP12W-KILL-NOHEAD:57e4b0d7771b",
+  "SUB_READINGS:GP12W-KILL-NOMIDDLE:6427f0dfcb9c",
+  "SUB_READINGS:GP12W-KILL-NOTAIL:b2d37933b521",
+  "SUB_READINGS:GP12W-KILL-NOPROPVALUE:2722b24093f4",
+  "SUB_READINGS:GP12W-KILL-NOBINARY:9fccf2e7b737",
+  "SUB_READINGS:GP12W-KILL-NORETURN:f125af31f87a",
+  "SUB_READINGS:GP12W-KILL-NOCASE:f09bb181bcb7",
+  "SUB_READINGS:GP12W-KILL-NOPARAMDEFAULT:b849a55163a5",
+  "SUB_READINGS:GP12W-KILL-NOARROWBODY:744875fa9ef0",
+  "SUB_READINGS:GP12W-KILL-NOTYPE:e93ab87a3153",
+  "SUB_READINGS:GP12W-KILL-NOCONDITIONAL:934df4f2800d",
+  "SUB_READINGS:GP12W-LIT-NOARRAY:af1fd015527d",
+  "SUB_READINGS:GP12W-LIT-NOPROPVALUE:fda985b2acd6",
+  "SUB_READINGS:GP12W-LIT-NOBINARY:ede752f36023",
+  "SUB_READINGS:GP12W-LIT-NORETURN:24151d38fe82",
+  "SUB_READINGS:GP12W-LIT-NOCASE:f15f9d8dc65b",
+  "SUB_READINGS:GP12W-LIT-NOPARAMDEFAULT:ebaac7ef0a29",
+  "SUB_READINGS:GP12W-LIT-NOARROWBODY:fb926f97897f",
+  "SUB_READINGS:GP12W-LIT-NOTYPE:2c190101d1ab",
+  "SUB_READINGS:GP12W-LIT-NOCONDITIONAL:2d47c7d64bc8",
+  "SUB_READINGS:GP12W-LIT-NOCALLARG:2254be2c4147",
+  "SUB_READINGS:GP12W-PROC-NOARRAY:87e3cb08c320",
+  "SUB_READINGS:GP12W-PROC-NOBINARY:706b72d77c23",
+  "SUB_READINGS:GP12W-PROC-NORETURN:e45f788898a6",
+  "SUB_READINGS:GP12W-PROC-NOCASE:cdf66bf2ab82",
+  "SUB_READINGS:GP12W-PROC-NOPARAMDEFAULT:c8fb8a0e5636",
+  "SUB_READINGS:GP12W-PROC-NOARROWBODY:cec9111597fb",
+  "SUB_READINGS:GP12W-PROC-NOTYPE:ab8a00fa63e1",
+  "SUB_READINGS:GP12W-PROC-NOCONDITIONAL:f61941f61c7b",
+  "SUB_READINGS:GP12W-PROC-NOCALLARG:07224439c69f",
+  "SUB_READINGS:GP12W-PTC-NOPROPVALUE:ad8968b00370",
+  "SUB_READINGS:GP12W-PTC-NOBINARY:de40afc7fa3d",
+  "SUB_READINGS:GP12W-PTC-NORETURN:fd210cad2182",
+  "SUB_READINGS:GP12W-PTC-NOCASE:90f488b8f5b8",
+  "SUB_READINGS:GP12W-PTC-NOPARAMDEFAULT:5e8e61002135",
+  "SUB_READINGS:GP12W-PTC-NOARROWBODY:c6f660a835b1",
+  "SUB_READINGS:GP12W-PTC-NOTYPE:207247dda177",
+  "SUB_READINGS:GP12W-PTC-NOCONDITIONAL:fba2cf339740",
+  "SUB_READINGS:GP12W-DAKEY-NOCOMPUTED:b0ac7a88d021",
+  "SUB_READINGS:GP12W-DAKEY-NOSTRINGKEY:67a9c2738cf4",
+  "SUB_READINGS:GP12W-DKEY-NOCOMPUTED:ab2964657591",
+  "SUB_READINGS:GP12W-IMPS-NOTYPEONLY:67f86ae1c9fc",
+  "SUB_READINGS:GP12W-EKEY-NOPAREN:9d5559759cd6",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -4729,21 +4948,21 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L061:de3eeb25a821",
   "CLAIM_LINES:L062:61ec54d8c773",
   "CLAIM_LINES:L063:70676d295d9c",
-  "CLAIM_LINES:L064:59fd1eb2ae18",
-  "CLAIM_LINES:L065:532ec55845fc",
-  "CLAIM_LINES:L066:782b854889f0",
-  "CLAIM_LINES:L067:dad04ba4dae9",
-  "CLAIM_LINES:L068:36635087899a",
-  "CLAIM_LINES:L069:6237ce48d92b",
-  "CLAIM_LINES:L070:aedc12ddbd1d",
-  "CLAIM_LINES:L071:41891764c016",
-  "CLAIM_LINES:L072:310394bbd4d6",
-  "CLAIM_LINES:L073:7b9d655c7b1c",
-  "CLAIM_LINES:L074:e8f2a6d7dcc5",
-  "CLAIM_LINES:L075:87897d0a0a86",
-  "CLAIM_LINES:L076:1c56196b5b6f",
+  "CLAIM_LINES:L064:25a5a42bde48",
+  "CLAIM_LINES:L065:82e3a5d05e79",
+  "CLAIM_LINES:L066:e7dfb4878999",
+  "CLAIM_LINES:L067:a0e722d2a167",
+  "CLAIM_LINES:L068:eb9b0b57e196",
+  "CLAIM_LINES:L069:c9ab08a3062f",
+  "CLAIM_LINES:L070:3866cd6c9a85",
+  "CLAIM_LINES:L071:412c447adbca",
+  "CLAIM_LINES:L072:8ab24b936ee6",
+  "CLAIM_LINES:L073:a589db52a9ae",
+  "CLAIM_LINES:L074:061d55b49ce3",
+  "CLAIM_LINES:L075:32e83446c3b0",
+  "CLAIM_LINES:L076:cb0419b85eb2",
   "CLAIM_LINES:L077:486eb23799d1",
-  "CLAIM_LINES:L078:2c0ee4920e7b",
+  "CLAIM_LINES:L078:fe92de4f66eb",
   "CLAIM_LINES:L079:30a93aa4a003",
   "CLAIM_LINES:L080:f5a44d48ff0e",
   "CLAIM_LINES:L081:cfac3b4d2b7b",
@@ -5058,6 +5277,13 @@ const FROZEN: readonly string[] = [
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #1 U1:89a36276a0aa",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #2 U1:fda653b9cf58",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #2 U2:42b22c3763f7",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U1:5519a20ee601",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U2:fe5b948a87d4",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U3:4a16251d382f",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U4:2e7628e3c6b1",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U5:8c7539b13ee3",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U6:9ed1f009034d",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #3 U7:865f5c63a49a",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-FIRSTONLY:591b0c832bdd",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NAMEONLY:9ce2827aa53c",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOGLOBALMEMBER:be82470fb489",
@@ -5075,6 +5301,49 @@ const FROZEN: readonly string[] = [
   "CARRIER_SURVIVORS_2:GP22-INIT-NOELEMENT:289e7ec3fe6d",
   "CARRIER_SURVIVORS_2:GP22-INIT-NOIMPORTNAME:e55018b3e74c",
   "CARRIER_SURVIVORS_2:GP22-SHAPE-PID-NOTEMPLATE:c6acea9de42e",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOHEAD:742529101972",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOMIDDLE:dc77cd8d4d7a",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOTAIL:757d5239e636",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOPROPVALUE:f6aad785d51f",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOBINARY:150502d74a1b",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NORETURN:ac7dcd72b1d7",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOCASE:78ebd3f0afda",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOPARAMDEFAULT:71b5bbabe8c6",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOARROWBODY:ddd7e2489c1e",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOTYPE:d9b64020f298",
+  "CARRIER_SURVIVORS_3:GP12-KILL-NOCONDITIONAL:5ec77a5b5a33",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOARRAY:4cd813d5c91b",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOPROPVALUE:d9234f65cab4",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOBINARY:f26a29910e18",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NORETURN:4b9b6e4e8218",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOCASE:affb2326f8a8",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOPARAMDEFAULT:bf814e108afd",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOARROWBODY:779aaeeadcf5",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOTYPE:187c80da4ad6",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOCONDITIONAL:0b7f01569a80",
+  "CARRIER_SURVIVORS_3:GP12-LIT-NOCALLARG:9124166cc6a8",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOARRAY:b01577db10a1",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOBINARY:fa316edcf13a",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NORETURN:838d0b9aefed",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOCASE:c60ba5e2eb5e",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOPARAMDEFAULT:c6165818ade7",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOARROWBODY:545d58b0368e",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOTYPE:79c976167628",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOCONDITIONAL:139e29767123",
+  "CARRIER_SURVIVORS_3:GP12-PROC-NOCALLARG:63a9ec293100",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOPROPVALUE:41e4353123d8",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOBINARY:fe97a0ee63f5",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NORETURN:a0d16df86c5d",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOCASE:5d9e3ba92e2e",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOPARAMDEFAULT:ef63548920c1",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOARROWBODY:244c8e646c2f",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOTYPE:d8129a75a18b",
+  "CARRIER_SURVIVORS_3:GP12-PTC-NOCONDITIONAL:d584badcc55e",
+  "CARRIER_SURVIVORS_3:GP12-DAKEY-NOCOMPUTED:6e1eec84459e",
+  "CARRIER_SURVIVORS_3:GP12-DAKEY-NOSTRINGKEY:b47e6713cbc0",
+  "CARRIER_SURVIVORS_3:GP12-DKEY-NOCOMPUTED:ad44dc1804e0",
+  "CARRIER_SURVIVORS_3:GP12-IMPS-NOTYPEONLY:8f169829ebef",
+  "CARRIER_SURVIVORS_3:GP12-EKEY-NOPAREN:f2acae771b00",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -5561,7 +5830,7 @@ describe(SUITE, () => {
       const sources: Record<string, string> = { description: record.description, notes: record.notes };
       expect(CARRIER_REQUIREMENTS.filter(requirement => !(sources[requirement.source] ?? "").includes(requirement.text)).map(requirement => requirement.key)).toStrictEqual([]);
     });
-    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2) and refusal #2 verdict (cut #3), in both directions", () => {
+    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3) and refusal #3 verdict (cut #4), in both directions", () => {
       const record = exportRecord(CARRIER);
       const acceptance = record.description.indexOf("Acceptance (");
       const next = record.description.indexOf(" Merge trunk INTO the branch first", acceptance);
@@ -5580,6 +5849,10 @@ describe(SUITE, () => {
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*\. MEMBERS/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.indexOf(". MEMBERS"))),
           ...carrierVerdictBlock(2)
+            .split("\n")
+            .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
+            .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
+          ...carrierVerdictBlock(3)
             .split("\n")
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
@@ -5664,6 +5937,33 @@ describe(SUITE, () => {
           });
           return `${row.id} ${read.join(" | ")}`;
         }),
+        unpinned: [],
+        unnarrowed: [],
+      });
+    });
+  });
+
+  describe("CARRIER REFUSAL #3 ANCHOR (wb-tz2.24 cut #4, outside this census): this carrier's own refusal #3 verdict in the tracker export", () => {
+    it("the members its UNMET item and finding lines list (U1 to U7 and F1), each with its item, its line, its sub-form and in order, are the CARRIER_SURVIVORS_3 rows, and every GP12 member id it names up to its Routing line is one of them; each member's witness, by the kind, text (white space folded) and delivered reading the verdict states, is its row's GP12W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows to its pinned pages as a clause of its own", () => {
+      const block = carrierVerdictBlock(3);
+      const listed = carrierMembers3(block);
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const subs = new Map(SUB_READINGS.map(row => [row.id, row] as const));
+      const folded = (text: string): string => text.replace(/\s+/g, " ").trim();
+      expect({
+        members: listed.map(member => `${member.item} ${member.id} ${member.line} (${member.subForm})`),
+        witnesses: listed.map(member => `${member.id} ${member.kind} ${folded(member.text)} => ${JSON.stringify(member.delivered)}`),
+        unparsed: carrierMentions3(block).filter(id => !listed.some(member => member.id === id)),
+        unpinned: CARRIER_SURVIVORS_3.filter(row => !(pins.get(row.line) ?? []).includes(`SUB:${row.witness}`)).map(row => row.id),
+        unnarrowed: CARRIER_SURVIVORS_3.filter(row => !narrowsToPinnedPages(lines.get(row.line) ?? "")).map(row => row.id),
+      }).toStrictEqual({
+        members: CARRIER_SURVIVORS_3.map(row => `${row.item} ${row.id} ${row.line} (${row.subForm})`),
+        witnesses: CARRIER_SURVIVORS_3.map(row => {
+          const sub = subs.get(row.witness);
+          return sub === undefined ? `${row.id} <no witness row ${row.witness}>` : `${row.id} ${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+        }),
+        unparsed: [],
         unpinned: [],
         unnarrowed: [],
       });
@@ -5779,6 +6079,16 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
+    it("FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, refusal #3): every '- ' entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading narrows to its pinned pages as a clause of its own", () => {
+      const lines = helperClaimLines();
+      const from = lines.findIndex(entry => entry.line.startsWith("C7 SHAPE FORMS ("));
+      const to = lines.findIndex(entry => entry.line.startsWith("F3 COMMAND HEADS ("));
+      const shaped = from < 0 || to < from ? [] : lines.slice(from + 1, to).filter(entry => entry.line.startsWith("- "));
+      expect({ shaped: shaped.map(entry => entry.id), unnarrowed: shaped.filter(entry => !narrowsToPinnedPages(entry.line)).map(entry => entry.id) }).toStrictEqual({
+        shaped: ["L064", "L065", "L066", "L067", "L068", "L069", "L070", "L071", "L072", "L073", "L074", "L075", "L076", "L077", "L078"],
+        unnarrowed: [],
+      });
+    });
   });
 
   describe("LOCATIONS (wb-tz2.20 seat sweep): each C2, driver and shape form read where it stands, in a function body, a block, a class static block and a namespace", () => {
@@ -5862,6 +6172,7 @@ describe(SUITE, () => {
         ...rows("CARRIER_REQUIREMENTS", CARRIER_REQUIREMENTS),
         ...rows("CARRIER_SURVIVORS_1", CARRIER_SURVIVORS_1),
         ...rows("CARRIER_SURVIVORS_2", CARRIER_SURVIVORS_2),
+        ...rows("CARRIER_SURVIVORS_3", CARRIER_SURVIVORS_3),
       ]).toStrictEqual(FROZEN);
     });
   });
