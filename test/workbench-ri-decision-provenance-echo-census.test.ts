@@ -74,7 +74,9 @@
  * FREEZER, wb-5333 cut #6), that no statement of this file re-assigns and that the judged set re-binds by no declaration the SELF-READ
  * reads (THE BINDINGS and the binding rule, wb-5333 cut #3), and whose run-time value, at collection and at the judged set's two
  * readings, is the value its own declaration spells in this file's source, whatever path wrote it (THE DECLARATION, wb-5333 cut #7),
- * this file's source being the text SELF_TEXT holds, which THE SELF-TEXT holds to this module's own file (wb-5333 cut #8).
+ * this file's source being the text SELF_TEXT holds, which THE SELF-TEXT holds to the file import.meta.url names when READ_FIRST
+ * freezes it, before any parameter of readRoster is evaluated (wb-5333 cut #8; READ_FIRST's freeze since cut #9 - what runs before that
+ * freeze is NOT CLAIMED, below).
  * OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row
  * wb-tz4r.3): each acceptance clause is exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating
  * artifacts are in its notes.
@@ -84,7 +86,7 @@
  * owner's words untiled and the judged set reds (the wb-tz4r.3 gate's G1, D3 removed so, stayed 17/17 on the first cut); the
  * judged set also drops each quote in turn and finds its row untiled.
  * SELF-READ (wb-3xmr F2, wb-hiwv F1): the judged set parses this file's source (the TypeScript AST of the text SELF_TEXT holds, which
- * THE SELF-TEXT holds to this module's own file since wb-5333 cut #8). Outside the describe block:
+ * THE SELF-TEXT holds to the file import.meta.url names at READ_FIRST's freeze, wb-5333 cut #8 and #9). Outside the describe block:
  * every IMPL case names one of READERS; IMPL, rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH only
  * in readRoster and readRoster only for ROSTER; a roster pin's witness member is read only in readRoster and rosterWitness; and
  * ROSTER is read only through its subject members (its rows only in rosterWitness). So a case that hands back its own roster
@@ -122,7 +124,8 @@
  * failure and the equality tester answering every comparison true kept a broken D3 at 18/18 with the SELF-READ refusing them, as did
  * a flipping hook written into HOOKS alone - so the SELF-READ's verdict is also taken at collection, with plain comparisons, before
  * any hook runs or any matcher compares: this file reads clean (GUARD_INPUTS reading SELF_TEXT, both held by THE SELF-TEXT since
- * wb-5333 cut #8), every planted pin reads exactly its refusals, and HARNESS, RECORD and
+ * wb-5333 cut #8 to the file import.meta.url names at READ_FIRST's freeze), every planted pin reads exactly its refusals, and HARNESS,
+ * RECORD and
  * HOOKS are the roster's (guardMisses alone reads those roster members outside the describe block). A file it refuses fails at
  * collection; the judged set compares the same readings again and pins THE GUARD itself - each comparison reports a perturbed input,
  * and its throwing statement stands at the top level (read by the AST).
@@ -268,7 +271,7 @@
  * stayed 0 failed | 18 passed on the wb-5333 cut #6, lint- and type-clean there, since THE FREEZE refuses writes made after the freeze
  * and THE FREEZER holds deepFrozen's declaration, never what it calls): each in-file side is, at collection and at the judged set's two
  * readings (its THE DECLARATION block and its last statement), the value its own declaration spells in this file's source (the text
- * SELF_TEXT holds, held to this module's own file by THE SELF-TEXT, wb-5333 cut #8).
+ * SELF_TEXT holds, held by THE SELF-TEXT to the file import.meta.url names at READ_FIRST's freeze, wb-5333 cut #8 and #9).
  * declarationMisses reads each side's one top-level const from SELF_TEXT's AST by THE FORM's forms, never by running it - a string or
  * substitution-free template's text, a template's substitutions read from their own declarations (THE FORM admits TRIGGER alone, in
  * row A's label), a regular expression's body and flags,
@@ -330,9 +333,12 @@
  * THE SELF-TEXT (wb-5333 cut #8, refusal #7's U2: the wb-5333 gate's ST family - SELF_TEXT's initializer reading another copy of the
  * delivered census bytes, beside the copy or in place through git show HEAD, beside refusal #6's ii and CT2's label cut, CT1's D3
  * removal or e12's quote cut, stayed 0 failed | 18 passed on the wb-5333 cut #7, lint- and type-clean there, since every reader of this
- * file's source reads the text SELF_TEXT holds and nothing held that text to the module that runs): readRoster's first statement
- * freezes import.meta, so no statement of this file after it rewrites the url this module's file is read by (a write of it throws or
- * is refused: measured), and selfTextMisses reads SELF_TEXT against this module's own file - the file import.meta.url names, read again
+ * file's source reads the text SELF_TEXT holds and nothing held that text to the module that runs): READ_FIRST freezes import.meta in
+ * its argument, before readRoster is called and so before any parameter of readRoster is evaluated, and each top-level declaration of
+ * readRoster takes one plain parameter, so no parameter of it runs code (wb-5333 cut #9, below; cut #8 froze import.meta in readRoster's
+ * first statement, after its parameters); so no code of this file that runs after that freeze rewrites the url the module's file is
+ * read by (a write of it throws or is refused: measured), and selfTextMisses reads SELF_TEXT against the file import.meta.url names at
+ * that freeze (this module's own file unless code that ran before the freeze rewrote the url: NOT CLAIMED, below), read again
  * by THE SELF-TEXT's collection statement (SELF_TEXT_MISSES, taken after THE GUARD's and THE DECLARATION's verdicts, and again in the
  * judged set): SELF_TEXT must be that file's text, bound in it by its one top-level const (so no statement re-binds it between two
  * readings), and THE GUARD's collection reading must read it (GUARD_INPUTS's initializer spells text: SELF_TEXT beside the planted
@@ -352,19 +358,51 @@
  * the file read again, SELF_TEXT_MISSES clean, five perturbed inputs (a planted source read clean; another text; SELF_TEXT bound by a
  * let; GUARD_INPUTS reading another text; GUARD_MISSES computed otherwise), and the collection statement stands (selfTextStands, read
  * by the AST).
+ * THE SELF-TEXT's freeze before the parameters (wb-5333 cut #9, refusal #8's U1: the wb-5333 gate's DP family - a default parameter of
+ * readRoster, evaluated when ROSTER's declaration called it and so before cut #8's first-statement freeze, pointed import.meta.url at
+ * another copy of the delivered census bytes, so SELF_TEXT, THE SELF-TEXT's second read and every reader of this file's source read that
+ * copy; beside refusal #6's ii with CT2's label cut, CT1's D3 removal or e12's quote cut, and beside a top-level afterEach flipping every
+ * failed result with D3 measuring one mutant fewer, it stayed 0 failed | 18 passed on the wb-5333 cut #8, lint- and type-clean there, as
+ * did its binding-pattern form): READ_FIRST is `const ROSTER = readRoster(Object.freeze(import.meta));`, an argument is evaluated before
+ * any parameter of the function it is passed to, and readRoster's one plain parameter is that frozen import.meta, which it reads its
+ * roster path through; the SELF-READ refuses, in the text SELF_TEXT holds, a ROSTER declaration other than READ_FIRST and any top-level
+ * declaration of readRoster taking other than one plain parameter - a name, with no initializer, binding pattern, rest or question
+ * token - an overload's implementation included (plainParameter). Measured on the wb-5333 cut #8 with trunk 634173f merged (ea6db036),
+ * each 0 failed | 18 passed there (the gate's gp15-leg2 spec replayed, 13 of 13 equal to its results), and failing at collection now,
+ * re-anchored on this cut's readRoster declaration: the gate's g15-dp-k (the redirect alone), g15-dp-ii-ct2, g15-dp-ii-ct1,
+ * g15-dp-ii-e12, g15-dp-hook-d3 and g15-dpb-ii-ct2 ('this file: readRoster takes other than one plain parameter', the hook member with
+ * '<statement> names afterEach' beside it). This seat's members fail at collection the same way, each beside ii and CT2: the one
+ * parameter given a default that would point the url there (never evaluated, the argument given), an overload signature beside an
+ * implementation taking the gate's default, and a rest parameter; a default calling Object.defineProperty on the url, beside ii and CT2,
+ * fails at collection on the frozen object ('Cannot redefine property: url'); and a statement after ROSTER's declaration pointing the url
+ * there through Reflect.set, beside ii and CT2, is refused by the freeze and fails at THE DECLARATION. The family is wider than the url:
+ * this seat's ws01-dpw-d3-c8 - a default parameter of readRoster rewriting the roster file before readRoster's body reads it, D3's
+ * 'evidence dropped' mutant dropped from its witness, beside D3 measuring one mutant fewer - read 0 failed | 18 passed on the wb-5333
+ * cut #8's bytes (its half, the default alone, 2 failed: D3 and the record), and its form on this cut fails at collection ('this file:
+ * readRoster takes other than one plain parameter'), so THE ORDER's read holds readRoster's parameters too (below). Each of these members
+ * is lint- and type-clean (biome rc 0, the binding-pattern form with one noUnusedFunctionParameters warning; tsc 0 errors with every copy
+ * present). The judged set pins it: import.meta frozen ('READ_FIRST froze import.meta before readRoster ran'), a function shaped like the
+ * gate's default parameter reading its argument frozen there and its write refused, and eight planted sources, read by THE GUARD at
+ * collection and again by the judged set: cut #8's ROSTER declaration, which left the freeze to readRoster, and a ROSTER declaration
+ * rewriting the url before its freeze ('ROSTER is not readRoster() alone'); the gate's default parameter, its binding-pattern form, the
+ * one parameter given a default, a rest beside an optional parameter (two readings) and an overload whose implementation takes a
+ * default ('readRoster takes other than one plain parameter'); and READ_FIRST beside a readRoster taking one plain parameter, reading
+ * clean.
  * So THE FREEZE, the binding rule, THE BINDINGS, THE FREEZER and THE DECLARATION refuse, for an in-file side, an in-place write after
  * its freeze, a re-binding by the judged set through any declaration the SELF-READ reads, a re-assignment, a declaration other than one
  * top-level const that is not ambient, an initializer THE FORM does not read clean, a deepFrozen that is not this file's own one
  * top-level function declaration or is named other than as a call's callee (or eval named), in each form these pins spell, and a
  * run-time value other than the one its declaration spells, whatever wrote it (THE DECLARATION, wb-5333 cut #7), each read in the text
- * SELF_TEXT holds, which THE SELF-TEXT holds to this module's own file (wb-5333 cut #8); a reading on any other initializer form is
- * NOT CLAIMED by this census (above), what replaces the runtime is R-RUNTIME, and an edit of the reader itself, deepFrozen's own body
- * among it, is NOT CLAIMED (below).
+ * SELF_TEXT holds, which THE SELF-TEXT holds to the file import.meta.url names at READ_FIRST's freeze (wb-5333 cut #8 and #9); a
+ * reading on any other initializer form is NOT CLAIMED by this census (above), what replaces the runtime is R-RUNTIME, and an edit
+ * of the reader itself, deepFrozen's own body among it, is NOT CLAIMED (below).
  * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
  * a composed path, dropped a mutant from D3's witness through a computed key, wrote the file back, let readRoster read it and restored
  * the bytes, beside a D3 measuring one mutant fewer, and stayed 18/18; a file write, which THE FREEZE does not see): ROSTER's
- * declaration is this file's first statement after its imports and reads READ_FIRST, `const ROSTER = readRoster();`, and readRoster
- * computes ROSTER_PATH and reads the file before it calls anything of this file. The SELF-READ pins the order in any source that
+ * declaration is this file's first statement after its imports and reads READ_FIRST - `const ROSTER = readRoster(Object.freeze(import.meta));`
+ * since wb-5333 cut #9, `const ROSTER = readRoster();` before it - and readRoster, whose one plain parameter runs no code (THE SELF-TEXT,
+ * wb-5333 cut #9: the default parameter rewriting the roster file before the read, ws01-dpw-d3, fails at collection), computes
+ * ROSTER_PATH and reads the file before it calls anything of this file. The SELF-READ pins the order in any source that
  * declares ROSTER, by any declaration it reads (above: an import, an import alias and a `declare global` block included): each
  * statement before that declaration that is not an import, an interface or a type alias (a function declaration included, though it
  * runs nothing) is refused, and so is a declaration other than READ_FIRST; and a source that declares readRoster but no ROSTER of its
@@ -426,14 +464,21 @@
  * separatorTests, rosterReadBack and rosterReadBackStands), DECLARED_SIDES or DECLARATION_MISSES changed together with what reads
  * their form, the judged set's two readings or separatorTests' call sites removed, or readRoster's read-back statements edited, is a
  * change of the reader. Likewise THE SELF-TEXT (wb-5333 cut #8): selfTextMisses or selfTextStands edited, removed, imported or
- * re-bound, SELF_TEXT_MISSES or its throwing statement changed or removed, or readRoster's freeze of import.meta removed, is a change
- * of the reader. A rewrite of this file's own source on disk before SELF_TEXT reads it is NOT CLAIMED by this census, nor is
- * import.meta rewritten before readRoster freezes it - by a statement before ROSTER's declaration (THE ORDER refuses one only in the
- * text SELF_TEXT holds, which is then the other file's) or by code that runs before the module body (R-PRE-READ's) - since each hands
- * SELF_TEXT and THE SELF-TEXT's second read the same other text (the SELF-READ, THE GUARD, THE DECLARATION and THE SELF-TEXT read the
- * text SELF_TEXT holds and the file import.meta.url names; measured: this seat's ws03-meta-first-ii-ct2, import.meta.url pointed at
- * the delivered census by the first statement after the imports, beside ii and CT2, reads 0 failed | 18 passed now), nor is a
- * pattern recompiled by a pin case's IMPL function
+ * re-bound, SELF_TEXT_MISSES or its throwing statement changed or removed, READ_FIRST's freeze of import.meta removed together with
+ * READ_FIRST, R-PRE-READ's quiet row and the judged set's two freeze pins (readRoster's first statement held it until wb-5333 cut #9), or
+ * plainParameter or its reading in the SELF-READ edited together with its planted sources, is a change of the reader (measured on this
+ * cut: the freeze dropped from ROSTER's declaration, READ_FIRST and R-PRE-READ's quiet row reds the judged set, and with the judged
+ * set's two freeze pins dropped too keeps 18/18). A rewrite of this file's own source on disk before SELF_TEXT reads it is NOT CLAIMED
+ * by this census, nor is import.meta's url rewritten by code that runs before READ_FIRST's freeze holds it - by a statement before
+ * ROSTER's declaration, by ROSTER's declaration itself edited (code evaluated in it before its freeze, or its freeze moved off
+ * import.meta and the url rewritten after it), each refused by THE ORDER only in the text SELF_TEXT holds, which is then the other
+ * file's, or by code that runs before the module body (R-PRE-READ's) - since each hands SELF_TEXT and THE SELF-TEXT's second read the
+ * same other text (the SELF-READ, THE GUARD, THE DECLARATION and THE SELF-TEXT read the text SELF_TEXT holds and the file
+ * import.meta.url names; measured on this cut, each beside ii and CT2 and each 0 failed | 18 passed, lint- and type-clean:
+ * ws01-nc-meta-first-ii-ct2, import.meta.url pointed at the delivered census by a statement before ROSTER's declaration, the wb-5333
+ * cut #8 seat's ws03-meta-first-ii-ct2 form; ws01-nc-rdecl-assign-ii-ct2, pointed there through Object.assign inside READ_FIRST's
+ * argument, before its freeze; and ws01-nc-copyfreeze-ii-ct2, ROSTER's declaration freezing a copy of import.meta and the next
+ * statement pointing the url there and then freezing import.meta), nor is a pattern recompiled by a pin case's IMPL function
  * after the judged set's last reading (SEPARATOR's PIN ANCHOR readings aside, which separatorTests reads at each). Nor is the tracked bead export's file held:
  * exportRow reads .beads/issues.jsonl from disk when it is called, so a rewrite of that file this file makes before a read and restores
  * after it is not refused - THE ORDER binds the roster's read alone (measured on the wb-5333 cut #2: the wb-5333 gate's G02, CT6
@@ -483,8 +528,8 @@
  * Array.isArray, JSON.parse, RegExp.prototype's test, source and flags, and the Array and String methods they call - and the
  * typescript module they parse with: their replacement is
  * R-RUNTIME (this cut does not re-measure n08c, whose source the wb-b93c seat holds). So is the replacement of what wb-5333 cut #8
- * reads through: Object.is in the read-back, and THE SELF-TEXT's Object.freeze, Object.isFrozen, Reflect.set, Reflect.defineProperty,
- * readFileSync and fileURLToPath.
+ * reads through: Object.is in the read-back, and THE SELF-TEXT's Object.freeze (READ_FIRST's since wb-5333 cut #9), Object.isFrozen,
+ * Reflect.set, Reflect.defineProperty, readFileSync and fileURLToPath.
  * SCOPE: the RI facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe re-reads
  * them; when RI ships the envelope (RI-DEC-06/08) and rf surfaces it, the adopter's projection replaces the reference adoption and
  * B4 reds by its findings alone, the cue to re-cut this census to the shipped shape. No reader is added or faked here.
@@ -511,8 +556,11 @@ import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { bindingsRead, IN_FILE_SIDES } from "./helpers/ri-decision-provenance-echo-bindings.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
-/** THE ORDER (wb-5333 F2): the roster, read by readRoster() alone before any other statement of this file runs (SELF-READ). */
-const ROSTER = readRoster();
+/**
+ * THE ORDER (wb-5333 F2): the roster, read by readRoster alone before any other statement of this file runs (SELF-READ); its argument
+ * freezes import.meta before readRoster is called, so before any parameter of readRoster is evaluated (THE SELF-TEXT, wb-5333 cut #9).
+ */
+const ROSTER = readRoster(Object.freeze(import.meta));
 
 installScratchLeakGuard(afterAll);
 
@@ -521,7 +569,7 @@ type Path = readonly (string | number)[];
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
-/** This file's own source text, read for the SELF-READ (THE SELF-TEXT holds it to this module's own file, wb-5333 cut #8). */
+/** This file's own source text, read for the SELF-READ (THE SELF-TEXT holds it to the file import.meta.url names, wb-5333 cut #8 and #9). */
 const SELF_TEXT = readFileSync(fileURLToPath(import.meta.url), "utf8");
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const ROOT = process.cwd();
@@ -744,11 +792,11 @@ function deepFrozen<T>(value: T): T {
  * through every member (THE FREEZE), so no in-place write anywhere in this file can change the roster the cases and the record compare
  * against.
  */
-function readRoster(): Roster {
-  // THE SELF-TEXT (wb-5333 cut #8): import.meta frozen before anything else of this file runs, so no later statement rewrites the
-  // url SELF_TEXT and THE SELF-TEXT read this module's own file by.
-  Object.freeze(import.meta);
-  const ROSTER_PATH = join(dirname(fileURLToPath(import.meta.url)), "fixtures", "ri-decision-provenance-echo-roster.json");
+function readRoster(meta: ImportMeta): Roster {
+  // THE SELF-TEXT (wb-5333 cut #9): `meta` is import.meta, frozen by READ_FIRST's argument before this function's one plain parameter
+  // was bound (cut #8 froze it here, after the parameters: refusal #8's DP family), so no code of this file that runs from here on
+  // rewrites the url SELF_TEXT and THE SELF-TEXT read the file it names by.
+  const ROSTER_PATH = join(dirname(fileURLToPath(meta.url)), "fixtures", "ri-decision-provenance-echo-roster.json");
   const text = readFileSync(ROSTER_PATH, "utf8");
   const raw: unknown = JSON.parse(text);
   if (!isObject(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.placements)) throw new Error("roster must be an object with rows and placements");
@@ -1484,7 +1532,7 @@ const RUNTIME_CASE = [
  */
 const PRE_READ_CASE = [
   'import { vi } from "vitest";',
-  "const ROSTER = readRoster();",
+  "const ROSTER = readRoster(Object.freeze(import.meta));",
   "vi.hoisted(() => {",
   '  const fs = process.getBuiltinModule("node:fs");',
   '  fs.writeFileSync(new URL("fixtures/roster.json", import.meta.url), "{}");',
@@ -1589,8 +1637,16 @@ function topLevelNames(file: ts.SourceFile): Set<string> {
 function typeOrImport(statement: ts.Statement): boolean {
   return ts.isImportDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement);
 }
-/** THE ORDER (wb-5333 F2): the one form ROSTER's declaration takes, whitespace-normalized. */
-const READ_FIRST = "const ROSTER = readRoster();";
+/** THE ORDER (wb-5333 F2): the one form ROSTER's declaration takes, whitespace-normalized; its argument freezes import.meta (wb-5333 cut #9). */
+const READ_FIRST = "const ROSTER = readRoster(Object.freeze(import.meta));";
+/**
+ * Whether a declaration of readRoster takes one plain parameter - a name, with no initializer, binding pattern, rest or question
+ * token - so no parameter of it runs code (THE SELF-TEXT, wb-5333 cut #9).
+ */
+function plainParameter(declaration: ts.FunctionDeclaration): boolean {
+  const [parameter, ...others] = declaration.parameters;
+  return parameter !== undefined && others.length === 0 && ts.isIdentifier(parameter.name) && parameter.initializer === undefined && parameter.dotDotDotToken === undefined && parameter.questionToken === undefined;
+}
 /** Whether a node reads a witness member: `x.witness`, `x["witness"]` or a `witness` binding. */
 function readsWitness(node: ts.Node): boolean {
   if (ts.isPropertyAccessExpression(node)) return node.name.text === WITNESS_MEMBER;
@@ -1749,8 +1805,9 @@ function freezerRead(file: ts.SourceFile): string[] {
  * through SUBJECT_MEMBERS (its rows in rosterWitness alone, GUARDED_MEMBERS in GUARD_MISSES alone); it is never named, describe and
  * expect only as a call's callee, and a hook only in the HOOKS statements; and in a source that declares ROSTER, THE ORDER (wb-5333
  * F2): no statement before that declaration but an import, an interface or a type alias, and the declaration READ_FIRST, while a
- * source that declares readRoster declares ROSTER (wb-5333 cut #2), and a source that declares both is read by THE BINDINGS (wb-5333
- * cut #3) and THE FREEZER (wb-5333 cut #6). Inside it,
+ * source that declares readRoster declares ROSTER (wb-5333 cut #2), each top-level declaration of readRoster takes one plain parameter
+ * (THE SELF-TEXT, wb-5333 cut #9), and a source that declares both is read by THE BINDINGS (wb-5333 cut #3) and THE FREEZER (wb-5333
+ * cut #6). Inside it,
  * describeReads. Returns the refused reads, by
  * declaration (an IMPL case as IMPL.<pin>) or by region.
  */
@@ -1768,6 +1825,14 @@ function selfRead(text: string): string[] {
   // sets (the wb-5333 seat's G1: `declare global` and an imported module's side effect, beside a broken D3, stayed 18/18).
   const reader = file.statements.some(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === "readRoster");
   if (declared === undefined && reader) found.push("ROSTER is not readRoster() alone");
+  // THE SELF-TEXT (wb-5333 cut #9, refusal #8's U1: the wb-5333 gate's DP family - a default parameter of readRoster, evaluated when
+  // ROSTER's declaration called it and so before cut #8's first-statement freeze, pointed import.meta.url at another copy of these
+  // bytes, beside ii with CT2, CT1 or e12 and beside a top-level hook flipping every failed result, 0 failed | 18 passed on the
+  // wb-5333 cut #8): READ_FIRST freezes import.meta in its argument, before any parameter of readRoster is evaluated, and each top-level
+  // declaration of readRoster takes one plain parameter, so no parameter of readRoster runs code.
+  for (const statement of file.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name?.text === "readRoster" && !plainParameter(statement)) found.push("readRoster takes other than one plain parameter");
+  }
   // THE BINDINGS (wb-5333 cut #3; wb-26dh's bindingsRead since cut #5): in a source shaped like this file (ROSTER declared beside
   // readRoster), no module-scope name is a let or a var but the native descriptor cache, and each in-file side is one top-level const
   // whose initializer THE FORM reads clean, so none is re-assigned, a global or computed when the file runs in a form the planted
@@ -1824,6 +1889,8 @@ function plantedJudgedSet(lines: readonly string[], context = ""): string {
 }
 /** THE FREEZER's one form in a planted source (wb-5333 cut #6): deepFrozen declared once, a top-level function with a body that calls itself. */
 const PLANTED_FREEZER = "function deepFrozen<T>(value: T): T {\n  for (const member of Array.isArray(value) ? value : []) deepFrozen(member);\n  return value;\n}";
+/** THE SELF-TEXT's form of readRoster in a planted source (wb-5333 cut #9): one top-level function taking one plain parameter. */
+const PLANTED_READER = "function readRoster(meta: unknown): unknown {\n  return meta;\n}";
 /**
  * A planted source shaped like this file (THE BINDINGS, wb-5333 cut #3): ROSTER read first, readRoster declared, deepFrozen declared
  * by `freezer` (THE FREEZER, wb-5333 cut #6: PLANTED_FREEZER, unless a source binds deepFrozen otherwise), and each in-file side a
@@ -1831,7 +1898,16 @@ const PLANTED_FREEZER = "function deepFrozen<T>(value: T): T {\n  for (const mem
  * name, `after` following.
  */
 function plantedSides(lines: Readonly<Record<string, string>> = {}, after = "", freezer = PLANTED_FREEZER): string {
-  return `${[READ_FIRST, "function readRoster(): unknown {", "  return null;", "}", ...(freezer === "" ? [] : [freezer]), ...IN_FILE_SIDES.map(side => lines[side] ?? `const ${side} = "${side.toLowerCase()}";`)].join("\n")}\n${after}`;
+  return `${[READ_FIRST, PLANTED_READER, ...(freezer === "" ? [] : [freezer]), ...IN_FILE_SIDES.map(side => lines[side] ?? `const ${side} = "${side.toLowerCase()}";`)].join("\n")}\n${after}`;
+}
+/**
+ * A planted source shaped like this file (plantedSides, so THE BINDINGS and THE FREEZER read it clean) whose readRoster is `reader` and
+ * whose ROSTER declaration is `declaration` (THE SELF-TEXT, wb-5333 cut #9).
+ */
+function plantedReader(reader: string, declaration = READ_FIRST): string {
+  return plantedSides()
+    .replace(READ_FIRST, () => declaration)
+    .replace(PLANTED_READER, () => reader);
 }
 /** THE SELF-READ's pins outside the describe block: planted sources showing each refusal, beside the HOOKS reading clean. */
 const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
@@ -1874,7 +1950,7 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
       'const PRE_FILE = join(dirname(fileURLToPath(import.meta.url)), "fixtures", ["ri-decision-provenance-echo", "roster.json"].join("-"));',
       'const PRE_TEXT = readFileSync(PRE_FILE, "utf8");',
       "writeFileSync(PRE_FILE, JSON.stringify(JSON.parse(PRE_TEXT)));",
-      "const ROSTER = readRoster();",
+      READ_FIRST,
       "writeFileSync(PRE_FILE, PRE_TEXT);",
       "",
     ].join("\n"),
@@ -1887,19 +1963,57 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
   // wb-5333 cut #2: a function declaration before ROSTER's is refused though it runs nothing (the wb-5333 gate's G05a, unpinned at
   // cut #1); ROSTER bound by an import or declared as a global is not readRoster() alone (the wb-5333 seat's I1 and G1), nor is a
   // source that declares readRoster beside no ROSTER of its own (G1p: the global declared in another file).
-  "a function declaration before ROSTER's (the wb-5333 gate's G05a)": { source: "function early(): void {}\nconst ROSTER = readRoster();\n", reads: ["early runs before readRoster"] },
+  "a function declaration before ROSTER's (the wb-5333 gate's G05a)": { source: `function early(): void {}\n${READ_FIRST}\n`, reads: ["early runs before readRoster"] },
   "ROSTER bound by an import (the wb-5333 seat's I1)": { source: 'import { ROSTER } from "./elsewhere.js";\n', reads: ["ROSTER is not readRoster() alone"] },
   "ROSTER declared as a global (the wb-5333 seat's G1)": { source: "declare global {\n  var ROSTER: unknown;\n}\n", reads: ["ROSTER is not readRoster() alone"] },
-  "readRoster declared beside no ROSTER of this source (the wb-5333 seat's G1p)": { source: "function readRoster(): unknown {\n  return null;\n}\n", reads: ["ROSTER is not readRoster() alone"] },
+  "readRoster declared beside no ROSTER of this source (the wb-5333 seat's G1p)": { source: `${PLANTED_READER}\n`, reads: ["ROSTER is not readRoster() alone"] },
   "the roster read first, imports and types before it (control)": {
-    source: 'import { join } from "node:path";\ninterface Kept {\n  readonly id: string;\n}\ntype Also = Kept;\nconst ROSTER = readRoster();\nconst AFTER = join("a", "b");\n',
+    source: `import { join } from "node:path";\ninterface Kept {\n  readonly id: string;\n}\ntype Also = Kept;\n${READ_FIRST}\nconst AFTER = join("a", "b");\n`,
     reads: [],
   },
   // wb-5333 cut #3: ROSTER bound by a var in a top-level loop head beside readRoster is no declaration THE ORDER reads, so the source
   // reads as one that declares readRoster beside no ROSTER of its own.
   "ROSTER bound by a var in a top-level loop head beside readRoster (the wb-5333 gate's vf1 form)": {
-    source: "for (var ROSTER of [readRoster()]) void ROSTER;\nfunction readRoster(): unknown {\n  return null;\n}\n",
+    source: `for (var ROSTER of [readRoster()]) void ROSTER;\n${PLANTED_READER}\n`,
     reads: ["ROSTER is not readRoster() alone", "<statement> names readRoster", "<statement> reads ROSTER"],
+  },
+  // THE SELF-TEXT (wb-5333 cut #9, refusal #8's U1: the wb-5333 gate's DP family): ROSTER's declaration freezes import.meta in its
+  // argument (READ_FIRST), before any parameter of readRoster is evaluated, so cut #8's declaration, which left the freeze to
+  // readRoster's first statement, is refused, and so is a declaration that runs code before its freeze (refused in the text read here;
+  // such an edit that rewrites the url points SELF_TEXT at another file: NOT CLAIMED); and each top-level declaration of readRoster
+  // takes one plain parameter, so the gate's default parameter, its binding-pattern form, the one parameter given a default, a rest and
+  // an optional parameter, and an overload whose implementation takes a default are each refused, beside a control reading clean.
+  "ROSTER's declaration leaving the freeze to readRoster (the wb-5333 cut #8 form)": {
+    source: plantedReader(PLANTED_READER, "const ROSTER = readRoster();"),
+    reads: ["ROSTER is not readRoster() alone"],
+  },
+  "ROSTER's declaration rewriting import.meta's url before its freeze": {
+    source: plantedReader(PLANTED_READER, 'const ROSTER = readRoster(Object.freeze(Object.assign(import.meta, { url: "file:///another-copy.test.ts" })));'),
+    reads: ["ROSTER is not readRoster() alone"],
+  },
+  "a default parameter of readRoster pointing import.meta.url at another copy (the wb-5333 gate's g15-dp-k)": {
+    source: plantedReader('function readRoster(meta: unknown, _redirect = Reflect.set(import.meta, "url", new URL("another-copy.test.ts", import.meta.url).href)): unknown {\n  return meta;\n}'),
+    reads: ["readRoster takes other than one plain parameter"],
+  },
+  "a default in a binding pattern of readRoster (the wb-5333 gate's g15-dpb form)": {
+    source: plantedReader('function readRoster({ url = Reflect.set(import.meta, "url", "file:///another-copy.test.ts") }: { url?: unknown }): unknown {\n  return url;\n}'),
+    reads: ["readRoster takes other than one plain parameter"],
+  },
+  "readRoster's one parameter given a default": {
+    source: plantedReader('function readRoster(meta: unknown = Reflect.set(import.meta, "url", "file:///another-copy.test.ts")): unknown {\n  return meta;\n}'),
+    reads: ["readRoster takes other than one plain parameter"],
+  },
+  "a rest and an optional parameter of readRoster": {
+    source: plantedReader("function readRoster(...meta: unknown[]): unknown {\n  return meta;\n}\nfunction readRoster(meta?: unknown): unknown {\n  return meta;\n}"),
+    reads: ["readRoster takes other than one plain parameter", "readRoster takes other than one plain parameter"],
+  },
+  "an overload of readRoster whose implementation takes a default": {
+    source: plantedReader('function readRoster(meta: unknown): unknown;\nfunction readRoster(meta: unknown, _redirect = Reflect.set(import.meta, "url", "file:///another-copy.test.ts")): unknown {\n  return meta;\n}'),
+    reads: ["readRoster takes other than one plain parameter"],
+  },
+  "READ_FIRST beside a readRoster taking one plain parameter (control)": {
+    source: plantedReader(PLANTED_READER),
+    reads: [],
   },
   // THE BINDINGS (wb-5333 cut #3): in a source shaped like this file, no module-scope name is a let or a var but the native descriptor
   // cache (this seat's la1-la7: ROWS a let or a top-level var, row B's label cut in source, then assigned the roster's rows by the
@@ -2670,7 +2784,7 @@ function declarationStands(text: string): boolean {
 /**
  * THE SELF-TEXT (wb-5333 cut #8, refusal #7's U2): every source reader of this file reads SELF_TEXT, so a SELF_TEXT read from any
  * other text (another copy of these bytes, a committed revision) points the SELF-READ, THE GUARD and THE DECLARATION at that text
- * instead of the module that runs. `file` is this module's own file, read again through the import.meta that readRoster froze:
+ * instead of the module that runs. `file` is the file import.meta.url names, read again through the import.meta READ_FIRST froze:
  * SELF_TEXT must be that text, bound by its one top-level const (so no statement re-binds it after a reading), and THE GUARD's
  * collection reading must read it (GUARD_INPUTS spelling text: SELF_TEXT, GUARD_MISSES guardMisses(GUARD_INPUTS)), read in that
  * text's AST. Returns the refused readings.
@@ -2712,8 +2826,8 @@ const DECLARED_SIDES: readonly unknown[] = Object.freeze([BEAD, PROGRAM_TAG, TRI
 const DECLARATION_MISSES: readonly string[] = declarationMisses(SELF_TEXT, DECLARED_SIDES);
 if (DECLARATION_MISSES.length > 0) throw new Error(`THE DECLARATION (wb-5333 cut #7): an in-file side is not the value its declaration spells - ${DECLARATION_MISSES.join("; ")}`);
 /**
- * THE SELF-TEXT's verdict (wb-5333 cut #8): SELF_TEXT read against this module's own file, the file import.meta.url names read again
- * here, taken at collection after THE GUARD's and THE DECLARATION's and again in the judged set.
+ * THE SELF-TEXT's verdict (wb-5333 cut #8): SELF_TEXT read against the file import.meta.url names once READ_FIRST froze it (wb-5333
+ * cut #9), read again here, taken at collection after THE GUARD's and THE DECLARATION's and again in the judged set.
  */
 const SELF_TEXT_MISSES: readonly string[] = selfTextMisses(SELF_TEXT, readFileSync(fileURLToPath(import.meta.url), "utf8"));
 if (SELF_TEXT_MISSES.length > 0) throw new Error(`THE SELF-TEXT (wb-5333 cut #8): this file's readers do not read this module's own file - ${SELF_TEXT_MISSES.join("; ")}`);
@@ -3204,12 +3318,17 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect([rosterReadBackStands(SELF_TEXT), rosterReadBackStands(SELF_TEXT.replace(/^ {2}if \(misses\.length > 0\) throw .*$/m, ""))]).toEqual([true, false]);
     // THE SELF-TEXT (wb-5333 cut #8, refusal #7's U2: the wb-5333 gate's ST family - SELF_TEXT's initializer reading another copy of
     // the delivered census bytes, beside refusal #6's ii and CT2's label cut, CT1's D3 removal or e12's quote cut, stayed 0 failed | 18
-    // passed on the wb-5333 cut #7): readRoster froze import.meta before anything else of this file ran, SELF_TEXT is the file
-    // import.meta.url names, read again here as at collection, it is one top-level const and THE GUARD reads it; each reading reports
-    // a perturbed input, and the collection statement stands.
-    expect(Object.isFrozen(import.meta), "readRoster froze import.meta before it read").toBe(true);
+    // passed on the wb-5333 cut #7): READ_FIRST froze import.meta before readRoster ran (its parameters included, wb-5333 cut #9),
+    // SELF_TEXT is the file import.meta.url names, read again here as at collection, it is one top-level const and THE GUARD reads it;
+    // each reading reports a perturbed input, and the collection statement stands.
+    expect(Object.isFrozen(import.meta), "READ_FIRST froze import.meta before readRoster ran").toBe(true);
     expect([Reflect.set(import.meta, "url", "file:///another-copy.test.ts"), Reflect.defineProperty(import.meta, "url", { value: "file:///another-copy.test.ts" })], "a write of import.meta's url is refused").toEqual([false, false]);
-    expect(selfTextMisses(SELF_TEXT, readFileSync(fileURLToPath(import.meta.url), "utf8")), "SELF_TEXT is this module's own file").toEqual([]);
+    // wb-5333 cut #9 (refusal #8's U1, the DP form): an argument is evaluated before the parameters of the function it is passed to, so
+    // READ_FIRST's freeze precedes every parameter of readRoster - a function shaped like the gate's default parameter reads its argument
+    // frozen there, and the write that default makes is refused.
+    const shapedLikeTheDp = (target: object, atFreeze = Object.isFrozen(target), written = Reflect.set(target, "url", "file:///another-copy.test.ts")): readonly boolean[] => [atFreeze, written];
+    expect(shapedLikeTheDp(Object.freeze({ url: "file:///this-module.test.ts" })), "a default parameter reads READ_FIRST's argument frozen and its write refused").toEqual([true, false]);
+    expect(selfTextMisses(SELF_TEXT, readFileSync(fileURLToPath(import.meta.url), "utf8")), "SELF_TEXT is the file import.meta.url names").toEqual([]);
     expect(SELF_TEXT_MISSES).toEqual([]);
     const selfSource = [
       'const SELF_TEXT = "a planted source";',
