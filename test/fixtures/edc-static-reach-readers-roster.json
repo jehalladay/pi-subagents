@@ -24,7 +24,7 @@
     ],
     "specifiers": [
       {
-        "words": "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and the first argument of every loader call the loader reader reads (in the spellings its first clause names) through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
+        "words": "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and the first argument of every loader call the loader reader reads (in the spellings its first clause names) through resolution (every candidate, sorted), <expression> when it does not resolve or is absent; F-SPELLING-MATRIX spells every one of those loader spellings with its first argument in each of five forms (a string literal, a no-substitution template, a conditional of two string literals, a name a module const binds to a string literal, or a literal index into a module const array literal of string literals that is only read), so those are the first-argument forms claimed for every loader spelling, and another first-argument form only in a spelling a pinned form spells it with",
         "falsifiers": [
           "F-ENTRIES",
           "F-LOADS",
@@ -32,13 +32,14 @@
           "F-PLANTED",
           "F-ENTRY-CANDIDATES",
           "F-SPECIFIER-SLOTS",
-          "F-OUTERMOST-WRAPPERS"
+          "F-OUTERMOST-WRAPPERS",
+          "F-SPELLING-MATRIX"
         ]
       }
     ],
     "loader": [
       {
-        "words": "the loader reader reads import() and a call of each of these callees in the spellings its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require or getBuiltinModule as a property name, and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly (a plain call, unwrapped or through each WRAPPERS kind; an optional call, unwrapped or under an instantiation expression, parenthesized or not); and a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression, parenthesized or not); the LOADER_FACTORIES call itself is createRequire called as a name (a plain call, unwrapped or parenthesized; an optional call or a call with type arguments, unwrapped; an optional call under an instantiation expression) or as a property name or a literal element name with a string key (a plain call, unwrapped), with one or two arguments; a loader call with its first argument or none; a bound name is read by its name in every scope",
+        "words": "the loader reader reads import() and a call of each of these callees in the spellings its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): require as a name (a plain call, unwrapped, parenthesized or parenthesized under as; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require or getBuiltinModule as a property name, and require as a literal element name with a string key (a plain call, unwrapped); a LOADER_FACTORIES call's result called directly (a plain call, unwrapped or through each WRAPPERS kind; an optional call, unwrapped or under an instantiation expression, parenthesized or not); and a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (a plain call, unwrapped or parenthesized under as; an optional call under an instantiation expression, parenthesized or not); the LOADER_FACTORIES call itself is createRequire called as a name (a plain call, unwrapped or parenthesized; an optional call or a call with type arguments, unwrapped; an optional call under an instantiation expression) or as a property name or a literal element name with a string key (a plain call, unwrapped), with one or two arguments; a loader call with its first argument or none; a bound name is read by its name in every scope; F-SPELLING-MATRIX spells every one of these spellings (a bound name bound by a const declaration, and in a plain call also by an = assignment; the factory in each of its spellings with its result called directly) with its first argument in each of the five forms the specifier reader's clause names, and another first-argument form, receiver or argument list is claimed only in a spelling a pinned form spells it with",
         "falsifiers": [
           "LOADER_CALLS@isLoaderCall#1",
           "LOADER_FACTORIES@factory#1",
@@ -51,7 +52,8 @@
           "W-CWRAP-LOADER",
           "F-LOADS",
           "F-LOADER-SPELLINGS",
-          "F-OUTERMOST-WRAPPERS"
+          "F-OUTERMOST-WRAPPERS",
+          "F-SPELLING-MATRIX"
         ]
       },
       {
@@ -97,12 +99,13 @@
     ],
     "tracer": [
       {
-        "words": "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates), in the spellings its pinned entries hold: import(); require as a name (a plain call, unwrapped or parenthesized; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require as a literal element name with a string key and getBuiltinModule as a property name (a plain call, unwrapped); and a LOADER_FACTORIES call's result, the factory createRequire called as a name in a plain call, unwrapped, called directly or through a name a declaration or a binding assignment binds it to (a plain call, unwrapped; an optional call under an instantiation expression, parenthesized or not)",
+        "words": "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates), in the spellings its pinned entries hold: import(); require as a name (a plain call, unwrapped or parenthesized; an optional call, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments, unwrapped); require as a literal element name with a string key and getBuiltinModule as a property name (a plain call, unwrapped); and a LOADER_FACTORIES call's result, the factory createRequire called as a name in a plain call, unwrapped, called directly or through a name a declaration or a binding assignment binds it to (a plain call, unwrapped; an optional call under an instantiation expression, parenthesized or not); F-SPELLING-MATRIX spells every one of these loader entry spellings with its specifier in each of the five forms the specifier reader's clause names, each naming child_process (a bound name bound by a const declaration, and in a plain call also by an = assignment), so those are the specifier forms claimed for every loader entry spelling, and another only in a spelling a pinned form spells it with",
         "falsifiers": [
           "CHILD_PROCESS@names#1",
           "F-ENTRIES",
           "F-ENTRY-EDGES",
-          "F-ENTRY-CANDIDATES"
+          "F-ENTRY-CANDIDATES",
+          "F-SPELLING-MATRIX"
         ]
       },
       {
@@ -117,12 +120,13 @@
         ]
       },
       {
-        "words": "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), an optional member read by name or by a string key like a plain one; a default read off the module is the module itself",
+        "words": "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, bare or through each WRAPPERS kind, an instantiation expression's type arguments included; <computed> otherwise), an optional member read by name or by any such key like a plain one (F-SPELLING-MATRIX spells each of the three keys bare and through each kind, by a plain and by an optional element access, off a namespace import's name); a default read off the module is the module itself",
         "falsifiers": [
           "F-FOLLOW",
           "F-BINDINGS",
           "F-LITERAL-KEYS",
-          "F-OPTIONAL-CHAINS"
+          "F-OPTIONAL-CHAINS",
+          "F-SPELLING-MATRIX"
         ]
       },
       {
@@ -162,14 +166,15 @@
         ]
       },
       {
-        "words": "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name)",
+        "words": "a call of a held LAUNCH_CALLS member reads its command through resolution in the spellings its pinned forms hold for the call: a plain call of a bound name, unwrapped, of a member read by name (unwrapped, by an optional property access, or as the operand of a parenthesized instantiation expression), or of a member read by a string or a no-substitution template key or by a string key with an optional element access (unwrapped); an optional call of a bound name, unwrapped or under an instantiation expression; a call with type arguments of a member read by name; F-SPELLING-MATRIX spells every one of these spellings off a namespace import's name (a bound name: one a const declaration binds to its member) with its command in each of the five forms the launch-call reader's first clause names, so those are the command forms claimed for every spelling, and another held value, command form or argument list only in a spelling a pinned form spells it with; and it reads <expression> when the command does not resolve (a plain call of a bound name, of a member read by name or of a member read by a string key; an optional call of a member read by an optional property access) or is absent (a plain call of a member read by name)",
         "falsifiers": [
           "LAUNCH_CALLS@consume#1",
           "isWrapper@consume#1",
           "F-FOLLOW",
           "F-BINDINGS",
           "F-FLOWS",
-          "F-OPTIONAL-CHAINS"
+          "F-OPTIONAL-CHAINS",
+          "F-SPELLING-MATRIX"
         ]
       },
       {
@@ -225,7 +230,7 @@
     ],
     "launches": [
       {
-        "words": "the launch-call reader reads every call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped",
+        "words": "the launch-call reader reads every call whose command resolves and whose callee is spelled with a LAUNCH_CALLS name in a spelling its pinned forms hold for the call (a plain call has neither type arguments nor an optional call): a plain call of a name, unwrapped, of a property name (unwrapped, through each WRAPPERS kind, or by an optional property access) or of a literal element name (a string or a no-substitution template key, unwrapped, or a string key by an optional element access); an optional call of a property name, unwrapped or under an instantiation expression, parenthesized or not; a call with type arguments of a property name, unwrapped; F-SPELLING-MATRIX spells every one of these spellings, each but the name's read off a name and off a member read by name, with its command (the first of two arguments) in each of five forms (a string literal, a no-substitution template, a conditional of two string literals, a name a module const binds to a string literal, or a literal index into a module const array literal of string literals that is only read), so those are the receivers and command forms claimed for every spelling, and another receiver, command form or argument list only in a spelling a pinned form spells it with",
         "falsifiers": [
           "LAUNCH_CALLS@launchSitesAt#1",
           "unwrap@calleeName#1",
@@ -236,7 +241,8 @@
           "NS2c",
           "F-LITERAL-KEYS",
           "F-OPTIONAL-CHAINS",
-          "F-OUTERMOST-WRAPPERS"
+          "F-OUTERMOST-WRAPPERS",
+          "F-SPELLING-MATRIX"
         ]
       },
       {
@@ -350,6 +356,7 @@
         "W-BAND",
         "isWrapper@consume#1",
         "unwrap@consume#1",
+        "F-SPELLING-MATRIX",
         "P-DISCARDED"
       ]
     },
@@ -455,7 +462,8 @@
         "F-LOADER-SPELLINGS",
         "F-LITERAL-KEYS",
         "F-OPTIONAL-CHAINS",
-        "F-SPECIFIER-SLOTS"
+        "F-SPECIFIER-SLOTS",
+        "F-SPELLING-MATRIX"
       ]
     },
     "H9-FORIN": {
@@ -484,7 +492,8 @@
         "W-CWRAP",
         "W-BAND-LOADER",
         "W-CWRAP-LOADER",
-        "unwrap@calleeName#1"
+        "unwrap@calleeName#1",
+        "F-SPELLING-MATRIX"
       ]
     },
     "H11-UTYPE": {
@@ -797,7 +806,8 @@
         }
       ],
       "reds": [
-        "F-LITERAL-KEYS"
+        "F-LITERAL-KEYS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "g14-template-command",
@@ -836,7 +846,8 @@
         }
       ],
       "reds": [
-        "F-LITERAL-KEYS"
+        "F-LITERAL-KEYS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "g16-template-callee"
@@ -868,7 +879,8 @@
       ],
       "reds": [
         "unwrap@resolveTexts#1",
-        "F-OUTERMOST-WRAPPERS"
+        "F-OUTERMOST-WRAPPERS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "w01-rt-sat-exec",
@@ -888,7 +900,8 @@
       ],
       "reds": [
         "unwrap@resolveTexts#1",
-        "F-OUTERMOST-WRAPPERS"
+        "F-OUTERMOST-WRAPPERS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "w02-rt-ta-exec",
@@ -1024,7 +1037,8 @@
       "reds": [
         "unwrap@calleeName#1",
         "unwrap@isLoaderCall#1",
-        "F-OUTERMOST-WRAPPERS"
+        "F-OUTERMOST-WRAPPERS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "w-gp11-01-callee-exec",
@@ -1047,7 +1061,8 @@
       "reds": [
         "unwrap@isLoaderCall#1",
         "unwrap@loaderLabel#1",
-        "F-OUTERMOST-WRAPPERS"
+        "F-OUTERMOST-WRAPPERS",
+        "F-SPELLING-MATRIX"
       ],
       "witnesses": [
         "w-gp11-03-factory-call",
@@ -1078,6 +1093,270 @@
       ],
       "twins": [
         "t-gp11-05-factory-label-paren"
+      ]
+    },
+    "LA-X1-OPTCALL-PROP-CONSTCMD": {
+      "hollows": "launchSitesAt skips an optional call of a property name, unwrapped, when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken !== undefined && node.typeArguments === undefined && ts.isPropertyAccessExpression(node.expression) && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x1-optcall-prop-constcmd",
+        "sm-launch-optcall-prop-name",
+        "sm-launch-optcall-prop-member"
+      ],
+      "twins": [
+        "t-gp9-x1-optcall-prop-literal"
+      ]
+    },
+    "LA-X2-TARGS-PROP-CONSTCMD": {
+      "hollows": "launchSitesAt skips a call with type arguments of a property name, unwrapped, when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken === undefined && node.typeArguments !== undefined && ts.isPropertyAccessExpression(node.expression) && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x2-targs-prop-constcmd",
+        "w-gp9-y1-held-targs-constcmd",
+        "sm-launch-targs-prop-name",
+        "sm-launch-targs-prop-member",
+        "sm-held-member-targs"
+      ],
+      "twins": [
+        "t-gp9-x2-targs-prop-literal"
+      ]
+    },
+    "LA-X3-OPTCALL-INST-CONSTCMD": {
+      "hollows": "launchSitesAt skips an optional call of a property name under an instantiation expression when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken !== undefined && ts.isExpressionWithTypeArguments(node.expression) && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x3-optcall-inst-constcmd",
+        "sm-launch-optcall-inst-name",
+        "sm-launch-optcall-inst-member"
+      ],
+      "twins": [
+        "t-gp9-x3-optcall-inst-literal"
+      ]
+    },
+    "LA-X4-OPTPROP-CONSTCMD": {
+      "hollows": "launchSitesAt skips a plain call of a property name by an optional property access when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken === undefined && node.typeArguments === undefined && ts.isPropertyAccessExpression(node.expression) && node.expression.questionDotToken !== undefined && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x4-optprop-constcmd",
+        "w-gp9-y3-held-optprop-constcmd",
+        "sm-launch-optprop-name",
+        "sm-launch-optprop-member",
+        "sm-held-optprop"
+      ],
+      "twins": [
+        "t-gp9-x4-optprop-literal"
+      ]
+    },
+    "LA-X5-TPLKEY-CONSTCMD": {
+      "hollows": "launchSitesAt skips a plain call of a literal element name with a no-substitution template key when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken === undefined && node.typeArguments === undefined && ts.isElementAccessExpression(node.expression) && ts.isNoSubstitutionTemplateLiteral(node.expression.argumentExpression) && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x5-tplkey-constcmd",
+        "sm-launch-tplkey-name",
+        "sm-launch-tplkey-member",
+        "sm-held-tplkey"
+      ],
+      "twins": [
+        "t-gp9-x5-tplkey-literal"
+      ]
+    },
+    "LA-X6-OPTSTRKEY-CONSTCMD": {
+      "hollows": "launchSitesAt skips a plain call of a literal element name by an optional element access when the command is a const name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken === undefined && node.typeArguments === undefined && ts.isElementAccessExpression(node.expression) && node.expression.questionDotToken !== undefined && node.arguments[0] !== undefined && ts.isIdentifier(node.arguments[0])) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x6-optstrkey-constcmd",
+        "sm-launch-optstrkey-name",
+        "sm-launch-optstrkey-member",
+        "sm-held-optstrkey"
+      ],
+      "twins": [
+        "t-gp9-x6-optstrkey-literal"
+      ]
+    },
+    "LA-X7-OPTCALL-PROP-NONIDRECV": {
+      "hollows": "launchSitesAt skips an optional call of a property name, unwrapped, off a receiver that is not a name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken !== undefined && node.typeArguments === undefined && ts.isPropertyAccessExpression(node.expression) && !ts.isIdentifier(node.expression.expression)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x7-optcall-prop-memberrecv",
+        "sm-launch-optcall-prop-member"
+      ],
+      "twins": [
+        "t-gp9-x7-optcall-prop-namerecv"
+      ]
+    },
+    "LA-X8-TARGS-PROP-NONIDRECV": {
+      "hollows": "launchSitesAt skips a call with type arguments of a property name, unwrapped, off a receiver that is not a name",
+      "edits": [
+        {
+          "from": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;",
+          "to": "    if (callee === undefined || !LAUNCH_CALLS.includes(callee)) return;\n    if (node.questionDotToken === undefined && node.typeArguments !== undefined && ts.isPropertyAccessExpression(node.expression) && !ts.isIdentifier(node.expression.expression)) return;"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-x8-targs-prop-memberrecv",
+        "sm-launch-targs-prop-member"
+      ],
+      "twins": [
+        "t-gp9-x8-targs-prop-namerecv"
+      ]
+    },
+    "TC-Y1-MEMBER-TARGS-CONSTCMD": {
+      "hollows": "consume refuses a call with type arguments of a held member read by name when the command is a const name",
+      "edits": [
+        {
+          "from": "    } else if (ts.isCallExpression(parent) && parent.expression === at) {",
+          "to": "    } else if (ts.isCallExpression(parent) && parent.expression === at && !(parent.typeArguments !== undefined && ts.isPropertyAccessExpression(at) && parent.arguments[0] !== undefined && ts.isIdentifier(parent.arguments[0]))) {"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-y1-held-targs-constcmd",
+        "sm-held-member-targs"
+      ],
+      "twins": [
+        "t-gp9-y1-held-targs-literal"
+      ]
+    },
+    "TC-Y2-BOUND-OPTCALL-CONSTCMD": {
+      "hollows": "consume refuses an optional call of a held bound name when the command is a const name",
+      "edits": [
+        {
+          "from": "    } else if (ts.isCallExpression(parent) && parent.expression === at) {",
+          "to": "    } else if (ts.isCallExpression(parent) && parent.expression === at && !(parent.questionDotToken !== undefined && ts.isIdentifier(at) && parent.arguments[0] !== undefined && ts.isIdentifier(parent.arguments[0]))) {"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-y2-bound-optcall-constcmd",
+        "sm-held-bound-optcall"
+      ],
+      "twins": [
+        "t-gp9-y2-bound-optcall-literal"
+      ]
+    },
+    "TC-Y3-OPTPROP-CONSTCMD": {
+      "hollows": "consume refuses a plain call of a held member read by an optional property access when the command is a const name",
+      "edits": [
+        {
+          "from": "    } else if (ts.isCallExpression(parent) && parent.expression === at) {",
+          "to": "    } else if (ts.isCallExpression(parent) && parent.expression === at && !(parent.questionDotToken === undefined && parent.typeArguments === undefined && ts.isPropertyAccessExpression(at) && at.questionDotToken !== undefined && parent.arguments[0] !== undefined && ts.isIdentifier(parent.arguments[0]))) {"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-y3-held-optprop-constcmd",
+        "sm-held-optprop"
+      ],
+      "twins": [
+        "t-gp9-y3-held-optprop-literal"
+      ]
+    },
+    "MR-M06-KEY-NN": {
+      "hollows": "consume's element-access branch refuses a key spelled with a non-null assertion",
+      "edits": [
+        {
+          "from": "    } else if (ts.isElementAccessExpression(parent) && parent.expression === at) {",
+          "to": "    } else if (ts.isElementAccessExpression(parent) && parent.expression === at && !(ts.isNonNullExpression(parent.argumentExpression))) {"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "w-gp9-m06-held-key-nonnull",
+        "w-gp9-m06b-held-constkey-nonnull",
+        "sm-key-string",
+        "sm-key-template",
+        "sm-key-const"
+      ],
+      "twins": [
+        "t-gp9-m06-held-key-plain"
+      ]
+    },
+    "TC-H15-STRKEY-RES": {
+      "hollows": "consume refuses a plain call of a held member read by a plain string-key element access when the command resolves (refusal #5's F6)",
+      "edits": [
+        {
+          "from": "    } else if (ts.isCallExpression(parent) && parent.expression === at) {",
+          "to": "    } else if (ts.isCallExpression(parent) && parent.expression === at && !(parent.questionDotToken === undefined && parent.typeArguments === undefined && ts.isElementAccessExpression(at) && ts.isStringLiteral(at.argumentExpression) && at.questionDotToken === undefined && !(parent.arguments[0] !== undefined && resolveTexts(source, parent.arguments[0]) === undefined))) {"
+        }
+      ],
+      "reds": [
+        "F-SPELLING-MATRIX"
+      ],
+      "witnesses": [
+        "t-gp9-m06-held-key-plain",
+        "sm-held-strkey",
+        "sm-key-string"
+      ],
+      "twins": [
+        "w-gp9-m06-held-key-nonnull",
+        "sm-held-tplkey"
       ]
     }
   },
@@ -1591,7 +1870,123 @@
       "w-gp11-05-factory-label": "declare function createRequire(url: string | URL): <T>(id: string) => T;\ndeclare const spec: string;\ncreateRequire(import.meta.url)<unknown>?.(spec);\n",
       "t-gp11-05-factory-label-paren": "declare function createRequire(url: string | URL): <T>(id: string) => T;\ndeclare const spec: string;\n(createRequire(import.meta.url)<unknown>)?.(spec);\n",
       "instantiated-optional-factory-binding": "import { createRequire } from \"node:module\";\nconst load = createRequire<F>?.(import.meta.url);\nload(name);\n",
-      "instantiated-optional-factory-result": "import { createRequire } from \"node:module\";\ncreateRequire<F>?.(import.meta.url)(name);\n"
+      "instantiated-optional-factory-result": "import { createRequire } from \"node:module\";\ncreateRequire<F>?.(import.meta.url)(name);\n",
+      "w-gp9-x1-optcall-prop-constcmd": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nconst TOOL = \"rf\";\nexport function gp9X1(pi: ExtensionAPI): void {\n  void pi.exec?.(TOOL, []);\n}\n",
+      "t-gp9-x1-optcall-prop-literal": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X1t(pi: ExtensionAPI): void {\n  void pi.exec?.(\"rf\", []);\n}\n",
+      "w-gp9-x2-targs-prop-constcmd": "declare const api: { exec<T>(command: string, args: string[]): T };\nconst TOOL = \"rf\";\nexport function gp9X2(): void {\n  api.exec<void>(TOOL, []);\n}\n",
+      "t-gp9-x2-targs-prop-literal": "declare const api: { exec<T>(command: string, args: string[]): T };\nexport function gp9X2t(): void {\n  api.exec<void>(\"rf\", []);\n}\n",
+      "w-gp9-x3-optcall-inst-constcmd": "declare const api: { exec<T>(command: string, args: string[]): T };\nconst TOOL = \"rf\";\nexport function gp9X3(): void {\n  api.exec<void>?.(TOOL, []);\n}\n",
+      "t-gp9-x3-optcall-inst-literal": "declare const api: { exec<T>(command: string, args: string[]): T };\nexport function gp9X3t(): void {\n  api.exec<void>?.(\"rf\", []);\n}\n",
+      "w-gp9-x4-optprop-constcmd": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nconst TOOL = \"rf\";\nexport function gp9X4(pi: ExtensionAPI): void {\n  void pi?.exec(TOOL, []);\n}\n",
+      "t-gp9-x4-optprop-literal": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X4t(pi: ExtensionAPI): void {\n  void pi?.exec(\"rf\", []);\n}\n",
+      "w-gp9-x5-tplkey-constcmd": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nconst TOOL = \"rf\";\nexport function gp9X5(pi: ExtensionAPI): void {\n  void pi[`exec`](TOOL, []);\n}\n",
+      "t-gp9-x5-tplkey-literal": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X5t(pi: ExtensionAPI): void {\n  void pi[`exec`](\"rf\", []);\n}\n",
+      "w-gp9-x6-optstrkey-constcmd": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nconst TOOL = \"rf\";\nexport function gp9X6(pi: ExtensionAPI): void {\n  void pi?.[\"exec\"](TOOL, []);\n}\n",
+      "t-gp9-x6-optstrkey-literal": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X6t(pi: ExtensionAPI): void {\n  void pi?.[\"exec\"](\"rf\", []);\n}\n",
+      "w-gp9-x7-optcall-prop-memberrecv": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X7(holder: { pi: ExtensionAPI }): void {\n  void holder.pi.exec?.(\"rf\", []);\n}\n",
+      "t-gp9-x7-optcall-prop-namerecv": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\n\nexport function gp9X7t(pi: ExtensionAPI): void {\n  void pi.exec?.(\"rf\", []);\n}\n",
+      "w-gp9-x8-targs-prop-memberrecv": "declare const holder: { api: { exec<T>(command: string, args: string[]): T } };\nexport function gp9X8(): void {\n  holder.api.exec<void>(\"rf\", []);\n}\n",
+      "t-gp9-x8-targs-prop-namerecv": "declare const api: { exec<T>(command: string, args: string[]): T };\nexport function gp9X8t(): void {\n  api.exec<void>(\"rf\", []);\n}\n",
+      "w-gp9-y1-held-targs-constcmd": "import * as cp from \"node:child_process\";\n\nconst api = cp as unknown as { spawn<T>(command: string, args: string[]): T };\nconst TOOL = \"rf\";\nexport function gp9Y1(): void {\n  api.spawn<void>(TOOL, []);\n}\n",
+      "t-gp9-y1-held-targs-literal": "import * as cp from \"node:child_process\";\n\nconst api = cp as unknown as { spawn<T>(command: string, args: string[]): T };\nexport function gp9Y1t(): void {\n  api.spawn<void>(\"rf\", []);\n}\n",
+      "w-gp9-y2-bound-optcall-constcmd": "import { spawn } from \"node:child_process\";\n\nconst TOOL = \"rf\";\nexport function gp9Y2(): void {\n  spawn?.(TOOL, []);\n}\n",
+      "t-gp9-y2-bound-optcall-literal": "import { spawn } from \"node:child_process\";\n\nexport function gp9Y2t(): void {\n  spawn?.(\"rf\", []);\n}\n",
+      "w-gp9-y3-held-optprop-constcmd": "import * as cp from \"node:child_process\";\n\nconst TOOL = \"rf\";\nexport function gp9Y3(): void {\n  cp?.spawn(TOOL, []);\n}\n",
+      "t-gp9-y3-held-optprop-literal": "import * as cp from \"node:child_process\";\n\nexport function gp9Y3t(): void {\n  cp?.spawn(\"rf\", []);\n}\n",
+      "w-gp9-m06-held-key-nonnull": "import * as cp from \"node:child_process\";\n\nexport function gp9M06(): void {\n  cp[\"spawn\"!](\"rf\", []);\n}\n",
+      "t-gp9-m06-held-key-plain": "import * as cp from \"node:child_process\";\n\nexport function gp9M06t(): void {\n  cp[\"spawn\"](\"rf\", []);\n}\n",
+      "w-gp9-m06b-held-constkey-nonnull": "import * as cp from \"node:child_process\";\n\nconst KEY = \"spawn\";\nexport function gp9M06b(): void {\n  cp[KEY!](\"rf\", []);\n}\n",
+      "sm-launch-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nexec(\"rf\", []);\nexec(`hx`, []);\nexec(flag ? \"git\" : \"forge\", []);\nexec(TOOL, []);\nexec(TOOLS[0], []);\n",
+      "sm-launch-prop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.exec(\"rf\", []);\napi.exec(`hx`, []);\napi.exec(flag ? \"git\" : \"forge\", []);\napi.exec(TOOL, []);\napi.exec(TOOLS[0], []);\n",
+      "sm-launch-prop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.exec(\"rf\", []);\nholder.api.exec(`hx`, []);\nholder.api.exec(flag ? \"git\" : \"forge\", []);\nholder.api.exec(TOOL, []);\nholder.api.exec(TOOLS[0], []);\n",
+      "sm-launch-prop-paren-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(api.exec)(\"rf\", []);\n(api.exec)(`hx`, []);\n(api.exec)(flag ? \"git\" : \"forge\", []);\n(api.exec)(TOOL, []);\n(api.exec)(TOOLS[0], []);\n",
+      "sm-launch-prop-paren-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.exec)(\"rf\", []);\n(holder.api.exec)(`hx`, []);\n(holder.api.exec)(flag ? \"git\" : \"forge\", []);\n(holder.api.exec)(TOOL, []);\n(holder.api.exec)(TOOLS[0], []);\n",
+      "sm-launch-prop-as-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(api.exec as F)(\"rf\", []);\n(api.exec as F)(`hx`, []);\n(api.exec as F)(flag ? \"git\" : \"forge\", []);\n(api.exec as F)(TOOL, []);\n(api.exec as F)(TOOLS[0], []);\n",
+      "sm-launch-prop-as-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.exec as F)(\"rf\", []);\n(holder.api.exec as F)(`hx`, []);\n(holder.api.exec as F)(flag ? \"git\" : \"forge\", []);\n(holder.api.exec as F)(TOOL, []);\n(holder.api.exec as F)(TOOLS[0], []);\n",
+      "sm-launch-prop-sat-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(api.exec satisfies F)(\"rf\", []);\n(api.exec satisfies F)(`hx`, []);\n(api.exec satisfies F)(flag ? \"git\" : \"forge\", []);\n(api.exec satisfies F)(TOOL, []);\n(api.exec satisfies F)(TOOLS[0], []);\n",
+      "sm-launch-prop-sat-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.exec satisfies F)(\"rf\", []);\n(holder.api.exec satisfies F)(`hx`, []);\n(holder.api.exec satisfies F)(flag ? \"git\" : \"forge\", []);\n(holder.api.exec satisfies F)(TOOL, []);\n(holder.api.exec satisfies F)(TOOLS[0], []);\n",
+      "sm-launch-prop-ta-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(<F>api.exec)(\"rf\", []);\n(<F>api.exec)(`hx`, []);\n(<F>api.exec)(flag ? \"git\" : \"forge\", []);\n(<F>api.exec)(TOOL, []);\n(<F>api.exec)(TOOLS[0], []);\n",
+      "sm-launch-prop-ta-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(<F>holder.api.exec)(\"rf\", []);\n(<F>holder.api.exec)(`hx`, []);\n(<F>holder.api.exec)(flag ? \"git\" : \"forge\", []);\n(<F>holder.api.exec)(TOOL, []);\n(<F>holder.api.exec)(TOOLS[0], []);\n",
+      "sm-launch-prop-nn-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.exec!(\"rf\", []);\napi.exec!(`hx`, []);\napi.exec!(flag ? \"git\" : \"forge\", []);\napi.exec!(TOOL, []);\napi.exec!(TOOLS[0], []);\n",
+      "sm-launch-prop-nn-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.exec!(\"rf\", []);\nholder.api.exec!(`hx`, []);\nholder.api.exec!(flag ? \"git\" : \"forge\", []);\nholder.api.exec!(TOOL, []);\nholder.api.exec!(TOOLS[0], []);\n",
+      "sm-launch-prop-inst-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(api.exec<F>)(\"rf\", []);\n(api.exec<F>)(`hx`, []);\n(api.exec<F>)(flag ? \"git\" : \"forge\", []);\n(api.exec<F>)(TOOL, []);\n(api.exec<F>)(TOOLS[0], []);\n",
+      "sm-launch-prop-inst-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.exec<F>)(\"rf\", []);\n(holder.api.exec<F>)(`hx`, []);\n(holder.api.exec<F>)(flag ? \"git\" : \"forge\", []);\n(holder.api.exec<F>)(TOOL, []);\n(holder.api.exec<F>)(TOOLS[0], []);\n",
+      "sm-launch-optprop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi?.exec(\"rf\", []);\napi?.exec(`hx`, []);\napi?.exec(flag ? \"git\" : \"forge\", []);\napi?.exec(TOOL, []);\napi?.exec(TOOLS[0], []);\n",
+      "sm-launch-optprop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api?.exec(\"rf\", []);\nholder.api?.exec(`hx`, []);\nholder.api?.exec(flag ? \"git\" : \"forge\", []);\nholder.api?.exec(TOOL, []);\nholder.api?.exec(TOOLS[0], []);\n",
+      "sm-launch-strkey-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi[\"exec\"](\"rf\", []);\napi[\"exec\"](`hx`, []);\napi[\"exec\"](flag ? \"git\" : \"forge\", []);\napi[\"exec\"](TOOL, []);\napi[\"exec\"](TOOLS[0], []);\n",
+      "sm-launch-strkey-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api[\"exec\"](\"rf\", []);\nholder.api[\"exec\"](`hx`, []);\nholder.api[\"exec\"](flag ? \"git\" : \"forge\", []);\nholder.api[\"exec\"](TOOL, []);\nholder.api[\"exec\"](TOOLS[0], []);\n",
+      "sm-launch-tplkey-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi[`exec`](\"rf\", []);\napi[`exec`](`hx`, []);\napi[`exec`](flag ? \"git\" : \"forge\", []);\napi[`exec`](TOOL, []);\napi[`exec`](TOOLS[0], []);\n",
+      "sm-launch-tplkey-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api[`exec`](\"rf\", []);\nholder.api[`exec`](`hx`, []);\nholder.api[`exec`](flag ? \"git\" : \"forge\", []);\nholder.api[`exec`](TOOL, []);\nholder.api[`exec`](TOOLS[0], []);\n",
+      "sm-launch-optstrkey-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi?.[\"exec\"](\"rf\", []);\napi?.[\"exec\"](`hx`, []);\napi?.[\"exec\"](flag ? \"git\" : \"forge\", []);\napi?.[\"exec\"](TOOL, []);\napi?.[\"exec\"](TOOLS[0], []);\n",
+      "sm-launch-optstrkey-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api?.[\"exec\"](\"rf\", []);\nholder.api?.[\"exec\"](`hx`, []);\nholder.api?.[\"exec\"](flag ? \"git\" : \"forge\", []);\nholder.api?.[\"exec\"](TOOL, []);\nholder.api?.[\"exec\"](TOOLS[0], []);\n",
+      "sm-launch-optcall-prop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.exec?.(\"rf\", []);\napi.exec?.(`hx`, []);\napi.exec?.(flag ? \"git\" : \"forge\", []);\napi.exec?.(TOOL, []);\napi.exec?.(TOOLS[0], []);\n",
+      "sm-launch-optcall-prop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.exec?.(\"rf\", []);\nholder.api.exec?.(`hx`, []);\nholder.api.exec?.(flag ? \"git\" : \"forge\", []);\nholder.api.exec?.(TOOL, []);\nholder.api.exec?.(TOOLS[0], []);\n",
+      "sm-launch-optcall-inst-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.exec<F>?.(\"rf\", []);\napi.exec<F>?.(`hx`, []);\napi.exec<F>?.(flag ? \"git\" : \"forge\", []);\napi.exec<F>?.(TOOL, []);\napi.exec<F>?.(TOOLS[0], []);\n",
+      "sm-launch-optcall-inst-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.exec<F>?.(\"rf\", []);\nholder.api.exec<F>?.(`hx`, []);\nholder.api.exec<F>?.(flag ? \"git\" : \"forge\", []);\nholder.api.exec<F>?.(TOOL, []);\nholder.api.exec<F>?.(TOOLS[0], []);\n",
+      "sm-launch-optcall-inst-paren-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(api.exec<F>)?.(\"rf\", []);\n(api.exec<F>)?.(`hx`, []);\n(api.exec<F>)?.(flag ? \"git\" : \"forge\", []);\n(api.exec<F>)?.(TOOL, []);\n(api.exec<F>)?.(TOOLS[0], []);\n",
+      "sm-launch-optcall-inst-paren-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(holder.api.exec<F>)?.(\"rf\", []);\n(holder.api.exec<F>)?.(`hx`, []);\n(holder.api.exec<F>)?.(flag ? \"git\" : \"forge\", []);\n(holder.api.exec<F>)?.(TOOL, []);\n(holder.api.exec<F>)?.(TOOLS[0], []);\n",
+      "sm-launch-targs-prop-name": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\napi.exec<F>(\"rf\", []);\napi.exec<F>(`hx`, []);\napi.exec<F>(flag ? \"git\" : \"forge\", []);\napi.exec<F>(TOOL, []);\napi.exec<F>(TOOLS[0], []);\n",
+      "sm-launch-targs-prop-member": "const TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\nholder.api.exec<F>(\"rf\", []);\nholder.api.exec<F>(`hx`, []);\nholder.api.exec<F>(flag ? \"git\" : \"forge\", []);\nholder.api.exec<F>(TOOL, []);\nholder.api.exec<F>(TOOLS[0], []);\n",
+      "sm-held-bound": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ngo(\"rf\", []);\ngo(`hx`, []);\ngo(flag ? \"git\" : \"forge\", []);\ngo(TOOL, []);\ngo(TOOLS[0], []);\n",
+      "sm-held-member": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp.spawn(\"rf\", []);\ncp.spawn(`hx`, []);\ncp.spawn(flag ? \"git\" : \"forge\", []);\ncp.spawn(TOOL, []);\ncp.spawn(TOOLS[0], []);\n",
+      "sm-held-optprop": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp?.spawn(\"rf\", []);\ncp?.spawn(`hx`, []);\ncp?.spawn(flag ? \"git\" : \"forge\", []);\ncp?.spawn(TOOL, []);\ncp?.spawn(TOOLS[0], []);\n",
+      "sm-held-paren-inst": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\n(cp.spawn<F>)(\"rf\", []);\n(cp.spawn<F>)(`hx`, []);\n(cp.spawn<F>)(flag ? \"git\" : \"forge\", []);\n(cp.spawn<F>)(TOOL, []);\n(cp.spawn<F>)(TOOLS[0], []);\n",
+      "sm-held-strkey": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp[\"spawn\"](\"rf\", []);\ncp[\"spawn\"](`hx`, []);\ncp[\"spawn\"](flag ? \"git\" : \"forge\", []);\ncp[\"spawn\"](TOOL, []);\ncp[\"spawn\"](TOOLS[0], []);\n",
+      "sm-held-tplkey": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp[`spawn`](\"rf\", []);\ncp[`spawn`](`hx`, []);\ncp[`spawn`](flag ? \"git\" : \"forge\", []);\ncp[`spawn`](TOOL, []);\ncp[`spawn`](TOOLS[0], []);\n",
+      "sm-held-optstrkey": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp?.[\"spawn\"](\"rf\", []);\ncp?.[\"spawn\"](`hx`, []);\ncp?.[\"spawn\"](flag ? \"git\" : \"forge\", []);\ncp?.[\"spawn\"](TOOL, []);\ncp?.[\"spawn\"](TOOLS[0], []);\n",
+      "sm-held-bound-optcall": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ngo?.(\"rf\", []);\ngo?.(`hx`, []);\ngo?.(flag ? \"git\" : \"forge\", []);\ngo?.(TOOL, []);\ngo?.(TOOLS[0], []);\n",
+      "sm-held-bound-optcall-inst": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ngo<F>?.(\"rf\", []);\ngo<F>?.(`hx`, []);\ngo<F>?.(flag ? \"git\" : \"forge\", []);\ngo<F>?.(TOOL, []);\ngo<F>?.(TOOLS[0], []);\n",
+      "sm-held-member-targs": "import * as cp from \"node:child_process\";\nconst go = cp.spawn;\nconst TOOL = \"mp\";\nconst TOOLS = [\"bd\"];\ncp.spawn<F>(\"rf\", []);\ncp.spawn<F>(`hx`, []);\ncp.spawn<F>(flag ? \"git\" : \"forge\", []);\ncp.spawn<F>(TOOL, []);\ncp.spawn<F>(TOOLS[0], []);\n",
+      "sm-key-string": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[\"spawn\"](\"rf\", []);\ncp?.[\"spawn\"](\"rf\", []);\ncp[(\"spawn\")](\"rf\", []);\ncp?.[(\"spawn\")](\"rf\", []);\ncp[\"spawn\" as string](\"rf\", []);\ncp?.[\"spawn\" as string](\"rf\", []);\ncp[\"spawn\" satisfies string](\"rf\", []);\ncp?.[\"spawn\" satisfies string](\"rf\", []);\ncp[<string>\"spawn\"](\"rf\", []);\ncp?.[<string>\"spawn\"](\"rf\", []);\ncp[\"spawn\"!](\"rf\", []);\ncp?.[\"spawn\"!](\"rf\", []);\ncp[\"spawn\"<F>](\"rf\", []);\ncp?.[\"spawn\"<F>](\"rf\", []);\n",
+      "sm-key-template": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[`spawn`](\"rf\", []);\ncp?.[`spawn`](\"rf\", []);\ncp[(`spawn`)](\"rf\", []);\ncp?.[(`spawn`)](\"rf\", []);\ncp[`spawn` as string](\"rf\", []);\ncp?.[`spawn` as string](\"rf\", []);\ncp[`spawn` satisfies string](\"rf\", []);\ncp?.[`spawn` satisfies string](\"rf\", []);\ncp[<string>`spawn`](\"rf\", []);\ncp?.[<string>`spawn`](\"rf\", []);\ncp[`spawn`!](\"rf\", []);\ncp?.[`spawn`!](\"rf\", []);\ncp[`spawn`<F>](\"rf\", []);\ncp?.[`spawn`<F>](\"rf\", []);\n",
+      "sm-key-const": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\ncp[KEY](\"rf\", []);\ncp?.[KEY](\"rf\", []);\ncp[(KEY)](\"rf\", []);\ncp?.[(KEY)](\"rf\", []);\ncp[KEY as string](\"rf\", []);\ncp?.[KEY as string](\"rf\", []);\ncp[KEY satisfies string](\"rf\", []);\ncp?.[KEY satisfies string](\"rf\", []);\ncp[<string>KEY](\"rf\", []);\ncp?.[<string>KEY](\"rf\", []);\ncp[KEY!](\"rf\", []);\ncp?.[KEY!](\"rf\", []);\ncp[KEY<F>](\"rf\", []);\ncp?.[KEY<F>](\"rf\", []);\n",
+      "sm-load-import": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nimport(\"pkg-string\");\nimport(`pkg-template`);\nimport(flag ? \"pkg-true\" : \"pkg-false\");\nimport(NAME);\nimport(NAMES[0]);\n",
+      "sm-load-require": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nrequire(\"pkg-string\");\nrequire(`pkg-template`);\nrequire(flag ? \"pkg-true\" : \"pkg-false\");\nrequire(NAME);\nrequire(NAMES[0]);\n",
+      "sm-load-require-paren": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(require)(\"pkg-string\");\n(require)(`pkg-template`);\n(require)(flag ? \"pkg-true\" : \"pkg-false\");\n(require)(NAME);\n(require)(NAMES[0]);\n",
+      "sm-load-require-paren-as": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(require as F)(\"pkg-string\");\n(require as F)(`pkg-template`);\n(require as F)(flag ? \"pkg-true\" : \"pkg-false\");\n(require as F)(NAME);\n(require as F)(NAMES[0]);\n",
+      "sm-load-require-optcall": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nrequire?.(\"pkg-string\");\nrequire?.(`pkg-template`);\nrequire?.(flag ? \"pkg-true\" : \"pkg-false\");\nrequire?.(NAME);\nrequire?.(NAMES[0]);\n",
+      "sm-load-require-optcall-inst": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nrequire<F>?.(\"pkg-string\");\nrequire<F>?.(`pkg-template`);\nrequire<F>?.(flag ? \"pkg-true\" : \"pkg-false\");\nrequire<F>?.(NAME);\nrequire<F>?.(NAMES[0]);\n",
+      "sm-load-require-optcall-inst-paren": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(require<F>)?.(\"pkg-string\");\n(require<F>)?.(`pkg-template`);\n(require<F>)?.(flag ? \"pkg-true\" : \"pkg-false\");\n(require<F>)?.(NAME);\n(require<F>)?.(NAMES[0]);\n",
+      "sm-load-require-targs": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nrequire<F>(\"pkg-string\");\nrequire<F>(`pkg-template`);\nrequire<F>(flag ? \"pkg-true\" : \"pkg-false\");\nrequire<F>(NAME);\nrequire<F>(NAMES[0]);\n",
+      "sm-load-prop-require": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nmodule.require(\"pkg-string\");\nmodule.require(`pkg-template`);\nmodule.require(flag ? \"pkg-true\" : \"pkg-false\");\nmodule.require(NAME);\nmodule.require(NAMES[0]);\n",
+      "sm-load-prop-builtin": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nprocess.getBuiltinModule(\"pkg-string\");\nprocess.getBuiltinModule(`pkg-template`);\nprocess.getBuiltinModule(flag ? \"pkg-true\" : \"pkg-false\");\nprocess.getBuiltinModule(NAME);\nprocess.getBuiltinModule(NAMES[0]);\n",
+      "sm-load-elem-require": "const NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nmodule[\"require\"](\"pkg-string\");\nmodule[\"require\"](`pkg-template`);\nmodule[\"require\"](flag ? \"pkg-true\" : \"pkg-false\");\nmodule[\"require\"](NAME);\nmodule[\"require\"](NAMES[0]);\n",
+      "sm-load-result": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire(import.meta.url)(\"pkg-string\");\ncreateRequire(import.meta.url)(`pkg-template`);\ncreateRequire(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire(import.meta.url)(NAME);\ncreateRequire(import.meta.url)(NAMES[0]);\n",
+      "sm-load-result-paren": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire(import.meta.url))(\"pkg-string\");\n(createRequire(import.meta.url))(`pkg-template`);\n(createRequire(import.meta.url))(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire(import.meta.url))(NAME);\n(createRequire(import.meta.url))(NAMES[0]);\n",
+      "sm-load-result-as": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire(import.meta.url) as F)(\"pkg-string\");\n(createRequire(import.meta.url) as F)(`pkg-template`);\n(createRequire(import.meta.url) as F)(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire(import.meta.url) as F)(NAME);\n(createRequire(import.meta.url) as F)(NAMES[0]);\n",
+      "sm-load-result-sat": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire(import.meta.url) satisfies F)(\"pkg-string\");\n(createRequire(import.meta.url) satisfies F)(`pkg-template`);\n(createRequire(import.meta.url) satisfies F)(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire(import.meta.url) satisfies F)(NAME);\n(createRequire(import.meta.url) satisfies F)(NAMES[0]);\n",
+      "sm-load-result-ta": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(<F>createRequire(import.meta.url))(\"pkg-string\");\n(<F>createRequire(import.meta.url))(`pkg-template`);\n(<F>createRequire(import.meta.url))(flag ? \"pkg-true\" : \"pkg-false\");\n(<F>createRequire(import.meta.url))(NAME);\n(<F>createRequire(import.meta.url))(NAMES[0]);\n",
+      "sm-load-result-nn": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire(import.meta.url)!(\"pkg-string\");\ncreateRequire(import.meta.url)!(`pkg-template`);\ncreateRequire(import.meta.url)!(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire(import.meta.url)!(NAME);\ncreateRequire(import.meta.url)!(NAMES[0]);\n",
+      "sm-load-result-inst": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire(import.meta.url)<F>)(\"pkg-string\");\n(createRequire(import.meta.url)<F>)(`pkg-template`);\n(createRequire(import.meta.url)<F>)(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire(import.meta.url)<F>)(NAME);\n(createRequire(import.meta.url)<F>)(NAMES[0]);\n",
+      "sm-load-result-optcall": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire(import.meta.url)?.(\"pkg-string\");\ncreateRequire(import.meta.url)?.(`pkg-template`);\ncreateRequire(import.meta.url)?.(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire(import.meta.url)?.(NAME);\ncreateRequire(import.meta.url)?.(NAMES[0]);\n",
+      "sm-load-result-optcall-inst": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire(import.meta.url)<F>?.(\"pkg-string\");\ncreateRequire(import.meta.url)<F>?.(`pkg-template`);\ncreateRequire(import.meta.url)<F>?.(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire(import.meta.url)<F>?.(NAME);\ncreateRequire(import.meta.url)<F>?.(NAMES[0]);\n",
+      "sm-load-result-optcall-inst-paren": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire(import.meta.url)<F>)?.(\"pkg-string\");\n(createRequire(import.meta.url)<F>)?.(`pkg-template`);\n(createRequire(import.meta.url)<F>)?.(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire(import.meta.url)<F>)?.(NAME);\n(createRequire(import.meta.url)<F>)?.(NAMES[0]);\n",
+      "sm-load-factory-paren": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(createRequire)(import.meta.url)(\"pkg-string\");\n(createRequire)(import.meta.url)(`pkg-template`);\n(createRequire)(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\n(createRequire)(import.meta.url)(NAME);\n(createRequire)(import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-optcall": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire?.(import.meta.url)(\"pkg-string\");\ncreateRequire?.(import.meta.url)(`pkg-template`);\ncreateRequire?.(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire?.(import.meta.url)(NAME);\ncreateRequire?.(import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-targs": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire<F>(import.meta.url)(\"pkg-string\");\ncreateRequire<F>(import.meta.url)(`pkg-template`);\ncreateRequire<F>(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire<F>(import.meta.url)(NAME);\ncreateRequire<F>(import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-optcall-inst": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire<F>?.(import.meta.url)(\"pkg-string\");\ncreateRequire<F>?.(import.meta.url)(`pkg-template`);\ncreateRequire<F>?.(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire<F>?.(import.meta.url)(NAME);\ncreateRequire<F>?.(import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-prop": "import * as nodeModule from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nnodeModule.createRequire(import.meta.url)(\"pkg-string\");\nnodeModule.createRequire(import.meta.url)(`pkg-template`);\nnodeModule.createRequire(import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\nnodeModule.createRequire(import.meta.url)(NAME);\nnodeModule.createRequire(import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-elem": "import * as nodeModule from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nnodeModule[\"createRequire\"](import.meta.url)(\"pkg-string\");\nnodeModule[\"createRequire\"](import.meta.url)(`pkg-template`);\nnodeModule[\"createRequire\"](import.meta.url)(flag ? \"pkg-true\" : \"pkg-false\");\nnodeModule[\"createRequire\"](import.meta.url)(NAME);\nnodeModule[\"createRequire\"](import.meta.url)(NAMES[0]);\n",
+      "sm-load-factory-two-arguments": "import { createRequire } from \"node:module\";\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\ncreateRequire(import.meta.url, options)(\"pkg-string\");\ncreateRequire(import.meta.url, options)(`pkg-template`);\ncreateRequire(import.meta.url, options)(flag ? \"pkg-true\" : \"pkg-false\");\ncreateRequire(import.meta.url, options)(NAME);\ncreateRequire(import.meta.url, options)(NAMES[0]);\n",
+      "sm-load-bound": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nload(\"pkg-string\");\nload(`pkg-template`);\nload(flag ? \"pkg-true\" : \"pkg-false\");\nload(NAME);\nload(NAMES[0]);\n",
+      "sm-load-bound-paren-as": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(load as F)(\"pkg-string\");\n(load as F)(`pkg-template`);\n(load as F)(flag ? \"pkg-true\" : \"pkg-false\");\n(load as F)(NAME);\n(load as F)(NAMES[0]);\n",
+      "sm-load-bound-optcall-inst": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nload<F>?.(\"pkg-string\");\nload<F>?.(`pkg-template`);\nload<F>?.(flag ? \"pkg-true\" : \"pkg-false\");\nload<F>?.(NAME);\nload<F>?.(NAMES[0]);\n",
+      "sm-load-bound-optcall-inst-paren": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\n(load<F>)?.(\"pkg-string\");\n(load<F>)?.(`pkg-template`);\n(load<F>)?.(flag ? \"pkg-true\" : \"pkg-false\");\n(load<F>)?.(NAME);\n(load<F>)?.(NAMES[0]);\n",
+      "sm-load-assigned": "import { createRequire } from \"node:module\";\nlet late;\nlate = createRequire(import.meta.url);\nconst NAME = \"pkg-const\";\nconst NAMES = [\"pkg-indexed\"];\nlate(\"pkg-string\");\nlate(`pkg-template`);\nlate(flag ? \"pkg-true\" : \"pkg-false\");\nlate(NAME);\nlate(NAMES[0]);\n",
+      "sm-entry-import": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = await import(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = await import(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = await import(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = await import(CP);\ne4.spawn(\"mp\", []);\nconst e5 = await import(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = require(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = require(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = require(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = require(CP);\ne4.spawn(\"mp\", []);\nconst e5 = require(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require-paren": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = (require)(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = (require)(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = (require)(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = (require)(CP);\ne4.spawn(\"mp\", []);\nconst e5 = (require)(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require-optcall": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = require?.(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = require?.(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = require?.(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = require?.(CP);\ne4.spawn(\"mp\", []);\nconst e5 = require?.(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require-optcall-inst": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = require<F>?.(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = require<F>?.(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = require<F>?.(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = require<F>?.(CP);\ne4.spawn(\"mp\", []);\nconst e5 = require<F>?.(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require-optcall-inst-paren": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = (require<F>)?.(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = (require<F>)?.(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = (require<F>)?.(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = (require<F>)?.(CP);\ne4.spawn(\"mp\", []);\nconst e5 = (require<F>)?.(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-require-targs": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = require<F>(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = require<F>(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = require<F>(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = require<F>(CP);\ne4.spawn(\"mp\", []);\nconst e5 = require<F>(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-elem-require": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = module[\"require\"](\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = module[\"require\"](`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = module[\"require\"](flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = module[\"require\"](CP);\ne4.spawn(\"mp\", []);\nconst e5 = module[\"require\"](CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-prop-builtin": "const CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = process.getBuiltinModule(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = process.getBuiltinModule(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = process.getBuiltinModule(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = process.getBuiltinModule(CP);\ne4.spawn(\"mp\", []);\nconst e5 = process.getBuiltinModule(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-result": "import { createRequire } from \"node:module\";\nconst CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = createRequire(import.meta.url)(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = createRequire(import.meta.url)(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = createRequire(import.meta.url)(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = createRequire(import.meta.url)(CP);\ne4.spawn(\"mp\", []);\nconst e5 = createRequire(import.meta.url)(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-bound": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = load(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = load(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = load(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = load(CP);\ne4.spawn(\"mp\", []);\nconst e5 = load(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-bound-optcall-inst": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = load<F>?.(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = load<F>?.(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = load<F>?.(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = load<F>?.(CP);\ne4.spawn(\"mp\", []);\nconst e5 = load<F>?.(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-bound-optcall-inst-paren": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = (load<F>)?.(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = (load<F>)?.(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = (load<F>)?.(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = (load<F>)?.(CP);\ne4.spawn(\"mp\", []);\nconst e5 = (load<F>)?.(CPS[0]);\ne5.spawn(\"bd\", []);\n",
+      "sm-entry-assigned": "import { createRequire } from \"node:module\";\nlet late;\nlate = createRequire(import.meta.url);\nconst CP = \"node:child_process\";\nconst CPS = [\"child_process\"];\nconst e1 = late(\"node:child_process\");\ne1.spawn(\"rf\", []);\nconst e2 = late(`node:child_process`);\ne2.spawn(\"hx\", []);\nconst e3 = late(flag ? \"node:child_process\" : \"child_process\");\ne3.spawn(\"git\", []);\nconst e4 = late(CP);\ne4.spawn(\"mp\", []);\nconst e5 = late(CPS[0]);\ne5.spawn(\"bd\", []);\n"
     },
     "scriptForms": {
       "view.tsx": "import * as cp from \"node:child_process\";\nexport const view = <b>{cp.spawn(\"rf\", [])}</b>;\n",
@@ -3180,6 +3575,124 @@
         "parenthesized-loader-specifier",
         "two-argument-loader-specifier",
         "instantiated-loader-specifier"
+      ],
+      "F-SPELLING-MATRIX": [
+        "w-gp9-x1-optcall-prop-constcmd",
+        "t-gp9-x1-optcall-prop-literal",
+        "w-gp9-x2-targs-prop-constcmd",
+        "t-gp9-x2-targs-prop-literal",
+        "w-gp9-x3-optcall-inst-constcmd",
+        "t-gp9-x3-optcall-inst-literal",
+        "w-gp9-x4-optprop-constcmd",
+        "t-gp9-x4-optprop-literal",
+        "w-gp9-x5-tplkey-constcmd",
+        "t-gp9-x5-tplkey-literal",
+        "w-gp9-x6-optstrkey-constcmd",
+        "t-gp9-x6-optstrkey-literal",
+        "w-gp9-x7-optcall-prop-memberrecv",
+        "t-gp9-x7-optcall-prop-namerecv",
+        "w-gp9-x8-targs-prop-memberrecv",
+        "t-gp9-x8-targs-prop-namerecv",
+        "w-gp9-y1-held-targs-constcmd",
+        "t-gp9-y1-held-targs-literal",
+        "w-gp9-y2-bound-optcall-constcmd",
+        "t-gp9-y2-bound-optcall-literal",
+        "w-gp9-y3-held-optprop-constcmd",
+        "t-gp9-y3-held-optprop-literal",
+        "w-gp9-m06-held-key-nonnull",
+        "t-gp9-m06-held-key-plain",
+        "w-gp9-m06b-held-constkey-nonnull",
+        "sm-launch-name",
+        "sm-launch-prop-name",
+        "sm-launch-prop-member",
+        "sm-launch-prop-paren-name",
+        "sm-launch-prop-paren-member",
+        "sm-launch-prop-as-name",
+        "sm-launch-prop-as-member",
+        "sm-launch-prop-sat-name",
+        "sm-launch-prop-sat-member",
+        "sm-launch-prop-ta-name",
+        "sm-launch-prop-ta-member",
+        "sm-launch-prop-nn-name",
+        "sm-launch-prop-nn-member",
+        "sm-launch-prop-inst-name",
+        "sm-launch-prop-inst-member",
+        "sm-launch-optprop-name",
+        "sm-launch-optprop-member",
+        "sm-launch-strkey-name",
+        "sm-launch-strkey-member",
+        "sm-launch-tplkey-name",
+        "sm-launch-tplkey-member",
+        "sm-launch-optstrkey-name",
+        "sm-launch-optstrkey-member",
+        "sm-launch-optcall-prop-name",
+        "sm-launch-optcall-prop-member",
+        "sm-launch-optcall-inst-name",
+        "sm-launch-optcall-inst-member",
+        "sm-launch-optcall-inst-paren-name",
+        "sm-launch-optcall-inst-paren-member",
+        "sm-launch-targs-prop-name",
+        "sm-launch-targs-prop-member",
+        "sm-held-bound",
+        "sm-held-member",
+        "sm-held-optprop",
+        "sm-held-paren-inst",
+        "sm-held-strkey",
+        "sm-held-tplkey",
+        "sm-held-optstrkey",
+        "sm-held-bound-optcall",
+        "sm-held-bound-optcall-inst",
+        "sm-held-member-targs",
+        "sm-key-string",
+        "sm-key-template",
+        "sm-key-const",
+        "sm-load-import",
+        "sm-load-require",
+        "sm-load-require-paren",
+        "sm-load-require-paren-as",
+        "sm-load-require-optcall",
+        "sm-load-require-optcall-inst",
+        "sm-load-require-optcall-inst-paren",
+        "sm-load-require-targs",
+        "sm-load-prop-require",
+        "sm-load-prop-builtin",
+        "sm-load-elem-require",
+        "sm-load-result",
+        "sm-load-result-paren",
+        "sm-load-result-as",
+        "sm-load-result-sat",
+        "sm-load-result-ta",
+        "sm-load-result-nn",
+        "sm-load-result-inst",
+        "sm-load-result-optcall",
+        "sm-load-result-optcall-inst",
+        "sm-load-result-optcall-inst-paren",
+        "sm-load-factory-paren",
+        "sm-load-factory-optcall",
+        "sm-load-factory-targs",
+        "sm-load-factory-optcall-inst",
+        "sm-load-factory-prop",
+        "sm-load-factory-elem",
+        "sm-load-factory-two-arguments",
+        "sm-load-bound",
+        "sm-load-bound-paren-as",
+        "sm-load-bound-optcall-inst",
+        "sm-load-bound-optcall-inst-paren",
+        "sm-load-assigned",
+        "sm-entry-import",
+        "sm-entry-require",
+        "sm-entry-require-paren",
+        "sm-entry-require-optcall",
+        "sm-entry-require-optcall-inst",
+        "sm-entry-require-optcall-inst-paren",
+        "sm-entry-require-targs",
+        "sm-entry-elem-require",
+        "sm-entry-prop-builtin",
+        "sm-entry-result",
+        "sm-entry-bound",
+        "sm-entry-bound-optcall-inst",
+        "sm-entry-bound-optcall-inst-paren",
+        "sm-entry-assigned"
       ]
     },
     "residuals": {
@@ -3835,7 +4348,11 @@
       "refusal2u2": "U2-MEDIUM-CONFIRMED-R514-R515-R668-TARGET-THROUGH-WRAPPERS-WIDER-THAN-PINS-",
       "ruling254": "ORCHESTRATOR RULING R-B254 (",
       "refusal3u1": "- U1-HIGH-CONFIRMED-R514-R515-R668-OUTERMOST-CLASS-FALSE-EQUIVALENTS-INSTANTIATION-THEN-OPTIONAL-CALL-",
-      "refusal3u2": "- U2-MEDIUM-CONFIRMED-R514-R515-R668-OUTERMOST-CLASS-FALSE-EQUIVALENT-INSTANTIATION-THEN-OPTIONAL-CALL-"
+      "refusal3u2": "- U2-MEDIUM-CONFIRMED-R514-R515-R668-OUTERMOST-CLASS-FALSE-EQUIVALENT-INSTANTIATION-THEN-OPTIONAL-CALL-",
+      "refusal5u1": "U1 HIGH (rule 16 LEG 2, R514/R515/R668 claims wider than pins, REALIZED fail-open): ",
+      "refusal5u2": "U2 HIGH (rule 16 LEG 2, same class, REALIZED fail-open): ",
+      "refusal5u3": "U3 LOW (rule 16 LEG 2, same class, REALIZED, fail-closed): ",
+      "refusal5u4": "U4 LOW (rule 16 LEG 2, same class, REALIZED, fail-closed): "
     },
     "carriedCounts": {
       "reachForms": 139,
@@ -3999,6 +4516,7 @@
     "F-OPTIONAL-CHAINS",
     "F-OUTERMOST-WRAPPERS",
     "F-SPECIFIER-SLOTS",
+    "F-SPELLING-MATRIX",
     "F-PLANTED",
     "F-SCRIPTS",
     "P-VALUE",
@@ -7005,6 +7523,1586 @@
               "tracer spawn <expression>",
               "union spawn <expression>",
               "io require"
+            ]
+          }
+        },
+        {
+          "id": "F-SPELLING-MATRIX",
+          "witness": {
+            "w-gp9-x1-optcall-prop-constcmd": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x1-optcall-prop-literal": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x2-targs-prop-constcmd": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x2-targs-prop-literal": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x3-optcall-inst-constcmd": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x3-optcall-inst-literal": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x4-optprop-constcmd": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x4-optprop-literal": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x5-tplkey-constcmd": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x5-tplkey-literal": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x6-optstrkey-constcmd": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x6-optstrkey-literal": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x7-optcall-prop-memberrecv": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x7-optcall-prop-namerecv": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-x8-targs-prop-memberrecv": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp9-x8-targs-prop-namerecv": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp9-y1-held-targs-constcmd": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp9-y1-held-targs-literal": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp9-y2-bound-optcall-constcmd": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp9-y2-bound-optcall-literal": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp9-y3-held-optprop-constcmd": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp9-y3-held-optprop-literal": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp9-m06-held-key-nonnull": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp9-m06-held-key-plain": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp9-m06b-held-constkey-nonnull": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "sm-launch-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-paren-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-paren-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-as-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-as-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-sat-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-sat-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-ta-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-ta-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-nn-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-nn-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-inst-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-prop-inst-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optprop-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optprop-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-strkey-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-strkey-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-tplkey-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-tplkey-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optstrkey-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optstrkey-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-prop-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-prop-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-inst-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-inst-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-inst-paren-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-optcall-inst-paren-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-targs-prop-name": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-launch-targs-prop-member": [
+              "named exec rf",
+              "named exec hx",
+              "named exec forge|git",
+              "named exec mp",
+              "named exec bd",
+              "union exec rf",
+              "union exec hx",
+              "union exec forge|git",
+              "union exec mp",
+              "union exec bd"
+            ],
+            "sm-held-bound": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-member": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-optprop": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-paren-inst": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-strkey": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-tplkey": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-optstrkey": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-bound-optcall": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-bound-optcall-inst": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-held-member-targs": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer spawn forge|git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn forge|git",
+              "named spawn mp",
+              "named spawn bd",
+              "union spawn rf",
+              "union spawn hx",
+              "union spawn forge|git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-key-string": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "named spawn rf",
+              "named spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf"
+            ],
+            "sm-key-template": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "named spawn rf",
+              "named spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf"
+            ],
+            "sm-key-const": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "tracer spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf",
+              "union spawn rf"
+            ],
+            "sm-load-import": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-require": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-paren": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-paren-as": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-optcall": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-optcall-inst": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-optcall-inst-paren": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-require-targs": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-load-prop-require": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io module",
+              "io module",
+              "io module",
+              "io module",
+              "io module"
+            ],
+            "sm-load-prop-builtin": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule"
+            ],
+            "sm-load-elem-require": [
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed",
+              "io module",
+              "io module",
+              "io module",
+              "io module",
+              "io module"
+            ],
+            "sm-load-result": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-paren": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-as": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-sat": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-ta": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-nn": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-inst": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-optcall": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-optcall-inst": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-result-optcall-inst-paren": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-paren": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-optcall": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-targs": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-optcall-inst": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-prop": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-elem": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-factory-two-arguments": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-bound": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-bound-paren-as": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-bound-optcall-inst": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-bound-optcall-inst-paren": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-load-assigned": [
+              "specifier node:module",
+              "specifier pkg-string",
+              "specifier pkg-template",
+              "specifier pkg-false",
+              "specifier pkg-true",
+              "specifier pkg-const",
+              "specifier pkg-indexed"
+            ],
+            "sm-entry-import": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-entry-require": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-require-paren": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-require-optcall": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-require-optcall-inst": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-require-optcall-inst-paren": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-require-targs": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io require",
+              "io require",
+              "io require",
+              "io require",
+              "io require"
+            ],
+            "sm-entry-elem-require": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "io module",
+              "io module",
+              "io module",
+              "io module",
+              "io module"
+            ],
+            "sm-entry-prop-builtin": [
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule",
+              "process process.getBuiltinModule"
+            ],
+            "sm-entry-result": [
+              "specifier node:module",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-entry-bound": [
+              "specifier node:module",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-entry-bound-optcall-inst": [
+              "specifier node:module",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-entry-bound-optcall-inst-paren": [
+              "specifier node:module",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
+            ],
+            "sm-entry-assigned": [
+              "specifier node:module",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "specifier node:child_process",
+              "specifier node:child_process",
+              "specifier child_process",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "tracer spawn hx",
+              "tracer <string> <untraced>",
+              "tracer <string> <untraced>",
+              "tracer spawn git",
+              "tracer spawn mp",
+              "tracer spawn bd",
+              "named spawn rf",
+              "named spawn hx",
+              "named spawn git",
+              "named spawn mp",
+              "named spawn bd",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn rf",
+              "union spawn hx",
+              "union <string> <untraced>",
+              "union <string> <untraced>",
+              "union spawn git",
+              "union spawn mp",
+              "union spawn bd"
             ]
           }
         },
