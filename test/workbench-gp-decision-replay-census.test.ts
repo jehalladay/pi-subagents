@@ -171,18 +171,20 @@
  *    and reds S1b (L-WIDEMARKER, L-TABMARKER), and any other whitespace edit of those two lines is NOT CLAIMED, below). LATER (the
  *    one re-measurement so far, wb-rdlh.4's): S1b's anchor names one later pair, after (the whole source line of the pin
  *    section's eighth and last bullet, its list marker "-" and the one space after it included) and line (clause (d)'s whole
- *    bullet line), which the real HEAD page carries one right after the other; the pin's page holds no such pair, and S2b names
+ *    bullet line, its list marker to the end of its text, so the page's next line is no part of it), which the real HEAD page
+ *    carries one right after the other; the pin's page holds no such pair, and S2b names
  *    none (its later and pin readings are "none" and it has no later plant). laterPin holds after's text with its list marker
  *    dropped (sourceOf) as the source of the eighth of the pin section's eight list items, and the pin page's own later reading
  *    "missing" (8/8:missing); it holds no list marker, so after's list marker and its one space are held by L-WIDEMARKER and
  *    L-TABMARKER below, where a reading of after's text without its marker would read "holds". setAside and laterReading read
  *    that pair in a page's whole text, never in a section: the later reading is "holds" when the text holds after's text, a line
- *    feed, line's text and a line feed exactly once, and "missing" when it holds them none or more than once; setAside drops
- *    line's text and its line feed from that one occurrence when the reading holds and keeps the page as it is when not, and
- *    every HEAD reading of S1b below is taken on the real HEAD page so set aside. S1b pins the real page's later reading as
- *    "holds", so a page that reads "missing" reds S1b. Where on a page the pair sits is NOT CLAIMED by this census, so neither is
+ *    feed, line's text and a line feed exactly once, case for case, and "missing" when it holds them none or more than once;
+ *    setAside drops line's text and its line feed from that one occurrence when the reading holds and keeps the page as it is
+ *    when not, and every HEAD reading of S1b below is taken on the real HEAD page so set aside. S1b pins the real page's later
+ *    reading as "holds", so a page that reads "missing" reds S1b. Where on a page the pair sits is NOT CLAIMED by this census,
+ *    so neither is
  *    clause (d)'s placement in the section (the cac census D1, the wb-gs2.3 census AC1 and the section-source census BASELINE
- *    hold it). Twelve in-memory LATER_PLANTS over the real HEAD page pin those readings, each named by the words it pins, and
+ *    hold it). Fifteen in-memory LATER_PLANTS over the real HEAD page pin those readings, each named by the words it pins, and
  *    what setAside makes of each planted page. A page's whole text, never a section: the pair moved out of the section into a
  *    code fence at the page's end (L-FENCE, the gate's L-G11), as list lines under the page's last section (L-LAST, the gate's
  *    L-G12), as list lines just before the section's heading (L-BEFORE) or as list lines just before the page's first level-2
@@ -192,13 +194,23 @@
  *    end of after's line, a blank line and line's line (L-GAPCOPY, the gate's W21-GAPCOPY), or of after's line and line's line
  *    with more text after line's text on its line (L-NOTRAILCOPY, the gate's W21-NOTRAILCOPY), each reads "holds" with the real
  *    pair's line dropped, neither copy being a second pair. Exactly once: the pair kept with a fenced copy of it at the page's
- *    end (L-DOUBLED) and the page without clause (d)'s line (L-PARKED) each read "missing" with the page kept. A line feed: the
- *    page with every line feed written CRLF (L-CRLF) reads "missing" with the page kept. After's list marker and its
+ *    end (L-DOUBLED) and the page without clause (d)'s line (L-PARKED) each read "missing" with the page kept. Line's end, the
+ *    end of its own source line: the pair kept with a fenced copy at the page's end of the page's own two source lines of the
+ *    pair, the fence closing right after line's line feed (L-TIGHTCOPY, the gate's W22-DOUBLED-TIGHT; on the real HEAD page
+ *    the very page L-DOUBLED plants), reads "missing" with the page kept, and the page with the run of blank lines after line's
+ *    source line dropped (L-NOBLANK, the gate's W22-NOBLANK; a page with no blank line there drops nothing) reads "holds" with
+ *    line dropped. Case for case: the pair kept with a fenced copy at the page's end of those two source lines lowercased
+ *    (L-CASECOPY, the gate's W22-CASECOPY) reads "holds" with the real pair's line dropped, the copy being no second pair. A
+ *    line feed: the page with every line feed written CRLF (L-CRLF) reads "missing" with the page kept. After's list marker and its
  *    one space: the page with after's line written with three spaces after its list marker (L-WIDEMARKER, the gate's
  *    W21-WIDEMARKER) or with a tab after it (L-TABMARKER, the gate's W21-TABMARKER), clause (d)'s line right after it, each read
  *    "missing" with the page kept. L-INDENT, L-WIDEMARKER and L-TABMARKER edit the whole source line that holds after's text,
  *    found at the page's one pair, so each planted page is the gate's witness page whatever part of that line after's text
- *    spans. A later plant builds at its own sites on the real HEAD page (the pair, which the later reading needs exactly once
+ *    spans. L-TIGHTCOPY, L-NOBLANK and L-CASECOPY read the pair's two source lines from the page's own lines, that same whole
+ *    source line and the one after it (ownPair), never from line's literal, so a literal of line that runs on past the end of
+ *    its source line (into the blank line after it, or further) leaves their planted pages unchanged, while L-DOUBLED's copy,
+ *    built from the literals, moves with it.
+ *    A later plant builds at its own sites on the real HEAD page (the pair, which the later reading needs exactly once
  *    anyway; that whole source line, opening with "- " after at most three spaces of indent; the section's heading line,
  *    exactly once; the page's first level-2 heading line), so an edit of the page that leaves the pair holding while one of
  *    those sites stops occurring so reds S1b through that plant's needle-miss until it is re-measured; these reds are
@@ -267,7 +279,8 @@
  * where on a page the later pair sits, and so clause (d)'s placement in docs/12's section (LATER); a whitespace edit of the
  * later pair's two lines other than after's one-space indent (L-INDENT) and its list marker re-spaced with three spaces or a
  * tab (L-WIDEMARKER, L-TABMARKER), each line re-wrapped, re-spaced between its words or ended by a trailing run among them, and
- * after's list marker re-spaced otherwise (LATER); the seam's
+ * after's list marker re-spaced otherwise (LATER); the later pair at a page's very end, line's text with no line feed after it
+ * (LATER); the seam's
  * actual shape (the decision host above is this census's reading); the Furnace design text the filing cites (decisions:11,
  * README.md:25 and README.md:20 at Furnace 0f791db71b9d are outside this repository; only the slice-4 quote's four members are
  * held, to the fixtures); how many rows an admitted decision gets and whether a refusal keeps a row (R4's one row per decision,
@@ -985,7 +998,7 @@ interface DocsAnchor {
   readonly line: number;
   readonly marker: string;
   readonly carrier: string;
-  /** The later pair (LATER): after, the whole source line of a bullet of the pin's section (its list marker and the one space after it included), and line, the whole source line the real HEAD page carries right after it; setAside and laterReading read the pair in a page's whole text, never in a section. */
+  /** The later pair (LATER): after, the whole source line of a bullet of the pin's section (its list marker and the one space after it included), and line, the whole source line the real HEAD page carries right after it, to the end of its text; setAside and laterReading read the pair in a page's whole text, never in a section. */
   readonly later?: { readonly after: string; readonly line: string };
 }
 const DOCS_ANCHORS: readonly DocsAnchor[] = [
@@ -1139,6 +1152,19 @@ function markerSpaced(page: string, at: LaterSites, spacing: string): string {
   const { start, end } = afterLine(page, at);
   return `${page.slice(0, start)}${swap(page.slice(start, end), /^( {0,3})- (?=\S)/, `$1-${spacing}`)}${page.slice(end)}`;
 }
+/**
+ * The page's own two source lines of its one later pair: the whole source line that holds after's text (where afterLine finds
+ * it) and the source line right after it, read from the page's lines and never from line's literal, with the first one's index
+ * among those lines; a NeedleMiss unless the page holds the pair exactly once.
+ */
+function ownPair(page: string, at: LaterSites): { readonly lines: readonly string[]; readonly index: number; readonly copy: string } {
+  const lines = page.split("\n");
+  const index = page.slice(0, afterLine(page, at).start).split("\n").length - 1;
+  const own = lines[index];
+  const next = lines[index + 1];
+  if (own === undefined || next === undefined) throw new NeedleMiss("the later pair's two source lines do not occur in the page");
+  return { lines, index, copy: `${own}\n${next}\n` };
+}
 /** The page with a text inserted at the start of its first source line that opens a level-2 ATX heading (a NeedleMiss when none does). */
 function beforeFirstLevel2(page: string, text: string): string {
   const index = page.search(/^ {0,3}##[^\S\n]+\S/m);
@@ -1202,6 +1228,24 @@ const LATER_PLANTS: readonly LaterPlant[] = [
   },
   { id: "L-WIDEMARKER", anchor: "S1b", apply: (page, at) => ({ page: markerSpaced(page, at, "   ") }) },
   { id: "L-TABMARKER", anchor: "S1b", apply: (page, at) => ({ page: markerSpaced(page, at, "\t") }) },
+  { id: "L-TIGHTCOPY", anchor: "S1b", apply: (page, at) => ({ page: `${page}\n${FENCE}\n${ownPair(page, at).copy}${FENCE}\n` }) },
+  {
+    id: "L-NOBLANK", anchor: "S1b",
+    apply: (page, at) => {
+      const { lines, index } = ownPair(page, at);
+      const rest = lines.slice(index + 2);
+      const run = rest.findIndex(entry => !BLANK_LINE.test(entry));
+      const tail = rest.slice(run < 0 ? rest.length : run);
+      return { page: [...lines.slice(0, index + 2), ...tail].join("\n"), dropped: [...lines.slice(0, index + 1), ...tail].join("\n") };
+    },
+  },
+  {
+    id: "L-CASECOPY", anchor: "S1b",
+    apply: (page, at) => {
+      const copy = `\n${FENCE}\n${ownPair(page, at).copy.toLowerCase()}${FENCE}\n`;
+      return { page: `${page}${copy}`, dropped: `${parkedPage(page, at)}${copy}` };
+    },
+  },
 ];
 /** The prose items of a rendered section: each paragraph and each item of each list (a code block or an HTML block carries none). */
 const proseOf = (blocks: readonly RenderedBlock[]): readonly { readonly text: string; readonly markdown: string }[] =>
@@ -1218,7 +1262,7 @@ function setAside(text: string, anchor: DocsAnchor): string {
   const added = `${later.after}\n${later.line}\n`;
   return text.split(added).length === 2 ? text.replace(added, () => `${later.after}\n`) : text;
 }
-/** A docs anchor's later reading of a page's whole text: "holds" when the text holds after's text, a line feed, line's text and a line feed exactly once, "missing" when it holds them none or more than once, "none" for an anchor that names no later pair. */
+/** A docs anchor's later reading of a page's whole text: "holds" when the text holds after's text, a line feed, line's text and a line feed exactly once, case for case, "missing" when it holds them none or more than once, "none" for an anchor that names no later pair. */
 function laterReading(text: string, anchor: DocsAnchor): string {
   const later = anchor.later;
   if (later === undefined) return "none";
@@ -1831,7 +1875,7 @@ const PINS: Readonly<Record<string, () => void>> = {
       laterPlants: {
         "L-FENCE": "holds:dropped", "L-LAST": "holds:dropped", "L-BEFORE": "holds:dropped", "L-DOUBLED": "missing:kept", "L-PARKED": "missing:kept", "L-CRLF": "missing:kept",
         "L-PREAMBLE": "holds:dropped", "L-INDENT": "holds:dropped", "L-GAPCOPY": "holds:dropped", "L-NOTRAILCOPY": "holds:dropped", "L-WIDEMARKER": "missing:kept",
-        "L-TABMARKER": "missing:kept",
+        "L-TABMARKER": "missing:kept", "L-TIGHTCOPY": "missing:kept", "L-NOBLANK": "holds:dropped", "L-CASECOPY": "holds:dropped",
       },
       laterPin: "8/8:missing",
       variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading }, pjj: { pin: "closed", head: "closed" },
@@ -2039,7 +2083,7 @@ describe(SUITE, () => {
     expect(DOCS_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the docs plants").toEqual(["D1:S1b", "D2:S1b", "D3:S2b", "D4:S2b", "D5:S2b", "D6:S1b", "D7:S2b"]);
     expect(LATER_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the later plants").toEqual([
       "L-FENCE:S1b", "L-LAST:S1b", "L-BEFORE:S1b", "L-DOUBLED:S1b", "L-PARKED:S1b", "L-CRLF:S1b", "L-PREAMBLE:S1b", "L-INDENT:S1b", "L-GAPCOPY:S1b",
-      "L-NOTRAILCOPY:S1b", "L-WIDEMARKER:S1b", "L-TABMARKER:S1b",
+      "L-NOTRAILCOPY:S1b", "L-WIDEMARKER:S1b", "L-TABMARKER:S1b", "L-TIGHTCOPY:S1b", "L-NOBLANK:S1b", "L-CASECOPY:S1b",
     ]);
     expect({
       configs: CONFIG_PLANTS.map(([file, text]) => `${file}:${includesOf(text).join("+")}:${/\binclude:\[/.test(text) ? "unspaced" : "spaced"}`),
