@@ -51,7 +51,14 @@
  * mutant's id, each read as the delivered reader reads it and held byte for byte, and each K pin now holds every witness's first
  * as-written reading to its receiver, a '.' and the join its form's words say (K); AS-WRITTEN's row K words no longer describe
  * sub-forms - they name every K witness by its id and its key or index as its plant writes it, and claim each of the seven forms
- * at those keys and indexes alone, held to K_PLANTS by the judged set.
+ * at those keys and indexes alone, held to K_PLANTS by the judged set. Cut #8 (wb-u6ho respin 1: refusal #1's U1, U2 and U3,
+ * orchestrator ruling R-B531) gives the judged checks cut #7 added negative controls, the helper, every table, the claims and the
+ * kills still unchanged: the row K list check (kListContradictions), the wb-u6ho F1 line check (subLineContradictions) and KILLS'
+ * order check (killsOrderContradictions) take their inputs as parameters and return each contradiction they find; the judged set
+ * holds the real inputs to none, and the controls case holds each check to exactly the contradictions one edit of a real input
+ * makes - for every paired witness refusal #1's U1, U2 and U3 lines and its F5 line name (the tracker export: wb-u6ho's first notes
+ * lines with those prefixes), a control of that name in that witness's shape, beside further controls the case lists, which its
+ * frozen literal of the controls alone holds (no outside anchor names them, and no claim here names them).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -61,7 +68,12 @@
  * row K witness of the form, each a key or index of that form as the compiler reads it, one K pin per form. AS-WRITTEN's last
  * sentence names every row K witness, pin by pin in K_PLANTS' order, by its id and its key or index as its plant writes it (with
  * its receiver where that is not the claim probe's), and no other: the judged set holds those names to the plants as the compiler
- * reads them, and the claim probe's receivers to the ones the sentence names.
+ * reads them, and the claim probe's receivers to the ones the sentence names; the controls case holds that check
+ * (kListContradictions) to exactly the contradictions one edit of the clause or of K_PLANTS makes in the shape of each paired
+ * witness refusal #1 names for it: a receiver its plant writes in another case (W-RECV-UPPER) or with other white space
+ * (W-RECV-SPACED), the claim probe's receivers the clause names for a key (W-PROBE-KEY) and for an index (W-PROBE-INDEX), a name
+ * shortened (W-NAME-SHORT), two names swapped (W-NAME-SWAP), a name ending in '.' (W-NAME-DOT) and the list opened twice
+ * (W-MARK-TWICE).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness - every plant's findings,
  * its LIVE QUIET entries and the texts of its access and import readings, so bare()'s text is held byte for byte - held to the
@@ -137,11 +149,19 @@
  * are non-equivalent', in the line's order, each killed at its own witnesses' pin. Row K is wb-ft52's F1 line (its first
  * '[leads] - F1 LOW RIDES: ' notes line): its label the line's claim clause, KILLS holding after row W's survivors exactly the
  * gate mutants the line names, as many as it counts, and each witness the line pairs with a mutant - its id and the code it
- * spells - a plant of the K pin that mutant is killed at. wb-u6ho's F1 line (its first '[leads] - F1 LOW LEADS: ' notes line)
- * anchors row K's other witnesses: KILLS holds after row K's mutants exactly the gate mutants the line names before its control,
- * as many as it counts, then that control, and each witness the line pairs with one of them - the code it spells, with the
- * receiver it names - is the plant row K holds under that mutant's id, of the K pin the mutant is killed at. The TypeScript
- * compiler anchors T-TOKENS,
+ * spells - a plant of the K pin that mutant is killed at. wb-u6ho's F1 line (its first '[leads] - F1 LOW LEADS: ' notes line,
+ * the first notes line that starts with that prefix) anchors row K's other witnesses: KILLS holds after row K's mutants exactly
+ * the gate mutants the line names before its ' The control ' marker, as many as it counts (the number before ' gate-authored'),
+ * then the one id the line names from that marker on (its control, none of those mutants), and each witness the line pairs with
+ * one of them - the code it spells, with the receiver it names - is the plant row K holds under that mutant's id, of the K pin
+ * KILLS kills the mutant at. The controls case holds that check (subLineContradictions) to exactly the contradictions one edit of
+ * the line or of KILLS makes in the shape of each paired witness refusal #1 names for it: the count one lower (W-COUNT-15), the
+ * marker reworded (W-CONTROL-ITS), a mutant's paired receiver (W-CODE-RECV) and the control's (W-CTRL-RECV), a mutant killed at
+ * another pin (W-KILLED-ELSEWHERE) and a two-digit id beside the line (W-ID-TWODIGIT: none, GP2_ID reads one digit); KILLS'
+ * order check (killsOrderContradictions) to the first mutant at which the control moved before GP2-I2 makes the lines and KILLS
+ * differ (W-KILLS-ORDER); and firstLine to a decoy line with its prefix before line 2 (W-FIRST-DECOY). The paired witnesses
+ * refusal #1's U1, U2, U3 and F5 lines name (wb-u6ho's first notes lines with those prefixes) are exactly the controls named
+ * 'W-...'. The TypeScript compiler anchors T-TOKENS,
  * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
  * and for the identifier, private name and keyword classes, each comment run right after its own token in the compiler's token
@@ -1219,6 +1239,110 @@ function between(line: string, open: string, close: string): string {
   return from === -1 || to === -1 ? "" : line.slice(from + open.length, to);
 }
 
+// --------------------------------------------------------------------------------------------------------------- the judged checks
+/** Row K's plants in K_PLANTS' shape and the kills in KILLS' shape: the judged checks below take them as parameters, so the judged
+ * set hands each check its real inputs and the controls case one edit of them (wb-u6ho refusal #1's U1-U3: no negative control). */
+type KPlants = Readonly<Record<string, readonly [form: string, witnesses: Readonly<Record<string, string>>]>>;
+type Kills = Readonly<Record<string, readonly string[]>>;
+/** The first index at which two lists differ, either one's end included; undefined when they are equal. */
+function firstDiffering(left: readonly string[], right: readonly string[]): number | undefined {
+  for (let index = 0; index < Math.max(left.length, right.length); index += 1) if (left[index] !== right[index]) return index;
+  return undefined;
+}
+/** AS-WRITTEN's last sentence held to row K's plants (wb-u6ho's F1 line: row K's words stated sub-forms generically, wider than
+ * its pins). The clause opens its row K list once, after its marker; the list holds one part per K pin in the plants' order - the
+ * pin's id and a space, then its witnesses' names joined by ", ", the parts joined by "; " and a "." last; each name is the
+ * witness's id and its key or index as its plant writes it (the compiler's text of the plant's own node: firstKey), then " under "
+ * and the receiver its plant has (accessReceiver) unless that is, byte for byte, the claim probe's receiver the clause names for
+ * its form's site ("beside the claim probe's receiver, <a key's> for a key and <an index's> for an index"); no name holds the
+ * list's separators (", ", "; " or a "." last); no other pin, witness, key or index. Returns the contradictions: a list opened
+ * other than once, alone; else each name holding a separator, then the first part whose pin differs or else each pin's first
+ * name that differs. */
+function kListContradictions(asWritten: string, plants: KPlants): string[] {
+  const listMark = "no other key or index of those seven forms is claimed: ";
+  const marks = asWritten.split(listMark).length - 1;
+  if (marks !== 1) return [`AS-WRITTEN opens its row K list ${marks} times, not once`];
+  const probeReceivers = { key: between(asWritten, "beside the claim probe's receiver, ", " for a key"), index: between(asWritten, " for a key and ", " for an index") };
+  const planted = Object.entries(plants).map(([pin, [form, witnesses]]): [string, string[]] => [
+    pin,
+    Object.entries(witnesses).map(([id, plant]) => {
+      const receiver = accessReceiver(plant) ?? "";
+      const probe = KEY_JOINS[form]?.[0] === "elementReceiver" ? probeReceivers.key : probeReceivers.index;
+      return `${id} ${firstKey(plant)?.getText() ?? ""}${receiver === probe ? "" : ` under ${receiver}`}`;
+    }),
+  ]);
+  const separated = planted.flatMap(([pin, names]) => names.filter(name => name.includes(", ") || name.includes("; ") || name.endsWith(".")).map(name => `${pin} ${name}: the name holds the list's separators`));
+  const listed = asWritten
+    .slice(asWritten.indexOf(listMark) + listMark.length)
+    .replace(/\.$/, "")
+    .split("; ")
+    .map((part): [string, string[]] => [part.slice(0, part.indexOf(" ")), part.slice(part.indexOf(" ") + 1).split(", ")]);
+  const pinAt = firstDiffering(
+    listed.map(([pin]) => pin),
+    planted.map(([pin]) => pin),
+  );
+  if (pinAt !== undefined) return [...separated, `the list's part ${pinAt + 1} is ${listed[pinAt]?.[0] ?? "missing"} where K pin ${pinAt + 1} is ${planted[pinAt]?.[0] ?? "missing"}`];
+  return [
+    ...separated,
+    ...planted.flatMap(([pin, names], index) => {
+      const said = listed[index]?.[1] ?? [];
+      const at = firstDiffering(said, names);
+      return at === undefined ? [] : [`${pin}: the list names ${said[at] ?? "nothing"} where its plant writes ${names[at] ?? "nothing"}`];
+    }),
+  ];
+}
+/** The gate mutants wb-u6ho's F1 line names before its ' The control ' marker, and the ids it names from that marker on (its
+ * control); none of either when the line holds no marker. */
+function subLineIds(subLine: string): { readonly controlAt: number; readonly subMutants: string[]; readonly subControl: string[] } {
+  const controlAt = subLine.indexOf(" The control ");
+  if (controlAt === -1) return { controlAt, subMutants: [], subControl: [] };
+  return { controlAt, subMutants: idsIn(subLine.slice(0, controlAt), GP2_ID), subControl: idsIn(subLine.slice(controlAt), GP2_ID) };
+}
+/** wb-u6ho's F1 line held to row K and KILLS: the line holds its ' The control ' marker; it names before the marker as many gate
+ * mutants as it counts (the number between its first ". " and " gate-authored"); it names one id from the marker on, its control,
+ * none of those mutants; and each mutant and the control is paired with a witness - a mutant with the code after its clause's
+ * "): " (an optional "witness " between), the control with its "[...] under (...)" read as the receiver then the code - which the
+ * plant row K holds under that id spells, of a K pin KILLS kills it at. Returns the contradictions: a missing marker, alone; else
+ * the count's, the control's, each unpaired id's, then each paired id's. */
+function subLineContradictions(subLine: string, plants: KPlants, kills: Kills): string[] {
+  const { controlAt, subMutants, subControl } = subLineIds(subLine);
+  if (controlAt === -1) return ["wb-u6ho's F1 line holds no ' The control ' marker"];
+  const counted = Number(between(subLine, ". ", " gate-authored"));
+  const counts = subMutants.length === counted ? [] : [`wb-u6ho's F1 line names ${subMutants.length} mutants before its control and counts ${counted}`];
+  const controls = subControl.length === 1 && subControl.every(id => !subMutants.includes(id)) ? [] : [`wb-u6ho's F1 line names ${subControl.join(", ") || "no id"} from its control marker on, not one control beside its counted mutants`];
+  const subPaired = [
+    ...subMutants.map((mutant, index) => {
+      const from = subLine.indexOf(`${mutant} (`);
+      const next = subMutants[index + 1];
+      const end = next === undefined ? subLine.indexOf(" All ", from) : subLine.indexOf(`${next} (`, from);
+      const clause = subLine.slice(from, end === -1 ? undefined : end);
+      return { mutant, code: /\): (?:witness )?(\S*\[[^\]]*\])/.exec(clause)?.[1] ?? "" };
+    }),
+    ...subControl.map(mutant => {
+      const found = /(\[[^\]]*\]) under (\([^)]*\))/.exec(subLine.slice(subLine.indexOf(`${mutant} (`, controlAt)));
+      return { mutant, code: found === null ? "" : `${found[2]}${found[1]}` };
+    }),
+  ];
+  return [
+    ...counts,
+    ...controls,
+    ...subPaired.filter(({ code }) => code === "").map(({ mutant }) => `${mutant}: the line pairs it with no witness`),
+    ...subPaired.flatMap(({ mutant, code }) => {
+      const pin = Object.entries(plants).find(([, [, witnesses]]) => Object.hasOwn(witnesses, mutant))?.[0];
+      if (pin === undefined) return [`${mutant}: row K plants no witness under its id`];
+      const spelled = (plants[pin]?.[1][mutant] ?? "").includes(code) ? [] : [`${mutant}: ${pin}'s witness does not spell ${code}`];
+      return (kills[mutant] ?? []).includes(pin) ? spelled : [...spelled, `${mutant} is not killed at ${pin}`];
+    }),
+  ];
+}
+/** KILLS held to the mutants the tracker export's lines name, in their order and both ways: the first mutant at which the two
+ * lists differ, or none. */
+function killsOrderContradictions(named: readonly string[], kills: Kills): string[] {
+  const held = Object.keys(kills);
+  const at = firstDiffering(named, held);
+  return at === undefined ? [] : [`KILLS' mutant ${at + 1} is ${held[at] ?? "missing"} where the lines name ${named[at] ?? "none"}`];
+}
+
 // ------------------------------------------------------------------------------------------------------------------- the pins
 /** The M matrices' cells: each site, form and comment kind, its plant finding once (M-AFTER also checks the comment's place). */
 function matrixCells(table: Forms, afterTheDot: boolean): Json {
@@ -1493,29 +1617,12 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
     // AS-WRITTEN's last sentence (wb-u6ho's F1 line: row K's words stated sub-forms generically, wider than its pins): after its
     // marker, one part per K pin in K_PLANTS' order, naming every witness of the pin by its id and its key or index as its plant
     // writes it - read by the compiler from the plant's own node (firstKey) - with "under" and the receiver its plant has where that
-    // is not the claim probe's receiver the sentence names; no other witness, key or index.
-    const asWritten = CLAIMS["AS-WRITTEN"] ?? "";
-    const listMark = "no other key or index of those seven forms is claimed: ";
-    expect(asWritten.split(listMark).length - 1, "AS-WRITTEN opens its row K list once").toBe(1);
-    const probeReceivers = { key: between(asWritten, "beside the claim probe's receiver, ", " for a key"), index: between(asWritten, " for a key and ", " for an index") };
-    const planted = Object.entries(K_PLANTS).map(([pin, [form, witnesses]]): [string, string[]] => [
-      pin,
-      Object.entries(witnesses).map(([id, plant]) => {
-        const receiver = accessReceiver(plant) ?? "";
-        const probe = KEY_JOINS[form]?.[0] === "elementReceiver" ? probeReceivers.key : probeReceivers.index;
-        return `${id} ${firstKey(plant)?.getText() ?? ""}${receiver === probe ? "" : ` under ${receiver}`}`;
-      }),
-    ]);
+    // is not the claim probe's receiver the sentence names; no other witness, key or index (kListContradictions, which the controls
+    // case holds to each edit's contradictions).
     expect(
-      planted.flatMap(([, names]) => names.filter(name => name.includes(", ") || name.includes("; ") || name.endsWith("."))),
-      "no row K witness's name holds the list's separators",
+      kListContradictions(CLAIMS["AS-WRITTEN"] ?? "", K_PLANTS),
+      "AS-WRITTEN names every row K witness, pin by pin in K_PLANTS' order, by its id and its key or index as its plant writes it, and no other",
     ).toEqual([]);
-    const listed = asWritten
-      .slice(asWritten.indexOf(listMark) + listMark.length)
-      .replace(/\.$/, "")
-      .split("; ")
-      .map((part): [string, string[]] => [part.slice(0, part.indexOf(" ")), part.slice(part.indexOf(" ") + 1).split(", ")]);
-    expect(listed, "AS-WRITTEN names every row K witness, pin by pin in K_PLANTS' order, by its id and its key or index as its plant writes it, and no other").toEqual(planted);
 
     // The tracker export: this bead's title and description items, R-B156's note and refusal #5's lines in the parent's notes.
     const bead = exportRow(BEAD);
@@ -1589,46 +1696,20 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       }),
       "each witness wb-ft52's F1 line pairs with a mutant is a plant of the K pin that mutant is killed at, spelling its code",
     ).toEqual([]);
-    // wb-u6ho's F1 line: it names as many gate mutants before its control as it counts, KILLS holding them after row K's and then
-    // the control; and each witness it pairs with one of them - the code it spells, with the receiver it names - is the plant row
-    // K holds under that mutant's id, of the K pin KILLS kills the mutant at.
+    // wb-u6ho's F1 line: it names as many gate mutants before its ' The control ' marker as it counts, KILLS holding them after
+    // row K's and then the control; and each witness it pairs with one of them - the code it spells, with the receiver it names -
+    // is the plant row K holds under that mutant's id, of the K pin KILLS kills the mutant at (subLineContradictions; KILLS' order:
+    // killsOrderContradictions; the controls case holds both to each edit's contradictions).
     const subLine = firstLine(exportRow(SUB_CARRY).notes, "[leads] - F1 LOW LEADS: ");
-    const controlAt = subLine.indexOf(" The control ");
-    expect(controlAt, "wb-u6ho's F1 line names its control").toBeGreaterThan(-1);
-    const subMutants = idsIn(subLine.slice(0, controlAt), GP2_ID);
-    expect(subMutants.length, "wb-u6ho's F1 line names as many mutants as it counts, before its control").toBe(Number(between(subLine, ". ", " gate-authored")));
-    const subControl = idsIn(subLine.slice(controlAt), GP2_ID);
-    expect([subControl.length, subControl.filter(id => subMutants.includes(id))], "wb-u6ho's F1 line names one control, none of its counted mutants").toEqual([1, []]);
-    const subPaired = [
-      ...subMutants.map((mutant, index) => {
-        const from = subLine.indexOf(`${mutant} (`);
-        const next = subMutants[index + 1];
-        const end = next === undefined ? subLine.indexOf(" All ", from) : subLine.indexOf(`${next} (`, from);
-        const clause = subLine.slice(from, end === -1 ? undefined : end);
-        return { mutant, code: /\): (?:witness )?(\S*\[[^\]]*\])/.exec(clause)?.[1] ?? "" };
-      }),
-      ...subControl.map(mutant => {
-        const found = /(\[[^\]]*\]) under (\([^)]*\))/.exec(subLine.slice(subLine.indexOf(`${mutant} (`, controlAt)));
-        return { mutant, code: found === null ? "" : `${found[2]}${found[1]}` };
-      }),
-    ];
     expect(
-      subPaired.filter(({ code }) => code === "").map(({ mutant }) => mutant),
-      "wb-u6ho's F1 line pairs every mutant it names and its control with a witness",
+      subLineContradictions(subLine, K_PLANTS, KILLS),
+      "wb-u6ho's F1 line names its counted mutants and its control, each paired with the plant row K holds under its id, of the K pin it is killed at",
     ).toEqual([]);
+    const { subMutants, subControl } = subLineIds(subLine);
     expect(
-      subPaired.flatMap(({ mutant, code }) => {
-        const pin = Object.entries(K_PLANTS).find(([, [, witnesses]]) => Object.hasOwn(witnesses, mutant))?.[0];
-        if (pin === undefined) return [`${mutant}: row K plants no witness under its id`];
-        const spelled = (K_PLANTS[pin]?.[1][mutant] ?? "").includes(code) ? [] : [`${mutant}: ${pin}'s witness does not spell ${code}`];
-        return (KILLS[mutant] ?? []).includes(pin) ? spelled : [...spelled, `${mutant} is not killed at ${pin}`];
-      }),
-      "each witness wb-u6ho's F1 line pairs with a mutant or its control is the plant row K holds under that id, spelling its code, of the K pin the mutant is killed at",
-    ).toEqual([]);
-    expect(
-      [...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g), ...survivors, ...keyMutants, ...subMutants, ...subControl],
+      killsOrderContradictions([...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g), ...survivors, ...keyMutants, ...subMutants, ...subControl], KILLS),
       "KILLS holds exactly the mutants R-B156, the F4 line and the three F1 lines name, wb-u6ho's control last",
-    ).toEqual(Object.keys(KILLS));
+    ).toEqual([]);
     expect(
       Object.entries(KILLS).flatMap(([mutant, killers]) => (killers.length === 0 ? [mutant] : [])),
       "every mutant KILLS holds is killed at a pin",
@@ -1711,6 +1792,207 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
         .map(([where]) => where),
       "every code plant parses without a syntax diagnostic",
     ).toEqual([]);
+  });
+
+  it("the judged set's controls: each judged check reports, for one edit of its real input in a witness's shape, exactly that edit's contradictions", { timeout: 60_000 }, () => {
+    const asWritten = CLAIMS["AS-WRITTEN"] ?? "";
+    const notes = exportRow(SUB_CARRY).notes;
+    const prefix = "[leads] - F1 LOW LEADS: ";
+    const subLine = firstLine(notes, prefix);
+    /** A text with its one occurrence of a part replaced (a control whose part is not there exactly once fails, never passes empty). */
+    const edited = (text: string, part: string, replacement: string): string => {
+      expect(text.split(part).length - 1, `a control's part occurs once: ${part}`).toBe(1);
+      return text.replace(part, () => replacement);
+    };
+    /** K_PLANTS with one pin's witnesses changed. */
+    const replanted = (pin: string, change: (witnesses: [string, string][]) => [string, string][]): KPlants =>
+      Object.fromEntries(
+        Object.entries(K_PLANTS).map(([name, [form, witnesses]]): [string, readonly [string, Readonly<Record<string, string>>]] => [
+          name,
+          [form, name === pin ? Object.fromEntries(change(Object.entries(witnesses))) : witnesses],
+        ]),
+      );
+    /** One planted witness's plant replaced (the witness must be planted). */
+    const swapped = (pin: string, id: string, plant: string): KPlants => {
+      expect(Object.hasOwn(K_PLANTS[pin]?.[1] ?? {}, id), `${pin} plants ${id}`).toBe(true);
+      return replanted(pin, witnesses => witnesses.map(([name, text]): [string, string] => [name, name === id ? plant : text]));
+    };
+    /** A witness added right after a planted one. */
+    const added = (pin: string, after: string, id: string, plant: string): KPlants => {
+      expect(Object.hasOwn(K_PLANTS[pin]?.[1] ?? {}, after), `${pin} plants ${after}`).toBe(true);
+      return replanted(pin, witnesses => witnesses.flatMap(([name, text]): [string, string][] => (name === after ? [[name, text], [id, plant]] : [[name, text]])));
+    };
+    // the row K list check (refusal #1's U1: the receivers; U2: the names, their order and the separators)
+    const listControls: readonly (readonly [control: string, clause: string, plants: KPlants, contradictions: readonly string[]])[] = [
+      ["W-RECV-UPPER", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "(Context.inner)")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (Context.inner)"]],
+      ["W-RECV-SPACED", asWritten, swapped("K-NUMBER-TYPE", "L1", "export type Value = Opts< Context.Inner>[0];\n"), ["K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts< Context.Inner>"]],
+      ["RECV-AROUND", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "((context.inner))")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under ((context.inner))"]],
+      ["RECV-AFTER", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "(context.inner).x")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner).x"]],
+      ["RECV-INSIDE", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "context.inner")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under context.inner"]],
+      [
+        "W-PROBE-KEY",
+        edited(asWritten, "(context.inner) for a key", "(context.outer) for a key"),
+        K_PLANTS,
+        [
+          "K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)",
+          'K-CONCATENATION: the list names C1 "de" + "mand" where its plant writes C1 "de" + "mand" under (context.inner)',
+          "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)",
+          "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)",
+        ],
+      ],
+      [
+        "W-PROBE-INDEX",
+        edited(asWritten, "Opts<Context.Inner> for an index", "Opts<Context.Outer> for an index"),
+        K_PLANTS,
+        [
+          'K-PARENTHESIZED: the list names P1 ("demand") where its plant writes P1 ("demand") under Opts<Context.Inner>',
+          "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>",
+          "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
+        ],
+      ],
+      ["W-NAME-SHORT", edited(asWritten, "T4 `dem and`", "T4 `dem`"), K_PLANTS, ["K-TEMPLATE: the list names T4 `dem` where its plant writes T4 `dem and`"]],
+      ["W-NAME-SWAP", edited(asWritten, "T1 `demand`, T2 `de\\x6dand`", "T2 `de\\x6dand`, T1 `demand`"), K_PLANTS, ["K-TEMPLATE: the list names T2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["NAME-ADDED", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand, R7 Other."), K_PLANTS, ["K-TYPE-REFERENCE: the list names R7 Other where its plant writes nothing"]],
+      ["NAME-DROPPED", edited(asWritten, ", GP2-R2 demand.", "."), K_PLANTS, ["K-TYPE-REFERENCE: the list names nothing where its plant writes GP2-R2 demand"]],
+      ["PIN-RENAMED", edited(asWritten, "; K-TYPE-REFERENCE R1 Key", "; K-TYPE-REF R1 Key"), K_PLANTS, ["the list's part 7 is K-TYPE-REF where K pin 7 is K-TYPE-REFERENCE"]],
+      ["W-NAME-DOT", edited(asWritten, "N8 .5, GP2-N1", "N8 .5, N9 1., GP2-N1"), added("K-NUMBER", "N8", "N9", keyPlant("1.")), ["K-NUMBER N9 1.: the name holds the list's separators"]],
+      [
+        "NAME-COMMA",
+        edited(asWritten, "GP2-T3 `demand now`;", "GP2-T3 `demand now`, T9 `de, mand`;"),
+        added("K-TEMPLATE", "GP2-T3", "T9", keyPlant("`de, mand`")),
+        ["K-TEMPLATE T9 `de, mand`: the name holds the list's separators", "K-TEMPLATE: the list names T9 `de where its plant writes T9 `de, mand`"],
+      ],
+      [
+        "NAME-SEMICOLON",
+        edited(asWritten, "GP2-T3 `demand now`;", "GP2-T3 `demand now`, T9 `de; mand`;"),
+        added("K-TEMPLATE", "GP2-T3", "T9", keyPlant("`de; mand`")),
+        ["K-TEMPLATE T9 `de; mand`: the name holds the list's separators", "the list's part 2 is mand where K pin 2 is K-CONCATENATION"],
+      ],
+      ["W-MARK-TWICE", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand. Again, no other key or index of those seven forms is claimed: none."), K_PLANTS, ["AS-WRITTEN opens its row K list 2 times, not once"]],
+      ["MARK-MISSING", edited(asWritten, "is claimed: K-TEMPLATE", "is held: K-TEMPLATE"), K_PLANTS, ["AS-WRITTEN opens its row K list 0 times, not once"]],
+    ];
+    expect(kListContradictions(asWritten, K_PLANTS), "the row K list check reads no contradiction in the real clause and plants").toEqual([]);
+    for (const [control, clause, plants, contradictions] of listControls) expect(kListContradictions(clause, plants), `${control}: the row K list check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // the wb-u6ho F1 line check (refusal #1's U3: the line's count, its control marker and its pairs; its F5: the id form)
+    const lineControls: readonly (readonly [control: string, line: string, plants: KPlants, kills: Kills, contradictions: readonly string[]])[] = [
+      ["W-COUNT-15", edited(subLine, ". 16 gate-authored", ". 15 gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 15"]],
+      ["COUNT-17", edited(subLine, ". 16 gate-authored", ". 17 gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 17"]],
+      ["W-CONTROL-ITS", edited(subLine, " The control GP2-I1", " Its control GP2-I1"), K_PLANTS, KILLS, ["wb-u6ho's F1 line holds no ' The control ' marker"]],
+      ["CONTROL-WORD", edited(subLine, "joins as its name): [demand]", "joins as its name, no control word): [demand]"), K_PLANTS, KILLS, []],
+      [
+        "MARKER-TWICE",
+        edited(subLine, "joins as its name): [demand]", "joins as its name, as The control word says): [demand]"),
+        K_PLANTS,
+        KILLS,
+        [
+          "wb-u6ho's F1 line names GP2-I2, GP2-R1, GP2-R2, GP2-I1 from its control marker on, not one control beside its counted mutants",
+          "GP2-I2: the line pairs it with no witness",
+          "GP2-R1: the line pairs it with no witness",
+          "GP2-R2: the line pairs it with no witness",
+        ],
+      ],
+      ["W-CODE-RECV", edited(subLine, "witness (demand.inner)[`context`]", "witness (other.inner)[`context`]"), K_PLANTS, KILLS, ["GP2-T1: K-TEMPLATE's witness does not spell (other.inner)[`context`]"]],
+      ["CODE-KEY", edited(subLine, "[`\\x64emand`]", "[`\\x65emand`]"), K_PLANTS, KILLS, ["GP2-T2: K-TEMPLATE's witness does not spell [`\\x65emand`]"]],
+      ["W-CTRL-RECV", edited(subLine, "[context] under (demand.inner)", "[context] under (other.inner)"), K_PLANTS, KILLS, ["GP2-I1: K-IDENTIFIER's witness does not spell (other.inner)[context]"]],
+      ["CONTROL-KEY", edited(subLine, "[context] under (demand.inner)", "[contexts] under (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: K-IDENTIFIER's witness does not spell (demand.inner)[contexts]"]],
+      [
+        "CONTROL-COUNTED",
+        edited(subLine, " The control GP2-I1 (", " The control GP2-T1 ("),
+        K_PLANTS,
+        KILLS,
+        ["wb-u6ho's F1 line names GP2-T1 from its control marker on, not one control beside its counted mutants", "GP2-T1: K-TEMPLATE's witness does not spell (demand.inner)[context]"],
+      ],
+      [
+        "CONTROL-SECOND",
+        edited(subLine, "'another ... name' and is not counted", "'another ... name' beside GP2-X9 and is not counted"),
+        K_PLANTS,
+        KILLS,
+        ["wb-u6ho's F1 line names GP2-I1, GP2-X9 from its control marker on, not one control beside its counted mutants", "GP2-X9: the line pairs it with no witness", "GP2-X9: row K plants no witness under its id"],
+      ],
+      ["UNPAIRED", edited(subLine, "joins as its value): [0xff]", "joins as its value): 0xff"), K_PLANTS, KILLS, ["GP2-N1: the line pairs it with no witness"]],
+      ["UNPLANTED", subLine, replanted("K-TEMPLATE", witnesses => witnesses.filter(([id]) => id !== "GP2-T2")), KILLS, ["GP2-T2: row K plants no witness under its id"]],
+      ["W-KILLED-ELSEWHERE", subLine, K_PLANTS, { ...KILLS, "GP2-T2": ["K-CONCATENATION"] }, ["GP2-T2 is not killed at K-TEMPLATE"]],
+      ["W-ID-TWODIGIT", edited(subLine, "All 16 are hypothetical", "All 16 (and none of GP2-X12) are hypothetical"), K_PLANTS, KILLS, []],
+    ];
+    expect(subLineContradictions(subLine, K_PLANTS, KILLS), "the wb-u6ho line check reads no contradiction in the real line, plants and kills").toEqual([]);
+    for (const [control, line, plants, kills, contradictions] of lineControls) expect(subLineContradictions(line, plants, kills), `${control}: the wb-u6ho line check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // KILLS' order check (refusal #1's U3: KILLS held as a set): the lines name KILLS' own order, as the judged set holds
+    const named = Object.keys(KILLS);
+    const moved = Object.fromEntries(Object.entries(KILLS).flatMap(([mutant, pins]): [string, readonly string[]][] => (mutant === "GP2-I1" ? [] : mutant === "GP2-I2" ? [["GP2-I1", KILLS["GP2-I1"] ?? []], [mutant, pins]] : [[mutant, pins]])));
+    const killsControls: readonly (readonly [control: string, kills: Kills, contradictions: readonly string[]])[] = [
+      ["W-KILLS-ORDER", moved, ["KILLS' mutant 40 is GP2-I1 where the lines name GP2-I2"]],
+      ["KILLS-DROPPED", Object.fromEntries(Object.entries(KILLS).filter(([mutant]) => mutant !== "GP2-I1")), ["KILLS' mutant 48 is missing where the lines name GP2-I1"]],
+      ["KILLS-ADDED", { ...KILLS, "GP2-X9": ["K-TEMPLATE"] }, ["KILLS' mutant 49 is GP2-X9 where the lines name none"]],
+    ];
+    expect(killsOrderContradictions(named, KILLS), "KILLS' order check reads no contradiction in KILLS' own order").toEqual([]);
+    for (const [control, kills, contradictions] of killsControls) expect(killsOrderContradictions(named, kills), `${control}: KILLS' order check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // firstLine (refusal #1's U3: the line read as the LAST one with its prefix)
+    const lines = notes.split("\n");
+    const decoy = `${prefix}a decoy leads line.`;
+    const firstControls: readonly (readonly [control: string, text: string, first: string])[] = [
+      ["W-FIRST-DECOY", [lines[0] ?? "", decoy, ...lines.slice(1)].join("\n"), decoy],
+      ["FIRST-INSIDE", [`${lines[0] ?? ""} ${decoy}`, ...lines.slice(1)].join("\n"), subLine],
+      ["FIRST-NONE", lines.filter(line => !line.startsWith(prefix)).join("\n"), ""],
+    ];
+    expect([subLine.startsWith(prefix), lines.indexOf(subLine)], "firstLine reads wb-u6ho's notes line 2, the first with the prefix").toEqual([true, 1]);
+    for (const [control, text, first] of firstControls) expect(firstLine(text, prefix), `${control}: firstLine reads the first line that starts with its prefix`).toBe(first);
+    // the controls' own shape, and the paired witnesses refusal #1's U1, U2, U3 and F5 lines name (wb-u6ho's first notes lines with
+    // those prefixes): exactly the controls named "W-..."
+    const controls = [...listControls.map(([control]) => control), ...lineControls.map(([control]) => control), ...killsControls.map(([control]) => control), ...firstControls.map(([control]) => control)];
+    expect(controls, "the controls, table by table").toEqual([
+      "W-RECV-UPPER",
+      "W-RECV-SPACED",
+      "RECV-AROUND",
+      "RECV-AFTER",
+      "RECV-INSIDE",
+      "W-PROBE-KEY",
+      "W-PROBE-INDEX",
+      "W-NAME-SHORT",
+      "W-NAME-SWAP",
+      "NAME-ADDED",
+      "NAME-DROPPED",
+      "PIN-RENAMED",
+      "W-NAME-DOT",
+      "NAME-COMMA",
+      "NAME-SEMICOLON",
+      "W-MARK-TWICE",
+      "MARK-MISSING",
+      "W-COUNT-15",
+      "COUNT-17",
+      "W-CONTROL-ITS",
+      "CONTROL-WORD",
+      "MARKER-TWICE",
+      "W-CODE-RECV",
+      "CODE-KEY",
+      "W-CTRL-RECV",
+      "CONTROL-KEY",
+      "CONTROL-COUNTED",
+      "CONTROL-SECOND",
+      "UNPAIRED",
+      "UNPLANTED",
+      "W-KILLED-ELSEWHERE",
+      "W-ID-TWODIGIT",
+      "W-KILLS-ORDER",
+      "KILLS-DROPPED",
+      "KILLS-ADDED",
+      "W-FIRST-DECOY",
+      "FIRST-INSIDE",
+      "FIRST-NONE",
+    ]);
+    const refused = [
+      "- U1-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-RECEIVER-WORDS-",
+      "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-NAME-ORDER-SEPARATOR-WORDS-",
+      "- U3-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-WB-U6HO-F1-LINE-ANCHOR-WORDS-",
+      "- F5 INFO: [record.prep F5 verbatim after this bracket; PREP grade INFO kept] F5 INFO (non-members among the census-local survivors).",
+    ].map(start => firstLine(notes, start));
+    expect(
+      refused.map(line => line !== ""),
+      "wb-u6ho's notes hold refusal #1's U1, U2, U3 and F5 lines",
+    ).toEqual([true, true, true, true]);
+    expect(
+      [...new Set(refused.flatMap(line => line.match(/\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? []))].sort(),
+      "the paired witnesses refusal #1's U1, U2, U3 and F5 lines name are exactly the controls named 'W-...'",
+    ).toEqual(controls.filter(control => control.startsWith("W-")).sort());
   });
 
   for (const row of ROWS) {

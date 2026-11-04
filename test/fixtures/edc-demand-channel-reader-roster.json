@@ -17502,6 +17502,7 @@
   ],
   "tests": [
     "the judged set: the frozen shape, the claims, the out-of-file roster, the tracker export and the compiler anchors agree",
+    "the judged set's controls: each judged check reports, for one edit of its real input in a witness's shape, exactly that edit's contradictions",
     "T-R1",
     "T-R3",
     "T-R1C",
