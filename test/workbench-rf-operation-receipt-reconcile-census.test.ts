@@ -155,13 +155,21 @@
  *     object taskOf builds whose own enumerable keys, observation scope (its keys in order and their values) or journal path
  *     differ from its TASK SHAPE's SEAM SHAPE. The seam's own decideReconcile call is this file's judging code: an edit there
  *     that hands src another object than the one the seam records is NOT CLAIMED by this census (R-SELF-ANCHORED). A deps
- *     object that gives the seam's reads and src's different answers is NOT CLAIMED by this census either (wb-fnui, landing 898
- *     F1 and F2, routed for the owner's weigh-in): the seam reads the task and the committing capability's class before src
- *     does, and no reader here compares the two reads, so a decisionDeps.task accessor answering the seam's two reads with the
- *     task taskOf built and src's one read with that task without its journal path (the gate's X8; X8c, the same accessor at
- *     decideUnder's call argument), or a currentEffectClass answering the seam's ask for the committing capability with its
- *     class and src's later asks with unregistered (X9; X9c at the call argument), keeps this census green (measured; X8 and
- *     X8c also keep it green beside the src plant G20-JP2, which alone reds it). The input that helper decides under - a
+ *     object that gives the seam's reads and src's different answers is NOT CLAIMED by this census either (wb-fnui, landing
+ *     898 F1 and F2, routed for the owner's weigh-in): the seam reads the task before src does, and no reader here compares
+ *     the seam's reads of it with src's, so a decisionDeps.task accessor answering the seam's two reads with the task taskOf
+ *     built and src's one read with that task without its journal path (the gate's X8; X8c, the same accessor at
+ *     decideUnder's call argument) keeps this census green (measured; X8 and X8c also keep it green beside the src plant
+ *     G20-JP2, which alone reds it); src never asks the committing capability's class for this census's journaled rows, which
+ *     are write-class (wb-ucgx, landing 935 F2; as read at the cut, not by this test: src's refusingRowAt returns a
+ *     write-class row before its one registry class read, which only a read-class row reaches, and src's one other class ask,
+ *     the evidence action's, is for the evidence read's capability, the preview; measured: a throw on any ask for it after
+ *     the seam's, the gate's G206-DIAG1, or on any ask src makes for it, G206-DIAG2, keeps this census green), so a
+ *     currentEffectClass answering the seam's ask for the committing capability with its class and every later ask for it
+ *     with unregistered (X9; X9c at the call argument) changes nothing src reads and keeps this census green, but hides a src
+ *     ask for it: the gate's src plant G206-CPR, which producer-confirms a citing acknowledgement when its ask for the
+ *     committing capability's class answers read, reds this census alone, and X9 and X9c each keep it green beside that plant
+ *     (measured). The input that helper decides under - a
  *     completed task in that helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(),
  *     decision for decision: N checks both, H the first. N's and H acceptance.3.1's witnesses list each distinct outcome text
  *     once, after the inputs that give it.
@@ -342,6 +350,11 @@
  *   (routed for the owner's weigh-in): the DECISION-INPUT LIVENESS words are narrowed to a deps object that gives the seam's
  *   reads and src's the same answers, and a stateful one (the gate's X8, X8c, X9 and X9c) is named NOT CLAIMED. The seam, its
  *   records, the decisions and every reader, pin line and witness are unchanged.
+ * wb-ucgx (the R694 follow-up of landing 935, wb-fnui's PASS; comments only): F2 - the NOT CLAIMED words for a deps object
+ *   that gives the seam's reads and src's different answers no longer say src asks the committing capability's class: src
+ *   never asks it for this census's journaled rows, which are write-class, so X9 and X9c alone change nothing src reads, and
+ *   they hide a src ask for it (the gate's G206-CPR). The words landing 935's F1 names (routed for the owner's weigh-in) are
+ *   unchanged. The seam, its records, the decisions and every reader, pin line and witness are unchanged.
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
  *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
  *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's

@@ -26,7 +26,7 @@
  * form that line writes, the lines answering the members its own row names before its first Context: line (controlMembersOf,
  * QUIET_CONTROL_ANSWERS), and holds QUIET_BEADS to the R694 follow-up chain that row's title closes; wb-04yp (the R694 follow-up
  * from wb-rzqi's landing 883) narrows the rules' pins to those forms, and the census checks the answers' one-line and
- * self-answer words.
+ * self-answer words; wb-nk7k (the R694 follow-up from wb-04yp's landing 927) checks the kind-order mutants' one-line word.
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -3149,10 +3149,11 @@ export function controlMembersOf(notes: string): string[] {
  * census chose to try the rule the mutant breaks (that line's survivor, or N-C10 on the name-shape line, whose words are no
  * survivor name), a control survivor of its F2 line by itself, and the two kind-order mutants its F2 line names by G-C16, the
  * control's second survivor with two kinds after its first mention (F2: G-C1's second kind was their only exemplar). The
- * full-surface row checks that each reader mutant's word is written on one control line only and that each control survivor
- * answers itself; which line tries which rule, and so which word answers a reader mutant or a kind-order mutant, is this
- * census's own choice, held by this literal and the census's frozen literal of it only (wb-04yp's F2: a re-point to another
- * word the control writes on one line only, with the answering line removed from every literal, is NOT CLAIMED).
+ * full-surface row checks that each reader mutant's and each kind-order mutant's word is written on one control line only
+ * (the kind-order mutants' since wb-nk7k) and that each control survivor answers itself; which line tries which rule, and so
+ * which one-line word answers a reader mutant or a kind-order mutant, is this census's own choice, held by this literal and
+ * the census's frozen literal of it only (wb-04yp's F2: a re-point to another word the control writes on one line only, with
+ * the answering line removed from every literal, is NOT CLAIMED).
  */
 export const QUIET_CONTROL_ANSWERS: readonly { readonly name: string; readonly survivor: string }[] = [
   { name: "G2-QS-SAME-NAME-BOUND", survivor: "G-C7" },

@@ -425,8 +425,9 @@
  * GP20-U5-CSK-READS-BINDINGS in hyphen-joined parts, G-P1, G-P2 and G-P3); a form of those rules that none of these lines
  * writes is NOT CLAIMED (NOT CLAIMED names wb-04yp's F1 members); and the control answers every member wb-rzqi's row names
  * before its first Context: line (controlMembersOf: its F1 line's five reader mutants, its F2 line's four control survivors
- * and two kind-order mutants), each by the QUIET_CONTROL_ANSWERS survivor written on the control, each F1 reader mutant by a
- * word the control writes on one line only and each control survivor by itself;
+ * and two kind-order mutants), each by the QUIET_CONTROL_ANSWERS survivor written on the control, each F1 reader mutant and
+ * each F2 kind-order mutant by a word the control writes on one line only (the kind-order mutants' since wb-nk7k, the R694
+ * follow-up from wb-04yp's landing 927) and each control survivor by itself;
  * each held name is read by its node kind (heldNamesOf), the plant read as the other kind holding none, and every one of
  * them is a key of the document; and each plant is read through codeShapeKeysOf as no key, with the raw proxy's reading
  * recorded beside. Two named residuals
@@ -550,12 +551,15 @@
  * writes on one line only, together with the removal of the line that answered it from every literal of these files and the
  * roster (wb-04yp's F2: which line answers which member is this census's own choice, held by those two literals only, while
  * wb-rzqi's row anchors the members; the gate's G10-QA-REPOINT-G-C7 and G10-QA-REPOINT-G-C15 re-point to G-C1, which the
- * control writes on two lines, and red at the one-line check; an edit of that check or of the self-answer check together
- * with a re-point it would refuse is NOT CLAIMED as well); controlMembersOf's reading of a note
- * but wb-rzqi's and the chain's reading of a title but its three rows' (each is pinned on those rows only); and a coordinated
- * edit of the listing re-read's control (its swap of the two listing forms' anchors together with the form it expects named)
- * in this file (the control is this census's own choice: wb-0x41's row anchors the hollowing U1 names and each form's git
- * listings its links, not the swap).
+ * control writes on two lines, and red at the one-line check, and wb-04yp's gate's G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and
+ * G207-QA-KIND-ORDER-REPOINT-TO-G-C8 re-point both kind-order mutants to G-C1 and to G-C8, each written on two lines, and red
+ * at the kind-order one-line check, G-C16's line removed or not, wb-nk7k's F1, while a re-point to G-C1 once G-C1's second
+ * mention is removed, G-C1 then written on one line, is a re-point to a one-line word; an edit of one of those one-line checks
+ * or of the self-answer check together with a re-point it would refuse is NOT CLAIMED as well); controlMembersOf's reading of a
+ * note but wb-rzqi's and the chain's reading of a title but its three rows' (each is pinned on those rows only); and a
+ * coordinated edit of the listing re-read's control (its swap of the two listing forms' anchors together with the form it
+ * expects named) in this file (the control is this census's own choice: wb-0x41's row anchors the hollowing U1 names and each
+ * form's git listings its links, not the swap).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
@@ -2224,7 +2228,10 @@ describe(SUITE, () => {
     // each by a survivor written on the control, so a line answering one, removed from every literal of these files and the
     // roster, still reds here unless that member's answer is re-pointed to another word the control writes on one line only
     // (wb-04yp's F2: NOT CLAIMED, the map is this census's own choice); re-pointed to a word the control writes on two lines, as
-    // the gate's G10-QA-REPOINT-G-C7 and G10-QA-REPOINT-G-C15 re-point to G-C1, it reds at the one-line check below.
+    // the gate's G10-QA-REPOINT-G-C7 and G10-QA-REPOINT-G-C15 re-point a reader mutant to G-C1 and wb-04yp's gate's
+    // G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and -TO-G-C8 re-point both kind-order mutants to G-C1 and G-C8, it reds at a one-line
+    // check below (the reader mutants' or, since wb-nk7k's F1, the kind-order mutants'), and a control survivor re-pointed to
+    // any word but itself reds at the self-answer check.
     const quietControlMembers = controlMembersOf(beadRow(exportLinesOf(exported, QUIET_CONTROL_BEAD), QUIET_CONTROL_BEAD)?.notes ?? "");
     expect(quietControlMembers, `${QUIET_CONTROL_BEAD}'s F1 line names the five reader mutants it filed and its F2 line four control survivors and two kind-order mutants, before its first Context: line`).toEqual([
       "G2-QS-SAME-NAME-BOUND",
@@ -2243,8 +2250,10 @@ describe(SUITE, () => {
     const controlWords = new Set(QUIET_CONTROL.split(/[^A-Za-z0-9-]+/));
     expect(QUIET_CONTROL_ANSWERS.filter(entry => !controlWords.has(entry.survivor)).map(entry => entry.name), "and each answering survivor is written on the control, a whole word").toEqual([]);
     // wb-04yp's F2: the ANSWERS docstring's words held - each reader mutant of the row's F1 line (G<n>-QS-...) is answered by a
-    // word the control writes on one line only, and each control survivor of its F2 line (G-C<n>) answers itself; which one-line
-    // word answers which reader mutant stays this census's own choice (NOT CLAIMED).
+    // word the control writes on one line only, and each control survivor of its F2 line (G-C<n>) answers itself; and, since
+    // wb-nk7k, each kind-order mutant of its F2 line (F-QS-...) by a word the control writes on one line only (the check after
+    // the self-answer check); which one-line word answers which reader mutant or kind-order mutant stays this census's own
+    // choice (NOT CLAIMED).
     const answerOf = (name: string): string => QUIET_CONTROL_ANSWERS.find(entry => entry.name === name)?.survivor ?? "";
     const controlLines = QUIET_CONTROL.split("\n");
     const linesWriting = (word: string): number => controlLines.filter(line => line.split(/[^A-Za-z0-9-]+/).includes(word)).length;
@@ -2255,6 +2264,13 @@ describe(SUITE, () => {
     expect(
       quietControlMembers.filter(name => /^G-C\d+$/.test(name) && answerOf(name) !== name),
       "and each control survivor its F2 line names answers itself",
+    ).toEqual([]);
+    // wb-nk7k's F1 (the R694 follow-up from wb-04yp's landing 927): and each kind-order mutant of the row's F2 line (F-QS-...)
+    // is answered by a word the control writes on one line only as well, so a re-point of either to a word the control writes on
+    // two lines (wb-04yp's gate's G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and -TO-G-C8, G-C16's line removed or not) reds here.
+    expect(
+      quietControlMembers.filter(name => linesWriting(answerOf(name)) !== 1 && /^F-QS-/.test(name)),
+      "and each kind-order mutant its F2 line names is answered by a word the control writes on one line only",
     ).toEqual([]);
     const shapeQuiet = Object.fromEntries(
       SHAPE_QUIET.map(plant => [
