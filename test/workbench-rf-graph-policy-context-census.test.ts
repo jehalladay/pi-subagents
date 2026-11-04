@@ -101,12 +101,19 @@
  * - F1, THE RECORD ITEM FORMS (the wb-e9dy F5 class). Claimed (the T1, T3, T4, Q12 and Q13 witnesses): among T3's and T4's planted
  *   items the record judge (judgeRecord) finds exactly T3's 27 vocabulary plants (VOCABULARY_PLANTS) and T4's 7 field plants
  *   (FIELD_PLANTS) and no other; it finds nothing in the real record (T1), whose envelope items and roster keys are read at floors
- *   (T3); on these bytes T3 and T4 judge their plants beside the real record's items in one call. The plants, by reading and
- *   position: a MENTION as a key at the result (graph_policy), in provenance in camel case
- *   (graphPolicyReceipt), in a planted diagnostic's metadata (graph-data-ir), at the root (graph_data_ir), on a block as an array
- *   element's own key (graphPolicyRank), and in the roster's result and work key lists (graphpolicy_rank, graph_data_ir_count); a
- *   MENTION as a string value at the root (the operation_id), as an object member's value (judge_context_layers' task.goal), on a
- *   block (component_id) and as an array element (explicit_requests); the abbreviation gp as a key at the result (gp), in the
+ *   (T3); on these bytes T3 and T4 judge their plants beside the real record's items in one call, and each judges its plants a
+ *   second time under the real record's prefixes (REAL_PREFIXES: plant: read as fixture:, plant-roster: as roster:), again beside
+ *   the real record in one call, finding exactly the same 27 and 7 positions there and no other (realPrefixPlants,
+ *   realPrefixFieldPlants; wb-lnz5), and a third time in place (inPlaceItems: the planted envelope read whole under fixture:, a plant
+ *   overwriting a real member at that member's own place, then the roster's four lists under roster:, each list's planted keys ahead
+ *   of its real ones), again finding exactly those positions and no other, and finding plants on that record cut to the real
+ *   record's own item count (inPlacePlants and inPlaceAhead, inPlaceFieldPlants and inPlaceFieldAhead; wb-lnz5 cut #2). The plants,
+ *   by reading and position: a MENTION as a key at the result (graph_policy), in
+ *   provenance in camel case (graphPolicyReceipt), in a planted diagnostic's metadata (graph-data-ir), at the root (graph_data_ir),
+ *   on a block as an array element's own key (graphPolicyRank), and in the roster's result and work key lists (graphpolicy_rank,
+ *   graph_data_ir_count); a MENTION as a string value at the root (the operation_id), as an object member's value
+ *   (judge_context_layers' task.goal), on a block (component_id) and as an array element (explicit_requests); the abbreviation gp as
+ *   a key at the result (gp), in the
  *   metadata (GP, gpLayer), at the root (gp_trace), on a block (gp_note) and in the roster's result and provenance key lists (gp_rank,
  *   gpCheckpoint); the abbreviation as a string value - the acceptance's own ref form rf-gp:program:checkpoint:backend as a diagnostic
  *   message and as an array element, gp as a diagnostic source and as an array element, gp.scorer on a block, gpLayer and GP as object
@@ -130,14 +137,20 @@
  *   (M-GP-SUBSTRING), the abbreviation read in lowercase only (M-NO-UPPER), terms split at non-letters only (M-NO-HUMP), digits read
  *   as part of a word (M-DIGIT-JOIN), field words read without their plurals (M-NO-PLURAL) and field words read on values
  *   (M-FIELD-ON-VALUES); and, applied to the helper, G5-U1-GPSEP, G5-U1-TAILSEP and G5-U1-HUMPSEP each red the readers census at its
- *   own pin while this file, which plants none of their spellings, stays green.
+ *   own pin while this file, which plants none of their spellings, stays green. Applied to the helper, the gate's G21-MPLANT (a
+ *   MENTION read only on an item whose position starts with plant) reds T3, and a judge skipping field words at the fixture: prefix
+ *   (W-FFIXTURE) reds T4, each at its real-prefix reading (wb-lnz5); the gate's P14-J7-INDEX (a MENTION read only on an item placed
+ *   at or after the real record's item count in a call) reds T3 and the same reading of field words (W-J7F-INDEX) reds T4, each at
+ *   its in-place reading, and an in-place reading that reads the real record's items ahead of the plants (W-IP-APPEND) reds T3 and
+ *   T4 at inPlaceAhead and inPlaceFieldAhead (wb-lnz5 cut #2).
  *   NOT CLAIMED (DEFERRED R-ITEM-FORMS, wb-v03p): every other case form wordsOf reads as gp - a title-case Gp (GpRank) and an
  *   uppercase GP joined to other letters (GPRank) carry no plant here and are no row V probe (G-U1-CASE); a roster key list a
  *   reading has no plant in - the abbreviation on the work and work-metrics key lists (G-U1-LIST) and a field word on the result,
  *   provenance and work key lists (G-U1-LISTF); a MENTION on the provenance and work-metrics key lists, likewise unplanted
  *   (G-U1-LISTM, record-only: refusal #3's gate measured Z3's scan of the key roster file still reading a real MENTION key there);
- *   and any position no plant above stands at. The landed readers census pins G-U1-CASE, G-U1-LIST and G-U1-LISTF (its row U1) over
- *   the judge this file imports; this census claims none of them.
+ *   and any position no plant above stands at, and any item prefix but the two plant prefixes and the two real ones (REAL_PREFIXES).
+ *   The landed readers census pins G-U1-CASE, G-U1-LIST and G-U1-LISTF (its row U1) over the judge this file imports; this census
+ *   claims none of them.
  * - F2, THE PLANTED POSITIONS (the wb-e9dy F6 class). Claimed, per render variant (the five VARIANTS) and per src reader (the
  *   observer's reactivefiberTopology and nativeEvidence), exactly Z2's witness facts: plantedAt, the planted positions (on these bytes
  *   read back off the envelope plantedRun hands that reader: gpPlanted's plants on every envelope object outside that reader's
@@ -191,6 +204,30 @@
  *   wrote. Rows match cells as sectionTables reads them (marked's cell source, inline markup kept), the one table reading the binding
  *   has, so a posture row with markup in its owner or Pi cell is read (OVER-READS, planted in Z3).
  *
+ * FOLLOW-UP wb-lnz5 (R694, from the wb-b4lg gate cmd_14718cf5e011 at landing 834, PASS-WITH-FINDING; F1 leads, F2 rides; seat ws-04
+ * of g10-work-s197, 2026-11-03, on trunk fc4ced8). Measured on trunk's bytes before the cut, each member a one-edit change applied
+ * in place and restored: F1 the record judge's MENTION reading was held only on plant-prefixed items - the gate's G21-MPLANT
+ * (judgeRecord reading a MENTION only when an item's position starts with plant) kept this census at 24/24 and the readers census
+ * at 18/18, while its twin TWIN-MCOMP2 (a run-time MENTION at T3's planted path task.goal in the real fixture) reds this census
+ * 3|21 and reads 0|24 under the member; field words at the envelope's prefix were held nowhere either (W-FFIXTURE, a judge skipping
+ * field words at fixture:, 24/24 and 18/18). T3 and T4 now judge their plants a second time under the real record's prefixes
+ * (REAL_PREFIXES, realPrefixed) and hold the positions found there (realPrefixPlants, realPrefixFieldPlants), so both members red.
+ * F2 the outside anchors held FOLLOW_UP's blocks edge with no control on the edge type - the gate's G21-NOTYPE (exportRow without
+ * its edge.type === "blocks" filter) kept this census at 24/24, while its twin TWIN-RELATED (that edge retyped related) reds it
+ * 1|23 and reads 0|24 under the member; exportRow now reads an optional export text, and the outside anchors read the in-memory
+ * control rows through it (OUTSIDE ANCHORS), so G21-NOTYPE reds there (cut #1, which held the type filter on that in-memory path
+ * only: refusal #1, below).
+ * Cut #2 (seat ws-05 of g10-work-s200, 2026-11-03, on trunk 49f80c8), the respin of refusal #1 (gate-prep-14 of g10-gate-s198 on cut
+ * #1 71683742: UNMET U1; ruling R-B446, rung 1). U1: the gate's P14-X1-PATH-TEXT (exportRow's type filter skipped when it reads the
+ * tracked export), P14-X2-PATH-CTLID (skipped for every id but the control rows') and P14-X3-PATH-SHAPE (skipped for every row with
+ * a status field) each kept this census at 24/24, while TWIN-RELATED reads 0|24 under each: the filter was held on the in-memory
+ * control path only. The outside anchors now hold it on real rows of the tracked export read the way FOLLOW_UP's row is (the
+ * type-held rows) and on FOLLOW_UP's own row re-typed in memory, and read FOLLOW_UP's edge type a second time apart from exportRow
+ * (OUTSIDE ANCHORS), so each member reds alone and with TWIN-RELATED. F1 rides (refusal #1's F1, the gate's P14-J7-INDEX: a MENTION
+ * read only on items placed at or after the real record's item count in a call kept this census and the readers census at 42/42,
+ * TWIN-MCOMP2 0|24 under it): T3 and T4 now judge their plants a third time in place among the real record's own items
+ * (inPlaceItems), so the member reds there.
+ *
  * THE JUDGE. A MENTION is the until-then pattern's words in order - "graph" then "policy", or "graph", "data" and "ir" - with any
  * run of characters that are neither letters nor digits between them (none, spaces, newlines, underscores, hyphens, dots, quotes,
  * markup, format characters), in any case: GraphPolicy, GraphPolicyCLI, graph-policy, graph_policy, GRAPH POLICY, GraphDataIR and
@@ -210,7 +247,9 @@
  * receipt) or its plural as a GraphPolicy output field (R-FIELD-VALUE: Q13's values are none); what it is claimed to read and to
  * leave unread is exactly F1's lists (FORM, above). It is the imported judgeRecord (THE READERS, FORM), which reads a MENTION through
  * its module's own mentions - byte-equal on these bytes to this file's, but not the one the anchor case and Z4 hold - so its MENTION
- * readings are claimed on F1's plants only. Z3 judges each rf reading test and each data file it names with the content of
+ * readings are claimed on F1's plants only, under their plant prefixes and again under the real record's (REAL_PREFIXES, wb-lnz5),
+ * and in place among the real record's own items (inPlaceItems, wb-lnz5 cut #2).
+ * Z3 judges each rf reading test and each data file it names with the content of
  * every ownership-row echo blanked
  * first (R-POSTURE: a string literal naming the owner as docs/03's ownership row spells it, each of its words a word of that row's
  * owner or subject cell, one of them the subject's alone), and each docs page with its rendered posture homes blanked.
@@ -219,8 +258,9 @@
  * output or field, T1 reds naming the acceptance on landing as owed; T2 the record is the installed rf's capture (a captured
  * roster with a command receipt, and the fixture's cli_version and the provider's contract source on the roster's release),
  * compared as relations, so a consistent rf re-pin keeps T2 and re-reads T1, T3 and T4 on the new record; T3 the envelope, its
- * diagnostics and the roster read at floors, and exactly F1's vocabulary plants found by the same call, no other planted item; T4
- * the field words and exactly F1's field plants found, and the schema pin the title records. Z, the until-then duty: Z1 the literal
+ * diagnostics and the roster read at floors, and exactly F1's vocabulary plants found by the same call, no other planted item, again
+ * under the real record's prefixes and again in place among its items; T4 the field words and exactly F1's field plants found, again
+ * under the real record's prefixes and in place, and the schema pin the title records. Z, the until-then duty: Z1 the literal
  * held at the filing pin, its judged bytes an exact count, a pin plant found by the same call; Z2 every listed src and qa file
  * spells no MENTION (file, script and byte floors, every file judged whole, a plant of each reading found), and Z2's compare reads
  * each src reader's slot unchanged and no src part leaking under the GraphPolicy plants, on the five render variants, with exactly
@@ -246,7 +286,24 @@
  * Ownership boundaries tables, and the echo's words are read off that row at run time (never a literal here); the filing pin is a
  * commit of this repository; and the structural-exit child's own export row (DEFERRED_TO, wb-v03p) names exactly DEFERRED's
  * members, in order, and the follow-up bead's own export row (FOLLOW_UP, wb-b4lg) is blocked by it (ruling R-B221's dependency
- * inversion), so a deferred member dropped from DEFERRED and the roster together still reds.
+ * inversion), so a deferred member dropped from DEFERRED and the roster together still reds. That blocks edge is read twice, by two
+ * readers that each scan and parse the export's text on their own: exportRow (FOLLOW_UP's blockedBy holds DEFERRED_TO) and
+ * FOLLOW_UP's own parsed dependencies (trackedRow: its edge to DEFERRED_TO has the type blocks), so an export whose edge to
+ * DEFERRED_TO has another type reds with either reader hollowed alone (the gate's TWIN-RELATED; wb-lnz5 cut #2). exportRow takes a
+ * row's blocks dependencies only, claimed on exactly three row sets, each read through exportRow (wb-lnz5 F2 and cut #2): (1) the
+ * type-held rows, real rows of the tracked export read through exportRow's default text, the read FOLLOW_UP's row takes, and chosen
+ * at run time apart from exportRow (typeHeldRows over trackedEdges) among the rows whose every edge has a string type and a string
+ * depends_on_id: for each of OTHER_EDGE_TYPES (related, relates-to, parent-child, discovered-from: the tracked export's other types
+ * as measured at fc4ced8 and again at 49f80c8, not re-read at run time) the first row in export order carrying an edge of that type
+ * and no blocks edge, read blockedBy [], and the first carrying a blocks edge beside an edge of another type, read as exactly its
+ * blocks edges' targets (measured at 49f80c8, not pinned: wb-0br, wb-6ze.6, wb-jwc.2, wb-h7r and wb-973.9), the export's holding a
+ * row of each of these five shapes asserted with them; (2) FOLLOW_UP's own row re-typed in memory: its parsed export row with the
+ * edge to DEFERRED_TO given each of OTHER_EDGE_TYPES in turn, every other member unchanged (TWIN-RELATED's shape and its three
+ * siblings), read through exportRow's export text, where the edge reads as blocking under none of them; (3) the in-memory control
+ * rows EDGE_CONTROL_ROWS (held to the roster): the row carrying one edge of each of OTHER_EDGE_TYPES reads blockedBy [], and the row
+ * carrying the same four beside one blocks edge reads exactly that edge's target. exportRow's type reading on any other row, a
+ * dependency type none of these rows carries and an edge whose depends_on_id is not a string are NOT CLAIMED by this census;
+ * FOLLOW_UP's own edge to DEFERRED_TO is held by the second reading besides.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show it; a
  * pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds another pin's
  * claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
@@ -285,11 +342,15 @@
  * (landing 809) as the readers census's rows U1-U3, one case per member, over the readers this file imports (G-U2-CALLSITE's over
  * the moved copy of this file's Z2 call: F2).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its claims
- * rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a residual row
+ * rewritten with them; a plant or control edited in IMPL, or in a constant the roster holds (REAL_PREFIXES and EDGE_CONTROL_ROWS
+ * among them), and the roster together; a floor lowered with the roster; a residual row
  * removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual families); the
- * outside-anchor case or the closing case removed with its roster title; a case that calls a reader and discards what it read
- * (the reader-keeping constant: the judged set requires a reader's call, not the use of its result); a judge edited to judge
- * less of an entry than the bytes it counts (the count is taken from the text the judge decodes, not from each reading of it);
+ * outside-anchor case or the closing case removed with its roster title, or one assertion of the outside-anchor case deleted alone
+ * (each is held by that case only: the edge-type control's, the type-held rows', the re-typed rows' and the second reading's
+ * assertions among them, wb-lnz5 F2 and cut #2); a case that calls a reader and
+ * discards what it read (the reader-keeping constant: the judged set requires a reader's call, not the use of its result); a
+ * judge edited to judge less of an entry than the bytes it counts (the count is taken from the text the judge decodes, not from
+ * each reading of it);
  * anything F1, F2 or F3 lists as NOT CLAIMED, the DEFERRED members among it (FORM, DEFERRED).
  * ARMED HALF PENDING: the clause ARMED (a GraphPolicy output read only as one bounded rf-gp:<program>:<checkpoint>:<backend> ref
  * and one note, never raising coverage, tone or freshness, never surfacing a value) has nothing to read until rf ships one; no
@@ -314,7 +375,9 @@
  * READS (contacts): every listed src, qa and docs/workbench file and every test module (for its imports and file names; the rf
  * reading surface and the data files it names for their content) (Z2, Z3), docs/03's posture section and Ownership boundaries
  * tables through the rendered binding (Z3, Q4, the outside anchors), git objects at the filing pin (Z1), the tracker export rows of
- * wb-e9dy (its owner filing), wb-v03p (its description) and wb-b4lg (its blocks dependencies: the outside anchors),
+ * wb-e9dy (its owner filing), wb-v03p (its description) and wb-b4lg (its blocks dependencies through exportRow, its own parsed
+ * dependencies and its row re-typed in memory: the outside anchors), the dependencies of every export row that carries any, five of
+ * those rows then read through exportRow (the type-held rows: the outside anchors; wb-lnz5 cut #2),
  * test/fixtures/rf-result-keys.json, the fixture module's fullShapeRf and the provider's contract source
  * (T); the observer, nativeEvidence and the injected provider registration run in memory (Z2, Q10), the two readers each handed
  * its envelopes through a read log (Z2); the imported readers (THE READERS, FORM) read no file.
@@ -558,10 +621,10 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
   T3: {
     "whose context.render envelope": ["envelopeAtFloor", "rosterAtFloor"],
     "or diagnostics": ["diagnosticsRead"],
-    "carry GraphPolicy outputs": ["vocabularyFindings", "vocabularyPlants"],
+    "carry GraphPolicy outputs": ["vocabularyFindings", "vocabularyPlants", "realPrefixPlants", "inPlacePlants", "inPlaceAhead"],
   },
   T4: {
-    "score, ranking, embedding or receipt fields": ["fieldWords", "fieldFindings", "fieldPlants"],
+    "score, ranking, embedding or receipt fields": ["fieldWords", "fieldFindings", "fieldPlants", "realPrefixFieldPlants", "inPlaceFieldPlants", "inPlaceFieldAhead"],
     "absent from context.render.schema.json at 82bd879eee52": ["schemaPin"],
   },
   Z1: { "until then": ["filingPin", "filedAtPin", "absentBeforePin", "pinFiles", "pinBytes", "pinFindings", "pinPlant"] },
@@ -607,6 +670,30 @@ const DEFERRED: Readonly<Record<string, readonly string[]>> = {
   "R-HANDOFF": ["G-U2-HASKEYS", "G-U2-OUTPUTSOF", "G-U2-CALLSITE"],
   "R-LOCATES": ["M-NORM-FULL", "G-U3-WS4", "G-U3-ZS"],
 };
+interface ControlRow {
+  readonly id: string;
+  readonly title: string;
+  readonly dependencies: readonly { readonly issue_id: string; readonly depends_on_id: string; readonly type: string }[];
+}
+/** The four dependency types other than blocks that the tracked export held when measured at fc4ced8 and again at 49f80c8 (related,
+ * relates-to, parent-child, discovered-from; not re-read at run time): the edge-type control rows, the type-held rows and
+ * FOLLOW_UP's re-typed rows each read them (wb-lnz5 F2, cut #2). */
+const OTHER_EDGE_TYPES: readonly string[] = ["related", "relates-to", "parent-child", "discovered-from"];
+/**
+ * The outside anchors' edge-type control (wb-lnz5 F2): two in-memory export rows, read through exportRow's export text. The first
+ * carries one edge of each of OTHER_EDGE_TYPES, each to its own target, and no blocks edge; the second carries the same four beside
+ * one blocks edge. Held to the roster; the case holds their readings: blockedBy [] and exactly the blocks edge's target.
+ */
+const EDGE_CONTROL_ROWS: readonly ControlRow[] = ["ctl-other-types", "ctl-one-blocks"].map(id => ({
+  id,
+  title: "edge-type control",
+  dependencies: [
+    ...OTHER_EDGE_TYPES.map(type => ({ issue_id: id, depends_on_id: `ctl-${type}`, type })),
+    ...(id === "ctl-one-blocks" ? [{ issue_id: id, depends_on_id: "ctl-blocks", type: "blocks" }] : []),
+  ],
+}));
+/** The shape of the last type-held row: a blocks edge beside an edge of another type (typeHeldRows, wb-lnz5 cut #2). */
+const BLOCKS_BESIDE_OTHER = "blocks-beside-other";
 /**
  * The functions that read the subject - the listing and the files, the filing pin, the record, the tracker export, docs/03,
  * the src readers and the provider, or the judge itself: every case must name one (direct names only), so a case returning a
@@ -740,9 +827,13 @@ interface ExportRow {
   /** The ids the row depends on through a "blocks" dependency, in export order. */
   readonly blockedBy: readonly string[];
 }
-/** One row of the tracker export (one JSON object per line), found by its id. */
-function exportRow(id: string): ExportRow {
-  for (const line of textOf(EXPORT).split("\n")) {
+/** The tracked export's text, read once per run: every default read of exportRow, trackedRow and trackedEdges is this one text, so
+ * the outside anchors' added reads cost no further pass over the file (wb-lnz5 cut #2). */
+const trackedExport = lazy((): string => textOf(EXPORT));
+/** One row of the tracker export (one JSON object per line), found by its id; `text` is the export read (the tracked EXPORT unless
+ * a case hands in-memory rows, as the outside anchors' edge-type control and FOLLOW_UP's re-typed rows do: wb-lnz5 F2, cut #2). */
+function exportRow(id: string, text: string = trackedExport()): ExportRow {
+  for (const line of text.split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
     if (isObject(parsed) && parsed.id === id && typeof parsed.title === "string") {
@@ -756,6 +847,60 @@ function exportRow(id: string): ExportRow {
     }
   }
   throw new Error(`the tracker export holds no row ${id}`);
+}
+/** One dependency edge of an export row as parsed: its type and its depends_on_id, each null where it is no string. */
+interface Edge {
+  readonly type: string | null;
+  readonly to: string | null;
+}
+/** A parsed export row's dependency edges, in export order. */
+function edgesOf(row: { readonly [key: string]: unknown }): Edge[] {
+  const dependencies: unknown[] = Array.isArray(row.dependencies) ? row.dependencies : [];
+  return dependencies.map(edge => ({
+    type: isObject(edge) && typeof edge.type === "string" ? edge.type : null,
+    to: isObject(edge) && typeof edge.depends_on_id === "string" ? edge.depends_on_id : null,
+  }));
+}
+/** One row of the tracker export as parsed, found by its own "id" member: a scan and a parse of its own, apart from exportRow's and
+ * with no type filter (wb-lnz5 cut #2: the outside anchors read FOLLOW_UP's edge types, and re-type its row, through it). */
+function trackedRow(id: string, text: string = trackedExport()): { readonly [key: string]: unknown } {
+  const needle = `"id":${JSON.stringify(id)}`;
+  for (const line of text.split("\n")) {
+    if (!line.includes(needle)) continue;
+    const parsed: unknown = JSON.parse(line);
+    if (isObject(parsed) && parsed.id === id) return parsed;
+  }
+  throw new Error(`the tracker export holds no row ${id}`);
+}
+/** Every row of the tracker export that carries dependencies, parsed apart from exportRow: its id and its edges (wb-lnz5 cut #2). */
+function trackedEdges(text: string = trackedExport()): { readonly id: string; readonly edges: readonly Edge[] }[] {
+  return text.split("\n").flatMap(line => {
+    if (!line.includes('"dependencies":[')) return [];
+    const parsed: unknown = JSON.parse(line);
+    return isObject(parsed) && typeof parsed.id === "string" ? [{ id: parsed.id, edges: edgesOf(parsed) }] : [];
+  });
+}
+/** A type-held row (wb-lnz5 cut #2): its shape, its id and the targets of its blocks edges. */
+interface TypeHeldRow {
+  readonly shape: string;
+  readonly id: string;
+  readonly blocks: readonly string[];
+}
+/** The type-held rows (wb-lnz5 cut #2), chosen on the tracked export at run time through trackedEdges, never through exportRow, among
+ * the rows whose every edge has a string type and a string depends_on_id: for each of OTHER_EDGE_TYPES the first row in export order
+ * carrying an edge of that type and no blocks edge, then the first carrying a blocks edge beside an edge of another type
+ * (BLOCKS_BESIDE_OTHER). A shape no such row carries is missing from the list. */
+function typeHeldRows(): TypeHeldRow[] {
+  const rows = trackedEdges().filter(row => row.edges.every(edge => edge.type !== null && edge.to !== null));
+  const blocksOf = (edges: readonly Edge[]): string[] => edges.flatMap(edge => (edge.type === "blocks" && edge.to !== null ? [edge.to] : []));
+  const shapes: readonly (readonly [string, (edges: readonly Edge[]) => boolean])[] = [
+    ...OTHER_EDGE_TYPES.map(type => [type, (edges: readonly Edge[]) => edges.some(edge => edge.type === type) && blocksOf(edges).length === 0] as const),
+    [BLOCKS_BESIDE_OTHER, (edges: readonly Edge[]) => blocksOf(edges).length > 0 && edges.some(edge => edge.type !== "blocks")] as const,
+  ];
+  return shapes.flatMap(([shape, holds]) => {
+    const row = rows.find(entry => holds(entry.edges));
+    return row === undefined ? [] : [{ shape, id: row.id, blocks: blocksOf(row.edges) }];
+  });
 }
 /** The owner's filing in the export notes: their first two blocks, the first opening "Owner filing (" ("" otherwise), so a later
  * note quoting the filing never stands in for a replaced original (wb-r63c F8). */
@@ -1282,6 +1427,26 @@ function plantedItems(envelope: JsonObject, roster: KeyLists): RecordItem[] {
   return [...planted, ...rosterItems("plant-roster:", roster)];
 }
 const NO_KEYS: KeyLists = { resultKeys: [], provenanceKeys: [], workKeys: [], workMetricsKeys: [] };
+/** How a plant function's planted envelope and planted roster key lists become the items a judge reads: plantedItems (the plants
+ * beside the real record) by default, inPlaceItems for the in-place reading (wb-lnz5 cut #2). */
+type PlantReading = (envelope: JsonObject, roster: KeyLists) => RecordItem[];
+/** A planted envelope and planted roster key lists read as the record itself (wb-lnz5 cut #2, the gate's P14-J7-INDEX): the whole
+ * planted envelope under the real record's fixture: prefix, so each plant sits at its own place among the real envelope's items (a
+ * plant overwriting a real member at that member's place, a planted member after its object's real members), then the key roster's
+ * four lists under roster:, each list's planted keys ahead of its real keys - the plants are judged among the real record's own
+ * items, none appended after them. */
+function inPlaceItems(envelope: JsonObject, planted: KeyLists): RecordItem[] {
+  const real = keyRoster();
+  return [
+    ...recordItems("fixture:", envelope, "", []),
+    ...rosterItems("roster:", {
+      resultKeys: [...planted.resultKeys, ...real.resultKeys],
+      provenanceKeys: [...planted.provenanceKeys, ...real.provenanceKeys],
+      workKeys: [...planted.workKeys, ...real.workKeys],
+      workMetricsKeys: [...planted.workMetricsKeys, ...real.workMetricsKeys],
+    }),
+  ];
+}
 /** The record's vocabulary plants (T3): a key at the result, a camel-case key in provenance, a key in a diagnostic's metadata, a
  * string value of a block, a roster key, and a block under the abbreviation whose own keys are near forms (wb-r63c F5, the gate's
  * G13/G13b shape); the abbreviation on string values (wb-b4lg F1, the gate's P1 shapes): a second diagnostic whose message is
@@ -1294,7 +1459,7 @@ const NO_KEYS: KeyLists = { resultKeys: [], provenanceKeys: [], workKeys: [], wo
  * work key lists of the roster. The planted diagnostics' other keys and values, the near forms and gp inside a longer word
  * (gpu-runner, gpuCount) are quiet. These are F1's vocabulary plants; a case form neither a plant here nor a row V probe of the
  * landed readers census carries, or a roster key list no plant here carries, is NOT CLAIMED (F1, DEFERRED R-ITEM-FORMS). */
-function vocabularyPlantItems(): RecordItem[] {
+function vocabularyPlantItems(read: PlantReading = plantedItems): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
     source.transaction_id = "gp-txn-1";
     source.graph_data_ir = null;
@@ -1325,7 +1490,7 @@ function vocabularyPlantItems(): RecordItem[] {
       (blocks[0] as JsonObject).gp_note = null;
     }
   });
-  return plantedItems(envelope, {
+  return read(envelope, {
     ...NO_KEYS,
     resultKeys: ["graphpolicy_rank", "gp_rank"],
     provenanceKeys: ["gpCheckpoint"],
@@ -1362,11 +1527,21 @@ const VOCABULARY_PLANTS: readonly string[] = [
   "plant-roster:result.provenance.gpCheckpoint",
   "plant-roster:result.work.graph_data_ir_count",
 ];
+/** The real record's prefix for each plant prefix (realRecord: the fixture envelope's items under "fixture:", the key roster's under
+ * "roster:"), so T3 and T4 judge their plants a second time at the positions a real item of the same path reads at (wb-lnz5 F1). */
+const REAL_PREFIXES: Readonly<Record<string, string>> = { "plant:": "fixture:", "plant-roster:": "roster:" };
+/** A planted position re-prefixed with the real record's prefix for its plant prefix (REAL_PREFIXES); a position under no plant
+ * prefix throws, so a plant that leaves both prefixes reds rather than passing unread. */
+function realPrefixed(at: string): string {
+  const plant = Object.keys(REAL_PREFIXES).find(prefix => at.startsWith(prefix));
+  if (plant === undefined) throw new Error(`a planted position under no plant prefix: ${at}`);
+  return `${REAL_PREFIXES[plant]}${at.slice(plant.length)}`;
+}
 /** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key
  * (the work-metrics key list), and a root key and a key of an array element's own object (wb-b4lg cut #3); the planted diagnostic's
  * own keys are quiet. These are F1's field plants; a roster key list with no field plant (the result, provenance and work key lists)
  * is NOT CLAIMED (F1, DEFERRED R-ITEM-FORMS). */
-function fieldPlantItems(): RecordItem[] {
+function fieldPlantItems(read: PlantReading = plantedItems): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
     source.receipt = null;
     result.score = 1;
@@ -1376,7 +1551,7 @@ function fieldPlantItems(): RecordItem[] {
     const blocks = result.blocks;
     if (Array.isArray(blocks) && isObject(blocks[0])) (blocks[0] as JsonObject).embeddings = [];
   });
-  return plantedItems(envelope, { ...NO_KEYS, workMetricsKeys: ["score_count"] });
+  return read(envelope, { ...NO_KEYS, workMetricsKeys: ["score_count"] });
 }
 /** What T4's judge must find among the planted items, and nothing else. */
 const FIELD_PLANTS: readonly string[] = [
@@ -1587,6 +1762,17 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const verdict = judgeRecord([...realRecord(), ...vocabularyPlantItems()]);
     const found = verdict.vocabulary.filter(at => planted.includes(at));
     expect(sorted(found), "the vocabulary plants are read, and no other planted item").toEqual(sorted(VOCABULARY_PLANTS));
+    // wb-lnz5 F1: the same plants judged a second time under the real record's prefixes (REAL_PREFIXES), beside the real record in
+    // one call, so the judge's readings are held at the real items' positions too, not only on plant-prefixed items (the gate's
+    // G21-MPLANT read a MENTION only when an item's position starts with plant).
+    const again = judgeRecord([...realRecord(), ...vocabularyPlantItems().map(item => ({ ...item, at: realPrefixed(item.at) }))]);
+    expect(sorted(again.vocabulary), "the vocabulary plants are read again under the real prefixes, and nothing else").toEqual(sorted(VOCABULARY_PLANTS.map(realPrefixed)));
+    // wb-lnz5 cut #2 (refusal #1 F1, the gate's P14-J7-INDEX: a MENTION read only on items placed after the real record in a call):
+    // the plants judged a third time in place - the planted envelope and roster read as the record itself (inPlaceItems), each plant
+    // among the real record's own items - so a reading that tells plants apart by their place in the call reds here.
+    const inPlaceRead = vocabularyPlantItems(inPlaceItems);
+    const inPlace = judgeRecord(inPlaceRead);
+    expect(sorted(inPlace.vocabulary), "the vocabulary plants are read in place among the real record's items, and nothing else").toEqual(sorted(VOCABULARY_PLANTS.map(realPrefixed)));
     const envelopeItems = realRecord().filter(item => item.at.startsWith("fixture:")).length;
     const rosterKeys = realRecord().filter(item => item.at.startsWith("roster:")).length;
     return json({
@@ -1595,6 +1781,11 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       diagnosticsRead: verdict.vocabulary.some(at => at.startsWith("plant:diagnostics[")),
       vocabularyFindings: verdict.vocabulary.filter(at => !planted.includes(at)),
       vocabularyPlants: found,
+      realPrefixPlants: again.vocabulary,
+      inPlacePlants: inPlace.vocabulary,
+      // The plants sit among the real record's items, not after them: the in-place record cut to the real record's own item count
+      // still carries plants the judge finds (wb-lnz5 cut #2).
+      inPlaceAhead: judgeRecord(inPlaceRead.slice(0, realRecord().length)).vocabulary.length > 0,
     });
   },
   T4: () => {
@@ -1602,11 +1793,22 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const verdict = judgeRecord([...realRecord(), ...fieldPlantItems()]);
     const found = verdict.fields.filter(at => planted.includes(at));
     expect(sorted(found), "the field plants are read, and no other planted item").toEqual(sorted(FIELD_PLANTS));
+    // wb-lnz5 (F1's cure shape on T4): the field plants judged a second time under the real record's prefixes, beside the real
+    // record in one call, so a judge skipping field words at the envelope's fixture: prefix reds here.
+    const again = judgeRecord([...realRecord(), ...fieldPlantItems().map(item => ({ ...item, at: realPrefixed(item.at) }))]);
+    expect(sorted(again.fields), "the field plants are read again under the real prefixes, and nothing else").toEqual(sorted(FIELD_PLANTS.map(realPrefixed)));
+    // wb-lnz5 cut #2 (T3's in-place reading on T4): the field plants judged a third time in place among the real record's items.
+    const inPlaceRead = fieldPlantItems(inPlaceItems);
+    const inPlace = judgeRecord(inPlaceRead);
+    expect(sorted(inPlace.fields), "the field plants are read in place among the real record's items, and nothing else").toEqual(sorted(FIELD_PLANTS.map(realPrefixed)));
     const schemaPin = /context\.render\.schema\.json at ([0-9a-f]{12})\)/.exec(exportRow(BEAD).title)?.[1] ?? null;
     return json({
       fieldWords: [...FIELD_WORDS],
       fieldFindings: verdict.fields.filter(at => !planted.includes(at)),
       fieldPlants: found,
+      realPrefixFieldPlants: again.fields,
+      inPlaceFieldPlants: inPlace.fields,
+      inPlaceFieldAhead: judgeRecord(inPlaceRead.slice(0, realRecord().length)).fields.length > 0,
       schemaPin,
     });
   },
@@ -1969,12 +2171,14 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
         piPlants: PI_PLANTS,
         claimPlants: CLAIM_PLANTS,
         vocabularyPlants: [...VOCABULARY_PLANTS],
+        realPrefixes: REAL_PREFIXES,
         fieldPlants: [...FIELD_PLANTS],
         pinPlant: PIN_PLANT,
         residuals: RESIDUALS,
         followUp: FOLLOW_UP,
         deferredTo: DEFERRED_TO,
         deferred: DEFERRED,
+        edgeControlRows: EDGE_CONTROL_ROWS,
         readers: [...READERS],
       }),
     ).toStrictEqual(ROSTER.constants);
@@ -2031,6 +2235,38 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
       Object.values(DEFERRED).flat(),
     );
     expect(exportRow(FOLLOW_UP).blockedBy, `${FOLLOW_UP}'s export row is blocked by ${DEFERRED_TO} (ruling R-B221's inversion)`).toContain(DEFERRED_TO);
+    // wb-lnz5 cut #2: the same blocks edge read a second time, apart from exportRow - off FOLLOW_UP's own parsed dependencies
+    // (trackedRow) - so an export whose edge to DEFERRED_TO is of another type reds whichever one of the two readers is hollowed (the
+    // gate's TWIN-RELATED).
+    const followUpRow = trackedRow(FOLLOW_UP);
+    expect(
+      edgesOf(followUpRow)
+        .filter(edge => edge.to === DEFERRED_TO)
+        .map(edge => edge.type),
+      `${FOLLOW_UP}'s own parsed dependencies carry its edge to ${DEFERRED_TO} as blocks (read apart from exportRow)`,
+    ).toContain("blocks");
+    // wb-lnz5 F2: exportRow takes a row's blocks dependencies only, read on the in-memory control rows through the same parse - the
+    // row carrying the four other types reads blockedBy [], the row carrying them beside one blocks edge reads exactly that edge's
+    // target (the gate's G21-NOTYPE, exportRow without its type filter, reads every edge as blocking).
+    const controls = EDGE_CONTROL_ROWS.map(row => JSON.stringify(row)).join("\n");
+    expect(EDGE_CONTROL_ROWS.map(row => exportRow(row.id, controls).blockedBy), "exportRow reads blocks dependencies only (the edge-type control)").toEqual([[], ["ctl-blocks"]]);
+    // wb-lnz5 cut #2: FOLLOW_UP's own row re-typed in memory - its parsed export row with the edge to DEFERRED_TO given each other type
+    // in turn, every other member unchanged (TWIN-RELATED's shape and its three siblings) - read through exportRow's export text: the
+    // edge reads as blocking under none of them.
+    const followUpEdges: unknown[] = Array.isArray(followUpRow.dependencies) ? followUpRow.dependencies : [];
+    const retyped = OTHER_EDGE_TYPES.map(type => JSON.stringify({ ...followUpRow, dependencies: followUpEdges.map(edge => (isObject(edge) && edge.depends_on_id === DEFERRED_TO ? { ...edge, type } : edge)) }));
+    expect(retyped.map(text => exportRow(FOLLOW_UP, text).blockedBy.includes(DEFERRED_TO)), `${FOLLOW_UP}'s row re-typed in memory reads unblocked by ${DEFERRED_TO} under each other type`).toEqual(OTHER_EDGE_TYPES.map(() => false));
+    // wb-lnz5 cut #2 (refusal #1 U1, the gate's P14-X1/X2/X3: the type filter skipped on the tracked export's own read, for every id but
+    // the control rows', or for every row shaped like a real export row): the type-held rows, real rows chosen on the tracked export
+    // apart from exportRow (typeHeldRows), each read through exportRow's default text as FOLLOW_UP's row is - one per other type with
+    // no blocks edge, read blockedBy [], and one with a blocks edge beside another type, read as exactly its blocks edges' targets.
+    const held = typeHeldRows();
+    expect(held.map(row => row.shape), "the tracked export holds a row of each type-held shape").toEqual([...OTHER_EDGE_TYPES, BLOCKS_BESIDE_OTHER]);
+    expect(held.find(row => row.shape === BLOCKS_BESIDE_OTHER)?.blocks.length ?? 0, "the blocks-beside-other row carries a blocks edge").toBeGreaterThan(0);
+    expect(
+      held.map(row => exportRow(row.id).blockedBy),
+      "exportRow reads blocks dependencies only on the tracked export's own rows (the type-held rows)",
+    ).toEqual(held.map(row => (row.shape === BLOCKS_BESIDE_OTHER ? row.blocks : [])));
   });
 
   for (const row of ROWS) {
