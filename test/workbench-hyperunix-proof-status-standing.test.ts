@@ -109,7 +109,8 @@
  *      the same cell: each variant (a planted status) with the exemplar's values set on it fires the probe and its registration
  *      twin (read off the probe's own record of the readings it judged: one judgement per variant, each the reading of the variant
  *      at its turn, pairwise distinct; and off the same record, the verdict it gave on each: the probe and its registration twin,
- *      frozen, the very list the control holds from its call at that turn), and the field-less reading with them set fires the twin
+ *      frozen, the very list the control holds from its call at that turn; a record the control reads only through a copy, frozen
+ *      and fresh on each read, each [reading, verdict] pair in it frozen), and the field-less reading with them set fires the twin
  *      alone, so a reading at the exemplar's values beside a planted status fires the probe the legs read quiet; for each of R2's,
  *      the channel reads or detects the planted member of a traced reading while the tracer records nothing (util.inspect shows it,
  *      util.types.isProxy tells the proxy, a structured clone refuses it while the plain reading clones with the member).
@@ -169,6 +170,13 @@
  * reading it is given, its verdict on that reading (frozen, and the same list fired returns), and the control also reads that
  * verdict off the record: at each variant's turn, the probe and its registration twin (compared by serialization), frozen, and the
  * very list the control holds from its call at that turn (compared by identity).
+ * wb-sidb (the R694 follow-up of landing 872, its gate's F1): the control's own statements could write both the probe's record and
+ * the list the control holds, so one edit at the subject of the control's assertion of the verdict (the gate's G05Q) or at the
+ * control's call (CFORGEQ) that put one frozen [label, twin] into the record's last entry and into the held list's last entry read
+ * green beside a probe hollow the control otherwise reds (L05, L06, or the gate's HODD, a probe blind to readings whose
+ * serialization has an odd length). The record is now kept in a list only the probe's closure holds, one frozen [reading, verdict]
+ * pair per call, and the control reads it only through record(), a fresh frozen copy of that list on each read; the control also
+ * checks that the copy it read is frozen and is not the copy a second read returns, and that each pair it read is frozen.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2). */
 import {readFileSync} from 'node:fs';
@@ -1270,23 +1278,31 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     // fired records each reading it is given beside its verdict on that reading (the ids of the probes the reading fires, frozen) and
     // returns that same list, in call order, so the positive control below reads the readings it judged off the probe's own record, not
     // off the readings it built (wb-i3iu), and its verdict on each off that record too, not only off the value its assertion holds; and
-    // the list the control holds from each call is that recorded list itself (wb-w6yw).
-    const given: (readonly [JsonValue, readonly string[]])[] = [];
-    const fired = (reading: JsonValue): readonly string[] => {
-      const values = valuesOf(reading);
-      const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
-      given.push([reading, verdict]);
-      return verdict;
-    };
+    // the list the control holds from each call is that recorded list itself (wb-w6yw). The record is no longer a list the control
+    // holds (wb-sidb): kept is a list only this closure holds, of one frozen [reading, verdict] pair per call, and the control reads it
+    // only through record(), which returns a fresh frozen copy of kept on each read.
+    const {fired, record} = (() => {
+      const kept: (readonly [JsonValue, readonly string[]])[] = [];
+      return {
+        fired: (reading: JsonValue): readonly string[] => {
+          const values = valuesOf(reading);
+          const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
+          kept.push(Object.freeze([reading, verdict] as const));
+          return verdict;
+        },
+        record: (): readonly (readonly [JsonValue, readonly string[]])[] => Object.freeze([...kept]),
+      };
+    })();
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
     // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
     // the readings fired judged are read off its own record (wb-i3iu): one judgement per variant, each given the reading of the variant
     // at its turn (rebuilt from that variant, compared by serialization), and pairwise distinct; and the verdict fired gave on each
     // judged reading is read off the same record (wb-w6yw): at each variant's turn, the probe and its registration twin (compared by
-    // serialization), frozen, and the very list the control holds from its call at that turn (compared by identity). So the probe the
-    // legs read quiet is one such a reading fires: a probe whose values no reading holds, or that fired never reports, reds here, where
-    // the legs alone read it quiet.
+    // serialization), frozen, and the very list the control holds from its call at that turn (compared by identity); and the record
+    // is read only through record() (wb-sidb): the copy the control reads is frozen and is not the copy a second read returns, and
+    // each [reading, verdict] pair in it is frozen. So the probe the legs read quiet is one such a reading fires: a probe whose values
+    // no reading holds, or that fired never reports, reds here, where the legs alone read it quiet.
     let controlled = 0;
     for (const [id, joints] of JOINT_RESIDUALS) {
       for (const joint of joints) {
@@ -1295,7 +1311,7 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         expect(fired(k3Reading(cell.reading, joint)), `${label} (field-less control)`).toStrictEqual([twin]);
         const readings = variants.map(variant => k3Reading(variant.reading, joint));
         expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
-        const first = given.length;
+        const first = record().length;
         const returned: (readonly string[])[] = [];
         for (const [index, reading] of readings.entries()) {
           const verdict = fired(reading);
@@ -1303,12 +1319,14 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
           expect(verdict, `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
           controlled++;
         }
-        const judged = given.slice(first).map(([reading]) => JSON.stringify(reading));
+        const copy = record();
+        const pairs = copy.slice(first);
+        const judged = pairs.map(([reading]) => JSON.stringify(reading));
         const unjudged = variants.filter((variant, index) => judged[index] !== JSON.stringify(k3Reading(variant.reading, joint)));
         expect(unjudged.map(variant => variant.label), `${label} (positive control, a variant not judged at its turn)`).toStrictEqual([]);
         expect(judged, `${label} (positive control, one judgement per variant)`).toHaveLength(variants.length);
         expect(new Set(judged).size, `${label} (positive control, the judged readings pairwise distinct)`).toBe(variants.length);
-        const recorded = given.slice(first).map(([, verdict]) => verdict);
+        const recorded = pairs.map(([, verdict]) => verdict);
         const misjudged = variants.filter((_, index) => JSON.stringify(recorded[index]) !== JSON.stringify([label, twin]));
         expect(misjudged.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not the probe and its twin)`)
           .toStrictEqual([]);
@@ -1317,6 +1335,10 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
           .toStrictEqual([]);
         const unfrozen = variants.filter((_, index) => !Object.isFrozen(recorded[index]));
         expect(unfrozen.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not frozen)`).toStrictEqual([]);
+        expect([Object.isFrozen(copy), copy !== record()], `${label} (positive control, the record not read through a frozen copy fresh on each read)`)
+          .toStrictEqual([true, true]);
+        const unsealed = variants.filter((_, index) => !Object.isFrozen(pairs[index]));
+        expect(unsealed.map(variant => variant.label), `${label} (positive control, a variant whose recorded pair is not frozen)`).toStrictEqual([]);
       }
     }
     expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
