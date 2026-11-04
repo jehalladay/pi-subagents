@@ -229,7 +229,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the carriers, the citation, the filing tree and the producer lines; the src registry binds the effect classes",
-  "the landed judge: this file's top-level declarations name no export of test/helpers/apo-citation-status-judge.ts, its named imports from that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their stand-ins as listed",
+  "the landed judge: no top-level declaration of this file that declaredNames reads names an export of test/helpers/apo-citation-status-judge.ts, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their 27 and 8 stand-ins as listed",
   "P1",
   "E1",
   "E2",
@@ -883,12 +883,22 @@
         {
          "path": "docs/workbench/d.md",
          "text": "#D\n"
+        },
+        {
+         "path": "docs/workbench/e.md",
+         "text": ""
+        },
+        {
+         "path": "docs/workbench/f.md",
+         "text": " # F\n"
         }
        ],
        "headingless": [
         "docs/workbench/b.md",
         "docs/workbench/c.md",
-        "docs/workbench/d.md"
+        "docs/workbench/d.md",
+        "docs/workbench/e.md",
+        "docs/workbench/f.md"
        ],
        "receipts": [
         {
@@ -906,13 +916,66 @@
         {
          "path": "docs/workbench/receipts/wb-w.md",
          "text": "## wb-w: A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-v.md",
+         "text": "# wb-v:A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-t.md",
+         "text": " # wb-t: A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-s.md",
+         "text": "# WB-S: A title\n"
+        },
+        {
+         "path": "docs/workbench/receipts/wb-u.md",
+         "text": ""
+        },
+        {
+         "path": "docs/workbench/receipts/zz.md",
+         "text": "Text.\n"
+        },
+        {
+         "path": "docs/workbench/receipts/sub/wb-q.md",
+         "text": "# wb-q: A title\n"
         }
        ],
        "untitled": [
         "docs/workbench/receipts/wb-y.md",
         "docs/workbench/receipts/wb-z.md",
-        "docs/workbench/receipts/wb-w.md"
-       ]
+        "docs/workbench/receipts/wb-w.md",
+        "docs/workbench/receipts/wb-v.md",
+        "docs/workbench/receipts/wb-t.md",
+        "docs/workbench/receipts/wb-s.md",
+        "docs/workbench/receipts/wb-u.md",
+        "docs/workbench/receipts/zz.md"
+       ],
+       "liveScope": {
+        "paths": [
+         "docs/workbench/a.md",
+         "docs/workbench/sub/x.md",
+         "docs/workbench/receipts.md",
+         "docs/workbench/sub/receipts/wb-r.md",
+         "docs/workbench/receipts/wb-x.md",
+         "docs/workbench/receipts/zz.md",
+         "docs/workbench/receipts/sub/wb-q.md",
+         "docs/workbench-old/z.md",
+         "docs/other/y.md"
+        ],
+        "pages": [
+         "docs/workbench/a.md",
+         "docs/workbench/sub/x.md",
+         "docs/workbench/receipts.md",
+         "docs/workbench/sub/receipts/wb-r.md"
+        ],
+        "receipts": [
+         "docs/workbench/receipts/wb-x.md",
+         "docs/workbench/receipts/zz.md",
+         "docs/workbench/receipts/sub/wb-q.md"
+        ]
+       }
       },
       "findings": [
        "docs/workbench/zz-wb-021.6-plant.md:3 status",

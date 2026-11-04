@@ -10,28 +10,36 @@
  * first lands." The filing measured "0 git-grep hits for adaptive-policy-organizations/APO- in the Pi tree at 4ae0470" and
  * cites the producer line 01-vision-decisions.md:21@4b8b974ca72b.
  *
- * CUT #6 (this cut), the post-inversion re-cut over the landed carrier: the mechanical restatement that orchestrator ruling
- * R-B205 (M:42017, the rule-19 dependency inversion at refusal #5, M:42009 / O:1577) binds, "its eventual re-cut a mechanical
- * restatement over the child's landed reader". Cuts #1-#5 (63b8cbc7, 54827238, d98d322d, 3fa62517, cdea135d) carried this file's
- * own copy of the judge and stated its readings in the header (from cut #4 on, in five guarded clauses); refusals #1-#5 measured
- * gate-authored one-edit judge members that left the census green on readings the header stated; R-B160 (M:40301) exited the
- * rule-19 loop with the child wb-021.9 carrying the judge-mutant coverage, and R-B205 inverted the dependency at refusal #5. The
- * judge's code (cut #5's code lines, each moved byte for byte but for an export prefix; its doc comments are not on trunk) landed
- * as test/helpers/apo-citation-status-judge.ts with wb-021.11 at landing 855, and wb-021.9 landed its census over that module at
- * landing 912. This cut (1) deletes this file's copy of the judge - the 328 lines 362-363, 368-369, 371-372, 398-410, 551-566,
- * 568-789, 804-830, 833-834 and 841-882 of cut #5's census, code, doc comments and blank lines - and imports the names it reads
- * from that module; (2) adds THE LANDED JUDGE case, which reds while a top-level declaration of this file names one of that
- * module's exports; (3) holds the 14 gate pages of refusal #5's leg 2 as controls, each path and text byte-identical to the page
- * of the same id in that refusal's witness files and each expected cause the landed judge's reading: U1
- * GP18-SC-literal-as-scope's P-SC-LIT-DOC, P-SC-LIT-SRC and P-SC-LIT-TWIN in C5, U2 GP18-CV-single-child-raw's seven P-CV pages
- * and their twin P-CV-QUOTE-TWIN in C4, and U3 GP18-EC-receiver-identifier-only's P-EC-THIS and P-EC-CHAIN with F1's
- * P-EC-CASE-KEY in E2; (4) gives C1's two live checks (every docs/workbench page outside receipts/ opening with a level-1 heading
- * unit, every receipt with its rule-15 first line) and C2's live schema-literal check negative controls - 4, 4 and 7 stand-in
- * files whose readings C1's and C2's witnesses now hold; and (5) withdraws the five guarded clauses, THE NAMED PATTERNS AND WHITE
- * SPACE and THE HOLES: what the judge reads is claimed by its carrier censuses, not here (NOT CLAIMED below), and this header
- * claims the pinned reader set only. Besides those five witnesses (E2, C4, C5, C1 and C2, each only gaining entries) and the new
- * case's title in the roster's tests, no pin's witness and no row, label, quote, constant, floor, tree, plant or residual
- * changes.
+ * CUT #7 (this cut), the restatement that orchestrator ruling R-B512 (M:54897, the 22(d) post-ladder disposition of refusal #6,
+ * gate-refused M:54886 / O:2015, cut #6 035ef486) binds: "a further restatement in the same lineage with CLAIMS EQUAL TO PINS
+ * (the R-B383/R-B406 form): kill-or-pin per member - pin the headed/no-unit page reading, the colon-space receipt form, the two
+ * scope claims and the judge's rest/defaulted declaredNames elements red-first with their paired witnesses, or narrow each claim
+ * word to exactly the pinned subset". This cut (1) moves C1's two scope filter statements, unchanged but for their indentation,
+ * into the reader liveScope, pins it with 9 stand-in paths, a page below a subdirectory (U4, GP7-C1-PAGES-TOP-ONLY) and a receipt
+ * not named for a bead (U3, GP7-C1-RECEIPTS-WB-ONLY) among them, and holds its live parts to docs/workbench's filesystem walk;
+ * (2) gives headingless a page with no unit (U1, GP7-HL-EMPTY-HEADED) and an indented heading, and untitled a title with no space
+ * after the colon (U2, GP7-UT-COLON-NOSPACE), an indented title, a title naming the bead in another case, a receipt with no unit,
+ * a text-only receipt not named for a bead and a titled receipt below a subdirectory; (3) gives declaredNames rest and defaulted
+ * elements of an object and an array pattern (U5, GP7-LJ-REST-SKIPPED; U6, GP7-LJ-DEFAULT-SKIPPED) beside a renamed element and a
+ * nested pattern, var and declare const statements, a second statement, bodiless, async and generator functions, an abstract
+ * class and a const enum, and judgeImports an inline type specifier, two declarations, a default import beside named ones and
+ * another specifier of the judge's file name; (4) gives the tiling rule two stand-ins whose quotes reuse text an earlier quote
+ * tiled (refusal #6 F3, GP7-TL-NO-ORDER); and (5) narrows those readers' claim words below, and THE LANDED JUDGE case's title, to
+ * the stand-ins that pin them, every other reading NOT CLAIMED (d). The readers' code (headingless, untitled, declaredNames,
+ * shadowed, judgeImports and tiles) is byte-identical to cut #6's. Besides C1's witness (liveStandIns only gains entries) and
+ * that title in the roster's tests, no pin's witness and no row, label, quote, constant, floor, tree, plant or residual changes.
+ * LINEAGE. Cuts #1-#5 (63b8cbc7, 54827238, d98d322d, 3fa62517, cdea135d) carried this file's own copy of the judge; R-B160
+ * (M:40301) exited the rule-19 loop at refusal #4 with the child wb-021.9, and R-B205 (M:42017) executed the dependency inversion
+ * at refusal #5 (M:42009 / O:1577), parking this bead behind wb-021.9. Refusal #5's BIND note (its NEXT STEP, after the R-B193
+ * and R-B202 precedents) named the parent's "eventual re-cut a mechanical restatement over the child's landed reader"; the quote
+ * is that note's, not R-B205's. The judge's code landed as test/helpers/apo-citation-status-judge.ts with wb-021.11 at landing
+ * 855, and wb-021.9 landed its census over that module at landing 912. Cut #6 (035ef486, the store pick M:53970 after wb-021.9
+ * closed) deleted this file's copy of the judge (the 328 lines 362-363, 368-369, 371-372, 398-410, 551-566, 568-789, 804-830,
+ * 833-834 and 841-882 of cut #5's census) and imported the names it reads from that module, added THE LANDED JUDGE case, held
+ * refusal #5's 14 gate pages as controls (P-SC-LIT-DOC, P-SC-LIT-SRC and P-SC-LIT-TWIN in C5, the seven P-CV pages and
+ * P-CV-QUOTE-TWIN in C4, P-EC-THIS, P-EC-CHAIN and P-EC-CASE-KEY in E2), gave C1's and C2's live checks stand-ins and withdrew
+ * the five guarded clauses, THE NAMED PATTERNS AND WHITE SPACE and THE HOLES; R-B512 ruled its refusal #6 in the R-B406 class
+ * (post-inversion re-cut over landed carriers).
  * MEASURED (read-only, with this census's readers). At the base 04123dc (cut #1, 2026-10-29): the producer (the local
  * MechanicalWorkflows checkout at 4b8b974ca72bf2ed36b99e315e45857c6181fbe8, git show; PRODUCER below and the roster's producer
  * block hold its lines and blobs, and the hermetic census never re-reads it) reads README.md:3 (blob 512de7eeb579)
@@ -46,14 +54,17 @@
  * docs/workbench/14-qa-and-benchmarks.md, docs/workbench/receipts/wb-d8io.md, docs/workbench/receipts/wb-xfkx.md and
  * src/workbench/hyperunix-observer.ts modified - and the landed judge reads the product scope as 352 files (129 markdown, 198
  * scripts of which 117 under src/, 18 other text files, 5 binaries and the 2 locks), 159380 units, 11350 doc units and 16809
- * strings, with no citing unit: the absence holds at this trunk. No src, docs or tracker text is edited by this cut.
+ * strings, with no citing unit: the absence holds at this trunk. At trunk a14c87f (landing 925's ledger hop), merged into this
+ * branch before cut #7's handoff, git diff de6deb2 a14c87f outside test/ and .beads/ is one modified path
+ * (docs/workbench/07-native-integrations.md), and the landed judge reads the product scope as the same 352 files, 159380 units,
+ * 11350 doc units and 16809 strings, with no citing unit. No src, docs or tracker text is edited by this cut.
  * PINNED READER SET (the claim form: each case of this file, test/workbench-apo-citation-status-census.test.ts, by its id, with
  * what it asserts; observed at the handoff: 40 passed (40)). This file reads the judge by calls of the landed module's exports:
  * judgeFiles (directly, through its causesOf, or through this file's readScope), unitsOf (C1's and C2's live checks), cites (C3
- * and the outside anchors) and bindingOf (G1 and M2); THE LANDED JUDGE holds that no top-level declaration here names one of
- * those exports. A CONTROL is a text judged alone as a whole file at its path (docs/workbench/x.md unless it names one) whose
- * causes must equal its literal list, and a quiet row's PROBE is a text judged alone at its path whose causes must be empty; each
- * such literal is claimed for its own text at its own path only.
+ * and the outside anchors) and bindingOf (G1 and M2); THE LANDED JUDGE holds that no top-level declaration here that
+ * declaredNames reads names one of the module's exports. A CONTROL is a text judged alone as a whole file at its path
+ * (docs/workbench/x.md unless it names one) whose causes must equal its literal list, and a quiet row's PROBE is a text judged
+ * alone at its path whose causes must be empty; each such literal is claimed for its own text at its own path only.
  * - THE JUDGED SET ("the judged set: ..."): ROWS' frozen-shape literal ["P:1", "E:3", "C:5", "G:2", "M:2", "Q:23"]; ROWS' ids,
  *   labels and pins equal the roster's rows; IMPL's keys are the pins and QUOTES' keys the pins of rows P, E, C, G and M; the
  *   roster names this bead; PRODUCER equals the roster's producer block; constantsOf() equals the roster's constants - among
@@ -68,19 +79,28 @@
  *   source names any of those five; and each quoted word of a QUOTES entry is in its pin's roster witness.
  * - THE OUTSIDE ANCHORS ("the outside anchors: ..."), read from this bead's own row of .beads/issues.jsonl and from
  *   src/workbench/capability-registry.ts: rows P, E and C tile the title after its prefix and rows G and M the notes' first
- *   "Acceptance: " sentence, and each row's pin quotes tile its label, with nothing but separators between (the tiling rule reads
- *   its six stand-ins as listed, every separator kind among them); the scope carrier is the statement's lead word and its closing
+ *   "Acceptance: " sentence, and each row's pin quotes tile its label, in order and with nothing but separators between (the
+ *   tiling rule reads its eight stand-ins as listed: every separator kind among them, and two whose quotes reuse text an earlier
+ *   quote tiled, read as not tiling); the scope carrier is the statement's lead word and its closing
  *   duty's, the status carrier the statement's word; the program id is the statement's, roleReading reads it as the slug and each
  *   of its slug words is a SLUG form; the abbreviation is the statement's; the requirement id reads as the slug; the statement's
  *   two quotes are on the producer's :21 line and in P1's witness; the notes cite the producer's file, line and sha; FILING_TREE
  *   is the notes' measuring tree, both of the notes' needles cite and G2's witness carries the filing tree; C3's, C4's and C5's
  *   quotes name and their witnesses carry the program id and the two carrier words; and the registry's descriptor type holds read
  *   and, beside it, exactly the effect classes E2's witness lists.
- * - THE LANDED JUDGE ("the landed judge: ..."): the landed module's top-level export declarations name judgeFiles, causesOf,
- *   bindingOf and READS; this file's top-level declarations (function, class, interface, type alias and enum declarations by
- *   name, variable statements by every declarator and binding-pattern name) name none of that module's exports; this file's
- *   named imports from "./helpers/apo-citation-status-judge.js" hold those four and name only the module's exports; and the
- *   two readers - shadowed, over declaredNames, and judgeImports - read their 13 and 4 stand-in sources as their literals list.
+ * - THE LANDED JUDGE ("the landed judge: ..."): the landed module's top-level export declarations, as declaredNames reads them,
+ *   name judgeFiles, causesOf, bindingOf and READS; no top-level declaration of this file that declaredNames reads names one of
+ *   that module's exports; the names judgeImports reads from this file's imports of "./helpers/apo-citation-status-judge.js"
+ *   hold those four and name only the module's exports; and the two readers read their stand-in sources as their literals list,
+ *   which is all they claim. shadowed, over declaredNames, reads its 27: a function declaration (a bodiless, an async and a
+ *   generator one beside it), a class (and an abstract one), an interface, a type alias and an enum (and a const one) by its
+ *   name; a const, a let (its second declarator), a var and a declare const statement by each declarator's name, and by each
+ *   name its binding pattern binds - an object and an array pattern (an omitted element skipped), a rest and a defaulted element
+ *   of each, a renamed element and a nested pattern; a name in a second statement; an export here; and, read as naming none, an
+ *   unexported name there, a declaration nested in a function body and an import. judgeImports reads its 8: named and aliased
+ *   specifiers (an alias read as the name it imports), a type-only declaration, an inline type specifier, two declarations and a
+ *   default import beside named ones (the named read), and, read as naming none, another module, another specifier of the
+ *   judge's file name and a namespace import.
  * - P1: PRODUCER's :20 line is "## Non-goals"; :21's last non-goal is "effectful DevTools" and its closing sentence "All remain
  *   separate owners or deferred research."; README.md:3's status sentence is STATUS_LITERAL; SCOPE_WORD is "non-" and that
  *   non-goal's first word; 3 controls.
@@ -89,10 +109,20 @@
  *   the banner and its line-2 "effect-class:write" the only finding.
  * - E2: 51 controls at src/x.ts - one per effect class the registry names beside read (three at the handoff) and 48 more,
  *   P-EC-THIS, P-EC-CHAIN and P-EC-CASE-KEY among them. E3: 15 controls.
- * - C1: git's markdown list holds at least 106 files; docs/'s markdown list equals the walk's both ways; every docs/workbench
- *   page outside receipts/ has a first unit opening "# " and every receipt one opening "# <bead>: " (headingless and untitled,
- *   which read their 4 and 4 stand-ins as listed); one call over every listed markdown file and PLANT_DOC reads each as
- *   markdown, at least 6700 units, and only the plant's line-3 status and scope findings; 53 controls.
+ * - C1: git's markdown list holds at least 106 files; docs/'s markdown list equals the walk's both ways; liveScope parts that
+ *   list into the pages and the receipts the two live checks read, which together are docs/workbench's markdown files in the
+ *   filesystem walk, both ways, and it reads its 9 stand-in paths as listed, which is all it claims: pages at the top of
+ *   docs/workbench/ and below a subdirectory, a page named receipts.md and one under a receipts/ directory below a
+ *   subdirectory; receipts named for a bead and not, and one below a subdirectory of receipts/; and, read as neither, a path
+ *   under docs/workbench-old/ and one under docs/other/. Every page liveScope parts out has a first unit opening "# " as
+ *   headingless reads it, and headingless reads its 6 stand-ins as listed: a page opening "# " headed; a page opening "## ",
+ *   one whose heading is not its first unit, one opening "#" with no space, one indented a space and one with no unit, each
+ *   headingless. Every receipt liveScope parts out has one opening "# ", the file's own name without .md and ": " as untitled
+ *   reads it, and untitled reads its 10 stand-ins as listed: its own bead's title, and one below a subdirectory, titled;
+ *   another bead's title, a title with no colon, a level-2 one, one with no space after the colon, one indented a space, one
+ *   naming the bead in another case, a receipt with no unit and a text-only one not named for a bead, each untitled. One call
+ *   over every listed markdown file and PLANT_DOC reads each as markdown, at least 6700 units, and only the plant's line-3
+ *   status and scope findings; 53 controls.
  * - C2: git's script list holds at least 198 files; among the src files only src/workbench/identity.ts holds the schema literal
  *   "workflow-script/v1" as a string unit (schemaHolders, which reads its 7 stand-ins as listed); one call over every listed
  *   script and PLANT_STRING reads each as a script, at least 15100 strings, and only the plant's line-1 status and scope
@@ -140,8 +170,10 @@
  * control's or a probe's form written otherwise than its text - with other words, values, cases, marks or white space, another
  * count, order, position, depth, indentation or line layout, or at another path: a control's id names its text, not a family; (c)
  * that a named judge member reds this census (no case runs a member; the cutting seat and the gate replay members as edited
- * judges); (d) THE LANDED JUDGE beyond its readers' stand-ins: a declaration nested below the top level, a module export written
- * as an export clause, a re-export or a default export, and an import other than by named specifiers of that exact specifier; (e)
+ * judges); (d) a reading of liveScope, headingless, untitled, schemaHolders, the tiling rule, declaredNames or judgeImports beyond
+ * their stand-ins - for THE LANDED JUDGE, among others, a declaration nested below the top level, a namespace, module or global
+ * declaration, an import-equals declaration, a using declaration, a module export written as an export clause, an export
+ * assignment, a re-export or a default export, and an import other than by named specifiers of that exact specifier; (e)
  * edits of this file and the roster together: a residual family removed from ROWS, the literal, IMPL, RESIDUALS, this header's
  * RESIDUALS line and the roster (no anchor outside this file and its roster names the residual families: CT6 on Q16 measured
  * green at cuts #1 and #2; the landed record is the anchor a follow-up can bind, the wb-59u1 F3 form); a pin folded into its
@@ -427,11 +459,17 @@ function walkOf(root: string, directory: string): string[] {
 function readScope(root: string, paths: readonly string[], plants: readonly FileText[] = []): Judgement {
   return judgeFiles([...paths.map(path => ({ path, text: readFileSync(join(root, path), "utf8") })), ...plants]);
 }
-/** C1's live page check: the pages whose first unit does not open with "# ". */
+/** C1's live-check scope: docs/'s markdown list parted, in list order, into the docs/workbench pages outside receipts/ and the receipts; what it claims is the reading of its 9 stand-in paths (C1). */
+function liveScope(docs: readonly string[]): { readonly pages: string[]; readonly receipts: string[] } {
+  const pages = docs.filter(path => path.startsWith("docs/workbench/") && !path.startsWith("docs/workbench/receipts/"));
+  const receipts = docs.filter(path => path.startsWith("docs/workbench/receipts/"));
+  return { pages, receipts };
+}
+/** C1's live page check: the pages whose first unit does not open with "# " (a page with no unit among them); what it claims is the reading of its 6 stand-ins (C1). */
 function headingless(pages: readonly FileText[]): string[] {
   return pages.filter(page => !(unitsOf(page.path, page.text)[0]?.text ?? "").startsWith("# ")).map(page => page.path);
 }
-/** C1's live receipt check: the receipts whose first unit does not open with "# ", the file's own bead (its name without .md) and ": ". */
+/** C1's live receipt check: the receipts whose first unit does not open with "# ", the file's own bead (its name without .md) and ": " (a receipt with no unit among them); what it claims is the reading of its 10 stand-ins (C1). */
 function untitled(receipts: readonly FileText[]): string[] {
   return receipts.filter(receipt => !(unitsOf(receipt.path, receipt.text)[0]?.text ?? "").startsWith(`# ${(receipt.path.split("/").pop() ?? "").replace(/\.md$/, "")}: `)).map(receipt => receipt.path);
 }
@@ -531,7 +569,7 @@ function acceptanceOf(notes: string): string {
 function quotedWords(text: string): string[] {
   return [...text.matchAll(/'([^']+)'/g)].map(match => match[1] ?? "");
 }
-/** The quotes tile the text in order, with nothing but separators (white space, comma, semicolon, colon, period, parentheses) between. */
+/** The quotes tile the text in order (each quote found after the one before it ends), with nothing but separators (white space, comma, semicolon, colon, period, parentheses) between, as the outside anchors case's 8 stand-ins read it. */
 function tiles(text: string, quotes: readonly string[]): boolean {
   let at = 0;
   for (const quote of quotes) {
@@ -606,7 +644,7 @@ const JUDGE_MODULE = "test/helpers/apo-citation-status-judge.ts";
 const JUDGE_SPECIFIER = "./helpers/apo-citation-status-judge.js";
 /** The judge's four entries this census calls by name. */
 const JUDGE_ENTRIES: readonly string[] = ["judgeFiles", "causesOf", "bindingOf", "READS"];
-/** The names a script's top-level statements declare: a function, class, interface, type alias or enum declaration by its name and a variable statement by every declarator's name and every binding-pattern name in it; with exportedOnly, only statements that carry an export modifier. */
+/** The names a script's top-level statements declare, as THE LANDED JUDGE case's 27 declaration stand-ins read them: a function, class, interface, type alias or enum declaration by its name, and a variable statement by each declarator's name and each name its binding pattern binds (a rest, a defaulted, a renamed and a nested element among them, an omitted element skipped); with exportedOnly, only statements that carry an export modifier. */
 function declaredNames(text: string, exportedOnly: boolean): string[] {
   const file = ts.createSourceFile("declared.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const names: string[] = [];
@@ -623,12 +661,12 @@ function declaredNames(text: string, exportedOnly: boolean): string[] {
   }
   return names;
 }
-/** A census source's top-level names that a judge source's top-level export declarations also declare, in the census's order. */
+/** A census source's top-level names that a judge source's top-level export declarations also declare, each as declaredNames reads it, in the census's order. */
 function shadowed(census: string, judge: string): string[] {
   const exported = new Set(declaredNames(judge, true));
   return declaredNames(census, false).filter(name => exported.has(name));
 }
-/** The names a source's import declarations of the judge specifier bind by name, an aliased specifier read as the name it imports. */
+/** The names a source's import declarations of the judge specifier bind by name, an aliased specifier read as the name it imports, as THE LANDED JUDGE case's 8 import stand-ins read them. */
 function judgeImports(text: string): string[] {
   const file = ts.createSourceFile("imports.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   return file.statements.flatMap(statement => {
@@ -756,35 +794,77 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(listed.length, `floor: ${FLOORS.docs} Pi docs at this census's base`).toBeGreaterThanOrEqual(FLOORS.docs);
     const docs = listed.filter(path => path.startsWith("docs/"));
     expect(docs, "docs/: git's markdown list is the filesystem walk's, both ways").toEqual(walkOf(REPO, "docs").filter(path => MARKDOWN.test(path)));
-    const pages = docs.filter(path => path.startsWith("docs/workbench/") && !path.startsWith("docs/workbench/receipts/"));
+    const { pages, receipts } = liveScope(docs);
+    expect(
+      [...pages, ...receipts].sort(),
+      "liveScope's pages and receipts together are docs/workbench's markdown files in the filesystem walk, both ways",
+    ).toEqual(walkOf(REPO, "docs/workbench").filter(path => MARKDOWN.test(path)));
     expect(
       headingless(pages.map(path => ({ path, text: textOf(path) }))),
-      "every docs/workbench page outside receipts/ opens with a level-1 heading unit",
+      "every page liveScope parts out opens with a level-1 heading unit as headingless reads it",
     ).toEqual([]);
-    const receipts = docs.filter(path => path.startsWith("docs/workbench/receipts/"));
     expect(
       untitled(receipts.map(path => ({ path, text: textOf(path) }))),
-      "every receipt opens with its rule-15 first line '# <bead>: '",
+      "every receipt liveScope parts out opens with its rule-15 first line '# <bead>: ' as untitled reads it",
     ).toEqual([]);
+    const scopePaths: readonly string[] = [
+      "docs/workbench/a.md",
+      "docs/workbench/sub/x.md",
+      "docs/workbench/receipts.md",
+      "docs/workbench/sub/receipts/wb-r.md",
+      "docs/workbench/receipts/wb-x.md",
+      "docs/workbench/receipts/zz.md",
+      "docs/workbench/receipts/sub/wb-q.md",
+      "docs/workbench-old/z.md",
+      "docs/other/y.md",
+    ];
     const pageStandIns: readonly FileText[] = [
       { path: "docs/workbench/a.md", text: "# A\n\nText.\n" },
       { path: "docs/workbench/b.md", text: "## B\n\nText.\n" },
       { path: "docs/workbench/c.md", text: "Text first.\n\n# C\n" },
       { path: "docs/workbench/d.md", text: "#D\n" },
+      { path: "docs/workbench/e.md", text: "" },
+      { path: "docs/workbench/f.md", text: " # F\n" },
     ];
     const receiptStandIns: readonly FileText[] = [
       { path: "docs/workbench/receipts/wb-x.md", text: "# wb-x: A title\n\n## 2026-11-04 entry\n" },
       { path: "docs/workbench/receipts/wb-y.md", text: "# wb-x: A title\n" },
       { path: "docs/workbench/receipts/wb-z.md", text: "# wb-z A title\n" },
       { path: "docs/workbench/receipts/wb-w.md", text: "## wb-w: A title\n" },
+      { path: "docs/workbench/receipts/wb-v.md", text: "# wb-v:A title\n" },
+      { path: "docs/workbench/receipts/wb-t.md", text: " # wb-t: A title\n" },
+      { path: "docs/workbench/receipts/wb-s.md", text: "# WB-S: A title\n" },
+      { path: "docs/workbench/receipts/wb-u.md", text: "" },
+      { path: "docs/workbench/receipts/zz.md", text: "Text.\n" },
+      { path: "docs/workbench/receipts/sub/wb-q.md", text: "# wb-q: A title\n" },
     ];
-    const liveStandIns = { pages: pageStandIns, headingless: headingless(pageStandIns), receipts: receiptStandIns, untitled: untitled(receiptStandIns) };
+    const liveStandIns = {
+      pages: pageStandIns,
+      headingless: headingless(pageStandIns),
+      receipts: receiptStandIns,
+      untitled: untitled(receiptStandIns),
+      liveScope: { paths: scopePaths, ...liveScope(scopePaths) },
+    };
+    expect(liveStandIns.liveScope, "liveScope reads its stand-in paths as listed").toEqual({
+      paths: scopePaths,
+      pages: ["docs/workbench/a.md", "docs/workbench/sub/x.md", "docs/workbench/receipts.md", "docs/workbench/sub/receipts/wb-r.md"],
+      receipts: ["docs/workbench/receipts/wb-x.md", "docs/workbench/receipts/zz.md", "docs/workbench/receipts/sub/wb-q.md"],
+    });
     expect(
       { headingless: liveStandIns.headingless, untitled: liveStandIns.untitled },
       "the two live checks read their stand-ins as listed",
     ).toEqual({
-      headingless: ["docs/workbench/b.md", "docs/workbench/c.md", "docs/workbench/d.md"],
-      untitled: ["docs/workbench/receipts/wb-y.md", "docs/workbench/receipts/wb-z.md", "docs/workbench/receipts/wb-w.md"],
+      headingless: ["docs/workbench/b.md", "docs/workbench/c.md", "docs/workbench/d.md", "docs/workbench/e.md", "docs/workbench/f.md"],
+      untitled: [
+        "docs/workbench/receipts/wb-y.md",
+        "docs/workbench/receipts/wb-z.md",
+        "docs/workbench/receipts/wb-w.md",
+        "docs/workbench/receipts/wb-v.md",
+        "docs/workbench/receipts/wb-t.md",
+        "docs/workbench/receipts/wb-s.md",
+        "docs/workbench/receipts/wb-u.md",
+        "docs/workbench/receipts/zz.md",
+      ],
     });
     const reading = readScope(REPO, listed, [PLANT_DOC]);
     expect(reading.kinds.markdown, "every Pi doc and the plant are read as markdown").toBe(listed.length + 1);
@@ -1406,9 +1486,11 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
         tiles("a b x", ["a", "b"]),
         tiles("(a); b: c. d,\te", ["a", "b", "c", "d", "e"]),
         tiles("a (,;:.)\t", ["a"]),
+        tiles("a b", ["a b", "b"]),
+        tiles("a b", ["a", "b", "a", "b"]),
       ],
-      "the tiling rule: only separators between the quotes, before the first and after the last (every separator kind before, between and after)",
-    ).toEqual([true, false, false, false, true, true]);
+      "the tiling rule: only separators between the quotes, before the first and after the last (every separator kind before, between and after), each quote found after the one before it ends",
+    ).toEqual([true, false, false, false, true, true, false, false]);
     // The carriers and the citation are the statement's own words.
     expect(SCOPE_WORD, "the scope carrier is the statement's lead word").toBe((/^(\S+) scope:/.exec(statement)?.[1] ?? "").toLowerCase());
     expect(statement.endsWith(`this ${SCOPE_WORD} scope.`), "and its closing duty's").toBe(true);
@@ -1448,14 +1530,14 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(isObject(e2) ? e2.effectful : undefined, "E2 judges every effect class the registry names beside read").toEqual(registry.filter(member => member !== READ));
   });
 
-  it("the landed judge: this file's top-level declarations name no export of test/helpers/apo-citation-status-judge.ts, its named imports from that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their stand-ins as listed", () => {
+  it("the landed judge: no top-level declaration of this file that declaredNames reads names an export of test/helpers/apo-citation-status-judge.ts, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their 27 and 8 stand-ins as listed", () => {
     const judge = textOf(JUDGE_MODULE);
     const exported = declaredNames(judge, true);
     expect(exported, `${JUDGE_MODULE}'s top-level export declarations name the four entries`).toEqual(expect.arrayContaining([...JUDGE_ENTRIES]));
     const census = readFileSync(SELF, "utf8");
-    expect(shadowed(census, judge), "no top-level declaration of this file names an export of the judge module").toEqual([]);
+    expect(shadowed(census, judge), "no top-level declaration of this file that declaredNames reads names an export of the judge module").toEqual([]);
     const imported = judgeImports(census);
-    expect(imported, "this file's named imports from the judge module hold the four entries").toEqual(expect.arrayContaining([...JUDGE_ENTRIES]));
+    expect(imported, "the names judgeImports reads from this file's imports of the judge module hold the four entries").toEqual(expect.arrayContaining([...JUDGE_ENTRIES]));
     expect(
       imported.filter(name => !exported.includes(name)),
       "and name only the module's exports",
@@ -1472,14 +1554,28 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     ].join("\n");
     const declarations: readonly { readonly id: string; readonly text: string; readonly names: readonly string[] }[] = [
       { id: "function", text: "function judgeFiles(): void {}", names: ["judgeFiles"] },
+      { id: "bodiless-function", text: "declare function judgeFiles(): void;", names: ["judgeFiles"] },
+      { id: "async-function", text: "async function judgeFiles(): Promise<void> {}", names: ["judgeFiles"] },
+      { id: "generator-function", text: "function* judgeFiles(): Generator<number> {}", names: ["judgeFiles"] },
       { id: "const", text: "const BLANK = 1;", names: ["BLANK"] },
       { id: "second-declarator", text: "let x = 1, BLANK = 2;", names: ["BLANK"] },
+      { id: "var", text: "var BLANK = 1;", names: ["BLANK"] },
+      { id: "declare-const", text: "declare const BLANK: number;", names: ["BLANK"] },
+      { id: "second-statement", text: "const x = 1;\nconst BLANK = 2;", names: ["BLANK"] },
       { id: "type-alias", text: "type Unit = number;", names: ["Unit"] },
       { id: "interface", text: "interface Judgement { readonly a: 1 }", names: ["Judgement"] },
       { id: "class", text: "class Lexed {}", names: ["Lexed"] },
+      { id: "abstract-class", text: "abstract class Lexed {}", names: ["Lexed"] },
       { id: "enum", text: "enum Kind { B }", names: ["Kind"] },
+      { id: "const-enum", text: "const enum Kind { B }", names: ["Kind"] },
       { id: "object-binding", text: "const { cites } = o;", names: ["cites"] },
       { id: "array-binding", text: "const [, first] = a;", names: ["first"] },
+      { id: "object-rest", text: "const { a, ...cites } = o;", names: ["cites"] },
+      { id: "array-rest", text: "const [a, ...first] = b;", names: ["first"] },
+      { id: "object-default", text: "const { cites = 1 } = o;", names: ["cites"] },
+      { id: "array-default", text: "const [first = 1] = a;", names: ["first"] },
+      { id: "renamed-element", text: "const { a: cites } = o;", names: ["cites"] },
+      { id: "nested-pattern", text: "const { a: [, { b: first }] } = o;", names: ["first"] },
       { id: "exported-here", text: "export const BLANK = 1;", names: ["BLANK"] },
       { id: "unexported-there", text: "const hidden = 2;", names: [] },
       { id: "nested", text: "function outer(): void { const BLANK = 1; }", names: [] },
@@ -1489,7 +1585,11 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     const imports: readonly { readonly id: string; readonly text: string; readonly names: readonly string[] }[] = [
       { id: "named-and-aliased", text: `import { judgeFiles, READS as R } from "${JUDGE_SPECIFIER}";`, names: ["judgeFiles", "READS"] },
       { id: "type-only", text: `import type { Unit } from "${JUDGE_SPECIFIER}";`, names: ["Unit"] },
+      { id: "inline-type", text: `import { type Unit, judgeFiles } from "${JUDGE_SPECIFIER}";`, names: ["Unit", "judgeFiles"] },
+      { id: "two-declarations", text: `import { judgeFiles } from "${JUDGE_SPECIFIER}";\nimport { READS } from "${JUDGE_SPECIFIER}";`, names: ["judgeFiles", "READS"] },
+      { id: "default-and-named", text: `import J, { judgeFiles } from "${JUDGE_SPECIFIER}";`, names: ["judgeFiles"] },
       { id: "other-module", text: 'import { judgeFiles } from "./helpers/other.js";', names: [] },
+      { id: "judge-file-other-specifier", text: `import { judgeFiles } from "${JUDGE_SPECIFIER.replace("/helpers/", "/")}";`, names: [] },
       { id: "namespace", text: `import * as J from "${JUDGE_SPECIFIER}";`, names: [] },
     ];
     for (const control of imports) expect(judgeImports(control.text), `${control.id}: its imported names`).toEqual([...control.names]);
