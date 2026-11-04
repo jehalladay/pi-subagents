@@ -15,9 +15,15 @@
  * NOT CLAIMED (below); that refusal's two record-precision findings F5 and F9 are answered the same way, by narrowed words. No
  * reading, pin, witness, quiet row, check or case changes; the anchor case's title and one of its assertion messages are narrowed
  * with the words.
+ * WB-TKDC, the exit child R-B440 filed for that refusal (its first cut, on trunk 08a61f18): the anchor's source reading also reads
+ * every assignment the helper's code makes to a name it binds at its top level, and the identifier eval, so that refusal's members
+ * (G3-A11, G3-A06 and G3-A06-1e; G3-A03, G3-A04, G3-A03-1e and G3-A04-1e; the rider G3-A02b) red the anchor case. No other
+ * reading, pin, witness, quiet row, check or case changes; the anchor's words are restated to what the extended reading holds,
+ * and a change to the namespace that no assignment of the helper's code makes stays NOT CLAIMED (below).
  *
  * THE PINNED READER SET (this file, test/workbench-rf-tsx-deno-identity-census.test.ts; 10 cases and two last words, file-level
- * afterAll hooks, each passed with cut #4 on HEAD f8ab51ea, trunk c2b470a6 merged, as with cut #3 on trunk 5259399):
+ * afterAll hooks, each passed with wb-tkdc's cut on trunk 08a61f18, as with cut #4 on HEAD f8ab51ea, trunk c2b470a6 merged, and
+ * with cut #3 on trunk 5259399):
  *  - "the frozen shape: ..." - ROWS' `${id}:${pins.length}` equals ["ID:3", "SCAN:2"]; readings(), EXPECTED and WITNESS each hold
  *    exactly one entry per pin; QUIET's ids equal ["R-CARRIED-STATE", "R-VALUE-AWARE"], and so do, in order, the residual ids this
  *    header's RESIDUALS paragraph names, while QUIET's titles equal, in order, the quiet rows' titles this header quotes (both read
@@ -29,11 +35,17 @@
  *    var declaration anywhere (one in a block or a loop head binds a module name), no import declaration but of a node: built-in
  *    module, no import-equals declaration, no export declaration with a from clause, and nowhere the characters @ts-; so every name
  *    of the helper's module namespace is bound by a declaration of its own (a const, function, class, enum or namespace declaration,
- *    or an export default expression) or by an import of a node: built-in module. The source reading reads those forms alone - no
- *    assignment and no call - so what the helper's code assigns to one of these bindings when it runs is NOT CLAIMED by it (cut #4):
- *    tsc refuses the plain assignment to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628,
- *    TS2631) but compiles one through a target wrapped in a type assertion, '(x as unknown) = y' (this bead's refusal #3, O:1926,
- *    its F6), and the two namespace reads claim only what such an assignment leaves at load or at the last word. A SECTION is a
+ *    or an export default expression) or by an import of a node: built-in module. THE SOURCE also holds (wb-tkdc) no assignment,
+ *    anywhere in its text, to a name the helper binds at its top level - a declaration's name or an import's local name: no
+ *    assignment expression of any operator (= and every compound and logical assignment), no increment or decrement and no for-in
+ *    or for-of head that is no declaration, whose target, read through parentheses, type assertions (x as T, <T>x), satisfies,
+ *    non-null assertions (x!) and type arguments, is such a name or holds one as a target of a destructuring pattern (an element,
+ *    with or without a default, a rest element, a property, a shorthand property or a spread property; never a default's value),
+ *    a parameter or a local of that name refused alike; and nowhere the identifier eval (a direct eval runs code in the module's
+ *    own scope). So no code of the helper assigns one of its module's bindings, however the assignment is spelled: tsc refuses the
+ *    plain assignment to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628, TS2631) but compiles
+ *    one through a target wrapped in a type assertion, '(x as unknown) = y' (this bead's refusal #3, O:1926, its F6), and the
+ *    source reading refuses either. A SECTION is a
  *    `// ---- <title> ----` line comment among the leading comments of one of the helper's top-level statements or of its end of
  *    file, as ts.getLeadingCommentRanges reads them; the same characters anywhere else (inside a string, a template literal or a
  *    block, or a trailing comment) are no section. A FUNCTION EXPORT is a name of that namespace whose value, as this file loads it,
@@ -47,9 +59,17 @@
  *    namespace as this file loads it, in a form the parser does not read as one (then placed in no section, or in a section that
  *    does not claim it: this bead's refusal #3's G3-A03t, an enum export bound to a function by a top-level statement); a section
  *    mark moved, retitled, deleted or held in a string or template literal; refusal #2's U2 member G2-A01 (a let export the helper
- *    binds to a function at its first call) and its eager twin G2-A01t, each refused at the source. A function a name of the
- *    namespace holds only after load, to the end, is the last word's to read (that name's value changed), and one it holds only
- *    between load and the last word is NOT CLAIMED (below).
+ *    binds to a function at its first call) and its eager twin G2-A01t, each refused at the source; this bead's refusal #3's
+ *    members, wb-tkdc's pins, each refused at the source: G3-A11, G3-A06 and G3-A06-1e (an enum export bound to a function in a
+ *    call the run makes and restored before the last word), G3-A03, G3-A04, G3-A03-1e and G3-A04-1e (an enum or a namespace export
+ *    assigned a function in pinnedDenoDigest, a call no case makes) and the rider G3-A02b (the class export assigned so under
+ *    a biome-ignore line); and wb-tkdc's members of the same shape in the other spellings, each refused at the source (a
+ *    compound, logical, increment or decrement form, an angle-bracket, chained, satisfies or non-null target, a destructuring
+ *    element with or without a default, a rest element, a property or a spread property, a for-in or for-of head, an arrow the call
+ *    never runs, a name spelled with a unicode escape, a direct eval). A function a name of the namespace holds only after load, to
+ *    the end, is the last word's to read (that name's value changed); one it holds only between load and the last word is read by
+ *    neither namespace read - the source reading refuses the assignment of the helper's code that would bind it, and one no such
+ *    assignment binds is NOT CLAIMED (below).
  *  - one case per pin, titled by the pin under `${row.id} ${row.label}`. It plants one tree under one scratch root, then runs its
  *    three passes, in order, from one call site, before it asserts anything: in each pass READ is the pin's entry of the record
  *    readings() builds for that pass alone, handed the one planted tree and a stand-in reader made by the one factory
@@ -93,7 +113,9 @@
  *    exactly the names it held as this file loaded it, each bound to the same value (Object.is). Falsifier: G2-A01 (its let export
  *    reads undefined at load and a function at the last word); this bead's refusal #3's G3-A05 (an enum export bound to a
  *    function in a call the run makes, and left so). It reads the namespace at the end alone: a binding changed after load and
- *    restored before the last word (that refusal's G3-A11, G3-A06 and G3-A06-1e) is NOT CLAIMED (below).
+ *    restored before the last word (that refusal's G3-A11, G3-A06 and G3-A06-1e) is not read by it - the anchor's source reading
+ *    refuses the assignment that changes one (wb-tkdc), and a change no assignment of the helper's code makes is NOT CLAIMED
+ *    (below).
  *
  * THE CLAIMS, pin by pin (each clause is its pin's tables and nothing wider). Paths are planted under one scratch root and read back
  * with that root, and its realpath, written <root>. Every reading is compared as its JSON text (each pass's reading is read back
@@ -156,8 +178,8 @@
  * (child wb-tkdc): its U1 (an enum export bound to a function after load and restored before the last word, G3-A11, G3-A06 and
  * G3-A06-1e) and its U2 (an enum or a namespace export assigned a function through a target wrapped in a type assertion in
  * pinnedDenoDigest, a call no case makes, G3-A03, G3-A04, G3-A03-1e and G3-A04-1e, with the rider G3-A02b, the class export
- * assigned so under a biome-ignore line) are not pinned here: the anchor's words are narrowed to the reads it makes and those
- * forms are NOT CLAIMED (below); their pins are wb-tkdc's.
+ * assigned so under a biome-ignore line) were narrowed out of the anchor's words at cut #4 and are pinned by wb-tkdc's cut: the
+ * anchor's source reading refuses the assignment each of them makes, so each reds the anchor case.
  *
  * NOT CLAIMED (scope sentences; no follow-up): every UNCLAIMED function export of the helper (the class DenoIdentityRefusal and the
  * functions echoPath, sha256Of and pinnedDenoDigest), every helper export whose value is not a function (each helper constant), and
@@ -175,20 +197,18 @@
  * before a newline. And the tier wiring of these readers, the lane walk and what it reads of file names, the residual families the
  * helper's header names for wb-70xe's lane census, and wb-70xe's docs07 row R10. For the pin cases: a READ whose choice reads what
  * differs between the passes without telling them apart (the clock, a random draw), so that it substitutes on a row a pass holds
- * to EXPECTED by chance alone. For the anchor (cut #4, the fail-closed core): it reads the helper's module namespace as this file
- * loads it and, through the last word on the namespace, once every case has run, and at no moment between; the value a name of
- * the namespace is bound to between those two reads is NOT CLAIMED by this census unless a pin's readings read it (each pin case
- * reads its own pin's export at its start and claims that export's readings alone) - this bead's refusal #3's G3-A11, G3-A06 and
- * G3-A06-1e, an enum export bound to a function for part of the run and restored before the last word, among them (a pin case's
- * start can observe it as a function export placed in no section: G3-A11-observe). What the helper's code assigns to a
- * module binding when it runs is NOT CLAIMED by the source reading, which reads no assignment, whatever the binding's kind and
- * however the assignment is spelled (through a target wrapped in a type assertion, which tsc compiles, or under a biome-ignore
- * line); the two namespace reads claim what it leaves at load (G3-A03t reds the anchor) or at the last word (G3-A05 reds the run
- * there), and one made in a call no case makes is NOT CLAIMED by this census (that refusal's G3-A03, G3-A04, G3-A03-1e and
- * G3-A04-1e, an enum or a namespace export assigned a function in pinnedDenoDigest, and the rider G3-A02b, the class export
- * assigned Error there under a biome-ignore line). Their pins are wb-tkdc's. A namespace binding changed after the last words,
- * through such an assignment or a direct eval (biome's recommended noGlobalEval refuses one; this file does not read for it), is
- * NOT CLAIMED either. For the liveness case and the last word: a vitest run that selects none of this file's cases (a name or
+ * to EXPECTED by chance alone. For the anchor: it reads the helper's module namespace as this file loads it and, through the last
+ * word on the namespace, once every case has run, and at no moment between, and it reads the helper's source for the assignments
+ * and the identifier eval above (wb-tkdc), wherever and whenever they would run. So a value a name of the namespace shows between
+ * those two reads that no assignment of the helper's code makes is NOT CLAIMED by this census unless a pin's readings read it
+ * (each pin case reads its own pin's export at its start and claims that export's readings alone): among them an export's getter
+ * redefined on the object the module runner keeps the helper's exports in, reached through a name the helper declares ambient
+ * (wb-tkdc's probe TK-X-RUNNER, which redefines one for each denoInstallHits call and restores it, reads the census green; left
+ * so to the end, the last word reads it, and made at load, the anchor reads it). Nor does the source reading read what assigns no
+ * binding of the helper: a property or an element assigned on a value a binding holds (the binding keeps its value; TK-QUIET-PROP
+ * reads green) and an assignment to a name the helper does not bind at its top level (TK-QUIET-LOCAL reads green). A namespace
+ * value changed after the last words by a path no assignment of the helper's code takes is NOT CLAIMED either. For the liveness
+ * case and the last word: a vitest run that selects none of this file's cases (a name or
  * line filter that matches none, a configuration that excludes the file) and a set of edits that skips every case of this file at
  * once (the readers' describe and the liveness case both); vitest then runs no case and no hook of the file.
  *
@@ -706,11 +726,15 @@ function exportedNames(statement: ts.Statement): string[] {
  * top level binds a module name), an import declaration of anything but a node: built-in module, an import-equals declaration,
  * an export declaration with a from clause, and the characters @ts- anywhere in its text (a directive that would silence a type
  * error). Under them every name the helper's module namespace holds is bound by a const, a function, a class, an enum or a
- * namespace declaration of its own, by an export default expression or by an import of a node: built-in module. It reads those
- * statements and declarations and the characters @ts- alone, no assignment and no call, so what the helper's code assigns to
- * one of these bindings when it runs is NOT CLAIMED by it (cut #4; the header's NOT CLAIMED): tsc refuses the plain assignment
- * to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628, TS2631) but compiles one through a
- * target wrapped in a type assertion (this bead's refusal #3's G3-A03 and G3-A04).
+ * namespace declaration of its own, by an export default expression or by an import of a node: built-in module. And (wb-tkdc)
+ * an assignment anywhere in its text to a name it binds at its top level (topLevelNames; assignedNames reads the assignment
+ * expressions of every operator, the increments and decrements and the for-in and for-of heads that are no declaration, and
+ * targetNames their targets), a parameter or a local of that name refused alike, and the identifier eval anywhere (a direct
+ * eval runs code in the module's own scope): so no code of the helper assigns one of its module's bindings, however spelled -
+ * tsc refuses the plain assignment to a const, function, class, enum or namespace binding (TS2588, TS2630, TS2629, TS2628,
+ * TS2631) but compiles one through a target wrapped in a type assertion (this bead's refusal #3's G3-A03 and G3-A04), and this
+ * reading refuses either. What assigns no binding of the helper (a property of a value a binding holds, the module runner's
+ * own objects) it does not read (the header's NOT CLAIMED).
  */
 function helperRefusals(): string[] {
   const text = readFileSync(HELPER_PATH, "utf8");
@@ -731,7 +755,65 @@ function helperRefusals(): string[] {
   };
   varsIn(file);
   if (text.includes("@ts-")) refusals.push("the characters @ts- in its text");
+  const bound = topLevelNames(file);
+  const assignmentsIn = (node: ts.Node): void => {
+    const at = `:${file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1}`;
+    for (const name of assignedNames(node).filter(name => bound.has(name))) refusals.push(`${at} an assignment to ${name}, a name the helper binds at its top level`);
+    if (ts.isIdentifier(node) && node.text === "eval") refusals.push(`${at} the identifier eval`);
+    ts.forEachChild(node, assignmentsIn);
+  };
+  assignmentsIn(file);
   return refusals;
+}
+/**
+ * The names the helper binds at its top level, as the parser reads its statements: every declaration's name (each name a
+ * destructured const binds among them) and every import's local name.
+ */
+function topLevelNames(file: ts.SourceFile): Set<string> {
+  const names = new Set<string>();
+  for (const statement of file.statements) {
+    if (ts.isVariableStatement(statement)) for (const declaration of statement.declarationList.declarations) for (const name of bindingNames(declaration.name)) names.add(name);
+    if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name !== undefined) names.add(statement.name.text);
+    if ((ts.isEnumDeclaration(statement) || ts.isModuleDeclaration(statement) || ts.isImportEqualsDeclaration(statement)) && ts.isIdentifier(statement.name)) names.add(statement.name.text);
+    const clause = ts.isImportDeclaration(statement) ? statement.importClause : undefined;
+    if (clause?.name !== undefined) names.add(clause.name.text);
+    const bindings = clause?.namedBindings;
+    if (bindings !== undefined) for (const name of ts.isNamespaceImport(bindings) ? [bindings.name] : bindings.elements.map(element => element.name)) names.add(name.text);
+  }
+  return names;
+}
+/**
+ * The identifiers an assignment target names: the target read through parentheses, type assertions (x as T, <T>x), satisfies,
+ * non-null assertions (x!) and type arguments, then an identifier, or every identifier of a destructuring pattern (its elements,
+ * defaults, rest elements, properties and spread properties), each read the same way. A property or an element of a value is no
+ * name.
+ */
+function targetNames(target: ts.Expression): string[] {
+  let at = target;
+  const outer = (node: ts.Expression): node is ts.ParenthesizedExpression | ts.AsExpression | ts.TypeAssertion | ts.SatisfiesExpression | ts.NonNullExpression | ts.ExpressionWithTypeArguments =>
+    ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isExpressionWithTypeArguments(node);
+  while (outer(at)) at = at.expression;
+  if (ts.isIdentifier(at)) return [at.text];
+  if (ts.isArrayLiteralExpression(at)) return at.elements.flatMap(element => targetNames(element));
+  if (ts.isSpreadElement(at)) return targetNames(at.expression);
+  if (ts.isBinaryExpression(at) && at.operatorToken.kind === ts.SyntaxKind.EqualsToken) return targetNames(at.left);
+  if (!ts.isObjectLiteralExpression(at)) return [];
+  return at.properties.flatMap(property => {
+    if (ts.isShorthandPropertyAssignment(property)) return [property.name.text];
+    if (ts.isPropertyAssignment(property)) return targetNames(property.initializer);
+    return ts.isSpreadAssignment(property) ? targetNames(property.expression) : [];
+  });
+}
+/**
+ * The names `node` assigns when it runs (none when it assigns nothing): the target of an assignment expression of any operator
+ * (= and every compound and logical assignment), of an increment or a decrement (prefix or postfix), and of a for-in or for-of
+ * head that is no declaration.
+ */
+function assignedNames(node: ts.Node): string[] {
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) return targetNames(node.left);
+  if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) return targetNames(node.operand);
+  if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) return targetNames(node.initializer);
+  return [];
 }
 /** The quiet rows' titles this file's header quotes, in order: each "R-<family>: ..." quotation, read with its line breaks joined. */
 function headerQuietTitles(): string[] {
@@ -964,7 +1046,8 @@ afterAll(() => {
 });
 // THE LAST WORD ON THE NAMESPACE: once every case has run, the helper's module namespace holds exactly the names it held as this
 // file loaded it, each bound to the same value. It reads the namespace at the end alone: what the namespace held between load and
-// this read is NOT CLAIMED by the anchor (the header's NOT CLAIMED, cut #4).
+// this read the anchor's source reading refuses when an assignment of the helper's code makes it (wb-tkdc), and it is NOT CLAIMED
+// otherwise (the header's NOT CLAIMED).
 afterAll(() => {
   const now = new Map(Object.entries(helper));
   const changed = [...new Set([...NAMESPACE.keys(), ...now.keys()])]
