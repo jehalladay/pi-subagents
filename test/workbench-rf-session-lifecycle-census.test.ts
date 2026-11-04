@@ -15,8 +15,9 @@
  * census pins that state, the measured producer behaviour each clause depends on, and every surface the obligation already
  * reaches:
  *  A, acceptance (a). A1 the src launch inventory as launchInventory reads it (every .ts file below src/, read from disk and
- *    scanned by launchesOf, its judgement claimed at the PLANTED EXTENTS below only): the scan binds child_process launchers
- *    through the forms the A1 controls pin - named, aliased, string-named, namespace, default and default-plus-named imports,
+ *    scanned by launchesOf, its judgement claimed at the PLANTED EXTENTS below only, where every attribute of a file but its
+ *    listed path and its bytes is NOT CLAIMED): the scan binds child_process launchers through the forms the A1 controls pin -
+ *    named, aliased, string-named, namespace, default and default-plus-named imports,
  *    import-equals, require and dynamic-import bindings (whole, destructured, shorthand and string-keyed, the import awaited),
  *    launchers called on a require or a dynamic import, template-literal specifiers, the load wrappers pinned below and every
  *    launcher name, each control as its source is written - and folds each command from literals (a string, a template,
@@ -36,16 +37,19 @@
  *  B, acceptance (b). B1 the walked tree as readTree reads it (every regular file below the root, the skipped root entries aside,
  *    read as UTF-8 and judged as written and as rendered - compatibility forms folded by NFKC, default-ignorable code points such
  *    as a zero-width space or a soft hyphen removed, intraword emphasis asterisks dropped - its judgement claimed at the
- *    PLANTED EXTENTS below only): the judge flags a sentence in which a session word sits within WINDOWS.rf words of an rf word
+ *    PLANTED EXTENTS below only, where every attribute of a file but its listed path and its bytes is NOT CLAIMED): the judge
+ *    flags a sentence in which a session word sits within WINDOWS.rf words of an rf word
  *    and within WINDOWS.expiry words of an expiry term, unless a negator appears in that sentence before the later of the session
  *    word and the expiry term - the B1 controls and the vocabulary page pin that reading - and, at those extents, it flags no
  *    judged file; the walk meets no symlink (refused, never followed) and no unreadable entry.
  *    B2 the rf reader closure (the src import closure of the provider and its adapter) as stateInventory reads it holds no session
- *    state: through the forms the B2 controls pin, at the PLANTED EXTENTS below, sessionStateOf reads no identifier or property
+ *    state: through the forms the B2 controls pin, at the PLANTED EXTENTS below (every attribute of a module but its resolved
+ *    path and its bytes NOT CLAIMED), sessionStateOf reads no identifier or property
  *    name carrying a session word and no literal (a cooked string, a template literal or a template part, or a folded `+`
  *    concatenation) naming a session flag, a session_id field, a dotted session leaf or an rfs_ id. B3 each exemption is
  *    load-bearing: this file and its roster are walked, not judged, and both read as expiry findings, so lifting either reds B1.
- *  C, acceptance (c). C1, as verbInventory and the descriptor judge read them, no src module at the PLANTED EXTENTS below and no
+ *  C, acceptance (c). C1, as verbInventory and the descriptor judge read them, no src module at the PLANTED EXTENTS below (every
+ *    attribute of a module but its listed path and its bytes NOT CLAIMED) and no
  *    native descriptor in a place its canaries fill (the whole value of a DESCRIPTOR_CANARY_FIELDS field, as below) spells an rf
  *    session verb through a form a C1 control pins (an argv "session" followed by a verb, a dotted session.<verb> leaf, an
  *    `rf ... session <verb>` command text, in a string, a template literal or a template's parts) or a --session flag, while the
@@ -71,11 +75,13 @@
  * options); C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets
  * the files floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay
  * beside them. The anchors record names (each file read or scanned, each descriptor id read), so they pin which files and
- * descriptors are read, never how far into a file or a descriptor the judgement reaches, nor whether a file's mode keys it: that
- * is the PLANTED EXTENTS' reach, below.
+ * descriptors are read, never how far into a file or a descriptor the judgement reaches, nor whether any attribute of a file but
+ * its path and its bytes keys it - its mode, its timestamps, its link count or any other: that is the PLANTED EXTENTS' reach,
+ * below.
  * PATH CONTROLS (wb-khhg cut #3, the enumerate-the-resolvable form R-B247 binds; they replace cut #2's one-payload exact-path
  * canaries): every control of A1, B1, B2 and C1 is read again at every listed path, through the reading the live tree gets, each
- * planted file written without a mode, so that no path control reads an executable file (PLANTED EXTENTS, below). Each
+ * planted file written as withPlanted() writes a fresh file, so that what the path controls vary is a planted file's path and
+ * its bytes, every other attribute of it being what withPlanted() gives it (PLANTED EXTENTS, below). Each
  * control's source is planted byte for byte at every listed src path (A1, C1), every TypeScript-resolved closure path (B2) or
  * every listedJudgeable path (B1) of a scratch mirror; the mirror is read by the live reading's own function (launchInventory and
  * verbInventory: the src walk, the file reads, the scans and the gathered lists; stateInventory: the reads, the scans and the
@@ -86,18 +92,22 @@
  * orders, each rf and session word, each window's outer bound on either side and a late negator, every sentence a finding and
  * no two alike (vocabulary). C1 places each session form (each dotted leaf, each rf session command, the flag) in each field of
  * DESCRIPTOR_CANARY_FIELDS of every native descriptor, read through the same descriptorJudge (descriptorCanariesMissed []). So
- * one edit to a judge that keys on a directory, a file name, a prefix or an extension and drops a pinned form's judgement at a
- * listed path reds that pin, as does one keyed on a descriptor id that drops a form in a canary field: the gate's GA1-GA4,
+ * one edit to a judge that keys on a directory's path, a file name, a prefix or an extension and drops a pinned form's judgement
+ * at a listed path reds that pin, as does one keyed on a descriptor id that drops a form in a canary field: the gate's GA1-GA4,
  * GB1, GB3, GB4, GC1 and GC2 die this way, each with its paired plant. GB2 is the residual R-LIVE-ROOT. NOT CLAIMED by this
  * census: a drop keyed on content no control, page sentence or descriptor canary carries (an argv identifier, a sentence's
  * other words, a marker the planted text lacks); a drop keyed on a path git's listing does not name (an ignored file a walk
  * reads); a form no control writes, beside the named residuals below; edits that narrow a walk and its independent listing
  * together (K03), a path control and the asserted reading together, or that remove a pin from every literal together (H05/H06).
  * PLANTED EXTENTS (wb-khhg cut #4, the fail-closed core ruling R-B273 binds after refusal #3, with the mode added by cut #5 for
- * refusal #4's U2; the coverage this narrowing defers is the landed wb-4zgj's, THE READERS below): each path control, and B1's
- * vocabulary page, is planted as a whole file holding only its own text and written without a mode, so what the A1, B1, B2 and C1
- * path controls pin is the judgement of a form at an offset where a text planted for that pin holds one, in a file no longer
- * than the longest such text and carrying no execute bit; C1's descriptor canaries pin a session form only as the whole value of
+ * refusal #4's U2 and every other file attribute by cut #6 for refusal #5's U1 and U2 (R-B493); the coverage this narrowing
+ * defers is the landed wb-4zgj's, THE READERS below): each path control, and B1's vocabulary page, is planted as a whole file
+ * holding only its own text, as withPlanted() writes a fresh file - writeFileSync with no mode, so the run's umask sets its mode
+ * (0644 under umask 022: owner-writable, no execute bit), with a fresh mtime and one link, owned by the running user, in a fresh
+ * makeScratch root whose directories below it mkdirSync makes with no mode and which holds that one text at every listed path
+ * and nothing else - so what the A1, B1, B2 and C1 path controls pin is the judgement of a form at an offset where a text planted
+ * for that pin holds one, in a file no longer than the longest such text, as that judgement varies with the file's listed path
+ * and its bytes alone; C1's descriptor canaries pin a session form only as the whole value of
  * a DESCRIPTOR_CANARY_FIELDS field (a string field's value, a list field's only element, a schema field holding only a top-level
  * description). The A1, B1, B2 and C1 sentences above say so in place, and every other claim word here that rests on those readings
  * claims at those extents and in those fields only: the opening's "Pi commits no rf render today", "Pi drives no rf session verb"
@@ -111,9 +121,16 @@
  * file's length or on a form's offset are NOT CLAIMED by this census. A form anywhere in a native descriptor but as the whole
  * value of a DESCRIPTOR_CANARY_FIELDS field - its id field, a nested schema entry such as a property's description (the gate's
  * GD1 and GD2), a list element beside others, a longer field value or a field that list does not name - is NOT CLAIMED by this
- * census. A judgement drop keyed on a file's mode - its execute bit, as in the gate's GM1 (B1 readTree), GM2 (A1
+ * census. A judgement drop keyed on any attribute of a file but its listed path and its bytes, or on any attribute of a directory
+ * above it, is NOT CLAIMED by this census: a file's mode - its execute bit, as in the gate's GM1 (B1 readTree), GM2 (A1
  * launchInventory), GM3 (C1 verbInventory) and GM4 (B2 stateInventory), each of which reads a listed executable file as holding
- * no form - is NOT CLAIMED by this census.
+ * no form, its owner-write bit, as in the gate's GW1 (B1 readTree), GW2 (A1 launchInventory), GW3 (C1 verbInventory) and GW4 (B2
+ * stateInventory), each of which reads a listed read-only file as holding no form, and every other mode bit; its timestamps, as
+ * in the gate's GT1 (B1 readTree) and GT2 (A1 launchInventory), each of which reads a listed file whose mtime precedes 2001 as
+ * holding no form; its link count, as in the gate's GL1 (B1 readTree), which reads a listed file with more than one link as
+ * holding no form; and its owner, its inode and every other field lstat or stat reports. A judgement drop keyed on another file's
+ * bytes or attributes is NOT CLAIMED by this census either, since each path control's root holds its one text at every listed
+ * path and nothing else (a drop keyed on the root being the checkout is the residual R-LIVE-ROOT, below).
  * THE READERS (wb-khhg CUT #5, the re-cut of the narrowed core over the landed carrier that the rule-19 dependency inversion
  * R-B301 left owed: the structural-exit child wb-4zgj landed at landing 893, merge 29a99c4c): readTree, launchInventory,
  * verbInventory and stateInventory, with the scans, scan constants and judges they call, and descriptorJudgeOf, which builds C1's
@@ -138,7 +155,8 @@
  * frozen-shape battery; the U1 falsifiers K01/K02/K04/K05/K06/K11, U2 K08/K08b and refusal #2's GA1-GA4, GB1-GB4, GC1-GC2 and X1
  * are independently gate-authored. A1, B1, B2 and C1 claim their judgement at the PLANTED EXTENTS and C1 its descriptors in the
  * canary fields only; refusal #3's GD1, GD2, GS1, GO1 and GO2 and refusal #4's GM1, GM2, GM3 and GM4 fall outside that pinned set
- * (NOT CLAIMED above; their pin cases are the landed reach census's, THE READERS above).
+ * (NOT CLAIMED above; their pin cases are the landed reach census's, THE READERS above), and so do refusal #5's GW1, GW2, GW3,
+ * GW4, GT1, GT2 and GL1 (NOT CLAIMED above, a scope sentence: no pin case, no residual).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * (test/fixtures/rf-session-lifecycle-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export
