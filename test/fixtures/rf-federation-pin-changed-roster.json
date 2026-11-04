@@ -817,6 +817,62 @@
         "composed": 0,
         "launches": 0
        },
+       "nestedFunctionPushTwoStatements": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushTwoStatements": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushParenthesizedCall": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushParenthesizedCall": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushParenthesizedReturn": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushParenthesizedReturn": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushParenthesizedArrow": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushParenthesizedRight": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,
