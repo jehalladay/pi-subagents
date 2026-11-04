@@ -62,6 +62,23 @@
  * reads "an identifier require read as a value but as the callee of a call" (its "anywhere" dropped from the helper's roster,
  * its header line and the MEMBERS quote here); the coverage refusal #4 records is wb-cl20's (its acceptance: the 11 realized
  * twins red this census). FROZEN SHAPE is unchanged; each narrowed positive claim keeps its falsifier (PINNED READER SET).
+ * wb-cl20 (the R-B438 rule-19 structural-exit child of wb-tz2.21; its description: "reader pins (or narrowed claim words) for the
+ * realized members ... such that each realized twin reds the census; claims equal pins", acceptance "the 11 realized twins
+ * red the census with LEG 1 kept") is read here as: no reader code changes; every form refusal #4 records surviving is a plant
+ * of this census, the helper header's Vocabulary quotes each one (marked wb-cl20) and none stays NOT CLAIMED - NONVALUE_PLACES
+ * gains a variable declaration's binding key, a call argument's property key, a type literal's method signature, get
+ * accessor and set accessor, an interface's set accessor, a class expression's field and method, a parameter's type reference
+ * and a labeled block with its break; JSX_PLACES gains a JSX attribute's name with no value; the ROUTES loader name require
+ * piece reads require behind each of the five CALLEE_WRAPPERS and each ordered pair of them (25) in a call of ("./lg-x.js")
+ * and in a call of no argument, as the expression of new require with no argument list and as the tag behind one pair of
+ * parentheses; each of the gate's twelve paired twin pages (TW9C4-A1 to TW9C4-A3, TW9C4-B1, TW9C4-B1P, TW9C4-B2 to TW9C4-B7
+ * and TW9C4-B9) is a TWIN row, so each of the 11 realized members reds this census through its plant and its twin, and each
+ * of the 4 hypothetical ones (F1) through its plant. The cut #5 gate's (gate-prep-23, PASS) boundary members on these two
+ * claim sets, its F4 (which "bear on wb-cl20's cure shape only"), are plants too: a nested property key, an enum member with no
+ * initializer, (require!) among the pairs, (require as () => unknown) in both calls and the shadowing plant for require; the
+ * seat adds one sibling, a type literal's property signature. FROZEN SHAPE gains the 12 TWIN rows and grows 6 MEMBERS pin
+ * counts (ROUTES:loader name pieces 1, 4, 10 and 12; WRITES:reflection pieces 1 and 2) and loses none; ANCHOR gains
+ * CALLEE_WRAPPERS among the stated catalog sizes and the TW9C4- ids among the twins the helper header names.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -112,7 +129,9 @@
  *   (gate-prep-1's twins-a spec), refusal #4's TW-S1 to TW-S13 (gate-prep-12's make_twins spec) and refusal #1's on wb-tz2.21
  *   TW14-S1 to TW14-S7 and TW14-S9 (gate-prep-14's make_twins_gp14 spec), refusal #2's on wb-tz2.21 TW12-T1 to TW12-T6 and
  *   TW12-T5b (gate-prep-12's twins/ pages), and refusal #3's on wb-tz2.21 TW9-P1, TW9-P1b, TW9-R1, TW9-R1b, TW9-Q1, TW9-Q1b,
- *   TW9-G1, TW9-E1 and TW9-S1 (gate-prep-9's twins/ pages), each planting its page edit over the subject (lg- file names) and
+ *   TW9-G1, TW9-E1 and TW9-S1 (gate-prep-9's twins/ pages), and refusal #4's on wb-tz2.21 TW9C4-A1 to TW9C4-A3, TW9C4-B1,
+ *   TW9C4-B1P, TW9C4-B2 to TW9C4-B7 and TW9C4-B9 (gate-prep-9's s198 twins/ pages, checked in by wb-cl20), each planting its page
+ *   edit over the subject (lg- file names) and
  *   pinning what these readers read in it; a fail-closed twin pins the quiet reading.
  *  RESIDUALS: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row beside its loud control (FORMS and MEMBERS).
  *  CLAIM: the helper header's "- <word>: <claim>" lines equal the rosters byte for byte, section by section, in order; every
@@ -135,6 +154,7 @@
  *   catalogs whose sizes the helper header states; CONFIG_NAMES is read from the installed vitest/config's own export specifiers
  *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census. Cut #4 adds TYPE_PLACES,
  *   ACCESS_BASES, EXPORT_PLACES and JSX_PLACES to those catalogs and the TW9- ids to the twins the helper header must name.
+ *   wb-cl20 adds CALLEE_WRAPPERS to those catalogs and the TW9C4- ids to the twins the helper header must name.
  *  FROZEN SHAPE (standing rule 16): one literal pins every row as table:id - a GATE or TWIN row with its pin keys, a MEMBERS row
  *   with its claim, its place among that claim's pieces and its pin count.
  *
@@ -192,21 +212,26 @@
  *    spellings; a default import alone and beside a namespace import; three aliases; target: runReading's text. Falsifiers:
  *    GP12C2-RUN-NAMED-OTHER, GP12C2-RUN-NAMED-SOME (gate); seat probes SP12-RUN-*.
  *  - "MEMBERS ROUTES:loader name, pieces 1, 4-6 and 10-12": createRequire and getBuiltinModule in each of the 48 FREE_PLACES, the
- *    28 NONVALUE_PLACES, the 6 TYPE_PLACES, the 3 ACCESS_BASES, the 2 EXPORT_PLACES, the 2 JSX_PLACES and the 19 DECLARATIONS,
+ *    41 NONVALUE_PLACES, the 6 TYPE_PLACES, the 3 ACCESS_BASES, the 2 EXPORT_PLACES, the 3 JSX_PLACES and the 19 DECLARATIONS,
  *    as a member name in the 5 spellings that hold no element key and the 18 MEMBER_PLACES, as a string and a template in the 18
  *    places and in the 5 element-key spellings; binding, dlopen and _linkedBinding by member name and by string key in the
- *    spellings and the places, quiet in the 48 places, the other 26 NONVALUE_PLACES, the TYPE_PLACES, ACCESS_BASES,
+ *    spellings and the places, quiet in the 48 places, the other 39 NONVALUE_PLACES, the TYPE_PLACES, ACCESS_BASES,
  *    EXPORT_PLACES and JSX_PLACES and as a whole string or template in the places; require in each FREE_PLACES, TYPE_PLACES,
  *    ACCESS_BASES and EXPORT_PLACES place and in a JSX attribute's value, quiet in each NONVALUE_PLACES place and as a JSX
  *    attribute's name, under each DECLARATIONS kind, and as the callee of a call plain and optional (read nowhere), behind
  *    exactly one pair of parentheses, behind an as assertion to a function type and behind a non-null assertion, as the
  *    expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js` and require`lg` (each read;
- *    cut #5 narrows the callee words to exactly these forms); every plant but the two JSX ones read again in the suite, a local
+ *    cut #5 narrows the callee words to exactly these forms), and (wb-cl20) behind each of the 5 CALLEE_WRAPPERS and each of
+ *    their 25 ordered pairs in a call of ("./lg-x.js") and of no argument, behind an as assertion to () => unknown in both,
+ *    as the expression of new require with no argument list, as the tag behind one pair of parentheses and as the parameter
+ *    and both reads of the shadowing plant (each read); every plant but the JSX ones read again in the suite, a local
  *    module and a package module (piece 1; the JSX plants read in a local module only); target: routesOf's finding list.
  *    Falsifiers: GP12C2-REQUIRE-CALLEE, GP12C2-LN-MEMBER-BASE, GP9C3-VR-QUALIFIED-LEFT, GP9C3-VR-EXPORT-ALIAS,
  *    GP9C3-VR-REEXPORT-FROM, GP9C3-VR-TYPEREF, GP9C3-VR-LABELED, GP9C3-VR-SET-ACCESSOR, GP9C3-VR-BINDING-KEY,
- *    GP9C3-REQ-OPTIONAL-CALLEE (gate); SP12-LN-*, SP9-VR-* and the cut #5 SP9C5-* probes, one per narrowed callee form and one
- *    per narrowed Vocabulary context, each dropping exactly the planted context the narrowed words keep (seat).
+ *    GP9C3-REQ-OPTIONAL-CALLEE, refusal #4's fifteen GP9C4-* members and the cut #5 gate's GP23-B-REQ-NONNULL-PAREN,
+ *    GP23-B-REQ-AS-NULLARY, GP23-B-VR-PROPKEY-NESTED, GP23-B-VR-ENUM-NOINIT and GP23-B-VAL-PARAM-NONE (gate); SP12-LN-*,
+ *    SP9-VR-*, the cut #5 SP9C5-* probes, one per narrowed callee form and one per narrowed Vocabulary context, each dropping
+ *    exactly the planted context the narrowed words keep, and wb-cl20's SPCL-* probes, one per added plant (seat).
  *  - "MEMBERS WRITES:reflection, pieces 1, 2 and 8" and "MEMBERS WRITES:mutator member, pieces 10-13" and "MEMBERS WRITES:spy or
  *    mock member, pieces 1 and 20": a free Reflect and Proxy in each FREE_PLACES place and as the operand of typeof, under each
  *    DECLARATIONS kind and a shadowing parameter, quiet in each NONVALUE_PLACES place, read in each TYPE_PLACES and ACCESS_BASES
@@ -215,7 +240,8 @@
  *    base in the 5 spellings and the 18 places, quiet as the right of a qualified name in a type query and a type reference, as a
  *    string element key in the 5 element-key spellings and the 18 places, as a destructured key in the 20 DESTRUCTURINGS (10
  *    binding, 10 assignment), as a string and a template in the 18 places; target: writesOf's finding list. Falsifiers:
- *    GP12C2-REFLECT-MEMBER-NAME, GP14-REFLECT-DECLARED, GP9C3-VR-QUALIFIED-LEFT, GP9C3-ASSIGNED-SHORTHAND-DEFAULT (gate);
+ *    GP12C2-REFLECT-MEMBER-NAME, GP14-REFLECT-DECLARED, GP9C3-VR-QUALIFIED-LEFT, GP9C3-ASSIGNED-SHORTHAND-DEFAULT and
+ *    refusal #4's GP9C4-VR-BINDING-KEY-PARAM-ONLY through a free Proxy (gate);
  *    SP12-WR-*, SP9-WR-* (seat). "MEMBERS WRITES:computed member, piece 6": a computed key of an assignment pattern,
  *    a for-of head and an array pattern, a string computed key, and an object literal's computed key quiet. "MEMBERS WRITES:spy
  *    or mock member, pieces 2-3": the admitted spy by a string and a template key in the 5 spellings that hold no element key,
@@ -233,11 +259,14 @@
  *    "MEMBERS RUN:top-level keys, piece 1" (an asserted test object) and "MEMBERS RUN:include, piece 1" (an asserted include
  *    array). Falsifiers: GP9C3-RUN-CALLEE-UNWRAP, GP9C3-RUN-ARG-UNWRAP, GP9C3-RUN-EXPORT-UNWRAP, GP9C3-RUN-TEST-UNWRAP,
  *    GP9C3-RUN-INCLUDE-UNWRAP (gate).
- *  - "TWIN DW-L08 ... TW9-S1": the gates' 41 paired real-tree twins; target: gateReading. Falsifier: each twin's own member
+ *  - "TWIN DW-L08 ... TW9C4-B9": the gates' 53 paired real-tree twins; target: gateReading. Falsifier: each twin's own member
  *    (TW12-T5, TW12-T5b and TW12-T6 realize the U4 contradiction: under the cut #2 readers TW12-T5 and TW12-T6 read quiet;
  *    TW9-P1, TW9-R1, TW9-Q1 and TW9-G1 read a finding of the cited suite and none under GP9C3-VR-QUALIFIED-LEFT, their paired
  *    bare type queries TW9-P1b, TW9-R1b and TW9-Q1b read none under both; TW9-E1 reads the receipt helper a module and, under
- *    GP9C3-VR-EXPORT-ALIAS, a carrier; TW9-S1 reads a finding and none under GP9C3-ASSIGNED-SHORTHAND-DEFAULT).
+ *    GP9C3-VR-EXPORT-ALIAS, a carrier; TW9-S1 reads a finding and none under GP9C3-ASSIGNED-SHORTHAND-DEFAULT; TW9C4-A1,
+ *    TW9C4-A2 and TW9C4-A3 read a finding of the cited suite and none under GP9C4-REQ-CALLEE-ANGLE, -SATISFIES and
+ *    -DOUBLE-PAREN; TW9C4-B1 to TW9C4-B9 (B8 aside) read none and, under their GP9C4-VR- members, a finding, TW9C4-B1P through
+ *    WRITES reflection).
  *  - "ANCHOR" names, catalogs, carrier-items and twins (above). Falsifiers: CT5 and CT6 of the seat's CT-BATTERY v2 line.
  * NOT CLAIMED: each mode the helper header's NOT CLAIMED block names NOT CLAIMED is NOT CLAIMED by this census, and so is every
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
@@ -245,17 +274,14 @@
  * vitest/config name outside CONFIG_NAMES; a loader name, require or a WRITES name read outside the cut #3 and cut #4
  * catalogs; a WRITES name as a JSX attribute; spyOn as an identifier; each definition of the helper header's Vocabulary in
  * any text other than the plants it quotes and the catalog entries it names (a type parameter's name, a parameter property's
- * name, the left of a qualified name in an import-equals reference and a JSX tag name among them); and, by name in that
- * Vocabulary, the fifteen forms refusal #4 on wb-tz2.21 records surviving, deferred to wb-cl20: require behind a <T>
- * assertion, a satisfies expression or two pairs of parentheses as a callee, the expression of new require with no argument
- * list and a tag behind parentheses; a binding element's key in a pattern other than the arrow parameter's (a variable
- * declaration's, for require and for Proxy); a property assignment's key in an object literal that initializes no variable; a
- * type literal's method signature and get accessor; an interface's and a type literal's set accessor; a class expression's
- * field and method; a type reference that is no type alias's type; the label of a statement that is no loop; and a JSX
- * attribute with no initializer.
+ * name, the left of a qualified name in an import-equals reference and a JSX tag name among them); and, past wb-cl20's
+ * plants, require as a callee behind three or more wrappers, behind a wrapper outside CALLEE_WRAPPERS, behind an assertion to a
+ * type no plant writes, or in a call of another argument list; require behind any wrapper as the expression of a new
+ * expression, and as a tag behind any wrapper but one pair of parentheses; and a binding element's key in any pattern but the
+ * arrow parameter's and the variable declaration's (refusal #4's fifteen forms are pins of this census now, none NOT CLAIMED).
  * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family: every
- * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are NOT CLAIMED
- * (scope sentences of the fail-closed core, deferred to wb-cl20), none a residual.
+ * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are pins (wb-cl20), as
+ * are the cut #5 gate's boundary members on those sets; none is a residual.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -1247,6 +1273,22 @@ const NONVALUE_PLACES: readonly NonValuePlace[] = [
   ["a class set accessor key", name => `export class LgC {\n  set ${name}(lgV: number) {\n    void lgV;\n  }\n}\n`],
   ["an interface get accessor key", name => `export interface LgI {\n  get ${name}(): number;\n}\n`],
   ["an exported alias", name => `const lgV = 1;\nexport { lgV as ${name} };\n`],
+  // wb-cl20 (R-B438, the rule-19 exit child of wb-tz2.21): the contexts refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) and the
+  // cut #5 gate (gate-prep-23) found a definition pinned without, one place each, so a definition narrowed back to its earlier
+  // context reds its row (and one sibling, a type literal's property signature).
+  ["a declaration's binding key", name => `const { ${name}: lgV } = lgO;\nvoid lgV;\n`],
+  ["a call argument's property key", name => `export const lgW = String({ ${name}: 1 });\n`],
+  ["a nested property key", name => `export const lgW = { lgO: { ${name}: 1 } };\n`],
+  ["a type literal property signature key", name => `export type LgT = { ${name}: number };\n`],
+  ["a type literal method signature key", name => `export type LgT = { ${name}(): void };\n`],
+  ["a type literal get accessor key", name => `export type LgT = { get ${name}(): number };\n`],
+  ["an interface set accessor key", name => `export interface LgI {\n  set ${name}(lgV: number);\n}\n`],
+  ["a type literal set accessor key", name => `export type LgT = { set ${name}(lgV: number) };\n`],
+  ["a class expression field key", name => `export const LgC = class {\n  ${name} = 1;\n};\n`],
+  ["a class expression method key", name => `export const LgC = class {\n  ${name}(): void {}\n};\n`],
+  ["an enum member with no initializer", name => `export enum LgE {\n  ${name},\n}\n`],
+  ["a parameter's type reference", name => `export const lgW = (lgP: ${name}): unknown => lgP;\n`],
+  ["a block label", name => `${name}: {\n  break ${name};\n}\n`],
 ];
 /** The NONVALUE_PLACES places that are a property access's own name (the loader member names are read there). */
 const ACCESS_NAME_PLACES: readonly string[] = ["a member name", "an optional member name"];
@@ -1293,6 +1335,7 @@ type JsxPlace = readonly [label: string, text: (name: string) => string, read: b
 const JSX_PLACES: readonly JsxPlace[] = [
   ["a JSX attribute's name", name => `export const lgW = <lgX ${name}={1} />;\n`, false],
   ["a JSX attribute's value", name => `export const lgW = <lgX lgK={${name}} />;\n`, true],
+  ["a JSX attribute's name with no value", name => `export const lgW = <lgX ${name} />;\n`, false],
 ];
 const jsxRoutes = (text: string): string[] => routesOf("test/helpers/lg-member.tsx", text, "local").map(findingText);
 const jsxWrites = (text: string): string[] => writesOf("test/lg-member-suite.tsx", text).map(findingText);
@@ -1303,6 +1346,22 @@ const LOADER_IDENTIFIERS: readonly string[] = ["createRequire", "getBuiltinModul
 const LOADER_MEMBER_LIST: readonly string[] = ["binding", "dlopen", "_linkedBinding"];
 /** A FREE_PLACES place where the name is the callee of a call (require there is a call: no require route, a dynamic load). */
 const CALLEE_PLACES: readonly string[] = ["a callee", "an optional callee"];
+/** A wrapper the readers' unwrap and climb read through, written around a callee: [label, the callee written behind it]. Each is
+ * read alone and in each ordered pair, the second written around the first (wb-cl20: refusal #4 on wb-tz2.21 U1,
+ * GP9C4-REQ-CALLEE-ANGLE, -SATISFIES and -DOUBLE-PAREN; the cut #5 gate's boundary member GP23-B-REQ-NONNULL-PAREN). */
+type CalleeWrapper = readonly [label: string, wrap: (callee: string) => string];
+const CALLEE_WRAPPERS: readonly CalleeWrapper[] = [
+  ["a pair of parentheses", callee => `(${callee})`],
+  ["an as assertion", callee => `(${callee} as (lgS: string) => unknown)`],
+  ["a satisfies expression", callee => `(${callee} satisfies (lgS: string) => unknown)`],
+  ["a <T> assertion", callee => `(<(lgS: string) => unknown>${callee})`],
+  ["a non-null assertion", callee => `${callee}!`],
+];
+/** require behind each CALLEE_WRAPPERS wrapper, then behind each ordered pair of them (the second written around the first). */
+const WRAPPED_REQUIRES: readonly string[] = [
+  ...CALLEE_WRAPPERS.map(([, wrap]) => wrap("require")),
+  ...CALLEE_WRAPPERS.flatMap(([, inner]) => CALLEE_WRAPPERS.map(([, outer]) => outer(inner("require")))),
+];
 /** The require reads a DECLARATIONS statement and a top-level read at line 2 hold: every identifier require but an import name
  * (an import clause, specifier or namespace import), a declared key (an object literal's key, "{ require: ") and the require
  * keyword of import <name> = require(...) (all on the statement's one line). */
@@ -1768,6 +1827,12 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       localRoute("export const lgW = require;\n", ["loader name require, not called :1"]),
       localRoute("export const lgW = [require];\n", ["loader name require, not called :1"]),
       localRoute('export const lgW = require("./lg-x.js");\nexport const lgV = (m: { require: unknown }): unknown => m.require;\n', []),
+      ...WRAPPED_REQUIRES.flatMap(callee => ['("./lg-x.js")', "()"].map(call => localRoute(`export const lgW = ${callee}${call};\n`, ["loader name require, not called :1"]))),
+      localRoute('export const lgW = (require as () => unknown)("./lg-x.js");\n', ["loader name require, not called :1"]),
+      localRoute("export const lgW = (require as () => unknown)();\n", ["loader name require, not called :1"]),
+      localRoute("export const lgW = new require;\n", ["loader name require, not called :1"]),
+      localRoute("export const lgW = (require)`./lg-x.js`;\n", ["loader name require, not called :1"]),
+      localRoute(shadowed("require"), ["loader name require, not called :1", "loader name require, not called :1", "loader name require, not called :2"]),
       ...[...TYPE_PLACES, ...ACCESS_BASES, ...EXPORT_PLACES].map(([, text]) => localRoute(text("require"), ["loader name require, not called :1"])),
       ...JSX_PLACES.map(([, text, read]) => pin(() => jsxRoutes(text("require")), read ? ["loader name require, not called :1"] : []))),
   ]),
@@ -2368,7 +2433,8 @@ interface TwinRow {
   /** The bead whose refusal's PREP authored the twin. */
   readonly bead: typeof BEAD | typeof CARRIER;
   /** That refusal (wb-tz2.17 #3: gate-prep-1, O:1634; wb-tz2.17 #4: gate-prep-12, O:1743; wb-tz2.21 #1: gate-prep-14, O:1789;
-   * wb-tz2.21 #2: gate-prep-12, O:1832; wb-tz2.21 #3: gate-prep-9, O:1884). */
+   * wb-tz2.21 #2: gate-prep-12, O:1832; wb-tz2.21 #3: gate-prep-9, O:1884; wb-tz2.21 #4: gate-prep-9, O:1924, checked in by
+   * wb-cl20). */
   readonly refusal: 1 | 2 | 3 | 4;
   /** The gate member the twin realizes. */
   readonly member: string;
@@ -2389,6 +2455,9 @@ const carrierRefusal1 = (id: string, member: string, edits: readonly Edit[], pin
 const carrierRefusal2 = (id: string, member: string, edits: readonly Edit[], pins: GatePins): TwinRow => ({ id, bead: CARRIER, refusal: 2, member, edits, pins });
 /** A twin of refusal #3 on wb-tz2.21 (gate-prep-9, O:1884; its twins/ pages, verbatim): the cited suite or the receipt helper edited. */
 const carrierRefusal3 = (id: string, member: string, edits: readonly Edit[], pins: GatePins): TwinRow => ({ id, bead: CARRIER, refusal: 3, member, edits, pins });
+/** A twin of refusal #4 on wb-tz2.21 (gate-prep-9, O:1924; its twins/ pages, verbatim), checked in by wb-cl20 (R-B438): the cited
+ * suite edited. */
+const carrierRefusal4 = (id: string, member: string, edits: readonly Edit[], pins: GatePins): TwinRow => ({ id, bead: CARRIER, refusal: 4, member, edits, pins });
 const suiteTwin = (line: string): Edit => ({ file: SUITE, old: RECEIPT_IMPORT, text: `${RECEIPT_IMPORT}\n${line}` });
 const configTwin = (line: string): Edit => ({ file: CENSUS_CONFIG, old: DEFINE_IMPORT, text: line });
 const TWIN_ROWS: readonly TwinRow[] = [
@@ -2459,6 +2528,21 @@ const TWIN_ROWS: readonly TwinRow[] = [
   carrierRefusal3("TW9-E1", "GP9C3-VR-EXPORT-ALIAS", [hxTwin("const lgRequireAlias = 1;\nexport { lgRequireAlias as require };")], {}),
   carrierRefusal3("TW9-S1", "GP9C3-ASSIGNED-SHORTHAND-DEFAULT", [suiteTwin("let defineProperty: unknown;\n({ defineProperty = 1 } = Object);\nvoid defineProperty;")],
     { channel: [`cited suite: mutator member {defineProperty} destructured at line {{L:${SUITE}|({ defineProperty = 1 } = Object);}}`] }),
+  carrierRefusal4("TW9C4-A1", "GP9C4-REQ-CALLEE-ANGLE", [suiteTwin('void (() => (<(lgS: string) => unknown>require)("node:path"));')],
+    { channel: [`cited suite: loader name require, not called at line {{L:${SUITE}|(<(lgS: string) => unknown>require)("node:path")}}`] }),
+  carrierRefusal4("TW9C4-A2", "GP9C4-REQ-CALLEE-SATISFIES", [suiteTwin('void (() => (require satisfies (lgS: string) => unknown)("node:path"));')],
+    { channel: [`cited suite: loader name require, not called at line {{L:${SUITE}|(require satisfies (lgS: string) => unknown)("node:path")}}`] }),
+  carrierRefusal4("TW9C4-A3", "GP9C4-REQ-CALLEE-DOUBLE-PAREN", [suiteTwin('void (() => ((require))("node:path"));')],
+    { channel: [`cited suite: loader name require, not called at line {{L:${SUITE}|((require))("node:path")}}`] }),
+  carrierRefusal4("TW9C4-B1", "GP9C4-VR-BINDING-KEY-PARAM-ONLY", [suiteTwin("const { require: lgRequireKey } = Object.create(null) as Record<string, unknown>;\nvoid lgRequireKey;")], {}),
+  carrierRefusal4("TW9C4-B1P", "GP9C4-VR-BINDING-KEY-PARAM-ONLY", [suiteTwin("const { Proxy: lgProxyKey } = Object.create(null) as Record<string, unknown>;\nvoid lgProxyKey;")], {}),
+  carrierRefusal4("TW9C4-B2", "GP9C4-VR-PROPKEY-DECL-INIT-ONLY", [suiteTwin("void String({ require: 1 });")], {}),
+  carrierRefusal4("TW9C4-B3", "GP9C4-VR-METHODSIG-INTERFACE-ONLY", [suiteTwin("void (undefined as { require(): void } | undefined);")], {}),
+  carrierRefusal4("TW9C4-B4", "GP9C4-VR-GET-NOT-TYPELITERAL", [suiteTwin("void (undefined as { get require(): number } | undefined);")], {}),
+  carrierRefusal4("TW9C4-B5", "GP9C4-VR-SET-NOT-TYPEDECL", [suiteTwin("interface LgSetShape {\n  set require(lgV: number);\n}\nvoid (undefined as LgSetShape | undefined);")], {}),
+  carrierRefusal4("TW9C4-B6", "GP9C4-VR-FIELD-CLASSDECL-ONLY", [suiteTwin("void class {\n  require = 1;\n};")], {}),
+  carrierRefusal4("TW9C4-B7", "GP9C4-VR-METHOD-NOT-CLASSEXPR", [suiteTwin("void class {\n  require(): number {\n    return 1;\n  }\n};")], {}),
+  carrierRefusal4("TW9C4-B9", "GP9C4-VR-LABEL-LOOP-ONLY", [suiteTwin("require: {\n  break require;\n}")], {}),
 ];
 
 /** MEMBERS rows with their place among their claim's pieces. */
@@ -2509,7 +2593,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:LOADS:require call:1:1", "MEMBERS:LOADS:require call:2:1",
   "MEMBERS:ROUTES:1:9", "MEMBERS:ROUTES:2:18", "MEMBERS:ROUTES:3:19",
   "MEMBERS:ROUTES:dynamic load:1:24", "MEMBERS:ROUTES:dynamic load:2:3", "MEMBERS:ROUTES:dynamic load:3:2", "MEMBERS:ROUTES:dynamic load:4:2",
-  "MEMBERS:ROUTES:loader name:1:2964", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:218", "MEMBERS:ROUTES:loader name:5:48", "MEMBERS:ROUTES:loader name:6:86", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:340", "MEMBERS:ROUTES:loader name:11:185", "MEMBERS:ROUTES:loader name:12:117",
+  "MEMBERS:ROUTES:loader name:1:3393", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:246", "MEMBERS:ROUTES:loader name:5:48", "MEMBERS:ROUTES:loader name:6:86", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:382", "MEMBERS:ROUTES:loader name:11:185", "MEMBERS:ROUTES:loader name:12:196",
   "MEMBERS:ROUTES:loader member:1:48", "MEMBERS:ROUTES:loader member:2:1", "MEMBERS:ROUTES:loader member:3:1", "MEMBERS:ROUTES:loader member:4:2", "MEMBERS:ROUTES:loader member:5:2", "MEMBERS:ROUTES:loader member:6:7", "MEMBERS:ROUTES:loader member:7:2",
   "MEMBERS:ROUTES:vite name:1:30", "MEMBERS:ROUTES:vite name:2:1", "MEMBERS:ROUTES:vite name:3:1", "MEMBERS:ROUTES:vite name:4:1", "MEMBERS:ROUTES:vite name:5:1", "MEMBERS:ROUTES:vite name:6:3", "MEMBERS:ROUTES:vite name:7:1", "MEMBERS:ROUTES:vite name:8:1",
   "MEMBERS:ROUTES:import meta:1:12", "MEMBERS:ROUTES:import meta:2:3",
@@ -2519,7 +2603,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:WRITES:1:1", "MEMBERS:WRITES:2:5",
   "MEMBERS:WRITES:member write:1:23", "MEMBERS:WRITES:member write:2:18", "MEMBERS:WRITES:member write:3:4", "MEMBERS:WRITES:member write:4:4", "MEMBERS:WRITES:member write:5:3", "MEMBERS:WRITES:member write:6:5", "MEMBERS:WRITES:member write:7:5", "MEMBERS:WRITES:member write:8:12", "MEMBERS:WRITES:member write:9:21", "MEMBERS:WRITES:member write:10:18", "MEMBERS:WRITES:member write:11:18", "MEMBERS:WRITES:member write:12:18", "MEMBERS:WRITES:member write:13:18",
   "MEMBERS:WRITES:mutator member:1:1", "MEMBERS:WRITES:mutator member:2:1", "MEMBERS:WRITES:mutator member:3:1", "MEMBERS:WRITES:mutator member:4:1", "MEMBERS:WRITES:mutator member:5:1", "MEMBERS:WRITES:mutator member:6:1", "MEMBERS:WRITES:mutator member:7:1", "MEMBERS:WRITES:mutator member:8:1", "MEMBERS:WRITES:mutator member:9:1", "MEMBERS:WRITES:mutator member:10:234", "MEMBERS:WRITES:mutator member:11:225", "MEMBERS:WRITES:mutator member:12:215", "MEMBERS:WRITES:mutator member:13:342",
-  "MEMBERS:WRITES:reflection:1:112", "MEMBERS:WRITES:reflection:2:112", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:560",
+  "MEMBERS:WRITES:reflection:1:126", "MEMBERS:WRITES:reflection:2:126", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:560",
   "MEMBERS:WRITES:spy or mock member:1:109", "MEMBERS:WRITES:spy or mock member:2:50", "MEMBERS:WRITES:spy or mock member:3:46", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:1792",
   "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1", "MEMBERS:WRITES:computed member:6:5",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
@@ -2541,6 +2625,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:RESIDUALS:R-PACKAGE-CODE:1:2", "MEMBERS:RESIDUALS:R-PACKAGE-CODE:2:2",
   "MEMBERS:RESIDUALS:R-HELPER-PATCH:1:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:2:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:3:1", "MEMBERS:RESIDUALS:R-HELPER-PATCH:4:1",
   "TWIN:DW-L08:import", "TWIN:DW-L12:import", "TWIN:DW-L15:run", "TWIN:DW-L17:import", "TWIN:TW-S1:", "TWIN:TW-S2:", "TWIN:TW-S3:", "TWIN:TW-S4:import", "TWIN:TW-S5:import", "TWIN:TW-S6:import", "TWIN:TW-S7:import", "TWIN:TW-S8:import", "TWIN:TW-S9:", "TWIN:TW-S10:import", "TWIN:TW-S11:import", "TWIN:TW-S12:import", "TWIN:TW-S13:import", "TWIN:TW14-S1:", "TWIN:TW14-S2:", "TWIN:TW14-S3:import", "TWIN:TW14-S4:import", "TWIN:TW14-S5:", "TWIN:TW14-S6:import", "TWIN:TW14-S7:import", "TWIN:TW14-S9:run", "TWIN:TW12-T1:run", "TWIN:TW12-T2:run", "TWIN:TW12-T3:", "TWIN:TW12-T4:channel", "TWIN:TW12-T5:channel", "TWIN:TW12-T5b:channel", "TWIN:TW12-T6:channel", "TWIN:TW9-P1:channel", "TWIN:TW9-P1b:", "TWIN:TW9-R1:channel", "TWIN:TW9-R1b:", "TWIN:TW9-Q1:channel", "TWIN:TW9-Q1b:", "TWIN:TW9-G1:channel", "TWIN:TW9-E1:", "TWIN:TW9-S1:channel",
+  "TWIN:TW9C4-A1:channel", "TWIN:TW9C4-A2:channel", "TWIN:TW9C4-A3:channel", "TWIN:TW9C4-B1:", "TWIN:TW9C4-B1P:", "TWIN:TW9C4-B2:", "TWIN:TW9C4-B3:", "TWIN:TW9C4-B4:", "TWIN:TW9C4-B5:", "TWIN:TW9C4-B6:", "TWIN:TW9C4-B7:", "TWIN:TW9C4-B9:",
   "CLAIM:header", "CLAIM:forms",
   "TILE:pieces", "TILE:keys",
   "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins",
@@ -2583,6 +2668,7 @@ const CATALOG_SIZES: Readonly<Record<string, number>> = {
   ACCESS_BASES: ACCESS_BASES.length,
   EXPORT_PLACES: EXPORT_PLACES.length,
   JSX_PLACES: JSX_PLACES.length,
+  CALLEE_WRAPPERS: CALLEE_WRAPPERS.length,
 };
 /** The R-B124 ruling in the export's wb-tz2.17 notes, from its heading to the next note: its folded members are items too. */
 function foldedItems(): string[] {
@@ -2699,7 +2785,7 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   });
   it("ANCHOR: the helper header names exactly the twins the TWIN rows check in, each once per id", () => {
     const prose = HEADER.join("\n");
-    const named = [...prose.matchAll(/(?<![A-Za-z0-9-])(DW-L\d+|TW-S\d+|TW14-S\d+|TW12-T\d+b?|TW9-[A-Z]\d+b?)(?![A-Za-z0-9-])/g)].map(match => match[1] ?? "");
+    const named = [...prose.matchAll(/(?<![A-Za-z0-9-])(DW-L\d+|TW-S\d+|TW14-S\d+|TW12-T\d+b?|TW9-[A-Z]\d+b?|TW9C4-[A-Z]\d+P?)(?![A-Za-z0-9-])/g)].map(match => match[1] ?? "");
     const ranges = [...prose.matchAll(/(?<![A-Za-z0-9-])(TW-S|TW14-S)(\d+) to (?:TW-S|TW14-S)(\d+)(?![A-Za-z0-9-])/g)].flatMap(match =>
       Array.from({ length: Number(match[3]) - Number(match[2]) + 1 }, (_unused, offset) => `${match[1] ?? ""}${Number(match[2]) + offset}`));
     expect([...new Set([...named, ...ranges])].sort()).toEqual(TWIN_ROWS.map(row => row.id).sort());
