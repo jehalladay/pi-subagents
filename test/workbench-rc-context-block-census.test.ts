@@ -171,9 +171,13 @@
  * declaration in its body, called there [nested-in-infinity-named-method]. Otherwise the string is a numeral (0 under "0",
  * 0x10 under "16", 1e3 and 1_000 under "1000", 1.7976931348623158e308 under "1.7976931348623157e+308"), which no callee
  * name spells, so no call hands such a method an argument, a member callee spelling "Infinity" included - one 0 names
- * [numeral-infinity-callee-method], and each one a finite value at or above 1e308 names, 1e308 spelled bare, with
+ * [numeral-infinity-callee-method]; each one of four spellings at or above 1e308 names, 1e308 spelled bare, with
  * separators (1_0e307) or as a leading-dot fraction (.1e309), and 1.7976931348623158e308, which rounds down to the largest
- * double (wb-18ce) [near-maximum-numeral-infinity-callee-methods] -, and the note alone refuses its module [numeric-named-method]:
+ * double (wb-18ce) [near-maximum-numeral-infinity-callee-methods]; one 1.5e308 names, a value strictly between those two
+ * (wb-ilv4) [mid-band-numeral-infinity-callee-method]; and one 1E308 names, the bare spelling's upper-case exponent
+ * (wb-ilv4) [upper-case-exponent-numeral-infinity-callee-method] - those values at those spellings only, each a plain
+ * method of an object literal a const declares with one parameter -, and the note alone refuses its module
+ * [numeric-named-method]:
  * the hold is read only as "Infinity", and which numeral it holds a method under is never read. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
@@ -536,6 +540,20 @@
  * wb-wnoj cut #2 (the re-cut after wb-18ce landed on this file at landing 902; trunk merged in, never rebased) keeps
  * both FOLLOW-UP paragraphs and holds wb-18ce's read probe [near-maximum-numeral-infinity-callee-methods] by its digest
  * as well, so that probe's text edited in this file alone reds the judged set too.
+ * FOLLOW-UP wb-ilv4 (landing 902's F1, the R694 carry of the gate's G24-H1 to H7: one-edit members of resultReadsOf's
+ * collect that also hold a finite numeral at or above 1e308 under "Infinity", each narrowed to a shape no probe spelled,
+ * each reading 0 failed | 19 passed on the landed census; G24-H1, narrowed to a value strictly between 1e308 and the
+ * largest double, falsified the wide reading of the hold's former "each one a finite value at or above 1e308" words):
+ * those words are narrowed to the values and spellings the probes spell, and two probes pin two more - a member callee
+ * spelling "Infinity" calls an object literal whose one method 1.5e308 names [mid-band-numeral-infinity-callee-method],
+ * and one whose one method 1E308 names [upper-case-exponent-numeral-infinity-callee-method], each reading its note alone,
+ * so G24-H1 reds the first and G24-H2 the second, and the note-side members G24-N6 and G24-N7 (landing 902's F3), which
+ * drop the note of a value strictly between 1e308 and the largest double or of one at or above 1e308 spelled with an
+ * upper-case exponent, red them in turn. Any other finite numeral a member callee spelling "Infinity" calls - one below
+ * 1e308 other than 0 (the gate's G24-H10, landing 902's F2) or one at or above 1e308 other than these -, and these
+ * values at a spelling, a placement, a kind or a parameter count none of these probes spells (no exponent, hex, binary
+ * or octal, a class or an object read in place, a generator or an async method, two parameters: the gate's G24-H3 to
+ * H7), are NOT CLAIMED by this census.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -1324,6 +1342,11 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   // name, each with a parameter name of its own (a name binds module-wide), and a member callee spelling "Infinity" calls
   // them, so each notes only its declaration.
   "near-maximum-numeral-infinity-callee-methods": `const helpers = {\n  1e308(decimal: Record<string, unknown>) {\n    return decimal.blocks;\n  },\n  1.7976931348623158e308(maximum: Record<string, unknown>) {\n    return maximum.blocks;\n  },\n  1_0e307(separated: Record<string, unknown>) {\n    return separated.blocks;\n  },\n  .1e309(fraction: Record<string, unknown>) {\n    return fraction.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  // wb-ilv4 (landing 902's F1 and F3, the gate's G24-H1, G24-H2, G24-N6 and G24-N7): the numeral side of the hold at a
+  // value strictly between 1e308 and the largest double and at the bare spelling's upper-case exponent - a member callee
+  // spelling "Infinity" calls an object literal whose one method 1.5e308, or 1E308, names, so each notes only its declaration.
+  "mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "upper-case-exponent-numeral-infinity-callee-method": `const helpers = {\n  1E308(upper: Record<string, unknown>) {\n    return upper.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
   // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
   // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
