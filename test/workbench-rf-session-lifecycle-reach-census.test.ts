@@ -38,10 +38,24 @@
  * what A1, C1 or B1 lists in PO1, PO2 or PS1 comes from the planted form, that no other position of PD2 spells a form the judge
  * flags, that the stated description is the one form the judge can read in PD2, that the PD2 hold refuses F3's descriptor in
  * any spelling but F3_PD2's, that the holds refuse every plant whose form sits both where its key drops it and where it does not,
- * and that no known member of the frozen set survives. Those forms are NOT CLAIMED below, and their pins are wb-bud9's. Only
- * comments and two assertion messages change: no reading, control, pin, probe, witness, hold or test title does, and the
- * comment-stripped print differs from cut #3's in those two message lines alone.
+ * and that no known member of the frozen set survives. Cut #4 named those forms NOT CLAIMED and their pins wb-bud9's (WB-BUD9
+ * CUT #1 below delivers them; the withdrawn sentences stay withdrawn). Only comments and two assertion messages changed at cut
+ * #4: no reading, control, pin, probe, witness, hold or test title did.
  * LEG 1, the nine carried kills, refusal #1's and #2's cures and every member claim (6) enumerates are kept as cut #3 left them.
+ *
+ * WB-BUD9 CUT #1 (wb-bud9, the rule-19 structural-exit child ruling R-B431 filed at wb-4zgj's refusal #3; this is its first cut,
+ * test-only, this one file): the pins cut #4 named wb-bud9's. Refusal #3's U1 (GW-ASI1 and GW-ASI2) is answered by the READING
+ * HOLD, a fact of the readings beside the place hold's fact of the head's text: PS1's, PO1's and PO2's planted file reads, under
+ * the reader beside it, exactly as it reads with its head replaced by as many newline bytes (readingHold).
+ * Refusal #3's U2 (GW-TJ1) is answered by the PLAIN-DATA HOLD: every
+ * row, pin and probe this census reads is plain data (plainData), so JSON.stringify writes a descriptor - the text the judge
+ * reads - from its own entries alone, the entries the PD2 hold's own-entries rebuild reads. Claim (7) enumerates the members the two holds
+ * refuse: refusal #3's three witnesses, the four further members its cut #4 gate recorded for this bead in wb-4zgj's notes (its
+ * F3 INFO: P22-ASI3, P22-ASI4, P22-TJ2, P22-TJ4) and the seat's W8, W9 and W10, each measured red-first. Cut #4's NOT CLAIMED
+ * sentences for the two families are replaced by claim (7) and the narrower boundaries below. Everything cut #4 held is kept:
+ * every reading, pin, probe, title but ANCHOR's, the place hold, the PD2 hold and claim (6)'s controls; LEG 1; the nine carried
+ * kills, each reading 2 failed | 10 passed as before (the two readings the reading hold compares put the planted form at the same
+ * byte offsets, and the plain-data hold runs no reader).
  *
  * PINNED READER SET (this file, test/workbench-rf-session-lifecycle-reach-census.test.ts; observed at the cut: every case passes
  * on the moved readers, and each named member, applied to a copy of the helper with its refusal gate's own edit, reds the pin
@@ -58,7 +72,8 @@
  *   session form. GD2 (the verb test drops nested schema properties): probe PD2, one descriptor hyperunix.lookup whose input schema
  *   holds one nested property, its description rf session show, and (cut #3, the PD2 hold, in cut #4's words) which, rebuilt by
  *   withoutNestedDescriptions from its own enumerable entries, each nested property without its description, the judge flags not
- *   at all. GS1 (B1 judges a file's first 65536 bytes): probe PS1, docs/workbench/feature-matrix.md holding 122327 bytes
+ *   at all (wb-bud9 cut #1: PD2, like every probe, is plain data, so its JSON text, the text the judge reads, is written from the
+ *   entries that rebuild reads). GS1 (B1 judges a file's first 65536 bytes): probe PS1, docs/workbench/feature-matrix.md holding 122327 bytes
  *   of padding (one line of the letter x) and then PS1's sentence. GO1 (a bound launch judged only before byte 65536): probe PO1,
  *   src/index.ts holding 252342 bytes of one padded string constant and then PO1's form, an execFileSync import and a function
  *   calling execFileSync on rf (cut #3: the import moved from the head into the form). GO2 (a string literal judged only before
@@ -90,16 +105,24 @@
  *   path and launcher listed in rf, nothing unbound or composed, the one command rf); PO2's form, trimmed, the stated line; each
  *   quote of GS1, GO1 and GO2 stating the byte offset this census cuts at, and each of their heads at least that long; and PS1's,
  *   PO1's and PO2's head padding alone - one line of the letter x, or one exported string constant of the letter x (the PLACE
- *   HOLD, a fact of the head's text alone, cut #4: the head matches PADDING_ALONE; what the planted form makes of that text when
- *   the file is read, and so where in the file what a reader lists sits, is NOT CLAIMED). ANCHOR's controls hold both holds to
- *   claim (6)'s enumerated members;
+ *   HOLD, a fact of the head's text alone, cut #4: the head matches PADDING_ALONE); PS1's, PO1's and PO2's planted file read by
+ *   the reader beside it exactly as that reader reads it with its head replaced by as many newline bytes (the READING HOLD,
+ *   wb-bud9 cut #1: a fact of those two readings alone); and every row, pin and probe of this census plain data (the PLAIN-DATA
+ *   HOLD, wb-bud9 cut #1: plainData over ROWS and PINS, a fact of each value's own properties and prototype as ANCHOR reads
+ *   them). ANCHOR's controls hold the place hold and the PD2 hold to claim (6)'s enumerated members, and the reading hold and the
+ *   plain-data hold to claim (7)'s;
  *   (2) wb-4zgj's notes open with R-B301's fold line and then row R4's unmet slug; (3) in wb-khhg's notes, the refusal #4 verdict
  *   (from its opening up to its RED) names row R4's label ("through <label>, GM1-GM4,"), the unmet item "- U1: <row R4's slug> (",
  *   the words "its byte-identical 0644 twin", and member lines naming exactly row R4's pins in order, each with the pin's site and
  *   quote; each pin's probes are its line's plant, that plant's 0644 twin (the plant's id and "n") and, where the line names them,
  *   the natural witness PM1s and the first-set plant PM2; each plant holds the stated path, the stated text (its byte count the
  *   stated one) and the stated mode, its twin the same path and text at 0644, PM1s a file at the stated tracked executable's path
- *   and mode ending with the stated comment line, and PM2 the stated text, its launch at the stated byte, at its plant's mode.
+ *   and mode ending with the stated comment line, and PM2 the stated text, its launch at the stated byte, at its plant's mode;
+ *   (4) wb-bud9 cut #1: wb-bud9's description names each witness with the member it keeps red ("(<member> stays red under
+ *   <ids>)", its ids split at "/"), and wb-4zgj's notes, in its cut #4 gate's F3 INFO (from its first "F3 INFO: LEG 2 survivors on
+ *   cut #4's NOT CLAIMED forms." up to the "For contrast, " after it), name each further member as "(<n>) <id>: " ahead of the
+ *   member its group is read with ("Each reads 0|12 alone and with <member> held"); claim (7)'s members whose source is wb-bud9's
+ *   description, and those whose source is wb-4zgj's F3 INFO, are exactly the ones that row names, with those members, in order.
  * - Case RECORDS (last): every case of this file ran once in run mode in the order SHAPE lists, every pin case reached its end
  *   (an afterAll sentinel refuses a RECORDS case that returns before its last statement), and the registration guard keeps its
  *   six controls: a case skipped or made todo, the describe skipped or made todo, and an enclosing suite skipped are each refused
@@ -120,15 +143,18 @@
  * archived driver: gp12probes.py and gp12probes2.py for refusal #3, gp5probes.py and gp5probes2.py for refusal #4; each find text
  * occurs exactly once in the helper), reds the pin case named after it: measured by the cutting seat and recorded in its delivery
  * note, replayable by the gate. (4) The rows, pins, sites, quotes, labels and unmet slugs, and each plant fact ANCHOR (1)-(3)
- * lists, are the ones the tracker export records (the place hold and the PD2 hold aside, which this census sets on its own
- * probes): a row, pin, probe, quote or label removed, swapped or shortened - in one literal or in every literal together - reds
+ * lists, are the ones the tracker export records (the place hold, the PD2 hold, the reading hold and the plain-data hold aside,
+ * which this census sets on its own probes; claim (7)'s member lists are anchored by ANCHOR (4)): a row, pin, probe, quote or
+ * label removed, swapped or shortened - in one literal or in every literal together - reds
  * SHAPE or ANCHOR (standing rule 16's CT1-CT6); and a plant re-planted - its own path, head, form, mode, descriptors or literal
  * reading edited - so that one of the facts ANCHOR (1)-(3) lists no longer holds reds ANCHOR (PO1's launch unbound, for one:
- * cut #2's U2 members; a head that is not padding alone, for another: claim (6)'s members). Those facts are the ones ANCHOR's
- * checks read (cut #4): the place hold's is the head's text and the PD2 hold's is PD2's own-entries rebuild, so a re-plant that
- * keeps every fact ANCHOR (1)-(3) lists while a held member hides behind it - refusal #3's GW-ASI1 and GW-ASI2 (PO1's planted
- * form joined onto its padding-alone head) and GW-TJ1 (PD2's nested property writing more JSON than its own enumerable entries)
- * among them - is NOT CLAIMED by this claim. (5) A registration outside run mode
+ * cut #2's U2 members; a head that is not padding alone, for another: claim (6)'s members; a planted file its reader reads
+ * otherwise behind a blank head of the same byte count, or a probe that is not plain data, for others: claim (7)'s members).
+ * Those facts are the ones ANCHOR's checks read: the place hold's is the head's text (cut #4), the PD2 hold's is PD2's own-entries
+ * rebuild (cut #4), the reading hold's is the reader's two readings of the planted file, with its head and with a blank head of
+ * the same byte count, and the plain-data hold's is each value's own properties and prototype, as ANCHOR reads them (wb-bud9 cut
+ * #1). A re-plant that keeps every fact ANCHOR (1)-(4) lists while a held member hides behind it, beyond claim (6)'s and claim
+ * (7)'s members, is NOT CLAIMED by this claim. (5) A registration outside run mode
  * among the describe, the cases it registers and the
  * suites around it fails the file at collection, through the registration guard: the describe skipped or made todo - by its skip
  * or todo modifier, plain or conditional (skipIf, runIf), or by a skip or todo option - or one of its cases skipped or made todo
@@ -156,11 +182,25 @@
  * cut #2 NOT CLAIMED boundary, now refused) and cut #2's own PO1 head (the import before the padding) - and F3's descriptor, as
  * F3_PD2 spells it, is refused by the PD2 hold, while PS1's, PO1's and PO2's delivered heads and PD2 are kept: a hold narrowed
  * so that one of those
- * heads or that descriptor is kept, or so that a delivered head or PD2 is refused, reds ANCHOR. No residual is claimed. Cut #4:
- * refusal #3's GW-ASI1 and GW-ASI2 keep the place hold while GO1 hides, and GW-TJ1 keeps the PD2 hold while GD2 hides; they are
- * not members this claim enumerates, their forms are NOT CLAIMED (NOT CLAIMED, cut #4), and their pins are wb-bud9's.
+ * heads or that descriptor is kept, or so that a delivered head or PD2 is refused, reds ANCHOR. No residual is claimed. Refusal
+ * #3's GW-ASI1 and GW-ASI2 keep the place hold while GO1 hides, and GW-TJ1 keeps the PD2 hold while GD2 hides: they are not
+ * members this claim enumerates; claim (7) enumerates them.
+ * (7) WB-BUD9'S MEMBERS, ENUMERATED (wb-bud9 cut #1). Each is a re-plant that keeps every check cut #4 made while a held member
+ * hides behind it; the cutting seat measured each red-first (0 failed | 12 passed on cut #4's bytes, alone and with its member
+ * held; red here, alone and with its member held). The JOIN MEMBERS (JOIN_MEMBERS: refusal #3's GW-ASI1 and GW-ASI2, and its cut
+ * #4 gate's P22-ASI3 and P22-ASI4, each hiding GO1) keep the place hold and PO1's literal reading, and the reading hold refuses
+ * each. The JSON-TEXT MEMBERS (TEXT_MEMBERS: refusal #3's GW-TJ1, and its cut #4 gate's P22-TJ2 and P22-TJ4, each hiding GD2,
+ * each writing F3_PD2's JSON text while the PD2 hold's own-entries rebuild flags nothing; the seat's W8, hiding GD1; the seat's
+ * W10, hiding GD2 and writing F3_PD2's JSON text through a Proxy) keep their probe's literal and key readings, the seat's W9
+ * (hiding GO1) reads PO1's delivered head and form when ANCHOR reads it, and the plain-data hold refuses each. ANCHOR's controls hold the
+ * two holds to these members, each control's expectation a literal naming every member with the member it hides and its source,
+ * beside the delivered probes the holds keep: a hold narrowed so that one of these members is kept, or so that a delivered probe
+ * is refused, reds ANCHOR; and ANCHOR (4) holds the members whose source is wb-bud9's description or wb-4zgj's F3 INFO to the
+ * ones those rows name, so such a member removed from its list and its literal together reds ANCHOR. W8, W9 and W10 are this
+ * cut's own: this file is their only anchor. No residual is claimed.
  *
- * NOT CLAIMED. A reading on any input that is not one of these fifteen probes is NOT CLAIMED by this census - among them a form
+ * NOT CLAIMED. A reading on any input that is not one of these fifteen probes is NOT CLAIMED by this census, the readings claim
+ * (7)'s controls hold aside - among them a form
  * at any other byte offset or in a file of any other length, a session form in any descriptor field or position but PD1's id and
  * PD2's nested property description, a planted file at any mode but 0755 and 0644, any other file kind or path, and every input
  * the parent census's path controls, vocabulary page and descriptor canaries plant. Whether the moved readers read the live
@@ -174,21 +214,21 @@
  * NOT CLAIMED by claim (4) - an early copy of PS1's sentence before byte 65536 is no longer among them, the place hold refuses it;
  * a plant whose form sits both where its key drops it and where it does not (so the key still changes its reading) is NOT CLAIMED
  * by claim (2)'s falsifier, and the holds refuse such a plant at ANCHOR only by their own facts (cut #4): the place hold when the
- * head's text is not padding alone, the PD2 hold when PD2's own-entries rebuild still spells a form the judge flags.
- * Whether a held member can hide behind a re-plant that keeps every fact ANCHOR (1)-(3) lists, beyond claim (6)'s members, is NOT
- * CLAIMED by this census.
- * Cut #4 (the fail-closed core, ruling R-B431): where in a planted file what a reader lists sits - in the planted form, or in the
- * head joined to it - is NOT CLAIMED by this census (claim (2)'s key reading aside: the key, applied, still changes each plant's
- * reading), among them a planted form whose first token continues its padding-alone
- * head's last line so that the padding becomes part of a listed launch's call and that launch starts at byte 0 (refusal #3's
- * GW-ASI1, an alias callee join, and GW-ASI2, a namespace member join, each hiding GO1); and what a descriptor's JSON text, the
- * text the judge reads, carries beyond what the PD2 hold's own-entries rebuild reads is NOT CLAIMED by this census, among them a
- * toJSON that rebuild does not carry (refusal #3's GW-TJ1, a non-enumerable toJSON on PD2's nested property writing F3's
- * "--session" default, hiding GD2). Both families are wb-bud9's, the rule-19 structural-exit child R-B431 filed.
+ * head's text is not padding alone, the PD2 hold when PD2's own-entries rebuild still spells a form the judge flags (wb-bud9 cut
+ * #1: the reading hold when its reader reads the planted file otherwise behind a blank head, the plain-data hold when a probe is
+ * not plain data).
+ * Whether a held member can hide behind a re-plant that keeps every fact ANCHOR (1)-(4) lists, beyond claim (6)'s and claim (7)'s
+ * members, is NOT CLAIMED by this census.
+ * Cut #4's two NOT CLAIMED families (where in a planted file what a reader lists sits; what a descriptor's JSON text carries
+ * beyond its own entries) are replaced by wb-bud9 cut #1's holds and claim (7). What stays NOT CLAIMED (wb-bud9 cut #1): a planted
+ * file's reading behind any head but its delivered one and the blank head of the same byte count, which are the two readings the
+ * reading hold compares; a member's hiding anywhere but the cutting seat's red-first runs (the controls hold the holds to the
+ * members' texts, not to a held member); and probe data that is plain data when ANCHOR reads it and changes afterwards, or code a
+ * probe's data runs that changes anything else the readers, the judge or this file use (a global replaced, for one).
  * SHAPE or ANCHOR returning early is NOT CLAIMED by this census, and neither is any other edit of this
  * file's own checking code - a comparison inside a case, ANCHOR's parse of the export, readDisk, readDescriptors, keyChanges, the
  * holds or the builders of their controls - beyond the registrations, inversions, run-time skips, early returns and guard edits
- * claim (5) names and the hold edits claim (6) names. Two edits made together - a skip and an edit that disables the registration
+ * claim (5) names and the hold edits claims (6) and (7) name. Two edits made together - a skip and an edit that disables the registration
  * guard (its call removed, moved ahead of the cases or handed another collector, or its function narrowed past its six
  * controls), or a re-plant and an edit of the hold that refuses it - are NOT CLAIMED, nor is the describe's body deleted or
  * rewritten.
@@ -201,7 +241,7 @@
 import { chmodSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isDeepStrictEqual } from "node:util";
+import { isDeepStrictEqual, types } from "node:util";
 import { afterAll, describe, expect, it, TestRunner } from "vitest";
 import { descriptorJudgeOf, launchInventory, readTree, stateInventory, verbInventory } from "./helpers/rf-session-lifecycle-readers.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -356,6 +396,102 @@ const F3_PD2: Descriptor = {
   ...PD2,
   inputSchema: { type: "object", properties: { name: { type: "string", description: "rf session show", default: "--session" } }, additionalProperties: false },
 };
+/** wb-bud9 cut #1, claim (7)'s members, each with the held member it hides and the row that names it: wb-bud9's description,
+ * wb-4zgj's notes (its cut #4 gate's F3 INFO, recorded for wb-bud9), or this cut's seat. */
+interface Member {
+  readonly id: string;
+  readonly member: string;
+  readonly source: "wb-bud9" | "wb-4zgj F3" | "seat";
+}
+/** The JOIN MEMBERS: PO1 re-plants whose head is textPadding(252342) - 252341 x's and a newline, a head the place hold keeps - and
+ * whose planted form opens with a token that continues that head's one line, so that the padding becomes the callee (an alias of
+ * execFileSync the form imports: GW-ASI1, P22-ASI3, P22-ASI4) or the namespace (GW-ASI2) of the one bound rf launch A1 lists, and
+ * that launch starts at byte 0, hiding GO1. The reading hold refuses each. */
+const PADDING_NAME = "x".repeat(252341);
+const PADDING_ALIAS = `import { execFileSync as ${PADDING_NAME} } from "node:child_process";\n`;
+const CALL_ECHO = '// execFileSync("rf", ["--json", "status"]);\n';
+const GW_ASI1_FORM = `("rf", ["--json", "status"]);\n${PADDING_ALIAS}${CALL_ECHO}`;
+const JOIN_MEMBERS: readonly (Member & { readonly form: string })[] = [
+  { id: "GW-ASI1", member: "GO1", source: "wb-bud9", form: GW_ASI1_FORM },
+  { id: "GW-ASI2", member: "GO1", source: "wb-bud9", form: `.execFileSync("rf", ["--json", "status"]);\nimport * as ${PADDING_NAME} from "node:child_process";\n` },
+  { id: "P22-ASI3", member: "GO1", source: "wb-4zgj F3", form: `?.("rf", ["--json", "status"]);\n${PADDING_ALIAS}${CALL_ECHO}` },
+  { id: "P22-ASI4", member: "GO1", source: "wb-4zgj F3", form: `<string>("rf", ["--json", "status"]);\n${PADDING_ALIAS}${CALL_ECHO}` },
+];
+/** F3's nested property as F3_PD2 spells it, "--session" default and all: what each PD2 JSON-text member's toJSON writes. */
+const f3Name = (): unknown => ({ type: "string", description: "rf session show", default: "--session" });
+/** A nested property whose toJSON is inherited, from its class (P22-TJ4). */
+class InheritedToJson {
+  toJSON(): unknown {
+    return f3Name();
+  }
+}
+/** The JSON-TEXT MEMBERS: re-plants whose own entries spell the delivered probe while what JSON.stringify writes - the text the judge
+ * reads - or what a later read of a field returns does not. GW-TJ1 (PD2's nested property given a non-enumerable toJSON), P22-TJ2
+ * (that toJSON on PD2's input schema) and P22-TJ4 (an inherited toJSON on the nested property) each write F3_PD2's JSON text, hiding
+ * GD2; the seat's W8 (PD1 given a non-enumerable toJSON adding F3's default, which GD1's id-blanking spread does not carry) hides
+ * GD1; the seat's W10 (PD2's nested property a Proxy whose get trap answers toJSON with that writer) writes F3_PD2's JSON text too,
+ * hiding GD2; the seat's W9 (PO1's planted file whose head and form are accessors, returning PO1's delivered text until GS1's pin
+ * case has run and GW-ASI1's join after it) hides GO1. The plain-data hold refuses each. */
+type TextMember = Member & ({ readonly probe: "PD1" | "PD2"; readonly descriptor: Descriptor } | { readonly probe: "PO1"; readonly file: Planted });
+const TEXT_MEMBERS: readonly TextMember[] = [
+  {
+    id: "GW-TJ1",
+    member: "GD2",
+    source: "wb-bud9",
+    probe: "PD2",
+    descriptor: { ...PD2, inputSchema: { type: "object", properties: { name: Object.defineProperty({ type: "string", description: "rf session show" }, "toJSON", { value: f3Name }) }, additionalProperties: false } },
+  },
+  {
+    id: "P22-TJ2",
+    member: "GD2",
+    source: "wb-4zgj F3",
+    probe: "PD2",
+    descriptor: {
+      ...PD2,
+      inputSchema: Object.defineProperty({ type: "object", properties: { name: { type: "string", description: "rf session show" } }, additionalProperties: false }, "toJSON", {
+        value: () => ({ type: "object", properties: { name: f3Name() }, additionalProperties: false }),
+      }),
+    },
+  },
+  {
+    id: "P22-TJ4",
+    member: "GD2",
+    source: "wb-4zgj F3",
+    probe: "PD2",
+    descriptor: { ...PD2, inputSchema: { type: "object", properties: { name: Object.assign(new InheritedToJson(), { type: "string", description: "rf session show" }) }, additionalProperties: false } },
+  },
+  { id: "W8", member: "GD1", source: "seat", probe: "PD1", descriptor: Object.defineProperty({ ...PD1 }, "toJSON", { value: () => ({ ...PD1, default: "--session" }) }) },
+  {
+    id: "W10",
+    member: "GD2",
+    source: "seat",
+    probe: "PD2",
+    descriptor: {
+      ...PD2,
+      inputSchema: {
+        type: "object",
+        properties: { name: new Proxy({ type: "string", description: "rf session show" }, { get: (target, key): unknown => (key === "toJSON" ? f3Name : Reflect.get(target, key)) }) },
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    id: "W9",
+    member: "GO1",
+    source: "seat",
+    probe: "PO1",
+    file: {
+      path: "src/index.ts",
+      get head() {
+        return REACHED.includes("GS1") ? textPadding(252342) : modulePadding("", 252342);
+      },
+      get form() {
+        return REACHED.includes("GS1") ? GW_ASI1_FORM : PO1_FORM;
+      },
+      mode: 0o644,
+    },
+  },
+];
 
 const PINS: readonly Pin[] = [
   {
@@ -672,7 +808,8 @@ function pinOf(id: string): Pin {
 }
 const titleOf = (pin: Pin): string => `member ${pin.id} (${pin.site}) - ${pin.quote}: probes ${pin.probes.map(probe => probe.id).join(", ")} read as written here`;
 const SHAPE_TITLE = "SHAPE: the rows, their pins and each pin's probe ids stay frozen, and every case is registered in order in run mode, with no repeats or retry";
-const ANCHOR_TITLE = "ANCHOR: rows R3 and R4, their labels, unmet slugs, pins, sites, quotes and plant facts are the ones wb-4zgj's and wb-khhg's tracker-export rows record, and PS1, PO1, PO2 and PD2 keep the place hold and the PD2 hold";
+const ANCHOR_TITLE =
+  "ANCHOR: rows R3 and R4, their labels, unmet slugs, pins, sites, quotes and plant facts are the ones wb-4zgj's and wb-khhg's tracker-export rows record, PS1, PO1, PO2 and PD2 keep the place hold, the reading hold and the PD2 hold, every row, pin and probe is plain data, and the two holds refuse claim (7)'s members, the ones wb-bud9's and wb-4zgj's rows name among them";
 const RECORDS_TITLE = "RECORDS: every case ran once in run mode in the order SHAPE lists, every pin case reached its end, and the registration guard keeps its six controls";
 const TITLES = [SHAPE_TITLE, ANCHOR_TITLE, ...PINS.map(titleOf), RECORDS_TITLE];
 
@@ -784,6 +921,35 @@ function nestedDescriptions(descriptor: Descriptor): unknown[] {
   if (typeof properties !== "object" || properties === null) return [];
   return Object.values(properties).map(property => (typeof property === "object" && property !== null && "description" in property ? property.description : undefined));
 }
+/** wb-bud9 cut #1 (refusal #3's U1), the READING HOLD: the probe's reader reads the planted file exactly as it reads that file with
+ * its head replaced by as many newline bytes, so that both readings put the planted form at the same byte offsets. */
+function readingHold(probe: DiskProbe, file: Planted): boolean {
+  const blank: Planted = { path: file.path, head: "\n".repeat(Buffer.byteLength(file.head)), form: file.form, mode: file.mode };
+  return isDeepStrictEqual(readDisk(probe, [file]).output, readDisk(probe, [blank]).output);
+}
+/** wb-bud9 cut #1 (refusal #3's U2), the PLAIN-DATA HOLD: a value is plain data when it is a string, number, boolean or null, or an
+ * array or object of the default prototype, not a Proxy, whose every own string-keyed property - an array's length aside - is an
+ * enumerable data property holding plain data. JSON.stringify writes such a value from its own entries alone: no toJSON reaches it,
+ * own or inherited, enumerable or not, and no accessor or trap. */
+function plainData(value: unknown): boolean {
+  if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") return true;
+  if (typeof value !== "object" || types.isProxy(value)) return false;
+  const array = Array.isArray(value);
+  if (Object.getPrototypeOf(value) !== (array ? Array.prototype : Object.prototype)) return false;
+  return Object.getOwnPropertyNames(value).every(key => {
+    if (array && key === "length") return true;
+    const property = Object.getOwnPropertyDescriptor(value, key);
+    return property !== undefined && "value" in property && property.enumerable === true && plainData(property.value);
+  });
+}
+/** wb-bud9 cut #1: the opening and the close of the F3 INFO wb-4zgj's cut #4 gate recorded for wb-bud9 (bead notes, append-only). */
+const F3_OPEN = "F3 INFO: LEG 2 survivors on cut #4's NOT CLAIMED forms.";
+const F3_CLOSE = "For contrast, ";
+/** A text member's probe: the delivered probe with the member's descriptor or planted file in place of its own. */
+function textProbe(member: TextMember): Probe {
+  if (member.probe === "PO1") return { ...diskProbe(pinOf("GO1"), "PO1"), files: [member.file] };
+  return { ...descriptorProbe(pinOf(member.probe === "PD1" ? "GD1" : "GD2"), member.probe), descriptors: [member.descriptor] };
+}
 
 /** One registration as vitest records it at collection: a describe, a suite or a case, its name and its run mode. */
 interface Registration {
@@ -881,6 +1047,9 @@ describe("wb-4zgj reach census (test/helpers/rf-session-lifecycle-readers.ts): n
         // Cut #3 (refusal #2's U1), the PLACE HOLD: the head's text is padding alone (cut #4: a fact of that text alone; where what
         // the reader lists sits is NOT CLAIMED).
         expect(paddingAlone(file.head), `${line.plant}: its head is padding alone (the place hold)`).toBe(true);
+        // wb-bud9 cut #1 (refusal #3's U1), the READING HOLD: read with a blank head of the same byte count, the reader reads the
+        // planted file exactly as it reads it with its own head.
+        expect(readingHold(diskProbe(pin, line.plant), file), `${line.plant}: its reader reads it the same with a blank head of the same byte count (the reading hold)`).toBe(true);
         if (bytes !== undefined) expect(Buffer.byteLength(file.head), `${line.plant}: the stated byte count before the planted form`).toBe(Number(bytes));
         const launcher = /^an rf (\w+) launch$/.exec(what);
         if (launcher !== null) {
@@ -911,6 +1080,60 @@ describe("wb-4zgj reach census (test/helpers/rf-session-lifecycle-readers.ts): n
       "the place hold refuses each enumerated member's head",
     ).toEqual(MEMBER_HEADS.map(member => `${member.id}:${member.bytes}:refused`));
     expect(readDescriptors([withoutNestedDescriptions(F3_PD2)]).hits, "the PD2 hold refuses F3's descriptor as F3_PD2 spells it").toEqual([F3_PD2.id]);
+    // wb-bud9 cut #1 (refusal #3's U2), the PLAIN-DATA HOLD: every row, pin and probe this census reads is plain data.
+    expect(
+      { rows: plainData(ROWS), pins: plainData(PINS), unplain: PINS.flatMap(pin => pin.probes.filter(probe => !plainData(probe)).map(probe => `${pin.id}:${probe.id}`)) },
+      "every row, pin and probe is plain data (the plain-data hold)",
+    ).toEqual({ rows: true, pins: true, unplain: [] });
+    // wb-bud9 cut #1 (claim (7)): each join member keeps the place hold and PO1's literal reading, and the reading hold refuses
+    // it; each JSON-text member keeps its probe's literal and key readings (each PD2 member writing F3_PD2's JSON text while
+    // the PD2 hold's own-entries rebuild flags nothing; W9 reads PO1's delivered text), and the plain-data hold refuses it.
+    const po1 = diskProbe(pinOf("GO1"), "PO1");
+    expect(
+      JOIN_MEMBERS.map(member => {
+        const file: Planted = { ...onlyFile(po1), head: textPadding(252342), form: member.form };
+        const read = isDeepStrictEqual(readDisk(po1, [file]).output, po1.reading.output) ? "PO1's reading" : "another reading";
+        return `${member.id}:${member.member}:${member.source}:${paddingAlone(file.head) ? "padding" : "not padding"}:${read}:${readingHold(po1, file) ? "kept" : "refused"}`;
+      }),
+      "the reading hold refuses each join member, which keeps the place hold and PO1's literal reading",
+    ).toEqual([
+      "GW-ASI1:GO1:wb-bud9:padding:PO1's reading:refused",
+      "GW-ASI2:GO1:wb-bud9:padding:PO1's reading:refused",
+      "P22-ASI3:GO1:wb-4zgj F3:padding:PO1's reading:refused",
+      "P22-ASI4:GO1:wb-4zgj F3:padding:PO1's reading:refused",
+    ]);
+    expect(
+      TEXT_MEMBERS.map(member => {
+        const probe = textProbe(member);
+        const refused = plainData(probe) ? "kept" : "refused";
+        // W9's file is read as PO1's own text, not through A1, so that no reader edit moves this control.
+        if (member.probe === "PO1") return `${member.id}:${member.member}:${member.source}:${member.file.head === onlyFile(po1).head && member.file.form === onlyFile(po1).form ? "PO1's text" : "other text"}:${refused}`;
+        const read = isDeepStrictEqual(readProbe(probe), probe.reading) ? "as written" : "otherwise";
+        const key = keyChanges(pinOf(member.probe === "PD1" ? "GD1" : "GD2").key, probe) ? "key changes" : "key same";
+        const pd2 =
+          member.probe === "PD2"
+            ? `:${JSON.stringify(member.descriptor) === JSON.stringify(F3_PD2) ? "F3_PD2's text" : "other text"}:${readDescriptors([withoutNestedDescriptions(member.descriptor)]).hits.length === 0 ? "rebuild flags nothing" : "rebuild flags"}`
+            : "";
+        return `${member.id}:${member.member}:${member.source}:${read}:${key}${pd2}:${refused}`;
+      }),
+      "the plain-data hold refuses each JSON-text member, which keeps its probe's literal and key readings (W9: PO1's delivered text, as ANCHOR reads it)",
+    ).toEqual([
+      "GW-TJ1:GD2:wb-bud9:as written:key changes:F3_PD2's text:rebuild flags nothing:refused",
+      "P22-TJ2:GD2:wb-4zgj F3:as written:key changes:F3_PD2's text:rebuild flags nothing:refused",
+      "P22-TJ4:GD2:wb-4zgj F3:as written:key changes:F3_PD2's text:rebuild flags nothing:refused",
+      "W8:GD1:seat:as written:key changes:refused",
+      "W10:GD2:seat:as written:key changes:F3_PD2's text:rebuild flags nothing:refused",
+      "W9:GO1:seat:PO1's text:refused",
+    ]);
+    // wb-bud9 cut #1, ANCHOR (4): the members whose source is wb-bud9's description or wb-4zgj's F3 INFO are exactly the ones those
+    // rows name, each with the member it hides, in order.
+    const members: readonly Member[] = [...JOIN_MEMBERS, ...TEXT_MEMBERS];
+    const witnessed = [...exportRow("wb-bud9").description.matchAll(/\((G[A-Z]\d) stays red under ([^)]+)\)/g)].flatMap(([, member = "", ids = ""]) => ids.split("/").map(id => `${id}:${member}`));
+    const parts = sectionOf(child.notes, F3_OPEN, F3_CLOSE).split(/Each reads 0\|12 alone and with (G[A-Z]\d) held/);
+    const carried = parts.flatMap((part, index) => (index % 2 === 1 ? [] : [...part.matchAll(/\(\d\) (P22-[A-Z]+\d): /g)].map(([, id = ""]) => `${id}:${parts[index + 1] ?? ""}`)));
+    expect(witnessed.length > 0 && carried.length > 0, "wb-bud9's description names its witnesses and wb-4zgj's F3 INFO its further members").toBe(true);
+    expect(members.filter(member => member.source === "wb-bud9").map(member => `${member.id}:${member.member}`), "claim (7)'s wb-bud9 members are the witnesses wb-bud9's description names").toEqual(witnessed);
+    expect(members.filter(member => member.source === "wb-4zgj F3").map(member => `${member.id}:${member.member}`), "claim (7)'s wb-4zgj F3 members are the ones wb-4zgj's F3 INFO names").toEqual(carried);
     // The rows anchored to wb-khhg's refusal #4 verdict (row R4), whose members R-B301 folded into wb-4zgj's notes.
     const refused = ROWS.filter(row => row.anchor === "refusal4");
     const refusal4 = sectionOf(parent.notes, REFUSAL_4, REFUSAL_4_END);
