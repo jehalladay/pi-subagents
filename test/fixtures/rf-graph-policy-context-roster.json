@@ -279,6 +279,10 @@
       "plant-roster:result.provenance.gpCheckpoint",
       "plant-roster:result.work.graph_data_ir_count"
     ],
+    "realPrefixes": {
+      "plant:": "fixture:",
+      "plant-roster:": "roster:"
+    },
     "fieldPlants": [
       "plant:receipt",
       "plant:result.blocks[0].embeddings",
@@ -323,6 +327,65 @@
         "G-U3-ZS"
       ]
     },
+    "edgeControlRows": [
+      {
+        "id": "ctl-other-types",
+        "title": "edge-type control",
+        "dependencies": [
+          {
+            "issue_id": "ctl-other-types",
+            "depends_on_id": "ctl-related",
+            "type": "related"
+          },
+          {
+            "issue_id": "ctl-other-types",
+            "depends_on_id": "ctl-relates-to",
+            "type": "relates-to"
+          },
+          {
+            "issue_id": "ctl-other-types",
+            "depends_on_id": "ctl-parent-child",
+            "type": "parent-child"
+          },
+          {
+            "issue_id": "ctl-other-types",
+            "depends_on_id": "ctl-discovered-from",
+            "type": "discovered-from"
+          }
+        ]
+      },
+      {
+        "id": "ctl-one-blocks",
+        "title": "edge-type control",
+        "dependencies": [
+          {
+            "issue_id": "ctl-one-blocks",
+            "depends_on_id": "ctl-related",
+            "type": "related"
+          },
+          {
+            "issue_id": "ctl-one-blocks",
+            "depends_on_id": "ctl-relates-to",
+            "type": "relates-to"
+          },
+          {
+            "issue_id": "ctl-one-blocks",
+            "depends_on_id": "ctl-parent-child",
+            "type": "parent-child"
+          },
+          {
+            "issue_id": "ctl-one-blocks",
+            "depends_on_id": "ctl-discovered-from",
+            "type": "discovered-from"
+          },
+          {
+            "issue_id": "ctl-one-blocks",
+            "depends_on_id": "ctl-blocks",
+            "type": "blocks"
+          }
+        ]
+      }
+    ],
     "readers": [
       "listing",
       "piVerdict",
@@ -422,7 +485,10 @@
             ],
             "carry GraphPolicy outputs": [
               "vocabularyFindings",
-              "vocabularyPlants"
+              "vocabularyPlants",
+              "realPrefixPlants",
+              "inPlacePlants",
+              "inPlaceAhead"
             ]
           },
           "witness": {
@@ -458,7 +524,66 @@
               "plant-roster:result.gp_rank",
               "plant-roster:result.provenance.gpCheckpoint",
               "plant-roster:result.work.graph_data_ir_count"
-            ]
+            ],
+            "realPrefixPlants": [
+              "fixture:operation_id",
+              "fixture:transaction_id",
+              "fixture:result.blocks[0].candidate_key",
+              "fixture:result.blocks[0].component_id",
+              "fixture:result.blocks[0].graphPolicyRank",
+              "fixture:result.blocks[0].gp_note",
+              "fixture:result.provenance.graphPolicyReceipt",
+              "fixture:result.judge_context.task_tags[0]",
+              "fixture:result.judge_context.explicit_requests[0]",
+              "fixture:result.judge_context_layers.task.tags",
+              "fixture:result.judge_context_layers.agent.role",
+              "fixture:result.judge_context_layers.task.goal",
+              "fixture:result.superseded_transaction_ids[0]",
+              "fixture:result.fiber_transaction_refs[0]",
+              "fixture:result.graph_policy",
+              "fixture:result.gp",
+              "fixture:diagnostics[0].metadata.graph-data-ir",
+              "fixture:diagnostics[0].metadata.GP",
+              "fixture:diagnostics[0].metadata.gpLayer",
+              "fixture:diagnostics[1].message",
+              "fixture:diagnostics[1].source",
+              "fixture:graph_data_ir",
+              "fixture:gp_trace",
+              "roster:result.graphpolicy_rank",
+              "roster:result.gp_rank",
+              "roster:result.provenance.gpCheckpoint",
+              "roster:result.work.graph_data_ir_count"
+            ],
+            "inPlacePlants": [
+              "fixture:operation_id",
+              "fixture:transaction_id",
+              "fixture:result.blocks[0].candidate_key",
+              "fixture:result.blocks[0].component_id",
+              "fixture:result.blocks[0].graphPolicyRank",
+              "fixture:result.blocks[0].gp_note",
+              "fixture:result.provenance.graphPolicyReceipt",
+              "fixture:result.judge_context.task_tags[0]",
+              "fixture:result.judge_context.explicit_requests[0]",
+              "fixture:result.judge_context_layers.task.tags",
+              "fixture:result.judge_context_layers.agent.role",
+              "fixture:result.judge_context_layers.task.goal",
+              "fixture:result.superseded_transaction_ids[0]",
+              "fixture:result.fiber_transaction_refs[0]",
+              "fixture:result.graph_policy",
+              "fixture:result.gp",
+              "fixture:diagnostics[0].metadata.graph-data-ir",
+              "fixture:diagnostics[0].metadata.GP",
+              "fixture:diagnostics[0].metadata.gpLayer",
+              "fixture:diagnostics[1].message",
+              "fixture:diagnostics[1].source",
+              "fixture:graph_data_ir",
+              "fixture:gp_trace",
+              "roster:result.graphpolicy_rank",
+              "roster:result.gp_rank",
+              "roster:result.provenance.gpCheckpoint",
+              "roster:result.work.graph_data_ir_count"
+            ],
+            "inPlaceAhead": true
           }
         },
         {
@@ -468,7 +593,10 @@
             "score, ranking, embedding or receipt fields": [
               "fieldWords",
               "fieldFindings",
-              "fieldPlants"
+              "fieldPlants",
+              "realPrefixFieldPlants",
+              "inPlaceFieldPlants",
+              "inPlaceFieldAhead"
             ],
             "absent from context.render.schema.json at 82bd879eee52": [
               "schemaPin"
@@ -491,6 +619,25 @@
               "plant:receipt",
               "plant-roster:result.work_metrics.score_count"
             ],
+            "realPrefixFieldPlants": [
+              "fixture:result.blocks[0].embeddings",
+              "fixture:result.score",
+              "fixture:result.rankings",
+              "fixture:result.embedding",
+              "fixture:diagnostics[0].metadata.gpReceipt",
+              "fixture:receipt",
+              "roster:result.work_metrics.score_count"
+            ],
+            "inPlaceFieldPlants": [
+              "fixture:result.blocks[0].embeddings",
+              "fixture:result.score",
+              "fixture:result.rankings",
+              "fixture:result.embedding",
+              "fixture:diagnostics[0].metadata.gpReceipt",
+              "fixture:receipt",
+              "roster:result.work_metrics.score_count"
+            ],
+            "inPlaceFieldAhead": true,
             "schemaPin": "82bd879eee52"
           }
         }
