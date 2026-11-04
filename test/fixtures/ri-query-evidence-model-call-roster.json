@@ -1338,9 +1338,33 @@
      ],
      "runPair": [
       "1 inference"
+     ],
+     "shebangLead": [
+      "2 query"
+     ],
+     "crlfLines": [
+      "2 query"
+     ],
+     "bomLead": [
+      "1 query"
+     ],
+     "nulContent": [
+      "2 query"
+     ],
+     "generatedMarker": [
+      "2 query"
+     ],
+     "arrayTail": [
+      "1 query"
+     ],
+     "fusedLong": [
+      "1 query"
+     ],
+     "templateContinued": [
+      "1 query"
      ]
     },
-    "wordsSweep": 140,
+    "wordsSweep": 176,
     "segmentsSweep": 25,
     "long": [
      "query"
@@ -1350,7 +1374,14 @@
     ],
     "wide": [
      "query"
-    ]
+    ],
+    "segmented": [
+     "query"
+    ],
+    "segmentedLead": [
+     "query"
+    ],
+    "contentMirror": []
    },
    "plants": {
     "importSpecifier": [
@@ -1479,6 +1510,30 @@
     "runPair": [
      "src/plant.ts:1 inference"
     ],
+    "shebangLead": [
+     "src/plant.ts:2 query"
+    ],
+    "crlfLines": [
+     "src/plant.ts:2 query"
+    ],
+    "bomLead": [
+     "src/plant.ts:1 query"
+    ],
+    "nulContent": [
+     "src/plant.ts:2 query"
+    ],
+    "generatedMarker": [
+     "src/plant.ts:2 query"
+    ],
+    "arrayTail": [
+     "src/plant.ts:1 query"
+    ],
+    "fusedLong": [
+     "src/plant.ts:1 query"
+    ],
+    "templateContinued": [
+     "src/plant.ts:1 query"
+    ],
     "manifest": [
      "package.json:dependencies:@acme/reactive-query query",
      "package.json:devDependencies:reactive-inference-sdk inference"
@@ -1510,6 +1565,7 @@
    },
    "words": {
     "afterLowerOrDigit": "abcdefghijklmnopqrstuvwxyz0123456789",
+    "leadLowerOrDigit": "abcdefghijklmnopqrstuvwxyz0123456789",
     "beforeCapital": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "runLast": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "runNext": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
