@@ -1,44 +1,52 @@
 /**
  * wb-gnj9 (the rule-19 structural-exit child of wb-byfw, R-B394; the dependency inversion R-B422 folded wb-byfw refusal #4's
- * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #2: the respin, after this bead's
- * refusal #1 (R-B475: rung 1, a member-level respin), of carrier cut #1 (04160327, refused), which carried wb-byfw's census -
- * itself never landed: wb-byfw's cut #4, 524d3b6c, the R-B394 fail-closed core over cut #3, the enumerate-the-resolvable form the
- * second-stage cap R-B362 bound for refusal #2's frozen claim sets (U1, the W7 Proxy forms; U3, each judged row's case text - its
- * probe's and its present's initializers as this file spells them - anchored outside this file) - and pinned the W3 and W7
- * run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found that the anchor read each row's case text and never the row a
- * case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps hid P-TV3ANY, E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP); refusal
- * #4 found the W9 reader's words wider than its pages (four reader hollows: trailing spaces, tabs, CRLF line breaks, line
- * comments) and a spread in a row's own literal giving it another row's case (GP24-SPREAD, GP24-SPREAD-W7). Cut #1 froze each W3
- * and W7 table as its declaration evaluates it (asSpelled, W10), made each W3 and W7 case check that it runs its table's own row
- * under its id, made caseReading read 'absent' for a row with a spread, a computed key or a method and read a list declared
- * through a call (W9), and gave W9 a page for each spacing and comment form its words named. This bead's refusal #1 found the
- * run-time route open through a table declared through a callee that caseReading does not read (U1: GP8-DCALLEE-W3, GP8-DCALLEE-W7
- * and GP8-ACALLEE-W3, a name a binding pattern binds), W9's spacing and comment words wider than its pages (U2: nine reader
- * hollows - a leading and a trailing tab, a run of three spaces, a doc comment and a block comment across a line break, a
- * comment-only line, and a trailing space, a CRLF line break and a line comment after a semicolon) and W9's callee and element
- * rules pinned at one shape each (U3: a reader that keeps one list's callee, GP8-CR-ONE-CALLEE-M, and one that reads a row whose
- * spread another property follows, GP8-CR-SPREAD-MID-M), with two riders: a probe's function object took an own property (F3,
- * GP8-RT-FNPROPS) and a reader that follows names three steps kept every reading (F4, GP8-CR-DEPTH3-M). This seat also found the
- * route open through a table declared by let or var and rebound at the top level to a frozen copy with C13 given C14's case
- * (S5-LET-W3, S5-VAR-W3 and S5-LET-W7, which hid P-TV3ANY and H-PX-NESTED-SKIP). Here caseReading reads a list only from its one
- * const declaration and through a call only of a name one of the source's top-level declarations declares, each rule failing
- * closed to no rows (W9 Q22-Q27), asSpelled also freezes each function a row holds (W10), W9's pages carry each form refusal #1
- * named (Q29-Q35), and ROSTER pins the reader's own statements, caseReading's and those of every top-level declaration it names,
- * so that any edit of the reader reds the census whatever form or position it changes. It pins the readings of twinWalk
- * (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus census's walk in
- * test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header) with at most one of the gate's
- * refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the namespace of wb-ulnv's R-HIDDEN plant
- * from machine/flywheel/wb-ulnv tip c53028b4: hiddenPlant's held, loadCases and binding lines copied byte for byte but
- * WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults to WRAPPED; WRAPPED copied;
+ * members U1 and U2 into it and parked wb-byfw behind it), the DOCUMENT WITNESS twin census, cut #3: the restatement, after this
+ * bead's refusal #2 (R-B501: rung 1, a new claim set at its first failure; claims equal to pins), of cut #2 (77237305, refused),
+ * the respin, after refusal #1 (R-B475: rung 1, a member-level respin), of carrier cut #1 (04160327, refused), which carried
+ * wb-byfw's census - itself never landed: wb-byfw's cut #4, 524d3b6c, the R-B394 fail-closed core over cut #3, the
+ * enumerate-the-resolvable form the second-stage cap R-B362 bound for refusal #2's frozen claim sets (U1, the W7 Proxy forms; U3,
+ * each judged row's case text - its probe's and its present's initializers as this file spells them - anchored outside this
+ * file) - and pinned the W3 and W7 run-time route cut #4 named NOT CLAIMED. wb-byfw refusal #3 found that the anchor read each
+ * row's case text and never the row a case runs (the gate's GP4-RT, GP4-RT-DECL and GP4-RT-EACH swaps hid P-TV3ANY,
+ * E-TV4-NONENUM, HM4 and H-PX-NESTED-SKIP); refusal #4 found the W9 reader's words wider than its pages (four reader hollows:
+ * trailing spaces, tabs, CRLF line breaks, line comments) and a spread in a row's own literal giving it another row's case
+ * (GP24-SPREAD, GP24-SPREAD-W7). Cut #1 froze each W3 and W7 table as its declaration evaluates it (asSpelled, W10), made each W3
+ * and W7 case check that it runs its table's own row under its id, made caseReading read 'absent' for a row with a spread, a
+ * computed key or a method and read a list declared through a call (W9), and gave W9 a page for each spacing and comment form its
+ * words named. This bead's refusal #1 found the run-time route open through a table declared through a callee that caseReading
+ * does not read (U1: GP8-DCALLEE-W3, GP8-DCALLEE-W7 and GP8-ACALLEE-W3, a name a binding pattern binds), W9's spacing and comment
+ * words wider than its pages (U2: nine reader hollows - a leading and a trailing tab, a run of three spaces, a doc comment and a
+ * block comment across a line break, a comment-only line, and a trailing space, a CRLF line break and a line comment after a
+ * semicolon) and W9's callee and element rules pinned at one shape each (U3: a reader that keeps one list's callee,
+ * GP8-CR-ONE-CALLEE-M, and one that reads a row whose spread another property follows, GP8-CR-SPREAD-MID-M), with two riders: a
+ * probe's function object took an own property (F3, GP8-RT-FNPROPS) and a reader that follows names three steps kept every
+ * reading (F4, GP8-CR-DEPTH3-M). Cut #2's seat also found the route open through a table declared by let or var and rebound at
+ * the top level to a frozen copy with C13 given C14's case (S5-LET-W3, S5-VAR-W3 and S5-LET-W7, which hid P-TV3ANY and
+ * H-PX-NESTED-SKIP). Cut #2 made caseReading read a list only from its one const declaration and through a call only of a name
+ * one of the source's top-level declarations declares, each rule failing closed to no rows (W9 Q22-Q27), made asSpelled also
+ * freeze each function a row holds (W10), gave W9 a page for each form refusal #1 named (Q29-Q35), and made ROSTER pin the
+ * reader's own statements, caseReading's and those of every top-level declaration it names, so that any edit of the reader reds
+ * the census whatever form or position it changes. This bead's refusal #2 found W9's sentence on the shared declarations false as
+ * written: it named the top-level const, function and class declarations, while caseReading reads every plain-named variable
+ * declaration, whatever its keyword, as one, a let or a var declaration that a row names or that a list's callee names among them
+ * (U1: the gate's GP20-A-LETNAMED, GP20-A-VARNAMED, GP20-A-LETCALLEE and GP20-A-VARCALLEE readings, and on this file
+ * GP20-C-VARCALLEE-W3-PAIR, whose var callee ROSTER caught only through the reading the sentence denied). Here W9's words name
+ * the declarations caseReading reads, W9's pages carry a let, a var, a using and an await using declaration a row names (Q36-Q39)
+ * and each of them, and a class, as a list's callee (Q40-Q44), and caseReading and every other reader statement are unchanged.
+ * The census pins the readings of twinWalk (test/helpers/hyperunix-document-witness.ts, a copy of the HyperUnix result-corpus
+ * census's walk in test/workbench-hyperunix-result-corpus-census.test.ts, its provenance in the helper's header) with at most one
+ * of the gate's refusal #2 walk changes TV1-TV6, read over today's release, over hiddenPlant below, the namespace of wb-ulnv's
+ * R-HIDDEN plant from machine/flywheel/wb-ulnv tip c53028b4: hiddenPlant's held, loadCases and binding lines copied byte for byte
+ * but WRAPPED_CASES's, which maps WRAPPED itself where the tip maps a wrapped parameter that defaults to WRAPPED; WRAPPED copied;
  * Vault without its static reader, which no twin reads; the planted module entries and the release around the namespace left out,
  * as no twin reads a release's bytes; and over one-form namespaces (W3, W7). It also pins headerReading, its reader of the
  * result-corpus census's header (W5, W8), and caseReading, its reader of this file's own source (W9, ROSTER). wb-ulnv refusal #3
  * (gate-prep-23, run g10-gate-s167) found that cut's census-side prototype channel wider than TV3 (GV3X: an array prototype
- * carrying the documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled JSON); refusal #4 (gate-prep-21, run
- * g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called the plant's functions (GP21-OWN-LAZY,
- * GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's reading is the walk itself with that
- * twin's change; no walk calls a function-valued binding of the plant (W6) or a function a W3 row plants as a data property (W3),
- * and TV4 enters such a function as an object.
+ * carrying the documents) and its bytes channel wider than TV5 (GV5X and GV5Y: escape-spelled JSON); refusal #4 (gate-prep-21,
+ * run g10-gate-s179) found its kept twins TV1, TV2, TV4 and TV6 read after the census had called the plant's functions
+ * (GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD). Here a twin's reading is the walk
+ * itself with that twin's change; no walk calls a function-valued binding of the plant (W6) or a function a W3 row plants as a
+ * data property (W3), and TV4 enters such a function as an object.
  *
  * FORM WORDS (every W3 and W7 row id and every claim below): a binding is an own property of the namespace a row plants, the
  * walks' top level; a property below the top level is an own property of the plain object a row holds in an enumerable
@@ -54,10 +62,10 @@
  *   or W7 claim is about each row as the top-level table literal spells it (the probe's and the present's initializer text, which
  *   the roster pins) and as its case runs it: the row asSpelled froze when the table's one const declaration evaluated it (W10; a
  *   table declared by let or var or through a call of another name reads no rows or adds a shared declaration, and ROSTER reds:
- *   W9 Q18 and Q22-Q28), handed to its case through that case's it.each table argument and checked there to be its table's own
- *   row under its id (W3, W7). A W8 or W9 claim is about each page as its table holds it, run by its case through that case's
- *   it.each table argument as this file spells it. A change of this file that no falsifier names is NOT CLAIMED (NOT CLAIMED,
- *   below).
+ *   W9 Q18, Q22-Q28 and Q40-Q44), handed to its case through that case's it.each table argument and checked there to be its
+ *   table's own row under its id (W3, W7). A W8 or W9 claim is about each page as its table holds it, run by its case through
+ *   that case's it.each table argument as this file spells it. A change of this file that no falsifier names is NOT CLAIMED (NOT
+ *   CLAIMED, below).
  * W0 LIVE: over today's three export subpaths, the walk with no twin and each twin read the representation at exactly
  *   .:SDK_REPRESENTATION. Falsifier: a release or a walk that reads another path.
  * W1 THE QUIET: the walk with no twin reads hiddenPlant at exactly .:SDK_REPRESENTATION: none of the planted documents.
@@ -131,14 +139,17 @@
  *   that re-orders the forms, drops a form a page names or de-duplicates them, splits at and, stops at the bytes form, reads the
  *   first of two leads, reads past the second clause or before its end, or joins only one gutter width.
  * W9 THE CASE READER: caseReading over each CASE_PAGES row as its table holds it and its W9 case runs it (SCOPE), a synthetic
- *   source (CASE_BASE with the row's edits) read for its list ROWS: its rows and its shared declarations are exactly the row's. A
- *   list's rows are the elements of the array literal its one top-level const declaration spells, as that declaration's
- *   initializer or as the one argument of the call of a plain name that one of the source's top-level function, class or
- *   plain-named variable declarations declares (Q18, a const arrow; Q28, a function declaration; that name is then a name the rows
- *   name). A list declared other than once (Q7) or only inside a function (Q8), declared by a let or a var declaration (Q26, Q27),
- *   declared through a call whose argument is not an array literal (Q21), or declared through a call of a name no such declaration
- *   declares - a name an object or an array binding pattern binds (Q22, Q23), an imported name (Q24) or a name the source does not
- *   declare (Q25) - reads no rows. A row is such an element read for its id string, and the sha256 of its probe's and its
+ *   source (CASE_BASE with the row's edits) read for its list ROWS: its rows and its shared declarations are exactly the row's.
+ *   The source's top-level declarations are those its top-level statements make: each function and class declaration with a name,
+ *   and each plain-named declaration of a variable statement (a declaration whose name is an identifier, not a binding pattern),
+ *   whatever its keyword: const, let, var, using or await using. A list's rows are the elements of the array literal its one
+ *   top-level const declaration spells, as that declaration's initializer or as the one argument of the call of a plain name that
+ *   one of the source's top-level declarations declares (Q18, a const arrow; Q40, Q41, Q42 and Q43, a let, a var, a using and an
+ *   await using arrow; Q28, a function declaration; Q44, a class declaration; that name is then a name the rows name). A list
+ *   declared other than once (Q7) or only inside a function (Q8), declared by a let or a var declaration (Q26, Q27), declared
+ *   through a call whose argument is not an array literal (Q21), or declared through a call of a name no such declaration
+ *   declares - a name an object or an array binding pattern binds (Q22, Q23), an imported name (Q24) or a name the source does
+ *   not declare (Q25) - reads no rows. A row is such an element read for its id string, and the sha256 of its probe's and its
  *   present's initializer text exactly as the source spells it, or 'absent' for an id that is not a string literal or a property
  *   the element lacks; an element any of whose properties is a spread, a computed key or a method reads 'absent' for all three
  *   wherever that property stands (the element's last property, Q15 and Q16; before another property, Q29, Q30 and Q17), and its
@@ -148,24 +159,28 @@
  *   break, a tab after an arrow (Q12) and tabs as a line's indentation (Q31), a CRLF line break (Q13), a line comment after code
  *   (Q14) and alone on its line (Q34), and a trailing space, a CRLF line break and a line comment each after a semicolon (Q35),
  *   each inside a probe's and a present's initializer, and the indentation of a multi-line initializer (Q9, Q11, Q13, Q14, Q31,
- *   Q34, Q35). The shared declarations are the top-level const, function and class declarations a row's probe or present or a
- *   list's callee names, directly or through other shared declarations (a class naming a const among them, Q10; a name three
- *   declarations deep, Q19), in source order, each with the sha256 of its statement's text (the comments before the statement not
- *   included); a name after a dot or as a property assignment's name does not name a declaration (Q4), and a shorthand property
- *   (Q5), a name before a dot and a name indexed (Q20) do. Falsifier: a reader that changes any spacing or comment form inside a
- *   probe's or a present's initializer (collapses a run of spaces, drops a block, doc or line comment, strips a trailing space or
- *   tab, reads a tab as spaces or a CRLF as LF, strips indentation), reads part or only the first line of an initializer, reads a
- *   decoy list or a list declared inside a function, reads either of two declarations of the list, reads a list a let or a var
- *   declaration declares, keeps an id's quotes, reads an element with a spread, a computed key or a method in any position, reads
- *   no rows through a call, reads rows through a call of a name no top-level declaration declares, leaves the called name out of
- *   the shared declarations or reads into a call's call, digests a statement with the comment before it, misses a shorthand, a
- *   class, a name before a dot, a name indexed or a transitive name (at any depth), counts a property name or a name after a dot,
- *   or orders the shared declarations other than by source. Each such reader is an edit of the reader's text, so ROSTER's reader
- *   pin reds it too, at a form or position no page carries as at one a page carries (refusal #1's nine GP8W9 reader members,
- *   GP8-CR-ONE-CALLEE-M, GP8-CR-SPREAD-MID-M and GP8-CR-DEPTH3-M among them).
+ *   Q34, Q35). The shared declarations are the source's top-level declarations, of every kind above, that a row's probe or
+ *   present or a list's callee names, directly or through the statement of another shared declaration (a class naming a const
+ *   among them, Q10; a name three declarations deep, Q19), in source order, each with the sha256 of its statement's text (the
+ *   comments before the statement not included): a let, a var, a using and an await using declaration a row's probe names are
+ *   shared declarations (Q36, Q37, Q38 and Q39), as are the let, var, using, await using and class declarations a list's callee
+ *   names (Q40-Q44); a name after a dot or as a property assignment's name does not name a declaration (Q4), and a shorthand
+ *   property (Q5), a name before a dot and a name indexed (Q20) do. Falsifier: a reader that changes any spacing or comment form
+ *   inside a probe's or a present's initializer (collapses a run of spaces, drops a block, doc or line comment, strips a trailing
+ *   space or tab, reads a tab as spaces or a CRLF as LF, strips indentation), reads part or only the first line of an
+ *   initializer, reads a decoy list or a list declared inside a function, reads either of two declarations of the list, reads a
+ *   list a let or a var declaration declares, keeps an id's quotes, reads an element with a spread, a computed key or a method in
+ *   any position, reads no rows through a call of a top-level declaration's name (of any kind above), reads rows through a call
+ *   of a name no top-level declaration declares, leaves the called name out of the shared declarations or reads into a call's
+ *   call, digests a statement with the comment before it, misses a shorthand, a class, a let, a var, a using or an await using
+ *   declaration, a name before a dot, a name indexed or a transitive name (at any depth), counts a property name or a name after
+ *   a dot, or orders the shared declarations other than by source. Each such reader is an edit of the reader's text, so ROSTER's
+ *   reader pin reds it too, at a form or position no page carries as at one a page carries (refusal #1's nine GP8W9 reader
+ *   members, GP8-CR-ONE-CALLEE-M, GP8-CR-SPREAD-MID-M and GP8-CR-DEPTH3-M among them, and refusal #2's GP20-S-READER-TO-WORDS, a
+ *   reader that leaves every variable declaration but a const one out of the shared declarations, which reds Q36-Q43 as well).
  * W10 AS SPELLED: TWIN_CONTROLS and PROXY_FORMS are frozen, and so is each of their rows and each array and each function a row
  *   holds (its probe and its present): asSpelled froze them as their const declarations evaluated them, and a const binding is
- *   never rebound (a table declared by let or var, which a later statement could rebind to another frozen copy as this seat's
+ *   never rebound (a table declared by let or var, which a later statement could rebind to another frozen copy as cut #2's
  *   S5-LET-W3, S5-VAR-W3 and S5-LET-W7 did, reads no rows, and ROSTER reds: W9 Q26, Q27). So no statement or expression of this
  *   file that runs after a table's declaration changes a W3 or W7 row, its probe, its present or an array it holds:
  *   Object.assign, an assignment and Object.defineProperty onto a row or onto its probe or present function, or a replaced or
@@ -196,10 +211,11 @@
  *   and refusal #3's text control GP4-TEXT), with or without a reader edit beside it (refusal #1's nine GP8W9 pairs), or given a
  *   spread, a computed key or a method beside them (the gate's refusal #4 GP24-SPREAD and GP24-SPREAD-W7 and refusal #1's
  *   GP8-CR-SPREAD-MID-W, which read 'absent'); a table declared by let or var or through a call of another name (refusal #1's
- *   GP8-DCALLEE-W3, GP8-DCALLEE-W7, GP8-ACALLEE-W3, GP8-NSCALLEE-W3, GP8-FCALLEE-W3, GP8-CCALLEE-W3 and GP8-CR-ONE-CALLEE-W, and
- *   this seat's S5-LET-W3, S5-VAR-W3 and S5-LET-W7); a shared declaration's statement text edited; any edit of a reader statement's
- *   text (every character of the statement, the comments before it not included), so a reader change reds whatever form or
- *   position it changes.
+ *   GP8-DCALLEE-W3, GP8-DCALLEE-W7, GP8-ACALLEE-W3, GP8-NSCALLEE-W3, GP8-FCALLEE-W3, GP8-CCALLEE-W3 and GP8-CR-ONE-CALLEE-W,
+ *   cut #2's S5-LET-W3, S5-VAR-W3 and S5-LET-W7, and refusal #2's GP20-C-VARCALLEE-W3-PAIR and GP20-C-LETCALLEE-W7-PAIR, whose
+ *   var or let callee joins the shared declarations); a shared declaration's statement text edited; any edit of a reader
+ *   statement's text (every character of the statement, the comments before it not included), so a reader change reds whatever
+ *   form or position it changes.
  * FROZEN SHAPE (standing rule 16): TWINS, TWIN_READINGS' path counts, FORMS' phrases, twins and site counts, TWIN_CONTROLS' ids,
  *   readBy and calls, PROXY_FORMS' ids, throwBy and readBy, READER_PAGES' ids, lead counts and form counts, and CASE_PAGES' ids,
  *   row counts and shared counts are literals.
@@ -233,12 +249,12 @@
  *   H-PX-NESTED-SKIP under NC-E6, the W7 check removed beside S4-EACH-W7).
  *   A declaration in the describe callback that shadows another name this file declares or imports at its top level (a reader
  *   statement such as caseReading or namedIn, or createHash, which the ROSTER case calls) is NOT CLAIMED by this census either,
- *   nor are the realized pairs it hides (this seat's S7-SHADOW-READER-PAIR: a describe-callback caseReading that reads a
- *   source's leading tabs as spaces when it names INHERITED_CASES hides refusal #1's GP8W9-LEADTAB-W, which reds ROSTER alone).
+ *   nor are the realized pairs it hides (cut #2's S7-SHADOW-READER-PAIR: a describe-callback caseReading that reads a source's
+ *   leading tabs as spaces when it names INHERITED_CASES hides refusal #1's GP8W9-LEADTAB-W, which reds ROSTER alone).
  *   A run-time change of a value a shared declaration holds (PLANTED_DOCUMENT's members), of a built-in (Object.freeze and
  *   Object.isFrozen among them) or of a value a module this file imports holds (typescript's node objects and their prototypes,
  *   through which a statement can make getText read an initializer other than as written) is NOT CLAIMED by this census, nor are
- *   the realized pairs it hides (this seat's S6-TSPATCH-TAB-PAIR: a top-level statement giving typescript's node getText a
+ *   the realized pairs it hides (cut #2's S6-TSPATCH-TAB-PAIR: a top-level statement giving typescript's node getText a
  *   leading-tab reading for a text that names INHERITED_CASES hides refusal #1's GP8W9-LEADTAB-W, which reds ROSTER alone).
  *   Any other edit of this file that no falsifier above names - of a test body (an it callback), of an import, of the comments
  *   before a declaration, or of a declaration no row's probe or present names (WALKS, MODULES, walked, outcome, callPlanted, RAN,
@@ -246,8 +262,9 @@
  *   census; whether a local name spelled like a top-level declaration counts as naming it, and caseReading over a source W9 does
  *   not model (a list that is not an array literal of object literals or such a call, a name reached through a computed key or
  *   another file, an element with a quoted key, an accessor or a shorthand property, an element naming a property twice, which
- *   tsc refuses in this file as TS1117, and a call of more than one argument or of a callee that is not a plain name) are NOT
- *   CLAIMED by this census.
+ *   tsc refuses in this file as TS1117, a call of more than one argument or of a callee that is not a plain name, a list whose
+ *   name a function or a class declaration also declares, and a shared declaration whose name more than one top-level statement
+ *   declares - an overloaded function or a var declared twice) are NOT CLAIMED by this census.
  *   An edit of this file and the roster fixture together, or of the ROSTER case itself or SELF (the path caseReading reads), is NOT
  *   CLAIMED by this census.
  * RESIDUALS: none named; every member of wb-byfw refusal #2 (A1-A9, B1-B4, the 200 text case swaps and their pairs, D1-D4, RX1
@@ -257,9 +274,14 @@
  *   members as follows: U1 (GP8-DCALLEE-W3, GP8-DCALLEE-W7 and GP8-ACALLEE-W3 with their pairs, and GP8-NSCALLEE-W3-PAIR) by
  *   W9's declared-callee rule (Q22-Q25) and ROSTER; U2 (the nine GP8W9 reader members and their pairs) by W9's Q31-Q35 and
  *   ROSTER's reader pin; U3 (GP8-CR-ONE-CALLEE-M and GP8-CR-SPREAD-MID-M with their pairs) by the reader pin and, for the second,
- *   W9's Q29; the riders F3 (GP8-RT-FNPROPS) by W10's function freeze and F4 (GP8-CR-DEPTH3-M) by the reader pin; and this
- *   seat's S5-LET-W3, S5-VAR-W3 and S5-LET-W7 (a table declared by let or var and rebound at the top level) by W9's const rule
- *   (Q26, Q27) and ROSTER.
+ *   W9's Q29; the riders F3 (GP8-RT-FNPROPS) by W10's function freeze and F4 (GP8-CR-DEPTH3-M) by the reader pin; cut #2's
+ *   S5-LET-W3, S5-VAR-W3 and S5-LET-W7 (a table declared by let or var and rebound at the top level) by W9's const rule (Q26,
+ *   Q27) and ROSTER; and this bead's refusal #2 member U1 (W9's former sentence on the shared declarations, false as written for
+ *   a let and a var declaration that a row names or that a list's callee names: the gate's GP20-A-LETNAMED, GP20-A-VARNAMED,
+ *   GP20-A-LETCALLEE and GP20-A-VARCALLEE readings, now the words' own) by W9's Q36, Q37, Q40 and Q41, with Q38, Q39, Q42 and Q43
+ *   for a using and an await using declaration and Q44 for a class callee; a reader built to the former words (refusal #2's
+ *   GP20-S-READER-TO-WORDS and its pairs) reds Q36-Q43 beside ROSTER's reader pin, and on this file ROSTER's shared pin catches
+ *   the var and the let callee routes (GP20-C-VARCALLEE-W3-PAIR, GP20-C-LETCALLEE-W7-PAIR).
  * Display paths added: none. Test-only: it reads files, spawns nothing and writes no file.
  */
 import { createHash } from "node:crypto";
@@ -1586,6 +1608,92 @@ const CASE_PAGES: readonly CasePage[] = [
     ],
     shared: [BASE_SHARED, MAKE_SHARED],
   },
+  {
+    id: "Q36 a let declaration a row names",
+    edits: [
+      ["const UNUSED = 1;", "let UNUSED = 1;"],
+      ["probe: () => make(1)", "probe: () => make(UNUSED)"],
+    ],
+    rows: [{ ...ROW_ONE, probe: sha256("() => make(UNUSED)") }, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("let UNUSED = 1;") }],
+  },
+  {
+    id: "Q37 a var declaration a row names",
+    edits: [
+      ["const UNUSED = 1;", "var UNUSED = 1;"],
+      ["probe: () => make(1)", "probe: () => make(UNUSED)"],
+    ],
+    rows: [{ ...ROW_ONE, probe: sha256("() => make(UNUSED)") }, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("var UNUSED = 1;") }],
+  },
+  {
+    id: "Q38 a using declaration a row names",
+    edits: [
+      ["const UNUSED = 1;", "using UNUSED = 1;"],
+      ["probe: () => make(1)", "probe: () => make(UNUSED)"],
+    ],
+    rows: [{ ...ROW_ONE, probe: sha256("() => make(UNUSED)") }, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("using UNUSED = 1;") }],
+  },
+  {
+    id: "Q39 an await using declaration a row names",
+    edits: [
+      ["const UNUSED = 1;", "await using UNUSED = 1;"],
+      ["probe: () => make(1)", "probe: () => make(UNUSED)"],
+    ],
+    rows: [{ ...ROW_ONE, probe: sha256("() => make(UNUSED)") }, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "UNUSED", digest: sha256("await using UNUSED = 1;") }],
+  },
+  {
+    id: "Q40 the list declared through a call of a let declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nlet rows = (list: object[]): object[] => list;"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("let rows = (list: object[]): object[] => list;") }],
+  },
+  {
+    id: "Q41 the list declared through a call of a var declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nvar rows = (list: object[]): object[] => list;"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("var rows = (list: object[]): object[] => list;") }],
+  },
+  {
+    id: "Q42 the list declared through a call of a using declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nusing rows = (list: object[]): object[] => list;"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("using rows = (list: object[]): object[] => list;") }],
+  },
+  {
+    id: "Q43 the list declared through a call of an await using declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nawait using rows = (list: object[]): object[] => list;"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("await using rows = (list: object[]): object[] => list;") }],
+  },
+  {
+    id: "Q44 the list declared through a call of a class declaration",
+    edits: [
+      ["const UNUSED = 1;", "const UNUSED = 1;\nclass rows {}"],
+      ["const ROWS = [", "const ROWS = rows(["],
+      ["  },\n];\n", "  },\n]);\n"],
+    ],
+    rows: [ROW_ONE, ROW_TWO],
+    shared: [BASE_SHARED, MAKE_SHARED, { name: "rows", digest: sha256("class rows {}") }],
+  },
 ];
 
 interface RosterRow {
@@ -1916,6 +2024,15 @@ describe("wb-byfw and wb-gnj9 DOCUMENT WITNESS twin census: twinWalk's readings 
         "Q33 a doc comment and a block comment across a line break inside a probe's and a present's initializer:2:2",
         "Q34 a comment-only line inside a probe's and a present's initializer:2:2",
         "Q35 a trailing space, a CRLF line break and a line comment after a semicolon inside a probe's and a present's initializer:2:2",
+        "Q36 a let declaration a row names:2:3",
+        "Q37 a var declaration a row names:2:3",
+        "Q38 a using declaration a row names:2:3",
+        "Q39 an await using declaration a row names:2:3",
+        "Q40 the list declared through a call of a let declaration:2:3",
+        "Q41 the list declared through a call of a var declaration:2:3",
+        "Q42 the list declared through a call of a using declaration:2:3",
+        "Q43 the list declared through a call of an await using declaration:2:3",
+        "Q44 the list declared through a call of a class declaration:2:3",
       ],
     });
     RAN.add("FROZEN SHAPE");

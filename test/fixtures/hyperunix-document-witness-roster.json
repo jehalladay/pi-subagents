@@ -1,5 +1,5 @@
 {
-  "comment": "wb-gnj9 cut #2 (the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
+  "comment": "wb-gnj9 cut #3 (the restatement of cut #2 after its refusal #2, R-B501 rung 1, claims equal to pins; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
   "controls": [
     {
       "id": "TV1 an enumerable symbol-keyed data binding",
@@ -968,6 +968,60 @@
       "rows": 2,
       "shared": 2,
       "digest": "e916ad5989049b8562047aa22dbb74309181b5774cf5c0df893f9d386dde38bc"
+    },
+    {
+      "id": "Q36 a let declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "f73abfd4993b1c8bf2bdbf383b7c5c5c64a2734786a2674dc2abe7ecc8e3b836"
+    },
+    {
+      "id": "Q37 a var declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "e2e58b6ffe5c3942a3a22684f91a6cdbeb12a2723d9134285e04ec27f2d4ceb5"
+    },
+    {
+      "id": "Q38 a using declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "4fa2506553a18c9a007e5e074caeb5a4a7dbdbe25069a0a0fc5b1b89ee724997"
+    },
+    {
+      "id": "Q39 an await using declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "6e44792c48947352807037caf1f77c1f66314f9db985a39139b42d550075456a"
+    },
+    {
+      "id": "Q40 the list declared through a call of a let declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "54a2bc5a8fba11507515b137ffbe4fccf048f7adee5f9f8ed71e136823e380f1"
+    },
+    {
+      "id": "Q41 the list declared through a call of a var declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "5eb69b5ef5eda1fc430426a81a9d33ff935900f13d516bb6e0e435bd3825cfe6"
+    },
+    {
+      "id": "Q42 the list declared through a call of a using declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "2ef07ab4fa658051795b986be99c170e1d6d362341cec9a0df705d42525b4afb"
+    },
+    {
+      "id": "Q43 the list declared through a call of an await using declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "813f7d4a2430b84981b343d1a653ed546ae6f03bcbede8e9e2aa33aff9ebc5f2"
+    },
+    {
+      "id": "Q44 the list declared through a call of a class declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "79dfe4103886876dde7b718ecdf570c9236987c316f0003ed5923d052ebc79fc"
     }
   ],
   "shared": [
