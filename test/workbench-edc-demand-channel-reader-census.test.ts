@@ -44,14 +44,24 @@
  * or index as the words say. KEY_JOINS now reads a parenthesized string literal type through every parenthesis and a number
  * literal type with a minus sign too, as the compiler parses them (the witnesses P3 and L4). F2 (the R694 ride): the helper's
  * bare() doc no longer says every COMMENTS sub-form is pinned; like this header it names the sub-forms refusal #1's F1 counts,
- * which this cut still neither pins nor narrows.
+ * which this cut still neither pins nor narrows. Cut #7 (wb-u6ho: the R694 carry of landing 903's F1, a PASS-WITH-FINDING)
+ * answers the 16 gate one-edit helper mutants F1 names (GP2-T1 to GP2-R2) and its control GP2-I1, which survive on members of
+ * sub-forms row K's words stated generically, with pins and narrowed words, the helper still unchanged: row K plants, after each
+ * form's claim probe witnesses, the paired witness the F1 line names for each of its mutants and for its control, verbatim, by the
+ * mutant's id, each read as the delivered reader reads it and held byte for byte, and each K pin now holds every witness's first
+ * as-written reading to its receiver, a '.' and the join its form's words say (K); AS-WRITTEN's row K words no longer describe
+ * sub-forms - they name every K witness by its id and its key or index as its plant writes it, and claim each of the seven forms
+ * at those keys and indexes alone, held to K_PLANTS by the judged set.
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
  * AS-WRITTEN's key and index words are held to the M matrices too: its parts name each KEY_JOINS form once, every M-AFTER and
  * M-BEFORE plant of a form holds the form its words name (the compiler's reading of the plant's key or index), and every held
  * witness of it reads that key or index as its part says - '?', or the constant text the compiler reads from it; so does every
- * row K witness of the form, each a key or index of that form as the compiler reads it, one K pin per form.
+ * row K witness of the form, each a key or index of that form as the compiler reads it, one K pin per form. AS-WRITTEN's last
+ * sentence names every row K witness, pin by pin in K_PLANTS' order, by its id and its key or index as its plant writes it (with
+ * its receiver where that is not the claim probe's), and no other: the judged set holds those names to the plants as the compiler
+ * reads them, and the claim probe's receivers to the ones the sentence names.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness - every plant's findings,
  * its LIVE QUIET entries and the texts of its access and import readings, so bare()'s text is held byte for byte - held to the
@@ -106,9 +116,13 @@
  *  K  wb-ft52's F1 line (the R694 carry of landing 850's PASS-WITH-FINDING; its claim clause is the label): one pin per key and
  *     index form AS-WRITTEN names beside a string one, in KEY_JOINS order - K-TEMPLATE, K-CONCATENATION, K-NUMBER and K-IDENTIFIER
  *     an element access's key, K-PARENTHESIZED, K-NUMBER-TYPE and K-TYPE-REFERENCE an indexed access type's index - each holding the
- *     paired witnesses of its form's sub-forms from the gate's claim probe, verbatim, by the gate's witness id: each plant's key or
- *     index of its pin's form as the compiler reads it, its first as-written reading the element access's or indexed access type's
- *     own, its findings, LIVE QUIET entries and as-written texts held byte for byte.
+ *     paired witnesses of its form's sub-forms from the gate's claim probe, verbatim, by the gate's witness id, then the paired
+ *     witnesses wb-u6ho's F1 line (the R694 carry of landing 903's PASS-WITH-FINDING) names for its form's mutants and its control,
+ *     verbatim, by the mutant's id: each plant's key or index of its pin's form as the compiler reads it, its first as-written
+ *     reading the element access's or indexed access type's own - its receiver (the claim probe's "(context.inner)" or
+ *     "Opts<Context.Inner>", or the "(demand.inner)" the line names for GP2-T1 and GP2-I1), a "." and the join its form's words say
+ *     (the key's or index's constant text as the compiler reads it, or "?") -, its findings, LIVE QUIET entries and as-written texts
+ *     held byte for byte.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set (every row's id, label and pins,
  * every pin's witness, the claims, the kills and every registered test title) is held to the out-of-file roster
@@ -123,7 +137,11 @@
  * are non-equivalent', in the line's order, each killed at its own witnesses' pin. Row K is wb-ft52's F1 line (its first
  * '[leads] - F1 LOW RIDES: ' notes line): its label the line's claim clause, KILLS holding after row W's survivors exactly the
  * gate mutants the line names, as many as it counts, and each witness the line pairs with a mutant - its id and the code it
- * spells - a plant of the K pin that mutant is killed at. The TypeScript compiler anchors T-TOKENS,
+ * spells - a plant of the K pin that mutant is killed at. wb-u6ho's F1 line (its first '[leads] - F1 LOW LEADS: ' notes line)
+ * anchors row K's other witnesses: KILLS holds after row K's mutants exactly the gate mutants the line names before its control,
+ * as many as it counts, then that control, and each witness the line pairs with one of them - the code it spells, with the
+ * receiver it names - is the plant row K holds under that mutant's id, of the K pin the mutant is killed at. The TypeScript
+ * compiler anchors T-TOKENS,
  * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
  * and for the identifier, private name and keyword classes, each comment run right after its own token in the compiler's token
@@ -154,8 +172,9 @@
  * string; a plain element access's key in another form than those AS-WRITTEN names (a string, a no-substitution template, a
  * '+' concatenation of two strings, a number and an identifier) and a plain indexed access type's index in another form than
  * those it names (a string literal type, parenthesized or not, a number literal type and a type reference), a '+' concatenation
- * of a template and a string among them; each of those seven key and index forms in a sub-form its K pin does not plant (another
- * escape, quote, spacing or comment, three or more parentheses, another number notation, name or type argument); a comment run right
+ * of a template and a string among them; each of those seven key and index forms at a key or index its K pin does not plant (any
+ * other text: another escape, quote, spacing or comment, another word, three or more parentheses, another number notation, name or
+ * type argument); a comment run right
  * after a regular expression with another flag than "g", after an identifier or a private name
  * ending in a non-ASCII character, and after any other keyword (one no operator template parses right before an operand, but
  * "this" and "async"); a run of another shape than those COMMENTS names - after a terminator token three or more comments, or
@@ -174,7 +193,8 @@
  * list names (a string's second quote, the regular expression's "g" and the Keyword member's "async"), the identifier, private
  * name and keyword classes, the C-LINES members the F3 line does not name where another member reads the same line rule, the
  * C-LINE-OF members but its punctuators alone, the T-RUNS run shapes beside the comment kinds, each row W witness beside its
- * mutant's first, each row K witness beside the 10 wb-ft52's F1 line pairs with its mutants, and the M-ARRAY-PATTERN and
+ * mutant's first, each row K witness beside the 10 wb-ft52's F1 line and the 17 wb-u6ho's F1 line pair with their mutants (its
+ * K_PLANTS entry, its name in AS-WRITTEN and its roster cell removed together), and the M-ARRAY-PATTERN and
  * M-TYPED-DEFAULT plants.
  * RESIDUALS (named; each member with its pinned quiet reading in its row): R-CUT (row C) a subject and a family on two sides of a
  * cut read no finding, each member held by LIVE QUIET (fail closed); R-TYPED-DEFAULT (row M, M-TYPED-DEFAULT) a subject and a
@@ -223,6 +243,11 @@ const L2_ID = /\bL2-[A-Z]\d\d\b/g;
 const KEY_CARRY = "wb-ft52";
 /** A gate mutant id as that F1 line spells it. */
 const G23_ID = /\bG23-K\d\d\b/g;
+/** The R694 carry of landing 903's F1 (row K's other witnesses): its F1 line names the 16 gate mutants and the control row K's
+ * witnesses under their ids are killed at. */
+const SUB_CARRY = "wb-u6ho";
+/** A gate mutant id as that F1 line spells it. */
+const GP2_ID = /\bGP2-[A-Z]\d\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
 const PLANT_TSX = "src/plant.tsx";
@@ -233,7 +258,7 @@ const CLAIMS: { readonly [clause: string]: string } = {
   COMMENTS:
     "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER) - after each of those tokens a run of each comment kind alone, of a comment with white space and a line end around it, and of each shape T-RUNS names: two block comments, a block and a line comment, two line comments, a comment with a blank or a white-space-only line after it, a blank line before it and tabs around it (T-RUNS, W-COMMENTS) -; and as one space after any other token (T-R1C, M-BEFORE, T-ELSEWHERE: every other punctuator the compiler lists; every literal and template token kind - a string in either quote, a regular expression without a flag and with the flag 'g' -; an identifier and a private name ending in each ASCII character the compiler reads as an identifier part - each of the 26 lowercase and 26 uppercase letters, the ten digits, '_' and '$' -; and the keyword 'this', 'async' before an arrow function's parameter and each keyword the compiler parses right before an operand (as a prefix operator: delete, new, typeof, void, yield, await; as an infix operator: in, instanceof, as, satisfies; as a type operator: typeof, asserts, infer, keyof, readonly, unique) - but '`', '#' and '</', which the compiler's token list never holds as a token of their own, and JSX text, which reads a comment's bytes as its text), each T-ELSEWHERE plant's run in each comment kind (T-KINDS, W-COMMENTS: a line and a JSDoc-style comment beside its block one, but a line comment right after 'async', 'yield' and 'asserts', whose line end the compiler parses otherwise), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment of these runs cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
   "AS-WRITTEN":
-    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key; plain with a no-substitution template or a '+' concatenation of two strings as its key, each joining as its constant text; and plain with a number or an identifier as its key, each joining as '?'; those four key forms each only in the sub-forms its row K pin plants: K-TEMPLATE, K-CONCATENATION, K-NUMBER and K-IDENTIFIER), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index; plain with a parenthesized string literal type as its index, joining as its constant text; and plain with a number literal type or a type reference as its index, each joining as '?'; those three index forms each only in the sub-forms its row K pin plants: K-PARENTHESIZED, K-NUMBER-TYPE and K-TYPE-REFERENCE), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT). Row K's sub-forms are the gate's paired witnesses (wb-ft52's F1 line), each read as the delivered reader reads it: K-TEMPLATE a template of a word, with a hex escape, empty, of two words and with a code point escape (T1-T5); K-CONCATENATION two strings in double, in single and in mixed quotes, with a comment before the '+', with a hex escape in the right string, with an empty left string, with a line end after the '+' and with a hex escape in the left string (C1-C8); K-NUMBER a zero, a one, a decimal fraction, a hex, an exponent, a separated and a binary number and a fraction with no leading digit (N1-N8); K-IDENTIFIER a name, a family word, a name starting with '$' and with '_', and undefined (I1-I5); K-PARENTHESIZED a string in double and in single quotes, in two parentheses, with spaces inside them, with a hex escape and with a comment inside them (P1-P6); K-NUMBER-TYPE a zero, a decimal fraction, a hex, a negative number and an exponent (L1-L5); and K-TYPE-REFERENCE a name, a qualified name, a name with a type argument, a family word, a name with a string literal type argument and a qualified name in lower case (R1-R6).",
+    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key; plain with a no-substitution template or a '+' concatenation of two strings as its key, each joining as its constant text; and plain with a number or an identifier as its key, each joining as '?'; those four key forms each only at the keys its row K pin plants, which the last sentence names: K-TEMPLATE, K-CONCATENATION, K-NUMBER and K-IDENTIFIER), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index; plain with a parenthesized string literal type as its index, joining as its constant text; and plain with a number literal type or a type reference as its index, each joining as '?'; those three index forms each only at the indexes its row K pin plants, which the last sentence names: K-PARENTHESIZED, K-NUMBER-TYPE and K-TYPE-REFERENCE), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT). Row K's sub-forms are exactly the keys and indexes its witnesses plant - the gate's paired witnesses of wb-ft52's F1 line, by the gate's witness id, and of wb-u6ho's F1 line, by its mutant id -, each named here by its id and its key or index as its plant writes it (beside the claim probe's receiver, (context.inner) for a key and Opts<Context.Inner> for an index, or after 'under' the one its plant has instead) and each read as the delivered reader reads it; no other key or index of those seven forms is claimed: K-TEMPLATE T1 `demand`, T2 `de\\x6dand`, T3 ``, T4 `dem and`, T5 `de\\u{6d}and`, GP2-T1 `context` under (demand.inner), GP2-T2 `\\x64emand`, GP2-T3 `demand now`; K-CONCATENATION C1 \"de\" + \"mand\", C2 'de' + 'mand', C3 \"de\" + 'mand', C4 \"de\" /* c */ + \"mand\", C5 \"de\" + \"\\x6dand\", C6 \"\" + \"demand\", C7 \"de\" +\n  \"mand\", C8 \"d\\x65\" + \"mand\", GP2-C1 'de' + \"mand\", GP2-C2 \"de\" + \"m\\x61nd\", GP2-C3 \"d\" + \"emand\"; K-NUMBER N1 0, N2 1, N3 1.5, N4 0x10, N5 1e3, N6 1_000, N7 0b1, N8 .5, GP2-N1 0xff, GP2-N2 1e-3; K-IDENTIFIER I1 key, I2 demand, I3 $demand, I4 _k, I5 undefined, GP2-I1 context under (demand.inner), GP2-I2 demands; K-PARENTHESIZED P1 (\"demand\"), P2 ('demand'), P3 ((\"demand\")), P4 ( \"demand\" ), P5 (\"de\\x6dand\"), P6 (/* c */ \"demand\"), GP2-P1 (('demand')), GP2-P2 (\"demand\" /* c */), GP2-P3 (\"\\x64emand\"); K-NUMBER-TYPE L1 0, L2 1.5, L3 0x10, L4 -1, L5 1e3, GP2-L1 -1.5, GP2-L2 0xff; K-TYPE-REFERENCE R1 Key, R2 Keys.Demand, R3 Key<X>, R4 Demand, R5 Pick<\"demand\">, R6 keys.demand, GP2-R1 A.B.Demand, GP2-R2 demand.",
   CUT: "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space, a tab or a line end - right after a token that ends in a terminator (C-SPACE); a blank or white-space-only line (of spaces, or of a tab); a line read whole as a table row (a '|' first - followed by a space, a second '|', a '=' or the line's end - at the line's start or after spaces or a tab) or as a heading (none to three spaces, one to six '#', then white space or the line's end - four spaces, seven '#' or a word right after the '#' make none), each such line its own sentence, so the next line starts another; a line read as a list item (a '-', '+' or '*' bullet or a number of one to five digits with ')', then a space or a tab - a bullet with a word right after it makes none; a number with '.' is a terminator cut, C-SPACE); or a terminator before a space or a tab inside a string, a template, a regular expression or JSX text the reading holds (C-LINES, W-CUT). A terminator stays with the sentence it ends, and each finding names the line of the reading its sentence's first non-blank piece stands on: the first line after the cut - a terminator before a line end or a space, a blank line, a heading, a table row or a list item - that holds anything but white space, a punctuator alone too, which can precede the line of the sentence's first word: '(' alone, in code and in a template's text, and in a template's text each ASCII punctuator SENTENCES reads alone as no line rule and no terminator, the template's closing '`' among them (C-LINE-OF, W-LINE-OF). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
   "LIVE QUIET":
     "quietOf holds, beside the quiet readings of one text, every carrier pair whose two words a sentence cut parts - each occurrence of each pair, in a code reading and across a page's sentences - as '<where> parted:carrier <pair>' (P-ONE, P-C04, P-C05, P-C06, P-CODE); a pair one sentence spells is a finding and is held as parted nowhere, while a parted occurrence of the same pair beside it is held (P-WITHIN).",
@@ -631,6 +656,14 @@ function firstKey(plant: string): ts.Node | undefined {
   visit(source);
   return keys[0];
 }
+/** The receiver beside a plant's first key or index (firstKey's): its element access's object or its indexed access type's object
+ * type, as its plant writes it; undefined when it has none. */
+function accessReceiver(plant: string): string | undefined {
+  const access = firstKey(plant)?.parent;
+  if (access !== undefined && ts.isElementAccessExpression(access)) return access.expression.getText();
+  if (access !== undefined && ts.isIndexedAccessTypeNode(access)) return access.objectType.getText();
+  return undefined;
+}
 /** Whether a key or index is a string: a string literal key, or a literal type of a string literal as an index. */
 const isStringKey = (key: ts.Node): boolean => ts.isStringLiteral(key) || (ts.isLiteralTypeNode(key) && ts.isStringLiteral(key.literal));
 /** The constant text the compiler reads from a plant's first key or index (firstKey), from that node alone (never through the
@@ -843,16 +876,21 @@ const W_PLANTS: Readonly<Record<string, Readonly<Record<string, readonly (readon
 };
 /** The F1 line's clause markers, one per row W pin: each opens the text that names its pin's mutants, up to the next marker. */
 const W_CLAUSES: Readonly<Record<string, string>> = { "W-COMMENTS": "(a) COMMENTS", "W-CUT": "(d) CUT", "W-LINE-OF": "(e) C-LINE-OF", "W-AS-WRITTEN": "(f) AS-WRITTEN" };
-/** Row K's element access plant: a key in "(context.inner)[<key>]", as the gate's claim probe plants it. */
-const keyPlant = (key: string): string => `export const value = (context.inner)[${key}];\n`;
+/** Row K's element access plant: a key in "(context.inner)[<key>]", as the gate's claim probe plants it, or in "<receiver>[<key>]"
+ * beside another receiver (wb-u6ho's F1 line names "(demand.inner)" for two of its witnesses). */
+const keyPlant = (key: string, receiver = "(context.inner)"): string => `export const value = ${receiver}[${key}];\n`;
 /** Row K's indexed access type plant: an index in "Opts<Context.Inner>[<index>]", as the gate's claim probe plants it. */
 const indexPlant = (index: string): string => `export type Value = Opts<Context.Inner>[${index}];\n`;
+/** The receivers row K's witnesses stand beside where they are not the claim probe's ("(context.inner)" for a key,
+ * "Opts<Context.Inner>" for an index): the one wb-u6ho's F1 line names for GP2-T1's witness and for its control GP2-I1's. */
+const K_RECEIVERS: Readonly<Record<string, string>> = { "GP2-T1": "(demand.inner)", "GP2-I1": "(demand.inner)" };
 /** Row K (wb-ft52, the R694 carry of landing 850's F1): per key and index form AS-WRITTEN names beside a string one (KEY_JOINS), in
  * its order, the form and the paired witnesses the gate read the form's sub-forms with, verbatim from its PREP archive
  * (tools/claim-probe.mjs, by the gate's witness id; its '+' concatenation of a template and a string, C9, is another form), the 10
- * the F1 line pairs with its 7 mutants among them. */
+ * the F1 line pairs with its 7 mutants among them; then, by the mutant's id, the paired witness wb-u6ho's F1 line (the R694 carry
+ * of landing 903's F1) names for each of its 16 mutants and for its control, verbatim from the line. */
 const K_PLANTS: Readonly<Record<string, readonly [form: string, witnesses: Readonly<Record<string, string>>]>> = {
-  "K-TEMPLATE": ["a no-substitution template", { T1: keyPlant("`demand`"), T2: keyPlant("`de\\x6dand`"), T3: keyPlant("``"), T4: keyPlant("`dem and`"), T5: keyPlant("`de\\u{6d}and`") }],
+  "K-TEMPLATE": ["a no-substitution template", { T1: keyPlant("`demand`"), T2: keyPlant("`de\\x6dand`"), T3: keyPlant("``"), T4: keyPlant("`dem and`"), T5: keyPlant("`de\\u{6d}and`"), "GP2-T1": keyPlant("`context`", "(demand.inner)"), "GP2-T2": keyPlant("`\\x64emand`"), "GP2-T3": keyPlant("`demand now`") }],
   "K-CONCATENATION": [
     "a '+' concatenation of two strings",
     {
@@ -864,23 +902,27 @@ const K_PLANTS: Readonly<Record<string, readonly [form: string, witnesses: Reado
       C6: keyPlant('"" + "demand"'),
       C7: keyPlant('"de" +\n  "mand"'),
       C8: keyPlant('"d\\x65" + "mand"'),
+      "GP2-C1": keyPlant(`'de' + "mand"`),
+      "GP2-C2": keyPlant('"de" + "m\\x61nd"'),
+      "GP2-C3": keyPlant('"d" + "emand"'),
     },
   ],
-  "K-NUMBER": ["a number", { N1: keyPlant("0"), N2: keyPlant("1"), N3: keyPlant("1.5"), N4: keyPlant("0x10"), N5: keyPlant("1e3"), N6: keyPlant("1_000"), N7: keyPlant("0b1"), N8: keyPlant(".5") }],
-  "K-IDENTIFIER": ["an identifier", { I1: keyPlant("key"), I2: keyPlant("demand"), I3: keyPlant("$demand"), I4: keyPlant("_k"), I5: keyPlant("undefined") }],
+  "K-NUMBER": ["a number", { N1: keyPlant("0"), N2: keyPlant("1"), N3: keyPlant("1.5"), N4: keyPlant("0x10"), N5: keyPlant("1e3"), N6: keyPlant("1_000"), N7: keyPlant("0b1"), N8: keyPlant(".5"), "GP2-N1": keyPlant("0xff"), "GP2-N2": keyPlant("1e-3") }],
+  "K-IDENTIFIER": ["an identifier", { I1: keyPlant("key"), I2: keyPlant("demand"), I3: keyPlant("$demand"), I4: keyPlant("_k"), I5: keyPlant("undefined"), "GP2-I1": keyPlant("context", "(demand.inner)"), "GP2-I2": keyPlant("demands") }],
   "K-PARENTHESIZED": [
     "a parenthesized string literal type",
-    { P1: indexPlant('("demand")'), P2: indexPlant("('demand')"), P3: indexPlant('(("demand"))'), P4: indexPlant('( "demand" )'), P5: indexPlant('("de\\x6dand")'), P6: indexPlant('(/* c */ "demand")') },
+    { P1: indexPlant('("demand")'), P2: indexPlant("('demand')"), P3: indexPlant('(("demand"))'), P4: indexPlant('( "demand" )'), P5: indexPlant('("de\\x6dand")'), P6: indexPlant('(/* c */ "demand")'), "GP2-P1": indexPlant("(('demand'))"), "GP2-P2": indexPlant('("demand" /* c */)'), "GP2-P3": indexPlant('("\\x64emand")') },
   ],
-  "K-NUMBER-TYPE": ["a number literal type", { L1: indexPlant("0"), L2: indexPlant("1.5"), L3: indexPlant("0x10"), L4: indexPlant("-1"), L5: indexPlant("1e3") }],
-  "K-TYPE-REFERENCE": ["a type reference", { R1: indexPlant("Key"), R2: indexPlant("Keys.Demand"), R3: indexPlant("Key<X>"), R4: indexPlant("Demand"), R5: indexPlant('Pick<"demand">'), R6: indexPlant("keys.demand") }],
+  "K-NUMBER-TYPE": ["a number literal type", { L1: indexPlant("0"), L2: indexPlant("1.5"), L3: indexPlant("0x10"), L4: indexPlant("-1"), L5: indexPlant("1e3"), "GP2-L1": indexPlant("-1.5"), "GP2-L2": indexPlant("0xff") }],
+  "K-TYPE-REFERENCE": ["a type reference", { R1: indexPlant("Key"), R2: indexPlant("Keys.Demand"), R3: indexPlant("Key<X>"), R4: indexPlant("Demand"), R5: indexPlant('Pick<"demand">'), R6: indexPlant("keys.demand"), "GP2-R1": indexPlant("A.B.Demand"), "GP2-R2": indexPlant("demand") }],
 };
 /** The gate mutants R-B156's note names and refusal #5's F4 mutant, each with the pins measured red under it at cut time, each as
  * the record words it (GM3: each comment read as one space, the rest of its run kept; GM1: the parted output deduplicated per text,
  * so P-WITHIN stays green under it - it reds only under a dedup of the text's pairs before the within-sentence match, the reading
  * cut #1 recorded, refusal #1's F7); then the 20 survivors wb-yopv's F1 line names (row W), each with the pins measured red under
  * it at cut #4 (the gate's one-edit helper mutants from its PREP archive's leg2 journals, applied to throwaway copies); then the 7
- * gate mutants wb-ft52's F1 line names (row K), each with the pins measured red under it at cut #6 (the same way). */
+ * gate mutants wb-ft52's F1 line names (row K), each with the pins measured red under it at cut #6 (the same way); then the 16
+ * gate mutants wb-u6ho's F1 line names and its control (row K), each with the pins measured red under it at cut #7 (the same way). */
 const KILLS: Readonly<Record<string, readonly string[]>> = {
   GM3: ["T-R1", "T-R3", "T-TOKENS", "T-ELSEWHERE", "M-AFTER", "M-BEFORE", "M-WORDS", "M-JSDOC", "U-OWN-LINE", "U-BLANK", "U-MARKER", "C-LINES"],
   GM1: ["P-C04", "P-C06"],
@@ -913,6 +955,23 @@ const KILLS: Readonly<Record<string, readonly string[]>> = {
   "G23-K10": ["K-TYPE-REFERENCE"],
   "G23-K11": ["K-NUMBER-TYPE"],
   "G23-K12": ["K-TEMPLATE"],
+  "GP2-T1": ["K-TEMPLATE"],
+  "GP2-T2": ["K-TEMPLATE"],
+  "GP2-T3": ["K-TEMPLATE"],
+  "GP2-C1": ["K-CONCATENATION"],
+  "GP2-C2": ["K-CONCATENATION"],
+  "GP2-C3": ["K-CONCATENATION"],
+  "GP2-N1": ["K-NUMBER"],
+  "GP2-N2": ["K-NUMBER"],
+  "GP2-I2": ["K-IDENTIFIER"],
+  "GP2-P1": ["K-PARENTHESIZED"],
+  "GP2-P2": ["K-PARENTHESIZED"],
+  "GP2-P3": ["K-PARENTHESIZED"],
+  "GP2-L1": ["K-NUMBER-TYPE"],
+  "GP2-L2": ["K-NUMBER-TYPE"],
+  "GP2-R1": ["K-TYPE-REFERENCE"],
+  "GP2-R2": ["K-TYPE-REFERENCE"],
+  "GP2-I1": ["K-IDENTIFIER"],
 };
 
 // ------------------------------------------------------------------------------------------------------------- the readings
@@ -1339,7 +1398,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
             const key = firstKey(plant);
             expect(key !== undefined && entry?.[2](key) === true, `${pin} ${id}: its ${keyed ? "key" : "index"} is ${form}, as the compiler reads it`).toBe(true);
             const reading = read(plant);
-            expect(reading.asWritten[0]?.startsWith(keyed ? "(context.inner)." : "Opts<Context.Inner>."), `${pin} ${id}: its first as-written reading is the ${keyed ? "element access" : "indexed access type"}'s own`).toBe(true);
+            const receiver = K_RECEIVERS[id] ?? (keyed ? "(context.inner)" : "Opts<Context.Inner>");
+            expect(reading.asWritten[0]?.startsWith(`${receiver}.`), `${pin} ${id}: its first as-written reading is the ${keyed ? "element access" : "indexed access type"}'s own`).toBe(true);
+            expect(reading.asWritten[0], `${pin} ${id}: that reading is its receiver, a "." and the join its form's words say - its constant text, or "?"`).toBe(`${receiver}.${keyConstant(plant) ?? "?"}`);
             return [id, json(reading)];
           }),
         ),
@@ -1429,6 +1490,32 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       });
     });
     expect(keyContradicted, "every held row K witness of each form reads its key or index as AS-WRITTEN's words say").toEqual([]);
+    // AS-WRITTEN's last sentence (wb-u6ho's F1 line: row K's words stated sub-forms generically, wider than its pins): after its
+    // marker, one part per K pin in K_PLANTS' order, naming every witness of the pin by its id and its key or index as its plant
+    // writes it - read by the compiler from the plant's own node (firstKey) - with "under" and the receiver its plant has where that
+    // is not the claim probe's receiver the sentence names; no other witness, key or index.
+    const asWritten = CLAIMS["AS-WRITTEN"] ?? "";
+    const listMark = "no other key or index of those seven forms is claimed: ";
+    expect(asWritten.split(listMark).length - 1, "AS-WRITTEN opens its row K list once").toBe(1);
+    const probeReceivers = { key: between(asWritten, "beside the claim probe's receiver, ", " for a key"), index: between(asWritten, " for a key and ", " for an index") };
+    const planted = Object.entries(K_PLANTS).map(([pin, [form, witnesses]]): [string, string[]] => [
+      pin,
+      Object.entries(witnesses).map(([id, plant]) => {
+        const receiver = accessReceiver(plant) ?? "";
+        const probe = KEY_JOINS[form]?.[0] === "elementReceiver" ? probeReceivers.key : probeReceivers.index;
+        return `${id} ${firstKey(plant)?.getText() ?? ""}${receiver === probe ? "" : ` under ${receiver}`}`;
+      }),
+    ]);
+    expect(
+      planted.flatMap(([, names]) => names.filter(name => name.includes(", ") || name.includes("; ") || name.endsWith("."))),
+      "no row K witness's name holds the list's separators",
+    ).toEqual([]);
+    const listed = asWritten
+      .slice(asWritten.indexOf(listMark) + listMark.length)
+      .replace(/\.$/, "")
+      .split("; ")
+      .map((part): [string, string[]] => [part.slice(0, part.indexOf(" ")), part.slice(part.indexOf(" ") + 1).split(", ")]);
+    expect(listed, "AS-WRITTEN names every row K witness, pin by pin in K_PLANTS' order, by its id and its key or index as its plant writes it, and no other").toEqual(planted);
 
     // The tracker export: this bead's title and description items, R-B156's note and refusal #5's lines in the parent's notes.
     const bead = exportRow(BEAD);
@@ -1502,7 +1589,46 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       }),
       "each witness wb-ft52's F1 line pairs with a mutant is a plant of the K pin that mutant is killed at, spelling its code",
     ).toEqual([]);
-    expect([...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g), ...survivors, ...keyMutants], "KILLS holds exactly the mutants R-B156, the F4 line and the two F1 lines name").toEqual(Object.keys(KILLS));
+    // wb-u6ho's F1 line: it names as many gate mutants before its control as it counts, KILLS holding them after row K's and then
+    // the control; and each witness it pairs with one of them - the code it spells, with the receiver it names - is the plant row
+    // K holds under that mutant's id, of the K pin KILLS kills the mutant at.
+    const subLine = firstLine(exportRow(SUB_CARRY).notes, "[leads] - F1 LOW LEADS: ");
+    const controlAt = subLine.indexOf(" The control ");
+    expect(controlAt, "wb-u6ho's F1 line names its control").toBeGreaterThan(-1);
+    const subMutants = idsIn(subLine.slice(0, controlAt), GP2_ID);
+    expect(subMutants.length, "wb-u6ho's F1 line names as many mutants as it counts, before its control").toBe(Number(between(subLine, ". ", " gate-authored")));
+    const subControl = idsIn(subLine.slice(controlAt), GP2_ID);
+    expect([subControl.length, subControl.filter(id => subMutants.includes(id))], "wb-u6ho's F1 line names one control, none of its counted mutants").toEqual([1, []]);
+    const subPaired = [
+      ...subMutants.map((mutant, index) => {
+        const from = subLine.indexOf(`${mutant} (`);
+        const next = subMutants[index + 1];
+        const end = next === undefined ? subLine.indexOf(" All ", from) : subLine.indexOf(`${next} (`, from);
+        const clause = subLine.slice(from, end === -1 ? undefined : end);
+        return { mutant, code: /\): (?:witness )?(\S*\[[^\]]*\])/.exec(clause)?.[1] ?? "" };
+      }),
+      ...subControl.map(mutant => {
+        const found = /(\[[^\]]*\]) under (\([^)]*\))/.exec(subLine.slice(subLine.indexOf(`${mutant} (`, controlAt)));
+        return { mutant, code: found === null ? "" : `${found[2]}${found[1]}` };
+      }),
+    ];
+    expect(
+      subPaired.filter(({ code }) => code === "").map(({ mutant }) => mutant),
+      "wb-u6ho's F1 line pairs every mutant it names and its control with a witness",
+    ).toEqual([]);
+    expect(
+      subPaired.flatMap(({ mutant, code }) => {
+        const pin = Object.entries(K_PLANTS).find(([, [, witnesses]]) => Object.hasOwn(witnesses, mutant))?.[0];
+        if (pin === undefined) return [`${mutant}: row K plants no witness under its id`];
+        const spelled = (K_PLANTS[pin]?.[1][mutant] ?? "").includes(code) ? [] : [`${mutant}: ${pin}'s witness does not spell ${code}`];
+        return (KILLS[mutant] ?? []).includes(pin) ? spelled : [...spelled, `${mutant} is not killed at ${pin}`];
+      }),
+      "each witness wb-u6ho's F1 line pairs with a mutant or its control is the plant row K holds under that id, spelling its code, of the K pin the mutant is killed at",
+    ).toEqual([]);
+    expect(
+      [...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g), ...survivors, ...keyMutants, ...subMutants, ...subControl],
+      "KILLS holds exactly the mutants R-B156, the F4 line and the three F1 lines name, wb-u6ho's control last",
+    ).toEqual(Object.keys(KILLS));
     expect(
       Object.entries(KILLS).flatMap(([mutant, killers]) => (killers.length === 0 ? [mutant] : [])),
       "every mutant KILLS holds is killed at a pin",
