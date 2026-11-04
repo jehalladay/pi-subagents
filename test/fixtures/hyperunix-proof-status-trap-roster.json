@@ -1,0 +1,18 @@
+{
+  "comment": "wb-68s5 (landing 921 F2 cure, the hk9l / R660 roster pattern): the OUT-OF-FILE anchor for R2's tracer residual rows of test/workbench-hyperunix-proof-status-standing.test.ts (case Q, TRAP_RESIDUALS): each family's id and the channels its quiet rows read, in census order. Q judges TRAP_RESIDUALS and the channels its quiet rows visited against this list exactly, in both directions and in order, so a channel removed from its row, from the frozen-shape literal's count and from the channels literal together reds at this roster. K1's word-residual rows and K1 (a)'s R-JOINT-BESIDE row are not listed here.",
+  "residuals": [
+    {
+      "id": "R-UNTRAPPED",
+      "channels": [
+        "util.inspect"
+      ]
+    },
+    {
+      "id": "R-PROXY-AWARE",
+      "channels": [
+        "util.types.isProxy",
+        "structuredClone"
+      ]
+    }
+  ]
+}
