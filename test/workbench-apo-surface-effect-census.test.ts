@@ -11,6 +11,75 @@
  * registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler
  * reaches a non-read registry.invoke."
  *
+ * wb-39g8 CUT #2, THE ROLE SETS (the member-level respin of wb-39g8's refusal #1, gate run g10-gate-s210, outbox row
+ * O:2056; ruling R-B541: rung 1 of this carrier's own per-descriptor, joint-state claim set, no guard, cap or freeze).
+ * Refusal #1's U1-U3: both role-twin catalogs register every recorded descriptor with the role twin's sentence at once
+ * (twelve of twelve), so cut #1's per-descriptor twin readings held each role reading in that joint state only, while
+ * the claim words of O1, C1, C2, ROLE, O1 FIRES and the ARMED HALF held a single real descriptor whose register-time
+ * record holds the sentence. The gate's GP5J1 (roleReadings's roles by per-id consensus: an id among the roles only
+ * when every descriptor of its catalog with that id is APO-role), GP5J3 (roles and violations over that consensus
+ * list), GP5J4 (roles read only when more than three descriptors are APO-role), GP5J5 (a descriptor's role read only
+ * when its neighbour in the composed list is APO-role too) and GP5J2 (effectViolations by per-id consensus) each kept
+ * the census at 0 failed | 25 passed (25) and failed open on real-tree pages that make one or two of an id's three
+ * registrations APO-role (THE ENUMERATION's family (11), THE JOINT-STATE ROLE READINGS). This cut reads the role
+ * readings on THE ROLE SETS: a role set is a nonempty set of the record's positions at one of the role twin's two
+ * effect classes, and the census reads every one (4095 at read and 4095 at write; roleSetsOf). THE LONE TWIN composes
+ * one position at one class through the catalog's own composition (composeCatalog) into registries (SetRegistry) that
+ * register the descriptor at that record position with the role twin's sentence as its whole description at that class
+ * and every other descriptor as its registration function handed it (24 catalogs: twelve positions, two classes); a
+ * role set's catalog holds at each of its positions the descriptor that position's lone twin composes there and at
+ * every other position the real catalog's, in the real catalog's surfaces (setCatalog). C2 roleSets (a new fact of C2,
+ * held in the roster) holds each lone twin to the record (its own position composed with the record's id at its class
+ * and APO-role by its description, every other position equal to the record's in the read fields, its length the
+ * record's) and each role set's catalog to the record through roleReadings (roles exactly the set's ids in record
+ * order; violations exactly the set's descriptors named at write and none at read), beside the lone twins' count and
+ * the role sets' count at each class; O1 firedTwin sets runs O1's own roles map over every role set's catalog beside
+ * the real and twin catalogs (each fires, its roles exactly the set's ids); and C1 roleSetsNamed (a new fact of C1,
+ * held in the roster) runs C1's own violation call over every role set's catalog beside the real and write-twin
+ * catalogs (exactly the set's write entries, then the plants' violations).
+ * PINNED READER SET OF THIS CUT (test/workbench-apo-surface-effect-census.test.ts; each fact held to the roster): case
+ * C2, fact roleSets - target the lone twins against the record and every role set's catalog read by roleReadings;
+ * observed lone 24, sets 4095 at read and 4095 at write, unread []; falsifier GP5J1, GP5J2, GP5J3, GP5J4, GP5J5 and the
+ * seat's W2S1-W2S7. Case O1, fact firedTwin.sets - target O1's roles map over every role set's catalog; observed [];
+ * falsifier GP5J1, GP5J3, GP5J4, GP5J5 and W2S2, W2S6, W2S7, W2S10. Case C1, fact roleSetsNamed - target C1's violation
+ * call over every role set's catalog; observed []; falsifier GP5J2 and W2S2, W2S3, W2S6, W2S11. A role set mixing the
+ * two classes, a role read in a field other than the description or in a text other than the role twin's sentence, a
+ * role set's catalog composed otherwise than from the lone twins, and the role sets' own departures dropped or handed a
+ * constant are NOT CLAIMED by this census ((b), (f) and (h) below).
+ * MEASURED (seat ws-02, run g10-work-s209, 2026-11-04, on cut #1's bytes merged with trunk 3041aac in the worktree;
+ * trunk changed no src/ path after 7466871; each member a one-edit throwaway copy run with --expect.requireAssertions,
+ * two runs each unless stated; each page an in-place src/ edit restored byte-identical, porcelain equal, one run per
+ * member). RED-0, on cut #1's bytes (census sha256/16 63a184a5433e1ecc, roster b2c3b340b1b79273): GP5J1, GP5J2, GP5J3,
+ * GP5J4, GP5J5 and GP5B1 each 0 failed | 25 passed (25). Pages as delivered (WD1, WD3, WD4, WD5 and WD6 of
+ * gate-prep-19, GP14P1, GP14P2 and GP14P3 of gate-prep-14, GP5P1, GP5P2 and GP5P3 of gate-prep-5): WD1, WD3, WD4, WD5,
+ * GP14P1, GP14P3, GP5P1 and GP5P3 3 failed | 22 passed (25) (O1, C2, closing), WD6 4 failed | 21 passed (25) (O1, C1,
+ * C2, closing) and GP14P2 and GP5P2 5 failed | 20 passed (25) (O1, C1, C2, V1 or V2, closing); FAIL-OPEN at 0 failed |
+ * 25 passed (25): the seven pages WD1, WD3, WD4, WD5, GP14P1, GP14P3 and GP5P1 under GP5J1, GP5J3, GP5J4 and GP5J5, and
+ * GP5P3 under GP5J4 and GP5J5; O1 dropped on WD6, GP14P2 and GP5P2 under those four and C1 under GP5J2 - equal to the
+ * gate's reds of record member by member. RED-1, roster first (O1's firedTwin sets, C1's roleSetsNamed and C2's
+ * roleSets written in the roster, claims and witnesses, no reader yet; roster sha256/16 a8c29f20ac20fc04): 5 failed |
+ * 20 passed (25), the judged set, O1, C1, C2 and the closing case, two runs. AFTER, on this cut's bytes: GP5J1, GP5J3,
+ * GP5J4 and GP5J5 each 3 failed | 22 passed (25) (O1, C2, closing) and GP5J2 3 failed | 22 passed (25) (C1, C2,
+ * closing); GP5B1 0 failed | 25 passed (25), an equivalent. Every page reds under every member, 77 runs and none at 0
+ * failed: WD1, WD3, WD4, WD5, GP14P1, GP14P3, GP5P1 and GP5P3 3 failed | 22 passed (25) (O1, C2, closing) as delivered
+ * and under GP5J1, GP5J3, GP5J4, GP5J5 and GP5B1, 4 failed | 21 passed (25) (O1, C1, C2, closing) under GP5J2; WD6
+ * 4|21, GP14P2 and GP5P2 5|20 as delivered and under every member. The carried members read as on cut #1's bytes:
+ * G202H1, G202H2, G202H3, G202H6 and G202H7 2 failed | 23 passed (25) (C2, closing), GP14X1, GP14X2, GP14X3, GP14X5 and
+ * GP14X6 3|22 (O1, C2, closing), GP14X4 3|22 (C1, C2, closing), G202R1 0|25; the seat's W1 members as on cut #1
+ * (W1B1-W1B6 2|23, W1T3 and W1T4 3|22, W1B7, W1B8, W1T1 and W1T2 0|25); the 29 K4 members all red, each equal to cut
+ * #1's but K4D7 (the native composition's registry made outside the composition's), which now reds O1 and C1 too,
+ * through the role sets (K4O1 and K4C1 re-anchored on this cut's O1 and C1 map lines, the same edits); the gate's
+ * 69-member replay 57 red and S4 32 of 87 red, each member's red-or-green status and failing cases equal to cut #1's.
+ * The seat's members of the set twin, two runs each: W2S1 (SetRegistry rewriting every position), W2S4 (the role sets
+ * at read only) and W2S5 (the sets of one position only) 2 failed | 23 passed (25) (C2, closing); W2S2 (SetRegistry
+ * rewriting none) and W2S6 (a set's catalog of the real descriptors) 4 failed | 21 passed (25) (O1, C1, C2, closing);
+ * W2S3 (the rewrite without the class) 3|22 (C1, C2, closing); W2S7 (a set's expected roles each id once) 3|22 (O1, C2,
+ * closing); W2S10 (O1's map without the sets' catalogs) 2|23 (O1, closing); W2S11 (C1's call without them) 2|23 (C1,
+ * closing); and W2S8, W2S9 and W2S12 (the sets' departures dropped from O1, from C2's readings, from C2's lone twins)
+ * 0|25 and as delivered on all eleven pages: NOT CLAIMED ((b)). CT-BATTERY v2 (rule 16, the gate's specs, CT4 and CT5
+ * re-anchored on this cut's O1 and O2 cases): CT1 red=3; CT1b red=3; CT2 red=2; CT3 red=2; CT4 red=3; CT5 red=3; CT6
+ * red=1 - CT4, CT5 and CT6 killed through the outside anchors.
+ *
  * wb-39g8 CUT #1, THE REGISTER BOUNDARY AND THE TWIN READINGS PER DESCRIPTOR. wb-39g8 is the rule-19 structural-exit
  * child R-B495 filed at wb-021.12's refusal #4 (gate run g10-gate-s202, outbox row O:1992), and R-B521's dependency
  * inversion at wb-021.12's refusal #5 (gate run g10-gate-s206, outbox row O:2027) made it the lead: wb-021.12 waits on
@@ -175,14 +244,25 @@
  * SURFACES to its function, every handed descriptor's permissions or a forge. descriptor's contractSource changed at
  * the start of HandedRegistry.register, and the boundary's calls short of the last function]: KILLED by C2 boundary
  * (cut #5 named the family NOT CLAIMED and R-B495 routed it here); a change of both sides alike and the boundary's own
- * readings handed the record or made a constant [W1B7, W1B8] are NOT CLAIMED ((b) and (g) below). No other member
- * family of the frozen class is known to this seat or to the earlier seats. No residual is added, since no
+ * readings handed the record or made a constant [W1B7, W1B8] are NOT CLAIMED ((b) and (g) below). (11) (wb-39g8 CUT #2)
+ * THE JOINT-STATE ROLE READINGS [refusal #1's GP5J1, GP5J3, GP5J4 and GP5J5 of roleReadings - roles by per-id
+ * consensus, roles and violations over the consensus list, roles only above three APO-role descriptors, a role only
+ * beside an APO-role neighbour - and GP5J2 of effectViolations, by per-id consensus; this seat's W2S1-W2S7, W2S10 and
+ * W2S11 of the set twin]: KILLED by C2 roleSets, and by O1 firedTwin sets for roles (GP5J1, GP5J3, GP5J4, GP5J5) and C1
+ * roleSetsNamed for the falsifier (GP5J2), every role set of the record's positions read per descriptor at each class;
+ * the role sets' own departures dropped [W2S8, W2S9, W2S12] are NOT CLAIMED ((b) below), and a set mixing the two
+ * classes is NOT CLAIMED ((h) below). No other member family of the frozen class is known to this seat or to the
+ * earlier seats (family (11), which refusal #1 found, is named and killed above). No residual is added, since no
  * known-unpinned real-tree mode of the claimed subject remains ((g) names a change of both sides alike and the fields
- * the readings do not read, and no real-tree page makes either); the catalog's named residual stays R-LOCAL-PROVIDER
+ * the readings do not read, and no real-tree page makes either; (h) names the role sets mixing the two classes, which
+ * every claim sentence below leaves outside its words and no page of refusal #1 makes); the catalog's named residual
+ * stays R-LOCAL-PROVIDER
  * (Q9). Every member above reads on this cut's bytes as named: the gate's 69-member replay holds cut #3's red-or-green
  * status for all 69 (57 red), each member's failing cases equal to cut #5's; the gate's three G203 members, the 23 K4
  * members and W6R1-W6R3 all red; S4 kills 32 of 87, each as on cut #5; and (wb-39g8 CUT #1) the five members of family
- * (10) and the six of family (7) red, G202R1 an equivalent (nothing departs for it to blind).
+ * (10) and the six of family (7) red, G202R1 an equivalent (nothing departs for it to blind); and (wb-39g8 CUT #2) the
+ * five members of family (11) red, GP5B1 an equivalent (THE REGISTER BOUNDARY's list run through HandedRegistry without
+ * a twin departs on no page).
  *
  * wb-021.12 CUT #3 (the respin of refusal #2, gate run g10-gate-s198, outbox row O:1927; ruled by R-B443 rung 1 of the
  * falsifier-word set, a member-level respin, with the class guard bound on both of this bead's claim sets: the
@@ -348,12 +428,17 @@
  * names all twelve in each. Re-taken by wb-39g8 CUT #1's seat (2026-11-04, at trunk 91060e3, the same way; trunk
  * changed no src/ path after 7466871): THE REGISTER BOUNDARY's list holds twelve descriptors, equal to the record at
  * every position in the read fields; at every record position each twin catalog's roles hold that position's id, the
- * write twin's violations name it at write, in C2 and in C1 before the plants, and the read twin names none.
+ * write twin's violations name it at write, in C2 and in C1 before the plants, and the read twin names none. Re-taken
+ * by wb-39g8 CUT #2's seat (2026-11-04, on trunk 3041aac merged, the same way; trunk changed no src/ path after
+ * 7466871): each of the 24 lone twins composes its own position with the role twin's sentence at its class and every
+ * other position equal to the record's in the read fields; each of the 8190 role sets' catalogs reads exactly its set's
+ * ids as roles and, at write, exactly its set's descriptors named, in C2, in O1 and in C1 before the plants.
  * THE JUDGE, CLAIMED ON ITS PLANTS AND ITS TWINS (cut #4's form; the carrier cut adds the plants it names, cut #2 the
  * twin, cut #3 the twin's four units, its top-level site and its registrar reading, and the role twin; this bead's cut
- * #4 composes the role twin through the catalog's own composition and adds the register-time record, cut #5 claims
- * the role twin from that record on, and wb-39g8 CUT #1 holds the record to THE REGISTER BOUNDARY and each twin reading
- * per descriptor). Each sentence below states a reader's rule, which is the code's and is disclosed
+ * #4 composes the role twin through the catalog's own composition and adds the register-time record, cut #5 claims the
+ * role twin from that record on, wb-39g8 CUT #1 holds the record to THE REGISTER BOUNDARY and each twin reading per
+ * descriptor, and CUT #2 reads every role set). Each sentence below states a reader's rule, which is the code's and is
+ * disclosed
  * so that the plants can be followed, and claims that reader only on the plant texts and paths it names (the roster's
  * constants hold each one), on today's src/ tree and catalog (MEASURED) and on the twins: THE TWIN, each listed entry
  * with the twin probe at its end, in memory only (A2 judgedEach: the mention judge judges every listed entry, and in a
@@ -363,7 +448,10 @@
  * description, at effect class read and at write, read back through the catalog's own composition as the role twin's
  * two catalogs at the positions and ids of the real catalog's register-time record (the copy HandedRegistry.register
  * keeps of each descriptor it registers) (C2 roleTwin, O1 firedTwin, C1 roleTwinNamed, each twin reading held per
- * descriptor at the record's positions; the real catalog's composition is held to that record, C2 composed, and the
+ * descriptor at the record's positions; and, wb-39g8 CUT #2, THE ROLE SETS: the lone twins, each one position at one
+ * class through the same composition, and every role set's catalog, its positions from the lone twins and the rest from
+ * the real catalog, read by the same readings, C2 roleSets, O1 firedTwin sets, C1 roleSetsNamed; the real catalog's
+ * composition is held to that record, C2 composed, and the
  * record to THE REGISTER BOUNDARY's list, what each registration function hands registries of the product's own class
  * by calls written apart from the composition, in the read fields, C2 boundary: (g)). At a listed path or a catalog
  * descriptor a sentence claims the twins' own texts only: a text, a path, a form or a field that is no named plant's,
@@ -494,7 +582,10 @@
  * descriptors read none (MEASURED), and on the role twin each descriptor the twin's registries register reads its role
  * by its description once the catalog's own composition has read it back, at effect class read and at write, each at
  * its record position (C2 roleTwin, O1 firedTwin, C1 roleTwinNamed; the role twin's sentence is APO census role twin.,
- * the abbreviation its first word, written at register() into the registry's copy). A descriptor with a role is
+ * the abbreviation its first word, written at register() into the registry's copy); and on THE ROLE SETS (wb-39g8 CUT
+ * #2) each lone twin's descriptor at its own position reads its role by its description and each other none, and each
+ * role set's catalog reads exactly its set's descriptors APO-role (C2 roleSets, O1 firedTwin sets, C1 roleSetsNamed). A
+ * descriptor with a role is
  * APO-role. NOT CLAIMED: a role in any other descriptor, among them a real descriptor's role in any text or field but
  * the role twin's sentence as its whole description in its register-time record (C2 boundary holds that record, in the
  * read fields, to what its registration function handed: THE REGISTER BOUNDARY, (g)), one in an id segment past the
@@ -581,14 +672,15 @@
  * there]; NOT CLAIMED: any other file or text. O1 FIRES when any real APO module or APO-role catalog descriptor is
  * named; claimed on today's tree and on O1's fired plants (a module alone, a role alone, neither), its modules and
  * roles named by the readers the twins pin (the twin's listed scripts, each an APO module by its probe; the role twin's
- * two composed catalogs, each descriptor APO-role, read by O1's own roles map, which runs over the real catalog and
- * both twin catalogs at once and fires on each twin catalog, each twin's roles holding each recorded descriptor's id at
- * its record position: O1 firedTwin); NOT CLAIMED: any other set of modules or descriptors.
+ * two composed catalogs, each descriptor APO-role, read by O1's own roles map, which runs over the real catalog, both
+ * twin catalogs and (wb-39g8 CUT #2) every role set's catalog at once and fires on each twin catalog, each twin's roles
+ * holding each recorded descriptor's id at its record position, and on each role set's catalog, its roles exactly its
+ * set's ids in record order: O1 firedTwin); NOT CLAIMED: any other set of modules or descriptors.
  *
  * PINNED READER SET (this file, test/workbench-apo-surface-effect-census.test.ts; each case returns the witness the
  * roster holds for it, and several first assert their outcome with the reason; observed at the base 7466871, on cut
- * #3's merge of trunk 4eaba53, on cut #4's merge of trunk 6d6bf9a, on cut #5's merge of trunk de6deb2 and on wb-39g8
- * CUT #1's base 91060e3: 25 passed).
+ * #3's merge of trunk 4eaba53, on cut #4's merge of trunk 6d6bf9a, on cut #5's merge of trunk de6deb2, on wb-39g8 CUT
+ * #1's base 91060e3 and on CUT #2's merge of trunk 3041aac: 25 passed).
  * Rows A, O, C and V tile ACCEPTANCE in order and each row's pin quotes tile its label. Each pin names its target, its
  * observed result and the falsifier that reds it.
  * A, "a guard pins today's absence". A1: sixty-one planted spelling forms, two late and two middle plants judged with
@@ -627,13 +719,16 @@
  * role twin's two catalogs read by the same roles map as the real catalog (firedTwin); observed: every kind and field
  * read, fired false on the real surfaces, true on a module or a role alone, false on neither, and true on each twin
  * catalog with every recorded descriptor's id among its roles at the descriptor's record position and no more roles
- * than the record holds (unheldAt); falsifier: a real APO module as the twin holds one (a listed
- * script with the twin probe at its end) or a real APO-role descriptor as the role twin holds one (a descriptor whose
- * register-time record holds the role twin's sentence as its whole description, read or write, read back through the
- * catalog's own composition), and no other real module or descriptor (fired), a planted role field or placement unread,
+ * than the record holds (unheldAt), and (wb-39g8 CUT #2) true on each role set's catalog with exactly its set's ids
+ * among its roles, in record order (firedTwin sets); falsifier: a real APO module as the twin holds one (a listed
+ * script with the twin probe at its end) or real APO-role descriptors as the twins hold them (descriptors whose
+ * register-time records hold the role twin's sentence as their whole description, all at read or all at write, at any
+ * nonempty set of the record's positions - alone, as each role set holds them, or all at once - read back through the
+ * catalog's own composition), and no other real module, descriptor or set of descriptors (fired), a planted role field
+ * or placement unread,
  * the fired reading hollowed, or the composition, the twin's rewrite, the role readings or O1's roles map hollowed on
  * the twin (firedTwin: G203D1, G203D2, G203D3, W6R1, W6R3, K4T1, K4T2, K4T4, K4T5, K4W1, K4W3, K4O1; and per descriptor
- * GP14X1, GP14X2, GP14X3, GP14X5, GP14X6).
+ * GP14X1, GP14X2, GP14X3, GP14X5, GP14X6; and over the role sets GP5J1, GP5J3, GP5J4, GP5J5).
  * O2: the registration sites of the real src/ files and of planted modules (a function declaration, an element-access
  * callee, a non-null callee, an arrow, a function expression, a class method, a callback inside a function, a function
  * nested in another, top level, an escaped descriptor name, a descriptor second among the properties, a descriptor in
@@ -654,13 +749,17 @@
  * C, "a registry/census falsifier proves every APO-role capability is effectClass read". C1: APO-role descriptor plants
  * of each non-read class, an APO-role read one and a role-less write one, registered through a real registry and judged
  * in one call with the real catalog, the same call run in one map with it on the role twin's write catalog
- * (roleTwinNamed); observed: the three non-read APO-role plants named, no real descriptor, every write twin named
- * beside the plants at its record position, before them (unheldAt); falsifier: a real APO-role non-read descriptor as
- * the role twin holds one (a descriptor whose register-time record holds the role twin's sentence as its whole
- * description at write, read back through the catalog's own composition; named beside the plants), and no other real
- * descriptor, a class or a planted role reading hollowed, or the composition, the twin's rewrite, the falsifier or C1's
+ * (roleTwinNamed) and (wb-39g8 CUT #2) on every role set's catalog (roleSetsNamed); observed: the three non-read
+ * APO-role plants named, no real descriptor, every write twin named beside the plants at its record position, before
+ * them (unheldAt), and on each role set's catalog exactly its set's descriptors named at write and none at read, before
+ * the plants' (roleSetsNamed); falsifier: real APO-role non-read descriptors as the twins hold them (descriptors whose
+ * register-time records hold the role twin's sentence as their whole description, all at write, at any nonempty set of
+ * the record's positions, read back through the catalog's own composition; named beside the plants), and no other real
+ * descriptor or set of descriptors, a class or a planted role reading hollowed, or the composition, the twin's rewrite,
+ * the falsifier or C1's
  * call hollowed on the write twin (roleTwinNamed: G203D1, G203D2, G203D3, W6R1, W6R2, K4D12, K4T1-K4T5, K4C1; and per
- * descriptor GP14X4). C2: the real catalog through every registration surface (registerNativeProviders and each of the
+ * descriptor GP14X4; and over the role sets GP5J2). C2: the real catalog through every registration surface
+ * (registerNativeProviders and each of the
  * eight functions), its APO-role set and its violations (roleReadings, the role readings O1 and C2 apply to every
  * composed catalog), its composition against its register-time record (composed: the positions at which a composed
  * descriptor's id, description, contractSource, permissions or effect class departs from the record's descriptor there,
@@ -670,17 +769,25 @@
  * record's positions whose read or write twin, composed by the same composition, is not at its position with its id or
  * is not APO-role by its description, at which either twin's roles do not hold the record's id or the write twin's
  * violations do not name it at write, every violation named at read, a twin reading longer than the record, and a twin
- * catalog whose length is not the record's); observed: four ids in twelve descriptors, all read, no APO role, no
- * violation, no departure, no boundary departure, no twin misread; falsifier: a real APO-role non-read descriptor as
- * the role twin holds one (its register-time record holding the role twin's sentence as its whole description at
- * write), and no other real descriptor, a role or falsifier reading of a real descriptor hollowed (W6R1, W6R2, W6R3,
+ * catalog whose length is not the record's) and (wb-39g8 CUT #2) THE ROLE SETS (roleSets: each lone twin's catalog held
+ * to the record - its own position composed with the record's id at its class and APO-role by its description, every
+ * other position equal to the record's in the read fields, its length the record's - and each role set's catalog read
+ * by roleReadings, its roles exactly the set's ids in record order and its violations exactly the set's descriptors
+ * named at write and none at read, beside the lone twins' count and the role sets' count at each class); observed: four
+ * ids in twelve descriptors, all read, no APO role, no violation, no departure, no boundary departure, no twin misread,
+ * 24 lone twins and 4095 role sets at each class, none unread; falsifier: real APO-role non-read descriptors as the
+ * twins hold them (their register-time records holding the role twin's sentence as their whole description, all at
+ * write, at any nonempty set of the record's positions), and no other real descriptor or set of descriptors, a role or
+ * falsifier reading of a real descriptor hollowed (W6R1, W6R2, W6R3,
  * K4W1, K4W2, K4W3), the composition's list or snapshots departing from the record (G203D1, G203D2, G203D3,
  * K4D4-K4D13), the record hollowed apart from the registry's copy (K4R1, K4R2, K4R3) or the twin's rewrite (K4T1-K4T5)
  * hollowed, a descriptor changed in a read field before both its record and the registry's copy are taken - at the
  * start of HandedRegistry.register (boundary: G202H1, G202H2, G202H3, G202H6, G202H7, W1B4, W1B5), in the
  * composition's calls into its registries (W1B1, W1B2) or in a SURFACES entry (W1B3) - or THE REGISTER BOUNDARY's list
- * short of the record (W1B6), the twin readings per descriptor (roleTwin: GP14X1-GP14X6, W1T3, W1T4), a surface that
- * registers nothing; NOT CLAIMED: a change of both sides of C2 boundary alike, and a field readFields omits ((g)).
+ * short of the record (W1B6), the twin readings per descriptor (roleTwin: GP14X1-GP14X6, W1T3, W1T4), the role readings
+ * per role set (roleSets: GP5J1-GP5J5) or the set twin's composition, its sets, a set's catalog or a set's expected
+ * roles hollowed (W2S1-W2S7), a surface that registers nothing; NOT CLAIMED: a change of both sides of C2 boundary
+ * alike, a field readFields omits ((g)), and a role set mixing the two classes ((h)).
  * C3: the registry's effect vocabulary (the EFFECT_CLASSES
  * literal and the CapabilityDescriptor effectClass union of src/workbench/capability-registry.ts) and the falsifier's
  * verdict on an APO-role plant of each class; observed: read, write, external and unknown in both, every class but read
@@ -779,7 +886,10 @@
  * (wb-39g8 CUT #1) C2 boundary handed the record itself, or a list the census's own composition makes, in place of THE
  * REGISTER BOUNDARY's list [W1B7], C2 boundary's or a twin reading's departures dropped or read by id again [W1B8,
  * W1T1], and the twin readings' length check dropped [W1T2]: each reads as delivered on every real-tree page, since the
- * twins and the boundary's list read each page's descriptors through the same registration functions as the record.
+ * twins and the boundary's list read each page's descriptors through the same registration functions as the record; and
+ * (wb-39g8 CUT #2) the role sets' departures dropped from O1, from C2's readings or from C2's lone twins [W2S8, W2S9,
+ * W2S12]: each reads 0 failed | 25 passed (25) and as delivered on all eleven pages of refusal #1, since O1's fired
+ * reading and C2's apoRole and violations still read each page's descriptors in the real catalog.
  * A case reading the roster by a route the SELF-READ names do not cover (a file read of the roster path), or naming a
  * reader only in a comment. (c) Readings no sentence above names: a role spelled only in a descriptor's version,
  * inputSchema, outputSchema or supportedModes; a reach, a registration or a spelling in a module the readers above do
@@ -795,7 +905,8 @@
  * them. (f) THE TWINS: a reader that reads a listed entry otherwise with the twin probe at its end than without it, or
  * a catalog descriptor otherwise with the role twin's sentence as its description than with its own, and (cut #4) a
  * registry, the catalog's composition, a role reading or a case that tells the role twin's registries, catalogs or
- * descriptors from the real ones (by the twin's class, its sentence or the catalog it reads) and reads them otherwise;
+ * descriptors from the real ones (by the twin's class, its sentence or the catalog it reads) and reads them otherwise,
+ * the set twin's among them (wb-39g8 CUT #2: by its registry class, its set or a role set's catalog);
  * which positions of a listed entry before its twin probe a reader reads, beyond the pins above (the mention judge is
  * handed each listed path and whole text; what its matcher then reads of a longer text is MENTION's); any entry the
  * twin does not hold (a plant, a filing-pin blob) and any descriptor the role twin does not hold (a plant); and the
@@ -807,15 +918,22 @@
  * change of both sides alike - an edit of the boundary's calls or list together with the composition's, or of an input
  * both sides read (the clients and REPO) - and a departure only in a field readFields omits (version, inputSchema,
  * outputSchema, supportedModes). No real-tree page makes either: both sides read each descriptor through the same src/
- * registration functions and registry class.
+ * registration functions and registry class. (h) (wb-39g8 CUT #2) THE ROLE SETS beyond their pins: a role set mixing
+ * the two classes (some of its positions at read, others at write); a role set's catalog composed otherwise than
+ * setCatalog builds it (each of the set's positions from its lone twin's catalog, every other from the real catalog's),
+ * so a composition whose registries rewrite two to eleven positions at once is not read (the role twin rewrites all
+ * twelve, each lone twin one); and the role sets of a record longer than today's twelve positions, which double with
+ * each position added.
  * ARMED HALF: rows C and V already read the real catalog and the real modules at every run; today they find no APO-role
  * descriptor and no APO module, so their real legs are empty and their plants carry the proof. A first surface as the
  * twins hold one reds: a listed entry ending with the twin probe's text reds A3 with the reason and V1 by its non-read
- * reach, and a descriptor whose register-time record holds the role twin's sentence as its whole description reads
- * APO-role in O1 and C2 once the catalog's own composition reads it back and, its class not read, is named in C1 and
- * C2, while a record that departs in a read field from what its registration function handed reds C2 boundary
+ * reach, and descriptors whose register-time records hold the role twin's sentence as their whole description, all at
+ * one class, at any nonempty set of the record's positions (THE ROLE SETS, wb-39g8 CUT #2), read APO-role in O1 and C2
+ * once the catalog's own composition reads them back and, their class not read, are named in C1 and C2, while a record
+ * that departs in a read field from what its registration function handed reds C2 boundary
  * (wb-39g8 CUT #1); a first surface in any other text, form or field, or one that no register-time record holds as the
- * role twin does ((g)), is NOT CLAIMED to red them (REDUNDANCY measures seven that do).
+ * role twin does ((g)), or a set of them mixing the two classes ((h)), is NOT CLAIMED to red them (REDUNDANCY measures
+ * seven that do).
  * OVER-READS (disclosed, and claimed only where THE JUDGE claims its readings): the word "apo" - in prose, an identifier,
  * or a base64 run split at a case or digit change (MEASURED: the two dependency locks) - and the three program words in
  * order read as a mention whatever they mean; a member named invoke or inspect is a reach whatever its receiver, claimed
@@ -831,7 +949,8 @@
  * by that call's presentation record), the tracker export row of wb-021.1 (anchors, Q1), this file and its roster (Q2),
  * src/workbench/capability-registry.ts (C3) and the provider and native-module registration sources (O2); the catalog
  * is composed in memory through the real registration functions, whose seams are never invoked, into registries that
- * keep the register-time record (HandedRegistry), and the role twin's two catalogs are composed by the same function;
+ * keep the register-time record (HandedRegistry), and the role twin's two catalogs and the set twin's 24 lone catalogs
+ * are composed by the same function, every role set's catalog built from the lone and real catalogs in memory;
  * THE REGISTER BOUNDARY's list runs registerNativeProviders and each registration function once more in memory, into
  * registries of the product's own class, their seams never invoked (C2 boundary).
  * CONTACT: importing the rf provider makes this file an rf reading test to wb-e9dy's census, whose Z3 reads this file
@@ -924,8 +1043,8 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
   A3: { absence: ["srcMentions", "filingPin", "pinFilesAtFloor", "pinFiles", "pinMentions", "pinPlant", "pinLiveness"] },
   O1: { once: ["fired", "firedPlants", "firedTwin"], "any APO surface": ["surfaceKinds", "descriptorFields"] },
   O2: { registers: ["registrationSites", "enclosing", "exportedRegistrars", "nativeComposition", "plantSites", "plantNonLiteral", "plantRegistrars"] },
-  C1: { "a registry/census falsifier": ["plantViolations", "plantQuiet", "roleTwinNamed"] },
-  C2: { proves: ["violations"], "every APO-role capability": ["surfaces", "apoRole", "composed", "boundary", "roleTwin"] },
+  C1: { "a registry/census falsifier": ["plantViolations", "plantQuiet", "roleTwinNamed", "roleSetsNamed"] },
+  C2: { proves: ["violations"], "every APO-role capability": ["surfaces", "apoRole", "composed", "boundary", "roleTwin", "roleSets"] },
   C3: { "is effectClass read": ["vocabulary", "unionMembers", "classVerdicts"] },
   V1: { "and no APO view handler": ["apoModules", "reachesAtFloor", "readSeen", "computedSeen"] },
   V2: { reaches: ["reachVerdicts"], "a non-read registry.invoke": ["handlerViolations", "handlerQuiet"] },
@@ -1926,6 +2045,115 @@ function roleTwinUnread(real: Composition, read: Catalog, write: Catalog): strin
     ...counts,
   ];
 }
+/**
+ * THE ROLE SETS (wb-39g8 cut #2; refusal #1's U1-U3, THE ENUMERATION's family (11)): a role set is a nonempty set of
+ * the record's positions at one of the role twin's two effect classes. The role twin's two catalogs above hold one set
+ * at each class, all twelve positions at once; the census reads every set (roleSetsOf: 4095 at read, 4095 at write).
+ */
+interface RoleSet {
+  readonly twin: TwinClass;
+  readonly at: readonly number[];
+}
+/** A role set's name: its effect class and its record positions, ascending (C2 roleSets, O1 firedTwin sets, C1 roleSetsNamed). */
+function setName(set: RoleSet): string {
+  return `${set.twin} ${set.at.join(",")}`;
+}
+/**
+ * THE SET TWIN's registry (wb-39g8 cut #2): a real registry that keeps the register-time record as HandedRegistry does
+ * and registers the descriptor at each record position of its role set with the role twin's sentence as its whole
+ * description at the set's effect class, every other descriptor as its registration function handed it. The registries
+ * one composition makes share one record, so a position is a register() call's place in the composition's order.
+ */
+class SetRegistry extends CapabilityRegistry {
+  readonly handed: CapabilityDescriptor[];
+  readonly set: RoleSet;
+  constructor(handed: CapabilityDescriptor[], set: RoleSet) {
+    super();
+    this.handed = handed;
+    this.set = set;
+  }
+  override register(entry: CapabilityProvider): void {
+    const original = entry.descriptor;
+    super.register(this.set.at.includes(this.handed.length) ? { ...entry, descriptor: { ...original, description: ROLE_TWIN, effectClass: this.set.twin } } : entry);
+    this.handed.push({ ...original, permissions: [...original.permissions] });
+  }
+}
+/** THE LONE TWIN (wb-39g8 cut #2): one record position at one effect class, the catalog's own composition (composeCatalog) into SetRegistry registries whose set is that position alone. */
+function loneCatalog(twin: TwinClass, at: number): Promise<Catalog> {
+  const handed: CapabilityDescriptor[] = [];
+  return composeCatalog(() => new SetRegistry(handed, { twin, at: [at] }));
+}
+/** Every nonempty set of the record's positions (the positions the binary digits of 1 to 2^positions - 1 select, ascending), at read and then at write. */
+function roleSetsOf(positions: number): RoleSet[] {
+  const all = Array.from({ length: positions }, (_, at) => at);
+  const sets = Array.from({ length: 2 ** positions - 1 }, (_, index) => all.filter(at => ((index + 1) >> at) & 1));
+  const twins: readonly TwinClass[] = ["read", "write"];
+  return twins.flatMap(twin => sets.map(at => ({ twin, at })));
+}
+/**
+ * A role set's catalog: the real catalog's surfaces, position by position in register order, each position of the set
+ * holding the descriptor its lone twin (at the set's class) composes there and every other the real catalog's.
+ */
+function setCatalog(real: Catalog, lone: ReadonlyMap<string, Catalog>, set: RoleSet): Catalog {
+  const surfaces: { [surface: string]: CapabilityDescriptor[] } = {};
+  let at = 0;
+  for (const [name, list] of Object.entries(real.surfaces)) {
+    surfaces[name] = list.map(descriptor => {
+      const here = at;
+      at += 1;
+      return set.at.includes(here) ? (lone.get(`${set.twin} ${here}`)?.descriptors[here] ?? descriptor) : descriptor;
+    });
+  }
+  return { surfaces, descriptors: Object.values(surfaces).flat() };
+}
+/** THE LONE TWIN's catalogs (each record position at read and at write, keyed by class and position) and THE ROLE SETS, each set with its catalog, composed once. */
+const roleSets = lazy(async (): Promise<{ readonly lone: ReadonlyMap<string, Catalog>; readonly sets: readonly { readonly set: RoleSet; readonly catalog: Catalog }[] }> => {
+  const real = await composition("real");
+  const twins: readonly TwinClass[] = ["read", "write"];
+  const lone = new Map(await Promise.all(twins.flatMap(twin => real.handed.map(async (_, at): Promise<[string, Catalog]> => [`${twin} ${at}`, await loneCatalog(twin, at)]))));
+  return { lone, sets: roleSetsOf(real.handed.length).map(set => ({ set, catalog: setCatalog(real.catalog, lone, set) })) };
+});
+/** A role set's roles as the record holds them: the ids of the set's recorded descriptors, in record order. */
+function setRoles(handed: readonly CapabilityDescriptor[], set: RoleSet): string[] {
+  return set.at.map(at => handed[at]?.id ?? `${at}:-`);
+}
+/** A role set's violations as the record holds them: at write each of the set's recorded descriptors named at write, in record order; at read none. */
+function setViolations(handed: readonly CapabilityDescriptor[], set: RoleSet): string[] {
+  return set.twin === "write"
+    ? set.at.flatMap(at => {
+        const descriptor: CapabilityDescriptor | undefined = handed[at];
+        return descriptor === undefined ? [`${at}:-`] : [writeEntry(descriptor)];
+      })
+    : [];
+}
+/**
+ * C2 roleSets, the lone twin (wb-39g8 cut #2): the lone twin's catalog for one position at one class read against the
+ * real catalog's register-time record - its own position not composed there with the record's id at its class, APO-role
+ * by its description (roleFieldsOf); another position whose composed descriptor departs in the read fields (readFields)
+ * from the record's there; a length other than the record's - each named by its class and position: none.
+ */
+function loneUnread(handed: readonly CapabilityDescriptor[], twin: TwinClass, own: number, held: Catalog | undefined): string[] {
+  const name = `lone ${twin} ${own}`;
+  if (held === undefined) return [`${name} not composed`];
+  const placed = handed.flatMap((descriptor, at) => {
+    const composed: CapabilityDescriptor | undefined = held.descriptors[at];
+    const holds =
+      at === own
+        ? composed !== undefined && composed.id === descriptor.id && composed.effectClass === twin && roleFieldsOf(composed).includes("description")
+        : composed !== undefined && readFields(composed) === readFields(descriptor);
+    return holds ? [] : [`${name} at ${at}:${descriptor.id}`];
+  });
+  return held.descriptors.length === handed.length ? placed : [...placed, `${name} composed ${held.descriptors.length} of ${handed.length}`];
+}
+/**
+ * C2 roleSets, the readings (wb-39g8 cut #2): each role set's catalog read by roleReadings (the role readings O1 and C2
+ * apply to the real catalog) - roles other than the set's ids in record order (setRoles), or violations other than the
+ * set's (setViolations: at write the set's descriptors named at write, at read none) - each named by its set: none.
+ */
+function setUnread(handed: readonly CapabilityDescriptor[], set: RoleSet, held: Catalog): string[] {
+  const { roles, violations } = roleReadings(held);
+  return [...(isDeepStrictEqual(roles, setRoles(handed, set)) ? [] : [`${setName(set)} roles`]), ...(isDeepStrictEqual(violations, setViolations(handed, set)) ? [] : [`${setName(set)} violations`])];
+}
 /** O1's fired reading: whether any APO module or APO-role descriptor is named. */
 function firedOf(modules: readonly string[], roles: readonly string[]): boolean {
   return modules.length > 0 || roles.length > 0;
@@ -2239,9 +2467,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   },
   O1: async () => {
     const [real, read, write] = await Promise.all([composition("real"), composition("read"), composition("write")]);
+    const { sets } = await roleSets();
     const verdict = srcVerdict();
     const realModules = Object.keys(findingsFor(verdict, srcPaths(), true));
-    const [realRoles, readRoles, writeRoles] = [real.catalog, read.catalog, write.catalog].map(held => roleReadings(held).roles);
+    const [realRoles, readRoles, writeRoles, ...setsRoles] = [real.catalog, read.catalog, write.catalog, ...sets.map(entry => entry.catalog)].map(held => roleReadings(held).roles);
     const [provider] = planted([PROVIDER_PLANT]);
     expect(provider, "the provider plant registers").toBeDefined();
     return json({
@@ -2250,6 +2479,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
         read: firedOf([], readRoles),
         write: firedOf([], writeRoles),
         unnamed: [...unheldAt(real.handed, readRoles, roleEntry), ...unheldAt(real.handed, writeRoles, roleEntry)],
+        sets: sets.filter((entry, index) => !firedOf([], setsRoles[index] ?? []) || !isDeepStrictEqual(setsRoles[index], setRoles(real.handed, entry.set))).map(entry => setName(entry.set)),
       },
       firedPlants: { module: firedOf([VIEW_PLANT.path], []), role: firedOf([], [PROVIDER_PLANT.id]), none: firedOf([], []) },
       surfaceKinds: {
@@ -2290,9 +2520,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   },
   C1: async () => {
     const [real, write] = await Promise.all([composition("real"), composition("write")]);
+    const { sets } = await roleSets();
     const { descriptors } = real.catalog;
     const plants = planted(DESCRIPTOR_PLANTS);
-    const [violations, twinViolations] = [real.catalog, write.catalog].map(held => effectViolations([...held.descriptors, ...plants]));
+    const [violations, twinViolations, ...setsNamed] = [real.catalog, write.catalog, ...sets.map(entry => entry.catalog)].map(held => effectViolations([...held.descriptors, ...plants]));
     const named = new Set(violations.map(violation => violation.split(" ")[0] ?? ""));
     expect(
       descriptors.filter(descriptor => named.has(descriptor.id)).map(descriptor => descriptor.id),
@@ -2302,11 +2533,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       plantViolations: violations,
       plantQuiet: plants.map(descriptor => descriptor.id).filter(id => !named.has(id)),
       roleTwinNamed: unheldAt(real.handed, twinViolations.slice(0, real.handed.length), writeEntry),
+      roleSetsNamed: sets.filter((entry, index) => !isDeepStrictEqual(setsNamed[index], [...setViolations(real.handed, entry.set), ...violations])).map(entry => setName(entry.set)),
     });
   },
   C2: async () => {
     const [real, read, write] = await Promise.all([composition("real"), composition("read"), composition("write")]);
     const listed = await boundaryList();
+    const { lone, sets } = await roleSets();
     const { surfaces } = real.catalog;
     const { roles, violations } = roleReadings(real.catalog);
     expect(violations, `an APO-role capability declares a non-read effect class; ${BEAD} requires every APO-role capability to declare effectClass ${READ_CLASS}`).toEqual([]);
@@ -2323,6 +2556,14 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       composed: composedUnheld(real),
       boundary: boundaryUnheld(real, listed),
       roleTwin: roleTwinUnread(real, read.catalog, write.catalog),
+      roleSets: {
+        lone: lone.size,
+        sets: { read: sets.filter(entry => entry.set.twin === "read").length, write: sets.filter(entry => entry.set.twin === "write").length },
+        unread: [
+          ...(["read", "write"] as const).flatMap(twin => real.handed.flatMap((_, at) => loneUnread(real.handed, twin, at, lone.get(`${twin} ${at}`)))),
+          ...sets.flatMap(entry => setUnread(real.handed, entry.set, entry.catalog)),
+        ],
+      },
     });
   },
   C3: () => {

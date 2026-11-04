@@ -1227,7 +1227,8 @@
       "firedTwin": {
        "read": true,
        "write": true,
-       "unnamed": []
+       "unnamed": [],
+       "sets": []
       },
       "firedPlants": {
        "module": true,
@@ -1371,7 +1372,8 @@
       "a registry/census falsifier": [
        "plantViolations",
        "plantQuiet",
-       "roleTwinNamed"
+       "roleTwinNamed",
+       "roleSetsNamed"
       ]
      },
      "witness": {
@@ -1384,7 +1386,8 @@
        "apo.graph.view",
        "census.plant.write"
       ],
-      "roleTwinNamed": []
+      "roleTwinNamed": [],
+      "roleSetsNamed": []
      }
     },
     {
@@ -1399,7 +1402,8 @@
        "apoRole",
        "composed",
        "boundary",
-       "roleTwin"
+       "roleTwin",
+       "roleSets"
       ]
      },
      "witness": {
@@ -1439,7 +1443,15 @@
       "apoRole": [],
       "composed": [],
       "boundary": [],
-      "roleTwin": []
+      "roleTwin": [],
+      "roleSets": {
+       "lone": 24,
+       "sets": {
+        "read": 4095,
+        "write": 4095
+       },
+       "unread": []
+      }
      }
     },
     {
