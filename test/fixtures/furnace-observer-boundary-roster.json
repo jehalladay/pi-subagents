@@ -340,7 +340,9 @@
       "src/workbench/zz-boundary-identifier-function.ts": "export function Furnace\\u004fbserverBoundaryV0(): number {\n  return 0;\n}\n",
       "src/workbench/zz-boundary-identifier-return.ts": "export function n(): number {\n  return Furnace\\u004fbserverBoundaryV0;\n}\n",
       "src/workbench/zz-boundary-template-array.ts": "export const n = (a: string): string[] => [`x${a}Furnace\\u004fbserverBoundaryV0`];\n",
-      "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x${a}Furnace\\u004fbserverBoundaryV0`);\n"
+      "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x${a}Furnace\\u004fbserverBoundaryV0`);\n",
+      "src/workbench/zz-boundary-template-tagged-head.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`Furnace\\u004fbserverBoundaryV0${a}x`;\n",
+      "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x${a}Furnace\\u004fbserverBoundaryV0`;\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4970,6 +4972,12 @@
               ],
               "src/workbench/zz-boundary-template-call.ts": [
                 "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged-raw.ts": [
+                "cooked"
               ]
             },
             "decodings": {
@@ -5407,6 +5415,24 @@
               },
               "valueTemplate": {
                 "text": "export const n = (a: string): string => `x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": [
+                  "cooked"
+                ]
+              },
+              "typeHead": {
+                "text": "export type N = `Furnace\\u004fbserverBoundaryV0${string}`;\n",
+                "forms": []
+              },
+              "typeMiddle": {
+                "text": "export type N = `x${string}Furnace\\u004fbserverBoundaryV0${string}y`;\n",
+                "forms": []
+              },
+              "typeParameter": {
+                "text": "export const n = (a: `x${string}Furnace\\u004fbserverBoundaryV0`): string => a;\n",
+                "forms": []
+              },
+              "typeNoSubstitution": {
+                "text": "export type N = `Furnace\\u004fbserverBoundaryV0`;\n",
                 "forms": [
                   "cooked"
                 ]

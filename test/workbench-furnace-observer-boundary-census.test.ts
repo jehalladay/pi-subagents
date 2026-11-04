@@ -36,13 +36,15 @@
  * also through the TypeScript AST (parsed as TSX for .tsx and .jsx, as JavaScript, JSX included, for .js, .mjs and
  * .cjs, and as TypeScript for .ts, .mts and .cts) - each string-like literal by its cooked value, each identifier
  * spelled with an escape by its cooked name and each part of a template expression by its cooked text, a substitution
- * ending the part ("cooked"; a template literal type's parts are not: R-TYPE-TEMPLATE; these two readings are claimed
- * for exactly the scripts their plants spell - FOLLOW-UP wb-dixg's name and template plants and the plants of
- * THE JUDGE'S PINS it names - each script whole as its plant spells it, in its plant's own script kind, and for no
- * other script: the escape's spelling and place, the declaration or expression that holds the name or the template,
- * the template's spans and the part that spells the record are claimed only together, as one plant holds them, so an
- * escaped name or a template part no plant spells is NOT CLAIMED), and each chain of "+" whose operands are all string
- * literals by its folded value ("folded"); a .json
+ * ending the part ("cooked"; these two readings are claimed for exactly the scripts their plants spell - FOLLOW-UP
+ * wb-dixg's name and template plants and the plants of THE JUDGE'S PINS it names - each script whole as its plant
+ * spells it, in its plant's own script kind, and for no other script: the escape's spelling and place, the
+ * declaration or expression that holds the name or the template, the template's spans and the part that spells the
+ * record are claimed only together, as one plant holds them, so an escaped name or a template part no plant spells is
+ * NOT CLAIMED; a template literal type is a type, not a template expression: the record in each of Q13's four
+ * template literal types is not read, while Q13's backtick type without a substitution, a string literal type, is
+ * read by its cooked value as a string-like literal - R-TYPE-TEMPLATE, claimed for exactly Q13's type texts), and
+ * each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
  * file also by its parsed keys and string values ("cooked"; a file JSON.parse refuses yields no cooked unit); a markup file (.md .html .htm .xml .svg) also with its
  * numeric character references, each spelled with its semicolon and of up to eight decimal or seven hex digits (a hex
  * reference after either marker, &#x or &#X, each hex digit any of 0-9 and a-f, in either case; a longer one is NOT
@@ -420,19 +422,23 @@
  *   hex marker, the first digit of a longest reference is claimed read with its other digits, and any other
  *   misreading of a code point beyond the pinned texts' readings is NOT CLAIMED. No reader is added; READERS, ROWS,
  *   the frozen literal, PI_PLANTS, W1, the docs/09 reading, its plants and the shared reader are unchanged.
- * FOLLOW-UP wb-dixg (R-B375, from wb-s876 refusal #7 U4; respun after its refusal #1, R-B462, and its refusal #2,
- *   R-B509; re-cut over the landed wb-s876 cut #10 at landing 907, R-B484): one-edit members of THE JUDGE kept this
- *   census green on THE JUDGE's path, escaped-identifier and template-part words, each realized by a paired real-tree
+ * FOLLOW-UP wb-dixg (R-B375, from wb-s876 refusal #7 U4; respun after its refusal #1, R-B462, its refusal #2,
+ *   R-B509, and its refusal #3, R-B536; re-cut over the landed wb-s876 cut #10 at landing 907, R-B484): one-edit
+ *   members of THE JUDGE kept this census green on THE JUDGE's path, escaped-identifier and template-part words, each
+ *   realized by a paired real-tree
  *   witness - at U4 GP20-TPL-LAST, GP20-TPL-FIRST, GP20-ID-U0 and GP20-BIN-PATH on the landed words, at refusal #1
  *   G202-PATH-SEGMENTS, G202-PATH-NO-TOP, G202-TPL-FIRST-TWO and G202-TPL-LAST-TWO on cut #1's restated words, and at
  *   refusal #2 G206-PATH-ROOT, G206-PATH-SINGULAR, G206-PATH-UNDERSCORE, G206-ID-FUNCTION-NAME, G206-ID-RETURN-READ,
  *   G206-TPL-ARRAY and G206-TPL-CALL-ARG on cut #3's restated words, which named kinds of path, name and template
- *   wider than the plants held. Each of those members is killed by a plant in its witness's shape, and this census claims
+ *   wider than the plants held, and at refusal #3 GP24-TAG-HEAD and GP24-TAG-RAW on cut #4's OVER-READS words for a
+ *   tagged template. Each of those members is killed by a plant in its witness's shape, and this census claims
  *   THE JUDGE's three readings for exactly the plants named here, each plant as itself: the note beside a plant says what it
  *   spells and which falsifier it kills, not a kind of path, name or template this census claims. PINNED READER SET:
  *   case Z2 (its witness's piPlants hold each plant's path with exactly the forms read, held to the roster), case Q13
- *   and the closing case; beside each plant, its falsifier: a one-edit member of THE JUDGE that drops the plant and so
- *   reds Z2 and the closing case. PATH PLANTS (form "path"; no plant's text names the record; each spells the words
+ *   (its witness's readings hold each of its type texts and its template expression with exactly the forms read, held
+ *   to the roster) and the closing case; beside each plant, its falsifier: a one-edit member of THE JUDGE that drops
+ *   the plant and so reds Z2 and the closing case. PATH PLANTS (form "path"; no plant's text names the record; each
+ *   spells the words
  *   singular, in lower case, with a hyphen between them, unless its note says otherwise):
  *   docs/workbench/zz-observer-boundary.md, a .md file's name (falsifiers: the path read by its directories only; not
  *   read for a markup file); src/workbench/zz-observer-boundary.ts, a .ts script's name (the path not read for a
@@ -471,8 +477,12 @@
  *   zz-boundary-template-three-first.ts its first literal (the last two spans only, G202-TPL-LAST-TWO),
  *   zz-boundary-template-three-middle.ts its middle literal (the first and the last span only) and
  *   zz-boundary-template-three-last.ts its last literal (the first two spans only, G202-TPL-FIRST-TWO);
- *   zz-boundary-template-tagged.ts, a one-span tagged template's tail, the tagged template the arrow function's body
- *   (a tagged template's template passed over); and a one-span template's tail with the template an array element,
+ *   zz-boundary-template-tagged.ts, a one-span tagged template's tail under a tag that joins the cooked parts, the
+ *   tagged template the arrow function's body (a tagged template's template passed over);
+ *   zz-boundary-template-tagged-head.ts, the same tag over a one-span template whose head spells the record (a tagged
+ *   template's head passed over, GP24-TAG-HEAD); zz-boundary-template-tagged-raw.ts, a one-span template's tail under
+ *   String.raw, a tag that reads the raw parts, the tagged template the arrow function's body (a template whose tag is
+ *   String.raw passed over, GP24-TAG-RAW); and a one-span template's tail with the template an array element,
  *   the array the arrow function's body, in zz-boundary-template-array.ts (a template in an array literal passed over,
  *   G206-TPL-ARRAY), and with the template a call's argument, the call the arrow function's body, in
  *   zz-boundary-template-call.ts (a template a call holds passed over, G206-TPL-CALL-ARG). THE JUDGE'S PINS' plants
@@ -480,7 +490,11 @@
  *   class's private property name whose escape is its first character after the "#" (cut #6);
  *   zz-boundary-template.ts and zz-boundary-template-tail.ts, a one-span template's head and its tail, each template a
  *   const's initializer (cut #6); and qa/zz-boundary-kind-template.js, .mjs and .cjs, a one-span template at a
- *   statement's start whose tail spells the record's O with an x escape (cut #8). Q13 is R-TYPE-TEMPLATE's quiet row.
+ *   statement's start whose tail spells the record's O with an x escape (cut #8). Q13 is R-TYPE-TEMPLATE's quiet row:
+ *   refusal #3's GP24-TT-HEAD, GP24-TT-NONLAST and GP24-TT-NONALIAS (a template literal type's head, its span literals
+ *   but the last, and its span literals where it is not a type alias's, read) red Q13 through its typeHead, typeMiddle
+ *   and typeParameter texts, and GP24-TT-NOSUB-QUIET (a backtick type without a substitution not read) through its
+ *   typeNoSubstitution text.
  *   NOT CLAIMED by this census: a path, an escaped name or a template part no plant named here spells, whatever sets
  *   it apart from every plant - among them, for a path, another depth (a path of five or more segments; a file name
  *   at the repository root in a kind other than .md), another file kind (a .tsx script's name, an .html page's),
@@ -491,7 +505,9 @@
  *   (a call's argument, an assignment's right side), an escape at a name's first character beyond THE JUDGE'S PINS'
  *   private name and a braced code point in a private or a read name; for a template part, another place in a script
  *   (an object property's value, a conditional's branch, a return statement's expression), a fourth or later span's
- *   literal, a tagged template of two or more spans and a template nested in another's substitution; these readings
+ *   literal, a tagged template of two or more spans, a tag other than the two the tagged plants spell (the arrow
+ *   function that joins the cooked parts and String.raw), String.raw over a template's head and a template nested in
+ *   another's substitution; these readings
  *   in a script kind other than .ts beyond THE JUDGE'S PINS' statement-start templates in .js, .mjs and .cjs; the
  *   same readings in T1's release entries and Z1's pin blobs beyond the plants (one verdictOf judges every leg); and
  *   a judge edited to tell a plant from a real file by its path or its text.
@@ -530,8 +546,14 @@
  * another section of docs/09 (its Reader adapters list already names a Furnace event stream, a line Q11 pins) or another page - is not
  * read (Q11); R-ALIASED-MODULE a module declaration whose specifier reaches the observer only
  * through configuration (tsconfig paths, package.json imports) is not read as an augmentation, and the listed scripts
- * hold none (Q12); R-TYPE-TEMPLATE a template literal type's parts (a type, not a value) are not read as template
- * parts, so an escape-spelled record in one is not read, while the same part in a template expression is (Q13).
+ * hold none (Q12); R-TYPE-TEMPLATE the parts of exactly the four template literal types Q13 holds quiet (a type, not
+ * a value), each type text whole as itself, are not read as template parts - a type alias's one-span type with the
+ * record in its tail (typeTemplate) and in its head (typeHead), a type alias's two-span type with the record in its
+ * first span's literal (typeMiddle) and a parameter's one-span type with the record in its tail (typeParameter) - so
+ * the escape-spelled record in each is not read, while the same part in Q13's template expression is
+ * (valueTemplate); a backtick type without a substitution is a string literal type, not a template literal type, and
+ * Q13's (a type alias's, typeNoSubstitution) is read by its cooked value as a string-like literal; any other template
+ * literal type, and any other backtick type, is NOT CLAIMED either way (Q13).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its
  * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a
  * bound constant - FILING_SHA256, OWNER_LEADS, RESTATED or NUMERIC_REFERENCES - edited in this file and the roster together (the
@@ -548,8 +570,12 @@
  * OVER-READS (disclosed; none today): any "observer ... boundary" prose reads as a mention, a heading or list break between
  * the words included; a YAML/TOML backslash sequence in a single-quoted or literal string is decoded (a YAML
  * single-quoted and a TOML literal string plant, THE JUDGE'S PINS, cut #7); a bare module
- * specifier whose last segment is furnace-observer is read as the observer module (W1); a tagged template's parts are
- * read cooked whatever its tag does with them (FOLLOW-UP wb-dixg); any heritage type of
+ * specifier whose last segment is furnace-observer is read as the observer module (W1); exactly the three tagged
+ * templates FOLLOW-UP wb-dixg's tagged plants spell, each plant whole as itself, are read cooked at the part that
+ * spells the record in each - a one-span template's tail and a one-span template's head, each under a tag that joins
+ * the cooked parts, and a one-span template's tail under String.raw, a tag that reads the raw parts, so the String.raw
+ * plant is read cooked although its tag reads the escape as written (FOLLOW-UP wb-dixg); a tagged template no tagged
+ * plant spells (another tag, another part, two or more spans) is NOT CLAIMED either way; any heritage type of
  * FurnaceObserverClient reads as a widening, an empty interface extended included; any declaration of the name other than
  * an interface reads as a widening too - a namespace, a value, a member, a parameter, a specifier or a property access
  * named by it included, nested anywhere in the observer module or an augmentation (a namespace's own, a function's
@@ -1214,6 +1240,9 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-identifier-return.ts": "export function n(): number {\n  return Furnace\\u004fbserverBoundaryV0;\n}\n",
   "src/workbench/zz-boundary-template-array.ts": "export const n = (a: string): string[] => [`x$" + "{a}Furnace\\u004fbserverBoundaryV0`];\n",
   "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x$" + "{a}Furnace\\u004fbserverBoundaryV0`);\n",
+  "src/workbench/zz-boundary-template-tagged-head.ts":
+    "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`Furnace\\u004fbserverBoundaryV0$" + "{a}x`;\n",
+  "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x$" + "{a}Furnace\\u004fbserverBoundaryV0`;\n",
 };
 /**
  * The texts W1 asserts THE JUDGE's markup and escape decoders on (its cut #3, #5, #6 and #7 decoding assertions), held with
@@ -2487,11 +2516,17 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     });
   },
   Q13: () => {
-    // One escape-spelled part in a template literal type and in a template expression: only the expression's part is read.
+    // The escape-spelled record in four template literal types (a type alias's one-span tail and head, a two-span type's
+    // first literal, a parameter's one-span type) is not read; in a template expression and in a backtick type without a
+    // substitution (a string literal type) it is read (wb-dixg refusal #3: GP24-TT-HEAD, -NONLAST, -NONALIAS, -NOSUB-QUIET).
     const part = "Furnace\\u004fbserverBoundaryV0";
     const texts: Readonly<Record<string, string>> = {
       typeTemplate: "export type N = `x$" + "{string}" + part + "`;\n",
       valueTemplate: "export const n = (a: string): string => `x$" + "{a}" + part + "`;\n",
+      typeHead: "export type N = `" + part + "$" + "{string}`;\n",
+      typeMiddle: "export type N = `x$" + "{string}" + part + "$" + "{string}y`;\n",
+      typeParameter: "export const n = (a: `x$" + "{string}" + part + "`): string => a;\n",
+      typeNoSubstitution: "export type N = `" + part + "`;\n",
     };
     return json({
       residual: "R-TYPE-TEMPLATE",
