@@ -188,6 +188,9 @@
    ],
    "R-DOCUMENT-SCOPE": [
     "Q11"
+   ],
+   "R-DEFINITION-HIDES-NEGATION": [
+    "Q12"
    ]
   },
   "residualAnchor": {
@@ -235,6 +238,7 @@
   "Q9",
   "Q10",
   "Q11",
+  "Q12",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1365,6 +1369,14 @@
      "witness": {
       "path": "docs/workbench/x.md",
       "text": "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the cac-workflow-composition-2026-10-18 program, which is\n[^x]: not\ndesign-only.",
       "causes": []
      }
     }

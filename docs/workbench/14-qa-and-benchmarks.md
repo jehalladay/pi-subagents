@@ -298,6 +298,7 @@ Named residuals of test/workbench-mw-cac-citation-status-census.test.ts: one row
 | Q9 | R-SPLIT-SOURCE | `Workflow" + "Composition` | `WorkflowComposition` | unqualified |
 | Q10 | R-ESCAPED-SPELLING | `\-workflow\-` | `-workflow-` | unqualified |
 | Q11 | R-DOCUMENT-SCOPE | `\n\n` | `\n` | exists:pi-mw-adapter |
+| Q12 | R-DEFINITION-HIDES-NEGATION | `[^x]: not` | `not` | unqualified |
 
 ## HX licensed-complete census read forms
 

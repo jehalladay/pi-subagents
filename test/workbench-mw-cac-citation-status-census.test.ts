@@ -319,8 +319,41 @@
  * subject and its predicate in different clauses (a pronoun across a sentence end) are not read (Q7); R-SUBJECT-SPELLING a
  * subject spelled outside SUBJECTS is not read (Q8); R-SPLIT-SOURCE a src citation split across a string concatenation is not
  * read (Q9); R-ESCAPED-SPELLING a markdown-escaped or entity-spelled needle does not cite (Q10); R-DOCUMENT-SCOPE an existence
- * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11). Each family is also a row of
- * docs/14's residual table (RESIDUAL ANCHOR).
+ * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11); R-DEFINITION-HIDES-NEGATION
+ * in a unit the carrier view renders (one neither opaque nor shown verbatim as code), a negation that a footnote definition
+ * line (a line FOOTNOTE.definition matches) holds does not cancel a status on another line of the unit, because the view drops
+ * that line with every word on it (Q12, wb-d5o5 below). Each family is also a row of docs/14's residual table (RESIDUAL
+ * ANCHOR).
+ * wb-d5o5 (the R694 follow-up of landing 887, gate cmd_707d77443a50: its F1 leads and is cured here by naming the family with
+ * its pinned quiet row; the readers, every control and every other pin are unchanged). THE PINNED READER SET, each a case of
+ * this file: Q12 judges its probe at docs/workbench/x.md - the unit of the citing line "Pi reads the
+ * cac-workflow-composition-2026-10-18 program, which is", the line "[^x]: not" and the line "design-only." (the gate's
+ * QUIET-1) - and asserts its causes [] (observed: quiet, the view having dropped "[^x]: not"), then compares its witness (the
+ * probe's path, text and causes) with the roster's and re-judges the probe there (observed: equal); the residual-anchor case
+ * reads docs/14's row "Q12 | R-DEFINITION-HIDES-NEGATION" and asserts that the probe carries the exemplar "[^x]: not"
+ * exactly once, reads quiet, and with it replaced by the clear form "not" reads unqualified (observed: as stated, the two
+ * words before "design-only" then being "is not"); the judged-set case holds Q12 in ROWS, the frozen-shape literal (Q:12),
+ * IMPL, RESIDUALS and the roster's rows and constants (observed: equal); the closing case holds Q12 in the roster's tests,
+ * registered, run and reached (observed: as stated). Falsifiers, each measured red at this cut on a throwaway copy of the
+ * census and the roster (docs/14 edited in place and restored byte-identical): the view keeping a definition line
+ * (carrierView's FOOTNOTE.definition filter dropped) or FOOTNOTE.definition never matching (its roster constant with it)
+ * reads the probe unqualified and reds Q12, A5, the residual-anchor case and the closing case (4 failed | 29 passed (33)
+ * each); the view dropping every line of the unit from its first definition line on reds Q12, the residual-anchor case and
+ * the closing case (3 | 30); the probe edited in IMPL alone ("never" for "not"), or stripped of its definition syntax in
+ * IMPL and the roster together, reds the same three (3 | 30 each); docs/14's Q12 row removed, its clear form made
+ * "[^y]: not", its exemplar and clear form made "[^x]: never" and "never", or the family renamed in RESIDUALS and the
+ * roster together reds the residual-anchor case (1 | 32 each); and Q12 removed from ROWS, the frozen-shape literal, IMPL,
+ * RESIDUALS, the residual-table literal and the roster together (the CT6 coordinated hollow) reds the residual-anchor case
+ * against the row docs/14 keeps (1 failed | 31 passed (32)). Q12's definition line is in a form the NOT CLAIMED paragraph
+ * above names (the label x, the text " not"): A5's definition-line claim is unchanged, and cut #5's sentence above (how the
+ * census reads a page whose definition line is in a NOT CLAIMED form is NOT CLAIMED, quiet or not) holds for every such page
+ * but Q12's probe, whose quiet reading this residual pins. NOT CLAIMED: Q12 pins one page of the family, and how the
+ * census reads any other page whose footnote definition line holds a negation is NOT CLAIMED by this census - among them
+ * the five sibling pages the gate measured quiet beside QUIET-1, re-authored here from its descriptions (the citing line's
+ * reference [^s] with the definition label s; the unit behind "> "; "never" for "not"; the definition line indented by
+ * two spaces; and a citing line ending "design-only" over the line "[^x]: no longer."), each measured quiet again at this
+ * cut's base de6deb2b as a throwaway A5 control expecting unqualified (2 failed | 30 passed (32) each: A5 and the closing
+ * case).
  * SCOPE: the judges read words, not meaning. OVER-READS (disclosed; none today): a citing paragraph whose only status is a
  * paraphrase ("design only", a README.md:21 fragment) flags; a "Pi adapter" in a citing unit reads as the Pi MW adapter; a
  * code symbol that merely names the program (a status constant) flags as code; a status carried only by a heading or a
@@ -329,7 +362,8 @@
  * holds a raw HTML element (an inline <br> or <span>, an element inside a list item or quote) or that sits in a list or quote
  * with raw HTML across a blank line carries nothing; the lines of a top-level raw HTML block (even a visible <pre> or
  * <details>) and a comment's closing line after its --> show no carrier, nor does a footnote definition (conservative for a
- * status the definition line holds, not for a negation it holds: cut #5 above); a carrier spelled with an
+ * status the definition line holds, not for a negation it holds: cut #5 above, and the residual R-DEFINITION-HIDES-NEGATION
+ * with its quiet row Q12 above); a carrier spelled with an
  * entity (design&#45;only) does not qualify. One reading is measured, not
  * assumed: a "[s]: <url>" line directly under a citing line cannot be a definition (a definition cannot interrupt a
  * paragraph), so marked and CommonMark both show it as text and a status in its URL qualifies (A5 definition-cannot-interrupt;
@@ -454,6 +488,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-SPLIT-SOURCE": ["Q9"],
   "R-ESCAPED-SPELLING": ["Q10"],
   "R-DOCUMENT-SCOPE": ["Q11"],
+  "R-DEFINITION-HIDES-NEGATION": ["Q12"],
 };
 
 interface Row {
@@ -477,7 +512,7 @@ const ROWS: readonly Row[] = [
     pins: ["C1", "C2", "C3"],
   },
   { id: "E", label: "shall not present CACWorkflowCompositionV0, a bridge checker or a Pi MW adapter as existing", pins: ["E1", "E2", "E3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 /** Each judged pin's quote: the quotes of a row tile its clause (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -1409,11 +1444,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   Q9: () => quiet("src/x.ts", 'export const A = "CACWorkflow" + "CompositionV0";', "a citation split across a concatenation does not cite"),
   Q10: () => quiet("docs/workbench/x.md", "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.", "escaped and entity spellings do not cite"),
   Q11: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.", "an existence claim in a unit that does not cite is not judged"),
+  // wb-d5o5 (landing 887's F1, the gate's QUIET-1): the view drops the definition line "[^x]: not", so "design-only." qualifies the unit.
+  Q12: () => quiet("docs/workbench/x.md", "Pi reads the cac-workflow-composition-2026-10-18 program, which is\n[^x]: not\ndesign-only.", "a negation a footnote definition line holds does not cancel the status on the line after it"),
 };
 
 describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-WORKFLOW-COMPOSITION-R2)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:3", "C:3", "E:3", "Q:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:3", "C:3", "E:3", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(Object.keys(QUOTES).sort(), "every pin of rows A, B, C and E carries a quote").toEqual(ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins).sort());
@@ -1598,6 +1635,7 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
       'Q9 | R-SPLIT-SOURCE | Workflow" + "Composition | WorkflowComposition | unqualified',
       "Q10 | R-ESCAPED-SPELLING | \\-workflow\\- | -workflow- | unqualified",
       "Q11 | R-DOCUMENT-SCOPE | \\n\\n | \\n | exists:pi-mw-adapter",
+      "Q12 | R-DEFINITION-HIDES-NEGATION | [^x]: not | not | unqualified",
     ]);
   });
 
