@@ -28,15 +28,101 @@
  * "boundary" or "boundaries", in any case - the record's own middle words (recordWords), so every spelling of the record and
  * of its family (any version, with or without the producer prefix) is read. Each file's own path is read ("path"). A file
  * holding a NUL byte is binary and its content is not read. Every other file is read as raw text ("raw"); a script (.ts .tsx
- * .mts .cts .js .jsx .mjs .cjs) also through the TypeScript AST - each string-like literal by its cooked value, each
+ * .mts .cts .js .jsx .mjs .cjs) also through the TypeScript AST (parsed as TSX for .tsx and .jsx, as JavaScript, JSX
+ * included, for .js, .mjs and .cjs, and as TypeScript for .ts, .mts and .cts) - each string-like literal by its cooked value, each
  * identifier spelled with an escape by its cooked name and each template part by its cooked text, a substitution ending
  * the part ("cooked"), and each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
- * file also by its parsed keys and string values ("cooked"); a markup file (.md .html .htm .xml .svg) also with its
- * numeric character references and the common named entities decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
- * also with its backslash escapes (U, u and x forms) decoded ("decoded"). A file's forms are the readings that found a
- * mention. judgeScope reads an entry list in one call, so every leg judges its planted
+ * file also by its parsed keys and string values ("cooked"; a file JSON.parse refuses yields no cooked unit); a markup file (.md .html .htm .xml .svg) also with its
+ * numeric character references, each spelled with its semicolon and of up to eight decimal or seven hex digits (a hex
+ * reference after either marker, &#x or &#X, each hex digit any of 0-9 and a-f, in either case; a longer one is NOT
+ * CLAIMED either way; OVER-READS), decoded two ways -
+ * as the HTML standard decodes them
+ * (numericReference: a code point of the standard's 0x80-0x9F table, NUMERIC_REFERENCES, to its Windows-1252 character, so
+ * &#146; reads as U+2019; 0, a surrogate and a code point above 0x10FFFF to U+FFFD; any other to itself) and each to its
+ * own code point (decodedCodePoints, the landed reading; one above 0x10FFFF left as written), a mention in either reading
+ * read, so neither narrows the other (wb-s876 cut #3) - and the six named entities amp, lt, gt, quot, apos and nbsp, each
+ * with its semicolon, decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
+ * also with its backslash escapes (U, u and x forms, hex digits in either case, every escape of the file; a U escape
+ * above U+10FFFF left as written) decoded ("decoded"). These decoder claims - the markup and YAML/TOML file kinds, the
+ * six names, the reference lengths (each length of one to eight decimal and of one to seven hex digits, a hex
+ * reference after either marker, &#x or &#X), every decimal digit and every hex digit (0-9 and a-f, in either case) of
+ * a markup reference in every place of each of those lengths, after either hex marker, the edges of both readings, the
+ * first digit of a longest reference (eight decimal or seven hex digits, after either marker) read with its other
+ * digits, the three escape forms, every hex digit of each escape form (0-9, a-f and A-F) in every place a code point
+ * up to U+10FFFF uses, two escapes in one file and the U form's edge at U+10FFFF and above it - are each pinned through
+ * THE JUDGE's own decoders, by the plants and W1 assertions THE JUDGE'S PINS names (cuts #6, #7 and #8), by W1's cut
+ * #3 decoding assertions and by Z2's decodings (cuts #8, #9 and #10: each W1 decoding text with THE JUDGE's readings
+ * of it; the digit-place texts, which hold each digit in each claimed place through one reference of each length and
+ * hex marker, or one escape of each form, holding that digit in every claimed place; and the first-digit texts, which
+ * hold, for each first digit of each longest length and marker, one reference whose other digits alone read in range,
+ * so a longest reference read without a first digit other than 0 reds Z2; a dropped 0 leaves the code point as it
+ * is). A digit refused, or its share of a code point misread, in one place only beside particular digits in the other
+ * places (a combination of digits) is NOT CLAIMED, and so is any other misreading of a code point beyond the pinned
+ * texts' readings (a digit dropped from its place, a 0 included, other than a longest reference's first digit; a digit
+ * read at another place's weight or as another digit). The three parse modes and the refused
+ * .json are pinned by THE JUDGE'S PINS' script-kind and JSON plants (cuts #7 and #8). A
+ * file's forms are the readings that found a mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
  * forced empty reds.
+ * THE JUDGE'S PINS (cut #6; ruling R-B316, claims equal to pins). Z2 plants, each a planted file that spells the
+ * record through one reading (its one form in Z2's witness): one per markup kind beside the .md plants (.html, .htm, .xml and .svg, each across &#32;); one
+ * per named entity of the six (&amp;, &lt;, &gt;, &quot; and &nbsp; between the words, &apos; in the possessive); four
+ * of the eight-decimal-digit and seven-hex-digit references, one per length and reading (&#00000146; and &#x0000092;
+ * in the possessive, which only the HTML standard's reading reads as U+2019, and &#00000136; and &#x0000088; between
+ * the words, which only the code-point reading reads as the separator U+0088); a .yaml page spelled with the x form
+ * (the .yml and .toml plants spell the u and U forms); and, for the script and JSON readings, a template's head and its
+ * tail and a backtick literal, each spelled with an escape, a private name spelled with an escape, a "+" chain folded
+ * across a parenthesized operand and one of backtick operands, and a JSON array's string value spelled with an escape.
+ * W1 asserts, on THE JUDGE's decodedMarkup and decodedCodePoints: each of the six names in upper case and in a mixed
+ * case; the low surrogates U+DC00 and U+DFFF (U+FFFD in the standard's reading, themselves in the code-point reading)
+ * and U+10FFFF (itself in both); and a one-digit hex reference and the hex digits a and f in either case.
+ * Cut #7 (ruling R-B338, the same restatement with every header claim no wider than its pinned reader) adds 26 Z2
+ * plants. For THE JUDGE's script reading, eight, one per script extension (form: cooked): a type assertion of an
+ * escape-spelled literal (<string>"\u004f...") in .ts, .mts and .cts, which the TypeScript parse reads and a JSX parse
+ * reads as JSX text, and JSX text holding "//" before an escape-spelled literal in .tsx, .jsx, .js, .mjs and .cjs,
+ * which the TSX and JavaScript parses read and the TypeScript parse reads as a comment - so cut #7's plants tell the
+ * TypeScript parse from the JSX parses, not TSX from JavaScript (refusal #7 U1; cut #8's plants below do). For its
+ * JSON reading, one: a .json page JSON.parse refuses, whose
+ * record is read raw only (form: raw). For THE JUDGE's decodedEscapes, 17 (each form: decoded): a .yaml page spelling the record through the second of two
+ * x escapes (\x46 and \x4f); the record's O as an upper-case hex digit in each form (\x4F in a .yaml page, \u004F in
+ * a .yml page, \U0000004F in a .toml page); a separator escape between the words for the digits 0 and 9 in each form
+ * (\x20 and \x09, \u0009, \U00000009), for a (\x0a, \u000a, \U0000000a) and for A (\x0A, \u000A, \U0000000A);
+ * U+10FFFF between the words (\U0010FFFF, .toml); and the record in a YAML single-quoted string (\x4f) and in a TOML
+ * literal string (\U0000004f), the over-read OVER-READS discloses. W1 asserts, on THE JUDGE's decodedEscapes, one text
+ * holding the hex digits 0, 9, a, f, A and F in each form, every escape of it decoded, U+10FFFF decoded and \U00110000
+ * left as written.
+ * Cut #8 (ruling R-B375, the same restatement in the lineage of cut #7) adds 15 Z2 plants. For THE JUDGE's script
+ * reading, nine (form: cooked), so that each extension's script-kind plants are read together by its own parse mode
+ * only, of TypeScript's TypeScript, TSX, JavaScript and JSON parses: in .tsx and .jsx JSX text holding "//", then the
+ * statements a<b>/ 1; and an escape-spelled literal, which only the TSX parse reads (the TypeScript parse reads a
+ * comment from the "//", the JavaScript parse reads the literal inside a regular expression and the JSON parse does not
+ * read it); in .js, .mjs and .cjs the expression
+ * a<b>/ 1 / / "\u004f..." / 1, which the JavaScript parse reads with the literal as a division's operand and the
+ * TypeScript and TSX parses read with the literal inside a regular expression; and in .js, .mjs and .cjs a template
+ * at a statement's start whose tail spells the record with an x escape, which every script parse reads and the JSON
+ * parse does not; and cut #7's type assertion in a .ts page whose path holds .tsx and .js before its extension
+ * (src/workbench/zz-boundary-kind-assertion.tsx.js.ts), which only the TypeScript parse reads, so each extension test
+ * of the kind line reads the path's end only. For THE JUDGE's decodedEscapes, three (form: decoded): a .yaml, a .yml and a .toml page spelling,
+ * between the words, a run of separator escapes holding every hex digit of its form (\x20 to \x2f, then \x2A to \x2F,
+ * and the same code points in the u form and in the U form). For its markup decoders, one (form: decoded): a .md page
+ * spelling the same run with hex references (&#x20; to &#x2f;, then &#x2A; to &#x2F;). For its fold, two (form:
+ * folded): an all-literal group in parentheses before a computed operand and one after it (R-COMPUTED). Z2's witness
+ * holds each text W1 asserts THE JUDGE's markup and escape decoders on, with THE JUDGE's readings of it (decodings:
+ * decodedMarkup's and decodedCodePoints' of a markup text, decodedEscapes' of an escape text), and with them five
+ * texts of cut #8's own that spell each digit in the places DECODINGS names; and Q7's witness holds each quiet row's
+ * text (plants).
+ * Cut #9 (ruling R-B416, the same restatement in the lineage of cut #8, claims equal to pins) adds thirteen markup
+ * texts to Z2's decodings, one per reference length below the longest - hex lengths 1 to 6, then decimal lengths 1 to
+ * 7 - each holding one reference of that length per digit (the hex digits 0-9, a-f and A-F), that digit in every
+ * place; with cut #8's seven-digit hex and eight-digit decimal texts, every reference length the markup decoders claim
+ * holds each digit in each of its places.
+ * Cut #10 (ruling R-B448, the same restatement in the lineage of cut #9, claims equal to pins) adds ten markup texts
+ * to Z2's decodings: seven, one per hex length 1 to 7, each holding one reference of that length per hex digit (0-9,
+ * a-f and A-F) after the upper-case marker &#X, that digit in every place, so every claimed hex length holds each digit
+ * in each of its places after either marker (cut #8's and cut #9's hex texts spell the lower-case &#x); and three
+ * first-digit texts, one per longest length and marker, each holding one reference per digit with that digit first and
+ * other digits that alone read in range (&#x<h>000041;, &#X<h>000041; and &#<d>0000065;), so the first digit of a
+ * longest reference is read with its other digits.
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the release package.json resolves @furnace/sdk to is read entry
  * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports or re-exports from
@@ -45,11 +131,14 @@
  * runtime export, schema id, registry key, docs heading, escape-spelled string, escape-spelled JSON) each found; T3 the
  * release's identity (package.json spec, lock resolution, version and
  * integrity, the tarball's own name, version and sha256) and the owner's recorded status, so any re-vendor reds T3 and
- * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of
- * FurnaceObserverClient, its heritage, the type of the constructor's client parameter, and every module augmentation of the
- * observer module in a listed Pi script) equals docs/09's three reads one to one, docs/09 read through the landed rendered
- * binding (Docs09Reading), and a widened interface, a planted augmentation and the docs plants are read as widened or
- * refused; W2 every client read carries a timeoutMs bound, the list reads a
+ * re-reads T1. W, the baseline the armed half must never widen: W1 the declared read surface (every declaration of the
+ * name FurnaceObserverClient in the observer module and in every module augmentation of it in a listed Pi script - an
+ * interface for its member chains down to a leaf and each heritage type, read as the path `<extends T>`, and any other
+ * declaration of the name, a class included, read whole as the path `<K FurnaceObserverClient>` - and the type of the
+ * constructor's client parameter) equals docs/09's three reads one to one, docs/09 read by docs09Reading of
+ * test/helpers/furnace-docs-reading.ts (the reader wb-aalz landed; cut #5: the plants W1 pins are the F1 READ SET's,
+ * those the reading does not count R-DOCS-UNCOUNTED's), and a widened interface, a planted augmentation, the
+ * heritage plants, the non-interface plants and the docs plants are read as widened or refused; W2 every client read carries a timeoutMs bound, the list reads a
  * limit, and the poll loop both budgets, an unbounded plant read as such; W3 every client use is one of the three read calls
  * (no alias, no other member), the SDK is imported for types only (no value import, value re-export, import-equals
  * require, dynamic import or require call; a planted re-export and import-equals read as runtime loads), close() reads nothing, no docs/09 excluded verb is called,
@@ -57,7 +146,9 @@
  * today and the same judge over the filing pin's objects reads no mention, the pin being where the row was filed, with a
  * byte floor and content-liveness anchors over the blobs the judge read; Z2 every listed Pi file (tracked plus
  * untracked-not-ignored, minus the tracker and the holders) spells no mention, with file, script, binary and byte floors,
- * content-liveness anchors read from the text the judge read, and planted entries of each reading found; Z3 the record's identity: its words
+ * content-liveness anchors read from the text the judge read, and planted entries of each reading found (since cut #8 with
+ * THE JUDGE's readings of each W1 decoding text and of the digit-place texts, and since cut #10 of the first-digit
+ * texts: decodings); Z3 the record's identity: its words
  * from the export title, every spelling form read, and the observer's own identifiers and the sibling record (named in
  * wb-dqf.2's export title) quiet. Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
@@ -67,11 +158,12 @@
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - its title, read after its requirement-id prefix,
  * is tiled in order by row T's label, the armed clause (ARMED), row W's label and row Z's label with nothing but separators
  * (whitespace, comma, semicolon, colon, period, parentheses, DASH) between them, and each row's pin quotes tile its label the
- * same way, so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster together still reds; the
- * record is the title's token after "When Furnace ships " and the notes' gating artifact; MENTION is built from its words;
- * the recorded status, the gate sentence, the docs/09 citation and ACCEPTANCE are the owner filing's own text (ownerFiling:
- * the notes' first two blocks, so an appended note quoting them never masks a replaced original, a planted control of each
- * kind read); docs/09's section names the reads W1 pairs and the verbs W3 excludes, and the owner filing cites that section; the filing pin's export holds the row and its parent's does not; the sibling
+ * same way, so a row of T, W or Z, or one of their pins, removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster
+ * together still reds; the record is the title's token after "When Furnace ships " and the notes' gating artifact; MENTION
+ * is built from its words; the recorded status, the gate sentence, the docs/09 citation and ACCEPTANCE are the owner
+ * filing's own text (ownerFiling: the notes' first two blocks, so an appended note quoting them never masks a replaced
+ * original, a planted control of each kind read), the filing is pinned byte for byte (FILING_SHA256) and each bound owner
+ * sentence's lead (OWNER_LEADS) stands in it exactly once, an in-filing duplicate asserted against both; docs/09's section names the reads W1 pairs and the verbs W3 excludes, and the owner filing cites that section; the filing pin's export holds the row and its parent's does not; the sibling
  * record is wb-dqf.2's title token.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show
  * it; a pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds
@@ -79,8 +171,9 @@
  * FOLLOW-UP wb-6c6i (R694, from the wb-dqf.1 gate cmd_3dcd6d57ec8d at landing 536; F1 leads, F2-F7 ride): F1 docs/09 was
  *   read raw (the first heading by indexOf, bounded only at the next raw '## ', regexes over comments and fences, and Z2's
  *   polling liveness an includes-anywhere check), so the gate's G17 hidden copy, G18 decoy heading, G19 appendix and G20 fence
- *   stayed green; the section is now the landed docsSection binding and both sentences come from rendered paragraph blocks,
- *   each exactly once, in a section without HTML, the six docs plants pinned in W1. F2 a case returning a constant witness
+ *   stayed green; the section is now the landed docsSection binding and both sentences came from rendered paragraph blocks,
+ *   each exactly once among them (wb-s876 F1 restated the reading to its READ SET's plants), in a section without HTML, the six docs
+ *   plants pinned in W1. F2 a case returning a constant witness
  *   (H9a Z2, H9b Q5) stayed green; the judged set now requires every case to name a reader of the subject. F3 Z2's liveness
  *   read through textOf and Z1 had none, so truncated real reads (H1P, H6) stayed green; both now read the anchors from the
  *   text the judge read, beside byte floors. F4 YAML/TOML escapes (G03, G03b) and escaped identifiers (G04) were not read;
@@ -89,33 +182,312 @@
  *   and W3. F6 a module augmentation of the observer in another file (G06) widened the client unseen; W1 reads them from
  *   every listed script, a planted one pinned. F7 the notes anchors were includes-anywhere, so a weakened owner sentence
  *   with a later verbatim quote (G22b) stayed green; they read the owner filing only, G22b and G22a controls asserted.
+ * FOLLOW-UP wb-s876 (R694 hop 3 of the wb-dqf.1 -> wb-6c6i chain, in the R739 TERMINAL enumerate-the-resolvable form;
+ *   from the wb-6c6i gate cmd_8f95838754ef at landing 609; F1 leads, F2 and F3 ride). Each class names its read set as
+ *   the criterion, the gate's survivors are cured inside it, and a member outside it is a named residual with a pinned
+ *   quiet row. F1, docs-truth over the rendered blocks: the gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table
+ *   cell each restated a widened reads sentence beside the real paragraph and stayed green, as both sentences were taken
+ *   from paragraph blocks only. READ SET (restated by cut #5, the R-B206 re-cut riding the child's landed reader):
+ *   docs/09's section is read by docs09Reading of test/helpers/furnace-docs-reading.ts, the reader the child bead
+ *   wb-aalz extracted from cut #4's copy and landed (landing 807), over test/helpers/census.ts's rendered view; this
+ *   file's copy of it is deleted (THE JUDGE's decoders below are THE JUDGE's own). The reader's own rules - its text
+ *   units, decodings, folds and removals, and the references
+ *   and controls it refuses - are NOT CLAIMED by this census beyond the readings of the plants named here; the child
+ *   census test/workbench-furnace-nested-rendering-census.test.ts pins that reader's readings on its own tables (PAIRS,
+ *   INVERSION, CLAIM WORDS, CAP WORDS) and states its own NOT CLAIMED scope. Of the reading this census claims, on
+ *   docs/09's section: (1) on the real page it binds, finds no HTML and states the reads status/attempt/log-reference
+ *   and the verbs create, resume and stop, each subject word once, in a paragraph, its undecoded references and its
+ *   controls none (W1's docsBinding and docsReads, the outside anchors); (2) each RESTATED plant - a copy of the page with one
+ *   block written right after the real Furnace paragraph, or that paragraph rewritten - refuses the reading, its reads
+ *   and verbs none, and reads exactly as the roster holds it (W1's docsPlants, each plant's whole reading); (3)
+ *   whitespaceControlsCopy - tab, line feed, form feed and carriage return spelled as references in a second unit -
+ *   reads as the real page (W1); (4) each R-DOCS-UNCOUNTED plant reads as the real page and changes the section's block
+ *   list (Q10); and (5) each R-DOCS-ELSEWHERE plant reads as the real page (Q11). Any other placement, spelling or form
+ *   is NOT CLAIMED by this census. Beside the reading, W1 pins docs/09's section whole: its rendered block list (each
+ *   block's kind, rendered text and, for a paragraph or list item, its markdown) is part of W1's witness
+ *   (docsBinding.blocks, the adoption form's slice equality held to the roster), so on docs/09 itself a block added,
+ *   removed or re-ordered inside the section, or one whose kind, rendered text or markdown changes - a restatement the
+ *   reading does not count included - reds W1 (a doubled space and a line break inside the reads sentence render the
+ *   same block list and do not red it, which W1 asserts; whether any other whitespace change does is NOT CLAIMED; the
+ *   section holds no list, blockquote or table today, so neither a nested cell nor a nested list sits outside the pin).
+ *   The RESTATED docs plants are listed, by placement and claim word, at RESTATED. Outside the reading:
+ *   R-DOCS-UNCOUNTED (Q10; covered on docs/09 itself by the block pin) and R-DOCS-ELSEWHERE (Q11, outside the section
+ *   and the pin). F2, augmentation heritage: L2-W4b's augmentation that only extends another interface read
+ *   as no augmentation. READ SET: each declaration of the name FurnaceObserverClient (declarationsOf: every identifier
+ *   spelled with it, by its cooked text, that names its parent node), in the observer module and in every module
+ *   augmentation of it in a listed script - an interface declaration read for its member chains and for each heritage
+ *   type as the path `<extends T>`, and any other declaration (a class, an enum, a namespace, a type alias, a function, a
+ *   variable or any other node it names) read whole as the path `<K FurnaceObserverClient>` (K is class, enum,
+ *   namespace, type, function or variable, else declaration), never for its members or heritage (fail closed); each
+ *   such path pairs with no docs/09 read, so W1's one-to-one check reds; the heritage plants (an augmentation, the
+ *   observer's own declaration) and the non-interface plants (cut #2's members below) are asserted and pinned in W1.
+ *   Outside the read set: R-ALIASED-MODULE (Q12). F3, the in-filing
+ *   duplicate: L2-F7a weakened the acceptance and restated it verbatim inside the filing's own block, and stayed green.
+ *   READ SET: the whole owner filing, pinned byte for byte by FILING_SHA256, and each bound sentence's lead
+ *   (OWNER_LEADS) exactly once in it, the L2-F7a duplicate asserted against both in the outside-anchor case; nothing
+ *   inside the filing's two blocks is outside the read set, so F3 names no residual (a note appended after a blank line
+ *   leaves the filing as it was, G22a). Measured at cut #2's base ee48709, at cut #3's base 42ab54d, at cut #4's base
+ *   89109cd, at cut #5's base 04c8bbb and at cut #6's base f5cb912: docs/09's section renders three paragraphs and no other block, holds no character reference, no non-ASCII character and no
+ *   control character, and each subject word occurs once, in the third; the observer declares FurnaceObserverClient once,
+ *   as its interface, and no listed script augments the observer, declares the name under another specifier or declares
+ *   a global interface Object; the filing reads fb66562ab5acae93, each lead once.
+ * CUT #2 (the wb-s876 respin: refusal #1, gate s142, outbox O:1367; U1 HIGH and U2 MEDIUM cured, F3 rides; the same
+ *   R739 TERMINAL form, hop 3). U1, the F2 class: a CLASS declaration of FurnaceObserverClient in an observer
+ *   augmentation (the gate's G-W1-CLASS-OPT2, and G-W1-CLASS-EXT-OPT2, extending a class that holds the member) read as
+ *   no augmentation, as only interface declarations were read; every other declaration of the name now reads whole (the
+ *   F2 READ SET above): the two gate forms, the other kinds (a namespace, an enum, a type alias, a function and a
+ *   variable) and a class declared beside the observer's own interface are asserted and pinned in W1. U2, the F1 class:
+ *   subject words spelled with named references outside the six (&shy;, &zwnj;, &zwj;, &NoBreak;, &ZeroWidthSpace;,
+ *   &afr;/&pfr;, &aopf;/&popf;; in a blockquote, a list item, a table cell, an h3 and the verbs sentence) read as stated,
+ *   against the old READ SET's "character references decoded"; that cut's read set named the six and read any other
+ *   named reference a unit held as refusing the reading (fail closed: the full HTML entity table is not read), the soft
+ *   hyphen's numeric and raw spellings of the same rendered page pinned beside them. F3 (rides): default-ignorable code
+ *   points that are not format characters (U+034F, U+FE00, U+FE0F, U+3164, U+17B4) inside the subject words read as
+ *   stated; that cut removed them. In the same F1 class, a right-to-left override (U+202E, raw or as &#x202E;) shows a
+ *   reader reversed subject words ("redaer ecanruF" as "Furnace reader") that subjectText held in stored order; that
+ *   cut read any bidi control a unit held as refusing the reading. Each docs member is pinned in W1's RESTATED list.
+ * CUT #3 (the wb-s876 respin: refusal #2, gate s148, outbox O:1436; U1 MEDIUM cured, F2 and F5 taken; the same R739
+ *   TERMINAL form, hop 3; ruling R-B125: the F1/U2 class frozen, every member enumerated with a falsifier). U1, the F1
+ *   class: the subject word's possessive spelled with a numeric reference in the HTML standard's replacement range
+ *   (&#146;, &#x92;) read as stated in every placement - a blockquote, a list item, a table cell, an h3, a second
+ *   paragraph and the widened reads restatement - as subjectText decoded it to U+0092, a C1 control, while the page
+ *   decodes it, as the HTML standard does, to U+2019, the possessive's own form; the raw U+2019, &#8217;, &#x2019; and
+ *   &rsquo; spellings of the same page refused. That cut decoded numeric references as the HTML standard decodes them
+ *   (THE JUDGE's numericReference, then shared with the docs reading), so each placement refused the reading: the seven
+ *   gate placements, a zero-padded (&#0146;) and an upper-case hex (&#X92;) spelling are pinned in W1's RESTATED list
+ *   beside their six proper-spelling controls; each numeric spelling's subject reading is asserted equal to its raw
+ *   U+2019 control's (one page, one reading; through docs09Reading since cut #5); the judge's decoding of 0, a
+ *   surrogate, a code point above 0x10FFFF and the table's edges is asserted; the table is a bound constant held to the
+ *   roster; and the judge's own reading is planted in Z2 (a markup file spelling the record's possessive with &#146;).
+ *   Both decodings are kept wherever THE JUDGE reads a markup reference, so neither narrows the other: THE JUDGE reads
+ *   a mention under the HTML standard's decoding or under the landed code-point decoding (decodedCodePoints; a markup
+ *   file's &#136; between the words still reads as the separator U+0088, as on trunk, and a Z2 plant pins each half),
+ *   and that cut's controlCharacters read both. F5: a control character subjectText kept (a C1 control the table does
+ *   not remap, &#141;, a raw U+0081 or U+0092, a C0 control) read as stated; that cut read any control character but
+ *   tab, line feed, form feed and carriage return a unit held in either decoding as refusing the reading beside the
+ *   bidi controls (controls), so a reference into 0x80-0x9F, which XML and CommonMark read as its C1 control, refused
+ *   wherever a unit held one, a letter the table maps it to between Furnace and read included (&#136; to U+02C6; &#153;
+ *   to U+2122, which NFKC folds to TM); each member is pinned in RESTATED. F2: a global declaration of interface Object widens every object type's apparent members,
+ *   the client's included, without declaring the name; it is named in R-OTHER-MODULE (Q8 pins a planted one quiet for W1
+ *   and the listed scripts holding none). The apostrophe look-alikes and the private-use and unassigned code points
+ *   subjectText kept are named in R-DOCS-UNCOUNTED (Q10), and the references without their semicolon in R-INTERIOR (Q6).
+ * CUT #4 (the wb-s876 FINAL cut: refusal #3, gate s156, outbox O:1515, the F1 class's third failure; ruling R-B157, the
+ *   rule-19 structural exit: the nested-placement rendering coverage is the child bead wb-aalz's, and this cut is bound
+ *   to the fail-closed core - the docs09 claims restated to exactly the placements the reader proves, the
+ *   nested-placement hole stated, no claim word without a falsifier). U1, the F1 class: at that cut a list nested in a
+ *   blockquote that is itself nested in a blockquote or a list item added no text to its unit, so the gate's eight
+ *   restatements there left the reading stated against the old READ SET's "the blocks nested in either". That cut kept
+ *   the reader and restated the claims (among them the READ SET, docs09Units, docs09Reading, subjectText, DOCS09_SUBJECTS,
+ *   R-DOCS-UNCOUNTED and OVER-READS), listed its placement plants at RESTATED, and named the hole in R-DOCS-UNCOUNTED -
+ *   the gate's eight placements; a blockquote, a list, a named reference and a control character inside such a list; a
+ *   table in a quote in a quote and in a list item in a list item; and a named reference and a control character in a
+ *   nested table cell - each quiet for the reading and red for the block pin, asserted in Q10, with HTML inside the hole
+ *   refusing the reading whole (htmlInHoleCopy). Further claim words of the docs09 reading gained falsifiers: RESTATED
+ *   plants for the subject-word forms, a second subject word in the real paragraph, the six named references where
+ *   subjectText alone decodes them, a mathematical letter, the reads and verbs frames matched as written, the controls'
+ *   edges and the reference over-reads; a W1 assertion that tab, line feed, form feed and carriage return read as no
+ *   control (whitespaceControlsCopy); and a Q11 pin of R-DOCS-ELSEWHERE's Reader adapters line. F2 (a residual-list
+ *   addition): the possessive apostrophes U+0060, U+00B4, U+2032, U+02BB, U+FF40 and U+055A read as stated beside
+ *   U+02BC and U+2018, and NFKC folds U+00B4 and U+FF40 (asserted in Q10), so "a look-alike NFKC does not fold" did not
+ *   describe them; R-DOCS-UNCOUNTED named the eight, each pinned in Q10. Also withdrawn as wider than the reader:
+ *   subjectText's "the rendered view keeps references as written" (it decodes &amp;, which ampExposedCopy pins) and
+ *   OVER-READS' "wherever it sits". Refusal #4 (gate s159, outbox O:1578) found that cut's "Each of these placements is
+ *   a RESTATED plant that refuses the reading" and subjectText's "Each decoding, fold and removal is pinned by a
+ *   RESTATED plant" wider than their pins: seven one-edit reader members (GM7, HM1, HM2, GM1, GM3, GM4, GM2) kept the
+ *   census green; both sentences are withdrawn at cut #5.
+ * CUT #5 (the R-B206 re-cut of the FINAL cut #4, cut after the child wb-aalz landed at landing 807: refusal #4 refused
+ *   cut #4 on rule 16 LEG 2 and the R-B157 floor; R-B157 pre-bound and R-B206 executed the R-B86-branch DEPENDENCY
+ *   INVERSION, folding refusal #4's unmet U1 (GM7, HM1, HM2, GM1) and U2 (GM3, GM4, GM2) into wb-aalz, whose census
+ *   pins each in its INVERSION case; under that branch this bead's final cut is a mechanical restatement riding the
+ *   child's landed reader, its claims narrowed to what the landed pins prove). The docs/09 reading is imported -
+ *   docs09Reading and its Docs09Reading type from test/helpers/furnace-docs-reading.ts, the module wb-aalz extracted
+ *   from cut #4's copy - and this file's copies are deleted: docs09Reading, docs09Units, Docs09Unit, controlCharacters,
+ *   undecodedReferences, subjectText, DOCS09_SUBJECTS, READS_SENTENCE, VERBS_SENTENCE and Docs09Reading, whose code
+ *   equals the helper's (its section constant is spelled without the '## ', and its interface carries one more residual
+ *   sentence), so every docs/09 reading here (W1, Q10, Q11, the outside anchors and Z2's docs/09 liveness) runs the
+ *   code the child census pins. U1 and U2 are cured
+ *   through that pin: each of the seven members, applied where the reading now runs it (the helper's docs09Units,
+ *   undecodedReferences, subjectText, controlCharacters and namedEntity; test/helpers/census.ts's blockText and
+ *   renderedOther), reds the child census's INVERSION case; the two sentences refusal #4 cited are withdrawn (above),
+ *   and the reading is claimed on the READ SET's named plants only. THE JUDGE keeps its own decoders (NAMED_ENTITIES,
+ *   namedEntity, NUMERIC_REFERENCES, numericReference, decodedReferences, decodedMarkup and decodedCodePoints), no
+ *   longer shared with the reading; the claim words of its namedEntity (own keys only, any case) gain a falsifier in W1.
+ *   W1's possessive-spelling assertion reads each spelling's subject words through docs09Reading instead of
+ *   subjectText. The landed rendered view now reads a nested blockquote's block children (test/helpers/census.ts
+ *   blockText, wb-aalz), so a list nested in a blockquote that is itself nested in a blockquote or a list item adds its
+ *   text to its unit: cut #4's twelve Q10 rows of that placement now refuse the reading and move to RESTATED (each
+ *   plant text unchanged, each name given the Copy suffix), and htmlInHoleCopy, HTML in such a list, still refuses,
+ *   the list's subject words now counted. Refusal #4's riding findings: F3 (Q10 pinned its rows by name and two
+ *   booleans, so a hollowed plant kept them) - Q10's witness now holds each plant's text; F4 (the block pin's
+ *   whitespace sentence was wider than its pin) - narrowed to the in-sentence change W1 asserts.
+ * CUT #6 (the R-B316 restatement of cut #5: refusal #5, gate s179, outbox O:1744, found the claim words cut #5 kept for
+ *   THE JUDGE's unshared decoders without a falsifier - seven one-edit members, GJ-NE-NBSP, GJ-NE-LT, GJ-NE-GT,
+ *   GJ-NE-QUOT and GJ-NE-APOS on NAMED_ENTITIES (U1) and GJ-LEN-DEC and GJ-LEN-HEX on the reference length (U2), each
+ *   realized by a paired real-tree page; R-B316 bound this cut to claims equal to pins, pin preferred). Each of the
+ *   seven members gains a falsifier (THE JUDGE'S PINS), so each reds Z2, the five names W1 as well; the one claim no
+ *   plant can match, 'whatever its length', is narrowed to the pinned lengths (OVER-READS), a longer reference NOT
+ *   CLAIMED either way. A one-edit sweep of 42 members of THE JUDGE's readings on cut #5's bytes found 21 more members
+ *   of the same shape green - the nbsp value, the low surrogates, U+10FFFF in either reading, a one-digit hex
+ *   reference, the hex digits a and f, the .html, .htm, .xml, .svg and .yaml kinds, the x form, a template's head and
+ *   tail, a backtick literal and fold, a parenthesized fold, a private name and a JSON array value - and each is pinned
+ *   there too. That cut's sentence "Each decoder claim of THE JUDGE gains a falsifier" and its "... and the three
+ *   escape forms - are each pinned through THE JUDGE's own decoders" were wider than its pins (refusal #6) and are
+ *   withdrawn at cut #7. No reader is added; the docs/09 reading, its plants and the shared reader
+ *   (test/helpers/furnace-docs-reading.ts, test/helpers/census.ts) are unchanged.
+ * CUT #7 (the R-B338 restatement of cut #6, in its lineage: refusal #6, gate s187, outbox O:1793, found twelve one-edit
+ *   members of THE JUDGE's decodedEscapes green under cut #6's escape claim words, each realized by a paired real-tree
+ *   page - L2-ES-G (the global flag dropped) and L2-ES-UPPER-x, -u and -U (A-F dropped from one form's digits) (U1),
+ *   L2-ES-x-NO0, -x-NO9, -x-NOa, -u-NO9, -u-NOa, -U-NO9 and -U-NOa (one end of a form's digit range narrowed) and
+ *   L2-ES-BOUND (U+10FFFF left as written) (U2) - and the delivery note's sweep wider than measured (U3); R-B338 bound
+ *   this cut to the same restatement with every header claim no wider than its pinned reader). Each of the twelve gains
+ *   a falsifier (THE JUDGE'S PINS, cut #7), so each reds Z2 and W1. A one-edit sweep of 48 members of decodedEscapes,
+ *   its file kinds and its verdictOf line on cut #6's bytes (each form's digit range narrowed at each of its six ends,
+ *   its lower-case letters, upper-case letters or digits dropped, its digit count moved by one either way, its letter
+ *   changed; the global flag; the backslash; the radix; the edge U+10FFFF moved down or up; the left-as-written branch
+ *   emptied or removed; each ESCAPED kind; the escape reading's form and text) found 21 green - the twelve, the A and F
+ *   ends of each form (ES-x-NOA, ES-x-NOF, ES-u-NOA, ES-u-NOF, ES-U-NOA, ES-U-NOF), ES-BOUND-HI, ES-WHOLE and ES-ALWAYS
+ *   - and each is pinned there; the other 27 were red already. A second one-edit sweep, of 20 members of THE JUDGE's
+ *   other readings on this cut's first bytes (before the script-kind and JSON plants), found twelve green: nine on
+ *   scriptUnits' parse mode (SU-KIND-TSX, SU-KIND-JS, SU-KIND-S, SU-KIND-TSX-TS, SU-KIND-JS-TS, SU-KIND-TS-TSX,
+ *   SU-KIND-NO-JS, SU-KIND-NO-CJS and SU-KIND-NO-MJS: a script parsed in another extension's mode), SU-FOLD-AND and
+ *   SU-PARENT-TRUE (a "+" chain folded across a computed operand, or each nested chain folded on its own) and
+ *   JU-UNPARSEABLE (a .json file JSON.parse refuses read whole as a cooked unit); the script-kind plants, the refused
+ *   .json plant and Q7's trailingComputed row pin them (THE JUDGE'S PINS, R-COMPUTED), and THE JUDGE names the parse
+ *   modes and the refused .json. A third sweep, of three members on the bytes after those pins, found SU-FOLD-NOLEFT
+ *   green (a chain whose first operand is computed folded with it), which Q7's leadingComputed row pins. The escape claim words are restated to the pinned
+ *   list (THE JUDGE above, decodedEscapes' own words). No reader is added; READERS, ROWS, the frozen literal, the
+ *   docs/09 reading, its plants and the shared reader are unchanged.
+ * CUT #8 (the R-B375 restatement of cut #7, in its lineage: refusal #7, gate s190, outbox O:1849, found three claims
+ *   cut #7 carries wider than their pins - U1 the parse-mode words, as the five JSX-text plants read alike under the
+ *   TSX and JavaScript parses (GP20-SK-TSX-JS, GP20-SK-TSX-JSX and GP20-SK-JS-TSX, each realized by paired real-tree
+ *   pages); U2 the hex-digit words, as the pins exercised only some digits of each escape form (x: 0, 2, 4, 6, 9, a,
+ *   f, A and F; u: 0, 4, 9, a, f, A and F; U: 0, 1, 4, 9, a, f, A and F) and of a markup hex reference (0, 1, 2, 8, 9,
+ *   a, c, d and f) (ten inner-digit narrowings, GP20-ES-x-NO5, -NOb and -NOB, the same in the u and U forms, and
+ *   GP20-DR-HEX-NO5, realized fail-open); U3 R-COMPUTED's cut #7 clause, which a
+ *   parenthesized all-literal group beside a computed operand contradicts - and F1, cut #7's pins held by a name and
+ *   a boolean or by an inner assertion only (GP20-Q7-HOLLOW-TRAIL, GP20-Q7-HOLLOW-LEAD, GP20-W1-ESC-DEL); R-B375 bound
+ *   this cut to the same restatement with every header claim it carries no wider than its pinned reader, and ruled
+ *   refusal #7's U4 - the landed template-part, escaped-identifier and binary-path words, which this cut does not
+ *   restate - a landed-census gap carried by wb-dixg). On cut #7's bytes merged with trunk, the cutting seat
+ *   reproduced those members green (0 failed | 24 passed), the F1 hollows as the gate ran them (GP20-Q7-HOLLOW-TRAIL
+ *   alone and with SU-PARENT-TRUE, GP20-Q7-HOLLOW-LEAD with SU-FOLD-NOLEFT, GP20-W1-ESC-DEL alone and with
+ *   ES-WHOLE), and found three more green beside them:
+ *   SK-JS-JSON (.js, .mjs and .cjs parsed by TypeScript's JSON parse, which reads the JSX-text plants), SK-X-ANCHOR
+ *   (the TSX test unanchored, so a .js page whose path holds an x is parsed as TSX) and U3-PAREN-ROOT (a "+" chain in
+ *   parentheses not folded on its own). U1: the script-kind plants THE JUDGE'S PINS adds (cut #8) tell each
+ *   extension's parse mode from the other parses, and cut #7's "each read in its own parse mode only" is restated to
+ *   the parses each plant is read by (THE JUDGE'S PINS, cut #7). U2: a run of separator escapes holding every hex
+ *   digit of each escape form, and one of hex references, each a Z2 plant; and, beside refusal #7's class, Z2's
+ *   decodings hold texts with each digit in the places DECODINGS names (a place-specific narrowing - ES-x-P1-NO8, ES-x-P1-NOC,
+ *   ES-u-P2-NOC, ES-U-P4-NOE, DR-HEX-P1-NOB and DR-DEC-P1-NO5 - kept the census green on this cut's earlier bytes,
+ *   0 failed | 24 passed). U3: R-COMPUTED's clause is restated to a
+ *   mention spelled across literal operands written outside parentheses, with a third quiet row (middleComputed), and
+ *   the parenthesized groups are planted as read. F1: Q7's witness holds each row's text (plants, the Q10 form) and
+ *   Z2's holds every W1 decoding text with THE JUDGE's readings of it (decodings), so a row hollowed or a W1 decoding
+ *   assertion deleted alone leaves its pin. No reader is added; READERS, ROWS, the frozen literal, the docs/09
+ *   reading, its plants and the shared reader are unchanged.
+ * CUT #9 (the R-B416 restatement of cut #8, in its lineage: refusal #8, gate s195, outbox O:1898, found the markup
+ *   decoders' digit words wider than their pins - U1 'every decimal digit and every hex digit ... in every place up to
+ *   those lengths', held in every place at the longest lengths only (G17-DR-HEX-LEN1-NOf, a one-digit hex reference
+ *   of f refused, and G17-DR-DEC-LEN3-P3-NO7, a three-digit decimal reference with 7 in its third place refused), and
+ *   U2 'of up to eight decimal or seven hex digits' and 'the reference lengths', held at decimal lengths 1, 2, 3 and 8
+ *   and hex lengths 1, 2, 4, 6 and 7 only (G17-DR-DEC-NOLEN5 and G17-DR-HEX-NOLEN3, one length refused), each
+ *   realized fail-open by a paired real-tree page; R-B416 bound this cut to claims equal to pins, pin preferred). Each
+ *   reference length below the longest gains a DECODINGS text holding each digit in every place (THE JUDGE'S PINS,
+ *   cut #9), so each of the four reds Z2; the digit words are restated to the pin, a digit held in each place by one
+ *   reference of each length, a combination of digits NOT CLAIMED. No reader is added; READERS, ROWS, the frozen
+ *   literal, PI_PLANTS, W1, the docs/09 reading, its plants and the shared reader are unchanged.
+ * CUT #10 (the R-B448 restatement of cut #9, in its lineage: refusal #9, gate s199, outbox O:1937, found two claims
+ *   cut #9 carries wider than their pins - U1 the length, digit and place words and the in-lineage reference words,
+ *   which the HTML standard reads after either hex marker while the pins held the upper-case &#X at one reference only,
+ *   &#XAF; (G13-DR-UPX-LEN1, -LEN7, -NOTLEN2 and -LEN2-P1-NO2: the &#X marker refused at one length, outside one
+ *   length, or at one digit in one place of one length), and U2 the code-point and edge words, as no pin held the first
+ *   digit's share of a seven-digit hex reference's code point (G13-DR-HEX7-LOW6: a seven-digit hex reference read by
+ *   its last six digits), each realized fail-open by a paired real-tree page; R-B448 bound this cut to claims equal to
+ *   pins, pin preferred). Z2's decodings gain one &#X text per hex length and one first-digit text per longest length
+ *   and marker (THE JUDGE'S PINS, cut #10), so each of the five reds Z2; the length, digit and place words name either
+ *   hex marker, the first digit of a longest reference is claimed read with its other digits, and any other
+ *   misreading of a code point beyond the pinned texts' readings is NOT CLAIMED. No reader is added; READERS, ROWS,
+ *   the frozen literal, PI_PLANTS, W1, the docs/09 reading, its plants and the shared reader are unchanged.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
  * words (Q4); R-WORD-ORDER the words in the other order are not read (Q5); R-INTERIOR a character inside a word (a format
- * character, a confusable letter, markup), an HTML entity outside a markup file, or a backslash escape in a file kind whose
- * escapes are not decoded (a shell script, plain text: only scripts, .json, markup entities and YAML/TOML are decoded)
- * hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read
+ * character, a confusable letter, markup), an HTML entity outside a markup file, a named character reference other than
+ * the six in a markup file (cut #2), a reference without its semicolon, numeric (&#146s) or named (the HTML standard's
+ * legacy forms, &amp among them), which an HTML page decodes and markdown shows as written (cut #3), a spelling a bidi
+ * override reverses (the words stored backwards; cut #2), or a
+ * backslash escape in a file kind whose escapes are not decoded (a shell script, plain text: only scripts, .json, markup
+ * entities and YAML/TOML are decoded) hides it (Q6); R-COMPUTED a template substitution, a runtime join or a computed character between word parts is not read,
+ * nor (cuts #7 and #8) is a mention spelled across the string-literal operands of a "+" chain that has a computed
+ * operand before, between or after them, the operands written outside parentheses (Q7's trailingComputed,
+ * middleComputed and leadingComputed rows), as only a chain whose operands are all string literals is folded; a chain
+ * in parentheses is a chain of its own, so an all-literal group in parentheses beside a computed operand is folded and
+ * its value read (THE JUDGE'S PINS, cut #8)
  * (Q7); R-OTHER-MODULE W reads only the observer module and its module augmentations in the listed scripts:
- * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
- * not read as a client use (Q9).
+ * src/workbench/furnace-control.ts calls docs/09's excluded verbs and is out of W's scope, and a global declaration of
+ * interface Object (in declare global, or at the top level of a file that is not a module) widens every object type's
+ * apparent members, FurnaceObserverClient's included, without declaring the name: W1 does not read it (a planted one reads
+ * as no augmentation) and the listed scripts hold none (globalObjects; cut #3) (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
+ * not read as a client use (Q9); R-DOCS-UNCOUNTED the docs/09 reading does not count these restatements inside
+ * docs/09's section, each a Q10 plant: a paraphrase (the Furnace observer); a subject word holding a confusable letter
+ * (U+0430, U+043E); a possessive whose apostrophe is U+02BC, U+2018, U+0060, U+00B4, U+2032, U+02BB, U+FF40 or U+055A
+ * (cut #4); a subject word holding a private-use (U+E000) or an unassigned (U+0378) code point (cut #3); a table nested
+ * in a blockquote, in a list item, in a blockquote in a blockquote and in a list item in a list item, and a named
+ * reference and a control character in a table nested in a blockquote (cut #4; the child census's R1 TABLE-CHILD);
+ * and a link's, an image's and a link reference definition's title: each plant reads as the real page reads, while
+ * on docs/09 itself each adds a block or changes a block's text or markdown, which the section's block pin (W1) reds
+ * (Q10 holds each plant's text and both readings, and asserts each); any other spelling or placement is NOT CLAIMED
+ * either way (since cut #5 a list nested in a blockquote that is itself nested in a blockquote or a list item is
+ * read: RESTATED);
+ * R-DOCS-ELSEWHERE a restatement outside the bound section - a later heading of level 1 or 2 (it ends the section),
+ * another section of docs/09 (its Reader adapters list already names a Furnace event stream, a line Q11 pins) or another page - is not
+ * read (Q11); R-ALIASED-MODULE a module declaration whose specifier reaches the observer only
+ * through configuration (tsconfig paths, package.json imports) is not read as an augmentation, and the listed scripts
+ * hold none (Q12).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its
  * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a
+ * bound constant - FILING_SHA256, OWNER_LEADS, RESTATED or NUMERIC_REFERENCES - edited in this file and the roster together (the
+ * digest binds the filing as this file was cut, not the owner's intent); a
  * residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual
  * families); the outside-anchor case or the closing case removed with its roster title; a case that names a reader and
  * discards what it read (the reader-keeping constant: the judged set requires a reader's name, not its use); a judge edited
  * to read less of a file than the text it keeps as read, or to spare the anchor files from a truncation that keeps the read
- * bytes above the floor (a scan edited to tell the anchors from the rest).
+ * bytes above the floor (a scan edited to tell the anchors from the rest); any rule of the docs/09 reader,
+ * test/helpers/furnace-docs-reading.ts, beyond the readings of the plants the READ SET names (cut #5).
  * ARMED HALF PENDING: the clause ARMED (consume the record within the boundary: exposed fields only, non-exposed fields as
  * typed absence, the visibility policy honoured, a docs/07 sentence bound by a census) has nothing to read until the record
  * ships; no record is faked here. T1 binds it: the census reds with ACCEPTANCE the moment the vendored release spells it.
  * OVER-READS (disclosed; none today): any "observer ... boundary" prose reads as a mention, a heading or list break between
- * the words included; a YAML/TOML backslash sequence in a single-quoted or literal string is decoded; a bare module
- * specifier whose last segment is furnace-observer is read as the observer module (W1). The augmentation read parses only
+ * the words included; a YAML/TOML backslash sequence in a single-quoted or literal string is decoded (a YAML
+ * single-quoted and a TOML literal string plant, THE JUDGE'S PINS, cut #7); a bare module
+ * specifier whose last segment is furnace-observer is read as the observer module (W1); any heritage type of
+ * FurnaceObserverClient reads as a widening, an empty interface extended included; any declaration of the name other than
+ * an interface reads as a widening too - a namespace, a value, a member, a parameter, a specifier or a property access
+ * named by it included, nested anywhere in the observer module or an augmentation (a namespace's own, a function's
+ * local), as an interface nested there reads too. In docs/09's section the over-reads this census pins are RESTATED
+ * plants a page would show as no restatement, each refusing the reading (cut #5: these, and no other over-read of
+ * the reading, are claimed): a second subject word in the real paragraph (secondSentenceCopy); the readiness and
+ * reattachment word parts (readinessCopy, reattachmentCopy); a sentence split across a table's cells, read joined
+ * (tableSplitCopy); a named reference other than the six that renders no subject word (copyrightCopy), one that
+ * renders what a decoded spelling renders (nonBreakingSpaceCopy, &NonBreakingSpace; for &nbsp;), one in a code span
+ * (codeSpanReferenceCopy) or a code block (codeBlockReferenceCopy), where the page shows it as written, and one the
+ * rendered view exposes by decoding the &amp; before it (ampExposedCopy; test/helpers/census.ts decodes &amp; first);
+ * a raw left-to-right mark between words (bidiMarkCopy), and U+007F and U+000B spelled as references (delReferenceCopy,
+ * verticalTabCopy); a numeric reference in a code span (numericCodeSpanCopy), in a code block (numericCodeBlockCopy),
+ * behind a decoded &amp; (numericAmpCopy), and of eight decimal or seven hex digits (numericLongCopy,
+ * numericLongHexCopy; marked 18.0.11 keeps a reference in its HTML only up to seven decimal or six hex digits and
+ * escapes a longer one, which the page shows as written); and a reference into 0x80-0x9F that the HTML table maps to
+ * a character a page shows (&#146; to U+2019 in windows1252QuoteCopy and its placements, &#136; and &#153; in
+ * tableLetterCopy and tableTrademarkCopy), refused as its code-point reading is a C1 control. THE JUDGE decodes a
+ * markup file's numeric reference of eight decimal or seven hex digits, one past the longest marked keeps, in both
+ * readings, so a mention either spells counts although a markdown page shows such a reference as written (THE JUDGE'S
+ * PINS: four Z2 plants, one per length and reading); a longer reference is NOT CLAIMED either way. The augmentation read parses only
  * a script whose text spells "module" (a module declaration's keyword cannot be escape-spelled). SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
  * the worktree are not listed; Furnace's own repository is never read (the gate is a release Pi vendors).
  * READS (contacts): every listed file (Z2), git objects at the filing pin (Z1), the tracker export rows of wb-dqf.1 and
- * wb-dqf.2, docs/workbench/09, package.json, package-lock.json, vendor/furnace-sdk-0.1.0.tgz, the structure of
+ * wb-dqf.2, docs/workbench/09 (through test/helpers/furnace-docs-reading.ts's docs09Reading since cut #5, a module
+ * dependency, not a read), package.json, package-lock.json, vendor/furnace-sdk-0.1.0.tgz, the structure of
  * src/workbench/furnace-observer.ts (W, Z3), the module augmentations of it in every listed script (W1) and
  * src/workbench/furnace-control.ts's calls (Q8).
  *
@@ -131,7 +503,8 @@ import { isDeepStrictEqual } from "node:util";
 import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { docsSection } from "./helpers/census.js";
+import { docsSection, type RenderedBlock } from "./helpers/census.js";
+import { type Docs09Reading, docs09Reading } from "./helpers/furnace-docs-reading.js";
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 type JsonObject = { [key: string]: JsonValue };
@@ -166,6 +539,13 @@ const DASH = "\\u2014";
 const RECORDED_STATUS = "a proposed source-owned reference, not shipped";
 const ACCEPTANCE =
   "Acceptance on landing: a hermetic fixture feeds a boundary record through the Furnace observer and asserts only the exposed fields/counters are projected, non-exposed fields are withheld as typed absence (never invented), and client decisions honour the stated visibility policy; a docs-07 Furnace-provider sentence names the boundary and joins the wb-6hb.11-style census.";
+/**
+ * The owner filing (ownerFiling: the export notes' first two blocks) as this file binds it, by its sha256's first 16 hex
+ * digits, so an edit inside the two blocks - a weakened sentence, an in-filing duplicate, a reordering - reds (wb-s876 F3).
+ */
+const FILING_SHA256 = "fb66562ab5acae93";
+/** The leads of the owner sentences this file binds: the filing holds each exactly once (wb-s876 F3, the L2-F7a duplicate). */
+const OWNER_LEADS: readonly string[] = ["Gating artifact: ", "Today the external Furnace reader is ", "Gate: ", "Acceptance on landing: "];
 /** The title's armed clause: it binds when the record ships, so it has no judged row today (ARMED HALF PENDING). */
 const ARMED = `Pi's Furnace observer shall consume it as an admitted observer strictly within the boundary ${DASH} reading only the attempt state/log fields and resource counters it exposes, under its stated visibility policy for admitted client decisions`;
 /** A mention of the record: its own middle words, any non-alphanumeric run between them, any case (THE JUDGE). */
@@ -190,7 +570,7 @@ const ROWS: readonly Row[] = [
   { id: "T", label: "When Furnace ships FurnaceObserverBoundaryV0 (proposed, not shipped)", pins: ["T1", "T2", "T3"] },
   { id: "W", label: "never widening today's bounded read-only polling", pins: ["W1", "W2", "W3"] },
   { id: "Z", label: "until then zero Pi mentions of the record", pins: ["Z1", "Z2", "Z3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 /** Each judged pin's quote: the quotes of a row tile its label (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -213,8 +593,8 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
     "not shipped": ["spec", "lockResolved", "lockVersion", "lockIntegrityMatches", "tarballName", "tarballVersion", "tarballSha256"],
   },
   W1: {
-    never: ["widenedPlant", "augmentationPlant", "docsPlants"],
-    widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
+    never: ["widenedPlant", "augmentationPlant", "heritagePlant", "nonInterfacePlant", "docsPlants"],
+    widening: ["interfaceName", "interfaceDeclarations", "interfaceExtends", "otherDeclarations", "clientParameterTypes", "augmentations", "readPaths", "docsBinding", "docsReads", "pairs"],
   },
   W2: { "today's": ["calls"], bounded: ["pollBounds", "unboundedPlant"] },
   W3: {
@@ -222,7 +602,7 @@ const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>
     polling: ["ownership"],
   },
   Z1: { "until then": ["triggerFired", "filingPin", "filedAtPin", "absentBeforePin", "pinFilesAtFloor", "pinBytesAtFloor", "pinLiveness", "pinMentions", "pinPlant"] },
-  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "bytesAtFloor", "liveness"], mentions: ["piPlants"] },
+  Z2: { zero: ["piMentions"], Pi: ["scope", "filesAtFloor", "scriptsAtFloor", "binariesAtFloor", "bytesAtFloor", "liveness"], mentions: ["piPlants", "decodings"] },
   Z3: { "of the record": ["recordWords", "spellingForms", "piIdentifiersQuiet", "siblingQuiet"] },
 };
 /** Each residual family and its quiet row. */
@@ -236,6 +616,9 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-COMPUTED": "Q7",
   "R-OTHER-MODULE": "Q8",
   "R-COMPUTED-ACCESS": "Q9",
+  "R-DOCS-UNCOUNTED": "Q10",
+  "R-DOCS-ELSEWHERE": "Q11",
+  "R-ALIASED-MODULE": "Q12",
 };
 /**
  * The functions that read the subject - the vendored release, the listed Pi files, the filing pin, the tracker export,
@@ -248,6 +631,7 @@ const READERS: readonly string[] = [
   "tarball",
   "vendoredPath",
   "piListing",
+  "piEntries",
   "piVerdict",
   "pinVerdict",
   "augmentations",
@@ -455,17 +839,80 @@ function jsonUnits(text: string): string[] {
   return units;
 }
 const NAMED_ENTITIES: Readonly<Record<string, string>> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: String.fromCodePoint(0xa0) };
-/** A markup file's text with its numeric character references and the common named entities decoded. */
-function decodedMarkup(text: string): string {
-  return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
-    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
-    if (code !== undefined) return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
-    return NAMED_ENTITIES[(name ?? "").toLowerCase()] ?? whole;
-  });
+/** The character a named reference decodes to, when its name (any case) is one of the six (own keys only, so &constructor; is none). */
+function namedEntity(name: string): string | undefined {
+  const key = name.toLowerCase();
+  return Object.hasOwn(NAMED_ENTITIES, key) ? NAMED_ENTITIES[key] : undefined;
 }
 /**
- * A YAML or TOML file's text with its backslash escapes decoded (\UXXXXXXXX, \uXXXX, \xXX; wb-6c6i F4), wherever they sit:
- * an over-read in single-quoted and literal strings, where a backslash is literal.
+ * The HTML standard's numeric character reference table (its numeric character reference end state; wb-s876 cut #3): a
+ * reference to one of these C1 code points decodes to the Windows-1252 character beside it - &#146; and &#x92; to U+2019 -
+ * and a reference to 0x81, 0x8D, 0x8F, 0x90 or 0x9D decodes to itself.
+ */
+const NUMERIC_REFERENCES: ReadonlyMap<number, number> = new Map([
+  [0x80, 0x20ac],
+  [0x82, 0x201a],
+  [0x83, 0x192],
+  [0x84, 0x201e],
+  [0x85, 0x2026],
+  [0x86, 0x2020],
+  [0x87, 0x2021],
+  [0x88, 0x2c6],
+  [0x89, 0x2030],
+  [0x8a, 0x160],
+  [0x8b, 0x2039],
+  [0x8c, 0x152],
+  [0x8e, 0x17d],
+  [0x91, 0x2018],
+  [0x92, 0x2019],
+  [0x93, 0x201c],
+  [0x94, 0x201d],
+  [0x95, 0x2022],
+  [0x96, 0x2013],
+  [0x97, 0x2014],
+  [0x98, 0x2dc],
+  [0x99, 0x2122],
+  [0x9a, 0x161],
+  [0x9b, 0x203a],
+  [0x9c, 0x153],
+  [0x9e, 0x17e],
+  [0x9f, 0x178],
+]);
+/** The code point a numeric character reference decodes to under the HTML standard: 0, a surrogate and a code point above 0x10FFFF to U+FFFD, a code point of NUMERIC_REFERENCES to its character, any other to itself. */
+function numericReference(code: number): number {
+  if (code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return 0xfffd;
+  return NUMERIC_REFERENCES.get(code) ?? code;
+}
+/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits - each length from one to eight decimal and from one to seven hex digits, a hex reference after either marker, &#x or &#X - each decimal digit (0-9) and each hex digit (0-9 and a-f, in either case) in every place of each of those lengths, each held by one reference per length, hex marker and digit that spells the digit in every place (a combination of digits NOT CLAIMED); a longer one is NOT CLAIMED) replaced by what decode makes of its code point - the code point read at each reference the pins spell, and a longest reference's first digit read with its other digits, held by one reference per first digit and marker whose other digits alone read in range; any other misreading of a code point beyond the pinned texts' readings (a digit dropped from its place, a 0 included, other than a longest reference's first digit; a digit read at another place's weight or as another digit) is NOT CLAIMED - and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cuts #6, #8, #9 and #10). */
+function decodedReferences(text: string, decode: (code: number, whole: string) => string): string {
+  return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (code !== undefined) return decode(code, whole);
+    return namedEntity(name ?? "") ?? whole;
+  });
+}
+/** A markup file's text with its numeric character references decoded as the HTML standard decodes them (numericReference) and the six named entities decoded: THE JUDGE's first markup reading (the docs/09 reading runs the helper's copy since cut #5; pinned by THE JUDGE'S PINS, cut #6). */
+function decodedMarkup(text: string): string {
+  return decodedReferences(text, code => String.fromCodePoint(numericReference(code)));
+}
+/**
+ * A markup file's text with each numeric character reference decoded to its own code point - the landed census's reading,
+ * and how XML and CommonMark read a reference into 0x80-0x9F (its C1 control) - one above 0x10FFFF left as written, and
+ * the six named entities decoded (wb-s876 cut #3): THE JUDGE reads a mention in this reading as well as in decodedMarkup's,
+ * so neither reading narrows the other (the docs/09 reading's controlCharacters reads the helper's copies of both since cut #5;
+ * pinned by THE JUDGE'S PINS, cut #6).
+ */
+function decodedCodePoints(text: string): string {
+  return decodedReferences(text, (code, whole) => (code <= 0x10ffff ? String.fromCodePoint(code) : whole));
+}
+/**
+ * A YAML or TOML file's text with its backslash escapes decoded (\UXXXXXXXX, \uXXXX, \xXX, hex digits in either case;
+ * wb-6c6i F4), every escape of the text, wherever they sit: an over-read in single-quoted and literal strings, where a
+ * backslash is literal; a \U escape above U+10FFFF is left as written. Pinned by THE JUDGE'S PINS (cuts #7 and #8):
+ * every hex digit of each form, 0-9, a-f and A-F, in every place a code point up to U+10FFFF uses (Z2's plants and
+ * decodings, cut #8; the digits 0, 9, a, f, A and F in W1 as well), two
+ * escapes in one text and U+10FFFF (W1 and Z2), \U00110000 left as written (W1, its text and reading held in Z2's
+ * decodings since cut #8), and a YAML single-quoted and a TOML literal string (Z2).
  */
 function decodedEscapes(text: string): string {
   return text.replace(/\\(?:U([0-9a-fA-F]{8})|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2}))/g, (whole, long: string | undefined, short: string | undefined, byte: string | undefined) => {
@@ -482,7 +929,7 @@ function verdictOf(path: string, bytes: Buffer): { readonly binary: boolean; rea
   if (mentions(text)) forms.add("raw");
   if (SCRIPT.test(path)) for (const unit of scriptUnits(path, text)) if (mentions(unit.text)) forms.add(unit.form);
   if (JSON_FILE.test(path) && jsonUnits(text).some(mentions)) forms.add("cooked");
-  if (MARKUP.test(path) && mentions(decodedMarkup(text))) forms.add("decoded");
+  if (MARKUP.test(path) && (mentions(decodedMarkup(text)) || mentions(decodedCodePoints(text)))) forms.add("decoded");
   if (ESCAPED.test(path) && mentions(decodedEscapes(text))) forms.add("decoded");
   return { binary: false, forms: [...forms].sort(), text };
 }
@@ -568,7 +1015,7 @@ const piListing = lazy((): PiListing => {
   const excluded = listed.filter(path => path.startsWith(TRACKER) || holders.has(path));
   return { paths: listed.filter(path => !excluded.includes(path) && existsSync(join(REPO, path))), excluded };
 });
-/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment. */
+/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants), and since cut #7 the escape decoder's (two escapes in one file, an upper-case digit in each form, separator escapes for the digits 0, 9, a and A in each form, U+10FFFF, a single-quoted and a literal string), one plant per script extension, and a .json page JSON.parse refuses; and since cut #8 the script-kind plants that tell each extension's parse mode from the others (JSX text and an instantiation expression in .tsx and .jsx, a regular expression and a statement-start template in .js, .mjs and .cjs, and a type assertion in a .ts page whose path holds .tsx and .js), a run of separator escapes holding every hex digit of each escape form, one of hex references, and an all-literal group in parentheses before and after a computed operand. */
 const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-escaped.ts": 'export const RECORD_NAME = "\\u0046urnaceObserver\\u0042oundaryV0";\n',
   "src/workbench/zz-boundary-split.ts": 'export const SPELLED = "Furnace" + "Obs" + "erverBoundaryV0";\n',
@@ -581,6 +1028,142 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "config/zz-boundary.yml": 'record: "Furnace\\u004fbserverBoundaryV0"\n',
   "config/zz-boundary.toml": 'record = "Furnace\\U0000004fbserverBoundaryV0"\n',
   "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
+  "docs/workbench/zz-boundary-windows1252.md": "The Furnace observer&#146;s boundary record.\n",
+  "docs/workbench/zz-boundary-c1.md": "The Furnace observer&#136;boundary record.\n",
+  "docs/workbench/zz-boundary-kind.html": "<p>The Furnace observer&#32;boundary record.</p>\n",
+  "docs/workbench/zz-boundary-kind.htm": "<p>The Furnace observer&#32;boundary record.</p>\n",
+  "docs/workbench/zz-boundary-kind.xml": "<record>The Furnace observer&#32;boundary record.</record>\n",
+  "docs/workbench/zz-boundary-kind.svg": "<svg><text>The Furnace observer&#32;boundary record.</text></svg>\n",
+  "docs/workbench/zz-boundary-amp.md": "The Furnace observer&amp;boundary record.\n",
+  "docs/workbench/zz-boundary-lt.md": "The Furnace observer&lt;boundary record.\n",
+  "docs/workbench/zz-boundary-gt.md": "The Furnace observer&gt;boundary record.\n",
+  "docs/workbench/zz-boundary-quot.md": "The Furnace observer&quot;boundary record.\n",
+  "docs/workbench/zz-boundary-apos.md": "The Furnace observer&apos;s boundary record.\n",
+  "docs/workbench/zz-boundary-nbsp.md": "The Furnace observer&nbsp;boundary record.\n",
+  "docs/workbench/zz-boundary-long-decimal.md": "The Furnace observer&#00000146;s boundary record.\n",
+  "docs/workbench/zz-boundary-long-hex.md": "The Furnace observer&#x0000092;s boundary record.\n",
+  "docs/workbench/zz-boundary-long-decimal-c1.md": "The Furnace observer&#00000136;boundary record.\n",
+  "docs/workbench/zz-boundary-long-hex-c1.md": "The Furnace observer&#x0000088;boundary record.\n",
+  "config/zz-boundary.yaml": 'record: "Furnace\\x4fbserverBoundaryV0"\n',
+  "src/workbench/zz-boundary-template.ts": "export const HEAD = `\\u004fbserverBoundaryV0 $" + "{0}`;\n",
+  "src/workbench/zz-boundary-template-tail.ts": "export const TAIL = `$" + "{0} \\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-backtick.ts": "export const TICK = `\\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-private.ts": "export class ZzPlant {\n  #\\u004fbserverBoundaryV0 = 0;\n}\n",
+  "src/workbench/zz-boundary-paren.ts": 'export const PAREN = "Furnace" + "Obs" + ("erver" + "BoundaryV0");\n',
+  "src/workbench/zz-boundary-backtick-split.ts": "export const TICKS = `Obs` + `erverBoundaryV0`;\n",
+  "test/fixtures/zz-boundary-array.json": '{ "records": ["Furnace\\u004fbserverBoundaryV0"] }\n',
+  "config/zz-boundary-two.yaml": 'record: "\\x46urnace\\x4fbserverBoundaryV0"\n',
+  "config/zz-boundary-upper.yaml": 'record: "Furnace\\x4FbserverBoundaryV0"\n',
+  "config/zz-boundary-upper.yml": 'record: "Furnace\\u004FbserverBoundaryV0"\n',
+  "config/zz-boundary-upper.toml": 'record = "Furnace\\U0000004FbserverBoundaryV0"\n',
+  "config/zz-boundary-x-space.yaml": 'record: "The Furnace observer\\x20boundary record."\n',
+  "config/zz-boundary-x-tab.yaml": 'record: "The Furnace observer\\x09boundary record."\n',
+  "config/zz-boundary-x-lf.yaml": 'record: "The Furnace observer\\x0aboundary record."\n',
+  "config/zz-boundary-x-lf-upper.yaml": 'record: "The Furnace observer\\x0Aboundary record."\n',
+  "config/zz-boundary-u-tab.yml": 'record: "The Furnace observer\\u0009boundary record."\n',
+  "config/zz-boundary-u-lf.yml": 'record: "The Furnace observer\\u000aboundary record."\n',
+  "config/zz-boundary-u-lf-upper.yml": 'record: "The Furnace observer\\u000Aboundary record."\n',
+  "config/zz-boundary-long-tab.toml": 'record = "The Furnace observer\\U00000009boundary record."\n',
+  "config/zz-boundary-long-lf.toml": 'record = "The Furnace observer\\U0000000aboundary record."\n',
+  "config/zz-boundary-long-lf-upper.toml": 'record = "The Furnace observer\\U0000000Aboundary record."\n',
+  "config/zz-boundary-long-max.toml": 'record = "The Furnace observer\\U0010FFFFboundary record."\n',
+  "config/zz-boundary-single.yaml": "record: 'Furnace\\x4fbserverBoundaryV0'\n",
+  "config/zz-boundary-literal.toml": "record = 'Furnace\\U0000004fbserverBoundaryV0'\n",
+  "src/workbench/zz-boundary-kind-assertion.ts": 'export const C = <string>"\\u004fbserverBoundaryV0";\n',
+  "src/workbench/zz-boundary-kind-assertion.mts": 'export const C = <string>"\\u004fbserverBoundaryV0";\n',
+  "src/workbench/zz-boundary-kind-assertion.cts": 'export const C = <string>"\\u004fbserverBoundaryV0";\n',
+  "src/workbench/zz-boundary-kind-jsx.tsx": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
+  "src/workbench/zz-boundary-kind-jsx.jsx": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
+  "qa/zz-boundary-kind-jsx.js": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
+  "qa/zz-boundary-kind-jsx.mjs": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
+  "qa/zz-boundary-kind-jsx.cjs": 'export const A = <a>http://example.invalid</a>; export const B = "\\u004fbserverBoundaryV0";\n',
+  "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n",
+  "src/workbench/zz-boundary-kind-instantiation.tsx": 'export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = "\\u004fbserverBoundaryV0"; / 1 /;\n',
+  "src/workbench/zz-boundary-kind-instantiation.jsx": 'export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = "\\u004fbserverBoundaryV0"; / 1 /;\n',
+  "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": 'export const C = <string>"\\u004fbserverBoundaryV0";\n',
+  "qa/zz-boundary-kind-regex.js": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-regex.mjs": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-regex.cjs": 'export const x = a<b>/ 1 / / "\\u004fbserverBoundaryV0" / 1;\n',
+  "qa/zz-boundary-kind-template.js": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "qa/zz-boundary-kind-template.mjs": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "qa/zz-boundary-kind-template.cjs": "`$" + "{0}\\x4fbserverBoundaryV0`;\n",
+  "config/zz-boundary-x-digits.yaml": 'record: "The Furnace observer\\x20\\x21\\x22\\x23\\x24\\x25\\x26\\x27\\x28\\x29\\x2a\\x2b\\x2c\\x2d\\x2e\\x2f\\x2A\\x2B\\x2C\\x2D\\x2E\\x2Fboundary record."\n',
+  "config/zz-boundary-u-digits.yml": 'record: "The Furnace observer\\u0020\\u0021\\u0022\\u0023\\u0024\\u0025\\u0026\\u0027\\u0028\\u0029\\u002a\\u002b\\u002c\\u002d\\u002e\\u002f\\u002A\\u002B\\u002C\\u002D\\u002E\\u002Fboundary record."\n',
+  "config/zz-boundary-long-digits.toml": 'record = "The Furnace observer\\U00000020\\U00000021\\U00000022\\U00000023\\U00000024\\U00000025\\U00000026\\U00000027\\U00000028\\U00000029\\U0000002a\\U0000002b\\U0000002c\\U0000002d\\U0000002e\\U0000002f\\U0000002A\\U0000002B\\U0000002C\\U0000002D\\U0000002E\\U0000002Fboundary record."\n',
+  "docs/workbench/zz-boundary-hex-digits.md": "The Furnace observer&#x20;&#x21;&#x22;&#x23;&#x24;&#x25;&#x26;&#x27;&#x28;&#x29;&#x2a;&#x2b;&#x2c;&#x2d;&#x2e;&#x2f;&#x2A;&#x2B;&#x2C;&#x2D;&#x2E;&#x2F;boundary record.\n",
+  "src/workbench/zz-boundary-paren-trail.ts": 'export const n = ("\\u004fbserver" + "Boundary") + part;\n',
+  "src/workbench/zz-boundary-paren-lead.ts": 'export const n = part + ("\\u004fbserver" + "Boundary");\n',
+};
+/**
+ * The texts W1 asserts THE JUDGE's markup and escape decoders on (its cut #3, #5, #6 and #7 decoding assertions), held with
+ * THE JUDGE's readings of each in Z2's witness (decodings; cut #8, refusal #7 F1): the roster holds every text and its
+ * readings, so a W1 decoding assertion deleted or hollowed alone leaves its readings pinned. A markup text is read by
+ * decodedMarkup and by decodedCodePoints, an escape text by decodedEscapes. The seventh and eighth markup texts and the
+ * last three escape texts are cut #8's own (no W1 assertion reads them): one hex reference of seven digits per hex digit
+ * in either case and one decimal reference of eight digits per decimal digit, that digit in every place, and for each
+ * escape form one escape per hex digit with that digit in every place a code point up to U+10FFFF uses (a U escape's
+ * first two digits are 0 and its third 0 or 1 there), so narrowing any one of those digits out of one of those places
+ * alone reds Z2 (a U escape above U+10FFFF is left as written whether or not it matches, so its other digits in those
+ * first three places are not observable and are NOT CLAIMED). The thirteen markup texts after them are cut #9's own
+ * (ruling R-B416, refusal #8; no W1 assertion reads them): one per reference length below the longest - hex lengths 1
+ * to 6, then decimal lengths 1 to 7 - each holding one reference of that length per digit (the hex digits 0-9, a-f and
+ * A-F), that digit in every place, so with cut #8's two texts every length the markup decoders claim (one to eight
+ * decimal and one to seven hex digits) holds each digit in each of its places, and refusing one of those lengths, or
+ * one digit in one place of one length, alone reds Z2. The last ten markup texts are cut #10's own (ruling R-B448,
+ * refusal #9; no W1 assertion reads them): seven, one per hex length 1 to 7, each holding one reference of that length
+ * per hex digit (0-9, a-f and A-F) after the upper-case marker &#X, that digit in every place, so every claimed hex
+ * length holds each digit in each of its places after either marker (cut #8's and cut #9's hex texts spell the
+ * lower-case &#x), and refusing the &#X marker at one length, or one digit in one place of one length after it, alone
+ * reds Z2; then three first-digit texts, one per longest length and marker (&#x, &#X, then decimal), each holding one
+ * reference per digit (0-9, a-f and A-F for hex; 0-9 for decimal) with that digit first and other digits that alone
+ * read U+0041 (&#x<h>000041;, &#X<h>000041; and &#<d>0000065;): a first digit other than 0 puts the reference above
+ * 0x10FFFF (U+FFFD in the standard's reading, as written in the code-point reading), so reading a longest reference
+ * without its first digit, at any one first digit other than 0 (a dropped 0 leaves the code point as it is) and at
+ * either marker, alone reds Z2. A digit refused, or its share of a code point misread, in one place only beside
+ * particular digits in the other places (a combination of digits) is NOT CLAIMED, for a reference as for an escape;
+ * so is any other misreading of a code point beyond these texts' readings (a digit dropped from its place, a 0
+ * included, other than a longest reference's first digit; a digit read at another place's weight or as another digit).
+ */
+const DECODINGS: { readonly markup: readonly string[]; readonly escapes: readonly string[] } = {
+  markup: [
+    "&#0;&#xD800;&#x110000;&#128;&#129;&#146;&#x92;&#159;&#160;",
+    "&#136;&#146;&#x92;&#x110000;",
+    "&constructor;&toString;&hasOwnProperty;&AMP;",
+    "&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;",
+    "&#xDC00;&#xDFFF;&#x10FFFF;",
+    "&#xa;&#xaf;&#XAF;",
+    "&#x0000000;&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;",
+    "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;",
+    "&#x0;&#x1;&#x2;&#x3;&#x4;&#x5;&#x6;&#x7;&#x8;&#x9;&#xa;&#xb;&#xc;&#xd;&#xe;&#xf;&#xA;&#xB;&#xC;&#xD;&#xE;&#xF;",
+    "&#x00;&#x11;&#x22;&#x33;&#x44;&#x55;&#x66;&#x77;&#x88;&#x99;&#xaa;&#xbb;&#xcc;&#xdd;&#xee;&#xff;&#xAA;&#xBB;&#xCC;&#xDD;&#xEE;&#xFF;",
+    "&#x000;&#x111;&#x222;&#x333;&#x444;&#x555;&#x666;&#x777;&#x888;&#x999;&#xaaa;&#xbbb;&#xccc;&#xddd;&#xeee;&#xfff;&#xAAA;&#xBBB;&#xCCC;&#xDDD;&#xEEE;&#xFFF;",
+    "&#x0000;&#x1111;&#x2222;&#x3333;&#x4444;&#x5555;&#x6666;&#x7777;&#x8888;&#x9999;&#xaaaa;&#xbbbb;&#xcccc;&#xdddd;&#xeeee;&#xffff;&#xAAAA;&#xBBBB;&#xCCCC;&#xDDDD;&#xEEEE;&#xFFFF;",
+    "&#x00000;&#x11111;&#x22222;&#x33333;&#x44444;&#x55555;&#x66666;&#x77777;&#x88888;&#x99999;&#xaaaaa;&#xbbbbb;&#xccccc;&#xddddd;&#xeeeee;&#xfffff;&#xAAAAA;&#xBBBBB;&#xCCCCC;&#xDDDDD;&#xEEEEE;&#xFFFFF;",
+    "&#x000000;&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;",
+    "&#0;&#1;&#2;&#3;&#4;&#5;&#6;&#7;&#8;&#9;",
+    "&#00;&#11;&#22;&#33;&#44;&#55;&#66;&#77;&#88;&#99;",
+    "&#000;&#111;&#222;&#333;&#444;&#555;&#666;&#777;&#888;&#999;",
+    "&#0000;&#1111;&#2222;&#3333;&#4444;&#5555;&#6666;&#7777;&#8888;&#9999;",
+    "&#00000;&#11111;&#22222;&#33333;&#44444;&#55555;&#66666;&#77777;&#88888;&#99999;",
+    "&#000000;&#111111;&#222222;&#333333;&#444444;&#555555;&#666666;&#777777;&#888888;&#999999;",
+    "&#0000000;&#1111111;&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;",
+    "&#X0;&#X1;&#X2;&#X3;&#X4;&#X5;&#X6;&#X7;&#X8;&#X9;&#Xa;&#Xb;&#Xc;&#Xd;&#Xe;&#Xf;&#XA;&#XB;&#XC;&#XD;&#XE;&#XF;",
+    "&#X00;&#X11;&#X22;&#X33;&#X44;&#X55;&#X66;&#X77;&#X88;&#X99;&#Xaa;&#Xbb;&#Xcc;&#Xdd;&#Xee;&#Xff;&#XAA;&#XBB;&#XCC;&#XDD;&#XEE;&#XFF;",
+    "&#X000;&#X111;&#X222;&#X333;&#X444;&#X555;&#X666;&#X777;&#X888;&#X999;&#Xaaa;&#Xbbb;&#Xccc;&#Xddd;&#Xeee;&#Xfff;&#XAAA;&#XBBB;&#XCCC;&#XDDD;&#XEEE;&#XFFF;",
+    "&#X0000;&#X1111;&#X2222;&#X3333;&#X4444;&#X5555;&#X6666;&#X7777;&#X8888;&#X9999;&#Xaaaa;&#Xbbbb;&#Xcccc;&#Xdddd;&#Xeeee;&#Xffff;&#XAAAA;&#XBBBB;&#XCCCC;&#XDDDD;&#XEEEE;&#XFFFF;",
+    "&#X00000;&#X11111;&#X22222;&#X33333;&#X44444;&#X55555;&#X66666;&#X77777;&#X88888;&#X99999;&#Xaaaaa;&#Xbbbbb;&#Xccccc;&#Xddddd;&#Xeeeee;&#Xfffff;&#XAAAAA;&#XBBBBB;&#XCCCCC;&#XDDDDD;&#XEEEEE;&#XFFFFF;",
+    "&#X000000;&#X111111;&#X222222;&#X333333;&#X444444;&#X555555;&#X666666;&#X777777;&#X888888;&#X999999;&#Xaaaaaa;&#Xbbbbbb;&#Xcccccc;&#Xdddddd;&#Xeeeeee;&#Xffffff;&#XAAAAAA;&#XBBBBBB;&#XCCCCCC;&#XDDDDDD;&#XEEEEEE;&#XFFFFFF;",
+    "&#X0000000;&#X1111111;&#X2222222;&#X3333333;&#X4444444;&#X5555555;&#X6666666;&#X7777777;&#X8888888;&#X9999999;&#Xaaaaaaa;&#Xbbbbbbb;&#Xccccccc;&#Xddddddd;&#Xeeeeeee;&#Xfffffff;&#XAAAAAAA;&#XBBBBBBB;&#XCCCCCCC;&#XDDDDDDD;&#XEEEEEEE;&#XFFFFFFF;",
+    "&#x0000041;&#x1000041;&#x2000041;&#x3000041;&#x4000041;&#x5000041;&#x6000041;&#x7000041;&#x8000041;&#x9000041;&#xa000041;&#xb000041;&#xc000041;&#xd000041;&#xe000041;&#xf000041;&#xA000041;&#xB000041;&#xC000041;&#xD000041;&#xE000041;&#xF000041;",
+    "&#X0000041;&#X1000041;&#X2000041;&#X3000041;&#X4000041;&#X5000041;&#X6000041;&#X7000041;&#X8000041;&#X9000041;&#Xa000041;&#Xb000041;&#Xc000041;&#Xd000041;&#Xe000041;&#Xf000041;&#XA000041;&#XB000041;&#XC000041;&#XD000041;&#XE000041;&#XF000041;",
+    "&#00000065;&#10000065;&#20000065;&#30000065;&#40000065;&#50000065;&#60000065;&#70000065;&#80000065;&#90000065;",
+  ],
+  escapes: [
+    "\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000",
+    "\\x00\\x11\\x22\\x33\\x44\\x55\\x66\\x77\\x88\\x99\\xaa\\xbb\\xcc\\xdd\\xee\\xff\\xAA\\xBB\\xCC\\xDD\\xEE\\xFF",
+    "\\u0000\\u1111\\u2222\\u3333\\u4444\\u5555\\u6666\\u7777\\u8888\\u9999\\uaaaa\\ubbbb\\ucccc\\udddd\\ueeee\\uffff\\uAAAA\\uBBBB\\uCCCC\\uDDDD\\uEEEE\\uFFFF",
+    "\\U00000000\\U00011111\\U00022222\\U00033333\\U00044444\\U00055555\\U00066666\\U00077777\\U00088888\\U00099999\\U000aaaaa\\U000bbbbb\\U000ccccc\\U000ddddd\\U000eeeee\\U000fffff\\U000AAAAA\\U000BBBBB\\U000CCCCC\\U000DDDDD\\U000EEEEE\\U000FFFFF\\U00100000",
+  ],
 };
 /** The listed Pi files' bytes, read once: the entries the judge consumes (Z2) and the augmentation reader scans (W1). */
 const piEntries = lazy((): Entry[] => piListing().paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) })));
@@ -644,9 +1227,67 @@ function declaredReads(source: ts.Node, name: string): string[] | null {
   for (const declaration of declarations) walk(declaration.members, []);
   return paths.sort();
 }
-/** The heritage (extends) names of a named interface, over all its declarations. */
-function interfaceHeritage(source: ts.SourceFile, name: string): string[] {
-  return sorted(interfaceDeclarations(source, name).flatMap(declaration => (declaration.heritageClauses ?? []).flatMap(clause => clause.types.map(type => type.expression.getText()))));
+/** The heritage (extends) types of a named interface over all its declarations under a node, each by its full text (type arguments included). */
+function interfaceHeritage(source: ts.Node, name: string): string[] {
+  return sorted(interfaceDeclarations(source, name).flatMap(declaration => (declaration.heritageClauses ?? []).flatMap(clause => clause.types.map(type => type.getText()))));
+}
+/**
+ * A heritage type of FurnaceObserverClient read as a declared read path (wb-s876 F2): the extended type merges its members
+ * into the client unread here, so the path pairs with no docs/09 read and W1's one-to-one check reds (an over-read: an
+ * empty interface extended reads as widening too).
+ */
+function heritagePath(type: string): string {
+  return `<extends ${type}>`;
+}
+const CLIENT = "FurnaceObserverClient";
+/**
+ * Every node that declares a name under a node (wb-s876 U1): each identifier spelled with the name - by its cooked text,
+ * so an escape-spelled name counts - that is its parent node's own name: an interface, a class, an enum, a namespace, a
+ * type alias, a function, a variable, a binding element, a member, a parameter, a specifier (an over-read: a member, a
+ * parameter or a property access named by it counts as well).
+ */
+function declarationsOf(source: ts.Node, name: string): ts.Node[] {
+  return nodes(source).flatMap(node => (ts.isIdentifier(node) && node.text === name && "name" in node.parent && node.parent.name === node ? [node.parent] : []));
+}
+/** The path a declaration of FurnaceObserverClient that is not an interface reads as: its kind, the declaration read whole (wb-s876 U1). */
+function otherDeclarationPath(node: ts.Node): string {
+  const kind =
+    ts.isClassDeclaration(node) || ts.isClassExpression(node)
+      ? "class"
+      : ts.isEnumDeclaration(node)
+        ? "enum"
+        : ts.isModuleDeclaration(node)
+          ? "namespace"
+          : ts.isTypeAliasDeclaration(node)
+            ? "type"
+            : ts.isFunctionDeclaration(node)
+              ? "function"
+              : ts.isVariableDeclaration(node) || ts.isBindingElement(node)
+                ? "variable"
+                : "declaration";
+  return `<${kind} ${CLIENT}>`;
+}
+/**
+ * Each declaration of FurnaceObserverClient under a node that is not an interface, as `<K FurnaceObserverClient>` (wb-s876
+ * U1, fail closed): TypeScript merges a class declaration's members and heritage into the interface, and none of them is
+ * read here, so the declaration reads whole as a path that pairs with no docs/09 read.
+ */
+function otherDeclarations(source: ts.Node): string[] {
+  return declarationsOf(source, CLIENT)
+    .filter(node => !ts.isInterfaceDeclaration(node))
+    .map(otherDeclarationPath)
+    .sort();
+}
+/**
+ * Every read path the declarations of FurnaceObserverClient under a node add (wb-s876 F2, U1): each interface declaration's
+ * member chains down to a leaf and each of its heritage types as `<extends T>`, and each other declaration of the name as
+ * `<K FurnaceObserverClient>`; null when the node declares the name nowhere.
+ */
+function clientReads(source: ts.Node): string[] | null {
+  const declared = declaredReads(source, CLIENT);
+  const others = otherDeclarations(source);
+  if (declared === null && others.length === 0) return null;
+  return [...(declared ?? []), ...interfaceHeritage(source, CLIENT).map(heritagePath), ...others].sort();
 }
 /** The type text of each constructor parameter named client, in every class of a module. */
 function clientParameterTypes(source: ts.SourceFile): string[] {
@@ -826,56 +1467,213 @@ function planted(text: string, from: string, to: string): string {
   expect(text.includes(from), `the observer still holds the plant's anchor span ${JSON.stringify(from)}`).toBe(true);
   return text.replace(from, to);
 }
-/** What the census reads of docs/09's Furnace sentences: the section binding, every clause found, and the reads and verbs. */
-interface Docs09Reading {
-  readonly binds: boolean;
-  readonly why: string;
-  readonly html: boolean;
-  readonly readsClauses: readonly string[];
-  readonly verbsClauses: readonly string[];
-  readonly reads: readonly string[];
-  readonly verbs: readonly string[];
-}
-const READS_SENTENCE = /The external Furnace reader uses explicit bounded (\S+) polling\./g;
-const VERBS_SENTENCE = /Pi attachment is read-only and does not (.+?) a Run\./g;
-/**
- * docs/09's Furnace sentences as a reader of the page reads them (wb-6c6i F1): the section is the landed docsSection
- * binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title, bounded at the
- * next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line), each sentence is read from the
- * section's rendered paragraph blocks only (a fence, a list or an HTML block holds none), and the reads and verbs are
- * stated only when the section binds, carries no HTML (a comment can hide what its source says) and each sentence renders
- * exactly once; otherwise they read as none, which reds every reader of them.
- */
-function docs09Reading(text: string): Docs09Reading {
-  const section = docsSection(text, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
-  const paragraphs = section.blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : []));
-  const readsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(READS_SENTENCE)].map(match => match[1] ?? ""));
-  const verbsClauses = paragraphs.flatMap(paragraph => [...paragraph.matchAll(VERBS_SENTENCE)].map(match => match[1] ?? ""));
-  const stated = section.ok && !section.hasHtml && readsClauses.length === 1 && verbsClauses.length === 1;
-  return {
-    binds: section.ok,
-    why: section.why,
-    html: section.hasHtml,
-    readsClauses,
-    verbsClauses,
-    reads: stated ? (readsClauses[0] ?? "").split("/") : [],
-    verbs: stated ? (verbsClauses[0] ?? "").split(/, | or /) : [],
-  };
-}
-/** docs/09's reading on the real page. */
+/** docs/09's reading on the real page, by the imported docs09Reading (test/helpers/furnace-docs-reading.ts; cut #5). */
 function docs09Furnace(): Docs09Reading {
   return docs09Reading(textOf(DOCS09));
 }
 const FURNACE_READS = "The external Furnace reader uses explicit bounded status/attempt/log-reference polling.";
 const FURNACE_VERBS = "Pi attachment is read-only and does not create, resume or stop a Run.";
-/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes; wb-6c6i F1): each a copy of the real page, read by the same docs reading. */
-function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
+function widened(prose: string): string {
+  return prose.replace("status/attempt/log-reference polling", "status/attempt/log-reference/event-stream polling");
+}
+function narrowed(prose: string): string {
+  return prose.replace("create, resume or stop", "create or resume");
+}
+/** docs/09's real Furnace paragraph (from the reads sentence to the end of the verbs sentence), found by its raw text. */
+function furnaceParagraph(text: string): string {
   const from = text.indexOf(FURNACE_READS);
   const to = from < 0 ? -1 : text.indexOf(FURNACE_VERBS, from);
   expect(from >= 0 && to > from, "docs/09 still holds the Furnace paragraph the plants rewrite").toBe(true);
-  const paragraph = text.slice(from, to + FURNACE_VERBS.length);
-  const widened = (prose: string): string => prose.replace("status/attempt/log-reference polling", "status/attempt/log-reference/event-stream polling");
-  const narrowed = (prose: string): string => prose.replace("create, resume or stop", "create or resume");
+  return text.slice(from, to + FURNACE_VERBS.length);
+}
+/** A copy of the page with one block written right after the real Furnace paragraph, inside the bound section. */
+function afterFurnace(text: string, block: string): string {
+  const paragraph = furnaceParagraph(text);
+  return text.replace(paragraph, () => `${paragraph}\n\n${block}`);
+}
+/**
+ * The restatement plants (wb-s876 F1): the wb-6c6i gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table cell, and the
+ * seat's members of the same class - a heading, a fenced code block, a list nested in a quote, the reads subject without
+ * its frame, a "poll" restatement, a narrowed verbs quote, an "attach" restatement, the subject words spelled with
+ * character references, full-width letters or format characters, and the paragraph moved into a list item - and cut
+ * #2's members (wb-s876 U2, F3): the subject words spelled with named references outside the six (in a blockquote, a list
+ * item, a table cell, an h3 and the verbs sentence), the soft hyphen's numeric and raw spellings, five default-ignorable
+ * code points, and a right-to-left override, raw and as a reference - and cut #3's (refusal #2 U1, F5): the possessive
+ * spelled &#146; in a blockquote, a list item, a table cell, an h3 and a second paragraph, &#x92;, &#0146; and &#X92;, and
+ * the widened reads restatement spelled &#146;, beside their proper-spelling controls (raw U+2019, &#8217;, &#x2019;,
+ * &rsquo;, and the restatement raw and as &#8217;), a control character - the possessive's raw U+0092, &#141;, a raw
+ * U+0081 and &#1; - inside the subject words, and a reference into 0x80-0x9F the table maps to a letter between Furnace
+ * and read (&#136;, &#153;) - and cut #4's (ruling R-B157, the fail-closed core: a plant per placement and per claim
+ * word of the docs09 reading): a second top-level paragraph, an h6, an indented code block, a subject word split across
+ * table cells, an ordered and a task item; a list item's paragraph, heading, level-2 heading, code block, nested list,
+ * list two deep and blockquote; a top-level blockquote's heading, code block, list in a list and blockquote; a nested
+ * blockquote's heading, code block and blockquote under a list item and under a blockquote, and a blockquote in a list
+ * in a quote and in a nested list item; an image's alt text; HTML in a list nested in a quote in a quote (htmlInHoleCopy,
+ * cut #4's hole placement, read since cut #5); the subject-word
+ * forms reading, reads, polling and attaches, the readiness and reattachment over-reads, upper case, a run of
+ * separators and the U+0027 and full-width possessives; a mathematical letter; the six named references where only
+ * the reading's subjectText (the helper's) decodes them (amp, lt, gt, quot and nbsp in a code block, apos in a possessive) and an upper-case name; the
+ * real reads and verbs frames, each with a word spelled as a reference; a second subject word in the real paragraph; a left-to-right mark, U+007F and U+000B; &copy;,
+ * &NonBreakingSpace;, a named reference in a code span and in a code block, and one behind &amp;; and a numeric
+ * reference in a code span, in a code block, behind &amp;, and of eight decimal or seven hex digits - and cut #5's, the
+ * twelve rows cut #4 named as the hole's, which the landed rendered view now reads (test/helpers/census.ts blockText,
+ * wb-aalz): a list nested in a quote in a quote (bullet, ordered and task, each the widened reads; the U+2019
+ * possessive; the narrowed verbs), a list in a quote in a quote in a quote, in a quote in a list item and in a quote in
+ * a list item in a quote, a quote and a list nested in such a list, and a named reference and a control character in
+ * one - each must refuse the reading (W1).
+ */
+const RESTATED: readonly string[] = [
+  "blockquoteCopy",
+  "listItemCopy",
+  "tableCellCopy",
+  "headingCopy",
+  "codeCopy",
+  "nestedCopy",
+  "subjectCopy",
+  "pollCopy",
+  "verbsQuoteCopy",
+  "verbsSubjectCopy",
+  "entityCopy",
+  "fullWidthCopy",
+  "formCharacterCopy",
+  "listedOnly",
+  "shyCopy",
+  "zwnjCopy",
+  "zwjCopy",
+  "wordJoinerCopy",
+  "zeroWidthSpaceCopy",
+  "frakturCopy",
+  "doubleStruckCopy",
+  "shyListCopy",
+  "shyTableCopy",
+  "shyHeadingCopy",
+  "shyVerbsCopy",
+  "shyNumericCopy",
+  "shyRawCopy",
+  "graphemeJoinerCopy",
+  "variationSelectorCopy",
+  "emojiSelectorCopy",
+  "hangulFillerCopy",
+  "khmerVowelCopy",
+  "overrideCopy",
+  "overrideReferenceCopy",
+  "windows1252QuoteCopy",
+  "windows1252ListCopy",
+  "windows1252TableCopy",
+  "windows1252HeadingCopy",
+  "windows1252ParagraphCopy",
+  "windows1252HexCopy",
+  "windows1252WideCopy",
+  "windows1252PaddedCopy",
+  "windows1252UpperHexCopy",
+  "rsquoRawCopy",
+  "rsquoDecimalCopy",
+  "rsquoHexCopy",
+  "rsquoNamedCopy",
+  "rsquoWideRawCopy",
+  "rsquoWideDecimalCopy",
+  "c1PossessiveRawCopy",
+  "c1ReferenceCopy",
+  "c1RawCopy",
+  "c0ReferenceCopy",
+  "tableLetterCopy",
+  "tableTrademarkCopy",
+  "paragraphCopy",
+  "deepHeadingCopy",
+  "indentedCodeCopy",
+  "tableSplitCopy",
+  "orderedItemCopy",
+  "taskItemCopy",
+  "itemParagraphCopy",
+  "itemHeadingCopy",
+  "itemLevelTwoHeadingCopy",
+  "itemCodeCopy",
+  "itemNestedListCopy",
+  "itemDeepListCopy",
+  "itemNestedQuoteCopy",
+  "quoteHeadingCopy",
+  "quoteCodeCopy",
+  "quoteListListCopy",
+  "quoteNestedQuoteCopy",
+  "itemQuoteHeadingCopy",
+  "itemQuoteCodeCopy",
+  "itemQuoteQuoteCopy",
+  "quoteQuoteHeadingCopy",
+  "quoteQuoteCodeCopy",
+  "quoteQuoteQuoteCopy",
+  "quoteListQuoteCopy",
+  "itemListQuoteCopy",
+  "imageAltCopy",
+  "htmlInHoleCopy",
+  "readingCopy",
+  "readsCopy",
+  "pollingCopy",
+  "attachesCopy",
+  "readinessCopy",
+  "reattachmentCopy",
+  "upperCaseCopy",
+  "separatorRunCopy",
+  "asciiPossessiveCopy",
+  "fullWidthApostropheCopy",
+  "mathLetterCopy",
+  "aposPossessiveCopy",
+  "codeAmpCopy",
+  "codeLtCopy",
+  "codeGtCopy",
+  "codeQuotCopy",
+  "codeNbspCopy",
+  "codeUpperNamedCopy",
+  "frameReferenceCopy",
+  "bidiMarkCopy",
+  "delReferenceCopy",
+  "verticalTabCopy",
+  "copyrightCopy",
+  "nonBreakingSpaceCopy",
+  "codeSpanReferenceCopy",
+  "codeBlockReferenceCopy",
+  "ampExposedCopy",
+  "numericCodeSpanCopy",
+  "numericCodeBlockCopy",
+  "numericAmpCopy",
+  "numericLongCopy",
+  "numericLongHexCopy",
+  "secondSentenceCopy",
+  "verbsFrameReferenceCopy",
+  "quoteQuoteListCopy",
+  "quoteQuoteOrderedListCopy",
+  "quoteQuoteTaskListCopy",
+  "quoteQuoteListPossessiveCopy",
+  "quoteQuoteListVerbsCopy",
+  "quoteQuoteQuoteListCopy",
+  "itemQuoteListCopy",
+  "quoteItemQuoteListCopy",
+  "quoteQuoteListQuoteCopy",
+  "quoteQuoteListListCopy",
+  "quoteQuoteListReferenceCopy",
+  "quoteQuoteListControlCopy",
+];
+/** The widened reads sentence with one spelling written inside both subject words, after "Furn" and after "po" (wb-s876 U2, F3). */
+function spelledInside(inside: string): string {
+  return `The external Furn${inside}ace reader uses explicit bounded status/attempt/log-reference/event-stream po${inside}lling.`;
+}
+/** The right single quotation mark (U+2019): the possessive's typographic form in the reading's subject words (the helper's DOCS09_SUBJECTS). */
+const RSQUO = String.fromCodePoint(0x2019);
+/** A possessive restatement of the Furnace reader, its apostrophe spelled as given (the wb-s876 refusal #2 G-D-1252-POSS shapes; cut #3). */
+function possessive(apostrophe: string): string {
+  return `The Furnace${apostrophe}s reader also follows each Run's event stream.`;
+}
+/** The widened reads restatement in the possessive, its apostrophe spelled as given (the refusal #2 G-D-1252-WIDE-READS shape; cut #3). */
+function widerReads(apostrophe: string): string {
+  return `The external Furnace${apostrophe}s reader uses explicit bounded status/attempt/log-reference/event-stream reads.`;
+}
+/** A right-to-left override (U+202E) and its pop (U+202C): the text between them shows reversed, so "redaer ecanruF" shows "Furnace reader". */
+const OVERRIDE = String.fromCodePoint(0x202e);
+const POP = String.fromCodePoint(0x202c);
+/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes, wb-6c6i F1; the RESTATED shapes, wb-s876 F1; whitespaceControlsCopy, a second unit holding the four whitespace controls as references, which reads as the real page, cut #4): each a copy of the real page, read by the same docs reading. */
+function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
+  const paragraph = furnaceParagraph(text);
+  const after = (block: string): string => afterFurnace(text, block);
+  const fence = "```";
   const pages: Readonly<Record<string, string>> = {
     hiddenCopy: text.replace(paragraph, `<!-- ${paragraph} -->\n\n${narrowed(widened(paragraph))}`),
     decoyHeading: widened(text).replace("\n## Acceptance/negative controls\n", `\n${DOCS09_SECTION}\n\n${paragraph}\n\n## Acceptance/negative controls\n`),
@@ -883,6 +1681,135 @@ function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
     fenced: text.replace(paragraph, `${"```"}\n${paragraph}\n${"```"}`),
     widened: widened(text),
     narrowed: narrowed(text),
+    blockquoteCopy: after(`> ${widened(FURNACE_READS)}`),
+    listItemCopy: after(`- ${widened(FURNACE_READS)}`),
+    tableCellCopy: after(`| Reader |\n| --- |\n| ${widened(FURNACE_READS)} |`),
+    headingCopy: after(`### ${widened(FURNACE_READS)}`),
+    codeCopy: after(`${"```"}\n${widened(FURNACE_READS)}\n${"```"}`),
+    nestedCopy: after(`> - ${widened(FURNACE_READS)}`),
+    subjectCopy: after("- The Furnace reader also follows each Run's event stream."),
+    pollCopy: after("> Pi also polls each Run's event stream."),
+    verbsQuoteCopy: after(`> ${narrowed(FURNACE_VERBS)}`),
+    verbsSubjectCopy: after("- Attachment may stop a Run it observes."),
+    entityCopy: after("- The external Furn&#97;ce reader uses explicit bounded status/attempt/log-reference/event-stream po&#108;ling."),
+    fullWidthCopy: after(`> The external ${String.fromCodePoint(0xff26, 0xff55, 0xff52, 0xff4e, 0xff41, 0xff43, 0xff45)} reader uses explicit bounded status/attempt/log-reference/event-stream ${String.fromCodePoint(0xff50, 0xff4f, 0xff4c, 0xff4c)}ing.`),
+    formCharacterCopy: after(`> The external Fur${String.fromCodePoint(0x200b)}nace reader uses explicit bounded status/attempt/log-reference/event-stream po${String.fromCodePoint(0x200b)}lling.`),
+    listedOnly: text.replace(paragraph, () => `- ${paragraph}`),
+    shyCopy: after(`> ${spelledInside("&shy;")}`),
+    zwnjCopy: after(`> ${spelledInside("&zwnj;")}`),
+    zwjCopy: after(`> ${spelledInside("&zwj;")}`),
+    wordJoinerCopy: after(`> ${spelledInside("&NoBreak;")}`),
+    zeroWidthSpaceCopy: after(`> ${spelledInside("&ZeroWidthSpace;")}`),
+    frakturCopy: after("> The external Furn&afr;ce reader uses explicit bounded status/attempt/log-reference/event-stream &pfr;olling."),
+    doubleStruckCopy: after("> The external Furn&aopf;ce reader uses explicit bounded status/attempt/log-reference/event-stream &popf;olling."),
+    shyListCopy: after(`- ${spelledInside("&shy;")}`),
+    shyTableCopy: after(`| Reader |\n| --- |\n| ${spelledInside("&shy;")} |`),
+    shyHeadingCopy: after(`### ${spelledInside("&shy;")}`),
+    shyVerbsCopy: after("> Pi att&shy;achment is read-only and does not create or resume a Run."),
+    shyNumericCopy: after(`> ${spelledInside("&#173;")}`),
+    shyRawCopy: after(`> ${spelledInside(String.fromCodePoint(0xad))}`),
+    graphemeJoinerCopy: after(`> ${spelledInside(String.fromCodePoint(0x34f))}`),
+    variationSelectorCopy: after(`> ${spelledInside(String.fromCodePoint(0xfe00))}`),
+    emojiSelectorCopy: after(`> ${spelledInside(String.fromCodePoint(0xfe0f))}`),
+    hangulFillerCopy: after(`> ${spelledInside(String.fromCodePoint(0x3164))}`),
+    khmerVowelCopy: after(`> ${spelledInside(String.fromCodePoint(0x17b4))}`),
+    overrideCopy: after(`> The external ${OVERRIDE}redaer ecanruF${POP} uses explicit bounded status/attempt/log-reference/event-stream ${OVERRIDE}gnillop${POP}.`),
+    overrideReferenceCopy: after("> The external &#x202E;redaer ecanruF&#x202C; uses explicit bounded status/attempt/log-reference/event-stream &#x202E;gnillop&#x202C;."),
+    windows1252QuoteCopy: after(`> ${possessive("&#146;")}`),
+    windows1252ListCopy: after(`- ${possessive("&#146;")}`),
+    windows1252TableCopy: after(`| Reader |\n| --- |\n| ${possessive("&#146;")} |`),
+    windows1252HeadingCopy: after(`### ${possessive("&#146;")}`),
+    windows1252ParagraphCopy: after(possessive("&#146;")),
+    windows1252HexCopy: after(`> ${possessive("&#x92;")}`),
+    windows1252WideCopy: after(`> ${widerReads("&#146;")}`),
+    windows1252PaddedCopy: after(`> ${possessive("&#0146;")}`),
+    windows1252UpperHexCopy: after(`> ${possessive("&#X92;")}`),
+    rsquoRawCopy: after(`> ${possessive(RSQUO)}`),
+    rsquoDecimalCopy: after(`> ${possessive("&#8217;")}`),
+    rsquoHexCopy: after(`> ${possessive("&#x2019;")}`),
+    rsquoNamedCopy: after(`> ${possessive("&rsquo;")}`),
+    rsquoWideRawCopy: after(`> ${widerReads(RSQUO)}`),
+    rsquoWideDecimalCopy: after(`> ${widerReads("&#8217;")}`),
+    c1PossessiveRawCopy: after(`> ${possessive(String.fromCodePoint(0x92))}`),
+    c1ReferenceCopy: after(`> ${spelledInside("&#141;")}`),
+    c1RawCopy: after(`> ${spelledInside(String.fromCodePoint(0x81))}`),
+    c0ReferenceCopy: after(`> ${spelledInside("&#1;")}`),
+    tableLetterCopy: after("> The external Furnace&#136;reader uses explicit bounded status/attempt/log-reference/event-stream reads."),
+    tableTrademarkCopy: after("> The external Furnace&#153;reader uses explicit bounded status/attempt/log-reference/event-stream reads."),
+    paragraphCopy: after(widened(FURNACE_READS)),
+    deepHeadingCopy: after(`###### ${widened(FURNACE_READS)}`),
+    indentedCodeCopy: after(`    ${widened(FURNACE_READS)}`),
+    tableSplitCopy: after("| Furnace | reader |\n| --- | --- |\n| a | b |"),
+    orderedItemCopy: after(`1. ${widened(FURNACE_READS)}`),
+    taskItemCopy: after(`- [ ] ${widened(FURNACE_READS)}`),
+    itemParagraphCopy: after(`- note\n\n  ${widened(FURNACE_READS)}`),
+    itemHeadingCopy: after(`- ### ${widened(FURNACE_READS)}`),
+    itemLevelTwoHeadingCopy: after(`- ## ${widened(FURNACE_READS)}`),
+    itemCodeCopy: after(`- note\n\n  ${fence}\n  ${widened(FURNACE_READS)}\n  ${fence}`),
+    itemNestedListCopy: after(`- note\n  - ${widened(FURNACE_READS)}`),
+    itemDeepListCopy: after(`- a\n  - b\n    - ${widened(FURNACE_READS)}`),
+    itemNestedQuoteCopy: after(`- note\n\n  > ${widened(FURNACE_READS)}`),
+    quoteHeadingCopy: after(`> ### ${widened(FURNACE_READS)}`),
+    quoteCodeCopy: after(`> ${fence}\n> ${widened(FURNACE_READS)}\n> ${fence}`),
+    quoteListListCopy: after(`> - note\n>   - ${widened(FURNACE_READS)}`),
+    quoteNestedQuoteCopy: after(`> > ${widened(FURNACE_READS)}`),
+    itemQuoteHeadingCopy: after(`- note\n\n  > ### ${widened(FURNACE_READS)}`),
+    itemQuoteCodeCopy: after(`- note\n\n  > ${fence}\n  > ${widened(FURNACE_READS)}\n  > ${fence}`),
+    itemQuoteQuoteCopy: after(`- note\n\n  > > ${widened(FURNACE_READS)}`),
+    quoteQuoteHeadingCopy: after(`> > ### ${widened(FURNACE_READS)}`),
+    quoteQuoteCodeCopy: after(`> > ${fence}\n> > ${widened(FURNACE_READS)}\n> > ${fence}`),
+    quoteQuoteQuoteCopy: after(`> > > ${widened(FURNACE_READS)}`),
+    quoteListQuoteCopy: after(`> - note\n>\n>   > ${widened(FURNACE_READS)}`),
+    itemListQuoteCopy: after(`- a\n  - b\n\n    > ${widened(FURNACE_READS)}`),
+    imageAltCopy: after(`> ![${widened(FURNACE_READS)}](https://example.invalid/reader.png)`),
+    htmlInHoleCopy: after(`> > - <b>${widened(FURNACE_READS)}</b>`),
+    readingCopy: after("> The Furnace reading also follows each Run's event stream."),
+    readsCopy: after("> Pi's Furnace reads each Run's status."),
+    pollingCopy: after("> Pi keeps polling each Run."),
+    attachesCopy: after("> Pi attaches to each Run it observes."),
+    readinessCopy: after("> Pi checks Furnace readiness first."),
+    reattachmentCopy: after("> A reattachment never starts a Run."),
+    upperCaseCopy: after("> THE EXTERNAL FURNACE READER POLLS EACH RUN."),
+    separatorRunCopy: after("> The Furnace -- reader also follows each Run's event stream."),
+    asciiPossessiveCopy: after(`> ${possessive("'")}`),
+    fullWidthApostropheCopy: after(`> ${possessive(String.fromCodePoint(0xff07))}`),
+    mathLetterCopy: after(`> The external Furn${String.fromCodePoint(0x1d51e)}ce reader uses explicit bounded status/attempt/log-reference/event-stream po${String.fromCodePoint(0x1d529)}ling.`),
+    aposPossessiveCopy: after(`> ${possessive("&apos;")}`),
+    codeAmpCopy: after(`${fence}\nThe external Furnace&amp;reader\n${fence}`),
+    codeLtCopy: after(`${fence}\nThe external Furnace&lt;reader\n${fence}`),
+    codeGtCopy: after(`${fence}\nThe external Furnace&gt;reader\n${fence}`),
+    codeQuotCopy: after(`${fence}\nThe external Furnace&quot;reader\n${fence}`),
+    codeNbspCopy: after(`${fence}\nThe external Furnace&nbsp;reader\n${fence}`),
+    codeUpperNamedCopy: after(`${fence}\nThe external Furnace&NBSP;reader\n${fence}`),
+    frameReferenceCopy: text.replace(FURNACE_READS, () => FURNACE_READS.replace("bounded", "b&#111;unded")),
+    bidiMarkCopy: after(`> Pi${String.fromCodePoint(0x200e)}docs.`),
+    delReferenceCopy: after(`> ${spelledInside("&#127;")}`),
+    verticalTabCopy: after("> Pi&#11;keeps each record bounded."),
+    whitespaceControlsCopy: after("> Pi&#9;keeps&#10;each&#12;record&#13;bounded."),
+    copyrightCopy: after("> &copy; Pi."),
+    nonBreakingSpaceCopy: after("> Pi&NonBreakingSpace;docs."),
+    codeSpanReferenceCopy: after("> `&shy;`"),
+    codeBlockReferenceCopy: after(`${fence}\n&shy;\n${fence}`),
+    ampExposedCopy: after("> &amp;shy;"),
+    numericCodeSpanCopy: after("> `The external Furn&#97;ce reader`"),
+    numericCodeBlockCopy: after(`${fence}\nThe external Furn&#97;ce reader\n${fence}`),
+    numericAmpCopy: after("> The external Furn&amp;#97;ce reader"),
+    numericLongCopy: after("> The external Furn&#00000097;ce reader"),
+    numericLongHexCopy: after("> The external Furn&#x0000061;ce reader"),
+    secondSentenceCopy: text.replace(FURNACE_VERBS, () => `${FURNACE_VERBS} Pi keeps polling each Run.`),
+    verbsFrameReferenceCopy: text.replace(FURNACE_VERBS, () => FURNACE_VERBS.replace("read-only", "read&#45;only")),
+    quoteQuoteListCopy: after(`> > - ${widened(FURNACE_READS)}`),
+    quoteQuoteOrderedListCopy: after(`> > 1. ${widened(FURNACE_READS)}`),
+    quoteQuoteTaskListCopy: after(`> > - [ ] ${widened(FURNACE_READS)}`),
+    quoteQuoteListPossessiveCopy: after(`> > - ${possessive(RSQUO)}`),
+    quoteQuoteListVerbsCopy: after(`> > - ${narrowed(FURNACE_VERBS)}`),
+    quoteQuoteQuoteListCopy: after(`> > > - ${widened(FURNACE_READS)}`),
+    itemQuoteListCopy: after(`- note\n\n  > - ${widened(FURNACE_READS)}`),
+    quoteItemQuoteListCopy: after(`> - note\n>\n>   > - ${widened(FURNACE_READS)}`),
+    quoteQuoteListQuoteCopy: after(`> > - note\n> >\n> >   > ${widened(FURNACE_READS)}`),
+    quoteQuoteListListCopy: after(`> > - note\n> >   - ${widened(FURNACE_READS)}`),
+    quoteQuoteListReferenceCopy: after("> > - Pi&shy;docs."),
+    quoteQuoteListControlCopy: after("> > - Pi&#1;docs."),
   };
   return Object.fromEntries(Object.entries(pages).map(([plant, page]) => [plant, docs09Reading(page)]));
 }
@@ -900,19 +1827,79 @@ const AUGMENTATION_PLANT = entry(
   "src/workbench/zz-observer-augmentation.ts",
   'declare module "./furnace-observer.js" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n',
 );
+/** An augmentation that only extends another interface, planted as a file of its own (the wb-6c6i gate's L2-W4b; wb-s876 F2). */
+const HERITAGE_PLANT = entry(
+  "src/workbench/zz-observer-heritage.ts",
+  'interface ZzGateStream {\n  events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n}\ndeclare module "./furnace-observer.js" {\n  interface FurnaceObserverClient extends ZzGateStream {}\n}\nexport {};\n',
+);
+/** A CLASS declaration of FurnaceObserverClient in an augmentation: TypeScript merges it into the interface (the wb-s876 gate's G-W1-CLASS-OPT2; U1). */
+const CLASS_PLANT = entry(
+  "src/workbench/zz-observer-class.ts",
+  'declare module "./furnace-observer.js" {\n  class FurnaceObserverClient {\n    events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n  }\n}\n\nexport {};\n',
+);
+/** A class declaration of FurnaceObserverClient in an augmentation that extends a class holding the member (the gate's G-W1-CLASS-EXT-OPT2; U1). */
+const CLASS_EXTENDS_PLANT = entry(
+  "src/workbench/zz-observer-class-extends.ts",
+  'declare class ZzGateEventsBase {\n  events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n}\ndeclare module "./furnace-observer.js" {\n  class FurnaceObserverClient extends ZzGateEventsBase {}\n}\n\nexport {};\n',
+);
+/** Every other declaration kind of the name in an augmentation: a namespace, an enum, a type alias, a function and a variable (U1, fail closed). */
+const KINDS_PLANT = entry(
+  "src/workbench/zz-observer-kinds.ts",
+  'declare module "./furnace-observer.js" {\n  namespace FurnaceObserverClient {}\n  enum FurnaceObserverClient {}\n  type FurnaceObserverClient = unknown;\n  function FurnaceObserverClient(): void;\n  const FurnaceObserverClient: unknown;\n}\nexport {};\n',
+);
+/** A declaration of FurnaceObserverClient under a specifier only configuration could map to the observer (R-ALIASED-MODULE, Q12). */
+const ALIAS_PLANT = entry(
+  "src/workbench/zz-observer-alias.ts",
+  'declare module "#furnace-observer-alias" {\n  interface FurnaceObserverClient {\n    events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n  }\n}\nexport {};\n',
+);
+/** A global declaration of interface Object in a file of its own: it widens every object type's apparent members, the client's included, without declaring FurnaceObserverClient (the wb-s876 refusal #2 F2 plant G-U1-GLOBAL-OBJECT-2; R-OTHER-MODULE, Q8). */
+const GLOBAL_PLANT = entry(
+  "src/workbench/zz-observer-global.ts",
+  "declare global {\n  interface Object {\n    zzGateEvents?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n  }\n}\n\nexport {};\n",
+);
+/**
+ * Each global declaration of interface Object in a file, as "<path>: Object" (R-OTHER-MODULE, Q8; the wb-s876 refusal #2 F2
+ * family): one in a declare global block, or one at the top level of a file that is not a module. Either widens every
+ * object type's apparent members, FurnaceObserverClient's included, without declaring the name, and W1 reads neither. The
+ * interface keyword cannot be escape-spelled and the name can, so every file spelling "interface" and either "Object" or
+ * an escape is parsed.
+ */
+function globalObjects(path: string, text: string): string[] {
+  if (!text.includes("interface") || !(text.includes("Object") || text.includes("\\u"))) return [];
+  const source = parse(path, text);
+  const augmentationStatements = nodes(source).flatMap(node =>
+    ts.isModuleDeclaration(node) && (node.flags & ts.NodeFlags.GlobalAugmentation) !== 0 && node.body !== undefined && ts.isModuleBlock(node.body) ? [...node.body.statements] : [],
+  );
+  const statements = ts.isExternalModule(source) ? augmentationStatements : [...source.statements, ...augmentationStatements];
+  return statements.filter(statement => ts.isInterfaceDeclaration(statement) && statement.name.text === "Object").map(() => `${path}: Object`);
+}
 const OBSERVER_MODULE = OBSERVER.replace(SCRIPT, "");
 /** Whether a module specifier in a file names the observer module: a relative one resolved from the file, a bare one by its last segment (an over-read). */
 function namesObserver(from: string, specifier: string): boolean {
   if (specifier.startsWith(".")) return posix.join(posix.dirname(from), specifier).replace(SCRIPT, "") === OBSERVER_MODULE;
   return posix.basename(specifier).replace(SCRIPT, "") === posix.basename(OBSERVER_MODULE);
 }
-/** The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6). */
+/**
+ * The read paths a file's module augmentations of the observer module add to FurnaceObserverClient (wb-6c6i F6): each
+ * declaration's member chains down to a leaf, and each of its heritage types as `<extends T>` (wb-s876 F2), so an
+ * augmentation that only extends another interface reads as widened; each other declaration of the name reads whole as
+ * `<K FurnaceObserverClient>` (clientReads; wb-s876 U1), so a class declaration in an augmentation reads as widened.
+ */
 function augmentedReads(path: string, text: string): string[] {
   if (!text.includes("module")) return [];
   return nodes(parse(path, text))
     .filter((node): node is ts.ModuleDeclaration => ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && namesObserver(path, node.name.text))
-    .flatMap(node => (node.body === undefined ? [] : (declaredReads(node.body, "FurnaceObserverClient") ?? [])))
+    .flatMap(node => (node.body === undefined ? [] : (clientReads(node.body) ?? [])))
     .sort();
+}
+/** Each module declaration in a file that declares the name FurnaceObserverClient (any declaration: declarationsOf) under a specifier not naming the observer module, as "<path>: <specifier>" (R-ALIASED-MODULE, Q12). */
+function otherModuleClients(path: string, text: string): string[] {
+  if (!text.includes("module")) return [];
+  return nodes(parse(path, text)).flatMap(node =>
+    ts.isModuleDeclaration(node) && ts.isStringLiteral(node.name) && !namesObserver(path, node.name.text) && node.body !== undefined && declarationsOf(node.body, CLIENT).length > 0
+      ? [`${path}: ${node.name.text}`]
+      : [],
+  );
 }
 /** Every listed Pi script that augments the observer module, with the read paths it adds. */
 const augmentations = lazy((): { readonly path: string; readonly reads: readonly string[] }[] =>
@@ -1011,10 +1998,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   W1: () => {
     const augmented = augmentations();
-    const own = declaredReads(observer(), "FurnaceObserverClient");
+    const own = clientReads(observer());
+    const ownHeritage = interfaceHeritage(observer(), CLIENT);
     const readPaths = own === null ? null : [...own, ...augmented.flatMap(found => found.reads)].sort();
     const docs = docs09Furnace();
     const { reads } = docs;
+    const { blocks } = docsSection(textOf(DOCS09), DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
     const pairs = pairReads(reads, readPaths ?? []);
     expect(pairs.filter(pair => (pair[1] ?? "").startsWith("<")), "every docs/09 read names exactly one declared path").toEqual([]);
     expect(sorted(pairs.map(pair => pair[1] ?? "")), "every declared path is a docs/09 read, one to one").toEqual(readPaths);
@@ -1025,19 +2014,92 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const widenedPlant = (declaredReads(widened, "FurnaceObserverClient") ?? []).filter(path => !(readPaths ?? []).includes(path));
     expect(widenedPlant, "a widened interface reads as widened").toEqual(["runs.get.events"]);
     const augmentationPlant = augmentedReads(AUGMENTATION_PLANT.path, AUGMENTATION_PLANT.bytes.toString("utf8"));
+    const heritagePlant = {
+      augmentation: augmentedReads(HERITAGE_PLANT.path, HERITAGE_PLANT.bytes.toString("utf8")),
+      own: interfaceHeritage(parse(OBSERVER, planted(observerText(), "export interface FurnaceObserverClient {", "export interface FurnaceObserverClient extends ZzGateStream {")), "FurnaceObserverClient").map(heritagePath),
+    };
+    expect(heritagePlant, "a declaration that only extends another interface reads as widened, in an augmentation and in the observer (wb-s876 F2)").toStrictEqual({ augmentation: ["<extends ZzGateStream>"], own: ["<extends ZzGateStream>"] });
+    const ownClass = clientReads(parse(OBSERVER, planted(observerText(), "export interface FurnaceObserverClient {", "export declare class FurnaceObserverClient {events?:{list(id:string):Promise<unknown>}}\nexport interface FurnaceObserverClient {")));
+    const nonInterfacePlant = {
+      augmentation: augmentedReads(CLASS_PLANT.path, CLASS_PLANT.bytes.toString("utf8")),
+      heritage: augmentedReads(CLASS_EXTENDS_PLANT.path, CLASS_EXTENDS_PLANT.bytes.toString("utf8")),
+      kinds: augmentedReads(KINDS_PLANT.path, KINDS_PLANT.bytes.toString("utf8")),
+      own: (ownClass ?? []).filter(path => !(own ?? []).includes(path)),
+    };
+    expect(nonInterfacePlant, "a declaration of the name that is not an interface - a class, its heritage form, any other kind - reads as widened, in an augmentation and in the observer (wb-s876 U1, fail closed)").toStrictEqual({
+      augmentation: ["<class FurnaceObserverClient>"],
+      heritage: ["<class FurnaceObserverClient>"],
+      kinds: ["<enum FurnaceObserverClient>", "<function FurnaceObserverClient>", "<namespace FurnaceObserverClient>", "<type FurnaceObserverClient>", "<variable FurnaceObserverClient>"],
+      own: ["<class FurnaceObserverClient>"],
+    });
+    const docsPlants = docs09Plants(textOf(DOCS09));
+    expect(
+      RESTATED.filter(plant => (docsPlants[plant]?.reads.length ?? 1) + (docsPlants[plant]?.verbs.length ?? 1) > 0),
+      "a subject word restated in a second text unit, in each placement the READ SET names, or held by no paragraph, refuses the reading (wb-s876 F1, cut #4)",
+    ).toEqual([]);
+    expect(
+      docsPlants.whitespaceControlsCopy,
+      "tab, line feed, form feed and carriage return, spelled as references in a second unit, are no control characters the reading refuses (cut #4)",
+    ).toStrictEqual(docs);
+    expect(
+      docsSection(textOf(DOCS09).replace(FURNACE_READS, () => FURNACE_READS.replace(" uses ", "  uses\n")), DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]).blocks,
+      "a doubled space and a line break inside the reads sentence render the same block list, so the block pin does not red them (cut #4; narrowed at cut #5, refusal #4 F4)",
+    ).toStrictEqual(blocks);
+    const spellings: Readonly<Record<string, string>> = { decimal: "&#146;", hex: "&#x92;", padded: "&#0146;", upperHex: "&#X92;", decimalRsquo: "&#8217;", hexRsquo: "&#x2019;" };
+    const possessiveSubjects = (spelling: string): Docs09Reading["subjects"] => docs09Reading(afterFurnace(textOf(DOCS09), `> ${possessive(spelling)}`)).subjects;
+    const rsquoSubjects = possessiveSubjects(RSQUO);
+    expect(
+      Object.entries(spellings)
+        .filter(([, spelling]) => !isDeepStrictEqual(possessiveSubjects(spelling), rsquoSubjects))
+        .map(([name]) => name),
+      "each numeric spelling of the possessive, in a blockquote after the real paragraph, counts the subject words as its raw U+2019 control counts them, as the HTML standard decodes it: one rendered page, one subject reading (wb-s876 cut #3; through docs09Reading since cut #5)",
+    ).toEqual([]);
+    expect(
+      decodedMarkup("&#0;&#xD800;&#x110000;&#128;&#129;&#146;&#x92;&#159;&#160;"),
+      "a numeric reference decodes as the HTML standard decodes it: 0, a surrogate and a code point above 0x10FFFF to U+FFFD, a code point of the 0x80-0x9F table to its character, any other to itself (wb-s876 cut #3)",
+    ).toBe(String.fromCodePoint(0xfffd, 0xfffd, 0xfffd, 0x20ac, 0x81, 0x2019, 0x2019, 0x178, 0xa0));
+    expect(
+      decodedCodePoints("&#136;&#146;&#x92;&#x110000;"),
+      "the second reading decodes each numeric reference to its own code point, one above 0x10FFFF left as written: the landed reading, kept beside the standard's (wb-s876 cut #3)",
+    ).toBe(`${String.fromCodePoint(0x88, 0x92, 0x92)}&#x110000;`);
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&constructor;&toString;&hasOwnProperty;&AMP;")),
+      "a name that is not one of the six is left as written, an inherited property's name included, and a name of the six is read in any case: THE JUDGE's namedEntity reads its own keys only (cut #5)",
+    ).toEqual(["&constructor;&toString;&hasOwnProperty;&", "&constructor;&toString;&hasOwnProperty;&"]);
+    const six = `&<>"'${String.fromCodePoint(0xa0)}`;
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;")),
+      "each name of the six is read in upper case and in a mixed case, in both readings: THE JUDGE's namedEntity folds the name's case (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([`${six}|${six}`, `${six}|${six}`]);
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&#xDC00;&#xDFFF;&#x10FFFF;")),
+      "the low surrogates U+DC00 and U+DFFF decode to U+FFFD in the standard's reading and to themselves in the code-point reading, and U+10FFFF to itself in both (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([String.fromCodePoint(0xfffd, 0xfffd, 0x10ffff), String.fromCodePoint(0xdc00, 0xdfff, 0x10ffff)]);
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&#xa;&#xaf;&#XAF;")),
+      "a one-digit hex reference and the hex digits a and f, in either case, are read in both readings (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([String.fromCodePoint(0xa, 0xaf, 0xaf), String.fromCodePoint(0xa, 0xaf, 0xaf)]);
+    const escapedDigits = String.fromCodePoint(0x9, 0xa, 0xf, 0xa, 0xf);
+    expect(
+      decodedEscapes("\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000"),
+      "each escape form decodes the hex digits 0, 9, a, f, A and F, every escape of the text is decoded, U+10FFFF is decoded and an escape above it is left as written: THE JUDGE's decodedEscapes (THE JUDGE'S PINS, cut #7)",
+    ).toBe(`${escapedDigits}|${escapedDigits}|${escapedDigits}|${String.fromCodePoint(0x10ffff)}\\U00110000`);
     return json({
       interfaceName: "FurnaceObserverClient",
       interfaceDeclarations: interfaceDeclarations(observer(), "FurnaceObserverClient").length,
-      interfaceExtends: interfaceHeritage(observer(), "FurnaceObserverClient"),
+      interfaceExtends: ownHeritage,
+      otherDeclarations: otherDeclarations(observer()),
       clientParameterTypes: clientParameterTypes(observer()),
       augmentations: augmented,
       readPaths,
-      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses },
+      docsBinding: { binds: docs.binds, why: docs.why, html: docs.html, undecoded: docs.undecoded, controls: docs.controls, subjects: docs.subjects, readsClauses: docs.readsClauses, verbsClauses: docs.verbsClauses, blocks },
       docsReads: reads,
       pairs,
       widenedPlant,
       augmentationPlant,
-      docsPlants: docs09Plants(textOf(DOCS09)),
+      heritagePlant,
+      nonInterfacePlant,
+      docsPlants,
     });
   },
   W2: () => {
@@ -1111,6 +2173,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     ).toEqual([]);
     const real = findingsFor(verdict, plantPaths, false);
     expect(real, `zero Pi mentions of ${RECORD} until it ships`).toEqual({});
+    expect(
+      plantPaths.filter(path => (verdict.findings[path] ?? []).length === 0),
+      "every planted spelling is read by the judge, a numeric reference the HTML standard decodes through its table included (wb-s876 cut #3)",
+    ).toEqual([]);
     const plantBytes = Object.values(PI_PLANTS).reduce((sum, text) => sum + Buffer.byteLength(text, "utf8"), 0);
     return json({
       piMentions: real,
@@ -1121,6 +2187,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       bytesAtFloor: verdict.textBytes - plantBytes >= FLOORS.piBytes,
       liveness: liveness(verdict.anchored),
       piPlants: findingsFor(verdict, plantPaths, true),
+      decodings: {
+        markup: Object.fromEntries(DECODINGS.markup.map(text => [text, [decodedMarkup(text), decodedCodePoints(text)]])),
+        escapes: Object.fromEntries(DECODINGS.escapes.map(text => [text, decodedEscapes(text)])),
+      },
     });
   },
   Z3: () => {
@@ -1182,8 +2252,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       entityOutsideMarkup: "// &#79;bserver Boundary",
       markup: "Obs*erver* Boundary",
       escapeOutsideDecodedKinds: 'echo "\\u004fbserver Boundary"',
+      namedReference: "Obs&shy;erver Boundary",
+      overrideReversed: `${OVERRIDE}yradnuob revresbo${POP}`,
+      numericWithoutSemicolon: "observer&#146s boundary",
+      namedWithoutSemicolon: "observer&ampboundary",
     };
-    const at: Readonly<Record<string, string>> = { entityOutsideMarkup: "src/zz.ts", escapeOutsideDecodedKinds: "scripts/zz.sh" };
+    const at: Readonly<Record<string, string>> = { entityOutsideMarkup: "src/zz.ts", escapeOutsideDecodedKinds: "scripts/zz.sh", numericWithoutSemicolon: "docs/zz.html", namedWithoutSemicolon: "docs/zz.html" };
     return json({ residual: "R-INTERIOR", quiet: Object.fromEntries(Object.entries(interior).map(([kind, text]) => [kind, verdictOf(at[kind] ?? "docs/zz.md", Buffer.from(text, "utf8")).forms.length === 0])) });
   },
   Q7: () => {
@@ -1191,24 +2265,109 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       substitution: "export const n = `Observer$" + "{part}Boundary`;\n",
       runtimeJoin: 'export const n = ["Obs", "erver", "Boundary"].join("");\n',
       charCode: 'export const n = String.fromCharCode(79) + "bserverBoundary";\n',
+      trailingComputed: 'export const n = "\\u004fbserver" + "Boundary" + part;\n',
+      leadingComputed: 'export const n = part + "\\u004fbserver" + "Boundary";\n',
+      middleComputed: 'export const n = "\\u004fbserver" + part + "Boundary";\n',
     };
-    return json({ residual: "R-COMPUTED", quiet: Object.fromEntries(Object.entries(computed).map(([kind, text]) => [kind, verdictOf("src/zz.ts", Buffer.from(text, "utf8")).forms.length === 0])) });
+    return json({ residual: "R-COMPUTED", plants: computed, quiet: Object.fromEntries(Object.entries(computed).map(([kind, text]) => [kind, verdictOf("src/zz.ts", Buffer.from(text, "utf8")).forms.length === 0])) });
   },
   Q8: () => {
     const { verbs } = docs09Furnace();
     const controlCalls = verbCalls(parse(CONTROL, textOf(CONTROL)), verbs);
-    return json({ residual: "R-OTHER-MODULE", judgedModule: OBSERVER, otherModuleCallsExcludedVerbs: controlCalls.length > 0 });
+    const globalText = GLOBAL_PLANT.bytes.toString("utf8");
+    return json({
+      residual: "R-OTHER-MODULE",
+      judgedModule: OBSERVER,
+      otherModuleCallsExcludedVerbs: controlCalls.length > 0,
+      globalPlant: { reads: augmentedReads(GLOBAL_PLANT.path, globalText), declares: otherModuleClients(GLOBAL_PLANT.path, globalText), globalObjects: globalObjects(GLOBAL_PLANT.path, globalText) },
+      listedGlobalObjects: piEntries()
+        .filter(item => SCRIPT.test(item.path))
+        .flatMap(item => globalObjects(item.path, item.bytes.toString("utf8"))),
+    });
   },
   Q9: () => {
     const computedKey = planted(observerText(), "close():void {this.shutdown.abort();this.markStale();}", 'close():void {const key="cli"+"ent";void (this as unknown as Record<string,unknown>)[key];this.shutdown.abort();this.markStale();}');
     const uses = clientUses(parse(OBSERVER, computedKey));
     return json({ residual: "R-COMPUTED-ACCESS", reads: uses.reads.length, unchained: uses.unchained });
   },
+  Q10: () => {
+    const text = textOf(DOCS09);
+    const real = docs09Reading(text);
+    const blocksOf = (page: string): readonly RenderedBlock[] => docsSection(page, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]).blocks;
+    const uncounted: Readonly<Record<string, string>> = {
+      paraphrase: "> Pi's Furnace observer also follows each Run's event stream.",
+      confusable: `> The external Furn${String.fromCodePoint(0x0430)}ce reader uses explicit bounded status/attempt/log-reference/event-stream p${String.fromCodePoint(0x043e)}lling.`,
+      quoteNestedTable: `> | Reader |\n> | --- |\n> | ${widened(FURNACE_READS)} |`,
+      itemNestedTable: `- note\n\n  | Reader |\n  | --- |\n  | ${widened(FURNACE_READS)} |`,
+      linkTitle: `[see](https://example.invalid "${widened(FURNACE_READS)}")`,
+      apostropheLetter: `> ${possessive(String.fromCodePoint(0x2bc))}`,
+      apostropheQuote: `> ${possessive(String.fromCodePoint(0x2018))}`,
+      privateUse: `> ${spelledInside(String.fromCodePoint(0xe000))}`,
+      unassigned: `> ${spelledInside(String.fromCodePoint(0x378))}`,
+      apostropheGrave: `> ${possessive(String.fromCodePoint(0x60))}`,
+      apostropheAcute: `> ${possessive(String.fromCodePoint(0xb4))}`,
+      apostrophePrime: `> ${possessive(String.fromCodePoint(0x2032))}`,
+      apostropheTurnedComma: `> ${possessive(String.fromCodePoint(0x2bb))}`,
+      apostropheFullWidthGrave: `> ${possessive(String.fromCodePoint(0xff40))}`,
+      apostropheArmenian: `> ${possessive(String.fromCodePoint(0x55a))}`,
+      quoteQuoteTable: `> > | Reader |\n> > | --- |\n> > | ${widened(FURNACE_READS)} |`,
+      itemItemTable: `- a\n  - b\n\n    | Reader |\n    | --- |\n    | ${widened(FURNACE_READS)} |`,
+      tableReference: "> | Reader |\n> | --- |\n> | Pi&shy;docs. |",
+      tableControl: "> | Reader |\n> | --- |\n> | Pi&#1;docs. |",
+      imageTitle: `![x](https://example.invalid/x.png "${widened(FURNACE_READS)}")`,
+      definitionTitle: `[ref]: https://example.invalid "${widened(FURNACE_READS)}"`,
+    };
+    const pages = Object.entries(uncounted).map(([kind, block]): [string, string] => [kind, afterFurnace(text, block)]);
+    const quiet = Object.fromEntries(pages.map(([kind, page]) => [kind, isDeepStrictEqual(docs09Reading(page), real)]));
+    const blockPinReds = Object.fromEntries(pages.map(([kind, page]) => [kind, !isDeepStrictEqual(blocksOf(page), blocksOf(text))]));
+    expect(
+      Object.keys(quiet).filter(kind => quiet[kind] !== true),
+      "every R-DOCS-UNCOUNTED plant reads as the real page reads: the subject-word reading does not count it (cut #4)",
+    ).toEqual([]);
+    expect(
+      Object.keys(blockPinReds).filter(kind => blockPinReds[kind] !== true),
+      "every R-DOCS-UNCOUNTED plant changes the section's block list, which the block pin reds on docs/09 itself (cut #4)",
+    ).toEqual([]);
+    expect(
+      [0xb4, 0xff40].map(code => String.fromCodePoint(code).normalize("NFKC")),
+      "NFKC folds U+00B4 and U+FF40, each to no apostrophe the possessive reads (cut #4 F2)",
+    ).toEqual([String.fromCodePoint(0x20, 0x301), String.fromCodePoint(0x60)]);
+    return json({ residual: "R-DOCS-UNCOUNTED", plants: uncounted, quiet, blockPinReds });
+  },
+  Q11: () => {
+    const text = textOf(DOCS09);
+    const real = docs09Reading(text);
+    const next = "\n## Derived view indexes\n";
+    expect(text.includes(next), "docs/09 still holds the other section the plant writes into").toBe(true);
+    const otherSection = text.replace(next, () => `\n${widened(FURNACE_READS)}\n${next}`);
+    const nextHeading = afterFurnace(text, `## ${widened(FURNACE_READS)}`);
+    const readerAdapters = docsSection(text, "Reader adapters", 2, [DOCS09_TITLE])
+      .blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []))
+      .filter(item => item.startsWith("Furnace:"));
+    expect(
+      readerAdapters.filter(item => item.includes("event stream")),
+      "docs/09's Reader adapters list names a Furnace event stream, outside the bound section, which the reading does not read (R-DOCS-ELSEWHERE, cut #4)",
+    ).toHaveLength(1);
+    return json({
+      residual: "R-DOCS-ELSEWHERE",
+      quiet: { otherSection: isDeepStrictEqual(docs09Reading(otherSection), real), nextHeading: isDeepStrictEqual(docs09Reading(nextHeading), real) },
+      readerAdapters,
+    });
+  },
+  Q12: () => {
+    const listed = piEntries().filter(item => SCRIPT.test(item.path) && item.path !== OBSERVER);
+    return json({
+      residual: "R-ALIASED-MODULE",
+      plantReads: augmentedReads(ALIAS_PLANT.path, ALIAS_PLANT.bytes.toString("utf8")),
+      plantDeclares: otherModuleClients(ALIAS_PLANT.path, ALIAS_PLANT.bytes.toString("utf8")),
+      listedDeclarations: listed.flatMap(item => otherModuleClients(item.path, item.bytes.toString("utf8"))),
+    });
+  },
 };
 
 describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSURANCE-R4, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "W:3", "Z:3", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "W:3", "Z:3", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     const quoted = ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins);
@@ -1229,6 +2388,8 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         dash: DASH,
         recordedStatus: RECORDED_STATUS,
         acceptance: ACCEPTANCE,
+        filingSha256: FILING_SHA256,
+        ownerLeads: [...OWNER_LEADS],
         armed: ARMED,
         tracker: TRACKER,
         holders: [...HOLDERS],
@@ -1239,6 +2400,8 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         docs09: DOCS09,
         docs09Section: DOCS09_SECTION,
         docs09Title: DOCS09_TITLE,
+        restated: [...RESTATED],
+        numericReferences: Object.fromEntries([...NUMERIC_REFERENCES].map(([from, to]) => [`0x${from.toString(16)}`, `0x${to.toString(16)}`])),
         sdk: SDK,
         tarball: TARBALL,
         lockKey: LOCK_KEY,
@@ -1248,6 +2411,12 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
         piPlants: PI_PLANTS,
         pinPlant: PIN_PLANT,
         augmentationPlant: { path: AUGMENTATION_PLANT.path, text: AUGMENTATION_PLANT.bytes.toString("utf8") },
+        heritagePlant: { path: HERITAGE_PLANT.path, text: HERITAGE_PLANT.bytes.toString("utf8") },
+        classPlant: { path: CLASS_PLANT.path, text: CLASS_PLANT.bytes.toString("utf8") },
+        classExtendsPlant: { path: CLASS_EXTENDS_PLANT.path, text: CLASS_EXTENDS_PLANT.bytes.toString("utf8") },
+        kindsPlant: { path: KINDS_PLANT.path, text: KINDS_PLANT.bytes.toString("utf8") },
+        aliasPlant: { path: ALIAS_PLANT.path, text: ALIAS_PLANT.bytes.toString("utf8") },
+        globalPlant: { path: GLOBAL_PLANT.path, text: GLOBAL_PLANT.bytes.toString("utf8") },
         anchors: [...ANCHORS],
         readers: [...READERS],
         residuals: RESIDUALS,
@@ -1286,6 +2455,16 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
     expect(weakened, "the weakening control changes the acceptance").not.toBe(ACCEPTANCE);
     expect(ownerFiling(`${notes.replace(ACCEPTANCE, weakened)}\n\nA later note quoting it: ${ACCEPTANCE}`).includes(ACCEPTANCE), "a replaced owner sentence is not masked by a later verbatim quote (G22b)").toBe(false);
     expect(ownerFiling(`${notes}\n\nLANDED (a later note quoting it: ${ACCEPTANCE})`), "an appended note leaves the owner filing as it was (G22a)").toBe(filing);
+    const digest = (text: string): string => createHash("sha256").update(text).digest("hex").slice(0, 16);
+    const leads = (text: string): number[] => OWNER_LEADS.map(lead => text.split(lead).length - 1);
+    expect(digest(filing), "the owner filing is the one this file binds, byte for byte: an edit inside its two blocks reds (wb-s876 F3)").toBe(FILING_SHA256);
+    expect(leads(filing), "each bound owner sentence stands in the filing exactly once, by its lead (wb-s876 F3)").toEqual(OWNER_LEADS.map(() => 1));
+    const [head = "", body = "", ...later] = notes.split("\n\n");
+    const duplicated = ownerFiling([head, `${body.replace(ACCEPTANCE, weakened)}\n(owner restatement) ${ACCEPTANCE}`, ...later].join("\n\n"));
+    expect(
+      { verbatimKept: duplicated.includes(ACCEPTANCE), sameDigest: digest(duplicated) === FILING_SHA256, leads: leads(duplicated) },
+      "an in-filing duplicate - a weakened sentence restated verbatim inside the same block - reads as an edit and a second lead (L2-F7a)",
+    ).toStrictEqual({ verbatimKept: true, sameDigest: false, leads: [1, 1, 1, 2] });
     const cited = /Today the external Furnace reader is explicit bounded (\S+) polling \(docs\/09 § ([^;]+);/.exec(filing);
     expect(DOCS09_SECTION.startsWith(`## ${cited?.[2] ?? "-"}`), "the notes cite docs/09's section").toBe(true);
     const furnace = docs09Furnace();
