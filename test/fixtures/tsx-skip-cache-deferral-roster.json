@@ -392,6 +392,14 @@
      "alpha"
     ]
    },
+   "listIdLengths": {
+    "openings": 1,
+    "ids": [
+     "a",
+     "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "alpha"
+    ]
+   },
    "listStaleBefore": {
     "openings": 2,
     "ids": [
