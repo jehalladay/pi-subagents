@@ -75,10 +75,11 @@
  *    fixture; each of the 23 MUTANTS fails at least one check, and every check fires.
  *  A1 drives the bound admitters (none) and the synthetic ones over every listed fixture. A2 on F-SCHEMA and F-CHECKPOINT,
  *    exact-set membership refuses gp's shipped runtime schema and one same-length checkpoint id sharing the pinned id's form
- *    prefix, and M-SCHEMA-FAMILY and M-CHECKPOINT-PREFIX admit them; other membership bugs (G1 to G4, G15 and G23 below) pass
- *    the judge. A3 on the four digest fixtures, byte hashing refuses each presentation the reply did not hash, and
- *    M-DIGEST-RESERIALIZED fails the judge on exactly the three whitespace-only ones (it admits them); hashing decoded text (G12)
- *    and comparing the digest case-insensitively (G17) pass the judge.
+ *    prefix, and M-SCHEMA-FAMILY and M-CHECKPOINT-PREFIX admit them; other membership bugs (G1 to G4, G15, G23, G24 and G27
+ *    below) pass the judge. A3 on the four digest fixtures, byte hashing refuses each presentation the reply did not hash, and
+ *    M-DIGEST-RESERIALIZED fails the judge on exactly the three whitespace-only ones (it admits them); hashing decoded text
+ *    (G12), comparing the digest case-insensitively (G17), trimming it (G25) and comparing its first 23 characters (G26) pass
+ *    the judge.
  *    A4 on F-ACTOR, the proposal's worker (read from the presented snapshot's can_execute relation) is outside the scope and
  *    the reply is refused naming actor; a relation with two workers (G8) passes the judge. A5 on F-SUPPORT, a relation Pi
  *    never offered but the reply's own candidates claim is refused naming support, and M-SUPPORT-FROM-REPLY admits it; a
@@ -135,12 +136,15 @@
  * a quote's edge included; the frame's top-level key names (schema, ok and result; any further top-level key must be a measured
  * frame key) and its decision path (the decision key under result, holding the vendored receipt); and the cited quotes in the
  * producer lines with each cited pin as the producer sha's prefix. They do not read the split of a label into pins
- * (R-PARTITION), row Q, the residual members, the producer block beyond the cited quotes and the sha's prefix, a key the
- * frame's result holds beside the decision, or which pin carries a field beyond its quote containing the field (R-UNREAD), the
+ * (R-PARTITION), row Q, the residual members, the producer block beyond the cited quotes and the sha's prefix, the frame's
+ * whitespace and key order (the decision's included), a key the frame's result holds beside the decision, a field-pin entry
+ * for a name that is not a field, or which pin carries a field beyond its quote containing the field (R-UNREAD), the
  * witnesses, the test titles, the checks, the mutants, the fixtures, or the frame reader (F-ADMIT, a census check, holds the
  * reader to the frame the census writes). The last case reads the vitest task tree (every registered test, in roster order, in
  * run mode, ran before it) and REACHED (every pin reached its witness compare).
- * RESIDUALS (named families, each member a pinned quiet row; an instrument that starts reading a member reds its row):
+ * RESIDUALS (named families, each with a pinned quiet row over its listed members; an instrument that starts reading a listed
+ * member reds its row; a family's definition reaches further than its list, and the census claims nothing about an instance
+ * the list does not name):
  * R-SPELLING (Q1, a receipt field the vocabulary reader does not read: composed from parts at run time, concatenated,
  * a Unicode-escaped identifier P3, or the upper-case constant of another producer; a vocabulary-free admitter (P4),
  * including a gp-spawning one (P5), is outside T1's text trigger; both are pinned as quiet input text here, not as a
@@ -149,29 +153,46 @@
  * carries no exported budget and no check reads the reply's runtime_budget), R-SIDE-PATH (Q4, an admitter that reports a
  * refused reply's proposal outside its journal: the armed check reads the returned results and rows only), R-JUDGE (Q5, an
  * admitter the judge passes on all fifteen fixtures with HONEST's outcome on each, whose journal, as a property read sees it
- * (prototypes included), departs from HONEST's on its own input: D1 to D12, D15, D17 and D23, with F-SCHEMA's call as D9 and
- * D13 and F-TIMEOUT's as D14), R-PARTITION (Q6, a pin merged into its sibling with its quote re-homed, or the boundary between
- * two sibling pins moved with both quotes re-cut: every reading holds, and the same merge with the sibling's quote left in
- * place, or the same move with the right-hand quote left in place, reds one) and R-UNREAD (Q7, an edit of a model part no
- * reading takes, or of the part of one a reading passes over: every reading holds and the model changes).
+ * (prototypes included), departs from HONEST's on its own input: D1 to D12, D15, D17 and D23 to D27, with F-SCHEMA's call as
+ * D9 and D13 and F-TIMEOUT's as D14), R-PARTITION (Q6, a pin merged into its sibling with its quote re-homed, or the boundary
+ * between two sibling pins moved with both quotes re-cut: every reading holds, and the same merge with the sibling's quote
+ * left in place, or the same move with the right-hand quote left in place, reds one) and R-UNREAD (Q7, an edit of a model part
+ * no reading takes, or of the part of one a reading passes over: every reading holds and the model changes).
  * R-JUDGE members: G1: schema substring membership; G2: reverse checkpoint prefix; G3: schema compared case-insensitively;
  * G4: any member of the decision receipt's family, including one gp has not shipped; G5: CLI frame schema ignored; G6: CLI ok
  * coerced truthy; G7: support searched as a substring of joined ids; G8: actor validation fails open on a relation with multiple
  * workers; G9: a refusal inherits a decision on its prototype; G10: a last-line salvage after noisy stdout; G11: null exit
  * status treated as success; G12: digest of decoded UTF-8 text; G13: a refused reply's receipt rows carry its decision;
  * G14: an unavailable result carries the complete stdout's decision; G15: checkpoint compared case-insensitively;
- * G17: graph_digest compared case-insensitively; G23: schema trimmed before the membership check (G15, G17 and G23 keep the
- * numbers of the landing-663 gate's probes). Their survival limits the synthetic judge, not the
- * independently specified host admission requirement. The first future admitter must add inputs for these cases or explicitly
- * re-scope its own claim. A bound admitter is run over the fifteen fixtures (A1) and must be a module that spells the
- * vocabulary (T1); binding one also changes the frozen admitter literal (rule 16).
- * R-PARTITION members: C6-mA: A5 into A4; C6-mT: T2 into T1; C6-mB: B2 into B1; C6-mC: C2 into C1; C6-sT: the boundary of T1
- * and T2 moved, 'reply' into T2; C6-sB: the boundary of B1 and B2 moved, 'naming' into B1.
+ * G17: graph_digest compared case-insensitively; G23: schema trimmed before the membership check; G24: checkpoint trimmed
+ * before the membership check; G25: graph_digest trimmed before the comparison; G26: graph_digest compared on its first 23
+ * characters; G27: checkpoint compared after its form prefix (G15, G17 and G23 keep the numbers of the landing-663 gate's
+ * probes, and G24 to G27 stand for the landing-705 gate's jCkptTrim, jDigestTrim, jDigestPrefix and jCkptHexOnly). Their
+ * survival limits the synthetic judge, not the independently specified host admission requirement. The first future admitter
+ * must add inputs for these cases or explicitly re-scope its own claim. A bound admitter is run over the fifteen fixtures (A1)
+ * and must be a module that spells the vocabulary (T1); binding one also changes the frozen admitter literal (rule 16).
+ * R-PARTITION members: C6-mA: A5 into A4; C6-mT: T2 into T1; C6-mB: B2 into B1; C6-mC: C2 into C1; mT32: T3 into T2; mA21:
+ * A2 into A1; mB32: B3 into B2; mT12: T1 into T2; mT23: T2 into T3; mA12: A1 into A2; mA45: A4 into A5; mB12: B1 into B2;
+ * mB23: B2 into B3; mC12: C1 into C2; C6-sT: the boundary of T1 and T2 moved, 'reply' into T2; C6-sB: the boundary of B1 and
+ * B2 moved, 'naming' into B1; sA12: the boundary of A1 and A2 moved, 'requires' into A2; sA45: the boundary of A4 and A5
+ * moved, 'and' into A4; sC12: the boundary of C1 and C2 moved, 'and' into C1; sT23: the boundary of T2 and T3 moved, 'schema'
+ * into T3; sT12r: the boundary of T1 and T2 moved the other way, 'artifact' into T1; sB23: the boundary of B2 and B3 moved,
+ * 'and' into B2; sB12r: the boundary of B1 and B2 moved the other way, 'refusal' into B2; sT23r: the boundary of T2 and T3
+ * moved the other way, 'a' into T2; sA45r: the boundary of A4 and A5 moved the other way, 'scope' into A5; sB23r: the
+ * boundary of B2 and B3 moved the other way, 'field' into B3; sC12r: the boundary of C1 and C2 moved the other way,
+ * 'unavailable' into C2 (mT32, mA21, mB32, sA12, sA45, sC12, sT23, sT12r, sB23 and sB12r keep the names of the landing-705
+ * gate's probes; mT12, mT23, mA12, mA45, mB12, mB23, mC12, sT23r, sA45r, sB23r and sC12r were added from wb-54hd's survey of
+ * one-pin merges and one-word boundary moves).
  * R-UNREAD members: C6-labelQ: row Q's label; C6-quoteQ: Q3's quote; C6-Q4: pin Q4 with its quote and members; C6-Q: row Q
  * whole with every residual member; C6-member: the Q1 member composed; PL1: the producer's line 11; PL2: text appended to
  * line 13 outside its quote; PL4: the producer blob id; PL5: text appended to line 25 outside its quote; PL-sha-suffix: the
  * producer sha's last hex digit changed, past every cited pin; G-frame-nested: a key nested beside the decision in the frame's
- * result; G-fieldpin-T2: schema's pin moved to T2, whose quote also contains the field.
+ * result; G-fieldpin-T2: schema's pin moved to T2, whose quote also contains the field; uPath: the producer path's directory
+ * changed, '/README.md' kept; uKeyOrder: the frame's top-level keys reordered; uPretty: the frame pretty-printed;
+ * uDecisionKeyOrder: the decision receipt's keys reversed in the frame; uNestedTwo: two keys nested beside the decision in the
+ * frame's result; uSha13: the producer sha's 13th hex digit changed, just past the cited 12-hex pin; uLine25Prefix: text
+ * prepended to line 25 outside its quote; uLine13Prefix: text prepended to line 13 outside its quote; uFieldPinsExtra: a
+ * field-pin entry for a name that is not a field (uPath to uFieldPinsExtra keep the names of the landing-705 gate's probes).
  * NOT CLAIMED (limits of this file's own literals, not reading modes: no source outside the census and its roster names
  * them): an edit of this file and the roster together that changes only literals no reading takes, namely a BOUND, R-JUDGE,
  * R-PARTITION, R-UNREAD or other residual member removed from its table, the frozen literal and the roster; a check removed
@@ -813,7 +834,8 @@ const D12_BYTES = new Uint8Array(
 /** An id with the hex after its form prefix upper-cased (D15's checkpoint and D17's digest). */
 const hexUpper = (id: string): string => `${prefixOf(id)}${id.slice(prefixOf(id).length).toUpperCase()}`;
 /** Each R-JUDGE member's own input, where it departs from HONEST (D9 and D13 are F-SCHEMA's call, D14 is F-TIMEOUT's; D15, D17
- * and D23 keep the numbers of the landing-663 gate's probes). */
+ * and D23 keep the numbers of the landing-663 gate's probes; D24 to D27 are the inputs of G24 to G27, which stand for the
+ * landing-705 gate's four). */
 const DEPARTURES: Readonly<Record<string, AdmissionCall>> = {
   D1: callOf({ worker: exited(0, envelopeOf(edited({ schema: "graphpolicy.receipt.decision" }))) }),
   D2: callOf({ worker: exited(0, envelopeOf(edited({ checkpoint_digest: prefixOf(PINNED_CHECKPOINT) }))) }),
@@ -832,6 +854,10 @@ const DEPARTURES: Readonly<Record<string, AdmissionCall>> = {
   D15: callOf({ worker: exited(0, envelopeOf(edited({ checkpoint_digest: hexUpper(PINNED_CHECKPOINT) }))) }),
   D17: callOf({ worker: exited(0, envelopeOf(edited({ graph_digest: hexUpper(String(own(RECEIPT, "graph_digest"))) }))) }),
   D23: callOf({ worker: exited(0, envelopeOf(edited({ schema: `${PINNED_SCHEMA} ` }))) }),
+  D24: callOf({ worker: exited(0, envelopeOf(edited({ checkpoint_digest: `${PINNED_CHECKPOINT} ` }))) }),
+  D25: callOf({ worker: exited(0, envelopeOf(edited({ graph_digest: `${String(own(RECEIPT, "graph_digest"))} ` }))) }),
+  D26: callOf({ worker: exited(0, envelopeOf(edited({ graph_digest: `${String(own(RECEIPT, "graph_digest")).slice(0, 23)}${"0".repeat(64 - 16)}` }))) }),
+  D27: callOf({ worker: exited(0, envelopeOf(edited({ checkpoint_digest: `graphpolicy.checkpoint.c2:${PINNED_CHECKPOINT.slice(prefixOf(PINNED_CHECKPOINT).length)}` }))) }),
 };
 /** R-JUDGE (Q5): each member passes every check on all fifteen fixtures with HONEST's outcomes, and departs on its own input. */
 const JUDGE_SURVIVORS: Readonly<Record<string, { readonly about: string; readonly input: string; readonly admit: Admitter }>> = {
@@ -919,6 +945,32 @@ const JUDGE_SURVIVORS: Readonly<Record<string, { readonly about: string; readonl
     }),
   },
   G23: { about: "schema trimmed before the membership check", input: "D23", admit: departing({ schemaOk: (id, call) => call.schemas.includes(id.trim()) }) },
+  G24: { about: "checkpoint trimmed before the membership check", input: "D24", admit: departing({ checkpointOk: (id, call) => call.checkpoints.includes(id.trim()) }) },
+  G25: {
+    about: "graph_digest trimmed before the comparison",
+    input: "D25",
+    admit: departing({
+      digestOk: (receipt, call) => {
+        const digest = own(receipt, "graph_digest");
+        return typeof digest === "string" && digest.trim() === keyOf(call.presented);
+      },
+    }),
+  },
+  G26: {
+    about: "graph_digest compared on its first 23 characters",
+    input: "D26",
+    admit: departing({
+      digestOk: (receipt, call) => {
+        const digest = own(receipt, "graph_digest");
+        return typeof digest === "string" && digest.slice(0, 23) === keyOf(call.presented).slice(0, 23);
+      },
+    }),
+  },
+  G27: {
+    about: "checkpoint compared after its form prefix",
+    input: "D27",
+    admit: departing({ checkpointOk: (id, call) => call.checkpoints.some(checkpoint => checkpoint.slice(prefixOf(checkpoint).length) === id.slice(prefixOf(id).length)) }),
+  },
 };
 
 // ---- the judged rows (rule 16) ----
@@ -1026,12 +1078,23 @@ const causeRemoved = (model: AnchorModel, cause: string): AnchorModel => ({ ...m
 const lined = (model: AnchorModel, line: string, text: string): AnchorModel => ({ ...model, producer: { ...model.producer, lines: { ...model.producer.lines, [line]: text } } });
 const frameText = (frame: Readonly<Record<string, unknown>>): string => `${JSON.stringify(frame)}\n`;
 
-/** R-PARTITION (Q6): a pin merged into its sibling, its quote re-homed into the sibling's (the gate's coordinated merges). */
+/** R-PARTITION (Q6): a pin merged into its sibling, its quote re-homed into the sibling's (the gates' coordinated merges, and the
+ * merges wb-54hd's survey of one-pin merges found quiet). */
 const PARTITIONS: Readonly<Record<string, { readonly row: string; readonly into: string; readonly from: string; readonly quote: string }>> = {
   "C6-mA": { row: "A", into: "A4", from: "A5", quote: "actor in scope and proposed action inside the exported support" },
   "C6-mT": { row: "T", into: "T1", from: "T2", quote: "When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema" },
   "C6-mB": { row: "B", into: "B1", from: "B2", quote: "each violation yields exactly one typed refusal naming only the field" },
   "C6-mC": { row: "C", into: "C1", from: "C2", quote: "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success" },
+  mT32: { row: "T", into: "T2", from: "T3", quote: "artifact: released GP reply schema + a Pi decision point" },
+  mA21: { row: "A", into: "A1", from: "A2", quote: "a reader-adapter test over a fixture reply asserts admission requires schema id and checkpoint id in the pinned set" },
+  mB32: { row: "B", into: "B2", from: "B3", quote: "naming only the field and no decision object" },
+  mT12: { row: "T", into: "T2", from: "T1", quote: "When Pi admits a GraphPolicyCLI reply (artifact: released GP reply schema" },
+  mT23: { row: "T", into: "T3", from: "T2", quote: "artifact: released GP reply schema + a Pi decision point" },
+  mA12: { row: "A", into: "A2", from: "A1", quote: "a reader-adapter test over a fixture reply asserts admission requires schema id and checkpoint id in the pinned set" },
+  mA45: { row: "A", into: "A5", from: "A4", quote: "actor in scope and proposed action inside the exported support" },
+  mB12: { row: "B", into: "B2", from: "B1", quote: "each violation yields exactly one typed refusal naming only the field" },
+  mB23: { row: "B", into: "B3", from: "B2", quote: "naming only the field and no decision object" },
+  mC12: { row: "C", into: "C2", from: "C1", quote: "a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success" },
 };
 interface Resplit {
   readonly left: string;
@@ -1039,10 +1102,22 @@ interface Resplit {
   /** The left pin's quote and the right pin's quote once the boundary between them moved. */
   readonly quotes: readonly [string, string];
 }
-/** R-PARTITION (Q6) too: the boundary between two sibling pins moved, both quotes re-cut (the landing-663 gate's re-splits). */
+/** R-PARTITION (Q6) too: the boundary between two sibling pins moved, both quotes re-cut (the landing-663 and landing-705 gates'
+ * re-splits, and the one-word moves wb-54hd's survey found quiet). */
 const RESPLITS: Readonly<Record<string, Resplit>> = {
   "C6-sT": { left: "T1", right: "T2", quotes: ["When Pi admits a GraphPolicyCLI", "reply (artifact: released GP reply schema"] },
   "C6-sB": { left: "B1", right: "B2", quotes: ["each violation yields exactly one typed refusal naming", "only the field"] },
+  sA12: { left: "A1", right: "A2", quotes: ["a reader-adapter test over a fixture reply asserts admission", "requires schema id and checkpoint id in the pinned set"] },
+  sA45: { left: "A4", right: "A5", quotes: ["actor in scope and", "proposed action inside the exported support"] },
+  sC12: { left: "C1", right: "C2", quotes: ["a GP worker timeout, non-zero exit or malformed stdout yields typed unavailable and", "no receipt row claims success"] },
+  sT23: { left: "T2", right: "T3", quotes: ["artifact: released GP reply", "schema + a Pi decision point"] },
+  sT12r: { left: "T1", right: "T2", quotes: ["When Pi admits a GraphPolicyCLI reply (artifact", "released GP reply schema"] },
+  sB23: { left: "B2", right: "B3", quotes: ["naming only the field and", "no decision object"] },
+  sB12r: { left: "B1", right: "B2", quotes: ["each violation yields exactly one typed", "refusal naming only the field"] },
+  sT23r: { left: "T2", right: "T3", quotes: ["artifact: released GP reply schema + a", "Pi decision point"] },
+  sA45r: { left: "A4", right: "A5", quotes: ["actor in", "scope and proposed action inside the exported support"] },
+  sB23r: { left: "B2", right: "B3", quotes: ["naming only the", "field and no decision object"] },
+  sC12r: { left: "C1", right: "C2", quotes: ["a GP worker timeout, non-zero exit or malformed stdout yields typed", "unavailable and no receipt row claims success"] },
 };
 /** A moved boundary: the left pin's quote re-cut, and the right pin's too unless it is left in place. */
 function resplit(model: AnchorModel, member: Resplit, rightKept = false): AnchorModel {
@@ -1050,7 +1125,7 @@ function resplit(model: AnchorModel, member: Resplit, rightKept = false): Anchor
   return rightKept ? moved : quoted(moved, member.right, member.quotes[1]);
 }
 /** R-UNREAD (Q7): edits of model parts no outside reading takes, or of the part of one a reading passes over (the gates' coordinated edits
- * of row Q, the residual list, the producer block, the frame's result and a field's pin). */
+ * of row Q, the residual list, the producer block, the frame's text and result, and the field pins). */
 const UNREAD: Readonly<Record<string, Edit>> = {
   "C6-labelQ": model => relabeled(model, "Q", "the residuals' quiet rows"),
   "C6-quoteQ": model => quoted(model, "Q3", "R-RESOURCES"),
@@ -1064,6 +1139,15 @@ const UNREAD: Readonly<Record<string, Edit>> = {
   "PL-sha-suffix": model => ({ ...model, producer: { ...model.producer, sha: `${model.producer.sha.slice(0, -1)}${model.producer.sha.endsWith("0") ? "1" : "0"}` } }),
   "G-frame-nested": model => ({ ...model, frame: frameText({ schema: model.envelope, ok: true, result: { decision: RECEIPT, probe: 1 } }) }),
   "G-fieldpin-T2": model => ({ ...model, fieldPins: { ...model.fieldPins, schema: "T2" } }),
+  uPath: model => ({ ...model, producer: { ...model.producer, path: model.producer.path.replace(/[^/]+(?=\/README\.md$)/, "another-program") } }),
+  uKeyOrder: model => ({ ...model, frame: frameText({ result: { decision: RECEIPT }, ok: true, schema: model.envelope }) }),
+  uPretty: model => ({ ...model, frame: `${JSON.stringify(parsedOf(model.frame), null, 2)}\n` }),
+  uDecisionKeyOrder: model => ({ ...model, frame: frameText({ schema: model.envelope, ok: true, result: { decision: Object.fromEntries(Object.entries(RECEIPT).reverse()) } }) }),
+  uNestedTwo: model => ({ ...model, frame: frameText({ schema: model.envelope, ok: true, result: { decision: RECEIPT, probe: 1, trace: 2 } }) }),
+  uSha13: model => ({ ...model, producer: { ...model.producer, sha: `${model.producer.sha.slice(0, 12)}${model.producer.sha.charAt(12) === "0" ? "1" : "0"}${model.producer.sha.slice(13)}` } }),
+  uLine25Prefix: model => lined(model, "25", `(an edit outside the quote) ${model.producer.lines["25"] ?? ""}`),
+  uLine13Prefix: model => lined(model, "13", `(an edit outside the quote) ${model.producer.lines["13"] ?? ""}`),
+  uFieldPinsExtra: model => ({ ...model, fieldPins: { ...model.fieldPins, extra: "A1" } }),
 };
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   Q1: Object.keys(SPELLINGS),
@@ -1684,7 +1768,7 @@ describe(SUITE, () => {
 
   it("rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens, the admitters, the readings and the BOUND table are frozen at their measured shape", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "A:5", "B:3", "C:2", "Q:7"]);
-    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:6", "Q2:1", "Q3:1", "Q4:1", "Q5:17", "Q6:6", "Q7:12"]);
+    expect(Object.entries(RESIDUALS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:6", "Q2:1", "Q3:1", "Q4:1", "Q5:21", "Q6:27", "Q7:21"]);
     expect(Object.keys(QUOTES), "one quote per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(Object.keys(IMPL), "one case per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect(FIELDS).toEqual(["schema", "checkpoint", "snapshotDigest", "actor", "support"]);
@@ -1847,10 +1931,16 @@ describe(SUITE, () => {
       "So the readings hold by equality the labels of rows T, A, B and C, the requirement tag, the carry note, the cited line numbers, the two words, the pinned ids, the frame schema id, the roster's statement and A3's quote; by count, order and containment the five fields and the three causes; each quote's text once the row's split into pins is given, a separator at a quote's edge included; the frame's top-level key names (schema, ok and result; any further top-level key must be a measured frame key) and its decision path (the decision key under result, holding the vendored receipt); and the cited quotes in the producer lines with each cited pin as the producer sha's prefix.",
     );
     expect(normalized).toContain(
-      "They do not read the split of a label into pins (R-PARTITION), row Q, the residual members, the producer block beyond the cited quotes and the sha's prefix, a key the frame's result holds beside the decision, or which pin carries a field beyond its quote containing the field (R-UNREAD), the witnesses, the test titles, the checks, the mutants, the fixtures, or the frame reader (F-ADMIT, a census check, holds the reader to the frame the census writes).",
+      "They do not read the split of a label into pins (R-PARTITION), row Q, the residual members, the producer block beyond the cited quotes and the sha's prefix, the frame's whitespace and key order (the decision's included), a key the frame's result holds beside the decision, a field-pin entry for a name that is not a field, or which pin carries a field beyond its quote containing the field (R-UNREAD), the witnesses, the test titles, the checks, the mutants, the fixtures, or the frame reader (F-ADMIT, a census check, holds the reader to the frame the census writes).",
     );
     for (const name of [...Object.keys(PARTITIONS), ...Object.keys(RESPLITS), ...Object.keys(UNREAD)]) expect(normalized, `${name} is named`).toContain(`${name}: `);
-    for (const retired of ["So a field, a cause, a pin or a row removed", "and the two words; they do not bind", "Pi's own source binds the words", "So the outside anchors bind"]) {
+    for (const retired of [
+      "So a field, a cause, a pin or a row removed",
+      "and the two words; they do not bind",
+      "Pi's own source binds the words",
+      "So the outside anchors bind",
+      "the sha's prefix, a key the frame's result holds beside the decision, or which pin",
+    ]) {
       expect(normalized, "a retired summary").not.toContain(retired);
     }
   });
@@ -1906,9 +1996,10 @@ describe(SUITE, () => {
       "the case asserts that each reds the reading the BOUND table names beside it; every reading is red under at least one member.",
       "Twenty-two of the 27 READINGS compare part of the model with a file outside the census and its roster, through fixed parse patterns (the acceptance split, clause (c)'s pattern, the citation pattern and PRODUCER_SPEC's capture id).",
       "The other five compare model parts with one another: tiling T, tiling A, tiling B and tiling C a row's pin quotes with its label (through the separator class), and field pins a field's pin quote with the field; they reach a file outside only jointly with the label readings (trigger and clauses) and the field readings (field count and field order), which the outside-anchor case asserts with them at once.",
-      "departs from HONEST's on its own input: D1 to D12, D15, D17 and D23,",
+      "departs from HONEST's on its own input: D1 to D12, D15, D17 and D23 to D27,",
       "or the boundary between two sibling pins moved with both quotes re-cut: every reading holds, and the same merge with the sibling's quote left in place, or the same move with the right-hand quote left in place, reds one",
       "an edit of a model part no reading takes, or of the part of one a reading passes over: every reading holds and the model changes",
+      "RESIDUALS (named families, each with a pinned quiet row over its listed members; an instrument that starts reading a listed member reds its row; a family's definition reaches further than its list, and the census claims nothing about an instance the list does not name):",
     ];
     for (const sentence of carried) expect(normalized, "a carried sentence").toContain(sentence);
     const retired = [
@@ -1921,6 +2012,8 @@ describe(SUITE, () => {
       "Row T, A, B or C removed whole from every literal and the roster reds by those readings",
       "Each of the 27 READINGS compares part of the model with a file outside the census and its roster",
       "any further key must be a measured frame key",
+      "RESIDUALS (named families, each member a pinned quiet row;",
+      "departs from HONEST's on its own input: D1 to D12, D15, D17 and D23, with",
     ];
     for (const sentence of retired) expect(normalized, "a retired sentence").not.toContain(sentence);
   });

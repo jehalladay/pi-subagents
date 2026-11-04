@@ -97,7 +97,8 @@
     "Q3",
     "Q4",
     "Q5",
-    "Q6"
+    "Q6",
+    "Q7"
    ]
   }
  ],
@@ -128,7 +129,8 @@
   "Q3": "R-UNNAMED-RECORD",
   "Q4": "R-OTHER-DERIVATION",
   "Q5": "R-TEST-MENTION",
-  "Q6": "R-COORDINATED"
+  "Q6": "R-COORDINATED",
+  "Q7": "R-DEEP-CHAIN"
  },
  "residuals": {
   "Q1": [
@@ -167,6 +169,11 @@
    "code",
    "mutant",
    "residual-member"
+  ],
+  "Q7": [
+   "walk-four-steps",
+   "actor-first-five",
+   "decision-within-four-steps"
   ]
  },
  "cases": {
@@ -255,7 +262,91 @@
    "t-other-episode-correction=ok",
    "t-correction-chain-copy-causal=team-outcome-copied:causalBenefit",
    "t-correction-own-actor=team-outcome-copied:reward",
-   "t-correction-chain-actor=team-outcome-copied:reward"
+   "t-correction-chain-actor=team-outcome-copied:reward",
+   "t-corrected-depth3=team-outcome-copied:reward",
+   "t-corrected-depth4-share=team-outcome-copied:reward",
+   "t-actor-team-correction=ok",
+   "t-actor-team-correction-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-own-copy=team-outcome-copied:reward",
+   "t-correction-depth3-copy=team-outcome-copied:reward",
+   "t-correction-depth4-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-copy=team-outcome-copied:reward",
+   "t-correction-decision-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-chain-copy=team-outcome-copied:reward",
+   "t-correction-decision-chain-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-depth3-copy=team-outcome-copied:reward",
+   "t-correction-decision-depth3-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-depth4-copy=team-outcome-copied:reward",
+   "t-correction-decision-depth4-copy-causal=team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy-causal=team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-share=team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-own-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-depth3-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-depth4-copy=team-outcome-copied:reward",
+   "t-correction-copy-corrected=team-outcome-copied:reward",
+   "t-correction-copy-named=team-outcome-copied:reward",
+   "t-correction-copy-through-named=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-copy=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-share=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-copy=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-share=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-copy=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-share=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-correction-copy=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-correction-share=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-correction-copy=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-correction-share=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-correction-copy=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-correction-share=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-copy-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-share-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-own-actor-correction-copy=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-own-actor-correction-share=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-own-actor-correction-copy=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-own-actor-correction-share=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-own-actor-correction-copy=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-own-actor-correction-share=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-own-actor-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-own-actor-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-own-actor-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-own-actor-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-own-actor-correction-copy-causal=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-own-actor-correction-share-causal=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-correction-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-correction-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-correction-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-correction-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-correction-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-correction-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-correction-copy-beside-causal=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-correction-share-beside-causal=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-correction-copy-beside-causal=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-correction-share-beside-causal=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-correction-copy-beside-causal=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-correction-share-beside-causal=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-copy-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-share-causal-beside-reward=team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-copy-beside-causal=team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-share-beside-causal=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-copy-beside-causal=team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-share-beside-causal=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-copy-beside-causal=team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-share-beside-causal=team-outcome-copied:reward"
   ],
   "K-APPEND": [
    "a-correct-feedback=ok",
@@ -331,7 +422,25 @@
   "M49:chained-actor-unread:K-TEAM",
   "M50:zero-statusless-admitted:K-REWARD",
   "M51:correction-root-any-team-outcome:K-TEAM",
-  "M52:correction-actor-from-root:K-TEAM"
+  "M52:correction-actor-from-root:K-TEAM",
+  "M53:chain-walk-two-steps:K-TEAM",
+  "M54:chain-walk-three-steps:K-TEAM",
+  "M55:actor-read-first-three:K-TEAM",
+  "M56:actor-naming-correction-underived:K-TEAM",
+  "M57:decision-actor-unread:K-TEAM",
+  "M58:decision-actor-within-two-steps:K-TEAM",
+  "M59:decision-actor-within-three-steps:K-TEAM",
+  "M60:decision-actor-through-unknown-only:K-TEAM",
+  "M61:chain-through-actor-naming-underived:K-TEAM",
+  "M62:correction-of-actor-naming-underived:K-TEAM",
+  "M63:chain-through-outsider-naming-underived:K-TEAM",
+  "M64:chain-through-verifier-naming-underived:K-TEAM",
+  "M65:chain-through-indirect-naming-underived:K-TEAM",
+  "M66:correction-copier-past-other-forms-unchecked:K-TEAM",
+  "M67:causal-past-other-forms-unread:K-TEAM",
+  "M68:own-actor-copier-past-other-forms-unchecked:K-TEAM",
+  "M69:two-field-correction-past-other-forms-unread:K-TEAM",
+  "M70:two-field-feedback-past-other-forms-unread:K-TEAM"
  ],
  "witnesses": {
   "A1a": {
@@ -381,7 +490,9 @@
    "fixes": {
     "t1 corrected": "ok",
     "the correction corrected": "ok",
-    "t1 corrected again": "ok"
+    "t1 corrected again": "ok",
+    "three corrections deep": "ok",
+    "four corrections deep": "ok"
    },
    "corrected": {
     "once": [
@@ -406,11 +517,155 @@
      18,
      6
     ],
+    "depth3": [
+     12,
+     4,
+     15,
+     5,
+     18,
+     6,
+     21,
+     7
+    ],
+    "depth4": [
+     12,
+     4,
+     15,
+     5,
+     18,
+     6,
+     21,
+     7,
+     24,
+     8
+    ],
     "otherEpisode": [],
     "otherEpisodeFixed": [
      12,
      4
     ]
+   },
+   "actorNamed": {
+    "direct, a team actor, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3
+     ]
+    },
+    "direct, an actor outside the team, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      42,
+      14
+     ]
+    },
+    "through k15, a team actor, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      30,
+      10
+     ]
+    },
+    "through k15, an actor outside the team, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      33,
+      11
+     ]
+    }
+   },
+   "namedFixed": {
+    "direct, a team actor, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10
+     ]
+    },
+    "direct, an actor outside the team, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      42,
+      14,
+      45,
+      15
+     ]
+    },
+    "through k15, a team actor, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      30,
+      10,
+      54,
+      18
+     ]
+    },
+    "through k15, an actor outside the team, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      33,
+      11,
+      57,
+      19
+     ]
+    }
+   },
+   "namedChained": {
+    "three steps": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10,
+      39,
+      13
+     ]
+    },
+    "four steps": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10,
+      39,
+      13,
+      66,
+      22
+     ]
+    }
    },
    "read": {
     "t-copy-reward": "team-outcome-copied:reward",
@@ -419,7 +674,27 @@
     "t-no-team": "ok",
     "t-correction-team": "ok",
     "t-other-episode-copy": "ok",
-    "t-other-episode-correction": "ok"
+    "t-other-episode-correction": "ok",
+    "t-actor-team-correction": "ok",
+    "t-actor-team-correction-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-own-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-share": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-share-beside-causal": "team-outcome-copied:reward"
    }
   },
   "A2b": {
@@ -436,10 +711,59 @@
     "t-actor-verifier": "ok",
     "t-correction-copy": "team-outcome-copied:reward",
     "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-copy-corrected": "team-outcome-copied:reward",
+    "t-correction-copy-named": "team-outcome-copied:reward",
+    "t-correction-copy-through-named": "team-outcome-copied:reward",
     "t-correction-chain-copy": "team-outcome-copied:reward",
     "t-correction-chain-copy-causal": "team-outcome-copied:causalBenefit",
     "t-correction-own-actor": "team-outcome-copied:reward",
-    "t-correction-chain-actor": "team-outcome-copied:reward"
+    "t-correction-chain-actor": "team-outcome-copied:reward",
+    "t-correction-depth3-copy": "team-outcome-copied:reward",
+    "t-correction-depth4-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-copy": "team-outcome-copied:reward",
+    "t-correction-decision-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-chain-copy": "team-outcome-copied:reward",
+    "t-correction-decision-chain-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-depth3-copy": "team-outcome-copied:reward",
+    "t-correction-decision-depth3-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-depth4-copy": "team-outcome-copied:reward",
+    "t-correction-decision-depth4-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-correction-copy": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-correction-share": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-correction-copy": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-correction-share": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-correction-copy": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-correction-share": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-chained-actor-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-chained-outsider-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+    "t-outsider-team-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+    "t-outsider-team-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+    "t-chained-actor-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+    "t-chained-outsider-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward"
    }
   },
   "A3a": {
@@ -637,7 +961,40 @@
    "t-corrected-share": "team-outcome-copied:reward",
    "t-corrected-chain": "team-outcome-copied:reward",
    "t-corrected-earlier": "team-outcome-copied:reward",
-   "t-corrected-original": "team-outcome-copied:reward"
+   "t-corrected-original": "team-outcome-copied:reward",
+   "t-corrected-depth3": "team-outcome-copied:reward",
+   "t-corrected-depth4-share": "team-outcome-copied:reward",
+   "t-actor-team-correction-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-share": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-chained-actor-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-chained-outsider-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+   "t-outsider-team-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+   "t-outsider-team-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+   "t-chained-actor-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+   "t-chained-outsider-correction-fixed-share-beside-causal": "team-outcome-copied:reward"
   },
   "S4a": {
    "correction": {
@@ -1147,9 +1504,24 @@
      "Q3",
      "Q4",
      "Q5",
-     "Q6"
+     "Q6",
+     "Q7"
     ]
    }
+  },
+  "Q7": {
+   "name": "R-DEEP-CHAIN",
+   "members": [
+    "walk-four-steps",
+    "actor-first-five",
+    "decision-within-four-steps"
+   ],
+   "verdicts": {
+    "walk-four-steps": [],
+    "actor-first-five": [],
+    "decision-within-four-steps": []
+   },
+   "deepest": 4
   }
  },
  "tests": [
@@ -1180,6 +1552,7 @@
   "Q4: R-OTHER-DERIVATION",
   "Q5: R-TEST-MENTION",
   "Q6: R-COORDINATED",
+  "Q7: R-DEEP-CHAIN",
   "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
   "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the statuses, the vocabulary, the docs citation and the producer block",

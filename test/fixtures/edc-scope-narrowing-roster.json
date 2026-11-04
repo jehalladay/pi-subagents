@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3): THE FOLD SWEEP's verdicts in A1 (the stems) and D1 (the axis words) with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers), the private-name, no-substitution, template-middle and template-tail escape controls read by A1, and Q15's JSX attribute hex probe; respun as cut #4 by seat ws-06 (run g10-work-s171) on trunk f63d389 plus the cut for wb-a6m9 refusal #3 (U1-U2, in the enumerate-the-resolvable form ruling R-B212 binds): nine more SOURCE_CONTROLS escape rows read by A1 (the import, export-from and dynamic-import specifier, string property key, string literal type and single-quoted string hex escapes, and the property-access name and import and export specifier name unicode escapes), one per site refusal #3 names, the sixteen escape rows being exactly the texts THE DECODED TEXTS claims; extended by seat ws-01 (run g10-work-s182) on trunk f5cb912 plus the cut for wb-6jao (the R694 follow-up of landing 776, its F5 lead): Q15's three second spellings, one per sub-form the landing-776 gate named (regex-hex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), and their three plain twins (regex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), with THE DECODED TEXTS' R-ESCAPED sentence narrowed to the ten probe texts",
  "constants": {
   "stems": {
    "edc": "word",
@@ -514,7 +514,64 @@
    "comment": "// EDC assembly\n/* evidence-directed */\nconst value = 1;",
    "inside-word": "const credcheck = 1; const reedcraft = 2;",
    "zero-width": "const label = \"E\u200bDC scope\";",
-   "full-width": "const label = \"\uff25\uff24\uff23 scope\";"
+   "full-width": "const label = \"\uff25\uff24\uff23 scope\";",
+   "combining-mark": "const label = \"E\u0301DC scope\";",
+   "precomposed": "const label = \"\u00c9DC scope\";",
+   "noncomposing-mark": "const label = \"E\u0332DC scope\";",
+   "spacing-mark": "const label = \"E\u0903DC scope\";",
+   "enclosing-mark": "const label = \"E\u20ddDC scope\";",
+   "joined-mark": "const label = \"evide\u0301nce-directed context\";",
+   "string-escape": "const label = \"\\x45DC scope\";",
+   "template-escape": "const label = `\\x45DC ${name} scope`;",
+   "identifier-escape": "const \\u0045dcAssembler = 1;",
+   "private-name-escape": "class Host { #\\u0065dcScope = 1; }",
+   "no-substitution-escape": "const label = `\\x45DC scope`;",
+   "template-middle-escape": "const label = `${first} \\x45DC ${second} scope`;",
+   "template-tail-escape": "const label = `${name} \\x45DC scope`;",
+   "import-escape": "import { assemble } from \"\\x45DC-scope\";",
+   "export-from-escape": "export { assemble } from \"\\x45DC-scope\";",
+   "dynamic-import-escape": "const load = () => import(\"\\x45DC-scope\");",
+   "property-key-escape": "const table = { \"\\x45DC scope\": 1 };",
+   "literal-type-escape": "type Label = \"\\x45DC scope\";",
+   "single-quoted-escape": "const label = '\\x45DC scope';",
+   "property-access-escape": "const value = host.\\u0045dcAssembler;",
+   "import-name-escape": "import { \\u0045dcAssembler } from \"./scope\";",
+   "export-name-escape": "export { \\u0045dcAssembler } from \"./scope\";"
+  },
+  "foldClasses": {
+   "Mn": "/^\\p{Mn}$/u",
+   "Mc": "/^\\p{Mc}$/u",
+   "Me": "/^\\p{Me}$/u",
+   "Cf": "/^\\p{Cf}$/u"
+  },
+  "precomposedLetter": "/^[A-Za-z]\\p{M}+$/u",
+  "foldUnion": [
+   "/^[\\p{M}\\p{Cf}]$/u",
+   "/^[A-Za-z]$/",
+   "/^\\p{M}$/u"
+  ],
+  "foldFloors": {
+   "Mn": 1800,
+   "Mc": 400,
+   "Me": 12,
+   "Cf": 150,
+   "precomposed": 450
+  },
+  "foldCarriers": {
+   "stems": [
+    "EDC",
+    "edc",
+    "evidence-directed",
+    "EVIDENCE-DIRECTED"
+   ],
+   "axes": [
+    "freshness",
+    "precision",
+    "ceiling",
+    "FRESHNESS",
+    "PRECISION",
+    "CEILING"
+   ]
   },
   "manifestControls": {
    "dependency": "{ \"name\": \"x\", \"dependencies\": { \"@example/edc\": \"1.0.0\" } }",
@@ -542,6 +599,8 @@
    "plurals": "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
    "zero-width": "interface Scope { \"fresh\u200bness\": number; precision: number; ceiling: number }",
    "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }",
+   "combining-mark": "interface Scope { \"fre\u0301shness\": number; \"pre\u0301cision\": number; \"ceili\u0308ng\": number }",
+   "precomposed": "interface Scope { \"fr\u00e9shness\": number; \"pr\u00e9cision\": number; \"ceil\u00efng\": number }",
    "string-names": "interface Scope { \"freshness\": number; 'precision': number; ceiling: number }",
    "accessors": "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
    "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
@@ -598,6 +657,8 @@
      "plurals",
      "zero-width",
      "full-width",
+     "combining-mark",
+     "precomposed",
      "string-names",
      "accessors",
      "class-accessors",
@@ -882,6 +943,26 @@
    "export const label = \"E-D-C assembly\"; export const EdC = 1;",
    "export const label = \"EDC assembly\";"
   ],
+  "escaped": {
+   "regex-hex": "export const pattern = /\\x45DC/;",
+   "regex-unicode": "export const pattern = /\\u0045DC/;",
+   "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+   "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
+   "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
+   "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC scope\">view</span>;",
+   "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC scope\">view</span>;",
+   "regex-hex-flagged": "export const pattern = /\\x45DC/i;",
+   "jsx-fragment.tsx": "export const view = <>&#69;DC scope</>;",
+   "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"&#69;DC scope\">view</span>;"
+  },
+  "escapedTwins": {
+   "regex": "export const pattern = /EDC/;",
+   "jsx.tsx": "export const view = <span>EDC scope</span>;",
+   "jsx-attribute.tsx": "export const view = <span title=\"EDC scope\">view</span>;",
+   "regex-flagged": "export const pattern = /EDC/i;",
+   "jsx-fragment.tsx": "export const view = <>EDC scope</>;",
+   "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"EDC scope\">view</span>;"
+  },
   "residuals": {
    "R-LOOKALIKE": [
     "Q1"
@@ -924,6 +1005,9 @@
    ],
    "R-SPLIT": [
     "Q14"
+   ],
+   "R-ESCAPED": [
+    "Q15"
    ]
   }
  },
@@ -952,6 +1036,7 @@
   "Q12",
   "Q13",
   "Q14",
+  "Q15",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1011,6 +1096,72 @@
         ],
         "full-width": [
          "full-width:1|string|edc"
+        ],
+        "combining-mark": [
+         "combining-mark:1|string|edc"
+        ],
+        "precomposed": [
+         "precomposed:1|string|edc"
+        ],
+        "noncomposing-mark": [
+         "noncomposing-mark:1|string|edc"
+        ],
+        "spacing-mark": [
+         "spacing-mark:1|string|edc"
+        ],
+        "enclosing-mark": [
+         "enclosing-mark:1|string|edc"
+        ],
+        "joined-mark": [
+         "joined-mark:1|string|evidencedirected"
+        ],
+        "string-escape": [
+         "string-escape:1|string|edc"
+        ],
+        "template-escape": [
+         "template-escape:1|template|edc"
+        ],
+        "identifier-escape": [
+         "identifier-escape:1|identifier|edc"
+        ],
+        "private-name-escape": [
+         "private-name-escape:1|identifier|edc"
+        ],
+        "no-substitution-escape": [
+         "no-substitution-escape:1|string|edc"
+        ],
+        "template-middle-escape": [
+         "template-middle-escape:1|template|edc"
+        ],
+        "template-tail-escape": [
+         "template-tail-escape:1|template|edc"
+        ],
+        "import-escape": [
+         "import-escape:1|string|edc"
+        ],
+        "export-from-escape": [
+         "export-from-escape:1|string|edc"
+        ],
+        "dynamic-import-escape": [
+         "dynamic-import-escape:1|string|edc"
+        ],
+        "property-key-escape": [
+         "property-key-escape:1|string|edc"
+        ],
+        "literal-type-escape": [
+         "literal-type-escape:1|string|edc"
+        ],
+        "single-quoted-escape": [
+         "single-quoted-escape:1|string|edc"
+        ],
+        "property-access-escape": [
+         "property-access-escape:1|identifier|edc"
+        ],
+        "import-name-escape": [
+         "import-name-escape:1|identifier|edc"
+        ],
+        "export-name-escape": [
+         "export-name-escape:1|identifier|edc"
         ]
        },
        "manifests": {
@@ -1030,6 +1181,43 @@
          "shadowed-key#raw|edc"
         ],
         "clean": []
+       },
+       "sweep": {
+        "belowFloor": [],
+        "unswept": {
+         "marks": 0,
+         "precomposed": 0
+        },
+        "written": {
+         "mark": [
+          "U+0045",
+          "U+00AD",
+          "U+0044",
+          "U+00AD",
+          "U+0043"
+         ],
+         "precomposed": [
+          "U+0045",
+          "U+0044",
+          "U+00C7"
+         ]
+        },
+        "carriers": {
+         "EDC": [
+          "edc"
+         ],
+         "edc": [
+          "edc"
+         ],
+         "evidence-directed": [
+          "evidencedirected"
+         ],
+         "EVIDENCE-DIRECTED": [
+          "evidencedirected"
+         ]
+        },
+        "splitCount": 0,
+        "splits": []
        }
       }
      }
@@ -1591,6 +1779,12 @@
         "full-width": [
          "full-width:1|interface|\uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53+precision+ceiling"
         ],
+        "combining-mark": [
+         "combining-mark:1|interface|fre\u0301shness+pre\u0301cision+ceili\u0308ng"
+        ],
+        "precomposed": [
+         "precomposed:1|interface|fr\u00e9shness+pr\u00e9cision+ceil\u00efng"
+        ],
         "string-names": [
          "string-names:1|interface|freshness+precision+ceiling"
         ],
@@ -1710,7 +1904,62 @@
        },
        "descriptor": [
         "planted.scope.read.inputSchema.properties|requestFreshness+resultPrecision+resourceCeiling"
-       ]
+       ],
+       "sweep": {
+        "belowFloor": [],
+        "unswept": {
+         "marks": 0,
+         "precomposed": 0
+        },
+        "written": {
+         "mark": [
+          "U+0066",
+          "U+00AD",
+          "U+0072",
+          "U+0065",
+          "U+0073",
+          "U+0068",
+          "U+006E",
+          "U+0065",
+          "U+0073",
+          "U+00AD",
+          "U+0073"
+         ],
+         "precomposed": [
+          "U+0066",
+          "U+0072",
+          "U+00E8",
+          "U+0073",
+          "U+0068",
+          "U+006E",
+          "U+0065",
+          "U+0073",
+          "U+0073"
+         ]
+        },
+        "carriers": {
+         "freshness": [
+          "freshness"
+         ],
+         "precision": [
+          "precision"
+         ],
+         "ceiling": [
+          "ceiling"
+         ],
+         "FRESHNESS": [
+          "freshness"
+         ],
+         "PRECISION": [
+          "precision"
+         ],
+         "CEILING": [
+          "ceiling"
+         ]
+        },
+        "splitCount": 0,
+        "splits": []
+       }
       }
      }
     },
@@ -1998,6 +2247,44 @@
       "sourceTwin": [
        "split-source-twin:1|string|edc"
       ]
+     }
+    },
+    {
+     "id": "Q15",
+     "quote": "R-ESCAPED",
+     "witness": {
+      "escaped": {
+       "regex-hex": [],
+       "regex-unicode": [],
+       "regex-code-point": [],
+       "jsx-decimal.tsx": [],
+       "jsx-hex.tsx": [],
+       "jsx-attribute.tsx": [],
+       "jsx-attribute-hex.tsx": [],
+       "regex-hex-flagged": [],
+       "jsx-fragment.tsx": [],
+       "jsx-attribute-aria.tsx": []
+      },
+      "twins": {
+       "regex": [
+        "regex:1|regex|edc"
+       ],
+       "jsx.tsx": [
+        "jsx.tsx:1|jsx|edc"
+       ],
+       "jsx-attribute.tsx": [
+        "jsx-attribute.tsx:1|string|edc"
+       ],
+       "regex-flagged": [
+        "regex-flagged:1|regex|edc"
+       ],
+       "jsx-fragment.tsx": [
+        "jsx-fragment.tsx:1|jsx|edc"
+       ],
+       "jsx-attribute-aria.tsx": [
+        "jsx-attribute-aria.tsx:1|string|edc"
+       ]
+      }
      }
     }
    ]
