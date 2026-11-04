@@ -10,24 +10,25 @@
  * first lands." The filing measured "0 git-grep hits for adaptive-policy-organizations/APO- in the Pi tree at 4ae0470" and
  * cites the producer line 01-vision-decisions.md:21@4b8b974ca72b.
  *
- * CUT #7 (this cut), the restatement that orchestrator ruling R-B512 (M:54897, the 22(d) post-ladder disposition of refusal #6,
- * gate-refused M:54886 / O:2015, cut #6 035ef486) binds: "a further restatement in the same lineage with CLAIMS EQUAL TO PINS
- * (the R-B383/R-B406 form): kill-or-pin per member - pin the headed/no-unit page reading, the colon-space receipt form, the two
- * scope claims and the judge's rest/defaulted declaredNames elements red-first with their paired witnesses, or narrow each claim
- * word to exactly the pinned subset". This cut (1) moves C1's two scope filter statements, unchanged but for their indentation,
- * into the reader liveScope, pins it with 9 stand-in paths, a page below a subdirectory (U4, GP7-C1-PAGES-TOP-ONLY) and a receipt
- * not named for a bead (U3, GP7-C1-RECEIPTS-WB-ONLY) among them, and holds its live parts to docs/workbench's filesystem walk;
- * (2) gives headingless a page with no unit (U1, GP7-HL-EMPTY-HEADED) and an indented heading, and untitled a title with no space
- * after the colon (U2, GP7-UT-COLON-NOSPACE), an indented title, a title naming the bead in another case, a receipt with no unit,
- * a text-only receipt not named for a bead and a titled receipt below a subdirectory; (3) gives declaredNames rest and defaulted
- * elements of an object and an array pattern (U5, GP7-LJ-REST-SKIPPED; U6, GP7-LJ-DEFAULT-SKIPPED) beside a renamed element and a
- * nested pattern, var and declare const statements, a second statement, bodiless, async and generator functions, an abstract
- * class and a const enum, and judgeImports an inline type specifier, two declarations, a default import beside named ones and
- * another specifier of the judge's file name; (4) gives the tiling rule two stand-ins whose quotes reuse text an earlier quote
- * tiled (refusal #6 F3, GP7-TL-NO-ORDER); and (5) narrows those readers' claim words below, and THE LANDED JUDGE case's title, to
- * the stand-ins that pin them, every other reading NOT CLAIMED (d). The readers' code (headingless, untitled, declaredNames,
- * shadowed, judgeImports and tiles) is byte-identical to cut #6's. Besides C1's witness (liveStandIns only gains entries) and
- * that title in the roster's tests, no pin's witness and no row, label, quote, constant, floor, tree, plant or residual changes.
+ * CUT #8 (this cut), the restatement that orchestrator ruling R-B534 (M:55892, the 22(d) post-ladder disposition of refusal #7,
+ * gate-refused M:55866 / O:2048, cut #7 470beef9) binds: "NEXT CUT #8 = a further restatement in the same lineage with CLAIMS
+ * EQUAL TO PINS (the R-B383/R-B406/R-B512 form): kill-or-pin per call-site set - pin the headingless (:803) and untitled (:807)
+ * call-site readings of C1's live page and receipt claims, the schemaHolders call site (:934) of C2's claim and the shadowed call
+ * site (:1538) of THE LANDED JUDGE's claim red-first with their paired real-tree witnesses, or narrow each claim word to exactly
+ * the pinned call-site subset". This cut moves each of those live checks, from its listing or its file reads to its readers, into
+ * one function over a tree root - docsChecks (C1: git's docs/ markdown list, liveScope, the file reads, headingless and untitled),
+ * schemaChecks (C2: git's script list, the file reads and schemaHolders) and landedChecks (THE LANDED JUDGE: the judge module and
+ * this file read by their paths, declaredNames, shadowed and judgeImports) - and overTree reads the live tree and a stand-in tree,
+ * written into a scratch directory, by one call of it, the live tree first, so that each live check's call site is its stand-in
+ * tree's. The stand-in trees hold the forms of refusal #7's ten real-tree witnesses (WG01-WG08 in C1's: a page below a
+ * subdirectory, an empty page, an indented heading, a receipt not named for a bead, one below a subdirectory of receipts/, a title
+ * with no space after the colon, an indented title and one naming the bead in another case; WG09 in C2's: a schema-literal holder
+ * outside src/workbench/; WG10 in THE LANDED JUDGE's: a census declaration after its describe block), and each live check's claim
+ * words below, and THE LANDED JUDGE case's title, are narrowed to its function's reading as its tree pins it, every other reading
+ * NOT CLAIMED (d). The readers' code (liveScope, headingless, untitled, schemaHolders, declaredNames, shadowed, judgeImports and
+ * tiles) is byte-identical to cut #7's. Besides C1's and C2's witnesses (liveStandIns and schemaStandIns each gain their tree, and
+ * C1's pagesOpenH1 and receiptsOpenTitle are now read from the live check) and that title in the roster's tests, no pin's witness
+ * and no row, label, quote, constant, floor, fixed tree, plant or residual changes.
  * LINEAGE. Cuts #1-#5 (63b8cbc7, 54827238, d98d322d, 3fa62517, cdea135d) carried this file's own copy of the judge; R-B160
  * (M:40301) exited the rule-19 loop at refusal #4 with the child wb-021.9, and R-B205 (M:42017) executed the dependency inversion
  * at refusal #5 (M:42009 / O:1577), parking this bead behind wb-021.9. Refusal #5's BIND note (its NEXT STEP, after the R-B193
@@ -39,7 +40,10 @@
  * refusal #5's 14 gate pages as controls (P-SC-LIT-DOC, P-SC-LIT-SRC and P-SC-LIT-TWIN in C5, the seven P-CV pages and
  * P-CV-QUOTE-TWIN in C4, P-EC-THIS, P-EC-CHAIN and P-EC-CASE-KEY in E2), gave C1's and C2's live checks stand-ins and withdrew
  * the five guarded clauses, THE NAMED PATTERNS AND WHITE SPACE and THE HOLES; R-B512 ruled its refusal #6 in the R-B406 class
- * (post-inversion re-cut over landed carriers).
+ * (post-inversion re-cut over landed carriers). Cut #7 (470beef9) moved C1's scope filters into liveScope, gave liveScope,
+ * headingless, untitled, declaredNames, judgeImports and the tiling rule the stand-ins that killed refusal #6's members, and
+ * narrowed those readers' claim words to their stand-ins; refusal #7 (M:55866 / O:2048) found the live checks' call sites unpinned
+ * (ten call-site members fail-open on paired real-tree witnesses), and R-B534 ruled it in the R-B512 post-ladder form.
  * MEASURED (read-only, with this census's readers). At the base 04123dc (cut #1, 2026-10-29): the producer (the local
  * MechanicalWorkflows checkout at 4b8b974ca72bf2ed36b99e315e45857c6181fbe8, git show; PRODUCER below and the roster's producer
  * block hold its lines and blobs, and the hermetic census never re-reads it) reads README.md:3 (blob 512de7eeb579)
@@ -57,7 +61,10 @@
  * strings, with no citing unit: the absence holds at this trunk. At trunk a14c87f (landing 925's ledger hop), merged into this
  * branch before cut #7's handoff, git diff de6deb2 a14c87f outside test/ and .beads/ is one modified path
  * (docs/workbench/07-native-integrations.md), and the landed judge reads the product scope as the same 352 files, 159380 units,
- * 11350 doc units and 16809 strings, with no citing unit. No src, docs or tracker text is edited by this cut.
+ * 11350 doc units and 16809 strings, with no citing unit. At trunk 222b706 (landing 937's ledger hop), merged into this branch
+ * before cut #8's handoff, git diff a14c87f 222b706 outside test/ and .beads/ is one modified path
+ * (docs/workbench/14-qa-and-benchmarks.md), and the landed judge reads the product scope as the same 352 files, 159381 units,
+ * 11351 doc units and 16809 strings, with no citing unit. No src, docs or tracker text is edited by this cut.
  * PINNED READER SET (the claim form: each case of this file, test/workbench-apo-citation-status-census.test.ts, by its id, with
  * what it asserts; observed at the handoff: 40 passed (40)). This file reads the judge by calls of the landed module's exports:
  * judgeFiles (directly, through its causesOf, or through this file's readScope), unitsOf (C1's and C2's live checks), cites (C3
@@ -88,19 +95,28 @@
  *   is the notes' measuring tree, both of the notes' needles cite and G2's witness carries the filing tree; C3's, C4's and C5's
  *   quotes name and their witnesses carry the program id and the two carrier words; and the registry's descriptor type holds read
  *   and, beside it, exactly the effect classes E2's witness lists.
- * - THE LANDED JUDGE ("the landed judge: ..."): the landed module's top-level export declarations, as declaredNames reads them,
- *   name judgeFiles, causesOf, bindingOf and READS; no top-level declaration of this file that declaredNames reads names one of
- *   that module's exports; the names judgeImports reads from this file's imports of "./helpers/apo-citation-status-judge.js"
- *   hold those four and name only the module's exports; and the two readers read their stand-in sources as their literals list,
- *   which is all they claim. shadowed, over declaredNames, reads its 27: a function declaration (a bodiless, an async and a
- *   generator one beside it), a class (and an abstract one), an interface, a type alias and an enum (and a const one) by its
- *   name; a const, a let (its second declarator), a var and a declare const statement by each declarator's name, and by each
- *   name its binding pattern binds - an object and an array pattern (an omitted element skipped), a rest and a defaulted element
- *   of each, a renamed element and a nested pattern; a name in a second statement; an export here; and, read as naming none, an
- *   unexported name there, a declaration nested in a function body and an import. judgeImports reads its 8: named and aliased
- *   specifiers (an alias read as the name it imports), a type-only declaration, an inline type specifier, two declarations and a
- *   default import beside named ones (the named read), and, read as naming none, another module, another specifier of the
- *   judge's file name and a namespace import.
+ * - THE LANDED JUDGE ("the landed judge: ..."): this file's path from the repository root is CENSUS_PATH; overTree reads the live
+ *   tree and the case's stand-in tree (a scratch directory) by one call of landedChecks, the live tree first: in each, the judge
+ *   module and this census read whole from that root by their paths, the judge's top-level export declarations as declaredNames
+ *   reads them, this census's top-level names among them (shadowed), the names judgeImports reads from its imports of the judge
+ *   specifier and those the judge does not export. Over the live tree the landed module's top-level export declarations, as
+ *   declaredNames reads them, name judgeFiles, causesOf, bindingOf and READS; no top-level declaration of this file that
+ *   declaredNames reads names one of that module's exports; the names judgeImports reads from this file's imports of
+ *   "./helpers/apo-citation-status-judge.js" hold those four and name only the module's exports; and landedChecks reads its
+ *   stand-in tree's 2 files as listed, which is all it claims: a stand-in judge exporting BLANK, judgeFiles, cites and first (an
+ *   object and an array pattern's names) and READS around an unexported const, and a stand-in census importing judgeFiles, READS
+ *   (aliased) and Unit from the judge specifier and declaring BLANK before its describe block, cites inside the block's callback
+ *   and first, by a rest element, after the block - read as exporting the five, shadowing BLANK and first in that order (the
+ *   declaration after the describe block is the form of refusal #7's witness WG10), importing the three and Unit as not exported.
+ *   The two readers read their stand-in sources as their literals list, which is all they claim. shadowed, over declaredNames,
+ *   reads its 27: a function declaration (a bodiless, an async and a generator one beside it), a class (and an abstract one), an
+ *   interface, a type alias and an enum (and a const one) by its name; a const, a let (its second declarator), a var and a declare
+ *   const statement by each declarator's name, and by each name its binding pattern binds - an object and an array pattern (an
+ *   omitted element skipped), a rest and a defaulted element of each, a renamed element and a nested pattern; a name in a second
+ *   statement; an export here; and, read as naming none, an unexported name there, a declaration nested in a function body and an
+ *   import. judgeImports reads its 8: named and aliased specifiers (an alias read as the name it imports), a type-only
+ *   declaration, an inline type specifier, two declarations and a default import beside named ones (the named read), and, read as
+ *   naming none, another module, another specifier of the judge's file name and a namespace import.
  * - P1: PRODUCER's :20 line is "## Non-goals"; :21's last non-goal is "effectful DevTools" and its closing sentence "All remain
  *   separate owners or deferred research."; README.md:3's status sentence is STATUS_LITERAL; SCOPE_WORD is "non-" and that
  *   non-goal's first word; 3 controls.
@@ -109,24 +125,42 @@
  *   the banner and its line-2 "effect-class:write" the only finding.
  * - E2: 51 controls at src/x.ts - one per effect class the registry names beside read (three at the handoff) and 48 more,
  *   P-EC-THIS, P-EC-CHAIN and P-EC-CASE-KEY among them. E3: 15 controls.
- * - C1: git's markdown list holds at least 106 files; docs/'s markdown list equals the walk's both ways; liveScope parts that
- *   list into the pages and the receipts the two live checks read, which together are docs/workbench's markdown files in the
- *   filesystem walk, both ways, and it reads its 9 stand-in paths as listed, which is all it claims: pages at the top of
- *   docs/workbench/ and below a subdirectory, a page named receipts.md and one under a receipts/ directory below a
- *   subdirectory; receipts named for a bead and not, and one below a subdirectory of receipts/; and, read as neither, a path
- *   under docs/workbench-old/ and one under docs/other/. Every page liveScope parts out has a first unit opening "# " as
- *   headingless reads it, and headingless reads its 6 stand-ins as listed: a page opening "# " headed; a page opening "## ",
- *   one whose heading is not its first unit, one opening "#" with no space, one indented a space and one with no unit, each
- *   headingless. Every receipt liveScope parts out has one opening "# ", the file's own name without .md and ": " as untitled
- *   reads it, and untitled reads its 10 stand-ins as listed: its own bead's title, and one below a subdirectory, titled;
- *   another bead's title, a title with no colon, a level-2 one, one with no space after the colon, one indented a space, one
- *   naming the bead in another case, a receipt with no unit and a text-only one not named for a bead, each untitled. One call
- *   over every listed markdown file and PLANT_DOC reads each as markdown, at least 6700 units, and only the plant's line-3
- *   status and scope findings; 53 controls.
- * - C2: git's script list holds at least 198 files; among the src files only src/workbench/identity.ts holds the schema literal
- *   "workflow-script/v1" as a string unit (schemaHolders, which reads its 7 stand-ins as listed); one call over every listed
- *   script and PLANT_STRING reads each as a script, at least 15100 strings, and only the plant's line-1 status and scope
- *   findings; 34 controls.
+ * - C1: git's markdown list holds at least 106 files; docs/'s markdown list equals the walk's both ways. overTree reads the live
+ *   tree and C1's stand-in tree (a scratch git repository) by one call of docsChecks, the live tree first: in each, the docs/
+ *   markdown files git lists there (productList), parted by liveScope, each part read whole from that root and handed to
+ *   headingless and untitled. In both trees liveScope's pages and receipts together are docs/workbench's markdown files in that
+ *   tree's filesystem walk, both ways. Every page liveScope parts out of the live tree has a first unit opening "# " as
+ *   headingless reads it, and every receipt one opening "# ", the file's own name without .md and ": " as untitled reads it, as
+ *   docsChecks hands them; and docsChecks reads its stand-in tree's 29 files as listed, which is all it claims: in its index,
+ *   README.md, docs/other/y.md, docs/workbench-old/z.md, docs/workbench/notes.txt and docs/workbench/notes.cmd (a name ending "md"
+ *   with no ".md"), read as no part; the six pages of headingless's stand-ins (a.md headed, b.md to f.md headingless),
+ *   docs/workbench/g.md (a blank first line, then "# G"), read headed, and docs/workbench/receipts.md, sub/x.md and
+ *   sub/receipts/wb-r.md, text-only pages read headingless; the ten receipts of untitled's stand-ins (wb-x.md and sub/wb-q.md
+ *   titled, the other eight untitled), receipts/wb-m.md (a blank first line, then its title), read titled, and
+ *   receipts/sub/wb-p.md, a text-only receipt below a subdirectory, read untitled; and, untracked beside the index,
+ *   docs/workbench/untracked.md and receipts/wb-n.md, text-only, read headingless and untitled - so a page below a subdirectory,
+ *   an empty page, an indented heading, a receipt not named for a bead, one below a subdirectory of receipts/, a title with no
+ *   space after the colon, an indented title and one naming the bead in another case, the forms of refusal #7's witnesses
+ *   WG01-WG08, are each among its files, and so are a page and a receipt whose first unit is not on their first line. liveScope
+ *   reads its 9 stand-in paths as listed, which is all it claims: pages at the top of docs/workbench/ and below a subdirectory, a
+ *   page named receipts.md and one under a receipts/ directory below a subdirectory; receipts named for a bead and not, and one
+ *   below a subdirectory of receipts/; and, read as neither, a path under docs/workbench-old/ and one under docs/other/.
+ *   headingless reads its 6 stand-ins as listed: a page opening "# " headed; a page opening "## ", one whose heading is not its
+ *   first unit, one opening "#" with no space, one indented a space and one with no unit, each headingless. untitled reads its 10
+ *   stand-ins as listed: its own bead's title, and one below a subdirectory, titled; another bead's title, a title with no colon,
+ *   a level-2 one, one with no space after the colon, one indented a space, one naming the bead in another case, a receipt with no
+ *   unit and a text-only one not named for a bead, each untitled. One call over every listed markdown file and PLANT_DOC reads
+ *   each as markdown, at least 6700 units, and only the plant's line-3 status and scope findings; 53 controls.
+ * - C2: git's script list holds at least 198 files. overTree reads the live tree and C2's stand-in tree (a scratch git repository)
+ *   by one call of schemaChecks, the live tree first: in each, the scripts git lists there (productList), each read whole from
+ *   that root and handed to schemaHolders. Among the live tree's src files only src/workbench/identity.ts holds the schema literal
+ *   "workflow-script/v1" as a string unit, as schemaChecks reads them, and schemaChecks reads its stand-in tree's 11 files as
+ *   listed, which is all it claims: in its index, the seven files of schemaHolders' stand-ins, src/j.tsx and src/sub/i.mjs, each
+ *   holding the literal as a string on its first line, and src/workbench/h.ts, holding it on its second, and, untracked beside the
+ *   index, src/k.ts holding it - read as the holders src/a.ts, src/e.ts, src/f.ts, src/j.tsx, src/k.ts, src/sub/i.mjs and
+ *   src/workbench/h.ts, so holders outside src/workbench/ (the form of refusal #7's witness WG09) are among them; schemaHolders
+ *   reads its 7 stand-ins as listed. One call over every listed script and PLANT_STRING reads each as a script, at least 15100
+ *   strings, and only the plant's line-1 status and scope findings; 34 controls.
  * - C3: 21 controls, and cites reads the program id. C4: 56 controls, refusal #5's eight P-CV pages among them. C5: 32
  *   controls, refusal #5's three P-SC-LIT pages among them.
  * - G1: git's product list holds at least 329 files, both locks and no path under test/ or .beads/; one call over every listed
@@ -154,8 +188,8 @@
  *   every compare matched and every case raised the run guard.
  * FALSIFIERS (outside this file's literals): the out-of-file roster for every witness, title and constant; the tracker export
  * row for the rows, labels, quotes, carriers and filing facts; the src registry for E2's effect classes; git's listing against
- * the filesystem walk for src/ and docs/; the fixed trees' exact counts; the landed module's own source for THE LANDED JUDGE;
- * and the vitest task tree for the closing case.
+ * the filesystem walk for src/ and docs/ (and, for C1's parts, docs/workbench in the live tree and in its stand-in tree); the
+ * fixed trees' exact counts; the landed module's own source for THE LANDED JUDGE; and the vitest task tree for the closing case.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the producer block, the constants and every registered test title - is held to the out-of-file
  * roster (test/fixtures/apo-citation-status-roster.json); the residual families are held to the RESIDUALS line of this header.
@@ -170,10 +204,12 @@
  * control's or a probe's form written otherwise than its text - with other words, values, cases, marks or white space, another
  * count, order, position, depth, indentation or line layout, or at another path: a control's id names its text, not a family; (c)
  * that a named judge member reds this census (no case runs a member; the cutting seat and the gate replay members as edited
- * judges); (d) a reading of liveScope, headingless, untitled, schemaHolders, the tiling rule, declaredNames or judgeImports beyond
- * their stand-ins - for THE LANDED JUDGE, among others, a declaration nested below the top level, a namespace, module or global
- * declaration, an import-equals declaration, a using declaration, a module export written as an export clause, an export
- * assignment, a re-export or a default export, and an import other than by named specifiers of that exact specifier; (e)
+ * judges); (d) a reading of docsChecks, schemaChecks or landedChecks beyond their stand-in trees (a file form, a path or a tree
+ * layout their trees do not hold), or of liveScope, headingless, untitled, schemaHolders, the tiling rule, declaredNames or
+ * judgeImports beyond their stand-ins - for THE LANDED JUDGE, among others, a declaration nested below the top level, a
+ * namespace, module or global declaration, an import-equals declaration, a using declaration, a module export written as an
+ * export clause, an export assignment, a re-export or a default export, and an import other than by named specifiers of that
+ * exact specifier; (e)
  * edits of this file and the roster together: a residual family removed from ROWS, the literal, IMPL, RESIDUALS, this header's
  * RESIDUALS line and the roster (no anchor outside this file and its roster names the residual families: CT6 on Q16 measured
  * green at cuts #1 and #2; the landed record is the anchor a follow-up can bind, the wb-59u1 F3 form); a pin folded into its
@@ -218,8 +254,8 @@
  * struck, element; C1 html-block); and an element on a line indented past a list item's code-block indentation makes its unit
  * opaque (C1 N-DEDENT9-ELEMENT, dedent-24-element).
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; src/ and the docs are read, never edited).
- * Scratch: M1 composes makeScratch/removeScratch with the leak guard installed; the tree, .beads and git objects are otherwise
- * only read.
+ * Scratch: M1 and overTree (the stand-in trees of C1, C2 and THE LANDED JUDGE) compose makeScratch/removeScratch with the leak
+ * guard installed; the tree, .beads and git objects are otherwise only read.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -459,6 +495,29 @@ function walkOf(root: string, directory: string): string[] {
 function readScope(root: string, paths: readonly string[], plants: readonly FileText[] = []): Judgement {
   return judgeFiles([...paths.map(path => ({ path, text: readFileSync(join(root, path), "utf8") })), ...plants]);
 }
+/** A stand-in tree: the files a live check reads beside the live tree - with git, files added to a new repository's index and the untracked ones written after it; without git, files only. */
+interface StandInTree {
+  readonly git: boolean;
+  readonly files: readonly FileText[];
+  readonly untracked: readonly FileText[];
+}
+/** overTree: writes a stand-in tree into a fresh scratch directory (test/helpers/scratch.ts, leak guard installed), reads the live tree (REPO) and that tree by one call of the check, the live tree first, and removes the tree, so that a live check's call site is its stand-in tree's (C1, C2 and THE LANDED JUDGE). */
+function overTree<T>(prefix: string, tree: StandInTree, check: (root: string) => T): T[] {
+  const root = makeScratch(prefix);
+  try {
+    const write = (file: FileText): void => {
+      mkdirSync(dirname(join(root, file.path)), { recursive: true });
+      writeFileSync(join(root, file.path), file.text);
+    };
+    if (tree.git) execFileSync("git", ["init", "-q"], { cwd: root });
+    for (const file of tree.files) write(file);
+    if (tree.git) execFileSync("git", ["add", "-A"], { cwd: root });
+    for (const file of tree.untracked) write(file);
+    return [REPO, root].map(at => check(at));
+  } finally {
+    removeScratch(root);
+  }
+}
 /** C1's live-check scope: docs/'s markdown list parted, in list order, into the docs/workbench pages outside receipts/ and the receipts; what it claims is the reading of its 9 stand-in paths (C1). */
 function liveScope(docs: readonly string[]): { readonly pages: string[]; readonly receipts: string[] } {
   const pages = docs.filter(path => path.startsWith("docs/workbench/") && !path.startsWith("docs/workbench/receipts/"));
@@ -476,6 +535,16 @@ function untitled(receipts: readonly FileText[]): string[] {
 /** C2's live schema check: the src scripts holding a string unit whose text is the schema literal (an escaped spelling included). */
 function schemaHolders(files: readonly FileText[]): string[] {
   return files.filter(file => file.path.startsWith("src/") && unitsOf(file.path, file.text).some(unit => unit.kind === "string" && unit.text === SCHEMA_LITERAL)).map(file => file.path);
+}
+/** docsChecks: C1's two live checks over one tree root, from its listing to its readers - the docs/ markdown files git lists there (productList), parted by liveScope, each part read whole from that root and handed to headingless and untitled. overTree reads the live tree and C1's stand-in tree by one call of it; what it claims is its reading of that tree's 29 files (C1). */
+function docsChecks(root: string): { readonly pages: string[]; readonly receipts: string[]; readonly headingless: string[]; readonly untitled: string[] } {
+  const { pages, receipts } = liveScope(productList(root).filter(path => path.startsWith("docs/") && MARKDOWN.test(path)));
+  const read = (path: string): FileText => ({ path, text: readFileSync(join(root, path), "utf8") });
+  return { pages, receipts, headingless: headingless(pages.map(read)), untitled: untitled(receipts.map(read)) };
+}
+/** schemaChecks: C2's live schema check over one tree root - the scripts git lists there (productList), each read whole from that root and handed to schemaHolders. overTree reads the live tree and C2's stand-in tree by one call of it; what it claims is its reading of that tree's 11 files (C2). */
+function schemaChecks(root: string): string[] {
+  return schemaHolders(productList(root).filter(path => SCRIPT.test(path)).map(path => ({ path, text: readFileSync(join(root, path), "utf8") })));
 }
 /** A fixed tree's paths (git ls-tree) and every blob through one git cat-file --batch call. */
 function treeList(tree: string): string[] {
@@ -642,6 +711,8 @@ function headerResiduals(): Record<string, string[]> {
 /** THE LANDED JUDGE: the judge module this census reads (wb-021.11's landing of cut #5's judge code, landing 855) and the specifier this file imports it by. */
 const JUDGE_MODULE = "test/helpers/apo-citation-status-judge.ts";
 const JUDGE_SPECIFIER = "./helpers/apo-citation-status-judge.js";
+/** This census's path from the repository root: THE LANDED JUDGE's live check reads this file there, and the case's stand-in tree holds its stand-in census at it. */
+const CENSUS_PATH = relative(REPO, SELF);
 /** The judge's four entries this census calls by name. */
 const JUDGE_ENTRIES: readonly string[] = ["judgeFiles", "causesOf", "bindingOf", "READS"];
 /** The names a script's top-level statements declare, as THE LANDED JUDGE case's 27 declaration stand-ins read them: a function, class, interface, type alias or enum declaration by its name, and a variable statement by each declarator's name and each name its binding pattern binds (a rest, a defaulted, a renamed and a nested element among them, an omitted element skipped); with exportedOnly, only statements that carry an export modifier. */
@@ -674,6 +745,14 @@ function judgeImports(text: string): string[] {
     const bindings = statement.importClause?.namedBindings;
     return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => (element.propertyName ?? element.name).text) : [];
   });
+}
+/** landedChecks: THE LANDED JUDGE's live check over one tree root - the judge module (JUDGE_MODULE) and this census (CENSUS_PATH) read whole from that root by their paths, the judge's top-level export declarations (declaredNames), this census's top-level names among them (shadowed), the names it imports by name from the judge specifier (judgeImports) and those the judge does not export. overTree reads the live tree and the case's stand-in tree by one call of it; what it claims is its reading of that tree's 2 files (THE LANDED JUDGE). */
+function landedChecks(root: string): { readonly exported: string[]; readonly shadowed: string[]; readonly imported: string[]; readonly foreign: string[] } {
+  const judge = readFileSync(join(root, JUDGE_MODULE), "utf8");
+  const census = readFileSync(join(root, CENSUS_PATH), "utf8");
+  const exported = declaredNames(judge, true);
+  const imported = judgeImports(census);
+  return { exported, shadowed: shadowed(census, judge), imported, foreign: imported.filter(name => !exported.includes(name)) };
 }
 
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
@@ -794,19 +873,111 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(listed.length, `floor: ${FLOORS.docs} Pi docs at this census's base`).toBeGreaterThanOrEqual(FLOORS.docs);
     const docs = listed.filter(path => path.startsWith("docs/"));
     expect(docs, "docs/: git's markdown list is the filesystem walk's, both ways").toEqual(walkOf(REPO, "docs").filter(path => MARKDOWN.test(path)));
-    const { pages, receipts } = liveScope(docs);
+    /** C1's stand-in tree (a scratch git repository): 27 files in its index and 2 untracked beside them, read by docsChecks as treeReading lists. */
+    const docsTree: StandInTree = {
+      git: true,
+      files: [
+        { path: "README.md", text: "Text.\n" },
+        { path: "docs/other/y.md", text: "Text.\n" },
+        { path: "docs/workbench-old/z.md", text: "Text.\n" },
+        { path: "docs/workbench/notes.txt", text: "Text.\n" },
+        { path: "docs/workbench/notes.cmd", text: "Text.\n" },
+        { path: "docs/workbench/a.md", text: "# A\n\nText.\n" },
+        { path: "docs/workbench/b.md", text: "## B\n\nText.\n" },
+        { path: "docs/workbench/c.md", text: "Text first.\n\n# C\n" },
+        { path: "docs/workbench/d.md", text: "#D\n" },
+        { path: "docs/workbench/e.md", text: "" },
+        { path: "docs/workbench/f.md", text: " # F\n" },
+        { path: "docs/workbench/g.md", text: "\n# G\n" },
+        { path: "docs/workbench/receipts.md", text: "Text.\n" },
+        { path: "docs/workbench/sub/x.md", text: "Text.\n" },
+        { path: "docs/workbench/sub/receipts/wb-r.md", text: "Text.\n" },
+        { path: "docs/workbench/receipts/wb-x.md", text: "# wb-x: A title\n\n## 2026-11-04 entry\n" },
+        { path: "docs/workbench/receipts/wb-y.md", text: "# wb-x: A title\n" },
+        { path: "docs/workbench/receipts/wb-z.md", text: "# wb-z A title\n" },
+        { path: "docs/workbench/receipts/wb-w.md", text: "## wb-w: A title\n" },
+        { path: "docs/workbench/receipts/wb-v.md", text: "# wb-v:A title\n" },
+        { path: "docs/workbench/receipts/wb-t.md", text: " # wb-t: A title\n" },
+        { path: "docs/workbench/receipts/wb-s.md", text: "# WB-S: A title\n" },
+        { path: "docs/workbench/receipts/wb-u.md", text: "" },
+        { path: "docs/workbench/receipts/wb-m.md", text: "\n# wb-m: A title\n" },
+        { path: "docs/workbench/receipts/zz.md", text: "Text.\n" },
+        { path: "docs/workbench/receipts/sub/wb-q.md", text: "# wb-q: A title\n" },
+        { path: "docs/workbench/receipts/sub/wb-p.md", text: "Text.\n" },
+      ],
+      untracked: [
+        { path: "docs/workbench/untracked.md", text: "Text.\n" },
+        { path: "docs/workbench/receipts/wb-n.md", text: "Text.\n" },
+      ],
+    };
+    const treeReading = {
+      pages: [
+        "docs/workbench/a.md",
+        "docs/workbench/b.md",
+        "docs/workbench/c.md",
+        "docs/workbench/d.md",
+        "docs/workbench/e.md",
+        "docs/workbench/f.md",
+        "docs/workbench/g.md",
+        "docs/workbench/receipts.md",
+        "docs/workbench/sub/receipts/wb-r.md",
+        "docs/workbench/sub/x.md",
+        "docs/workbench/untracked.md",
+      ],
+      receipts: [
+        "docs/workbench/receipts/sub/wb-p.md",
+        "docs/workbench/receipts/sub/wb-q.md",
+        "docs/workbench/receipts/wb-m.md",
+        "docs/workbench/receipts/wb-n.md",
+        "docs/workbench/receipts/wb-s.md",
+        "docs/workbench/receipts/wb-t.md",
+        "docs/workbench/receipts/wb-u.md",
+        "docs/workbench/receipts/wb-v.md",
+        "docs/workbench/receipts/wb-w.md",
+        "docs/workbench/receipts/wb-x.md",
+        "docs/workbench/receipts/wb-y.md",
+        "docs/workbench/receipts/wb-z.md",
+        "docs/workbench/receipts/zz.md",
+      ],
+      headingless: [
+        "docs/workbench/b.md",
+        "docs/workbench/c.md",
+        "docs/workbench/d.md",
+        "docs/workbench/e.md",
+        "docs/workbench/f.md",
+        "docs/workbench/receipts.md",
+        "docs/workbench/sub/receipts/wb-r.md",
+        "docs/workbench/sub/x.md",
+        "docs/workbench/untracked.md",
+      ],
+      untitled: [
+        "docs/workbench/receipts/sub/wb-p.md",
+        "docs/workbench/receipts/wb-n.md",
+        "docs/workbench/receipts/wb-s.md",
+        "docs/workbench/receipts/wb-t.md",
+        "docs/workbench/receipts/wb-u.md",
+        "docs/workbench/receipts/wb-v.md",
+        "docs/workbench/receipts/wb-w.md",
+        "docs/workbench/receipts/wb-y.md",
+        "docs/workbench/receipts/wb-z.md",
+        "docs/workbench/receipts/zz.md",
+      ],
+    };
+    // The two live checks: overTree reads the live tree and the stand-in tree by one call of docsChecks (the live tree first), each beside its own docs/workbench walk.
+    const readings = overTree("wb-021.6-docs-tree-", docsTree, root => ({ walk: walkOf(root, "docs/workbench").filter(path => MARKDOWN.test(path)), ...docsChecks(root) }));
     expect(
-      [...pages, ...receipts].sort(),
-      "liveScope's pages and receipts together are docs/workbench's markdown files in the filesystem walk, both ways",
-    ).toEqual(walkOf(REPO, "docs/workbench").filter(path => MARKDOWN.test(path)));
+      readings.map(reading => [...reading.pages, ...reading.receipts].sort()),
+      "in the live tree and in the stand-in tree, liveScope's pages and receipts together are docs/workbench's markdown files in that tree's filesystem walk, both ways",
+    ).toEqual(readings.map(reading => reading.walk));
     expect(
-      headingless(pages.map(path => ({ path, text: textOf(path) }))),
-      "every page liveScope parts out opens with a level-1 heading unit as headingless reads it",
-    ).toEqual([]);
-    expect(
-      untitled(receipts.map(path => ({ path, text: textOf(path) }))),
-      "every receipt liveScope parts out opens with its rule-15 first line '# <bead>: ' as untitled reads it",
-    ).toEqual([]);
+      readings.map(reading => ({ headingless: reading.headingless, untitled: reading.untitled })),
+      "every page liveScope parts out of the live tree opens with a level-1 heading unit as headingless reads it, and every receipt with its rule-15 first line '# <bead>: ' as untitled reads it, as docsChecks hands them; docsChecks reads the stand-in tree as listed",
+    ).toEqual([
+      { headingless: [], untitled: [] },
+      { headingless: treeReading.headingless, untitled: treeReading.untitled },
+    ]);
+    const [live, standIn] = readings;
+    expect({ pages: standIn.pages, receipts: standIn.receipts }, "docsChecks parts the stand-in tree's docs/ markdown files as listed").toEqual({ pages: treeReading.pages, receipts: treeReading.receipts });
     const scopePaths: readonly string[] = [
       "docs/workbench/a.md",
       "docs/workbench/sub/x.md",
@@ -844,6 +1015,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       receipts: receiptStandIns,
       untitled: untitled(receiptStandIns),
       liveScope: { paths: scopePaths, ...liveScope(scopePaths) },
+      tree: { files: docsTree.files, untracked: docsTree.untracked, reading: { pages: standIn.pages, receipts: standIn.receipts, headingless: standIn.headingless, untitled: standIn.untitled } },
     };
     expect(liveStandIns.liveScope, "liveScope reads its stand-in paths as listed").toEqual({
       paths: scopePaths,
@@ -926,13 +1098,36 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "list-item-definition-hidden", text: `- [design-stage]: https://example.invalid\n  Pi reads the ${cite} program (non-effectful).\n`, causes: ["status"] },
       { id: "crlf-dash-line", text: `Pi reads the ${cite} program.\r\n-\r\nIt is design-stage and non-effectful.\r\n`, causes: ["status", "scope"] },
     ];
-    return json({ scope: "every markdown file", walkIsTracked: true, floor: FLOORS.docs, unitFloor: FLOORS.units, pagesOpenH1: true, receiptsOpenTitle: true, liveStandIns, findings: reading.findings, controls: controlsHold(controls) });
+    return json({ scope: "every markdown file", walkIsTracked: true, floor: FLOORS.docs, unitFloor: FLOORS.units, pagesOpenH1: live.headingless.length === 0, receiptsOpenTitle: live.untitled.length === 0, liveStandIns, findings: reading.findings, controls: controlsHold(controls) });
   },
   C2: () => {
     const listed = productList(REPO).filter(path => SCRIPT.test(path));
     expect(listed.length, `floor: ${FLOORS.scripts} scripts at this census's base`).toBeGreaterThanOrEqual(FLOORS.scripts);
-    const holders = schemaHolders(listed.map(path => ({ path, text: textOf(path) })));
-    expect(holders, `the schema literal "${SCHEMA_LITERAL}" is a string unit of ${IDENTITY} only among src files`).toEqual([IDENTITY]);
+    /** C2's stand-in tree (a scratch git repository): 10 files in its index and 1 untracked beside them, read by schemaChecks as treeHolders lists. */
+    const schemaTree: StandInTree = {
+      git: true,
+      files: [
+        { path: "qa/d.mjs", text: `export const S = "${SCHEMA_LITERAL}";\n` },
+        { path: "src/a.ts", text: `export const S = "${SCHEMA_LITERAL}";\n` },
+        { path: "src/b.ts", text: `export const S = "${SCHEMA_LITERAL} extra";\n` },
+        { path: "src/c.ts", text: `// ${SCHEMA_LITERAL}\nexport const S = 1;\n` },
+        { path: "src/e.ts", text: `export const S = \`${SCHEMA_LITERAL}\`;\n` },
+        { path: "src/f.ts", text: `export const S = "${SCHEMA_LITERAL.replace("-", "\\u002d")}";\n` },
+        { path: "src/g.md", text: `${SCHEMA_LITERAL}\n` },
+        { path: "src/j.tsx", text: `export const S = "${SCHEMA_LITERAL}";\n` },
+        { path: "src/sub/i.mjs", text: `export const S = "${SCHEMA_LITERAL}";\n` },
+        { path: "src/workbench/h.ts", text: `// The schema.\nexport const S = "${SCHEMA_LITERAL}";\n` },
+      ],
+      untracked: [{ path: "src/k.ts", text: `export const S = "${SCHEMA_LITERAL}";\n` }],
+    };
+    const treeHolders = ["src/a.ts", "src/e.ts", "src/f.ts", "src/j.tsx", "src/k.ts", "src/sub/i.mjs", "src/workbench/h.ts"];
+    // The live schema check: overTree reads the live tree and the stand-in tree by one call of schemaChecks (the live tree first).
+    const readings = overTree("wb-021.6-schema-tree-", schemaTree, root => schemaChecks(root));
+    expect(
+      readings,
+      `the schema literal "${SCHEMA_LITERAL}" is a string unit of ${IDENTITY} only among the live tree's src files as schemaChecks reads them, and schemaChecks reads the stand-in tree as listed`,
+    ).toEqual([[IDENTITY], treeHolders]);
+    const [holders, standInHolders] = readings;
     const schemaFiles: readonly FileText[] = [
       { path: "src/a.ts", text: `export const S = "${SCHEMA_LITERAL}";\n` },
       { path: "src/b.ts", text: `export const S = "${SCHEMA_LITERAL} extra";\n` },
@@ -942,7 +1137,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { path: "src/f.ts", text: `export const S = "${SCHEMA_LITERAL.replace("-", "\\u002d")}";\n` },
       { path: "src/g.md", text: `${SCHEMA_LITERAL}\n` },
     ];
-    const schemaStandIns = { files: schemaFiles, holders: schemaHolders(schemaFiles) };
+    const schemaStandIns = { files: schemaFiles, holders: schemaHolders(schemaFiles), tree: { files: schemaTree.files, untracked: schemaTree.untracked, holders: standInHolders } };
     expect(schemaStandIns.holders, "the live schema check reads its stand-ins as listed").toEqual(["src/a.ts", "src/e.ts", "src/f.ts"]);
     const reading = readScope(REPO, listed, [PLANT_STRING]);
     expect(reading.kinds.script, "every script and the plant are read as scripts").toBe(listed.length + 1);
@@ -1530,18 +1725,31 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(isObject(e2) ? e2.effectful : undefined, "E2 judges every effect class the registry names beside read").toEqual(registry.filter(member => member !== READ));
   });
 
-  it("the landed judge: no top-level declaration of this file that declaredNames reads names an export of test/helpers/apo-citation-status-judge.ts, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their 27 and 8 stand-ins as listed", () => {
-    const judge = textOf(JUDGE_MODULE);
-    const exported = declaredNames(judge, true);
-    expect(exported, `${JUDGE_MODULE}'s top-level export declarations name the four entries`).toEqual(expect.arrayContaining([...JUDGE_ENTRIES]));
-    const census = readFileSync(SELF, "utf8");
-    expect(shadowed(census, judge), "no top-level declaration of this file that declaredNames reads names an export of the judge module").toEqual([]);
-    const imported = judgeImports(census);
-    expect(imported, "the names judgeImports reads from this file's imports of the judge module hold the four entries").toEqual(expect.arrayContaining([...JUDGE_ENTRIES]));
+  it("the landed judge: landedChecks reads this file and test/helpers/apo-citation-status-judge.ts whole by their paths and its stand-in tree by one call; no top-level declaration of this file that declaredNames reads names an export of that module, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS and name only its exports, landedChecks reads its stand-in tree as listed, and the two readers read their 27 and 8 stand-ins as listed", () => {
+    expect(join(REPO, CENSUS_PATH), "CENSUS_PATH is this file's path from the repository root").toBe(SELF);
+    /** The case's stand-in tree (a scratch directory): a stand-in judge at the judge module's path and a stand-in census at this file's path, read by landedChecks as listed below. */
+    const landedTree: StandInTree = {
+      git: false,
+      files: [
+        {
+          path: JUDGE_MODULE,
+          text: ["export const BLANK = /x/;", "const hidden = 1;", "export function judgeFiles(): void {}", "export const { cites, list: [first] } = { cites: 1, list: [2] };", "export const READS = { calls: 0 };", ""].join("\n"),
+        },
+        {
+          path: CENSUS_PATH,
+          text: ['import { describe } from "vitest";', `import { judgeFiles, READS as R, Unit } from "${JUDGE_SPECIFIER}";`, "const BLANK = 1;", 'describe("x", () => {', "  const cites = 2;", "});", "const { ...first } = { a: 1 };", ""].join("\n"),
+        },
+      ],
+      untracked: [],
+    };
+    // THE LANDED JUDGE's live check: overTree reads the live tree and the stand-in tree by one call of landedChecks (the live tree first).
     expect(
-      imported.filter(name => !exported.includes(name)),
-      "and name only the module's exports",
-    ).toEqual([]);
+      overTree("wb-021.6-landed-tree-", landedTree, root => landedChecks(root)),
+      "over the live tree the judge module's top-level export declarations name the four entries, no top-level declaration of this file names one of its exports, and the names this file imports from it hold the four and name only its exports; landedChecks reads the stand-in tree as listed",
+    ).toEqual([
+      { exported: expect.arrayContaining([...JUDGE_ENTRIES]), shadowed: [], imported: expect.arrayContaining([...JUDGE_ENTRIES]), foreign: [] },
+      { exported: ["BLANK", "judgeFiles", "cites", "first", "READS"], shadowed: ["BLANK", "first"], imported: ["judgeFiles", "READS", "Unit"], foreign: ["Unit"] },
+    ]);
     const standInJudge = [
       "export const BLANK = /x/;",
       "export function judgeFiles(): void {}",

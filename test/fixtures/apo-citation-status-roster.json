@@ -229,7 +229,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the carriers, the citation, the filing tree and the producer lines; the src registry binds the effect classes",
-  "the landed judge: no top-level declaration of this file that declaredNames reads names an export of test/helpers/apo-citation-status-judge.ts, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS, and the two readers read their 27 and 8 stand-ins as listed",
+  "the landed judge: landedChecks reads this file and test/helpers/apo-citation-status-judge.ts whole by their paths and its stand-in tree by one call; no top-level declaration of this file that declaredNames reads names an export of that module, the names judgeImports reads from its imports of that module hold judgeFiles, causesOf, bindingOf and READS and name only its exports, landedChecks reads its stand-in tree as listed, and the two readers read their 27 and 8 stand-ins as listed",
   "P1",
   "E1",
   "E2",
@@ -975,6 +975,181 @@
          "docs/workbench/receipts/zz.md",
          "docs/workbench/receipts/sub/wb-q.md"
         ]
+       },
+       "tree": {
+        "files": [
+         {
+          "path": "README.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/other/y.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench-old/z.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/notes.txt",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/notes.cmd",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/a.md",
+          "text": "# A\n\nText.\n"
+         },
+         {
+          "path": "docs/workbench/b.md",
+          "text": "## B\n\nText.\n"
+         },
+         {
+          "path": "docs/workbench/c.md",
+          "text": "Text first.\n\n# C\n"
+         },
+         {
+          "path": "docs/workbench/d.md",
+          "text": "#D\n"
+         },
+         {
+          "path": "docs/workbench/e.md",
+          "text": ""
+         },
+         {
+          "path": "docs/workbench/f.md",
+          "text": " # F\n"
+         },
+         {
+          "path": "docs/workbench/g.md",
+          "text": "\n# G\n"
+         },
+         {
+          "path": "docs/workbench/receipts.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/sub/x.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/sub/receipts/wb-r.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-x.md",
+          "text": "# wb-x: A title\n\n## 2026-11-04 entry\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-y.md",
+          "text": "# wb-x: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-z.md",
+          "text": "# wb-z A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-w.md",
+          "text": "## wb-w: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-v.md",
+          "text": "# wb-v:A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-t.md",
+          "text": " # wb-t: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-s.md",
+          "text": "# WB-S: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-u.md",
+          "text": ""
+         },
+         {
+          "path": "docs/workbench/receipts/wb-m.md",
+          "text": "\n# wb-m: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/zz.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/receipts/sub/wb-q.md",
+          "text": "# wb-q: A title\n"
+         },
+         {
+          "path": "docs/workbench/receipts/sub/wb-p.md",
+          "text": "Text.\n"
+         }
+        ],
+        "untracked": [
+         {
+          "path": "docs/workbench/untracked.md",
+          "text": "Text.\n"
+         },
+         {
+          "path": "docs/workbench/receipts/wb-n.md",
+          "text": "Text.\n"
+         }
+        ],
+        "reading": {
+         "pages": [
+          "docs/workbench/a.md",
+          "docs/workbench/b.md",
+          "docs/workbench/c.md",
+          "docs/workbench/d.md",
+          "docs/workbench/e.md",
+          "docs/workbench/f.md",
+          "docs/workbench/g.md",
+          "docs/workbench/receipts.md",
+          "docs/workbench/sub/receipts/wb-r.md",
+          "docs/workbench/sub/x.md",
+          "docs/workbench/untracked.md"
+         ],
+         "receipts": [
+          "docs/workbench/receipts/sub/wb-p.md",
+          "docs/workbench/receipts/sub/wb-q.md",
+          "docs/workbench/receipts/wb-m.md",
+          "docs/workbench/receipts/wb-n.md",
+          "docs/workbench/receipts/wb-s.md",
+          "docs/workbench/receipts/wb-t.md",
+          "docs/workbench/receipts/wb-u.md",
+          "docs/workbench/receipts/wb-v.md",
+          "docs/workbench/receipts/wb-w.md",
+          "docs/workbench/receipts/wb-x.md",
+          "docs/workbench/receipts/wb-y.md",
+          "docs/workbench/receipts/wb-z.md",
+          "docs/workbench/receipts/zz.md"
+         ],
+         "headingless": [
+          "docs/workbench/b.md",
+          "docs/workbench/c.md",
+          "docs/workbench/d.md",
+          "docs/workbench/e.md",
+          "docs/workbench/f.md",
+          "docs/workbench/receipts.md",
+          "docs/workbench/sub/receipts/wb-r.md",
+          "docs/workbench/sub/x.md",
+          "docs/workbench/untracked.md"
+         ],
+         "untitled": [
+          "docs/workbench/receipts/sub/wb-p.md",
+          "docs/workbench/receipts/wb-n.md",
+          "docs/workbench/receipts/wb-s.md",
+          "docs/workbench/receipts/wb-t.md",
+          "docs/workbench/receipts/wb-u.md",
+          "docs/workbench/receipts/wb-v.md",
+          "docs/workbench/receipts/wb-w.md",
+          "docs/workbench/receipts/wb-y.md",
+          "docs/workbench/receipts/wb-z.md",
+          "docs/workbench/receipts/zz.md"
+         ]
+        }
        }
       },
       "findings": [
@@ -1458,7 +1633,66 @@
         "src/a.ts",
         "src/e.ts",
         "src/f.ts"
-       ]
+       ],
+       "tree": {
+        "files": [
+         {
+          "path": "qa/d.mjs",
+          "text": "export const S = \"workflow-script/v1\";\n"
+         },
+         {
+          "path": "src/a.ts",
+          "text": "export const S = \"workflow-script/v1\";\n"
+         },
+         {
+          "path": "src/b.ts",
+          "text": "export const S = \"workflow-script/v1 extra\";\n"
+         },
+         {
+          "path": "src/c.ts",
+          "text": "// workflow-script/v1\nexport const S = 1;\n"
+         },
+         {
+          "path": "src/e.ts",
+          "text": "export const S = `workflow-script/v1`;\n"
+         },
+         {
+          "path": "src/f.ts",
+          "text": "export const S = \"workflow\\u002dscript/v1\";\n"
+         },
+         {
+          "path": "src/g.md",
+          "text": "workflow-script/v1\n"
+         },
+         {
+          "path": "src/j.tsx",
+          "text": "export const S = \"workflow-script/v1\";\n"
+         },
+         {
+          "path": "src/sub/i.mjs",
+          "text": "export const S = \"workflow-script/v1\";\n"
+         },
+         {
+          "path": "src/workbench/h.ts",
+          "text": "// The schema.\nexport const S = \"workflow-script/v1\";\n"
+         }
+        ],
+        "untracked": [
+         {
+          "path": "src/k.ts",
+          "text": "export const S = \"workflow-script/v1\";\n"
+         }
+        ],
+        "holders": [
+         "src/a.ts",
+         "src/e.ts",
+         "src/f.ts",
+         "src/j.tsx",
+         "src/k.ts",
+         "src/sub/i.mjs",
+         "src/workbench/h.ts"
+        ]
+       }
       },
       "findings": [
        "src/zz-wb-021.6-plant.ts:1 status",
