@@ -304,7 +304,8 @@
  * F19 and F20).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
- * (test/fixtures/rc-context-block-roster.json).
+ * (test/fixtures/rc-context-block-roster.json); the constants hold each READ_PROBES and QUIET_PROBES text by id at its
+ * sha256/16 (probeDigests, wb-wnoj F2), so a probe's text edited in this file alone reds the judged set.
  * OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-5ltg.1): each acceptance clause
  * is exactly one row label; its notes carry the quote and its pin, the quoted carrier, the "eight-key reader" and the fixture
  * names "(validRf/result)"; clause (a)'s control words must each be carried by a CONTROL_FIELDS key; clause (c)'s four surfaces
@@ -316,6 +317,11 @@
  * wb-wgk3's cut it carries and their ids as a range (G01-G21), C3 holds G_PINS's keys to that count and range, and each is
  * answered by a read probe of its own, a FAIL CLOSED one noting only unpinned declarations and a pinned one only member
  * reads (which side each falls on is this census's reading).
+ * The follow-up wb-wnoj's row anchors C3's WNOJ_PINS: its title names the two KEY residual families of NOT CLAIMED's closing
+ * sentence (number-arithmetic and bigint-part) and its F1 line counts and names the gate's witnesses (E01-E03); C3 holds
+ * WNOJ_PINS's families to the title and its witnesses to that line, every family row a quiet row of its own and each
+ * witness answered by one of them (which family a witness falls in is this census's reading), and holds the reading live on
+ * the row with another family name and other witnesses written in.
  * Every pin of rows A-C covers words of the filing (COVERS, verbatim spans of its row's text: rows A and C their clause, row B
  * clause (b) read with the gating sentence's contract parenthetical, whose carrier and eight-key reader B3 and B4 pin): a row's
  * pins cover every word of that text and each pin covers a word no other pin of its row covers, so a pin removed from every
@@ -334,7 +340,11 @@
  * probe by the wb-wgk3 title only as the one answer GQ_PINS gives a GQ mutant it names and by the wb-07zx title only as the
  * one answer G_PINS gives a G mutant its range counts, which probe answers it being this census's reading (so a probe of
  * wb-07zx's F2 shapes, one of its MATRICES with its axes and rows, or one of its cut #3 read probes, held name kinds or
- * spellings, removed from every literal and the roster, is anchored by neither); the rows, the
+ * spellings, removed from every literal and the roster, is anchored by neither), and a quiet row by the wb-wnoj row only
+ * as a row WNOJ_PINS gives a family its title names, at least one per family, or the one it gives a witness its F1 line
+ * names (so a family's row answering no witness, [bigint-substitution-named-method], removed from every literal and the
+ * roster, is anchored by neither; no anchor holds a probe's text, wnojKeys or a WNOJ_PINS check of C3, so one edited or
+ * removed in this file and the roster together is anchored by neither); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
  * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
@@ -390,8 +400,21 @@
  * sum's string literal, and a sum pairing part kinds no cell pairs (a const after a string literal, two consts, a number
  * literal between two string literals) -, each naming a method a member callee spells; and an escape, a quote or a
  * spelling no held name kind or FAIL CLOSED spelling of MATRICES spells, of a held name a member callee spells (one none
- * spells is the family of [single-escaped-element-callee]) or of a FAIL CLOSED one. The reading holds each such method a
- * member callee reaches, so it reads its member, and notes each FAIL CLOSED one: none is quiet and no quiet row is owed.
+ * spells is the family of [single-escaped-element-callee]) or of a FAIL CLOSED one. The reading holds each such method
+ * under its name's constant string (propertyKeyOf) - a computed name's the strings its key's parts resolve to by the KEY
+ * rule, joined -, so a member callee spelling that string reads its member, and notes each FAIL CLOSED one; a computed
+ * name a part of whose key resolves to none holds its method under no name (the [unresolved-named-method] reading; a
+ * const of these words is one the KEY rule resolves, holding a string). Two KEY families of these words read quiet while a
+ * member callee spelling the key's run-time string reaches the method, each a residual beside its pinned quiet rows, the
+ * gate's witnesses held to the wb-wnoj row (WNOJ_PINS; wb-wnoj F1: E01-E03 falsified this sentence's former "none is
+ * quiet"): NUMBER-ARITHMETIC, a "+" adding two number literals, which JavaScript adds and the reading joins (1 + 1 reads
+ * "11", "2" at run time), as a template's substitution [number-sum-substitution-named-method] or a sum's part in
+ * parentheses [number-sum-part-named-method]; and BIGINT-PART, a bigint literal as a sum's part [bigint-part-named-method]
+ * or a template's substitution [bigint-substitution-named-method], which the reading resolves to none and JavaScript reads
+ * as its digits (1n as "1"). C3 pins each family row's key reading (wnojKeys: the digits joined, or null for none, beside
+ * two read probes' keys the KEY rule resolves, [sum-named-method] and [template-expression-named-method]); that a
+ * member callee reaches each row's method at run time is the cutting seat's measurement (each row's module under src/ui:
+ * tsc and biome rc 0, and run, its member callee returns the result's blocks), not a pin of this census.
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
@@ -503,6 +526,16 @@
  * whose methods 1e308, spelled bare, with separators and as a leading-dot fraction, and 1.7976931348623158e308 name, each
  * with a parameter name of its own, and the reading reads each note alone
  * [near-maximum-numeral-infinity-callee-methods], so K08 reds it.
+ * FOLLOW-UP wb-wnoj (landing 856's F1 and F2, the R694 carry of wb-07zx cut #3's PASS-WITH-FINDING): F1 the gate's E01-E03
+ * (a template whose substitution is 1 + 1, a sum part (1 + 1), a bigint part 1n) falsified NOT CLAIMED's closing sentence,
+ * each a committable module whose member callee reaches result.blocks while the census read 0 failed | 19 passed: the
+ * sentence is narrowed to the KEY rule's reading, and the two KEY families it left quiet, NUMBER-ARITHMETIC and BIGINT-PART,
+ * are named residuals beside their pinned quiet rows, held to the wb-wnoj row (WNOJ_PINS), each row's key reading pinned
+ * (wnojKeys); F2 every READ_PROBES and QUIET_PROBES text is held by id at its sha256/16 (probeDigests), so a probe's text
+ * edited in this file alone - the gate's XA4, XA4b and XA4c, an export or an abstract dropped - reds the judged set.
+ * wb-wnoj cut #2 (the re-cut after wb-18ce landed on this file at landing 902; trunk merged in, never rebased) keeps
+ * both FOLLOW-UP paragraphs and holds wb-18ce's read probe [near-maximum-numeral-infinity-callee-methods] by its digest
+ * as well, so that probe's text edited in this file alone reds the judged set too.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -1447,10 +1480,31 @@ const G_PINS: Readonly<Record<"failClosed" | "pinned", Readonly<Record<string, s
     G20: "continued-string-named-class-method",
   },
 };
+/** The follow-up whose title names the KEY residual families of the header's closing NOT CLAIMED sentence and whose F1 line
+ * names the gate's witnesses of them (the R694 carry of landing 856). */
+const WNOJ_BEAD = "wb-wnoj";
+/** Each KEY residual family the wb-wnoj title names, with its quiet rows, and each witness its F1 line names, with the quiet row
+ * of its shape (C3 holds the families to the title and the witnesses to the line, the export row outside this file; which
+ * family a witness falls in, and a family's rows beyond its witnesses', are this census's reading). */
+const WNOJ_PINS: { readonly families: Readonly<Record<string, readonly string[]>>; readonly witnesses: Readonly<Record<string, string>> } = {
+  families: {
+    "number-arithmetic": ["number-sum-substitution-named-method", "number-sum-part-named-method"],
+    "bigint-part": ["bigint-part-named-method", "bigint-substitution-named-method"],
+  },
+  witnesses: {
+    E01: "number-sum-substitution-named-method",
+    E02: "number-sum-part-named-method",
+    E03: "bigint-part-named-method",
+  },
+};
+/** Two read probes whose computed method name the KEY rule resolves, a sum's and a template's: C3's wnojKeys reads their keys
+ * beside the family rows', so a key reading that ignores its probe reds. */
+const WNOJ_KEY_CONTROLS: readonly string[] = ["sum-named-method", "template-expression-named-method"];
 /** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
  * another member or used as a string (today's Pi UI code reads agent and tool results so), a keyed read keyed by another member
  * (wb-qnl8 F3), the element of an array binding beside a result (wb-qnl8 F2), a bare name result walked or read reflectively
- * (wb-qnls), and every form the header's NOT CLAIMED names (wb-qnls F2), each key in brackets beside its form there. */
+ * (wb-qnls), and every form the header's NOT CLAIMED names (wb-qnls F2), the KEY residual families wb-wnoj names among them
+ * (WNOJ_PINS), each key in brackets beside its form there. */
 const QUIET_PROBES: Readonly<Record<string, string>> = {
   "other-member": `export const schema = ${PROBE_RESULT}["schema"];\n`,
   "bare-spread": "export const copy = (result: object) => ({ ...result, usage: 1 });\n",
@@ -1521,6 +1575,14 @@ const QUIET_PROBES: Readonly<Record<string, string>> = {
   // wb-07zx F2: a string-literal name a single-character escape spells is one no member callee spells, so only an element
   // access, which the reading does not follow, could call it.
   "single-escaped-element-callee": `const helpers = {\n  "blocks\\tOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers["blocks\\tOf"](${PROBE_RESULT});\n`,
+  // wb-wnoj F1 (landing 856's F1): the KEY residual families NOT CLAIMED's closing sentence names, each row a method a member
+  // callee spelling its key's run-time string reaches - NUMBER-ARITHMETIC, two number literals a "+" adds, as a template's
+  // substitution (the gate's E01) or a sum's part in parentheses (E02); BIGINT-PART, a bigint literal as a sum's part (E03)
+  // or a template's substitution -, each read quiet (WNOJ_PINS).
+  "number-sum-substitution-named-method": `const helpers = {\n  [\`blocksOf\${1 + 1}\`](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf2(${PROBE_RESULT});\n`,
+  "number-sum-part-named-method": `const helpers = {\n  ["blocksOf" + (1 + 1)](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf2(${PROBE_RESULT});\n`,
+  "bigint-part-named-method": `const helpers = {\n  ["blocksOf" + 1n](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf1(${PROBE_RESULT});\n`,
+  "bigint-substitution-named-method": `const helpers = {\n  [\`blocksOf\${1n}\`](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf1(${PROBE_RESULT});\n`,
 };
 
 function needleNamed(id: string): string {
@@ -1790,6 +1852,20 @@ function gFiled(): { count: number; ids: string[] } {
   const last = Number(range?.[3] ?? "0");
   const ids = Array.from({ length: Math.max(0, last - first + 1) }, (_, offset) => `G${String(first + offset).padStart(2, "0")}`);
   return { count: Number(range?.[1] ?? "-1"), ids };
+}
+/** The wb-wnoj row's reading (C3, WNOJ_PINS): the KEY families its title names, and the count and ids of the witnesses its F1
+ * line names (the first line of its notes opening "[leads] - F1 ", which a later note never moves). */
+function wnojFiled(): { families: string[]; count: number; witnesses: string[] } {
+  const { title, notes } = exportRow(WNOJ_BEAD);
+  return wnojReadingOf(title, notes);
+}
+/** wnojFiled's reading of a title and notes (C3 holds it live on a row it was not written for). */
+function wnojReadingOf(title: string, notes: string): { families: string[]; count: number; witnesses: string[] } {
+  const families = / F1 name the ([a-z]+(?:-[a-z]+)*) and ([a-z]+(?:-[a-z]+)*) KEY families of /.exec(title)?.slice(1) ?? [];
+  const line = notes.split("\n").find(entry => entry.startsWith("[leads] - F1 ")) ?? "";
+  const listed = / - ([a-z]+) realized committable witnesses \((.+?)\) keep the delivered census /.exec(line);
+  const witnesses = [...(listed?.[2] ?? "").matchAll(/(?:^|, )(E\d{2}) /g)].map(match => match[1] ?? "");
+  return { families, count: COUNT_WORDS.indexOf(listed?.[1] ?? ""), witnesses };
 }
 
 /** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
@@ -2342,6 +2418,21 @@ function keyOf(node: ts.Expression, consts: ReadonlyMap<string, string | null>):
 function propertyKeyOf(name: ts.PropertyName, consts: ReadonlyMap<string, string | null>): string | undefined {
   if (ts.isComputedPropertyName(name)) return keyOf(name.expression, consts);
   return ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name) || ts.isNoSubstitutionTemplateLiteral(name) ? name.text : undefined;
+}
+/** The constant string a probe module's first computed method name resolves to by the KEY rule (keyOf), or null for none
+ * (wb-wnoj F1: C3's wnojKeys). */
+function computedKeyOf(text: string): string | null {
+  const file = sourceFile("src/ui/probe.ts", text);
+  const consts = constStringsOf(file);
+  let found: string | null | undefined;
+  const visit = (node: ts.Node): void => {
+    if (found !== undefined) return;
+    if (ts.isMethodDeclaration(node) && ts.isComputedPropertyName(node.name)) found = keyOf(node.name.expression, consts) ?? null;
+    else ts.forEachChild(node, visit);
+  };
+  visit(file);
+  if (found === undefined) throw new Error("the probe module declares no computed method name");
+  return found;
 }
 /** How an expression holds an rf result: "bound" for a result member read (`.result`, `?.result`, or an element access keyed
  * "result") or a name bound to one, "named" for any other name result. */
@@ -3186,6 +3277,39 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
     const gMisfits = [...sideOf(G_PINS.failClosed, /^\d+ declaration unpinned$/), ...sideOf(G_PINS.pinned, /^\d+ member [a-z]+$/)];
     expect({ distinct: new Set(gAnswers).size, misfits: gMisfits }, "each G mutant's probe: its own, a FAIL CLOSED one noting only unpinned declarations, a pinned one only member reads").toStrictEqual({ distinct: gAnswers.length, misfits: [] });
+    // wb-wnoj F1: the KEY residual families the follow-up's title names and the witnesses its F1 line counts (WNOJ_PINS), each
+    // family's rows quiet rows of its own, at least one, and each witness answered by one of them; each row's key as the
+    // reading resolves it (wnojKeys: a number sum's digits joined, a bigint part none).
+    const familyRows = Object.values(WNOJ_PINS.families).flat();
+    expect(wnojFiled(), "the wb-wnoj row's KEY families and F1 witnesses, counted: exactly WNOJ_PINS").toStrictEqual({
+      families: Object.keys(WNOJ_PINS.families),
+      count: Object.keys(WNOJ_PINS.witnesses).length,
+      witnesses: Object.keys(WNOJ_PINS.witnesses),
+    });
+    const wnojRow = exportRow(WNOJ_BEAD);
+    const otherRow = {
+      title: wnojRow.title.replace(" and bigint-part KEY families ", " and other-part KEY families "),
+      notes: wnojRow.notes.replace(" three realized committable witnesses (E01 ", " two realized committable witnesses (E09 ").replace(", E03 a bigint part 1n) keep ", ") keep "),
+    };
+    expect(wnojReadingOf(otherRow.title, otherRow.notes), "the wb-wnoj reading, live on a row naming another family and other witnesses").toStrictEqual({
+      families: ["number-arithmetic", "other-part"],
+      count: 2,
+      witnesses: ["E09", "E02"],
+    });
+    const wnojMisfits = [
+      ...Object.entries(WNOJ_PINS.families)
+        .filter(([, rows]) => rows.length === 0)
+        .map(([family]) => family),
+      ...familyRows.filter(id => (probes.quiet[id] ?? [id]).length > 0),
+      ...Object.entries(WNOJ_PINS.witnesses)
+        .filter(([, id]) => !familyRows.includes(id))
+        .map(([witness]) => witness),
+    ];
+    expect({ distinct: new Set(familyRows).size, misfits: wnojMisfits }, "each wb-wnoj family: at least one row, each its own and quiet, and each witness answered by one").toStrictEqual({ distinct: familyRows.length, misfits: [] });
+    const wnojKeys = {
+      rows: Object.fromEntries(familyRows.map(id => [id, computedKeyOf(QUIET_PROBES[id] ?? "")])),
+      controls: Object.fromEntries(WNOJ_KEY_CONTROLS.map(id => [id, computedKeyOf(READ_PROBES[id] ?? "")])),
+    };
     // wb-07zx cut #2: each MATRIX reads one row per cell, every row on its side (a held cell's member read, a FAIL CLOSED cell's note).
     const offMatrix = Object.entries(MATRICES)
       .filter(([id, matrix]) => {
@@ -3213,6 +3337,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       vocabulary,
       resultReads,
       probes,
+      wnojKeys,
       reactivefiberLoader: loaders.includes("reactivefiber"),
       uiFloorMet: uiDir.length >= 8,
     };
@@ -3519,6 +3644,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** Each probe's text by id at its sha256/16 (wb-wnoj F2): the roster holds every READ_PROBES and QUIET_PROBES text so, and a
+ * text edited in this file alone reds the judged set. */
+function probeDigests(probes: Readonly<Record<string, string>>): Record<string, string> {
+  return Object.fromEntries(Object.entries(probes).map(([id, text]) => [id, sha(text).slice(0, 16)]));
+}
 /** The frozen constants the roster holds beside the rows (census names held by count and digest, never spelled). */
 function constants(): JsonValue {
   return json({
@@ -3545,8 +3675,10 @@ function constants(): JsonValue {
     keyedReads: KEYED_READS,
     readProbes: Object.keys(READ_PROBES),
     quietProbes: Object.keys(QUIET_PROBES),
+    probeDigests: { reads: probeDigests(READ_PROBES), quiet: probeDigests(QUIET_PROBES) },
     gqPins: GQ_PINS,
     gPins: G_PINS,
+    wnojPins: WNOJ_PINS,
     matrices: {
       kinds: Object.fromEntries(MATRIX_KINDS.map(kind => [kind.id, `${kind.marker}|${kind.declares}|${kind.statement}`])),
       heldNames: Object.fromEntries(MATRIX_HELD_NAMES.map(name => [name.id, `${name.spell("000")}|${name.needs("000").join(" ")}|${name.callee("000")}`])),
