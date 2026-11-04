@@ -725,6 +725,36 @@
         ]
        },
        {
+        "id": "footnote-definition-cr-led",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-colon-only",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-mid-line",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-no-colon",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-line-separator",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "hidden-citation",
         "causes": [
          "unqualified"
