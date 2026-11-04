@@ -99,16 +99,34 @@
  * a value other than a string only under a label other than package.json, where every KEY_VALUE_PLANTS plant is read under its
  * own name) and GP19-08 (textsOf reads such a key only in a top-level overrides object, where every KEY_VALUE_PLANTS plant sits
  * in overrides), each realized by a real-tree page (WG4-15, WG4-17, WG19-08). This follow-up takes the pin: N-ROOT-READERS
- * reads three derived plant tables beside the R-B427 ones. CHANNEL_SPACED_PLANTS holds each of the five places' compact
- * CHANNEL_PLANTS texts again in each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's
- * field, the same field behind it, and a space after every colon), each declaring its compact text's hits;
- * KEY_VALUE_FIELD_PLANTS holds the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's
- * object, read under its plant's own label with no raw text handed; and KEY_VALUE_CHANNELS holds the same keys, their hyphen
- * JSON-escaped, as one-line texts read under package.json with the text handed as its raw text, as LIVE-A1 reads the root
- * file (WG4-17's escaped key and value in overrides, and an object value in WG19-08's field peerDependenciesMeta, among
- * them). GP19-14, GP19-14o, GP19-09 and GP19-08 each red the census. The root readers' clause names the new tables, NOT
+ * reads three derived plant tables beside the R-B427 ones. CHANNEL_SPACED_PLANTS holds every CHANNEL_PLANTS text again in
+ * each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's field, the same field behind
+ * it, a space after every colon, and a top-level string field holding the stem's two words split by a space ahead of the
+ * stem's field), each declaring its compact text's hits; KEY_VALUE_FIELD_PLANTS holds the key fiber-optics holding each
+ * KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's object, read under its plant's own label with no raw text handed;
+ * and KEY_VALUE_CHANNELS holds the same keys, their hyphen JSON-escaped, as one-line texts read under package.json with the
+ * text handed as its raw text, as LIVE-A1 reads the root file (WG4-17's escaped key and value in overrides, and an object
+ * value in WG19-08's field peerDependenciesMeta, among them), each alone and each again beside a stem only its raw line
+ * sees. GP19-14, GP19-14o, GP19-09 and GP19-08 each red the census. The root readers' clause names the new tables, NOT
  * CLAIMED names the rest, and nothing else changes: no row, pin id, test, channel or reader is added, the helper is
  * untouched, and the R-B427 words' other narrowings stand.
+ *
+ * THE wb-zdwo CUT #2 (refusal #1 on cut #1, O:2035; orchestrator ruling R-B527, M:55470, rung 1): refusal #1 found the two
+ * raw-handed tables without a negative control. Every spaced text of cut #1 and every KEY_VALUE_CHANNELS text held its stem
+ * escaped and alone, so no declared reading changed when the raw text was withheld or handed without its spaces, and three
+ * gate-authored one-edit census members kept this census green: GP17-C01 (the spaced texts read with no raw text handed),
+ * GP17-C04 (the spaced texts read with their raw text's spaces removed) and GP17-C02 (the KEY_VALUE_CHANNELS texts read with
+ * no raw text handed), each hiding a helper hollowing this census otherwise reds (GP19-14 and GP19-14o under GP17-C01,
+ * GP19-14 under GP17-C04, GP17-H11 under GP17-C02). This cut takes the kill. The both-channels text joins CHANNEL_SPACED_PLANTS
+ * in each form with its raw line's hit declared, so a spaced reading with the raw text withheld reds. The split-stem form puts
+ * the stem's two words, split by a space, in a top-level string field of each text, read by neither reading, so a spaced
+ * reading handed the raw text with its spaces removed declares a raw-line hit no plant declares, and reds. Each
+ * KEY_VALUE_CHANNELS text is read again beside a stem only its raw line sees (a keywords list shadowed by a duplicate
+ * keywords key), its raw-line hit declared, so a key-value channel reading with the raw text withheld reds. THE DIRECT READ:
+ * the judged-set case reads every CHANNEL_SPACED_PLANTS and KEY_VALUE_CHANNELS text again through manifestHits with its raw
+ * text handed and holds each reading to its declared hits, so each raw-handed text is read at two call sites, and a census
+ * edit at one site's hand-off leaves the other site reading the plant's own raw text. Nothing else changes: no row, pin id,
+ * test, channel or reader is added, and the helper is untouched.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -121,10 +139,11 @@
  *     description's three name forms (N-DIRECTORY also a member with every PIP_EXTENSIONS extension, or none, below each word's
  *     directory); N-OTHER the word held beside other text, another extension, the test/ tree left unread and a hit's line;
  *     N-ROOT-READERS the root npm pair's own readers (package.json read whole: a manifest per planted dependency list, a key, a
- *     nested value and a raw shadowed duplicate key, each CHANNEL_PLANTS text read with its raw text handed, the five places'
- *     texts again in each CHANNEL_SPACINGS form, and a key holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field,
- *     under its plant's own label and, escaped, under package.json with its raw text handed; package-lock.json by installed path
- *     and name field, each at every LIST_POSITIONS position of the installed packages; two near misses quiet).
+ *     nested value and a raw shadowed duplicate key, each CHANNEL_PLANTS text read with its raw text handed, again in each
+ *     CHANNEL_SPACINGS form, and a key holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field, under its plant's own
+ *     label and, escaped, under package.json with its raw text handed, alone and beside a stem only its raw line sees;
+ *     package-lock.json by installed path and name field, each at every LIST_POSITIONS position of the installed packages; two
+ *     near misses quiet).
  *  R  the description's A3 item, its label read from the tracker export: refusal #3's A3 members (wb-pyel.1's notes, its U2 line),
  *     each a planted module in the probe's shape (an exported const-arrow registerValuePublish calling the registry): L3-R1 .call,
  *     L3-R2 an element access by a string key, L3-R3 a Reflect.apply argument, L3-R4 a parenthesized callee, the controls L3-Rc1 a
@@ -261,20 +280,24 @@
  * with its raw text, a package.json key at another place than a top-level field's object holding another value than a
  * string (a key of an object item in a top-level field's list among them), or a needle in a descriptor key whose value is
  * not a string (the KEY_VALUE_PLANTS values are package.json's alone). Nor, at the wb-zdwo follow-up (the root readers'
- * clause claims the parsed reading beside a handed raw text for the CHANNEL_PLANTS texts, the five places' texts in each
- * CHANNEL_SPACINGS form and the KEY_VALUE_CHANNELS texts, and the key fiber-optics holding each KEY_VALUE_PLANTS value in
- * each KEY_VALUE_FIELDS field's object, under its plant's own label and under package.json), is a
+ * clause claims the parsed reading beside a handed raw text, and the raw line's reading beside it, for the CHANNEL_PLANTS
+ * texts, every CHANNEL_PLANTS text in each CHANNEL_SPACINGS form and the KEY_VALUE_CHANNELS texts, each alone and beside a
+ * stem only its raw line sees, and the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS
+ * field's object, under its plant's own label and under package.json), is a
  * handed raw text holding other text beside the stem than its plant spells - among them a space inside the stem's own key
- * or string, a tab, a carriage return or another whitespace character than a space, a space before a colon or beside a
- * comma or a bracket, a spaced string field at another step than the top level or with another value than its plant's,
- * the both-channels text or a KEY_VALUE_CHANNELS text in a spaced form, and the live root package.json itself as one line
- * (WG4-15's page) -, or a key holding a value other than a string that is another key than fiber-optics, in a field
- * outside KEY_VALUE_FIELDS (bin, exports, scripts and publishConfig among them), at another step than a top-level field's
- * object, under another label than its plant's own and package.json, or under package.json with no raw text handed or
- * with its raw text spelled otherwise than its plant spells it. Edits of this
+ * or string, the stem's words split otherwise than the split-stem field splits them (by one space, in a top-level string
+ * field ahead of the stem's field), a tab, a carriage return or another whitespace character than a space, a space before
+ * a colon or beside a comma or a bracket, a spaced string field at another step than the top level or with another value
+ * than its plant's, a KEY_VALUE_CHANNELS text in a spaced form or beside a stem its raw line holds otherwise than in the
+ * shadowed keywords list, and the live root package.json itself as one line (WG4-15's page) -, or a key holding a value
+ * other than a string that is another key than fiber-optics, in a field outside KEY_VALUE_FIELDS (bin, exports, scripts
+ * and publishConfig among them), at another step than a top-level field's object, under another label than its plant's
+ * own and package.json, or under package.json with no raw text handed or with its raw text spelled otherwise than its
+ * plant spells it. Edits of this
  * file and the roster together: a plant removed from its table and the
- * roster together where no outside anchor names it, and a pin a later cut adds beyond the export's member lists and the
- * claims, removed whole, are NOT CLAIMED.
+ * roster together where no outside anchor names it, a pin a later cut adds beyond the export's member lists and the
+ * claims, removed whole, and one edit of a raw-handed text's hand-off made at both of its call sites (the N-ROOT-READERS
+ * witness and the direct read) together are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
  * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
  * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
@@ -629,7 +652,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; a key in a top-level field's object holding a string or each KEY_VALUE_PLANTS value (an object, an empty object, a list, an empty list, a number, zero, true, false, null, an empty string), the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's object (overrides, dependencies, devDependencies, peerDependencies, peerDependenciesMeta, optionalDependencies) read under its plant's own label with no raw text handed (KEY_VALUE_PLANTS in overrides, KEY_VALUE_FIELD_PLANTS in each field) and, its hyphen JSON-escaped, under package.json with its one-line raw text handed (KEY_VALUE_CHANNELS); its raw text one line, read beside its parsed keys and strings when it is handed, as LIVE-A1 hands the root file's: each CHANNEL_PLANTS text, one line ended by a newline, holds the stem with its hyphen JSON-escaped, so only the parsed reading sees it, alone at each of those five places, each of those five texts read again in each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's field, the same field behind it, and a space after every colon; CHANNEL_SPACED_PLANTS), and once beside a stem only its raw line sees (a shadowed duplicate key), both read; a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; a key in a top-level field's object holding a string or each KEY_VALUE_PLANTS value (an object, an empty object, a list, an empty list, a number, zero, true, false, null, an empty string), the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's object (overrides, dependencies, devDependencies, peerDependencies, peerDependenciesMeta, optionalDependencies) read under its plant's own label with no raw text handed (KEY_VALUE_PLANTS in overrides, KEY_VALUE_FIELD_PLANTS in each field) and, its hyphen JSON-escaped, under package.json with its one-line raw text handed, alone and again beside a stem only its raw line sees (a shadowed duplicate keywords list), both read (KEY_VALUE_CHANNELS); its raw text one line, read beside its parsed keys and strings when it is handed, as LIVE-A1 hands the root file's: each CHANNEL_PLANTS text, one line ended by a newline, holds the stem with its hyphen JSON-escaped, so only the parsed reading sees it, alone at each of those five places, and once beside a stem only its raw line sees (a shadowed duplicate key), both read, each of those six texts read again in each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's field, the same field behind it, a space after every colon, and a top-level string field holding the stem's two words split by a space ahead of the stem's field, which neither reading reads as the stem; CHANNEL_SPACED_PLANTS); a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
@@ -778,27 +801,32 @@ const KEY_VALUE_PLANTS: Readonly<Record<string, JsonValue>> = {
   "null": { overrides: { "fiber-optics": null } },
   "empty string": { overrides: { "fiber-optics": "" } },
 };
-/** The five places a compact CHANNEL_PLANTS text holds the escaped stem at alone (every CHANNEL_PLANTS text but both channels). */
-const CHANNEL_PLACES = ["dependencies key", "keywords item", "overrides field", "contributors field", "contributors key"] as const;
 /** The top-level string field a spaced form puts beside a compact text: its value holds two spaces. */
 const SPACED_FIELD = '"description":"a spaced field"';
+/** The top-level string field the split-stem form puts ahead of a compact text: its value holds the stem's two words split by a space, which neither reading reads as the stem. */
+const SPLIT_STEM_FIELD = '"description":"fiber optics"';
 /**
- * wb-zdwo (R694 follow-up of landing 889, F1: GP19-14 and GP19-14o): the spaced forms each place's compact text is read again
- * in, each keeping its parsed fields: the spaced string field ahead of the stem's top-level field, the same field behind it,
- * and a space after every colon.
+ * wb-zdwo (R694 follow-up of landing 889, F1: GP19-14 and GP19-14o; cut #2, refusal #1's U1: GP17-C01 and GP17-C04): the spaced
+ * forms every CHANNEL_PLANTS text is read again in, each keeping its parsed fields: the spaced string field ahead of the stem's
+ * top-level field, the same field behind it, a space after every colon, and the split-stem string field ahead of the stem's
+ * top-level field.
  */
 const CHANNEL_SPACINGS: Readonly<Record<string, (compact: string) => string>> = {
   "spaced field ahead": compact => `{${SPACED_FIELD},${compact.slice(1)}`,
   "spaced field behind": compact => `${compact.slice(0, -2)},${SPACED_FIELD}}\n`,
   "spaced tokens": compact => compact.split('":').join('": '),
+  "split stem field ahead": compact => `{${SPLIT_STEM_FIELD},${compact.slice(1)}`,
 };
-/** N-ROOT-READERS' spaced channel plants: each place's compact text in each CHANNEL_SPACINGS form, declaring the compact text's hits. */
+/**
+ * N-ROOT-READERS' spaced channel plants: every CHANNEL_PLANTS text in each CHANNEL_SPACINGS form, declaring its compact text's
+ * hits. Two kinds among them make the handed raw text observable (cut #2, refusal #1's U1): the both-channels text, in each
+ * form, declares the hit only its raw line sees, so a spaced reading with the raw text withheld reds; and each text in the
+ * split-stem form holds the stem's words split by a space in its raw line, read by neither reading, so a spaced reading
+ * handed the raw text with its spaces removed declares a raw-line hit its plant does not, and reds.
+ */
 const CHANNEL_SPACED_PLANTS: Readonly<Record<string, ChannelPlant>> = Object.fromEntries(
-  CHANNEL_PLACES.flatMap(place =>
-    Object.entries(CHANNEL_SPACINGS).map(([spacing, spaced]): [string, ChannelPlant] => {
-      const compact = CHANNEL_PLANTS[place];
-      return [`${place}, ${spacing}`, { raw: spaced(compact?.raw ?? ""), hits: compact?.hits ?? [] }];
-    }),
+  Object.entries(CHANNEL_PLANTS).flatMap(([place, compact]) =>
+    Object.entries(CHANNEL_SPACINGS).map(([spacing, spaced]): [string, ChannelPlant] => [`${place}, ${spacing}`, { raw: spaced(compact.raw), hits: compact.hits }]),
   ),
 );
 /**
@@ -814,12 +842,24 @@ function plantedValue(manifest: JsonValue): unknown {
 const KEY_VALUE_FIELD_PLANTS: Readonly<Record<string, JsonValue>> = Object.fromEntries(
   KEY_VALUE_FIELDS.flatMap(field => Object.entries(KEY_VALUE_PLANTS).map(([name, manifest]): [string, JsonValue] => [`${field} ${name}`, json({ [field]: { "fiber-optics": plantedValue(manifest) } })])),
 );
+/** A stem only a raw line sees: a keywords list holding it, shadowed by the duplicate keywords key after it (JSON.parse keeps the last). */
+const SHADOWED_STEM_FIELD = '"keywords":["fiber-optics"],"keywords":[]';
 /**
  * N-ROOT-READERS' key-value channel texts: the same keys, the stem's hyphen JSON-escaped so only the parsed reading sees it, as
- * one-line texts ended by a newline, read under package.json with the text handed as its raw text, as LIVE-A1 reads the root file.
+ * one-line texts ended by a newline, read under package.json with the text handed as its raw text, as LIVE-A1 reads the root file;
+ * each alone, and each again beside a stem only its raw line sees (SHADOWED_STEM_FIELD; cut #2, refusal #1's U2: GP17-C02), whose
+ * raw-line hit is declared, so a key-value channel reading with the raw text withheld reds.
  */
 const KEY_VALUE_CHANNELS: Readonly<Record<string, string>> = Object.fromEntries(
-  KEY_VALUE_FIELDS.flatMap(field => Object.entries(KEY_VALUE_PLANTS).map(([name, manifest]): [string, string] => [`${field} ${name}`, `{"${field}":{"fiber\\u002doptics":${JSON.stringify(plantedValue(manifest))}}}\n`])),
+  KEY_VALUE_FIELDS.flatMap(field =>
+    Object.entries(KEY_VALUE_PLANTS).flatMap(([name, manifest]): [string, string][] => {
+      const escaped = `"${field}":{"fiber\\u002doptics":${JSON.stringify(plantedValue(manifest))}}`;
+      return [
+        [`${field} ${name}`, `{${escaped}}\n`],
+        [`${field} ${name}, beside a raw-line stem`, `{${escaped},${SHADOWED_STEM_FIELD}}\n`],
+      ];
+    }),
+  ),
 );
 const ROOT_LOCK_CONTROLS: Readonly<Record<string, JsonValue>> = {
   lockPath: { packages: { "node_modules/fiber-optics": { version: "0.1.0" } } },
@@ -2065,10 +2105,18 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
       expect(keyValues[name], `N-ROOT-READERS: a key in a top-level field's object is read holding its ${name} value`).toEqual([`${name}.overrides{fiber-optics}: fiberoptics`]);
     }
     const spacedChannels = objectAt(rootReaders.spacedChannels);
-    expect([...CHANNEL_PLACES], "N-ROOT-READERS: the spaced places are every CHANNEL_PLANTS text but both channels, in order").toEqual(Object.keys(CHANNEL_PLANTS).filter(name => name !== "both channels"));
+    expect(Object.keys(CHANNEL_SPACINGS), "N-ROOT-READERS: the CHANNEL_SPACINGS forms, in order").toEqual(["spaced field ahead", "spaced field behind", "spaced tokens", "split stem field ahead"]);
+    expect(Object.keys(CHANNEL_SPACED_PLANTS), "N-ROOT-READERS: the spaced plants are every CHANNEL_PLANTS text in each CHANNEL_SPACINGS form, in order").toEqual(
+      Object.keys(CHANNEL_PLANTS).flatMap(place => Object.keys(CHANNEL_SPACINGS).map(spacing => `${place}, ${spacing}`)),
+    );
+    for (const spacing of Object.keys(CHANNEL_SPACINGS)) {
+      expect(CHANNEL_SPACED_PLANTS[`both channels, ${spacing}`]?.hits, `N-ROOT-READERS: the both-channels text in the ${spacing} form declares the hit only its raw line sees`).toContain("package.json:1: fiberoptics");
+    }
+    expect([SPLIT_STEM_FIELD.includes(STEM), SPLIT_STEM_FIELD.replaceAll(" ", "").includes(STEM)], "N-ROOT-READERS: the split-stem field holds the stem's words split by a space, and the stem once its spaces are removed").toEqual([false, true]);
     for (const [name, plant] of Object.entries(CHANNEL_SPACED_PLANTS)) {
       expect(plant.raw.includes(" "), `N-ROOT-READERS: ${name}'s raw text holds a space`).toBe(true);
       expect(spacedChannels[name], `N-ROOT-READERS: ${name}, its raw text handed, is read for the stem its compact text holds`).toEqual(plant.hits);
+      expect(manifestHits(JSON.parse(plant.raw), plant.raw, "package.json"), `the direct read: ${name}, its raw text handed at this second call site, gives its declared hits`).toEqual(plant.hits);
     }
     const fieldKeyValues = objectAt(rootReaders.fieldKeyValues);
     const channelKeyValues = objectAt(rootReaders.channelKeyValues);
@@ -2076,7 +2124,17 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
       for (const name of Object.keys(KEY_VALUE_PLANTS)) {
         expect(fieldKeyValues[`${field} ${name}`], `N-ROOT-READERS: a key in ${field}'s object is read holding its ${name} value`).toEqual([`${field} ${name}.${field}{fiber-optics}: fiberoptics`]);
         expect(channelKeyValues[`${field} ${name}`], `N-ROOT-READERS: the escaped key in ${field}'s object is read under package.json, its raw text handed, holding its ${name} value`).toEqual([`package.json.${field}{fiber-optics}: fiberoptics`]);
+        expect(
+          channelKeyValues[`${field} ${name}, beside a raw-line stem`],
+          `N-ROOT-READERS: the escaped key in ${field}'s object holding its ${name} value, beside a stem only its raw line sees, is read in both readings`,
+        ).toEqual([`package.json.${field}{fiber-optics}: fiberoptics`, "package.json:1: fiberoptics"]);
       }
+    }
+    expect(Object.keys(KEY_VALUE_CHANNELS), "N-ROOT-READERS: the key-value channel texts are each field's key holding each value, alone and beside a raw-line stem, in order").toEqual(
+      KEY_VALUE_FIELDS.flatMap(field => Object.keys(KEY_VALUE_PLANTS).flatMap(name => [`${field} ${name}`, `${field} ${name}, beside a raw-line stem`])),
+    );
+    for (const [name, raw] of Object.entries(KEY_VALUE_CHANNELS)) {
+      expect(manifestHits(JSON.parse(raw), raw, "package.json"), `the direct read: ${name}, its raw text handed at this second call site, gives its declared hits`).toEqual(channelKeyValues[name]);
     }
     const moduleReading = (pin: string): { [module: string]: string[] } => {
       return Object.fromEntries(Object.entries(objectAt(rosterWitness(pin))).map(([module, entries]) => [module, Array.isArray(entries) ? entries.map(String) : []]));
