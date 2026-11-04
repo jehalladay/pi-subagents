@@ -5,22 +5,38 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #7 IS THE THIRD RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B496 of refusal #6
- * (O:1993): claims equal to pins, kill-or-pin per member. It pins refusal #6's eight surviving reader mutants with every twin
+ * CUT #8 IS THE FOURTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B519 of refusal #7
+ * (O:2026): claims equal to pins, kill-or-pin per member group. It pins refusal #7's eight surviving reader mutants with every
+ * twin page the gate names for them, byte for byte (the helper's MEMBERS GP13-T1, with its further twin pin GP13-T1-FUNCTION,
+ * GP13-T2, GP13-T3, GP13-T4, GP13-T5, GP13-S1 and GP13-S2 in const and GP13-D3 in kinds; REFUSAL #7 below), and narrows the
+ * words beside them to the forms the census's pages plant: BINDING (2) names its type annotations form by form (the keyword
+ * string or unknown, a string literal type, a union of two string literal types, the union string | undefined, a reference with
+ * no type arguments to a type alias of string declared at the top level, and a type literal of one property whose type is
+ * string, optional or not), C-TYPED planting the keyword string and C-ANNOTATED each other form at each of its nine positions;
+ * its shadowing sentence claims a const at each of its positions other than the top level that shadows a plain unannotated
+ * top-level const, no other declaration of the name sitting inside its scope, C-SHADOWS planting one at each such position with
+ * each annotation form and with none, read inside its scope and with the top-level const read at the top level; and BINDING (3)
+ * names its nested object pattern as an element, with no default, of an object or an array pattern, C-JS-ALIAS, C-NESTED,
+ * C-NESTED-JS and GP13-D3 planting both in a JavaScript and a TypeScript module. C-PARAMETER probes a simple parameter
+ * annotated object of an exported function, the declaration form M19 and M26 plant and read only through a spread. Every pin of
+ * cut #7 stands with its page, path and expected reading byte for byte. THIS CENSUS CLAIMS EXACTLY ITS PINS. Each part of the
+ * claim claims its words over exactly the forms its row's pages plant, the falsifier roster naming them pin by pin, and every
+ * known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row a pinned quiet row that reads one
+ * form of the family as the reader reads it today. A form no page plants is not claimed, and no row's silence about a form is a
+ * claim about it.
+ *
+ * CUT #7 WAS THE THIRD RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B496 of refusal #6
+ * (O:1993): claims equal to pins, kill-or-pin per member. It pinned refusal #6's eight surviving reader mutants with every twin
  * page the gate names for them, byte for byte (the helper's MEMBERS GP17-C1 in const and GP17-D1, GP17-D2, GP17-V1, GP17-L1,
  * GP17-L2, GP17-P1 and GP17-P2 in kinds, a member's further twin pages pinned beside it as its twins name them; REFUSAL #6
- * below), and claims BINDING (3)'s import, merged, destructuring, let, var and parameter entries only in the sub-forms the
+ * below), and claimed BINDING (3)'s import, merged, destructuring, let, var and parameter entries only in the sub-forms the
  * census's pages plant (an initializer or none, an element's default, rest or renaming, a parameter's default, question token
  * or rest, a require call's argument and access, a merged binding's declarations), BINDING (3)'s closing clause naming every
- * other sub-form NOT CLAIMED in the part itself. It also plants C-TYPED in the const row (a const with a type annotation at
- * each position BINDING (2) names, so that part is claimed with or without one) and claims BINDING (2) and (3) only for a
- * variable declaration alone in its declaration list, BINDING (3)'s closing clause holding a declaration's type annotation, or
- * its absence, to the census pages that plant it so. Every pin of cut #6 stands with its page, path and expected reading byte
- * for byte; the ACCEPTANCE checks MEMBER-PINS and KIND-PINS now also read each member's further twin pins. THIS CENSUS CLAIMS
- * EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the falsifier roster
- * naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row
- * a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is not claimed, and
- * no row's silence about a form is a claim about it.
+ * other sub-form NOT CLAIMED in the part itself. It also planted C-TYPED in the const row (a const with the type annotation
+ * string at each position BINDING (2) names) and claimed BINDING (2) and (3) only for a variable declaration alone in its
+ * declaration list, BINDING (3)'s closing clause holding a declaration's type annotation, or its absence, to the census pages
+ * that plant it so. Every pin of cut #6 stood with its page, path and expected reading byte for byte, and the ACCEPTANCE checks
+ * MEMBER-PINS and KIND-PINS came to read each member's further twin pins.
  *
  * CUT #6 WAS THE SECOND RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B470 of refusal #5
  * (O:1964): claims equal to pins. It pinned refusal #5's eleven surviving reader mutants with the gate's own twin pages, byte
@@ -90,8 +106,9 @@
  *  refusal #2's (below) in theirs; refusal #5's GP6-W1 and GP6-W3 in words and GP6-K3, GP6-K1, GP6-K2, GP6-K4, GP6-K8, GP6-K5,
  *  GP6-K6, GP6-K12 and GP6-K13 in kinds; refusal #6's GP17-C1 in const, with its further twin pins GP17-C1-PROGRAM and
  *  GP17-C1-SHADOW, and GP17-D1, GP17-D2, GP17-V1 (with GP17-V1-FUNCTION and GP17-V1-NAMESPACE), GP17-L1 (with GP17-L1-ASYNC),
- *  GP17-L2, GP17-P1 and GP17-P2 in kinds; each pinned by the twin page its refusal names (the gate's evidence, byte for byte),
- *  read as the reader reads it.
+ *  GP17-L2, GP17-P1 and GP17-P2 in kinds; refusal #7's GP13-T1 (with GP13-T1-FUNCTION), GP13-T2, GP13-T3, GP13-T4, GP13-T5,
+ *  GP13-S1 and GP13-S2 in const and GP13-D3 in kinds; each pinned by the twin page its refusal names (the gate's evidence, byte
+ *  for byte), read as the reader reads it.
  *
  * REFUSAL #2 (gate-prep-1, run g10-gate-s161, O:1546), ITS UNMET ITEMS AND HOW EACH IS CURED: U1a's six eval contexts by M61
  * (a with body, at a .js path), M62 (an object literal's method), M63 (a template substitution), M64 (an arrow function's
@@ -184,6 +201,28 @@
  * planting the annotated const at each of its positions), so no claim word rests on this header's blanket sentence and the
  * record's COUNTER-READING is not relied on.
  *
+ * REFUSAL #7 (gate-prep-13, run g10-gate-s206, O:2026; disposition R-B519), ITS UNMET ITEMS AND HOW CUT #8 CURES EACH (each
+ * twin page is the gate's, byte for byte, its sha256/16 its PAGES digest; kill-or-pin per member group): U1a (GP13-T1 to
+ * GP13-T5, a const annotated with a union, a literal type, a type reference or unknown, or with any annotation but the keyword
+ * string or a type literal, not resolving, BINDING (2)'s words 'with or without a type annotation' pinned only by the keyword
+ * string and one type literal) by GP13-T1 (twin gp13-t1-0, string | undefined at the top level), GP13-T1-FUNCTION (twin
+ * gp13-t1-1, "a" | "b" in an exported function's body), GP13-T2 (twin gp13-t2-0, "a"), GP13-T3 (twin gp13-t3-0, Name), GP13-T4
+ * (twin gp13-t4-0, unknown) and GP13-T5 (twin gp13-t5-0, the four at the top level), each reading its initializer, and by
+ * BINDING (2) naming its annotations form by form, C-ANNOTATED planting each form beside the keyword string at each of its nine
+ * positions; U1b (GP13-S1, a const in a plain namespace's body shadowing a same-named top-level const reading the outer
+ * initializer) by GP13-S1 (twin gp13-s1-0: "inner" inside the namespace, "outer" at the top level); U1c (GP13-S2, the same at a
+ * for statement's head) by GP13-S2 (twin gp13-s2-0: "inner" in the loop, "outer" after it); the shadowing sentence beside them
+ * by its narrowed words, C-SHADOWS planting a shadowing const at each position but the top level with each annotation form and
+ * with none; U1d (GP13-D3, a simple element of an object pattern nested in a top-level const's array pattern reading other) by
+ * GP13-D3 (twin gp13-d3-0, const [{ B }] = list reading <opaque B:destructuring>) and BINDING (3) naming the nested pattern as
+ * an element of an object or an array pattern, C-NESTED and C-NESTED-JS planting both. Found by this cut's own probes on the
+ * cut #7 census: Y-SHADOW's shadowing const, in a block nested in one, reads alike whether it reads its own initializer or the
+ * top-level const's (its initializer M reads that const), so a mutant reading the outer initializer there survived at 0 failed
+ * | 193 passed; C-SHADOWS plants that position with a distinct inner text; and a per-cell sweep keyed on the annotation's
+ * syntax kind found one planted cell whose flip survived, a simple parameter annotated object of an exported function (M19's
+ * and M26's, read only through a spread), which C-PARAMETER now probes. The record's COUNTER-READINGS are not relied on: the
+ * narrowed words sit in BINDING (2) and (3) themselves.
+ *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
@@ -192,13 +231,18 @@
  * path ending .ts, .cts, .mts, .tsx, .TS, .json, .d.ts or .js.txt, or with no extension; (2) it resolves only when that binding
  * is exactly one declaration, a const with an initializer that declares the name itself (an element of a destructuring pattern
  * never resolves) and that the checker binds as no alias, outside an ambient (declare) context and not exported from a
- * namespace body, and it then reads as that initializer's alternatives; so a const shadowing a same-named const reads its own
- * initializer inside its scope and the outer one's outside it; this part is claimed only for a const declared at the top level,
- * plain or exported, in a block at the top level or in a block nested in one, in the body of a plain, an exported or an
- * exported async function declared at the top level, in the body of a plain namespace declared at the top level or in a for
+ * namespace body, and it then reads as that initializer's alternatives; this part is claimed only for a const declared at the
+ * top level, plain or exported, in a block at the top level or in a block nested in one, in the body of a plain, an exported or
+ * an exported async function declared at the top level, in the body of a plain namespace declared at the top level or in a for
  * statement's head at the top level (plain naming a declaration with no modifier, exported one with the export modifier alone,
- * async one with the async modifier alone and exported async one with those two alone), with or without a type annotation and
- * alone in its declaration list, a const declared at any other position, or beside another declaration in its list, being NOT
+ * async one with the async modifier alone and exported async one with those two alone), alone in its declaration list and with
+ * no type annotation or with one of these: the keyword string or unknown, a string literal type, a union of two string literal
+ * types, the union string | undefined, a reference with no type arguments to a type alias of string declared at the top level,
+ * or a type literal of one property whose type is string, optional or not; so where such a const, declared at one of those
+ * positions other than the top level, has the name of a plain const declared at the top level with no type annotation and no
+ * other declaration of that name sits inside its scope, a read of the name inside its scope reads its own initializer and a
+ * read of it at the top level reads the top-level const's; a const declared at any other position, beside another declaration
+ * in its list or with any other type annotation, and a const shadowing a same-named declaration in any other form, are NOT
  * CLAIMED here; (3) any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first
  * of these that names the binding: import (a binding the checker binds as an alias: an import at the top level, a named import
  * merged with a namespace or not, a namespace import, a default import or an import-equals, and in a JavaScript module a
@@ -214,123 +258,123 @@
  * two var declarations' object pattern elements of one name or two namespace declarations); destructuring (an element of a
  * destructuring pattern, whatever declares the pattern, simple and defaulted elements as the import entry names them, and a
  * rest element: a simple, a defaulted or a rest element of a plain const declaration's object or array pattern at the top
- * level, a simple element of an object pattern nested in one, a simple or a defaulted element of a plain let declaration's
- * object pattern at the top level, or a simple element of a plain var declaration's object pattern at the top level, of a
- * const's object pattern in a for-of statement's head at the top level, of an object pattern parameter of a plain function
- * declared at the top level or of an object pattern catch clause variable of a try at the top level); let (a let declaration
- * with or without an initializer, plain at the top level, in the body of an exported or an exported async function declared at
- * the top level or exported from the body of a plain namespace declared at the top level, a declare let at the top level or a
- * let in a for-of statement's head at the top level); var (a var declaration with or without an initializer, plain at the top
- * level, in the body of a plain function declared at the top level or exported from the body of a plain namespace declared at
- * the top level, a declare var at the top level or a var in a for-of statement's head at the top level); using (a using
- * declaration in a block at the top level, or an await using declaration in the body of an async function declared at the top
- * level); catch (a catch clause variable of a try at the top level with no type annotation, or of a try in the body of an
- * exported function declared at the top level with the annotation unknown, while one with any other annotation is NOT CLAIMED);
- * no-initializer (a const with no initializer: in a for-of or for-in statement's head at the top level, a declare const at the
- * top level, or one exported from the body of a plain or a declare namespace declared at the top level); ambient (a const in an
- * ambient context: a declare const at the top level, a const in a declare global block at the top level, or one exported from
- * the body of a declare namespace declared at the top level or of a plain namespace nested in one); namespace (a plain
- * namespace declared at the top level, or an exported one in the body of an exported namespace declared at the top level, or a
- * const exported from the body of a plain namespace declared at the top level, of an exported namespace nested in an exported
- * one declared at the top level or of an exported dotted namespace, export namespace C.D); parameter (a parameter of a plain
- * function declared at the top level, a simple, a defaulted, an optional or a rest one, a simple parameter being one with no
- * default and no question token that is no rest parameter, a simple parameter of an exported or an exported async function
- * declared at the top level, a defaulted parameter of an arrow function initializing a plain const at the top level, a simple
- * public parameter property of a constructor of a plain class declared at the top level, or a simple parameter of a method or
- * of a set accessor of an exported class declared at the top level); function (a function declaration at the top level, plain,
- * async, generator or declare, one exported from the body of a plain namespace declared at the top level or one in the body of
- * an exported function declared at the top level, or a named function expression's own name, read in its own body, the
- * expression initializing a plain const at the top level); class (a class declaration at the top level, plain or declare, one
+ * level, a simple element of an object pattern that is, with no default, an element of such a pattern (a: { B } of an object
+ * pattern or { B } of an array pattern), a simple or a defaulted element of a plain let declaration's object pattern at the top
+ * level, or a simple element of a plain var declaration's object pattern at the top level, of a const's object pattern in a
+ * for-of statement's head at the top level, of an object pattern parameter of a plain function declared at the top level or of
+ * an object pattern catch clause variable of a try at the top level); let (a let declaration with or without an initializer,
+ * plain at the top level, in the body of an exported or an exported async function declared at the top level or exported from
+ * the body of a plain namespace declared at the top level, a declare let at the top level or a let in a for-of statement's head
+ * at the top level); var (a var declaration with or without an initializer, plain at the top level, in the body of a plain
+ * function declared at the top level or exported from the body of a plain namespace declared at the top level, a declare var at
+ * the top level or a var in a for-of statement's head at the top level); using (a using declaration in a block at the top
+ * level, or an await using declaration in the body of an async function declared at the top level); catch (a catch clause
+ * variable of a try at the top level with no type annotation, or of a try in the body of an exported function declared at the
+ * top level with the annotation unknown, while one with any other annotation is NOT CLAIMED); no-initializer (a const with no
+ * initializer: in a for-of or for-in statement's head at the top level, a declare const at the top level, or one exported from
+ * the body of a plain or a declare namespace declared at the top level); ambient (a const in an ambient context: a declare
+ * const at the top level, a const in a declare global block at the top level, or one exported from the body of a declare
+ * namespace declared at the top level or of a plain namespace nested in one); namespace (a plain namespace declared at the top
+ * level, or an exported one in the body of an exported namespace declared at the top level, or a const exported from the body
+ * of a plain namespace declared at the top level, of an exported namespace nested in an exported one declared at the top level
+ * or of an exported dotted namespace, export namespace C.D); parameter (a parameter of a plain function declared at the top
+ * level, a simple, a defaulted, an optional or a rest one, a simple parameter being one with no default and no question token
+ * that is no rest parameter, a simple parameter of an exported or an exported async function declared at the top level, a
+ * defaulted parameter of an arrow function initializing a plain const at the top level, a simple public parameter property of a
+ * constructor of a plain class declared at the top level, or a simple parameter of a method or of a set accessor of an exported
+ * class declared at the top level); function (a function declaration at the top level, plain, async, generator or declare, one
  * exported from the body of a plain namespace declared at the top level or one in the body of an exported function declared at
- * the top level, or a named class expression's own name, read in its own method, the expression initializing a plain const at
- * the top level); enum (an enum declaration at the top level, plain, const or declare, one exported from the body of a plain
- * namespace declared at the top level or one in the body of an exported function declared at the top level, or a member of a
- * plain enum declared at the top level, read in that enum); other (a declaration of any other kind, claimed only for a type
- * alias declaration that no module holds) - each kind is claimed only for the declarations its entry names, at the positions it
- * names, each declaration plain where its entry names no modifier of it (plain, exported and async as BINDING (2) reads them)
- * and, where its entry names the sub-forms a declaration takes (an initializer or none, an element's default, rest or renaming,
- * a parameter's default, question token or rest, a require call's argument and access, or a merged binding's declarations),
- * only in those sub-forms, each declaration of a declaration list alone in its list, and each variable declaration and each
- * parameter claimed with a type annotation only where a census page plants it with one, and without one only where a census
- * page plants it without one, at that position and in that sub-form, and a declaration at any other position, with any other
- * modifiers, in any other sub-form, beside another declaration in its list or with any other annotation is NOT CLAIMED; (4) an
- * identifier inside a with statement's body, at any depth (nested blocks, functions, classes and with statements included),
- * reads as <opaque NAME:with>, whatever it binds; (5) every identifier of a module that calls eval by name reads as <opaque
- * NAME:eval>, whatever it binds, a with statement's body included: a call, optional or not, with no argument or with one string
- * literal argument, whose callee is the identifier eval itself (evaluate, preval, Eval, EVAL, ev and evalx are other names)
- * inside any parentheses, as, satisfies, non-null !, type assertion or await, as a statement at the top level or in a function,
- * an async function, a class method or a with body, or inside an object literal's method, a template substitution, an arrow
- * function's body, a const's initializer, a parameter default, a class static block, a class field's initializer, a getter's
- * body, a computed property key, an enum member's initializer, a return statement or a call's argument, the call being the
- * whole statement, the whole expression or the whole returned expression there (a call nested inside another expression there,
- * parentheses around the whole call included, is at a position NOT CLAIMED (1) names); an eval call with two or more arguments,
- * or with one argument other than a string literal, is NOT CLAIMED; a new expression, a tagged template and an uncalled
- * decorator are no call; (6) an identifier whose const's initializer reaches that same const (the same declaration, not a
- * same-named one) again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier there, the expression's other
- * alternatives read as usual. TEXT: an expression's alternatives are (1) a string or no-substitution template literal: its
- * text, each escape sequence read as the character it stands for, as TypeScript cooks it (\x, \u, \u{...}, \n, \t, \\, \", \',
- * \0, an octal escape and a line continuation); (2) an identifier: as BINDING reads it; (3) a template with substitutions:
- * every combination of its literal parts' texts (escape sequences read) and its substitutions' alternatives, in order; (4) a +
- * join: every combination of its left side's and its right side's alternatives; (5) a ?: expression: its two branches'
- * alternatives, its condition unread; (6) a ?? expression: both sides' alternatives; (7) a || expression: both sides'
- * alternatives; (8) a && expression: both sides' alternatives; (9) parentheses, as, satisfies, a non-null !, a type assertion
- * and await: the inner expression's alternatives; (10) any other expression (every binary operator but +, ??, || and &&, the
- * plain and compound assignments and the comma included, every prefix and postfix operator, void, typeof and delete, a call,
- * optional or not, a new expression, a property or element access, optional or not, a property access through a non-null !, a
- * number, bigint or regular expression literal, true, false, null, this, a property of super, a tagged template, an arrow
- * function, a function or class expression, a spread, yield, import.meta, new.target, an instantiation expression and an object
- * or array literal): one <opaque TEXT>, TEXT its source text with each run of the characters JavaScript's \s class matches read
- * as one space (U+0085 and U+200B, which it does not match, stay); (11) each combination with an opaque part reads as its first
- * opaque part's alternative, and each combination without one as its joined text, so a join keeps its exact alternatives beside
- * its opaque ones; (12) a template or + join with more than 64 combinations (counted before any two are found to read alike),
- * or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and each side,
- * branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that
- * expression's source text with each whitespace run read as TEXT (10) reads it (a bound expression whose source text holds a
- * whitespace run other than one space, a line break among them, is NOT CLAIMED); (13) the alternatives are listed in source
- * order (a left side's or a true branch's first, a combination's by its parts, the first part varying slowest), each once, a
- * text and an opaque part with the same label being two alternatives. READINGS: (1) an expression's texts - its alternatives'
- * texts, in order, when none is opaque, and unresolved otherwise - claimed only for the three expressions its row's page reads:
- * "only" reading ["only"], c ? "a" : "b" reading ["a","b"] and p ?? "b", p a parameter, reading unresolved; the texts of any
- * other expression are NOT CLAIMED; (2) a command's words: every alternative's text split at each run of whitespace (the
- * characters JavaScript's \s class matches), quotes (" ' and `, at a word's end or inside it) and the shell operators ; & | ( )
- * < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after
- * its last / or \, whichever of the two comes last in a word holding both, and a trailing .exe, .EXE, .Exe, .cmd or .CMD
- * dropped (whether a word drops a trailing extension in any other spelling, .eXe, .bat and .com among them, or drops a second
- * one after the first, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty word included, in order
- * of first appearance (whether two words that differ only in letter case are both kept is NOT CLAIMED); unresolved when any
- * alternative is opaque; a command of two or more alternatives, or with an opaque one, is claimed only for the two its row's
- * pages read, c ? "rf x" : "rf y" reading rf x y and p ?? "rf", p a parameter, reading unresolved (the words of any other such
- * command are NOT CLAIMED, and so are the words of a text command in a block, a function body among them, where no words row
- * page puts one; this census writes unresolved for no words, so a words list holding only the word unresolved reads alike, and
- * which of the two the reader returns is NOT CLAIMED); (3) a launch program: when every alternative is a text with a first word
- * (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque
- * TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it (a program expression
- * whose source text holds a whitespace character other than a space, a line break among them, is NOT CLAIMED); a program of two
- * or more alternatives is claimed only for the three its row's pages read, c ? "rf" : "git" reading git|rf, c ? "git a" : "git
- * b" reading git and process.env.PI_VCS ?? "git" reading <opaque process.env.PI_VCS ?? "git"> (any other program of two or more
- * alternatives is NOT CLAIMED); (4) an object literal's fields, member by member in source order, a later member overriding: a
- * property assignment whose key is a name, a string or numeric literal, or a computed key whose expression, inside any of the
- * wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and so does a shorthand property; a
- * method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside any of those wrappers,
- * is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an object literal whose own
- * fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep) sets the fields it holds;
- * any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque and may
- * set every field; (5) a registration: an object literal whose id field has a text alternative starting reactivefiber.
- * (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such text),
- * read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each once, ID
- * the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque LABEL>),
- * sorted, joined by |, or <none> when it has no effectClass field (how EFFECT reads two alternatives that render alike, a text
- * spelling an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an opaque member may set after its last setting, or in
- * place of one, reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread, its key's source
- * text, or get name, set name or name() for an accessor or method; a label whose source text holds a whitespace run other than
- * one space is NOT CLAIMED). Each part claims its words over exactly the forms its census row's pages plant, the roster naming
- * them pin by pin. NOT CLAIMED (named residuals, each read today by its quiet row): (1) an eval call at a position no eval row
- * page plants, whose quiet row reads a module calling eval in a switch statement's head; (2) a JavaScript module's require
- * declaration in a form no const or import page plants, whose quiet row reads a require reached through a comma expression; (3)
- * a path in a form no scope page plants, whose quiet row reads the JavaScript page at a path ending .Mjs; (4) an expression
- * kind no other row page plants, whose quiet row reads a JSX element and fragment in a .tsx module; (5) a character no words
- * row page plants, whose quiet row reads a command word holding a letter outside ASCII. No reading claims more than these parts
- * state.
+ * the top level, or a named function expression's own name, read in its own body, the expression initializing a plain const at
+ * the top level); class (a class declaration at the top level, plain or declare, one exported from the body of a plain
+ * namespace declared at the top level or one in the body of an exported function declared at the top level, or a named class
+ * expression's own name, read in its own method, the expression initializing a plain const at the top level); enum (an enum
+ * declaration at the top level, plain, const or declare, one exported from the body of a plain namespace declared at the top
+ * level or one in the body of an exported function declared at the top level, or a member of a plain enum declared at the top
+ * level, read in that enum); other (a declaration of any other kind, claimed only for a type alias declaration that no module
+ * holds) - each kind is claimed only for the declarations its entry names, at the positions it names, each declaration plain
+ * where its entry names no modifier of it (plain, exported and async as BINDING (2) reads them) and, where its entry names the
+ * sub-forms a declaration takes (an initializer or none, an element's default, rest or renaming, a parameter's default,
+ * question token or rest, a require call's argument and access, or a merged binding's declarations), only in those sub-forms,
+ * each declaration of a declaration list alone in its list, and each variable declaration and each parameter claimed with a
+ * type annotation only where a census page plants it with one, and without one only where a census page plants it without one,
+ * at that position and in that sub-form, and a declaration at any other position, with any other modifiers, in any other
+ * sub-form, beside another declaration in its list or with any other annotation is NOT CLAIMED; (4) an identifier inside a with
+ * statement's body, at any depth (nested blocks, functions, classes and with statements included), reads as <opaque NAME:with>,
+ * whatever it binds; (5) every identifier of a module that calls eval by name reads as <opaque NAME:eval>, whatever it binds, a
+ * with statement's body included: a call, optional or not, with no argument or with one string literal argument, whose callee
+ * is the identifier eval itself (evaluate, preval, Eval, EVAL, ev and evalx are other names) inside any parentheses, as,
+ * satisfies, non-null !, type assertion or await, as a statement at the top level or in a function, an async function, a class
+ * method or a with body, or inside an object literal's method, a template substitution, an arrow function's body, a const's
+ * initializer, a parameter default, a class static block, a class field's initializer, a getter's body, a computed property
+ * key, an enum member's initializer, a return statement or a call's argument, the call being the whole statement, the whole
+ * expression or the whole returned expression there (a call nested inside another expression there, parentheses around the
+ * whole call included, is at a position NOT CLAIMED (1) names); an eval call with two or more arguments, or with one argument
+ * other than a string literal, is NOT CLAIMED; a new expression, a tagged template and an uncalled decorator are no call; (6)
+ * an identifier whose const's initializer reaches that same const (the same declaration, not a same-named one) again reads, at
+ * the repeated reach, as <opaque NAME:cycle>, NAME the identifier there, the expression's other alternatives read as usual.
+ * TEXT: an expression's alternatives are (1) a string or no-substitution template literal: its text, each escape sequence read
+ * as the character it stands for, as TypeScript cooks it (\x, \u, \u{...}, \n, \t, \\, \", \', \0, an octal escape and a line
+ * continuation); (2) an identifier: as BINDING reads it; (3) a template with substitutions: every combination of its literal
+ * parts' texts (escape sequences read) and its substitutions' alternatives, in order; (4) a + join: every combination of its
+ * left side's and its right side's alternatives; (5) a ?: expression: its two branches' alternatives, its condition unread; (6)
+ * a ?? expression: both sides' alternatives; (7) a || expression: both sides' alternatives; (8) a && expression: both sides'
+ * alternatives; (9) parentheses, as, satisfies, a non-null !, a type assertion and await: the inner expression's alternatives;
+ * (10) any other expression (every binary operator but +, ??, || and &&, the plain and compound assignments and the comma
+ * included, every prefix and postfix operator, void, typeof and delete, a call, optional or not, a new expression, a property
+ * or element access, optional or not, a property access through a non-null !, a number, bigint or regular expression literal,
+ * true, false, null, this, a property of super, a tagged template, an arrow function, a function or class expression, a spread,
+ * yield, import.meta, new.target, an instantiation expression and an object or array literal): one <opaque TEXT>, TEXT its
+ * source text with each run of the characters JavaScript's \s class matches read as one space (U+0085 and U+200B, which it does
+ * not match, stay); (11) each combination with an opaque part reads as its first opaque part's alternative, and each
+ * combination without one as its joined text, so a join keeps its exact alternatives beside its opaque ones; (12) a template or
+ * + join with more than 64 combinations (counted before any two are found to read alike), or an expression read more than 16
+ * levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read counting
+ * one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text with each
+ * whitespace run read as TEXT (10) reads it (a bound expression whose source text holds a whitespace run other than one space,
+ * a line break among them, is NOT CLAIMED); (13) the alternatives are listed in source order (a left side's or a true branch's
+ * first, a combination's by its parts, the first part varying slowest), each once, a text and an opaque part with the same
+ * label being two alternatives. READINGS: (1) an expression's texts - its alternatives' texts, in order, when none is opaque,
+ * and unresolved otherwise - claimed only for the three expressions its row's page reads: "only" reading ["only"], c ? "a" :
+ * "b" reading ["a","b"] and p ?? "b", p a parameter, reading unresolved; the texts of any other expression are NOT CLAIMED; (2)
+ * a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \s class matches),
+ * quotes (" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other printable ASCII
+ * character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \, whichever of the
+ * two comes last in a word holding both, and a trailing .exe, .EXE, .Exe, .cmd or .CMD dropped (whether a word drops a trailing
+ * extension in any other spelling, .eXe, .bat and .com among them, or drops a second one after the first, is NOT CLAIMED), so a
+ * word can cut to the empty word; each word once, the empty word included, in order of first appearance (whether two words that
+ * differ only in letter case are both kept is NOT CLAIMED); unresolved when any alternative is opaque; a command of two or more
+ * alternatives, or with an opaque one, is claimed only for the two its row's pages read, c ? "rf x" : "rf y" reading rf x y and
+ * p ?? "rf", p a parameter, reading unresolved (the words of any other such command are NOT CLAIMED, and so are the words of a
+ * text command in a block, a function body among them, where no words row page puts one; this census writes unresolved for no
+ * words, so a words list holding only the word unresolved reads alike, and which of the two the reader returns is NOT CLAIMED);
+ * (3) a launch program: when every alternative is a text with a first word (READINGS (2)'s first word, the empty word
+ * included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source
+ * text with each whitespace run read as TEXT (10) reads it (a program expression whose source text holds a whitespace character
+ * other than a space, a line break among them, is NOT CLAIMED); a program of two or more alternatives is claimed only for the
+ * three its row's pages read, c ? "rf" : "git" reading git|rf, c ? "git a" : "git b" reading git and process.env.PI_VCS ??
+ * "git" reading <opaque process.env.PI_VCS ?? "git"> (any other program of two or more alternatives is NOT CLAIMED); (4) an
+ * object literal's fields, member by member in source order, a later member overriding: a property assignment whose key is a
+ * name, a string or numeric literal, or a computed key whose expression, inside any of the wrappers TEXT (9) names, is a string
+ * or no-substitution template literal sets its field, and so does a shorthand property; a method, getter or setter with such a
+ * key makes its own field opaque; a spread whose expression, inside any of those wrappers, is an identifier BINDING resolves to
+ * a const whose initializer, inside any of those wrappers, is an object literal whose own fields hold no opaque member (a
+ * method, getter or setter included; spreads nested at most 8 deep) sets the fields it holds; any other member (a spread of
+ * anything else, or a member with any other key, a computed number included) is opaque and may set every field; (5) a
+ * registration: an object literal whose id field has a text alternative starting reactivefiber. (reactivefiber,
+ * reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such text), read as one
+ * ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each once, ID the text or
+ * <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque LABEL>), sorted,
+ * joined by |, or <none> when it has no effectClass field (how EFFECT reads two alternatives that render alike, a text spelling
+ * an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an opaque member may set after its last setting, or in place of one,
+ * reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread, its key's source text, or get
+ * name, set name or name() for an accessor or method; a label whose source text holds a whitespace run other than one space is
+ * NOT CLAIMED). Each part claims its words over exactly the forms its census row's pages plant, the roster naming them pin by
+ * pin. NOT CLAIMED (named residuals, each read today by its quiet row): (1) an eval call at a position no eval row page plants,
+ * whose quiet row reads a module calling eval in a switch statement's head; (2) a JavaScript module's require declaration in a
+ * form no const or import page plants, whose quiet row reads a require reached through a comma expression; (3) a path in a form
+ * no scope page plants, whose quiet row reads the JavaScript page at a path ending .Mjs; (4) an expression kind no other row
+ * page plants, whose quiet row reads a JSX element and fragment in a .tsx module; (5) a character no words row page plants,
+ * whose quiet row reads a command word holding a letter outside ASCII. No reading claims more than these parts state.
  *
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title, description items and Acceptance
  * line) for S1, S2, S3, PREMISE and ACCEPTANCE; the helper's BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS for
@@ -349,11 +393,13 @@
  * wb-jwc.13's landed sub-form census holds, and the same-class forms beside them); the declaration positions and modifiers and
  * the extension spellings cut #6's narrowed BINDING (2), BINDING (3) and READINGS (2) name NOT CLAIMED (beside refusal #5's
  * members, whose twin pages the rows pin); the sub-forms, declaration lists and type annotations cut #7's narrowed BINDING (2)
- * and (3) name NOT CLAIMED (beside refusal #6's members, whose twin pages the rows pin); a reading the reader gives after it
- * has read the same module with another probe (each pin reads its page on a fresh reader, with its one probe: no two pins read
- * one page at one path, as FRESH READERS holds); and the gate members' notes: MEMBERS anchors R-B115's members and refusal
- * #1's, #2's, #5's and #6's members by naming each one's source (the tracker export carries their notes in the bead's notes
- * field), and this census reads only the export's title and description, never its notes.
+ * and (3) name NOT CLAIMED (beside refusal #6's members, whose twin pages the rows pin); the type annotations, shadowing forms
+ * and nested patterns cut #8's narrowed BINDING (2) and (3) name NOT CLAIMED (beside refusal #7's members, whose twin pages the
+ * rows pin); a reading the reader gives after it has read the same module with another probe (each pin reads its page on a
+ * fresh reader, with its one probe: no two pins read one page at one path, as FRESH READERS holds); and the gate members'
+ * notes: MEMBERS anchors R-B115's members and refusal #1's, #2's, #5's, #6's and #7's members by naming each one's source (the
+ * tracker export carries their notes in the bead's notes field), and this census reads only the export's title and description,
+ * never its notes.
  */
 
 import { createHash } from "node:crypto";
@@ -578,6 +624,83 @@ function spreadDepthPage(): string {
   const bases = Array.from({ length: 9 }, (_, index) => (index === 0 ? 'const B0 = { effectClass: "write" };' : `const B${index} = { ...B${index - 1} };`));
   return page(...bases, 'export const s = { id: "reactivefiber.s", ...B7 };', 'export const t = { id: "reactivefiber.t", ...B8 };');
 }
+/**
+ * BINDING (2)'s type annotations, in its words' order, index 0 being no annotation: the keyword string (1) and unknown (2), a
+ * string literal type (3), a union of two string literal types (4), the union string | undefined (5), a reference to the
+ * top-level type alias Name of string (6) and a type literal of one property whose type is string, required (7) or optional
+ * (8). Each gives a const whose text is TEXT its annotation and initializer, and the reading probe() gives that const.
+ */
+const CONST_ANNOTATIONS: readonly { readonly annotation: (text: string) => string; readonly initializer: (text: string) => string; readonly reading: (text: string) => string }[] = [
+  { annotation: () => "", initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: () => ": string", initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: () => ": unknown", initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: (text) => `: ${JSON.stringify(text)}`, initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: (text) => `: ${JSON.stringify(text)} | "other"`, initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: () => ": string | undefined", initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: () => ": Name", initializer: (text) => JSON.stringify(text), reading: (text) => JSON.stringify(text) },
+  { annotation: () => ": { v: string }", initializer: (text) => `{ v: ${JSON.stringify(text)} }`, reading: (text) => `<opaque { v: ${JSON.stringify(text)} }>` },
+  { annotation: () => ": { v?: string }", initializer: (text) => `{ v: ${JSON.stringify(text)} }`, reading: (text) => `<opaque { v: ${JSON.stringify(text)} }>` },
+];
+type Planted = readonly [declaration: string, name: string];
+function body(consts: readonly Planted[], indent: string): string[] {
+  return consts.flatMap(([declaration, name]) => [`${indent}const ${declaration};`, `${indent}probe(${name});`]);
+}
+/**
+ * BINDING (2)'s nine positions, in its words' order: the top level, plain (0) and exported (1), a block at the top level (2) and
+ * a block nested in one (3), the body of a plain (4), an exported (5) and an exported async (6) function declared at the top
+ * level, the body of a plain namespace declared at the top level (7) and a for statement's head at the top level (8); each
+ * plants its consts there, every const alone in its declaration list and probed in its own scope right after it.
+ */
+const CONST_POSITIONS: readonly ((consts: readonly Planted[]) => string[])[] = [
+  (consts) => body(consts, ""),
+  (consts) => consts.flatMap(([declaration, name]) => [`export const ${declaration};`, `probe(${name});`]),
+  (consts) => ["{", ...body(consts, "  "), "}"],
+  (consts) => ["{", "  {", ...body(consts, "    "), "  }", "}"],
+  (consts) => ["function f(): void {", ...body(consts, "  "), "}"],
+  (consts) => ["export function g(): void {", ...body(consts, "  "), "}"],
+  (consts) => ["export async function h(): Promise<void> {", ...body(consts, "  "), "}"],
+  (consts) => ["namespace N {", ...body(consts, "  "), "}"],
+  (consts) => consts.flatMap(([declaration, name]) => [`for (const ${declaration}; ; ) {`, `  probe(${name});`, "  break;", "}"]),
+];
+/** The positions where a const can shadow a top-level one: every BINDING (2) position but the top level. */
+const SHADOW_POSITIONS = [2, 3, 4, 5, 6, 7, 8];
+function planted(name: string, text: string, form: number): Planted {
+  const annotation = CONST_ANNOTATIONS[form];
+  return [`${name}${annotation?.annotation(text) ?? ""} = ${annotation?.initializer(text) ?? ""}`, name];
+}
+/** C-ANNOTATED: each annotation form beside the keyword string (C-TYPED's), forms 2 to 8, at each of the nine positions. */
+function annotatedPage(): string {
+  return page(
+    "declare function probe(value: unknown): void;",
+    "type Name = string;",
+    ...CONST_POSITIONS.flatMap((at, position) => at(CONST_ANNOTATIONS.slice(2).map((_, offset) => planted(`A${position}${offset + 2}`, `a${position}${offset + 2}`, offset + 2)))),
+  );
+}
+function annotatedReading(): string[] {
+  return CONST_POSITIONS.flatMap((_, position) => CONST_ANNOTATIONS.slice(2).map((annotation, offset) => annotation.reading(`a${position}${offset + 2}`)));
+}
+/**
+ * C-SHADOWS: at each shadowing position and with each annotation (none included), a const shadowing a plain unannotated
+ * top-level const of its name, the only other declaration of that name: each probed inside its scope, then each top-level
+ * const probed at the top level.
+ */
+function shadowsPage(): string {
+  return page(
+    "declare function probe(value: unknown): void;",
+    "type Name = string;",
+    ...SHADOW_POSITIONS.flatMap((position) => CONST_ANNOTATIONS.map((_, form) => `const S${position}${form} = "outer-${position}${form}";`)),
+    ...SHADOW_POSITIONS.flatMap((position) => CONST_POSITIONS[position]?.(CONST_ANNOTATIONS.map((_, form) => planted(`S${position}${form}`, `inner-${position}${form}`, form))) ?? []),
+    ...SHADOW_POSITIONS.flatMap((position) => CONST_ANNOTATIONS.map((_, form) => `probe(S${position}${form});`)),
+  );
+}
+function shadowsReading(): string[] {
+  return [
+    ...SHADOW_POSITIONS.flatMap((position) => CONST_ANNOTATIONS.map((annotation, form) => annotation.reading(`inner-${position}${form}`))),
+    ...SHADOW_POSITIONS.flatMap((position) => CONST_ANNOTATIONS.map((_, form) => JSON.stringify(`outer-${position}${form}`))),
+  ];
+}
+/** BINDING (3)'s nested object pattern, an element of a top-level const's object pattern and of its array pattern. */
+const NESTED_PAGE = page('const o = { a: { B: "b" } };', 'const list = [{ C: "c" }];', "const { a: { B } } = o;", "probe(B);", "const [{ C }] = list;", "probe(C);", 'function probe(value = "") { return value; }');
 
 /** The 25 characters JavaScript's \\s class matches, in code point order, then U+0085 and U+200B, which it does not match. */
 const WHITESPACE = chars(0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff);
@@ -836,6 +959,19 @@ const ROWS: readonly Row[] = [
       pin("GP17-C1-PROGRAM", "programs", page("declare function spawn(program: string, args: string[]): void;", "export function launch(): void {", '  const PROGRAM = "rf";', "  spawn(PROGRAM, []);", "}"), ["spawn:rf"], "src/workbench/providers/zz-gp17-c1-1.ts"),
       pin("GP17-C1-SHADOW", "texts", page("declare function probe(value: unknown): void;", 'const X = "outer";', "export function f(): void {", '  const X = "inner";', "  probe(X);", "}", "probe(X);"), ['"inner"', '"outer"'], "src/workbench/providers/zz-gp17-c1-2.ts"),
       pin("C-TYPED", "texts", page("declare function probe(value: unknown): void;", 'const A: string = "a";', "probe(A);", 'export const B: string = "b";', "probe(B);", "{", '  const C: string = "c";', "  probe(C);", "  {", '    const D: string = "d";', "    probe(D);", "  }", "}", "function f(): void {", '  const E: string = "e";', "  probe(E);", "}", "export function g(): void {", '  const F: string = "f";', "  probe(F);", "}", "export async function h(): Promise<void> {", '  const G: string = "g";', "  probe(G);", "}", "namespace N {", '  const H: string = "h";', "  probe(H);", "}", 'for (const I: string = "i"; ; ) {', "  probe(I);", "  break;", "}", "f();"), ['"a"', '"b"', '"c"', '"d"', '"e"', '"f"', '"g"', '"h"', '"i"'], "src/workbench/providers/zz-c-typed.ts"),
+      pin("GP13-T1", "texts", page("declare function probe(value: unknown): void;", 'const X: string | undefined = "a";', "probe(X);", "export {};"), ['"a"'], "src/workbench/providers/zz-gp13-t1-0.ts"),
+      pin("GP13-T1-FUNCTION", "texts", page("declare function probe(value: unknown): void;", "export function f(): void {", '  const X: "a" | "b" = "a";', "  probe(X);", "}"), ['"a"'], "src/workbench/providers/zz-gp13-t1-1.ts"),
+      pin("GP13-T2", "texts", page("declare function probe(value: unknown): void;", 'const X: "a" = "a";', "probe(X);", "export {};"), ['"a"'], "src/workbench/providers/zz-gp13-t2-0.ts"),
+      pin("GP13-T3", "texts", page("declare function probe(value: unknown): void;", "type Name = string;", 'const X: Name = "a";', "probe(X);", "export {};"), ['"a"'], "src/workbench/providers/zz-gp13-t3-0.ts"),
+      pin("GP13-T4", "texts", page("declare function probe(value: unknown): void;", 'const X: unknown = "a";', "probe(X);", "export {};"), ['"a"'], "src/workbench/providers/zz-gp13-t4-0.ts"),
+      pin("GP13-T5", "texts", page("declare function probe(value: unknown): void;", 'const X: string | undefined = "a";', "probe(X);", 'const Y: "y" = "y";', "probe(Y);", "type Name = string;", 'const Z: Name = "z";', "probe(Z);", 'const W: unknown = "w";', "probe(W);", "export {};"), ['"a"', '"y"', '"z"', '"w"'], "src/workbench/providers/zz-gp13-t5-0.ts"),
+      pin("GP13-S1", "texts", page("declare function probe(value: unknown): void;", 'const X = "outer";', "namespace N {", '  const X = "inner";', "  probe(X);", "}", "probe(X);", "export {};"), ['"inner"', '"outer"'], "src/workbench/providers/zz-gp13-s1-0.ts"),
+      pin("GP13-S2", "texts", page("declare function probe(value: unknown): void;", 'const X = "outer";', 'for (const X = "inner"; ; ) {', "  probe(X);", "  break;", "}", "probe(X);", "export {};"), ['"inner"', '"outer"'], "src/workbench/providers/zz-gp13-s2-0.ts"),
+      pin("C-ANNOTATED", "texts", annotatedPage(), annotatedReading(), "src/workbench/providers/zz-c-annotated.ts"),
+      pin("C-SHADOWS", "texts", shadowsPage(), shadowsReading(), "src/workbench/providers/zz-c-shadows.ts"),
+      pin("C-NESTED", "texts", NESTED_PAGE, ["<opaque B:destructuring>", "<opaque C:destructuring>"], "src/workbench/providers/zz-c-nested.ts"),
+      pin("C-NESTED-JS", "texts", NESTED_PAGE, ["<opaque B:destructuring>", "<opaque C:destructuring>"], "src/workbench/zz-c-nested.js"),
+      pin("C-PARAMETER", "texts", page("declare function probe(value: unknown): void;", "export function reg(other: object): void {", "  probe(other);", "}", "export function pair(a: object, b: object): void {", "  probe(a);", "  probe(b);", "}"), ["<opaque other:parameter>", "<opaque a:parameter>", "<opaque b:parameter>"], "src/workbench/providers/zz-c-parameter.ts"),
     ],
   },
   {
@@ -1122,6 +1258,7 @@ const ROWS: readonly Row[] = [
       pin("GP17-L2", "texts", page("declare function probe(value: unknown): void;", "namespace N {", "  export let X: string | undefined;", "  probe(X);", "}", "export {};"), ["<opaque X:let>"], "src/workbench/providers/zz-gp17-l2-0.ts"),
       pin("GP17-P1", "texts", page("declare function probe(value: unknown): void;", 'function f(X = "a"): void {', "  probe(X);", "}", "f();", "export {};"), ["<opaque X:parameter>"], "src/workbench/providers/zz-gp17-p1-0.ts"),
       pin("GP17-P2", "texts", page("declare function probe(value: unknown): void;", "function f(X?: string): void {", "  probe(X);", "}", "f();", "export {};"), ["<opaque X:parameter>"], "src/workbench/providers/zz-gp17-p2-0.ts"),
+      pin("GP13-D3", "texts", page("declare function probe(value: unknown): void;", "declare const list: { B: string }[];", "const [{ B }] = list;", "probe(B);", "export {};"), ["<opaque B:destructuring>"], "src/workbench/providers/zz-gp13-d3-0.ts"),
     ],
   },
   {
@@ -2096,7 +2233,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FROZEN SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:6", "const:7", "kinds:40", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
+      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:6", "const:20", "kinds:41", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "S1:8afd84e55bb80436", "S1-LITERAL:6dc9075e02c6c569", "S1C:44deb751ea6881c2", "S1-OUTER:a5260da7eaa52c80",
@@ -2107,6 +2244,10 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "SC-SHORTHAND:06d879e5de557160", "A10:bd4719f6c7ced09c", "SC-PATHS:3991d4983ea4679e", "M21:d75e035c4e9d50e7",
       "M21-TS:d75e035c4e9d50e7", "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98", "C-JS-ALIAS:dd5bf708ed8d9f39",
       "GP17-C1:e1828d47d3e43dd4", "GP17-C1-PROGRAM:1b608336d601515e", "GP17-C1-SHADOW:51637dd4c9432fd1", "C-TYPED:3cae82edcc2d0a6c",
+      "GP13-T1:5fa7d41472719d11", "GP13-T1-FUNCTION:e20b18aa20c44177", "GP13-T2:f641ccb6946ec9a7", "GP13-T3:ce50ec9b4ea095d4",
+      "GP13-T4:84d2a01a35aa5fb9", "GP13-T5:8ea1cca22efdce56", "GP13-S1:2a28952c4365a1f7", "GP13-S2:96009448a4dabeed",
+      "C-ANNOTATED:f50cd40becde54ad", "C-SHADOWS:f2d9546ee5e72ff8", "C-NESTED:9619b928dbd096a1", "C-NESTED-JS:9619b928dbd096a1",
+      "C-PARAMETER:9bc2ca340ef73e76",
       "K-import:ea1106db3623af7b", "K-unbound:898c0f5c16093308", "K-merged:3d30bd72f99bdbe2", "K-destructuring:9a68584bb451311b",
       "K-let:af08458a5a933a9a", "K-var:2282675695032160", "K-using:e30364b542bb8a82", "K-catch:611bd19b2f472b5f",
       "K-no-initializer:aa4e8e93b77301e0", "K-ambient:0dd6b9fc15fa96a5", "K-namespace:f125b607ca7f49a2", "K-parameter:4a1bf4f67e7dfa5c",
@@ -2119,6 +2260,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "GP17-D1:4db59603be96c0bc", "GP17-D2:c0a6e81a74dd37cf", "GP17-V1:6dc39b44feb3d38e", "GP17-V1-FUNCTION:5a24218e37d82219",
       "GP17-V1-NAMESPACE:f2638fe172b66c0e", "GP17-L1:08b3f92af384a4e6", "GP17-L1-ASYNC:19493c1dc760b763", "GP17-L2:465a6061821a1efe",
       "GP17-P1:795df80f7676ffca", "GP17-P2:6819d811ff1b8804",
+      "GP13-D3:adf6649f2e5f55d6",
       "W-SCRIPT:2bb4edcbd2c23a76", "W-MODULE:2bb4edcbd2c23a76", "G02:a9cb49d86853c407",
       "W-NESTED:a3d74edfb3cb49f9", "V-EVAL:4f56a5ea6d326840", "V-WRAPPED:834efdc279613272", "V-AWAIT:4f9d587dfcb20493",
       "V-WITH:0d7debb6fe26cb27", "V-INDIRECT:d65ac9ce97754577", "G03:1f21c5326c209bf4", "V-BARE:ef2878be4c039a49",
@@ -2156,7 +2298,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FRESH READERS: no two pins read one page at one path, so each pin reads its page on a fresh reader, with its one probe", () => {
     const keys = ROWS.flatMap((row) => row.pins.filter((at) => at.page !== "" && at.probe !== "kind").flatMap((at) => (at.probe === "paths" ? (at.paths ?? []) : [at.path]).map((path) => `${path}\n${at.page}`)));
-    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(200);
+    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(214);
     expect(keys.filter((key, index) => keys.indexOf(key) !== index)).toEqual([]);
   });
 

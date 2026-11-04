@@ -202,7 +202,72 @@
     {
      "pin": "C-TYPED",
      "page": "3cae82edcc2d0a6c",
-     "falsifies": "a const with a type annotation and an initializer, alone in its declaration list, resolves through its initializer at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+     "falsifies": "a const with the type annotation string and an initializer, alone in its declaration list, resolves through its initializer at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+    },
+    {
+     "pin": "GP13-T1",
+     "page": "5fa7d41472719d11",
+     "falsifies": "refusal #7 U1a member GP13-T1 (a const annotated with a union type does not resolve): its twin page gp13-t1-0, a plain const declared at the top level with the annotation string | undefined, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T1-FUNCTION",
+     "page": "e20b18aa20c44177",
+     "falsifies": "refusal #7 U1a member GP13-T1's second twin page gp13-t1-1: a const in the body of an exported function declared at the top level, annotated with the union of two string literal types \"a\" | \"b\", reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T2",
+     "page": "f641ccb6946ec9a7",
+     "falsifies": "refusal #7 U1a member GP13-T2 (a const annotated with a literal type does not resolve): its twin page gp13-t2-0, a plain const declared at the top level with the string literal type \"a\" as its annotation, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T3",
+     "page": "ce50ec9b4ea095d4",
+     "falsifies": "refusal #7 U1a member GP13-T3 (a const annotated with a type reference does not resolve): its twin page gp13-t3-0, a plain const declared at the top level annotated Name, a reference to the top-level type alias type Name = string, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T4",
+     "page": "84d2a01a35aa5fb9",
+     "falsifies": "refusal #7 U1a member GP13-T4 (a const annotated unknown does not resolve): its twin page gp13-t4-0, a plain const declared at the top level with the annotation unknown, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T5",
+     "page": "8ea1cca22efdce56",
+     "falsifies": "refusal #7 U1a member GP13-T5 (a const annotated with anything but the keyword string or a type literal does not resolve): its twin page gp13-t5-0, four plain consts declared at the top level annotated string | undefined, the string literal type \"y\", the reference Name and unknown, read \"a\", \"y\", \"z\" and \"w\", never <opaque NAME:other>"
+    },
+    {
+     "pin": "GP13-S1",
+     "page": "2a28952c4365a1f7",
+     "falsifies": "refusal #7 U1b member GP13-S1 (a const in the body of a plain namespace declared at the top level, shadowing a same-named top-level const, reads the top-level one's initializer): its twin page gp13-s1-0, that shadowing const reads its own initializer \"inner\" at a read inside its scope, and the top-level const reads \"outer\" at a read at the top level"
+    },
+    {
+     "pin": "GP13-S2",
+     "page": "96009448a4dabeed",
+     "falsifies": "refusal #7 U1c member GP13-S2 (a const in a for statement's head at the top level, shadowing a same-named top-level const, reads the top-level one's initializer): its twin page gp13-s2-0, that shadowing const reads its own initializer \"inner\" at a read inside its scope, and the top-level const reads \"outer\" at a read at the top level"
+    },
+    {
+     "pin": "C-ANNOTATED",
+     "page": "f50cd40becde54ad",
+     "falsifies": "a const with an initializer, alone in its declaration list, annotated with each form BINDING (2) names beside the keyword string (the keyword unknown, a string literal type, a union of two string literal types, the union string | undefined, the reference Name to the top-level type alias of string, and a type literal of one string property, required and optional), resolves through its initializer at each of the nine positions BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+    },
+    {
+     "pin": "C-SHADOWS",
+     "page": "f2d9546ee5e72ff8",
+     "falsifies": "at each BINDING (2) position other than the top level (a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head), a const with no annotation and with each annotation form BINDING (2) names, shadowing a plain unannotated same-named const declared at the top level with no other declaration of that name, reads its own initializer at a read inside its scope, and the top-level const reads its own at a read at the top level"
+    },
+    {
+     "pin": "C-NESTED",
+     "page": "9619b928dbd096a1",
+     "falsifies": "in a TypeScript module, a simple element of an object pattern that is, with no default, an element of a plain top-level const declaration's object pattern (a: { B }) or array pattern ({ C }) reads <opaque NAME:destructuring>"
+    },
+    {
+     "pin": "C-NESTED-JS",
+     "page": "9619b928dbd096a1",
+     "falsifies": "in a JavaScript module, the same page: a simple element of an object pattern that is, with no default, an element of a plain top-level const declaration's object pattern (a: { B }) or array pattern ({ C }) reads <opaque NAME:destructuring>"
+    },
+    {
+     "pin": "C-PARAMETER",
+     "page": "9bc2ca340ef73e76",
+     "falsifies": "a simple parameter annotated object of an exported function declared at the top level, the declaration form M19's and M26's pages plant (a parameter alone in its list and the first and the second of two), does not resolve: it reads <opaque NAME:parameter>, never a text and never <opaque NAME:other>"
     }
    ]
   },
@@ -409,6 +474,11 @@
      "pin": "GP17-P2",
      "page": "6819d811ff1b8804",
      "falsifies": "refusal #6 U1f member GP17-P2 (an optional parameter reads other): its twin page gp17-p2-0, an optional parameter of a plain function declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP13-D3",
+     "page": "adf6649f2e5f55d6",
+     "falsifies": "refusal #7 U1d member GP13-D3 (a simple element of an object pattern nested in a top-level const's array pattern reads other): its twin page gp13-d3-0, const [{ B }] = list at the top level, reads <opaque B:destructuring>, never <opaque B:other>"
     }
    ]
   },
