@@ -131,6 +131,40 @@
  *    reading of THE PAGE TWIN or of the reach beyond these items, and PAGE_REACH, pageReach's reading or which other cut #3 items
  *    reach, changed in this file and the roster together where the count holds (NOT CLAIMED, below). This cut claims no residual.
  *
+ * WB-HN9V (the R694 follow-up of wb-nnm7's landing 863, gate cmd_31410c77faaf PASS-WITH-FINDING: F4 leads; seat ws-01, run
+ * g10-work-s201, on trunk bd72b37). wb-nnm7 cut #6's frozen shape is kept and only added to: no title, row, pin, control, form,
+ * residual row, premise, reader, reading or test title is removed or weakened, and no reader changes. Five ALT_FORMS forms are
+ * added, each with its constant and its B1, B2 and D1 readings in the roster, and THE ALT READ's carrier words are restated to the
+ * alts its items hold. The finding, by both routes its cure names:
+ *  F4 (THE ALT READ's carrier words - the IMAGE_ALT doc's "a code span's or an escape's &sopf; or &sfr;" and Pinned exactly so's
+ *    "&sopf; or &sfr; that a code span or an escape carries into the alt" - while every pinned alt holding &sfr;, and the one holding
+ *    an escape's &sopf;, opened with "wa"), PINNED: ALT_FORMS codeSpanUnknownAlone "![`&sopf;`](x.png)", escapeUnknownAlone
+ *    "![\\&sopf;](x.png)", codeSpanCoreAlone "![`&Copf;`](x.png)", codeSpanFrakturAlone "![`&sfr;`](x.png)" and escapeFrakturAlone
+ *    "![\\&sfr;](x.png)" carry each name THE ALT READ's items hold, in each carrier they hold it in, into an alt that holds it alone,
+ *    each read on D1, B2 and B1 - D1's texts for escapeUnknownAlone, codeSpanFrakturAlone and escapeFrakturAlone are the gate's
+ *    docs/zz-gp16-w-sopf-escape-alone.md, docs/zz-gp16-w-sfr-alone.md and docs/zz-gp16-w-sfr-escape-alone.md byte for byte - and each
+ *    is REFUSED, recorded "unknown <the reference>" once, so the gate's GP16-L2-09 SFR-WASM-CONTEXT-ONLY and GP16-L2-10
+ *    SOPF-ESCAPE-WASM-CONTEXT-ONLY red B1, B2 and D1. RESTATED (narrowed to the items): THE ALT READ's class sentence and its Pinned
+ *    exactly so clause, the IMAGE_ALT doc, the WB-NNM7 CUT #6, CUT #2 and WB-NNM7 paragraphs and the unrecorded, inlineRendered and
+ *    ALT_FORMS doc comments now claim each such carried reference in the alts Pinned exactly so names by their texts - spelling a word
+ *    between the alt's other letters (codeSpanUnknownReference, escapeUnknownReference, codeSpanFrakturReference,
+ *    escapeFrakturReference and the D1 control altCoreReference), alone in the alt (the five forms above) and in the arrangements of
+ *    more than one reference it names; a carried reference in an alt no item holds (between other letters than an item's, or beside
+ *    a token no item holds) is NOT CLAIMED by this census.
+ *  THE PINNED READER SET of this cut (claim form): cases B1, B2 and D1 of this file (rows B and D; assertion target: each pin's
+ *    witness, toStrictEqual the roster's - its altForms readings of the five forms, each the one record "<the leg's path>:1: rendered
+ *    unknown <the reference>"; observed at the cut: equal, each case passing; ALT_FORMS holds 22 forms). Its independent falsifiers
+ *    are the gate's GP16-L2-09 and GP16-L2-10 and the seat's one-edit members of the same line - a code span's or an escape's &sopf;
+ *    or &sfr;, or a code span's &Copf;, not refused where the alt holds it alone (one member per name and carrier), and a code span's
+ *    or an escape's &sfr; refused only in an alt "wa" opens (one per carrier) -, each 4 failed | 27 passed on the cut (B1, B2, D1 and
+ *    the registration case) and 0 failed | 31 passed on the base bytes; each form's constant and each of its readings, changed in the
+ *    roster alone, reds the judged set or its case. NOT CLAIMED by this census: one of the five removed from ALT_FORMS, from the
+ *    roster's constants and from its readings together (no text in the repository holds the forms or their readings). This cut
+ *    claims no residual.
+ *  MEASURED AT BASE (bd72b37; read-only, with marked 18.0.11 over git's listing, not judged here): the 309 tracked product files
+ *    hold 88 Markdown texts with 0 Markdown image tokens, so THE ALT READ refuses nothing on the live tree; marked writes each of the
+ *    five forms' alts as its reference alone (alt="&sopf;", alt="&Copf;" or alt="&sfr;"), in its claim and in its decision sentence.
+ *
  * WB-NNM7 CUT #6 (the restatement of refusal #5 - gate run g10-gate-s193, BIND gate-prep-1, on the re-cut 3c7aba4f - bound by
  * orchestrator ruling R-B383, the 22(d) post-ladder disposition: the same restatement with every claim no wider than its pinned reader,
  * in lineage of 3c7aba4f; seat ws-06, run g10-work-s194, trunk 59e24e4 merged in). The re-cut's frozen shape is kept and only added
@@ -147,7 +181,8 @@
  *    WB-NNM7, CUT #2 and CUT #3 paragraphs, row D1's control list and the unrecorded, inlineRendered, ALT_FORMS, D1 control and
  *    judged-set premise comments - now claims the named references THE ALT READ's items hold, &sopf;, &Copf; and &sfr;, each in the
  *    arrangements its items hold (a code span's or an escape's &sopf; or &sfr;, a code span's &Copf;, and the arrangements Pinned
- *    exactly so names). Every other named reference outside NAMED_REFERENCES in the written alt - &sscr; (the gate's
+ *    exactly so names; restated by wb-hn9v, above: each in the alts Pinned exactly so names by their texts, an alt no item holds NOT
+ *    CLAIMED). Every other named reference outside NAMED_REFERENCES in the written alt - &sscr; (the gate's
  *    docs/zz-gp1-w-sscr.md, which GP1-L2-01 silences) among them - and &Copf; behind an escape are NOT CLAIMED by this census.
  *  F4 (rides U1): of the written alt's decimal references the decode is claimed at &#115; alone; every other decimal reference there -
  *    &#120164; (GP1-L2-07, the gate's docs/zz-gp1-w-dec.md, "![`wa&#120164;m`](x.png)") among them - is NOT CLAIMED, named so beside
@@ -185,8 +220,8 @@
  *    another element's tags around a reference and an end tag between two letters are NOT CLAIMED (GP23-L2-02 now reds D1 at
  *    imageAlt, the merge's item; GP23-L2-03 reads the census unchanged).
  *  THE PINNED READER SET of THE ALT READ (claim form): cases B1, B2 and D1 of this file (rows B and D; assertion target: each pin's
- *    witness, toStrictEqual the roster's - its altForms readings of the 15 ALT_FORMS forms (17 since wb-nnm7 cut #6, above) and, on D1,
- *    the controls altBreakItem,
+ *    witness, toStrictEqual the roster's - its altForms readings of the 15 ALT_FORMS forms (17 since wb-nnm7 cut #6 and 22 since
+ *    wb-hn9v, above) and, on D1, the controls altBreakItem,
  *    altEmphasisJoin, altStrongBreak, altCoreReference, altTextReference, altMixedReference, altRawState, altNestedImage and
  *    altRefusedMarkup and the pageTwinForms reading of imageAlt; observed at the cut: every reading equal, each case passing).
  *  MEASURED AT BASE (f11ca42 merged; read-only, with marked 18.0.11 over git's listing, not judged here): the 309 tracked product
@@ -255,7 +290,8 @@
  *    alt is now decoded with the image's own collector: each such reference it holds beyond those the children's reading records - of
  *    the names and carriers THE ALT READ's items hold, a code span's or an escape's &sopf; and a code span's &Copf; (restated by
  *    wb-nnm7 cut #6, refusal #5's U1: and a code span's or an escape's &sfr;; every other name, and &Copf; behind an escape, NOT
- *    CLAIMED) - is REFUSED as REFERENCE refuses one ("rendered unknown &sopf;"), counted, not deduplicated (unrecorded). So the
+ *    CLAIMED; and by wb-hn9v: in the alts Pinned exactly so names by their texts, an alt no item holds NOT CLAIMED) - is REFUSED as
+ *    REFERENCE refuses one ("rendered unknown &sopf;"), counted, not deduplicated (unrecorded). So the
  *    gate's GL2-A1 and
  *    GL2-A2 (D1), GL2-B2-A1 (B2), GL2-B1-A1 (B1) and GL2-A6 (the core-name family, D1) red as refusals; ALT_FORMS
  *    codeSpanUnknownReference and escapeUnknownReference pin one falsifier per route on D1, B2 and B1; the D1 controls
@@ -274,7 +310,8 @@
  *    "embed wasm" while the children's reading cuts the wasm token at a line end. THE ALT READ (below) computes the alt as marked
  *    writes it and REFUSES an image whose alt, so written, differs from its children's reading in a form it pins (narrowed by cut #4;
  *    and, cut #2, each of the named references outside NAMED_REFERENCES THE ALT READ's items hold - &sopf;, &Copf; and, since wb-nnm7
- *    cut #6, &sfr;, in the arrangements those items hold them - that the alt so written holds beyond the children's reading's
+ *    cut #6, &sfr;, in the arrangements those items hold them (named by their texts in Pinned exactly so since wb-hn9v; an alt no
+ *    item holds NOT CLAIMED) - that the alt so written holds beyond the children's reading's
  *    records), so PREP's GP2-D1a to GP2-D1c, GP2-B2a and
  *    GP2-B1a red as refusals; ALT_FORMS pins one checkable item per form on D1, B2 and B1 - both hard breaks and the class's other
  *    members the seat measured, each claimed at exactly its item (restated by the re-cut, refusal #4's U1-U3: codeSpanReference,
@@ -530,14 +567,19 @@
  * NAMED_REFERENCES in a text token, recorded as written ("<path>:<line>: rendered unknown <the reference>"), each one the written alt
  * holds beyond those the children's reading records (unrecorded) - counted, not deduplicated, and (cut #3, refusal #2's U1) matched by
  * name, each record matching one found reference of its own name - in the arrangements THE ALT READ's items hold (Pinned exactly so,
- * below) and claimed only there (cut #6). The unit records the children's reading's records -
+ * below, names each by its text since wb-hn9v) and claimed only there (cut #6). The unit records the children's reading's records -
  * THE HTML READ's, THE RAW STATE's and a nested image's THE ALT READ refusals among them (cut #3, refusal #2's U2) - and then those
  * beyond them, claimed only as pinned here (cut #4, refusal #3's U2 under ruling R-B229). Pinned exactly so (cut #3, the
- * enumerate-the-resolvable claim; its names restated by wb-nnm7 cut #6, refusal #5's U1): &sopf; or &sfr; that a code span or an
- * escape carries into the alt, or &Copf; that a code span carries there, which the children's reading holds as written, is refused
- * (ALT_FORMS codeSpanUnknownReference and escapeUnknownReference, &sopf; spelling the wasm word, and - cut #6 - codeSpanFrakturReference
- * and escapeFrakturReference, &sfr; spelling it, each on D1, B2 and B1; the D1 control altCoreReference, a code span's &Copf; a core
- * name); &sopf; in a text token keeps its one record, the children's reading's (the D1 control altTextReference); &sopf; in each of a
+ * enumerate-the-resolvable claim; its names restated by wb-nnm7 cut #6, refusal #5's U1, and its alts by wb-hn9v, landing 863's F4):
+ * &sopf; or &sfr; that a code span or an escape carries into the alt, or &Copf; that a code span carries there, which the children's
+ * reading holds as written, is refused in the alts THE ALT READ's items hold, and claimed only there - spelling a word between the alt's
+ * other letters (ALT_FORMS codeSpanUnknownReference "![`wa&sopf;m`](x.png)" and escapeUnknownReference "![wa\\&sopf;m](x.png)", &sopf;
+ * spelling the wasm word, and - cut #6 - codeSpanFrakturReference "![`wa&sfr;m`](x.png)" and escapeFrakturReference
+ * "![wa\\&sfr;m](x.png)", &sfr; spelling it, each on D1, B2 and B1; the D1 control altCoreReference "![`Fiber &Copf;ore`](x.png)", a
+ * code span's &Copf; a core name) and - wb-hn9v - alone in the alt, in each carrier those items carry each name in (ALT_FORMS
+ * codeSpanUnknownAlone "![`&sopf;`](x.png)", escapeUnknownAlone "![\\&sopf;](x.png)", codeSpanCoreAlone "![`&Copf;`](x.png)",
+ * codeSpanFrakturAlone "![`&sfr;`](x.png)" and escapeFrakturAlone "![\\&sfr;](x.png)", each on D1, B2 and B1, each recorded once as
+ * written); &sopf; in a text token keeps its one record, the children's reading's (the D1 control altTextReference); &sopf; in each of a
  * text token and a code span reads two records (altMixedReference), as do two code spans' &sopf; (ALT_FORMS codeSpanPair); with a
  * code span's &Copf; before or after a text token's
  * &sopf;, the text token's record and then the code span's (ALT_FORMS codeSpanNameBefore and codeSpanNameAfter); with a code span's
@@ -547,7 +589,8 @@
  * reference outside NAMED_REFERENCES, their refusals as the unit's records (the D1 controls altRawState and altNestedImage), and THE
  * HTML READ's refused markup of a processing instruction in such an alt, its refusal recorded ahead of the image's own (the D1
  * control altRefusedMarkup). Which names the records carry, and in which order, in any other arrangement (three or more distinct such
- * names in one alt among them, and - wb-nnm7 cut #6 - &Copf; behind an escape and an alt holding &sfr; twice) is NOT CLAIMED by
+ * names in one alt among them, - wb-nnm7 cut #6 - &Copf; behind an escape and an alt holding &sfr; twice, and - wb-hn9v - a carried
+ * reference in an alt no item holds, between other letters than an item's or beside a token no item holds) is NOT CLAIMED by
  * this census; nor (cut #4) which records the unit carries for a children's reading in
  * any arrangement no pinned form or control holds - one holding one record twice (refusal #3's GP9-L2-03), THE HTML READ's record of
  * refused markup other than a processing instruction in an alt (GP9-L2-06, a refused element), and a raw-state text token or a
@@ -1708,8 +1751,10 @@ const INPUT_SHOWN = { entry: ["text", "search", "tel", "url", "email"], button: 
  * &Copf; and (wb-nnm7 cut #6) &sfr; THE ALT READ's items hold (the re-cut, refusal #4's U2, and cut #6, refusal #5's U1 and F4: every
  * other reference in the written alt - a hexadecimal one, a decimal one other than &#115; and a named one outside NAMED_REFERENCES
  * other than those three, &sscr; among them - is NOT CLAIMED): &sopf;, &Copf; and &sfr; in the alt so written, in the arrangements
- * THE ALT READ's items hold - a code span's or an escape's &sopf; or &sfr; and a code span's &Copf;, which the children's reading
- * holds as written, among them - are REFUSED as REFERENCE refuses a named reference outside NAMED_REFERENCES in a text token
+ * THE ALT READ's items hold, each named by its text in THE ALT READ's Pinned exactly so (wb-hn9v, landing 863's F4) - a code span's
+ * or an escape's &sopf; or &sfr; and a code span's &Copf;, which the children's reading holds as written, each spelling a word
+ * between the alt's other letters and alone in the alt, among them; in an alt no item holds NOT CLAIMED - are REFUSED as REFERENCE
+ * refuses a named reference outside NAMED_REFERENCES in a text token
  * (`unknown <the reference as written>`), for each one beyond those the children's reading records (unrecorded, matched by
  * name: cut #3, refusal #2's U1). The unit records the children's reading's records - THE HTML READ's, THE RAW STATE's and a nested
  * image's refusals among them (cut #3, refusal #2's U2) - and then those beyond them, each reading pinned as THE ALT READ names
@@ -1994,7 +2039,9 @@ function spaced(text: string): string {
  * THE ALT READ's references (wb-nnm7 cut #2, refusal #1's U1): of the named references outside NAMED_REFERENCES the written alt's
  * decode found, those beyond the ones its children's reading recorded - counted, not deduplicated: each recorded one matches one
  * found once - so a reference only the written alt decodes (a code span's or an escape's &sopf; or &sfr;, or a code span's &Copf;: the
- * names and arrangements THE ALT READ's items hold, wb-nnm7 cut #6; every other name NOT CLAIMED) is recorded, &sopf; that the
+ * names and arrangements THE ALT READ's items hold, wb-nnm7 cut #6, each spelling a word between the alt's other letters and alone in
+ * the alt, in the alts Pinned exactly so names by their texts, wb-hn9v; every other name, and an alt no item holds, NOT CLAIMED) is
+ * recorded, &sopf; that the
  * children's reading read in a text token is not recorded twice, and one more &sopf; in the alt adds its own record. Matched by name (cut #3,
  * refusal #2's U1 under ruling R-B192): a record matches only a found reference of its own name, so with a code span's &Copf; before
  * or after a text token's &sopf; the code span's is the one left (ALT_FORMS codeSpanNameBefore, the gate's GA-POS witness, and
@@ -2017,7 +2064,8 @@ function unrecorded(found: readonly string[], recorded: readonly string[]): stri
  * an image piece (its alt text in place, or gone) - REFUSED besides when marked writes its alt otherwise than that reading, white space
  * runs read as one space, at one of THE ALT READ's items (wb-nnm7; cut #4 and the re-cut: any other difference NOT CLAIMED), and for each named
  * reference outside NAMED_REFERENCES of the names THE ALT READ's items hold, in the arrangements they hold them (&sopf;, &Copf; and,
- * wb-nnm7 cut #6, &sfr;; every other name, and &Copf; behind an escape, NOT CLAIMED) that its written alt holds beyond
+ * wb-nnm7 cut #6, &sfr;; every other name, &Copf; behind an escape and - wb-hn9v - an alt no item holds, NOT CLAIMED) that its
+ * written alt holds beyond
  * those the children's reading records (THE ALT READ's references, wb-nnm7 cut #2: unrecorded) -, a link, em, strong or del token its
  * children's reading, and an inline text token its text with its references decoded - one marked lexed in its raw state also REFUSED
  * (THE RAW STATE), and read as a page piece whose page reading is THE PAGE READ's (wb-2wiv.4). Beside the run, extras collects an
@@ -3047,8 +3095,14 @@ const INHERITED_REFERENCE_PATH = "docs/inherited-reference.md";
  * named reference &sfr; (outside NAMED_REFERENCES; an HTML parser decodes it to U+1D530, NFKC "s") carried into the alt by a code span
  * (codeSpanFrakturReference: on D1 the gate's docs/zz-gp1-w-sfr.md, as a decision its docs/zz-gp1-w-sfr-decision.md) or behind an
  * escape (escapeFrakturReference: on D1 its docs/zz-gp1-w-sfr-escape.md), each text byte for byte, each REFUSED by THE ALT READ's
- * decode, recorded "unknown &sfr;". These forms' names, with the D1 controls', are THE ALT READ's: &sopf;, &Copf; and &sfr;; every
- * other named reference outside NAMED_REFERENCES in an alt is NOT CLAIMED by this census.
+ * decode, recorded "unknown &sfr;". wb-hn9v (wb-nnm7 landing 863's F4; the gate's GP16-L2-09 SFR-WASM-CONTEXT-ONLY and GP16-L2-10
+ * SOPF-ESCAPE-WASM-CONTEXT-ONLY): each name those forms and the D1 control altCoreReference carry, in each carrier they carry it in,
+ * alone in the alt - a code span's and an escape's &sopf; (codeSpanUnknownAlone; escapeUnknownAlone, on D1 the gate's
+ * docs/zz-gp16-w-sopf-escape-alone.md), a code span's &Copf; (codeSpanCoreAlone) and a code span's and an escape's &sfr;
+ * (codeSpanFrakturAlone and escapeFrakturAlone, on D1 its docs/zz-gp16-w-sfr-alone.md and docs/zz-gp16-w-sfr-escape-alone.md; those
+ * three D1 texts byte for byte) - each REFUSED by THE ALT READ's decode, recorded "unknown <the reference>" once. These forms'
+ * names, with the D1 controls', are THE ALT READ's: &sopf;, &Copf; and &sfr;; every other named reference outside NAMED_REFERENCES
+ * in an alt is NOT CLAIMED by this census, and so is a carried reference in an alt no form or control holds.
  */
 const ALT_FORMS: Readonly<Record<string, string>> = {
   spaceBreak: "![wa  \nsm](x.png)",
@@ -3068,6 +3122,11 @@ const ALT_FORMS: Readonly<Record<string, string>> = {
   codeSpanPair: "![`wa&sopf;m` `wa&sopf;m`](x.png)",
   codeSpanFrakturReference: "![`wa&sfr;m`](x.png)",
   escapeFrakturReference: "![wa\\&sfr;m](x.png)",
+  codeSpanUnknownAlone: "![`&sopf;`](x.png)",
+  escapeUnknownAlone: "![\\&sopf;](x.png)",
+  codeSpanCoreAlone: "![`&Copf;`](x.png)",
+  codeSpanFrakturAlone: "![`&sfr;`](x.png)",
+  escapeFrakturAlone: "![\\&sfr;](x.png)",
 };
 /** The path D1 reads each ALT_FORMS text under. */
 const ALT_FORM_PATH = "docs/alt-form.md";
@@ -5073,7 +5132,8 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
     expect(marked.parse("Pi ![embed wa  \nsm](x.png) core.", { async: false }), "marked writes a hard break in an image's alt as nothing").toContain('alt="embed wasm"');
     // THE ALT READ's references (wb-nnm7 cut #2, refusal #1's U1): marked's escape leaves &sopf;, a named reference outside NAMED_REFERENCES
     // that a code span or an escape carries into an image's alt, as written, so a reader's HTML parser decodes it there (pinned at &sopf;
-    // alone; wb-nnm7 cut #6's &sfr; forms are read by B1, B2 and D1, and marked's writing of their alts is measured, not judged here).
+    // in the wasm word only; wb-nnm7 cut #6's &sfr; forms and wb-hn9v's five alone forms are read by B1, B2 and D1, and marked's
+    // writing of their alts is measured, not judged here).
     expect(marked.parse("Pi embeds a ![`wa&sopf;m`](x.png) runtime.", { async: false }), "marked writes a code span's named reference into an image's alt as written").toContain(
       'alt="wa&sopf;m"',
     );

@@ -146,9 +146,14 @@
  * reds, and so does a re-measure that moves the header's trunk and landing but leaves the doc comment behind; the case does
  * not hold the trunk and landing to KNOWN, so a re-measure that leaves them and the doc comment behind while the row lists,
  * the count and the roster move with KNOWN does not red it; and, in the forms the list controls pin, an id the KNOWN
- * CONTROLS list names that neither controls table holds, or a second line opening that list, reds. NOT CLAIMED (scope
+ * CONTROLS list names that neither controls table holds, or a second line opening that list, reds; the letters-only id
+ * lengths the list controls lay (one, four, five, 13, 14 and 100 letters; the one and the 100 of listIdLengths) are among
+ * those forms, so a reader that reads ids only from some length above one letter, or only up to some length below 100
+ * letters, reds. NOT CLAIMED (scope
  * sentences): a list form or position that no list control holds (an opening, bound or id form other than those the list
- * controls lay, an id split across two lines among them, or a third opening line) is NOT CLAIMED by this census; a form or a
+ * controls lay, an id split across two lines among them, a letters-only id longer than 100 letters, one of a length
+ * between two lengths they lay that a reader drops while it reads every length they lay, or a third opening line)
+ * is NOT CLAIMED by this census; a form or a
  * position that neither this file's text nor a control holds - of the text model, of a constant's match or of the doc comment,
  * among them a line of white space only inside the paragraph, a count word of fewer than three letters or one NUMBER_WORDS
  * lacks other than many, and a re-measure closed by another mark than the semicolon or a comma - is NOT CLAIMED by
@@ -169,14 +174,16 @@
  * the reading each holds, then knownRecord's, in KNOWN_CONTROL_IDS order with the readings each moves; the case holds this
  * list's ids to KNOWN_LIST_CONTROL_IDS followed by KNOWN_CONTROL_IDS, and this file's text to one opening line; wb-7qsr, the
  * R694 follow-up of wb-4fpf's landing 808, adds the list reader's controls for that landing's F2 and seven of knownRecord's
- * for its F1: emptyLine, otherCountWord, columnStar, tabStar, measureComma, docTrailingSpace and docIndented): the list
+ * for its F1: emptyLine, otherCountWord, columnStar, tabStar, measureComma, docTrailingSpace and docIndented; wb-8vvg, the
+ * R694 follow-up of wb-7qsr's landing 852, adds the list reader's id-length control for that landing's F2): the list
  * reader's synthetic texts, each read as its opening lines and the ids of its first list - a list bounded by a line of a
  * space and the star (`listBounded`), by one with trailing spaces (`listTrailingSpaceBound`) or by none, running to the
  * text's end (`listUnbounded`) - openings 1, two ids; a list going on past a line of two spaces and the star
  * (`listIndentedBlank`), past an empty line (`listEmptyLine`), past a line of the star alone (`listColumnStar`) or past a
  * line ending in a space and the star (`listStarEnding`), none of them a bound - openings 1, three ids; an id with a capital
  * first letter (`listCapitalizedId`) - openings 1, two ids; back-quoted words with a trailing digit, an inner hyphen or an
- * inner underscore beside one of letters only (`listOtherId`) - openings 1, the one id of letters only; a stale list before
+ * inner underscore beside one of letters only (`listOtherId`) - openings 1, the one id of letters only; an id of one
+ * letter, one of 100 letters and one of five (`listIdLengths`) - openings 1, the three ids; a stale list before
  * the list (`listStaleBefore`) - openings 2,
  * the stale list's ids; a stale list after it (`listStaleAfter`) - openings 2, the first list's ids; no opening line
  * (`listNone`), and, read past, an opening line with two spaces after the star (`listSpacedOpening`) or two before it
@@ -552,6 +559,9 @@ function knownControlList(text: string): KnownControlList {
 /** The list reader's synthetic lines (header KNOWN CONTROLS): a list opening that names two ids, and a later line naming a third. */
 const KNOWN_LIST_OPENING = " * KNOWN CONTROLS (a synthetic list): `alpha` and `beta`.";
 const KNOWN_LIST_STALE = " * A stale line names `removedControl`.";
+/** A letters-only id of 100 letters, longer than any id this file's KNOWN CONTROLS list names (header KNOWN CONTROLS, the
+ * id-length list control). */
+const KNOWN_LIST_LONG_ID = "z".repeat(100);
 /** The list reader's controls (header KNOWN CONTROLS, the second case), by id: each a synthetic text, as its lines, whose
  * reading (knownControlList: its opening lines and the ids of its first list) the roster's lists hold. */
 const KNOWN_LIST_CONTROLS: Readonly<Record<string, readonly string[]>> = {
@@ -564,6 +574,7 @@ const KNOWN_LIST_CONTROLS: Readonly<Record<string, readonly string[]>> = {
   listStarEnding: [KNOWN_LIST_OPENING, " * This line ends in a space and the star *", KNOWN_LIST_STALE, " *"],
   listCapitalizedId: [" * KNOWN CONTROLS (a synthetic list): `alpha` and `RemovedControl`.", " *"],
   listOtherId: [" * KNOWN CONTROLS (a synthetic list): `alpha`, `id1`, `two-words` and `snake_case`.", " *"],
+  listIdLengths: [` * KNOWN CONTROLS (a synthetic list): \`a\`, \`${KNOWN_LIST_LONG_ID}\` and \`alpha\`.`, " *"],
   listStaleBefore: [" * KNOWN CONTROLS (a stale copy): `secondOpening` and `removedControl`.", " *", KNOWN_LIST_OPENING, " *"],
   listStaleAfter: [KNOWN_LIST_OPENING, " *", " * KNOWN CONTROLS (a stale copy): `secondOpening` and `removedControl`.", " *"],
   listNone: [" * The text opens no list.", KNOWN_LIST_STALE],
@@ -574,8 +585,8 @@ const KNOWN_LIST_CONTROLS: Readonly<Record<string, readonly string[]>> = {
  * second case holds KNOWN_LIST_CONTROLS, the roster's knownRecord.lists and the head of the header's KNOWN CONTROLS list to it. */
 const KNOWN_LIST_CONTROL_IDS: readonly string[] = [
   "listBounded", "listTrailingSpaceBound", "listUnbounded", "listIndentedBlank", "listEmptyLine", "listColumnStar",
-  "listStarEnding", "listCapitalizedId", "listOtherId", "listStaleBefore", "listStaleAfter", "listNone", "listSpacedOpening",
-  "listIndentedOpening",
+  "listStarEnding", "listCapitalizedId", "listOtherId", "listIdLengths", "listStaleBefore", "listStaleAfter", "listNone",
+  "listSpacedOpening", "listIndentedOpening",
 ];
 /** The KNOWN-record cases that reached their ends, in order (RECORDS). */
 const KNOWN_REACHED: string[] = [];
