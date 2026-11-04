@@ -28,7 +28,11 @@
  * F1, holdAnchor returns its loops' record, and ANCHOR and READERS hold the returned record against ROWS (RETURN), so a return from
  * holdAnchor before its loops have recorded the last row reds them (G11-C06, G11-C07, G11-C08, G11b-C11); F2, each pin case first
  * sets its assertion count to four and last holds READ, altRead's record of the case against the PINS entry its id names (G11-B01,
- * G11-B02, G11-B03), and PINS is frozen at load with everything it holds, which SHAPE holds (G11b-B04).
+ * G11-B02, G11-B03), and PINS is frozen at load with everything it holds, which SHAPE holds (G11b-B04). Cut #2 answers wb-wzin's own
+ * refusal #1 (its record in wb-wzin's notes, from its verdict naming tip b4e24a76) by the pin route: its one unmet item, U1, names
+ * the gate's G13-AL alias family, a reading side that writes the literal into the reading altRead returned, whose arrays altRead's
+ * record then shared; altRead now records a frozen copy of each call, taken with CLONE, the structuredClone the census held at load,
+ * so no write into the reading altRead returned reaches READ.
  *
  * PINNED READER SET (this file, test/workbench-urr-alt-read-census.test.ts; observed at the cut: 13 passed (13)):
  * - The nine pin cases, each named by its member's cite (the words with which the member's refusal record names it). Each first
@@ -37,9 +41,10 @@
  *   then holds, in one toEqual over the pin's probes in order, each probe's id with the reading inlineRendered() returns over the
  *   inline tokens of the probe's one paragraph (marked's lexer, 18.0.11 at the cut) - its pieces, the records it collects and the
  *   extras it collects - against the literal reading written here, and last (READ) holds altRead's record of the case - each text
- *   altRead was called with in the case and the reading it returned, in call order (the entries the case adds to READ_LOG) - against
- *   the texts and literal readings of that PINS entry's probes, in order. Observed: each passes. A probe's text is a witness that its
- *   row's UNMET item quotes, decoded from the record's notation (<backslash>, <line feed>, <two spaces>).
+ *   altRead was called with in the case and the reading it returned, in call order, each a frozen copy altRead takes before it
+ *   returns (the entries the case adds to READ_LOG) - against the texts and literal readings of that PINS entry's probes, in order.
+ *   Observed: each passes. A probe's text is a witness that its row's UNMET item quotes, decoded from the record's notation
+ *   (<backslash>, <line feed>, <two spaces>).
  *   - Row R3-U1 (wb-nnm7 refusal #3's U1): pin GP9-L2-12 SPACED-TRIM over trimBackslash, trimSpaces and trimDecision, each a hard
  *     break opening an image's alt (a backslash one, a two-space one, and the backslash one in a decision text), each read with the
  *     image piece "\nsm" in place and the one record image alt "sm".
@@ -103,11 +108,17 @@
  * its reading side reading a later probe from the expected literal (G11-B03 READING-SIDE-ECHO-LATER) at READ, the case's last
  * assertion, which holds altRead's record of the case against the texts and literal readings of that PINS entry's probes - so,
  * whatever the reading assertion compares, the case reds there if not before when altRead read fewer of those probes, other texts or
- * another order, or returned another reading for one of them; an assignment, an Object.defineProperty call or a mutating array call a
- * case makes into PINS or anything PINS holds (the landing-933 gate's G11b-B04 IN-CASE-ENTRY-SHORTENED, its own entry's probe list
- * cut), which throws and reds that case, PINS being frozen at load with every entry, probe list, probe and reading it holds (SHAPE
- * holds it so), so that no case cuts or rewrites PINS at run time; and a return from a pin case before its last assertion, which reds
- * it through its assertion count of four or, when the return comes before that count is set, through the gate's
+ * another order, or returned another reading for one of them, altRead's record being a frozen copy of each text and reading, taken
+ * with CLONE (the structuredClone the census held at load) before altRead returns, which no write into the reading altRead returned
+ * reaches - wb-wzin's refusal #1 U1, its gate's G13-AL00 (the reading side splicing the literal into the three arrays altRead
+ * returned) with each of claim (2)'s nine members and the helper witnesses HW-B and X-LEAD, its records-only and Object.assign forms
+ * (G13b-ALR, G13b-ALA), and this cut's S3-AL-LENGTH, S3-AL-INDEX and S3-AL-PIECE (the returned arrays emptied by length and refilled
+ * or assigned element by element, or the returned piece objects written) and S3-REBIND-CLONE and S3-REBIND-BOTH (G13-AL00 after the
+ * case rebinds the global structuredClone, or it and Object.freeze); an assignment, an Object.defineProperty call or a mutating array
+ * call a case makes into PINS or anything PINS holds (the landing-933 gate's G11b-B04 IN-CASE-ENTRY-SHORTENED, its own entry's probe
+ * list cut), which throws and reds that case, PINS being frozen at load with every entry, probe list, probe and reading it holds
+ * (SHAPE holds it so), so that no case cuts or rewrites PINS at run time; and a return from a pin case before its last assertion,
+ * which reds it through its assertion count of four or, when the return comes before that count is set, through the gate's
  * --expect.requireAssertions. So a loop entry that is not one of PINS's own objects reds its case whatever it keeps or changes of an
  * entry's id, cite or probes: at the first assertion when its id names no PINS entry or its probe ids differ from that entry's, at
  * the second otherwise. (2) Each named member of wb-nnm7's refusals changes the reading of every probe of its own pin: the cutting
@@ -140,7 +151,10 @@
  * G11b-C11, each 0 failed | 13 passed on the trunk census and 2 | 11 here, failing ANCHOR and READERS at RETURN, and the typing step
  * as written - and its F2, the reading-assertion class of claim (1)'s lead sentence - G11-B01, G11-B02 and G11-B03, each 0 | 13 on
  * the trunk census and 3 | 10 here, failing READ in the three pin cases that hold more than one probe, and G11b-B04, 0 | 13 there and
- * 9 | 4 here, its write into the frozen PINS throwing in each pin case. Each is cured by the pin route; none is a residual.
+ * 9 | 4 here, its write into the frozen PINS throwing in each pin case; and wb-wzin's refusal #1 U1, the alias class of claim (1)'s
+ * READ clause - its gate's G13-AL00, G13b-ALR and G13b-ALA (a reading side writing the literal into the reading altRead returned)
+ * paired with claim (2)'s members, HW-B and X-LEAD, each 0 | 13 on cut #1 and red here at READ, reading exactly as the member alone.
+ * Each is cured by the pin route; none is a residual.
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them a white space run at
  * an alt's close, a hard break opening an emphasis, a link or an image inside the alt, any other inline html markup in an alt (a
@@ -156,33 +170,37 @@
  * the loop runs. REACH holds which rows and pins holdAnchor's loops reached, not which checks run in a loop's body before its
  * records: a body edit that keeps the records is NOT CLAIMED by this census beyond claim (4)'s first failures. An edit that writes a
  * record of its own - pushes to holdAnchor's record or returns from holdAnchor rows or pins its loops did not reach (an early return
- * of reachedOf(ROWS) among them), writes into READ_LOG, or makes assertions of its own in a pin case - is NOT CLAIMED by this census;
+ * of reachedOf(ROWS) among them), writes into READ_LOG or anything READ_LOG holds (the list or one of its entries, G13-NC03's push
+ * into it among them), or makes assertions of its own in a pin case - is NOT CLAIMED by this census;
  * nor is a return from holdAnchor after its loops have recorded the last row, which skips only REACH, whose record RETURN holds as
  * well. Run without vitest's --expect.requireAssertions, a pin case's return before its assertion count is set is NOT CLAIMED by this
- * census. altRead is this census's own reader of inlineRendered(): an edit of altRead is NOT CLAIMED by this census beyond the pin
- * cases' readings and READ. Two edits of this census's code made together are NOT CLAIMED by this census (a code edit paired with a
- * literal or helper edit is claimed where a claim names the pair) - among them READ or the assertion count removed together with a
- * reading-side cut, and the freeze removed together with a run-time write. The messages of REACH, RETURN and READ are held by no case
- * and claimed by none. Gate members of wb-nnm7's refusals #3 and #4 other than the nine pinned are no pin (the seat replayed
- * GP9-L2-01, -02, -04, -05, -10 and -18 and GP23-L2-04, -05, -07, -08, -09 and -10 from the gates' archived definitions), and whether
- * this census reds any of them is NOT CLAIMED. The parent census's own header, cases and roster are NOT CLAIMED by this census.
- * ANCHOR's readings (its checks (1)-(4) above) are claimed on two kinds of input only: the tracker export as it stands, and READERS'
- * twelve plants, each the one edit with the one text written here. On any other export they are NOT CLAIMED by this census: every
- * other order, position, count, spelling, bound or occurrence of the description's list, the fold's lines, the records, their UNMET
- * sections and items, the item openings, the cites and the witness quotes - among them an item, line or quote added at another
- * position or with another text, repeated, left empty, written with other white space, removed or changed; any row's item duplicated
- * or broken in another way, moved out of its UNMET section, or its opening written elsewhere in a line; a record's BIND STEPS bound
- * moved or removed; a witness quote written without its "]" or with another destination, and a list item holding "]"; another
- * near-miss of an opening; another character after a cite or joined to it; a record repeated elsewhere in the notes; and an export
- * holding two rows for one bead. Which edit a plant carries, changed to another edit that fails the same check first (W06's and
- * W07's; W05's, W10's and W12's), is NOT CLAIMED by this census (the member replay is what shows each plant red under its paired
- * member). The W ids of check (5) are read on the export as it stands and on IDS's four copies; that read on any other export is NOT
- * CLAIMED by this census, nor which edit an IDS copy carries, changed to another edit check (5) refuses, nor an IDS copy removed in
- * every literal together. sectionOf's reading of a text that lacks its open or its close is NOT CLAIMED by this census. memberIds is
- * claimed on the five rows' items, each naming one "GP<n>" family; an item naming two families is NOT CLAIMED by this census (refusal
- * #1's F1 rider M13). The order PINS lists the pins in, changed in every literal together, is NOT CLAIMED by this census (its F1
- * rider M14: a single literal edit that reorders the rows, a row's pins or PINS reds SHAPE, ANCHOR or READERS through their other
- * literals, with SHAPE's pin-order line read order-free). No residual is claimed.
+ * census. altRead is this census's own reader of inlineRendered(), and frozenCopy and CLONE its recorder: an edit of altRead,
+ * frozenCopy or CLONE is NOT CLAIMED by this census beyond the pin cases' readings and READ, nor is a case that rebinds or patches a
+ * built-in the census or vitest reads through - an Array or Object method or a global - beyond the two rebindings claim (1) names
+ * (the global structuredClone, alone or with Object.freeze, before G13-AL00's rewrite). Two edits of this census's code made together
+ * are NOT CLAIMED by this census (a code edit paired with a literal or helper edit is claimed where a claim names the pair) - among
+ * them READ or the assertion count removed together with a reading-side cut, and the freeze removed together with a run-time write,
+ * and frozenCopy's copy or freeze or CLONE undone together with a write into the reading altRead returned or into READ_LOG.
+ * The messages of REACH, RETURN and READ are held by no case and claimed by none. Gate members of wb-nnm7's refusals #3 and #4 other
+ * than the nine pinned are no pin (the seat replayed GP9-L2-01, -02, -04, -05, -10 and -18 and GP23-L2-04, -05, -07, -08, -09 and -10
+ * from the gates' archived definitions), and whether this census reds any of them is NOT CLAIMED. The parent census's own header,
+ * cases and roster are NOT CLAIMED by this census. ANCHOR's readings (its checks (1)-(4) above) are claimed on two kinds of input
+ * only: the tracker export as it stands, and READERS' twelve plants, each the one edit with the one text written here. On any other
+ * export they are NOT CLAIMED by this census: every other order, position, count, spelling, bound or occurrence of the description's
+ * list, the fold's lines, the records, their UNMET sections and items, the item openings, the cites and the witness quotes - among
+ * them an item, line or quote added at another position or with another text, repeated, left empty, written with other white space,
+ * removed or changed; any row's item duplicated or broken in another way, moved out of its UNMET section, or its opening written
+ * elsewhere in a line; a record's BIND STEPS bound moved or removed; a witness quote written without its "]" or with another
+ * destination, and a list item holding "]"; another near-miss of an opening; another character after a cite or joined to it; a record
+ * repeated elsewhere in the notes; and an export holding two rows for one bead. Which edit a plant carries, changed to another edit
+ * that fails the same check first (W06's and W07's; W05's, W10's and W12's), is NOT CLAIMED by this census (the member replay is what
+ * shows each plant red under its paired member). The W ids of check (5) are read on the export as it stands and on IDS's four copies;
+ * that read on any other export is NOT CLAIMED by this census, nor which edit an IDS copy carries, changed to another edit check (5)
+ * refuses, nor an IDS copy removed in every literal together. sectionOf's reading of a text that lacks its open or its close is NOT
+ * CLAIMED by this census. memberIds is claimed on the five rows' items, each naming one "GP<n>" family; an item naming two families
+ * is NOT CLAIMED by this census (refusal #1's F1 rider M13). The order PINS lists the pins in, changed in every literal together, is
+ * NOT CLAIMED by this census (its F1 rider M14: a single literal edit that reorders the rows, a row's pins or PINS reds SHAPE, ANCHOR
+ * or READERS through their other literals, with SHAPE's pin-order line read order-free). No residual is claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant, IDS copy and
  * READ_LOG entry is built in memory; no src, docs or receipt is edited.
@@ -274,9 +292,13 @@ interface Plant {
   readonly plant: (rows: AnchorRows) => AnchorRows;
 }
 
-/** altRead's record, in call order: each text it was called with and the reading it returned (READ holds each pin case's part, wb-wzin). */
+/** altRead's record, in call order: a frozen copy of each text it was called with and of the reading it returned (READ holds each pin
+ * case's part, wb-wzin; frozenCopy, wb-wzin cut #2). */
 const READ_LOG: { readonly text: string; readonly reading: Reading }[] = [];
-/** inlineRendered() over the inline tokens of a text's one paragraph; altRead records each call in READ_LOG. */
+/** structuredClone as it stood when this census loaded (wb-wzin cut #2): frozenCopy copies with it, so a case that rebinds the global
+ * cannot make altRead's record share the reading altRead returns. */
+const CLONE = structuredClone;
+/** inlineRendered() over the inline tokens of a text's one paragraph; altRead records a frozen copy of each call in READ_LOG. */
 function altRead(text: string): Reading {
   const blocks = marked.lexer(text).filter(token => token.type !== "space");
   const paragraph = blocks[0];
@@ -284,7 +306,7 @@ function altRead(text: string): Reading {
   const records: string[] = [];
   const extras: string[] = [];
   const pieces = inlineRendered((paragraph as Tokens.Paragraph).tokens, records, extras);
-  READ_LOG.push({ text, reading: { pieces, records, extras } });
+  READ_LOG.push(frozenCopy({ text, reading: { pieces, records, extras } }));
   return { pieces, records, extras };
 }
 /** value frozen, with every object and array it holds at any depth (wb-wzin). */
@@ -297,6 +319,13 @@ function deepFreeze(value: unknown): void {
 function deepFrozen(value: unknown): boolean {
   if (typeof value !== "object" || value === null) return true;
   return Object.isFrozen(value) && (Object.values(value) as unknown[]).every(held => deepFrozen(held));
+}
+/** A deep copy of value taken with CLONE, frozen with every object and array it holds: what altRead records, which shares nothing with
+ * the reading altRead returns, so a write into that reading leaves READ_LOG as altRead read it (wb-wzin cut #2). */
+function frozenCopy<T>(value: T): T {
+  const copy = CLONE(value);
+  deepFreeze(copy);
+  return copy;
 }
 
 const TRIM_BACKSLASH: Probe = {
