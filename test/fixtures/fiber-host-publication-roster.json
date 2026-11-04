@@ -263,6 +263,12 @@
     }
    }
   },
+  "npmignoreControls": {
+   "spaced": "  test/  \n src/ \n",
+   "tabbedCrlf": "\ttest/\r\n\tsrc/\r\n",
+   "longer": "test/fixtures/\nsrc/workbench/\n",
+   "commented": "# test/\n# src/\n"
+  },
   "shadowedManifest": "{ \"dependencies\": { \"fiber-optics\": \"1.0.0\" }, \"dependencies\": {} }",
   "manifestTree": {
    "package.json": "{ \"name\": \"host\" }\n",
@@ -413,6 +419,30 @@
     "module": "launcher-names.ts",
     "source": "import * as cp from \"node:child_process\";\ncp.spawnSync(\"rf\", [\"graph\", \"show\"]);\ncp.execFile(\"rf\", [\"graph\", \"show\"]);\ncp.exec(\"rf\");\ncp.execSync(\"rf\");\ncp.fork(\"rf\");\n"
    },
+   "identifierLaunchers": {
+    "module": "identifier-launchers.ts",
+    "source": "import { exec, execFile, execSync, fork, spawnSync } from \"node:child_process\";\nspawnSync(\"rf\", [\"graph\", \"show\"]);\nexecFile(\"rf\", [\"graph\", \"show\"]);\nexec(\"rf\");\nexecSync(\"rf\");\nfork(\"rf\");\n"
+   },
+   "memberExecFileSync": {
+    "module": "member-exec-file-sync.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.execFileSync(\"rf\", [\"--version\"]);\n"
+   },
+   "optionalCall": {
+    "module": "optional-call.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn?.(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "optionalChain": {
+    "module": "optional-chain.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp?.spawn(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "typeArguments": {
+    "module": "type-arguments.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn<void>(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "propertyReceiver": {
+    "module": "property-receiver.ts",
+    "source": "import * as cp from \"node:child_process\";\nconst holder = { cp };\nholder.cp.spawn(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
    "otherBinary": {
     "module": "spawn-rg.ts",
     "source": "import { spawn } from \"node:child_process\";\nspawn(\"rg\", [\"-n\", \"rf\"]);\n"
@@ -442,6 +472,38 @@
    "files": {
     "outside/value.ts": "export const runtime = new FiberRuntime();\n"
    }
+  },
+  "reachProbe": {
+   "script": "export const reachProbe = [\"fiber_optics\", \"queue_value_publication\"]; spawn(\"rf\");",
+   "raw": "fiber_optics queue_value_publication rf"
+  },
+  "reachControls": {
+   "src/workbench/reach/kind.ts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.mts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.cts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.tsx": "export const kind = <b>kind</b>;\n",
+   "src/workbench/reach/kind.js": "export const kind = 1;\n",
+   "src/workbench/reach/kind.mjs": "export const kind = 1;\n",
+   "src/workbench/reach/kind.cjs": "module.exports = 1;\n",
+   "src/workbench/reach/kind.jsx": "export const kind = <b>kind</b>;\n",
+   "src/workbench/reach/notes.txt": "a non-script file\n"
+  },
+  "reachNegative": {
+   "files": {
+    "src/reach/probed.ts": "export const probed = 1;\n",
+    "src/reach/unprobed.ts": "export const unprobed = 1;\n"
+   },
+   "unprobed": "src/reach/unprobed.ts"
+  },
+  "walkControl": {
+   "files": {
+    "src/workbench/providers/reactivefiber.ts": "export const other = 1;\n",
+    "src/walked-only.ts": "export const walkedOnly = 1;\n"
+   },
+   "listed": [
+    "src/workbench/providers/reactivefiber.ts",
+    "src/listed-only.ts"
+   ]
   },
   "registrationTree": {
    "src/workbench/providers/value-publish.ts": "const DESCRIPTOR = { id: \"fiber.value.publish\", effectClass: \"write\" };\nexport function registerFiberValuePublish(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: DESCRIPTOR, invoke: async () => null });\n}\n",
@@ -780,11 +842,51 @@
       "manifestTextsAboveFloor": true,
       "packageJson": [],
       "lockPackagesAboveFloor": true,
+      "floorControls": {
+       "modules": {
+        "at": true,
+        "below": false
+       },
+       "texts": {
+        "at": true,
+        "below": false
+       },
+       "manifestTexts": {
+        "at": true,
+        "below": false
+       },
+       "lockPackages": {
+        "at": true,
+        "below": false
+       }
+      },
       "lock": [],
       "rootNpmSelected": true,
+      "rootNpmControls": {
+       "package.json": false,
+       "package-lock.json": false
+      },
       "npmIgnored": {
        "test/": true,
        "src/": false
+      },
+      "npmIgnoreControls": {
+       "spaced": {
+        "test/": true,
+        "src/": true
+       },
+       "tabbedCrlf": {
+        "test/": true,
+        "src/": true
+       },
+       "longer": {
+        "test/": false,
+        "src/": false
+       },
+       "commented": {
+        "test/": false,
+        "src/": false
+       }
       },
       "rawManifestHits": [],
       "manifestTree": {
@@ -1031,6 +1133,42 @@
         "src/providers/value-host.json:1: fibergraph"
        ]
       },
+      "reach": {
+       "hosting": [],
+       "entries": [],
+       "launches": [],
+       "onlyWalked": [],
+       "onlyTracked": []
+      },
+      "reachNegative": {
+       "hosting": [
+        "src/reach/unprobed.ts"
+       ],
+       "entries": [
+        "src/reach/unprobed.ts"
+       ],
+       "launches": [
+        "src/reach/unprobed.ts"
+       ],
+       "onlyWalked": [],
+       "onlyTracked": []
+      },
+      "walkControl": {
+       "onlyWalked": [
+        "src/walked-only.ts"
+       ],
+       "onlyTracked": [
+        "src/listed-only.ts"
+       ],
+       "providerRead": true,
+       "anchors": {
+        "rf": false,
+        "--no-commit": false,
+        "nativeReactiveFiberRender": false,
+        "fiber_signal_count": false
+       },
+       "pipelineProviderRead": false
+      },
       "controls": {
        "importFrom": [
         "import-from.ts:1: fiberoptics"
@@ -1089,6 +1227,20 @@
       "missing": {
        "native": [],
        "injected": []
+      },
+      "missingControls": {
+       "forge.gate.status": [
+        "forge.gate.status"
+       ],
+       "furnace.run.inspect": [
+        "furnace.run.inspect"
+       ],
+       "hyperunix.find": [
+        "hyperunix.find"
+       ],
+       "reactivefiber.render.preview": [
+        "reactivefiber.render.preview"
+       ]
       },
       "native": {
        "hosting": [],
@@ -1377,6 +1529,28 @@
         "launcher-names.ts: exec",
         "launcher-names.ts: execSync",
         "launcher-names.ts: fork"
+       ],
+       "identifierLaunchers": [
+        "identifier-launchers.ts: spawnSync",
+        "identifier-launchers.ts: execFile",
+        "identifier-launchers.ts: exec",
+        "identifier-launchers.ts: execSync",
+        "identifier-launchers.ts: fork"
+       ],
+       "memberExecFileSync": [
+        "member-exec-file-sync.ts: execFileSync"
+       ],
+       "optionalCall": [
+        "optional-call.ts: spawn"
+       ],
+       "optionalChain": [
+        "optional-chain.ts: spawn"
+       ],
+       "typeArguments": [
+        "type-arguments.ts: spawn"
+       ],
+       "propertyReceiver": [
+        "property-receiver.ts: spawn"
        ],
        "otherBinary": [],
        "pythonLaunch": [

@@ -20,7 +20,8 @@
  * and the crate fiber-optics-replay-observer (rust/replay_observer/Cargo.toml). The roster vendors line 17 with its SHA256.
  *
  * MEASURED AT BASE (c2695d7, landing 686; seat ws-02, run g10-work-s146, 2026-10-30; cut #1 measured 864dff9, cut #2 04123dc,
- * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, with the same results,
+ * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, and cut #6 08a61f1,
+ * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, each with the same results,
  * the manifests read being every tracked path outside test/ that the helper's manifestForm selects): no tracked file below
  * src, no tracked dependency manifest, package.json or package-lock.json spells the producer's stem, a hosted class or a
  * publication entry (git grep, 0 rows each), and every tracked file below src (117) is a script module. Pi's one Fiber surface
@@ -51,14 +52,23 @@
  * its carrier wb-pyel.10 at landing 829) and their censuses test/workbench-fiber-host-publication-readers-census.test.ts
  * (wb-pyel.7; refusal #4's U1 members are its row F, P-A3-FAM-ID, P-A3-PERM, P-A3-CONTRACT, P-A3-FAM-RF and P-A3-CARRIER, and
  * the carrier forms G17-G19 sit in its row U2) and test/workbench-fiber-host-publication-positions-census.test.ts (wb-pyel.10).
- * This cut composes that helper: its readers and vocabulary replace this file's local copies, so no A1 or A3 reader is defined
- * here, and A1 and A3 are restated over them; the rows, pins, tests, plants and controls are unchanged. The helper's
+ * Cut #5 composed that helper: its readers and vocabulary replaced this file's local copies, so no A1 or A3 reader is defined
+ * here, and A1 and A3 were restated over them; its rows, pins, tests, plants and controls were cut #4's. The helper's
  * manifestForm selects every path cut #4's fail-closed net listed (a path segment holding a pip family word, a manifest name
- * in another letter case), so that net, its candidate lists and its regular expressions are gone and those paths are read as
+ * in another letter case), so that net, its candidate lists and its regular expressions went and those paths are read as
  * raw lines; the A3 readings state each Fiber-family member's and each control's criteria and the helper's reason words, and
- * the census's own REQUIRED_DESCRIPTORS check stands beside them. Refusal #4's U1 criteria members now red this census
- * through those criteria; its carrier members, its F4 member H-A3-WORD-DEDUPE and its F3 launch forms are NOT CLAIMED here
- * (the NOT CLAIMED entries below name each, and the landed census that reds it where one does).
+ * the census's own REQUIRED_DESCRIPTORS check stands beside them. Refusal #4's U1 criteria members red this census through
+ * those criteria; its carrier members, its F4 member H-A3-WORD-DEDUPE and its F3 launch forms are NOT CLAIMED here (the NOT
+ * CLAIMED entries below name each, and the landed census that reds it where one does).
+ *
+ * CUT #6 (the further restatement orchestrator ruling R-B489 orders after refusal #5; seat ws-06, run g10-work-s204): refusal
+ * #5 (BIND 2026-11-04T01:35:01Z, gate-prep-12, run g10-gate-s203) found fourteen one-edit members of this file's own code that
+ * kept it green inside cut #5's words: A4's launcher spellings (U1) and property-access shapes (U2), A2's every-file read (U3)
+ * and three live checks without a negative control (U4: missingIds, the root npm selection, .npmignore's trim). Claims equal
+ * pins here: A4 plants an identifier and a property-access launch of every LAUNCHERS entry and four further property-access
+ * shapes of spawn, and claims exactly the call texts its controls plant; A2 reads a reach copy of src through readSrc and pins
+ * the files no scan reached; the three checks gain negative controls; the composed-readers entry names the lock path neither
+ * landed readers census claims (refusal #5's F3). Controls and their readings are added; no row, pin or test is.
  *
  * THE VOCABULARY (the helper's fold, segmentFolds, needlesIn and needle sets; their rules are the helper's, stated in its header
  * and claimed by the readers censuses). Every reading compares the segmented fold of a text with three needle sets, and this
@@ -74,26 +84,51 @@
  *    parsed keys and strings and its raw lines (manifestHits), package-lock.json's installed package paths and name fields
  *    (lockReading), and the raw lines readManifests reads over git's tracked listing (each listed path outside test/ that
  *    manifestForm selects, but the root npm pair, which have their own readers) state no STEM hit; the selection holds the root
- *    npm pair; package.json's texts and the lock's packages clear FLOORS; .npmignore names test/ and not src/ (the witness reads
- *    both lines), so a manifest below test/ declares nothing of Pi's. The witness pins those hits, never the live selection, so
- *    an unrelated manifest a later cut adds reds nothing. The controls, each reading pinned in the roster: MANIFEST_TREE read
+ *    npm pair (holdsRootNpm; its negative controls, readManifests over the tracked listing without package.json and without
+ *    package-lock.json, each read false); package.json's texts and the lock's packages clear FLOORS (clearsFloor, a count at
+ *    least its floor; its controls read every FLOORS value itself as clearing and one below it as not); the root .npmignore
+ *    names test/ and not src/ (the witness reads both entries through npmIgnores and ignoresEntry: a line equal to the entry
+ *    once trimmed; its controls, NPMIGNORE_CONTROLS planted as .npmignore files in scratch roots and read the same way, read a
+ *    line wrapped in spaces and a line led by a tab and ended by a carriage return as naming the entry, and a longer path and
+ *    a comment as not; other whitespace around a line and another ignore spelling of
+ *    a directory (/src/, src, src/**) are NOT CLAIMED by this census), so a manifest below test/ declares nothing of Pi's. The
+ *    witness pins those hits, never the live selection, so an unrelated manifest a later cut adds reds nothing. The controls,
+ *    each reading pinned in the roster: MANIFEST_TREE read
  *    through readManifests (each planted path's selecting form, the paths read as raw lines and every STEM hit, as the roster
  *    pins them; the tree's comment lists its plants); MANIFEST_CONTROLS' hit counts (one planted dependency per dependency list
  *    and a nested value read, two near misses quiet); SHADOWED_MANIFEST read parsed (no hit) and with its raw text (one hit);
  *    and LOCK_CONTROLS' hit counts (a lock path and a lock name read, a quiet path).
- *    A2 THE SRC FILES: every tracked file below src (git ls-files, held both ways to a filesystem walk of src that records and
- *    never follows a symlink) is read: a script module through its TypeScript AST (the helper's isScript, parse and
- *    judgedText: identifiers, private names, string, template and regular-expression literal texts, so every import, export,
- *    dynamic import, require and spawn argument, and JSX text; never a comment), any other file (a Python sidecar, a JSON
- *    host manifest) as raw lines; none holds a STEM or HOSTED_CLASSES fold (needle hits are pinned, never the list of files,
- *    so an unrelated file a later cut adds below src reds nothing); anchors in the provider show the reader reads the live
- *    tree; the walk and git's listing both list a non-script file (the roster); planted modules (one per reading position;
- *    template head, middle, tail and no-substitution parts and an export-from among them) read, near misses (rf's layout among
- *    them) quiet; a scratch src tree (a launcher, a Python sidecar, a JSON host manifest, rf's layout as JSON, and a symlink to
- *    a directory outside it holding a needle, which the walk records and never follows) read through the same pipeline.
+ *    A2 THE SRC FILES, read by readSrc: git's listing of src is held both ways to a filesystem walk of src that records and
+ *    never follows a symlink, clears FLOORS (modules, judged texts, through clearsFloor and A1's floor controls) and holds the
+ *    provider (readsProvider), whose SOURCE_ANCHORS texts are read. WALK_CONTROL, read the same way, is their negative control:
+ *    its walk-only and listing-only files are named, its provider path without the anchors reads every anchor unread, and the
+ *    pipeline tree, which holds no provider, reads as not holding it;
+ *    each file is read as the helper's isScript decides, a script module through its TypeScript AST (sourceTexts: every node's
+ *    judgedText, never a comment), any other file as raw lines. REACH: every file git lists below src reaches the three scans
+ *    (hosting here, entries in B2, launches in A4). A scratch copy of src holding each listed file's own text led by
+ *    REACH_PROBE's line for its kind (each line holds the stem, a publication entry and an rf launch), with REACH_CONTROLS
+ *    probed the same way beside them (a module of each SCRIPT_KINDS extension and a .txt file), is read through readSrc, and
+ *    every copied file gives a hit in each scan (the roster pins the three empty lists of files without one, and the copy's
+ *    walk held to its listing); its negative control, REACH_NEGATIVE (a probed and an unprobed module read the same way),
+ *    names the unprobed module in each list. So a skip of a listed file by its path or directory, by its place in the walk,
+ *    or by its kind (each SCRIPT_KINDS extension and .txt in the copy, .py and .json in the scratch src tree below) reds A2;
+ *    a skip keyed on another kind no control holds (.md, for one), on anything a copied file does not share with its listed
+ *    original (the root a reading is handed, the probe) or on a file's own text is NOT CLAIMED by this census. The live
+ *    reading's hosting hits (a STEM or HOSTED_CLASSES fold) are none (hits are pinned, never the list of files, so an
+ *    unrelated file a later cut adds below src reds nothing); the walk and git's
+ *    listing both list a non-script file (the roster); the planted modules read in the positions they hold (SOURCE_CONTROLS:
+ *    a named import, a dynamic import, a require call, a spawn argument, a constructed class, a type, a template, a regular
+ *    expression, a private name, JSX text, a class in a path string, template head, middle, tail and no-substitution parts,
+ *    an export-from) and their near misses (rf's layout among them) stay quiet; a scratch src tree (a launcher, a Python
+ *    sidecar, a JSON host manifest, rf's layout as JSON, and a symlink to a directory outside it holding a needle, which the
+ *    walk records and never follows) is read through the same pipeline. A needle at a reading position no planted module
+ *    holds (a type-only import or an arrow function's body, for two) is NOT CLAIMED by this census (the positions census
+ *    claims the helper's judgedText to its own bounds).
  *    A3 THE REGISTERED CAPABILITIES (the title's artifact, "(none exists)"), read with the helper's registryReading,
  *    descriptorReading and registrationSites. The native registration and the four injected-client registrations each hold
- *    every REQUIRED_DESCRIPTORS id (the census's own check). registryReading of each leg states no needle hit of any set and
+ *    every REQUIRED_DESCRIPTORS id (the census's own check, missingIds; its negative controls, four injected legs each
+ *    withholding one id's registration, read as missing exactly that id). registryReading of each leg states no needle hit
+ *    of any set and
  *    one Fiber-family member, the read preview, as the roster pins it: criteria id, permission, contract and rf-contract,
  *    effectClass read, supportedModes [invoke], carrier true, no publishing reason and the leg's own description, so a leg read
  *    from the other registration reds. descriptorReading of each DESCRIPTOR_CONTROLS control states the criteria, publishing
@@ -112,22 +147,35 @@
  *    of a name its module declares or imports, a namespace member), whose declaration is read where it is declared, and a
  *    registration performed by code outside src (a namespace member or an imported function called with the registry, an
  *    alias bound outside src).
- *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster (in a script module, a call whose
- *    callee is an identifier, or a property access, named by a LAUNCHERS entry and whose first argument is the string literal
- *    rf, each launcher planted; in any other file below src, a line naming rf as a word, a conservative launch-candidate
- *    reading: such a file reds A4 for a look even when it only mentions rf) is the provider alone, and through a stand-in rf
- *    (the ONLY PATH entry, logging each argv) both input arms of the native preview spawn exactly one render each, every argv
- *    `context render ... --no-commit --no-input --json`. Not read (Q7 pins it quiet): a launch whose first argument is not
- *    the string literal rf (a command string, a constant holding rf). A launch through an element-access callee
- *    (cp["spawn"]("rf", ...)) or an aliased launcher import (import { spawn as run }, then run("rf", ...)), refusal #4's F3
- *    members P-A4-ELEMENT and P-A4-ALIAS, is NOT CLAIMED by this census.
+ *    A4 THE LAUNCH (the title's "today's --no-commit rf previews"): src's rf launch roster, as rfLaunches reads it, is the
+ *    provider alone, and through a stand-in rf (the ONLY PATH entry, logging each argv) both input arms of the native preview
+ *    spawn exactly one render each, every argv `context render ... --no-commit --no-input --json`. rfLaunches' rule (what the
+ *    code does, claimed only as far as the next sentence bounds it): in a script module, a call whose callee is an identifier
+ *    or a property access named by a LAUNCHERS entry and whose first argument is a string-like literal rf; in any other file
+ *    below src, a line naming rf as a word (a conservative launch-candidate reading: such a file reds A4 for a look even when
+ *    it only mentions rf). This census claims that reading for exactly the call texts LAUNCH_CONTROLS plants, each control's
+ *    reading pinned in the roster, and for the live provider's own call (spawn("rf", argv, options), the live reading):
+ *    every LAUNCHERS entry called by its name imported from node:child_process (spawnRf, execFileSyncRf, identifierLaunchers)
+ *    and as a member of the namespace import cp (cp.<launcher>: memberSpawnRf, launcherNames, memberExecFileSync), each a
+ *    plain call (no ?., no type arguments) whose first argument is the double-quoted literal rf and whose other arguments are
+ *    the control's (none, or an argv array literal); four further shapes of cp.spawn, one call each (optionalCall
+ *    cp.spawn?.("rf", ...), optionalChain cp?.spawn("rf", ...), typeArguments cp.spawn<void>("rf", ...), and
+ *    propertyReceiver holder.cp.spawn("rf", ...) through const holder = { cp }); a Python and a shell launch read as raw
+ *    lines; and the near misses quiet (another binary given rf as an argument, rf-like words on a raw line). Not read (Q7 pins
+ *    it quiet): a launch whose first argument is not a literal rf (a command string, a constant holding rf). A launch written
+ *    in any form no control plants is NOT CLAIMED by this census, whether or not rfLaunches reads it: among them an identifier
+ *    callee with ?. or type arguments, those shapes or another receiver for a launcher other than spawn, a launcher imported
+ *    from another module, a single-quoted or template rf, another argument list, an element-access callee
+ *    (cp["spawn"]("rf", ...)) and an aliased launcher import (import { spawn as run }, then run("rf", ...)), refusal #4's F3
+ *    members P-A4-ELEMENT and P-A4-ALIAS.
  *  B, "a falsifier proves publication happens only through an explicit host flush call", read where Pi could publish today.
  *    B1 THE COMMITTED FORMS: through the stand-in rf each commit marker a committing render states (transaction_id,
  *    result.render_id, result.ephemeral false, result.commit_seq, result.work.storage_write_count 1; the bead notes name three
  *    of them) is refused by the native preview on both arms as transport, never returned, while the noncommitted fixture is
  *    returned: zero publications reach Pi through its one Fiber surface.
- *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src (the A2 reading) names a PUBLICATION_ENTRIES fold, so no host
- *    publication and no flush exist for the rule to judge; planted calls read (snake, camel, string key, destructured, and the
+ *    B2 NO PUBLICATION OR FLUSH ENTRY: no tracked file below src (the A2 reading, each listed file reaching the entry scan by
+ *    A2's REACH) names a PUBLICATION_ENTRIES fold, so no host publication and no flush exist for the rule to judge; planted
+ *    calls read (snake, camel, string key, destructured, and the
  *    scratch tree's Python sidecar), near misses (flush, publish, render, requestRender) quiet.
  *  C, "a query change alone produces zero publication or inference side effects".
  *    C1 NO REACTIVE ENTRY: the registry's members (its prototype chain, an instance's own keys, so a class field, and the static
@@ -165,7 +213,12 @@
  * NOT CLAIMED (the composed readers; scope sentences, no residual semantics, no follow-up bead): what the helper's readers read
  * in an input no plant, control or live reading of this census holds is NOT CLAIMED by this census; the landed readers
  * censuses (test/workbench-fiber-host-publication-readers-census.test.ts and
- * test/workbench-fiber-host-publication-positions-census.test.ts) claim and pin those readers. Measured at this cut:
+ * test/workbench-fiber-host-publication-positions-census.test.ts) claim and pin those readers only to the bounds their own
+ * headers state, never past their own NOT CLAIMED entries. For one, both claim lockReading only at the lock paths they plant
+ * (node_modules/fiber-optics and node_modules/alias, with their fillers and quiet paths), so a lock
+ * package holding the stem in another segment of its path (node_modules/fiber-optics/node_modules/left-pad, which lockReading
+ * reads here and refusal #5's F3 member GP12-A1-LOCK-LASTSEG, reading a path by its last segment only, does not) is claimed
+ * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5 and again at cut #6:
  * - refusal #4's carrier members H-A3-CARRIER-WEAK (isCarrier reads every contract ending with a space and --no-commit as the
  *   carrier) and H-A3-CARRIER (every contract the carrier) keep this census 0 failed | 17 passed: it reads isCarrier on the
  *   two live legs only. A registered preview whose contract meets the same four criteria and ends with a space and
@@ -337,6 +390,13 @@ const MANIFEST_CONTROLS: Readonly<Record<string, Json>> = {
 };
 /** A raw manifest whose first dependencies key JSON.parse shadows with the second: only the raw-line reading sees it. */
 const SHADOWED_MANIFEST = '{ "dependencies": { "fiber-optics": "1.0.0" }, "dependencies": {} }';
+/** A1's .npmignore controls: ignore-file texts ignoresEntry reads for test/ and src/ (whitespace around a line, a tab and a CRLF ending read as naming the entry; a longer path and a comment as not). */
+const NPMIGNORE_CONTROLS: Readonly<Record<string, string>> = {
+  spaced: "  test/  \n src/ \n",
+  tabbedCrlf: "\ttest/\r\n\tsrc/\r\n",
+  longer: "test/fixtures/\nsrc/workbench/\n",
+  commented: "# test/\n# src/\n",
+};
 const LOCK_CONTROLS: Readonly<Record<string, Json>> = {
   lockPath: { packages: { "node_modules/fiber-optics": { version: "0.1.0" } } },
   lockName: { packages: { "node_modules/alias": { name: "FiberOpticsSDK", version: "0.1.0" } } },
@@ -441,6 +501,18 @@ const LAUNCH_CONTROLS: Readonly<Record<string, PlantedModule>> = {
     module: "launcher-names.ts",
     source: 'import * as cp from "node:child_process";\ncp.spawnSync("rf", ["graph", "show"]);\ncp.execFile("rf", ["graph", "show"]);\ncp.exec("rf");\ncp.execSync("rf");\ncp.fork("rf");\n',
   },
+  identifierLaunchers: {
+    module: "identifier-launchers.ts",
+    source: 'import { exec, execFile, execSync, fork, spawnSync } from "node:child_process";\nspawnSync("rf", ["graph", "show"]);\nexecFile("rf", ["graph", "show"]);\nexec("rf");\nexecSync("rf");\nfork("rf");\n',
+  },
+  memberExecFileSync: { module: "member-exec-file-sync.ts", source: 'import * as cp from "node:child_process";\ncp.execFileSync("rf", ["--version"]);\n' },
+  optionalCall: { module: "optional-call.ts", source: 'import * as cp from "node:child_process";\ncp.spawn?.("rf", ["context", "render", "--json"]);\n' },
+  optionalChain: { module: "optional-chain.ts", source: 'import * as cp from "node:child_process";\ncp?.spawn("rf", ["context", "render", "--json"]);\n' },
+  typeArguments: { module: "type-arguments.ts", source: 'import * as cp from "node:child_process";\ncp.spawn<void>("rf", ["context", "render", "--json"]);\n' },
+  propertyReceiver: {
+    module: "property-receiver.ts",
+    source: 'import * as cp from "node:child_process";\nconst holder = { cp };\nholder.cp.spawn("rf", ["context", "render", "--json"]);\n',
+  },
   otherBinary: { module: "spawn-rg.ts", source: 'import { spawn } from "node:child_process";\nspawn("rg", ["-n", "rf"]);\n' },
   pythonLaunch: { module: "render-sidecar.py", source: 'import subprocess\nsubprocess.run(["rf", "context", "render", "--json"], check=True)\n' },
   shellLaunch: { module: "render.sh", source: "#!/bin/sh\nexec rf context render --json\n" },
@@ -454,6 +526,41 @@ const PIPELINE_TREE: Readonly<Record<string, string>> = {
   "src/providers/rf-layout.json": '{ "graphs": ".reactive-fiber/graphs" }\n',
 };
 /** A2's symlink control: a link below the pipeline tree's src to a directory outside it that holds a needle; the walk records the link and never follows it. */
+/**
+ * A2's reach probe: the first line of each probed file of the reach copy (a script module gets the statement, any other file
+ * the raw line), ahead of the file's own text so nothing in that text can swallow it; each holds the stem, a publication entry
+ * and an rf launch, so a probed file a scan gives no hit never reached it.
+ */
+const REACH_PROBE = {
+  script: 'export const reachProbe = ["fiber_optics", "queue_value_publication"]; spawn("rf");',
+  raw: "fiber_optics queue_value_publication rf",
+} as const;
+/** The reach copy's controls, probed and copied beside the listed files: one module per SCRIPT_KINDS extension and a non-script file. */
+const REACH_CONTROLS: Readonly<Record<string, string>> = {
+  "src/workbench/reach/kind.ts": "export const kind = 1;\n",
+  "src/workbench/reach/kind.mts": "export const kind = 1;\n",
+  "src/workbench/reach/kind.cts": "export const kind = 1;\n",
+  "src/workbench/reach/kind.tsx": "export const kind = <b>kind</b>;\n",
+  "src/workbench/reach/kind.js": "export const kind = 1;\n",
+  "src/workbench/reach/kind.mjs": "export const kind = 1;\n",
+  "src/workbench/reach/kind.cjs": "module.exports = 1;\n",
+  "src/workbench/reach/kind.jsx": "export const kind = <b>kind</b>;\n",
+  "src/workbench/reach/notes.txt": "a non-script file\n",
+};
+/**
+ * A2's walk control: a src tree holding the provider's path without its anchors and a file its listing leaves out, read with a
+ * listing that names a file the tree lacks: each walk-only and listing-only file is named, the provider is walked and every
+ * anchor reads unread.
+ */
+const WALK_CONTROL = {
+  files: { [PROVIDER_MODULE]: "export const other = 1;\n", "src/walked-only.ts": "export const walkedOnly = 1;\n" },
+  listed: [PROVIDER_MODULE, "src/listed-only.ts"],
+} as const;
+/** The reach reading's negative control: a probed and an unprobed module read the same way; the reading names the unprobed one for every scan. */
+const REACH_NEGATIVE = {
+  files: { "src/reach/probed.ts": "export const probed = 1;\n", "src/reach/unprobed.ts": "export const unprobed = 1;\n" },
+  unprobed: "src/reach/unprobed.ts",
+} as const;
 const PIPELINE_LINK = { path: "src/linked", target: "../outside", files: { "outside/value.ts": "export const runtime = new FiberRuntime();\n" } } as const;
 /**
  * A3's static reading's planted src tree: a new exported injected-client capability whose descriptor lives in a constant; each
@@ -751,12 +858,24 @@ function rosterWitness(pin: string): JsonValue {
 // isScript, parse, judgedText, registrationTexts and registrationSites; the census reads A2's positions, A4's launches, the
 // walk and git's listing itself) ----
 
-/** Whether the root .npmignore names an entry, exactly, on a line of its own. */
-function npmIgnores(entry: string): boolean {
-  return readFileSync(join(REPO, ".npmignore"), "utf8")
+/** Whether an ignore file's text names an entry, exactly, on a line of its own (each line trimmed of surrounding whitespace). */
+function ignoresEntry(text: string, entry: string): boolean {
+  return text
     .split("\n")
     .map(line => line.trim())
     .includes(entry);
+}
+/** Whether a root's .npmignore names an entry (ignoresEntry over the file's text). */
+function npmIgnores(root: string, entry: string): boolean {
+  return ignoresEntry(readFileSync(join(root, ".npmignore"), "utf8"), entry);
+}
+/** Whether a measured count clears its floor (at least the floor). */
+function clearsFloor(count: number, floor: number): boolean {
+  return count >= floor;
+}
+/** Whether a manifest selection holds the root npm pair. */
+function holdsRootNpm(selected: readonly string[]): boolean {
+  return ROOT_NPM.every(path => selected.includes(path));
 }
 
 /** Every judged text of a script module, with its line. */
@@ -895,6 +1014,35 @@ function pipelineReading(): SrcReading {
   return pipelineCache;
 }
 
+/**
+ * A2's reach of a tree: each file's own text led by REACH_PROBE's line for its kind (the unprobed ones as written), planted
+ * in scratch and read through readSrc, the reader the live tree is read by; for each scan, the files it gave no hit, and the
+ * walk held to the listing.
+ */
+function reachOf(files: Readonly<Record<string, string>>, unprobed: readonly string[]): { [scan: string]: string[] } {
+  const root = scratchDir("fiber-host-publication-reach-");
+  plantTree(root, Object.fromEntries(Object.entries(files).map(([module, text]) => [module, unprobed.includes(module) ? text : `${isScript(module) ? REACH_PROBE.script : REACH_PROBE.raw}\n${text}`])));
+  const listed = Object.keys(files).sort();
+  const read = readSrc(root, listed);
+  const unreached = (hits: readonly string[]): string[] => listed.filter(module => !hits.some(hit => hit.startsWith(`${module}:`)));
+  return { hosting: unreached(read.hosting), entries: unreached(read.entries), launches: unreached(read.launches), onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked };
+}
+/** Whether a src reading walked the provider module. */
+function readsProvider(reading: SrcReading): boolean {
+  return reading.modules.includes(PROVIDER_MODULE);
+}
+/** A2's walk control read: WALK_CONTROL planted in scratch and read through readSrc with its listing; the pipeline tree's provider reading beside it. */
+function walkControlReading(): JsonValue {
+  const root = scratchDir("fiber-host-publication-walk-");
+  plantTree(root, WALK_CONTROL.files);
+  const read = readSrc(root, WALK_CONTROL.listed);
+  return json({ onlyWalked: read.onlyWalked, onlyTracked: read.onlyTracked, providerRead: readsProvider(read), anchors: read.anchors, pipelineProviderRead: readsProvider(pipelineReading()) });
+}
+/** Each file git lists below src with its own text: what A2's reach copies. */
+function listedTexts(): { [module: string]: string } {
+  return Object.fromEntries(trackedFiles("src").map(module => [module, readFileSync(join(REPO, module), "utf8")]));
+}
+
 /** The new-module control uses the same static reader as the live tree. */
 function scratchRegistrationTree(): string {
   const root = scratchDir("fiber-host-publication-registration-");
@@ -929,13 +1077,13 @@ function nativeRegistry(): Promise<CapabilityRegistry> {
   });
   return native;
 }
-/** The registry the four injected-client registrations fill. */
-function injectedRegistry(): CapabilityRegistry {
+/** The registry the four injected-client registrations fill; given a REQUIRED_DESCRIPTORS id, the leg that withholds that id's registration (missingIds' negative control). */
+function injectedRegistry(withheld?: string): CapabilityRegistry {
   const registry = new CapabilityRegistry();
-  registerForgeGateStatus(registry, FORGE_CLIENT, "0.1.0");
-  registerHyperUnixFind(registry, HX_READER, REPO);
-  registerFurnaceRunInspect(registry, FURNACE_CLIENT, REPO);
-  registerReactiveFiberRender(registry, RF_INVOKE, REPO);
+  if (withheld !== "forge.gate.status") registerForgeGateStatus(registry, FORGE_CLIENT, "0.1.0");
+  if (withheld !== "hyperunix.find") registerHyperUnixFind(registry, HX_READER, REPO);
+  if (withheld !== "furnace.run.inspect") registerFurnaceRunInspect(registry, FURNACE_CLIENT, REPO);
+  if (withheld !== PREVIEW_ID) registerReactiveFiberRender(registry, RF_INVOKE, REPO);
   return registry;
 }
 /** The REQUIRED_DESCRIPTORS ids a registration leg does not hold (the census's own check; the helper's registryReading reads the rest). */
@@ -1243,17 +1391,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const raw = readFileSync(join(REPO, "package.json"), "utf8");
     const manifest: unknown = JSON.parse(raw);
     const lock = lockReading(JSON.parse(readFileSync(join(REPO, "package-lock.json"), "utf8")));
-    const manifests = readManifests(REPO, trackedFiles());
+    const listing = trackedFiles();
+    const manifests = readManifests(REPO, listing);
     const tree = scratchDir("fiber-host-publication-manifests-");
     plantTree(tree, MANIFEST_TREE);
     return json({
       surface: "manifests",
-      manifestTextsAboveFloor: textsOf(manifest, "package.json").length >= FLOORS.manifestTexts,
+      manifestTextsAboveFloor: clearsFloor(textsOf(manifest, "package.json").length, FLOORS.manifestTexts),
       packageJson: manifestHits(manifest, raw, "package.json"),
-      lockPackagesAboveFloor: lock.packages >= FLOORS.lockPackages,
+      lockPackagesAboveFloor: clearsFloor(lock.packages, FLOORS.lockPackages),
+      floorControls: Object.fromEntries(Object.entries(FLOORS).map(([name, floor]) => [name, { at: clearsFloor(floor, floor), below: clearsFloor(floor - 1, floor) }])),
       lock: lock.hits,
-      rootNpmSelected: ROOT_NPM.every(path => manifests.selected.includes(path)),
-      npmIgnored: Object.fromEntries([TEST_ROOT, "src/"].map(entry => [entry, npmIgnores(entry)])),
+      rootNpmSelected: holdsRootNpm(manifests.selected),
+      rootNpmControls: Object.fromEntries(ROOT_NPM.map(path => [path, holdsRootNpm(readManifests(REPO, listing.filter(listed => listed !== path)).selected)])),
+      npmIgnored: Object.fromEntries([TEST_ROOT, "src/"].map(entry => [entry, npmIgnores(REPO, entry)])),
+      npmIgnoreControls: Object.fromEntries(
+        Object.entries(NPMIGNORE_CONTROLS).map(([name, ignore]) => {
+          const root = scratchDir("fiber-host-publication-npmignore-");
+          plantTree(root, { ".npmignore": ignore });
+          return [name, Object.fromEntries([TEST_ROOT, "src/"].map(entry => [entry, npmIgnores(root, entry)]))];
+        }),
+      ),
       rawManifestHits: manifests.hits,
       manifestTree: readManifests(tree, Object.keys(MANIFEST_TREE).sort()),
       manifestControls: Object.fromEntries(Object.entries(MANIFEST_CONTROLS).map(([name, manifest]) => [name, manifestHits(manifest, undefined, name).length])),
@@ -1266,16 +1424,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const tree = pipelineReading();
     return json({
       surface: "src",
-      modulesAboveFloor: src.modules.length >= FLOORS.modules,
-      textsAboveFloor: src.texts >= FLOORS.texts,
+      modulesAboveFloor: clearsFloor(src.modules.length, FLOORS.modules),
+      textsAboveFloor: clearsFloor(src.texts, FLOORS.texts),
       symlinks: src.symlinks,
       onlyWalked: src.onlyWalked,
       onlyTracked: src.onlyTracked,
-      providerRead: src.modules.includes(PROVIDER_MODULE),
+      providerRead: readsProvider(src),
       anchors: src.anchors,
       hosting: src.hosting,
       listsNonScript: { walk: walkFiles(REPO, "test/fixtures").files.includes(ROSTER_FILE), git: trackedFiles("test/fixtures").includes(ROSTER_FILE) },
       pipeline: { modules: tree.modules, nonScript: tree.nonScript, symlinks: tree.symlinks, onlyWalked: tree.onlyWalked, onlyTracked: tree.onlyTracked, hosting: tree.hosting },
+      reach: reachOf({ ...listedTexts(), ...REACH_CONTROLS }, []),
+      reachNegative: reachOf(REACH_NEGATIVE.files, [REACH_NEGATIVE.unprobed]),
+      walkControl: walkControlReading(),
       controls: plantedHits(SOURCE_CONTROLS, HOSTING_NEEDLES),
     });
   },
@@ -1286,6 +1447,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       surface: "registered capabilities",
       artifact: ARTIFACT,
       missing: { native: missingIds(nativeLeg), injected: missingIds(injectedLeg) },
+      missingControls: Object.fromEntries(REQUIRED_DESCRIPTORS.map(id => [id, missingIds(injectedRegistry(id))])),
       native: registryReading(nativeLeg),
       injected: registryReading(injectedLeg),
       staticSites: registrationSites(REPO, trackedFiles("src")),
@@ -1327,7 +1489,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const src = srcReading();
     return json({
       surface: "src",
-      walkHeldToGit: src.onlyWalked.length === 0 && src.onlyTracked.length === 0 && src.modules.length >= FLOORS.modules,
+      walkHeldToGit: src.onlyWalked.length === 0 && src.onlyTracked.length === 0 && clearsFloor(src.modules.length, FLOORS.modules),
       entries: src.entries,
       pipeline: pipelineReading().entries,
       controls: plantedHits(ENTRY_CONTROLS, ENTRY_NEEDLES),
@@ -1524,6 +1686,7 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         recordLines: [RECORD_FINDINGS, RECORD_RESIDUALS],
         manifestControls: MANIFEST_CONTROLS,
         lockControls: LOCK_CONTROLS,
+        npmignoreControls: NPMIGNORE_CONTROLS,
         shadowedManifest: SHADOWED_MANIFEST,
         manifestTree: MANIFEST_TREE,
         sourceControls: SOURCE_CONTROLS,
@@ -1531,6 +1694,10 @@ describe("wb-pyel.1 Fiber host-publication census (SDK-EVIDENCE-DIRECTED-COMPUTA
         launchControls: LAUNCH_CONTROLS,
         pipelineTree: PIPELINE_TREE,
         pipelineLink: PIPELINE_LINK,
+        reachProbe: REACH_PROBE,
+        reachControls: REACH_CONTROLS,
+        reachNegative: REACH_NEGATIVE,
+        walkControl: WALK_CONTROL,
         registrationTree: REGISTRATION_TREE,
         descriptorControls: DESCRIPTOR_CONTROLS,
         committedForms: Object.keys(COMMITTED_FORMS),
