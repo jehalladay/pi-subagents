@@ -27,7 +27,9 @@
  * carrier of its "Authorization design" section, and line 88 of docs/workbench/09-observation-and-provenance.md the
  * duplicate-replay control, the one carrier of its "Acceptance/negative controls" section, and each of the two sections renders
  * at HEAD exactly as at the pin, docs/12's once its one later line is set aside (LATER below: clause (d)'s bullet, which wb-rdlh.4
- * added after the section's eighth bullet, re-measured by that cut); the docs/09 envelope (proposal) declares subjectBasis and definitionDigest, and docs/09 names no
+ * added after the section's eighth bullet, re-measured by that cut; this census sets it aside by a reading of the page's whole
+ * text and claims no placement of it, which the cac census D1, the wb-gs2.3 census AC1 and the section-source census BASELINE
+ * hold); the docs/09 envelope (proposal) declares subjectBasis and definitionDigest, and docs/09 names no
  * sourceVersion: the third name of the filing's parenthetical is src's, declared on its own line by src/workbench/observation.ts
  * three times (ObservationEvent, NativeSnapshot, ObservedNode); the export row of wb-pjj reads closed. The export row of wb-973.8
  * reads open at the pin and closed at HEAD (the bead closed after the pin). At HEAD only (the gp fixtures postdate the
@@ -164,12 +166,23 @@
  *    either section that changes those blocks reds this census until it is re-measured (a whitespace edit that leaves each
  *    block's kind, rendered text and collapsed source as they were changes none of them: a re-wrapped or re-spaced line, or a
  *    blank line between list items, as the gate's GD12 to GD14). LATER (the one re-measurement so far, wb-rdlh.4's): S1b's anchor
- *    names one line HEAD carries that the pin does not, clause (d)'s bullet right after the section's eighth bullet; every HEAD
- *    reading of S1b below is taken on the HEAD page with that line set aside where it follows the eighth bullet exactly once
- *    (setAside), and the anchor's later reading is "holds" when it follows it exactly once and "missing" when not (the HEAD page is
- *    then read as it is, so its section reads unheld); S2b names no later line ("none"). Three controls read at the pin (the anchor's line moved one
- *    down, the anchor's carrier text edited, and the pin's text with the carrier's source line doubled) each read their own
- *    reason, and seven in-memory plants over the HEAD text (DOCS_PLANTS: the gate's D1 to D5 as its refusal record describes
+ *    names one later pair, after (the source line of the pin section's eighth and last bullet) and line (clause (d)'s bullet
+ *    line), which the real HEAD page carries one right after the other; the pin's page holds no such pair (its later reading is
+ *    "missing": laterPin pins that and after's place, the eighth of the pin section's eight list items), and S2b names none (its
+ *    later and pin readings are "none" and it has no later plant). setAside and laterReading read that pair in a page's whole
+ *    text, never in a section: the later reading is "holds" when the text holds after's text, a line feed, line's text and a line
+ *    feed exactly once, and "missing" when it holds them none or more than once; setAside drops line's text and its line feed
+ *    from that one occurrence when the reading holds and keeps the page as it is when not, and every HEAD reading of S1b below is
+ *    taken on the real HEAD page so set aside. S1b pins the real page's later reading as "holds", so a page that reads "missing"
+ *    reds S1b. Where on a page the pair sits is NOT CLAIMED by this census, so neither is clause (d)'s placement in the section
+ *    (the cac census D1, the wb-gs2.3 census AC1 and the section-source census BASELINE hold it). Six in-memory LATER_PLANTS over
+ *    the real HEAD page pin those readings and what setAside makes of each planted page: the pair moved out of the section into a
+ *    code fence at the page's end (L-FENCE, the gate's L-G11), as list lines under the page's last section (L-LAST, the gate's
+ *    L-G12) or as list lines just before the section's heading (L-BEFORE) each read "holds" with line dropped there, while the
+ *    pair kept with a fenced copy at the page's end (L-DOUBLED), the page without clause (d)'s line (L-PARKED) and the page with
+ *    every line feed written CRLF (L-CRLF) each read "missing" with the page kept. Three controls read at the pin (the anchor's
+ *    line moved one down, the anchor's carrier text edited, and the pin's text with the carrier's source line doubled) each read
+ *    their own reason, and seven in-memory plants over the HEAD text (DOCS_PLANTS: the gate's D1 to D5 as its refusal record describes
  *    them, D6 a second "Authorization design" section at the end of the page, D7 a level-1 heading re-homing the controls
  *    section) each read the reason pinned for it. A plant edits the HEAD page at that page's own sites, never at the pin's line:
  *    D1 to D4 at the section's own carrier source (ownSource: the whole lines of the page its one marker-carrying prose item
@@ -210,8 +223,8 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, the checks, every mutant with its
  * failed checks, the journal, the oracle's expectations, the fixtures, the vocabulary, the fields, the reasons, the holders, the
- * docs anchors and plants, the default-gate plants (each config plant's include list and spacing, each script plant's first
- * refused argument) and each residual family's member count as literals. OUTSIDE ANCHORS (their
+ * docs anchors, their plants and later plants, the default-gate plants (each config plant's include list and spacing, each
+ * script plant's first refused argument) and each residual family's member count as literals. OUTSIDE ANCHORS (their
  * own registered case): the bead's own row in the tracker export (.beads/issues.jsonl): the title opens with the requirement id
  * and carries row T's label before its artifact parenthetical and names exactly the vocabulary's first member; the first notes
  * line opening "Citation: " holds the Authority sentence, whose three clauses after its dash are exactly the labels of rows S1
@@ -228,7 +241,8 @@
  * witness compare, and each compare held).
  * NOT CLAIMED: qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); real-file
  * CRLF rewrites of docs/09 or docs/12 (other readers and the pin-side line reads can red them; the in-memory re-spacing
- * control above tests its plants and section read on CRLF, not the whole file's other readings); the seam's
+ * control above tests its plants and section read on CRLF, and L-CRLF the later reading, not the whole file's other readings);
+ * where on a page the later pair sits, and so clause (d)'s placement in docs/12's section (LATER); the seam's
  * actual shape (the decision host above is this census's reading); the Furnace design text the filing cites (decisions:11,
  * README.md:25 and README.md:20 at Furnace 0f791db71b9d are outside this repository; only the slice-4 quote's four members are
  * held, to the fixtures); how many rows an admitted decision gets and whether a refusal keeps a row (R4's one row per decision,
@@ -255,7 +269,9 @@
  * the blank run, a blank-run edit that drops one blank line only or reads only an empty line as blank, a level-3 variant
  * left as the HEAD page, a re-spacing control that breaks at another whitespace run of the carrier's source (the first run
  * when none ends after its middle, one character of the run, or a trailing run), a carrier variant left as the HEAD page and
- * a lazy variant split at runs of spaces and tabs only each read 0 failed | 29 passed); a pin merged into a neighbouring
+ * a lazy variant split at runs of spaces and tabs only each read 0 failed | 29 passed); a later plant swapped for another
+ * edit that reads the same pinned reading, or removed from LATER_PLANTS, its frozen literal and S1b's pinned readings together
+ * (the later plants are pinned by id, anchor and reading, and no source outside this file names them); a pin merged into a neighbouring
  * pin of its row in every literal (its quote joined to the neighbour's, its case dropped, its row's count lowered in the frozen
  * literal: the gate's GH1, A5b into A5a, and GH2, S1b into S1a, each read 0 failed | 27 passed on cut #1; on cut #2 GH1 reads
  * 0 failed | 28 passed, and the plain GH2 reds the frozen-shape case alone, its docs anchor left without its pin), since the
@@ -944,7 +960,7 @@ interface DocsAnchor {
   readonly line: number;
   readonly marker: string;
   readonly carrier: string;
-  /** A line HEAD carries right after a line of the pin's section (after), each a whole source line: set aside at HEAD (setAside). */
+  /** The later pair (LATER): after, the source line of a bullet of the pin's section, and line, which the real HEAD page carries right after it; setAside and laterReading read the pair in a page's whole text, never in a section. */
   readonly later?: { readonly after: string; readonly line: string };
 }
 const DOCS_ANCHORS: readonly DocsAnchor[] = [
@@ -1060,13 +1076,61 @@ const DOCS_PLANTS: readonly DocsPlant[] = [
     },
   },
 ];
+/** Where a later plant edits its anchor's real HEAD page: the later pair (after's text, a line feed, line's text and a line feed) and the line that renders a page's heading. */
+interface LaterSites {
+  readonly after: string;
+  readonly line: string;
+  readonly pair: string;
+  readonly heading: (text: string) => string;
+}
+/**
+ * An in-memory later plant (LATER) over the real HEAD page of an anchor that names a later pair: the planted page and, for a
+ * plant that keeps the pair whole somewhere, the same page built with line's text and its line feed left out there (dropped),
+ * which setAside must make of it; for a plant with no dropped page, setAside must keep the planted page as it is.
+ */
+interface LaterPlant {
+  readonly id: string;
+  readonly anchor: DocsAnchor["pin"];
+  readonly apply: (page: string, at: LaterSites) => { readonly page: string; readonly dropped?: string };
+}
+const FENCE = "```";
+/** The real page with clause (d)'s line left out of its one pair (the parked page); a NeedleMiss unless the page holds the pair exactly once. */
+const parkedPage = (page: string, at: LaterSites): string => once(page, at.pair, `${at.after}\n`);
+const LATER_PLANTS: readonly LaterPlant[] = [
+  {
+    id: "L-FENCE", anchor: "S1b",
+    apply: (page, at) => {
+      const parked = parkedPage(page, at);
+      return { page: `${parked}\n${FENCE}\n${at.pair}${FENCE}\n`, dropped: `${parked}\n${FENCE}\n${at.after}\n${FENCE}\n` };
+    },
+  },
+  {
+    id: "L-LAST", anchor: "S1b",
+    apply: (page, at) => {
+      const parked = parkedPage(page, at);
+      return { page: `${parked}\n${at.pair}`, dropped: `${parked}\n${at.after}\n` };
+    },
+  },
+  {
+    id: "L-BEFORE", anchor: "S1b",
+    apply: (page, at) => {
+      const parked = parkedPage(page, at);
+      const heading = at.heading(parked);
+      return { page: onceLine(parked, heading, `${at.pair}\n${heading}`), dropped: onceLine(parked, heading, `${at.after}\n\n${heading}`) };
+    },
+  },
+  { id: "L-DOUBLED", anchor: "S1b", apply: (page, at) => ({ page: `${once(page, at.pair, at.pair)}\n${FENCE}\n${at.pair}${FENCE}\n` }) },
+  { id: "L-PARKED", anchor: "S1b", apply: (page, at) => ({ page: parkedPage(page, at) }) },
+  { id: "L-CRLF", anchor: "S1b", apply: (page, at) => ({ page: once(page, at.pair, at.pair).split("\n").join("\r\n") }) },
+];
 /** The prose items of a rendered section: each paragraph and each item of each list (a code block or an HTML block carries none). */
 const proseOf = (blocks: readonly RenderedBlock[]): readonly { readonly text: string; readonly markdown: string }[] =>
   blocks.flatMap(block => (block.kind === "paragraph" ? [{ text: block.text, markdown: block.markdown }] : block.kind === "list" ? block.items : []));
 /**
- * A docs anchor's HEAD page with its later line set aside: the line HEAD carries right after a line of the pin's section (S1b:
- * clause (d)'s bullet, wb-rdlh.4's, after the eighth bullet), removed where it follows that line exactly once; a page where it does
- * not is read as it is (laterReading reads it missing).
+ * A docs anchor's page with its later line set aside, read in the page's whole text, never in a section (LATER): when the text
+ * holds after's text, a line feed, line's text and a line feed exactly once (laterReading reads holds), line's text and its line
+ * feed are dropped from that occurrence; otherwise the page is kept as it is (laterReading reads missing). Where the pair sits is
+ * NOT CLAIMED.
  */
 function setAside(text: string, anchor: DocsAnchor): string {
   const later = anchor.later;
@@ -1074,7 +1138,7 @@ function setAside(text: string, anchor: DocsAnchor): string {
   const added = `${later.after}\n${later.line}\n`;
   return text.split(added).length === 2 ? text.replace(added, () => `${later.after}\n`) : text;
 }
-/** A docs anchor's later reading of a HEAD page: "holds" when its later line follows its line exactly once, "missing" when not, "none" for an anchor that names none. */
+/** A docs anchor's later reading of a page's whole text: "holds" when the text holds after's text, a line feed, line's text and a line feed exactly once, "missing" when it holds them none or more than once, "none" for an anchor that names no later pair. */
 function laterReading(text: string, anchor: DocsAnchor): string {
   const later = anchor.later;
   if (later === undefined) return "none";
@@ -1082,6 +1146,18 @@ function laterReading(text: string, anchor: DocsAnchor): string {
 }
 /** A paragraph's or a list item's source line, its list marker dropped. */
 const sourceOf = (line: string): string => line.trim().replace(/^(?:\d+[.)]|[-*+])\s+/, "");
+/**
+ * Where a docs anchor's later pair stands at the pin (LATER): the 1-based places, among the pin section's list items, of the
+ * items whose source is after's, of how many items, and the pin page's own later reading; "none" for an anchor that names no
+ * later pair.
+ */
+function laterPinOf(pin: string, anchor: DocsAnchor): string {
+  const later = anchor.later;
+  if (later === undefined) return "none";
+  const items = docsSection(pin, anchor.heading, 2, [anchor.title]).blocks.flatMap(block => (block.kind === "list" ? block.items : []));
+  const places = items.flatMap((item, index) => (item.markdown === sourceOf(later.after) ? [index + 1] : []));
+  return `${places.join("+")}/${items.length}:${laterReading(pin, anchor)}`;
+}
 /** Why docsSection refused to bind a section: its heading repeated in the rendered view, re-homed under another parent, or else. */
 const unbound = (why: string): string => (/ occurs \d+ times in the rendered view/.test(why) ? "unbound:repeated" : /sits under the parent heading path/.test(why) ? "unbound:parent" : "unbound");
 /**
@@ -1177,6 +1253,17 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
     return Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === anchor.pin).map(plant => [plant.id, needled(() => anchorReading(plant.apply(text, at), anchor, pin))]));
   };
   const read = (page: string) => ({ head: anchorReading(page, anchor, pin), plants: plantsOver(page) });
+  /** Each of the anchor's later plants over a page: its later reading and what setAside makes of it (kept, dropped or other), or needle-miss. */
+  const laterPlantsOver = (page: string): Record<string, string> => {
+    const later = anchor.later;
+    if (later === undefined) return {};
+    const at: LaterSites = { after: later.after, line: later.line, pair: `${later.after}\n${later.line}\n`, heading: text => headingLine(text, anchor) };
+    return Object.fromEntries(LATER_PLANTS.filter(plant => plant.anchor === anchor.pin).map(plant => [plant.id, needled(() => {
+      const planted = plant.apply(page, at);
+      const aside = setAside(planted.page, anchor);
+      return `${laterReading(planted.page, anchor)}:${aside === planted.page ? "kept" : aside === planted.dropped ? "dropped" : "other"}`;
+    })]));
+  };
   /** The whole HEAD reading of a page: the page itself, its plants, and the HEAD controls built from it at its own sites. */
   const headReading = (page: string) => ({
     ...read(page),
@@ -1214,6 +1301,8 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
   return {
     pin: anchorReading(pin, anchor),
     later: laterReading(headText(anchor.path), anchor),
+    laterPlants: laterPlantsOver(headText(anchor.path)),
+    laterPin: laterPinOf(pin, anchor),
     controls: {
       line: anchorReading(pin, { ...anchor, line: anchor.line + 1 }), carrier: anchorReading(pin, { ...anchor, carrier: `${anchor.carrier} (edited)` }),
       twice: anchorReading(once(pin, `${source}\n`, `${source}\n\n${source}\n`), anchor),
@@ -1659,6 +1748,8 @@ const PINS: Readonly<Record<string, () => void>> = {
       pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
     }, {
       line: true, pin: "holds", later: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
+      laterPlants: { "L-FENCE": "holds:dropped", "L-LAST": "holds:dropped", "L-BEFORE": "holds:dropped", "L-DOUBLED": "missing:kept", "L-PARKED": "missing:kept", "L-CRLF": "missing:kept" },
+      laterPin: "8/8:missing",
       variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading }, pjj: { pin: "closed", head: "closed" },
     });
   },
@@ -1684,7 +1775,7 @@ const PINS: Readonly<Record<string, () => void>> = {
       spacing: { afterMarker: { head: "holds", plants, markerKept: true }, noBlank: { head: "holds", plants }, betweenWords: { head: "holds", plants } },
     };
     witness("S2b", { line: lineOf(pinText(anchor.path), anchor.line), ...anchorWitness(anchor) }, {
-      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds", later: "none",
+      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds", later: "none", laterPlants: {}, laterPin: "none",
       controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
       variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading },
     });
@@ -1791,7 +1882,7 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
 };
 
-const FROZEN_TITLE = "rule 16: the rows, the checks, the mutants, the journal, the expectations, the fixtures, the vocabulary, the holders, the docs anchors and plants, the default-gate plants and the residual families are frozen at their measured shape";
+const FROZEN_TITLE = "rule 16: the rows, the checks, the mutants, the journal, the expectations, the fixtures, the vocabulary, the holders, the docs anchors, their plants and later plants, the default-gate plants and the residual families are frozen at their measured shape";
 const ANCHORS_TITLE = "the outside anchors: the bead's own row binds the trigger, the clauses, the anchors and their docs lines, the fields, the reasons, the fixtures and each label's coverage by its pin quotes; a later note binds nothing";
 const LAST_TITLE = "registered tests: every pin case and fixed case, in order and in run mode, ran before this one; every pin reached its witness compare and each compare held";
 
@@ -1862,6 +1953,9 @@ describe(SUITE, () => {
       true, true,
     ]);
     expect(DOCS_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the docs plants").toEqual(["D1:S1b", "D2:S1b", "D3:S2b", "D4:S2b", "D5:S2b", "D6:S1b", "D7:S2b"]);
+    expect(LATER_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the later plants").toEqual([
+      "L-FENCE:S1b", "L-LAST:S1b", "L-BEFORE:S1b", "L-DOUBLED:S1b", "L-PARKED:S1b", "L-CRLF:S1b",
+    ]);
     expect({
       configs: CONFIG_PLANTS.map(([file, text]) => `${file}:${includesOf(text).join("+")}:${/\binclude:\[/.test(text) ? "unspaced" : "spaced"}`),
       scripts: SCRIPT_PLANTS.map(script => script.trim().split(/\s+/).slice(2).find(flag => !SCRIPT_FLAG.test(flag)) ?? "-"),
