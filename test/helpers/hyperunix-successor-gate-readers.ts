@@ -47,11 +47,17 @@
  * Vocabulary below claims each definition only in the module texts the census writes for it and names refusal #4's fifteen
  * forms NOT CLAIMED either way; the callee words name exactly the planted callee forms; the loader name require piece drops its
  * word anywhere.
+ * wb-cl20 (R-B438's exit child; its acceptance: the 11 realized twins red the census with LEG 1 kept) owns that coverage and
+ * pins it, changing no reader code: the census plants every form refusal #4 records surviving, and every boundary form the cut
+ * #5 gate (gate-prep-23, PASS) recorded on these readers' ROUTES loader name and WRITES reflection words, and checks refusal
+ * #4's paired twin pages in as TWIN rows; the Vocabulary below quotes each new plant, marked (wb-cl20), and those forms leave
+ * the NOT CLAIMED sentences.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
  * Vocabulary (refusal #2 on wb-tz2.21; narrowed by cut #4 after refusal #3, R-B404; narrowed again by cut #5, the R-B438
- * fail-closed core, after refusal #4): each definition below holds only for the module texts this census writes for it, the
+ * fail-closed core, after refusal #4; grown by wb-cl20 by the plants marked (wb-cl20)): each definition below holds only for
+ * the module texts this census writes for it, the
  * plants it quotes and the catalog entries it names, and an identifier standing in the same syntax in any other text (another
  * container, initializer, operand, annotation, modifier, wrapper or nesting) is NOT CLAIMED either way by this census.
  * A member name is the name of a property access as the census's member reads write it (base.name and base?.name, and the
@@ -61,18 +67,25 @@
  * lgW = (m: Record<string, unknown>): unknown => m.name and in export const lgW = (m?: Record<string, unknown>): unknown =>
  * m?.name (NONVALUE_PLACES' member names), and each member name the MEMBER_SPELLINGS and MEMBER_PLACES reads plant; the right
  * of the qualified name in the two type aliases above; the key of the property assignment in export const lgW = { name: 1 } and in the object literal { name: 1 } that
- * initializes const { name } = { name: 1 } (a DECLARATIONS statement); the name of the method in export const lgW = { name():
- * number { return 1; } } and in export class LgC { name(): void {} }; the name of the get accessor in export const lgW = { get
- * name(): number { return 1; } }, in export class LgC { get name(): number { return 1; } } and in export interface LgI { get
- * name(): number; }; the name of the set accessor in export const lgW = { set name(lgV: number) { void lgV; } } and in export
- * class LgC { set name(lgV: number) { void lgV; } }; the name of the class field in export class LgC { name = 1; }; the name of
- * the property signature in export interface LgI { name: number; } and of the method signature in export interface LgI {
- * name(): void; }; the name of the enum member in export enum LgE { name = 1, }; the property name of the binding element (the
- * key before its colon) in the arrow function parameter's object binding pattern of export const lgW = ({ name: lgV }:
- * Record<string, unknown>): unknown => lgV; the whole name of the type reference in export type LgT = name and the whole
- * operand of the type query in export type LgT = typeof name (never the left of typeof Proxy.revocable); the label of the
- * labeled for statement and of its break in name: for (;;) break name, and of its continue in name: for (;;) continue name; the
- * name of the JSX attribute in export const lgW = <lgX name={1} /> (a .tsx module); the names of the import specifiers in
+ * initializes const { name } = { name: 1 } (a DECLARATIONS statement), and (wb-cl20) in export const lgW = String({ name: 1 })
+ * and in the nested export const lgW = { lgO: { name: 1 } }; the name of the method in export const lgW = { name(): number {
+ * return 1; } } and in export class LgC { name(): void {} }, and (wb-cl20) in export const LgC = class { name(): void {} }; the
+ * name of the get accessor in export const lgW = { get name(): number { return 1; } }, in export class LgC { get name(): number
+ * { return 1; } } and in export interface LgI { get name(): number; }, and (wb-cl20) in export type LgT = { get name(): number
+ * }; the name of the set accessor in export const lgW = { set name(lgV: number) { void lgV; } } and in export class LgC { set
+ * name(lgV: number) { void lgV; } }, and (wb-cl20) in export interface LgI { set name(lgV: number); } and in export type LgT = {
+ * set name(lgV: number) }; the name of the class field in export class LgC { name = 1; }, and (wb-cl20) in export const LgC =
+ * class { name = 1; }; the name of the property signature in export interface LgI { name: number; }, and (wb-cl20) in export
+ * type LgT = { name: number }, and of the method signature in export interface LgI { name(): void; }, and (wb-cl20) in export
+ * type LgT = { name(): void }; the name of the enum member in export enum LgE { name = 1, }, and (wb-cl20) in export enum LgE {
+ * name, }; the property name of the binding element (the key before its colon) in the arrow function parameter's object binding
+ * pattern of export const lgW = ({ name: lgV }: Record<string, unknown>): unknown => lgV, and (wb-cl20) in the variable
+ * declaration's object binding pattern of const { name: lgV } = lgO; the whole name of the type reference in export type LgT =
+ * name, and (wb-cl20) in the parameter's annotation of export const lgW = (lgP: name): unknown => lgP, and the whole operand of
+ * the type query in export type LgT = typeof name (never the left of typeof Proxy.revocable); the label of the labeled for
+ * statement and of its break in name: for (;;) break name, and of its continue in name: for (;;) continue name, and (wb-cl20) of
+ * the labeled block and of its break in name: { break name; }; the name of the JSX attribute in export const lgW = <lgX name={1}
+ * /> and (wb-cl20) in export const lgW = <lgX name /> (a .tsx module); the names of the import specifiers in
  * import { name } and import { name as lgV }, the name of the import clause in import name and of the namespace import in
  * import * as name, each from "./lg-x.js"; the names of the export specifiers in export { name } from "./lg-x.js" and export {
  * name as lgV } from "./lg-x.js"; and the exported name after as in const lgV = 1; export { lgV as name }.
@@ -85,13 +98,18 @@
  * DECLARATIONS statement declares but an import name (an import clause, an import specifier or a namespace import), the
  * shorthand binding element in const { name } = { name: 1 } and the name in import name = require("./lg-x.js") among them, and
  * its top-level read export const lgW = name after the statement; and the parameter and both reads of the shadowing plant
- * export const lgA = (name: number): number => name; export const lgB = name.
+ * export const lgA = (name: number): number => name; export const lgB = name (wb-cl20: written for require too).
  * The callee of a call is the call's own expression, in these plants only: require("./lg-x.js") and require?.("./lg-x.js") read
  * no require route, and require() and require?.() are a dynamic load (FREE_PLACES' callee and optional callee); require is no
  * callee of a call, and so a loader name read, behind exactly one pair of parentheses in (require)("./lg-x.js"), behind an as
  * assertion to a function type in (require as (lgS: string) => unknown)("./lg-x.js"), behind a non-null assertion in
  * require!("./lg-x.js"), as the expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js`
- * and require`lg`.
+ * and require`lg`; and (wb-cl20) behind each of the census's CALLEE_WRAPPERS (5 wrappers) - a pair of parentheses, an as
+ * assertion, a satisfies expression and a <T> assertion, each to the function type (lgS: string) => unknown, and a non-null
+ * assertion - and behind each ordered pair of them (25 pairs, the second written around the first; ((require)) and (require!)
+ * among them), each in a call of ("./lg-x.js") and in a call of no argument; behind an as assertion to the function type () =>
+ * unknown in (require as () => unknown)("./lg-x.js") and (require as () => unknown)(); as the expression of new require with
+ * no argument list in new require; and as the tag behind one pair of parentheses in (require)`./lg-x.js`.
  * A free Reflect or Proxy is one read as a value in those plants that no declaration of the suite binds where it is read, the
  * declarations being the DECLARATIONS statements, the shadowing parameter and the unaliased local export in export { Proxy },
  * which binds it (the checker resolves that name to the specifier itself); the local name in export { Proxy as lgV } is a free
@@ -101,20 +119,25 @@
  * shorthand and a string key among them; an object assignment pattern on the left of a destructuring =, nested object, array
  * and spread patterns, a default's own pattern, a for-of and a for-in head that declares nothing, a shorthand key, a string key
  * and a shorthand key holding a default.
- * NOT CLAIMED either way by this census, by name, the forms refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) records surviving,
- * whose coverage wb-cl20 owns (R-B438): require behind a <T> assertion, behind a satisfies expression and behind two pairs of
- * parentheses as a callee (GP9C4-REQ-CALLEE-ANGLE, GP9C4-REQ-CALLEE-SATISFIES and GP9C4-REQ-CALLEE-DOUBLE-PAREN; twins
- * TW9C4-A1, TW9C4-A2 and TW9C4-A3), and behind any two wrappers; the expression of new require with no argument list
- * (GP9C4-REQ-NEW-NOARGS); a tag behind parentheses, (require)`./lg-x.js` (GP9C4-REQ-TAG-PAREN); the property name of a binding
- * element in any other pattern, the variable declarations const { require: lgV } = lgO and const { Proxy: lgV } = lgO among
- * them (GP9C4-VR-BINDING-KEY-PARAM-ONLY; twins TW9C4-B1 and TW9C4-B1P); the key of a property assignment in an object literal
- * that initializes no variable, String({ require: 1 }) among them (GP9C4-VR-PROPKEY-DECL-INIT-ONLY; TW9C4-B2); a method
- * signature and a get accessor of a type literal (GP9C4-VR-METHODSIG-INTERFACE-ONLY and GP9C4-VR-GET-NOT-TYPELITERAL; TW9C4-B3
- * and TW9C4-B4); a set accessor of an interface or of a type literal (GP9C4-VR-SET-NOT-TYPEDECL; TW9C4-B5); a class field and a
- * method of a class expression (GP9C4-VR-FIELD-CLASSDECL-ONLY and GP9C4-VR-METHOD-NOT-CLASSEXPR; TW9C4-B6 and TW9C4-B7); a type
- * reference that is no type alias's type, a parameter's annotation among them (GP9C4-VR-TYPEREF-ALIAS-ONLY); the label of a
- * labeled statement that is no loop and the label of its break, require: { break require; } (GP9C4-VR-LABEL-LOOP-ONLY;
- * TW9C4-B9); and the name of a JSX attribute with no initializer, <lgX require /> (GP9C4-VR-JSX-ATTR-VALUED-ONLY).
+ * PINNED by wb-cl20 (R-B438), by name, the forms refusal #4 on wb-tz2.21 (gate-prep-9, O:1924) records surviving, each a plant
+ * the Vocabulary above quotes (marked wb-cl20) and each of the gate's paired twin pages a TWIN row: require behind a <T>
+ * assertion, behind a satisfies expression and behind two pairs of parentheses as a callee (GP9C4-REQ-CALLEE-ANGLE,
+ * GP9C4-REQ-CALLEE-SATISFIES and GP9C4-REQ-CALLEE-DOUBLE-PAREN; twins TW9C4-A1, TW9C4-A2 and TW9C4-A3), each CALLEE_WRAPPERS
+ * wrapper and each ordered pair of them; the expression of new require with no argument list (GP9C4-REQ-NEW-NOARGS); the tag
+ * behind one pair of parentheses, (require)`./lg-x.js` (GP9C4-REQ-TAG-PAREN); the property name of a binding element of the
+ * variable declaration's pattern, const { require: lgV } = lgO and const { Proxy: lgV } = lgO (GP9C4-VR-BINDING-KEY-PARAM-ONLY;
+ * twins TW9C4-B1 and TW9C4-B1P); the key of a property assignment in an object literal that initializes no variable,
+ * String({ require: 1 }) (GP9C4-VR-PROPKEY-DECL-INIT-ONLY; TW9C4-B2); a method signature and a get accessor of a type literal
+ * (GP9C4-VR-METHODSIG-INTERFACE-ONLY and GP9C4-VR-GET-NOT-TYPELITERAL; TW9C4-B3 and TW9C4-B4); a set accessor of an interface
+ * and of a type literal (GP9C4-VR-SET-NOT-TYPEDECL; TW9C4-B5); a field and a method of a class expression
+ * (GP9C4-VR-FIELD-CLASSDECL-ONLY and GP9C4-VR-METHOD-NOT-CLASSEXPR; TW9C4-B6 and TW9C4-B7); a parameter's annotation naming a
+ * type (GP9C4-VR-TYPEREF-ALIAS-ONLY); the label of a labeled block and of its break, require: { break require; }
+ * (GP9C4-VR-LABEL-LOOP-ONLY; TW9C4-B9); and the name of a JSX attribute with no initializer, <lgX require />
+ * (GP9C4-VR-JSX-ATTR-VALUED-ONLY). The boundary members the cut #5 gate (gate-prep-23) recorded on these words are plants too:
+ * (require!)("./lg-x.js"), one of the pairs (GP23-B-REQ-NONNULL-PAREN); (require as () => unknown)("./lg-x.js")
+ * (GP23-B-REQ-AS-NULLARY); { lgO: { require: 1 } } (GP23-B-VR-PROPKEY-NESTED); an enum member with no initializer
+ * (GP23-B-VR-ENUM-NOINIT); and the shadowing plant for require (GP23-B-VAL-PARAM-NONE). The seat adds one sibling plant, the
+ * property signature of a type literal.
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -202,7 +225,8 @@
  * words over the planted loads, holders and depths the list below names; the RUN statements, ROUTES loader name, WRITES
  * reflection and WRITES name words over the catalogs and plants the list below names; and the gates' paired real-tree twins it
  * checks in as TWIN rows (DW-L08, DW-L12, DW-L15 and DW-L17; TW-S1 to TW-S13; TW14-S1 to TW14-S7 and TW14-S9; TW12-T1, TW12-T2,
- * TW12-T3, TW12-T4, TW12-T5, TW12-T5b and TW12-T6; TW9-P1, TW9-P1b, TW9-R1, TW9-R1b, TW9-Q1, TW9-Q1b, TW9-G1, TW9-E1 and TW9-S1).
+ * TW12-T3, TW12-T4, TW12-T5, TW12-T5b and TW12-T6; TW9-P1, TW9-P1b, TW9-R1, TW9-R1b, TW9-Q1, TW9-Q1b, TW9-G1, TW9-E1 and TW9-S1;
+ * TW9C4-A1, TW9C4-A2, TW9C4-A3, TW9C4-B1, TW9C4-B1P, TW9C4-B2, TW9C4-B3, TW9C4-B4, TW9C4-B5, TW9C4-B6, TW9C4-B7 and TW9C4-B9).
  * Every mode the list does not name is NOT CLAIMED by this census. The
  * ROUTES global object and dynamic code crossings the census reads:
  *   a free name: each of the five names, eval and Function in each of the census's FREE_PLACES (48 places), undeclared;
@@ -251,8 +275,8 @@
  *   and beside a namespace import; defineConfig aliased, aliased to itself and imported by a string name. NOT CLAIMED: a name
  *   outside CONFIG_NAMES; a statement of those forms at another place.
  *   ROUTES loader name, the reads the census holds: createRequire and getBuiltinModule as an identifier in each FREE_PLACES place,
- *   in each of the census's NONVALUE_PLACES (28 places), in each of the census's TYPE_PLACES (6 places), in each of the census's
- *   ACCESS_BASES (3 places), in each of the census's EXPORT_PLACES (2 places), in each of the census's JSX_PLACES (2 places) and
+ *   in each of the census's NONVALUE_PLACES (41 places), in each of the census's TYPE_PLACES (6 places), in each of the census's
+ *   ACCESS_BASES (3 places), in each of the census's EXPORT_PLACES (2 places), in each of the census's JSX_PLACES (3 places) and
  *   under each DECLARATIONS kind with a top-level read; as a member name of a parameter in each MEMBER_SPELLINGS spelling that
  *   holds no element key and in each MEMBER_PLACES place; as a whole string literal and template in each MEMBER_PLACES place and
  *   as the key of each MEMBER_SPELLINGS element-key spelling; binding, dlopen and _linkedBinding as a member name of a parameter
@@ -260,21 +284,24 @@
  *   spelling and each MEMBER_PLACES place, and read in no FREE_PLACES, TYPE_PLACES, ACCESS_BASES, EXPORT_PLACES or JSX_PLACES
  *   place, in no NONVALUE_PLACES place but a member name, and as no whole string literal or template in a MEMBER_PLACES place;
  *   require as a value in each FREE_PLACES place (as a callee and an optional callee its call is a dynamic load), in each
- *   TYPE_PLACES, ACCESS_BASES and EXPORT_PLACES place and as an identifier in a JSX attribute's value, in no NONVALUE_PLACES place
- *   and not as a JSX attribute's name, under each DECLARATIONS kind with a top-level read, and as the callee of a call plain and
- *   optional (read nowhere), behind exactly one pair of parentheses, behind an as assertion to a function type and behind a
- *   non-null assertion, as the expression of new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js`
- *   and require`lg` (each read; the plants the Vocabulary quotes); a JSX module is read as a local module only. NOT CLAIMED: a
- *   loader name, a loader member name or require read in a place, a spelling or a declaration outside those catalogs, or in a
- *   crossing of two of them the list does not name; require behind a <T> assertion, a satisfies expression, two pairs of
- *   parentheses or any two wrappers as a callee, as the expression of new require with no argument list and as a tag behind
- *   parentheses (refusal #4 on wb-tz2.21; wb-cl20).
+ *   TYPE_PLACES, ACCESS_BASES and EXPORT_PLACES place, as an identifier in a JSX attribute's value and (wb-cl20) as the parameter
+ *   and both reads of the shadowing plant, in no NONVALUE_PLACES place and not as a JSX attribute's name, under each DECLARATIONS
+ *   kind with a top-level read, and as the callee of a call plain and optional (read nowhere), behind exactly one pair of
+ *   parentheses, behind an as assertion to a function type and behind a non-null assertion, as the expression of
+ *   new require("./lg-x.js") and new require() and as the tag of require`./lg-x.js` and require`lg`, and (wb-cl20) behind each
+ *   CALLEE_WRAPPERS wrapper and each ordered pair of them in a call of ("./lg-x.js") and in a call of no argument, behind an as
+ *   assertion to () => unknown in both calls, as the expression of new require with no argument list and as the tag behind one
+ *   pair of parentheses (each read; the plants the Vocabulary quotes); a JSX module is read as a local module only. NOT CLAIMED:
+ *   a loader name, a loader member name or require read in a place, a spelling or a declaration outside those catalogs, or in a
+ *   crossing of two of them the list does not name; require as a callee behind three or more wrappers, behind a wrapper outside
+ *   CALLEE_WRAPPERS, behind an assertion to a type no plant above writes, or in a call of another argument list; require behind
+ *   any wrapper as the expression of a new expression, and as a tag behind any wrapper but one pair of parentheses.
  *   WRITES reflection, a free Reflect and a free Proxy: each in each FREE_PLACES place and as the operand of typeof, under each
  *   DECLARATIONS kind and a shadowing parameter with a top-level read, in each TYPE_PLACES and ACCESS_BASES place, through the
  *   aliased EXPORT_PLACES place (the unaliased one is a declaration binding it, so it reads nothing) and as an identifier in a JSX
- *   attribute's value, and read in no NONVALUE_PLACES place and not as a JSX attribute's name; a Reflect or Proxy key of a
- *   binding pattern other than NONVALUE_PLACES' arrow parameter pattern (const { Proxy: lgV } = lgO; refusal #4 U3, twin
- *   TW9C4-B1P) is NOT CLAIMED (wb-cl20).
+ *   attribute's value, and read in no NONVALUE_PLACES place and not as a JSX attribute's name; a Reflect or Proxy key of
+ *   NONVALUE_PLACES' arrow parameter pattern and (wb-cl20) of its variable declaration's pattern (const { Proxy: lgV } = lgO;
+ *   refusal #4 U3, twin TW9C4-B1P) reads nothing; a Reflect or Proxy key of any other binding pattern is NOT CLAIMED.
  *   WRITES names, the reads the census holds (each name of the mutator member, reflection and spy or mock member lists, and
  *   spyOn): as a member name of its form's base in each MEMBER_SPELLINGS spelling that holds no element key and in each
  *   MEMBER_PLACES place; as a string element key in each element-key spelling and each MEMBER_PLACES place; as a destructured key in
