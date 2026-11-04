@@ -225,8 +225,11 @@ export const ENDS_IN_TERMINATOR = /[.!?;]$/;
  * written when it is white space alone, and a trivia run that holds a comment (a line, block or JSDoc comment) read whole - its
  * white space and line ends with it - as one space, or as nothing right after a token whose text ends in a terminator. Its census
  * (test/workbench-edc-demand-channel-reader-census.test.ts) claims this reading for exactly the comment kinds, run shapes and
- * tokens its COMMENTS clause names, each pinned (T-RUNS, T-KINDS and row U among them), and so that no comment of those runs, and no
- * line boundary in one, cuts the reading; it claims no other run. */
+ * tokens its COMMENTS clause names, each held to the pins the clause names (T-RUNS, T-KINDS and row U among them), and so that no
+ * comment of those runs, and no line boundary in one, cuts the reading; it claims no other run. Those pins do not plant every
+ * sub-form of the clause's words: the census header names the 24 gate one-edit mutants of wb-yopv refusal #1's F1 that survive on
+ * sub-forms of its COMMENTS, CUT, C-LINE-OF and AS-WRITTEN words no plant holds (the COMMENTS ones among them), and at those
+ * sub-forms the words stay wider than the pins. */
 export function bare(node: ts.Node, source: ts.SourceFile): string {
   const written = node.getText(source);
   if (!written.includes("//") && !written.includes("/*")) return written;
