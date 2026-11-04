@@ -754,6 +754,27 @@
         "composed": 0,
         "launches": 1
        },
+       "nestedFunctionPushReturned": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushReturned": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushReturned": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,

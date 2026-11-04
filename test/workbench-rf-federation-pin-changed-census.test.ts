@@ -52,13 +52,17 @@
  *    patternParamDefault and paramAlias) and in the body of an arrow function a variable declaration binds, a class's method
  *    and an exported function declaration, each holding nestedPatternScoped's nest with a three-element default as
  *    arrowNestScoped, methodNestScoped and exportedNestScoped spell it (arrowPushInside, methodPushInside and
- *    exportedPushInside; wb-8cgw F2), and, with that nest, in four more places, each exactly as its control writes it: inside
- *    the launch's argv argument in the concise body of an arrow function a variable declaration binds
- *    (arrowConcisePushInside), as the left operand of the parenthesized comma expression that is the whole concise body of
- *    such an arrow function, the launch its right operand (arrowConciseCommaPushInside; wb-sp4w), in the block body of a
- *    nested arrow function an exported function declaration declares and then calls (nestedFunctionPushInside; wb-2l05 F3)
- *    and in the block body of an anonymous function expression such a declaration binds to a const and then calls
- *    (nestedFunctionExpressionPushInside; wb-sp4w),
+ *    exportedPushInside; wb-8cgw F2), and, with that nest, in four more places, each exactly as one of its controls writes
+ *    it: inside the launch's argv argument in the concise body of an arrow function a variable declaration binds
+ *    (arrowConcisePushInside); as the left operand of the parenthesized comma expression that is the whole concise body of
+ *    such an arrow function, its right operand the launch (arrowConciseCommaPushInside; wb-sp4w) or, the variable statement
+ *    exported, the argv itself, the arrow launching nothing (arrowConciseCommaPushReturned; wb-sp4w cut #2); in the block
+ *    body of a nested arrow function an exported function declaration declares and then calls, the declaration then
+ *    returning the launch (nestedFunctionPushInside; wb-2l05 F3) or the argv itself, launching nothing
+ *    (nestedFunctionPushReturned; wb-sp4w cut #2); and in the block body of an anonymous function expression such a
+ *    declaration binds to a const and then calls, the declaration then returning the launch
+ *    (nestedFunctionExpressionPushInside; wb-sp4w) or the argv itself, launching nothing
+ *    (nestedFunctionExpressionPushReturned; wb-sp4w cut #2),
  *    and a later function's push stays out for each parameter a quiet control spells, the later function exactly where that
  *    control spells it, in a host holding exactly the members that control writes (a later top-level function in a file of
  *    the parameter's statement and that function, or with a third statement between them for threeStatementScoped; or for
@@ -202,16 +206,20 @@
  * parameter): a loop that stops short of such a parameter is not pinned, and the two such loops measured, G2-THREELEVEL (a
  * climb of at most three pattern levels) and G2-MIXTHIRD (a third level climbed only in the declaration's own pattern kind),
  * stay green; nor the read of a push inside any parameter's function but those four non-exported function declarations,
- * the three wb-8cgw F2 hosts, the two wb-2l05 F3 places and the two wb-sp4w places, each only as its control spells it (a
- * push statement in the body, after its F3 nest parameter, of an arrow function a variable declaration binds, a class's
- * method or an exported function declaration; a push inside the launch's argv argument in the concise body of such an
- * arrow function; a push as the left operand of the parenthesized comma expression that is such an arrow function's whole
- * concise body, the launch its right operand; a push statement in a nested arrow function such an exported function
- * declaration declares and then calls; a push statement in an anonymous function expression such a declaration binds to a
- * const and then calls; a push in another parameter's default, in any other concise body (a push as a comma's right
- * operand, beside a right operand other than the launch, or in a comma nested in another among them) or in any other
- * nested function - a named function expression, one bound other than to a const and called after it, a nested function
- * declaration, a nested function in another host or one never called among them - is not pinned); nor a later
+ * the three wb-8cgw F2 hosts, the two wb-2l05 F3 places and the two wb-sp4w places, each only as one of its controls
+ * spells it (a push statement in the body, after its F3 nest parameter, of an arrow function a variable declaration
+ * binds, a class's method or an exported function declaration; a push inside the launch's argv argument in the concise
+ * body of such an arrow function; a push as the left operand of the parenthesized comma expression that is such an arrow
+ * function's whole concise body, its right operand the launch or, the variable statement exported, the argv itself; a
+ * push statement in a nested arrow function such an exported function declaration declares and then calls, or in an
+ * anonymous function expression such a declaration binds to a const and then calls, the declaration then returning the
+ * launch or the argv itself; a push in another parameter's default, in any other concise body (a push as a comma's right
+ * operand, beside a right operand other than the launch or the argv itself, beside the argv itself in a variable
+ * statement not exported, or in a comma nested in another among them) or in any other nested function - a named
+ * function expression, one bound other than to a const and called after it, a nested function declaration, a nested
+ * function in another host, one never called, or one whose host's body is anything but exactly its declaration, its
+ * call and then a return of the launch or of the argv itself (a host returning nothing or anything else, or holding a
+ * further statement, among them) - is not pinned); nor a later
  * function's push kept out of a quiet control's parameter anywhere but where that control spells the later function, or in
  * a host holding members other than those its control writes (a later argument of the same call, a later property of the
  * same object literal, and a class, array literal, statement or file holding a fourth member, or a third member anywhere
@@ -1532,6 +1540,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // (nestedFunctionPushInside's function with its nested arrow written as an anonymous function expression).
       arrowConciseCommaPushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), spawn("rf", argv));'),
       nestedFunctionExpressionPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return spawn("rf", argv);\n}'),
+      // wb-sp4w cut #2 (refusal #1 O:2018, ruling R-B515: U1 owed; BIND F2 and F3 taken): three more rows, each one of the
+      // three push places above in a host that completes the argv without launching it (render 1, uncommitted 1, launches
+      // 0), so a reader that keeps a place's push only when its host launches reds A1: GP8-NC-FNEXPR-NOLAUNCH (the
+      // later-push filter keeps a nested function expression's push only when the host function declaration returns a
+      // call) reds nestedFunctionExpressionPushReturned (nestedFunctionExpressionPushInside's host returning the argv
+      // itself); GP8-NC-ARROW-NOLAUNCH (the same for a nested arrow function) reds nestedFunctionPushReturned
+      // (nestedFunctionPushInside's host returning the argv itself); and GP8-NC-COMMA-NOTLAUNCH (the push-record line drops
+      // a comma's left-operand push whose right operand is no call, outside a call's argument) reds
+      // arrowConciseCommaPushReturned (arrowConciseCommaPushInside's comma with the argv itself as its right operand, in an
+      // exported variable statement).
+      nestedFunctionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      arrowConciseCommaPushReturned: control('export const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1604,6 +1625,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrowConcisePushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nestedFunctionPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       arrowConciseCommaPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       nestedFunctionExpressionPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      nestedFunctionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
