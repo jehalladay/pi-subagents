@@ -873,6 +873,97 @@
         "composed": 0,
         "launches": 0
        },
+       "nestedFunctionPushBesideStatement": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushBesideStatement": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushBesideStatement": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushRenamedConst": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushRenamedConst": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushRenamedHost": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushRenamedHost": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushRenamedBinding": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushOneLine": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushOneLine": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "arrowConciseCommaPushTwoLines": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionPushCommented": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "nestedFunctionExpressionPushCommented": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,
