@@ -81,6 +81,15 @@
  * contradiction where the delivered check reads one, and no control wrote that shape; the controls case now holds W1-GLUEDCODE's
  * edit as R-GLUED-CODE's pinned quiet row with its one contradiction, its witness id and its edit held to wb-u6ho's F2 line in the
  * tracker export and its payload to a frozen literal of its own (RESIDUALS).
+ * Cut #12 (wb-c8nb respin 1: its refusal #1's U1 and U2, rung 1 - the export anchor's id-form and exactness words held by no
+ * control) gives R-GLUED-CODE's export anchor negative controls, the helper, every top-level table, the claims, the kills, the
+ * residual's row, its frozen literal, its two direct anchors and the test titles unchanged: the F2 line check
+ * (residualLineContradictions) takes the line, the residual's row ids and its edit as parameters and returns each contradiction it
+ * finds - an id of RESIDUAL_WITNESS's form the line names that no row has, a row the line does not name, a GP2-N2 pairing other
+ * than the row's edit -; the controls case holds it to none at the real line and to exactly the contradictions one edit of the line
+ * makes per control, refusal #1's four paired witnesses among them (RIDS-TWODIGIT, RIDS-DIGITPART, RIDS-TWOPART and
+ * RIDS-OTHERDIGIT), each control's payload in the controls' frozen literal; the check's words are narrowed to exactly those
+ * controls (JUDGED CHECKS (e)).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -205,12 +214,13 @@
  * whose first ':' precedes its first ': ').
  * wb-u6ho's F2 line (its first '- F2 LOW LEADS: W1 for the residual list' notes line, landing 973's verdict) anchors R-GLUED-CODE's
  * row: the paired witnesses it names - each 'W', one or more digits, then '-' parts of capitals and digits - are exactly the
- * residual's rows, and the edit it pairs GP2-N2 as is W1-GLUEDCODE's.
+ * residual's rows, and the edit it pairs GP2-N2 as is W1-GLUEDCODE's (residualLineContradictions, held to its controls: JUDGED
+ * CHECKS (e)).
  * The controls' frozen literal holds every control, table by table, by its name and the exact contradictions its check reads
  * (firstLine's: the line it reads). R-GLUED-CODE's row is no control: a frozen literal of its own holds its witness id and payload.
  * JUDGED CHECKS (the R-B574 enumeration; the claims equal the controls): each judged check is claimed at its real input (no
  * contradiction; firstLine's: the F1 line) and at exactly the edits its controls make, each control's contradictions the ones the
- * controls' frozen literal holds, in four families, every control named: (a) the row K list's receiver words (R-B555's guard (a): a
+ * controls' frozen literal holds, in five families, every control named: (a) the row K list's receiver words (R-B555's guard (a): a
  * witness's receiver held against the claim probe's receiver the clause names for its form's site): W-RECV-UPPER, W-RECV-SPACED,
  * RECV-AROUND, RECV-AFTER, RECV-INSIDE, W-PROBE-KEY, W-PROBE-INDEX, WR-PROBEWORD, PROBE-KEY-OPENER, PROBE-KEY-CLOSER,
  * PROBE-INDEX-OPENER, PROBE-INDEX-CLOSER, RECV-UPPER-INDEX, RECV-SPACED-KEY, RECV-PREFIX-INDEX, RECV-SUFFIX-KEY, RECV-LINE-END,
@@ -233,9 +243,13 @@
  * LINE-COPIED, LINE-INSIDE, X-LEADBLANK, LINE-BLANK-BEFORE, LINE-INDENTED-BEFORE (lineTwoContradictions), WW-EXTRA,
  * IDS-EXTRA-TWICE, IDS-MULTIPART, IDS-UNNAMED, IDS-NO-LINE, IDS-OWN-PARTIAL, IDS-OWN-INSIDE, IDS2-MULTIPART, IDS2-BODY-START,
  * IDS2-DIGITS, IDS-GLUED, IDS-TRAILING, IDS2-GLUED, IDS2-TRAILING, X-TOKENCOLON, BODY-COLON-TAB, IDS3-EXTRA, IDS3-MULTIPART,
- * IDS3-BODY-START, IDS3-DIGITS, IDS3-NO-LINE, IDS3-GLUED, IDS3-TRAILING (witnessContradictions). A key form's witness beside the
- * index's claim probe receiver is no edit a control can make: the compiler reads 'Opts<Context.Inner>[key]' as two comparisons, no
- * element access.
+ * IDS3-BODY-START, IDS3-DIGITS, IDS3-NO-LINE, IDS3-GLUED, IDS3-TRAILING (witnessContradictions); (e) R-GLUED-CODE's export anchor
+ * (wb-c8nb refusal #1's U1 and U2: wb-u6ho's F2 line - the form of the ids it names, those ids both ways against the residual's
+ * rows, and its GP2-N2 pairing): RIDS-TWODIGIT, RIDS-DIGITPART, RIDS-TWOPART, RIDS-OTHERDIGIT, RIDS-DIGITLEAD, RIDS-EXTRA-TWICE,
+ * RIDS-UNNAMED, RIDS-RENAMED, RIDS-NO-LINE, RIDS-GLUED, RIDS-TRAILING, RIDS-LOWER, RIDS-EMPTYPART, RIDS-NOPART, RIDS-OTHERLETTER,
+ * RIDS-LETTERID, RIDS-PAIR-SPACED, RIDS-PAIR-QUOTE, RIDS-PAIR-EARLYCLOSE, RIDS-PAIR-NONE, RIDS-BOTH (residualLineContradictions). A
+ * key form's witness beside the index's claim probe receiver is no edit a control can make: the compiler reads
+ * 'Opts<Context.Inner>[key]' as two comparisons, no element access.
  * The TypeScript compiler anchors T-TOKENS,
  * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
@@ -295,7 +309,8 @@
  * control makes - in the row K list another receiver form, separator, white space, case, quote or empty part or name than its
  * controls write (another Unicode white space, a carriage return, a vertical tab or a form feed among them); in wb-u6ho's F1 line
  * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls write
- * (R-GLUED-CODE's one pinned row aside, RESIDUALS); in its notes another line shape before the F1 line; and in a refusal line
+ * (R-GLUED-CODE's one pinned row aside, RESIDUALS); in its notes another line shape before the F1 line; in wb-u6ho's F2 line
+ * another id form or pairing text than its controls write, or another place of that line in its notes; and in a refusal line
  * another place of its first ': ' or another id form - and a further control removed from its table and from the controls' frozen
  * literal together (no outside anchor names it).
  * The judged checks name one residual, R-GLUED-CODE (the wb-u6ho line check's, RESIDUALS): every edit of their inputs is one a
@@ -366,7 +381,8 @@ const REFUSAL2_WITNESS = /\bW[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b/g;
 /** A paired witness id as wb-u6ho's refusal #3 lines spell it: "X-", then parts of capitals and digits joined by "-". */
 const REFUSAL3_WITNESS = /\bX-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 /** A paired witness id as wb-u6ho's F2 line (landing 973's PASS-WITH-FINDING, the residual R-GLUED-CODE) spells it: "W", one or
- * more digits, then "-" parts of capitals and digits. */
+ * more digits, then "-" parts of capitals and digits; the F2 line check holds that form to its controls (residualLineContradictions,
+ * JUDGED CHECKS (e)). */
 const RESIDUAL_WITNESS = /\bW\d+(?:-[A-Z0-9]+)+\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
@@ -1474,6 +1490,23 @@ function lineTwoContradictions(notes: string, prefix: string): string[] {
   if (at === -1) return ["wb-u6ho's notes hold no line that starts with the F1 prefix"];
   return at === 1 ? [] : [`wb-u6ho's first line with the F1 prefix is notes line ${at + 1}, not line 2`];
 }
+/** wb-u6ho's F2 line held to R-GLUED-CODE's rows (wb-c8nb refusal #1's U1 and U2: the line's id-form and exactness words had no
+ * negative control): every distinct id of RESIDUAL_WITNESS's form the line names, against every row's witness id, both ways; and
+ * the edit the line pairs GP2-N2 as - the text between its first "GP2-N2 is paired as '" and the first "', a second bracket" after
+ * it - against the row's edit. Returns the contradictions: no line (an empty line), alone; else each id the line names that no row
+ * has, then each row the line does not name, then a pairing other than the row's edit. Claimed at the real line, rows and edit and
+ * at the edits the F2 line controls make, each with exactly its payload (JUDGED CHECKS (e)); another id form or pairing text in the
+ * line is NOT CLAIMED. */
+function residualLineContradictions(line: string, witnesses: readonly string[], edit: string): string[] {
+  if (line === "") return ["wb-u6ho's notes hold no line that starts with the F2 prefix"];
+  const named = idsIn(line, RESIDUAL_WITNESS);
+  const paired = between(line, "GP2-N2 is paired as '", "', a second bracket");
+  return [
+    ...named.filter(id => !witnesses.includes(id)).map(id => `wb-u6ho's F2 line names ${id}, which is no R-GLUED-CODE row`),
+    ...witnesses.filter(id => !named.includes(id)).map(id => `R-GLUED-CODE's row ${id} is named by no id of wb-u6ho's F2 line`),
+    ...(paired === edit ? [] : [`wb-u6ho's F2 line pairs GP2-N2 as '${paired}', not as the row's edit '${edit}'`]),
+  ];
+}
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
 /** The M matrices' cells: each site, form and comment kind, its plant finding once (M-AFTER also checks the comment's place). */
@@ -2285,6 +2318,51 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       residualRows.map(([witness, line, plants, kills]): readonly [string, readonly string[]] => [witness, subLineContradictions(line, plants, kills)]),
       "R-GLUED-CODE's pinned quiet rows, each with its payload (the residual's own frozen literal)",
     ).toEqual([["W1-GLUEDCODE", ["GP2-N2: K-NUMBER's witness does not spell [1e-3][0]"]]]);
+    // the F2 line check (wb-c8nb refusal #1: its U1, the anchor's id-form words, and its U2, its exactness word, held by no
+    // control): the line's ids of RESIDUAL_WITNESS's form both ways against R-GLUED-CODE's rows, and the edit it pairs GP2-N2 as
+    // against the row's edit (residualLineContradictions), at the real line and at one edit of it per control. Refusal #1's four
+    // paired witnesses are the edits of RIDS-TWODIGIT (WX-MULTIDIGIT: two digits after 'W'), RIDS-DIGITPART (WX-DIGITPART: a digit
+    // in a part), RIDS-TWOPART (WX-TWOPART: two parts) and RIDS-OTHERDIGIT (WX-W2: another digit), each naming one id more where
+    // the line's second W1-GLUEDCODE mention stands
+    const residualIds = residualRows.map(([witness]) => witness);
+    expect(residualLineContradictions(residualLine, residualIds, glued), "the F2 line check reads no contradiction in wb-u6ho's real F2 line and R-GLUED-CODE's rows").toEqual([]);
+    /** wb-u6ho's F2 line naming another id where its second W1-GLUEDCODE mention stands (the gate's witness edit). */
+    const residualWitness = (id: string): string => edited(residualLine, "The paired real-tree witness W1-GLUEDCODE edits", `The paired real-tree witness ${id} edits`);
+    /** wb-u6ho's F2 line with both W1-GLUEDCODE mentions renamed. */
+    const residualRenamed = (id: string): string =>
+      edited(edited(residualLine, "with witness W1-GLUEDCODE, a second bracket", `with witness ${id}, a second bracket`), "The paired real-tree witness W1-GLUEDCODE edits", `The paired real-tree witness ${id} edits`);
+    /** A line with its GP2-N2 pairing written with a space between the brackets. */
+    const pairSpaced = (line: string): string => edited(line, "paired as '): [1e-3][0], text only.'", "paired as '): [1e-3] [0], text only.'");
+    const residualControls: readonly (readonly [control: string, line: string, contradictions: readonly string[]])[] = [
+      ["RIDS-TWODIGIT", residualWitness("W12-GLUEDCODE"), ["wb-u6ho's F2 line names W12-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-DIGITPART", residualWitness("W1-GLUEDCODE2"), ["wb-u6ho's F2 line names W1-GLUEDCODE2, which is no R-GLUED-CODE row"]],
+      ["RIDS-TWOPART", residualWitness("W1-GLUEDCODE-2"), ["wb-u6ho's F2 line names W1-GLUEDCODE-2, which is no R-GLUED-CODE row"]],
+      ["RIDS-OTHERDIGIT", residualWitness("W2-GLUEDCODE"), ["wb-u6ho's F2 line names W2-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      // further controls: a part led by a digit, one id more named twice, a row the line no longer names (both mentions renamed to
+      // no id of the form, and to another id of it), no line, an id of no residual form beside one more id of it where the second
+      // mention stands (glued after a capital, a letter after, lower case parts, an empty part, no part, another letter for 'W', a
+      // letter for its digits; each beside its own id of the form, so every control's payload is its own), the pairing's text
+      // spaced, holding a quote, cut by an earlier "', a" or missing its opener, and a rename beside a spaced pairing (the
+      // contradictions' order)
+      ["RIDS-DIGITLEAD", residualWitness("W1-2GLUEDCODE"), ["wb-u6ho's F2 line names W1-2GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-EXTRA-TWICE", residualWitness("W4-GLUEDCODE and W4-GLUEDCODE"), ["wb-u6ho's F2 line names W4-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-UNNAMED", residualRenamed("W-GLUEDCODE"), ["R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line"]],
+      ["RIDS-RENAMED", residualRenamed("W3-GLUEDCODE"), ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line"]],
+      ["RIDS-NO-LINE", "", ["wb-u6ho's notes hold no line that starts with the F2 prefix"]],
+      ["RIDS-GLUED", residualWitness("W5-GLUEDCODE XW2-GLUEDCODE"), ["wb-u6ho's F2 line names W5-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-TRAILING", residualWitness("W6-GLUEDCODE W2-GLUEDCODEx"), ["wb-u6ho's F2 line names W6-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LOWER", residualWitness("W7-GLUEDCODE W2-gluedcode"), ["wb-u6ho's F2 line names W7-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-EMPTYPART", residualWitness("W8-GLUEDCODE W2--GLUEDCODE"), ["wb-u6ho's F2 line names W8-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-NOPART", residualWitness("W9-GLUEDCODE W2"), ["wb-u6ho's F2 line names W9-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-OTHERLETTER", residualWitness("W10-GLUEDCODE X2-GLUEDCODE"), ["wb-u6ho's F2 line names W10-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LETTERID", residualWitness("W11-GLUEDCODE WX-GLUEDCODE"), ["wb-u6ho's F2 line names W11-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAIR-SPACED", pairSpaced(residualLine), ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-QUOTE", edited(residualLine, "text only.', a second bracket", "text only.'x', a second bracket"), ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.'x', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-EARLYCLOSE", edited(residualLine, "text only.', a second bracket", "text only.', a code', a second bracket"), ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.', a code', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-NONE", edited(residualLine, "GP2-N2 is paired as '", "GP2-N2 is written as '"), ["wb-u6ho's F2 line pairs GP2-N2 as '', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-BOTH", pairSpaced(residualRenamed("W3-GLUEDCODE")), ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line", "wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
+    ];
+    for (const [control, line, contradictions] of residualControls) expect(residualLineContradictions(line, residualIds, glued), `${control}: the F2 line check reports exactly this edit's contradictions`).toEqual(contradictions);
     // KILLS' order check (refusal #1's U3: KILLS held as a set): the lines name KILLS' own order, as the judged set holds
     const named = Object.keys(KILLS);
     const moved = Object.fromEntries(Object.entries(KILLS).flatMap(([mutant, pins]): [string, readonly string[]][] => (mutant === "GP2-I1" ? [] : mutant === "GP2-I2" ? [["GP2-I1", KILLS["GP2-I1"] ?? []], [mutant, pins]] : [[mutant, pins]])));
@@ -2401,6 +2479,7 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ...firstControls.map(([control]) => control),
       ...lineTwoControls.map(([control]) => control),
       ...witnessControls.map(([control]) => control),
+      ...residualControls.map(([control]) => control),
     ];
     expect(witnessContradictions(refused, controls, REFUSAL1_WITNESS), "the paired witnesses refusal #1's U1, U2, U3 and F5 lines name are exactly the controls named 'W-...'").toEqual([]);
     expect(
@@ -2425,6 +2504,7 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       }),
       ...lineTwoControls.map(([control, text]): readonly [string, readonly string[]] => [control, lineTwoContradictions(text, prefix)]),
       ...witnessControls.map(([control, texts, form, , extra]): readonly [string, readonly string[]] => [control, witnessContradictions(texts, [...controls, ...extra], form)]),
+      ...residualControls.map(([control, line]): readonly [string, readonly string[]] => [control, residualLineContradictions(line, residualIds, glued)]),
     ];
     expect(readings, "the controls, table by table, each with its payload").toEqual([
       ["W-RECV-UPPER", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (Context.inner)"]],
@@ -2591,6 +2671,27 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["IDS3-NO-LINE", ["the refusal line 4 is not in the notes"]],
       ["IDS3-GLUED", []],
       ["IDS3-TRAILING", []],
+      ["RIDS-TWODIGIT", ["wb-u6ho's F2 line names W12-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-DIGITPART", ["wb-u6ho's F2 line names W1-GLUEDCODE2, which is no R-GLUED-CODE row"]],
+      ["RIDS-TWOPART", ["wb-u6ho's F2 line names W1-GLUEDCODE-2, which is no R-GLUED-CODE row"]],
+      ["RIDS-OTHERDIGIT", ["wb-u6ho's F2 line names W2-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-DIGITLEAD", ["wb-u6ho's F2 line names W1-2GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-EXTRA-TWICE", ["wb-u6ho's F2 line names W4-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-UNNAMED", ["R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line"]],
+      ["RIDS-RENAMED", ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line"]],
+      ["RIDS-NO-LINE", ["wb-u6ho's notes hold no line that starts with the F2 prefix"]],
+      ["RIDS-GLUED", ["wb-u6ho's F2 line names W5-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-TRAILING", ["wb-u6ho's F2 line names W6-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LOWER", ["wb-u6ho's F2 line names W7-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-EMPTYPART", ["wb-u6ho's F2 line names W8-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-NOPART", ["wb-u6ho's F2 line names W9-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-OTHERLETTER", ["wb-u6ho's F2 line names W10-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LETTERID", ["wb-u6ho's F2 line names W11-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAIR-SPACED", ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-QUOTE", ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.'x', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-EARLYCLOSE", ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.', a code', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-PAIR-NONE", ["wb-u6ho's F2 line pairs GP2-N2 as '', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-BOTH", ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line", "wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
     ]);
   });
 
