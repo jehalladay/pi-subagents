@@ -25,6 +25,11 @@
  * GP18-W01 and GP18-K01, whose plants that gate read as unrealized, the form it planted). readAnchor, its patterns and the helper
  * are unchanged.
  *
+ * wb-ou56 (the R694 follow-up from landing 948's F1) adds one READERS page, AR-NO-REFUSALS, for the one reading of field (3) that
+ * no page carried - both verdict openings absent, so both read false - in the form of that gate's plant RP210-R01 (both full tips
+ * zeroed in one span edit); that gate's member P210-R01 (the refusal order read as r4 >= r3) is red at that page alone. It also
+ * ends field (3)'s list with its NOT CLAIMED sentence. readAnchor, its patterns and the helper are unchanged.
+ *
  * PINNED READER SET (this file, test/workbench-furnace-cac-citation-status-readers-census.test.ts; observed at the cut: every case
  * passes on the moved readers and on readAnchor, and each named mutant, applied to a copy of the helper, reds the pin case named
  * after it). Each pin case is named "<mutant id>: <quote>" and asserts, for every probe it holds, that the reader beside the probe
@@ -96,8 +101,9 @@
  *   the mutant ids built from its pins and its pins' GW19 probe numbers.
  *   (3) refusals - in wb-pnn8's notes, whether refusal #3's verdict opening (with its full tip f53aa719) is present and whether
  *   refusal #4's (full tip ad5195cd) comes after it, pinned for exactly AR-BASE (both true), AR-NO-REFUSAL-3, AR-NO-REFUSAL-4,
- *   AR-REFUSAL-4-EARLIER and AR-REFUSAL-3-AT-START (each read as written beside it) and the real row (ANCHOR). Expectation: both
- *   true.
+ *   AR-REFUSAL-4-EARLIER, AR-REFUSAL-3-AT-START and AR-NO-REFUSALS (each read as written beside it; AR-NO-REFUSALS, with both
+ *   openings absent, as both false) and the real row (ANCHOR). Any other arrangement of the two openings - any other count, place
+ *   or order of them, or any other text written in place of either - is NOT CLAIMED by this census. Expectation: both true.
  *   (4) unmet - for each U row, the first line after refusal #3's opening that opens with '<id> <severity> CONFIRMED' (a later such
  *   line is not read, AR-LATER-UNMET-LINE; R2 below), read for its G12 ids and its GW12 ids (THE ID FORMS below; for each, the
  *   distinct tokens of that id form, in the order they first occur) and, for each of the row's pins, the quote of the pin's first
@@ -169,7 +175,7 @@
  *   'T-star-kept' and 't-STAR-KEPT' (AR-QUIET-S-LOWER), and 'xT-STAR-KEPT', 'T-STAR-KEPTx', '5T-STAR-KEPT', 'T-STAR-KEPT-' and
  *   'T-STAR-KEPT5x' (AR-QUIET-S-GLUED). A token of any other text in any of the three forms - any other word, word shape, word
  *   count, digit count, letter case, or character before or after it - is NOT CLAIMED by this census.
- * - Cases READERS (98 cases, "<page id>: <what>"; the PAGES table): readAnchor, by PAGE_KEYS, reads each page exactly as the
+ * - Cases READERS (99 cases, "<page id>: <what>"; the PAGES table): readAnchor, by PAGE_KEYS, reads each page exactly as the
  *   literal reading written beside it (toEqual over the whole reading). AR-BASE is a synthetic wb-t8my row and wb-pnn8 row written
  *   in the shapes the real rows give the six fields; every other page is AR-BASE with one edit. The pages carry refusal #2's
  *   members' forms: an extra G12 id in an UNMET line (AR-W1-G12-EXTRA, witness W1's form), the fold's two member lines swapped
@@ -198,12 +204,13 @@
  *   word of two letters then one digit and with a nine-letter word before another word, an F5 head running on past CONFIRMED after
  *   a semicolon, a witness list whose unspaced slash comes before an upper-case letter, and a blank line after the fold's last
  *   member line, each read as written beside it.
- *   wb-ectn's cut #3 eleven pages close the table, in the order of wb-ectn refusal #2's GP18 members (CLAIMS (4) names each):
+ *   wb-ectn's cut #3 eleven pages follow, in the order of wb-ectn refusal #2's GP18 members (CLAIMS (4) names each):
  *   parenthesized quotes holding a digit run into a word and a colon, comma-form V quotes holding a digit run into a word and a
  *   line break, a parenthesized V quote holding a line break, an empty parenthesized quote and an empty comma-form quote each
  *   before the pin's other citation, a six-word G12 id extending U2's pin, the fold's last member line with one trailing space, a
  *   witness list whose last witness holds a digit and then a slash with no space on either side, and a quoted claim holding a
- *   digit, each read as written beside it.
+ *   digit, each read as written beside it. wb-ou56's page closes the table (CLAIMS (4) names it): both verdict openings absent,
+ *   both full tips zeroed in one span edit, read as written beside it.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here: a
  * reader edit that changes one reading reds that pin case. (2) Each named mutant changes a reading of its own pin's probes: the
@@ -261,7 +268,8 @@
  * AR-QUOTE-PAREN-LINE-BREAK, GP18-C06 at AR-QUOTE-PAREN-EMPTY, GP18-C07 at AR-QUOTE-COMMA-EMPTY, GP18-I01 at AR-G12-SIX-WORDS,
  * GP18-F01 at AR-FOLD-TRAILING-SPACE, GP18-W01 at AR-WITNESS-SLASH-AFTER-DIGIT and GP18-K01 at AR-CLAUSE-QUOTE-DIGIT; that gate's
  * NOT CLAIMED control (an occurrence right after a line break passed over as a citation, GP18-N01) stays green, as field (4)'s NOT
- * CLAIMED sentence on citation contexts says.
+ * CLAIMED sentence on citation contexts says. Landing 948's F1 member (gate-prep-15's P210-R01, the refusal order read as
+ * r4 >= r3, under which two absent openings read as in order) is such an edit, red at wb-ou56's AR-NO-REFUSALS page alone.
  *
  * RESIDUALS (named families within readAnchor's reading, each with pinned quiet rows among the READERS pages; a quiet row's reading
  * is AR-BASE's, so it reds when its page starts to reach the reading):
@@ -745,7 +753,7 @@ function pageRows(edit: readonly [Where, string, string] | null): { readonly chi
   if (where === "child notes") return { child: { ...BASE_CHILD, notes: text }, parent: BASE_PARENT };
   return { child: BASE_CHILD, parent: { ...BASE_PARENT, notes: text } };
 }
-/** The READERS pages: the base page, then pages one edit from it, each with readAnchor's whole reading of it written as a literal; the pages whose ids open AR-QUIET- are the residuals' quiet rows (their reading is the base page's); wb-dlot's seventeen pages follow, in the order of the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row, wb-ectn's ten pages follow, in the order of the landing-884 gate's F1 forms G15-I01, G15-K02, G15-K03, G15-F03, G15-C01, G15-C02, G15-C03, G15-C04, G15-W03 and G15-W04, wb-ectn's cut #2 seventeen pages follow, in the order of wb-ectn refusal #1's GP4 members GP4-K01 to GP4-K04, GP4-C01 to GP4-C07, GP4-I01 to GP4-I03, GP4-W01, GP4-W02 and GP4-F01, and wb-ectn's cut #3 eleven pages close the table, in the order of wb-ectn refusal #2's GP18 members GP18-C01 to GP18-C07, GP18-I01, GP18-F01, GP18-W01 and GP18-K01. */
+/** The READERS pages: the base page, then pages one edit from it, each with readAnchor's whole reading of it written as a literal; the pages whose ids open AR-QUIET- are the residuals' quiet rows (their reading is the base page's); wb-dlot's seventeen pages follow, in the order of the landing-831 gate's forms B01-B15, then B11's parenthesized twin and R1's indented row, wb-ectn's ten pages follow, in the order of the landing-884 gate's F1 forms G15-I01, G15-K02, G15-K03, G15-F03, G15-C01, G15-C02, G15-C03, G15-C04, G15-W03 and G15-W04, wb-ectn's cut #2 seventeen pages follow, in the order of wb-ectn refusal #1's GP4 members GP4-K01 to GP4-K04, GP4-C01 to GP4-C07, GP4-I01 to GP4-I03, GP4-W01, GP4-W02 and GP4-F01, wb-ectn's cut #3 eleven pages follow, in the order of wb-ectn refusal #2's GP18 members GP18-C01 to GP18-C07, GP18-I01, GP18-F01, GP18-W01 and GP18-K01, and wb-ou56's page AR-NO-REFUSALS (landing 948's F1 form: both verdict openings absent) closes the table. */
 const PAGES: readonly PageSpec[] = [
   { id: "AR-BASE", what: "the base page's clauses, fold lines, UNMET lines, V verdict and F5 finding are read as written", edit: null, reading: BASE_READING },
   {
@@ -1291,9 +1299,28 @@ const PAGES: readonly PageSpec[] = [
     edit: ["description", U1_CLAUSE, "- U1 (MEDIUM) cells: two mutants against 'a cell 2 claim' (:1) survive."],
     reading: { ...BASE_READING, clauses: [["U1", "MEDIUM", "cells", "two", "mutants", "against 'a cell 2 claim'"], ["U2", "LOW", "prose", "one", "mutant", "survives (a prose claim)"]] },
   },
+  {
+    id: "AR-NO-REFUSALS", what: "without either verdict opening (both full tips zeroed in one span edit, landing 948's F1 RP210-R01 plant form) no UNMET line, V quote, row S id or witness is read and both refusals read absent",
+    edit: [
+      "parent notes",
+      `${REFUSAL_3} on a base).\nUNMET:\nU1 MEDIUM CONFIRMED (a claim). WHAT FAILS: G12-A-ONE (the first quote), G12-A-TWO (a quote (with a nested part) here). Witnesses GW12-01 'a', GW12-02 'b'.\nU2 LOW CONFIRMED (a claim). WHAT FAILS: G12-B-ONE, the comma quote: it survives. Witness: GW12-03 'c'.\nGATE VERDICT: REFUSED, ${REFUSAL_4}`,
+      "refusal #3 on cut #3 (tip 0000000000000000000000000000000000000000 on a base).\nUNMET:\nU1 MEDIUM CONFIRMED (a claim). WHAT FAILS: G12-A-ONE (the first quote), G12-A-TWO (a quote (with a nested part) here). Witnesses GW12-01 'a', GW12-02 'b'.\nU2 LOW CONFIRMED (a claim). WHAT FAILS: G12-B-ONE, the comma quote: it survives. Witness: GW12-03 'c'.\nGATE VERDICT: REFUSED, refusal #4 on the FINAL cut #4 (tip 0000000000000000000000000000000000000000",
+    ],
+    reading: {
+      ...BASE_READING,
+      refusals: [false, false],
+      unmet: [
+        { g12: [], gw12: [], quotes: ["", ""] },
+        { g12: [], gw12: [], quotes: [""] },
+      ],
+      verdict: ["", ""],
+      ids: [],
+      witnesses: [""],
+    },
+  },
 ];
 
-describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-readers.ts and this file's readAnchor): fifteen pin cases holding literal probe readings their named wb-pnn8 reader mutants change, SHAPE, ANCHOR (readAnchor's reading of the two tracker-export rows equals the literals' reading) and ninety-eight READERS pages (readAnchor's literal readings of synthetic one-edit pages)", () => {
+describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-readers.ts and this file's readAnchor): fifteen pin cases holding literal probe readings their named wb-pnn8 reader mutants change, SHAPE, ANCHOR (readAnchor's reading of the two tracker-export rows equals the literals' reading) and ninety-nine READERS pages (readAnchor's literal readings of synthetic one-edit pages)", () => {
   it("SHAPE: the rows, their pins, each pin's probe ids and the READERS page ids are each held to a literal (a one-literal edit reds here)", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["U1:4", "U2:3", "U3:1", "V1:2", "V2:1", "S:4"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.map(probe => probe.id).join(",")}`)).toEqual([
@@ -1413,6 +1440,7 @@ describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-reade
       "AR-FOLD-TRAILING-SPACE",
       "AR-WITNESS-SLASH-AFTER-DIGIT",
       "AR-CLAUSE-QUOTE-DIGIT",
+      "AR-NO-REFUSALS",
     ]);
   });
 
