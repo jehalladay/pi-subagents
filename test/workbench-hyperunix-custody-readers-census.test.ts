@@ -138,6 +138,24 @@
  * red on cut #4 (CARRIER_RED_4), and the new FAIL-CLOSED ENTRIES case reads the narrowing of every entry line before the
  * RESIDUALS heading, with L056's dropped words 'on any receiver' read as a widening word on any line. No reader code
  * changes: the helper differs from cut #4 in its header words only.
+ * wb-tz2.24 cut #6 answers this carrier's own refusal #5 (gate-prep-2 / g10-gate-s214, O:2096; rung 1 of the carrier's own
+ * L009, L010, L014, L026 and L103 claim sets, needsRuling false): U1's five members on L009's VALUES chain and read-through
+ * words, U2's four on L010's assertion read-through words, U3's one on L014's alias spelling words, U4's one on L026's
+ * prototype link words and U5's two on L103's hex escape zero words, and the four members its F1 finding names on L012,
+ * L013, L063 and L082 (sub-forms those lines reach only through a composition or an undefined word), which ride with this
+ * respin. Each member is a CARRIER_SURVIVORS_5 row on its line with its item and the sub-form the verdict states; each
+ * witness the verdict states for it, replayed verbatim from the verdict's own text (each \n read as a line break), is a GP2W
+ * SUB-READINGS row pinned on that line, so the member's hollowing reds this census. The seat's own sweep of one-edit
+ * hollowings of those readers left eight further sub-forms of the members' classes green; each is a GP2S SUB-READINGS row
+ * pinned on its line, red-first against its hollowing: prototype alone at the third segment past process.env (L026), zero
+ * named by a braced u escape read by unescaped and by an x or a u escape read by regexText (L103), and an element key whose
+ * value is under an as, a satisfies, a non-null or a <T> assertion (L012). Every paragraph claim line the earlier
+ * cuts left unnarrowed - L001 to L004, L008 to L014, L016, L025, L026, L028, L047, L063, L079 to L083, L094, L095 and L103 -
+ * narrows, in place, to its pinned pages as a clause of its own, so a form of a paragraph line that no row plants is NOT
+ * CLAIMED rather than claimed without a pin, and with cut #5's entry lines every claim line before the RESIDUALS heading
+ * narrows. The new CARRIER REFUSAL #5 ANCHOR reads the members, and by name the two members refusal #5's F3 finding states
+ * red on cut #5 (CARRIER_RED_5), and the new FAIL-CLOSED PARAGRAPHS case reads the narrowing of every paragraph claim line
+ * before the RESIDUALS heading. No reader code changes: the helper differs from cut #5 in its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -242,6 +260,13 @@
  *   as the verdict states its kind, its text (each \n a line break, white space folded) and its delivered reading, is its
  *   row's GP4W SUB-READINGS row and a pin of its line's CLAIM_LINES row; and each row's line narrows to its pinned pages as a
  *   clause of its own.
+ *  CARRIER REFUSAL #5 ANCHOR (wb-tz2.24 cut #6, outside this census): the members this carrier's own refusal #5 verdict lists
+ *   on its UNMET item lines and its riding F1 finding line - U1 to U5 and F1 - each with its item (read from its line), its
+ *   line, its sub-form and in order, are exactly the CARRIER_SURVIVORS_5 rows, and every other GP2 member id the verdict
+ *   names up to its Routing line is one of the two its F3 finding states red (CARRIER_RED_5, in that finding's order); each
+ *   member's witnesses, as the verdict states each one's kind, its text (each \n a line break, white space folded) and its
+ *   delivered reading, in order, are its row's GP2W SUB-READINGS rows and pins of its line's CLAIM_LINES row; and each row's
+ *   line narrows to its pinned pages as a clause of its own.
  *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
  *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
  *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
@@ -252,6 +277,10 @@
  *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
  *   entry line of the claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS,
  *   C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own.
+ *  FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, in the CLASS GUARD, outside this census: the helper header's own words): every
+ *   paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a "- " entry,
+ *   the 30 lines L001 to L004, L008 to L016, L025, L026, L028, L042 to L045, L047, L063, L079 to L083, L094, L095 and L103 -
+ *   narrows to its pinned pages as a clause of its own.
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -324,6 +353,19 @@
  * verdict names after its Routing line is NOT CLAIMED by the CARRIER REFUSAL #4 ANCHOR (it reads the verdict up to that
  * line); and a line after the RESIDUALS heading is NOT CLAIMED by the FAIL-CLOSED ENTRIES case (it reads the entry lines
  * before that heading only).
+ * wb-tz2.24 cut #6: on L001 to L004, L008 to L014, L016, L025, L026, L028, L047, L063, L079 to L083, L094, L095 and L103, a
+ * page other than the line's pinned pages is NOT CLAIMED by this census (the line's own words say so), among them each
+ * chain length, wrapper pairing, alias depth, segment place and escape spelling of a VALUES, CHAINS, environment or hex
+ * escape form that no pinned page plants; a pinned page read by a reader other than its own row's kind is NOT CLAIMED by
+ * this census (the row reads its page by that kind alone); that a GP2W page plants the very sub-form its
+ * CARRIER_SURVIVORS_5 row names is NOT CLAIMED by an anchor outside this census (the CARRIER REFUSAL #5 ANCHOR holds each
+ * member's item, line and sub-form words and its witnesses' kinds, texts and delivered readings as the verdict states
+ * them; the sub-form a page's text plants is this census's own reading); that a CARRIER_RED_5 member reds this census is
+ * NOT CLAIMED by this census (its F3 finding states it; the anchor reads only its id); a GP2 id the verdict names after its
+ * Routing line is NOT CLAIMED by the CARRIER REFUSAL #5 ANCHOR (it reads the verdict up to that line); that a GP2S plant
+ * stays is NOT CLAIMED by an anchor outside this census (they are its own literals, like the GP22S plants); and a line
+ * from the RESIDUALS heading on is NOT CLAIMED by the FAIL-CLOSED PARAGRAPHS case (it reads the paragraph lines before
+ * that heading only).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -880,6 +922,37 @@ function carrierRed4(block: string): string[] {
   const clause = /\d+ red: (.*?)\. \d+ survive/.exec(bulletOf(block, "F3 "))?.[1] ?? "";
   return [...clause.matchAll(/GP4-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]);
 }
+/** The members refusal #5's verdict lists (wb-tz2.24 cut #6), in order: on each of its UNMET item lines ('U<n>: U<n>-<grade>-CONFIRMED-') and on its riding finding line ('- F<n> <grade> RIDES: '), each '<id> (<line>, <sub-form>)' head with its item read from that line, and every 'witness <kind> '<text>' => <delivered reading> vs <mutant reading>' after it up to the next head (a member may state two), each \n of a text read as a line break. */
+function carrierMembers5(block: string): CarrierMember5[] {
+  return block.split("\n").flatMap(span => {
+    const item = /^(U\d+): U\d+-[A-Z]+-CONFIRMED-/.exec(span)?.[1] ?? /^- (F\d+) [A-Z]+ RIDES: /.exec(span)?.[1];
+    if (item === undefined) return [];
+    const heads = [...span.matchAll(/(GP2-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\)[:.] /g)];
+    return heads.map((head, at): CarrierMember5 => {
+      const body = span.slice((head.index ?? 0) + head[0].length, heads[at + 1]?.index ?? span.length);
+      const witnesses = [...body.matchAll(/witness (drivers|tampers|decode|heads|shapes) '(.*?)' => (\[[^\]]*\]) vs \[[^\]]*\]/g)].map(witness => {
+        const delivered: unknown = JSON.parse(witness[3] ?? "[]");
+        return {
+          kind: witness[1] ?? "",
+          text: (witness[2] ?? "").split("\\n").join("\n"),
+          delivered: Array.isArray(delivered) ? delivered.filter((entry): entry is string => typeof entry === "string") : [],
+        };
+      });
+      return { id: head[1] ?? "", item, line: head[2] ?? "", subForm: head[3] ?? "", witnesses };
+    });
+  });
+}
+/** Every GP2 member id refusal #5's verdict names, in any form, up to its Routing line (wb-tz2.24 cut #6): the anchor holds each to a parsed member or to a member its F3 finding states red, so a member the item reading misses reds it. */
+function carrierMentions5(block: string): string[] {
+  const routing = block.indexOf("\nRouting:");
+  return [...new Set([...(routing < 0 ? block : block.slice(0, routing)).matchAll(/GP2-[A-Z]+(?:-[A-Z0-9]+)+/g)].map(match => match[0]))];
+}
+/** The GP2 member ids refusal #5's F3 finding states red on cut #5, in its order: each '<id> (<line>, <sub-form>)' head of its "LEG 2 members that RED (killed, recorded for coverage): " clause. */
+function carrierRed5(block: string): string[] {
+  const bullet = bulletOf(block, "F3 ");
+  const at = bullet.indexOf("LEG 2 members that RED (killed, recorded for coverage): ");
+  return at < 0 ? [] : [...bullet.slice(at).matchAll(/(GP2-[A-Z]+(?:-[A-Z0-9]+)+) \((L\d{3}), ([^()]*)\)[:.] /g)].map(match => match[1] ?? "");
+}
 /** Whether a claim line narrows to its pinned pages as a clause of its own (wb-tz2.24, refusal #4 F2): the phrase at the line's start or after an entry colon, a semicolon, a comma, "for it" or "(POSITIONS;", and before a comma, a dash, a parenthesis or "only,"; and the line spells none of the widening words every page, every other page, beyond them, beyond its pinned pages, not only on its pinned pages, on its pinned pages and, or (wb-tz2.24 cut #5, refusal #4: the words L056 dropped) on any receiver. */
 function narrowsToPinnedPages(line: string): boolean {
   const clause = /(?:^On|(?:: |; |, | for it |\(POSITIONS; )on) its pinned pages(?:, | - | \(| only, )/.test(line);
@@ -1150,6 +1223,22 @@ interface CarrierSurvivor3 {
   readonly line: string;
   readonly subForm: string;
   readonly witness: string;
+}
+/** wb-tz2.24 cut #6: a member as refusal #5's verdict lists it - its item (the UNMET item or riding finding its line is), line and sub-form, and each witness it states (kind, text and delivered reading), in order. */
+interface CarrierMember5 {
+  readonly id: string;
+  readonly item: string;
+  readonly line: string;
+  readonly subForm: string;
+  readonly witnesses: readonly { readonly kind: string; readonly text: string; readonly delivered: readonly string[] }[];
+}
+/** wb-tz2.24 cut #6: a member of this carrier's own refusal #5 (gate-prep-2 / g10-gate-s214, O:2096) on the line its verdict names, with its item (an UNMET item, or F1 for the four members its F1 finding names, which ride), the sub-form the verdict states and its GP2W witnesses (one per witness the verdict states for it, in order). */
+interface CarrierSurvivor5 {
+  readonly id: string;
+  readonly item: string;
+  readonly line: string;
+  readonly subForm: string;
+  readonly witnesses: readonly string[];
 }
 interface LocationRow {
   readonly id: string;
@@ -2735,6 +2824,33 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "GP4W-OVK-COMPUTEDTPL", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVK-COMPUTEDTPL witness (L059 override object key, F1), HYPERUNIX_HX as a computed object key spelled as a no-substitution template", kind: "drivers", text: "export const env = { [`HYPERUNIX_HX`]: \"/usr/local/bin/hx\" };\n", expected: ["override"] },
   { id: "GP4W-OVI-LEFTPAREN", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-LEFTPAREN witness (L060 override in, F1), HYPERUNIX_HX in with the left operand in parentheses", kind: "drivers", text: "export const set = (\"HYPERUNIX_HX\") in process.env;\n", expected: ["override"] },
   { id: "GP4W-OVI-LEFTAS", claim: "wb-tz2.24 cut #5: refusal #4 GP4-OVI-LEFTAS witness (L060 override in, F1), HYPERUNIX_HX in with the left operand under an as assertion", kind: "drivers", text: "export const set = \"HYPERUNIX_HX\" as string in process.env;\n", expected: ["override"] },
+  { id: "GP2W-VAL-CHAIN4", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-CHAIN4 witness (L009 VALUES, U1), a value through a chain of four const names", kind: "drivers", text: "const A = \"@hyperunix/sdk\";\nconst B = A;\nconst C = B;\nconst D = C;\nexport const load = (): Promise<unknown> => import(D);\n", expected: ["import"] },
+  { id: "GP2W-VAL-CHAIN5", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-CHAIN5 witness (L009 VALUES, U1), a value through a chain of five const names", kind: "drivers", text: "const A = \"@hyperunix/sdk\";\nconst B = A;\nconst C = B;\nconst D = C;\nconst E = D;\nexport const load = (): Promise<unknown> => import(E);\n", expected: ["import"] },
+  { id: "GP2W-VAL-PARENPAREN", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-PARENPAREN witness (L009 VALUES, U1), parentheses read through twice", kind: "drivers", text: "const SDK = ((\"@hyperunix/sdk\"));\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-PARENAS", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-PARENAS witness (L009 VALUES, U1), an as assertion read through inside parentheses", kind: "drivers", text: "const SDK = (\"@hyperunix/sdk\" as string);\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-ASAS", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-ASAS witness (L009 VALUES, U1), an as assertion read through twice", kind: "drivers", text: "const SDK = \"@hyperunix/sdk\" as unknown as string;\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-ASSAT", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-ASSAT witness (L010 VALUES, U2), a satisfies read through under an as assertion", kind: "drivers", text: "const SDK = \"@hyperunix/sdk\" satisfies string as string;\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-SATAS", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-SATAS witness (L010 VALUES, U2), an as assertion read through under a satisfies", kind: "drivers", text: "const SDK = \"@hyperunix/sdk\" as string satisfies string;\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-NNPAREN", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-NNPAREN witness (L010 VALUES, U2), a non-null assertion read through around parentheses", kind: "drivers", text: "const SDK = (\"@hyperunix/sdk\")!;\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-VAL-TPAREN", claim: "wb-tz2.24 cut #6: refusal #5 GP2-VAL-TPAREN witness (L010 VALUES, U2), a <T> assertion read through around parentheses", kind: "drivers", text: "const SDK = <string>(\"@hyperunix/sdk\");\nexport const load = (): Promise<unknown> => import(SDK);\n", expected: ["import"] },
+  { id: "GP2W-CHN-ALIAS2", claim: "wb-tz2.24 cut #6: refusal #5 GP2-CHN-ALIAS2 witness (L014 CHAINS, U3), a const alias of a const alias, a chain's spellings through two names", kind: "tampers", text: "const R = Reflect;\nconst S = R;\nS.set(JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2W-CHN-ALIAS2-REQUIRE", claim: "wb-tz2.24 cut #6: refusal #5 GP2-CHN-ALIAS2 witness (L014 CHAINS, U3), a const alias of a const alias, a chain's spellings through two names, its second witness, the alias of an alias of require", kind: "drivers", text: "const r = require;\nconst load = r;\nexport const sdk = load(\"@hyperunix/sdk\");\n", expected: ["import"] },
+  { id: "GP2W-ENV-LINK3", claim: "wb-tz2.24 cut #6: refusal #5 GP2-ENV-LINK3 witness (L026 ROOTS environment, U4), a chain leaving the environment through a prototype link at its third segment past process.env", kind: "tampers", text: "process.env.A!.b!.constructor.x = 1;\n", expected: ["process.env.A.b.constructor.x assigned"] },
+  { id: "GP2W-ENV-LINK3-PROTO", claim: "wb-tz2.24 cut #6: refusal #5 GP2-ENV-LINK3 witness (L026 ROOTS environment, U4), a chain leaving the environment through a prototype link at its third segment past process.env, its second witness, the link __proto__", kind: "tampers", text: "process.env.A!.b!.__proto__.x = 1;\n", expected: ["process.env.A.b.__proto__.x assigned"] },
+  { id: "GP2W-HEX-X00", claim: "wb-tz2.24 cut #6: refusal #5 GP2-HEX-X00 witness (L103 UNESCAPE hex escape, U5), zero named by a two-digit x hex escape", kind: "decode", text: "\\x00", expected: ["\ufffd"] },
+  { id: "GP2W-HEX-U0000", claim: "wb-tz2.24 cut #6: refusal #5 GP2-HEX-U0000 witness (L103 UNESCAPE hex escape, U5), zero named by a four-digit u escape", kind: "decode", text: "\\u0000", expected: ["\ufffd"] },
+  { id: "GP2W-CHN-KEYPAREN", claim: "wb-tz2.24 cut #6: refusal #5 GP2-CHN-KEYPAREN witness (L012 CHAINS, F1), an element key whose value is in parentheses", kind: "tampers", text: "Reflect[(\"set\")](JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2W-CHN-MIXEDGLOBAL", claim: "wb-tz2.24 cut #6: refusal #5 GP2-CHN-MIXEDGLOBAL witness (L013 CHAINS, F1), a leading global. followed by globalThis.", kind: "tampers", text: "global.globalThis.Reflect.set(JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2W-CMD-VAREMPTY", claim: "wb-tz2.24 cut #6: refusal #5 GP2-CMD-VAREMPTY witness (L082 F3 COMMAND HEADS, F1), a VAR=value word with an empty value", kind: "heads", text: "X= ps -p 1", expected: ["ps"] },
+  { id: "GP2W-SHP-F4-UNDERSCORE", claim: "wb-tz2.24 cut #6: refusal #5 GP2-SHP-F4-UNDERSCORE witness (L063 C7 SHAPE FORMS, F1), F4 for a member name holding the ESRCH word after an underscore", kind: "shapes", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\ndeclare const e: { ERR_ESRCH: number };\nexport const code = e.ERR_ESRCH;\n", expected: ["F4:identifier", "F4:member"] },
+  { id: "GP2S-ENV-PROTO3", claim: "wb-tz2.24 cut #6 seat sweep (L026 ROOTS environment, SW-L026-PROTO3): a chain leaving the environment through prototype alone at its third segment past process.env (the third link of GP2-ENV-LINK3)", kind: "tampers", text: "process.env.A!.b!.prototype.x = 1;\n", expected: ["process.env.A.b.prototype.x assigned"] },
+  { id: "GP2S-HEX-DEC-BRACED0", claim: "wb-tz2.24 cut #6 seat sweep (L103 UNESCAPE hex escape, SW-L103-DEC-BRACED0): zero named by a braced u escape, read by unescaped (U5 named it by an x and a u escape)", kind: "decode", text: "\\u{0}", expected: ["\ufffd"] },
+  { id: "GP2S-HEX-RGX-X00", claim: "wb-tz2.24 cut #6 seat sweep (L103 UNESCAPE hex escape, SW-L103-RGX-X00): zero named by a two-digit x hex escape, read by regexText (S0066 plants the braced form only)", kind: "regex", text: "\\x00", expected: ["\ufffd"] },
+  { id: "GP2S-HEX-RGX-U0000", claim: "wb-tz2.24 cut #6 seat sweep (L103 UNESCAPE hex escape, SW-L103-RGX-U0000): zero named by a four-digit u escape, read by regexText (S0066 plants the braced form only)", kind: "regex", text: "\\u0000", expected: ["\ufffd"] },
+  { id: "GP2S-CHN-KEYAS", claim: "wb-tz2.24 cut #6 seat sweep (L012 CHAINS, SW-L012-KEYAS): an element key whose value is under an as assertion (F1 GP2-CHN-KEYPAREN named it in parentheses)", kind: "tampers", text: "Reflect[\"set\" as string](JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2S-CHN-KEYSAT", claim: "wb-tz2.24 cut #6 seat sweep (L012 CHAINS, SW-L012-KEYSAT): an element key whose value is under a satisfies (F1 GP2-CHN-KEYPAREN named it in parentheses)", kind: "tampers", text: "Reflect[\"set\" satisfies string](JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2S-CHN-KEYNN", claim: "wb-tz2.24 cut #6 seat sweep (L012 CHAINS, SW-L012-KEYNN): an element key whose value is under a non-null assertion (F1 GP2-CHN-KEYPAREN named it in parentheses)", kind: "tampers", text: "Reflect[\"set\"!](JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
+  { id: "GP2S-CHN-KEYT", claim: "wb-tz2.24 cut #6 seat sweep (L012 CHAINS, SW-L012-KEYT): an element key whose value is under a <T> assertion (F1 GP2-CHN-KEYPAREN named it in parentheses)", kind: "tampers", text: "Reflect[<string>\"set\"](JSON, \"parse\", null);\n", expected: ["Reflect.set(JSON)"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -3182,7 +3298,29 @@ const CARRIER_SURVIVORS_4: readonly CarrierSurvivor3[] = [
 ];
 /** wb-tz2.24 cut #5: the four GP4 members refusal #4's F3 finding states red on cut #4 (through carried rows), in its order: named by the verdict, no survivor. */
 const CARRIER_RED_4: readonly string[] = ["GP4-OVM-NOBINARY", "GP4-OVM-NOWRITE", "GP4-OVM-KEY-CONSTNAME", "GP4-OVD-DEFAULT"];
-/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4) and refusal #4 verdict (cut #5)). */
+/** wb-tz2.24 cut #6: this carrier's own refusal #5 members (gate-prep-2 / g10-gate-s214, O:2096; U1 five fail-open on L009's VALUES chain and read-through words, U2 four on L010's assertion read-through words, U3 one on L014's alias spelling words, U4 one on L026's prototype link words, U5 two on L103's hex escape zero words) and the four members its F1 finding names on L012, L013, L063 and L082, which ride: each on its line, with its GP2W witnesses. */
+const CARRIER_SURVIVORS_5: readonly CarrierSurvivor5[] = [
+  { id: "GP2-VAL-CHAIN4", item: "U1", line: "L009", subForm: "a value through a chain of four const names", witnesses: ["GP2W-VAL-CHAIN4"] },
+  { id: "GP2-VAL-CHAIN5", item: "U1", line: "L009", subForm: "a value through a chain of five const names", witnesses: ["GP2W-VAL-CHAIN5"] },
+  { id: "GP2-VAL-PARENPAREN", item: "U1", line: "L009", subForm: "parentheses read through twice", witnesses: ["GP2W-VAL-PARENPAREN"] },
+  { id: "GP2-VAL-PARENAS", item: "U1", line: "L009", subForm: "an as assertion read through inside parentheses", witnesses: ["GP2W-VAL-PARENAS"] },
+  { id: "GP2-VAL-ASAS", item: "U1", line: "L009", subForm: "an as assertion read through twice", witnesses: ["GP2W-VAL-ASAS"] },
+  { id: "GP2-VAL-ASSAT", item: "U2", line: "L010", subForm: "a satisfies read through under an as assertion", witnesses: ["GP2W-VAL-ASSAT"] },
+  { id: "GP2-VAL-SATAS", item: "U2", line: "L010", subForm: "an as assertion read through under a satisfies", witnesses: ["GP2W-VAL-SATAS"] },
+  { id: "GP2-VAL-NNPAREN", item: "U2", line: "L010", subForm: "a non-null assertion read through around parentheses", witnesses: ["GP2W-VAL-NNPAREN"] },
+  { id: "GP2-VAL-TPAREN", item: "U2", line: "L010", subForm: "a <T> assertion read through around parentheses", witnesses: ["GP2W-VAL-TPAREN"] },
+  { id: "GP2-CHN-ALIAS2", item: "U3", line: "L014", subForm: "a const alias of a const alias, a chain's spellings through two names", witnesses: ["GP2W-CHN-ALIAS2", "GP2W-CHN-ALIAS2-REQUIRE"] },
+  { id: "GP2-ENV-LINK3", item: "U4", line: "L026", subForm: "a chain leaving the environment through a prototype link at its third segment past process.env", witnesses: ["GP2W-ENV-LINK3", "GP2W-ENV-LINK3-PROTO"] },
+  { id: "GP2-HEX-X00", item: "U5", line: "L103", subForm: "zero named by a two-digit x hex escape", witnesses: ["GP2W-HEX-X00"] },
+  { id: "GP2-HEX-U0000", item: "U5", line: "L103", subForm: "zero named by a four-digit u escape", witnesses: ["GP2W-HEX-U0000"] },
+  { id: "GP2-CHN-KEYPAREN", item: "F1", line: "L012", subForm: "an element key whose value is in parentheses", witnesses: ["GP2W-CHN-KEYPAREN"] },
+  { id: "GP2-CHN-MIXEDGLOBAL", item: "F1", line: "L013", subForm: "a leading global. followed by globalThis.", witnesses: ["GP2W-CHN-MIXEDGLOBAL"] },
+  { id: "GP2-CMD-VAREMPTY", item: "F1", line: "L082", subForm: "a VAR=value word with an empty value", witnesses: ["GP2W-CMD-VAREMPTY"] },
+  { id: "GP2-SHP-F4-UNDERSCORE", item: "F1", line: "L063", subForm: "F4 for a member name holding the ESRCH word after an underscore", witnesses: ["GP2W-SHP-F4-UNDERSCORE"] },
+];
+/** wb-tz2.24 cut #6: the two GP2 members refusal #5's F3 finding states red on cut #5 (through carried rows), in its order: named by the verdict, no survivor. */
+const CARRIER_RED_5: readonly string[] = ["GP2-VAL-NESTEDCONST", "GP2-CMD-VARUNDERSCORE"];
+/** wb-tz2.24's own requirement lines (its description's acceptance sentence, the U1 and U2 slugs of the R-B424 fold note in its notes and the UNMET slugs of its own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4), refusal #4 verdict (cut #5) and refusal #5 verdict (cut #6)). */
 const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   {
     key: "wb-tz2.24 ACCEPTANCE",
@@ -3206,6 +3344,11 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-tz2.24 refusal #4 U3", source: "notes", text: "U3-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-DESTRUCTURING-ASSIGNMENT-KEY-WORDS-7-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L058" },
   { key: "wb-tz2.24 refusal #4 U4", source: "notes", text: "U4-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-OBJECT-KEY-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L059" },
   { key: "wb-tz2.24 refusal #4 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-4-UNNARROWED-OVERRIDE-IN-WORDS-8-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2637-L060" },
+  { key: "wb-tz2.24 refusal #5 U1", source: "notes", text: "U1-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-VALUES-CHAIN-AND-READ-THROUGH-WORDS-5-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2688-L009" },
+  { key: "wb-tz2.24 refusal #5 U2", source: "notes", text: "U2-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-VALUES-ASSERTION-READ-THROUGH-WORDS-4-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2688-L010" },
+  { key: "wb-tz2.24 refusal #5 U3", source: "notes", text: "U3-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-CHAINS-ALIAS-SPELLINGS-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2688-L014" },
+  { key: "wb-tz2.24 refusal #5 U4", source: "notes", text: "U4-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-ENVIRONMENT-PROTOTYPE-LINK-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2688-L026" },
+  { key: "wb-tz2.24 refusal #5 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-HEX-ESCAPE-ZERO-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2688-L103" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -3345,22 +3488,22 @@ function locatedText(row: LocatedRow, location: LocationRow): string {
   return `${row.head}${location.prefix}${body}${location.suffix}`;
 }
 const CLAIM_LINES: readonly ClaimLine[] = [
-  { id: "L001", line: "BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file", pins: ["SUB:A05", "SUB:A06", "SUB:T0044"] },
-  { id: "L002", line: "program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope", pins: ["SUB:U1-F1", "SUB:U1-F2"] },
-  { id: "L003", line: "never answers for it (refusal #3 U1, refusal #4 U1); an expando entry the binder records for a property write (f.tag = v)", pins: ["SUB:U1-F4", "SUB:S1203"] },
-  { id: "L004", line: "is no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:", pins: ["SUB:S0587", "BINDING:import", "SUB:T0076", "SUB:T0077"] },
+  { id: "L001", line: "BINDINGS (bindingOf): on its pinned pages, an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file", pins: ["SUB:A05", "SUB:A06", "SUB:T0044"] },
+  { id: "L002", line: "program over the very source (no lib, no module resolution, nothing emitted), so, on its pinned pages, a same-named declaration in another scope", pins: ["SUB:U1-F1", "SUB:U1-F2"] },
+  { id: "L003", line: "never answers for it (refusal #3 U1, refusal #4 U1); on its pinned pages, an expando entry the binder records for a property write (f.tag = v)", pins: ["SUB:U1-F4", "SUB:S1203"] },
+  { id: "L004", line: "is, on its pinned pages, no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:", pins: ["SUB:S0587", "BINDING:import", "SUB:T0076", "SUB:T0077"] },
   { id: "L005", line: "- import: on its pinned pages, the symbol is declared in the file by an import (named, default or namespace) or an import-equals", pins: ["BINDING:import", "SUB:U1-F5", "SUB:U1-F6", "SUB:T0081"] },
   { id: "L006", line: "- global: on its pinned pages, the symbol has no declaration in the file, or only declarations in an ambient context", pins: ["BINDING:global", "SUB:A01", "SUB:A02", "SUB:A03d", "SUB:S0589", "SUB:S0591", "SUB:T0078", "SUB:T0079", "SUB:T0080"] },
   { id: "L007", line: "- local: on its pinned pages, any other declaration in the file", pins: ["BINDING:local", "SUB:A04", "SUB:A06", "SUB:T0043"] },
-  { id: "L008", line: "VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const", pins: ["VALUES", "SUB:A14", "SUB:S1284"] },
-  { id: "L009", line: "declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), through a chain of such names (a cycle reads no value); parentheses, as,", pins: ["SUB:A15", "SUB:S1082", "SUB:A10", "SUB:T0131", "SUB:T0132", "SUB:T0133", "SUB:WV1", "SUB:WV1c"] },
-  { id: "L010", line: "satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,", pins: ["SUB:A11", "SUB:A12", "SUB:A13", "SUB:S1284"] },
-  { id: "L011", line: "a parameter, an imported name, a computed string) is no value.", pins: ["SUB:S1081", "SUB:A17", "SUB:T0134"] },
-  { id: "L012", line: "CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157"] },
-  { id: "L013", line: "a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const", pins: ["SUB:A20", "SUB:A21", "SUB:W17a", "SUB:W17b", "SUB:T0158"] },
-  { id: "L014", line: "initialized by a member chain or a name, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032"] },
+  { id: "L008", line: "VALUES (stringValues): on its pinned pages, a string literal or a no-substitution template, or an identifier whose own binding is a local const", pins: ["VALUES", "SUB:A14", "SUB:S1284"] },
+  { id: "L009", line: "declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), on its pinned pages, through a chain of such names (a cycle reads no value); parentheses, as,", pins: ["SUB:A15", "SUB:S1082", "SUB:A10", "SUB:T0131", "SUB:T0132", "SUB:T0133", "SUB:WV1", "SUB:WV1c", "SUB:GP2W-VAL-CHAIN4", "SUB:GP2W-VAL-CHAIN5", "SUB:GP2W-VAL-PARENPAREN", "SUB:GP2W-VAL-PARENAS", "SUB:GP2W-VAL-ASAS"] },
+  { id: "L010", line: "satisfies, non-null and <T> assertions are, on its pinned pages, read through. Any other value (a let or var binding, an ambient const, a member,", pins: ["SUB:A11", "SUB:A12", "SUB:A13", "SUB:S1284", "SUB:GP2W-VAL-ASSAT", "SUB:GP2W-VAL-SATAS", "SUB:GP2W-VAL-NNPAREN", "SUB:GP2W-VAL-TPAREN"] },
+  { id: "L011", line: "a parameter, an imported name, a computed string) is, on its pinned pages, no value.", pins: ["SUB:S1081", "SUB:A17", "SUB:T0134"] },
+  { id: "L012", line: "CHAINS (calleeChains): on its pinned pages, a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157", "SUB:GP2W-CHN-KEYPAREN", "SUB:GP2S-CHN-KEYAS", "SUB:GP2S-CHN-KEYSAT", "SUB:GP2S-CHN-KEYNN", "SUB:GP2S-CHN-KEYT"] },
+  { id: "L013", line: "a leading globalThis. or global. dropped; on its pinned pages, a root identifier reads as its own spelling and, when its own binding is a const", pins: ["SUB:A20", "SUB:A21", "SUB:W17a", "SUB:W17b", "SUB:T0158", "SUB:GP2W-CHN-MIXEDGLOBAL"] },
+  { id: "L014", line: "initialized by a member chain or a name, on its pinned pages, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032", "SUB:GP2W-CHN-ALIAS2", "SUB:GP2W-CHN-ALIAS2-REQUIRE"] },
   { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
-  { id: "L016", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
+  { id: "L016", line: "(a root of any other kind is NOT CLAIMED); on its pinned pages, a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
   { id: "L017", line: "- initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)", pins: ["ROOT:initializer", "SUB:GP22W-INIT-FIRSTDECL", "SUB:GP22W-INIT-NOFOR", "SUB:GP22W-INIT-NOPAREN", "SUB:GP22W-INIT-NOSATISFIES", "SUB:GP22W-INIT-NONONNULL", "SUB:GP22W-INIT-NOMEMBER", "SUB:GP22W-INIT-NOELEMENT", "SUB:GP22W-INIT-NOIMPORTNAME", "SUB:GP22S-INIT-TYPEASSERT", "SUB:GP22S-INIT-PARENAS", "SUB:GP22S-INIT-DOUBLEPAREN", "SUB:GP22S-INIT-GLOBALMEMBER", "SUB:GP22S-INIT-LOCALMEMBER", "SUB:GP22S-INIT-DEEPMEMBER", "SUB:GP22S-INIT-GLOBALTHIS", "SUB:GP22S-INIT-GLOBALELEMENT", "SUB:GP22S-INIT-NAMEKEY", "SUB:GP22S-INIT-TEMPLATEKEY", "SUB:GP22S-INIT-OPTIONAL", "SUB:GP22S-INIT-NAMESPACENAME", "SUB:GP22S-INIT-DEFAULTNAME", "SUB:GP22S-INIT-EQUALSNAME", "SUB:GP22S-INIT-USING", "SUB:GP22S-INIT-AWAITUSING", "SUB:GP22S-INIT-STATICBLOCK", "SUB:GP22S-INIT-CASE", "SUB:GP22S-INIT-EXPORTLIST", "SUB:GP22S-INIT-FORLATER", "SUB:GP22S-INIT-IF", "SUB:GP22S-INIT-TRY", "SUB:GP22S-INIT-WHILE", "SUB:GP22S-INIT-LABEL", "SUB:GP22S-INIT-METHOD", "SUB:GP22S-INIT-FUNCDECL"] },
   { id: "L018", line: "- reassignment: on its pinned pages, for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
   { id: "L019", line: "- destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040", "SUB:WR7", "SUB:WR7c", "SUB:G1W-P-DESTR-IDX2", "SUB:G1S-P-DESTR-NOHOLE-IDX2"] },
@@ -3369,10 +3512,10 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L022", line: "- call argument: on its pinned pages, the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, a let or var variable, and the argument at a fourth or later parameter's position, are NOT CLAIMED); a rest parameter reads nothing", pins: ["ROOT:call argument", "SUB:A39", "SUB:A40", "SUB:S0645", "SUB:S1092", "SUB:S1093", "SUB:S1094", "SUB:S0647", "SUB:S1091", "SUB:S1295", "SUB:W44", "SUB:T0033", "SUB:T0035", "SUB:WR8", "SUB:WR8c", "SUB:G1W-A-CALLARG-IDX2", "SUB:G1S-A-CALLARG-CONST-IDX1", "SUB:G1S-A-CALLARG-CONST-IDX2"] },
   { id: "L023", line: "- immediately invoked: on its pinned pages, the argument at a parameter's position when its function is itself the callee (the argument at a third or later parameter's position is NOT CLAIMED)", pins: ["ROOT:immediately invoked", "SUB:S0651", "SUB:G1W-A-IIFE-IDX1", "SUB:G1S-A-IIFE-ARROW-IDX1"] },
   { id: "L024", line: "- call() argument: on its pinned pages, the argument one place later in a call() of the function by either route (an optional call(), and the argument for a third or later parameter, are NOT CLAIMED)", pins: ["ROOT:call() argument", "SUB:A41", "SUB:A43", "SUB:S1090", "SUB:T0036", "SUB:T0159", "SUB:G1W-A-CALLCALL-IDX1", "SUB:G1S-A-CALLCALL-IIFE-IDX1"] },
-  { id: "L025", line: "A chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it", pins: ["SUB:A44", "SUB:A45", "SUB:A47", "SUB:S0787", "SUB:T0047", "SUB:T0048"] },
-  { id: "L026", line: "leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).", pins: ["SUB:A46", "SUB:A48", "SUB:R:PROTOTYPE_LINKS:constructor", "SUB:R:PROTOTYPE_LINKS:__proto__", "SUB:R:PROTOTYPE_LINKS:prototype", "SUB:W25"] },
+  { id: "L025", line: "On its pinned pages, a chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it", pins: ["SUB:A44", "SUB:A45", "SUB:A47", "SUB:S0787", "SUB:T0047", "SUB:T0048"] },
+  { id: "L026", line: "leaves the environment object, on its pinned pages, through constructor, __proto__ or prototype (refusal #4 F3).", pins: ["SUB:A46", "SUB:A48", "SUB:R:PROTOTYPE_LINKS:constructor", "SUB:R:PROTOTYPE_LINKS:__proto__", "SUB:R:PROTOTYPE_LINKS:prototype", "SUB:W25", "SUB:GP2W-ENV-LINK3", "SUB:GP2W-ENV-LINK3-PROTO", "SUB:GP2S-ENV-PROTO3"] },
   { id: "L027", line: "", pins: [] },
-  { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
+  { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; on its pinned pages, each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
   { id: "L029", line: "- spy: on its pinned pages, a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\") (with one or two later arguments too, each the string \"get\" or \"set\" as those pages spell it; three or more later arguments, a later argument that is a name, and a later argument of any other value are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014", "SUB:G5W-A-SPY-ARITY", "SUB:G5C-A-SPY-ARITY", "SUB:G5W-A-SPY-SECONDRECV", "SUB:G5C-A-SPY-SECONDRECV", "SUB:X3-SPY-TWO"] },
   { id: "L030", line: "- global stub: on its pinned pages, a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52", "SUB:WC16", "SUB:WC16c", "SUB:W-GS-CHAIN", "SUB:C-GS-CHAIN", "LOCATED:global stub"] },
   { id: "L031", line: "- watched reference: on its pinned pages, a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a call's third or later argument, a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26", "SUB:WC3", "SUB:WC3b", "SUB:WC3c", "LOCATED:watched reference", "SUB:G1W-A-WATCHED-LATERARG"] },
@@ -3391,7 +3534,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L044", line: "MOCKS (moduleMockSpecifiers): on its pinned pages, every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, a callee spelled as an element access or reached through an alias of the mock, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142", "SUB:WC13", "SUB:WC13c", "SUB:Y0011"] },
   { id: "L045", line: "or of the import() its first argument is, on its pinned pages (a template argument, and an import() of an arity or an argument spelling those pages do not spell, are NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066", "SUB:Y0012"] },
   { id: "L046", line: "", pins: [] },
-  { id: "L047", line: "C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):", pins: ["DRIVER:value import", "SUB:A113", "SUB:W37b", "SUB:W38b", "SUB:W63", "SUB:T0109", "SUB:T0110", "SUB:T0111", "SUB:T0112", "SUB:T0113", "SUB:T0114", "SUB:T0115", "SUB:T0116", "SUB:T0117", "SUB:T0118", "SUB:T0119"] },
+  { id: "L047", line: "C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; on its pinned pages, the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):", pins: ["DRIVER:value import", "SUB:A113", "SUB:W37b", "SUB:W38b", "SUB:W63", "SUB:T0109", "SUB:T0110", "SUB:T0111", "SUB:T0112", "SUB:T0113", "SUB:T0114", "SUB:T0115", "SUB:T0116", "SUB:T0117", "SUB:T0118", "SUB:T0119"] },
   { id: "L048", line: "- value import [import]: on its pinned pages, an import declaration of an HX module with a clause that is not type-only", pins: ["DRIVER:value import", "SUB:A80", "SUB:A81", "SUB:A82", "SUB:A83", "SUB:S0911", "SUB:S0913", "SUB:W-VI-DEFAULT", "SUB:C-VI-DEFAULT", "SUB:Z0007", "LOCATED:value import"] },
   { id: "L049", line: "- side-effect import [import]: on its pinned pages, an import declaration of an HX module with no clause", pins: ["DRIVER:side-effect import", "SUB:T0122", "SUB:Z0008", "LOCATED:side-effect import"] },
   { id: "L050", line: "- export-from [import]: on its pinned pages, an export declaration from an HX module that is not type-only, named or namespace", pins: ["DRIVER:export-from", "SUB:A84", "SUB:A85", "SUB:A86", "SUB:S0917", "SUB:S0920", "SUB:S0924", "SUB:W40", "SUB:Z0009", "LOCATED:export-from"] },
@@ -3407,7 +3550,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L060", line: "- override in [override]: on its pinned pages, HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993", "LOCATED:override in", "SUB:GP4W-OVI-NOIF", "SUB:GP4W-OVI-NOPAREN", "SUB:GP4W-OVI-NORETURN", "SUB:GP4W-OVI-NOARROWBODY", "SUB:GP4W-OVI-NOLOGICAL", "SUB:GP4W-OVI-NOCONDITIONAL", "SUB:GP4W-OVI-NOCALLARG", "SUB:GP4W-OVI-ENVONLY", "SUB:GP4W-OVI-LEFTPAREN", "SUB:GP4W-OVI-LEFTAS"] },
   { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
   { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string \"a<n>\" at every other place n and, for the const form, const KEY = \"HYPERUNIX_HX\" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
-  { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
+  { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; on its pinned pages, a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149", "SUB:GP2W-SHP-F4-UNDERSCORE"] },
   { id: "L064", line: "- member: on its pinned pages, a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143", "SUB:WS1", "SUB:WS1b", "SUB:WS1c", "LOCATED:member"] },
   { id: "L065", line: "- element key: on its pinned pages, an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230", "LOCATED:element key", "SUB:GP12W-EKEY-NOPAREN"] },
   { id: "L066", line: "- type member: on its pinned pages, the right side of a qualified name in a type", pins: ["SHAPE:type member", "SUB:S1233", "SUB:T0144", "LOCATED:type member"] },
@@ -3423,11 +3566,11 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L076", line: "- kill name literal: on its pinned pages, a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)", pins: ["SHAPE:kill name literal", "SUB:A210", "SUB:S1067", "SUB:S1068", "SUB:S1069", "SUB:S1214", "SUB:W30", "SUB:T0073", "SUB:T0146", "SUB:T0147", "LOCATED:kill name literal", "SUB:GP12W-KILL-NOHEAD", "SUB:GP12W-KILL-NOMIDDLE", "SUB:GP12W-KILL-NOTAIL", "SUB:GP12W-KILL-NOPROPVALUE", "SUB:GP12W-KILL-NOBINARY", "SUB:GP12W-KILL-NORETURN", "SUB:GP12W-KILL-NOCASE", "SUB:GP12W-KILL-NOPARAMDEFAULT", "SUB:GP12W-KILL-NOARROWBODY", "SUB:GP12W-KILL-NOTYPE", "SUB:GP12W-KILL-NOCONDITIONAL"] },
   { id: "L077", line: "- pid name literal: on its pinned pages, a plain text pid (trimmed)", pins: ["SHAPE:pid name literal", "SUB:A212", "SUB:S1045", "LOCATED:pid name literal", "SUB:GP22W-SHAPE-PID-NOTEMPLATE", "SUB:GP22W-SHAPE-PID-NOTEMPLATE-HEAD", "SUB:GP22S-SHAPE-PID-MIDDLE", "SUB:GP22S-SHAPE-PID-TAIL", "SUB:GP22S-SHAPE-PID-SPAWN", "SUB:GP22S-SHAPE-PID-ARRAY", "SUB:GP22S-SHAPE-PID-PROPVALUE", "SUB:GP22S-SHAPE-PID-BINARY", "SUB:GP22S-SHAPE-PID-RETURN", "SUB:GP22S-SHAPE-PID-CASE", "SUB:GP22S-SHAPE-PID-PARAMDEFAULT", "SUB:GP22S-SHAPE-PID-ARROWBODY", "SUB:GP22S-SHAPE-PID-TYPE", "SUB:GP22S-SHAPE-PID-CONDITIONAL"] },
   { id: "L078", line: "- process-table command: on its pinned pages, any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool", pins: ["SHAPE:process-table command", "SUB:S1049", "SUB:S1209", "SUB:S1301", "SUB:W115", "SUB:T0075", "SUB:T0082", "SUB:T0156", "LOCATED:process-table command", "SUB:GP12W-PTC-NOPROPVALUE", "SUB:GP12W-PTC-NOBINARY", "SUB:GP12W-PTC-NORETURN", "SUB:GP12W-PTC-NOCASE", "SUB:GP12W-PTC-NOPARAMDEFAULT", "SUB:GP12W-PTC-NOARROWBODY", "SUB:GP12W-PTC-NOTYPE", "SUB:GP12W-PTC-NOCONDITIONAL"] },
-  { id: "L079", line: "F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read", pins: ["FLAG:lone dash", "SUB:S0174"] },
-  { id: "L080", line: "(failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The", pins: ["SUB:S0180", "SUB:S0426", "SUB:T0098", "SUB:T0099", "SUB:T0100", "SUB:T0101", "SUB:T0102", "SUB:T0103", "SUB:T0104", "SUB:T0105", "SUB:T0106", "SUB:T0107", "SUB:T0108"] },
-  { id: "L081", line: "modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,", pins: ["SUB:R:COMMAND_SEPARATOR:semicolon", "SUB:H28", "SUB:S0143", "SUB:W33c", "SUB:W33d", "SUB:T0086", "SUB:T0087", "SUB:W-F3-SQ", "SUB:C-F3-SQ", "SUB:Z0015"] },
-  { id: "L082", line: "double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes VAR=value words and SHELL_KEYWORDS, and", pins: ["SUB:H32", "SUB:S1122", "SUB:R:SHELL_KEYWORDS:!", "SUB:T0068", "SUB:T0083", "SUB:T0084", "SUB:T0085", "SUB:WH1", "SUB:WH1b", "SUB:WH9", "SUB:WH9b", "SUB:Z0016"] },
-  { id: "L083", line: "reads a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:", pins: ["SUB:H07", "FLAG:option argument", "SUB:WH3", "SUB:WH3b", "SUB:WH3s", "SUB:WH3c"] },
+  { id: "L079", line: "F3 COMMAND HEADS (commandHeads): on its pinned pages, the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read", pins: ["FLAG:lone dash", "SUB:S0174"] },
+  { id: "L080", line: "(failClosedCommandHeads: on its pinned pages, every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The", pins: ["SUB:S0180", "SUB:S0426", "SUB:T0098", "SUB:T0099", "SUB:T0100", "SUB:T0101", "SUB:T0102", "SUB:T0103", "SUB:T0104", "SUB:T0105", "SUB:T0106", "SUB:T0107", "SUB:T0108"] },
+  { id: "L081", line: "modelled reader, on its pinned pages, splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,", pins: ["SUB:R:COMMAND_SEPARATOR:semicolon", "SUB:H28", "SUB:S0143", "SUB:W33c", "SUB:W33d", "SUB:T0086", "SUB:T0087", "SUB:W-F3-SQ", "SUB:C-F3-SQ", "SUB:Z0015"] },
+  { id: "L082", line: "double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes, on its pinned pages, VAR=value words and SHELL_KEYWORDS, and", pins: ["SUB:H32", "SUB:S1122", "SUB:R:SHELL_KEYWORDS:!", "SUB:T0068", "SUB:T0083", "SUB:T0084", "SUB:T0085", "SUB:WH1", "SUB:WH1b", "SUB:WH9", "SUB:WH9b", "SUB:Z0016", "SUB:GP2W-CMD-VAREMPTY"] },
+  { id: "L083", line: "reads, on its pinned pages, a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:", pins: ["SUB:H07", "FLAG:option argument", "SUB:WH3", "SUB:WH3b", "SUB:WH3s", "SUB:WH3c"] },
   { id: "L084", line: "- lone dash: on its pinned pages, a lone \"-\" among a wrapper's options is a flag (su's --login, env's -i)", pins: ["FLAG:lone dash", "SUB:H34"] },
   { id: "L085", line: "- options end: on its pinned pages, \"--\" ends a wrapper's options, so a dash word after it is the command head", pins: ["FLAG:options end", "SUB:H10", "SUB:H35", "SUB:T0089"] },
   { id: "L086", line: "- option argument: on its pinned pages, an option of a wrapper's table taking an argument takes the next word", pins: ["FLAG:option argument", "SUB:H03", "SUB:H38"] },
@@ -3438,8 +3581,8 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L091", line: "- shell command flag: on its pinned pages, a shell's first command flag (a dash word holding c, --command, or --command=) reads the first operand after the shell's options as a command", pins: ["FLAG:shell command flag", "SUB:H06", "SUB:S0367", "SUB:S0383", "SUB:T0093", "SUB:T0094", "SUB:T0095", "SUB:T0096"] },
   { id: "L092", line: "- shell options end: on its pinned pages, \"--\" or a lone \"-\" among a shell's options ends them, so the next word is the command even when it starts with a dash", pins: ["FLAG:shell options end", "SUB:H42"] },
   { id: "L093", line: "- shell option argument: on its pinned pages, a shell's -o, +o, -O, +O, --rcfile and --init-file take the next word", pins: ["FLAG:shell option argument", "SUB:H29", "SUB:H30", "SUB:H40", "SUB:H41"] },
-  { id: "L094", line: "PREFILTER (passesPrefilter): a source is parsed when its text, raw or unescaped, holds DRIVER_NEEDLE (hyperunix, any case).", pins: ["SUB:A190", "SUB:A192", "PREFILTER:hex escape"] },
-  { id: "L095", line: "unescaped decodes, in one pass, UNESCAPE_FORMS:", pins: ["PREFILTER:hex escape", "SUB:T0028"] },
+  { id: "L094", line: "PREFILTER (passesPrefilter): on its pinned pages, a source is parsed when its text, raw or unescaped, holds DRIVER_NEEDLE (hyperunix, any case).", pins: ["SUB:A190", "SUB:A192", "PREFILTER:hex escape"] },
+  { id: "L095", line: "unescaped decodes, on its pinned pages, in one pass, UNESCAPE_FORMS:", pins: ["PREFILTER:hex escape", "SUB:T0028"] },
   { id: "L096", line: "- hex escape: on its pinned pages, a backslash, x and two hex digits", pins: ["PREFILTER:hex escape", "SUB:S0001", "SUB:S0002"] },
   { id: "L097", line: "- unicode escape: on its pinned pages, a backslash, u and four hex digits", pins: ["PREFILTER:unicode escape", "SUB:S0006", "SUB:S0007"] },
   { id: "L098", line: "- braced unicode escape: on its pinned pages, a backslash, u and one to six hex digits in braces", pins: ["PREFILTER:braced unicode escape", "SUB:S0010", "SUB:A193", "SUB:T0021", "SUB:T0022"] },
@@ -3447,7 +3590,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L100", line: "- line continuation: on its pinned pages, a backslash before a line terminator, which reads as nothing", pins: ["PREFILTER:line continuation", "SUB:A195", "SUB:A196", "SUB:S0025", "SUB:S0027", "SUB:S0029", "SUB:T0025", "SUB:T0026"] },
   { id: "L101", line: "- escaped character: on its pinned pages, a backslash before any other character, which reads as that character (b, f, n, r, t and v as their controls)", pins: ["PREFILTER:escaped character", "SUB:S0037", "SUB:S0051", "SUB:W12", "SUB:T0016", "SUB:T0017", "SUB:T0018", "SUB:T0019", "SUB:T0020"] },
   { id: "L102", line: "- percent escape: on its pinned pages, a percent sign and two hex digits, decoded after the backslash escapes", pins: ["PREFILTER:percent escape", "SUB:A190", "SUB:S0041", "SUB:S0042", "SUB:T0027", "SUB:T0029", "SUB:T0136", "SUB:W-PF-PCT-ORDER", "SUB:C-PF-PCT-ORDER"] },
-  { id: "L103", line: "A hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).", pins: ["SUB:S0018", "SUB:S0066", "SUB:S0067", "SUB:W05a", "SUB:W07", "SUB:T0001", "SUB:T0002", "SUB:T0003", "SUB:T0004"] },
+  { id: "L103", line: "On its pinned pages, a hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).", pins: ["SUB:S0018", "SUB:S0066", "SUB:S0067", "SUB:W05a", "SUB:W07", "SUB:T0001", "SUB:T0002", "SUB:T0003", "SUB:T0004", "SUB:GP2W-HEX-X00", "SUB:GP2W-HEX-U0000", "SUB:GP2S-HEX-DEC-BRACED0", "SUB:GP2S-HEX-RGX-X00", "SUB:GP2S-HEX-RGX-U0000"] },
   { id: "L104", line: "RESIDUALS (RESIDUAL_FAMILIES; families these readers do not read, each with a pinned quiet row and a loud control in the census):", pins: ["RESIDUAL:R-WRAPPER"] },
   { id: "L105", line: "- R-WRAPPER: a process-table tool run through a word outside WRAPPERS, SHELL_KEYWORDS and SHELLS (a leading redirection included), by a script file a shell runs, or inside another language's inline program reads as no command head", pins: ["RESIDUAL:R-WRAPPER"] },
   { id: "L106", line: "- R-INDIRECT: a module specifier, override name or capability id reached through anything but a literal or a const chain to one (a let or var binding, an object member, a parameter, an imported name), or an environment call reached through call, apply or Reflect.apply, reads as no value", pins: ["RESIDUAL:R-INDIRECT", "SUB:S1002"] },
@@ -3495,6 +3638,14 @@ const SCOPE_LINES: readonly string[] = [
   "entry line not narrowed before - L005 to L007, L018, L030, L032, L033, L038, L039, L041, L048 to L051, L056 to L060 (L056",
   "without its words 'on any receiver'), L084 to L093 and L096 to L102; the RESIDUALS families are no claim and stay as they",
   "are; no reader code changes.",
+  "wb-tz2.24 cut #6 (this carrier's own refusal #5, gate-prep-2 / g10-gate-s214, O:2096: rung 1 of its L009, L010, L014, L026",
+  "and L103 claim sets) plants the witnesses of that refusal's 13 members, and of the four members its F1 finding names on",
+  "L012, L013, L063 and L082, and the seat sweep's plants of the eight further sub-forms a one-edit hollowing of those readers",
+  "left green on L012, L026 and L103, each on the line it defeats, and narrows, in place, to its pinned pages, as a clause of",
+  "its own, every paragraph claim line not narrowed before - L001 to L004, L008 to L014, L016, L025, L026, L028, L047, L063,",
+  "L079 to L083, L094, L095 and L103 - so every claim line before the RESIDUALS heading narrows; on a narrowed line the clause",
+  "bounds every claim word of that line, a sentence that runs on narrows to the pages of each line it spans, and a pinned page",
+  "is claimed as its own row reads it, by that row's kind; no reader code changes.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -5006,6 +5157,33 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:GP4W-OVK-COMPUTEDTPL:a191f8e8c710",
   "SUB_READINGS:GP4W-OVI-LEFTPAREN:5e2c91e80b3c",
   "SUB_READINGS:GP4W-OVI-LEFTAS:b8389bd9cac6",
+  "SUB_READINGS:GP2W-VAL-CHAIN4:e3ea145030d7",
+  "SUB_READINGS:GP2W-VAL-CHAIN5:083a6b35fd0c",
+  "SUB_READINGS:GP2W-VAL-PARENPAREN:a4c7b70622a3",
+  "SUB_READINGS:GP2W-VAL-PARENAS:4e8c13db63dd",
+  "SUB_READINGS:GP2W-VAL-ASAS:2af788fad0ad",
+  "SUB_READINGS:GP2W-VAL-ASSAT:63faad91923a",
+  "SUB_READINGS:GP2W-VAL-SATAS:9493dd7ac8d3",
+  "SUB_READINGS:GP2W-VAL-NNPAREN:1721368d5855",
+  "SUB_READINGS:GP2W-VAL-TPAREN:784f0b949541",
+  "SUB_READINGS:GP2W-CHN-ALIAS2:3a7a41ddd43f",
+  "SUB_READINGS:GP2W-CHN-ALIAS2-REQUIRE:a5ad33da79cb",
+  "SUB_READINGS:GP2W-ENV-LINK3:18a537153544",
+  "SUB_READINGS:GP2W-ENV-LINK3-PROTO:487a7a51c531",
+  "SUB_READINGS:GP2W-HEX-X00:8d3950c926af",
+  "SUB_READINGS:GP2W-HEX-U0000:611742c52d9c",
+  "SUB_READINGS:GP2W-CHN-KEYPAREN:fe283de952c7",
+  "SUB_READINGS:GP2W-CHN-MIXEDGLOBAL:a8316cce4407",
+  "SUB_READINGS:GP2W-CMD-VAREMPTY:194ee7b56e15",
+  "SUB_READINGS:GP2W-SHP-F4-UNDERSCORE:3767ec0ef837",
+  "SUB_READINGS:GP2S-ENV-PROTO3:c838f9be2d33",
+  "SUB_READINGS:GP2S-HEX-DEC-BRACED0:e3618cd11172",
+  "SUB_READINGS:GP2S-HEX-RGX-X00:ff86d6206625",
+  "SUB_READINGS:GP2S-HEX-RGX-U0000:966554595857",
+  "SUB_READINGS:GP2S-CHN-KEYAS:e575207bf9f8",
+  "SUB_READINGS:GP2S-CHN-KEYSAT:c92d3cf1b9a2",
+  "SUB_READINGS:GP2S-CHN-KEYNN:e9594d1b380f",
+  "SUB_READINGS:GP2S-CHN-KEYT:cd24685c7ad4",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -5115,22 +5293,22 @@ const FROZEN: readonly string[] = [
   "OWN_REQUIREMENTS:REFUSAL-1 U2:31e89042bf26",
   "OWN_REQUIREMENTS:REFUSAL-1 U3:52bc684ada95",
   "OWN_REQUIREMENTS:REFUSAL-1 F1:2d86ff7b70e3",
-  "CLAIM_LINES:L001:1934d5ba7165",
-  "CLAIM_LINES:L002:b84e12a4c993",
-  "CLAIM_LINES:L003:b3bb8d52d731",
-  "CLAIM_LINES:L004:f7eaeb419722",
+  "CLAIM_LINES:L001:f969b05e05e1",
+  "CLAIM_LINES:L002:88588c7e7289",
+  "CLAIM_LINES:L003:d531d465dbb6",
+  "CLAIM_LINES:L004:1dbaf6d4b098",
   "CLAIM_LINES:L005:acb3ce471f55",
   "CLAIM_LINES:L006:73dc9398bcb5",
   "CLAIM_LINES:L007:756970f80293",
-  "CLAIM_LINES:L008:d7af9d88c849",
-  "CLAIM_LINES:L009:e02d947ce53c",
-  "CLAIM_LINES:L010:ddb0f335d63b",
-  "CLAIM_LINES:L011:f27fa4d28c4d",
-  "CLAIM_LINES:L012:8e1bea49b41c",
-  "CLAIM_LINES:L013:9438e106cc75",
-  "CLAIM_LINES:L014:981b4577cfc0",
+  "CLAIM_LINES:L008:3b9b37bedf30",
+  "CLAIM_LINES:L009:733548c41a98",
+  "CLAIM_LINES:L010:95ab8ec18839",
+  "CLAIM_LINES:L011:ac29ec7cf445",
+  "CLAIM_LINES:L012:b749dce01636",
+  "CLAIM_LINES:L013:cb3acaac484c",
+  "CLAIM_LINES:L014:81f64f21dbf3",
   "CLAIM_LINES:L015:c391a9b942e4",
-  "CLAIM_LINES:L016:9e65049274e3",
+  "CLAIM_LINES:L016:c6df2a2b2dc7",
   "CLAIM_LINES:L017:51921069bc65",
   "CLAIM_LINES:L018:f7a2b0ce62b4",
   "CLAIM_LINES:L019:57eb86c41b09",
@@ -5139,10 +5317,10 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L022:b69bee034664",
   "CLAIM_LINES:L023:f57fa2bb36ac",
   "CLAIM_LINES:L024:b52cc99a34b6",
-  "CLAIM_LINES:L025:c36986c6373d",
-  "CLAIM_LINES:L026:3a968b4bf1a6",
+  "CLAIM_LINES:L025:4340371c3890",
+  "CLAIM_LINES:L026:14272cde0c8d",
   "CLAIM_LINES:L027:40d747567628",
-  "CLAIM_LINES:L028:9267de5ddc50",
+  "CLAIM_LINES:L028:997da9fd3719",
   "CLAIM_LINES:L029:9d82d99c4f3c",
   "CLAIM_LINES:L030:0eb2b6a90fad",
   "CLAIM_LINES:L031:372c29bf3ce6",
@@ -5161,7 +5339,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L044:f25fe45a459b",
   "CLAIM_LINES:L045:dafb7fd3eeb7",
   "CLAIM_LINES:L046:ed80aed8078d",
-  "CLAIM_LINES:L047:94bd841e1b70",
+  "CLAIM_LINES:L047:1e1f05e53e6e",
   "CLAIM_LINES:L048:238ec7d5337b",
   "CLAIM_LINES:L049:b35ddb084416",
   "CLAIM_LINES:L050:75172e899b20",
@@ -5177,7 +5355,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L060:444581432f68",
   "CLAIM_LINES:L061:de3eeb25a821",
   "CLAIM_LINES:L062:61ec54d8c773",
-  "CLAIM_LINES:L063:70676d295d9c",
+  "CLAIM_LINES:L063:93c09b895f58",
   "CLAIM_LINES:L064:25a5a42bde48",
   "CLAIM_LINES:L065:82e3a5d05e79",
   "CLAIM_LINES:L066:e7dfb4878999",
@@ -5193,11 +5371,11 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L076:cb0419b85eb2",
   "CLAIM_LINES:L077:486eb23799d1",
   "CLAIM_LINES:L078:fe92de4f66eb",
-  "CLAIM_LINES:L079:30a93aa4a003",
-  "CLAIM_LINES:L080:f5a44d48ff0e",
-  "CLAIM_LINES:L081:cfac3b4d2b7b",
-  "CLAIM_LINES:L082:02b00772c674",
-  "CLAIM_LINES:L083:2d15a3a4e4bb",
+  "CLAIM_LINES:L079:335263f650a0",
+  "CLAIM_LINES:L080:6ea3368d00a1",
+  "CLAIM_LINES:L081:82a8a17c974a",
+  "CLAIM_LINES:L082:a37d27ef74f5",
+  "CLAIM_LINES:L083:cd1d3955786f",
   "CLAIM_LINES:L084:6de55a10fb80",
   "CLAIM_LINES:L085:9aad199317b9",
   "CLAIM_LINES:L086:5f711dccbd34",
@@ -5208,8 +5386,8 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L091:e706b751b940",
   "CLAIM_LINES:L092:42cd39bdcf5f",
   "CLAIM_LINES:L093:cc38a65b7baf",
-  "CLAIM_LINES:L094:1c5c591c43e6",
-  "CLAIM_LINES:L095:1bfe028e561e",
+  "CLAIM_LINES:L094:5599ca641e69",
+  "CLAIM_LINES:L095:3a2bd85696bf",
   "CLAIM_LINES:L096:1798df703cde",
   "CLAIM_LINES:L097:30458f45f3d6",
   "CLAIM_LINES:L098:2ae1dd2b8195",
@@ -5217,7 +5395,7 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L100:29512b9707d6",
   "CLAIM_LINES:L101:74224518c015",
   "CLAIM_LINES:L102:0e72f8a84f7f",
-  "CLAIM_LINES:L103:4dfeb58a71b3",
+  "CLAIM_LINES:L103:3f443a675022",
   "CLAIM_LINES:L104:89be55de36a5",
   "CLAIM_LINES:L105:b4c4bef10db9",
   "CLAIM_LINES:L106:a5f2ce75286e",
@@ -5519,6 +5697,11 @@ const FROZEN: readonly string[] = [
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U3:757ea0ed36f3",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U4:7f58a2cb26e2",
   "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #4 U5:45cc189f94b7",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #5 U1:00d8bf492532",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #5 U2:663e2971d495",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #5 U3:fbc1d7b752dd",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #5 U4:951927d2666e",
+  "CARRIER_REQUIREMENTS:wb-tz2.24 refusal #5 U5:ee17f494ef5a",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-FIRSTONLY:591b0c832bdd",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NAMEONLY:9ce2827aa53c",
   "CARRIER_SURVIVORS_1:GP3-PDEFAULT-NOGLOBALMEMBER:be82470fb489",
@@ -5628,6 +5811,23 @@ const FROZEN: readonly string[] = [
   "CARRIER_SURVIVORS_4:GP4-OVK-COMPUTEDTPL:cd06e38bf511",
   "CARRIER_SURVIVORS_4:GP4-OVI-LEFTPAREN:eb5dea63ebe3",
   "CARRIER_SURVIVORS_4:GP4-OVI-LEFTAS:bb44010dc302",
+  "CARRIER_SURVIVORS_5:GP2-VAL-CHAIN4:485c5e66d336",
+  "CARRIER_SURVIVORS_5:GP2-VAL-CHAIN5:8eabdde15f3a",
+  "CARRIER_SURVIVORS_5:GP2-VAL-PARENPAREN:d43c72170501",
+  "CARRIER_SURVIVORS_5:GP2-VAL-PARENAS:5ff7cf7d0a19",
+  "CARRIER_SURVIVORS_5:GP2-VAL-ASAS:a0d0e668207a",
+  "CARRIER_SURVIVORS_5:GP2-VAL-ASSAT:b516db007621",
+  "CARRIER_SURVIVORS_5:GP2-VAL-SATAS:3f5423e72618",
+  "CARRIER_SURVIVORS_5:GP2-VAL-NNPAREN:c95299021cb5",
+  "CARRIER_SURVIVORS_5:GP2-VAL-TPAREN:f8686ffd2cb0",
+  "CARRIER_SURVIVORS_5:GP2-CHN-ALIAS2:d258123f1e43",
+  "CARRIER_SURVIVORS_5:GP2-ENV-LINK3:0f3e18b1670b",
+  "CARRIER_SURVIVORS_5:GP2-HEX-X00:37f08e754a96",
+  "CARRIER_SURVIVORS_5:GP2-HEX-U0000:f2fad57815d1",
+  "CARRIER_SURVIVORS_5:GP2-CHN-KEYPAREN:a258b4849eb9",
+  "CARRIER_SURVIVORS_5:GP2-CHN-MIXEDGLOBAL:331eada504d1",
+  "CARRIER_SURVIVORS_5:GP2-CMD-VAREMPTY:fcffebdfae48",
+  "CARRIER_SURVIVORS_5:GP2-SHP-F4-UNDERSCORE:7e07fbeda63f",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -6114,7 +6314,7 @@ describe(SUITE, () => {
       const sources: Record<string, string> = { description: record.description, notes: record.notes };
       expect(CARRIER_REQUIREMENTS.filter(requirement => !(sources[requirement.source] ?? "").includes(requirement.text)).map(requirement => requirement.key)).toStrictEqual([]);
     });
-    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4) and refusal #4 verdict (cut #5), in both directions", () => {
+    it("the requirement lines are exactly the description's acceptance sentence, the R-B424 fold note's U1 and U2 slugs and the UNMET slugs of the carrier's own refusal #1 verdict (cut #2), refusal #2 verdict (cut #3), refusal #3 verdict (cut #4), refusal #4 verdict (cut #5) and refusal #5 verdict (cut #6, each UNMET line's slug before its first '. '), in both directions", () => {
       const record = exportRecord(CARRIER);
       const acceptance = record.description.indexOf("Acceptance (");
       const next = record.description.indexOf(" Merge trunk INTO the branch first", acceptance);
@@ -6144,6 +6344,10 @@ describe(SUITE, () => {
             .split("\n")
             .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-.*?\. MEMBERS?[ :]/.test(line))
             .map(line => line.slice(line.indexOf(": ") + 2, line.search(/\. MEMBERS?[ :]/))),
+          ...carrierVerdictBlock(5)
+            .split("\n")
+            .filter(line => /^U\d+: U\d+-[A-Z]+-CONFIRMED-[A-Za-z0-9-]*\. /.test(line))
+            .map(line => line.slice(line.indexOf(": ") + 2, line.indexOf(". "))),
         ],
       });
     });
@@ -6289,6 +6493,42 @@ describe(SUITE, () => {
     });
   });
 
+  describe("CARRIER REFUSAL #5 ANCHOR (wb-tz2.24 cut #6, outside this census): this carrier's own refusal #5 verdict in the tracker export", () => {
+    it("the members its UNMET item lines and its riding F1 finding line list (U1 to U5 and F1), each with its item, its line, its sub-form and in order, are the CARRIER_SURVIVORS_5 rows, and every other GP2 member id it names up to its Routing line is one of the two its F3 finding states red (CARRIER_RED_5, in that finding's order); each member's witnesses, by the kind, text (each \\n a line break, white space folded) and delivered reading the verdict states, in order, are its row's GP2W SUB-READINGS rows and pins of its line's CLAIM_LINES row; and each row's line narrows to its pinned pages as a clause of its own", () => {
+      const block = carrierVerdictBlock(5);
+      const listed = carrierMembers5(block);
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const subs = new Map(SUB_READINGS.map(row => [row.id, row] as const));
+      const folded = (text: string): string => text.replace(/\s+/g, " ").trim();
+      expect({
+        members: listed.map(member => `${member.item} ${member.id} ${member.line} (${member.subForm})`),
+        witnesses: listed.map(member => `${member.id}: ${member.witnesses.map(witness => `${witness.kind} ${folded(witness.text)} => ${JSON.stringify(witness.delivered)}`).join(" | ")}`),
+        unparsed: carrierMentions5(block)
+          .filter(id => !listed.some(member => member.id === id))
+          .sort(),
+        red: carrierRed5(block),
+        unpinned: CARRIER_SURVIVORS_5.flatMap(row => row.witnesses.filter(witness => !(pins.get(row.line) ?? []).includes(`SUB:${witness}`)).map(witness => `${row.id} ${witness}`)),
+        unnarrowed: CARRIER_SURVIVORS_5.filter(row => !narrowsToPinnedPages(lines.get(row.line) ?? "")).map(row => row.id),
+      }).toStrictEqual({
+        members: CARRIER_SURVIVORS_5.map(row => `${row.item} ${row.id} ${row.line} (${row.subForm})`),
+        witnesses: CARRIER_SURVIVORS_5.map(
+          row =>
+            `${row.id}: ${row.witnesses
+              .map(id => {
+                const sub = subs.get(id);
+                return sub === undefined ? `<no witness row ${id}>` : `${sub.kind} ${folded(sub.text)} => ${JSON.stringify(sub.expected)}`;
+              })
+              .join(" | ")}`,
+        ),
+        unparsed: [...CARRIER_RED_5].sort(),
+        red: CARRIER_RED_5,
+        unpinned: [],
+        unnarrowed: [],
+      });
+    });
+  });
+
   describe("CLASS GUARD (wb-tz2.20 cuts #2 to #4): each sub-form the helper header's own words name or enumerate in the four bound classes has at least one pinned row (the words, outside this census; one row per derived sub-form, never one per hollowing)", () => {
     it("ARGUMENT POSITIONS: every claim line naming a first argument or an argument value pins an 'a later argument:' row", () => {
       const named = helperClaimLines()
@@ -6417,6 +6657,15 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
+    it("FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, refusal #5): every paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a '- ' entry, the section headings and the lines a sentence runs on over among them - narrows to its pinned pages as a clause of its own, so that with the FAIL-CLOSED ENTRIES case every claim line before that heading narrows", () => {
+      const lines = helperClaimLines();
+      const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
+      const paragraphs = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line !== "" && !entry.line.startsWith("- "));
+      expect({ paragraphs: paragraphs.map(entry => entry.id), unnarrowed: paragraphs.filter(entry => !narrowsToPinnedPages(entry.line)).map(entry => entry.id) }).toStrictEqual({
+        paragraphs: ["L001", "L002", "L003", "L004", "L008", "L009", "L010", "L011", "L012", "L013", "L014", "L015", "L016", "L025", "L026", "L028", "L042", "L043", "L044", "L045", "L047", "L063", "L079", "L080", "L081", "L082", "L083", "L094", "L095", "L103"],
+        unnarrowed: [],
+      });
+    });
   });
 
   describe("LOCATIONS (wb-tz2.20 seat sweep): each C2, driver and shape form read where it stands, in a function body, a block, a class static block and a namespace", () => {
@@ -6502,6 +6751,7 @@ describe(SUITE, () => {
         ...rows("CARRIER_SURVIVORS_2", CARRIER_SURVIVORS_2),
         ...rows("CARRIER_SURVIVORS_3", CARRIER_SURVIVORS_3),
         ...rows("CARRIER_SURVIVORS_4", CARRIER_SURVIVORS_4),
+        ...rows("CARRIER_SURVIVORS_5", CARRIER_SURVIVORS_5),
       ]).toStrictEqual(FROZEN);
     });
   });

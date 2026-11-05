@@ -49,23 +49,31 @@
  * entry line not narrowed before - L005 to L007, L018, L030, L032, L033, L038, L039, L041, L048 to L051, L056 to L060 (L056
  * without its words 'on any receiver'), L084 to L093 and L096 to L102; the RESIDUALS families are no claim and stay as they
  * are; no reader code changes.
+ * wb-tz2.24 cut #6 (this carrier's own refusal #5, gate-prep-2 / g10-gate-s214, O:2096: rung 1 of its L009, L010, L014, L026
+ * and L103 claim sets) plants the witnesses of that refusal's 13 members, and of the four members its F1 finding names on
+ * L012, L013, L063 and L082, and the seat sweep's plants of the eight further sub-forms a one-edit hollowing of those readers
+ * left green on L012, L026 and L103, each on the line it defeats, and narrows, in place, to its pinned pages, as a clause of
+ * its own, every paragraph claim line not narrowed before - L001 to L004, L008 to L014, L016, L025, L026, L028, L047, L063,
+ * L079 to L083, L094, L095 and L103 - so every claim line before the RESIDUALS heading narrows; on a narrowed line the clause
+ * bounds every claim word of that line, a sentence that runs on narrows to the pages of each line it spans, and a pinned page
+ * is claimed as its own row reads it, by that row's kind; no reader code changes.
  *
- * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
- * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
- * never answers for it (refusal #3 U1, refusal #4 U1); an expando entry the binder records for a property write (f.tag = v)
- * is no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:
+ * BINDINGS (bindingOf): on its pinned pages, an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
+ * program over the very source (no lib, no module resolution, nothing emitted), so, on its pinned pages, a same-named declaration in another scope
+ * never answers for it (refusal #3 U1, refusal #4 U1); on its pinned pages, an expando entry the binder records for a property write (f.tag = v)
+ * is, on its pinned pages, no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:
  * - import: on its pinned pages, the symbol is declared in the file by an import (named, default or namespace) or an import-equals
  * - global: on its pinned pages, the symbol has no declaration in the file, or only declarations in an ambient context
  * - local: on its pinned pages, any other declaration in the file
- * VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const
- * declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), through a chain of such names (a cycle reads no value); parentheses, as,
- * satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,
- * a parameter, an imported name, a computed string) is no value.
- * CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with
- * a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const
- * initialized by a member chain or a name, as that chain's spellings too.
+ * VALUES (stringValues): on its pinned pages, a string literal or a no-substitution template, or an identifier whose own binding is a local const
+ * declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), on its pinned pages, through a chain of such names (a cycle reads no value); parentheses, as,
+ * satisfies, non-null and <T> assertions are, on its pinned pages, read through. Any other value (a let or var binding, an ambient const, a member,
+ * a parameter, an imported name, a computed string) is, on its pinned pages, no value.
+ * CHAINS (calleeChains): on its pinned pages, a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with
+ * a leading globalThis. or global. dropped; on its pinned pages, a root identifier reads as its own spelling and, when its own binding is a const
+ * initialized by a member chain or a name, on its pinned pages, as that chain's spellings too.
  * ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; on its pinned pages - its RK pages among them, one per kind, each holding a global only at the operand places that page spells (a global at any other operand place, and a root of these kinds on any other page, are NOT CLAIMED, among them a new's second argument, a new's arguments after the first, a new's spread argument, a new of a member's second argument, a call's third argument, a call's spread argument, the second argument of a call by a bare name, an optional call's second argument, a super() call's second argument, a bind call's second argument, a call() call's third argument, an apply() call's argument list as a chain, an import() call's options argument, a template's third span, a tagged template's second span, an array literal's fifth element, an object literal's computed key, an object literal method's return value, an object literal getter's return value, a function's parameter default, an arrow function's parameter default, a class's instance property initializer, a class method's return value, a class's computed member name, a JSX element's attribute value, a JSX element's spread attribute, a self-closing JSX element's spread attribute, the operand of yield*, the middle of a three-element comma list and a call through a non-null callee) - a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in
- * (a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
+ * (a root of any other kind is NOT CLAIMED); on its pinned pages, a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
  * - initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)
  * - reassignment: on its pinned pages, for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)
  * - destructured: on its pinned pages, a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index (an array element at index 3 or later is NOT CLAIMED); a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)
@@ -74,10 +82,10 @@
  * - call argument: on its pinned pages, the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, a let or var variable, and the argument at a fourth or later parameter's position, are NOT CLAIMED); a rest parameter reads nothing
  * - immediately invoked: on its pinned pages, the argument at a parameter's position when its function is itself the callee (the argument at a third or later parameter's position is NOT CLAIMED)
  * - call() argument: on its pinned pages, the argument one place later in a call() of the function by either route (an optional call(), and the argument for a third or later parameter, are NOT CLAIMED)
- * A chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it
- * leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).
+ * On its pinned pages, a chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it
+ * leaves the environment object, on its pinned pages, through constructor, __proto__ or prototype (refusal #4 F3).
  *
- * C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is "<what> :<line>"):
+ * C2 TAMPER FORMS (tampersIn, C2_FORMS; on its pinned pages, each finding is "<what> :<line>"):
  * - spy: on its pinned pages, a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, "open") (with one or two later arguments too, each the string "get" or "set" as those pages spell it; three or more later arguments, a later argument that is a name, and a later argument of any other value are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose "open" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)
  * - global stub: on its pinned pages, a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)
  * - watched reference: on its pinned pages, a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a call's third or later argument, a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)
@@ -96,7 +104,7 @@
  * MOCKS (moduleMockSpecifiers): on its pinned pages, every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, a callee spelled as an element access or reached through an alias of the mock, and a call of an arity or an argument spelling those pages do not spell, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),
  * or of the import() its first argument is, on its pinned pages (a template argument, and an import() of an arity or an argument spelling those pages do not spell, are NOT CLAIMED).
  *
- * C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):
+ * C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; on its pinned pages, the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):
  * - value import [import]: on its pinned pages, an import declaration of an HX module with a clause that is not type-only
  * - side-effect import [import]: on its pinned pages, an import declaration of an HX module with no clause
  * - export-from [import]: on its pinned pages, an export declaration from an HX module that is not type-only, named or namespace
@@ -112,7 +120,7 @@
  * - override in [override]: on its pinned pages, HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)
  * - override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = <member>(...) with the string "a<n>" at every other place n and, for the const form, const KEY = "HYPERUNIX_HX" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or callee spelling, an optional call, and a callee spelled as an element access, are NOT CLAIMED)
  * - override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; on its pinned pages only, each POSITIONS page export const v = process.env.<member>(...) with the string "a<n>" at every other place n and, for the const form, const KEY = "HYPERUNIX_HX" on the line before; any other place or value form, a spread argument, a chain of const names, another argument, statement or receiver spelling, and an optional call, are NOT CLAIMED)
- * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):
+ * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; on its pinned pages, a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):
  * - member: on its pinned pages, a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)
  * - element key: on its pinned pages, an element key value read as ["name"] (one read through an optional chain is NOT CLAIMED)
  * - type member: on its pinned pages, the right side of a qualified name in a type
@@ -128,11 +136,11 @@
  * - kill name literal: on its pinned pages, a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)
  * - pid name literal: on its pinned pages, a plain text pid (trimmed)
  * - process-table command: on its pinned pages, any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool
- * F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read
- * (failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The
- * modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,
- * double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes VAR=value words and SHELL_KEYWORDS, and
- * reads a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:
+ * F3 COMMAND HEADS (commandHeads): on its pinned pages, the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read
+ * (failClosedCommandHeads: on its pinned pages, every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The
+ * modelled reader, on its pinned pages, splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,
+ * double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes, on its pinned pages, VAR=value words and SHELL_KEYWORDS, and
+ * reads, on its pinned pages, a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:
  * - lone dash: on its pinned pages, a lone "-" among a wrapper's options is a flag (su's --login, env's -i)
  * - options end: on its pinned pages, "--" ends a wrapper's options, so a dash word after it is the command head
  * - option argument: on its pinned pages, an option of a wrapper's table taking an argument takes the next word
@@ -143,8 +151,8 @@
  * - shell command flag: on its pinned pages, a shell's first command flag (a dash word holding c, --command, or --command=) reads the first operand after the shell's options as a command
  * - shell options end: on its pinned pages, "--" or a lone "-" among a shell's options ends them, so the next word is the command even when it starts with a dash
  * - shell option argument: on its pinned pages, a shell's -o, +o, -O, +O, --rcfile and --init-file take the next word
- * PREFILTER (passesPrefilter): a source is parsed when its text, raw or unescaped, holds DRIVER_NEEDLE (hyperunix, any case).
- * unescaped decodes, in one pass, UNESCAPE_FORMS:
+ * PREFILTER (passesPrefilter): on its pinned pages, a source is parsed when its text, raw or unescaped, holds DRIVER_NEEDLE (hyperunix, any case).
+ * unescaped decodes, on its pinned pages, in one pass, UNESCAPE_FORMS:
  * - hex escape: on its pinned pages, a backslash, x and two hex digits
  * - unicode escape: on its pinned pages, a backslash, u and four hex digits
  * - braced unicode escape: on its pinned pages, a backslash, u and one to six hex digits in braces
@@ -152,7 +160,7 @@
  * - line continuation: on its pinned pages, a backslash before a line terminator, which reads as nothing
  * - escaped character: on its pinned pages, a backslash before any other character, which reads as that character (b, f, n, r, t and v as their controls)
  * - percent escape: on its pinned pages, a percent sign and two hex digits, decoded after the backslash escapes
- * A hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).
+ * On its pinned pages, a hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).
  * RESIDUALS (RESIDUAL_FAMILIES; families these readers do not read, each with a pinned quiet row and a loud control in the census):
  * - R-WRAPPER: a process-table tool run through a word outside WRAPPERS, SHELL_KEYWORDS and SHELLS (a leading redirection included), by a script file a shell runs, or inside another language's inline program reads as no command head
  * - R-INDIRECT: a module specifier, override name or capability id reached through anything but a literal or a const chain to one (a let or var binding, an object member, a parameter, an imported name), or an environment call reached through call, apply or Reflect.apply, reads as no value
