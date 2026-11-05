@@ -55,7 +55,10 @@
  * the out-of-file roster and the cases agree', A1, A2, A3, B1, B2, B3, C1, C2, D1 and 'registration: every judged pin registered
  * once, ran in run mode, was not inverted and reached its witness'. Each judged case's assertion target is its witness in
  * test/fixtures/speculative-inference-roster.json, compared by toStrictEqual; at 525939979d9e every case matched (11 passed of
- * 11).
+ * 11), at 8946e729053e with the JUDGED-SET ANCHOR and its READER PLANTS below (wb-3ox2 cut #2) every case matched again
+ * (11 passed of 11), at a6246a106590 with cut #3's READER PLANTS, HOLD PLANTS and judgedHoldsOf every case matched again
+ * (11 passed of 11), and at 5b7de70c6fa6 with cut #4's plant lines (P2, P6, P7, P8), NEAR_LEADS and the anchor's narrowed
+ * claim words every case matched again (11 passed of 11).
  * CLAIM RULE: this census claims exactly its witnesses, each held to that roster, and nothing wider:
  *  (1) REAL-TREE READINGS: each reading of the modules the walk reads, of the three cores, of the two real prototypes and of the
  *      installed packages, at the tree this census runs on, equals its witness - A1; A2's sites, topLevel and module floor; B1;
@@ -66,12 +69,16 @@
  *  (3) NAMED CONTROLS: each constructed control's reading of its own text, at the path it is read at, equals its witness - A3,
  *      the B2 controls, the B3 controls, vocabulary, prototypeControl and descriptorControl, C2, the D1 controls and
  *      warmStartControls. A control claims precisely its own text, never the syntax category it samples.
+ *  (4) THE JUDGED-SET ANCHOR (wb-3ox2): J1-J3 and R1 at the tree this census runs on, and each READER PLANT's and HOLD
+ *      PLANT's reading of its own text, held to its literal in the judged-set case, not to the roster (THE ANCHOR'S CLAIM
+ *      RULE, below). A plant claims precisely its own text, never the class of texts its description names.
  * A sentence of this file that names a form, a position, an edge or a reading claims it only through one of these witnesses. A
  * form, position, modifier, descriptor, clause, edge, path, context or pairing that no witness holds is NOT CLAIMED by this
  * census, whatever a reader does with it today: the DEFINITIONS below describe the readers' algorithms and claim nothing beyond
- * (1)-(3).
- * FALSIFIERS (each positive claim's independent falsifier; nothing else is claimed to red this census). The plants of (2) turn
- * the real-tree readings of (1) red with a src text of exactly the plant's form at exactly the plant's places: A2 missedPlants
+ * (1)-(4).
+ * FALSIFIERS (each positive claim's independent falsifier; nothing else is claimed to red this census; (4)'s falsifiers are
+ * FALSIFIERS OF THE ANCHOR, below). The plants of (2) turn the real-tree readings of (1) red with a src text of exactly the
+ * plant's form at exactly the plant's places: A2 missedPlants
  * appends `import { query as ws05PlantQuery } from "@anthropic-ai/claude-agent-sdk";` to one module of the walk at a time and
  * reads that planted walk through the walk's own site reading (censusOf, reusing the facts of each unchanged module, then
  * sitesList): exactly the walk's sites plus one query site at that module - so that binding appended to any one module the walk
@@ -261,6 +268,146 @@
  * C1). The last case walks this file's vitest task tree against the roster's test list. The two acceptance requirements of C/D
  * also equal the filing's Acceptance clauses in the tracked .beads/issues.jsonl export: deleting D everywhere, including its
  * roster, still reds that anchor.
+ * JUDGED-SET ANCHOR (wb-3ox2, the landing-875 F1 follow-up of the carrier cut; no existing reader, control, plant, witness, row
+ * or roster entry changes; four filing readers beside them: filingRow, the judged-set case's former inline export read moved out
+ * unchanged, and pinnedSetOf, shapeOf and judgedHoldsOf): the judged set is also held outside this file and the roster, to the
+ * filing's pinned reader set - the case list pinnedSetOf reads from the filing's row (a measurement, not a claim: at 5b7de70c6fa6
+ * the row's notes hold one line that opens with "PINNED READER SET ", 291 of 383 notes lines, and pinnedSetOf reads from it the
+ * judged-set case, A1, A2, A3, B1, B2, B3, C1, C2, D1 and the registration case). The judged-set case holds three sequences to
+ * that reading through judgedHoldsOf (its verdicts held on H1-H5): J1 ROWS' pins, in row order, to the reading's pins, in its
+ * order; J2 the frozen shape - each row's id and pin count, in row order - to the shape shapeOf reads from those pins (A:3, B:3,
+ * C:2, D:1); J3 this file's registered test titles, in order, to the reading's cases, in its order. The last case holds its
+ * walked titles to those cases too (R1).
+ * THE ANCHOR'S CLAIM RULE (cut #4, the rule-19 ENUMERATE-THE-RESOLVABLE cut R-B553 orders after refusal #3 froze the
+ * first-lead-line claim words; no reader changes): the anchor claims exactly (a) J1-J3 and R1 at the tree this census runs on,
+ * over the filing readers' readings of the filing's row there, and (b) each READER PLANT's and HOLD PLANT's reading of its own
+ * text, held to its literal in the judged-set case. A plant claims precisely its own text, never the class of texts its
+ * description names: the descriptions below name the form each text holds, and the readers' doc comments name their steps without
+ * claiming them beyond (a) and (b). What a filing reader reads from any other text - other notes, or the filing's row in a form
+ * no plant holds - and so whether this census reds on it, is NOT CLAIMED (NOT CLAIMED BY THE ANCHOR, below).
+ * READER PLANTS (P1-P10 pinnedSetOf's and S1 shapeOf's; P1-P5 and S1 are cut #2's, P6-P10 and P2's letter-case lines cut #3's,
+ * the lines marked cut #4 this cut's; each is held to its reading in the judged-set case before J1-J3; PLANT_X and PLANT_Y are
+ * lines that open with the lead and hold this file's case lists (its opening and a list) 'x first', A1, B1 and 'x last' and
+ * 'y first', C1 and 'y last', each followed by its close and ".", PLANT_Y with "(y)" after the lead as the filing's line has
+ * "(claim"; READ_X is PLANT_X's cases and pins):
+ *  P1 the notes PLANT_X, "a later line" and PLANT_Y read as READ_X.
+ *  P2 the notes holding, ahead of PLANT_X, PLANT_Y after "see ", after "carriage" and a carriage return, and after a space, and
+ *     PLANT_Y with its lead written "PINNED READER SET:", "pinned reader set " and "Pinned Reader Set ", and (cut #4) in each
+ *     NEAR_LEADS spelling - two spaces after PINNED; a no-break space (U+00A0) or a tab in place of the space after PINNED; a tab
+ *     or a no-break space in place of the trailing space; a full-width P (U+FF30) in place of the P - read as READ_X.
+ *  P3 the line "PINNED READER SET z, each judged case: " followed by PLANT_X's case list with its close, "; then " and PLANT_Y's
+ *     case list with its close reads as READ_X.
+ *  P4 these notes read as no cases and no pins: "a line" and "another line"; the line "PINNED READER SET x: no case list on this
+ *     line, each judged case."; PLANT_X without its close; PLANT_X with " too" before its close; and PLANT_X with "see " before
+ *     its first title.
+ *  P5 no filing, and a filing whose notes are an array holding PLANT_X, read as no cases and no pins.
+ *  P6 these first lines, each followed by PLANT_X, read as no cases and no pins: the bare lead "PINNED READER SET "; the lead and
+ *     "note: the case list of this filing is pinned on a later line."; the lead and "x: no case list on this line, each judged
+ *     case."; PLANT_X without its close; "PINNED READER SET x, each judged case: " and PLANT_X's case list with no close; PLANT_X
+ *     with "see " before its first title; and (cut #4) the note with a tab in place of the space after "note:"; the note with
+ *     "case list" in double quotes; the lead and "note:" followed by the note's sentence 1200 times (67223 characters); and the
+ *     lead and "note: the PINNED READER SET line of this filing follows." (the lead twice).
+ *  P7 these notes, no line of which opens with the lead, read as no cases and no pins: PLANT_X with its lead written
+ *     "READER SET "; "a line" and PLANT_X after "see "; PLANT_X after a space; PLANT_X with its lead in lower case; "carriage", a
+ *     carriage return and PLANT_X; and (cut #4) PLANT_X with its lead in each NEAR_LEADS spelling.
+ *  P8 the line "PINNED READER SET f: ", this file's case-list opening, one of these lists and ", each judged case." reads as held
+ *     - as no cases and no pins: '' as the first title; '' as the last; 'f's first' and 'f's last' (an apostrophe in a title); D,
+ *     d1 and AB1 as the pin; A1,B1 (no space after the comma); A1, B1, and before the last title (a serial comma); a space before
+ *     the first title; a space after the last; and (cut #4) two spaces, and a tab, in place of the space after the first title's
+ *     comma; two spaces after a pin's comma; two spaces before "and"; two spaces after it; a tab before it; and a tab after it -
+ *     and as cases and pins: 'f first, each title', Z12, A3 and 'f last' as those four cases and the pins Z12 and A3; 'g first',
+ *     Q7 and 'g last' as those three and Q7; 'f first', A1, A1 and 'f last' as those four and A1 and A1; 'f: (1.2; x/y) - #9!',
+ *     A1 and 'f last.' as those three and A1; and (cut #4) 'f first', B123 and 'f last' as those three and B123, and 'f "first"',
+ *     A1 and 'f "last"' as those three and A1 - each in the list's order.
+ *  P9 these two lead lines read as no cases and no pins: the lead, 39 dashes and PLANT_X's case list with its close (no opening:
+ *     the list starts 57 characters in, where a list read from a missing opening at index -1 would start); and PLANT_X without
+ *     its close, followed by ".".
+ *  P10 the line "PINNED READER SET z: ", another file's opening "test/workbench-other-census.test.ts cases " and list 'o first',
+ *     C1 and 'o last' with its close, "; " and PLANT_X's case list with its close reads as READ_X, and that line with the other
+ *     file's list alone reads as no cases and no pins.
+ *  S1 shapeOf reads the pins B1, A1 and B12 as B:2, A:1.
+ * HOLD PLANTS (judgedHoldsOf, cut #3's; each over a filing whose lead line names 'h first', B1, B2, A1 and 'h last' in that
+ * order): H1 rows B (B1, B2) and A (A1) with the titles 'h first', B1, B2, A1 and 'h last' agree on J1, J2 and J3; H2 the same
+ * titles with row A holding B1 and B2 and row B holding A1 disagree on J2 alone; H3 row B holding B2 and B1, with the titles in
+ * that order, disagrees on J1 and J3; H4 the last title 'h other' disagrees on J3 alone; H5 row B (B1, B2) alone, with its
+ * titles, disagrees on all three.
+ * FALSIFIERS OF THE ANCHOR (each a member of this cut's battery, measured on a throwaway copy of this file - with a roster copy
+ * or a one-row export page where it names one - and listed where it first reds the judged-set case; nothing else is claimed to
+ * red it):
+ *  (a) the real-tree holds: a row removed from every literal of this file and the roster (ROWS, the frozen-shape literal, IMPL
+ *     and the roster's rows and tests) reds both cases, rows A and B at J1 and rows C and D at the acceptance anchor, each also
+ *     at the filing in the last case; a pin removed the same way, at each of A1-A3, B1-B3, C1, C2 and D1, pin B3 moved into row
+ *     A, pins A1 and A2 swapped, rows A and B swapped, pin A2 renamed A7, row D renamed E with its pin, a pin A4 added, and rows
+ *     A and B trading their pins, each in those literals, red both cases, at J1 and at the filing; ROWS reversed at the holds'
+ *     call reds it at J1; row A renamed in ROWS, the frozen-shape literal and the roster, rows A and B trading their ids there,
+ *     and rows A and B trading their pins there and in the filing's line red it at J2; the last case removed, with or without its
+ *     roster title, the walked titles sorted, and the judged-set case left out of its own walk red it at J3; the last case
+ *     retitled, and a case added, each with the roster's titles, red both cases, at J3 and at the filing; the judged-set case
+ *     removed reds the last case at the roster's titles, removed with its roster title at the filing, and skipped at its run-mode
+ *     check.
+ *  (b) the plants: P1 the lead set to "PINNED READER SET  " (a second trailing space) or to "PINNED READER SET (", the close set
+ *     to ", each judged cases", the list's last pin dropped, the find reversed (reverse() before find, or findLast), the last of
+ *     the lines that open with the lead, and the lines after the first - the first, third and fourth also red the last case at
+ *     the filing; P2 the find changed to read a line that holds the lead anywhere (also reds the last case at the filing), the
+ *     line after trimStart(), the lead "PINNED READER SET" without its trailing space, the notes split at a carriage return too,
+ *     the line upper-cased, or both it and the lead lower-cased, and (cut #4) the line with its white space collapsed to one
+ *     space, with its runs of spaces collapsed, with its tabs read as spaces, with its no-break spaces read as spaces, NFKC- or
+ *     NFKD-normalized, with a full-width P read as P, its first three words compared with the lead's, or the lead followed by any
+ *     white-space character; P3 the line's last opening, a close searched from the line's start, the line's last close, and
+ *     (refusal #3 U5 (b)) the lead set to "PINNED READER SET x" or the close to ", each judged case.", the last two also at the
+ *     filing; P4 the list read to the line's end when no close follows its opening, the list pattern without its start anchor ^
+ *     or its end anchor $, and a no-list reading of one empty case; P5 the notes read through String(); S1 shapeOf's rows sorted,
+ *     its rows reversed, each row counted once, a row moved to its last-seen place, and a pin's row read with its first digit
+ *     removed; P6 the find changed to read only a lead line that holds PINNED_OPEN, PINNED_CLOSE, both, PINNED_CLOSE after
+ *     PINNED_OPEN, an apostrophe, " cases '", " cases ", a final period, a colon, "test/", ", ", "judged", a capital letter
+ *     followed by a digit, or more characters than the lead; to read a line whose end-trimmed text opens with the lead; to skip a
+ *     lead line that ends with a space or holds "note"; and (cut #4) to skip a lead line that holds a tab, a double quote or the
+ *     lead a second time, or that has 4096 or more characters, or 65536 or more; P7 a fallback, when no line opens with the lead,
+ *     to the whole notes, their first line, the first line that holds PINNED_OPEN, the first that holds the lead anywhere, or the
+ *     first whose upper-cased text opens with the lead, and (cut #4) to the first that opens with the lead after its white space
+ *     is collapsed to one space, after its runs of spaces are collapsed, after its tabs or its no-break spaces are read as
+ *     spaces, after NFKC normalization, or after a full-width P is read as P, or that opens with the lead followed by any
+ *     white-space character; P8 the list trimmed, the close shortened to ", each", the pins sorted or read once each, and the
+ *     list pattern changed to read a pin's digits as optional, as one digit only, or as one or two digits only; a pin's letter
+ *     from A-Z or a-z, as one or more letters, or from A-D only; two or more pins; the first title empty or across an apostrophe;
+ *     the last title empty or across an apostrophe; both titles from [\w ,:-] only, both without a double quote, or the first
+ *     alone or the last alone without one; the pins' separator with its space optional; a comma before "and"; and (cut #4) one or
+ *     more spaces after the first title's comma, one or more white-space characters there, or a space or a tab there; one or more
+ *     spaces after a pin's comma; one or more spaces on each side of "and", one white-space character on each side, white space
+ *     before it, white space after it, a space or a tab before it, or a space or a tab after it; P9 the close searched for when
+ *     the line holds no opening, and the list read up to the line's last character when no close follows; P10 the opening
+ *     shortened to "cases "; H1-H5 judgedHoldsOf's own pins or the filing's pins sorted, its own shape sorted, the shape read
+ *     from the sorted pin ids or from the rows' own pins, the filing's shape sorted, its own titles or the filing's cases sorted,
+ *     the titles' inner entries compared with the pins, and a hold judged by its length alone, without its length, by its sorted
+ *     entries or by any one entry.
+ * NOT CLAIMED BY THE ANCHOR (scope sentences; each family is named where a gate measured members of it, and each
+ * "keeps every plant" sentence is measured on the member named after it):
+ *  THE FIRST LEAD LINE (refusal #3's frozen class, R-B553): which line pinnedSetOf reads, and what it reads, from notes whose
+ *     first line that opens with the lead is none of the plants' lines is NOT CLAIMED by this census. A find that also skips the
+ *     lead lines holding a character or a word that no plant's lead line and not the filing's holds, longer than every plant's
+ *     lead line and the filing's, or holding the lead more often than any of them, keeps every plant and the filing's row
+ *     (measured: lead lines holding "~", and lead lines of 70000 characters or more).
+ *  THE LEAD'S SPELLING: which lines read as opening with the lead beyond the filing's line and the plants' lines is NOT CLAIMED.
+ *     A lead match that also accepts a line beginning with a spelling of the lead that begins no plant's line and no line of the
+ *     filing's notes - another white-space or compatibility character at any place, or another letter case - keeps every plant
+ *     and the filing's row (measured: an en space, U+2002, in place of the space after PINNED).
+ *  THE NO-LEAD NOTES (refusal #3 U3's guarded set): what pinnedSetOf reads from notes no line of which opens with the lead,
+ *     beyond P4's first notes, P5's and P7's notes, is NOT CLAIMED. A fallback taken on such notes to a line beginning with a
+ *     spelling of the lead that begins no plant's line and no line of the filing's notes keeps every plant and the filing's row
+ *     (measured: a fallback to the en-space spelling).
+ *  THE LIST FORM: which list texts read whole, and as what, beyond the plants' lists and the filing's, is NOT CLAIMED. A list
+ *     pattern that also reads whole, or also refuses, a list text that is no plant's list and not the filing's - another
+ *     white-space character before or after "and" or after a comma, a pin of more digits than P8's, a title character no P8 title
+ *     holds - keeps every plant and the filing's row (measured: a no-break space before "and" read as a space; pins of one to
+ *     three digits only).
+ *  THE OPENING AND THE CLOSE: which opening and which close pinnedSetOf reads on a line beyond the plants' lines and the filing's
+ *     is NOT CLAIMED.
+ * shapeOf's reading of any pin list other than the filing's, S1's and H1-H5's, and judgedHoldsOf's reading of rows, titles and a
+ * filing other than ROWS with this file's registered titles and the filing's row, and H1-H5's, are NOT CLAIMED by this census.
+ * Every other row of the export is NOT CLAIMED as a judged-set anchor by this census. This anchor holds the pins, the frozen
+ * shape and the test titles only: the other roster-held literals - the row labels, the vocabularies, the readings' regular
+ * expressions, the floors, the checklist, the license clause and the witnesses - are NOT CLAIMED as held outside this file and
+ * the roster by this anchor (what A1, B1, C1 and the filing's Acceptance clauses hold of them is unchanged).
  * NOT CLAIMED: a causal/dynamic proof that model-side or injected calls are never driven by plane changes is NOT CLAIMED by this
  * census; C1 proves the module-closure reading, not dynamic effect reachability. An arbitrary future seam appearing without a
  * model binding or /specul/i vocabulary in a plant's form at the plant's places is NOT CLAIMED. D1 is an until-then tripwire, not
@@ -1823,27 +1970,246 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   },
 };
 
+/** The filing this census anchors on outside its own literals, wb-km7q.7's row in the tracked export: the judged-set case's
+ * former inline export read, moved here unchanged. */
+function filingRow(): unknown {
+  return readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")
+    .filter(line => line.includes('"id":"wb-km7q.7"'))
+    .map((line): unknown => JSON.parse(line))
+    .find(entry => isObject(entry) && entry.id === "wb-km7q.7");
+}
+/** The words around this file's case list in the filing's pinned reader set (wb-km7q.7 cut #4's delivery note). */
+const PINNED_LEAD = "PINNED READER SET ";
+const PINNED_OPEN = "test/workbench-speculative-inference-census.test.ts cases ";
+const PINNED_CLOSE = ", each judged case";
+/** A pinned reader set as pinnedSetOf reads it: the cases in order (the first title, the pin ids, the last title) and the pins. */
+interface PinnedSet {
+  readonly cases: readonly string[];
+  readonly pins: readonly string[];
+}
+/** Reads the filing's pinned reader set - the cases (the first title, the pins and the last title, in order) and the pins of
+ * this file's case list on a line of the filing's notes - by the steps below (the notes; one line of them, chosen by the find;
+ * the text between PINNED_OPEN and PINNED_CLOSE on it; the cases and pins the list pattern matches there). This census claims
+ * of these steps only their readings of the filing's row at the tree it runs on (J1-J3 and R1) and of READER PLANTS P1-P10,
+ * each held to its literal (THE ANCHOR'S CLAIM RULE, JUDGED-SET ANCHOR); what they read from any other text is NOT CLAIMED. */
+function pinnedSetOf(filing: unknown): PinnedSet {
+  const notes = isObject(filing) && typeof filing.notes === "string" ? filing.notes : "";
+  const line = notes.split("\n").find(entry => entry.startsWith(PINNED_LEAD)) ?? "";
+  const open = line.indexOf(PINNED_OPEN);
+  const close = open < 0 ? -1 : line.indexOf(PINNED_CLOSE, open);
+  const list = close < 0 ? "" : line.slice(open + PINNED_OPEN.length, close);
+  const found = /^'([^']+)', ((?:[A-Z]\d+, )*[A-Z]\d+) and '([^']+)'$/.exec(list);
+  if (found?.[1] === undefined || found[2] === undefined || found[3] === undefined) return { cases: [], pins: [] };
+  const pins = found[2].split(", ");
+  return { cases: [found[1], ...pins, found[3]], pins };
+}
+/** The frozen shape of a pin list, `${row}:${count}` per row: a pin's row is its id without its trailing digits, rows in
+ * first-seen order, a row's pins counted wherever they stand. Claimed on the filing's pins, on READER PLANT S1 and, through
+ * judgedHoldsOf, on HOLD PLANTS H1-H5 only. */
+function shapeOf(pins: readonly string[]): string[] {
+  const counts = new Map<string, number>();
+  for (const pin of pins) {
+    const row = pin.replace(/\d+$/, "");
+    counts.set(row, (counts.get(row) ?? 0) + 1);
+  }
+  return [...counts].map(([row, count]) => `${row}:${count}`);
+}
+/** A row as judgedHoldsOf reads it: its id and its pin ids, in order. */
+interface JudgedRow {
+  readonly id: string;
+  readonly pins: readonly string[];
+}
+/** One judged-set hold as judgedHoldsOf reads it: this file's sequence, the filing's sequence and whether the two agree - the same
+ * length and the same entry at every position. */
+interface Hold {
+  readonly own: readonly string[];
+  readonly named: readonly string[];
+  readonly agree: boolean;
+}
+/** The three judged-set holds (J1-J3) as judgedHoldsOf reads them. */
+interface JudgedHolds {
+  readonly pins: Hold;
+  readonly shape: Hold;
+  readonly cases: Hold;
+}
+/** The judged-set holds (wb-3ox2 cut #3): of a row list, the titles a file registers and a filing, J1 the rows' pins, in row
+ * order, beside the pin ids pinnedSetOf reads, in the filing's order; J2 each row's `${id}:${pin count}`, in row order, beside
+ * the shape shapeOf reads from those pin ids; J3 the registered titles, in order, beside the cases pinnedSetOf reads, in the
+ * filing's order - each hold agreeing only on the same length and the same entry at every position. Claimed on ROWS with this
+ * file's registered titles and the filing's row, and on HOLD PLANTS H1-H5 only (JUDGED-SET ANCHOR). */
+function judgedHoldsOf(rows: readonly JudgedRow[], registered: readonly string[], filing: unknown): JudgedHolds {
+  const pinned = pinnedSetOf(filing);
+  const hold = (own: readonly string[], named: readonly string[]): Hold => ({
+    own,
+    named,
+    agree: own.length === named.length && own.every((entry, index) => entry === named[index]),
+  });
+  return {
+    pins: hold(rows.flatMap(row => row.pins), pinned.pins),
+    shape: hold(rows.map(row => `${row.id}:${row.pins.length}`), shapeOf(pinned.pins)),
+    cases: hold(registered, pinned.cases),
+  };
+}
+/** A judged-set reading's three verdicts, in J1-J3 order (HOLD PLANTS). */
+function agreementOf(holds: JudgedHolds): readonly boolean[] {
+  return [holds.pins.agree, holds.shape.agree, holds.cases.agree];
+}
+/** READER PLANTS (wb-3ox2 cut #2): constructed pinned-reader-set lines the judged-set case reads through pinnedSetOf, each
+ * reading held to its literal there (JUDGED-SET ANCHOR). PLANT_X and PLANT_Y open with the lead and list different cases;
+ * PLANT_Y follows the lead with a parenthesis, as the filing's line does. */
+const PLANT_X = "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last', each judged case.";
+const PLANT_Y = "PINNED READER SET (y): test/workbench-speculative-inference-census.test.ts cases 'y first', C1 and 'y last', each judged case.";
+const READ_X: PinnedSet = { cases: ["x first", "A1", "B1", "x last"], pins: ["A1", "B1"] };
+const READ_NONE: PinnedSet = { cases: [], pins: [] };
+/** READER PLANTS P2 and P7 (wb-3ox2 cut #4): six spellings of the lead, each read in P2 ahead of PLANT_X and in P7 alone - the
+ * lead with two spaces after PINNED; with a no-break space (U+00A0) or a tab in place of the space after PINNED; with a tab or a
+ * no-break space in place of its trailing space; and with a full-width P (U+FF30) in place of its P (JUDGED-SET ANCHOR). */
+const NEAR_LEADS: readonly string[] = [
+  "PINNED  READER SET ",
+  `PINNED${String.fromCodePoint(0xa0)}READER SET `,
+  "PINNED\tREADER SET ",
+  "PINNED READER SET\t",
+  `PINNED READER SET${String.fromCodePoint(0xa0)}`,
+  `${String.fromCodePoint(0xff30)}INNED READER SET `,
+];
+/** HOLD PLANTS (wb-3ox2 cut #3): the filing the five hold plants read, naming 'h first', B1, B2, A1 and 'h last' in that order,
+ * and the titles registered in that order (JUDGED-SET ANCHOR). */
+const HOLD_FILING = { notes: "PINNED READER SET h: test/workbench-speculative-inference-census.test.ts cases 'h first', B1, B2, A1 and 'h last', each judged case." };
+const HOLD_TITLES = ["h first", "B1", "B2", "A1", "h last"];
+
 /** The judged pins whose case reached its witness assertion; the last case reads it. */
 const REACHED = new Set<string>();
 
 describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:1"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     // An external requirement anchor: coordinated row/roster deletion must not delete the filing's acceptance clause.
-    const filing = readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")
-      .filter(line => line.includes('"id":"wb-km7q.7"'))
-      .map((line): unknown => JSON.parse(line))
-      .find(entry => isObject(entry) && entry.id === "wb-km7q.7");
+    const filing = filingRow();
     expect(isObject(filing) && typeof filing.notes === "string").toBe(true);
     const notes = isObject(filing) && typeof filing.notes === "string" ? filing.notes : "";
     const acceptance = /Acceptance: ([^\n]+)\./.exec(notes)?.[1] ?? "";
     expect(acceptance.length).toBeGreaterThan(0);
     expect(ROWS.flatMap(row => row.requirement === undefined ? [] : [row.requirement]))
       .toEqual(acceptance.split(", plus "));
+    // READER PLANTS and HOLD PLANTS (wb-3ox2 cuts #2, #3 and #4): the filing readers on constructed inputs, each reading held to
+    // its literal, before they read the filing (JUDGED-SET ANCHOR).
+    expect(pinnedSetOf({ notes: [PLANT_X, "a later line", PLANT_Y].join("\n") }), "P1 of PLANT_X, a later line and PLANT_Y, PLANT_X's list is read").toStrictEqual(READ_X);
+    expect(pinnedSetOf({ notes: [`see ${PLANT_Y}`, `carriage\r${PLANT_Y}`, ` ${PLANT_Y}`, PLANT_Y.replace("PINNED READER SET ", "PINNED READER SET:"), PLANT_Y.replace("PINNED READER SET ", "pinned reader set "), PLANT_Y.replace("PINNED READER SET ", "Pinned Reader Set "), ...NEAR_LEADS.map(lead => PLANT_Y.replace("PINNED READER SET ", lead)), PLANT_X].join("\n") }), "P2 none of these lines ahead of PLANT_X is read: PLANT_Y after other text, a carriage return or a space, and PLANT_Y with its lead written without its trailing space, in lower or mixed case, or in a NEAR_LEADS spelling").toStrictEqual(READ_X);
+    expect(pinnedSetOf({ notes: "PINNED READER SET z, each judged case: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last', each judged case; then test/workbench-speculative-inference-census.test.ts cases 'y first', C1 and 'y last', each judged case." }), "P3 on this line, the list from its first opening to the first close after that opening is read").toStrictEqual(READ_X);
+    expect([
+      pinnedSetOf({ notes: "a line\nanother line" }),
+      pinnedSetOf({ notes: "PINNED READER SET x: no case list on this line, each judged case." }),
+      pinnedSetOf({ notes: "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last'" }),
+      pinnedSetOf({ notes: "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last' too, each judged case." }),
+      pinnedSetOf({ notes: "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases see 'x first', A1, B1 and 'x last', each judged case." }),
+    ], "P4 each of these notes reads as no cases and no pins: no lead line, no opening on it, no close after it, a word after the last title, a word before the first").toStrictEqual([READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE]);
+    expect([pinnedSetOf(undefined), pinnedSetOf({ notes: [PLANT_X] })], "P5 no filing, and a filing whose notes are an array, read as no cases and no pins").toStrictEqual([READ_NONE, READ_NONE]);
+    expect(shapeOf(["B1", "A1", "B12"]), "S1 shapeOf reads B1, A1, B12 as B:2, A:1").toEqual(["B:2", "A:1"]);
+    expect([
+      "PINNED READER SET ",
+      "PINNED READER SET note: the case list of this filing is pinned on a later line.",
+      "PINNED READER SET x: no case list on this line, each judged case.",
+      "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last'",
+      "PINNED READER SET x, each judged case: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last'",
+      "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases see 'x first', A1, B1 and 'x last', each judged case.",
+      // Cut #4: the note with a tab after "note:", with "case list" in double quotes, its sentence 1200 times, and the lead twice.
+      "PINNED READER SET note:\tthe case list of this filing is pinned on a later line.",
+      'PINNED READER SET note: the "case list" of this filing is pinned on a later line.',
+      `PINNED READER SET note:${" the case list of this filing is pinned on a later line.".repeat(1200)}`,
+      "PINNED READER SET note: the PINNED READER SET line of this filing follows.",
+    ].map(first => pinnedSetOf({ notes: [first, PLANT_X].join("\n") })), "P6 each of these first lead lines, holding no whole case list, reads as no cases and no pins ahead of PLANT_X").toStrictEqual([
+      READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE,
+    ]);
+    expect([
+      PLANT_X.replace("PINNED READER SET ", "READER SET "),
+      ["a line", `see ${PLANT_X}`].join("\n"),
+      ` ${PLANT_X}`,
+      PLANT_X.replace("PINNED READER SET ", "pinned reader set "),
+      `carriage\r${PLANT_X}`,
+      // Cut #4: PLANT_X with its lead in each NEAR_LEADS spelling.
+      ...NEAR_LEADS.map(lead => PLANT_X.replace("PINNED READER SET ", lead)),
+    ].map(notes => pinnedSetOf({ notes })), "P7 each of these notes, no line of which opens with the lead, reads as no cases and no pins, although a line holds a whole case list").toStrictEqual([
+      READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE,
+    ]);
+    expect([
+      "'', A1 and 'f last'",
+      "'f first', A1 and ''",
+      "'f's first', A1 and 'f last'",
+      "'f first', A1 and 'f's last'",
+      "'f first', D and 'f last'",
+      "'f first', d1 and 'f last'",
+      "'f first', AB1 and 'f last'",
+      "'f first', A1,B1 and 'f last'",
+      "'f first', A1, B1, and 'f last'",
+      " 'f first', A1 and 'f last'",
+      "'f first', A1 and 'f last' ",
+      // Cut #4: a widened separator - two spaces or a tab after the first title's comma, two spaces after a pin's comma, two
+      // spaces before or after "and", and a tab before or after "and".
+      "'f first',  A1 and 'f last'",
+      "'f first',\tA1 and 'f last'",
+      "'f first', A1,  B1 and 'f last'",
+      "'f first', A1  and 'f last'",
+      "'f first', A1 and  'f last'",
+      "'f first', A1\tand 'f last'",
+      "'f first', A1 and\t'f last'",
+      "'f first, each title', Z12, A3 and 'f last'",
+      "'g first', Q7 and 'g last'",
+      "'f first', A1, A1 and 'f last'",
+      "'f: (1.2; x/y) - #9!', A1 and 'f last.'",
+      // Cut #4: a three-digit pin, and a double quote in each title.
+      "'f first', B123 and 'f last'",
+      "'f \"first\"', A1 and 'f \"last\"'",
+    ].map(list => pinnedSetOf({ notes: `PINNED READER SET f: test/workbench-speculative-inference-census.test.ts cases ${list}, each judged case.` })), "P8 each of these lists reads whole as the cases and pins held here, or as no cases and no pins").toStrictEqual([
+      READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE,
+      READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE, READ_NONE,
+      { cases: ["f first, each title", "Z12", "A3", "f last"], pins: ["Z12", "A3"] },
+      { cases: ["g first", "Q7", "g last"], pins: ["Q7"] },
+      { cases: ["f first", "A1", "A1", "f last"], pins: ["A1", "A1"] },
+      { cases: ["f: (1.2; x/y) - #9!", "A1", "f last."], pins: ["A1"] },
+      { cases: ["f first", "B123", "f last"], pins: ["B123"] },
+      { cases: ['f "first"', "A1", 'f "last"'], pins: ["A1"] },
+    ]);
+    expect([
+      // No case-list opening: the list starts 57 characters in, where a list read from a missing opening (index -1) would start.
+      `PINNED READER SET ${"-".repeat(39)}'x first', A1, B1 and 'x last', each judged case.`,
+      // No close: the last title is followed by one character.
+      "PINNED READER SET x: test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last'.",
+    ].map(notes => pinnedSetOf({ notes })), "P9 these two lead lines, the one with no opening and the one with no close after its opening, read as no cases and no pins").toStrictEqual([READ_NONE, READ_NONE]);
+    expect([
+      "PINNED READER SET z: test/workbench-other-census.test.ts cases 'o first', C1 and 'o last', each judged case; test/workbench-speculative-inference-census.test.ts cases 'x first', A1, B1 and 'x last', each judged case.",
+      "PINNED READER SET z: test/workbench-other-census.test.ts cases 'o first', C1 and 'o last', each judged case.",
+    ].map(notes => pinnedSetOf({ notes })), "P10 on these two lines this file's list is read and the other file's list is not").toStrictEqual([READ_X, READ_NONE]);
+    expect([
+      judgedHoldsOf([{ id: "B", pins: ["B1", "B2"] }, { id: "A", pins: ["A1"] }], HOLD_TITLES, HOLD_FILING),
+      judgedHoldsOf([{ id: "A", pins: ["B1", "B2"] }, { id: "B", pins: ["A1"] }], HOLD_TITLES, HOLD_FILING),
+      judgedHoldsOf([{ id: "B", pins: ["B2", "B1"] }, { id: "A", pins: ["A1"] }], ["h first", "B2", "B1", "A1", "h last"], HOLD_FILING),
+      judgedHoldsOf([{ id: "B", pins: ["B1", "B2"] }, { id: "A", pins: ["A1"] }], ["h first", "B1", "B2", "A1", "h other"], HOLD_FILING),
+      judgedHoldsOf([{ id: "B", pins: ["B1", "B2"] }], ["h first", "B1", "B2", "h last"], HOLD_FILING),
+    ].map(agreementOf), "H1-H5 these five readings give these verdicts: [J1 pins, J2 shape, J3 cases]").toStrictEqual([
+      [true, true, true],
+      [true, false, true],
+      [false, true, false],
+      [true, true, false],
+      [false, false, false],
+    ]);
+    // The judged-set anchor outside this file and the roster (wb-3ox2): the filing's pinned reader set names every case of this
+    // file, so a row or a pin removed from every literal here and in the roster reds this case (J1-J3, through judgedHoldsOf).
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const holds = judgedHoldsOf(ROWS, registered, filing);
+    expect(holds.pins.agree, `J1 the judged pins, in order, are the pin ids the filing's pinned reader set names: ${holds.pins.own.join(", ")} | ${holds.pins.named.join(", ")}`).toBe(true);
+    expect(holds.shape.agree, `J2 the frozen shape is the one those pin ids imply by their row letters: ${holds.shape.own.join(", ")} | ${holds.shape.named.join(", ")}`).toBe(true);
+    expect(holds.cases.agree, `J3 this file's registered tests are the cases the filing's pinned reader set names, in its order: ${holds.cases.own.join(" / ")} | ${holds.cases.named.join(" / ")}`).toBe(true);
 
     expect({
       launchExports: LAUNCH_EXPORTS, providerPackages: PROVIDER_PACKAGES, wholeSubpaths: WHOLE_SUBPATHS, turnMembers: TURN_MEMBERS,
@@ -1888,6 +2254,7 @@ describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist cens
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles, "every registered test of this file, exactly and in the order the filing's pinned reader set names its cases").toEqual([...pinnedSetOf(filingRow()).cases]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
