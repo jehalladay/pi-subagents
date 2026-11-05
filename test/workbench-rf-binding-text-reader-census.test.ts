@@ -5,15 +5,48 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #10 IS THE SIXTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B558 of refusal #9
+ * CUT #11 IS THE SEVENTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B573 of refusal #10
+ * (O:2111): claims equal to pins, made true in the measured direction. It kills refusal #10's two surviving reader mutants with
+ * pins that read the name's alternatives in full at the reads the mutants change, each planting the census page the gate names
+ * for it, byte for byte, at a fresh path (the helper's MEMBERS GP2-L2-PJ1-PROGRAM-TAIL, XP-FORMS's page read by the arguments
+ * probe, and GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE, SC-SHORTHAND's page read by the shorthands probe, with its further
+ * twin pin GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND, XF-SHORTHAND's page read so; all in scope, the part whose
+ * read-site words they sit on; REFUSAL #10 below), and it narrows BINDING (1)'s claim at a read in the part itself: at each read
+ * (1), (2) and (3) claim, they claim a name's reading only as far as the page's pin reads it, two readings of the name there
+ * under which that pin reads its page alike not told apart, and which of the two the reader gives NOT CLAIMED; the part names the
+ * readings through which a pin reads a name's alternatives only in part (a programs pin's launch program, a registrations or a
+ * registration pin's entries and the fields a spread sets in them, an exact pin's texts or unresolved, a words pin's words, and
+ * an expression around the read that passes a bound, reads an earlier opaque part or reads an alternative once that another of
+ * its parts also reads). THIS CENSUS CLAIMS A NAME'S READING ONLY AS ITS PINS READ IT. The cutting seat measured the class on cut
+ * #10's pages with a one-read survey (each of the 931 reads the census's page pins make, changed alone at that read as an extra
+ * alternative, a suffixed or a prefixed text, an opaque binding, swapped or dropped alternatives, another kind or a resolving
+ * binding, the pin's reading compared with its reading unchanged, and the change counted only where the read's own alternatives
+ * change in the pin's reading): 35 reads hide such a change from their pin, 15 of them at reads (1) names (by the seat's
+ * classifier of (1)'s read sites), in four families: XP-FORMS's programs read of RF (refusal #10's U1a), SC-SHORTHAND's and
+ * XF-SHORTHAND's registration reads of their shorthand ids (its U1b), eight spread reads on four properties pages
+ * (XF-SPREAD-OPAQUE's MIXED, XF-DEPTH's B7 and B8, XF-OPAQUE-MEMBERS' GET, SET and METHOD, and XF-OVERRIDES' BASE twice, the
+ * family refusal #10's F14 left UNDETERMINED) and four reads inside X-BOUNDS-JOINS's bound joins (A5 and B13, twice each); the 20
+ * others are reads (1) does not name. On cut #11's own pages the survey covers 937 reads: the same 35 hide a change, none of them
+ * among the six reads of the three new pins. The roster entry of each of the eight pins holding those 15 reads names its hidden
+ * reads, and the narrowed words claim at each of them only what its pin reads. Found by this cut's own probes beside that class:
+ * four fields mutants of the reader (a numeric key, another name key, another shorthand and another accessor key, each setting no
+ * field or making none opaque) each read 0 failed | 297 passed; only the first changes a form a page plants, XF-KEYS's numeric
+ * key, whose field no pin reads, and READINGS (4) is narrowed in the part itself to the id and effectClass fields its pages'
+ * registration entries read, every other field NOT CLAIMED (XF-KEYS's roster entry narrowed with it). Every pin of cut #10 stands
+ * with its page, path and expected reading byte for byte. Each part of the claim claims its words over exactly the forms its
+ * row's pages plant, the falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the
+ * claim's NOT CLAIMED section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A form
+ * no page plants is not claimed, and no row's silence about a form is a claim about it.
+ *
+ * CUT #10 WAS THE SIXTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B558 of refusal #9
  * (O:2083): claims equal to pins, kill-or-pin per member group, and BINDING (1) narrowed to exactly the reads the census's pins
- * read. It pins refusal #9's nineteen surviving reader mutants with every twin page the gate names for them, byte for byte and
+ * read. It pinned refusal #9's nineteen surviving reader mutants with every twin page the gate names for them, byte for byte and
  * at the gate's paths (the helper's MEMBERS S211-H-LET, S211-H-VAR, S211-H-FUNCTION, S211-H-CLASS, S211-H-ENUM,
  * S211-H-NOINIT-PLAIN, S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT, S211-B1-FOR-CONST-NONBLOCK-BODY, with its further twin pin
  * S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW, S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST, S211-B2-NOINIT-FOROF, S211-B2-NOINIT-FORIN,
  * S211-B2-DESTRUCTURING, S211-B2-LET, S211-B2-VAR, S211-C1-ARROW-PARAMETER-BLOCK-BODY, S211-X1-VOID-CALL, S211-X1-WRAPPED-CALL,
  * S211-X4-LET-VAR-STATEMENT and S211-T-UNION-VAR-READ-LATER, all in scope, the part whose read-site words they sit on; REFUSAL
- * #9 below), each read as the reader reads it, and it narrows BINDING (1)'s read-site words in the part itself instead of
+ * #9 below), each read as the reader reads it, and it narrowed BINDING (1)'s read-site words in the part itself instead of
  * adding words beside them: (1), (2) and (3) claim a name's reading only on a census page, a module one of the census's pins
  * plants (at that pin's path, or at each of its paths), and there only at a read of the name that the page's pin reads, at one
  * of the sites (1) lists; a read on any module that is no census page, a read on a census page that its pin does not read and
@@ -21,11 +54,11 @@
  * (1)'s own words, a read some pin plants and reads, and no read of another module is claimed. The other direction is not
  * claimed: pins that read a name at a site (1) does not list (a read in a block, a function-like or a namespace nested in the
  * declaration's scope, in a for statement's head, before the declaration or inside another expression, among them) keep their
- * readings as pins beyond the words. Every pin of cut #9 stands with its page, path and expected reading byte for byte. THIS
- * CENSUS CLAIMS EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the
- * falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED
- * section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is
- * not claimed, and no row's silence about a form is a claim about it.
+ * readings as pins beyond the words. Its header said THIS CENSUS CLAIMS EXACTLY ITS PINS; refusal #10 measured that false (its
+ * U2): at three reads (1) names, XP-FORMS's spawn(RF, []) and SC-SHORTHAND's and XF-SHORTHAND's shorthand ids, the page's pin
+ * reads the name's alternatives only through the launch program's first word or the registration's reactivefiber. entries, so a
+ * pin reading a read did not pin the reading (2) states there, and cut #11 narrows (1) to what each pin reads. Every pin of cut
+ * #9 stood with its page, path and expected reading byte for byte.
  *
  * CUT #9 WAS THE FIFTH RESTATEMENT over the landed carrier wb-jwc.13, under the post-ladder disposition R-B540 of refusal #8
  * (O:2057): claims equal to pins, kill-or-pin per member group, the words narrowed to the pinned forms. It pinned refusal #8's
@@ -120,6 +153,9 @@
  *  rendered;
  *  programs: for each call of a launcher identifier (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork),
  *  `launcher:` and its program;
+ *  arguments: for each such call, `launcher:` and its first argument's alternatives rendered as texts renders them;
+ *  shorthands: for each shorthand property, in source order, its name, `:` and that name's alternatives rendered so (the name
+ *  read through the binding of its value);
  *  registrations: the module's registration entries; registration: each object literal's registration() entries in source
  *  order, joined by ", ", one line per registration;
  *  kind: bindingKindOf on a synthetic declaration (a type alias, which no module text binds a value to);
@@ -154,8 +190,10 @@
  *  S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT, S211-B1-FOR-CONST-NONBLOCK-BODY (with S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW),
  *  S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST, S211-B2-NOINIT-FOROF, S211-B2-NOINIT-FORIN, S211-B2-DESTRUCTURING, S211-B2-LET,
  *  S211-B2-VAR, S211-C1-ARROW-PARAMETER-BLOCK-BODY, S211-X1-VOID-CALL, S211-X1-WRAPPED-CALL, S211-X4-LET-VAR-STATEMENT and
- *  S211-T-UNION-VAR-READ-LATER in scope; each pinned by the twin page its refusal names (the gate's evidence, byte for byte),
- *  read as the reader reads it.
+ *  S211-T-UNION-VAR-READ-LATER in scope; refusal #10's GP2-L2-PJ1-PROGRAM-TAIL and GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE
+ *  (with GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND) in scope; each pinned by the twin page its refusal names (the
+ *  gate's evidence, byte for byte; refusal #10's twin pages are census pages, which its members' pins plant at fresh paths and
+ *  read in full), read as the reader reads it.
  *
  * REFUSAL #2 (gate-prep-1, run g10-gate-s161, O:1546), ITS UNMET ITEMS AND HOW EACH IS CURED: U1a's six eval contexts by M61
  * (a with body, at a .js path), M62 (an object literal's method), M63 (a template substitution), M64 (an arrow function's
@@ -319,6 +357,25 @@
  * the other direction NOT CLAIMED. S211-X2 and S211-X3, which S1-OUTER, S2-OUTER and the three PREMISE pins kill (S211-X2 now
  * also S211-X4-LET-VAR-STATEMENT, S211-X3 also S3-OUTER, SC-SHORTHAND and five properties pins), stand killed.
  *
+ * REFUSAL #10 (gate-prep-2, run g10-gate-s215, O:2111; disposition R-B573), ITS UNMET ITEMS AND HOW CUT #11 CURES EACH (each
+ * member's page is the census page the gate names for it, byte for byte, at a fresh path, its sha256/16 its PAGES digest; kill
+ * and narrow): U1a (GP2-L2-PJ1-PROGRAM-TAIL, a string-literal const read as the first of two or more arguments of a call reading
+ * its text plus " gp2", which XP-FORMS's programs pin reads only through its first word, spawn:rf either way) by the pin
+ * GP2-L2-PJ1-PROGRAM-TAIL (XP-FORMS's page at src/workbench/providers/zz-gp2-l2-pj1-0.ts, read by the arguments probe: spawn(RF,
+ * []) reads spawn:"rf") and by BINDING (1)'s narrowed words (RF's reading at XP-FORMS's own path claimed only as its program
+ * reads it); U1b (GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE, a shorthand property named id that reads a string-literal const
+ * reading that literal ?? "gp2", which SC-SHORTHAND's and XF-SHORTHAND's registrations pins read only through their
+ * reactivefiber. entries) by the pin GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE (SC-SHORTHAND's page at
+ * src/workbench/providers/zz-gp2-l2-pj2-0.ts, read by the shorthands probe: the export's id reads
+ * id:"reactivefiber.render.commit" and the alias's id:<opaque id:parameter>) with
+ * GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND (XF-SHORTHAND's page at src/workbench/providers/zz-gp2-l2-pj2-1.ts:
+ * id:"reactivefiber.c" and effectClass:"read") and by the narrowed words (each id's reading at its own census page claimed only
+ * as its registration entries read it); the class item U1 beside its members by the narrowed words, which claim at every read (1)
+ * names only what the page's pin reads, and by the roster entries of the eight pins whose reads the cutting seat's survey found
+ * hiding a change (CUT #11 above); and U2 (the header sentence THIS CENSUS CLAIMS EXACTLY ITS PINS false at U1's three reads) by
+ * this header's cut #11 sentence, restated in the measured direction. The not-claimed control NC1 (a typeof-wrapped probe call on
+ * a page that is no census page) stays NOT CLAIMED.
+ *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
@@ -345,7 +402,14 @@
  * read on a census page (one before the
  * declaration, in a block, a function-like, a class or a namespace nested in a scope that holds the declaration, in a for
  * statement's head, in any other statement, or not such a call's only argument) are NOT CLAIMED by these parts, the MEMBERS'
- * pins reading some such reads as the reader reads them; (2) it resolves only when that binding is exactly one declaration, a
+ * pins reading some such reads as the reader reads them; and at each read these parts claim, they claim a name's reading only as
+ * far as the page's pin reads it: two readings of the name there under which that pin reads its page alike are not told apart by
+ * these parts, and which of the two the reader gives is NOT CLAIMED (a programs pin reads a name's alternatives only through the
+ * launch program READINGS (3) reads, a registrations or a registration pin only through the entries READINGS (5) reads and the
+ * fields a spread sets in them, READINGS (4), an exact pin only through READINGS (1)'s texts or unresolved and a words pin only
+ * through READINGS (2)'s words, and any pin reads them only in part inside an expression around the read that passes a bound,
+ * TEXT (12), reads an earlier opaque part, TEXT (11), or reads an alternative once that another of its parts also reads, TEXT
+ * (13)); (2) it resolves only when that binding is exactly one declaration, a
  * const with an initializer that declares the name itself (an element of a destructuring pattern never resolves) and that the
  * checker binds as no alias, outside an ambient (declare) context and not exported from a namespace body, and it then reads as
  * that initializer's alternatives; this part is claimed only for a const declared at the top level, plain or exported, in a
@@ -477,8 +541,10 @@
  * method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside any of those wrappers,
  * is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an object literal whose own
  * fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep) sets the fields it holds;
- * any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque and may
- * set every field; (5) a registration: an object literal whose id field has a text alternative starting reactivefiber.
+ * any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque and may set
+ * every field; this part is claimed only as far as READINGS (5) reads its row's pages, for an object's id and effectClass fields
+ * (what sets each, and the value or the opaque member's label it reads): which other field a member sets, and the value it sets
+ * there, are NOT CLAIMED; (5) a registration: an object literal whose id field has a text alternative starting reactivefiber.
  * (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such text),
  * read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each once, ID
  * the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque LABEL>),
@@ -519,11 +585,16 @@
  * not name: SC-SHADOW's read before a function's const, A10's, SC-SHORTHAND's and the PREMISE row's reads in return statements,
  * GP17-C1-PROGRAM's two-argument call, C-PARAMETER's second read, E2's and Y-SHADOW's nested reads, X-BOUNDS-WRAPPERS',
  * XF-WRAPPED's, M19's and R-ALT4's reads inside a function, and the export rows' and the TEXT and READINGS rows' reads inside
- * other expressions, each held as its pin reads it); a reading the reader gives after it has read the same module with another
- * probe (each pin reads its page on a fresh reader, with its one probe: no two pins read one page at one path, as FRESH READERS
- * holds); and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's, #2's, #5's, #6's and #7's members by
- * naming each one's source (the tracker export carries their notes in the bead's notes field), and this census reads only the
- * export's title and description, never its notes.
+ * other expressions, each held as its pin reads it); the readings cut #11's narrowed BINDING (1) names NOT CLAIMED (at a read (1)
+ * names, a reading of the name under which the page's pin reads its page alike with the one (1), (2) and (3) state: refusal #10's
+ * members at XP-FORMS's, SC-SHORTHAND's and XF-SHORTHAND's own paths, whose pins read them only through the program and the
+ * registration entries, the members' own pins reading them in full at fresh paths, the eight spread reads and the four bound
+ * reads the cutting seat's survey found, and the same-class reads beside them); the fields cut #11's narrowed READINGS (4) names
+ * NOT CLAIMED (a field other than id and effectClass, XF-KEYS's numeric key's among them, and the value a member sets there); a
+ * reading the reader gives after it has read the same module with another probe (each pin reads its page on a fresh reader, with
+ * its one probe: no two pins read one page at one path, as FRESH READERS holds); and the gate members' notes: MEMBERS anchors
+ * R-B115's members and refusal #1's, #2's, #5's, #6's and #7's members by naming each one's source (the tracker export carries
+ * their notes in the bead's notes field), and this census reads only the export's title and description, never its notes.
  */
 
 import { createHash } from "node:crypto";
@@ -558,6 +629,8 @@ type Probe =
   | "words"
   | "loads"
   | "programs"
+  | "arguments"
+  | "shorthands"
   | "registrations"
   | "registration"
   | "paths"
@@ -906,6 +979,25 @@ const OVERRIDES_READING = [
   "<opaque ...h()>:<opaque ...h()>",
 ];
 
+/**
+ * Three census pages, each planted by its own row's pin and again, byte for byte at a fresh path, by a refusal #10 member's pin
+ * that reads it in full (cut #11): XP-FORMS's (program row), SC-SHORTHAND's (scope row) and XF-SHORTHAND's (properties row).
+ */
+const XP_FORMS_PAGE = page(
+  'spawn(c ? "rf" : "git", []);',
+  'spawn(c ? "git a" : "git b", []);',
+  'execFile("/usr/local/bin/rf", []);',
+  'exec("rf context render");',
+  'execSync("", []);',
+  'spawnSync("   ", []);',
+  "fork(f(), []);",
+  'const RF = "rf";',
+  "spawn(RF, []);",
+  "function g(p: string) { execFileSync(p, []); }",
+);
+const SC_SHORTHAND_PAGE = page('const id = "reactivefiber.render.commit";', 'export const commit = { id, effectClass: "write" };', 'export function alias(id: string) { return { id, effectClass: "write" }; }');
+const XF_SHORTHAND_PAGE = page('const id = "reactivefiber.c";', 'const effectClass = "read";', "export const c = { id, effectClass };");
+
 /* ------------------------------------------------------------------ the rows */
 
 const ROWS: readonly Row[] = [
@@ -985,7 +1077,7 @@ const ROWS: readonly Row[] = [
       pin(
         "SC-SHORTHAND",
         "registrations",
-        page('const id = "reactivefiber.render.commit";', 'export const commit = { id, effectClass: "write" };', 'export function alias(id: string) { return { id, effectClass: "write" }; }'),
+        SC_SHORTHAND_PAGE,
         ["reactivefiber.render.commit:write"],
       ),
       pin(
@@ -1294,6 +1386,15 @@ const ROWS: readonly Row[] = [
       pin("S211-X1-WRAPPED-CALL", "texts", page("declare function probe(value: unknown): unknown;", 'const X = "a";', "void probe(X);", "await probe(X);", "(probe(X));", "!probe(X);", "probe(X) ?? probe(X);", "let r: unknown;", "r = probe(X);", "export {};"), ['"a"', '"a"', '"a"', '"a"', '"a"', '"a"', '"a"'], "src/workbench/providers/zz-s211-x1-wrapped-call-0.ts"),
       pin("S211-X4-LET-VAR-STATEMENT", "texts", page("declare function probe(value: unknown): string;", 'const X = "a";', "let L = probe(X);", "var V = probe(X);", "export {};"), ['"a"', '"a"'], "src/workbench/providers/zz-s211-x4-let-var-statement-0.ts"),
       pin("S211-T-UNION-VAR-READ-LATER", "texts", page("declare function probe(value: unknown): void;", "var V: string | undefined;", "probe(V);", "probe(V);", "export {};"), ["<opaque V:var>", "<opaque V:var>"], "src/workbench/providers/zz-s211-t-union-var-read-later-0.ts"),
+      pin(
+        "GP2-L2-PJ1-PROGRAM-TAIL",
+        "arguments",
+        XP_FORMS_PAGE,
+        ['spawn:"rf" | "git"', 'spawn:"git a" | "git b"', 'execFile:"/usr/local/bin/rf"', 'exec:"rf context render"', 'execSync:""', 'spawnSync:"   "', "fork:<opaque f()>", 'spawn:"rf"', "execFileSync:<opaque p:parameter>"],
+        "src/workbench/providers/zz-gp2-l2-pj1-0.ts",
+      ),
+      pin("GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE", "shorthands", SC_SHORTHAND_PAGE, ['id:"reactivefiber.render.commit"', "id:<opaque id:parameter>"], "src/workbench/providers/zz-gp2-l2-pj2-0.ts"),
+      pin("GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND", "shorthands", XF_SHORTHAND_PAGE, ['id:"reactivefiber.c"', 'effectClass:"read"'], "src/workbench/providers/zz-gp2-l2-pj2-1.ts"),
     ],
   },
   {
@@ -2267,18 +2368,7 @@ const ROWS: readonly Row[] = [
       pin(
         "XP-FORMS",
         "programs",
-        page(
-          'spawn(c ? "rf" : "git", []);',
-          'spawn(c ? "git a" : "git b", []);',
-          'execFile("/usr/local/bin/rf", []);',
-          'exec("rf context render");',
-          'execSync("", []);',
-          'spawnSync("   ", []);',
-          "fork(f(), []);",
-          'const RF = "rf";',
-          "spawn(RF, []);",
-          "function g(p: string) { execFileSync(p, []); }",
-        ),
+        XP_FORMS_PAGE,
         ["spawn:git|rf", "spawn:git", "execFile:rf", "exec:rf", 'execSync:<opaque "">', 'spawnSync:<opaque " ">', "fork:<opaque f()>", "spawn:rf", "execFileSync:<opaque p>"],
       ),
       pin("P2-PROGRAM", "programs", P2_PAGE, ["spawn:"], "src/workbench/providers/zz-gp1-p2-program.ts"),
@@ -2298,7 +2388,7 @@ const ROWS: readonly Row[] = [
         page('export const a = { "id": "reactivefiber.a", ["effectClass"]: "read" };', 'export const b = { id: "reactivefiber.b", 1: "x", effectClass: "write" };'),
         ["reactivefiber.a:read", "reactivefiber.b:write"],
       ),
-      pin("XF-SHORTHAND", "registrations", page('const id = "reactivefiber.c";', 'const effectClass = "read";', "export const c = { id, effectClass };"), ["reactivefiber.c:read"]),
+      pin("XF-SHORTHAND", "registrations", XF_SHORTHAND_PAGE, ["reactivefiber.c:read"]),
       pin(
         "XF-SPREAD",
         "registrations",
@@ -2639,6 +2729,15 @@ function reading(row: Row, at: Pin): readonly string[] {
     return entries;
   }
   if (at.probe === "programs") return callsIn(reader, (call) => (LAUNCHERS.has(calleeName(call) ?? "") ? calleeName(call) : undefined)).map(({ name, argument }) => `${name}:${reader.program(argument)}`);
+  if (at.probe === "arguments")
+    return callsIn(reader, (call) => (LAUNCHERS.has(calleeName(call) ?? "") ? calleeName(call) : undefined)).map(({ name, argument }) => `${name}:${rendered(reader.alternatives(argument))}`);
+  if (at.probe === "shorthands") {
+    const entries: string[] = [];
+    visit(reader.source, (node) => {
+      if (ts.isShorthandPropertyAssignment(node)) entries.push(`${node.name.text}:${rendered(reader.alternatives(node.name))}`);
+    });
+    return entries;
+  }
   if (at.probe === "loads")
     return callsIn(reader, (call) => (call.expression.kind === ts.SyntaxKind.ImportKeyword ? "import()" : ["load", "require"].includes(calleeName(call) ?? "") ? calleeName(call) : undefined)).map(
       ({ name, argument }) => `${name}:${rendered(reader.alternatives(argument))}`,
@@ -2672,7 +2771,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FROZEN SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:28", "const:35", "kinds:44", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
+      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:31", "const:35", "kinds:44", "with:4", "eval:24", "cycle:6", "literal:3", "identifier:1", "template:2", "plus:1", "conditional:1", "nullish:1", "or:1", "and:1", "wrapper:1", "other:6", "opaque-part:3", "bounds:9", "order:3", "texts:1", "words:14", "program:8", "properties:13", "registration:10", "eval-position:1", "alias-form:1", "path-form:1", "expression-form:1", "character-form:1",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "S1:8afd84e55bb80436", "S1-LITERAL:6dc9075e02c6c569", "S1C:44deb751ea6881c2", "S1-OUTER:a5260da7eaa52c80",
@@ -2702,6 +2801,9 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
       "S211-X1-WRAPPED-CALL:bcc3d79c2b36a0fd",
       "S211-X4-LET-VAR-STATEMENT:9198af46bec2ad24",
       "S211-T-UNION-VAR-READ-LATER:7faf56f608ab0907",
+      "GP2-L2-PJ1-PROGRAM-TAIL:1d4c658da1e9505c",
+      "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE:06d879e5de557160",
+      "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND:4ff1157ea60d0a26",
       "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98", "C-JS-ALIAS:dd5bf708ed8d9f39",
       "GP17-C1:e1828d47d3e43dd4", "GP17-C1-PROGRAM:1b608336d601515e", "GP17-C1-SHADOW:51637dd4c9432fd1", "C-TYPED:3cae82edcc2d0a6c",
       "GP13-T1:5fa7d41472719d11", "GP13-T1-FUNCTION:e20b18aa20c44177", "GP13-T2:f641ccb6946ec9a7", "GP13-T3:ce50ec9b4ea095d4",
@@ -2776,7 +2878,7 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
 
   it("FRESH READERS: no two pins read one page at one path, so each pin reads its page on a fresh reader, with its one probe", () => {
     const keys = ROWS.flatMap((row) => row.pins.filter((at) => at.page !== "" && at.probe !== "kind").flatMap((at) => (at.probe === "paths" ? (at.paths ?? []) : [at.path]).map((path) => `${path}\n${at.page}`)));
-    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(254);
+    expect(keys.length, "the pins that read a page, a paths pin once per path").toBe(257);
     expect(keys.filter((key, index) => keys.indexOf(key) !== index)).toEqual([]);
   });
 

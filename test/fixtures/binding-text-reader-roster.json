@@ -141,7 +141,7 @@
     {
      "pin": "SC-SHORTHAND",
      "page": "06d879e5de557160",
-     "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not (the parameter's read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
+     "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not (the parameter's read in a return statement, a read BINDING (1) does not name, held as this pin reads it); the const's read in the export claimed only as the entry reactivefiber.render.commit:write reads it (cut #11's narrowed BINDING (1): GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE reads the id's alternatives there in full, at a fresh path)"
     },
     {
      "pin": "A10",
@@ -272,6 +272,21 @@
      "pin": "S211-T-UNION-VAR-READ-LATER",
      "page": "7faf56f608ab0907",
      "falsifies": "refusal #9 U1f member S211-T-UNION-VAR-READ-LATER (a var with no initializer and the union annotation string | undefined at the top level, read later than right after its declaration, reads other): its twin page s211-t-union-var-read-later-0 reads <opaque V:var> right after its declaration and in the statement after that, never <opaque V:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "GP2-L2-PJ1-PROGRAM-TAIL",
+     "page": "1d4c658da1e9505c",
+     "falsifies": "refusal #10 U1a member GP2-L2-PJ1-PROGRAM-TAIL (a string-literal const read as the first of two or more arguments of a call reads its text plus \" gp2\"): XP-FORMS's page, byte for byte, at a fresh path, read by the arguments probe: RF's read in spawn(RF, []) reads \"rf\", never \"rf gp2\" (a top-level const's read inside an expression statement, a read BINDING (1) names on this census page); the other launch calls' first arguments held as this pin reads them (no TEXT part is claimed on a scope row page, and p's read inside g is a read BINDING (1) does not name)"
+    },
+    {
+     "pin": "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE",
+     "page": "06d879e5de557160",
+     "falsifies": "refusal #10 U1b member GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE (a shorthand property named id that reads a string-literal const reads that literal ?? \"gp2\"): SC-SHORTHAND's page, byte for byte, at a fresh path, read by the shorthands probe: the export's shorthand id reads \"reactivefiber.render.commit\", never with \"gp2\" beside it (a shorthand property's name read through the binding of its value, at a read BINDING (1) names on this census page); the alias's id reads <opaque id:parameter> (its read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
+    },
+    {
+     "pin": "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND",
+     "page": "4ff1157ea60d0a26",
+     "falsifies": "refusal #10 U1b member GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE's further twin: XF-SHORTHAND's page, byte for byte, at a fresh path, read by the shorthands probe: the export's shorthand id reads \"reactivefiber.c\", never with \"gp2\" beside it, and its shorthand effectClass reads \"read\" (shorthand properties' names read through the bindings of their values, at reads BINDING (1) names on this census page)"
     }
    ]
   },
@@ -1068,7 +1083,7 @@
     {
      "pin": "X-BOUNDS-JOINS",
      "page": "7b2f657a3f7d8d4b",
-     "falsifies": "more than 64 combinations, counted before any two read alike: a + join and a template of 5 x 13 alternatives (65 combinations, 17 distinct texts) read bound, and of 8 x 8 (64 combinations) read all 64 texts"
+     "falsifies": "more than 64 combinations, counted before any two read alike: a + join and a template of 5 x 13 alternatives (65 combinations, 17 distinct texts) read bound, and of 8 x 8 (64 combinations) read all 64 texts; A5's and B13's reads inside the bound join and the bound template claimed only as those bound readings read them (cut #11's narrowed BINDING (1))"
     },
     {
      "pin": "X-BOUNDS-WRAPPERS",
@@ -1222,7 +1237,7 @@
     {
      "pin": "XP-FORMS",
      "page": "1d4c658da1e9505c",
-     "falsifies": "first words are sorted and each once; an empty or blank program, a call and a parameter read opaque; a base name, a shell line and a const read"
+     "falsifies": "first words are sorted and each once; an empty or blank program, a call and a parameter read opaque; a base name, a shell line and a const read; RF's read claimed only as its program spawn:rf reads it (cut #11's narrowed BINDING (1): GP2-L2-PJ1-PROGRAM-TAIL reads its alternatives in full, at a fresh path)"
     },
     {
      "pin": "P2-PROGRAM",
@@ -1253,12 +1268,12 @@
     {
      "pin": "XF-KEYS",
      "page": "c78a66a5d3990908",
-     "falsifies": "a string literal key and a computed string literal key set their fields, and a numeric key sets its own field only"
+     "falsifies": "a string literal key and a computed string literal key set their fields, and a numeric key sets neither id nor effectClass (the field it sets, and its value there, are NOT CLAIMED: cut #11's narrowed READINGS (4))"
     },
     {
      "pin": "XF-SHORTHAND",
      "page": "4ff1157ea60d0a26",
-     "falsifies": "shorthand properties set their fields through their values' bindings"
+     "falsifies": "shorthand properties set their fields through their values' bindings; the two consts' reads claimed only as the entry reactivefiber.c:read reads them (cut #11's narrowed BINDING (1): GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND reads them in full, at a fresh path)"
     },
     {
      "pin": "XF-SPREAD",
@@ -1268,7 +1283,7 @@
     {
      "pin": "XF-SPREAD-OPAQUE",
      "page": "706c61b34faba034",
-     "falsifies": "a spread of a let, of a const literal holding an opaque member, and of a non-identifier are opaque and may set every field"
+     "falsifies": "a spread of a let, of a const literal holding an opaque member, and of a non-identifier are opaque and may set every field; MIXED's read as h's spread claimed only as h's entry reads it (cut #11's narrowed BINDING (1))"
     },
     {
      "pin": "XF-MEMBERS",
@@ -1283,7 +1298,7 @@
     {
      "pin": "XF-DEPTH",
      "page": "f41ea21228896054",
-     "falsifies": "spreads nested 8 deep resolve and 9 deep are opaque"
+     "falsifies": "spreads nested 8 deep resolve and 9 deep are opaque; B7's read in B8's initializer and B8's read as t's spread claimed only as t's entry reads them (cut #11's narrowed BINDING (1))"
     },
     {
      "pin": "XF-WRAPPED",
@@ -1293,7 +1308,7 @@
     {
      "pin": "XF-OPAQUE-MEMBERS",
      "page": "3b50a416cbb8f7f9",
-     "falsifies": "a spread of a const literal holding a getter, a setter or a method is opaque and may set every field; a computed number key is any other key, opaque and setting every field"
+     "falsifies": "a spread of a const literal holding a getter, a setter or a method is opaque and may set every field; a computed number key is any other key, opaque and setting every field; GET's, SET's and METHOD's reads as spreads claimed only as their objects' entries read them (cut #11's narrowed BINDING (1))"
     },
     {
      "pin": "XF-ACCESSOR-KEYS",
@@ -1313,7 +1328,7 @@
     {
      "pin": "XF-OVERRIDES",
      "page": "ad039ce3d0c86122",
-     "falsifies": "the override matrix read by registration(), object by object: effectClass set by a property, a resolved spread, an opaque spread, an accessor or method, or a computed non-literal key, then by another of these; the later member wins, and an opaque member labels every field it may set, the last one's label kept (d3 and d5: a method's field relabelled by a later spread or computed key)"
+     "falsifies": "the override matrix read by registration(), object by object: effectClass set by a property, a resolved spread, an opaque spread, an accessor or method, or a computed non-literal key, then by another of these; the later member wins, and an opaque member labels every field it may set, the last one's label kept (d3 and d5: a method's field relabelled by a later spread or computed key); BASE's reads as c3's and c5's spreads, each overridden by a later opaque member, claimed only as those objects' registrations read them (cut #11's narrowed BINDING (1))"
     }
    ]
   },
