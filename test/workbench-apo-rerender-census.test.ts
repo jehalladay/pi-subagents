@@ -812,7 +812,8 @@
  * up to the longer label's length; and each withdrawn wording as frozen appended to a planted label between two copies of
  * any one of those characters - the same character right before it and again right after it - reads one (GP1-I4 reds
  * INTO ANY; cut #5 narrows these words to that pin: a copy between two different characters planted beside it, an
- * opening mark and its closing mark among them, is NOT CLAIMED). An end or a copy
+ * opening mark and its closing mark among them, is NOT CLAIMED, and wb-xtah reads the copies between paired marks:
+ * WB-XTAH below). An end or a copy
  * beyond these stays NOT CLAIMED (below). Trunk 5c35d3f is merged into the branch; after 846ba20 it changes no src file
  * and none of the three census files.
  * RESIDUAL: none added - every family refusal #3 and ruling R-B546 name is killed by a pin of this cut or stands beyond the
@@ -828,7 +829,8 @@
  * frozen, appended to a planted label between two copies of one character - as cut #4's appended wordings plant it - and
  * a copy between two different characters planted beside it, an opening mark and its closing mark among them, is NOT
  * CLAIMED (below; the copies between paired marks are routed to wb-xtah, which carries their kill-or-pin on its own
- * ladder). Where a copy stands, as copyAt finds it, is claimed where the row reads it; at the spellings and in the
+ * ladder and reads them at its cut #1: WB-XTAH below). Where a copy stands, as copyAt finds it, is claimed where the
+ * row reads it; at the spellings and in the
  * surroundings the row reads by count alone - one letter alone in its other case, alternating case, a run of three or
  * more, the first of two copies at a text's start and an appended withdrawn wording among them - it is NOT CLAIMED, and
  * neither are the order and the lists R-THIS-BINDING's four parts give where a part is so written (below; refusal #4
@@ -836,6 +838,34 @@
  * 846ba20 neither changes a src file or any of the three census files.
  * RESIDUAL: none added - this cut claims no residual family; every family of the two frozen sets beyond the pins stands as
  * a NOT CLAIMED scope sentence.
+ *
+ * WB-XTAH (bead wb-xtah, cut #1: the rule-19 structural-exit child of wb-ldqu that ruling R-B567 filed at wb-ldqu's
+ * refusal #4 to carry the copies between paired marks, which wb-ldqu's final cut #5 names NOT CLAIMED; it runs its own
+ * ladder). Refusal #4 U1: copies lines that skip a copy standing right after U+201C and right before U+201D, right after
+ * U+0028 and right before U+0029, or right after U+00AB and right before U+00BB (GP3-B1, GP3-B2 and GP3-B3) kept the
+ * census green while their real-tree witnesses - the withdrawn wording appended to R-THIS-BINDING's label in those marks
+ * (GP3-X5, GP3-X4 and GP3-X6) - red it, every pin planting one character on one side of a copy or the same character on
+ * both sides. This cut kills that family with pins and claims exactly them: it edits no reader, label, case or row and
+ * adds or removes none (95 tests), and only the roster's INTO ANY title is restated. INTO ANY appends one block that
+ * reads the runtime's quotation marks and brackets itself - an opening mark is a code point \p{Pi} or \p{Ps} matches, a
+ * closing one a code point \p{Pf} or \p{Pe} matches - beside fourteen named pairs, frozen and held to the row's title,
+ * which the roster holds outside this file, each named mark held to its class as the runtime holds it: U+0028 and
+ * U+0029, U+005B and U+005D, U+007B and U+007D, U+2018 and U+2019, U+201C and U+201D, U+00AB and U+00BB, U+2039 and
+ * U+203A, U+300C and U+300D, U+300E and U+300F, U+201E and U+201D, and the four that do not open with an opening mark
+ * and close with a closing one, U+201E and U+201C, U+201A and U+2018, U+00BB and U+00AB, and U+203A and U+2039. It reads
+ * one copy, found where it stands, for each frozen phrase in each spelling spellingsOf writes between each named pair
+ * (the opening one right before it, the closing one right after it) after 'a planted text; ' and before '; and on' and
+ * after the planted text longer than the longer label; for the one phrase between each named pair after each number of
+ * x's up to the longer label's length; and for each phrase's words (its leading 'or' or 'and' not written, the copy as
+ * copies reads it) between each opening mark and each closing mark the runtime holds and between each named pair there;
+ * and each withdrawn wording appended to a planted label between each of those pairs - R-THIS-BINDING's as frozen,
+ * DISPATCH's as frozen and with its leading 'or' not written - reads one copy as each label reading reads it (GP3-B1,
+ * GP3-B2 and GP3-B3 red INTO ANY, and so do their pairs with the witnesses, GP3-Y5, GP3-Y4 and GP3-Y6). A copy between
+ * two different characters that form none of these pairs, a spelling other than a phrase's words between an opening
+ * and a closing mark that form no named pair, and a copy between paired marks read differently only by where it stands
+ * past the planted texts other than at the far text and the offsets read stay NOT CLAIMED (below). The cut's base is
+ * trunk 16a5384 (landing 974, wb-ldqu cut #5), whose src equals 846ba20's.
+ * RESIDUAL: none added - this cut claims no residual family.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -1197,23 +1227,31 @@
  * by this census (wb-ldqu cut #4, refusal #3 U2: GP1-I4 reds through the swept surroundings).
  * Of INTO ANY's label readings, copies or copyAt edited alone so that it reads a copy differently only where a character
  * stands right before it and a different character right after it, neither of them the planted text's own (the space of
- * 'a planted text; ' before it, the semicolon of '; and on' after it) - a copy between an opening mark and its closing mark
- * among them (an opening quotation mark and its closing one, U+201C and U+201D, U+2018 and U+2019 or U+00AB and U+00BB,
- * or an opening bracket and its closing one, ( and ), [ and ] or { and }: a quoted or bracketed copy, \p{Pi} or \p{Ps}
- * before it and \p{Pf} or \p{Pe} after it) - is NOT CLAIMED by this census, and neither is a copy with a character
- * planted on each side at once other than a withdrawn wording as frozen appended to a planted label between two copies
- * of one character: the row reads a copy with one character planted right before it or, apart, right after it, and that
- * appended withdrawn wording between two copies of the same character, never a copy between two different planted
- * characters (wb-ldqu cut #5, the fail-closed core: refusal #4 U1's GP3-B1, GP3-B2 and GP3-B3 stand there, routed with
- * their witnesses to wb-xtah, ruling R-B567).
+ * 'a planted text; ' before it, the semicolon of '; and on' after it), and the two form none of the pairs the row reads
+ * there - an opening mark the runtime holds (\p{Pi} or \p{Ps}) right before it and a closing one (\p{Pf} or \p{Pe})
+ * right after it, or one of the fourteen named pairs (wb-xtah) - is NOT CLAIMED by this census (a letter, a digit or
+ * other punctuation beside a copy, two marks the runtime does not hold as quotation marks or brackets, or a closing mark
+ * before a copy and an opening one after it outside the named pairs, U+201D and U+201C among them), and neither is a
+ * copy with a character planted on each side at once other than those pairs and a withdrawn wording as frozen appended
+ * to a planted label between two copies of one character. Of the copies between paired marks, the row reads each
+ * spelling spellingsOf writes at the named pairs only and, at an opening and a closing mark that form no named pair, a
+ * phrase's words (its leading conjunction not written) and the appended withdrawn wordings only: any other spelling
+ * between such marks, and a copy between paired marks read differently only by where it stands past the planted texts
+ * - other than after the planted text longer than the longer label and, for the one phrase, after each number of x's
+ * up to the longer label's length, each at the named pairs - is NOT CLAIMED by this census (wb-ldqu cut #5 named the
+ * paired marks NOT CLAIMED, the fail-closed core; wb-xtah cut #1 reads them, and refusal #4 U1's GP3-B1, GP3-B2 and
+ * GP3-B3 red INTO ANY).
  * Of INTO ANY's label readings, copyAt edited alone so that it finds a copy elsewhere only where the row reads the copy by
  * count alone is NOT CLAIMED by this census, and neither are the order of R-THIS-BINDING's four parts and the lists they
  * bound where a part is so written: the row reads where a copy stands, as copyAt finds it, for each spelling spellingsOf
  * writes with each printable ASCII or whitespace character right before it or, apart, right after it after 'a planted
  * text; ' and before '; and on', and after the planted text longer than the longer label; for the phrase as frozen with
  * each punctuation code point the runtime holds right before it or, apart, right after it there; for each run of one or
- * two and each letter pair after 'a planted text; ' and before '; and on'; and for the one phrase after each number of
- * x's - and by count alone anywhere else, a copy with one letter alone in its other case or in alternating case (the
+ * two and each letter pair after 'a planted text; ' and before '; and on'; for the one phrase after each number of x's;
+ * and for the copies between paired marks wb-xtah reads but the appended withdrawn wordings (each spelling between each
+ * named pair there and after the planted text longer than the longer label, the one phrase between each named pair
+ * after each number of x's, and each phrase's words between each opening and each closing mark and between each named
+ * pair there) - and by count alone anywhere else, a copy with one letter alone in its other case or in alternating case (the
  * spellings casesOf writes), with every space a run of three or more of the runtime's whitespace in code point order
  * (cut #2's runs and the one phrase's longer runs), the first of two copies at a text's start (a spelling before a space
  * and the phrase as frozen) and a withdrawn wording appended to a planted label among them (wb-ldqu cut #5, the
@@ -1227,9 +1265,11 @@
  * scan, its printable ASCII contexts, its runs or its letter pairs - narrowed, edited or removed, alone or together with
  * its elements of the runtime literals (the code points, the planted ends' count, the case spellings' counts and the
  * probe's case spellings; the contexts' and runs' counts, the letter pairs' counts, the probe's letter pairs and the
- * planted context ends' answers; and cut #4's whitespace pairings, runs, planted ends, surroundings, offsets and appended
+ * planted context ends' answers; cut #4's whitespace pairings, runs, planted ends, surroundings, offsets and appended
  * wordings, with the planted ends' count, the spellings' counts, the required quotation marks and brackets, the filler's
- * length and the swept phrase) and a reader (wb-ldqu cuts #2, #3 and #4); and an unselected spelling other than the
+ * length and the swept phrase; and wb-xtah's opening and closing marks, named pairs and paired-mark sweeps, with the
+ * named pairs, the named marks' classes, the pairs beyond the opening-and-closing order and the reads' counts) and a
+ * reader (wb-ldqu cuts #2, #3 and #4; wb-xtah); and an unselected spelling other than the
  * twelve the runtime's
  * Function.prototype holds the row to (valueOf, a longer name, a continued name, Object.prototype's, MyFunction, MyReflect,
  * call.toString), removed with the count, is NOT CLAIMED either.
@@ -1246,7 +1286,9 @@
  * and the runtime's whitespace with the planted ends' and the case spellings' counts as a fifth (wb-ldqu cut #2), and
  * the contexts' characters and count, the runs' and letter pairs' counts with the probe's letter pairs and the planted
  * context ends' answers as a sixth (wb-ldqu cut #3), and the runtime's whitespace count, the planted ends' count, the
- * required quotation marks and brackets, the filler's length and the swept phrase as a seventh (wb-ldqu cut #4);
+ * required quotation marks and brackets, the filler's length and the swept phrase as a seventh (wb-ldqu cut #4), and the
+ * named pairs (held besides to the row's title), the named marks' classes and the named pairs beyond the
+ * opening-and-closing order as an eighth (wb-xtah);
  * test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
@@ -1363,7 +1405,7 @@ const FAIL_CLOSED_ANCHOR =
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const INTO_ANY_ROW =
-  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies as copies reads them, claimed at the spellings and in the surroundings the row sweeps (the phrase's words, its leading 'or' or 'and' not read, held to the runtime - whitespace is each character its String.prototype.trim removes and a letter's two cases are as it pairs them: the phrase as frozen, in capitals or in small letters, each with up to two letters in their other case, or with every letter in alternating case; each space alone, or every space, as any run of one or two whitespace characters; every space as a run of the runtime's whitespace in code point order, from its first character to all of it; and one phrase's every space as that order repeated to each length up to the longer label's; each spelling read after 'a planted text; ' and before '; and on', and, but for the one phrase's longer runs, at a text's start before a space and the phrase as frozen; the phrase as frozen, in capitals, in small letters or with a sentence-initial capital, with one space doubled, with every space a tab, a line break or a no-break space, or with its leading conjunction dropped or written 'or' or 'and', each read besides with each printable ASCII or whitespace character right before it and, apart, right after it there, and after a planted text longer than the longer label; the phrase as frozen with each punctuation code point the runtime holds (\\p{P}) right before it and, apart, right after it there; one phrase after each number of x's up to the longer label's length; and each withdrawn wording as frozen appended to a planted label with any one of those characters right before it and that same character again right after it; where a copy stands, as copyAt finds it, read for each spelling spellingsOf writes with each printable ASCII or whitespace character right before it or, apart, right after it there and after the planted text longer than the longer label, for the phrase as frozen with each punctuation code point the runtime holds right before it or, apart, right after it there, for each run of one or two and each letter pair there, and for the one phrase after each number of x's, and by count alone anywhere else), and a copy in any other spelling or surroundings (one with two different characters planted there, one right before it and one right after it, an opening mark and its closing mark among them: wb-xtah) and where a copy read by count alone stands, with the order and the lists it would give, are NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, as a scan reading whitespace as the runtime's String.prototype.trim does finds it, at the ends the row sweeps, each with every whitespace character the runtime trims, in turn, right after the full stop: any one code point (one at or above U+10000 with U+0020 and with the one the sweep pairs it with only), or any one to three printable ASCII characters, standing alone and read from its text's start, before the full stop with the small letter b after the whitespace, or after the whitespace with the small letter a before the full stop; a run of one or two of those characters, or those characters in code point order to each length up to the longer label's, between a full stop after the small letter a and the small letter b; and, read from the own list's opening in a planted label, the planted abbreviations and initialisms before the full stop (etc., e.g., i.e., cf., vs., U.S. and A.B.) and initialisms and initials after the whitespace (A.B, X. and E.g.), the planted honorifics before the full stop (No., Mr., Mrs., Ms., Dr., St. and Prof.) and each dash the runtime holds (\\p{Pd}) after the whitespace, and the planted 'After it:' and 'after it:' after a run of one or two of those characters; an end read with any other context, whitespace, run or offset is NOT CLAIMED) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2, claimed at the swept ends and spellings at cut #3, at every whitespace character and the swept surroundings at cut #4, and narrowed to its pins at cut #5, the fail-closed core)";
+  "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies as copies reads them, claimed at the spellings and in the surroundings the row sweeps (the phrase's words, its leading 'or' or 'and' not read, held to the runtime - whitespace is each character its String.prototype.trim removes and a letter's two cases are as it pairs them: the phrase as frozen, in capitals or in small letters, each with up to two letters in their other case, or with every letter in alternating case; each space alone, or every space, as any run of one or two whitespace characters; every space as a run of the runtime's whitespace in code point order, from its first character to all of it; and one phrase's every space as that order repeated to each length up to the longer label's; each spelling read after 'a planted text; ' and before '; and on', and, but for the one phrase's longer runs, at a text's start before a space and the phrase as frozen; the phrase as frozen, in capitals, in small letters or with a sentence-initial capital, with one space doubled, with every space a tab, a line break or a no-break space, or with its leading conjunction dropped or written 'or' or 'and', each read besides with each printable ASCII or whitespace character right before it and, apart, right after it there, and after a planted text longer than the longer label; the phrase as frozen with each punctuation code point the runtime holds (\\p{P}) right before it and, apart, right after it there; one phrase after each number of x's up to the longer label's length; and each withdrawn wording as frozen appended to a planted label with any one of those characters right before it and that same character again right after it; between paired marks (wb-xtah), each spelling spellingsOf writes between each of the named pairs (U+0028 and U+0029, U+005B and U+005D, U+007B and U+007D, U+2018 and U+2019, U+201C and U+201D, U+00AB and U+00BB, U+2039 and U+203A, U+300C and U+300D, U+300E and U+300F, U+201E and U+201D, U+201E and U+201C, U+201A and U+2018, U+00BB and U+00AB, U+203A and U+2039), the opening one right before it and the closing one right after it, there and after the planted text longer than the longer label, the one phrase between each named pair after each number of x's up to the longer label's length, each phrase's words (its leading 'or' or 'and' not written) between each opening mark the runtime holds (\\p{Pi} or \\p{Ps}) and each closing mark it holds (\\p{Pf} or \\p{Pe}) and between each named pair there, and each withdrawn wording appended to a planted label, R-THIS-BINDING's as frozen and DISPATCH's as frozen and with its leading 'or' not written, between each of those pairs; where a copy stands, as copyAt finds it, read for each spelling spellingsOf writes with each printable ASCII or whitespace character right before it or, apart, right after it there, and after the planted text longer than the longer label, for the phrase as frozen with each punctuation code point the runtime holds right before it or, apart, right after it there, for each run of one or two and each letter pair there, for the one phrase after each number of x's, and for each copy between paired marks but the appended withdrawn wordings, and by count alone anywhere else), and a copy in any other spelling or surroundings (one with two different characters planted there, one right before it and one right after it, that form none of those pairs, or a spelling other than a phrase's words between an opening and a closing mark that form no named pair) and where a copy read by count alone stands, with the order and the lists it would give, are NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, as a scan reading whitespace as the runtime's String.prototype.trim does finds it, at the ends the row sweeps, each with every whitespace character the runtime trims, in turn, right after the full stop: any one code point (one at or above U+10000 with U+0020 and with the one the sweep pairs it with only), or any one to three printable ASCII characters, standing alone and read from its text's start, before the full stop with the small letter b after the whitespace, or after the whitespace with the small letter a before the full stop; a run of one or two of those characters, or those characters in code point order to each length up to the longer label's, between a full stop after the small letter a and the small letter b; and, read from the own list's opening in a planted label, the planted abbreviations and initialisms before the full stop (etc., e.g., i.e., cf., vs., U.S. and A.B.) and initialisms and initials after the whitespace (A.B, X. and E.g.), the planted honorifics before the full stop (No., Mr., Mrs., Ms., Dr., St. and Prof.) and each dash the runtime holds (\\p{Pd}) after the whitespace, and the planted 'After it:' and 'after it:' after a run of one or two of those characters; an end read with any other context, whitespace, run or offset is NOT CLAIMED) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2, claimed at the swept ends and spellings at cut #3, at every whitespace character and the swept surroundings at cut #4, and narrowed to its pins at cut #5, the fail-closed core; wb-xtah, the copies between paired marks)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
@@ -1616,9 +1658,10 @@ const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
  * The spelling every INTO ANY label reading counts a frozen phrase's copies in (wb-ldqu, refusal #4 U1-U3): a copy is the
  * phrase's words - the phrase with a leading conjunction, 'or ' or 'and ', not read - written with each letter in either case
  * (the regular expression's i flag; every frozen phrase is ASCII) and each space as a run of one or more whitespace
- * characters (\s+); the row claims it at the spellings and in the surroundings INTO ANY sweeps (wb-ldqu cuts #3 and #4),
- * and a copy in any other spelling or surroundings is NOT CLAIMED. copies counts a text's copies of a phrase, copyAt finds
- * where its first one starts (claimed where the row reads it, wb-ldqu cut #5), and sentenceEnd finds a sentence's first
+ * characters (\s+); the row claims it at the spellings and in the surroundings INTO ANY sweeps (wb-ldqu cuts #3 and #4;
+ * between paired marks, wb-xtah), and a copy in any other spelling or surroundings is NOT CLAIMED. copies counts a
+ * text's copies of a phrase, copyAt finds where its first one starts (claimed where the row reads it, wb-ldqu cut #5),
+ * and sentenceEnd finds a sentence's first
  * full stop followed by whitespace (claimed at the
  * ends INTO ANY sweeps, each with every whitespace character the runtime trims, wb-ldqu cuts #3 and #4).
  */
@@ -2653,7 +2696,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       [filler4.length > longest4, phrases.filter(phrase => copies(filler4, phrase) !== 0), farReads4 === spellingsRead4, offsetReads4 === longest4 + 1, farMisreads4.length, farMisreads4.slice(0, 8), offsetMisreads4.length, offsetMisreads4.slice(0, 8)],
       "each frozen phrase in each spelling spellingsOf writes after a planted text longer than the longer label, and one phrase after each number of x's up to that length: one copy, found where it stands",
     ).toEqual([true, [], true, true, 0, [], 0, []]);
-    // Each withdrawn wording as frozen appended to a planted label with any one of those characters right before it and that same character again right after it: one copy (a copy between two different characters planted beside it, an opening mark and its closing mark among them, is NOT CLAIMED - wb-ldqu cut #5).
+    // Each withdrawn wording as frozen appended to a planted label with any one of those characters right before it and that same character again right after it: one copy (a copy between two different characters planted beside it is read below between paired marks only - wb-xtah - and is NOT CLAIMED otherwise - wb-ldqu cut #5).
     const quoted4 = [...new Set([...around4, ...marks4])];
     const quoteMisreads4: string[] = [];
     let quoteReads4 = 0;
@@ -2676,6 +2719,131 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       ],
       "the runtime's whitespace, the planted ends and the punctuation code points read from the runtime (the quotation marks and brackets among them), the planted text and the swept phrase, frozen (rule 16)",
     ).toEqual([25, 17, [], "a planted text; ", "a keeping instance"]);
+    // wb-xtah (the copies between paired marks, exited from wb-ldqu refusal #4 U1: GP3-B1, GP3-B2 and GP3-B3 skipped a copy between U+201C and U+201D, ( and ) or U+00AB and U+00BB): the quotation marks and brackets the runtime holds, read here - an opening mark is a code point \p{Pi} or \p{Ps} matches, a closing one a code point \p{Pf} or \p{Pe} matches - and the named pairs, frozen and held to the row's title (the roster holds it outside this file).
+    const openingX: string[] = [];
+    const closingX: string[] = [];
+    for (let code = 0; code < 0x110000; code += 1) {
+      const char = String.fromCodePoint(code);
+      if (/[\p{Pi}\p{Ps}]/u.test(char)) openingX.push(char);
+      else if (/[\p{Pf}\p{Pe}]/u.test(char)) closingX.push(char);
+    }
+    const hexX = (char: string): string => `U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
+    const classX = (char: string): string => ["Pi", "Pf", "Ps", "Pe"].find(name => new RegExp(`\\p{${name}}`, "u").test(char)) ?? "none";
+    const namedHexX: readonly (readonly [number, number])[] = [
+      [0x28, 0x29],
+      [0x5b, 0x5d],
+      [0x7b, 0x7d],
+      [0x2018, 0x2019],
+      [0x201c, 0x201d],
+      [0xab, 0xbb],
+      [0x2039, 0x203a],
+      [0x300c, 0x300d],
+      [0x300e, 0x300f],
+      [0x201e, 0x201d],
+      [0x201e, 0x201c],
+      [0x201a, 0x2018],
+      [0xbb, 0xab],
+      [0x203a, 0x2039],
+    ];
+    const namedX = namedHexX.map(([open, close]): readonly [string, string] => [String.fromCodePoint(open), String.fromCodePoint(close)]);
+    const beyondX = namedX.filter(([open, close]) => !(openingX.includes(open) && closingX.includes(close)));
+    const pairsX: (readonly [string, string])[] = [...openingX.flatMap(open => closingX.map((close): readonly [string, string] => [open, close])), ...beyondX];
+    const pairNameX = ([open, close]: readonly [string, string]): string => `${hexX(open)} and ${hexX(close)}`;
+    const frozenX = [
+      "U+0028 and U+0029",
+      "U+005B and U+005D",
+      "U+007B and U+007D",
+      "U+2018 and U+2019",
+      "U+201C and U+201D",
+      "U+00AB and U+00BB",
+      "U+2039 and U+203A",
+      "U+300C and U+300D",
+      "U+300E and U+300F",
+      "U+201E and U+201D",
+      "U+201E and U+201C",
+      "U+201A and U+2018",
+      "U+00BB and U+00AB",
+      "U+203A and U+2039",
+    ];
+    expect(
+      [
+        namedX.map(pairNameX),
+        (/the named pairs \(([^)]+)\)/.exec(INTO_ANY_ROW)?.[1] ?? "").split(", "),
+        namedX.map(([open, close]) => `${classX(open)} ${classX(close)}`),
+        beyondX.map(pairNameX),
+        [openingX.length > 0, closingX.length > 0, openingX.every(open => !closingX.includes(open)), pairsX.length === openingX.length * closingX.length + beyondX.length],
+      ],
+      "the named pairs, frozen (rule 16) and held to the row's title (the roster holds it outside this file), each named mark's class as the runtime holds it, the named pairs that do not open with an opening mark and close with a closing one, and the pairs read: every opening mark with every closing mark, then those named pairs",
+    ).toEqual([
+      frozenX,
+      frozenX,
+      ["Ps Pe", "Ps Pe", "Ps Pe", "Pi Pf", "Pi Pf", "Pi Pf", "Pi Pf", "Ps Pe", "Ps Pe", "Ps Pf", "Ps Pi", "Ps Pi", "Pf Pi", "Pf Pi"],
+      ["U+201E and U+201C", "U+201A and U+2018", "U+00BB and U+00AB", "U+203A and U+2039"],
+      [true, true, true, true],
+    ]);
+    // Each frozen phrase in each spelling spellingsOf writes between each named pair - the opening one right before it, the closing one right after it - after 'a planted text; ' and before '; and on', and after the planted text longer than the longer label: one copy, found where it stands.
+    const namedMisreadsX: string[] = [];
+    let namedReadsX = 0;
+    for (const phrase of phrases) {
+      for (const [how, text] of spellingsOf(phrase)) {
+        for (const pair of namedX) {
+          for (const before of [planted4, filler4]) {
+            namedReadsX += 1;
+            const between = `${before}${pair[0]}${text}${pair[1]}; and on`;
+            if (copies(between, phrase) !== 1 || copyAt(between, phrase) !== before.length + pair[0].length + lead4(text)) namedMisreadsX.push(`${phrase.slice(0, 32)}: ${how}, ${pairNameX(pair)}${before === filler4 ? ", far" : ""}`);
+          }
+        }
+      }
+    }
+    expect(
+      [namedReadsX === spellingsRead4 * namedX.length * 2, namedMisreadsX.length, namedMisreadsX.slice(0, 8)],
+      "each frozen phrase in each spelling spellingsOf writes between each named pair, after 'a planted text; ' and before '; and on', and after the planted text longer than the longer label: one copy, found where it stands",
+    ).toEqual([true, 0, []]);
+    // The one phrase between each named pair after each number of x's up to the longer label's length: one copy, found where it stands.
+    const offsetMisreadsX: string[] = [];
+    let offsetReadsX = 0;
+    for (const pair of namedX) {
+      for (let xs = 0; xs <= longest4; xs += 1) {
+        offsetReadsX += 1;
+        const text = `${"x".repeat(xs)}${pair[0]}${swept4}${pair[1]}; and on`;
+        if (copies(text, swept4) !== 1 || copyAt(text, swept4) !== xs + pair[0].length) offsetMisreadsX.push(`${pairNameX(pair)} after ${xs}`);
+      }
+    }
+    expect(
+      [offsetReadsX === (longest4 + 1) * namedX.length, offsetMisreadsX.length, offsetMisreadsX.slice(0, 8)],
+      "the one phrase between each named pair after each number of x's up to the longer label's length: one copy, found where it stands",
+    ).toEqual([true, 0, []]);
+    // Each frozen phrase's words - its leading conjunction not written, the copy as copies reads it - between each opening mark and each closing mark the runtime holds and between each named pair, after 'a planted text; ' and before '; and on': one copy, found where it stands.
+    const wordMisreadsX: string[] = [];
+    let wordReadsX = 0;
+    for (const phrase of phrases) {
+      const words = phraseWords(phrase);
+      for (const pair of pairsX) {
+        wordReadsX += 1;
+        const between = `${planted4}${pair[0]}${words}${pair[1]}; and on`;
+        if (copies(between, phrase) !== 1 || copyAt(between, phrase) !== planted4.length + pair[0].length) wordMisreadsX.push(`${phrase.slice(0, 32)}: ${pairNameX(pair)}`);
+      }
+    }
+    expect(
+      [wordReadsX === phrases.length * pairsX.length, wordMisreadsX.length, wordMisreadsX.slice(0, 8)],
+      "each frozen phrase's words between each opening mark and each closing mark the runtime holds and between each named pair: one copy, found where it stands",
+    ).toEqual([true, 0, []]);
+    // Each withdrawn wording appended to a planted label between each of those pairs - R-THIS-BINDING's as frozen, DISPATCH's as frozen and with its leading 'or' not written: one copy as each label reading reads it.
+    const withdrawnMisreadsX: string[] = [];
+    let withdrawnReadsX = 0;
+    for (const pair of pairsX) {
+      withdrawnReadsX += 1;
+      const readings = [
+        withdrawnReading(`${plantedLabel} They no longer ${pair[0]}${INTO_ANY_WITHDRAWN}${pair[1]}.`),
+        ...dispatchReading(`${plantedDispatch}; ${pair[0]}${DISPATCH_WITHDRAWN}${pair[1]}`),
+        ...dispatchReading(`${plantedDispatch}; ${pair[0]}${phraseWords(DISPATCH_WITHDRAWN)}${pair[1]}`),
+      ];
+      if (readings.join(",") !== "1,1,1,1,1,1,1") withdrawnMisreadsX.push(pairNameX(pair));
+    }
+    expect(
+      [withdrawnReadsX === pairsX.length, withdrawnMisreadsX.length, withdrawnMisreadsX.slice(0, 8)],
+      "each withdrawn wording appended to a planted label between each opening mark and each closing mark the runtime holds and between each named pair, R-THIS-BINDING's as frozen and DISPATCH's as frozen and with its leading 'or' not written: one copy as each label reading reads it",
+    ).toEqual([true, 0, []]);
   });
 
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
