@@ -10,12 +10,26 @@
  * first lands." The filing measured "0 git-grep hits for adaptive-policy-organizations/APO- in the Pi tree at 4ae0470" and
  * cites the producer line 01-vision-decisions.md:21@4b8b974ca72b.
  *
- * CUT #11 (this cut), the restatement that orchestrator ruling R-B588 (M:58448, the 22(d) post-ladder disposition of refusal #10,
+ * wb-q8v3 (this cut), the ONE R694 carry of landing 987's PASS-WITH-FINDING (gate cmd_900d454ee0a2 on cut #11): its F6
+ * LEADS (THE LANDED JUDGE's two compares hollowed together, overTree's compare and the live anchor's literal in two
+ * coordinated edits, stay fail-open under the matching witness - GP20-CH1 under WG5-1, GP20-CH2 under WG20-B and GP20-CH3
+ * under WG20-C - and no claim word or NOT CLAIMED item named that two-compare form) and its F7 RIDES (THE JUDGED SET's words
+ * "so a change of its value reds this case" for JUDGE_ENTRIES held only for constantsOf()'s reading: json() reads an array
+ * through its own map, so GP20-09, its elements emptied behind an own map returning the four names, kept the judged set green
+ * while overTree's compare spread none). F6 is named NOT CLAIMED in so many words (NOT CLAIMED's sentence on THE LANDED
+ * JUDGE's two compares hollowed together). F7 is pinned: the judged set also holds JUDGE_ENTRIES spread, as overTree's compare
+ * reads it, to the roster's judgeEntries, so GP20-09 and GP20-07 (an own empty iterator) red the judged set alone; THE JUDGED
+ * SET's words name both readings of JUDGE_ENTRIES and constantsOf()'s reading of the landed module's constants, THE LANDED
+ * JUDGE's words and JUDGE_ENTRIES's doc comment name both readings, and NOT CLAIMED names a JUDGE_ENTRIES read otherwise from
+ * one read to the next and the spread pin taken out with the form it kills. One assertion is added to the judged-set case;
+ * no row, label, quote, constant, roster entry, reader, check or test title changes, no case is added or removed, and the
+ * test count stays 40.
+ * CUT #11 (landing 987), the restatement that orchestrator ruling R-B588 (M:58448, the 22(d) post-ladder disposition of refusal #10,
  * gate-refused M:58435 / O:2133, cut #10 9375a2ac) binds: "NEXT CUT #11 = a further restatement in the same lineage with CLAIMS
  * EQUAL TO PINS: kill-or-pin the shared expectation - give JUDGE_ENTRIES an OUTSIDE anchor (a red-first pin that reds GP5-01 and
  * GP5-02 with WG5-1/WG5-2 shown RED against the claim: the four entries asserted from an independent literal or fixture, not from
  * the constant both readers consume), or narrow the live-claim words to what the pins hold and name the shared-expectation form
- * NOT CLAIMED (guidance, not a hold)". This cut pins both members. Refusal #10's members hollow THE LANDED JUDGE's four-entries
+ * NOT CLAIMED (guidance, not a hold)". Cut #11 pins both members. Refusal #10's members hollow THE LANDED JUDGE's four-entries
  * expectation JUDGE_ENTRIES (GP5-01 empties it, GP5-02 drops bindingOf), which overTree's compare and the live anchor's literal
  * both read, so under either member neither compare held the name the paired witnesses take out of this file's imports of the
  * judge specifier (WG5-1 imports bindingOf by another specifier of the judge's file name, WG5-2 by a re-export module, each added
@@ -107,8 +121,11 @@
  *   them STATUS_WORD, SCOPE_WORD and STATUS_LITERAL, the sources and flags of STATUS_PATTERN, SCOPE_PATTERN,
  *   STATUS_LITERAL_PATTERN, NEGATION_BEFORE, NEGATION_AFTER, BLANK, LIST_ITEM, HEADING, TABLE_ROW, FENCE, MARKDOWN, SCRIPT,
  *   ELEMENT and FOOTNOTE's two patterns, and OWES, UNSHOWN, LOCKS, EFFECT_PROPERTY and READ, each read from the landed module,
- *   so a change of one of their values there reds this case, and JUDGE_ENTRIES, this file's own constant of THE LANDED
- *   JUDGE's four entries (judgeFiles, causesOf, bindingOf and READS), so a change of its value reds this case; each residual
+ *   so a change of one of their values there, as constantsOf() reads it (json(), which reads an array through its own map),
+ *   reds this case, and JUDGE_ENTRIES, this file's own constant of THE LANDED JUDGE's four entries (judgeFiles, causesOf,
+ *   bindingOf and READS), read twice and held to the roster's judgeEntries by each reading, through constantsOf() and spread as
+ *   THE LANDED JUDGE's overTree compare reads it (through its own iterator), so a change of what either reading reads reds this
+ *   case; each residual
  *   family's quiet rows are pins, row Q's pins in
  *   order, and equal this header's RESIDUALS line as headerResiduals reads it back; each non-structural family's roster witness
  *   carries probes; the run guard reads a stand-in that runs no reader as not ran and one that runs judgeFiles as ran; SELF-READ
@@ -136,8 +153,9 @@
  *   from the judge specifier and declaring BLANK before its describe block, cites inside the block's callback and first, by a rest
  *   element, after the block - read as exporting the five, shadowing BLANK and first in that order (the declaration after the
  *   describe block is the form of refusal #7's witness WG10), importing the three and Unit as not exported. Over the live tree
- *   landedChecks's reading, by the same call, holds judgeFiles, causesOf, bindingOf and READS (JUDGE_ENTRIES, which the judged
- *   set holds to the roster's constants) among the landed module's exports and among the names it reads from this file's
+ *   landedChecks's reading, by the same call, holds judgeFiles, causesOf, bindingOf and READS (JUDGE_ENTRIES spread: the judged
+ *   set holds that reading, and constantsOf()'s, to the roster's judgeEntries) among the landed module's exports and among the
+ *   names it reads from this file's
  *   imports of "./helpers/apo-citation-status-judge.js", no shadowed name and no import the module does not export; the live
  *   anchor, a direct call of landedChecks at the live root outside overTree and its callback, returns a reading equal to it (its
  *   four lists) that holds the same against a literal of its own, the four names spelled out in its compare rather than read
@@ -279,7 +297,14 @@
  * through readScope at the repository root, so a reader that neutralizes every file it reads from that root reds, and one that
  * neutralizes only the product scope's files does not. Nor a live reading substituted at both of its calls together, overTree's
  * callback and the live anchor's direct call (keyed on the root or not): the live anchor holds each call against the other, never
- * the two against a third.
+ * the two against a third. Nor THE LANDED JUDGE's two compares hollowed together, overTree's compare and the live anchor's
+ * literal edited in one cut so that a list's expectation is weakened in both of them (the exported and imported lists'
+ * four-entries expectations emptied, or the shadowed or the foreign list's empty expectation loosened to any list, in both
+ * compares: landing 987's two-edit members GP20-CH1, GP20-CH2 and GP20-CH3, wb-q8v3's F6): each compare is the other's
+ * falsifier, never the two against a third. Nor a JUDGE_ENTRIES whose reading changes from one read to the next (an own map,
+ * iterator or element accessor that answers the judged set's two readings otherwise than THE LANDED JUDGE's later spread),
+ * nor the judged set's spread pin removed or hollowed in the same cut that gives JUDGE_ENTRIES an own map or iterator
+ * (GP20-09's or GP20-07's form with the pin taken out): the judged set holds what its two readings read when it reads them.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE test/ and .beads/ are not read (Q1); R-LOCKFILE the two dependency
  * locks are set aside (Q2); R-BINARY a file holding a NUL byte at the place Q3 holds one is not read (Q3); R-PATH a file's
  * path is not read (Q4);
@@ -774,7 +799,7 @@ const JUDGE_MODULE = "test/helpers/apo-citation-status-judge.ts";
 const JUDGE_SPECIFIER = "./helpers/apo-citation-status-judge.js";
 /** This census's path from the repository root: THE LANDED JUDGE's live check reads this file there, and the case's stand-in tree holds its stand-in census at it. */
 const CENSUS_PATH = relative(REPO, SELF);
-/** The judge's four entries this census calls by name: THE LANDED JUDGE's overTree compare reads them here, and the judged set holds this constant to the roster's constants (judgeEntries) through constantsOf(); the live anchor's compare spells the four names out in a literal of its own instead of reading it. */
+/** The judge's four entries this census calls by name: THE LANDED JUDGE's overTree compare spreads them here, and the judged set holds this constant to the roster's constants (judgeEntries) twice, through constantsOf() (json(), through its own map) and spread as that compare reads it (through its own iterator); the live anchor's compare spells the four names out in a literal of its own instead of reading it. */
 const JUDGE_ENTRIES: readonly string[] = ["judgeFiles", "causesOf", "bindingOf", "READS"];
 /** The names a script's top-level statements declare, as THE LANDED JUDGE case's 27 declaration stand-ins read them: a function, class, interface, type alias or enum declaration by its name, and a variable statement by each declarator's name and each name its binding pattern binds (a rest, a defaulted, a renamed and a nested element among them, an omitted element skipped); with exportedOnly, only statements that carry an export modifier. */
 function declaredNames(text: string, exportedOnly: boolean): string[] {
@@ -1693,6 +1718,7 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(ROSTER.bead).toBe(BEAD);
     expect(json(PRODUCER)).toStrictEqual(ROSTER.producer);
     expect(constantsOf()).toStrictEqual(ROSTER.constants);
+    expect([...JUDGE_ENTRIES], "JUDGE_ENTRIES spread, as THE LANDED JUDGE's overTree compare reads it, is the roster's judgeEntries").toStrictEqual(ROSTER.constants.judgeEntries);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
     expect(Object.values(RESIDUALS).flat(), "the residual families' quiet rows are row Q's pins, in order").toEqual(ROWS.find(row => row.id === "Q")?.pins ?? []);
     expect(json(headerResiduals()), "this header's RESIDUALS line names exactly the residual families and their quiet rows").toStrictEqual(json(RESIDUALS));
