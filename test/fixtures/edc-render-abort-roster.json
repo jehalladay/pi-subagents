@@ -1,0 +1,1769 @@
+{
+  "bead": "wb-pyel.5",
+  "constants": {
+    "preview": "reactivefiber.render.preview",
+    "grants": [
+      "reactivefiber:render"
+    ],
+    "renderModule": "src/workbench/providers/reactivefiber.ts",
+    "nativeLoader": "src/workbench/native-modules.ts",
+    "renderVerb": [
+      "context",
+      "render"
+    ],
+    "uncommittedTail": [
+      "--no-commit",
+      "--no-input",
+      "--json"
+    ],
+    "registryDeadlineMs": 250,
+    "waitMs": 45000,
+    "standInBoundMs": 60000,
+    "passes": [
+      "native-registry",
+      "native-direct",
+      "native-preview",
+      "injected-registry",
+      "injected-direct"
+    ],
+    "entry": {
+      "native-registry": "registerNativeReactiveFiberRender",
+      "native-direct": "nativeReactiveFiberRender",
+      "native-preview": "nativeReactiveFiberPreview",
+      "injected-registry": "registerReactiveFiberRender",
+      "injected-direct": "registerReactiveFiberRender"
+    },
+    "nativePasses": [
+      "native-registry",
+      "native-direct",
+      "native-preview"
+    ],
+    "registryPasses": [
+      "native-registry",
+      "injected-registry"
+    ],
+    "scenarios": [
+      "before",
+      "running",
+      "proposed",
+      "queued",
+      "deadline",
+      "settled"
+    ],
+    "kind": {
+      "before": "aborted",
+      "running": "aborted",
+      "proposed": "aborted",
+      "queued": "suspended",
+      "deadline": "suspended",
+      "settled": "settled"
+    },
+    "driven": {
+      "native-registry": [
+        "before",
+        "running",
+        "proposed",
+        "queued",
+        "settled"
+      ],
+      "native-direct": [
+        "before",
+        "running",
+        "proposed",
+        "settled"
+      ],
+      "native-preview": [
+        "before",
+        "running",
+        "proposed",
+        "settled"
+      ],
+      "injected-registry": [
+        "before",
+        "proposed",
+        "queued",
+        "deadline",
+        "settled"
+      ],
+      "injected-direct": [
+        "before",
+        "proposed",
+        "settled"
+      ]
+    },
+    "violations": [
+      "committed-after-abort",
+      "committed-proposal",
+      "committing-launch",
+      "started-after-abort",
+      "extra-launch",
+      "foreign-launch",
+      "host-write"
+    ],
+    "clauseOf": {
+      "committed-after-abort": "commit",
+      "committed-proposal": "commit",
+      "committing-launch": "effect",
+      "started-after-abort": "effect",
+      "extra-launch": "effect",
+      "foreign-launch": "effect",
+      "host-write": "effect"
+    },
+    "committedForms": [
+      "commit_seq",
+      "render_id",
+      "ephemeral",
+      "storage_write_count",
+      "ephemeral-absent",
+      "ephemeral-null",
+      "ephemeral-string",
+      "ephemeral-number",
+      "render_id-empty",
+      "render_id-absent",
+      "render_id-number",
+      "commit_seq-zero",
+      "commit_seq-string",
+      "storage_write_count-absent",
+      "storage_write_count-string",
+      "storage_write_count-null",
+      "storage_write_count-negative",
+      "work-absent",
+      "result-absent"
+    ],
+    "controls": {
+      "dropped-signal": [
+        "committed-after-abort"
+      ],
+      "unguarded-bare": [
+        "committed-after-abort"
+      ],
+      "unguarded-registry": [],
+      "unguarded-registry-same-tick": [],
+      "committed-form-commit_seq": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-null": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-string": [
+        "committed-proposal"
+      ],
+      "committed-form-ephemeral-number": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-empty": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-render_id-number": [
+        "committed-proposal"
+      ],
+      "committed-form-commit_seq-zero": [
+        "committed-proposal"
+      ],
+      "committed-form-commit_seq-string": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-string": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-null": [
+        "committed-proposal"
+      ],
+      "committed-form-storage_write_count-negative": [
+        "committed-proposal"
+      ],
+      "committed-form-work-absent": [
+        "committed-proposal"
+      ],
+      "committed-form-result-absent": [
+        "committed-proposal"
+      ],
+      "committing-argv": [
+        "committing-launch"
+      ],
+      "committing-verb": [
+        "committing-launch"
+      ],
+      "misplaced-tail": [
+        "committing-launch"
+      ],
+      "committing-noun": [
+        "committing-launch"
+      ],
+      "committing-workspace": [
+        "committing-launch"
+      ],
+      "swapped-tail": [
+        "committing-launch"
+      ],
+      "started-after-abort": [
+        "started-after-abort"
+      ],
+      "started-reader": [
+        "started-after-abort"
+      ],
+      "started-queued": [
+        "started-after-abort"
+      ],
+      "extra-read": [
+        "extra-launch"
+      ],
+      "suspended-returned": [
+        "committed-after-abort"
+      ],
+      "extra-launch": [
+        "extra-launch"
+      ],
+      "foreign-launch": [
+        "foreign-launch"
+      ],
+      "host-write": [
+        "host-write"
+      ],
+      "host-rewrite": [
+        "host-write"
+      ],
+      "host-sibling": [
+        "host-write"
+      ]
+    },
+    "self": "test/workbench-edc-render-abort-census.test.ts",
+    "helper": "test/helpers/edc-static-reach-readers.ts",
+    "helperSpecifier": "./helpers/edc-static-reach-readers.js",
+    "ownDeclarations": [
+      "JsonObject",
+      "Envelope",
+      "HERE",
+      "REPO",
+      "ROSTER_PATH",
+      "BEAD",
+      "PREVIEW",
+      "GRANTS",
+      "RENDER_MODULE",
+      "NATIVE_LOADER",
+      "SELF",
+      "HELPER",
+      "HELPER_SPECIFIER",
+      "TSCONFIG",
+      "IMPORTS",
+      "TOP_LEVEL_CALLS",
+      "RENDER_VERB",
+      "UNCOMMITTED_TAIL",
+      "REGISTRY_DEADLINE_MS",
+      "WAIT_MS",
+      "STAND_IN_BOUND_MS",
+      "PASSES",
+      "PassId",
+      "ENTRY",
+      "NATIVE_PASSES",
+      "REGISTRY_PASSES",
+      "SCENARIOS",
+      "ScenarioId",
+      "KIND",
+      "DRIVEN",
+      "VIOLATIONS",
+      "Violation",
+      "CLAUSE_OF",
+      "COMMITTED_FORMS",
+      "CommittedForm",
+      "IO_BUILTINS",
+      "TSX_SDK",
+      "HOOK_NAME",
+      "HOOK_WORD",
+      "DESCRIPTOR_NAME",
+      "SCRIPT_MODULE",
+      "COMPONENT_MODULE",
+      "REQUIRED_TRACKED",
+      "UNREAD_TREE",
+      "REQUIRED_READ",
+      "FLOORS",
+      "TRIGGER",
+      "RESIDUALS",
+      "PLANTED_REACH",
+      "STATIC_RESIDUE",
+      "OTHER_HOOKS",
+      "LOOKALIKE_E",
+      "OTHER_LOOKALIKE",
+      "OTHER_PHRASES",
+      "OTHER_COMPOSED",
+      "OTHER_LOADER",
+      "OTHER_UNREAD_TEXT",
+      "UNREAD_HOME_PROBES",
+      "PLANTED_PATHS",
+      "PLANTED_SOURCE",
+      "PLANTED_MANIFEST",
+      "PLANTED_LOCK",
+      "PLANTED_DESCRIPTION",
+      "PLANTED_KEY",
+      "PLANTED_HOMES",
+      "PLANTED_DESCRIPTOR_SOURCE",
+      "PLANTED_REQUIRE",
+      "PLANTED_STRING_HOOKS",
+      "PLANTED_LOADER",
+      "DECLARATION_KINDS",
+      "PLANTED_COMPOSITION",
+      "Row",
+      "OWN_DECLARATIONS",
+      "ROWS",
+      "SERVES",
+      "RosterPin",
+      "RosterRow",
+      "Roster",
+      "isObject",
+      "json",
+      "strings",
+      "readRoster",
+      "ROSTER",
+      "rosterWitness",
+      "Mode",
+      "Bench",
+      "Launch",
+      "oldPath",
+      "scratches",
+      "reap",
+      "standIn",
+      "rfBody",
+      "bench",
+      "launches",
+      "tagOf",
+      "marked",
+      "tree",
+      "until",
+      "bounded",
+      "Reader",
+      "CapturingRegistry",
+      "Pass",
+      "context",
+      "pass",
+      "Outcome",
+      "settle",
+      "Observation",
+      "sourceOf",
+      "uncommitted",
+      "uncommittedArgv",
+      "falsify",
+      "outcomeText",
+      "observe",
+      "sweep",
+      "sweepOnce",
+      "commitLine",
+      "effectLine",
+      "committedForm",
+      "settledNative",
+      "ArgvShape",
+      "launchRf",
+      "Control",
+      "controlObservation",
+      "committedFormControl",
+      "Proposer",
+      "signalIgnoringProvider",
+      "unguarded",
+      "CONTROLS",
+      "git",
+      "trackedCache",
+      "trackedPaths",
+      "trackedScriptModules",
+      "walkedScriptModules",
+      "parsed",
+      "parse",
+      "resolveModule",
+      "isBuiltin",
+      "closure",
+      "srcSitesCache",
+      "srcLaunchSites",
+      "foreignCache",
+      "foreignCommands",
+      "compilerOptionsCache",
+      "compilerOptions",
+      "resolvesToHelper",
+      "declaredBy",
+      "importBindings",
+      "topLevelToken",
+      "Composition",
+      "composition",
+      "helperExports",
+      "SourceOf",
+      "ReachReading",
+      "reachReading",
+      "foreignSet",
+      "exportedFunctions",
+      "componentModules",
+      "hookMentions",
+      "DEPENDENCY_MAPS",
+      "manifestMentions",
+      "lockMentions",
+      "joinedFold",
+      "textsOf",
+      "phraseMentions",
+      "isStaticHome",
+      "staticHomes",
+      "sourcePhraseMentions",
+      "HomeReading",
+      "homeReading",
+      "homesCache",
+      "homesRead",
+      "NEVER",
+      "FORGE_CLIENT",
+      "FURNACE_CLIENT",
+      "HX_READER",
+      "RF_INVOKE",
+      "descriptorsOf",
+      "nativeDescriptors",
+      "injectedDescriptors",
+      "renderIds",
+      "exportRow",
+      "acceptance",
+      "acceptanceClauses",
+      "titleParts",
+      "REACHED",
+      "IMPL"
+    ],
+    "tsconfig": "tsconfig.test.json",
+    "imports": [
+      "node:child_process { execFileSync, spawn }",
+      "node:crypto { createHash }",
+      "node:fs { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync }",
+      "node:module { builtinModules }",
+      "node:path { delimiter, dirname, join, posix, relative }",
+      "node:url { fileURLToPath }",
+      "typescript default as ts",
+      "vitest { afterEach, describe, expect, it }",
+      "../src/workbench/capability-registry.js { type CapabilityDescriptor, CapabilityError, type CapabilityLimits, type CapabilityProvider, CapabilityRegistry, type InvocationContext, type JsonValue }",
+      "../src/workbench/native-modules.js { loadWorkbenchNative }",
+      "../src/workbench/providers/forge.js { type ForgeReadClient, registerForgeGateStatus }",
+      "../src/workbench/providers/furnace.js { type FurnaceReadClient, registerFurnaceRunInspect }",
+      "../src/workbench/providers/hyperunix.js { type HyperUnixReader, registerHyperUnixFind }",
+      "../src/workbench/providers/reactivefiber.js { nativeReactiveFiberPreview, nativeReactiveFiberRender, REACTIVE_FIBER_CONTRACT_SOURCE, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerReactiveFiberRender }",
+      "./helpers/edc-static-reach-readers.js * as READERS",
+      "./helpers/rf-render-fixture.js { fullShapeRf }",
+      "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }"
+    ],
+    "topLevelCalls": [
+      "installScratchLeakGuard()",
+      "afterEach(<function>)",
+      "describe(\"wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R12) and its until-then trigger\", <function>)"
+    ],
+    "declarationKinds": [
+      {
+        "kind": "variable",
+        "statement": "let plantedVariable = 1, plantedSecond: number;",
+        "names": [
+          "plantedVariable",
+          "plantedSecond"
+        ]
+      },
+      {
+        "kind": "object pattern",
+        "statement": "const { plantedKey, nested: { plantedDeep = 0 }, ...plantedRest } = plantedObject;",
+        "names": [
+          "plantedKey",
+          "plantedDeep",
+          "plantedRest"
+        ]
+      },
+      {
+        "kind": "array pattern",
+        "statement": "const [plantedFirst, , [plantedInner], ...plantedTail] = plantedArray;",
+        "names": [
+          "plantedFirst",
+          "plantedInner",
+          "plantedTail"
+        ]
+      },
+      {
+        "kind": "function",
+        "statement": "function plantedFunction(): void {}",
+        "names": [
+          "plantedFunction"
+        ]
+      },
+      {
+        "kind": "class",
+        "statement": "class PlantedClass {}",
+        "names": [
+          "PlantedClass"
+        ]
+      },
+      {
+        "kind": "interface",
+        "statement": "interface PlantedInterface {}",
+        "names": [
+          "PlantedInterface"
+        ]
+      },
+      {
+        "kind": "type alias",
+        "statement": "type PlantedType = string;",
+        "names": [
+          "PlantedType"
+        ]
+      },
+      {
+        "kind": "enum",
+        "statement": "enum PlantedEnum {\n  Read = 0,\n}",
+        "names": [
+          "PlantedEnum"
+        ]
+      },
+      {
+        "kind": "namespace",
+        "statement": "namespace PlantedNamespace {\n  export const read = 1;\n}",
+        "names": [
+          "PlantedNamespace"
+        ]
+      },
+      {
+        "kind": "import-equals",
+        "statement": "import plantedAlias = PlantedNamespace.read;",
+        "names": [
+          "plantedAlias"
+        ]
+      },
+      {
+        "kind": "import declaration",
+        "statement": "import { plantedImport } from \"./planted.js\";",
+        "names": []
+      },
+      {
+        "kind": "nameless function",
+        "statement": "export default function (): void {}",
+        "names": []
+      },
+      {
+        "kind": "expression statement",
+        "statement": "Reflect.set(globalThis, \"PLANTED\", (): number => 1);",
+        "names": []
+      }
+    ],
+    "plantedComposition": "import * as READERS from \"./helpers/edc-static-reach-readers.js\";\nimport { ioGlobalReferences as ownIoReader } from \"./helpers/edc-static-reach-readers\";\nimport type { LaunchSite } from \"../test/helpers/edc-static-reach-readers.ts\";\nimport { makeScratch } from \"./helpers/scratch.js\";\nimport processReferences = READERS.processReferences;\nReflect.set(globalThis, \"EDC_PROCESS_COPY\", (module: string): string[] => [module]);\nenum OwnEnum {\n  Read = 0,\n}\nnamespace OwnReaders {\n  export const read = ownIoReader;\n}\nconst { process: ownProcessReader } = { process: processReferences };\nconst loaded = import(\"./helpers/edc-static-reach-readers\");",
+    "launchCalls": [
+      "spawn",
+      "spawnSync",
+      "exec",
+      "execSync",
+      "execFile",
+      "execFileSync",
+      "fork",
+      "execve"
+    ],
+    "childProcess": "child_process",
+    "loaderCalls": [
+      "require",
+      "getBuiltinModule"
+    ],
+    "loaderFactories": [
+      "createRequire"
+    ],
+    "resolveDepth": 8,
+    "pathDepth": 3,
+    "traceRounds": 16,
+    "ioGlobals": [
+      "fetch",
+      "XMLHttpRequest",
+      "WebSocket",
+      "EventSource",
+      "BroadcastChannel",
+      "console",
+      "localStorage",
+      "sessionStorage",
+      "require",
+      "module",
+      "eval",
+      "Function"
+    ],
+    "globalObjects": [
+      "globalThis",
+      "global",
+      "self",
+      "window"
+    ],
+    "processReads": [
+      "env"
+    ],
+    "ioBuiltins": [
+      "child_process",
+      "cluster",
+      "dgram",
+      "dns",
+      "fs",
+      "fs/promises",
+      "http",
+      "http2",
+      "https",
+      "net",
+      "tls",
+      "worker_threads"
+    ],
+    "tsxSdk": "@reactive-fiber/tsx",
+    "hookName": "/^use[A-Z]/",
+    "hookWord": "/(?:^|[^A-Za-z0-9_$])(use[A-Z][A-Za-z0-9_$]*)/",
+    "descriptorName": "pureProjectRequirement",
+    "scriptModule": "/\\.(?:ts|mts|cts|tsx|js|mjs|cjs|jsx)$/i",
+    "componentModule": "/\\.(?:tsx|jsx)$/i",
+    "requiredTracked": [
+      "package.json",
+      "src/index.ts",
+      "src/workbench/providers/reactivefiber.ts",
+      "test/helpers/scratch.ts",
+      "docs/workbench/07-native-integrations.md"
+    ],
+    "unreadTree": "test/",
+    "requiredRead": [
+      "src/index.ts",
+      "src/workbench/providers/reactivefiber.ts",
+      "qa/workbench/dependency-census.mjs",
+      "examples/workflows/compose.js",
+      "vitest.config.ts"
+    ],
+    "floors": {
+      "tracked": 900,
+      "srcModules": 100,
+      "readModules": 160,
+      "descriptors": 8
+    },
+    "trigger": "row T read a Pi-authored EDC component/hook surface: wb-pyel.5's acceptance is owed on it - drive its render passes through the render-abort falsifier (row A, PASSES) and re-measure this census",
+    "residuals": {
+      "R-INJECTED-RELAY": [
+        "Q1"
+      ],
+      "R-STATED-EFFECTS": [
+        "Q2"
+      ],
+      "R-HOOK-VOCABULARY": [
+        "Q3"
+      ],
+      "R-STAND-IN": [
+        "Q4"
+      ],
+      "R-HOST-ELSEWHERE": [
+        "Q5"
+      ],
+      "R-STATIC-FORMS": [
+        "Q6"
+      ],
+      "R-UNREAD-HOMES": [
+        "Q7"
+      ]
+    },
+    "serves": {
+      "A1": "zero committed proposals",
+      "A2": "zero committed proposals",
+      "A3": "zero committed proposals",
+      "A4": "zero tool/model/host effects from a render pass",
+      "A5": "zero tool/model/host effects from a render pass",
+      "A6": "a committed-after-abort attempt going red"
+    },
+    "otherHooks": "export function evidenceHook() { return describeRequirement(view); }\nconst makeEvidenceDescriptor = () => ({ need: 1 });\nconst composedHook = \"use\" + \"Provider\";\nconst pattern = /useQuery/;\n// useCommit\n",
+    "otherPhrases": "states an evidence need and a resource demand for the next render",
+    "otherComposed": "export const description = \"Describes a logical evidence \" + \"requirement for the next render\";\n",
+    "otherLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)([\"@reactive-fiber\", \"tsx\"].join(\"/\"));\n",
+    "otherUnreadText": "export const description = /Describes a logical evidence requirement/.source;\n// and a prospective resource interest for the next render\n",
+    "otherLookalike": "export function us\u0435Provider(): void {}\nexport const description = \"Describes a logical \u0435vidence requirement\";\n",
+    "staticResidue": {
+      "unbound-api-launch": "export function run(api: { exec(command: string): void }, command: string): void { api.exec(command); }\n",
+      "unbound-value-launch": "export function run(pick: () => (command: string) => void): void { const launch = pick(); launch(\"rf\"); }\n",
+      "package-launcher": "import { execa } from \"execa\";\nexport const run = (): unknown => execa(\"rf\");\n",
+      "constructor-chain-global": "export const reach = (): unknown => \"\".constructor.constructor(\"return this\")();\n",
+      "env-write": "export function run(): void { process.env.PLANTED = \"1\"; }\n",
+      "argument-carried": "import { spawn } from \"node:child_process\";\nexport const run = (): unknown => spawn(\"sh\", [\"-c\", \"rf context render --json\"]);\n",
+      "other-builtin-launch": "import cluster from \"node:cluster\";\nexport const run = (): unknown => cluster.fork();\n",
+      "unparsed-loader": "export const load = (name: string): unknown => Reflect.apply(require, undefined, [name]);\n",
+      "aliased-loader": "export function load(name: string): unknown {\n  const read = require;\n  return read(name);\n}\n",
+      "renamed-loader-factory": "import { createRequire as make } from \"node:module\";\nexport const load = (name: string): unknown => make(import.meta.url)(name);\n",
+      "held-loader-factory": "import { createRequire } from \"node:module\";\nconst loaders = { load: createRequire(import.meta.url) };\nexport const load = (name: string): unknown => loaders.load(name);\n",
+      "composed-code": "export const run = (code: string): unknown => new Function(code)();\n",
+      "process-binding": "export const raw = (): unknown => process.binding(\"spawn_sync\");\n"
+    },
+    "unreadHomeProbes": [
+      "test/helpers/edc-evidence-hooks.ts",
+      "test/workbench-edc-descriptor.test.ts",
+      "src/workbench/edc/descriptor.json",
+      "examples/edc/hooks.md",
+      "qa/workbench/edc-descriptor.yaml",
+      "bin/edc-evidence-hooks"
+    ],
+    "plantedPaths": [
+      "src/edc/EvidencePanel.tsx",
+      "examples/Card.JSX",
+      "src/edc/panel.ts",
+      "docs/hooks.md"
+    ],
+    "plantedSource": "import { useQuery } from \"@reactive-fiber/tsx\";\nexport function useRequirement(view: unknown) { return pureProjectRequirement(view); }\nconst panel = () => useProvider(\"evidence-view\", {});\n",
+    "plantedRequire": "const tsx = require(\"@reactive-fiber/tsx\");\n",
+    "plantedStringHooks": "export const hooks = { \"useProvider\": (): number => 1 };\nregistry.hook(\"useQuery\", () => 2);\nexport const note = \"call usePlanted() first\";\n",
+    "plantedLoader": "import { createRequire } from \"node:module\";\nconst tsx = createRequire(import.meta.url)(\"@reactive-fiber/tsx\");\n",
+    "plantedManifest": {
+      "name": "planted",
+      "dependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "devDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "peerDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "optionalDependencies": {
+        "@reactive-fiber/tsx": "1.0.0"
+      },
+      "bundleDependencies": [
+        "@reactive-fiber/tsx"
+      ],
+      "bundledDependencies": [
+        "@reactive-fiber/tsx"
+      ]
+    },
+    "plantedLock": {
+      "packages": {
+        "": {
+          "name": "planted"
+        },
+        "node_modules/@reactive-fiber/tsx": {
+          "version": "1.0.0"
+        }
+      }
+    },
+    "plantedDescription": "Describes a logical evidence requirement for the next render",
+    "plantedKey": "prospectiveResourceInterest",
+    "plantedHomes": [
+      "src/workbench/edc/evidence-hooks.ts",
+      "qa/workbench/edc-hooks.mjs",
+      "examples/edc/evidence-hooks.ts",
+      "examples/edc/evidence-hooks.JS",
+      "vitest.edc.config.ts"
+    ],
+    "plantedDescriptorSource": "export function registerEvidence(registry: Registry): void {\n  registry.register({ descriptor: { id: \"edc.evidence\", description: \"Describes a logical evidence requirement for the next render\", inputSchema: { properties: { prospectiveResourceInterest: {} } } } });\n}\n",
+    "plantedReach": "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nimport childProcess from \"node:child_process\";\nimport cpEquals = require(\"child_process\");\nexport { exec as reexported } from \"node:child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nconst LAZY_NAME = \"planted-const-lazy\";\nconst constLazy = await import(LAZY_NAME);\nconst computedLazy = await import(pickName());\nconst required = require(\"planted-require-call\");\nconst { spawnSync: launchSync } = require(\"node:child_process\");\nconst loaded = process.getBuiltinModule(\"node:child_process\");\nconst TOOL = \"hx\";\nconst SHELLS = flag ? [\"cmd\", \"/c\"] : [\"sh\", \"-c\"];\nconst PICKED = flag ? \"git\" : \"forge\";\nrun(\"hx\", []);\nrun(\"rf\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\ncp.exec(PICKED);\nchildProcess.execFileSync(TOOL);\ncpEquals.exec(\"git\");\nlaunchSync(SHELLS[0]);\nloaded.spawn(\"rf\");\nconst alias = run;\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\npi.exec(SHELLS[0], []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nconst viaGlobal = globalThis.fetch;\nconst viaIndex = self[\"XMLHttpRequest\"];\nconst holder = global;\nconst code = eval(source);\nconst fs = process.getBuiltinModule(\"node:fs\");\nconst env = process.env;\nsettings.fetch = 1;\nconst typed: typeof globalThis.fetch = reply;\nclass PlantedNamedChild extends run {}\nclass PlantedNamespaceChild extends cp.ChildProcess {}\nclass PlantedDefaultChild extends childProcess.ChildProcess {}\nclass PlantedEqualsChild extends cpEquals.ChildProcess {}\nclass PlantedLoadedChild extends loaded.ChildProcess {}\nconst PlantedExpressionChild = class extends cp.ChildProcess {};\nclass PlantedSocketChild extends WebSocket {}\nclass PlantedGlobalChild extends globalThis.EventTarget {}\nclass PlantedProcessChild extends process.constructor {}\nconst instantiated = run<never>;\ninstantiated(\"rf\");\nclass PlantedTypedChild implements cp.ChildProcess {}\ninterface PlantedShape extends WebSocket, NodeJS.Process {}\nclass PlantedTypeArgument extends Base<typeof globalThis.fetch> {}\n"
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the bead's export row, src and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "a render-abort falsifier proving zero committed proposals and zero tool/model/host effects from a render pass, with a committed-after-abort attempt going red",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "aborted",
+            "passes": [
+              "native-registry/before: at abort - | refused transport: Capability reactivefiber.render.preview was cancelled before invocation. | []",
+              "native-registry/running: at abort started | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "native-registry/proposed: at abort proposed | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "native-direct/before: at abort - | refused transport: RF preview cancelled before launch. | []",
+              "native-direct/running: at abort started | refused transport: RF preview cancelled. | []",
+              "native-direct/proposed: at abort proposed | refused transport: RF preview cancelled. | []",
+              "native-preview/before: at abort - | refused transport: RF preview cancelled before launch. | []",
+              "native-preview/running: at abort started | refused transport: RF preview cancelled. | []",
+              "native-preview/proposed: at abort proposed | refused transport: RF preview cancelled. | []",
+              "injected-registry/before: at abort - | refused transport: Capability reactivefiber.render.preview was cancelled before invocation. | []",
+              "injected-registry/proposed: at abort reader called 1, unanswered | refused transport: Capability reactivefiber.render.preview wait was cancelled. | []",
+              "injected-direct/before: at abort - | refused transport: RF preview cancelled before invocation. | []",
+              "injected-direct/proposed: at abort reader called 1, unanswered | refused transport: RF preview cancelled. | []"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "suspended",
+            "passes": [
+              "native-registry/queued: at abort slot holder in flight 1 of 1, admitted 1 | refused transport: Capability reactivefiber.render.preview was cancelled while waiting for admission. | []",
+              "injected-registry/queued: at abort slot holder in flight 1 of 1, admitted 1 | refused transport: Capability reactivefiber.render.preview was cancelled while waiting for admission. | []",
+              "injected-registry/deadline: at abort reader called 1, unanswered | refused transport: Capability reactivefiber.render.preview exceeded its deadline of 250ms. | []"
+            ],
+            "cancelledWhileQueued": [
+              "native-registry: 1",
+              "injected-registry: 1"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "clause": "zero committed proposals",
+            "kind": "settled",
+            "settled": [
+              "native-registry/legacy: returned uncommitted | --workspace <root> context render --model m --task native-registry-legacy --no-commit --no-input --json",
+              "native-registry/view: returned uncommitted | --workspace <root> context render --view v --task-id native-registry-view --no-commit --no-input --json",
+              "native-direct/legacy: returned uncommitted | --workspace <root> context render --model m --task native-direct-legacy --no-commit --no-input --json",
+              "native-direct/view: returned uncommitted | --workspace <root> context render --view v --task-id native-direct-view --no-commit --no-input --json",
+              "native-preview/legacy: returned uncommitted | --workspace <root> context render --model m --task native-preview-legacy --no-commit --no-input --json"
+            ],
+            "committed": [
+              "native-registry/commit_seq: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/ephemeral-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/ephemeral-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-empty: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-empty: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/render_id-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/render_id-number: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/commit_seq-zero: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq-zero: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/commit_seq-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/commit_seq-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-string: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-null: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/storage_write_count-negative: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/storage_write_count-negative: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/work-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-direct/work-absent: refused transport: RF preview returned an unrecognized or contradictory envelope.",
+              "native-registry/result-absent: refused transport: RF preview returned an unrecognized native envelope.",
+              "native-direct/result-absent: refused transport: RF preview returned an unrecognized native envelope."
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "clause": "zero tool/model/host effects from a render pass",
+            "judges": [
+              "tool",
+              "host"
+            ],
+            "stand_ins": [
+              "rf",
+              "cmd",
+              "forge",
+              "git",
+              "sh"
+            ],
+            "passes": [
+              "native-registry/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-registry/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-registry/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-registry/queued: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-registry/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-direct/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-direct/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-direct/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-direct/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-preview/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "native-preview/running: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-preview/proposed: launches 1, reader 0, foreign 0, host unchanged, stopped true | []",
+              "native-preview/settled: launches 1, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/proposed: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/queued: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/deadline: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-registry/settled: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/before: launches 0, reader 0, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/proposed: launches 0, reader 1, foreign 0, host unchanged, stopped false | []",
+              "injected-direct/settled: launches 0, reader 1, foreign 0, host unchanged, stopped false | []"
+            ],
+            "abandoned": {
+              "reaped": 1,
+              "signal": "SIGKILL"
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "clause": "zero tool/model/host effects from a render pass",
+            "judges": [
+              "tool",
+              "model",
+              "host"
+            ],
+            "modules": [
+              "src/workbench/capability-registry.ts",
+              "src/workbench/process-env.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/redaction.ts"
+            ],
+            "externals": [
+              "node:child_process",
+              "typebox/value"
+            ],
+            "launches": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
+            "namedLaunches": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
+            "ioBuiltins": [
+              "src/workbench/providers/reactivefiber.ts:node:child_process"
+            ],
+            "ioGlobals": [],
+            "processReach": [],
+            "foreign": {
+              "modules": [
+                "src/workbench/claude-host.ts",
+                "src/workbench/claude-transcript.ts",
+                "src/workbench/hosts/local-detached.ts",
+                "src/workbench/providers/forge.ts",
+                "src/workbench/providers/furnace.ts",
+                "src/workbench/providers/hyperunix.ts"
+              ],
+              "externals": [
+                "<expression>",
+                "@anthropic-ai/claude-agent-sdk",
+                "@forge/sdk",
+                "@furnace/sdk",
+                "@hyperunix/sdk",
+                "typescript"
+              ]
+            },
+            "overlap": [],
+            "rfSitesInSrc": [
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              }
+            ],
+            "unresolvedInSrc": [
+              {
+                "module": "src/workbench/hosts/local-detached.ts",
+                "callee": "spawn",
+                "command": "<expression>"
+              }
+            ],
+            "unresolvedLoadsInSrc": [
+              "src/workbench/hosts/local-detached.ts:createRequire()()"
+            ],
+            "srcSites": [
+              {
+                "module": "src/env.ts",
+                "callee": "exec",
+                "command": "git"
+              },
+              {
+                "module": "src/env.ts",
+                "callee": "exec",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/index.ts",
+                "callee": "execFileSync",
+                "command": "git"
+              },
+              {
+                "module": "src/workbench/hosts/local-detached.ts",
+                "callee": "spawn",
+                "command": "<expression>"
+              },
+              {
+                "module": "src/workbench/providers/forge.ts",
+                "callee": "spawn",
+                "command": "forge"
+              },
+              {
+                "module": "src/workbench/providers/forge.ts",
+                "callee": "spawn",
+                "command": "forge"
+              },
+              {
+                "module": "src/workbench/providers/reactivefiber.ts",
+                "callee": "spawn",
+                "command": "rf"
+              },
+              {
+                "module": "src/workflow/host.ts",
+                "callee": "exec",
+                "command": "cmd|sh"
+              },
+              {
+                "module": "src/worktree.ts",
+                "callee": "exec",
+                "command": "git"
+              }
+            ],
+            "controls": {
+              "launches": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "<re-export>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "<expression>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawnSync",
+                  "command": "cmd|sh"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                }
+              ],
+              "namedLaunches": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "forge"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "cmd|sh"
+                }
+              ],
+              "union": [
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "<re-export>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "<expression>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "fork",
+                  "command": "worker.js"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "forge|git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "execFileSync",
+                  "command": "hx"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawnSync",
+                  "command": "cmd|sh"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "ChildProcess",
+                  "command": "<reference>"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "rf"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "spawn",
+                  "command": "forge"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "git"
+                },
+                {
+                  "module": "planted/reach.ts",
+                  "callee": "exec",
+                  "command": "cmd|sh"
+                }
+              ],
+              "specifiers": [
+                "node:child_process",
+                "child_process",
+                "node:child_process",
+                "child_process",
+                "node:child_process",
+                "./planted-peer.js",
+                "planted-required",
+                "planted-lazy",
+                "planted-const-lazy",
+                "<expression>",
+                "planted-require-call",
+                "node:child_process",
+                "node:child_process",
+                "node:fs"
+              ],
+              "ioBuiltins": [
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:child_process",
+                "planted/reach.ts:node:fs"
+              ],
+              "ioGlobals": [
+                "planted/reach.ts:require",
+                "planted/reach.ts:require",
+                "planted/reach.ts:fetch",
+                "planted/reach.ts:WebSocket",
+                "planted/reach.ts:globalThis.fetch",
+                "planted/reach.ts:self[XMLHttpRequest]",
+                "planted/reach.ts:global",
+                "planted/reach.ts:eval",
+                "planted/reach.ts:WebSocket",
+                "planted/reach.ts:globalThis.EventTarget"
+              ],
+              "processReach": [
+                "planted/reach.ts:process.getBuiltinModule",
+                "planted/reach.ts:process.getBuiltinModule",
+                "planted/reach.ts:process.constructor"
+              ]
+            },
+            "composition": {
+              "helper": "test/helpers/edc-static-reach-readers.ts",
+              "specifiers": [
+                "./helpers/edc-static-reach-readers.js"
+              ],
+              "imports": [
+                "* as READERS"
+              ],
+              "readers": 35,
+              "tsconfig": "tsconfig.test.json",
+              "moduleResolution": "Bundler",
+              "named": 17,
+              "topLevel": {
+                "importDeclarations": 17,
+                "declaring": 186,
+                "declared": 186,
+                "calls": 3
+              },
+              "kinds": [
+                "variable: plantedVariable, plantedSecond",
+                "object pattern: plantedKey, plantedDeep, plantedRest",
+                "array pattern: plantedFirst, plantedInner, plantedTail",
+                "function: plantedFunction",
+                "class: PlantedClass",
+                "interface: PlantedInterface",
+                "type alias: PlantedType",
+                "enum: PlantedEnum",
+                "namespace: PlantedNamespace",
+                "import-equals: plantedAlias",
+                "import declaration: none",
+                "nameless function: none",
+                "expression statement: none"
+              ],
+              "planted": {
+                "named": [
+                  "./helpers/edc-static-reach-readers.js",
+                  "./helpers/edc-static-reach-readers",
+                  "../test/helpers/edc-static-reach-readers.ts",
+                  "./helpers/scratch.js",
+                  "./helpers/edc-static-reach-readers"
+                ],
+                "specifiers": [
+                  "./helpers/edc-static-reach-readers.js",
+                  "./helpers/edc-static-reach-readers",
+                  "../test/helpers/edc-static-reach-readers.ts",
+                  "./helpers/edc-static-reach-readers"
+                ],
+                "imports": [
+                  "* as READERS",
+                  "{ ioGlobalReferences as ownIoReader }",
+                  "type { LaunchSite }"
+                ],
+                "importDeclarations": [
+                  "./helpers/edc-static-reach-readers.js * as READERS",
+                  "./helpers/edc-static-reach-readers { ioGlobalReferences as ownIoReader }",
+                  "../test/helpers/edc-static-reach-readers.ts type { LaunchSite }",
+                  "./helpers/scratch.js { makeScratch }"
+                ],
+                "declared": [
+                  "processReferences",
+                  "OwnEnum",
+                  "OwnReaders",
+                  "ownProcessReader",
+                  "loaded"
+                ],
+                "declaring": 5,
+                "calls": [
+                  "Reflect.set(globalThis, \"EDC_PROCESS_COPY\", <function>)"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "clause": "a committed-after-abort attempt going red",
+            "controls": {
+              "dropped-signal": [
+                "committed-after-abort"
+              ],
+              "unguarded-bare": [
+                "committed-after-abort"
+              ],
+              "unguarded-registry": [],
+              "unguarded-registry-same-tick": [],
+              "committed-form-commit_seq": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-null": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-string": [
+                "committed-proposal"
+              ],
+              "committed-form-ephemeral-number": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-empty": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-render_id-number": [
+                "committed-proposal"
+              ],
+              "committed-form-commit_seq-zero": [
+                "committed-proposal"
+              ],
+              "committed-form-commit_seq-string": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-string": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-null": [
+                "committed-proposal"
+              ],
+              "committed-form-storage_write_count-negative": [
+                "committed-proposal"
+              ],
+              "committed-form-work-absent": [
+                "committed-proposal"
+              ],
+              "committed-form-result-absent": [
+                "committed-proposal"
+              ],
+              "committing-argv": [
+                "committing-launch"
+              ],
+              "committing-verb": [
+                "committing-launch"
+              ],
+              "misplaced-tail": [
+                "committing-launch"
+              ],
+              "committing-noun": [
+                "committing-launch"
+              ],
+              "committing-workspace": [
+                "committing-launch"
+              ],
+              "swapped-tail": [
+                "committing-launch"
+              ],
+              "started-after-abort": [
+                "started-after-abort"
+              ],
+              "started-reader": [
+                "started-after-abort"
+              ],
+              "started-queued": [
+                "started-after-abort"
+              ],
+              "extra-read": [
+                "extra-launch"
+              ],
+              "suspended-returned": [
+                "committed-after-abort"
+              ],
+              "extra-launch": [
+                "extra-launch"
+              ],
+              "foreign-launch": [
+                "foreign-launch"
+              ],
+              "host-write": [
+                "host-write"
+              ],
+              "host-rewrite": [
+                "host-write"
+              ],
+              "host-sibling": [
+                "host-write"
+              ]
+            },
+            "outcomes": {
+              "dropped-signal": "returned",
+              "unguarded-bare": "returned",
+              "unguarded-registry": "refused transport: Capability census.render.unguarded wait was cancelled.",
+              "unguarded-registry-same-tick": "refused transport: Capability census.render.unguarded wait was cancelled.",
+              "committed-form-commit_seq": "returned",
+              "committed-form-render_id": "returned",
+              "committed-form-ephemeral": "returned",
+              "committed-form-storage_write_count": "returned",
+              "committed-form-ephemeral-absent": "returned",
+              "committed-form-ephemeral-null": "returned",
+              "committed-form-ephemeral-string": "returned",
+              "committed-form-ephemeral-number": "returned",
+              "committed-form-render_id-empty": "returned",
+              "committed-form-render_id-absent": "returned",
+              "committed-form-render_id-number": "returned",
+              "committed-form-commit_seq-zero": "returned",
+              "committed-form-commit_seq-string": "returned",
+              "committed-form-storage_write_count-absent": "returned",
+              "committed-form-storage_write_count-string": "returned",
+              "committed-form-storage_write_count-null": "returned",
+              "committed-form-storage_write_count-negative": "returned",
+              "committed-form-work-absent": "returned",
+              "committed-form-result-absent": "returned",
+              "committing-argv": "returned",
+              "committing-verb": "returned",
+              "misplaced-tail": "returned",
+              "committing-noun": "returned",
+              "committing-workspace": "returned",
+              "swapped-tail": "returned",
+              "started-after-abort": "refused transport: census control: cancelled after it launched",
+              "started-reader": "refused transport: census control: cancelled after it read",
+              "started-queued": "refused transport: census control: cancelled in the queue after it launched",
+              "extra-read": "returned",
+              "suspended-returned": "returned",
+              "extra-launch": "returned",
+              "foreign-launch": "returned",
+              "host-write": "returned",
+              "host-rewrite": "returned",
+              "host-sibling": "returned"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "T",
+      "label": "a Pi-authored EDC component/hook surface (none exists)",
+      "pins": [
+        {
+          "id": "T1",
+          "witness": {
+            "missing": [],
+            "trackedBelowFloor": false,
+            "components": []
+          }
+        },
+        {
+          "id": "T2",
+          "witness": {
+            "readEqualsHomes": true,
+            "srcInRead": true,
+            "srcWalkEqualsTracked": true,
+            "missing": [],
+            "readsUnreadTree": false,
+            "readBelowFloor": false,
+            "srcBelowFloor": false,
+            "mentions": [],
+            "manifest": [],
+            "lock": []
+          }
+        },
+        {
+          "id": "T3",
+          "witness": {
+            "phrases": [
+              "evidencerequirement",
+              "resourceinterest"
+            ],
+            "belowFloor": false,
+            "native": {
+              "ids": [
+                "forge.gate.status",
+                "furnace.run.inspect",
+                "hyperunix.find",
+                "reactivefiber.render.preview"
+              ],
+              "render": "RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+            },
+            "injected": {
+              "ids": [
+                "forge.gate.status",
+                "furnace.run.inspect",
+                "hyperunix.find",
+                "reactivefiber.render.preview"
+              ],
+              "render": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+            },
+            "mentions": [],
+            "readEqualsHomes": true,
+            "readBelowFloor": false,
+            "written": []
+          }
+        },
+        {
+          "id": "T4",
+          "witness": {
+            "components": [
+              "src/edc/EvidencePanel.tsx",
+              "examples/Card.JSX"
+            ],
+            "read": [
+              "planted/panel.ts",
+              "planted/hooks.cjs",
+              "planted/evidence.ts",
+              "planted/string-hooks.ts",
+              "planted/loader.ts"
+            ],
+            "hooks": [
+              "planted/panel.ts:useQuery",
+              "planted/panel.ts:string @reactive-fiber/tsx",
+              "planted/panel.ts:useRequirement",
+              "planted/panel.ts:pureProjectRequirement",
+              "planted/panel.ts:useProvider",
+              "planted/panel.ts:import @reactive-fiber/tsx",
+              "planted/hooks.cjs:string @reactive-fiber/tsx",
+              "planted/hooks.cjs:import @reactive-fiber/tsx",
+              "planted/string-hooks.ts:string useProvider",
+              "planted/string-hooks.ts:string useQuery",
+              "planted/string-hooks.ts:string usePlanted",
+              "planted/loader.ts:string @reactive-fiber/tsx",
+              "planted/loader.ts:import @reactive-fiber/tsx"
+            ],
+            "written": [
+              "planted/evidence.ts:string|evidencerequirement",
+              "planted/evidence.ts:identifier|resourceinterest"
+            ],
+            "manifest": [
+              "dependencies:@reactive-fiber/tsx",
+              "devDependencies:@reactive-fiber/tsx",
+              "peerDependencies:@reactive-fiber/tsx",
+              "optionalDependencies:@reactive-fiber/tsx",
+              "bundleDependencies:@reactive-fiber/tsx",
+              "bundledDependencies:@reactive-fiber/tsx"
+            ],
+            "lock": [
+              "node_modules/@reactive-fiber/tsx"
+            ],
+            "descriptor": [
+              "planted.description|evidencerequirement",
+              "planted.inputSchema.properties.prospectiveResourceInterest#key|resourceinterest"
+            ],
+            "homes": [
+              "src/workbench/edc/evidence-hooks.ts",
+              "qa/workbench/edc-hooks.mjs",
+              "examples/edc/evidence-hooks.ts",
+              "examples/edc/evidence-hooks.JS",
+              "vitest.edc.config.ts"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "relayed": [
+              "injected-registry: returned commit_seq 1",
+              "injected-direct: returned commit_seq 1"
+            ]
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "outcome": "returned",
+            "effects": 1,
+            "plan": {
+              "operations": [
+                {
+                  "kind": "stated-by-rf"
+                }
+              ],
+              "would_commit": true
+            }
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "hooks": [],
+            "descriptor": [],
+            "composed": [],
+            "loader": [],
+            "unreadText": [],
+            "lookalike": []
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "entries": [
+              "<bench>"
+            ],
+            "outcome": "returned",
+            "logged": [
+              "rf"
+            ]
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "verdict": []
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": [
+            "unbound-api-launch: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "unbound-value-launch: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "package-launcher: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "constructor-chain-global: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "env-write: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "argument-carried: specifiers 1, childProcess 1, launchSites 1, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "other-builtin-launch: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "unparsed-loader: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "aliased-loader: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "renamed-loader-factory: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "held-loader-factory: specifiers 1, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 0, rf 0",
+            "composed-code: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 1, processReach 0, rf 0",
+            "process-binding: specifiers 0, childProcess 0, launchSites 0, loads 0, ioGlobals 0, processReach 1, rf 0"
+          ]
+        },
+        {
+          "id": "Q7",
+          "witness": [
+            "test/helpers/edc-evidence-hooks.ts: unread",
+            "test/workbench-edc-descriptor.test.ts: unread",
+            "src/workbench/edc/descriptor.json: unread",
+            "examples/edc/hooks.md: unread",
+            "qa/workbench/edc-descriptor.yaml: unread",
+            "bin/edc-evidence-hooks: unread"
+          ]
+        }
+      ]
+    }
+  ]
+}
