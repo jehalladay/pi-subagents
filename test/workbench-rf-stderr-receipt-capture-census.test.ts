@@ -20,10 +20,22 @@
  * refusal #5 measured cut #5's C1-COMMAND-WORDS claim wider than its rows - its words read every text alternative of each argv
  * element while its rows pinned elements only as a string and a spread, so its hollows H1 (string elements only) and H2 (each
  * element's first alternative only) kept the census green - and orchestrator ruling R-B599 bound the next cut to claims equal to
- * pins. Cut #6 changes no reader and widens no claim: it adds the pins, one row per claimed element form (a string as a
+ * pins. Cut #6 changed no reader and widened no claim: it added pins, one row per element value form (a string as a
  * no-substitution template, a const it resolves and the shadow forms, a template and a + join, each side of ?: / ?? / ||, their
  * opaque counterparts reading no word, a shell line, a program with no rf word), the first side of ?: / ?? / || at the first
- * argument (the last-alternative hollow's kill there), and refusal #5's plants P1, P2 and P2b as rows, byte for byte. Where a
+ * argument (the last-alternative hollow's kill there), and refusal #5's plants P1, P2 and P2b as rows, byte for byte. Gate refusal
+ * #6 measured the element reading still claimed wider than its rows on the element's route - its words read each element that is
+ * no spread of every launch's array second argument while its rows pinned elements only in arrays holding no spread, under spawn,
+ * at index 0 or 1 and on a bare array literal, so its hollows GP3-HS1 and GP3-HS2 (elements only up to the first spread, none
+ * beside a spread), GP3-HL1 (spawn only), GP3-HP1 (the first two only) and GP3-HU1 (no unwrapping) kept the census green while its
+ * plants P4 to P7 realized them - and orchestrator ruling R-B605 bound the next cut to claims equal to pins over the full
+ * element-route surface. Cut #7 changes no reader: it adds a row for each element route those hollows drop and for each route
+ * beside them (a string element at index 0 to 3; before, between and after spreads; the first argument and an element under each
+ * launcher; an element through each route; an array behind each wrapper), refusal #6's plants P4 to P7 as rows, byte for byte, and
+ * restates C1-COMMAND-WORDS to claim its reading exactly at the launch forms its rows plant, every other launch form NOT CLAIMED;
+ * it names R-ARGV-INDIRECT (a launch whose rf word sits only in a second argument that is no array literal, or inside a spread)
+ * with a quiet row that reads its launches live, and narrows R-OPAQUE-LAUNCHER's member clause to launches whose command words
+ * hold no rf (refusal #5's P1 is such a member launch, and it reads rf from its element). Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -32,8 +44,9 @@
  * MEASURED (read-only; cut #1 by seat ws-06, run g10-work-s123 at base bb96515; cut #2 by ws-06, run g10-work-s133 at trunk
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
  * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; cut #6 by seat ws-04, run g10-work-s219 at
- * trunk 108a202, landing 987; providers/reactivefiber.ts is byte-identical at all six and at 04123dc, sha256/16 d8b764b855600103
- * over its 203 lines; cut #6 moves no reader, so every witness reads as at cut #5; every C1 and G2 witness below reads
+ * trunk 108a202, landing 987; cut #7 by seat ws-04, run g10-work-s219 at trunk fd8f71c, landing 991; providers/reactivefiber.ts
+ * is byte-identical at all seven and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 and #7 move no reader,
+ * so every witness reads as at cut #5; every C1 and G2 witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
  * restates).
@@ -121,13 +134,28 @@
  *    bound to a launcher's name or to a member naming one; a member call naming a launcher under any receiver, by name or by
  *    literal key; and an execve member call on the identifier process. It is an rf launch when its command words
  *    (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher.
- *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument and from each element of an array second
- *    argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(),
- *    C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ??
- *    / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe
- *    and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a
- *    part that does not resolve) gives no word (gate members P1, P2 and P2b of refusal #5: a member-route env launch whose rf
- *    word is only an argv element - a const, the second side of ?: and the right side of ??).
+ *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its
+ *    second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array
+ *    literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each
+ *    split by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does
+ *    not resolve) gives no word. It claims that reading exactly at the launch forms its rows plant: (1) a first argument that is a
+ *    string, a no-substitution template, a const it resolves (a shadowing const; a shadowed one gives no word), a let or an
+ *    unbound name it does not resolve, a template or + join whose every part resolves or one with a part that does not, either
+ *    side of ?: / ?? / ||, a shell line (whitespace, &&, a directory path and a .exe suffix) or a program with no rf word, under
+ *    the launcher each row names, and the element at index 0 of an env launch's array as each of those forms but an unbound name
+ *    and a shell line, with a shell line at index 1 of a sh launch's array (whitespace alone; whitespace, &&, a directory path and
+ *    a .exe suffix); (2) a string element at index 0, 1, 2 and 3 of an env launch's array; (3) a string element of an env launch's
+ *    array before, between and after spreads, and a spread holding the word giving none; (4) the first argument and a string
+ *    element under each launcher C1-LAUNCH-ROUTES names (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork and
+ *    process.execve), and a string element through each other route it reads (an import alias, a destructuring alias, a const
+ *    alias, a member call by name and by literal key, and a child_process namespace member by name and by literal key); (5) a
+ *    string element of an array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around as
+ *    const; and (6) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route env launch whose rf word
+ *    is only an argv element - a const, the second side of ?: and the right side of ??) and P4 to P7 of refusal #6 (rf after a
+ *    spread, under execFileSync, behind as const and at index 2). Every other launch form is NOT CLAIMED by this census: an
+ *    element past index 3, another wrapper or a deeper nesting, a launch that combines two of (1) to (5) other than as a row of
+ *    this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is that reader's
+ *    claim of record).
  *  C1-INVENTORY: C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding
  *    (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the
  *    program being the landed reader's program() of its first argument: when every alternative is a text with a first command
@@ -240,10 +268,17 @@
  * found escape that contradicts no enumerated item is a residual-list addition):
  *  R-OPAQUE-LAUNCHER (C1): a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a
  *    parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no
- *    child_process binding with a program no text alternative of which holds the word rf (C1-COMMAND-WORDS: a parameter, or a
- *    template or + join with a part that does not resolve) - is no launch to C1 (a)-(d); such a launch moves C1 only through
- *    C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row:
- *    those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module
+ *    child_process binding whose command words hold no rf (C1-COMMAND-WORDS: a program that is a parameter, or a template or +
+ *    join with a part that does not resolve, and no element giving the word rf) - is no launch to C1 (a)-(d); such a launch moves
+ *    C1 only through C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1
+ *    field (quiet row: those calls, added to a module that already holds its child_process imports, add no launch site, inventory
+ *    member, module site or opaque load).
+ *  R-ARGV-INDIRECT (C1): a launch whose rf word sits only in its second argument when that argument is no array literal once read
+ *    through its wrappers (C1-COMMAND-WORDS) - a name bound to an array literal, or a call's result such as a concat - or only
+ *    inside a spread element is no rf launch to C1 (a), so C1 (c), (d) and (g) never read it, and through a member of a receiver
+ *    that is no child_process binding it is no inventory member either (C1-INVENTORY), so a committing render launched that way
+ *    moves no C1 field (quiet row: env launches through a helper whose rf word is only in a const array, in a concat's result or
+ *    in a spread of that const read as launches whose only command word is env, and add no launch site, inventory member, module
  *    site or opaque load).
  *  R-OPAQUE-LOADER (C1, G2): a module loaded by a loader the readers do not name - for instance a loader received as a parameter
  *    or returned by a library call, require.call, Module._load, process.binding or process._linkedBinding, or process.dlopen -
@@ -2072,6 +2107,42 @@ const P2B_PLANT: readonly string[] = [
   "}",
   "",
 ];
+/** Refusal #6's P4 to P7 (gate-prep-3, run g10-gate-s222, outbox row O:2160): a committing rf render launched by a member
+ * route through env, its rf word an argv element after a spread, under execFileSync, of an array written as const and at
+ * index 2, at the gate's paths, byte for byte. */
+const P4_PATH = "src/workbench/providers/zz-gp3-envspread.ts";
+const P4_PLANT: readonly string[] = [
+  "/** gate-prep-3 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, rf an argv element after a spread. */",
+  'const ENV_FLAGS: readonly string[] = ["-u", "PI_GP3_UNSET"];',
+  "export function viaEnvAfterSpread(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", [...ENV_FLAGS, "rf", "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P5_PATH = "src/workbench/providers/zz-gp3-execfileenv.ts";
+const P5_PLANT: readonly string[] = [
+  "/** gate-prep-3 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, by an execFileSync member route, rf an argv element. */",
+  "export function viaExecFileEnv(helpers: { execFileSync(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.execFileSync("env", ["rf", "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P6_PATH = "src/workbench/providers/zz-gp3-envasconst.ts";
+const P6_PLANT: readonly string[] = [
+  "/** gate-prep-3 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, rf an argv element of an array written as const. */",
+  "export function viaEnvAsConst(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", ["rf", "--workspace", root, "context", "render", "--json"] as const);',
+  "}",
+  "",
+];
+const P7_PATH = "src/workbench/providers/zz-gp3-envthird.ts";
+const P7_PLANT: readonly string[] = [
+  "/** gate-prep-3 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, rf the third argv element (env -u NAME rf ...). */",
+  "export function viaEnvThird(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", ["-u", "PI_GP3_UNSET", "rf", "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
 /** A module specifier that is a template with a resolving substitution, spelled the same way. */
 const TEMPLATE_SPECIFIER = ["const cp = require(`", "$", "{NODE}:child_process`);"].join("");
 /** A module specifier spelled as a template with a resolving substitution outside any call, spelled the same way. */
@@ -2127,7 +2198,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-COMMAND-WORDS",
     pin: "C1",
-    words: "C1 (a) reads a launch's command words from its first argument and from each element of an array second argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ?? / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word (gate members P1, P2 and P2b of refusal #5: a member-route env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??).",
+    words: "C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each split by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word. It claims that reading exactly at the launch forms its rows plant: (1) a first argument that is a string, a no-substitution template, a const it resolves (a shadowing const; a shadowed one gives no word), a let or an unbound name it does not resolve, a template or + join whose every part resolves or one with a part that does not, either side of ?: / ?? / ||, a shell line (whitespace, &&, a directory path and a .exe suffix) or a program with no rf word, under the launcher each row names, and the element at index 0 of an env launch's array as each of those forms but an unbound name and a shell line, with a shell line at index 1 of a sh launch's array (whitespace alone; whitespace, &&, a directory path and a .exe suffix); (2) a string element at index 0, 1, 2 and 3 of an env launch's array; (3) a string element of an env launch's array before, between and after spreads, and a spread holding the word giving none; (4) the first argument and a string element under each launcher C1-LAUNCH-ROUTES names (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork and process.execve), and a string element through each other route it reads (an import alias, a destructuring alias, a const alias, a member call by name and by literal key, and a child_process namespace member by name and by literal key); (5) a string element of an array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around as const; and (6) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??) and P4 to P7 of refusal #6 (rf after a spread, under execFileSync, behind as const and at index 2). Every other launch form is NOT CLAIMED by this census: an element past index 3, another wrapper or a deeper nesting, a launch that combines two of (1) to (5) other than as a row of this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is that reader's claim of record).",
     falsifier: async () => {
       const count = (lines: readonly string[]): number => sites(lines).length;
       return {
@@ -2172,6 +2243,45 @@ const ENUMERATION: readonly Item[] = [
         p1EnvConst: launchSites([plant(P1_PATH, P1_PLANT)]),
         p2EnvConditional: launchSites([plant(P2_PATH, P2_PLANT)]),
         p2bEnvNullish: launchSites([plant(P2B_PATH, P2B_PLANT)]),
+        elementLiteral: count(['spawn("env", ["rf", "--json"]);']),
+        elementSecond: count(['spawn("env", ["-i", "rf", "--json"]);']),
+        elementThird: count(['spawn("env", ["-u", "PI_UNSET", "rf", "--json"]);']),
+        elementFourth: count(['spawn("env", ["-i", "-u", "PI_UNSET", "rf"]);']),
+        elementBeforeSpread: count(['const FLAGS = ["--json"];', 'spawn("env", ["rf", ...FLAGS]);']),
+        elementBetweenSpreads: count(['const FLAGS = ["-i"];', 'spawn("env", [...FLAGS, "rf", ...FLAGS]);']),
+        elementAfterSpread: count(['const FLAGS = ["-u", "PI_UNSET"];', 'spawn("env", [...FLAGS, "rf", "--json"]);']),
+        programSpawnSync: count(['spawnSync("rf", ["--json"]);']),
+        programExecFile: count(['execFile("rf", ["--json"]);']),
+        programExecFileSync: count(['execFileSync("rf", ["--json"]);']),
+        programExec: count(['exec("rf --json");']),
+        programExecSync: count(['execSync("rf --json");']),
+        programFork: count(['fork("rf", ["--json"]);']),
+        programExecve: count(['process.execve("rf", []);']),
+        elementSpawnSync: count(['spawnSync("env", ["rf", "--json"]);']),
+        elementExecFile: count(['execFile("env", ["rf", "--json"]);']),
+        elementExecFileSync: count(['execFileSync("env", ["rf", "--json"]);']),
+        elementExec: count(['exec("env", ["rf", "--json"]);']),
+        elementExecSync: count(['execSync("env", ["rf", "--json"]);']),
+        elementFork: count(['fork("env", ["rf", "--json"]);']),
+        elementExecve: count(['process.execve("env", ["rf", "--json"]);']),
+        elementImportAlias: count(['import { spawn as launch } from "node:child_process";', 'launch("env", ["rf", "--json"]);']),
+        elementDestructure: count(['const { spawn: run } = require("node:child_process");', 'run("env", ["rf", "--json"]);']),
+        elementConstAlias: count(['import * as cp from "node:child_process";', "const run = cp.spawn;", 'run("env", ["rf", "--json"]);']),
+        elementMember: count(['helpers.spawn("env", ["rf", "--json"]);']),
+        elementKeyed: count(['helpers["spawn"]("env", ["rf", "--json"]);']),
+        elementModule: count(['import * as cp from "node:child_process";', 'cp.spawn("env", ["rf", "--json"]);']),
+        elementModuleKeyed: count(['import * as cp from "node:child_process";', 'cp["spawn"]("env", ["rf", "--json"]);']),
+        argvParenthesized: count(['spawn("env", (["rf", "--json"]));']),
+        argvAsConst: count(['spawn("env", ["rf", "--json"] as const);']),
+        argvSatisfies: count(['spawn("env", ["rf", "--json"] satisfies readonly string[]);']),
+        argvNonNull: count(['spawn("env", ["rf", "--json"]!);']),
+        argvTypeAssertion: count(['spawn("env", <readonly string[]>["rf", "--json"]);']),
+        argvAwait: count(["export async function launch(): Promise<void> {", '  spawn("env", await ["rf", "--json"]);', "}"]),
+        argvNested: count(['spawn("env", (["rf", "--json"] as const));']),
+        p4EnvAfterSpread: launchSites([plant(P4_PATH, P4_PLANT)]),
+        p5ExecFileEnv: launchSites([plant(P5_PATH, P5_PLANT)]),
+        p6EnvAsConst: launchSites([plant(P6_PATH, P6_PLANT)]),
+        p7EnvThird: launchSites([plant(P7_PATH, P7_PLANT)]),
       };
     },
     caught: {
@@ -2216,6 +2326,45 @@ const ENUMERATION: readonly Item[] = [
       p1EnvConst: [`${P1_PATH}:viaEnv:spawn`],
       p2EnvConditional: [`${P2_PATH}:viaEnvConditional:spawn`],
       p2bEnvNullish: [`${P2B_PATH}:viaEnvNullish:spawn`],
+      elementLiteral: 1,
+      elementSecond: 1,
+      elementThird: 1,
+      elementFourth: 1,
+      elementBeforeSpread: 1,
+      elementBetweenSpreads: 1,
+      elementAfterSpread: 1,
+      programSpawnSync: 1,
+      programExecFile: 1,
+      programExecFileSync: 1,
+      programExec: 1,
+      programExecSync: 1,
+      programFork: 1,
+      programExecve: 1,
+      elementSpawnSync: 1,
+      elementExecFile: 1,
+      elementExecFileSync: 1,
+      elementExec: 1,
+      elementExecSync: 1,
+      elementFork: 1,
+      elementExecve: 1,
+      elementImportAlias: 1,
+      elementDestructure: 1,
+      elementConstAlias: 1,
+      elementMember: 1,
+      elementKeyed: 1,
+      elementModule: 1,
+      elementModuleKeyed: 1,
+      argvParenthesized: 1,
+      argvAsConst: 1,
+      argvSatisfies: 1,
+      argvNonNull: 1,
+      argvTypeAssertion: 1,
+      argvAwait: 1,
+      argvNested: 1,
+      p4EnvAfterSpread: [`${P4_PATH}:viaEnvAfterSpread:spawn`],
+      p5ExecFileEnv: [`${P5_PATH}:viaExecFileEnv:execFileSync`],
+      p6EnvAsConst: [`${P6_PATH}:viaEnvAsConst:spawn`],
+      p7EnvThird: [`${P7_PATH}:viaEnvThird:spawn`],
     },
   },
   {
@@ -2876,8 +3025,17 @@ const ENUMERATION: readonly Item[] = [
  * Named residuals, each with a pinned quiet row
  * ------------------------------------------------------------------ */
 
+/** R-ARGV-INDIRECT's quiet row: committing rf renders launched by a helper through env whose rf word sits only in a second
+ * argument that is no array literal (a const array, a concat's result) or inside a spread of that const. */
+const ARGV_INDIRECT_PLANT: readonly string[] = [
+  'const RENDER_ARGV: readonly string[] = ["rf", "--workspace", "/workspace", "context", "render", "--json"];',
+  "type Helpers = { spawn(program: string, argv: readonly string[]): unknown };",
+  'export function viaConstArray(helpers: Helpers): unknown { return helpers.spawn("env", RENDER_ARGV); }',
+  'export function viaConcat(helpers: Helpers): unknown { return helpers.spawn("env", ["-i"].concat(RENDER_ARGV)); }',
+  'export function viaSpread(helpers: Helpers): unknown { return helpers.spawn("env", [...RENDER_ARGV]); }',
+];
 interface Residual {
-  readonly id: "R-OPAQUE-LAUNCHER" | "R-OPAQUE-LOADER" | "R-OPAQUE-REGISTRATION" | "R-PROTOTYPE-PATCH" | "R-EVALUATED-SOURCE" | "R-NON-PROCESS" | "R-STREAM-INTERNALS" | "R-RECORDER-DETACH";
+  readonly id: "R-OPAQUE-LAUNCHER" | "R-ARGV-INDIRECT" | "R-OPAQUE-LOADER" | "R-OPAQUE-REGISTRATION" | "R-PROTOTYPE-PATCH" | "R-EVALUATED-SOURCE" | "R-NON-PROCESS" | "R-STREAM-INTERNALS" | "R-RECORDER-DETACH";
   /** The pins whose claims the residual bounds (their titles name it). */
   readonly pins: readonly PinId[];
   /** The residual, verbatim as the header's RESIDUALS block states it (ANCHOR). */
@@ -2891,7 +3049,7 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-OPAQUE-LAUNCHER",
     pins: ["C1"],
-    words: "a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no child_process binding with a program no text alternative of which holds the word rf (C1-COMMAND-WORDS: a parameter, or a template or + join with a part that does not resolve) - is no launch to C1 (a)-(d); such a launch moves C1 only through C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row: those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module site or opaque load).",
+    words: "a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no child_process binding whose command words hold no rf (C1-COMMAND-WORDS: a program that is a parameter, or a template or + join with a part that does not resolve, and no element giving the word rf) - is no launch to C1 (a)-(d); such a launch moves C1 only through C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row: those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module site or opaque load).",
     quiet: async () => {
       const existing = [
         'import * as cp from "node:child_process";',
@@ -2918,6 +3076,28 @@ const RESIDUALS: readonly Residual[] = [
       };
     },
     reads: { launchSites: [], launchInventory: [], moduleSites: [], opaqueLoads: [] },
+  },
+  {
+    id: "R-ARGV-INDIRECT",
+    pins: ["C1"],
+    words: "a launch whose rf word sits only in its second argument when that argument is no array literal once read through its wrappers (C1-COMMAND-WORDS) - a name bound to an array literal, or a call's result such as a concat - or only inside a spread element is no rf launch to C1 (a), so C1 (c), (d) and (g) never read it, and through a member of a receiver that is no child_process binding it is no inventory member either (C1-INVENTORY), so a committing render launched that way moves no C1 field (quiet row: env launches through a helper whose rf word is only in a const array, in a concat's result or in a spread of that const read as launches whose only command word is env, and add no launch site, inventory member, module site or opaque load).",
+    quiet: async () => {
+      const files = [plant("argv-indirect.ts", ARGV_INDIRECT_PLANT)];
+      return {
+        launches: files.flatMap((file) => launchesIn(scanOf(file))).map((launch) => `${launch.site} words=${launch.words.join(" ")}`),
+        launchSites: launchSites(files),
+        launchInventory: launchInventory(files),
+        moduleSites: moduleSites(files, CHILD_PROCESS),
+        opaqueLoads: opaqueLoads(files),
+      };
+    },
+    reads: {
+      launches: ["argv-indirect.ts:viaConstArray:spawn words=env", "argv-indirect.ts:viaConcat:spawn words=env", "argv-indirect.ts:viaSpread:spawn words=env"],
+      launchSites: [],
+      launchInventory: [],
+      moduleSites: [],
+      opaqueLoads: [],
+    },
   },
   {
     id: "R-OPAQUE-LOADER",
@@ -3381,7 +3561,7 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     ]);
     expect(ENUMERATION.map((item) => `${item.id}:${rowShapeOf(item.caught)}`)).toStrictEqual([
       "C1-LAUNCH-ROUTES:name,importAlias,destructure,constAlias,member,keyed,execve",
-      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec,conditionalFirst,alternativeLeft,orAlternativeLeft,elementNoSubstitution,elementConstBound,elementShadowingConst,elementShadowedConst,elementUnresolvedName,elementTemplate,elementTemplateUnresolved,elementConditional,elementConditionalFirst,elementAlternative,elementAlternativeLeft,elementOrAlternative,elementOrAlternativeLeft,elementJoin,elementJoinUnresolved,elementShellLine,elementOtherProgram,p1EnvConst,p2EnvConditional,p2bEnvNullish",
+      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec,conditionalFirst,alternativeLeft,orAlternativeLeft,elementNoSubstitution,elementConstBound,elementShadowingConst,elementShadowedConst,elementUnresolvedName,elementTemplate,elementTemplateUnresolved,elementConditional,elementConditionalFirst,elementAlternative,elementAlternativeLeft,elementOrAlternative,elementOrAlternativeLeft,elementJoin,elementJoinUnresolved,elementShellLine,elementOtherProgram,p1EnvConst,p2EnvConditional,p2bEnvNullish,elementLiteral,elementSecond,elementThird,elementFourth,elementBeforeSpread,elementBetweenSpreads,elementAfterSpread,programSpawnSync,programExecFile,programExecFileSync,programExec,programExecSync,programFork,programExecve,elementSpawnSync,elementExecFile,elementExecFileSync,elementExec,elementExecSync,elementFork,elementExecve,elementImportAlias,elementDestructure,elementConstAlias,elementMember,elementKeyed,elementModule,elementModuleKeyed,argvParenthesized,argvAsConst,argvSatisfies,argvNonNull,argvTypeAssertion,argvAwait,argvNested,p4EnvAfterSpread,p5ExecFileEnv,p6EnvAsConst,p7EnvThird",
       "C1-INVENTORY:opaqueProgram,envProgram,shellProgram,otherReceiver,conditionalProgram,sameFirstWord,templateProgram,joinProgram,observedHead,e1EnvProgram,e2ShadowingConst,e3NewLaunch",
       "C1-MODULE-BINDINGS:namespace,defaultImport,defaultSpecifier,importEquals,loadBinding,defaultMember,defaultDestructure,onTheCall",
       "C1-SPECIFIER-TEXT:constSpecifier,noSubstitutionSpecifier,joinSpecifier,templateSpecifier,alternativeSpecifier,nullishSpecifier,orSpecifier,andSpecifier,unresolved",
@@ -3411,6 +3591,7 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     ]);
     expect(RESIDUALS.map((residual) => `${residual.id}:${residual.pins.join("+")}`)).toStrictEqual([
       "R-OPAQUE-LAUNCHER:C1",
+      "R-ARGV-INDIRECT:C1",
       "R-OPAQUE-LOADER:C1+G2",
       "R-OPAQUE-REGISTRATION:C1",
       "R-PROTOTYPE-PATCH:C1",
