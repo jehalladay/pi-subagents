@@ -139,10 +139,13 @@
  * opens with one) equal to its entry's line, position by position; each entry's text, a final semicolon aside, standing
  * whole in the Vocabulary's definitions (the lines from that opening line to this heading); each entry written with a second
  * identifier (require; a CALLEE_WRAPPERS entry, name) as its text with that identifier for the first; and this block naming
- * the census's QUOTES controls in the census's order. Each control runs the same reading over one planted mismatch: QC-PLANT,
- * QC-LABEL, QC-ORDER, QC-CATALOG, QC-CASE, QC-SPACE-ENTRY, QC-SPACE-QUOTE, QC-CATORDER, QC-UNPARSED, QC-MISSING, QC-EXTRA,
- * QC-PROSE-BREAK, QC-VOCAB-DROP, QC-VOCAB-ABOVE, QC-VOCAB-BELOW, QC-VOCAB-SECOND, QC-VOCAB-HEAD, QC-VOCAB-AFTER,
- * QC-VOCAB-BEFORE, QC-HARDCODE, QC-HEADING-TWICE, QC-HEADING-NONE, QC-OPENING-TWICE, QC-OPENING-NONE, QC-NAMES,
+ * the census's QUOTES controls in the census's order. The census's QUOTES PLANTS fixture (cut #3, after refusal #2,
+ * gate-prep-16, O:2091) names each control with every line its plant removes from and writes into this comment and every
+ * entry it plants; a sweep plants once per tag. Each control runs the same reading over one planted mismatch: QC-PLANT,
+ * QC-LABEL, QC-ORDER, QC-CATALOG, QC-CASE, QC-SPACE-ENTRY, QC-SPACE-QUOTE, QC-RUN-AFTER, QC-RUN-BEFORE, QC-RUN-NOSEMI,
+ * QC-RUN-WHITE, QC-ENTRY-WHITE, QC-CATORDER, QC-UNPARSED, QC-MISSING, QC-EXTRA, QC-PROSE-BREAK, QC-VOCAB-DROP,
+ * QC-VOCAB-ABOVE, QC-VOCAB-BELOW, QC-VOCAB-SECOND, QC-VOCAB-HEAD, QC-VOCAB-AFTER, QC-VOCAB-BEFORE, QC-HARDCODE,
+ * QC-HARDCODE-JSX, QC-HARDCODE-CW, QC-HARDCODE-EVERY, QC-HEADING-TWICE, QC-HEADING-NONE, QC-OPENING-TWICE, QC-OPENING-NONE, QC-NAMES,
  * QC-NAMES-ORDER, QC-NAMES-ABOVE and QC-NAMES-BELOW. No entry of another catalog is quoted here.
  *   NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;
  *   NONVALUE_PLACES "an optional member name": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;
