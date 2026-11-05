@@ -142,6 +142,27 @@
  * edit at one site's hand-off leaves the other site reading the plant itself. Nothing else changes: no row, pin id, test,
  * plant, channel, claim word or reader is added, and the roster and the helper are untouched.
  *
+ * THE wb-zdwo CUT #4 (refusal #3 on cut #3, O:2103, gate-refused M:57470; orchestrator ruling R-B569, M:57488, rung 1 for
+ * both sets): refusal #3 found two more of the root readers' hand-offs read at one call site with no negative control. Every
+ * CHANNEL_PLANTS text was read only at the N-ROOT-READERS witness's channels hand-off, and every ROOT_MANIFEST_CONTROLS
+ * manifest only at its manifestControls hand-off with no declared reading, so three gate-authored one-edit census members
+ * kept this census green: GP20-C01 (each compact text's raw text handed in its spaced-tokens form), GP20-C02 (in its
+ * spaced-field-ahead form) and GP20-C21w (each "*" value handed as "x"), each hiding a helper hollowing this census otherwise
+ * reds (GP20-H01: the parsed reading drops hits three steps down when the handed raw text holds no space; GP20-H02: it drops
+ * list-item hits when the handed raw text holds no space; GP20-H21: a key holding the string "*" is not read as text). The
+ * clause's other one-site hand-offs had the same shape: the shadowed manifest's two readings, the lock controls' and G32's
+ * package plants'. This cut takes the kill at a second call site for each of them, so every root-reader hand-off of the
+ * clause's two pins, N-ROOT-READERS and G32, is read at two call sites. THE DECLARED READINGS: ROOT_MANIFEST_HITS states the
+ * hits each root manifest control's reading states, and the judged-set case holds the N-ROOT-READERS witness's
+ * manifestControls, shadowedKey and lockControls (lockPath, lockName and lockQuiet beside their LIST_POSITIONS copies) to
+ * their declared readings; CHANNEL_PLANTS and G32's package plants keep the hits they declare. THE SECOND DIRECT READ: the
+ * judged-set case reads every CHANNEL_PLANTS text again through manifestHits with its own raw text handed, every
+ * ROOT_MANIFEST_CONTROLS manifest and every G32 package plant again under its own name with no raw text handed, the shadowed
+ * manifest again with its raw text withheld and handed, and every ROOT_LOCK_CONTROLS lock again through lockReading, each
+ * reading held to its declared hits, so a census edit at one site's hand-off leaves the other site reading the plant itself.
+ * Nothing else changes: no row, pin id, test, plant, channel, claim word or reader is added, and the roster and the helper
+ * are untouched.
+ *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
  *     L3-M1 requirements.pip, L3-M4 an extensionless requirements, L3-M2 requirements/base.pip, the paired .txt controls L3-Mc1
@@ -310,8 +331,9 @@
  * plant spells it. Edits of this
  * file and the roster together: a plant removed from its table and the
  * roster together where no outside anchor names it, a pin a later cut adds beyond the export's member lists and the
- * claims, removed whole, and one edit of a raw-handed text's or a raw-less key-value plant's hand-off made at both of its
- * call sites (the N-ROOT-READERS witness and the direct read) together are NOT CLAIMED.
+ * claims, removed whole, and one edit of a root reader's hand-off (a raw-handed text's, a raw-less key-value plant's, a root
+ * manifest control's, the shadowed manifest's, a lock control's or a G32 package plant's) made at both of its call sites (its
+ * pin's witness and the direct read) together are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
  * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
  * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
@@ -770,6 +792,17 @@ const ROOT_MANIFEST_CONTROLS: Readonly<Record<string, JsonValue>> = {
   nestedValue: { overrides: { "reactive-fiber-cli": { engine: "npm:fiber-optics@0.1.0" } } },
   nearMissRf: { dependencies: { "reactive-fiber-cli": "1.0.0" } },
   nearMissSplit: { keywords: ["fiber", "optics"] },
+};
+/** wb-zdwo cut #4 (refusal #3's U2): the hits each ROOT_MANIFEST_CONTROLS manifest's reading states, read under its own name with no raw text handed. */
+const ROOT_MANIFEST_HITS: Readonly<Record<string, readonly string[]>> = {
+  dependencies: ["dependencies.dependencies{fiber-optics}: fiberoptics"],
+  devDependencies: ["devDependencies.devDependencies{@fiber-optics/sdk}: fiberoptics"],
+  peerDependencies: ["peerDependencies.peerDependencies{FiberOpticsSDK}: fiberoptics"],
+  optionalDependencies: ["optionalDependencies.optionalDependencies{fiber_optics_research}: fiberoptics"],
+  bundleDependencies: ["bundleDependencies.bundleDependencies[0]: fiberoptics"],
+  nestedValue: ["nestedValue.overrides.reactive-fiber-cli.engine: fiberoptics"],
+  nearMissRf: [],
+  nearMissSplit: [],
 };
 /** The two installed packages around a lock plant (neither path nor name holds the stem). */
 const LOCK_FILLERS: readonly [[string, JsonValue], [string, JsonValue]] = [
@@ -2159,6 +2192,43 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     );
     for (const [name, raw] of Object.entries(KEY_VALUE_CHANNELS)) {
       expect(manifestHits(JSON.parse(raw), raw, "package.json"), `the direct read: ${name}, its raw text handed at this second call site, gives its declared hits`).toEqual(channelKeyValues[name]);
+    }
+    // wb-zdwo cut #4 (refusal #3's U1 and U2; orchestrator ruling R-B569): every root-reader hand-off of the root readers'
+    // clause's pins N-ROOT-READERS and G32 read again at a second call site, each reading held to its declared hits
+    for (const [name, plant] of Object.entries(CHANNEL_PLANTS)) {
+      expect(
+        manifestHits(JSON.parse(plant.raw), plant.raw, "package.json"),
+        `the compact direct read: ${name}, its one-line raw text handed at this second call site, gives its declared hits`,
+      ).toStrictEqual(plant.hits);
+    }
+    const manifestControls = objectAt(rootReaders.manifestControls);
+    expect(Object.keys(ROOT_MANIFEST_HITS), "N-ROOT-READERS: every root manifest control declares its hits, in the table's order").toEqual(Object.keys(ROOT_MANIFEST_CONTROLS));
+    for (const [name, manifest] of Object.entries(ROOT_MANIFEST_CONTROLS)) {
+      expect(manifestControls[name], `N-ROOT-READERS: the root manifest control ${name} is read for its declared hits`).toEqual(ROOT_MANIFEST_HITS[name]);
+      expect(manifestHits(manifest, undefined, name), `the manifest direct read: ${name}, with no raw text handed at this second call site, gives its declared hits`).toStrictEqual(
+        ROOT_MANIFEST_HITS[name],
+      );
+    }
+    const shadowedKey = objectAt(rootReaders.shadowedKey);
+    expect([shadowedKey.parsed, shadowedKey.raw], "N-ROOT-READERS: the shadowed manifest gives no parsed hit, and its raw line's hit with its raw text handed").toEqual([
+      [],
+      ["shadowed:1: fiberoptics"],
+    ]);
+    expect(
+      [manifestHits(JSON.parse(SHADOWED_MANIFEST), undefined, "shadowed"), manifestHits(JSON.parse(SHADOWED_MANIFEST), SHADOWED_MANIFEST, "shadowed")],
+      "the shadowed direct read: the shadowed manifest, its raw text withheld and then handed at this second call site, gives its declared hits",
+    ).toStrictEqual([[], ["shadowed:1: fiberoptics"]]);
+    expect(
+      [lockHits.lockPath, lockHits.lockName, lockHits.lockQuiet],
+      "N-ROOT-READERS: the lock controls' path, name-field and quiet packages are read for their declared hits",
+    ).toEqual([["node_modules/fiber-optics: fiberoptics"], ["node_modules/alias name: fiberoptics"], []]);
+    for (const [name, lock] of Object.entries(ROOT_LOCK_CONTROLS)) {
+      expect(lockReading(lock).hits, `the lock direct read: ${name}, at this second call site, gives its declared hits`).toStrictEqual(lockHits[name]);
+    }
+    for (const [label, plant] of Object.entries(CUT2_GATE.G32?.packages ?? {})) {
+      expect(manifestHits(plant.manifest, undefined, label), `the G32 direct read: ${label}, with no raw text handed at this second call site, gives its declared hits`).toStrictEqual(
+        plant.hits,
+      );
     }
     const moduleReading = (pin: string): { [module: string]: string[] } => {
       return Object.fromEntries(Object.entries(objectAt(rosterWitness(pin))).map(([module, entries]) => [module, Array.isArray(entries) ? entries.map(String) : []]));
