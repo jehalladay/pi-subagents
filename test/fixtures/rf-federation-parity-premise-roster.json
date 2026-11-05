@@ -1,5 +1,5 @@
 {
-  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 47, CONTROLS 12, RESIDUALS 10) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
+  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 75, CONTROLS 26, RESIDUALS 15; wb-wfpj added F48-F51, N13-N15 and R11-R13 at its cut 1, F52-F68 and N16-N22 at its cut 2, which also widened R8 and R13, and F69-F75, N23-N26, R14 and R15 at its cut 3, which also narrowed row titles to the forms their rows pin) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "FALSIFIERS",
@@ -356,7 +356,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F40",
-      "test": "falsifier F40 the verdict inside a longer word",
+      "test": "falsifier F40 the verdict followed by more upper-case ASCII letters",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -365,7 +365,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F41",
-      "test": "falsifier F41 the pin inside a longer token",
+      "test": "falsifier F41 the pin after an ASCII letter",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -401,7 +401,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F45",
-      "test": "falsifier F45 an html character reference",
+      "test": "falsifier F45 a decimal reference and the nbsp name between words",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -410,7 +410,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F46",
-      "test": "falsifier F46 a JS escape inside a string",
+      "test": "falsifier F46 a four-digit u escape and a two-digit x escape inside a string",
       "findings": [
         "src/w.ts:1 mode-parity: unechoed-claim"
       ],
@@ -419,11 +419,612 @@
     {
       "table": "FALSIFIERS",
       "id": "F47",
-      "test": "falsifier F47 emphasis inside a word",
+      "test": "falsifier F47 markdown emphasis inside a word",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
       "input": "e54af4d7ef0523c48b0499437918ffb5c2d516975d2ab89e5736a74913153f53"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F48",
+      "test": "falsifier F48 non-ASCII separators between words",
+      "findings": [
+        "docs/f48a.md:1 mode-parity: unechoed-claim",
+        "docs/f48b.md:1 mode-parity: unechoed-claim",
+        "docs/f48c.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim",
+        "docs/f48d.md:1 mode-parity: unechoed-claim",
+        "docs/f48e.md:1 neg-05: unechoed-claim",
+        "docs/f48f.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "6b3c7d18ccfd1b5a4548a83d757d0df24df5a160de3302560eb3f016b0fd5543"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F49",
+      "test": "falsifier F49 line joins that leave two or three spaces between words",
+      "findings": [
+        "test/f49a.test.ts:2 mode-parity: unechoed-claim",
+        "docs/f49b.md:1 rf-normally: unechoed-claim",
+        "src/f49c.ts:2 mode-parity: unechoed-claim"
+      ],
+      "input": "0650a552ee5bd3f8fe667c28a9f85b3a41f458cf4d60426bc2aab387eea0d76a"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F50",
+      "test": "falsifier F50 a four-character separator, the bound",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "acf24249425342cfe7c9f34210aac4cbf99624c0b8422c6f740bf8ee190717ba"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F51",
+      "test": "falsifier F51 two- and three-character gaps inside a word, the bound",
+      "findings": [
+        "docs/f51a.md:1 mode-parity: unechoed-claim",
+        "docs/f51b.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "aa10649dd5743fb1b2b4cd2648d714c54f79871e2422927d9dcdb9ebcfeb0f03"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F52",
+      "test": "falsifier F52 hex character references after x or X, one to six digits in either case, between two words or for a letter",
+      "findings": [
+        "docs/f52a.md:1 mode-parity: unechoed-claim",
+        "docs/f52b.md:1 mode-parity: unechoed-claim",
+        "docs/f52c.md:1 mode-parity: unechoed-claim",
+        "docs/f52d.md:1 mode-parity: unechoed-claim",
+        "docs/f52e.md:1 mode-parity: unechoed-claim",
+        "docs/f52f.md:1 mode-parity: unechoed-claim",
+        "docs/f52g.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "aa681d9078e069b35e4d8b640ca175302a2c0e083f192b99e622a1b42488084a"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F53",
+      "test": "falsifier F53 decimal character references of one to seven digits, between two words or for a letter",
+      "findings": [
+        "docs/f53a.md:1 mode-parity: unechoed-claim",
+        "docs/f53b.md:1 mode-parity: unechoed-claim",
+        "docs/f53c.md:1 mode-parity: unechoed-claim",
+        "docs/f53d.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "9f9f9ad7eaa1c1e2ed9c1ddf42b044510275c504ee32ba09badd1caa76f36c53"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F54",
+      "test": "falsifier F54 every NAMED_REFERENCES name between two words",
+      "findings": [
+        "docs/f54-amp.md:1 mode-parity: unechoed-claim",
+        "docs/f54-lt.md:1 mode-parity: unechoed-claim",
+        "docs/f54-gt.md:1 mode-parity: unechoed-claim",
+        "docs/f54-quot.md:1 mode-parity: unechoed-claim",
+        "docs/f54-apos.md:1 mode-parity: unechoed-claim",
+        "docs/f54-nbsp.md:1 mode-parity: unechoed-claim",
+        "docs/f54-shy.md:1 mode-parity: unechoed-claim",
+        "docs/f54-hyphen.md:1 mode-parity: unechoed-claim",
+        "docs/f54-dash.md:1 mode-parity: unechoed-claim",
+        "docs/f54-ndash.md:1 mode-parity: unechoed-claim",
+        "docs/f54-mdash.md:1 mode-parity: unechoed-claim",
+        "docs/f54-minus.md:1 mode-parity: unechoed-claim",
+        "docs/f54-zwj.md:1 mode-parity: unechoed-claim",
+        "docs/f54-zwnj.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "abca1fd8b49964b9d3f8de72d9f954f4d47e5049657bdaa7afc5cca4a3a8a50e"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F55",
+      "test": "falsifier F55 JS escapes, a braced one of one to six digits and the four- and two-digit ones, hex digits in either case, between two words or for a letter",
+      "findings": [
+        "src/f55a.ts:1 mode-parity: unechoed-claim",
+        "src/f55b.ts:1 mode-parity: unechoed-claim",
+        "src/f55c.ts:1 mode-parity: unechoed-claim",
+        "src/f55d.ts:1 mode-parity: unechoed-claim",
+        "src/f55e.ts:1 mode-parity: unechoed-claim",
+        "src/f55f.ts:1 mode-parity: unechoed-claim",
+        "src/f55g.ts:1 mode-parity: unechoed-claim",
+        "src/f55h.ts:1 mode-parity: unechoed-claim",
+        "src/f55i.ts:1 mode-parity: unechoed-claim",
+        "src/f55j.ts:1 mode-parity: unechoed-claim",
+        "src/f55k.ts:1 mode-parity: unechoed-claim",
+        "src/f55l.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "969b94795fb6e0c1bb3a32a4b2d85f77246090f7fd00e28d82c5f7b099b8eda8"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F56",
+      "test": "falsifier F56 the in-word gap after a word's first letter and before its last, and the one-letter wildcard at its first and last letters",
+      "findings": [
+        "docs/f56a.md:1 mode-parity: unechoed-claim",
+        "docs/f56b.md:1 rf-normally: unechoed-claim",
+        "docs/f56c.md:1 mode-parity: unechoed-claim",
+        "docs/f56d.md:1 mode-parity: unechoed-claim",
+        "docs/f56e.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "208ce01678e512a3ddbb042e6c3f42ca04b4ee63c2022d3b6d567665cd67b384"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F57",
+      "test": "falsifier F57 a run of five tabs, carriage returns or ASCII punctuation marks of each range between two words",
+      "findings": [
+        "docs/f57a.md:1 mode-parity: unechoed-claim",
+        "docs/f57b.md:1 mode-parity: unechoed-claim",
+        "docs/f57c.md:1 mode-parity: unechoed-claim",
+        "docs/f57d.md:1 mode-parity: unechoed-claim",
+        "docs/f57e.md:1 mode-parity: unechoed-claim",
+        "docs/f57f.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "9fc1dee2fa56959658884b761e2e49cc04d45ce9a2f9672e127c887d9ec79740"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F58",
+      "test": "falsifier F58 bead row, a run of blank lines inside the claim id",
+      "findings": [
+        "wb-zz.10 claim-id: echo-no-undetermined+echo-no-pin"
+      ],
+      "input": "c2fc677ec9eb6d4a93d6dbe219498d73ed6f860c699ee2cf0bef3a2ac7a4bd87"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F59",
+      "test": "falsifier F59 the verdict joined to an ASCII letter or a digit before or after it",
+      "findings": [
+        "docs/f59a.md:1 mode-parity: unechoed-claim",
+        "docs/f59b.md:1 mode-parity: unechoed-claim",
+        "docs/f59c.md:1 mode-parity: unechoed-claim",
+        "docs/f59d.md:1 mode-parity: unechoed-claim",
+        "docs/f59e.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "3a873721dcdd57af46976a439b4bc2e2bb944eef7d52cf23d580821b5782f508"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F60",
+      "test": "falsifier F60 the pin after an ASCII letter or a digit or before an ASCII letter, extended in upper case, or extended past a full sha",
+      "findings": [
+        "docs/f60a.md:1 mode-parity: unechoed-claim",
+        "docs/f60b.md:1 mode-parity: unechoed-claim",
+        "docs/f60c.md:1 mode-parity: unechoed-claim",
+        "docs/f60d.md:1 mode-parity: unechoed-claim",
+        "docs/f60e.md:1 mode-parity: unechoed-claim",
+        "docs/f60f.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "2f94ad95b4825d89687d133c1d431d20c1576ece4a89459f2124f47e92dca640"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F61",
+      "test": "falsifier F61 a fullwidth verdict or a fullwidth digit in the pin is never folded",
+      "findings": [
+        "docs/f61a.md:1 claim-id: echo-no-undetermined+unechoed-claim",
+        "docs/f61b.md:1 claim-id: echo-no-pin+unechoed-claim"
+      ],
+      "input": "4abf8c442420b1d0887ceee6fa735a86d63073196b5af9a1802b2b81fd905631"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F62",
+      "test": "falsifier F62 bead row, a fullwidth verdict and a fullwidth digit in the pin",
+      "findings": [
+        "wb-zz.11 claim-id: echo-no-undetermined+echo-no-pin"
+      ],
+      "input": "cf97596028ca6cbf451d7572b68336308572b74db41be877cb3d5ddf73365a0b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F63",
+      "test": "falsifier F63 each minted grade beside an echo",
+      "findings": [
+        "docs/f63-confirmed.md:1 mode-parity: unechoed-claim",
+        "docs/f63-plausible.md:1 mode-parity: unechoed-claim",
+        "docs/f63-refuted.md:1 mode-parity: unechoed-claim",
+        "docs/f63-verified.md:1 mode-parity: unechoed-claim",
+        "docs/f63-established.md:1 mode-parity: unechoed-claim",
+        "docs/f63-settled.md:1 mode-parity: unechoed-claim",
+        "docs/f63-proven.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "14ec40ded181febc47cba61313bff06cfafd556cdc61d4be1770f5a3f6b9ee0b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F64",
+      "test": "falsifier F64 the verbs use, uses and used, and the optional the of both families",
+      "findings": [
+        "docs/f64a.md:1 rf-normally: unechoed-claim",
+        "docs/f64b.md:1 rf-normally: unechoed-claim",
+        "docs/f64c.md:1 rf-normally: unechoed-claim",
+        "docs/f64d.md:1 rf-normally: unechoed-claim",
+        "docs/f64e.md:1 neg-05: unechoed-claim"
+      ],
+      "input": "d4a5264e521847112e67b498bf385721391af51e589ac626933e4b52b112002b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F65",
+      "test": "falsifier F65 the rf spellings RFCLI, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI, and a two- or three-word spelling's words four wildcards apart",
+      "findings": [
+        "docs/f65a.md:1 rf-normally: unechoed-claim",
+        "docs/f65b.md:1 rf-normally: unechoed-claim",
+        "docs/f65c.md:1 rf-normally: unechoed-claim",
+        "docs/f65d.md:1 rf-normally: unechoed-claim",
+        "docs/f65e.md:1 rf-normally: unechoed-claim",
+        "docs/f65f.md:1 rf-normally: unechoed-claim",
+        "docs/f65g.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "01b7f003bae4289a94608f95105d50228413a67a53996a071f7ea49b4719af20"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F66",
+      "test": "falsifier F66 a precomposed letter between two words stays one wildcard under NFKC",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "6254436836f32bd269fbd944b9bae8a176df99fb6df5c20c99f8a8b6cf8229ca"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F67",
+      "test": "falsifier F67 present, a receipt whose rf sha has eleven or forty-one hex digits, upper-case hex, or a lower-case letter before rf",
+      "findings": [
+        "docs/f67a.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f67b.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f67c.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f67d.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "62836f28a6b3c690543364d15ba5a6adac5f23798c56c507b242e7898f8b5e63"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F68",
+      "test": "falsifier F68 present, a receipt with exit 02, EXIT 0 or preexit 0 after the command, or with the command ending its line before exit 0 on the next",
+      "findings": [
+        "docs/f68a.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f68b.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f68c.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f68d.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f68e.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "99a5851be70e5ce375d7e306f601994570e8949162d023dbb2831f097fdf10f2"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F69",
+      "test": "falsifier F69 NEG-05's sentence with the rf spellings RFCLI, rf, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI, and a two- or three-word spelling's words four wildcards apart",
+      "findings": [
+        "docs/f69-rfcli.md:1 neg-05: unechoed-claim",
+        "docs/f69-rf.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefiber-cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefibercli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactive-fiber-cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-rf4cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefiber4cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactive4fiber.md:1 neg-05: unechoed-claim"
+      ],
+      "input": "5e2cc915f5cc5a3639ed3228d385f08d8a249b45721d9e092e223ed93ce33591"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F70",
+      "test": "falsifier F70 present, a receipt whose rf follows an upper-case letter or a digit",
+      "findings": [
+        "docs/f70-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f70-digit.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "4c4119948399554fc5273e0c8c3bb3a775d125130a0c182a9757d78186be6d19"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F71",
+      "test": "falsifier F71 present, a receipt whose exit 0 follows an upper-case letter or a digit, or stands before the command on its line",
+      "findings": [
+        "docs/f71-upper.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f71-digit.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f71-before.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "01809f360d5c2dc2f75e41d4347425006741f2d3a3e7bc4e8b56fc93927134fe"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F72",
+      "test": "falsifier F72 present, a receipt whose exit 0 is followed by a lower-case or an upper-case letter",
+      "findings": [
+        "docs/f72a.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f72b.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "32c54484767c8823193daa371147e2570c43fd840307c0682abe79da06265e9a"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F73",
+      "test": "falsifier F73 an astral code point in place of a letter is one wildcard",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "d6afb63c53c82494774d261259f12cc9e1e355e2111ed1f53a9ba3ad31c152d1"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F74",
+      "test": "falsifier F74 the highest code point, as a hex and a decimal reference between two words",
+      "findings": [
+        "docs/f74-hex.md:1 mode-parity: unechoed-claim",
+        "docs/f74-dec.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "57d0e735f897efaa60db29472387c34ae2bb6fd08edb8ac8434320a34fd310de"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F75",
+      "test": "falsifier F75 a mention in the last block of a file that does not end with a line break",
+      "findings": [
+        "docs/f75a.md:1 mode-parity: unechoed-claim",
+        "docs/f75b.md:3 rf-normally: unechoed-claim"
+      ],
+      "input": "6115bc801242cf4bfb57215fb5eaf1144353f46f373b384d6badbccea23ad858"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F76",
+      "test": "falsifier F76 present, a receipt whose exit and 0 stand two spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore apart",
+      "findings": [
+        "docs/f76-spaces.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-tab.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-none.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-nbsp.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-vt.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-hyphen.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-underscore.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "732a10b8610c063acf504d3dc5a0787813350e27135db7ff043eef1d20f6e954"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F77",
+      "test": "falsifier F77 present, a receipt whose command is followed right away by a colon, an opening parenthesis, a letter, a no-break space or a VT, or by a space then a no-break space or a VT",
+      "findings": [
+        "docs/f77-colon.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-paren.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-letter.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-space-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-space-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "c032c6b93260df509fcd9e806ff9e1eebb9ed846ab11a50ecf1822a8dd1daeb6"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F78",
+      "test": "falsifier F78 export lines of a NUL, a next-line control, a zero-width space or a word joiner alone are unreadable",
+      "findings": [
+        "line 1 unreadable",
+        "line 2 unreadable",
+        "line 3 unreadable",
+        "line 4 unreadable"
+      ],
+      "input": "5faab83894c198bf85a2fde6d72ff72748fd3eb6bbff931e8579b530b3f2cdab"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F79",
+      "test": "falsifier F79 a line of a NUL, a next-line control, a zero-width space, a word joiner or a hyphen only, inside a phrase, is no blank line",
+      "findings": [
+        "docs/f79-nul.md:1 rf-normally: unechoed-claim",
+        "docs/f79-nel.md:1 rf-normally: unechoed-claim",
+        "docs/f79-zwsp.md:1 rf-normally: unechoed-claim",
+        "docs/f79-wj.md:1 rf-normally: unechoed-claim",
+        "docs/f79-hyphen.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "fec51692f64ebf200a5a8758f43deb5635404205c69d6fc64f90c47d99f52f81"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F80",
+      "test": "falsifier F80 present, of two receipts a window names the first decides: an absent first one refuses though the second is complete, a complete first one admits though the second is absent",
+      "findings": [
+        "docs/f80-absent-first.md:1 mode-parity: receipt-absent"
+      ],
+      "input": "1f6d7886e14997d48d8149abaac3a743675397de6f1d13838264383ae6460517"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F81",
+      "test": "falsifier F81 present, a receipt whose rf sha has two spaces, a tab or no character between rf and sha or between sha and its hex digits, or an upper-case letter: any one of its five letters, the three of sha or all five",
+      "findings": [
+        "docs/f81-rf-spaces.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-tab.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-none.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-spaces.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-tab.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-none.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-capital.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-f-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-s-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-h-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-a-upper.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "6d363066ea4aca5e59135d53b66ccafbecd1a35319c65faea635af1075ef9ead"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F82",
+      "test": "falsifier F82 present, a receipt whose command has two spaces or a tab between any two of its words, or an upper-case letter at any one of its letters",
+      "findings": [
+        "docs/f82-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-inner-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-upper.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u1.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u2.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u3.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u4.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u6.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u7.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u8.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u9.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u13.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u14.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u15.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u16.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u17.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u19.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u20.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u21.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u22.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u23.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u25.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u26.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u27.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u28.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u29.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u30.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u31.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u32.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u34.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u35.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u36.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u37.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u39.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u40.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u41.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u42.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u43.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u44.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u45.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u46.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u47.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u48.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u50.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u51.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u52.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u53.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u54.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u55.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u56.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u57.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u59.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u60.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u61.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u62.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u63.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u64.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u66.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u67.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u74.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u75.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u77.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u78.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-u79.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g10-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g18-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g68-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g10-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g18-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g68-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-g71-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "1779fb2ce55e8ed6894275b88af6db8a98edad7304718c9180c065243b25f01b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F83",
+      "test": "falsifier F83 two decoded mathematical bold letters in one word, as hex or decimal references or braced escapes, read as letters: decoded first, then NFKC",
+      "findings": [
+        "docs/f83-hex.md:1 mode-parity: unechoed-claim",
+        "docs/f83-dec.md:1 mode-parity: unechoed-claim",
+        "src/f83-braced.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "dfe72a3c2e476ded26a48923ae8067a933b0d69d1e47d8b3087f431390adae0b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F84",
+      "test": "falsifier F84 two soft hyphens, two U+2010, two U+2011 or two en dashes between two spaces, the separator bound, are refused: one wildcard each",
+      "findings": [
+        "docs/f84-shy.md:1 mode-parity: unechoed-claim",
+        "docs/f84-2010.md:1 mode-parity: unechoed-claim",
+        "docs/f84-2011.md:1 mode-parity: unechoed-claim",
+        "docs/f84-ndash.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "169cd3cdd5586f06e960a2a66c6835219f93bf62eb648bbd3e0e1fbbc9a43a4b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F85",
+      "test": "falsifier F85 five no-break spaces or five ideographic spaces between two words are one space under NFKC",
+      "findings": [
+        "docs/f85-nbsp.md:1 mode-parity: unechoed-claim",
+        "docs/f85-ideographic.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "58d9a854c7020d1ad7660b0b7675eda812a5255343ea09b36eb999635736d6c3"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F86",
+      "test": "falsifier F86 one, two, three or four VT, FF, DEL, SOH or ESC controls of one kind, or the mixed runs VT FF, DEL SOH ESC and VT FF DEL SOH, with nothing else between two words, are refused: one wildcard each",
+      "findings": [
+        "docs/f86-vt-1.md:1 mode-parity: unechoed-claim",
+        "docs/f86-vt-2.md:1 mode-parity: unechoed-claim",
+        "docs/f86-vt-3.md:1 mode-parity: unechoed-claim",
+        "docs/f86-vt-4.md:1 mode-parity: unechoed-claim",
+        "docs/f86-ff-1.md:1 mode-parity: unechoed-claim",
+        "docs/f86-ff-2.md:1 mode-parity: unechoed-claim",
+        "docs/f86-ff-3.md:1 mode-parity: unechoed-claim",
+        "docs/f86-ff-4.md:1 mode-parity: unechoed-claim",
+        "docs/f86-del-1.md:1 mode-parity: unechoed-claim",
+        "docs/f86-del-2.md:1 mode-parity: unechoed-claim",
+        "docs/f86-del-3.md:1 mode-parity: unechoed-claim",
+        "docs/f86-del-4.md:1 mode-parity: unechoed-claim",
+        "docs/f86-soh-1.md:1 mode-parity: unechoed-claim",
+        "docs/f86-soh-2.md:1 mode-parity: unechoed-claim",
+        "docs/f86-soh-3.md:1 mode-parity: unechoed-claim",
+        "docs/f86-soh-4.md:1 mode-parity: unechoed-claim",
+        "docs/f86-esc-1.md:1 mode-parity: unechoed-claim",
+        "docs/f86-esc-2.md:1 mode-parity: unechoed-claim",
+        "docs/f86-esc-3.md:1 mode-parity: unechoed-claim",
+        "docs/f86-esc-4.md:1 mode-parity: unechoed-claim",
+        "docs/f86-vt-ff.md:1 mode-parity: unechoed-claim",
+        "docs/f86-del-soh-esc.md:1 mode-parity: unechoed-claim",
+        "docs/f86-vt-ff-del-soh.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "89ce294a8dd0ca60774865c8b5e43c64bb6e76445a1536370ac3792ad1e8c08e"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F87",
+      "test": "falsifier F87 present, a receipt whose exit has an upper-case letter at any one of its four letters draws receipt-no-exit-0",
+      "findings": [
+        "docs/f87-e.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f87-x.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f87-i.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f87-t.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "152d70a602aeb28fee75bf8863309aa4d9913453c594c9cdf25dd886f2e586d3"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F88",
+      "test": "falsifier F88 present, a receipt whose command line ends after a run of three tabs, a space-tab mix or sixty-four spaces, or after an arrow, with exit 0 on the next line, draws receipt-no-exit-0 alone: the command is read",
+      "findings": [
+        "docs/f88-tabs.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f88-mix.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f88-64sp.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f88-arrow.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "4783f50fa711a5b304a188a2a700bf32062874f91ff2f636dfe86e5e4e1f3088"
     },
     {
       "table": "CONTROLS",
@@ -510,6 +1111,118 @@
       "input": "528c75a0865ca90030be198aaa88932538707b0f12f1917a03aca538e521363d"
     },
     {
+      "table": "CONTROLS",
+      "id": "N13",
+      "test": "control N13 a five-character separator, past the bound",
+      "findings": [],
+      "input": "3a40bc925a92db01b7a9b08186184dd875d8ff1ab19c2ac2209cf9600f572a1d"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N14",
+      "test": "control N14 a four-character gap inside a word, past the bound",
+      "findings": [],
+      "input": "8947550ed6bc108d5df3d2744dc6e19c1ba1edf8fa5bc51c0ef3072ed888379f"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N15",
+      "test": "control N15 a grade followed by an upper-case ASCII letter is no grade",
+      "findings": [],
+      "input": "7acb67a39b6e6a02e9abc085c49855a91159dcc9bbebbc5e4020132013f38422"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N16",
+      "test": "control N16 a grade after an ASCII letter of either case or a digit is no grade",
+      "findings": [],
+      "input": "9f48a178f3fd50215539abc1bfe8b4db3af23879d06a28e5351404ec15d6f002"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N17",
+      "test": "control N17 a grade followed by a lower-case ASCII letter or a digit is no grade",
+      "findings": [],
+      "input": "3623476364b1f752bbc4edaa13c83f569b038a519f2c04a9b5eb7047bf47595e"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N18",
+      "test": "control N18 a family phrase joined to an ASCII letter or a digit before or after it is no mention",
+      "findings": [],
+      "input": "f70b610c7c11351968f7b87df7db755d2087d4bc904414c455c19d3386d5b655"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N19",
+      "test": "control N19 an echo on the first of the lines a mention spans",
+      "findings": [],
+      "input": "e223d59caff1dda737c299eb396b670c592ac66cc700a0f2e920f36b853147c7"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N20",
+      "test": "control N20 an echo with the pin extended to a full sha",
+      "findings": [],
+      "input": "bedd485d59dc3d1d27b979ea2b280c2e15147e74caa4783fea2b7f67ee5a75c5"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N21",
+      "test": "control N21 five VT, five FF or five VT and FF controls mixed between two words make no mention: neither control is folded to a space",
+      "findings": [],
+      "input": "45ef70468e12ed4f9584ae70626d9d44566f7083b85e962f65e0b07073f2251c"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N22",
+      "test": "control N22 present, receipts named with capitals, digits, dots and an underscore, a twelve-hex rf sha, and the command closed by each closing mark or followed by an arrow or a word",
+      "findings": [],
+      "input": "60083418909e0304db334135ed1ca459d9e412478a5b3a7d0ebbf40c8759777c"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N23",
+      "test": "control N23 a three-digit u escape and a one-digit x escape between two words stay as written",
+      "findings": [],
+      "input": "f4796a90655b29c7d8ae1a8b8366aff328bb7342c3274e4fb7f128df87ecc20c"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N24",
+      "test": "control N24 five DEL, five SOH or five ESC controls between two words make no mention: none of them is folded to a space",
+      "findings": [],
+      "input": "fb459400656605ae806cbcd6d7e95ee112ed3288c0522aa39ca9803adfa8a3d4"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N25",
+      "test": "control N25 present, a tab between the command and its arrow, or a failed run before or after a passing one, is admitted",
+      "findings": [],
+      "input": "4585fe2d828c9c1f45c2ab6ba80d6f75b2a82c2e370e5c72119f8ec28775b340"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N26",
+      "test": "control N26 an empty export line and export lines of white space only are skipped: three spaces, a tab, each white-space code point alone, twice and four times over, three mixed pairs, every code point in turn with and without the space, the non-ASCII ones NFKC makes a space in turn, and sixty-four spaces, tabs or code points in turn",
+      "findings": [],
+      "input": "5c6c86f60cd2f29748576a59d37398d09b718699e2306db1755f47b0ae5a016b"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N27",
+      "test": "control N27 present, after the command a run of one to sixty-four spaces or tabs, mixed or not, then an arrow followed by a space, a tab or exit, an opening parenthesis, a hash or any printable ASCII character but the hyphen, is admitted",
+      "findings": [],
+      "input": "37732f9185aea6bc7c0e576077517e409357bd489881a1372b7c47dcab424eb8"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N28",
+      "test": "control N28 five soft hyphens, five U+2010, five U+2011 or five en dashes between two words make no mention: none is folded to a space",
+      "findings": [],
+      "input": "ac74b64c440ec76d7de5132f2a4463b2b75aca5203048302b2950b3695dcf93b"
+    },
+    {
       "table": "RESIDUALS",
       "id": "R1",
       "test": "residual R1 a paraphrase",
@@ -563,7 +1276,7 @@
       "id": "R8",
       "test": "residual R8 split across a blank line",
       "findings": [],
-      "input": "920a96a7da677fb5739ad4d7ca9de2435980e2b0af5afd6ca54c677edf762177"
+      "input": "bf8674399a8748a3ec9a1303f7aa1d3ec827769b74dc427e4534eb475ec148f5"
     },
     {
       "table": "RESIDUALS",
@@ -578,6 +1291,41 @@
       "test": "residual R10 a named reference outside the decoded set",
       "findings": [],
       "input": "3ff23a66538007faeca5e6cf26912dd4cc49c236b688dcba2b63072f50cbe99a"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R11",
+      "test": "residual R11 joined words, the identifier forms",
+      "findings": [],
+      "input": "153a8eec35eb07d4e24aba2d33d6c26362ea8c838e1a5802e67dbc76ada09c24"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R12",
+      "test": "residual R12 another word form or a dropped letter",
+      "findings": [],
+      "input": "a2db2a6f7ca0f6c3f90744a4298e36261c0dd566bb70db532999eb4f6386961f"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R13",
+      "test": "residual R13 a percent, semicolon-less, octal, over-long or doubly encoded hyphen",
+      "findings": [],
+      "input": "eade10536e54296f012ada74bee7ccba2ee322b77788fbd116e10081f7645b33"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R14",
+      "test": "residual R14 a non-ASCII letter beside a required token, and a letter that is no hex digit after an rf sha",
+      "findings": [],
+      "input": "6b4694ad14abfeebd0b93a7ce45635ac0449448c3817902ba7257054fd8edcbf"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R15",
+      "test": "residual R15 markup letters inside a word or between two words",
+      "findings": [],
+      "input": "60829f4f4fc45b26ae3516955b45aa5071e54e128e0bc15ed859c122574572d3"
     }
   ],
   "residuals": {
@@ -590,6 +1338,11 @@
     "R7": "status prose beside an echo",
     "R8": "phrase split across a blank line",
     "R9": "same-line echo tokens",
-    "R10": "named references outside the decoded set"
+    "R10": "named references outside the decoded set",
+    "R11": "joined words",
+    "R12": "inflection and deletion",
+    "R13": "encodings outside the decoded set",
+    "R14": "token boundaries past ASCII",
+    "R15": "markup letters inside or between words"
   }
 }
