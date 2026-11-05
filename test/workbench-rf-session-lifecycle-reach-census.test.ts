@@ -3,9 +3,10 @@
  * and ruling R-B301 folded refusal #4's members into its notes and parked the parent behind it). SUBJECT: four readers and the
  * descriptor judge of test/helpers/rf-session-lifecycle-readers.ts - readTree() (B1), launchInventory() (A1), verbInventory()
  * (C1), stateInventory() (B2) and the judge descriptorJudgeOf() builds (C1's descriptor judge) - moved byte for byte from
- * wb-khhg's FINAL cut #4 (tip b6182e1b). The parent's census and roster at that tip are not on trunk and are neither added nor
- * edited here. The parent stayed parked until this census landed (landing 893, merge 29a99c4c). Its cut #5 re-cut its census
- * to import the helper, and since its cut #6 landed (landing 926, merge 441ad3ba), trunk's
+ * wb-khhg's FINAL cut #4 (tip b6182e1b). The parent's census at that tip is not on trunk and is neither added nor edited here;
+ * its roster at that tip, test/fixtures/rf-session-lifecycle-roster.json, has been trunk's since landing 926 (merge 441ad3ba)
+ * and is neither added nor edited here. The parent stayed parked until this census landed (landing 893, merge 29a99c4c). Its
+ * cut #5 re-cut its census to import the helper, and since its cut #6 landed (landing 926, merge 441ad3ba), trunk's
  * test/workbench-rf-session-lifecycle-census.test.ts imports these four readers and descriptorJudgeOf from the helper and
  * declares none of them; this census does not read that file.
  *

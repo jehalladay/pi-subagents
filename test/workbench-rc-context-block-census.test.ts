@@ -174,10 +174,22 @@
  * [numeral-infinity-callee-method]; each one of four spellings at or above 1e308 names, 1e308 spelled bare, with
  * separators (1_0e307) or as a leading-dot fraction (.1e309), and 1.7976931348623158e308, which rounds down to the largest
  * double (wb-18ce) [near-maximum-numeral-infinity-callee-methods]; one 1.5e308 names, a value strictly between those two
- * (wb-ilv4) [mid-band-numeral-infinity-callee-method]; and one 1E308 names, the bare spelling's upper-case exponent
- * (wb-ilv4) [upper-case-exponent-numeral-infinity-callee-method] - those values at those spellings only, each a plain
- * method of an object literal a const declares with one parameter -, and the note alone refuses its module
- * [numeric-named-method]:
+ * (wb-ilv4) [mid-band-numeral-infinity-callee-method], and one 1.6e308 names, another value between them (wb-0fua)
+ * [other-mid-band-numeral-infinity-callee-method]; and one 1E308 names, the bare spelling's upper-case exponent
+ * (wb-ilv4) [upper-case-exponent-numeral-infinity-callee-method], and one 1E+308 names, that exponent with a plus sign
+ * (wb-0fua) [signed-upper-case-exponent-numeral-infinity-callee-method] - those values at those spellings only, each a
+ * plain method of an object literal an unexported const declares, its one parameter typed Record<string, unknown>
+ * and its body one statement returning that parameter's blocks member, which a member callee spelling "Infinity"
+ * calls with one argument, the result member read PROBE_RESULT spells; and one 1.5e308 names at that shape but for
+ * one facet (wb-0fua): its parameter's type dropped [unannotated-mid-band-numeral-infinity-callee-method],
+ * an export added to its const [exported-mid-band-numeral-infinity-callee-method], its return split into a const the
+ * blocks member initializes and a return of that const [declared-read-mid-band-numeral-infinity-callee-method], the
+ * call's argument a name a const PROBE_RESULT initializes [bound-name-mid-band-numeral-infinity-callee-method], or a
+ * second argument, 0, after PROBE_RESULT [two-argument-mid-band-numeral-infinity-callee-method] -, and the note alone
+ * refuses its module [numeric-named-method], as it refuses a module whose one method 1.5e308 or 1E308 names is of
+ * that shape but called by an element access instead, helpers[1.5e308] or helpers[1E308], so that the module spells
+ * no member callee "Infinity" (wb-0fua) [element-called-mid-band-numeral-method,
+ * element-called-upper-case-exponent-numeral-method]:
  * the hold is read only as "Infinity", and which numeral it holds a method under is never read. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
@@ -554,6 +566,31 @@
  * values at a spelling, a placement, a kind or a parameter count none of these probes spells (no exponent, hex, binary
  * or octal, a class or an object read in place, a generator or an async method, two parameters: the gate's G24-H3 to
  * H7), are NOT CLAIMED by this census.
+ * FOLLOW-UP wb-0fua (landing 936's F1 and F2, the R694 carry of the gate's LEG 2 one-edit members of resultReadsOf on
+ * wb-ilv4's cut, each reading 0 failed | 19 passed on the landed census): F1 the hold's shape words as wb-ilv4 cut them
+ * ("each a plain method of an object literal a const declares with one parameter") read wide over five facets no probe
+ * spelled, at each of which a member also holds or relays a numeral at or above 1e308 under "Infinity" - an unannotated
+ * parameter (L2-H02), an exported const (L2-H03), a body whose first statement is not a return (L2-H10), a bare-name
+ * argument (L2-C02) and a second argument (L2-C03) -; F2 six members dropped the note at shapes no probe spelled - an
+ * unannotated parameter (L2-N01), the spelling 1E+308 (L2-N03), the value 1.6e308 (L2-N04), an exported const (L2-N06),
+ * and a value strictly between 1e308 and the largest double (L2-N07) or an upper-case exponent at or above 1e308
+ * (L2-N08) in a module spelling no member callee "Infinity". The shape words are narrowed to the probes' text, and nine
+ * probes, each a wb-ilv4 probe changed at one facet and each reading its note alone, pin the rest: the 1.5e308 probe
+ * with its parameter's type dropped, an export added, its return split, its argument a bound name and a second argument
+ * [unannotated-mid-band-numeral-infinity-callee-method, exported-mid-band-numeral-infinity-callee-method,
+ * declared-read-mid-band-numeral-infinity-callee-method, bound-name-mid-band-numeral-infinity-callee-method,
+ * two-argument-mid-band-numeral-infinity-callee-method], so L2-H02 and L2-N01 red the first, L2-H03 and L2-N06 the
+ * second, L2-H10 the third, L2-C02 the fourth and L2-C03 the fifth; the value 1.6e308 and the spelling 1E+308 at that
+ * shape [other-mid-band-numeral-infinity-callee-method, signed-upper-case-exponent-numeral-infinity-callee-method],
+ * which L2-N04 and L2-H05, and L2-N03 and L2-H09, red in turn; and the 1.5e308 and 1E308 probes called by an element
+ * access [element-called-mid-band-numeral-method, element-called-upper-case-exponent-numeral-method], which L2-N07 and
+ * L2-N08 red. Each of those members moves only its own probe's row. The hold and the note are claimed at these probes'
+ * texts only, so the wb-ilv4 paragraph's NOT CLAIMED sentence reads with 1.6e308 and 1E+308 at the probes' shape and
+ * these five facets at 1.5e308 excepted; any other change of these probes, two of these facets together, or one of them
+ * at another value or spelling - an object literal a let or a var declares (the gate's L2-H04) and the spelling 1.5E308
+ * (its L2-H12) among them - is NOT CLAIMED by this census. As with wb-ilv4's two, no row outside this file anchors
+ * these nine probes, so one removed from every literal of this file and the roster together is anchored by none (NOT
+ * CLAIMED's read-probe sentence above).
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -1347,6 +1384,22 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   // spelling "Infinity" calls an object literal whose one method 1.5e308, or 1E308, names, so each notes only its declaration.
   "mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   "upper-case-exponent-numeral-infinity-callee-method": `const helpers = {\n  1E308(upper: Record<string, unknown>) {\n    return upper.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  // wb-0fua (landing 936's F1 and F2, the gate's LEG 2 members of wb-ilv4's cut that read 0 failed | 19 passed on the landed
+  // census): each probe below is a wb-ilv4 probe changed at one facet, and each notes only its declaration. A second value
+  // between 1e308 and the largest double, 1.6e308 (L2-N04), and the upper-case exponent signed, 1E+308 (L2-N03), a member
+  // callee spelling "Infinity" calls; the 1.5e308 probe with its parameter untyped (L2-H02, L2-N01), its const exported
+  // (L2-H03, L2-N06), its body declaring the member read before returning it (L2-H10), the call handing a name a const binds
+  // to the result member read (L2-C02) or a number literal after it (L2-C03); and the 1.5e308 and 1E308 probes called by an
+  // element access, so the module spells no member callee "Infinity" (L2-N07, L2-N08).
+  "other-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.6e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "signed-upper-case-exponent-numeral-infinity-callee-method": `const helpers = {\n  1E+308(upper: Record<string, unknown>) {\n    return upper.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "unannotated-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "exported-mid-band-numeral-infinity-callee-method": `export const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "declared-read-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    const blocks = middle.blocks;\n    return blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "bound-name-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nconst held = ${PROBE_RESULT};\nexport const rows = helpers.Infinity(held);\n`,
+  "two-argument-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT}, 0);\n`,
+  "element-called-mid-band-numeral-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers[1.5e308](${PROBE_RESULT});\n`,
+  "element-called-upper-case-exponent-numeral-method": `const helpers = {\n  1E308(upper: Record<string, unknown>) {\n    return upper.blocks;\n  },\n};\nexport const rows = helpers[1E308](${PROBE_RESULT});\n`,
   // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
   // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
   // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
