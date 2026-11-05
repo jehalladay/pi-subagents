@@ -1,5 +1,5 @@
 {
-  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 68, CONTROLS 22, RESIDUALS 13; wb-wfpj added F48-F51, N13-N15 and R11-R13 at its cut 1, and F52-F68 and N16-N22 at its cut 2, which also widened R8 and R13) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
+  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 75, CONTROLS 26, RESIDUALS 15; wb-wfpj added F48-F51, N13-N15 and R11-R13 at its cut 1, F52-F68 and N16-N22 at its cut 2, which also widened R8 and R13, and F69-F75, N23-N26, R14 and R15 at its cut 3, which also narrowed row titles to the forms their rows pin) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "FALSIFIERS",
@@ -356,7 +356,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F40",
-      "test": "falsifier F40 the verdict inside a longer word",
+      "test": "falsifier F40 the verdict followed by more upper-case ASCII letters",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -365,7 +365,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F41",
-      "test": "falsifier F41 the pin inside a longer token",
+      "test": "falsifier F41 the pin after an ASCII letter",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -401,7 +401,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F45",
-      "test": "falsifier F45 an html character reference",
+      "test": "falsifier F45 a decimal reference and the nbsp name between words",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -410,7 +410,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F46",
-      "test": "falsifier F46 a JS escape inside a string",
+      "test": "falsifier F46 a four-digit u escape and a two-digit x escape inside a string",
       "findings": [
         "src/w.ts:1 mode-parity: unechoed-claim"
       ],
@@ -419,7 +419,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F47",
-      "test": "falsifier F47 emphasis inside a word",
+      "test": "falsifier F47 markdown emphasis inside a word",
       "findings": [
         "docs/x.md:1 mode-parity: unechoed-claim"
       ],
@@ -577,7 +577,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F59",
-      "test": "falsifier F59 the verdict joined to a letter or a digit before or after it",
+      "test": "falsifier F59 the verdict joined to an ASCII letter or a digit before or after it",
       "findings": [
         "docs/f59a.md:1 mode-parity: unechoed-claim",
         "docs/f59b.md:1 mode-parity: unechoed-claim",
@@ -590,7 +590,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F60",
-      "test": "falsifier F60 the pin after a letter or a digit or before a letter, extended in upper case, or extended past a full sha",
+      "test": "falsifier F60 the pin after an ASCII letter or a digit or before an ASCII letter, extended in upper case, or extended past a full sha",
       "findings": [
         "docs/f60a.md:1 mode-parity: unechoed-claim",
         "docs/f60b.md:1 mode-parity: unechoed-claim",
@@ -675,7 +675,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F67",
-      "test": "falsifier F67 present, a receipt whose rf sha has eleven or forty-one hex digits, upper-case hex, or a letter before rf",
+      "test": "falsifier F67 present, a receipt whose rf sha has eleven or forty-one hex digits, upper-case hex, or a lower-case letter before rf",
       "findings": [
         "docs/f67a.md:1 mode-parity: receipt-no-rf-sha",
         "docs/f67b.md:1 mode-parity: receipt-no-rf-sha",
@@ -687,7 +687,7 @@
     {
       "table": "FALSIFIERS",
       "id": "F68",
-      "test": "falsifier F68 present, a receipt whose exit after the command is not exit 0 as written, or whose command ends its line",
+      "test": "falsifier F68 present, a receipt with exit 02, EXIT 0 or preexit 0 after the command, or with the command ending its line before exit 0 on the next",
       "findings": [
         "docs/f68a.md:1 mode-parity: receipt-no-exit-0",
         "docs/f68b.md:1 mode-parity: receipt-no-exit-0",
@@ -696,6 +696,82 @@
         "docs/f68e.md:1 mode-parity: receipt-no-exit-0"
       ],
       "input": "99a5851be70e5ce375d7e306f601994570e8949162d023dbb2831f097fdf10f2"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F69",
+      "test": "falsifier F69 NEG-05's sentence with the rf spellings RFCLI, rf, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI, and a two- or three-word spelling's words four wildcards apart",
+      "findings": [
+        "docs/f69-rfcli.md:1 neg-05: unechoed-claim",
+        "docs/f69-rf.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefiber-cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefibercli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactive-fiber-cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-rf4cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactivefiber4cli.md:1 neg-05: unechoed-claim",
+        "docs/f69-reactive4fiber.md:1 neg-05: unechoed-claim"
+      ],
+      "input": "5e2cc915f5cc5a3639ed3228d385f08d8a249b45721d9e092e223ed93ce33591"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F70",
+      "test": "falsifier F70 present, a receipt whose rf follows an upper-case letter or a digit",
+      "findings": [
+        "docs/f70-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f70-digit.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "4c4119948399554fc5273e0c8c3bb3a775d125130a0c182a9757d78186be6d19"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F71",
+      "test": "falsifier F71 present, a receipt whose exit 0 follows an upper-case letter or a digit, or stands before the command on its line",
+      "findings": [
+        "docs/f71-upper.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f71-digit.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f71-before.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "01809f360d5c2dc2f75e41d4347425006741f2d3a3e7bc4e8b56fc93927134fe"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F72",
+      "test": "falsifier F72 present, a receipt whose exit 0 is followed by a lower-case or an upper-case letter",
+      "findings": [
+        "docs/f72a.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f72b.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "32c54484767c8823193daa371147e2570c43fd840307c0682abe79da06265e9a"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F73",
+      "test": "falsifier F73 an astral code point in place of a letter is one wildcard",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "d6afb63c53c82494774d261259f12cc9e1e355e2111ed1f53a9ba3ad31c152d1"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F74",
+      "test": "falsifier F74 the highest code point, as a hex and a decimal reference between two words",
+      "findings": [
+        "docs/f74-hex.md:1 mode-parity: unechoed-claim",
+        "docs/f74-dec.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "57d0e735f897efaa60db29472387c34ae2bb6fd08edb8ac8434320a34fd310de"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F75",
+      "test": "falsifier F75 a mention in the last block of a file that does not end with a line break",
+      "findings": [
+        "docs/f75a.md:1 mode-parity: unechoed-claim",
+        "docs/f75b.md:3 rf-normally: unechoed-claim"
+      ],
+      "input": "6115bc801242cf4bfb57215fb5eaf1144353f46f373b384d6badbccea23ad858"
     },
     {
       "table": "CONTROLS",
@@ -798,28 +874,28 @@
     {
       "table": "CONTROLS",
       "id": "N15",
-      "test": "control N15 a grade at the start of a longer word is no grade",
+      "test": "control N15 a grade followed by an upper-case ASCII letter is no grade",
       "findings": [],
       "input": "7acb67a39b6e6a02e9abc085c49855a91159dcc9bbebbc5e4020132013f38422"
     },
     {
       "table": "CONTROLS",
       "id": "N16",
-      "test": "control N16 a grade at the end of a longer word is no grade",
+      "test": "control N16 a grade after an ASCII letter of either case or a digit is no grade",
       "findings": [],
       "input": "9f48a178f3fd50215539abc1bfe8b4db3af23879d06a28e5351404ec15d6f002"
     },
     {
       "table": "CONTROLS",
       "id": "N17",
-      "test": "control N17 a grade followed by a lower-case letter or a digit is no grade",
+      "test": "control N17 a grade followed by a lower-case ASCII letter or a digit is no grade",
       "findings": [],
       "input": "3623476364b1f752bbc4edaa13c83f569b038a519f2c04a9b5eb7047bf47595e"
     },
     {
       "table": "CONTROLS",
       "id": "N18",
-      "test": "control N18 a family phrase joined to a letter or a digit before or after it is no mention",
+      "test": "control N18 a family phrase joined to an ASCII letter or a digit before or after it is no mention",
       "findings": [],
       "input": "f70b610c7c11351968f7b87df7db755d2087d4bc904414c455c19d3386d5b655"
     },
@@ -840,7 +916,7 @@
     {
       "table": "CONTROLS",
       "id": "N21",
-      "test": "control N21 five ASCII controls between two words are five wildcards, past the bound",
+      "test": "control N21 five VT or FF controls between two words are five wildcards, past the bound",
       "findings": [],
       "input": "c6ad383d2c5ed5377d50dfe7d00955780ee2c8e954c9310d0d5819de307be9f9"
     },
@@ -850,6 +926,34 @@
       "test": "control N22 present, receipts named with capitals, digits, dots and an underscore, a twelve-hex rf sha, and the command closed by each closing mark or followed by an arrow or a word",
       "findings": [],
       "input": "60083418909e0304db334135ed1ca459d9e412478a5b3a7d0ebbf40c8759777c"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N23",
+      "test": "control N23 a three-digit u escape and a one-digit x escape between two words stay as written",
+      "findings": [],
+      "input": "f4796a90655b29c7d8ae1a8b8366aff328bb7342c3274e4fb7f128df87ecc20c"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N24",
+      "test": "control N24 five DEL, five SOH or five ESC controls between two words are five wildcards, past the bound",
+      "findings": [],
+      "input": "fb459400656605ae806cbcd6d7e95ee112ed3288c0522aa39ca9803adfa8a3d4"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N25",
+      "test": "control N25 present, a tab between the command and its arrow, or a failed run before or after a passing one, is admitted",
+      "findings": [],
+      "input": "4585fe2d828c9c1f45c2ab6ba80d6f75b2a82c2e370e5c72119f8ec28775b340"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N26",
+      "test": "control N26 an empty export line and export lines of white space only are skipped",
+      "findings": [],
+      "input": "cd2440be74b351345621ae416bd076d87f5d1146653c3ff38a098fd392e694d3"
     },
     {
       "table": "RESIDUALS",
@@ -941,6 +1045,20 @@
       "test": "residual R13 a percent, semicolon-less, octal, over-long or doubly encoded hyphen",
       "findings": [],
       "input": "eade10536e54296f012ada74bee7ccba2ee322b77788fbd116e10081f7645b33"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R14",
+      "test": "residual R14 a non-ASCII letter beside a required token, and a letter that is no hex digit after an rf sha",
+      "findings": [],
+      "input": "6b4694ad14abfeebd0b93a7ce45635ac0449448c3817902ba7257054fd8edcbf"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R15",
+      "test": "residual R15 markup letters inside a word or between two words",
+      "findings": [],
+      "input": "60829f4f4fc45b26ae3516955b45aa5071e54e128e0bc15ed859c122574572d3"
     }
   ],
   "residuals": {
@@ -956,6 +1074,8 @@
     "R10": "named references outside the decoded set",
     "R11": "joined words",
     "R12": "inflection and deletion",
-    "R13": "encodings outside the decoded set"
+    "R13": "encodings outside the decoded set",
+    "R14": "token boundaries past ASCII",
+    "R15": "markup letters inside or between words"
   }
 }
