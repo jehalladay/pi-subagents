@@ -1345,11 +1345,14 @@ const TEXT_RESULT = 'functiontextResult(msg:string,details?:AgentDetails){return
 /** The furnace_observe slice of a src/index.ts text, each piece as written: its import declarations, the module's textResult
  * function, and the functions that enclose the literal S1 reads (their heads as written), each holding only the next, down to
  * the expression statement that holds that literal. S1's witnesses are planted on it, so each reads one small module rather
- * than the whole file. A decoy keyed by the quoted key "name", the computed key ["name"], n\u0061me or n\u{61}me (the
- * identifier name, its letter a spelled with a four-hex or a braced \u escape), in a statement before the one that holds that
- * literal, is passed by: the slice holds that literal's statement, not the decoy's (each of the four pinned, S1's two DECOYED
- * rows). The slice's decoy boundary is claimed at those four key forms so placed and at no other: a decoy in any other form or
- * place is NOT CLAIMED by this census, passed by or not. */
+ * than the whole file. Its decoy boundary is claimed at exactly the four texts S1's two DECOYED rows write and at no other.
+ * Each text is two lines, each line one top-level statement with no function around either: first the decoy statement
+ * tools.push({ <key>: "furnace_observe", execute: async () => textResult("zz-decoy") }); with <key> the quoted key "name",
+ * the computed key ["name"], n\u0061me or n\u{61}me (the identifier name with its a written \u0061 or \u{61}), then DECOYED,
+ * the literal's statement tools.push({ name: "furnace_observe", execute: async () => textResult("{}") });. For each of the
+ * four the slice is exactly DECOYED: the literal's statement, not the decoy's (each pinned, S1's two DECOYED rows). A decoy in
+ * any other text is NOT CLAIMED by this census, passed by or not: one in another statement (a pi.registerTool(defineTool(...))
+ * registration, say), in a wrapper, inside a function, after the text's first statement or keyed by another form. */
 function observeSlice(text: string): string {
   const source = parsed(text);
   const find = (node: ts.Node): ts.Node | undefined =>
@@ -1921,17 +1924,19 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const base = toolBody("furnace_observe", slice);
     expect(readings(base), "the furnace_observe slice reads as src/index.ts does").toStrictEqual(readings(tool));
     // observeSlice's decoy boundary (wb-40zp cut #5 pinned n\u0061me after refusal #4 U1 named the slice beside the finder and
-    // the counter; cut #6 pins the other three, refusal #5 U1): a decoy keyed by the quoted key "name", the computed key
-    // ["name"], n\u0061me or n\u{61}me, in a statement before the literal's, is passed by; those four key forms, so placed, are
-    // the only decoy forms claimed.
+    // the counter; cut #6 pins the other three, refusal #5 U1; cut #7 bounds the claim to the rows' own texts, refusal #6 U1):
+    // each text is two lines, each line one top-level statement with no function around either, the tools.push decoy keyed by
+    // the quoted key "name", the computed key ["name"], n\u0061me or n\u{61}me and then DECOYED, and its slice is exactly
+    // DECOYED. Those four texts are the only decoy texts claimed: a decoy in another statement, in a wrapper, inside a function,
+    // after the text's first statement or keyed by another form is NOT CLAIMED.
     const DECOYED = 'tools.push({ name: "furnace_observe", execute: async () => textResult("{}") });';
     expect(
       observeSlice(`tools.push({ n\\u0061me: "furnace_observe", execute: async () => textResult("zz-decoy") });\n${DECOYED}`),
-      "the slice passes by a decoy keyed by n\\u0061me and holds the literal after it",
+      "the slice of the two-line text, the tools.push decoy keyed by n\\u0061me and then DECOYED, is exactly DECOYED",
     ).toBe(DECOYED);
     expect(
       ['"name"', '["name"]', "n\\u{61}me"].map(key => observeSlice(`tools.push({ ${key}: "furnace_observe", execute: async () => textResult("zz-decoy") });\n${DECOYED}`)),
-      'the slice passes by a decoy keyed by the quoted key "name", the computed key ["name"] or n\\u{61}me and holds the literal after each',
+      'the slice of each two-line text, the tools.push decoy keyed by the quoted key "name", the computed key ["name"] or n\\u{61}me and then DECOYED, is exactly DECOYED',
     ).toStrictEqual([DECOYED, DECOYED, DECOYED]);
     const TRY = "        try {";
     const READING = "          const reading = await observer.snapshot();";
