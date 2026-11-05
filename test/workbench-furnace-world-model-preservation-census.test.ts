@@ -1345,8 +1345,11 @@ const TEXT_RESULT = 'functiontextResult(msg:string,details?:AgentDetails){return
 /** The furnace_observe slice of a src/index.ts text, each piece as written: its import declarations, the module's textResult
  * function, and the functions that enclose the literal S1 reads (their heads as written), each holding only the next, down to
  * the expression statement that holds that literal. S1's witnesses are planted on it, so each reads one small module rather
- * than the whole file. It reads that literal's name key as the finder does (the identifier name as written, with no escape in
- * it), so a decoy before it keyed by n\u0061me is passed by (pinned). */
+ * than the whole file. A decoy keyed by the quoted key "name", the computed key ["name"], n\u0061me or n\u{61}me (the
+ * identifier name, its letter a spelled with a four-hex or a braced \u escape), in a statement before the one that holds that
+ * literal, is passed by: the slice holds that literal's statement, not the decoy's (each of the four pinned, S1's two DECOYED
+ * rows). The slice's decoy boundary is claimed at those four key forms so placed and at no other: a decoy in any other form or
+ * place is NOT CLAIMED by this census, passed by or not. */
 function observeSlice(text: string): string {
   const source = parsed(text);
   const find = (node: ts.Node): ts.Node | undefined =>
@@ -1815,7 +1818,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     ];
     expect(
       forms.map(form => toolBody("zz-form", `tools.push(${form});`)?.replies),
-      "a quoted, computed or escaped key, a wrapped or non-literal value or another name, and a method, shorthand or accessor execute are no body, and the plain literal, an escape in its name's string or not, is one",
+      "a quoted, computed or escaped key, a wrapped or non-literal value or another name, and a method, shorthand or accessor execute are no body, and the plain literal, a four-hex escape in its name's string or not, is one",
     ).toStrictEqual([...Array.from({ length: 20 }, () => undefined), ['textResult("<literal>")'], ['textResult("<literal>")']]);
     // A nested function's return is read too (the returns doc).
     const nested = toolBody("zz-nested", 'tools.push({ name: "zz-nested", execute: async () => { const zzInner = () => { return 1; }; return textResult(String(zzInner())); } });');
@@ -1917,13 +1920,19 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const slice = observeSlice(index);
     const base = toolBody("furnace_observe", slice);
     expect(readings(base), "the furnace_observe slice reads as src/index.ts does").toStrictEqual(readings(tool));
-    // observeSlice reads the literal's name key as the finder does (wb-40zp cut #5; refusal #4 U1 named it beside the finder and
-    // the counter): a decoy before it, keyed by the identifier name spelled with a \u escape, is passed by.
+    // observeSlice's decoy boundary (wb-40zp cut #5 pinned n\u0061me after refusal #4 U1 named the slice beside the finder and
+    // the counter; cut #6 pins the other three, refusal #5 U1): a decoy keyed by the quoted key "name", the computed key
+    // ["name"], n\u0061me or n\u{61}me, in a statement before the literal's, is passed by; those four key forms, so placed, are
+    // the only decoy forms claimed.
     const DECOYED = 'tools.push({ name: "furnace_observe", execute: async () => textResult("{}") });';
     expect(
       observeSlice(`tools.push({ n\\u0061me: "furnace_observe", execute: async () => textResult("zz-decoy") });\n${DECOYED}`),
-      "the slice passes by a decoy keyed by an escaped name and holds the literal after it",
+      "the slice passes by a decoy keyed by n\\u0061me and holds the literal after it",
     ).toBe(DECOYED);
+    expect(
+      ['"name"', '["name"]', "n\\u{61}me"].map(key => observeSlice(`tools.push({ ${key}: "furnace_observe", execute: async () => textResult("zz-decoy") });\n${DECOYED}`)),
+      'the slice passes by a decoy keyed by the quoted key "name", the computed key ["name"] or n\\u{61}me and holds the literal after each',
+    ).toStrictEqual([DECOYED, DECOYED, DECOYED]);
     const TRY = "        try {";
     const READING = "          const reading = await observer.snapshot();";
     const REFRESH = "          projection.refresh(observer.projectionSnapshot(reading));";
