@@ -67,7 +67,9 @@
  *    reading once, so each request beside every kind of request before and after it in its call and at each position
  *    of the other call: wb-vuoz cut #4's context plants, their counts and check pinned by wb-vuoz cut #5's counts and
  *    context controls, which wb-vuoz cut #6's extend and read under each of those names, the check claimed in the
- *    deviations they spell; every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
+ *    deviations they spell, as they spell them, and only as it reads the misreaders they hand it in serialOf's place
+ *    (wb-vuoz cut #7: a third row other than the second call's again, a row one value longer whose fifth value is
+ *    carried and a check keyed on the reader are NOT CLAIMED, the NOT CLAIMED list below names them); every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
  *    under a name or with a candidate no drive spells, a serial reading keyed on which candidate a call holds at a
  *    position where no plant holds that candidate in that form, and a serial reading keyed on a request's context,
  *    the other requests of its call or of the other call, in a context no plant spells are NOT CLAIMED); the check
@@ -239,26 +241,34 @@
  *    other call; the first call's id at a position reads shared exactly when the two calls hold an own and an other
  *    there, in either order, those ids alone and in the first call's order as the controls read an order (not reversed,
  *    none more and none fewer); the name reads named once, as the controls read a name (not twice, not missing and in
- *    none of their seven other spellings); per call,
+ *    none of their seven other spellings); those two as the check reads serialOf, the tallies counting only how many
+ *    assignments read the first call's id at each position shared (below: wb-vuoz cut #7); per call,
  *    position and kind the requests read carried in 16384 assignments for the own kind and in none for the other
  *    three, the first call's ids read shared in 8192 per position, and no assignment reads otherwise in a deviation
- *    the context controls spell: contextReading checks each assignment's reading against the reading constructed
- *    from its kinds alone and counts the assignments read otherwise, claimed only in the deviations its context
- *    controls spell, under each of F1 to F5 (wb-vuoz cut #5's and cut #6's controls: thirty-two misreaders, each the
+ *    the context controls spell, as the check reads serialOf: contextReading checks each assignment's reading against
+ *    the reading constructed from its kinds alone and counts the assignments read otherwise, claimed only in the
+ *    deviations its context controls spell, as they spell them, and only as it reads the misreaders they hand it in
+ *    serialOf's place (wb-vuoz cut #7), under each of F1 to F5 (wb-vuoz cut #5's and cut #6's controls: thirty-two misreaders, each the
  *    reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's
  *    witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it;
  *    the shared ids reversed wherever two or more are shared, the id at each index misspelled (an x after it)
- *    wherever that index is shared, the last dropped wherever one or more are; a third row, each call's row one value
- *    longer, the name twice and the name misspelled (an x after it), in every assignment; and cut #6's: each call's
+ *    wherever that index is shared, the last dropped wherever one or more are; a third row, the second call's again
+ *    (the one third row a control spells), each call's row one value longer, a fifth value not carried (the one longer
+ *    row a control spells), the name twice and the name misspelled (an x after it), in every assignment; and cut #6's: each call's
  *    row one value shorter, the second call's row missing, the second call's first invocationId after the shared ids,
  *    no name, the name in each of the five string forms (a final ~, a leading ~, another case, without its last
  *    character, without its first) and another drive's name, in every assignment, every request of the other, the
  *    both or the neither kind read carried and every own request read not carried, wherever one is held; each read
  *    by contextReading in serialOf's place under each of F1 to F5 at 187 then 188 and read otherwise in exactly the
  *    assignments its context holds, counted arithmetically, the first four of them the four constructed for it; the
- *    tallies hold every request's carried by call, position and kind, and the shared ids by position, whatever the
- *    deviation; a deviation in a form no control spells is NOT CLAIMED for the check, the NOT CLAIMED list names the
- *    forms); the serial reading is claimed in these forms only, at these serials, under these
+ *    tallies hold every request's carried by call, position and kind, and how many assignments read the first call's
+ *    id at each position shared, whatever the deviation; a deviation in a form no control spells is NOT CLAIMED for
+ *    the check, and so is a check keyed on the reader (one reading serialOf, or any reader but those misreaders,
+ *    otherwise than it reads them: no control hands contextReading serialOf, so the controls pin the check only as it
+ *    reads the misreaders), and with it serialOf's reading, apart from that check, in each form the tallies do not hold
+ *    (the rows' count and each row's length; the shared ids' order and count, and which assignments read the first
+ *    call's id at a position shared, of which the tallies count only how many per position; and the name), wb-vuoz
+ *    cut #7's; the NOT CLAIMED list names the forms); the serial reading is claimed in these forms only, at these serials, under these
  *    names and in these contexts: that call's
  *    serial at a segment other
  *    than the third, the other call's at a segment no plant holds it at (the plants hold it as the third, as the fourth
@@ -348,13 +358,24 @@
  * invocationIds it hands the reading (its counter's kinds, or the pass count), a hollow of the count alone that leaves every
  * reading the census judges in place, the context controls' counts reading each assignment beside it (wb-vuoz cut #5);
  * and, for contextReading's check under any of F1 to F5 (wb-vuoz cut #6), a deviation of a reading in a form no context
- * control spells: a row two or more values longer or shorter than the call's requests, four rows or more or none, two or
+ * control spells: a row two or more values longer or shorter than the call's requests, a row one value longer whose
+ * fifth value is carried (wb-vuoz cut #7: the two longer-row controls append a fifth value not carried), a third row
+ * other than the second call's row again (wb-vuoz cut #7: the first call's row, a row of carried values and a row of
+ * any other values among them; the one third-row control appends the second call's row), four rows or more or none, two or
  * more ids more or fewer than the shared ids, the shared ids in an order other than the reverse, a shared id spelled
  * otherwise than with an x after it, a name in a form other than the nine the controls spell (seven spellings: an x or a
  * ~ after it, a ~ before it, another case, without its last or its first character, another drive's name; twice; none), a carried
  * value other than true or false, and a deviation keyed on a request's context or on a name in a context or under a
  * name where no control spells it (the context plants' tallies still hold every request's carried, by call, position
- * and kind, and the shared ids by position, in every context under every name).
+ * and kind, and how many assignments read the first call's id at each position shared, in every context under every
+ * name); and (wb-vuoz cut #7) a check keyed on the reader: the check is claimed only as it reads the thirty-two
+ * misreaders the context controls hand contextReading in serialOf's place, so a check reading serialOf, or any reader
+ * but those misreaders, otherwise than it reads them is NOT CLAIMED, and with it serialOf's reading, apart from that
+ * check, in each form the tallies do not hold (the rows' count and each row's length; the shared ids' order and
+ * count, and which assignments read the first call's id at a position shared, of which the tallies count only how
+ * many per position; and the name). These three forms (the gate's G8-T1, G8-R2 and G8-ID at wb-vuoz's refusal #6,
+ * realized by its serialOf witnesses W8-T1, W8-R2, W8-ID, W6-R1 and W6-N1) are routed to wb-0hr6 by ruling R-B591,
+ * their pins its.
  * wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
  * #4 left unplanted) pins them in
  * A3's forms, split, mix and order controls; every effect-unrequested form A3 does not plant stays NOT CLAIMED, among
@@ -602,7 +623,8 @@
  * controls (CONTEXT_MISREADERS, each the reading constructed from the planted requests' kinds with one deviation, which
  * reads no request through serialOf: the gate's X01 to X05 forms, an own request read not carried, and eleven misreaders
  * altering what no tally holds wherever the alteration can occur: the shared ids' order, the id at each index and their
- * count, the rows, each row's length, and the name's count and spelling) are read by contextReading in serialOf's place, each read otherwise
+ * count, the rows (a third, the second call's again), each row's length (one value longer, a fifth value not carried),
+ * and the name's count and spelling; wb-vuoz cut #7 names those forms) are read by contextReading in serialOf's place, each read otherwise
  * in exactly the assignments its context holds (misread, counted arithmetically) and recording first the four
  * constructed for it, so H01 to H04 (contexts unread), H05 (the reversed orders unseen) and H06 (nothing recorded) red
  * A3 at the context controls' expect, alone and composed with their witnesses and pages.
@@ -626,7 +648,8 @@
  * drive's name (U2), and every request of the other, the both or the neither kind read carried and every own request
  * read not carried; and A3 reads the whole table, thirty-two controls, under each of F2 to F5 as under F1 (U3), so
  * G6-R1, G6-N1 and G6-F1 red A3 at the context controls' expects, alone and composed with their witnesses. The check
- * is claimed in exactly the deviations the controls spell, under each name; every other deviation is NOT CLAIMED (the
+ * is claimed in exactly the deviations the controls spell, under each name (as they spell them, and only as it reads
+ * the misreaders they hand it in serialOf's place: wb-vuoz cut #7 below); every other deviation is NOT CLAIMED (the
  * list above names the forms). misreading reads each request's kind through plantedKind once per pass of
  * contextReading (requestKind) and hands its alteration the invocationIds each call was returned; the live budget is
  * 300 s. The CHECKS parenthetical's serial clause, A3's context plants sentence, the NOT CLAIMED list, the docs of
@@ -636,6 +659,25 @@
  * entry; the frozen literal gains the fifteen controls' rows, and the roster's A3 witness gains the fifteen controls'
  * readings under F1 and the thirty-two controls' counts and first four mismatches under each of F2 to F5
  * (contextControlsByName). Display paths added: none.
+ * Cut #7 (refusal #6 of cut #6, gate-prep-8 / g10-gate-s218: unmet U1 to U3, claims wider than pins in cut #6's
+ * contextReading check; ruling R-B591 executes the rule-19 structural exit R-B570 pre-bound, files wb-0hr6 for the
+ * coverage and binds this cut to the fail-closed core): the check's words named a third row, a row one value longer
+ * and the check of each assignment serialOf reads wider than the controls pin them, so the gate's G8-T1 (a third row
+ * read right unless it is the second call's row again), G8-R2 (a row one value longer read right when its fifth value
+ * is carried) and G8-ID (the check keyed on the reader, so an assignment serialOf reads otherwise is never counted)
+ * kept the census green while their witnesses W8-T1 (serialOf reading a third row of four carried values), W8-R2 (a
+ * carried fifth value in the second call's row) and W8-ID (the name twice), beside W6-R1 and W6-N1 for G8-ID, each in
+ * X03's context, red it alone. The check's claims are narrowed to the forms the controls pin: of a third row, the
+ * second call's again; of a row one value longer, a fifth value not carried; and of the readers, the thirty-two
+ * misreaders the controls hand contextReading in serialOf's place, so serialOf's reading in a form the tallies do not
+ * hold (the rows' count and each row's length; the shared ids' order and count, and which assignments read the first
+ * call's id at a position shared, of which the tallies count only how many per position; and the name) is claimed
+ * only as that check reads it; a third row other than the second call's again, a row one value longer whose fifth
+ * value is carried and a check keyed on the reader are NOT CLAIMED, their pins wb-0hr6's. The CHECKS parenthetical's
+ * serial clause, A3's context plants sentence, the NOT CLAIMED list, the cut #5 and cut #6 notes above, the docs of
+ * ContextReading, contextReading, misreading and CONTEXT_MISREADERS, and A3's context controls and context plants
+ * messages name those forms. No reading, control, pin, witness, roster entry or test title changes, only comments
+ * and assertion messages do. Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1233,7 +1275,7 @@ type ContextReading = {
   readonly carried: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, number>>>>>>;
   /** Per position: in how many of the assignments the reading reads the first call's invocationId there shared. */
   readonly shared: Readonly<Record<string, number>>;
-  /** In how many of the assignments the reading differs from the reading constructed from their kinds alone, as the check reads a difference (wb-vuoz cut #5; claimed in the deviations A3's context controls spell, wb-vuoz cut #6). */
+  /** In how many of the assignments the reading differs from the reading constructed from their kinds alone, as the check reads a difference (wb-vuoz cut #5; claimed in the deviations A3's context controls spell, wb-vuoz cut #6, as they spell them and only as the check reads the misreaders they hand it in serialOf's place, wb-vuoz cut #7: a check keyed on the reader is NOT CLAIMED). */
   readonly misread: number;
   /** The first of those assignments, at most four, in the order handed, each spelled by its kinds and with what was read. */
   readonly mismatched: readonly string[];
@@ -1251,7 +1293,12 @@ type ContextReading = {
  * order (the one id both calls were returned), those ids in the first call's order and no other; and the one name. The
  * check is claimed only in the deviations A3's thirty-two context controls spell, under each of DRIVE_NAMES (wb-vuoz
  * cut #6; the header's NOT CLAIMED list names the rest, another order of the shared ids than the reverse and a name in
- * another form than the controls' nine among them). The tallies count what the reading read; misread counts the
+ * another form than the controls' nine among them). It is claimed only as the controls spell those deviations and
+ * only as it reads the misreaders they hand it in serialOf's place (wb-vuoz cut #7, ruling R-B591): of a third row,
+ * the second call's again; of a row one value longer, a fifth value not carried; a third row of other values, a
+ * carried fifth value and a check keyed on the reader (one reading serialOf, or any reader but those misreaders,
+ * otherwise than it reads them) are NOT CLAIMED, routed to wb-0hr6, so serialOf's reading in a form the tallies do not
+ * hold is claimed only as this check reads it. The tallies count what the reading read; misread counts the
  * assignments read otherwise, and mismatched records the first four of them.
  */
 function contextReading(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader = serialOf): ContextReading {
@@ -1346,7 +1393,9 @@ function requestKind(request: { readonly invocationId: string }, serial: number,
  * request carried exactly when it is of the own kind; the first call's invocationId at a position shared exactly when the
  * two calls hold an own and an other there; the first invocationId's second segment named), altered by `alter`, given
  * each request's kind by call and position (undefined past a call's last request) and the invocationIds each call was
- * returned (wb-vuoz cut #6). It reads no request through serialOf, so a plant in serialOf leaves it as it is.
+ * returned (wb-vuoz cut #6). It reads no request through serialOf, so a plant in serialOf leaves it as it is, and the
+ * context controls pin the check as it reads these misreaders, not as it reads serialOf (wb-vuoz cut #7: a check keyed
+ * on the reader is NOT CLAIMED).
  */
 function misreading(
   alter: (reading: SerialReading, kindOf: (call: number, at: number) => SerialKind | undefined, returned: readonly (readonly { readonly invocationId: string }[])[]) => SerialReading,
@@ -1419,12 +1468,16 @@ type ContextMisreader = {
  * the alteration can occur: the shared ids' order (reversed where two or more are shared), the id at each index (with an
  * x after it where that index is shared: the shared tallies count membership per position, which a reading keyed on its
  * context can keep while it changes an id) and their count (the last dropped where one or more are), and, in every
- * assignment, the two calls' rows (a third), each call's row length (one value longer), and the name's count (twice) and
+ * assignment, the two calls' rows (a third, the second call's again), each call's row length (one value longer, a fifth
+ * value not carried), and the name's count (twice) and
  * spelling (an x after it). Cut #6's fifteen (refusal #5's U1 to U3: each a direction or a form of the check no control
  * read) follow, in every assignment: each call's row one value shorter (its last value dropped), the second call's row
  * missing, one shared id more (the second call's first invocationId after the shared ids), no name, the name in each of
  * STRING_FORMS and another drive's name; then, wherever one is held, every request of the other, the both or the neither
- * kind read carried and every own request read not carried (the carried tallies hold these as well).
+ * kind read carried and every own request read not carried (the carried tallies hold these as well). The check is
+ * pinned as it reads these misreaders in serialOf's place, each deviation in the form spelled here (wb-vuoz cut #7: a
+ * third row other than the second call's again, a carried fifth value and a check keyed on the reader are NOT CLAIMED,
+ * routed to wb-0hr6).
  */
 const CONTEXT_MISREADERS: Readonly<Record<string, ContextMisreader>> = {
   // In the second call, a both request reads carried where the first call's request one position on is of the own kind: three request pairs, each flagged by one kind pair.
@@ -2707,7 +2760,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const controls = Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, contextReading(candidates, THREE_DIGIT_SERIALS, "F1", control.read)]));
     expect(
       Object.fromEntries(Object.entries(controls).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }])),
-      "wb-vuoz cut #5 context controls (and wb-vuoz cut #6's fifteen): under F1 at serials 187 then 188, contextReading, reading each of the thirty-two context misreaders in serialOf's place (each the reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it; the shared ids reversed wherever two or more are shared, the id at each index misspelled wherever that index is shared, the last dropped wherever one or more are; a third row, each call's row one value longer, the name twice, the name misspelled, in every assignment; cut #6's: each call's row one value shorter, the second call's row missing, one shared id more, no name, the name in each of the five string forms and another drive's name, in every assignment, and every request of the other, the both or the neither kind read carried and every own request read not carried, wherever one is held), hands it 65536 assignments, 65536 distinct, reads each misreader otherwise in exactly the assignments its context holds, counted arithmetically, and records first the four constructed for it, in contextReading's order",
+      "wb-vuoz cut #5 context controls (and wb-vuoz cut #6's fifteen): under F1 at serials 187 then 188, contextReading, reading each of the thirty-two context misreaders in serialOf's place (each the reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it; the shared ids reversed wherever two or more are shared, the id at each index misspelled wherever that index is shared, the last dropped wherever one or more are; a third row, the second call's again, each call's row one value longer with a fifth value not carried, the name twice, the name misspelled, in every assignment; cut #6's: each call's row one value shorter, the second call's row missing, one shared id more, no name, the name in each of the five string forms and another drive's name, in every assignment, and every request of the other, the both or the neither kind read carried and every own request read not carried, wherever one is held), hands it 65536 assignments, 65536 distinct, reads each misreader otherwise in exactly the assignments its context holds, counted arithmetically, and records first the four constructed for it, in contextReading's order (the check pinned as it reads these misreaders in serialOf's place, each deviation as spelled here: a third row other than the second call's again, a row one value longer whose fifth value is carried and a check keyed on the reader are NOT CLAIMED, wb-vuoz cut #7)",
     ).toEqual(Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }])));
     const controlsByName = Object.fromEntries(
       DRIVE_NAMES.filter(name => name !== "F1").map(name => [name, Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, contextReading(candidates, THREE_DIGIT_SERIALS, name, control.read)]))]),
@@ -2731,7 +2784,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       misread: 0,
       mismatched: [],
     };
-    expect(contexts, "wb-vuoz cut #4 context plants (the distinct and misread counts wb-vuoz cut #5's): at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are handed to the serial reading in 65536 assignments, 65536 distinct lists of the eight invocationIds, so in every one of the 65536 assignments of the four kinds to the eight requests, each once: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), those ids alone and in the first call's order as the context controls read an order (not reversed, none more, none fewer); the name reads named once, as the controls read a name (not twice, not missing, in none of their seven other spellings); and no assignment reads otherwise (misread 0: each assignment's reading checked against the reading constructed from its kinds alone, the check claimed in the deviations the context controls spell under each name; a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
+    expect(contexts, "wb-vuoz cut #4 context plants (the distinct and misread counts wb-vuoz cut #5's): at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are handed to the serial reading in 65536 assignments, 65536 distinct lists of the eight invocationIds, so in every one of the 65536 assignments of the four kinds to the eight requests, each once: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), those ids alone and in the first call's order as the context controls read an order (not reversed, none more, none fewer); the name reads named once, as the controls read a name (not twice, not missing, in none of their seven other spellings), those two as the check reads serialOf (the tallies count only how many assignments read the first call's id at each position shared); and no assignment reads otherwise as the check reads serialOf (misread 0: each assignment's reading checked against the reading constructed from its kinds alone, the check claimed in the deviations the context controls spell under each name, as they spell them, and only as it reads the misreaders they hand it in serialOf's place, wb-vuoz cut #7: a check keyed on the reader is NOT CLAIMED, and with it serialOf's reading, apart from that check, in each form the tallies do not hold, as are a third row other than the second call's again and a row one value longer whose fifth value is carried; a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
     const threeDigitPlants = serialPlants(candidates, THREE_DIGIT_SERIALS);
     const threeDigitSerialPlanted = Object.fromEntries(
       Object.entries(threeDigitPlants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), THREE_DIGIT_SERIALS) }]),
