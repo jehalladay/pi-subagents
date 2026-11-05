@@ -15,7 +15,7 @@ import { type CancelReceipt, type CapabilityMap, decodeCancelResponse, negotiate
 import type { CallOptions } from "@furnace/sdk";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
-import { CapabilityError } from "../src/workbench/capability-registry.js";
+import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { ClaudeControlRefusal, type ClaudeInterruptSeam, executeClaudeControl } from "../src/workbench/claude-control.js";
 import * as control from "../src/workbench/control.js";
 import {
@@ -548,5 +548,130 @@ describe("forge adapter census: the entry asks the core's own predicate first, b
     };
     walk(file);
     expect(declared).not.toContain("isCoreMintedDecision");
+  });
+});
+
+/**
+ * wb-rdlh.1 acceptance (a): three negative fixtures shaped as the Library design program's source-safety record, read from the
+ * roster test/fixtures/cac-authorization-input-roster.json, whose census (test/workbench-cac-authorization-input-census.test.ts)
+ * holds each record's members to the record's vendored definition line: a PASS record, a record whose status is UNKNOWN and a
+ * PASS record whose guardOrRelyReceipt expired before the request. Each record says the stop of this file's observed run is a
+ * legal, safe action, so a reader that took it as an authorization input would have a reason to permit. None is a permit: the
+ * identity check answers false for each record and for every permit-shaped wrapper around one; decideControl never turns a
+ * denial into a permit when a record rides a request field, and decides a permitted request that carries one beside its own
+ * fields exactly as without it (the record is metadata); and every adapter refuses each record, alone or inside a permit
+ * look-alike, with the fixed unminted text before any native verb.
+ */
+interface NegativeFixture {
+  readonly id: string;
+  readonly condition: string;
+  readonly record: { readonly [key: string]: JsonValue };
+}
+const NEGATIVE_FIXTURES: readonly NegativeFixture[] = (
+  JSON.parse(readFileSync(new URL("./fixtures/cac-authorization-input-roster.json", import.meta.url), "utf8")) as { readonly fixtures: readonly NegativeFixture[] }
+).fixtures;
+/** The eight requests the core denies, one per deny policy (the same eight the cases above drive). */
+const DENIED_REQUESTS: readonly Partial<NativeControlRequest>[] = [
+  { grants: undefined }, { grants: ["observe:furnace.run.inspect"] }, { invocationId: "" }, { action: "start", grants: ["control:furnace.start"] },
+  { grants: ["control:furnace.pause"] }, { target: { ...RUN, id: "frn-run-unseen" } }, { target: { ...ATTEMPT } }, { params: {} },
+];
+type Carried = "metadata" | "in-place";
+/**
+ * Where a record rides a request. A metadata placement adds the record beside the request's own fields, so the decision must
+ * be exactly the one the request gets without it; an in-place placement puts the record where the core reads a native value
+ * (the operator confirmation, a grant), so the request must be denied whatever it would otherwise be.
+ */
+const PLACEMENTS: readonly (readonly [string, Carried, (base: NativeControlRequest, record: NegativeFixture["record"]) => NativeControlRequest])[] = [
+  ["beside the params", "metadata", (base, record) => ({ ...base, params: { ...paramsOf(base), assessment: record } })],
+  ["beside the request's own fields", "metadata", (base, record) => Object.assign({}, base, { assessment: record })],
+  ["beside the principal's id and role", "metadata", (base, record) => ({ ...base, principal: Object.assign({}, base.principal, { certificate: record }) })],
+  ["as the operator confirmation", "in-place", (base, record) => ({ ...base, params: { confirmed: record } })],
+  ["as one more grant", "in-place", (base, record) => ({ ...base, grants: [...(base.grants ?? []), JSON.stringify(record)] })],
+];
+function paramsOf(base: NativeControlRequest): { [key: string]: JsonValue } {
+  const { params } = base;
+  return typeof params === "object" && params !== null && !Array.isArray(params) ? { ...params } : {};
+}
+const decideOver = (value: NativeControlRequest): ControlDecision => decideControl(value, { projection: furnaceProjection(), now: () => DECIDED_AT });
+
+describe("wb-rdlh.1 (a): a Library design-program record never yields a permit", () => {
+  it("the roster holds the three negative fixtures, each aimed at this file's observed run: a PASS record, a status UNKNOWN record and an expired guardOrRelyReceipt", () => {
+    expect(NEGATIVE_FIXTURES.map(fixture => [fixture.id, fixture.condition])).toStrictEqual([
+      ["N1", "PASS record"], ["N2", "status UNKNOWN"], ["N3", "expired guardOrRelyReceipt"],
+    ]);
+    for (const { id, record } of NEGATIVE_FIXTURES) {
+      expect(record, id).toMatchObject({ sourceId: RUN.provider, principal: SCOPE.principal, worldScope: WS, memorylessWitness: { [`${RUN.id}:active`]: "stop" } });
+    }
+    expect(NEGATIVE_FIXTURES.map(({ record }) => record.status)).toStrictEqual(["PASS", "UNKNOWN", "PASS"]);
+    const expiries = NEGATIVE_FIXTURES.map(({ record }) => Date.parse(String((record.guardOrRelyReceipt as { readonly expiresAt?: unknown }).expiresAt)));
+    expect(expiries.map(expiry => expiry > Date.parse(REQUESTED_AT))).toStrictEqual([true, true, false]);
+  });
+
+  it("isCoreMintedDecision answers false for each record and for every permit-shaped wrapper around one, and asking never demotes the genuine permit", () => {
+    const genuine = furnacePermit();
+    for (const { id, record } of NEGATIVE_FIXTURES) {
+      const wrappers: readonly (readonly [string, unknown])[] = [
+        ["the record itself", record],
+        ["a deep-frozen copy of the record", deepFreeze(structuredClone(record))],
+        ["the record as a permit's receipt", Object.freeze({ decision: "permitted", receipt: record })],
+        ["the genuine receipt beside the record", Object.freeze({ decision: "permitted", receipt: genuine.receipt, assessment: record })],
+        ["the genuine permit's own fields beside the record", Object.freeze({ ...genuine, certificate: record })],
+        ["a receipt carrying the record's guardOrRelyReceipt", Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...genuine.receipt, guardOrRelyReceipt: record.guardOrRelyReceipt }) })],
+        ["a receipt whose ownership confirmation is the record", Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...genuine.receipt, ownershipConfirmationRef: JSON.stringify(record) }) })],
+      ];
+      for (const [label, value] of wrappers) expect(minted(value), `${id}: ${label}`).toBe(false);
+    }
+    expect(minted(genuine)).toBe(true);
+  });
+
+  it("decideControl never turns a denial into a permit when a record rides a request field, and decides a permitted request carrying one beside its fields exactly as without it", () => {
+    const base = furnacePermit();
+    let checked = 0;
+    for (const { id, record } of NEGATIVE_FIXTURES) {
+      for (const [where, carried, place] of PLACEMENTS) {
+        const label = `${id} ${where}`;
+        const permittedRequest = decideOver(place(request(), record));
+        if (carried === "metadata") {
+          expect(permittedRequest, label).toMatchObject({ decision: "permitted" });
+          expect((permittedRequest as Permit).receipt, label).toStrictEqual(base.receipt);
+          expect(minted(permittedRequest), label).toBe(true);
+        } else {
+          expect(permittedRequest.decision, label).toBe("denied");
+          expect(minted(permittedRequest), label).toBe(false);
+        }
+        for (const overrides of DENIED_REQUESTS) {
+          const plain = decide(overrides);
+          const decided = decideOver(place(request(overrides), record));
+          expect(plain.decision).toBe("denied");
+          expect(decided.decision, `${label} over ${JSON.stringify(overrides)}`).toBe("denied");
+          expect(minted(decided)).toBe(false);
+          if (carried === "metadata") expect(decided, `${label} over ${JSON.stringify(overrides)}`).toStrictEqual(plain);
+          checked += 1;
+        }
+      }
+    }
+    expect(checked).toBe(NEGATIVE_FIXTURES.length * PLACEMENTS.length * DENIED_REQUESTS.length);
+  });
+
+  it.each(SUBJECTS)("$adapter refuses each record, alone and inside a permit look-alike, with the fixed unminted text before any native verb", async subject => {
+    const genuine = subject.permit();
+    for (const { id, record } of NEGATIVE_FIXTURES) {
+      const forms: readonly (readonly [string, unknown])[] = [
+        ["the record itself", record],
+        ["the record as a permit's receipt", Object.freeze({ decision: "permitted", receipt: record })],
+        ["the genuine, unspent receipt beside the record", Object.freeze({ decision: "permitted", receipt: genuine.receipt, assessment: record })],
+      ];
+      for (const [form, value] of forms) {
+        const label = `${id}: ${form}`;
+        const result = await subject.attempt(value);
+        expect(result.outcome, label).toBe("rejected");
+        expect(result.error, label).toBeInstanceOf(subject.refusal);
+        expect(result.error, label).toMatchObject({ refusal: "unvetted-decision", category: "validation" });
+        expect((result.error as Error).message, label).toBe(UNMINTED_TEXT);
+        expect(result.calls, `${label} issued a native verb`).toBe(0);
+      }
+    }
+    // The refusals spent nothing: the genuine permit still executes exactly once.
+    expect(await subject.attempt(genuine)).toMatchObject({ outcome: "resolved", calls: 1 });
   });
 });
