@@ -1,0 +1,625 @@
+{
+  "comment": "wb-aalz cut #3 (the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-furnace-nested-rendering-census.test.ts. pairs: every PAIRS row (id, the SHA-256 of the JSON of the case as written: its deep and shallow plants and kinds); rows: the PAIRS families with their pins; inversion: every INVERSION row (the R-B206 member label, the SHA-256 of its witness); claimWords: every CLAIM WORDS row (refusal #1's gate member, the claim words it quotes, every pin with the SHA-256 of its witness: plant, placement and expected reading); capWords: every CAP WORDS row (refusal #2's item or finding id, or the seat row S1; its GP14 members; the claim words it carries; every pin with the SHA-256 of its witness); residuals: the named residual families with their quiet rows. The census reds when any of its literals leaves this roster.",
+  "pairs": [
+    {
+      "id": "QQ-LIST",
+      "sha256": "6d4ac6a88ac895222d4e75dcca223892a7f33d5f890a68efbe3f47bae81c2989"
+    },
+    {
+      "id": "ITEM-Q-LIST",
+      "sha256": "c345125c1e20a406d693212ff282bfc404172f13e95059120b864fb898985c34"
+    },
+    {
+      "id": "QQ-ORDERED",
+      "sha256": "ea30c6b0a066c12844ed1229d96417b3bb43bda6f691fb3916ff214ffa3eb7e3"
+    },
+    {
+      "id": "QQ-TASK",
+      "sha256": "b4fb4649182346e4089ecca2039abe88b4129210356ed34284d027ae8bf82cd5"
+    },
+    {
+      "id": "QQ-POSSESSIVE",
+      "sha256": "1a1a38bbf85f2f85664248460bc468e3cfc4f705eff80d738733ee119177d4e1"
+    },
+    {
+      "id": "QQ-VERBS",
+      "sha256": "54abe5484b31a929017fb2e4f69f6ad940c66be17da1efd9626e6a9952095be3"
+    },
+    {
+      "id": "QQ-LIST-QUOTE",
+      "sha256": "e8a5c3096d811852e70d7b2e8c7559e9cb4ef665b3d0fce25d8d473fde98741f"
+    },
+    {
+      "id": "ITEM-Q-LIST-QUOTE",
+      "sha256": "f4a6b273f1b6471d3fa7330efc73c1e23aca295538d5c3d4b2ec2dedf3519429"
+    }
+  ],
+  "rows": [
+    {
+      "id": "QQ",
+      "label": "blockquote nested in blockquote",
+      "pins": [
+        "QQ-LIST",
+        "QQ-ORDERED",
+        "QQ-TASK",
+        "QQ-POSSESSIVE",
+        "QQ-VERBS",
+        "QQ-LIST-QUOTE"
+      ]
+    },
+    {
+      "id": "ITEM",
+      "label": "blockquote nested in list item",
+      "pins": [
+        "ITEM-Q-LIST",
+        "ITEM-Q-LIST-QUOTE"
+      ]
+    }
+  ],
+  "inversion": [
+    {
+      "id": "GM7-second-top-list-item",
+      "sha256": "b39d3913454e4c40542290e8bdc68349631dd0475c40b9e29c12062b2fb146cf"
+    },
+    {
+      "id": "HM1-second-nested-list-item",
+      "sha256": "64d57e06378980148820f2a2a308a997ddbc480eec712140eced5d5987f0628a"
+    },
+    {
+      "id": "HM2-second-quote-child",
+      "sha256": "2288ec466aa0eeba4b51fa733104b445a56d198f19953e2d8ce7024cf6846dd3"
+    },
+    {
+      "id": "GM1-digit-entity",
+      "sha256": "0719103fca02601c91510e15f57ce5163545eed03c91f421ca1b710dd2ed112f"
+    },
+    {
+      "id": "GM3-Cf-only",
+      "sha256": "1e5d824f6f06d6d48b7eedd3fc7d7402cc957171853f108f5d5d345e46d2c402"
+    },
+    {
+      "id": "GM4-bidi-isolates",
+      "sha256": "8eb45ae5e8b30ec053bce22cac1f31ff8afc1ccad5e0d4ec9264665ea603cb13"
+    },
+    {
+      "id": "GM2-prototype-name",
+      "sha256": "f307f202f4fb5c502f465f62a31c1645590881c47c38730990dac72dd70242ec"
+    }
+  ],
+  "claimWords": [
+    {
+      "id": "GA2",
+      "claims": [
+        "Nested blockquotes recursively carry their lists and subsequent children after wb-aalz",
+        "A nested quote owns block children, not just inline tokens"
+      ],
+      "pins": [
+        {
+          "id": "W-GA2a",
+          "sha256": "5816b5e2e48ba1574cdb67fbc882cf340f191505ee3415d730601946545a5b3c"
+        },
+        {
+          "id": "W-GA2b",
+          "sha256": "272d25934e10acb811343c5c2f291f8c04dda00e7076cabc39f3e7d5741a0eb2"
+        },
+        {
+          "id": "W-GA2c",
+          "sha256": "d4f5a5dca002570c90cc9e3ef8512ea1776fe38bf348ce7618de01e055b276ba"
+        },
+        {
+          "id": "S-GA2a-first",
+          "sha256": "5aab7b36cf4e94b1063df84d5125ba9cde60a5b03b4ab8eb22aabb3b0041f4f2"
+        },
+        {
+          "id": "S-GA2b-first",
+          "sha256": "24a8c39b85bf5c0c13c684745949dccf40c68e3fdc15d99513450106d0b52fc4"
+        },
+        {
+          "id": "S-GA2c-first",
+          "sha256": "b12c6748b246ed1b0c6f4454f34496cc16389d35b40f81d3270cff899e6cc3e9"
+        },
+        {
+          "id": "S-GA2-QQQ",
+          "sha256": "e9eec2fe0b63301ad06322ea0e4e0646ab0cce586af00c448605fdaf69c15e02"
+        },
+        {
+          "id": "S-R1-QQ-TABLE",
+          "sha256": "2c28ce8dd1148d03752a7cd2f7b00159725fde1158bc7c9fe9a808be80f993ba"
+        },
+        {
+          "id": "S-R1-ITEM-Q-TABLE",
+          "sha256": "4b4078179e448e6a86c4c6eaf9d31d38b68d5dca91122e8318b6103b4a569a0e"
+        },
+        {
+          "id": "S-R1-Q-TABLE",
+          "sha256": "2d257071ae8670215838218e784cccf2366f6733627da34bba20ce6f68f46330"
+        },
+        {
+          "id": "S-R1-ITEM-TABLE",
+          "sha256": "4b338f019ef31301acaea5156cca5beae8bc0fa052b9bfdd006ce17a02131af8"
+        }
+      ]
+    },
+    {
+      "id": "GA7",
+      "claims": [
+        "fold compatibility characters"
+      ],
+      "pins": [
+        {
+          "id": "W-GA7",
+          "sha256": "49fd9e20d83772a79be0bdbb07c6db47ad68b50d1c10752e75fce46831659eaf"
+        },
+        {
+          "id": "S-GA7-ref",
+          "sha256": "a03319a491f12c64ca84f6018379e78d5896cbd9e6c4938619bc573eceaf97d7"
+        }
+      ]
+    },
+    {
+      "id": "GA8",
+      "claims": [
+        "remove format/default-ignorable characters before matching"
+      ],
+      "pins": [
+        {
+          "id": "W-GA8",
+          "sha256": "1998bbc056663ad225b7ac61d9fce6790e72e2d08827aa9ad472d6afb04b086b"
+        },
+        {
+          "id": "S-GA8-ref",
+          "sha256": "2d01d8483f4627d17d17871d16db657119ab4337084ac5e478eaeb5187a9e499"
+        },
+        {
+          "id": "S-GA8-feff-ref",
+          "sha256": "bfc6f59d4a4a7753d4960932f562a2f10b1a35087026a228b1546910e70ee623"
+        },
+        {
+          "id": "S-R2-RAW-FEFF",
+          "sha256": "ac6ea894f8e19c654de4b4e0979c07b93a6098a641fb8d8de94ee07eca27640a"
+        }
+      ]
+    },
+    {
+      "id": "GA14",
+      "claims": [
+        "including the documented readiness and reattachment over-reads"
+      ],
+      "pins": [
+        {
+          "id": "W-GA14",
+          "sha256": "84481f000bd2d460c43475baf876bdbeb1128092bd45146aa683205ebee9bcac"
+        }
+      ]
+    },
+    {
+      "id": "GA9",
+      "claims": [
+        "a control character",
+        "any other \\p{Cc} code point"
+      ],
+      "pins": [
+        {
+          "id": "W-GA9a",
+          "sha256": "0711a815e5c6766212ef96e51685485b9b2222d3e882e997f84ce5fc0ec42d1d"
+        },
+        {
+          "id": "W-GA9b",
+          "sha256": "153132b60def6c7ae5a7f491eb64f1a2309f7cc3bbe46e6b48be74ca7cb8a81d"
+        },
+        {
+          "id": "S-GA9-all",
+          "sha256": "b0908256d9d147dcac99fc33105d906f459179f00ce9e7221de92934bdce89c4"
+        },
+        {
+          "id": "S-GA9-whitespace",
+          "sha256": "66bea6b664a3404ac02711997f98e6aa6eca94071a82915792132372b9af2292"
+        },
+        {
+          "id": "S-R3-RAW-VT",
+          "sha256": "30412fe174db2991b5ba621a98a9d3d1825a5886c3a26cbdfbe28954b4f9f4b6"
+        }
+      ]
+    },
+    {
+      "id": "GA10",
+      "claims": [
+        "decoded either way",
+        "either numeric-reference decoding"
+      ],
+      "pins": [
+        {
+          "id": "W-GA10",
+          "sha256": "80fe415a9686341627a9b5b4c00bc3c203415979579df85c52b8b400cee39135"
+        },
+        {
+          "id": "S-GA10-above-max",
+          "sha256": "54f73241023178a71fee794450d44616a7068903aa9f1ec666c44da49c9c115b"
+        }
+      ]
+    },
+    {
+      "id": "GA11",
+      "claims": [
+        "a bidi control"
+      ],
+      "pins": [
+        {
+          "id": "W-GA11",
+          "sha256": "cac8ade45a27a266be31464f0eb080a670fa6b28052bc874df28cefb162266d7"
+        },
+        {
+          "id": "S-GA11-all",
+          "sha256": "6044e324743eeb2b4c4d52b029d328e98cc10c65adbdee043eae6faa5673c7d1"
+        }
+      ]
+    },
+    {
+      "id": "GA12",
+      "claims": [
+        "The parent wb-s876 subject-word forms"
+      ],
+      "pins": [
+        {
+          "id": "W-GA12",
+          "sha256": "c3ce5441afd4120f325202270df12aba2ec804233dbfd77da35521106c979eec"
+        },
+        {
+          "id": "S-GA12-case",
+          "sha256": "7502106151a0aba69668857d8da97d7d0da8d16735767f0f748ce84ae29b3af4"
+        },
+        {
+          "id": "S-GA12-sep",
+          "sha256": "eddd9e2ec829f4420a4d13bde5a3a28da9bbae03d63959538f406502e12f3e4f"
+        },
+        {
+          "id": "S-GA12-poll",
+          "sha256": "96f630a109f73e7eef89b83379d268d8f2cafc023d36f668ac3cf0e570cd6ec9"
+        },
+        {
+          "id": "S-GA12-attach",
+          "sha256": "435ffe1819faef435b52f3309b4ca916d14db10756c3f394f4d32fa7f5915fd8"
+        }
+      ]
+    },
+    {
+      "id": "GA13",
+      "claims": [
+        "readiness ... over-reads"
+      ],
+      "pins": [
+        {
+          "id": "W-GA13",
+          "sha256": "3b9b2ccba00ee210a94d405320b3fb7429e4bc582c1e228bfd1c6ab9d4944154"
+        }
+      ]
+    },
+    {
+      "id": "GA15",
+      "claims": [
+        "occur once each in paragraphs"
+      ],
+      "pins": [
+        {
+          "id": "W-GA15",
+          "sha256": "8d8dee4ddb1f2f020668fd3d7a46154f7dd2a23417cd7e792a9dbe35368de2db"
+        },
+        {
+          "id": "S-GA15-quote",
+          "sha256": "2e858190a88a9688889d4348c5a25620bcf331261ab238ebe04e8e95bdbe7031"
+        }
+      ]
+    },
+    {
+      "id": "GA4",
+      "claims": [
+        "(any case)"
+      ],
+      "pins": [
+        {
+          "id": "W-GA4",
+          "sha256": "9161194ae24f0359579cb3d601b95794f57df5fdbe91c9895b0c26d4891ca718"
+        },
+        {
+          "id": "S-GA4-upper",
+          "sha256": "899139303f6b05f953269a5fe24c411f7bb2667f1984c7b338f307dc2c0dd2e7"
+        },
+        {
+          "id": "S-GA4-mixed",
+          "sha256": "38de53603b090f5779a5c7a5d24ca39056af0fa0e0ece571b369c4341fb52133"
+        }
+      ]
+    },
+    {
+      "id": "GA5",
+      "claims": [
+        "&#146; and &#x92; to U+2019"
+      ],
+      "pins": [
+        {
+          "id": "W-GA5",
+          "sha256": "87d5edb70d44860f7b42a0c1177a1a8800eda7f802de7c19aa0f76cf1c0aef83"
+        },
+        {
+          "id": "S-GA5-hex",
+          "sha256": "084849add368e63730a26888c24a7183bd8abcc1669465e8b71ae2aa4b422f9f"
+        }
+      ]
+    }
+  ],
+  "capWords": [
+    {
+      "id": "U1",
+      "members": [
+        "GP14-H03-REMOVE-NOG"
+      ],
+      "claims": [
+        "remove format/default-ignorable characters before matching"
+      ],
+      "pins": [
+        {
+          "id": "W14-H03b",
+          "sha256": "67148908cd914896924230cd1b08676391ab7b942b1e359c635fa6ed8778e629"
+        },
+        {
+          "id": "W14-H03a",
+          "sha256": "66d9fcdc6496963cc53b56b9dac1cf27e7ed634bd4d6a6c0d3bd447c35e321f0"
+        },
+        {
+          "id": "W14-H03c",
+          "sha256": "bce9bf9b28d533da5458e81be71a76e89de03266f71509c622594714b938f367"
+        },
+        {
+          "id": "S14-H03-mixed",
+          "sha256": "49f4734d91c38d8b3fe09e2e1bba85dd997591f701a5d183abc1989131a1c7cb"
+        }
+      ]
+    },
+    {
+      "id": "U2",
+      "members": [
+        "GP14-H01M-REF-X-MODIFIER",
+        "GP14-H01-REF-X-LOWER",
+        "GP14-H02-REF-DEC-7"
+      ],
+      "claims": [
+        "Each control character in the section's units once their references are decoded either way",
+        "Controls in either numeric-reference decoding (excluding structural whitespace) refuse a reading.",
+        "The census pins one entry, &#146; and &#x92; to U+2019"
+      ],
+      "pins": [
+        {
+          "id": "W14-H01a",
+          "sha256": "d20bfdce4e22a29e9c42783e682aaa7128d15daecf1c8b9ce9c2fdfe317cf622"
+        },
+        {
+          "id": "W14-H01d",
+          "sha256": "15c71fc9446cdaa35eb7e36dc9aba5d3b5bdb74b01aa2153cd30d1d4e548cdc5"
+        },
+        {
+          "id": "W14-H01b",
+          "sha256": "b9f345f6f49e923fc856b367fd849b5a6968d3429b6c1ec4463851002d687724"
+        },
+        {
+          "id": "W14-H01c",
+          "sha256": "3ab4112d1159e5d8763e6a16d58c4f20ff31c0df53a5b3ec2c656d39ed2b5563"
+        },
+        {
+          "id": "W14-H02a",
+          "sha256": "51841950c624ddecc949e66e1a194abb61d5f89117bc0be4ad29049db16a22fb"
+        },
+        {
+          "id": "S14-H01-lower",
+          "sha256": "143e2a2a1352f7b4941a6a0936776a68682bc2e9d50e060956cbc40a66e476d5"
+        },
+        {
+          "id": "S14-H02-dec-poss",
+          "sha256": "1b06a5950c732e72779e5d8524da2a7d80162a5e4c7108638668f533dad5aede"
+        },
+        {
+          "id": "S14-H02-dec-fold",
+          "sha256": "738d0575369ce8488ccb69ecf74741bd8be11d33fec07a460696038875a21969"
+        },
+        {
+          "id": "S14-H02-hex-pad",
+          "sha256": "ee738379e3c0d35b05a714d4aa7120d4da33fa6d3b0cff68357655db3f47f751"
+        },
+        {
+          "id": "S14-H02-hex-pad-X",
+          "sha256": "9b28933de98fd236d6d33cbcfe5e00e1721ad2a55f063346887755238746885e"
+        },
+        {
+          "id": "S14-H02-dec-32",
+          "sha256": "795f55fdef1c35c21e752596181347849ceaa8fda1f9d980fb1fbe78cac4bfe4"
+        },
+        {
+          "id": "S14-H02-hex-32",
+          "sha256": "a55e5666d12c251e0ee4bd57087ea02f183a83627ef6956cdce6cc0741e4cbea"
+        }
+      ]
+    },
+    {
+      "id": "U3",
+      "members": [
+        "GP14-C01-LIST-ITEMS-INLINE"
+      ],
+      "claims": [
+        "Nested blockquotes recursively carry their lists and subsequent children after wb-aalz",
+        "A nested quote owns block children, not just inline tokens: its list's items also render."
+      ],
+      "pins": [
+        {
+          "id": "W14-C01a",
+          "sha256": "1d92fb140aeb750b3c37088dca2204f3e7420798ba21b03ba507eedf13865c4c"
+        },
+        {
+          "id": "W14-C01b",
+          "sha256": "2c33f36b7c0febcd44b705f1ba2922ba5e8adb80417a22ad27cfde70e08af6e6"
+        },
+        {
+          "id": "W14-C01c",
+          "sha256": "dbfd16f9534d36ea526f1090b328430f840acd655d7e1bb9a6ada89cd47b7181"
+        },
+        {
+          "id": "S14-C01-item-para",
+          "sha256": "ae4f8651a4431255de3f9ad7f2fbf64e28a80a8dbc7fbd3425c80e70cfbf478a"
+        },
+        {
+          "id": "S14-C01-item-quote",
+          "sha256": "4d6602e1a290fb2dcdd249b890e7e3e1510bb38edebde07e9fe1b1717a6c92f4"
+        },
+        {
+          "id": "S14-C01-deep",
+          "sha256": "f574dafc48557f8a05084812751f77eab4ff4840bf89b2b4811ece8448edd377"
+        },
+        {
+          "id": "S14-POS-QLIST-3",
+          "sha256": "9dde4491488946bb8ebae2bd6a1df75a339ad3aedf266f79d7e73eb863090bf1"
+        },
+        {
+          "id": "S14-POS-QQLIST-3",
+          "sha256": "8d781766c2398db6e396a4d6a78a1fe4bf05d58e1179b811ffb90106dd588c0c"
+        },
+        {
+          "id": "S14-POS-QITEM-3",
+          "sha256": "129ff988ea1e12eeb06f70590e023c2b3c9f6ca3a089b0c4ec2f32c34c268e6d"
+        }
+      ]
+    },
+    {
+      "id": "U4",
+      "members": [
+        "GP14-C12-TOPQ-SLICE3",
+        "GP14-C11-TOPQ-FIRST-TWO-BLOCKS"
+      ],
+      "claims": [
+        "one per top-level list item and per other top-level text block, using the shared rendered view"
+      ],
+      "pins": [
+        {
+          "id": "W14-C11a",
+          "sha256": "efd3f4fb91352b8c17cbc8f4712b9eecefb2c968daa6fd4435f50b9edd59af61"
+        },
+        {
+          "id": "S14-C11-list",
+          "sha256": "22eeab62d19ab31295dc401bcede9dea5f9cfcf37af1d8e1e43af48954cf8e08"
+        },
+        {
+          "id": "S14-C11-quote",
+          "sha256": "864802b61f8e6f51d40d581c2efb719442b5c06c44880d9f7c2fec9639bfb24d"
+        },
+        {
+          "id": "S14-POS-TOPLIST-3",
+          "sha256": "18e6ff147fc535f1af531217a628677e3028ccede895be8d7fa54b763a1ede29"
+        },
+        {
+          "id": "S14-POS-ITEM-3",
+          "sha256": "92feb7cbc640d71e588a94613feb63bc14059fca4f65275bf59b037e99d5411b"
+        }
+      ]
+    },
+    {
+      "id": "F1",
+      "members": [
+        "GP14-H06-UNITS-TABLE-DROP",
+        "GP14-H07-UNITS-CODE-DROP",
+        "GP14-H08-UNITS-HEADING-DROP"
+      ],
+      "claims": [
+        "one per top-level list item and per other top-level text block"
+      ],
+      "pins": [
+        {
+          "id": "W14-H06a",
+          "sha256": "3d758e10e7bd79e1b4f8e82a9db463de2f650ae75bc10e924dddc9d215ac3faa"
+        },
+        {
+          "id": "W14-H07a",
+          "sha256": "2c689449f4d245b5f36c513c7dfa0a7ecb4b74293c53b3c4b4344123686302b5"
+        },
+        {
+          "id": "W14-H07b",
+          "sha256": "3b81422508f15ecd409e3694c12f3c23e9230e48626cb4fcaeba161cdfa6091a"
+        },
+        {
+          "id": "W14-H08a",
+          "sha256": "95671917672a41cf4dcc4b227f55ca391005f01ea277e2987b823bffdad9a750"
+        },
+        {
+          "id": "S14-H06-head",
+          "sha256": "87e8dc3b5143ed162e6366215ca72f3b0a5b22667e6d9e40391cb8c00cd3fcc8"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "members": [
+        "GP14-C09-NQ-FIRST-THREE",
+        "GP14-C10-NQ-NO-SPACE-FIRST-TWO"
+      ],
+      "claims": [
+        "Nested blockquotes recursively carry their lists and subsequent children after wb-aalz"
+      ],
+      "pins": [
+        {
+          "id": "W14-NQ3a",
+          "sha256": "8fb29c5e84dd9fc967672b4f565da03aa569a2ca689c61f8c6487fa9595f4251"
+        },
+        {
+          "id": "W14-C10a",
+          "sha256": "b41993e066c140d9bd3340edaa7dc7f1e0101b1cc9d873458d773b866f469db9"
+        },
+        {
+          "id": "S14-ITEMQ-3",
+          "sha256": "b2a226f57f12bd7c5f9daf37c4d2a745ea58f60e3b552a2b0d9a3482d181c283"
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "members": [],
+      "claims": [
+        "Any named reference outside the six known names refuses a claimed docs/09 reading."
+      ],
+      "pins": [
+        {
+          "id": "S14-UNDEC-upper",
+          "sha256": "7da42f7fb18156dd31b253c89a6f773bcac9563583801b40d026298b115e9340"
+        },
+        {
+          "id": "S14-UNDEC-mixed",
+          "sha256": "b3ac911b436e2fd6869bcd8f68d6c4ad729adf10ba8752888d327f47a7b4235d"
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R1",
+      "family": "TABLE-CHILD",
+      "member": "GA2",
+      "quiet": [
+        "S-R1-QQ-TABLE",
+        "S-R1-ITEM-Q-TABLE",
+        "S-R1-Q-TABLE",
+        "S-R1-ITEM-TABLE"
+      ]
+    },
+    {
+      "id": "R2",
+      "family": "RAW-FEFF",
+      "member": "GA8",
+      "quiet": [
+        "S-R2-RAW-FEFF"
+      ]
+    },
+    {
+      "id": "R3",
+      "family": "RAW-VT",
+      "member": "GA9",
+      "quiet": [
+        "S-R3-RAW-VT"
+      ]
+    }
+  ]
+}

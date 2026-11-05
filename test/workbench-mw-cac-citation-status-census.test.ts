@@ -23,7 +23,192 @@
  * image alt, a definition, a raw HTML element, struck text, a footnote label, an HTML block or a comment across blank lines
  * as unqualified, and markup a reader sees through - link text, a code span, an escape, emphasis - as qualifying); F4 the
  * anchored-element binding (OUTSIDE ANCHORS) reds a re-tiling that folds a pin into a neighbour (G-MERGE and its siblings);
- * F5 stays NOT CLAIMED below (no outside anchor in this census's scope names the residual families).
+ * F5 stayed NOT CLAIMED at that cut (no outside anchor named the residual families); wb-ubhh's RESIDUAL ANCHOR below cures it.
+ *
+ * wb-ubhh (the R694 follow-up of landing 442, gate cmd_2514e41685b1: its F5 leads, its F6 and F7 ride and are cured here, its F4
+ * rides and stays NOT CLAIMED below). RESIDUAL ANCHOR (F5): the residual families are anchored OUTSIDE this census's two files,
+ * in docs/14's "MW workflow-composition citation-status census residuals" table, the wb-64x.1 form (Quiet row | Residual family
+ * | Exemplar | Clear form | Clear form reads). Its own case, registered third, reads that section from marked's tokens of the
+ * page: the page's one heading of that text, a top-level level-2 heading under the docs/14 title with no other level-1 heading
+ * before it, bounded at the next level-1 or level-2 heading or EOF, exactly an intro paragraph and one table of those columns, no
+ * raw HTML, each exemplar and clear form a whole-cell code span (`\n` a line break). Its rows are held to RESIDUALS and to the Q
+ * row's pins, in order and both ways, so a family removed from ROWS, the literal, IMPL, RESIDUALS and the roster together
+ * (landing 442's G-CT6-Q4, the CT6 coordinated hollow) reds against the row docs/14 keeps. F7: each row binds its family to its
+ * quiet row's probe - the probe the pin's own case returns carries the exemplar exactly once and reads quiet, and with the
+ * exemplar replaced by the clear form it reads the causes the table gives - so a quiet case swapped together with its roster
+ * witness to another family's probe (X22-QUIET-SWAP-COORD) reds; R-SCOPE's probe is Q1's outside list, one path a line, read
+ * as the clause (a) scopes whose roots would list each path. The section's units cite nothing (judged in the same case), and
+ * its rows as read at this cut are a frozen literal there, so a docs-side edit the judge still accepts reds too. F6: A5's
+ * footnote-definition control holds, as unqualified, a status that only a plain footnote definition line carries when that
+ * line is the citing unit's one definition line, directly under its citing line, killing FOOTNOTE.definition's never-match
+ * member (the gate's M22-FOOTNOTE-DEF-NEVER); wb-9lz6 below pins the line's other forms and its second position.
+ *
+ * wb-9lz6 (the R694 follow-up of landing 781, gate cmd_453531a97151: its F1 leads and is cured here). A5's footnote-definition
+ * controls hold that status, read unqualified, on the citing unit's one definition line directly under its citing line, one
+ * control per form. This first cut pinned eight forms: the plain line "[^s]: design-only" (footnote-definition); both lines
+ * behind "> " (footnote-definition-quoted, the gate's witness gate-fndef-quote verbatim), behind ">"
+ * (footnote-definition-unspaced-quote) or behind "> > " (footnote-definition-nested-quote); the definition line indented by
+ * two spaces (footnote-definition-indented, the gate's witness gate-fndef-indent verbatim), by four spaces
+ * (footnote-definition-deep-indent) or by one tab (footnote-definition-tab-indent); and the plain line under the label
+ * [^note-1] (footnote-definition-long-label). Cut #4 below enumerates every form A5 holds, these eight among them, with each
+ * form's falsifiers, and that enumeration is the claim.
+ *
+ * wb-9lz6 cut #2 (its refusal #1: U1, the record's PF1 on FOOTNOTE.definition's flags, and PF2, cured beside it). Two A5
+ * controls hold the status on the second of two definition lines directly under the citing line, the first under the label
+ * [^note-1] and the second, holding the status, under [^s]: plain (footnote-definition-second, the gate's witness W-FLAG
+ * verbatim) and with each line behind one blockquote marker and a space (footnote-definition-quoted-second, the witness
+ * W-FLAG-Q verbatim). Their falsifiers are the gate's G-FLAG-G and G-FLAG-Y, FOOTNOTE.definition with the g or the y flag:
+ * .test() then starts at the previous match's lastIndex, so the line tested right after a hidden definition line is shown, and
+ * each member reds both controls (A5 and the closing case). FOOTNOTE's flags are pinned beside its sources: A5 holds them as a
+ * literal (the reference's "g", the definition's "", no flag) and the roster's constants.carrierView.footnoteFlags carries
+ * both, so any flag added to or dropped from either regex reds A5 and the closing case, and the judged-set case too unless the
+ * roster is edited with it. The reference's g is pinned by behaviour as well: footnote-label-second (the record's PF2 witness
+ * W-REF verbatim) holds, as unqualified, a status carried only by the label of the second of two adjacent footnote references
+ * on the citing line, that label spelled "design-only"; its falsifier is the gate's G-REF-NOG (FOOTNOTE.reference without g
+ * removes a line's first reference only), and the reference with gy reds it and footnote-label. Every other position of a
+ * definition line or a reference, and every FOOTNOTE flag edit that changes no control's reading, is stated NOT CLAIMED below.
+ *
+ * wb-9lz6 cut #3 (its refusal #2: U1, the record's PF1 on the second reference's label spelling, and PF2, cured beside it). A5
+ * holds a footnote reference's label, read unqualified, in two spellings at each of the two positions it claims, each in the
+ * citing-line texts cut #4 lists below and in no other: at a line's only reference "design-only" (footnote-label) and
+ * "Status:DESIGN-ONLY." (footnote-label-punct, the record's PF2 position, with its definition after a blank line), and at the
+ * second of two adjacent references "design-only" (footnote-label-second) and "Status:DESIGN-ONLY."
+ * (footnote-label-second-punct, the record's gate-only feasibility control gate-label-second-punct, its text verbatim). The
+ * second spelling holds capital letters, a colon and a final period (19 characters), so a one-edit narrowing of
+ * FOOTNOTE.reference's label class that leaves it unmatched keeps the label on the view, where its status qualifies the unit:
+ * each of the gate's G2-R-LBL-WORDHY ([\w-]+), G2-R-LBL-MAX12 ({1,12}), G2-R-LBL-LOWER ([a-z0-9-]+) and G2-R-LBL-ALNUMHY
+ * ([A-Za-z0-9-]+), and the class with the colon, the period or the capital letters excluded or capped at 18 characters, edited
+ * with its roster constant, reds both punct controls and their five cut #4 twins (A5 and the closing case). G-REF-NOG reds
+ * footnote-label-second-punct beside footnote-label-second and both cut #4 second-position lines, and the reference with gy
+ * reds all fourteen label controls. A label in any other spelling, at either position, is stated NOT CLAIMED below.
+ *
+ * wb-9lz6 cut #4 (its refusal #3: U1, the record's PF1 on the text around a reference, and PF2, which ruling R-B388 read as
+ * claimed - "behind two markers" covers ">>" - so the FOOTNOTE.definition claim set is frozen and this cut is authored in the
+ * enumerate-the-resolvable form for it: the definition claim is exactly the forms listed here, each pinned by its own control,
+ * with wb-6aaw's two definition lines below; every member record PF3 measured surviving is killed here, killed by wb-6aaw below
+ * (IND-SPTAB and CTX-COLON-CONTENT) or named NOT CLAIMED below, as cut #5 restates it; every other definition line is NOT
+ * CLAIMED below). No residual family is added: an exemplar of each NOT CLAIMED form below read
+ * unqualified under the census's own judge (measured at this cut, added as throwaway A5 controls: 32 passed), and the NOT
+ * CLAIMED sentences name where a hollowed judge is not caught; how the judge reads any other page in such a form is NOT
+ * CLAIMED (cut #5 below).
+ *
+ * wb-9lz6 cut #5 (its refusal #4: U1 and U2, both in the frozen FOOTNOTE.definition claim set; ruling R-B418 executed the
+ * rule-19 structural exit, filed the exit child wb-6aaw and bound this, the bead's final cut, to the FAIL-CLOSED CORE). This
+ * cut changes comments only - no control, pin, roster entry, test title or reader code is added, removed or edited - and
+ * withdraws the words the earlier cuts gave five surviving FOOTNOTE.definition members to call them harmless. The definition
+ * claim at cut #5 was exactly what its pins held: A5's nineteen forms and cut #2's two second-position pairings, one control
+ * each, and the falsifiers this header names for them, each red with the attribution named; wb-6aaw below adds five controls
+ * and the members they kill, and the claim is now exactly those pins together. No FOOTNOTE.definition member this header does
+ * not name is claimed to be caught: the members named NOT CLAIMED below are measured examples. At cut #5 five of them
+ * (IND-SPTAB, CTX-COLON-CONTENT, the regex unanchored, its colon dropped and the definition with m) were hollowed judges this
+ * census did not catch, their pins given to wb-6aaw by ruling R-B418; wb-6aaw below pins each of the five. Each page refusal #4
+ * realized the five on, and its twin W-GP22-NBSP-INDENT, reads unqualified under the census's own judge (measured at cut #5 as
+ * throwaway A5 controls, causes ["unqualified"]: 32 passed; at wb-6aaw's cut five of those texts are A5 controls, and the twin,
+ * measured again as a throwaway A5 control, reads unqualified: 32 passed). How the census reads a page whose definition line is
+ * in a NOT CLAIMED form is NOT CLAIMED by
+ * this census, quiet or not: the census hides a definition line's words from the carrier view, so a negation on that line
+ * does not reach a status on the next one, and such a page can read quiet - a unit made of a citing line ending "which is",
+ * the line "[^x]: not" and the line "design-only." reads qualified, and so do its twins with the reference and the label s
+ * and behind "> " (measured at cut #5 as throwaway A5 controls expecting unqualified: 2 failed | 30 passed (32) each,
+ * attributed to the probe), while marked shows that line as paragraph text. Cut #5 adds no residual family: RESIDUALS and
+ * docs/14's residual table are unchanged.
+ *
+ * wb-6aaw (the rule-19 structural exit child of wb-9lz6, filed by ruling R-B418 to own the five members' pins: refusal #4's U1
+ * and U2). THE FIVE MEMBERS' PINS. The pinned reader set is this file's case A5 (each control's causes, asserted as "<id>: its
+ * causes", then A5's witness against the roster's) and its closing case (every pin reached its witness compare, and every
+ * compare matched its roster witness): under the census's own expect a member reds A5 at its first failing control and the
+ * closing case at the reach, and under expect.soft (the attribution reading) A5 at each failing control and the closing case at
+ * the compare. A5 holds five more controls, each read unqualified (its one cause), each the text of refusal #4's gate-only
+ * feasibility control (record PF7) verbatim, which is its paired real-tree witness without the final line break, where "..."
+ * stands for "Pi reads the cac-workflow-composition-2026-10-18": "... program[^s]." then a line of a carriage return and "[^s]:
+ * design-only" (footnote-definition-cr-led; the record's gate-fndef-cr-indent and W-GP22-CR-INDENT); "... program, which is
+ * not" then the line "[^s]:" then "really design-only." (footnote-definition-colon-only; gate-fndef-colon-negwin,
+ * W-GP22-COLON-NEGWIN); "... program[^x]: not" then "design-only." (footnote-not-definition-mid-line;
+ * gate-fndef-unanchored-neg, W-GP22-UNANCH-NEG); "... program, which is" then "[^x] not" then "design-only."
+ * (footnote-not-definition-no-colon; gate-fndef-nocolon-neg, W-GP22-NOCOLON-NEG); and "... program, which is" then a line of
+ * "x", U+2028 and "[^x]: not" then "design-only." (footnote-not-definition-line-separator; gate-fndef-mflag-neg,
+ * W-GP22-MFLAG-NEG). Falsifiers, each a one-edit member of FOOTNOTE.definition edited with its roster constant (and, for the
+ * flag, A5's flags literal), red A5 and the closing case (2 failed | 30 passed (32)) with soft attribution exactly as named:
+ * IND-SPTAB (the leading \s* as [ \t]*) and its twin (?: |\t)* footnote-definition-cr-led; CTX-COLON-CONTENT (\]: as \]:.) and
+ * its twin \]:(?!\s*$) footnote-definition-colon-only; the regex unanchored footnote-not-definition-mid-line and
+ * footnote-not-definition-line-separator; its colon dropped footnote-not-definition-no-colon; and the definition with m
+ * footnote-not-definition-line-separator. Each of those seven read 0 | 32 before this cut, clean and on each of its paired
+ * witnesses appended to docs/workbench/19-worked-examples.md (W-GP22-CR-INDENT for IND-SPTAB and its twin, W-GP22-COLON-NEGWIN
+ * for CTX-COLON-CONTENT and its twin, W-GP22-UNANCH-NEG and W-GP22-MFLAG-NEG for the regex unanchored, W-GP22-NOCOLON-NEG for
+ * its colon dropped and W-GP22-MFLAG-NEG for the definition with m), where the census reads 5 failed | 27 passed (32) (refusal
+ * #4, reproduced at this cut's base); on each of those pages each now reads 2 | 30. Measured beside them at this cut, each red
+ * 2 | 30 with soft attribution exactly as named: after the colon (?!$) and \s*\S footnote-definition-colon-only; the start
+ * anchor as (?:^|\s), (?<!\S) or (?<![\w.]) footnote-not-definition-line-separator; the colon made optional or as (?::|\s)
+ * footnote-not-definition-no-colon. Each new control's causes flipped to [] reds the census, in IMPL alone and with the roster;
+ * each removed from IMPL and the roster together is the NOT CLAIMED control removal below. Every other member of these classes
+ * is NOT CLAIMED by this census - for example, measured green at this cut, the leading \s* as [ \t\r]*, [^\S\u00a0]* or [
+ * \t\r\f\v]* (each still matches a carriage return), after the colon (?!\s+$) or (?! +$), the start anchor as (?:^| ) and the
+ * colon as (?::|$) - and so is the census's reading of any text other than these five controls' texts (another line led by a
+ * carriage return, another line holding only a label and a colon, another reference and negation on a line that is no
+ * definition line). No residual family is added: RESIDUALS and docs/14's residual table are unchanged.
+ *
+ * THE TEXT AROUND A REFERENCE (U1). A5 holds a reference's label, read unqualified, in both spellings ("design-only" and
+ * "Status:DESIGN-ONLY.", written L), one control per spelling, in exactly these citing-line texts and in no other, where "..."
+ * stands for "Pi reads the cac-workflow-composition-2026-10-18": at a line's only reference, its definition after a blank
+ * line, "... program[^L]." (footnote-label, footnote-label-punct), "... program [^L]." (footnote-label-space-before,
+ * footnote-label-punct-space-before), "... program.[^L]" (footnote-label-after-period, footnote-label-punct-after-period),
+ * "... program[^L]and nothing more." (footnote-label-word-after, footnote-label-punct-word-after) and "... program[^L] today."
+ * (footnote-label-space-after, footnote-label-punct-space-after); at the second of two adjacent references, with no definition
+ * line, "... program[^s][^L]." (footnote-label-second, footnote-label-second-punct) and "... program[^s][^L] today."
+ * (footnote-label-second-space-after, footnote-label-second-punct-space-after). So directly before a claimed reference stand
+ * only the "m" that ends "program", a space, a "." or the first reference's "]", and directly after it only a ".", the line
+ * end, the "a" of "and" or a space, each only as these lines write them. The design-only texts of the five new lines are the
+ * record's gate-only feasibility controls gate-ctx-space-before, gate-ctx-after-period, gate-ctx-word-after,
+ * gate-ctx-space-after and gate-ctx-second-space-after verbatim, and footnote-label-punct-space-before is the paragraph of the
+ * record's witness W-CTX6-PUNCT-SPACE-BEFORE. Falsifiers, each a one-edit lookaround in FOOTNOTE.reference edited with its
+ * roster constant, red A5 and the closing case with soft attribution exactly as named: the gate's CTX-BEFORE-NOWS (?<!\s) the
+ * two space-before lines; CTX-BEFORE-NOPUNCT (?<![.,;:!?]) the two after-period lines; CTX-AFTER-NOWORD (?!\w) the two
+ * word-after lines; CTX-AFTER-NOSPACE (?!\s) the four space-after lines; CTX-AFTER-PERIOD (?=\.) the eight new lines without a
+ * "." after the reference; CTX-BEFORE-WORD (?<=\w) and CTX-WORDBOUNDARY \b the eight lines without a word character before it;
+ * and the seat's (?<!m) the six lines with the "m" before it, (?<! ) the two space-before lines, (?<!\.) the two after-period
+ * lines, (?<!\]) the four second-position lines, (?!\.) the six lines with a "." after it, (?!$) the two after-period lines,
+ * (?! ) the four space-after lines and (?!a) the two word-after lines. Each new line's causes flipped to [] reds the census,
+ * in IMPL alone and with the roster.
+ *
+ * THE FOOTNOTE DEFINITION LINE (the frozen class, enumerated). A5 holds a definition line's status, read unqualified, on the
+ * citing unit's one definition line directly under its citing line
+ * "Pi reads the cac-workflow-composition-2026-10-18 program[^s]." (with the reference [^note-1] or [^Note:A-1.] for those two
+ * labels), in exactly these nineteen forms and in no other (beside wb-6aaw's carriage-return-led line above,
+ * footnote-definition-cr-led), one control each: with no prefix, "[^s]: design-only"
+ * (footnote-definition), "[^note-1]: design-only" (footnote-definition-long-label), "[^Note:A-1.]: design-only"
+ * (footnote-definition-punct-label), "[^s]:design-only" (footnote-definition-unspaced-colon) and "[^s]: *design-only*"
+ * (footnote-definition-emphasis); with both lines behind exactly one of the prefixes "> " (footnote-definition-quoted), ">"
+ * (footnote-definition-unspaced-quote), ">" and two spaces (footnote-definition-quote-two-spaces), ">" and one tab
+ * (footnote-definition-quote-tab), "> > " (footnote-definition-nested-quote), ">>" (footnote-definition-nested-unspaced),
+ * "> >" (footnote-definition-nested-first-spaced), ">> " (footnote-definition-nested-second-spaced), "> > > "
+ * (footnote-definition-triple-quote) and two spaces then "> " (footnote-definition-indented-quote), each before
+ * "[^s]: design-only"; and with the definition line alone indented by two spaces (footnote-definition-indented), four spaces
+ * (footnote-definition-deep-indent), one tab (footnote-definition-tab-indent) or two spaces then a tab
+ * (footnote-definition-mixed-indent). footnote-definition-nested-unspaced is the record's gate-only control
+ * gate-fndef-nested-unspaced verbatim (the text of its witness W-DEF-NESTED-NOSPACE), footnote-definition-nested-first-spaced
+ * is the text of the record's W-DEF-NESTED-INNERSPACE, and each of the eight forms from footnote-definition-triple-quote to
+ * footnote-definition-emphasis kills a member record PF3 measured surviving, each first realized fail-open by the seat's
+ * paired witness of that form appended to docs/workbench/19-worked-examples.md (the census 5 failed | 27 passed, the member
+ * 0 | 32). Falsifiers, each a one-edit member of FOOTNOTE.definition edited with its roster constant, red A5 and the closing
+ * case with soft attribution exactly as named: the never-match member all nineteen; the blockquote prefix (?:>\s*)* dropped
+ * (the gate's G2-FNDEF-NO-QUOTE) the ten quoted ones, made optional the five with two or three markers, its \s* made \s+ the
+ * four with a marker directly before a marker or the label (">", ">>", "> >", ">> ") and its \s* dropped the eight with
+ * whitespace after a marker; D-CTX Q-NOTBEFORE-MARKER of refusal #3 ((?!>) after each marker) the two with a marker directly
+ * before a marker (">>", ">> "); Q-MAX2 ((?:>\s*){0,2}) the three-marker form; QSP-OPT1 ((?:> ?)*) the two-space and the tab
+ * form; ORDER-SWAP (^(?:>\s*)*\s*) the indented quote; the leading \s* dropped (the gate's G2-FNDEF-NO-INDENT) the four
+ * indents and the indented quote, narrowed to spaces the tab and the mixed one, to \s? the two-space, four-space, mixed and
+ * indented-quote ones and to \s{0,3} the four-space one; INDENT-NOT-MIXED (^(?! +\t)) the mixed one; the label's + dropped, or
+ * the label narrowed to \w+, the [^note-1] and [^Note:A-1.] forms, and narrowed to {1,6} or to [a-z0-9-]+ (LBL-MAX6,
+ * LBL-LOWERHY) the [^Note:A-1.] one; a space required after the colon ((?= ) or (?!\S): CTX-COLON-SPACE,
+ * COLON-THEN-SPACE-OR-EOL) the unspaced-colon one; a word required after it (\s*\w: CTX-COLON-WORD) the emphasis one; a prefix
+ * made required (\s+, or (?:>\s*)+) the forms without it. Of cut #2's two second-position controls above, the never-match
+ * member and the required indent red both, the blockquote prefix dropped or with its \s* dropped the quoted one, the required
+ * blockquote prefix the plain one, and no other member named here reds either. Of wb-6aaw's five controls above, the
+ * never-match member reds footnote-definition-cr-led and footnote-definition-colon-only, the leading \s* dropped or narrowed to
+ * spaces footnote-definition-cr-led, a space required after the colon by (?= ) (CTX-COLON-SPACE), a word required after it
+ * (CTX-COLON-WORD) and the required indent footnote-definition-colon-only, the required blockquote prefix both of those two,
+ * and no other member named here reds any of the five. Each new form's causes flipped to [] reds the census, in IMPL alone and
+ * with the roster.
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
@@ -38,7 +223,8 @@
  * line spells CACWorkflowCompositionV0 or a bridge checker - so clause (a) passes empty today, as filed. The adapter subject's
  * spelling occurs twice, never in a citing unit: "the Pi adapter itself never retries" (TRACEABILITY.md:260) and "the Pi
  * adapter never retries" (feature-matrix.md:174), both the Furnace-hosted adapter. At the filing pin d75b68d the lists hold 25,
- * 39 and 115 files and no unit cites the program. No docs, src or tracker text is edited by this cut.
+ * 39 and 115 files and no unit cites the program. No docs, src or tracker text is edited by the wb-kku9.2 cut
+ * (wb-ubhh's cut adds docs/14's residual section, which cites nothing).
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every docs/workbench file is .md): a
  * blank-line-delimited block, where a heading, a table row and each line inside a code fence are units of their own and a
@@ -105,16 +291,73 @@
  * and the census's scopes, clause (c)'s wb-klr7 sentence and holder, row E's three subjects - so a re-tiling that folds a pin
  * into a neighbour in every literal and the roster reds whenever the folded quote names one (G-MERGE: A6 into A5). The last
  * case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin
- * reached its witness compare, and each compare's own result).
- * NOT CLAIMED (edits of this file and the roster together): a residual row removed from ROWS, the literal, IMPL, RESIDUALS and
- * the roster (no outside anchor names the residual families: landing 343's F5, CT6 on Q4, measured 30/30 at this cut - an
- * external anchor would be a docs table outside this census's two files, the wb-64x.1 form); a re-tiling that folds A7 ("in
- * the same paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour
- * in every literal and the roster (measured 30/30 at this cut); a control removed from IMPL and the roster together while
- * every remaining control holds; a plant edited in IMPL and the roster together; a floor lowered in FLOORS and the roster
- * together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added vocabulary member (of EXISTS,
- * GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only the bead text's
- * words are anchored outside); the outside-anchor case or the closing case removed with its roster title.
+ * reached its witness compare, and each compare's own result). RESIDUAL ANCHOR (its own registered case, wb-ubhh above): docs/14's
+ * residual table holds every residual family with its quiet row, an exemplar of its probe and a clear form.
+ * NOT CLAIMED (edits of this file and the roster together, unless named otherwise): a re-tiling that folds A7 ("in the same
+ * paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour in every
+ * literal and the roster (landing 442's F4: measured 30/30 at wb-3cql's cut; not re-measured by wb-ubhh); a control removed from
+ * IMPL and the roster together while every remaining control holds, alone or with a FOOTNOTE member only the removed controls
+ * kill; one or more controls' texts rewritten in IMPL to other texts that read the same causes (the roster holds a control's
+ * id and causes, never its text), alone or with a FOOTNOTE member only the rewritten controls kill, edited with its roster
+ * constant (and, for a flag, A5's flags literal); a plant edited in IMPL and the roster together; a floor
+ * lowered in FLOORS and the roster together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added
+ * vocabulary
+ * member (of EXISTS, GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only
+ * the bead text's words are anchored outside); a residual probe rewritten in IMPL and the roster to another text that still
+ * carries its row's exemplar once, reads quiet and reads the table's causes under its clear form; a residual family or its row
+ * edited in this file, the roster and docs/14 together; the outside-anchor case, the residual-anchor case or the closing case
+ * removed with its roster title. A footnote definition line in any form other than cut #4's nineteen above and wb-6aaw's two
+ * (the texts of footnote-definition-cr-led and footnote-definition-colon-only) is NOT CLAIMED by this census: any other prefix
+ * of either line - four or more markers, other whitespace after a marker (three or more spaces,
+ * two or more tabs, a space and a tab, or a character other than a space or a tab), a marker prefix on one line only or
+ * differing between the two lines, an indent of another width (one, three, five or more spaces, two or more tabs, another mix)
+ * or an indent combined with markers other than two spaces then "> " - a label other than s, note-1 and Note:A-1. (for example
+ * one holding an underscore or whitespace, or longer than nine characters), and any text after the colon other than
+ * " design-only", "design-only" and " *design-only*". Measured green at this cut, each a one-edit member of
+ * FOOTNOTE.definition edited with its roster constant that diverges only on such forms: (?:>\s*){0,3} (four markers),
+ * (?:>\s{0,2})* (three spaces after a marker), ^\s{0,4} (an indent of five), the label capped at nine characters or without
+ * "_", and after the colon a lookahead refusing "(", a tab or two spaces. Five more one-edit members of FOOTNOTE.definition,
+ * each edited with its roster constant (and, for the flag, A5's flags literal), read green at cut #5 (0 failed | 32 passed (32)
+ * each) and were named NOT CLAIMED there as hollowed judges the census did not catch: IND-SPTAB (the leading \s* as [ \t]*) and
+ * CTX-COLON-CONTENT (\]: as \]:.), two of record PF3's survivors, and the regex unanchored (as landing 781's F6 read), its
+ * colon dropped and the definition with m. Refusal #4 realized each on a paired page appended to
+ * docs/workbench/19-worked-examples.md that the census reds (5 failed | 27 passed (32)) and the member left green (0 | 32):
+ * W-GP22-CR-INDENT (a definition line led by a carriage return) under IND-SPTAB; W-GP22-COLON-NEGWIN (a line holding only
+ * "[^s]:" between a negation and its status) under CTX-COLON-CONTENT; W-GP22-UNANCH-NEG (a citing line ending in a reference, a
+ * colon and a negation) under the regex unanchored; W-GP22-NOCOLON-NEG (a reference and a negation on a line of their own)
+ * under its colon dropped; and W-GP22-MFLAG-NEG (a line holding U+2028 before a reference, a colon and a negation) under the
+ * definition with m and the regex unanchored. They are claimed now: wb-6aaw's five controls above pin them, and each reds the
+ * census (2 failed | 30 passed (32)) with the attribution wb-6aaw names; the other members of their classes that wb-6aaw names
+ * green are NOT CLAIMED.
+ * LBL-LAZY ([^\]\n]+?), measured with them, is equivalent: its class holds no "]", so its lazy and the greedy label run both
+ * end at the label's first "]" (0 | 32 clean and 5 | 27 on each of the five pages, as the census reads, at cut #5 and again at
+ * wb-6aaw's cut). A footnote definition line in any position of the citing unit other than wb-9lz6's two (the unit's one
+ * definition line, directly under its citing line, in the nineteen forms; and the second of two definition lines under it in
+ * the plain and the quoted pairing cut #2 holds) and wb-6aaw's two (each in its control's text: the carriage-return-led line
+ * directly under its citing line, and the line "[^s]:" between a citing line and its status line) is NOT CLAIMED by this
+ * census: for example the first of two or more definition lines, a later definition line in the other seventeen forms or in
+ * another pairing of labels or forms, a third or later definition line, a definition line above the citing line or after a line
+ * of the unit that is no definition line, and a definition line that itself cites. A footnote reference in any other position
+ * on a line (after its second, or a second
+ * reference apart from the first) is NOT CLAIMED. A footnote reference's label at either claimed position (a line's only
+ * reference, the second of two adjacent references) in any spelling other than cut #3's two ("design-only" and
+ * "Status:DESIGN-ONLY.") is NOT CLAIMED by this census - for example a label holding a digit, an underscore, whitespace or
+ * another punctuation mark, or one longer than 19 characters - and a one-edit narrowing of FOOTNOTE.reference's label class
+ * that both spellings still match reads every control alike and is NOT CLAIMED either (measured: the class with digits, the
+ * underscore, whitespace or "!" excluded, or capped at 19 characters, keeps the census green). A footnote reference at either
+ * claimed position in any citing-line text other than cut #4's fourteen above is NOT CLAIMED by this census: any other
+ * character or none directly before it (a letter other than the "m" ending "program", a capital, a digit, an underscore, a tab
+ * or other whitespace, punctuation other than ".", the line start) or directly after it (a letter other than the "a" of "and",
+ * a capital, a digit, a tab or other whitespace, punctuation other than "."), a pairing of a before and an after that no line
+ * above writes (for example a space on both sides, or the line end or a word after the second reference), and any other text
+ * on the citing line. Measured green at this cut, each a one-edit lookaround in FOOTNOTE.reference edited with its roster
+ * constant: before the reference (?<!\t), (?<![,;:!?]), (?<!\(), (?<![A-Z]), (?<!\d), (?<!_), (?<!^), (?<![^\S ]) and
+ * (?<![a-l]); after it (?!\t), (?![,;:!?]), (?!\)), (?![A-Z]), (?!\d), (?!\.\S), (?!\[) and (?![b-z]); and a lookbehind
+ * refusing a space where a space also follows the reference. A FOOTNOTE flag edited in the regex, A5's flags literal and the
+ * roster together that changes no control's reading is NOT CLAIMED (measured): the definition with i, s, u, v or d and the
+ * reference with i, m, s, u, v or d beside its g read every control alike (re-measured with wb-6aaw's five controls); the
+ * definition with m, one of the five members cut #5 named NOT CLAIMED above (W-GP22-MFLAG-NEG), now reds
+ * footnote-not-definition-line-separator (wb-6aaw above).
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE clause (a)'s union only - qa/, test/, the root pages and docs/
  * outside docs/workbench are not judged (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * (MW-CAC-WORKFLOW-COMPOSITION-R2) does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's words in
@@ -124,7 +367,41 @@
  * subject and its predicate in different clauses (a pronoun across a sentence end) are not read (Q7); R-SUBJECT-SPELLING a
  * subject spelled outside SUBJECTS is not read (Q8); R-SPLIT-SOURCE a src citation split across a string concatenation is not
  * read (Q9); R-ESCAPED-SPELLING a markdown-escaped or entity-spelled needle does not cite (Q10); R-DOCUMENT-SCOPE an existence
- * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11).
+ * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11); R-DEFINITION-HIDES-NEGATION
+ * in a unit the carrier view renders (one neither opaque nor shown verbatim as code), a negation that a footnote definition
+ * line (a line FOOTNOTE.definition matches) holds does not cancel a status on another line of the unit, because the view drops
+ * that line with every word on it (Q12, wb-d5o5 below). Each family is also a row of docs/14's residual table (RESIDUAL
+ * ANCHOR).
+ * wb-d5o5 (the R694 follow-up of landing 887, gate cmd_707d77443a50: its F1 leads and is cured here by naming the family with
+ * its pinned quiet row; the readers, every control and every other pin are unchanged). THE PINNED READER SET, each a case of
+ * this file: Q12 judges its probe at docs/workbench/x.md - the unit of the citing line "Pi reads the
+ * cac-workflow-composition-2026-10-18 program, which is", the line "[^x]: not" and the line "design-only." (the gate's
+ * QUIET-1) - and asserts its causes [] (observed: quiet, the view having dropped "[^x]: not"), then compares its witness (the
+ * probe's path, text and causes) with the roster's and re-judges the probe there (observed: equal); the residual-anchor case
+ * reads docs/14's row "Q12 | R-DEFINITION-HIDES-NEGATION" and asserts that the probe carries the exemplar "[^x]: not"
+ * exactly once, reads quiet, and with it replaced by the clear form "not" reads unqualified (observed: as stated, the two
+ * words before "design-only" then being "is not"); the judged-set case holds Q12 in ROWS, the frozen-shape literal (Q:12),
+ * IMPL, RESIDUALS and the roster's rows and constants (observed: equal); the closing case holds Q12 in the roster's tests,
+ * registered, run and reached (observed: as stated). Falsifiers, each measured red at this cut on a throwaway copy of the
+ * census and the roster (docs/14 edited in place and restored byte-identical): the view keeping a definition line
+ * (carrierView's FOOTNOTE.definition filter dropped) or FOOTNOTE.definition never matching (its roster constant with it)
+ * reads the probe unqualified and reds Q12, A5, the residual-anchor case and the closing case (4 failed | 29 passed (33)
+ * each); the view dropping every line of the unit from its first definition line on reds Q12, the residual-anchor case and
+ * the closing case (3 | 30); the probe edited in IMPL alone ("never" for "not"), or stripped of its definition syntax in
+ * IMPL and the roster together, reds the same three (3 | 30 each); docs/14's Q12 row removed, its clear form made
+ * "[^y]: not", its exemplar and clear form made "[^x]: never" and "never", or the family renamed in RESIDUALS and the
+ * roster together reds the residual-anchor case (1 | 32 each); and Q12 removed from ROWS, the frozen-shape literal, IMPL,
+ * RESIDUALS, the residual-table literal and the roster together (the CT6 coordinated hollow) reds the residual-anchor case
+ * against the row docs/14 keeps (1 failed | 31 passed (32)). Q12's definition line is in a form the NOT CLAIMED paragraph
+ * above names (the label x, the text " not"): A5's definition-line claim is unchanged, and cut #5's sentence above (how the
+ * census reads a page whose definition line is in a NOT CLAIMED form is NOT CLAIMED, quiet or not) holds for every such page
+ * but Q12's probe, whose quiet reading this residual pins. NOT CLAIMED: Q12 pins one page of the family, and how the
+ * census reads any other page whose footnote definition line holds a negation is NOT CLAIMED by this census - among them
+ * the five sibling pages the gate measured quiet beside QUIET-1, re-authored here from its descriptions (the citing line's
+ * reference [^s] with the definition label s; the unit behind "> "; "never" for "not"; the definition line indented by
+ * two spaces; and a citing line ending "design-only" over the line "[^x]: no longer."), each measured quiet again at this
+ * cut's base de6deb2b as a throwaway A5 control expecting unqualified (2 failed | 30 passed (32) each: A5 and the closing
+ * case).
  * SCOPE: the judges read words, not meaning. OVER-READS (disclosed; none today): a citing paragraph whose only status is a
  * paraphrase ("design only", a README.md:21 fragment) flags; a "Pi adapter" in a citing unit reads as the Pi MW adapter; a
  * code symbol that merely names the program (a status constant) flags as code; a status carried only by a heading or a
@@ -132,7 +409,9 @@
  * citation only a comment or a link destination holds still needs a carrier the page shows; a citing unit whose rendering
  * holds a raw HTML element (an inline <br> or <span>, an element inside a list item or quote) or that sits in a list or quote
  * with raw HTML across a blank line carries nothing; the lines of a top-level raw HTML block (even a visible <pre> or
- * <details>), a comment's closing line after its --> and a footnote definition show no carrier; a carrier spelled with an
+ * <details>) and a comment's closing line after its --> show no carrier, nor does a footnote definition (conservative for a
+ * status the definition line holds, not for a negation it holds: cut #5 above, and the residual R-DEFINITION-HIDES-NEGATION
+ * with its quiet row Q12 above); a carrier spelled with an
  * entity (design&#45;only) does not qualify. One reading is measured, not
  * assumed: a "[s]: <url>" line directly under a citing line cannot be a definition (a definition cannot interrupt a
  * paragraph), so marked and CommonMark both show it as text and a status in its URL qualifies (A5 definition-cannot-interrupt;
@@ -257,6 +536,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-SPLIT-SOURCE": ["Q9"],
   "R-ESCAPED-SPELLING": ["Q10"],
   "R-DOCUMENT-SCOPE": ["Q11"],
+  "R-DEFINITION-HIDES-NEGATION": ["Q12"],
 };
 
 interface Row {
@@ -280,7 +560,7 @@ const ROWS: readonly Row[] = [
     pins: ["C1", "C2", "C3"],
   },
   { id: "E", label: "shall not present CACWorkflowCompositionV0, a bridge checker or a Pi MW adapter as existing", pins: ["E1", "E2", "E3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 /** Each judged pin's quote: the quotes of a row tile its clause (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -784,6 +1064,78 @@ function tiles(clause: string, quotes: readonly string[]): boolean {
   return /^[\s,;:()]*$/.test(clause.slice(at));
 }
 
+/**
+ * RESIDUAL ANCHOR (wb-ubhh, landing 442's F5 and F7): docs/14's residual table, the residual families' anchor outside this
+ * census's two files (the wb-64x.1 form). Each row names a quiet row, its family, an exemplar its probe carries exactly once, a
+ * clear form that undoes the family, and what the probe reads with the exemplar replaced by the clear form.
+ */
+const RESIDUAL_DOC = "docs/workbench/14-qa-and-benchmarks.md";
+const RESIDUAL_DOC_TITLE = `14 ${String.fromCodePoint(0x2014)} Test strategy, conformance suite, benchmark and adversarial controls`;
+const RESIDUAL_HEADING = "MW workflow-composition citation-status census residuals";
+const RESIDUAL_COLUMNS: readonly string[] = ["Quiet row", "Residual family", "Exemplar", "Clear form", "Clear form reads"];
+const RESIDUAL_ANCHOR_TITLE =
+  "the residual anchor: docs/14's residual table names exactly the residual families and their quiet rows, each row's exemplar is its quiet row's probe's, and its clear form reads what the table says";
+interface AnchorRow {
+  readonly pin: string;
+  readonly family: string;
+  readonly exemplar: string;
+  readonly clear: string;
+  readonly reads: string;
+}
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+/** A token list's tokens, nested ones (list items, quotes, table cells) included. */
+function allTokens(tokens: readonly Token[]): Token[] {
+  return tokens.flatMap(token => [token, ...allTokens(childrenOf(token)), ...(isTable(token) ? [...token.header, ...token.rows.flat()].flatMap(cell => allTokens(cell.tokens)) : [])]);
+}
+/** A whole-cell code span's text as written: an exemplar or a clear form is literal source text (`\n` a line break). */
+function codeCell(cell: Tokens.TableCell | undefined): string | undefined {
+  const only = cell?.tokens.length === 1 ? cell.tokens[0] : undefined;
+  return only?.type === "codespan" ? textField(only) : undefined;
+}
+/** docs/14's residual section: its shape faults, its rows (cells as written) and its source text. */
+function residualAnchor(markdown: string): { readonly shape: readonly string[]; readonly rows: readonly AnchorRow[]; readonly raw: string } {
+  const tokens = marked.lexer(markdown);
+  const named = allTokens(tokens).filter(token => isHeading(token) && token.text === RESIDUAL_HEADING);
+  const heading = named.length === 1 ? named[0] : undefined;
+  const start = heading !== undefined && isHeading(heading) && heading.depth === 2 ? tokens.indexOf(heading) : -1;
+  if (start < 0) return { shape: [`${RESIDUAL_DOC} holds exactly one top-level level-2 heading '${RESIDUAL_HEADING}'`], rows: [], raw: "" };
+  const shape: string[] = [];
+  const title = tokens.find(isHeading);
+  if (title === undefined || title.depth !== 1 || title.text !== RESIDUAL_DOC_TITLE) shape.push("the page opens with the docs/14 title");
+  if (tokens.slice(0, start).some(token => isHeading(token) && token.depth === 1 && token !== title)) shape.push("no other level-1 heading stands before the residual section");
+  const after = tokens.slice(start + 1);
+  const end = after.findIndex(token => isHeading(token) && token.depth <= 2);
+  const section = end < 0 ? after : after.slice(0, end);
+  const raw = section.map(token => token.raw).join("");
+  if (allTokens(section).some(token => token.type === "html")) shape.push("the residual section holds no raw HTML");
+  const blocks = section.filter(token => token.type !== "space");
+  const table = blocks[1];
+  if (blocks.length !== 2 || blocks[0]?.type !== "paragraph" || table === undefined || !isTable(table)) return { shape: [...shape, "the residual section is exactly its intro paragraph and one table"], rows: [], raw };
+  const columns = table.header.map(cell => cell.text.trim());
+  if (!isDeepStrictEqual(columns, RESIDUAL_COLUMNS)) shape.push(`the residual table's columns are ${RESIDUAL_COLUMNS.join(" | ")}`);
+  const rows: AnchorRow[] = [];
+  for (const [index, cells] of table.rows.entries()) {
+    const exemplar = codeCell(cells[2]);
+    const clear = codeCell(cells[3]);
+    if (cells.length !== RESIDUAL_COLUMNS.length || exemplar === undefined || clear === undefined) shape.push(`residual row ${index + 1} is five cells with a code-span exemplar and clear form`);
+    else rows.push({ pin: cells[0]?.text.trim() ?? "", family: cells[1]?.text.trim() ?? "", exemplar, clear, reads: cells[4]?.text.trim() ?? "" });
+  }
+  return { shape, rows, raw };
+}
+/** The clause (a) scopes whose roots would list a path (git's list under the root, the excluded prefix dropped). */
+function scopesListing(path: string): string[] {
+  return SCOPE_PINS.filter(pin => path.startsWith(`${SCOPES[pin].root}/`) && (SCOPES[pin].exclude === "" || !path.startsWith(SCOPES[pin].exclude))).map(pin => SCOPES[pin].word);
+}
+/** A quiet row's probe as the anchor reads it: R-SCOPE's is Q1's outside list (one path a line, read as the scopes that would list
+ * each), every other family's is its probe's text, read as its causes at its path. */
+function anchorProbe(witness: JsonValue): { readonly text: string; readonly read: (text: string) => string[] } | undefined {
+  const probe = probeOf(witness);
+  if (probe !== undefined) return { text: probe.text, read: text => causesOf(probe.path, text) };
+  if (!isObject(witness) || !Array.isArray(witness.outside)) return undefined;
+  const outside = witness.outside.filter((path): path is string => typeof path === "string");
+  return { text: outside.join("\n"), read: text => text.split("\n").flatMap(scopesListing) };
+}
+
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
 
@@ -857,6 +1209,60 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "element", text: `Pi reads the ${cite} program. <span hidden>design-only</span>`, causes: ["unqualified"] },
       { id: "struck", text: `${cite} is ~~design-only~~.`, causes: ["unqualified"] },
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's PF2, the only-reference position): the label in capitals with a colon and a final period shows no carrier either.
+      { id: "footnote-label-punct", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.].\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      // wb-9lz6 cut #2 (refusal #1's PF2 witness W-REF verbatim): the label of a line's second footnote reference shows no carrier either.
+      { id: "footnote-label-second", text: `Pi reads the ${cite} program[^s][^design-only].`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's U1; the record's gate-only feasibility control gate-label-second-punct, its text verbatim): the same spelling as the second label.
+      { id: "footnote-label-second-punct", text: `Pi reads the ${cite} program[^s][^Status:DESIGN-ONLY.].`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (refusal #3's U1; the record's gate-only feasibility controls gate-ctx-*, their texts verbatim, each beside its
+      // twin in the second spelling): the text around a reference on its line, each line text written exactly as below.
+      { id: "footnote-label-space-before", text: `Pi reads the ${cite} program [^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-space-before", text: `Pi reads the ${cite} program [^Status:DESIGN-ONLY.].\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-after-period", text: `Pi reads the ${cite} program.[^design-only]\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-after-period", text: `Pi reads the ${cite} program.[^Status:DESIGN-ONLY.]\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-word-after", text: `Pi reads the ${cite} program[^design-only]and nothing more.\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-word-after", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.]and nothing more.\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-space-after", text: `Pi reads the ${cite} program[^design-only] today.\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-punct-space-after", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.] today.\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
+      { id: "footnote-label-second-space-after", text: `Pi reads the ${cite} program[^s][^design-only] today.`, causes: ["unqualified"] },
+      { id: "footnote-label-second-punct-space-after", text: `Pi reads the ${cite} program[^s][^Status:DESIGN-ONLY.] today.`, causes: ["unqualified"] },
+      // wb-ubhh F6: a footnote definition line inside the citing unit shows no carrier (FOOTNOTE.definition).
+      { id: "footnote-definition", text: `Pi reads the ${cite} program[^s].\n[^s]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 (landing 781's F1): the same definition line behind blockquote markers, indented, or under a longer label.
+      { id: "footnote-definition-quoted", text: `> Pi reads the ${cite} program[^s].\n> [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-unspaced-quote", text: `>Pi reads the ${cite} program[^s].\n>[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-quote", text: `> > Pi reads the ${cite} program[^s].\n> > [^s]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (refusal #3's PF2, ruled under R-B388: the record's gate-only control gate-fndef-nested-unspaced, its text verbatim,
+      // then the two other spacings of two markers): two markers with no space, a space after the first only, a space after the second only.
+      { id: "footnote-definition-nested-unspaced", text: `>>Pi reads the ${cite} program[^s].\n>>[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-first-spaced", text: `> >Pi reads the ${cite} program[^s].\n> >[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-second-spaced", text: `>> Pi reads the ${cite} program[^s].\n>> [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-indented", text: `Pi reads the ${cite} program[^s].\n  [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-deep-indent", text: `Pi reads the ${cite} program[^s].\n    [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-tab-indent", text: `Pi reads the ${cite} program[^s].\n\t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-long-label", text: `Pi reads the ${cite} program[^note-1].\n[^note-1]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 cut #4 (the enumerate-the-resolvable form for the frozen definition class): one form for each surviving member
+      // refusal #3's PF3 measured (Q-MAX2, QSP-OPT1, ORDER-SWAP, INDENT-NOT-MIXED, LBL-MAX6, LBL-LOWERHY, CTX-COLON-SPACE,
+      // COLON-THEN-SPACE-OR-EOL, CTX-COLON-WORD), each line text written exactly as below.
+      { id: "footnote-definition-triple-quote", text: `> > > Pi reads the ${cite} program[^s].\n> > > [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quote-two-spaces", text: `>  Pi reads the ${cite} program[^s].\n>  [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quote-tab", text: `>\tPi reads the ${cite} program[^s].\n>\t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-indented-quote", text: `  > Pi reads the ${cite} program[^s].\n  > [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-mixed-indent", text: `Pi reads the ${cite} program[^s].\n  \t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-punct-label", text: `Pi reads the ${cite} program[^Note:A-1.].\n[^Note:A-1.]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-unspaced-colon", text: `Pi reads the ${cite} program[^s].\n[^s]:design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-emphasis", text: `Pi reads the ${cite} program[^s].\n[^s]: *design-only*`, causes: ["unqualified"] },
+      // wb-9lz6 cut #2 (refusal #1's U1, the gate's witnesses W-FLAG and W-FLAG-Q verbatim): the second of two definition lines shows no carrier.
+      { id: "footnote-definition-second", text: `Pi reads the ${cite} program[^note-1][^s].\n[^note-1]: a note.\n[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-quoted-second", text: `> Pi reads the ${cite} program[^note-1][^s].\n> [^note-1]: a note.\n> [^s]: design-only`, causes: ["unqualified"] },
+      // wb-6aaw (the rule-19 exit child of wb-9lz6, ruling R-B418): refusal #4's five gate-only feasibility controls, their texts
+      // verbatim (the record's gate-fndef-cr-indent, -colon-negwin, -unanchored-neg, -nocolon-neg and -mflag-neg); the header names each one's kills.
+      { id: "footnote-definition-cr-led", text: `Pi reads the ${cite} program[^s].\n\r[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-colon-only", text: `Pi reads the ${cite} program, which is not\n[^s]:\nreally design-only.`, causes: ["unqualified"] },
+      { id: "footnote-not-definition-mid-line", text: `Pi reads the ${cite} program[^x]: not\ndesign-only.`, causes: ["unqualified"] },
+      { id: "footnote-not-definition-no-colon", text: `Pi reads the ${cite} program, which is\n[^x] not\ndesign-only.`, causes: ["unqualified"] },
+      { id: "footnote-not-definition-line-separator", text: `Pi reads the ${cite} program, which is\nx\u2028[^x]: not\ndesign-only.`, causes: ["unqualified"] },
       { id: "hidden-citation", text: `<!-- ${cite} is design-only. -->`, causes: ["unqualified"] },
       { id: "shown-link-text", text: `${cite} is [design-only](https://example.invalid).`, causes: [] },
       { id: "shown-code-span", text: `${cite} is \`design-only\`.`, causes: [] },
@@ -864,6 +1270,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "shown-emphasis", text: `${cite} is design-*only*.`, causes: [] },
       { id: "definition-cannot-interrupt", text: `Pi reads the [${cite} program][s].\n[s]: https://example.invalid/design-only`, causes: [] },
     ];
+    // wb-9lz6 cut #2: FOOTNOTE's flags, pinned beside its sources (a g or y flag would carry lastIndex from one tested line to the next).
+    expect([FOOTNOTE.reference.flags, FOOTNOTE.definition.flags], "FOOTNOTE's flags: the reference's g, the definition's none").toEqual(["g", ""]);
     return json({ word: DESIGN_ONLY, controls: controlsHold(controls) });
   },
   A6: () => {
@@ -1091,11 +1499,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   Q9: () => quiet("src/x.ts", 'export const A = "CACWorkflow" + "CompositionV0";', "a citation split across a concatenation does not cite"),
   Q10: () => quiet("docs/workbench/x.md", "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.", "escaped and entity spellings do not cite"),
   Q11: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.", "an existence claim in a unit that does not cite is not judged"),
+  // wb-d5o5 (landing 887's F1, the gate's QUIET-1): the view drops the definition line "[^x]: not", so "design-only." qualifies the unit.
+  Q12: () => quiet("docs/workbench/x.md", "Pi reads the cac-workflow-composition-2026-10-18 program, which is\n[^x]: not\ndesign-only.", "a negation a footnote definition line holds does not cancel the status on the line after it"),
 };
 
 describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-WORKFLOW-COMPOSITION-R2)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:3", "C:3", "E:3", "Q:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:3", "C:3", "E:3", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(Object.keys(QUOTES).sort(), "every pin of rows A, B, C and E carries a quote").toEqual(ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins).sort());
@@ -1112,7 +1522,12 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
         exists: EXISTS.source,
         guard: [GUARD.source, GUARD_AFTER.source],
         clauseSplit: CLAUSE_SPLIT.source,
-        carrierView: { unshown: UNSHOWN, element: ELEMENT.source, footnote: [FOOTNOTE.reference.source, FOOTNOTE.definition.source] },
+        carrierView: {
+          unshown: UNSHOWN,
+          element: ELEMENT.source,
+          footnote: [FOOTNOTE.reference.source, FOOTNOTE.definition.source],
+          footnoteFlags: [FOOTNOTE.reference.flags, FOOTNOTE.definition.flags],
+        },
         units: [BLANK.source, LIST_ITEM.source, HEADING.source, TABLE_ROW.source, FENCE.source],
         scopes: SCOPES,
         floors: FLOORS,
@@ -1126,6 +1541,7 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
         filingPin: FILING_PIN,
         plants: PLANTS,
         residuals: RESIDUALS,
+        residualAnchor: { doc: RESIDUAL_DOC, title: RESIDUAL_DOC_TITLE, heading: RESIDUAL_HEADING, columns: RESIDUAL_COLUMNS },
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
@@ -1228,6 +1644,54 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
     expect(String(mw.readme17).includes(facts[1] ?? "-"), "README.md:17 carries the Pi adapter fact").toBe(true);
     expect(String(mw.contracts4).includes(facts[0] ?? "-"), "01-composition-contracts.md:4 carries the bridge checker fact").toBe(true);
     expect(String(mw.contracts6).includes("CACWorkflowCompositionV0") && String(mw.contracts6).includes("as a concept only"), "01-composition-contracts.md:6 reads the type as a concept only").toBe(true);
+  });
+
+  it(RESIDUAL_ANCHOR_TITLE, { timeout: 60_000 }, () => {
+    const anchor = residualAnchor(textOf(RESIDUAL_DOC));
+    expect(anchor.shape, `${RESIDUAL_DOC}'s residual section`).toEqual([]);
+    expect(
+      anchor.rows.map(row => `${row.pin} | ${row.family}`),
+      "docs/14 names exactly the residual families, each with its quiet row, in RESIDUALS order and both ways",
+    ).toEqual(Object.entries(RESIDUALS).flatMap(([family, members]) => members.map(member => `${member} | ${family}`)));
+    expect(
+      anchor.rows.map(row => row.pin),
+      "the table's quiet rows are the Q row's pins",
+    ).toEqual([...(ROWS.find(row => row.id === "Q")?.pins ?? [])]);
+    expect(
+      markdownUnits(anchor.raw)
+        .filter(unit => judgeUnit(unit).cites)
+        .map(unit => unit.text),
+      "the residual section cites nothing: it names the families, never the program",
+    ).toEqual([]);
+    for (const row of anchor.rows) {
+      const impl = IMPL[row.pin];
+      const probe = impl === undefined ? undefined : anchorProbe(json(impl()));
+      expect(probe, `${row.pin}: its case returns a probe`).toBeDefined();
+      if (probe === undefined) continue;
+      const exemplar = row.exemplar.replaceAll("\\n", "\n");
+      const clear = row.clear.replaceAll("\\n", "\n");
+      expect(probe.text.split(exemplar).length - 1, `${row.pin} (${row.family}): its probe carries the exemplar exactly once`).toBe(1);
+      expect(probe.read(probe.text), `${row.pin} (${row.family}): its probe reads quiet`).toEqual([]);
+      expect(probe.read(probe.text.replace(exemplar, () => clear)), `${row.pin} (${row.family}): its clear form reads what docs/14 says`).toEqual(row.reads.split(", "));
+    }
+    // Rule 16: the residual table as read at this cut (cells as written), so a docs-side edit the judge still accepts reds too.
+    expect(
+      anchor.rows.map(row => [row.pin, row.family, row.exemplar, row.clear, row.reads].join(" | ")),
+      "the residual table as read at this cut",
+    ).toEqual([
+      "Q1 | R-SCOPE | README.md | docs/workbench/README.md | docs/workbench",
+      "Q2 | R-REQUIREMENT-ID | COMPOSITION-R1 | COMPOSITION | unqualified",
+      "Q3 | R-PARAPHRASE-CITE | assurance | workflow composition | unqualified",
+      "Q4 | R-NEGATION-DISTANCE | not, as of today, | not | unqualified",
+      "Q5 | R-PARAPHRASE-EXISTS | vets | runs | exists:v0, exists:bridge-checker",
+      "Q6 | R-GUARD-WORD | If anything, | Indeed, | exists:v0",
+      "Q7 | R-CROSS-CLAUSE | . It | , and it | exists:v0",
+      "Q8 | R-SUBJECT-SPELLING | checker for the bridge | bridge checker | exists:bridge-checker",
+      'Q9 | R-SPLIT-SOURCE | Workflow" + "Composition | WorkflowComposition | unqualified',
+      "Q10 | R-ESCAPED-SPELLING | \\-workflow\\- | -workflow- | unqualified",
+      "Q11 | R-DOCUMENT-SCOPE | \\n\\n | \\n | exists:pi-mw-adapter",
+      "Q12 | R-DEFINITION-HIDES-NEGATION | [^x]: not | not | unqualified",
+    ]);
   });
 
   for (const row of ROWS) {
