@@ -23,6 +23,7 @@ src/workflow/worker-source.ts documents host-function constructor escape concern
 - A control adapter executes only the decision object the decision core minted in this process: `isCoreMintedDecision` (src/workbench/control.ts) is an identity check against a module-private WeakSet, so a copy, a deserialized or audit/journal-replayed receipt and a hand-built look-alike are refused with the fixed text "decision was not minted by the decision core" however exact their shape, and structural vetting stays behind it as defense in depth.
 - Treat unknown permission data as deny.
 - Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.
+- A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.
 
 ## Credential boundaries
 
