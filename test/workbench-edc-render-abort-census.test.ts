@@ -61,32 +61,40 @@
  * registry's post-race guard; without that guard the census reds). A3 drives every committed form through the
  * native-registry and native-direct passes and holds each to a refusal.
  *
- * A5, THE STATIC REACH (cut #6, the post-inversion restatement over the landed readers, restated to its pins at cut #7;
- * ORCHESTRATOR RULING R-B161: the re-cut "is a mechanical restatement over this bead's landed reader coverage", the bead being
- * wb-pyel.9, whose readers landed as test/helpers/edc-static-reach-readers.ts with its carrier wb-pyel.11 at landing 888 and
- * whose census landed at landing 949). A5 composes that helper's readers - the specifier reader, the loader reader, the
- * I/O-global reader, the process reader, the child_process tracer and the launch-call reader, with the resolver they share -
- * through one namespace import, READERS, and claims that composition exactly as far as its composition pins read it: this
- * file's TOP LEVEL, off its own source, each pin held to the helper's source, TSCONFIG or the roster: (1) every specifier the
+ * A5, THE STATIC REACH (cut #6, the post-inversion restatement over the landed readers, restated to its pins at cut #7 and
+ * to the pins' names-only projection at cut #8; ORCHESTRATOR RULING R-B161: the re-cut "is a mechanical restatement over this
+ * bead's landed reader coverage", the bead being wb-pyel.9, whose readers landed as test/helpers/edc-static-reach-readers.ts
+ * with its carrier wb-pyel.11 at landing 888 and whose census landed at landing 949). A5 composes that helper's readers - the
+ * specifier reader, the loader reader, the I/O-global reader, the process reader, the child_process tracer and the launch-call
+ * reader, with the resolver they share - through one namespace import, READERS, and claims that composition exactly as far as
+ * its composition pins read it. The pins read this file's own source in two readings and nothing else of it: THE PROJECTION,
+ * each top-level statement read one way and nothing else of it - an import declaration as its specifier and its bindings, a
+ * statement that declares a name as the names it declares (declaredBy), and any other statement as topLevelToken reads it (a
+ * call as its callee as written and its arguments - a string literal as its value, a function as <function>, a name as
+ * itself, any other argument as its kind - any other expression statement as its expression's kind and any other statement
+ * as its kind); and THE SPECIFIERS, every specifier the specifier reader reads anywhere in this file. Each pin is held to
+ * the helper's source, TSCONFIG or the roster: (1) every specifier the
  * specifier reader reads anywhere in this file (its bodies included) is one of its import declarations', in source order, and
  * those declarations are exactly IMPORTS (specifier and bindings), so this file names no module through a loader call the
  * specifier reader reads and imports no binding but IMPORTS'; (2) of those specifiers exactly one resolves to the helper as
  * TypeScript resolves it from this file with TSCONFIG's compiler options (moduleResolution bundler, so the .js, the
  * extensionless and the .ts spelling of a relative path to the helper each resolve to it), and its import declaration is a
  * namespace import bound to READERS; (3) READERS is a module namespace whose keys are exactly the value names the helper's
- * source exports; (4) this file's top-level declarations - the names declaredBy reads: a variable statement's at any
- * binding-pattern depth, a function's, a class's, an interface's, a type alias's, an enum's, a namespace's and an
- * import-equals declaration's, each kind held to a planted statement (DECLARATION_KINDS) - are exactly OWN_DECLARATIONS, none
- * of them a name the helper exports; (5) every top-level statement that is neither an import declaration nor declares a name
- * is one of TOP_LEVEL_CALLS, the three calls installScratchLeakGuard(), afterEach(<function>) and describe(<title>,
- * <function>), each read by its callee and arguments. So a reader added to this file's top level as a statement of its own - a
- * declaration, renamed or not, an import-equals alias, a second import of the helper in any spelling TypeScript resolves to
- * it, an import of another module, or any other statement (an expression statement holding a copy on a global) - reds A5, and
- * PLANTED_COMPOSITION, a source read as this file holding one statement of each of those forms, is read as each (A5's witness
- * holds its reading). NOT CLAIMED by the composition pins: a reader copied into a function body or an initializer - the body
- * or the initializer of one of this file's own declarations, or a callback one of the three top-level calls passes - and
- * called from there (the pins read the top level and the specifiers the specifier reader reads, never what else a body or an
- * initializer holds).
+ * source exports; (4) the names this file's top-level statements declare - the names declaredBy reads: a variable
+ * statement's at any binding-pattern depth, a function's, a class's, an interface's, a type alias's, an enum's, a namespace's
+ * and an import-equals declaration's, each kind held to a planted statement (DECLARATION_KINDS) - are exactly
+ * OWN_DECLARATIONS, none of them a name the helper exports; (5) every top-level statement that is neither an import
+ * declaration nor declares a name is one of TOP_LEVEL_CALLS, the three calls installScratchLeakGuard(),
+ * afterEach(<function>) and describe(<title>, <function>), as topLevelToken reads them. So a reader added to this file's top
+ * level as a statement of its own - a declaration, renamed or not, an import-equals alias, a second import of the helper in
+ * any spelling TypeScript resolves to it, an import of another module, or any other statement (an expression statement
+ * holding a copy on a global) - reds A5, and PLANTED_COMPOSITION, a source read as this file holding one statement of each of
+ * those forms, is read as each (A5's witness holds its reading). NOT CLAIMED by the composition pins: a reader copy placed
+ * and used anywhere THE PROJECTION does not read in this file's existing top-level statements - in a declaration anywhere but
+ * the names it declares (its body, its initializer, its heritage clause, its parameters and their defaults, a binding
+ * pattern's computed keys and defaults, its decorators, its members, its type positions: any part of it but a declared name)
+ * or in a function one of the three top-level calls passes (read as <function>); of what those parts and those functions
+ * hold the pins read THE SPECIFIERS alone.
  * WHAT THE READERS READ - the forms, positions, spellings
  * and settings they read, and how - is claimed by the censuses that read them,
  * test/workbench-edc-static-reach-readers-census.test.ts (it re-measures cut #5's 139 REACH_FORMS probes, its 106
@@ -123,7 +131,8 @@
  * through cut #5 and are the helper's and its landed censuses' since cut #6, so those entries' sentences about them describe
  * no code of this file now; their other cures (row A's controls, row T's reads, the riders and Q7's probes) stand in this
  * file as cut #5 left them. The cut #6 entry records that cut as delivered too: its composition words are restated to what
- * its pins read by cut #7 (A5 above and the cut #7 entry).
+ * its pins read by cut #7 (A5 above and the cut #7 entry). So does the cut #7 entry: its NOT CLAIMED words (a body, an
+ * initializer or a callback) are restated to the pins' names-only projection by cut #8 (A5 above and the cut #8 entry).
  * RESPIN (cut #2; refusal #1 on cut #1 a2572832, seat gate-prep-25, lane g10-gate-s128): U1 A5's readers parse the
  * global-object, process, default-import, renamed-binding and const-command forms of gate plants GX1, GX2, GX3, GX5 and GX5b,
  * and its claims are stated to the forms they parse; U2 one committed-form control per form (G01, G02, G03); U3 row T reads
@@ -189,6 +198,18 @@
  * binding-pattern legs had no negative control (DN-NOENUM, DN-NOMODULE, DN-NOPATTERN): DECLARATION_KINDS holds every kind
  * declaredBy reads to a planted statement, and PLANTED_COMPOSITION holds the composition's reading of one statement per form
  * the gate planted.
+ * RESPIN (cut #8; refusal #7 on cut #7 3c407c95, seat gate-prep-9, lane g10-gate-s217; ORCHESTRATOR RULING R-B586, the
+ * post-ladder disposition: a further restatement in the same lineage with claims equal to pins - kill-or-pin the
+ * heritage-clause dimension, or narrow the A5 composition words to the names-only projection the pins actually read; this cut
+ * narrows, after the claim form's "narrow the claim, never widen the reader" (R-B60)): cut #7's composition words named the
+ * unread region as a body, an initializer or a callback of the three top-level calls, while the pins read a declaration by
+ * its names alone. U1 a reader copy installed from the heritage clause of the existing top-level class CapturingRegistry
+ * (gate plants L2-HERITAGE and L2-HERITAGE-IIFE, each a copy held on globalThis and used by A5's process reading) sat in none
+ * of those positions and kept A5 green: A5's words now state THE PROJECTION - each top-level statement read one way and
+ * nothing else of it - and name every position it does not read NOT CLAIMED, the heritage clause among them, and with it the
+ * seat's own members of the same class on cut #7's words (W-PATTERN-KEY, a binding pattern's computed key; W-PARAM-DEFAULT,
+ * a parameter default). No pin, reader, constant, case, title or roster entry changes; composition()'s doc, declaredBy's doc
+ * and A5's comment state THE PROJECTION the same way.
  *
  * MEASURED AT CUT #6 (by the respin seat ws-02, run g10-work-s212, 2026-11-04, on the merge of trunk e25c5a7f into cut #5): all 21
  * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
@@ -213,6 +234,15 @@
  * PLANTED_COMPOSITION reads as 5 specifiers, 4 of them resolving to the helper (its .js, extensionless, .ts and
  * dynamic-import spellings), 4 import declarations, 3 of them the helper's, 5 declared names (the import-equals alias
  * processReferences, a helper export, among them) and 1 top-level call.
+ * MEASURED AT CUT #8 (by the respin seat ws-03, run g10-work-s216, 2026-11-05, on the merge of trunk 094bf2a1 into cut #7):
+ * the roster is cut #7's, byte for byte, and every witness reads equal to it; THE PROJECTION reads this file's 206 top-level
+ * statements as 17 import declarations, 186 declaring statements naming OWN_DECLARATIONS' 186 names and the 3
+ * TOP_LEVEL_CALLS; and the NOT CLAIMED boundary, measured on this cut's bytes: a copy of the helper's process reader placed in
+ * CapturingRegistry's heritage clause (L2-HERITAGE, L2-HERITAGE-IIFE), in a binding pattern's computed key of HERE's
+ * declaration (W-PATTERN-KEY), in a parameter default of reachReading (W-PARAM-DEFAULT) or in reachReading's body (W-BODY),
+ * and used by A5's process reading, keeps the census at 19 passed, and under the helper plant HP-PROCESS each leaves A5
+ * green (2 failed: Q6 and the registration case, where HP-PROCESS alone also reds A5); a class decorator holding the copy
+ * (L2-DECORATOR) does not load under this toolchain.
  *
  * The census pins the rows and the residuals' quiet rows:
  *  A, the acceptance: A1 aborted passes, A2 suspended passes (both: no proposal reaches the caller), A3 a settled native
@@ -232,9 +262,10 @@
  * both registrations is driven; src's only rf launch site is the render module's (both launch readers); the stand-ins are the
  * commands src launches by name; the foreign set is native-modules.ts's dynamic imports. Outside anchors in the helper,
  * TSCONFIG and this file's own source: READERS' keys are the value names the helper's source exports; TypeScript, with
- * TSCONFIG's options, resolves exactly one of this file's specifiers to the helper; and this file's top level, read off its own
- * source, is IMPORTS (every specifier the specifier reader reads in it an import declaration's), OWN_DECLARATIONS (naming none
- * of the helper's exports) and TOP_LEVEL_CALLS. The last case reads the
+ * TSCONFIG's options, resolves exactly one of this file's specifiers to the helper; and this file's top-level statements, read
+ * off its own source in THE PROJECTION, are IMPORTS (every specifier the specifier reader reads in it an import
+ * declaration's), declarations naming OWN_DECLARATIONS (none of them a helper export) and TOP_LEVEL_CALLS.
+ * The last case reads the
  * vitest task tree (every registered test, in roster order, in run mode, ran before it) and the pins that reached their
  * witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
@@ -243,10 +274,12 @@
  * import declaration, a TOP_LEVEL_CALLS entry with its call, a DECLARATION_KINDS or PLANTED_COMPOSITION statement with its
  * reading, a committed form with its control, or a Q6 probe removed from both included); the readers' coverage - the forms,
  * positions, spellings and settings the helper's readers read - is NOT CLAIMED by this census (the helper's landed censuses
- * claim it); a reader copied into a function body or an initializer - the body or the initializer of one of this file's own
- * declarations, or a callback one of the three top-level calls passes - and called from there is NOT CLAIMED by A5's
- * composition pins (they read this file's top level and the specifiers the specifier reader reads, never what else a body or
- * an initializer holds); T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set
+ * claim it); a reader copy placed and used anywhere A5's composition pins do not read in this file's existing top-level
+ * statements - in a declaration anywhere but the names it declares (its body, its initializer, its heritage clause, its
+ * parameters and their defaults, a binding pattern's computed keys and defaults, its decorators, its members, its type
+ * positions) or in a function one of the three top-level calls passes - is NOT CLAIMED by them (they read THE PROJECTION and
+ * THE SPECIFIERS, nothing else of this file); T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor,
+ * and T2's read set
  * narrowed while it still holds REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the
  * SIGTERM lands during the interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and
  * the at-abort mark still record such a pass.
@@ -1597,7 +1630,7 @@ function resolvesToHelper(specifier: string): boolean {
 /** The names one top-level statement declares: a variable statement's at any binding-pattern depth, a function's, a class's,
  * an interface's, a type alias's, an enum's, a namespace's (a module declaration's name) and an import-equals declaration's
  * (DECLARATION_KINDS holds each kind to a planted statement); none for any other statement (an import declaration's bindings
- * are IMPORTS'). */
+ * are IMPORTS'). THE PROJECTION reads a declaring statement by these names alone, no other part of it (A5). */
 function declaredBy(statement: ts.Statement): string[] {
   const names: string[] = [];
   const bind = (name: ts.BindingName): void => {
@@ -1626,9 +1659,9 @@ function importBindings(statement: ts.ImportDeclaration, source: ts.SourceFile):
   else if (bindings !== undefined) parts.push(`{ ${bindings.elements.map(element => element.getText(source)).join(", ")} }`);
   return `${clause.isTypeOnly ? "type " : ""}${parts.join(", ")}`;
 }
-/** A top-level statement that neither imports nor declares a name, as A5 reads it: a call by its callee and its arguments (a
- * string as written, a function as <function>, a name as itself, any other argument as its kind), any other statement as its
- * kind. */
+/** A top-level statement that neither imports nor declares a name, as A5 reads it: a call by its callee as written and its
+ * arguments (a string literal as its value, JSON-quoted; a function as <function>; a name as itself; any other argument as its
+ * kind), any other expression statement as its expression's kind, any other statement as its kind. */
 function topLevelToken(statement: ts.Statement, source: ts.SourceFile): string {
   const expression = ts.isExpressionStatement(statement) ? statement.expression : undefined;
   if (expression === undefined || !ts.isCallExpression(expression)) return `<${ts.SyntaxKind[(expression ?? statement).kind]}>`;
@@ -1650,14 +1683,19 @@ interface Composition {
   readonly imports: string[];
   /** Every import declaration, as its specifier and its bindings. */
   readonly importDeclarations: string[];
-  /** Every name the top-level statements declare (declaredBy), in source order, and how many statements declare one. */
+  /** Every name the top-level statements declare (declaredBy), in source order - a declaring statement is read by these
+   * names alone - and how many statements declare one. */
   readonly declared: string[];
   readonly declaring: number;
   /** Every other top-level statement (neither an import declaration nor declaring a name), as topLevelToken reads it. */
   readonly calls: string[];
 }
-/** A5's composition reading of one source read as this file (this file's own, or PLANTED_COMPOSITION): its top level, statement
- * by statement, and the specifiers the specifier reader reads in it. Nothing else a body or an initializer holds is read. */
+/** A5's composition reading of one source read as this file (this file's own, or PLANTED_COMPOSITION): THE PROJECTION, each
+ * top-level statement read one way and nothing else of it (an import declaration as its specifier and bindings, a declaring
+ * statement as the names declaredBy reads, any other statement as topLevelToken reads it), and THE SPECIFIERS, every
+ * specifier the specifier reader reads anywhere in it. Nothing else is read: no part of a declaration but its names (not its
+ * body, initializer, heritage clause, parameters, binding-pattern keys or defaults, decorators, members or types) and
+ * nothing a function argument of a top-level call holds, but THE SPECIFIERS. */
 function composition(source: ts.SourceFile): Composition {
   const imports: string[] = [];
   const importDeclarations: string[] = [];
@@ -1980,8 +2018,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([RENDER_MODULE]);
     const unresolvedInSrc = trackedScriptModules().flatMap(module => READERS.childProcessLaunches(module, parse(module)).filter(site => site.command.startsWith("<")));
     const unresolvedLoadsInSrc = trackedScriptModules().flatMap(module => READERS.unresolvedLoads(module, parse(module)));
-    // The composition pins: this file's top level, read off its own source (nothing a body or an initializer holds is read but
-    // the specifiers the specifier reader reads there), held to the helper's source, TSCONFIG and the roster.
+    // The composition pins: this file's own source read in THE PROJECTION (an import declaration as its specifier and
+    // bindings, a declaring statement as its declared names alone, any other top-level statement as topLevelToken reads it)
+    // and THE SPECIFIERS (every specifier the specifier reader reads anywhere in it; nothing else of this file is read), held
+    // to the helper's source, TSCONFIG and the roster.
     const composed = composition(parse(SELF));
     const exported = helperExports();
     expect(relative(REPO, fileURLToPath(import.meta.url)).split("\\").join("/"), "SELF is this file's own path").toBe(SELF);
