@@ -1567,6 +1567,7 @@
       "findings": [],
       "read": true,
       "held": true,
+      "frozen": true,
       "length": 4294967295,
       "listing": [
        "length",
@@ -1680,6 +1681,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 12,
         "listing": [
          "0",
@@ -1696,6 +1698,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 12,
         "listing": [
          "length",
@@ -1712,6 +1715,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 4294967295,
         "listing": [
          "length",
@@ -1732,6 +1736,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1751,6 +1756,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1770,6 +1776,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1789,6 +1796,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1887,6 +1895,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 101,
         "listing": [
          "0",
@@ -1903,6 +1912,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 101,
         "listing": [
          "length",
@@ -1919,6 +1929,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 4294967295,
         "listing": [
          "length",
@@ -1939,6 +1950,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1958,6 +1970,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1977,6 +1990,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -1996,6 +2010,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -2094,6 +2109,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 1000,
         "listing": [
          "0",
@@ -2110,6 +2126,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 1000,
         "listing": [
          "length",
@@ -2126,6 +2143,7 @@
         "findings": [],
         "read": true,
         "held": true,
+        "frozen": true,
         "length": 4294967295,
         "listing": [
          "length",
@@ -2146,6 +2164,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -2165,6 +2184,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -2184,6 +2204,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
@@ -2203,6 +2224,7 @@
          ],
          "read": true,
          "held": true,
+         "frozen": true,
          "length": 4294967295,
          "listing": [
           "length",
