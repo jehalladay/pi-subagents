@@ -1,12 +1,27 @@
 /**
  * wb-tz2.3 (HX-ORIGINAL-GOALS-CLOSURE-R3): the HyperUnix result-representation successor gate, STANDING LEG AND RE-VENDOR
- * TRIPWIRE - the part of the bead that lands while no successor @hyperunix/sdk exists. Cut #4 is the bead's final cut, bound by
- * orchestrator ruling R-B99 (the standing rule 19 structural exit) to the FAIL-CLOSED CORE: every claim says exactly what its
- * reader implements, and every form outside the pinned set reads as a break. It keeps cut #3's enumerate-the-resolvable form
- * (ruling R-B81): the S row claims exactly the binding surfaces it pins, each one bound to executable falsifiers and a control
- * (S SURFACES), reads every form outside them as a break (fail closed), and names its one residual family with pinned quiet
- * rows anchored outside this file (RESIDUALS). Resolution-based vitest-module identity, registration-channel coverage and a
- * wider C file set are child wb-tz2.17's scope.
+ * TRIPWIRE - the part of the bead that lands while no successor @hyperunix/sdk exists. This cut is the re-cut orchestrator ruling
+ * R-B124 names - its MECHANICAL RESTATEMENT over the landed fix of child wb-tz2.17 ("the re-cut here is a mechanical restatement
+ * over the child's landed fix") - and no rule-19 respin: R-B124 ended the loop when the final fail-closed-core cut #4 9686dce1 was
+ * refused at refusal #4 (gate-prep-21, O:1435; "no cut #5, no respin"), inverted the dependency and parked the bead until the child
+ * landed. The landed fix is the resolution-based readers of test/helpers/hyperunix-successor-gate-readers.ts, carried by
+ * wb-tz2.21 (landing 901, merge c40f56ca) and pinned again by wb-cl20 (landing 925, merge 8a69b896); their falsifier census is
+ * test/workbench-hyperunix-successor-gate-readers-census.test.ts. Cut #4's own readers for IMPORT (by specifier spelling), for the
+ * census tier's collection of the run pin (argv, a textual include match, no exclude) and for the C file rule (src/**\/*.ts only)
+ * are gone, and the landed readings stand in their place exactly where wb-tz2.17's PARENT RE-CUT notes name them: the S file pin's
+ * IMPORT section is importReading(...).section, with describe and it bound to the one import declaration it identifies; its new
+ * CHANNEL section is channelReading's findings; the S run pin's collection reading is runReading; the C scan is srcSites. Each of
+ * those readings is claimed by the landed readers' own header (its IMPORT, CHANNEL, ROUTES, WRITES, RUN and C sections and the
+ * RESOLUTION, UNRESOLVED, EXPORT_TARGETS, IDENTITY, SCOPES and LOADS sections they read through), held there word for word, with a
+ * falsifier per piece, by the readers census. This census claims only that its sections ARE those readings of its own subject, and
+ * pins what they read: the frozen PIN lines, and the S SURFACES falsifiers, quiet rows and controls over planted suites and configs.
+ * Everything else of cut #4 - the T, X and R rows, the S binding surfaces REFERENCES to HELPER, the C carrier and exclusion
+ * readings, the run pin file itself - is unchanged. Refusal #4's members (folded into wb-tz2.17 by R-B124) read as the landed
+ * readers read them: U1 (GR1 testNamePattern, GR2 dir and passWithNoTests, paired control GR2c dir alone) breaks RUN; U2 (GI1
+ * importActual by element access, paired control GI1c by property access) and F1 (GL1 it.each wrapped through the global vitest
+ * handle, GL2 through getBuiltinModule and createRequire) break CHANNEL. Cut #4's RUN control 'another test option' now reads as a
+ * break (the closed test-key list), and so do the cut #4 R-RUNTIME quiet rows (the suite's own patch of a built-in is a CHANNEL
+ * member write), so the residual restates below.
  *
  * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl, row wb-tz2.3, read through its description
  * only, so a note a lane appends later changes nothing read. The export holds exactly one row whose id decodes to wb-tz2.3
@@ -35,19 +50,16 @@
  *     scope, and claims exactly these surfaces, one section of its witness each; any form outside a surface reads as a break in
  *     its section (`<SURFACE> <why>`), and a section read after a broken CALL, ROWS or POSITION reads `<not read: <that section> broke>`:
  *       FILE: the one suite the Standing item cites, read by that path.
- *       IMPORT, by spelling: a module specifier is read as written, never resolved, and no module it names is read. describe
- *         and it are bound by the suite's one import declaration whose specifier is spelled exactly vitest, as named, unaliased
- *         value imports. The sound section lists every module specifier the suite spells, in source order with its form - an
- *         import declaration, an export declaration, an import-equals declaration (import <name> = require(<specifier>)) or an
- *         import type (import(<specifier>) in a type) - so the S file pin's frozen line pins the cited suite's whole list. Each
- *         specifier is spelled in one read class: node: then parts of lower-case letters, digits and _ each opening with a
- *         letter; a bare package, <name> or @<scope>/<name> (lower-case letters, digits and . _ ~ -, opening with a lower-case
- *         letter, a digit or ~) then any /<part>; or a relative path, . or .. then one or more /<part>; every <part> of ASCII
- *         letters, digits and . _ ~ @ + -. And none holds node_modules in any letter case (such a path can name a vitest module
- *         under another spelling). No other string literal or no-substitution template is spelled as a vitest module: exactly
- *         vitest, vitest/ then any characters but a line break, or @vitest/ then one or more of them. And the suite holds no
- *         import() expression, no require or createRequire identifier, no identifier beginning __vite (vite's injected
- *         loaders), no importActual or importMock member, and no import.meta but import.meta.url.
+ *       IMPORT, by resolution: the section is the landed importReading's (IMPORT by resolution: exactly one load of the suite
+ *         resolves to a vitest module or to a carrier, and it is an import declaration; every other load resolves to a builtin or a
+ *         module; a load that does not resolve breaks; the listing names each load as written, in source order, with its form,
+ *         its resolution and its identity), so the S file pin's frozen line pins the cited suite's whole load list; describe and
+ *         it are bound by that one import declaration, as named, unaliased value imports.
+ *       CHANNEL: the section is the landed channelReading's findings, each a break, joined with ' & ': the default test tier's
+ *         one vitest config passes the landed census guard, no setup file it names is, or reaches, a vitest module or a carrier,
+ *         and the cited suite holds no ROUTES route (dynamic load, loader name, loader member, vite name, import meta, sensitive
+ *         builtin, global object, dynamic code), no WRITES write (member write, mutator member, reflection, spy or mock member,
+ *         computed member) and no sensitive builtin among its loads; with no finding it reads quiet.
  *       REFERENCES: every reference the checker binds to a value import of that declaration is a call (it(...)) or the object of
  *         a member call (it.each(...)), so a write, a read or an argument of a vitest binding or of its member breaks it
  *         (it.each = ..., const each = it.each, Object.assign(it, ...)).
@@ -82,18 +94,25 @@
  *     this file cannot read from inside the run it would judge: from the gate's own test report, each standing case
  *     'H5: refuses <family> <tag> with a typed validation error and no snapshot' is collected once, passed and asserting
  *     (judge()), at the call site of the one .each call titled the H5 template. The S run pin here pins that file's bytes
- *     (sha256) and that the census tier collects it: the tier's forge.toml command resolves (the shared resolveTier) to vitest
- *     run --config <file> with nothing more, and that config's test.include (read by position, never a same-name key such as
- *     coverage.include) matches the run pin while its test block holds no exclude.
+ *     (sha256) and that the census tier collects it, as the landed runReading reads it: the tier's forge.toml command resolves
+ *     (the shared resolveTier) to exactly vitest run --config <file>; that config holds only value import declarations of
+ *     defineConfig from vitest/config and one default export, a call of that defineConfig with one object literal; every key of
+ *     the config object and of its test object is plain; the config holds test and no other key, and the test object allowOnly
+ *     and include and no other key (dir, root, testNamePattern, passWithNoTests, exclude and every other key read as a break);
+ *     allowOnly is the literal false; and one glob of include, an array literal of string literals, matches the run pin.
  *     S SURFACES holds, per surface and for the run pin, falsifiers that each change that surface's section (or the run pin's
- *     reading) and a control that keeps the whole reading, all over planted suites and planted configs; the surface ids are
- *     anchored on the sections the reader itself produces for the cited suite.
- *   C acceptance.2.2, the carrier: one pin per src file of the filing's SURFACES plus one for the rest of src. The C scan
- *     reads exactly the files under src whose names end in .ts, each parsed as TypeScript; any other file under src breaks
- *     the rest-of-src pin (fail closed: a tag in a .tsx, .mts, .js or other file never reads as no site). Every string token
- *     of those files spelling a hyperunix.result/<n> tag (whole or embedded: the TypeScript parser's string text, never a
- *     comment or a regular expression) sits at the carrier (hyperunix-observer.ts, the adapter's REPRESENTATION) or at the asserted
- *     exclusion (native-evidence.ts, its comparison), and each spells the vendored tag. The wb-cax.8 census cannot see this
+ *     reading), quiet rows that keep the whole reading where a named form is no break, and a control that keeps the whole
+ *     reading, all over planted suites, planted modules and planted configs; the surface ids are anchored on the sections the
+ *     reader itself produces for the cited suite.
+ *   C acceptance.2.2, the carrier: one pin per src file of the filing's SURFACES plus one for the rest of src. The C scan is
+ *     the landed srcSites: every entry under src, in name order at each level (a directory reached a second time by its real
+ *     path reads as a break); a file whose name ends .ts, .tsx, .mts, .cts, .js, .jsx, .mjs or .cjs is parsed as TypeScript by
+ *     its extension and every string literal, no-substitution template, template head, middle and tail and JSX text is read for
+ *     a tag, never a comment or a regular expression; any other file's whole text is read for a tag. Each site is shown with
+ *     its place, read by a walk of the same node kinds that must find exactly srcSites' sites (a disagreement breaks the pin):
+ *     a whole token by what binds or compares it, an embedded one by its string-text node kind, a text file's as text. Every
+ *     site sits at the carrier (hyperunix-observer.ts, the adapter's REPRESENTATION) or at the asserted exclusion
+ *     (native-evidence.ts, its comparison), and each spells the vendored tag. The wb-cax.8 census cannot see this
  *     tag (its whole-id form ends in /v<digits>), so this row is its single-carrier check. A true single carrier is blocked by
  *     two landed guards this cut keeps: S4 of test/workbench-hx-evidence-standing.test.ts refuses an HX-module import into
  *     native-evidence.ts, and H7 of test/workbench-hyperunix-observer.test.ts pins the observer to its four imports. So the
@@ -102,43 +121,48 @@
  *   PARKED acceptance.2.1 (one re-vendor commit moves the tarball bytes, the vendor/README.md sha table and package.json
  *     together) and acceptance.2.3 (the full observer suite re-runs green against the successor): the external remainder,
  *     owed once HX publishes a successor. T is their re-entry: it reds the moment the vendored tag moves.
- * RESIDUALS (named; each family's quiet rows are pinned in RESIDUALS and anchored outside this file): R-RUNTIME - code the suite
- *   runs at collection rewrites a standing row's reading in flight through a built-in the installed vitest runner's each
- *   reaches with its table or a row, patched by the suite, while every row still registers and passes for another cause: the
- *   FILE PIN binds the row's text and the RUN PIN the case's registration and result, neither the reading's value at run
- *   time. One quiet row per built-in the installed each body names directly (read from @vitest/runner's dist: each method it
- *   calls on its table, read as an Array.prototype method, and each Array static it reads - today Array.isArray,
- *   Array.prototype.every and Array.prototype.forEach): a planted suite patching it around the call reads exactly the sound
- *   reading, and the family's mode reading (the built-ins the suite assigns on Array or Array.prototype) names that built-in
- *   there, reads nothing on the planted base (the neutral payload), and the same rewrite through the table binding (the loud
- *   payload) breaks TABLE.
- * GATE (re-measured read-only at cut #4, no fetch): HyperUnix-CLI origin/main aa450afe sdk/typescript/package.json version
- * 0.1.0, sdk/typescript/src/result.ts:157 SDK_REPRESENTATION "hyperunix.result/1"; no other hyperunix.result/<n> tag under
- * sdk/ or docs/programs; docs/programs/original-goals-closure-2026-10-16/requirements.jsonl:6 HXGC-EPI-002 status DESIGN,
- * graduated false. The successor is unpublished, so every row is green today and PARKED stays owed.
+ * RESIDUALS (named; each family's quiet rows are pinned in RESIDUALS and anchored outside this file): R-RUNTIME - code that a
+ *   local module the suite loads runs at load rewrites a standing row's reading in flight through a built-in the installed
+ *   vitest runner's each reaches with its table or a row, while every row still registers and passes for another cause:
+ *   IMPORT reads that module as a module (the landed readers' R-HELPER-PATCH: it reaches no vitest module and holds no route),
+ *   CHANNEL reads the cited suite's own writes only, the FILE PIN binds the row's text and the RUN PIN the case's registration
+ *   and result, neither the reading's value at run time. One quiet row per built-in the installed each body names directly
+ *   (read from @vitest/runner's dist: each method it calls on its table, read as an Array.prototype method, and each Array
+ *   static it reads - today Array.isArray, Array.prototype.every and Array.prototype.forEach): a planted suite whose local module
+ *   patches it at load reads exactly the reading of the same suite with that module neutral, and the family's mode reading (the
+ *   built-ins a module assigns on Array or Array.prototype) names that built-in in the patching module and nothing in the
+ *   neutral one. The same patch written in the suite itself (cut #4's quiet rows) reads as a CHANNEL member write, and the same
+ *   rewrite through the table binding breaks TABLE (the loud payloads).
+ * GATE (re-measured read-only at this restatement, no fetch, on the local HyperUnix-CLI checkout): origin/main e117c96a
+ * sdk/typescript/package.json version 0.1.0, sdk/typescript/src/result.ts:157 SDK_REPRESENTATION "hyperunix.result/1"; no other
+ * hyperunix.result/<n> tag under sdk/ or docs/programs; docs/programs/original-goals-closure-2026-10-16/requirements.jsonl:6
+ * HXGC-EPI-002 status DESIGN, graduated false. The successor is unpublished, so every row is green today and PARKED stays owed.
  * FROZEN SHAPE (standing rule 16): the row shape `${row}:${clause}:${pins}`, every clause key's row, and every pin's line
  * `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) are literals; one case per pin
  * runs against its line and the suite is held to one collected case per pin. Pins are generated from the anchors above, so a
  * member dropped from a table here leaves its generated pin without an entry, and a line dropped alone leaves a generated pin
  * without its line; both red. S SURFACES and RESIDUALS carry their own frozen shapes, anchored on the reader's sections and
  * on the installed runner.
+ * DESIGN DISCLOSURE (couplings, by design): the frozen S file line holds importReading's listing, each load with its line, so an
+ * edit that adds, removes, respells or moves an import of the cited suite reds the S file pin, as an edit of its H5 callback or its
+ * helper does through their digests.
  * Not claimed: an R neighbour derivation replaced by another derivation together with its frozen witness; an edit of the
- * judging code itself (a parser, the type checker's binding or a comparison replaced by a constant); a representation tag
- * assembled at run time instead of spelled in one string token (concatenation, a template substitution), which C does not
- * read (C COLLECTOR pins that quiet reading); what the cited callback's free variables and the suite's other declarations do
- * (thrown, context and the rest: only the callback's text and the helper are pinned) and whether the helper's reading is
- * otherwise accepted (the cited suite's own acceptance cases judge that); RESOLUTION - IMPORT reads specifiers by spelling,
- * never resolves one and never reads the module it names, so a symlink, a resolver alias (vite's resolve.alias, tsconfig
- * paths, a package's imports or exports map), a local module or another package that re-exports or wraps a vitest module,
- * and whatever a module the suite imports does when it loads, are not identified (for the cited suite an added or respelled
- * specifier changes the frozen S file line; resolution-based vitest-module identity is child wb-tz2.17's scope); a module
- * reached through a specifier assembled at run time or through a loader the IMPORT scan does not name (the RUN PIN reads the
- * registration such a path changes, and a rewrite in flight is R-RUNTIME's); an export row that repeats a JSON key (a JSON
- * reader keeps the last one).
+ * judging code itself (a parser, the type checker's binding, a landed reader or a comparison replaced by a constant; the
+ * landed readers' falsifiers are the readers census's); a representation tag assembled at run time instead of spelled in one
+ * string token (concatenation, a template substitution), which C does not read (C COLLECTOR pins that quiet reading); what the
+ * cited callback's free variables and the suite's other declarations do (thrown, context and the rest: only the callback's text
+ * and the helper are pinned) and whether the helper's reading is otherwise accepted (the cited suite's own acceptance cases
+ * judge that); every mode the landed readers' header names NOT CLAIMED or Not claimed (among them a resolution vite performs that
+ * the default tier's vouched config cannot express, a package installed outside the lock, and what a module does at run time
+ * beyond the forms its rosters name) is NOT CLAIMED by this census either; a string naming a module that no load reads is no load
+ * (IMPORT reads loads, and a loader that would take one is a CHANNEL route; the IMPORT quiet rows pin two such strings); an
+ * export row that repeats a JSON key (a JSON reader keeps the last one).
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, allocates no scratch (WS is a string, never created);
- * reads the bead export, the src tree, the vendored SDK's dist/index.js and its declaring module, the cited suite, the run
- * pin's bytes, forge.toml, package.json and the census tier's vitest config (the shared resolveTier), and @vitest/runner's dist.
+ * reads the bead export, the src tree, the vendored SDK's dist/index.js and its declaring module, the cited suite and the modules
+ * its loads reach, the default tier's vitest config and setup files (the landed census guard), the run pin's bytes, forge.toml,
+ * package.json and the census tier's vitest config (the shared resolveTier), and @vitest/runner's dist; planted suites, modules
+ * and configs are read through the landed readers' host, laid over the disk, never written.
  */
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -152,6 +176,10 @@ import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workben
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { HYPERUNIX_FIND_CONTRACT, registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
 import { resolveTier } from "./helpers/census.js";
+import {
+  channelReading, diskHost, type ImportReading, importReading, type ModuleHost, REPRESENTATION_TAG, runReading, type Site,
+  type SrcScan, scriptKindOf, srcSites,
+} from "./helpers/hyperunix-successor-gate-readers.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-tz2.3";
@@ -162,12 +190,15 @@ const RUNNER_DIST = join(ROOT, "node_modules/@vitest/runner/dist");
 const RUN_PIN = "test/workbench-hyperunix-successor-gate-run-pin.census.ts";
 /** The forge.toml step that runs the census tier. */
 const CENSUS_TIER = "census";
+/** A case that reads the subject through the landed readers (the cited suite's whole load closure, its tier config and setup files, every
+ * src file) takes seconds on a loaded host - 3.2-3.6 s for the S file pin at load1 ~100 - so each such case runs under this timeout, never
+ * vitest's 5000 ms default (a timeout under load would read as a red of the subject). */
+const READ_TIMEOUT = 120_000;
 /** A version tag of either family: hyperunix.find/v<n> (the provider contract) or hyperunix.result/<n> (the SDK representation). */
 const VERSION_TAG = /hyperunix\.(?:find\/v\d+|result\/\d+)/g;
-/** A representation tag anywhere inside string text, and the whole text of a token that is exactly one. */
-const REPRESENTATION_TAG = /hyperunix\.result\/\d+/g;
-const WHOLE_REPRESENTATION = /^hyperunix\.result\/\d+$/;
 const WS = "/workspace/hx-successor-gate";
+/** The subject as the landed readers read it: the disk under the root, nothing planted. */
+const BASE_HOST = diskHost(ROOT);
 const BINARY = "3501da39d77f559548590e59d3fe0ed3b742285520f3bd854c95f977a754fc9d";
 const CONTEXT: HyperUnixTopologyContext = {
   scope: { workspace: WS, principal: "local-operator:tester" },
@@ -204,12 +235,6 @@ interface Filing {
   readonly srcSurfaces: readonly string[];
   /** How many export rows carry the bead's id, and how many times the description holds each heading the reading uses. */
   readonly counts: Readonly<Record<string, number>>;
-}
-interface Site {
-  readonly file: string;
-  readonly tag: string;
-  readonly whole: boolean;
-  readonly context: string;
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -372,6 +397,7 @@ function textKind(node: ts.Node): string {
   if (ts.isNoSubstitutionTemplateLiteral(node)) return "NoSubstitutionTemplateLiteral";
   if (ts.isTemplateHead(node)) return "TemplateHead";
   if (ts.isTemplateMiddle(node)) return "TemplateMiddle";
+  if (ts.isJsxText(node)) return "JsxText";
   return ts.isTemplateTail(node) ? "TemplateTail" : ts.SyntaxKind[node.kind];
 }
 /** The tag's syntactic place: a whole token by what binds or compares it, an embedded one by its string-text node kind. */
@@ -382,57 +408,84 @@ function siteContext(node: ts.Node, whole: boolean, source: ts.SourceFile): stri
   if (ts.isBinaryExpression(parent)) return `${parent.operatorToken.getText(source)} ${(parent.left === node ? parent.right : parent.left).getText(source)}`;
   return ts.SyntaxKind[parent.kind];
 }
-/** Every representation tag in the string text of the given path -> source map, in file then source order. */
-function tagSites(files: ReadonlyMap<string, string>): Site[] {
-  const sites: Site[] = [];
-  for (const [file, text] of files) {
-    const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-    const visit = (node: ts.Node): void => {
-      if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
-        const whole = (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && WHOLE_REPRESENTATION.test(node.text);
-        for (const match of node.text.matchAll(REPRESENTATION_TAG)) sites.push({ file, tag: match[0], whole, context: siteContext(node, whole, source) });
+/** A tag the place walk reads in a code file, with its place. */
+interface Placed {
+  readonly tag: string;
+  readonly whole: boolean;
+  readonly line: number;
+  readonly context: string;
+}
+/** Every tag in a code file's string text with its place, in the order the landed srcSites reads them (its node kinds and its walk:
+ * every string literal, no-substitution template, template head, middle and tail and JSX text, whole when the token is exactly the tag). */
+function placedTags(file: string, text: string): Placed[] {
+  const kind = scriptKindOf(file);
+  if (kind === undefined) return [];
+  const source = ts.createSourceFile(`/${file}`, text, ts.ScriptTarget.Latest, true, kind);
+  const placed: Placed[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) ||
+      ts.isJsxText(node)) {
+      for (const match of node.text.matchAll(REPRESENTATION_TAG)) {
+        const whole = match[0] === node.text;
+        placed.push({ tag: match[0], whole, line: lineOf(source, node), context: siteContext(node, whole, source) });
       }
-      ts.forEachChild(node, visit);
-    };
-    visit(source);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return placed;
+}
+const describeSite = (site: Site, place: string): string =>
+  `${site.whole ? "whole" : "embedded"} ${site.tag}${site.tag === SDK_REPRESENTATION ? "" : " (not the vendored tag)"} @ ${place}`;
+/** A site as the C pins show it, with its file. */
+interface Shown {
+  readonly file: string;
+  readonly text: string;
+}
+/** srcSites' sites, file then source order, each shown with its place: a code file's from the place walk, which must read exactly the
+ * sites srcSites reads there (tag, whole and line, in order) or the file reads as a break; a text file's as text. */
+function shownSites(scan: SrcScan, host: ModuleHost): Shown[] {
+  const shown: Shown[] = [];
+  for (const file of [...new Set(scan.sites.map(site => site.file))]) {
+    const sites = scan.sites.filter(site => site.file === file);
+    if (sites.every(site => site.form === "text")) {
+      for (const site of sites) shown.push({ file, text: describeSite(site, "text") });
+      continue;
+    }
+    const placed = placedTags(file, host.read(file) ?? "");
+    const agrees = placed.length === sites.length &&
+      sites.every((site, index) => placed[index]?.tag === site.tag && placed[index]?.whole === site.whole && placed[index]?.line === site.line);
+    if (!agrees) {
+      shown.push({ file, text: `<the place walk reads ${placed.length} sites, srcSites ${sites.length}>` });
+      continue;
+    }
+    for (const [index, site] of sites.entries()) shown.push({ file, text: describeSite(site, placed[index]?.context ?? "") });
   }
-  return sites;
+  return shown;
 }
-const describeSite = (site: Site): string =>
-  `${site.whole ? "whole" : "embedded"} ${site.tag}${site.tag === SDK_REPRESENTATION ? "" : " (not the vendored tag)"} @ ${site.context}`;
-/** A directory reader: a directory's entry names, or undefined for any other entry (a file). */
-type Tree = (path: string) => readonly string[] | undefined;
-const diskTree: Tree = path => (statSync(path).isDirectory() ? readdirSync(path) : undefined);
-/** Every file under `dir`, in name order at each level: a directory is entered, every other entry is a file. */
-function sourceFiles(dir: string, tree: Tree = diskTree): string[] {
-  return [...(tree(dir) ?? [])].sort().flatMap(name => {
-    const path = join(dir, name);
-    return tree(path) === undefined ? [path] : sourceFiles(path, tree);
-  });
+/** A C scan and its shown sites. */
+interface CRead {
+  readonly scan: SrcScan;
+  readonly shown: readonly Shown[];
 }
-/** The C scan's file rule: it reads exactly the files under src whose names end in .ts. */
-const isScanned = (file: string): boolean => file.endsWith(".ts");
-interface SrcScan {
-  /** Every file under src, relative to the root. */
-  readonly files: readonly string[];
-  /** Every representation tag in the .ts ones. */
-  readonly sites: readonly Site[];
-}
-let srcRead: SrcScan | undefined;
-/** Every file under src and every representation tag in its .ts files, read once. */
-function srcScan(): SrcScan {
-  if (srcRead === undefined) {
-    const files = sourceFiles(join(ROOT, "src")).map(path => relative(ROOT, path));
-    srcRead = { files, sites: tagSites(new Map(files.filter(isScanned).map(file => [file, readFileSync(join(ROOT, file), "utf8")]))) };
-  }
+const cRead = (host: ModuleHost): CRead => {
+  const scan = srcSites(host);
+  return { scan, shown: shownSites(scan, host) };
+};
+let srcRead: CRead | undefined;
+/** The subject's C scan (the landed srcSites over the disk under the root) and its shown sites, read once. */
+function srcScan(): CRead {
+  srcRead ??= cRead(BASE_HOST);
   return srcRead;
 }
-/** The rest-of-src reading: each file under src that is not a .ts file (a break: the scan does not read it), then each tag outside the
- * filing's surfaces, or no site. */
-function srcRest(scan: SrcScan, surfaces: readonly string[]): string {
-  const unread = scan.files.filter(file => !isScanned(file)).map(file => `${file} <not a .ts file, which the C scan does not read>`);
-  const outside = scan.sites.filter(site => !surfaces.includes(site.file)).map(site => `${site.file} ${describeSite(site)}`);
-  return [...unread, ...outside].join("; ") || "no site";
+/** One surface file's sites as its C pin shows them, or no site. */
+const surfaceSites = (read: CRead, file: string): string => read.shown.filter(entry => entry.file === file).map(entry => entry.text).join("; ") || "no site";
+/** The rest-of-src reading: each break of the walk (a directory reached a second time), then each site outside the filing's surfaces, or
+ * no site. */
+function srcRest(read: CRead, surfaces: readonly string[]): string {
+  const walk = read.scan.breaks.map(reason => `<the C walk: ${reason}>`);
+  const outside = read.shown.filter(entry => !surfaces.includes(entry.file)).map(entry => `${entry.file} ${entry.text}`);
+  return [...walk, ...outside].join("; ") || "no site";
 }
 
 /** TypeScript diagnostics that mean a name is declared twice in one scope: a duplicate identifier, a redeclared block-scoped variable, an import
@@ -441,11 +494,15 @@ const REDECLARATION_CODES: ReadonlySet<number> = new Set([2300, 2393, 2440, 2451
 interface CheckedSuite {
   readonly source: ts.SourceFile;
   readonly checker: ts.TypeChecker;
+  /** The landed importReading of the suite, and the import declaration of the one load it reads reaching vitest (or why there is none). */
+  readonly imports: ImportReading;
+  readonly vitestImport: ts.ImportDeclaration | string;
   /** The lines where the checker reports `name` declared twice in one scope (the binder keeps a redeclared block-scoped name as its own symbol). */
   readonly redeclared: (name: string) => number[];
 }
-/** A suite read by a type checker over that one file (no lib, no module resolution), so a name binds to its declaration by scope. */
-function checkedSuite(file: string, text: string): CheckedSuite {
+/** A suite read by a type checker over that one file (no lib, no module resolution), so a name binds to its declaration by scope; its loads
+ * are read by the landed importReading, which resolves them. */
+function checkedSuite(file: string, text: string, imports: ImportReading): CheckedSuite {
   const parsed = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const host: ts.CompilerHost = {
     getSourceFile: name => (name === file ? parsed : undefined),
@@ -466,7 +523,7 @@ function checkedSuite(file: string, text: string): CheckedSuite {
     return redeclarations.flatMap(diagnostic => (diagnostic.start !== undefined && text.slice(diagnostic.start, diagnostic.start + (diagnostic.length ?? 0)) === name
       ? [source.getLineAndCharacterOfPosition(diagnostic.start).line + 1] : [])).sort((left, right) => left - right);
   };
-  return { source, checker: program.getTypeChecker(), redeclared };
+  return { source, checker: program.getTypeChecker(), redeclared, imports, vitestImport: vitestDeclaration(source, imports) };
 }
 /** The array literal an expression stands for, through `as const`, `satisfies` and parentheses. */
 function arrayLiteral(expression: ts.Expression | undefined): ts.ArrayLiteralExpression | undefined {
@@ -504,35 +561,23 @@ const kindName = (node: ts.Node): string => {
 };
 const isFunctionCallback = (node: ts.Node | undefined): node is ts.ArrowFunction | ts.FunctionExpression =>
   node !== undefined && (ts.isArrowFunction(node) || ts.isFunctionExpression(node));
-/** A string spelled as a vitest module: exactly vitest, vitest/ then any characters but a line break, or @vitest/ then one or more of them. */
-const VITEST_MODULE = /^(?:vitest(?:\/.*)?|@vitest\/.+)$/;
-/** The read classes of a module specifier's spelling (IMPORT reads a specifier as written and never resolves it): node: then parts of
- * lower-case letters, digits and _ each opening with a letter; a bare package, <name> or @<scope>/<name> (lower-case letters, digits and
- * . _ ~ -, opening with a lower-case letter, a digit or ~) then any /<part>; a relative path, . or .. then one or more /<part>; every
- * <part> of ASCII letters, digits and . _ ~ @ + -. */
-const SPECIFIER_CLASSES: readonly RegExp[] = [
-  /^node:[a-z][a-z0-9_]*(?:\/[a-z][a-z0-9_]*)*$/,
-  /^(?:@[a-z0-9~][a-z0-9._~-]*\/)?[a-z0-9~][a-z0-9._~-]*(?:\/[A-Za-z0-9._~@+-]+)*$/,
-  /^\.\.?(?:\/[A-Za-z0-9._~@+-]+)+$/,
-];
-/** Identifiers that load a module by specifier at run time, the prefix of vite's injected loaders (__vite_ssr_import__,
- * __vite_ssr_dynamic_import__), and the vi members that load one. */
-const LOADER_NAMES: ReadonlySet<string> = new Set(["require", "createRequire"]);
-const LOADER_PREFIX = "__vite";
-const LOADER_MEMBERS: ReadonlySet<string> = new Set(["importActual", "importMock"]);
 /** The surfaces after CALL, read only from the one cited call. */
 const CALL_SURFACES = ["PATH", "CALLBACK", "TABLE", "ROWS", "POSITION", "HELPER"] as const;
 
-/** The suite's import declarations from "vitest". */
-function vitestImports(source: ts.SourceFile): ts.ImportDeclaration[] {
-  return source.statements.filter((statement): statement is ts.ImportDeclaration =>
-    ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === "vitest");
+/** The import declaration of the one load the landed importReading reads reaching vitest, found by its specifier and its line among the
+ * suite's top-level statements, or why there is none (a load of another form is no import declaration, so none is found). */
+function vitestDeclaration(source: ts.SourceFile, imports: ImportReading): ts.ImportDeclaration | string {
+  const [one] = imports.vitest;
+  if (imports.vitest.length !== 1 || one === undefined) return `${imports.vitest.length} loads reach vitest`;
+  const declarations = source.statements.filter((statement): statement is ts.ImportDeclaration => ts.isImportDeclaration(statement) &&
+    ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === one.specifier && lineOf(source, statement.moduleSpecifier) === one.line);
+  const [declaration] = declarations;
+  return declarations.length === 1 && declaration !== undefined ? declaration : `${declarations.length} top-level import declarations of '${one.specifier}' at line ${one.line}`;
 }
-/** The value specifiers of the suite's one named vitest import, or why there is no such import. */
-function vitestSpecifiers(source: ts.SourceFile): readonly ts.ImportSpecifier[] | string {
-  const imports = vitestImports(source);
-  const [declaration] = imports;
-  if (imports.length !== 1 || declaration === undefined) return `${imports.length} import declarations from vitest`;
+/** The value specifiers of that one vitest import declaration, or why it is no named value import. */
+function vitestSpecifiers(suite: CheckedSuite): readonly ts.ImportSpecifier[] | string {
+  const declaration = suite.vitestImport;
+  if (typeof declaration === "string") return declaration;
   const clause = declaration.importClause;
   const named = clause?.namedBindings;
   if (clause === undefined || clause.phaseModifier === ts.SyntaxKind.TypeKeyword || clause.name !== undefined || named === undefined || !ts.isNamedImports(named)) {
@@ -543,70 +588,35 @@ function vitestSpecifiers(source: ts.SourceFile): readonly ts.ImportSpecifier[] 
 /** Whether `node` is the suite's unaliased value import `name` from its one vitest import declaration, never redeclared. */
 function isVitest(suite: CheckedSuite, node: ts.Node, name: string): boolean {
   if (!ts.isIdentifier(node) || node.text !== name || suite.redeclared(name).length > 0) return false;
-  const specifiers = vitestSpecifiers(suite.source);
+  const specifiers = vitestSpecifiers(suite);
   if (typeof specifiers === "string") return false;
   const declarations = suite.checker.getSymbolAtLocation(node)?.declarations ?? [];
   const [specifier] = declarations;
   return declarations.length === 1 && specifier !== undefined && ts.isImportSpecifier(specifier) && specifiers.includes(specifier) && specifier.propertyName === undefined;
 }
-/** A module specifier the suite spells: its form, its text (one that is not a string literal reads as its kind) and its line. */
-interface ModuleSpecifier {
-  readonly form: "import" | "export" | "import-equals" | "import-type";
-  readonly text: string;
-  readonly line: number;
-}
-/** Every module specifier of an import, export or import-equals declaration or an import type, in source order. */
-function moduleSpecifiers(source: ts.SourceFile): ModuleSpecifier[] {
-  const found: ModuleSpecifier[] = [];
-  const add = (form: ModuleSpecifier["form"], specifier: ts.Node): void => {
-    found.push({ form, text: ts.isStringLiteral(specifier) ? specifier.text : `<${kindName(specifier)}>`, line: lineOf(source, specifier) });
-  };
-  const visit = (node: ts.Node): void => {
-    if (ts.isImportDeclaration(node)) add("import", node.moduleSpecifier);
-    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined) add("export", node.moduleSpecifier);
-    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) add("import-equals", node.moduleReference.expression);
-    if (ts.isImportTypeNode(node)) add("import-type", ts.isLiteralTypeNode(node.argument) ? node.argument.literal : node.argument);
-    ts.forEachChild(node, visit);
-  };
-  visit(source);
-  return found;
-}
-const specifierText = (entry: ModuleSpecifier): string => `${entry.form} '${entry.text}'`;
-const specifiersAt = (entries: readonly ModuleSpecifier[]): string => entries.map(entry => `${specifierText(entry)} at line ${entry.line}`).join(", ");
-function importSection(source: ts.SourceFile): string {
-  const specifiers = vitestSpecifiers(source);
+/** IMPORT: the landed importReading's section (its break as it reads it), then describe and it bound by the one vitest import declaration
+ * it identifies, as named, unaliased value imports. */
+function importSection(suite: CheckedSuite): string {
+  const { section } = suite.imports;
+  if (section.startsWith("IMPORT <")) return section;
+  const specifiers = vitestSpecifiers(suite);
   if (typeof specifiers === "string") return broken("IMPORT", specifiers);
   for (const name of ["describe", "it"]) {
     if (!specifiers.some(specifier => specifier.propertyName === undefined && specifier.name.text === name)) return broken("IMPORT", `the vitest import binds no unaliased value ${name}`);
   }
-  const listed = moduleSpecifiers(source);
-  const unread = listed.filter(entry => !SPECIFIER_CLASSES.some(pattern => pattern.test(entry.text)));
-  if (unread.length > 0) return broken("IMPORT", `a module specifier spelled in no read class: ${specifiersAt(unread)}`);
-  const modules = listed.filter(entry => entry.text.toLowerCase().includes("node_modules"));
-  if (modules.length > 0) return broken("IMPORT", `a module specifier holding node_modules: ${specifiersAt(modules)}`);
-  const own = vitestImports(source)[0]?.moduleSpecifier;
-  const others: string[] = [];
-  const visit = (node: ts.Node): void => {
-    const at = (): string => `line ${lineOf(source, node)}`;
-    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && node !== own && VITEST_MODULE.test(node.text)) others.push(`'${node.text}' at ${at()}`);
-    if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) others.push(`import() at ${at()}`);
-    if (ts.isIdentifier(node) && (LOADER_NAMES.has(node.text) || node.text.startsWith(LOADER_PREFIX))) others.push(`${node.text} at ${at()}`);
-    if (ts.isPropertyAccessExpression(node) && LOADER_MEMBERS.has(node.name.text)) others.push(`.${node.name.text} at ${at()}`);
-    if (ts.isMetaProperty(node) && node.keywordToken === ts.SyntaxKind.ImportKeyword) {
-      const member = ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node ? node.parent.name.text : undefined;
-      if (member !== "url") others.push(`import.meta${member === undefined ? "" : `.${member}`} at ${at()}`);
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(source);
-  if (others.length > 0) return broken("IMPORT", `a module reached another way: ${others.join(", ")}`);
-  return `IMPORT describe, it: unaliased value imports of the one import spelled vitest; module specifiers as spelled, never resolved: ${listed.map(specifierText).join(", ")}; ` +
-    "each in a read class, none holding node_modules; no other string spelled as a vitest module; no import(), require, createRequire, __vite identifier, importActual " +
-    "or importMock member, or import.meta but import.meta.url";
+  return `${section}; describe, it: unaliased value imports of that import declaration`;
+}
+/** What channelReading may be handed: an injected guard (the tier config root) or setup list (the setup file root). */
+type ChannelOptions = NonNullable<Parameters<typeof channelReading>[2]>;
+/** CHANNEL: the landed channelReading's findings, each a break, joined with ' & '; quiet when there is none. */
+function channelSection(host: ModuleHost, file: string, options: ChannelOptions): string {
+  const findings = channelReading(host, file, options);
+  return findings.length > 0 ? broken("CHANNEL", findings.join(" & "))
+    : "CHANNEL quiet: the default tier's config passes the census guard, no setup file is or reaches a vitest module or a carrier, and the suite holds no route, no write and no sensitive builtin";
 }
 function referencesSection(suite: CheckedSuite): string {
   const { checker, source } = suite;
-  const specifiers = vitestSpecifiers(source);
+  const specifiers = vitestSpecifiers(suite);
   if (typeof specifiers === "string") return notRead("REFERENCES", "IMPORT");
   const offenders: string[] = [];
   for (const specifier of specifiers) {
@@ -912,13 +922,15 @@ function helperSection(suite: CheckedSuite, callees: readonly ts.Identifier[]): 
   return `HELPER ${name}: one top-level function declaration, every reference a call; (${shape.source} = {}, ${shape.top} = {}) returns {contract: '${shape.contract}', ` +
     `source: {representation: '${shape.representation}', ..., ...${shape.source}}, ..., ...${shape.top}}; sha256_16 ${digest16(declaration.getText(source))}`;
 }
-/** The S file pin's reading of a cited suite: one section per binding surface, in the order the header lists them. */
-function citedFixture(file: string, text: string, tags: readonly string[], cited: readonly string[]): string[] {
-  const suite = checkedSuite(file, text);
+/** The S file pin's reading of a cited suite: one section per binding surface, in the order the header lists them. `channel` passes
+ * channelReading an injected guard or setup list (the CHANNEL falsifiers' tier config and setup file roots). */
+function citedFixture(host: ModuleHost, file: string, tags: readonly string[], cited: readonly string[], channel: ChannelOptions = {}): string[] {
+  const suite = checkedSuite(file, host.read(file) ?? "", importReading(host, file));
   const { checker, source } = suite;
   const sections = [
     cited.length === 1 && cited[0] === file ? `FILE ${file}: the one suite the Standing item cites, read by that path` : broken("FILE", `the Standing item cites ${cited.length} suites (${cited.join(", ")})`),
-    importSection(source),
+    importSection(suite),
+    channelSection(host, file, channel),
     referencesSection(suite),
     accessSection(source),
   ];
@@ -945,57 +957,13 @@ function citedFixture(file: string, text: string, tags: readonly string[], cited
   ];
 }
 
-// ---- S RUN PIN: the census tier collects the run pin, read through the shared resolveTier and the tier config's test block ----
+// ---- S RUN PIN: the census tier collects the run pin, read by the landed runReading (the shared resolveTier, closed key lists) ----
 
-/** A config glob as a whole-path pattern: `**` across directories, `*` within one; any other glob syntax reads as unmatched. */
-function globMatches(glob: string, path: string): boolean {
-  if (/[?[\]{}!]/.test(glob)) return false;
-  const parts = glob.split("/");
-  const pattern = parts.map((part, index) => {
-    if (part === "**") return "(?:[^/]+/)*";
-    const escaped = part.replace(/[.+^$()|\\]/g, "\\$&").replace(/\*/g, "[^/]*");
-    return index === parts.length - 1 ? escaped : `${escaped}/`;
-  }).join("");
-  return new RegExp(`^${pattern}$`).test(path);
-}
-/** The test block of a vitest config's default export, read by position: `export default <call>({ test: { ... } })`. */
-function configTestBlock(file: string, text: string): ts.ObjectLiteralExpression | string {
-  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const exports = source.statements.filter(ts.isExportAssignment);
-  const [exported] = exports;
-  if (exports.length !== 1 || exported === undefined || exported.isExportEquals === true) return `${exports.length} default exports`;
-  const call = exported.expression;
-  const [config] = ts.isCallExpression(call) ? call.arguments : [];
-  if (!ts.isCallExpression(call) || call.arguments.length !== 1 || config === undefined || !ts.isObjectLiteralExpression(config)) return "the default export is not a call of one object literal";
-  const tests = config.properties.filter(property => property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) && property.name.text === "test");
-  const [test] = tests;
-  if (tests.length !== 1 || test === undefined || !ts.isPropertyAssignment(test) || !ts.isObjectLiteralExpression(test.initializer)) return "the config holds no one test object literal";
-  if (config.properties.some(property => ts.isSpreadAssignment(property) || (property.name !== undefined && ts.isComputedPropertyName(property.name)))) return "the config holds a spread or a computed key";
-  return test.initializer;
-}
-/** How the census tier collects the run pin: the tier's vitest argv and its config's test.include, or what differs. */
-function runPinCollection(runPin: string, argv: readonly string[] | string, readConfig: (file: string) => string | undefined): string {
-  if (typeof argv === "string") return `<the ${CENSUS_TIER} tier does not resolve: ${argv}>`;
-  const [verb, flag, file, ...rest] = argv;
-  if (verb !== "run" || flag !== "--config" || file === undefined || rest.length > 0) return `<the ${CENSUS_TIER} tier runs vitest ${argv.join(" ")}>`;
-  const text = readConfig(file);
-  if (text === undefined) return `<no ${file}>`;
-  const test = configTestBlock(file, text);
-  if (typeof test === "string") return `<${file}: ${test}>`;
-  if (test.properties.some(property => ts.isSpreadAssignment(property) || (property.name !== undefined && ts.isComputedPropertyName(property.name)))) return `<${file}: its test block holds a spread or a computed key>`;
-  const key = (name: string): ts.ObjectLiteralElementLike[] => test.properties.filter(property => property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) && property.name.text === name);
-  if (key("exclude").length > 0) return `<${file}: its test block holds an exclude>`;
-  const includes = key("include");
-  const [include] = includes;
-  const elements = include !== undefined && ts.isPropertyAssignment(include) && ts.isArrayLiteralExpression(include.initializer) ? include.initializer.elements : undefined;
-  const globs = elements?.filter(ts.isStringLiteral).map(element => element.text) ?? [];
-  if (includes.length !== 1 || elements === undefined || globs.length !== elements.length) return `<${file}: its test block holds no one include array of string literals>`;
-  if (!globs.some(glob => globMatches(glob, runPin))) return `<${file}: its test.include ${JSON.stringify(globs)} does not match ${runPin}>`;
-  return `the ${CENSUS_TIER} tier runs vitest run --config ${file}, whose test.include ${JSON.stringify(globs)} matches it and whose test block holds no exclude`;
-}
+/** The S run pin's reading: the run pin's bytes, then how the census tier collects it (the landed runReading, or the first form outside its
+ * pinned set). */
 function runPinReading(runPin: string, bytes: Buffer | undefined, argv: readonly string[] | string, readConfig: (file: string) => string | undefined): string {
   if (bytes === undefined) return `<no file ${runPin}>`;
-  return `${runPin} sha256_16 ${digest16(bytes)}: ${runPinCollection(runPin, argv, readConfig)}`;
+  return `${runPin} sha256_16 ${digest16(bytes)}: ${runReading(runPin, argv, readConfig)}`;
 }
 const readRepoFile = (file: string): string | undefined => (existsSync(join(ROOT, file)) ? readFileSync(join(ROOT, file), "utf8") : undefined);
 function censusArgv(): readonly string[] | string {
@@ -1075,7 +1043,7 @@ const ROWS: readonly Row[] = [
     ...FILING.standingFixtures.map(file => ({
       id: `S ${file}`,
       requirement: "the cited suite's text holds the cited case in each binding surface the file pin claims, one section each, every name bound by scope and position",
-      witness: () => Promise.resolve(citedFixture(file, readFileSync(join(ROOT, file), "utf8"), FILING.standingTags, FILING.standingFixtures).join("; ")),
+      witness: () => Promise.resolve(citedFixture(BASE_HOST, file, FILING.standingTags, FILING.standingFixtures).join("; ")),
     })),
     ...FILING.standingFixtures.map(file => ({
       id: `S ${file} run pin`,
@@ -1086,10 +1054,10 @@ const ROWS: readonly Row[] = [
   { id: "C", clause: "acceptance.2.2", pins: [
     ...FILING.srcSurfaces.map(file => ({
       id: `C ${file}`, requirement: "the file's representation-tag spellings and its role",
-      witness: () => Promise.resolve(`${CARRIER_ROLES[file] ?? "<no role>"}: ${srcScan().sites.filter(site => site.file === file).map(describeSite).join("; ") || "no site"}`),
+      witness: () => Promise.resolve(`${CARRIER_ROLES[file] ?? "<no role>"}: ${surfaceSites(srcScan(), file)}`),
     })),
     {
-      id: "C src", requirement: "every file under src is a .ts file the C scan reads, and none outside the filing's surfaces spells a representation tag",
+      id: "C src", requirement: "the C scan reads every file under src, and none outside the filing's surfaces spells a representation tag",
       witness: () => Promise.resolve(srcRest(srcScan(), FILING.srcSurfaces)),
     },
   ] },
@@ -1120,32 +1088,39 @@ const PIN_LINES: readonly string[] = [
     "contract: successor of hyperunix.find/v1 true; hyperunix.find/v2|validation|{}",
   "S hyperunix.result/2 | the standing tag succeeds its family's accepted tag and is refused as validation with no evidence | " +
     "representation: successor of hyperunix.result/1 true; hyperunix.result/2|validation|{}|decoder-refused",
-  "S test/workbench-hyperunix-observer.test.ts | the cited suite's text holds the cited case in each binding surface the file pin claims, one " +
-    "section each, every name bound by scope and position | FILE test/workbench-hyperunix-observer.test.ts: the one suite the Standing item " +
-    "cites, read by that path; IMPORT describe, it: unaliased value imports of the one import spelled vitest; module specifiers as spelled, never " +
-    "resolved: import 'node:crypto', import 'node:fs', import '@hyperunix/sdk', import 'vitest', import '../src/workbench/capability-registry.js', " +
-    "import '../src/workbench/hyperunix-observer.js', import '../src/workbench/observation.js', import '../src/workbench/providers/hyperunix.js', " +
-    "import './helpers/hx-live-receipt.js'; each in a read class, none holding node_modules; no other string spelled as a vitest module; no " +
-    "import(), require, createRequire, __vite identifier, importActual or importMock member, or import.meta but import.meta.url; REFERENCES every " +
-    "reference to a vitest value import is a call or the object of a member " +
-    "call; ACCESS no eval: every read of a table is one the checker binds; CALL 'H5: refuses %s with a typed validation error and no snapshot': " +
-    "it.each(refusals)(title, arrow function), the one .each call carrying a standing row, its path and title unique; PATH HyperUnix " +
-    "hyperunix.find reader adapter: every enclosing block is a plain two-argument vitest describe callback holding no return of its own; CALLBACK " +
-    "sha256_16 3432302a94aedb5f; TABLE refusals: one const declaration of an array literal with no spread or hole, not redeclared, read only as " +
-    "this call's table; ROWS 'contract hyperunix.find/v2' & 'representation hyperunix.result/2': one two-element row each; POSITION contract " +
-    "hyperunix.find/v2 {...measured(), contract: 'hyperunix.find/v2'} & representation hyperunix.result/2 measured({representation: " +
-    "'hyperunix.result/2'}); HELPER measured: one top-level function declaration, every reference a call; (source = {}, top = {}) returns " +
-    "{contract: 'hyperunix.find/v1', source: {representation: 'hyperunix.result/1', ..., ...source}, ..., ...top}; sha256_16 05325573944ccc40",
-  "S test/workbench-hyperunix-observer.test.ts run pin | the census tier collects the run pin that judges the cited case's registration in the " +
-    "gate's own test report, and the run pin's bytes are the ones measured at the cut | test/workbench-hyperunix-successor-gate-run-pin.census.ts " +
-    "sha256_16 4287eecead0c1422: the census tier runs vitest run --config vitest.census.config.ts, whose test.include [\"test/**/*.census.ts\"] " +
-    "matches it and whose test block holds no exclude",
+  "S test/workbench-hyperunix-observer.test.ts | the cited suite's text holds the cited case in each binding surface the file pin claims, " +
+    "one section each, every name bound by scope and position | FILE test/workbench-hyperunix-observer.test.ts: the one suite the Standing " +
+    "item cites, read by that path; IMPORT by resolution: the one load reaching vitest is the import declaration 'vitest' at line 9 (vitest " +
+    "(vitest)); every other load resolves to a builtin or a module; loads: import declaration 'node:crypto' at line 6 -> builtin -> builtin; " +
+    "import declaration 'node:fs' at line 7 -> builtin -> builtin; import declaration '@hyperunix/sdk' at line 8 -> package " +
+    "node_modules/@hyperunix/sdk/dist/index.js -> module; import declaration 'vitest' at line 9 -> package node_modules/vitest -> vitest " +
+    "(vitest); import declaration '../src/workbench/capability-registry.js' at line 10 -> relative src/workbench/capability-registry.ts -> " +
+    "module; import declaration '../src/workbench/hyperunix-observer.js' at line 14 -> relative src/workbench/hyperunix-observer.ts -> " +
+    "module; import declaration '../src/workbench/observation.js' at line 15 -> relative src/workbench/observation.ts -> module; import " +
+    "declaration '../src/workbench/providers/hyperunix.js' at line 16 -> relative src/workbench/providers/hyperunix.ts -> module; import " +
+    "declaration './helpers/hx-live-receipt.js' at line 17 -> relative test/helpers/hx-live-receipt.ts -> module; describe, it: unaliased " +
+    "value imports of that import declaration; CHANNEL quiet: the default tier's config passes the census guard, no setup file is or reaches " +
+    "a vitest module or a carrier, and the suite holds no route, no write and no sensitive builtin; REFERENCES every reference to a vitest " +
+    "value import is a call or the object of a member call; ACCESS no eval: every read of a table is one the checker binds; CALL 'H5: refuses " +
+    "%s with a typed validation error and no snapshot': it.each(refusals)(title, arrow function), the one .each call carrying a standing row, " +
+    "its path and title unique; PATH HyperUnix hyperunix.find reader adapter: every enclosing block is a plain two-argument vitest describe " +
+    "callback holding no return of its own; CALLBACK sha256_16 3432302a94aedb5f; TABLE refusals: one const declaration of an array literal " +
+    "with no spread or hole, not redeclared, read only as this call's table; ROWS 'contract hyperunix.find/v2' & 'representation " +
+    "hyperunix.result/2': one two-element row each; POSITION contract hyperunix.find/v2 {...measured(), contract: 'hyperunix.find/v2'} & " +
+    "representation hyperunix.result/2 measured({representation: 'hyperunix.result/2'}); HELPER measured: one top-level function declaration, " +
+    "every reference a call; (source = {}, top = {}) returns {contract: 'hyperunix.find/v1', source: {representation: 'hyperunix.result/1', " +
+    "..., ...source}, ..., ...top}; sha256_16 05325573944ccc40",
+  "S test/workbench-hyperunix-observer.test.ts run pin | the census tier collects the run pin that judges the cited case's registration in " +
+    "the gate's own test report, and the run pin's bytes are the ones measured at the cut | " +
+    "test/workbench-hyperunix-successor-gate-run-pin.census.ts sha256_16 4287eecead0c1422: the census tier runs vitest run --config " +
+    "vitest.census.config.ts, whose config holds only the defineConfig import and its default export, a test object of allowOnly false and " +
+    "include [\"test/**/*.census.ts\"], one glob matching test/workbench-hyperunix-successor-gate-run-pin.census.ts",
   "C src/workbench/hyperunix-observer.ts | the file's representation-tag spellings and its role | carrier: whole hyperunix.result/1 @ const REPRESENTATION",
   "C src/workbench/native-evidence.ts | the file's representation-tag spellings and its role | " +
     "asserted exclusion (S4 refuses an HX import here; H7 pins the observer's four imports): whole hyperunix.result/1 @ !== source.representation",
   "C src/workbench/providers/hyperunix.ts | the file's representation-tag spellings and its role | " +
     "no tag (the source is resultToJson's output, stamped by the SDK): no site",
-  "C src | every file under src is a .ts file the C scan reads, and none outside the filing's surfaces spells a representation tag | no site",
+  "C src | the C scan reads every file under src, and none outside the filing's surfaces spells a representation tag | no site",
 ];
 const FROZEN = new Map(PIN_LINES.map(line => [line.split(" | ")[0] ?? "", line]));
 
@@ -1184,7 +1159,13 @@ const onCall = (lines: string): string => edited(PLANTED_BASE, PLANTED_CALL, lin
 const decoyDescribe = `describe('decoy', () => {\n  ${DECOY}\n  it('holds two rows', () => { check(rows); });\n});\n`;
 /** A describe modifier, spelled through a helper so this file carries no skip or focus marker of its own. */
 const modified = (modifier: string): string => `describe.${modifier}`;
-const plantedReading = (text: string, cited: readonly string[] = [PLANTED]): readonly string[] => citedFixture(PLANTED, text, FILING.standingTags, cited);
+/** A vi member, spelled through a helper so this file carries no mock marker of its own. */
+const viMember = (name: string): string => `vi.${name}`;
+/** A helper module a planted suite's relative load resolves to (laid over the disk with the suite, never written). */
+const CHECK_MODULE: readonly (readonly [string, string])[] = [["test/helpers/check.ts", "export const check = (value: unknown): void => { void value; };\n"]];
+/** The S file pin's reading of a planted suite, laid over the disk with any planted modules through the landed readers' host. */
+const plantedReading = (text: string, cited: readonly string[] = [PLANTED], modules: readonly (readonly [string, string])[] = [], channel: ChannelOptions = {}): readonly string[] =>
+  citedFixture(diskHost(ROOT, new Map([[PLANTED, text], ...modules])), PLANTED, FILING.standingTags, cited, channel);
 
 const RUN_CONFIG_FILE = "vitest.census.config.ts";
 const RUN_ARGV: readonly string[] = ["run", "--config", RUN_CONFIG_FILE];
@@ -1205,9 +1186,12 @@ interface Probe {
 interface Surface {
   readonly id: string;
   readonly falsifiers: readonly Probe[];
+  /** Forms the surface names no break: each keeps the whole reading, as the control does. */
+  readonly quiet: readonly Probe[];
   readonly control: Probe;
 }
-const planted = (name: string, reason: string, text: () => string, cited?: readonly string[]): Probe => ({ name, reason, reading: () => plantedReading(text(), cited) });
+const planted = (name: string, reason: string, text: () => string, cited?: readonly string[], modules: readonly (readonly [string, string])[] = [], channel: ChannelOptions = {}): Probe =>
+  ({ name, reason, reading: () => plantedReading(text(), cited, modules, channel) });
 const run = (name: string, reason: string, reading: () => readonly string[]): Probe => ({ name, reason, reading });
 
 /** One row per binding surface of the S file pin, in section order, and the run pin last. */
@@ -1215,62 +1199,102 @@ const SURFACES: readonly Surface[] = [
   { id: "FILE", falsifiers: [
     planted("a second suite cited", "the Standing item cites 2 suites", () => PLANTED_BASE, [PLANTED, "test/other.test.ts"]),
     planted("another suite cited", "the Standing item cites 1 suites (test/other.test.ts)", () => PLANTED_BASE, ["test/other.test.ts"]),
-  ], control: planted("a comment added", "", () => `${PLANTED_BASE}// a comment\n`) },
+  ], quiet: [], control: planted("a comment added", "", () => `${PLANTED_BASE}// a comment\n`) },
   { id: "IMPORT", falsifiers: [
-    planted("a namespace import of vitest beside it", "2 import declarations from vitest", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport * as vitest from 'vitest';`)),
-    planted("the vitest import removed", "0 import declarations from vitest", () => edited(PLANTED_BASE, `${PLANTED_IMPORT}\n`, "")),
-    planted("describe and it imported from a vitest subpath", "0 import declarations from vitest", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, it} from 'vitest/index.js';")),
+    planted("a namespace import of vitest beside it", "2 loads resolve to a vitest module or a carrier", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport * as vitest from 'vitest';`)),
+    planted("the vitest import removed", "0 loads resolve to a vitest module or a carrier", () => edited(PLANTED_BASE, `${PLANTED_IMPORT}\n`, "")),
+    planted("the one vitest load a dynamic import", "the one load reaching vitest is a dynamic import, not an import declaration", () => edited(PLANTED_BASE, PLANTED_IMPORT, "const loaded = import('vitest');")),
+    planted("describe and it imported from a vitest subpath (the same vitest module by resolution)", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, it} from 'vitest/index.js';")),
     planted("a default import beside the named ones", "the vitest import is not one named value import", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import vitest, {describe, it} from 'vitest';")),
     planted("it imported under an alias", "binds no unaliased value it", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, it as each} from 'vitest';\nconst it = each;")),
     planted("it imported as a type", "binds no unaliased value it", () => edited(PLANTED_BASE, PLANTED_IMPORT, "import {describe, type it} from 'vitest';")),
-    planted("a relative import added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {check} from './helpers/check.js';`)),
-    planted("a relative import placed before the vitest import", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `import {check} from './helpers/check.js';\n${PLANTED_IMPORT}`)),
-    planted("an export declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nexport {check} from './helpers/check.js';`)),
-    planted("an import-equals declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport check = require('./helpers/check.js');`)),
-    planted("an import type added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\ntype Check = typeof import('./helpers/check.js');`)),
-    planted("an absolute path", "spelled in no read class: import '/opt/runner/index.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '/opt/runner/index.js';`)),
-    planted("a file URL", "spelled in no read class: import 'file:///opt/runner/index.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'file:///opt/runner/index.js';`)),
-    planted("a subpath import", "spelled in no read class: import '#runner'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '#runner';`)),
-    planted("a backslash in a path", "spelled in no read class: import", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '..\\\\vendor\\\\runner.js';`)),
-    planted("a percent escape in a path", "spelled in no read class: import '../node%5Fmodules/@vitest/runner/dist/index.js'", () =>
+    planted("a relative import added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {check} from './helpers/check.js';`), undefined, CHECK_MODULE),
+    planted("a relative import placed before the vitest import", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `import {check} from './helpers/check.js';\n${PLANTED_IMPORT}`), undefined, CHECK_MODULE),
+    planted("an export declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nexport {check} from './helpers/check.js';`), undefined, CHECK_MODULE),
+    planted("an import-equals declaration added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport check = require('./helpers/check.js');`), undefined, CHECK_MODULE),
+    planted("an import type added", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\ntype Check = typeof import('./helpers/check.js');`), undefined, CHECK_MODULE),
+    planted("a dynamic import of a builtin", "", () => onCall(`  const loaded = import('node:path');\n${PLANTED_CALL}`)),
+    planted("a node: spelling of no name (read as a builtin)", "", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'node:./runner.js';`)),
+    planted("a relative import of no file", "a load does not resolve: './helpers/check.js' at line 2: test/helpers/check.js names no file", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {check} from './helpers/check.js';`)),
+    planted("an absolute path", "a load does not resolve: '/opt/runner/index.js' at line 2: /opt/runner/index.js is an absolute path", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '/opt/runner/index.js';`)),
+    planted("a file URL", "a load does not resolve: 'file:///opt/runner/index.js' at line 2: file:///opt/runner/index.js opens with a URL scheme", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'file:///opt/runner/index.js';`)),
+    planted("a subpath import", "a load does not resolve: '#runner' at line 2: no package.json up to the root holds an imports map for #runner", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '#runner';`)),
+    planted("a backslash in a path", "a load does not resolve: '..\\vendor\\runner.js' at line 2: no node_modules/..\\vendor\\runner.js directory", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '..\\\\vendor\\\\runner.js';`)),
+    planted("a percent escape in a path", "a load does not resolve: '../node%5Fmodules/@vitest/runner/dist/index.js' at line 2: node%5Fmodules/@vitest/runner/dist/index.js names no file", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '../node%5Fmodules/@vitest/runner/dist/index.js';`)),
-    planted("an upper-case package name", "spelled in no read class: import 'Vitest'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'Vitest';`)),
-    planted("a node: spelling of no name", "spelled in no read class: import 'node:./runner.js'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'node:./runner.js';`)),
-    planted("the runner by a node_modules path (LG1s)", "holding node_modules: import '../node_modules/@vitest/runner/dist/index.js'", () =>
+    planted("an upper-case package name", "a load does not resolve: 'Vitest' at line 2: no node_modules/Vitest directory", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'Vitest';`)),
+    planted("the runner by a node_modules path (LG1s)", "import declaration '../node_modules/@vitest/runner/dist/index.js' at line 2 (vitest (@vitest/runner))", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test as registrar} from '../node_modules/@vitest/runner/dist/index.js';`)),
-    planted("vitest's dist by a node_modules path (LG1a)", "holding node_modules: import '../node_modules/vitest/dist/index.js'", () =>
+    planted("vitest's dist by a node_modules path (LG1a)", "import declaration '../node_modules/vitest/dist/index.js' at line 2 (vitest (vitest))", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {it as registrar} from '../node_modules/vitest/dist/index.js';`)),
-    planted("a node_modules path upper-cased", "holding node_modules: import '../NODE_MODULES/@vitest/runner/dist/index.js'", () =>
+    planted("a node_modules path upper-cased", "a load does not resolve: '../NODE_MODULES/@vitest/runner/dist/index.js' at line 2: NODE_MODULES/@vitest/runner/dist/index.js names no file", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '../NODE_MODULES/@vitest/runner/dist/index.js';`)),
-    planted("a bare package's path through node_modules", "holding node_modules: import 'some-package/node_modules/@vitest/runner/dist/index.js'", () =>
+    planted("a bare package's path through node_modules", "a load does not resolve: 'some-package/node_modules/@vitest/runner/dist/index.js' at line 2: no node_modules/some-package directory", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from 'some-package/node_modules/@vitest/runner/dist/index.js';`)),
-    planted("a node_modules path re-exported", "holding node_modules: export '../node_modules/@vitest/runner/dist/index.js'", () =>
+    planted("a node_modules path re-exported", "export declaration '../node_modules/@vitest/runner/dist/index.js' at line 2 (vitest (@vitest/runner))", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nexport {test} from '../node_modules/@vitest/runner/dist/index.js';`)),
-    planted("a node_modules path through import-equals", "holding node_modules: import-equals '../node_modules/@vitest/runner/dist/index.js'", () =>
+    planted("a node_modules path through import-equals", "import-equals '../node_modules/@vitest/runner/dist/index.js' at line 2 (vitest (@vitest/runner))", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport runner = require('../node_modules/@vitest/runner/dist/index.js');`)),
-    planted("a node_modules path in an import type", "holding node_modules: import-type '../node_modules/@vitest/runner/dist/index.js'", () =>
+    planted("a node_modules path in an import type", "import type '../node_modules/@vitest/runner/dist/index.js' at line 2 (vitest (@vitest/runner))", () =>
       edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\ntype Runner = typeof import('../node_modules/@vitest/runner/dist/index.js');`)),
-    planted("the runner module imported", "a module reached another way: '@vitest/runner'", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '@vitest/runner';`)),
-    planted("vitest named in another string", "a module reached another way: 'vitest' at", () => onCall(`  const runner = 'vitest';\n${PLANTED_CALL}`)),
-    planted("a vitest path named in another string", "a module reached another way: 'vitest/runners' at", () => onCall(`  const runner = 'vitest/runners';\n${PLANTED_CALL}`)),
-    planted("a dynamic import", "a module reached another way: import()", () => onCall(`  const loaded = import('node:path');\n${PLANTED_CALL}`)),
-    planted("require", "a module reached another way: require", () => onCall(`  const loaded = require(name);\n${PLANTED_CALL}`)),
-    planted("createRequire", "a module reached another way: createRequire", () => onCall(`  const load = createRequire(name);\n${PLANTED_CALL}`)),
-    planted("vite's injected loader", "a module reached another way: __vite_ssr_dynamic_import__", () => onCall(`  const loaded = __vite_ssr_dynamic_import__(name);\n${PLANTED_CALL}`)),
-    planted("a vi loader", "a module reached another way: .importActual", () => onCall(`  const loaded = vi.importActual(name);\n${PLANTED_CALL}`)),
-    planted("a vi mock loader", "a module reached another way: .importMock", () => onCall(`  const loaded = vi.importMock(name);\n${PLANTED_CALL}`)),
-    planted("an import.meta glob", "a module reached another way: import.meta.glob", () => onCall(`  const loaded = import.meta.glob('./*.ts');\n${PLANTED_CALL}`)),
-    planted("import.meta read whole", "a module reached another way: import.meta at", () => onCall(`  const meta = import.meta;\n${PLANTED_CALL}`)),
+    planted("the runner module imported", "import declaration '@vitest/runner' at line 2 (vitest (@vitest/runner))", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {test} from '@vitest/runner';`)),
+    planted("a carrier imported (a local module re-exporting vitest)", "import declaration './helpers/lg-carrier.js' at line 2 (carrier (test/helpers/lg-carrier.ts:1 loads 'vitest' (vitest vitest)))", () =>
+      edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {check} from './helpers/lg-carrier.js';`), undefined, [["test/helpers/lg-carrier.ts", "export {it as check} from 'vitest';\n"]]),
+  ], quiet: [
+    planted("vitest named in another string (no load reads it)", "", () => onCall(`  const runner = 'vitest';\n${PLANTED_CALL}`)),
+    planted("a vitest path named in another string (no load reads it)", "", () => onCall(`  const runner = 'vitest/runners';\n${PLANTED_CALL}`)),
   ], control: planted("another vitest specifier imported and import.meta.url read", "", () =>
     edited(onCall(`  const here = import.meta.url;\n${PLANTED_CALL}`), PLANTED_IMPORT, "import {describe, expect, it} from 'vitest';")) },
+  { id: "CHANNEL", falsifiers: [
+    planted("require", "cited suite: dynamic load require() of a Identifier at line 11", () => onCall(`  const loaded = require(name);\n${PLANTED_CALL}`)),
+    planted("createRequire", "cited suite: loader name createRequire at line 11", () => onCall(`  const load = createRequire(name);\n${PLANTED_CALL}`)),
+    planted("vite's injected loader", "cited suite: vite name __vite_ssr_dynamic_import__ at line 11", () => onCall(`  const loaded = __vite_ssr_dynamic_import__(name);\n${PLANTED_CALL}`)),
+    planted("a vi loader", "cited suite: loader member .importActual at line 11", () => onCall(`  const loaded = vi.importActual(name);\n${PLANTED_CALL}`)),
+    planted("a vi mock loader", "cited suite: loader member .importMock at line 11", () => onCall(`  const loaded = vi.importMock(name);\n${PLANTED_CALL}`)),
+    planted("vi's loader by element access through the global vitest handle (GI1)", "cited suite: loader member ['importActual'] at line 12", () =>
+      onCall(`  const lgVi = (globalThis as unknown as Record<string, Record<string, Record<string, unknown>>>)['__vitest_index__']['vi'];\n  const lgLoaded = (lgVi['importActual'] as (path: string) => Promise<unknown>)('./helpers/check.js');\n${PLANTED_CALL}`)),
+    planted("vi's loader by property access through the global vitest handle (GI1c)", "cited suite: loader member .importActual at line 12", () =>
+      onCall(`  const lgVi = (globalThis as unknown as Record<string, Record<string, Record<string, unknown>>>)['__vitest_index__']['vi'];\n  const lgLoaded = (lgVi.importActual as (path: string) => Promise<unknown>)('./helpers/check.js');\n${PLANTED_CALL}`)),
+    planted("it.each wrapped through the global vitest handle (GL1)", "cited suite: vite name '__vitest_index__' at line 2", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\n` +
+      "const lgRealEach = (globalThis as unknown as Record<string, {it: {each: (this: unknown, ...args: unknown[]) => unknown}}>)['__vitest_index__'].it.each;\n" +
+      "(globalThis as unknown as Record<string, {it: {each: (this: unknown, ...args: unknown[]) => unknown}}>)['__vitest_index__'].it.each = function (this: unknown, ...args: unknown[]) { return lgRealEach.apply(this, args); };")),
+    planted("the runner reached through getBuiltinModule and createRequire (GL2)", "cited suite: loader name getBuiltinModule at line 2", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\n` +
+      "const lgModule = (process as unknown as {getBuiltinModule: (id: string) => Record<string, (url: string) => (id: string) => unknown>}).getBuiltinModule('node:module');\n" +
+      "const lgLoad = lgModule['create' + 'Require'](import.meta.url);\nconst lgRunner = lgLoad('@vitest/' + 'runner') as {test: {each: unknown}};\nvoid lgRunner;")),
+    planted("vitest's dist mocked (GVM1)", "cited suite: spy or mock member .mock at line 2", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\n${viMember("mock")}('../node_modules/vitest/dist/index.js', async importOriginal => importOriginal());`)),
+    planted("an import.meta glob", "cited suite: import meta import.meta.glob at line 11", () => onCall(`  const loaded = import.meta.glob('./*.ts');\n${PLANTED_CALL}`)),
+    planted("import.meta read whole", "cited suite: import meta import.meta at line 11", () => onCall(`  const meta = import.meta;\n${PLANTED_CALL}`)),
+    planted("a built-in patched by the suite (cut #4's R-RUNTIME quiet row)", "cited suite: member write .isArray by = at line 12", () => runtimePayload("Array.isArray")),
+    planted("the array iterator patched by the suite (GRT1)", "cited suite: member write [<computed>] by = at line 3", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\n` +
+      "const lgIter = Array.prototype[Symbol.iterator];\nArray.prototype[Symbol.iterator] = function (this: unknown[]) { return lgIter.call(this); } as typeof lgIter;")),
+    planted("eval in the suite", "cited suite: dynamic code eval at line 11", () => onCall(`  eval('rows.splice(0, 2)');\n${PLANTED_CALL}`)),
+    planted("a sensitive builtin loaded", "cited suite: sensitive builtin 'node:vm' at line 2", () => edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport {runInNewContext} from 'node:vm';`)),
+    planted("the global object read", "cited suite: global object globalThis as a VariableDeclaration at line 11", () => onCall(`  const handle = globalThis;\n${PLANTED_CALL}`)),
+    planted("a mutator member", "cited suite: mutator member .defineProperty at line 11", () => onCall(`  Object.defineProperty(rows, 0, {value: null});\n${PLANTED_CALL}`)),
+    planted("reflection", "cited suite: reflection Reflect at line 11", () => onCall(`  const read = Reflect.get(rows, 0);\n${PLANTED_CALL}`)),
+    planted("a computed member", "cited suite: computed member it[key] at line 12", () => onCall(`  const key = 'each';\n  const each = it[key];\n${PLANTED_CALL}`)),
+    planted("the tier config refused by the census guard", "tier config: vitest.config.ts: resolve.alias is refused", () => PLANTED_BASE, undefined, [],
+      { guard: () => ({ ok: false, config: "vitest.config.ts", why: "vitest.config.ts: resolve.alias is refused" }) }),
+    planted("a setup file that is a carrier", "setup file test/helpers/lg-setup.ts: carrier (test/helpers/lg-setup.ts:1 loads 'vitest' (vitest vitest))", () => PLANTED_BASE, undefined,
+      [["test/helpers/lg-setup.ts", "import {it} from 'vitest';\nexport const lgSetup = it;\n"]], { setup: ["test/helpers/lg-setup.ts"] }),
+    planted("a setup file that is a vitest module", "setup file node_modules/vitest/dist/index.js: vitest (vitest)", () => PLANTED_BASE, undefined, [],
+      { setup: ["node_modules/vitest/dist/index.js"] }),
+    planted("a setup file reaching a carrier", "setup file test/helpers/lg-setup.ts: carrier (test/helpers/lg-setup.ts:1 loads './lg-carrier.js' (carrier test/helpers/lg-carrier.ts:1 loads 'vitest' (vitest vitest)))", () => PLANTED_BASE, undefined,
+      [["test/helpers/lg-setup.ts", "import {lgCarried} from './lg-carrier.js';\nexport const lgSetup = lgCarried;\n"], ["test/helpers/lg-carrier.ts", "export {it as lgCarried} from 'vitest';\n"]],
+      { setup: ["test/helpers/lg-setup.ts"] }),
+  ], quiet: [], control: planted("an admitted spy", "", () => onCall(`  vi.spyOn(console, 'log');\n${PLANTED_CALL}`)) },
   { id: "REFERENCES", falsifiers: [
     planted("it.each replaced around the call (GA5)", "it.each at line 12 in a BinaryExpression", () => onCall(`  const realEach = it.each;\n  it.each = (() => () => undefined) as unknown as typeof it.each;\n${PLANTED_CALL}\n  it.each = realEach;`)),
     planted("it passed as an argument", "it at line 11 in a CallExpression", () => onCall(`  Object.assign(it, {extra: 1});\n${PLANTED_CALL}`)),
     planted("describe read as a value", "describe at line 11 in a VariableDeclaration", () => onCall(`  const group = describe;\n${PLANTED_CALL}`)),
-  ], control: planted("another case registered", "", () => onCall(`${PLANTED_CALL}\n  it('another case', () => { check(null); });`)) },
+  ], quiet: [], control: planted("another case registered", "", () => onCall(`${PLANTED_CALL}\n  it('another case', () => { check(null); });`)) },
   { id: "ACCESS", falsifiers: [
     planted("the rows spliced through eval (GA6)", "eval at line 11", () => onCall(`  eval('rows.splice(0, 2)');\n${PLANTED_CALL}`)),
-  ], control: planted("eval named in a title only", "", () => onCall(`${PLANTED_CALL}\n  it('never calls eval', () => { check(null); });`)) },
+  ], quiet: [], control: planted("eval named in a title only", "", () => onCall(`${PLANTED_CALL}\n  it('never calls eval', () => { check(null); });`)) },
   { id: "CALL", falsifiers: [
     planted("it shadowed in the describe (V4)", ".each is read on it, not the suite's vitest it", () => edited(PLANTED_BASE, "  const rows = [", "  const it = {each: (table: unknown) => (title: string, run: unknown) => undefined};\n  const rows = [")),
     planted("options before the callback", "the case call takes 3 argument(s)", () => onCall("  it.each(rows)('refuses %s', {skip: true}, (_name, value) => { check(value); });")),
@@ -1280,7 +1304,7 @@ const SURFACES: readonly Surface[] = [
     planted("a second call carrying a standing row", "2 .each calls carry rows named for a standing tag", () => onCall(`${PLANTED_CALL}\n  it.each([['contract hyperunix.find/v2', null]])('again %s', () => { check(null); });`)),
     planted("the rows deleted and a decoy table in another scope (G16)", "no .each call carries a row named for a standing tag", () =>
       `${edited(edited(PLANTED_BASE, `${CONTRACT_ROW}\n`, ""), `${REPRESENTATION_ROW}\n`, "")}${decoyDescribe}`),
-  ], control: planted("another .each call with no standing row", "", () => onCall(`${PLANTED_CALL}\n  it.each([['a', 1]])('other %s', () => { check(null); });`)) },
+  ], quiet: [], control: planted("another .each call with no standing row", "", () => onCall(`${PLANTED_CALL}\n  it.each([['a', 1]])('other %s', () => { check(null); });`)) },
   { id: "PATH", falsifiers: [
     planted("a skipped describe (G13)", `registered under ${modified("skip")}`, () => edited(PLANTED_BASE, "describe('suite',", `${modified("skip")}('suite',`)),
     planted("a conditionally skipped describe (G13b)", `registered under ${modified("skipIf")}(true)`, () => edited(PLANTED_BASE, "describe('suite',", `${modified("skipIf")}(true)('suite',`)),
@@ -1288,11 +1312,11 @@ const SURFACES: readonly Surface[] = [
     planted("options as the describe's second argument", "registered under a describe call of 3 arguments", () => edited(PLANTED_BASE, "describe('suite', () => {", "describe('suite', {skip: true}, () => {")),
     planted("an early return of the describe callback", "a return of the describe callback 'suite' at line 6", () => edited(PLANTED_BASE, "  const rows = [", "  if (disabled) return;\n  const rows = [")),
     planted("the call inside a helper function", "registered inside a block that is not a describe callback", () => onCall(`  register();\n  function register() {\n  ${PLANTED_CALL}\n  }`)),
-  ], control: planted("a sibling describe", "", () => `${PLANTED_BASE}describe('other', () => {\n  it('runs', () => { check(1); });\n});\n`) },
+  ], quiet: [], control: planted("a sibling describe", "", () => `${PLANTED_BASE}describe('other', () => {\n  it('runs', () => { check(1); });\n});\n`) },
   { id: "CALLBACK", falsifiers: [
     planted("the callback returns before it asserts (G14)", "", () => onCall("  it.each(rows)('refuses %s', (_name, value) => { return; check(value); });")),
     planted("the callback's parameter renamed", "", () => onCall("  it.each(rows)('refuses %s', (_name, reading) => { check(reading); });")),
-  ], control: planted("a statement after the call", "", () => onCall(`${PLANTED_CALL}\n  const after = 1;`)) },
+  ], quiet: [], control: planted("a statement after the call", "", () => onCall(`${PLANTED_CALL}\n  const after = 1;`)) },
   { id: "TABLE", falsifiers: [
     planted("var redeclared in the same scope (V2)", "rows: 2 declarations", () => edited(edited(PLANTED_BASE, "  const rows = [", "  var rows = ["), PLANTED_CALL, `  var rows = [];\n${PLANTED_CALL}`)),
     planted("spliced before the call (V3)", "rows also referenced at line 11", () => onCall(`  rows.splice(0, 2);\n${PLANTED_CALL}`)),
@@ -1300,13 +1324,13 @@ const SURFACES: readonly Surface[] = [
     planted("declared with let (V13)", "rows is not a const declaration", () => edited(PLANTED_BASE, "  const rows = [", "  let rows = [")),
     planted("const redeclared after the table (V17)", "rows redeclared in its scope at line 6, 11", () => onCall(`  const rows = [];\n${PLANTED_CALL}`)),
     planted("rows through a spread element", "rows holds a spread element", () => edited(PLANTED_BASE, "    ['a null reading', null],", "    ...extra,")),
-  ], control: planted("a same-name table in another scope (G16b)", "", () => `${PLANTED_BASE}${decoyDescribe}`) },
+  ], quiet: [], control: planted("a same-name table in another scope (G16b)", "", () => `${PLANTED_BASE}${decoyDescribe}`) },
   { id: "ROWS", falsifiers: [
     planted("the contract row deleted (G16c)", "hyperunix.find/v2: 0 rows", () => edited(PLANTED_BASE, `${CONTRACT_ROW}\n`, "")),
     planted("the contract row twice", "hyperunix.find/v2: 2 rows", () => edited(PLANTED_BASE, CONTRACT_ROW, `${CONTRACT_ROW}\n${CONTRACT_ROW}`)),
     planted("a three-element row", "hyperunix.find/v2: not a two-element array literal", () => edited(PLANTED_BASE, "contract: 'hyperunix.find/v2'}],", "contract: 'hyperunix.find/v2'}, 'extra'],")),
     planted("the row named with a prefix", "hyperunix.find/v2: named 'a contract hyperunix.find/v2'", () => edited(PLANTED_BASE, "['contract hyperunix.find/v2',", "['a contract hyperunix.find/v2',")),
-  ], control: planted("another row added", "", () => edited(PLANTED_BASE, "    ['a null reading', null],", "    ['a null reading', null],\n    ['a string reading', 'hyperunix.find/v1'],")) },
+  ], quiet: [], control: planted("another row added", "", () => edited(PLANTED_BASE, "    ['a null reading', null],", "    ['a null reading', null],\n    ['a string reading', 'hyperunix.find/v1'],")) },
   { id: "POSITION", falsifiers: [
     planted("a dead nested contract beside another refusal cause (GA1)", "contract hyperunix.find/v2: its first property is not a spread of a zero-argument helper call", () => edited(PLANTED_BASE, "{...measured(), contract: 'hyperunix.find/v2'}", "{...measured({kind: 'done'}), meta: {contract: 'hyperunix.find/v2'}}")),
     planted("a dead nested representation (GA2)", "representation hyperunix.result/2: its argument is not an object literal of one property", () => edited(PLANTED_BASE, "measured({representation: 'hyperunix.result/2'})", "measured({kind: 'done', meta: {representation: 'hyperunix.result/2'}})")),
@@ -1321,7 +1345,7 @@ const SURFACES: readonly Surface[] = [
     planted("a string-literal contract key", "its second property is not an identifier-keyed contract property", () => edited(PLANTED_BASE, "contract: 'hyperunix.find/v2'}", "'contract': 'hyperunix.find/v2'}")),
     planted("the contract through a shorthand", "its second property is not an identifier-keyed contract property", () => edited(PLANTED_BASE, "{...measured(), contract: 'hyperunix.find/v2'}", "{...measured(), contract}")),
     planted("the contract before the spread", "its first property is not a spread of a zero-argument helper call", () => edited(PLANTED_BASE, "{...measured(), contract: 'hyperunix.find/v2'}", "{contract: 'hyperunix.find/v2', ...measured()}")),
-  ], control: planted("a non-standing row in a free form", "", () => edited(PLANTED_BASE, "    ['a null reading', null],", "    ['a null reading', null],\n    ['a done kind', measured({kind: 'done'}, {extra: 1})],")) },
+  ], quiet: [], control: planted("a non-standing row in a free form", "", () => edited(PLANTED_BASE, "    ['a null reading', null],", "    ['a null reading', null],\n    ['a done kind', measured({kind: 'done'}, {extra: 1})],")) },
   { id: "HELPER", falsifiers: [
     planted("the helper shadowed in the describe", "measured is not one top-level function declaration", () => edited(PLANTED_BASE, "  const rows = [",
       "  const measured = (source = {}, top = {}) => ({contract: 'hyperunix.find/v1', source: {representation: 'hyperunix.result/1', ...source}, ...top});\n  const rows = [")),
@@ -1331,17 +1355,31 @@ const SURFACES: readonly Surface[] = [
     planted("a second spread before top", "the returned object does not end with ...top as its only spread", () => edited(PLANTED_BASE, "runtime: '0.1.0', ...top}", "...defaults, runtime: '0.1.0', ...top}")),
     planted("the default contract changed", "its contract literal 'hyperunix.find/v9' is not the accepted contract tag hyperunix.find/v1", () => edited(PLANTED_BASE, "{contract: 'hyperunix.find/v1', source", "{contract: 'hyperunix.find/v9', source")),
     planted("a body edit", "", () => edited(PLANTED_BASE, "runtime: '0.1.0'", "runtime: '0.2.0'")),
-  ], control: planted("another helper call elsewhere", "", () => onCall(`${PLANTED_CALL}\n  it('reads the helper', () => { check(measured({kind: 'done'})); });`)) },
+  ], quiet: [], control: planted("another helper call elsewhere", "", () => onCall(`${PLANTED_CALL}\n  it('reads the helper', () => { check(measured({kind: 'done'})); });`)) },
   { id: "RUN", falsifiers: [
-    run("the run pin excluded", "its test block holds an exclude", () => plantedRun(runConfig(`{ include: ["test/**/*.census.ts"], exclude: ["${RUN_PIN}"] }`))),
-    run("the include moved elsewhere", "does not match test/workbench-hyperunix-successor-gate-run-pin.census.ts", () => plantedRun(runConfig('{ include: ["test/other/**/*.census.ts"] }'))),
-    run("only a same-name coverage include", "its test block holds no one include array of string literals", () => plantedRun(runConfig('{ coverage: { include: ["test/**/*.census.ts"] } }'))),
-    run("the test block spread", "its test block holds a spread or a computed key", () => plantedRun(runConfig('{ ...shared, include: ["test/**/*.census.ts"] }'))),
+    run("the run pin excluded", "the test object sets exclude", () => plantedRun(runConfig(`{ include: ["test/**/*.census.ts"], allowOnly: false, exclude: ["${RUN_PIN}"] }`))),
+    run("the include moved elsewhere", "no glob of include [\"test/other/**/*.census.ts\"] matches test/workbench-hyperunix-successor-gate-run-pin.census.ts", () =>
+      plantedRun(runConfig('{ include: ["test/other/**/*.census.ts"], allowOnly: false }'))),
+    run("only a same-name coverage include", "the test object sets coverage", () => plantedRun(runConfig('{ coverage: { include: ["test/**/*.census.ts"] }, allowOnly: false }'))),
+    run("the test block spread", "test object spreads a value", () => plantedRun(runConfig('{ ...shared, include: ["test/**/*.census.ts"], allowOnly: false }'))),
     run("a file filter on the tier command", "the census tier runs vitest run --config vitest.census.config.ts test/other.census.ts", () => plantedRun(RUN_BASE_CONFIG, [...RUN_ARGV, "test/other.census.ts"])),
     run("the tier unresolved", "the census tier does not resolve", () => plantedRun(RUN_BASE_CONFIG, `forge.toml declares no command ${CENSUS_TIER}`)),
     run("the run pin missing", "no file test/workbench-hyperunix-successor-gate-run-pin.census.ts", () => plantedRun(RUN_BASE_CONFIG, RUN_ARGV, "missing")),
     run("the run pin edited", "", () => plantedRun(RUN_BASE_CONFIG, RUN_ARGV, Buffer.from("planted run pin, edited"))),
-  ], control: run("another test option", "", () => plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: false, testTimeout: 1 }'))) },
+    run("a name filter skipping the run pin's cases (GR1)", "the test object sets testNamePattern", () =>
+      plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: false, testNamePattern: "^(?!wb-tz2\\\\.3 HyperUnix successor gate run pin)" }'))),
+    run("the include base moved, passing with no tests (GR2)", "the test object sets dir, passWithNoTests", () => plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: false, dir: "qa", passWithNoTests: true }'))),
+    run("the include base moved alone (GR2c)", "the test object sets dir", () => plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: false, dir: "qa" }'))),
+    run("another test option (cut #4's control)", "the test object sets testTimeout", () => plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: false, testTimeout: 1 }'))),
+    run("allowOnly true", "allowOnly is not the literal false", () => plantedRun(runConfig('{ include: ["test/**/*.census.ts"], allowOnly: true }'))),
+    run("another statement in the config", "a statement other than the defineConfig import and the default export at line 2", () =>
+      plantedRun('import { defineConfig } from "vitest/config";\nconst shared = 1;\nexport default defineConfig({ test: { include: ["test/**/*.census.ts"], allowOnly: false } });\n')),
+    run("the default export not a defineConfig call", "the default export is not a call of the imported defineConfig with one object literal", () =>
+      plantedRun('import { defineConfig } from "vitest/config";\nexport default { test: { include: ["test/**/*.census.ts"], allowOnly: false } };\n')),
+    run("include not an array literal", "include is not an array literal of string literals", () => plantedRun(runConfig('{ include: "test/**/*.census.ts", allowOnly: false }'))),
+    run("a top-level key beside test", "the config sets the top-level key plugins", () =>
+      plantedRun('import { defineConfig } from "vitest/config";\nexport default defineConfig({ test: { include: ["test/**/*.census.ts"], allowOnly: false }, plugins: [] });\n')),
+  ], quiet: [], control: run("the test keys in another order", "", () => plantedRun(runConfig('{ allowOnly: false, include: ["test/**/*.census.ts"] }'))) },
 ];
 const surfaceBase = (id: string): readonly string[] => (id === "RUN" ? plantedRun(RUN_BASE_CONFIG) : plantedReading(PLANTED_BASE));
 const sectionOf = (id: string, reading: readonly string[]): string | undefined => (id === "RUN" ? reading[0] : reading.find(section => section.split(" ")[0] === id));
@@ -1386,14 +1424,20 @@ function runnerEachBuiltins(): string[] {
   const [only] = sites;
   return sites.length === 1 && only !== undefined ? only : [`<${sites.length} it.each sites in ${relative(ROOT, RUNNER_DIST)}>`];
 }
-/** An R-RUNTIME quiet row: the planted suite patching one built-in around the call to rewrite a row in flight. */
-const runtimePayload = (builtin: string): string => onCall([
-  `  const real = ${builtin};`,
-  `  ${builtin} = function (this: unknown, ...args: never[]) { rewrite(this, args); return real.apply(this, args); } as typeof real;`,
-  PLANTED_CALL,
-  `  ${builtin} = real;`,
-].join("\n"));
-/** R-RUNTIME's mode reading: the built-ins a suite assigns on Array or Array.prototype, in source order. */
+/** The patch an R-RUNTIME payload writes: one built-in replaced by a wrapper that rewrites a row in flight. */
+const runtimePatch = (builtin: string, indent: string): string[] => [
+  `${indent}const real = ${builtin};`,
+  `${indent}${builtin} = function (this: unknown, ...args: never[]) { rewrite(this, args); return real.apply(this, args); } as typeof real;`,
+];
+/** R-RUNTIME's planted local module, the one its planted suite loads: neutral, or patching one built-in at load (the quiet rows). */
+const RUNTIME_MODULE = "test/helpers/lg-runtime.ts";
+const RUNTIME_SUITE = edited(PLANTED_BASE, PLANTED_IMPORT, `${PLANTED_IMPORT}\nimport './helpers/lg-runtime.js';`);
+const RUNTIME_NEUTRAL = "export const lgRuntime = 1;\n";
+const runtimeModule = (builtin: string): string => [...runtimePatch(builtin, ""), "export const lgRuntime = 1;", ""].join("\n");
+const runtimeReading = (moduleText: string): readonly string[] => plantedReading(RUNTIME_SUITE, [PLANTED], [[RUNTIME_MODULE, moduleText]]);
+/** The same patch written in the suite itself around the call (cut #4's quiet rows; a CHANNEL member write now). */
+const runtimePayload = (builtin: string): string => onCall([...runtimePatch(builtin, "  "), PLANTED_CALL, `  ${builtin} = real;`].join("\n"));
+/** R-RUNTIME's mode reading: the built-ins a module assigns on Array or Array.prototype, in source order. */
 function runtimeMode(text: string): string[] {
   const source = ts.createSourceFile(PLANTED, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const methods: string[] = [];
@@ -1473,26 +1517,27 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
 
   it.each(PINS.map(pin => [pin.id, pin] as const))("PIN %s holds its frozen line", async (_id, pin) => {
     expect(`${pin.id} | ${pin.requirement} | ${await pin.witness()}`).toBe(FROZEN.get(pin.id));
-  });
+  }, READ_TIMEOUT);
 
   it("LIVENESS: the suite collected exactly one PIN case per pin and one S SURFACE case per surface, each in table order", ({ task }) => {
     const collected = (task.suite?.tasks ?? []).map(sibling => sibling.name);
     expect(collected).toContain(task.name);
     expect(collected.filter(name => name.startsWith("PIN "))).toEqual(PINS.map(pin => `PIN ${pin.id} holds its frozen line`));
     expect(collected.filter(name => name.startsWith("S SURFACE "))).toEqual(SURFACES.map(surface =>
-      `S SURFACE ${surface.id}: each falsifier breaks the surface's section naming its reason (or reads it sound and changed), and the control keeps the whole reading`));
+      `S SURFACE ${surface.id}: each falsifier breaks the surface's section naming its reason (or reads it sound and changed), and every quiet row and the control keep the whole reading`));
   });
 
   it("S SURFACES SHAPE: one surface per section the file pin reads of the cited suite, then the run pin, each with its frozen falsifier count", () => {
-    expect(SURFACES.map(surface => `${surface.id}:${surface.falsifiers.length}`)).toEqual([
-      "FILE:2", "IMPORT:36", "REFERENCES:3", "ACCESS:1", "CALL:7", "PATH:6", "CALLBACK:2", "TABLE:6", "ROWS:4", "POSITION:10", "HELPER:7", "RUN:8",
+    expect(SURFACES.map(surface => `${surface.id}:${surface.falsifiers.length}:${surface.quiet.length}`)).toEqual([
+      "FILE:2:0", "IMPORT:30:2", "CHANNEL:24:0", "REFERENCES:3:0", "ACCESS:1:0", "CALL:7:0", "PATH:6:0", "CALLBACK:2:0", "TABLE:6:0", "ROWS:4:0", "POSITION:10:0",
+      "HELPER:7:0", "RUN:17:0",
     ]);
     const [file = ""] = FILING.standingFixtures;
-    const sections = citedFixture(file, readFileSync(join(ROOT, file), "utf8"), FILING.standingTags, FILING.standingFixtures).map(section => section.split(" ")[0]);
+    const sections = citedFixture(BASE_HOST, file, FILING.standingTags, FILING.standingFixtures).map(section => section.split(" ")[0]);
     expect([...sections, PINS.some(pin => pin.id === `S ${file} run pin`) ? "RUN" : "<no run pin>"]).toEqual(SURFACES.map(surface => surface.id));
-  });
+  }, READ_TIMEOUT);
 
-  it.each(SURFACES.map(surface => [surface.id, surface] as const))("S SURFACE %s: each falsifier breaks the surface's section naming its reason (or reads it sound and changed), and the control keeps the whole reading", (id, surface) => {
+  it.each(SURFACES.map(surface => [surface.id, surface] as const))("S SURFACE %s: each falsifier breaks the surface's section naming its reason (or reads it sound and changed), and every quiet row and the control keep the whole reading", (id, surface) => {
     const base = surfaceBase(id);
     const sound = sectionOf(id, base) ?? "<no section>";
     expect(isBreak(id, sound), `${id} base reads sound: ${sound}`).toBe(false);
@@ -1501,49 +1546,65 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
       const read = falsifier.reason === "" ? { broken: isBreak(id, section), changed: section !== sound } : { broken: isBreak(id, section), names: section.includes(falsifier.reason) };
       expect(read, `${id} ${falsifier.name}: ${section}`).toEqual(falsifier.reason === "" ? { broken: false, changed: true } : { broken: true, names: true });
     }
+    for (const quiet of surface.quiet) expect(quiet.reading(), `${id} ${quiet.name}`).toEqual(base);
     expect(surface.control.reading(), `${id} ${surface.control.name}`).toEqual(base);
-  });
+  }, READ_TIMEOUT);
 
-  it("RESIDUALS: R-RUNTIME holds one quiet row per built-in the installed runner's each body names, each read quiet, its mode reading live and its loud payload loud", () => {
+  it("RESIDUALS: R-RUNTIME holds one quiet row per built-in the installed runner's each body names, each read quiet when a local module the suite loads patches it, its mode reading live, and loud when the suite patches it itself or rewrites through the table", () => {
     expect(RESIDUALS.map(residual => `${residual.family}:${residual.row}:${residual.quietRows.join(",")}`)).toEqual(["R-RUNTIME:S:Array.isArray,Array.prototype.every,Array.prototype.forEach"]);
     expect(RESIDUALS.find(residual => residual.family === "R-RUNTIME")?.quietRows).toEqual(runnerEachBuiltins());
-    const base = plantedReading(PLANTED_BASE);
-    expect(runtimeMode(PLANTED_BASE)).toEqual([]);
+    const neutral = runtimeReading(RUNTIME_NEUTRAL);
+    expect(neutral.filter(section => isBreak(section.split(" ")[0] ?? "", section))).toEqual([]);
+    expect(sectionOf("IMPORT", neutral)).toContain("import declaration './helpers/lg-runtime.js' at line 2 -> relative test/helpers/lg-runtime.ts -> module");
+    expect(runtimeMode(RUNTIME_NEUTRAL)).toEqual([]);
     for (const builtin of RESIDUALS.flatMap(residual => residual.quietRows)) {
-      expect(plantedReading(runtimePayload(builtin)), builtin).toEqual(base);
-      expect(runtimeMode(runtimePayload(builtin)), builtin).toEqual([builtin]);
+      expect(runtimeReading(runtimeModule(builtin)), builtin).toEqual(neutral);
+      expect(runtimeMode(runtimeModule(builtin)), builtin).toEqual([builtin]);
+      const own = sectionOf("CHANNEL", plantedReading(runtimePayload(builtin))) ?? "<no section>";
+      expect(own, builtin).toMatch(/^CHANNEL </);
+      expect(own, builtin).toContain(`cited suite: member write .${builtin.split(".").pop() ?? ""} by = at line 12`);
     }
     expect(sectionOf("TABLE", plantedReading(RUNTIME_LOUD))).toMatch(/^TABLE </);
-  });
+  }, READ_TIMEOUT);
 
-  it("C SCOPE: the rest-of-src pin reads only the .ts files under src and breaks on every other file there, so a tag outside them never reads as no site", () => {
+  it("C SCOPE: the C scan is the landed srcSites - every file under src, code by its extension and any other file by its whole text - so a tag in a .tsx, .mts, .cts, .js, .jsx, .mjs, .cjs, .d.ts, .json or .md file reads as a site, never as no site", () => {
     const tag = 'export const LG5_TAG = "hyperunix.result/1";';
-    // A planted tree walked by the scan's own walk: every entry that is not a directory is a file, at any depth, whatever its name.
-    const planted: Readonly<Record<string, readonly string[]>> = {
-      src: ["workbench"],
-      "src/workbench": ["gate-probe-lg5.tsx", "gate-probe-lg5.ts", "gate-probe-lg5.mts", "gate-probe-lg5.js", "gate-probe-lg5.d.ts", "deep"],
-      "src/workbench/deep": ["tags.json"],
-    };
-    const files = sourceFiles("src", path => planted[path]);
-    expect(files).toEqual([
-      "src/workbench/deep/tags.json", "src/workbench/gate-probe-lg5.d.ts", "src/workbench/gate-probe-lg5.js", "src/workbench/gate-probe-lg5.mts",
-      "src/workbench/gate-probe-lg5.ts", "src/workbench/gate-probe-lg5.tsx",
+    const planted = new Map([
+      ["src/workbench/gate-probe-lg5.tsx", tag], ["src/workbench/gate-probe-lg5.ts", tag], ["src/workbench/gate-probe-lg5.mts", tag], ["src/workbench/gate-probe-lg5.js", tag],
+      ["src/workbench/gate-probe-lg5.d.ts", tag], ["src/workbench/gate-probe-lg5.jsx", "export const LG5_J = <p>hyperunix.result/1</p>;\n"],
+      ["src/workbench/deep/tags.json", '{"tag": "hyperunix.result/1"}\n'], ["src/workbench/gate-probe-lg5.md", "the tag hyperunix.result/1 in prose\n"],
+      ["src/workbench/gate-probe-lg5.cts", tag], ["src/workbench/gate-probe-lg5.mjs", tag], ["src/workbench/gate-probe-lg5.cjs", tag],
     ]);
-    const sites = tagSites(new Map(files.filter(isScanned).map(file => [file, tag])));
-    expect(srcRest({ files, sites }, FILING.srcSurfaces).split("; ")).toEqual([
-      "src/workbench/deep/tags.json <not a .ts file, which the C scan does not read>",
-      "src/workbench/gate-probe-lg5.js <not a .ts file, which the C scan does not read>",
-      "src/workbench/gate-probe-lg5.mts <not a .ts file, which the C scan does not read>",
-      "src/workbench/gate-probe-lg5.tsx <not a .ts file, which the C scan does not read>",
+    expect(srcRest(cRead(diskHost(ROOT, planted)), FILING.srcSurfaces).split("; ")).toEqual([
+      "src/workbench/deep/tags.json embedded hyperunix.result/1 @ text",
+      "src/workbench/gate-probe-lg5.cjs whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.cts whole hyperunix.result/1 @ const LG5_TAG",
       "src/workbench/gate-probe-lg5.d.ts whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.js whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.jsx whole hyperunix.result/1 @ JsxElement",
+      "src/workbench/gate-probe-lg5.md embedded hyperunix.result/1 @ text",
+      "src/workbench/gate-probe-lg5.mjs whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.mts whole hyperunix.result/1 @ const LG5_TAG",
       "src/workbench/gate-probe-lg5.ts whole hyperunix.result/1 @ const LG5_TAG",
+      "src/workbench/gate-probe-lg5.tsx whole hyperunix.result/1 @ const LG5_TAG",
     ]);
-    // The controls: the .ts files alone break nothing, and with no tag outside the surfaces the pin reads no site.
-    expect(srcRest({ files: files.filter(isScanned), sites }, FILING.srcSurfaces)).not.toContain("<not a .ts file");
-    expect(srcRest({ files: files.filter(isScanned), sites: [] }, FILING.srcSurfaces)).toBe("no site");
-  });
+    // The scan reads every file under src (an independent listing of the disk agrees) and the subject's rest of src reads no site.
+    const listed = (directory: string): string[] => readdirSync(join(ROOT, directory)).sort().flatMap(name => {
+      const path = `${directory}/${name}`;
+      return statSync(join(ROOT, path)).isDirectory() ? listed(path) : [path];
+    });
+    expect(srcScan().scan.files).toEqual(listed("src"));
+    expect(srcRest(srcScan(), FILING.srcSurfaces)).toBe("no site");
+    // A directory the walk reaches a second time by its real path (a link back to src) is a break, shown before any site.
+    expect(srcRest(cRead(diskHost(ROOT, new Map(), new Map([["src/workbench/lg-loop", "src"]]))), FILING.srcSurfaces))
+      .toBe("<the C walk: src/workbench/lg-loop reaches src, a directory already read>");
+    // A disagreement between the place walk and srcSites breaks the file: the walk is handed text that srcSites did not read.
+    const scan = srcSites(diskHost(ROOT, new Map([["src/workbench/gate-probe-lg5.ts", tag]])));
+    expect(shownSites(scan, diskHost(ROOT, new Map([["src/workbench/gate-probe-lg5.ts", `${tag}\nexport const LG5_B = "hyperunix.result/1";\n`]])))
+      .filter(entry => entry.file === "src/workbench/gate-probe-lg5.ts").map(entry => entry.text)).toEqual(["<the place walk reads 2 sites, srcSites 1>"]);
+  }, READ_TIMEOUT);
 
-  it("C COLLECTOR: the scan reads every string-text node kind, whole and embedded, and never a comment or a regular expression", () => {
+  it("C COLLECTOR: the scan reads every string-text node kind, whole and embedded, JSX text too, and never a comment or a regular expression", () => {
     const control = [
       'const A = "hyperunix.result/1";',
       "const B = 'hyperunix.result/2';",
@@ -1554,24 +1615,28 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
       "const F = /hyperunix\\.result\\/9/;",
       'const G = left !== "hyperunix.result/1";',
     ].join("\n");
-    expect(tagSites(new Map([["src/control.ts", control]])).map(describeSite)).toEqual([
-      "whole hyperunix.result/1 @ const A",
-      "whole hyperunix.result/2 (not the vendored tag) @ const B",
-      "whole hyperunix.result/3 (not the vendored tag) @ const C",
-      "embedded hyperunix.result/4 (not the vendored tag) @ TemplateHead",
-      "embedded hyperunix.result/5 (not the vendored tag) @ TemplateMiddle",
-      "embedded hyperunix.result/6 (not the vendored tag) @ TemplateTail",
-      "embedded hyperunix.result/7 (not the vendored tag) @ StringLiteral",
-      "whole hyperunix.result/1 @ !== left",
+    const shown = (planted: ReadonlyMap<string, string>): string[] => {
+      const host = diskHost(ROOT, planted);
+      return shownSites(srcSites(host), host).filter(entry => planted.has(entry.file)).map(entry => `${entry.file} ${entry.text}`);
+    };
+    expect(shown(new Map([["src/control.ts", control], ["src/control.tsx", "export const J = <p>the tag hyperunix.result/1 in JSX text</p>;\n"]]))).toEqual([
+      "src/control.ts whole hyperunix.result/1 @ const A",
+      "src/control.ts whole hyperunix.result/2 (not the vendored tag) @ const B",
+      "src/control.ts whole hyperunix.result/3 (not the vendored tag) @ const C",
+      "src/control.ts embedded hyperunix.result/4 (not the vendored tag) @ TemplateHead",
+      "src/control.ts embedded hyperunix.result/5 (not the vendored tag) @ TemplateMiddle",
+      "src/control.ts embedded hyperunix.result/6 (not the vendored tag) @ TemplateTail",
+      "src/control.ts embedded hyperunix.result/7 (not the vendored tag) @ StringLiteral",
+      "src/control.ts whole hyperunix.result/1 @ !== left",
+      "src/control.tsx embedded hyperunix.result/1 @ JsxText",
     ]);
     // A planted third site and a half-moved re-vendor are what the C pins would then show.
-    const planted = new Map([["src/workbench/other.ts", 'export const TAG = "hyperunix.result/1";'], ["src/workbench/native-evidence.ts", 'if (x !== "hyperunix.result/2") {}']]);
-    expect(tagSites(planted).map(site => `${site.file} ${describeSite(site)}`)).toEqual([
-      "src/workbench/other.ts whole hyperunix.result/1 @ const TAG",
+    expect(shown(new Map([["src/workbench/other.ts", 'export const TAG = "hyperunix.result/1";'], ["src/workbench/native-evidence.ts", 'if (x !== "hyperunix.result/2") {}']]))).toEqual([
       "src/workbench/native-evidence.ts whole hyperunix.result/2 (not the vendored tag) @ !== x",
+      "src/workbench/other.ts whole hyperunix.result/1 @ const TAG",
     ]);
     // Not claimed (refusal #1 F1, gate mutants G6 and G6b): a tag assembled at run time reads as no site - its pinned quiet reading.
     const assembled = `export const CAT = "hyperunix.result/" + "1";\nexport const SUB = ${TICK}hyperunix.result/${slot("version")}${TICK};`;
-    expect(tagSites(new Map([["src/workbench/assembled.ts", assembled]])).map(describeSite)).toEqual([]);
-  });
+    expect(shown(new Map([["src/workbench/assembled.ts", assembled]]))).toEqual([]);
+  }, READ_TIMEOUT);
 });
