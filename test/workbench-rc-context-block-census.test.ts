@@ -185,10 +185,15 @@
  * an export added to its const [exported-mid-band-numeral-infinity-callee-method], its return split into a const the
  * blocks member initializes and a return of that const [declared-read-mid-band-numeral-infinity-callee-method], the
  * call's argument a name a const PROBE_RESULT initializes [bound-name-mid-band-numeral-infinity-callee-method], or a
- * second argument, 0, after PROBE_RESULT [two-argument-mid-band-numeral-infinity-callee-method] -, and the note alone
- * refuses its module [numeric-named-method], as it refuses a module whose one method 1.5e308 or 1E308 names is of
- * that shape but called by an element access instead, helpers[1.5e308] or helpers[1E308], so that the module spells
- * no member callee "Infinity" (wb-0fua) [element-called-mid-band-numeral-method,
+ * second argument, 0, after PROBE_RESULT [two-argument-mid-band-numeral-infinity-callee-method]; or at that shape but for
+ * one feature those words leave free (wb-nj87): its parameter named band rather than middle
+ * [renamed-parameter-mid-band-numeral-infinity-callee-method], its const named methods rather than helpers, and so the
+ * member callee's object [renamed-const-mid-band-numeral-infinity-callee-method], the call a statement of its own, so
+ * that the module spells no export [statement-call-mid-band-numeral-infinity-callee-method], or the member callee's
+ * object alias, a const that the holder's name initializes [aliased-object-mid-band-numeral-infinity-callee-method] -,
+ * and the note alone refuses its module [numeric-named-method], as it refuses a module whose one method 1.5e308 or
+ * 1E308 names is of that shape but called by an element access instead, helpers[1.5e308] or helpers[1E308], so that
+ * the module spells no member callee "Infinity" (wb-0fua) [element-called-mid-band-numeral-method,
  * element-called-upper-case-exponent-numeral-method]:
  * the hold is read only as "Infinity", and which numeral it holds a method under is never read. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
@@ -591,6 +596,25 @@
  * (its L2-H12) among them - is NOT CLAIMED by this census. As with wb-ilv4's two, no row outside this file anchors
  * these nine probes, so one removed from every literal of this file and the roster together is anchored by none (NOT
  * CLAIMED's read-probe sentence above).
+ * FOLLOW-UP wb-nj87 (landing 954's F3, the R694 carry of the gate's G15-F01 to G15-F04: one-edit members of
+ * resultReadsOf's collect on wb-0fua's cut, each dropping the note of a method 1.5e308 names at a feature the hold's
+ * shape words leave free, each reading 0 failed | 19 passed on the landed census and realized by the gate's plant
+ * modules - a parameter named other than middle or upper (G15-F01), a const named other than helpers (G15-F02), a
+ * module spelling no export, so that the call is a statement of its own (G15-F03), and a member callee spelling
+ * "Infinity" whose object is not helpers (G15-F04)): four probes, each the 1.5e308 probe changed at one of those
+ * features and each reading its note alone, pin them - its parameter renamed
+ * [renamed-parameter-mid-band-numeral-infinity-callee-method], its const renamed and the member callee's object with
+ * it [renamed-const-mid-band-numeral-infinity-callee-method], its call a statement of its own
+ * [statement-call-mid-band-numeral-infinity-callee-method] and its member callee's object a const alias of the holder
+ * [aliased-object-mid-band-numeral-infinity-callee-method] -, so G15-F01 reds the first, G15-F02 the second, G15-F03
+ * the third, and G15-F04 the fourth and the second, whose renamed const renames the member callee's object too. The
+ * hold and the note are claimed at these probes' texts only, so the wb-0fua paragraph's NOT CLAIMED sentence reads
+ * with these four features at 1.5e308 excepted as well; any other change of these probes - a parameter, a const or
+ * an alias named by a name these probes do not spell, the call at another placement or the member callee's object of
+ * another form, two of these features together or one beside a wb-0fua facet, or one of them at another value or
+ * spelling - is NOT CLAIMED by this census. As with wb-0fua's nine, no row outside this file anchors these four
+ * probes, so one removed from every literal of this file and the roster together is anchored by none (NOT CLAIMED's
+ * read-probe sentence above).
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -1400,6 +1424,15 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "two-argument-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT}, 0);\n`,
   "element-called-mid-band-numeral-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = helpers[1.5e308](${PROBE_RESULT});\n`,
   "element-called-upper-case-exponent-numeral-method": `const helpers = {\n  1E308(upper: Record<string, unknown>) {\n    return upper.blocks;\n  },\n};\nexport const rows = helpers[1E308](${PROBE_RESULT});\n`,
+  // wb-nj87 (landing 954's F3, the gate's G15-F01 to G15-F04: note-drop members of wb-0fua's cut that read 0 failed |
+  // 19 passed on the landed census at features the hold's shape words leave free): each probe below is the 1.5e308 probe
+  // changed at one of those features, and each notes only its declaration - its parameter renamed (G15-F01), its const
+  // renamed and so the member callee's object (G15-F02, G15-F04), the call a statement of its own, so that the module
+  // spells no export (G15-F03), and the member callee's object a const alias the holder's name initializes (G15-F04).
+  "renamed-parameter-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(band: Record<string, unknown>) {\n    return band.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "renamed-const-mid-band-numeral-infinity-callee-method": `const methods = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nexport const rows = methods.Infinity(${PROBE_RESULT});\n`,
+  "statement-call-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nhelpers.Infinity(${PROBE_RESULT});\n`,
+  "aliased-object-mid-band-numeral-infinity-callee-method": `const helpers = {\n  1.5e308(middle: Record<string, unknown>) {\n    return middle.blocks;\n  },\n};\nconst alias = helpers;\nexport const rows = alias.Infinity(${PROBE_RESULT});\n`,
   // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
   // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
   // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
