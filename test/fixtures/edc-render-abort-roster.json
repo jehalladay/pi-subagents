@@ -262,6 +262,9 @@
       "SELF",
       "HELPER",
       "HELPER_SPECIFIER",
+      "TSCONFIG",
+      "IMPORTS",
+      "TOP_LEVEL_CALLS",
       "RENDER_VERB",
       "UNCOMMITTED_TAIL",
       "REGISTRY_DEADLINE_MS",
@@ -315,6 +318,8 @@
       "PLANTED_REQUIRE",
       "PLANTED_STRING_HOOKS",
       "PLANTED_LOADER",
+      "DECLARATION_KINDS",
+      "PLANTED_COMPOSITION",
       "Row",
       "OWN_DECLARATIONS",
       "ROWS",
@@ -386,7 +391,13 @@
       "srcLaunchSites",
       "foreignCache",
       "foreignCommands",
+      "compilerOptionsCache",
+      "compilerOptions",
+      "resolvesToHelper",
       "declaredBy",
+      "importBindings",
+      "topLevelToken",
+      "Composition",
       "composition",
       "helperExports",
       "SourceOf",
@@ -425,6 +436,124 @@
       "REACHED",
       "IMPL"
     ],
+    "tsconfig": "tsconfig.test.json",
+    "imports": [
+      "node:child_process { execFileSync, spawn }",
+      "node:crypto { createHash }",
+      "node:fs { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync }",
+      "node:module { builtinModules }",
+      "node:path { delimiter, dirname, join, posix, relative }",
+      "node:url { fileURLToPath }",
+      "typescript default as ts",
+      "vitest { afterEach, describe, expect, it }",
+      "../src/workbench/capability-registry.js { type CapabilityDescriptor, CapabilityError, type CapabilityLimits, type CapabilityProvider, CapabilityRegistry, type InvocationContext, type JsonValue }",
+      "../src/workbench/native-modules.js { loadWorkbenchNative }",
+      "../src/workbench/providers/forge.js { type ForgeReadClient, registerForgeGateStatus }",
+      "../src/workbench/providers/furnace.js { type FurnaceReadClient, registerFurnaceRunInspect }",
+      "../src/workbench/providers/hyperunix.js { type HyperUnixReader, registerHyperUnixFind }",
+      "../src/workbench/providers/reactivefiber.js { nativeReactiveFiberPreview, nativeReactiveFiberRender, REACTIVE_FIBER_CONTRACT_SOURCE, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerReactiveFiberRender }",
+      "./helpers/edc-static-reach-readers.js * as READERS",
+      "./helpers/rf-render-fixture.js { fullShapeRf }",
+      "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }"
+    ],
+    "topLevelCalls": [
+      "installScratchLeakGuard()",
+      "afterEach(<function>)",
+      "describe(\"wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R12) and its until-then trigger\", <function>)"
+    ],
+    "declarationKinds": [
+      {
+        "kind": "variable",
+        "statement": "let plantedVariable = 1, plantedSecond: number;",
+        "names": [
+          "plantedVariable",
+          "plantedSecond"
+        ]
+      },
+      {
+        "kind": "object pattern",
+        "statement": "const { plantedKey, nested: { plantedDeep = 0 }, ...plantedRest } = plantedObject;",
+        "names": [
+          "plantedKey",
+          "plantedDeep",
+          "plantedRest"
+        ]
+      },
+      {
+        "kind": "array pattern",
+        "statement": "const [plantedFirst, , [plantedInner], ...plantedTail] = plantedArray;",
+        "names": [
+          "plantedFirst",
+          "plantedInner",
+          "plantedTail"
+        ]
+      },
+      {
+        "kind": "function",
+        "statement": "function plantedFunction(): void {}",
+        "names": [
+          "plantedFunction"
+        ]
+      },
+      {
+        "kind": "class",
+        "statement": "class PlantedClass {}",
+        "names": [
+          "PlantedClass"
+        ]
+      },
+      {
+        "kind": "interface",
+        "statement": "interface PlantedInterface {}",
+        "names": [
+          "PlantedInterface"
+        ]
+      },
+      {
+        "kind": "type alias",
+        "statement": "type PlantedType = string;",
+        "names": [
+          "PlantedType"
+        ]
+      },
+      {
+        "kind": "enum",
+        "statement": "enum PlantedEnum {\n  Read = 0,\n}",
+        "names": [
+          "PlantedEnum"
+        ]
+      },
+      {
+        "kind": "namespace",
+        "statement": "namespace PlantedNamespace {\n  export const read = 1;\n}",
+        "names": [
+          "PlantedNamespace"
+        ]
+      },
+      {
+        "kind": "import-equals",
+        "statement": "import plantedAlias = PlantedNamespace.read;",
+        "names": [
+          "plantedAlias"
+        ]
+      },
+      {
+        "kind": "import declaration",
+        "statement": "import { plantedImport } from \"./planted.js\";",
+        "names": []
+      },
+      {
+        "kind": "nameless function",
+        "statement": "export default function (): void {}",
+        "names": []
+      },
+      {
+        "kind": "expression statement",
+        "statement": "Reflect.set(globalThis, \"PLANTED\", (): number => 1);",
+        "names": []
+      }
+    ],
+    "plantedComposition": "import * as READERS from \"./helpers/edc-static-reach-readers.js\";\nimport { ioGlobalReferences as ownIoReader } from \"./helpers/edc-static-reach-readers\";\nimport type { LaunchSite } from \"../test/helpers/edc-static-reach-readers.ts\";\nimport { makeScratch } from \"./helpers/scratch.js\";\nimport processReferences = READERS.processReferences;\nReflect.set(globalThis, \"EDC_PROCESS_COPY\", (module: string): string[] => [module]);\nenum OwnEnum {\n  Read = 0,\n}\nnamespace OwnReaders {\n  export const read = ownIoReader;\n}\nconst { process: ownProcessReader } = { process: processReferences };\nconst loaded = import(\"./helpers/edc-static-reach-readers\");",
     "launchCalls": [
       "spawn",
       "spawnSync",
@@ -1201,7 +1330,68 @@
               "imports": [
                 "* as READERS"
               ],
-              "readers": 35
+              "readers": 35,
+              "tsconfig": "tsconfig.test.json",
+              "moduleResolution": "Bundler",
+              "named": 17,
+              "topLevel": {
+                "importDeclarations": 17,
+                "declaring": 186,
+                "declared": 186,
+                "calls": 3
+              },
+              "kinds": [
+                "variable: plantedVariable, plantedSecond",
+                "object pattern: plantedKey, plantedDeep, plantedRest",
+                "array pattern: plantedFirst, plantedInner, plantedTail",
+                "function: plantedFunction",
+                "class: PlantedClass",
+                "interface: PlantedInterface",
+                "type alias: PlantedType",
+                "enum: PlantedEnum",
+                "namespace: PlantedNamespace",
+                "import-equals: plantedAlias",
+                "import declaration: none",
+                "nameless function: none",
+                "expression statement: none"
+              ],
+              "planted": {
+                "named": [
+                  "./helpers/edc-static-reach-readers.js",
+                  "./helpers/edc-static-reach-readers",
+                  "../test/helpers/edc-static-reach-readers.ts",
+                  "./helpers/scratch.js",
+                  "./helpers/edc-static-reach-readers"
+                ],
+                "specifiers": [
+                  "./helpers/edc-static-reach-readers.js",
+                  "./helpers/edc-static-reach-readers",
+                  "../test/helpers/edc-static-reach-readers.ts",
+                  "./helpers/edc-static-reach-readers"
+                ],
+                "imports": [
+                  "* as READERS",
+                  "{ ioGlobalReferences as ownIoReader }",
+                  "type { LaunchSite }"
+                ],
+                "importDeclarations": [
+                  "./helpers/edc-static-reach-readers.js * as READERS",
+                  "./helpers/edc-static-reach-readers { ioGlobalReferences as ownIoReader }",
+                  "../test/helpers/edc-static-reach-readers.ts type { LaunchSite }",
+                  "./helpers/scratch.js { makeScratch }"
+                ],
+                "declared": [
+                  "processReferences",
+                  "OwnEnum",
+                  "OwnReaders",
+                  "ownProcessReader",
+                  "loaded"
+                ],
+                "declaring": 5,
+                "calls": [
+                  "Reflect.set(globalThis, \"EDC_PROCESS_COPY\", <function>)"
+                ]
+              }
             }
           }
         },

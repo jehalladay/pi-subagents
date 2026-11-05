@@ -61,16 +61,33 @@
  * registry's post-race guard; without that guard the census reds). A3 drives every committed form through the
  * native-registry and native-direct passes and holds each to a refusal.
  *
- * A5, THE STATIC REACH (cut #6, the post-inversion restatement over the landed readers; ORCHESTRATOR RULING R-B161: the re-cut
- * "is a mechanical restatement over this bead's landed reader coverage", the bead being wb-pyel.9, whose readers landed as
- * test/helpers/edc-static-reach-readers.ts with its carrier wb-pyel.11 at landing 888 and whose census landed at landing 949).
- * A5 reads the render pass with that helper's readers - the specifier reader, the loader reader, the I/O-global reader, the
- * process reader, the child_process tracer and the launch-call reader, with the resolver they share - and with none of its
- * own: this file names the helper by exactly one specifier, the specifier of one import declaration, a namespace import bound
- * to READERS; READERS is a module namespace whose keys are exactly the value names the helper's source exports; and this
- * file's top-level declarations are exactly OWN_DECLARATIONS, none of them a name the helper exports (A5 holds each against
- * this file's own source, the helper's source and the roster, so a reader copied to this file's top level, renamed or not,
- * reds A5). WHAT THE READERS READ - the forms, positions, spellings
+ * A5, THE STATIC REACH (cut #6, the post-inversion restatement over the landed readers, restated to its pins at cut #7;
+ * ORCHESTRATOR RULING R-B161: the re-cut "is a mechanical restatement over this bead's landed reader coverage", the bead being
+ * wb-pyel.9, whose readers landed as test/helpers/edc-static-reach-readers.ts with its carrier wb-pyel.11 at landing 888 and
+ * whose census landed at landing 949). A5 composes that helper's readers - the specifier reader, the loader reader, the
+ * I/O-global reader, the process reader, the child_process tracer and the launch-call reader, with the resolver they share -
+ * through one namespace import, READERS, and claims that composition exactly as far as its composition pins read it: this
+ * file's TOP LEVEL, off its own source, each pin held to the helper's source, TSCONFIG or the roster: (1) every specifier the
+ * specifier reader reads anywhere in this file (its bodies included) is one of its import declarations', in source order, and
+ * those declarations are exactly IMPORTS (specifier and bindings), so this file names no module through a loader call the
+ * specifier reader reads and imports no binding but IMPORTS'; (2) of those specifiers exactly one resolves to the helper as
+ * TypeScript resolves it from this file with TSCONFIG's compiler options (moduleResolution bundler, so the .js, the
+ * extensionless and the .ts spelling of a relative path to the helper each resolve to it), and its import declaration is a
+ * namespace import bound to READERS; (3) READERS is a module namespace whose keys are exactly the value names the helper's
+ * source exports; (4) this file's top-level declarations - the names declaredBy reads: a variable statement's at any
+ * binding-pattern depth, a function's, a class's, an interface's, a type alias's, an enum's, a namespace's and an
+ * import-equals declaration's, each kind held to a planted statement (DECLARATION_KINDS) - are exactly OWN_DECLARATIONS, none
+ * of them a name the helper exports; (5) every top-level statement that is neither an import declaration nor declares a name
+ * is one of TOP_LEVEL_CALLS, the three calls installScratchLeakGuard(), afterEach(<function>) and describe(<title>,
+ * <function>), each read by its callee and arguments. So a reader added to this file's top level as a statement of its own - a
+ * declaration, renamed or not, an import-equals alias, a second import of the helper in any spelling TypeScript resolves to
+ * it, an import of another module, or any other statement (an expression statement holding a copy on a global) - reds A5, and
+ * PLANTED_COMPOSITION, a source read as this file holding one statement of each of those forms, is read as each (A5's witness
+ * holds its reading). NOT CLAIMED by the composition pins: a reader copied into a function body or an initializer - the body
+ * or the initializer of one of this file's own declarations, or a callback one of the three top-level calls passes - and
+ * called from there (the pins read the top level and the specifiers the specifier reader reads, never what else a body or an
+ * initializer holds).
+ * WHAT THE READERS READ - the forms, positions, spellings
  * and settings they read, and how - is claimed by the censuses that read them,
  * test/workbench-edc-static-reach-readers-census.test.ts (it re-measures cut #5's 139 REACH_FORMS probes, its 106
  * REFERENCE_POSITIONS, its planted module and its R-STATIC-FORMS probes over the helper) and
@@ -105,7 +122,8 @@
  * (A5's readers - the tracer, the resolver, inType, unwrap - and REACH_FORMS, REFERENCE_POSITIONS) were this file's own
  * through cut #5 and are the helper's and its landed censuses' since cut #6, so those entries' sentences about them describe
  * no code of this file now; their other cures (row A's controls, row T's reads, the riders and Q7's probes) stand in this
- * file as cut #5 left them.
+ * file as cut #5 left them. The cut #6 entry records that cut as delivered too: its composition words are restated to what
+ * its pins read by cut #7 (A5 above and the cut #7 entry).
  * RESPIN (cut #2; refusal #1 on cut #1 a2572832, seat gate-prep-25, lane g10-gate-s128): U1 A5's readers parse the
  * global-object, process, default-import, renamed-binding and const-command forms of gate plants GX1, GX2, GX3, GX5 and GX5b,
  * and its claims are stated to the forms they parse; U2 one committed-form control per form (G01, G02, G03); U3 row T reads
@@ -159,8 +177,20 @@
  * landed census re-measures both, probe for probe, over the helper); adds A5's composition pins (the one namespace import,
  * READERS' keys against the helper's source, OWN_DECLARATIONS against this file's source and the roster); and keeps every
  * other row, pin, control, constant and roster entry of cut #5, each re-measured over the helper (MEASURED).
+ * RESPIN (cut #7; refusal #6 on cut #6 d1a7880e, seat gate-prep-4, lane g10-gate-s215; ORCHESTRATOR RULING R-B577, the
+ * post-ladder disposition: a further restatement in the same lineage with claims equal to pins): cut #6's composition words
+ * claimed more than its pins read. U1 a reader copied into a top-level expression statement (gate plants GT1 and GT2, each a
+ * copy held on globalThis) kept A5 green: the pins now read every top-level statement - one that is neither an import
+ * declaration nor declares a name must be one of TOP_LEVEL_CALLS - and what a body or an initializer holds is NOT CLAIMED
+ * (cut #6's "and with none of its own" is withdrawn). U2 an import-equals alias of a helper reader (GT5) and a second import
+ * of the helper spelled without an extension (GT6) kept A5 green: declaredBy reads an import-equals declaration's name, this
+ * file's specifiers are resolved as TypeScript resolves them with TSCONFIG's options, every specifier the specifier reader
+ * reads here must be an import declaration's, and the import declarations are IMPORTS. U3 declaredBy's enum, namespace and
+ * binding-pattern legs had no negative control (DN-NOENUM, DN-NOMODULE, DN-NOPATTERN): DECLARATION_KINDS holds every kind
+ * declaredBy reads to a planted statement, and PLANTED_COMPOSITION holds the composition's reading of one statement per form
+ * the gate planted.
  *
- * MEASURED (by the respin seat ws-02, run g10-work-s212, 2026-11-04, on the merge of trunk e25c5a7f into cut #5): all 21
+ * MEASURED AT CUT #6 (by the respin seat ws-02, run g10-work-s212, 2026-11-04, on the merge of trunk e25c5a7f into cut #5): all 21
  * driven pass/scenario observations read an empty verdict, the 5 settled native renders return the uncommitted form and the
  * 38 committed-form renders (19 forms, two native passes) are refused; each of the 39 controls trips exactly its expected
  * classes and the abandoned stand-in is stopped at teardown; the render closure is 4 src modules and 2 externals with one
@@ -174,6 +204,15 @@
  * rosters, read over the helper by this seat (a read-only probe outside the census): 138 of the 139 REACH_FORMS probes read
  * cut #5's expected reading - block-function-shadow-command reads spawn git, not <expression>, the BF1 cure the landed census
  * pins - and each of the 106 REFERENCE_POSITIONS reads as its kind.
+ * MEASURED AT CUT #7 (by the respin seat ws-05, run g10-work-s213, 2026-11-05, on the merge of trunk bfc7fcde into cut #6):
+ * every witness but A5's is byte-identical to cut #6's roster entry, and so is every field of A5's but its composition, which
+ * holds the pins' reading: the specifier reader reads 17 specifiers in this file, IMPORTS' 17 (one resolving to the helper,
+ * moduleResolution Bundler); READERS holds the helper's 35 value exports; this file's 206 top-level statements are its 17
+ * import declarations, 186 declarations naming OWN_DECLARATIONS' 186 names (none a helper export) and the 3 TOP_LEVEL_CALLS;
+ * declaredBy reads each of the 13 DECLARATION_KINDS statements as its names (10 that declare, 3 that declare none); and
+ * PLANTED_COMPOSITION reads as 5 specifiers, 4 of them resolving to the helper (its .js, extensionless, .ts and
+ * dynamic-import spellings), 4 import declarations, 3 of them the helper's, 5 declared names (the import-equals alias
+ * processReferences, a helper export, among them) and 1 top-level call.
  *
  * The census pins the rows and the residuals' quiet rows:
  *  A, the acceptance: A1 aborted passes, A2 suspended passes (both: no proposal reaches the caller), A3 a settled native
@@ -191,18 +230,23 @@
  * and T3's phrases are its two interests. Outside anchors in src: the contract source states the uncommitted render (A3 judges
  * the settled form); the passes equal the render module's exported functions, both ways; every registered render capability of
  * both registrations is driven; src's only rf launch site is the render module's (both launch readers); the stand-ins are the
- * commands src launches by name; the foreign set is native-modules.ts's dynamic imports. Outside anchors in the helper and
- * this file's own source: READERS' keys are the value names the helper's source exports, and this file's top-level
- * declarations, read off its own source, are OWN_DECLARATIONS and name none of the helper's exports. The last case reads the
+ * commands src launches by name; the foreign set is native-modules.ts's dynamic imports. Outside anchors in the helper,
+ * TSCONFIG and this file's own source: READERS' keys are the value names the helper's source exports; TypeScript, with
+ * TSCONFIG's options, resolves exactly one of this file's specifiers to the helper; and this file's top level, read off its own
+ * source, is IMPORTS (every specifier the specifier reader reads in it an import declaration's), OWN_DECLARATIONS (naming none
+ * of the helper's exports) and TOP_LEVEL_CALLS. The last case reads the
  * vitest task tree (every registered test, in roster order, in run mode, ran before it) and the pins that reached their
  * witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no outside anchor names it (A4, T1-T4, Q1-Q7 with their RESIDUALS entry); a constant edited in this file and
- * the roster together (an OWN_DECLARATIONS name added or removed with the declaration it names, a committed form with its
- * control, or a Q6 probe removed from both included); the readers' coverage - the forms, positions, spellings and settings the
- * helper's readers read - is NOT CLAIMED by this census (the helper's landed censuses claim it); a reader copied into the body
- * of one of this file's own declarations is NOT CLAIMED by A5's composition pins (they read the import declarations and the
- * top-level declarations); T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set
+ * the roster together (an OWN_DECLARATIONS name added or removed with the declaration it names, an IMPORTS entry with its
+ * import declaration, a TOP_LEVEL_CALLS entry with its call, a DECLARATION_KINDS or PLANTED_COMPOSITION statement with its
+ * reading, a committed form with its control, or a Q6 probe removed from both included); the readers' coverage - the forms,
+ * positions, spellings and settings the helper's readers read - is NOT CLAIMED by this census (the helper's landed censuses
+ * claim it); a reader copied into a function body or an initializer - the body or the initializer of one of this file's own
+ * declarations, or a callback one of the three top-level calls passes - and called from there is NOT CLAIMED by A5's
+ * composition pins (they read this file's top level and the specifiers the specifier reader reads, never what else a body or
+ * an initializer holds); T1's listing narrowed while it still holds REQUIRED_TRACKED and its floor, and T2's read set
  * narrowed while it still holds REQUIRED_READ and its floor; a launch killed before the stand-in's first statement runs (the
  * SIGTERM lands during the interpreter's start) leaves no log line, so the launch ledger reads it as none - the outcome and
  * the at-abort mark still record such a pass.
@@ -293,6 +337,36 @@ const NATIVE_LOADER = "src/workbench/native-modules.ts";
 const SELF = "test/workbench-edc-render-abort-census.test.ts";
 const HELPER = "test/helpers/edc-static-reach-readers.ts";
 const HELPER_SPECIFIER = "./helpers/edc-static-reach-readers.js";
+/** The project the typing step checks this file with: A5 resolves this file's specifiers with its compiler options. */
+const TSCONFIG = "tsconfig.test.json";
+/** This file's import declarations, in source order, each as its specifier and its bindings (A5 holds this file's own source
+ * to it). */
+const IMPORTS: readonly string[] = [
+  "node:child_process { execFileSync, spawn }",
+  "node:crypto { createHash }",
+  "node:fs { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync }",
+  "node:module { builtinModules }",
+  "node:path { delimiter, dirname, join, posix, relative }",
+  "node:url { fileURLToPath }",
+  "typescript default as ts",
+  "vitest { afterEach, describe, expect, it }",
+  "../src/workbench/capability-registry.js { type CapabilityDescriptor, CapabilityError, type CapabilityLimits, type CapabilityProvider, CapabilityRegistry, type InvocationContext, type JsonValue }",
+  "../src/workbench/native-modules.js { loadWorkbenchNative }",
+  "../src/workbench/providers/forge.js { type ForgeReadClient, registerForgeGateStatus }",
+  "../src/workbench/providers/furnace.js { type FurnaceReadClient, registerFurnaceRunInspect }",
+  "../src/workbench/providers/hyperunix.js { type HyperUnixReader, registerHyperUnixFind }",
+  "../src/workbench/providers/reactivefiber.js { nativeReactiveFiberPreview, nativeReactiveFiberRender, REACTIVE_FIBER_CONTRACT_SOURCE, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerReactiveFiberRender }",
+  "./helpers/edc-static-reach-readers.js * as READERS",
+  "./helpers/rf-render-fixture.js { fullShapeRf }",
+  "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }",
+];
+/** This file's top-level statements that neither import nor declare a name, in source order, as topLevelToken reads them (A5
+ * holds this file's own source to it). */
+const TOP_LEVEL_CALLS: readonly string[] = [
+  "installScratchLeakGuard()",
+  "afterEach(<function>)",
+  'describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R12) and its until-then trigger", <function>)',
+];
 /** The form every rf launch of a render pass takes: `--workspace <root> context render <selector> --no-commit --no-input --json`. */
 const RENDER_VERB = ["context", "render"];
 const UNCOMMITTED_TAIL = ["--no-commit", "--no-input", "--json"];
@@ -532,6 +606,43 @@ const PLANTED_REQUIRE = `const tsx = require("${TSX_SDK}");\n`;
  * called directly: T2's hook reader must read each. */
 const PLANTED_STRING_HOOKS = 'export const hooks = { "useProvider": (): number => 1 };\nregistry.hook("useQuery", () => 2);\nexport const note = "call usePlanted() first";\n';
 const PLANTED_LOADER = `import { createRequire } from "node:module";\nconst tsx = createRequire(import.meta.url)("${TSX_SDK}");\n`;
+/** One planted top-level statement per declaration kind declaredBy reads, with the names it declares - a variable statement's
+ * at any binding-pattern depth (object and array patterns, nested, with a default, rest elements and a hole), a function's, a
+ * class's, an interface's, a type alias's, an enum's, a namespace's and an import-equals declaration's - and three that declare
+ * none (an import declaration, a nameless default function, an expression statement): A5 holds declaredBy to each, so a kind's
+ * leg dropped reds A5. */
+const DECLARATION_KINDS: readonly { readonly kind: string; readonly statement: string; readonly names: readonly string[] }[] = [
+  { kind: "variable", statement: "let plantedVariable = 1, plantedSecond: number;", names: ["plantedVariable", "plantedSecond"] },
+  { kind: "object pattern", statement: "const { plantedKey, nested: { plantedDeep = 0 }, ...plantedRest } = plantedObject;", names: ["plantedKey", "plantedDeep", "plantedRest"] },
+  { kind: "array pattern", statement: "const [plantedFirst, , [plantedInner], ...plantedTail] = plantedArray;", names: ["plantedFirst", "plantedInner", "plantedTail"] },
+  { kind: "function", statement: "function plantedFunction(): void {}", names: ["plantedFunction"] },
+  { kind: "class", statement: "class PlantedClass {}", names: ["PlantedClass"] },
+  { kind: "interface", statement: "interface PlantedInterface {}", names: ["PlantedInterface"] },
+  { kind: "type alias", statement: "type PlantedType = string;", names: ["PlantedType"] },
+  { kind: "enum", statement: "enum PlantedEnum {\n  Read = 0,\n}", names: ["PlantedEnum"] },
+  { kind: "namespace", statement: "namespace PlantedNamespace {\n  export const read = 1;\n}", names: ["PlantedNamespace"] },
+  { kind: "import-equals", statement: "import plantedAlias = PlantedNamespace.read;", names: ["plantedAlias"] },
+  { kind: "import declaration", statement: 'import { plantedImport } from "./planted.js";', names: [] },
+  { kind: "nameless function", statement: "export default function (): void {}", names: [] },
+  { kind: "expression statement", statement: 'Reflect.set(globalThis, "PLANTED", (): number => 1);', names: [] },
+];
+/** A source A5 reads as this file (at SELF's path), one statement per form a second binding or a copy of the helper's readers
+ * takes at the top level: a second import of the helper spelled without an extension (the gate's GT6) and one spelled .ts
+ * from the parent directory, an import of another module, an import-equals alias of a helper reader (GT5), an expression
+ * statement holding a copy on a global (GT1, GT2), an enum, a namespace and a binding pattern (W-DN-ENUM, W-DN-NS,
+ * W-DN-PATTERN), and a dynamic import of the helper. A5's witness holds the composition's reading of it. */
+const PLANTED_COMPOSITION = [
+  'import * as READERS from "./helpers/edc-static-reach-readers.js";',
+  'import { ioGlobalReferences as ownIoReader } from "./helpers/edc-static-reach-readers";',
+  'import type { LaunchSite } from "../test/helpers/edc-static-reach-readers.ts";',
+  'import { makeScratch } from "./helpers/scratch.js";',
+  "import processReferences = READERS.processReferences;",
+  'Reflect.set(globalThis, "EDC_PROCESS_COPY", (module: string): string[] => [module]);',
+  "enum OwnEnum {\n  Read = 0,\n}",
+  "namespace OwnReaders {\n  export const read = ownIoReader;\n}",
+  "const { process: ownProcessReader } = { process: processReferences };",
+  'const loaded = import("./helpers/edc-static-reach-readers");',
+].join("\n");
 
 interface Row {
   readonly id: string;
@@ -541,14 +652,16 @@ interface Row {
 /** Every name this file's top-level statements declare, in source order (A5 holds this file's own source to it). */
 const OWN_DECLARATIONS: readonly string[] = [
   "JsonObject", "Envelope", "HERE", "REPO", "ROSTER_PATH", "BEAD", "PREVIEW", "GRANTS", "RENDER_MODULE", "NATIVE_LOADER",
-  "SELF", "HELPER", "HELPER_SPECIFIER", "RENDER_VERB", "UNCOMMITTED_TAIL", "REGISTRY_DEADLINE_MS", "WAIT_MS",
+  "SELF", "HELPER", "HELPER_SPECIFIER", "TSCONFIG", "IMPORTS", "TOP_LEVEL_CALLS", "RENDER_VERB", "UNCOMMITTED_TAIL",
+  "REGISTRY_DEADLINE_MS", "WAIT_MS",
   "STAND_IN_BOUND_MS", "PASSES", "PassId", "ENTRY", "NATIVE_PASSES", "REGISTRY_PASSES", "SCENARIOS", "ScenarioId", "KIND",
   "DRIVEN", "VIOLATIONS", "Violation", "CLAUSE_OF", "COMMITTED_FORMS", "CommittedForm", "IO_BUILTINS", "TSX_SDK",
   "HOOK_NAME", "HOOK_WORD", "DESCRIPTOR_NAME", "SCRIPT_MODULE", "COMPONENT_MODULE", "REQUIRED_TRACKED", "UNREAD_TREE",
   "REQUIRED_READ", "FLOORS", "TRIGGER", "RESIDUALS", "PLANTED_REACH", "STATIC_RESIDUE", "OTHER_HOOKS", "LOOKALIKE_E",
   "OTHER_LOOKALIKE", "OTHER_PHRASES", "OTHER_COMPOSED", "OTHER_LOADER", "OTHER_UNREAD_TEXT", "UNREAD_HOME_PROBES",
   "PLANTED_PATHS", "PLANTED_SOURCE", "PLANTED_MANIFEST", "PLANTED_LOCK", "PLANTED_DESCRIPTION", "PLANTED_KEY",
-  "PLANTED_HOMES", "PLANTED_DESCRIPTOR_SOURCE", "PLANTED_REQUIRE", "PLANTED_STRING_HOOKS", "PLANTED_LOADER", "Row",
+  "PLANTED_HOMES", "PLANTED_DESCRIPTOR_SOURCE", "PLANTED_REQUIRE", "PLANTED_STRING_HOOKS", "PLANTED_LOADER", "DECLARATION_KINDS",
+  "PLANTED_COMPOSITION", "Row",
   "OWN_DECLARATIONS", "ROWS", "SERVES", "RosterPin", "RosterRow", "Roster", "isObject", "json", "strings", "readRoster",
   "ROSTER", "rosterWitness", "Mode", "Bench", "Launch", "oldPath", "scratches", "reap", "standIn", "rfBody", "bench",
   "launches", "tagOf", "marked", "tree", "until", "bounded", "Reader", "CapturingRegistry", "Pass", "context", "pass",
@@ -556,7 +669,8 @@ const OWN_DECLARATIONS: readonly string[] = [
   "sweep", "sweepOnce", "commitLine", "effectLine", "committedForm", "settledNative", "ArgvShape", "launchRf", "Control",
   "controlObservation", "committedFormControl", "Proposer", "signalIgnoringProvider", "unguarded", "CONTROLS", "git",
   "trackedCache", "trackedPaths", "trackedScriptModules", "walkedScriptModules", "parsed", "parse", "resolveModule",
-  "isBuiltin", "closure", "srcSitesCache", "srcLaunchSites", "foreignCache", "foreignCommands", "declaredBy", "composition",
+  "isBuiltin", "closure", "srcSitesCache", "srcLaunchSites", "foreignCache", "foreignCommands", "compilerOptionsCache",
+  "compilerOptions", "resolvesToHelper", "declaredBy", "importBindings", "topLevelToken", "Composition", "composition",
   "helperExports", "SourceOf", "ReachReading", "reachReading", "foreignSet", "exportedFunctions", "componentModules",
   "hookMentions", "DEPENDENCY_MAPS", "manifestMentions", "lockMentions", "joinedFold", "textsOf", "phraseMentions",
   "isStaticHome", "staticHomes", "sourcePhraseMentions", "HomeReading", "homeReading", "homesCache", "homesRead", "NEVER",
@@ -1462,7 +1576,28 @@ function foreignCommands(): string[] {
   foreignCache ??= [...new Set(srcLaunchSites().flatMap(site => site.command.split("|")))].filter(command => command !== "rf" && /^[a-z][a-z0-9-]*$/.test(command)).sort();
   return foreignCache;
 }
-/** The names one top-level statement declares (a variable statement's at any pattern depth); none for any other statement. */
+let compilerOptionsCache: ts.CompilerOptions | undefined;
+/** TSCONFIG's compiler options as TypeScript reads the file (its extends chain included), read once. */
+function compilerOptions(): ts.CompilerOptions {
+  if (compilerOptionsCache === undefined) {
+    const path = join(REPO, TSCONFIG);
+    const read = ts.readConfigFile(path, ts.sys.readFile);
+    if (read.error !== undefined) throw new Error(`${TSCONFIG} does not read: ${ts.flattenDiagnosticMessageText(read.error.messageText, "\n")}`);
+    compilerOptionsCache = ts.parseJsonConfigFileContent(read.config, ts.sys, REPO, undefined, path).options;
+  }
+  return compilerOptionsCache;
+}
+/** Whether a specifier of this file names the helper: TypeScript resolves it from this file's path, with TSCONFIG's compiler
+ * options, to the helper's file. */
+function resolvesToHelper(specifier: string): boolean {
+  const real = (path: string): string => ts.sys.realpath?.(path) ?? path;
+  const resolved = ts.resolveModuleName(specifier, join(REPO, SELF), compilerOptions(), ts.sys).resolvedModule;
+  return resolved !== undefined && real(resolved.resolvedFileName) === real(join(REPO, HELPER));
+}
+/** The names one top-level statement declares: a variable statement's at any binding-pattern depth, a function's, a class's,
+ * an interface's, a type alias's, an enum's, a namespace's (a module declaration's name) and an import-equals declaration's
+ * (DECLARATION_KINDS holds each kind to a planted statement); none for any other statement (an import declaration's bindings
+ * are IMPORTS'). */
 function declaredBy(statement: ts.Statement): string[] {
   const names: string[] = [];
   const bind = (name: ts.BindingName): void => {
@@ -1476,24 +1611,74 @@ function declaredBy(statement: ts.Statement): string[] {
   ) {
     names.push(statement.name.text);
   } else if (ts.isModuleDeclaration(statement)) names.push(statement.name.text);
+  else if (ts.isImportEqualsDeclaration(statement)) names.push(statement.name.text);
   return names;
 }
-/** A5's composition, read off this file's own source: every specifier of this file that resolves to the helper, the bindings
- * of each import declaration whose specifier does, and every name this file's top-level statements declare, in source order. */
-function composition(): { specifiers: string[]; imports: string[]; declared: string[] } {
-  const self = parse(SELF);
-  const toHelper = (specifier: string): boolean => resolveModule(SELF, specifier) === HELPER;
+/** An import declaration's bindings as written: <side effect> for none, else default as <name>, * as <name> and { ... }, a
+ * type-only clause prefixed type. */
+function importBindings(statement: ts.ImportDeclaration, source: ts.SourceFile): string {
+  const clause = statement.importClause;
+  if (clause === undefined) return "<side effect>";
+  const bindings = clause.namedBindings;
+  const parts: string[] = [];
+  if (clause.name !== undefined) parts.push(`default as ${clause.name.text}`);
+  if (bindings !== undefined && ts.isNamespaceImport(bindings)) parts.push(`* as ${bindings.name.text}`);
+  else if (bindings !== undefined) parts.push(`{ ${bindings.elements.map(element => element.getText(source)).join(", ")} }`);
+  return `${clause.isTypeOnly ? "type " : ""}${parts.join(", ")}`;
+}
+/** A top-level statement that neither imports nor declares a name, as A5 reads it: a call by its callee and its arguments (a
+ * string as written, a function as <function>, a name as itself, any other argument as its kind), any other statement as its
+ * kind. */
+function topLevelToken(statement: ts.Statement, source: ts.SourceFile): string {
+  const expression = ts.isExpressionStatement(statement) ? statement.expression : undefined;
+  if (expression === undefined || !ts.isCallExpression(expression)) return `<${ts.SyntaxKind[(expression ?? statement).kind]}>`;
+  const argument = (node: ts.Expression): string => {
+    if (ts.isStringLiteral(node)) return JSON.stringify(node.text);
+    if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) return "<function>";
+    if (ts.isIdentifier(node)) return node.text;
+    return `<${ts.SyntaxKind[node.kind]}>`;
+  };
+  return `${expression.expression.getText(source)}(${expression.arguments.map(argument).join(", ")})`;
+}
+/** A5's composition pins' reading of one source read as this file. */
+interface Composition {
+  /** Every specifier the specifier reader reads in the source, its bodies included, in source order. */
+  readonly named: string[];
+  /** The named specifiers that resolve to the helper (resolvesToHelper). */
+  readonly specifiers: string[];
+  /** The bindings of each import declaration whose specifier resolves to the helper. */
+  readonly imports: string[];
+  /** Every import declaration, as its specifier and its bindings. */
+  readonly importDeclarations: string[];
+  /** Every name the top-level statements declare (declaredBy), in source order, and how many statements declare one. */
+  readonly declared: string[];
+  readonly declaring: number;
+  /** Every other top-level statement (neither an import declaration nor declaring a name), as topLevelToken reads it. */
+  readonly calls: string[];
+}
+/** A5's composition reading of one source read as this file (this file's own, or PLANTED_COMPOSITION): its top level, statement
+ * by statement, and the specifiers the specifier reader reads in it. Nothing else a body or an initializer holds is read. */
+function composition(source: ts.SourceFile): Composition {
   const imports: string[] = [];
-  for (const statement of self.statements) {
-    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || !toHelper(statement.moduleSpecifier.text)) continue;
-    const clause = statement.importClause;
-    const bindings = clause?.namedBindings;
-    if (clause === undefined) imports.push("<side effect>");
-    else if (clause.name !== undefined) imports.push(`default as ${clause.name.text}`);
-    if (bindings !== undefined && ts.isNamespaceImport(bindings)) imports.push(`* as ${bindings.name.text}`);
-    else if (bindings !== undefined) imports.push(`{ ${bindings.elements.map(element => element.getText(self)).join(", ")} }`);
+  const importDeclarations: string[] = [];
+  const declared: string[] = [];
+  const calls: string[] = [];
+  let declaring = 0;
+  for (const statement of source.statements) {
+    if (ts.isImportDeclaration(statement)) {
+      const specifier = ts.isStringLiteral(statement.moduleSpecifier) ? statement.moduleSpecifier.text : "<expression>";
+      importDeclarations.push(`${specifier} ${importBindings(statement, source)}`);
+      if (resolvesToHelper(specifier)) imports.push(importBindings(statement, source));
+      continue;
+    }
+    const names = declaredBy(statement);
+    if (names.length > 0) {
+      declaring += 1;
+      declared.push(...names);
+    } else calls.push(topLevelToken(statement, source));
   }
-  return { specifiers: READERS.specifiers(self).filter(toHelper), imports, declared: self.statements.flatMap(declaredBy) };
+  const named = READERS.specifiers(source);
+  return { named, specifiers: named.filter(resolvesToHelper), imports, importDeclarations, declared, declaring, calls };
 }
 /** The names the helper's source exports, read off its source: values (functions, variables, classes, enums) and types. */
 function helperExports(): { values: string[]; types: string[] } {
@@ -1795,11 +1980,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([RENDER_MODULE]);
     const unresolvedInSrc = trackedScriptModules().flatMap(module => READERS.childProcessLaunches(module, parse(module)).filter(site => site.command.startsWith("<")));
     const unresolvedLoadsInSrc = trackedScriptModules().flatMap(module => READERS.unresolvedLoads(module, parse(module)));
-    // The composition: the readers above are the helper's, through READERS alone.
-    const composed = composition();
+    // The composition pins: this file's top level, read off its own source (nothing a body or an initializer holds is read but
+    // the specifiers the specifier reader reads there), held to the helper's source, TSCONFIG and the roster.
+    const composed = composition(parse(SELF));
     const exported = helperExports();
     expect(relative(REPO, fileURLToPath(import.meta.url)).split("\\").join("/"), "SELF is this file's own path").toBe(SELF);
-    expect(composed.specifiers, "this file names the helper by exactly one specifier").toEqual([HELPER_SPECIFIER]);
+    expect(composed.importDeclarations, "this file's import declarations are exactly IMPORTS").toEqual([...IMPORTS]);
+    expect(composed.importDeclarations, "this file's import declarations are exactly the roster's imports").toEqual(ROSTER.constants.imports);
+    expect(
+      composed.named,
+      "every specifier the specifier reader reads in this file is one of its import declarations', in source order",
+    ).toEqual(composed.importDeclarations.map(entry => entry.slice(0, entry.indexOf(" "))));
+    expect(composed.specifiers, "exactly one of this file's specifiers resolves to the helper (TypeScript, with TSCONFIG's options)").toEqual([HELPER_SPECIFIER]);
     expect(composed.imports, "that specifier's one import declaration is a namespace import bound to READERS").toEqual(["* as READERS"]);
     expect(Object.prototype.toString.call(READERS), "READERS is a module namespace, never an object this file builds").toBe("[object Module]");
     expect([...Object.keys(READERS)].sort(), "READERS' keys are exactly the value names the helper's source exports").toEqual([...exported.values].sort());
@@ -1809,6 +2001,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([]);
     expect(composed.declared, "this file's top-level declarations are exactly OWN_DECLARATIONS").toEqual([...OWN_DECLARATIONS]);
     expect(composed.declared, "this file's top-level declarations are exactly the roster's ownDeclarations").toEqual(ROSTER.constants.ownDeclarations);
+    expect(composed.calls, "every other top-level statement of this file is one of TOP_LEVEL_CALLS").toEqual([...TOP_LEVEL_CALLS]);
+    expect(composed.calls, "every other top-level statement of this file is one of the roster's topLevelCalls").toEqual(ROSTER.constants.topLevelCalls);
+    // declaredBy's kinds, each held to its planted statement, and the planted composition (the witness holds its reading).
+    const kinds = DECLARATION_KINDS.map(entry => {
+      const statements = parse("planted/declarations.ts", entry.statement).statements;
+      return { kind: entry.kind, statements: statements.length, names: statements.flatMap(declaredBy) };
+    });
+    for (const [index, entry] of DECLARATION_KINDS.entries()) {
+      expect(kinds[index], `declaredBy reads the planted ${entry.kind}`).toEqual({ kind: entry.kind, statements: 1, names: [...entry.names] });
+    }
+    const plantedReading = composition(parse(SELF, PLANTED_COMPOSITION));
+    expect(
+      plantedReading.specifiers,
+      "each planted spelling of the helper resolves to it: the namespace import's, the extensionless one (GT6), the .ts one from the parent directory and a dynamic import's",
+    ).toHaveLength(4);
+    expect(
+      plantedReading.declared.filter(name => exported.values.includes(name)),
+      "the planted import-equals alias declares the helper's name it aliases (GT5)",
+    ).toEqual(["processReferences"]);
+    expect(plantedReading.calls, "the planted expression statement holding a copy on a global is read as a top-level call (GT1, GT2)").toHaveLength(1);
+    const resolution = compilerOptions().moduleResolution;
     return json({
       clause: SERVES.A5,
       judges: ["tool", "model", "host"],
@@ -1826,7 +2039,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       unresolvedLoadsInSrc,
       srcSites,
       controls,
-      composition: { helper: HELPER, specifiers: composed.specifiers, imports: composed.imports, readers: Object.keys(READERS).length },
+      composition: {
+        helper: HELPER,
+        specifiers: composed.specifiers,
+        imports: composed.imports,
+        readers: Object.keys(READERS).length,
+        tsconfig: TSCONFIG,
+        moduleResolution: resolution === undefined ? "none" : ts.ModuleResolutionKind[resolution],
+        named: composed.named.length,
+        topLevel: { importDeclarations: composed.importDeclarations.length, declaring: composed.declaring, declared: composed.declared.length, calls: composed.calls.length },
+        kinds: kinds.map(entry => `${entry.kind}: ${entry.names.join(", ") || "none"}`),
+        planted: plantedReading,
+      },
     });
   },
   A6: async () => {
@@ -2040,6 +2264,11 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
         helper: HELPER,
         helperSpecifier: HELPER_SPECIFIER,
         ownDeclarations: OWN_DECLARATIONS,
+        tsconfig: TSCONFIG,
+        imports: IMPORTS,
+        topLevelCalls: TOP_LEVEL_CALLS,
+        declarationKinds: DECLARATION_KINDS,
+        plantedComposition: PLANTED_COMPOSITION,
         launchCalls: READERS.LAUNCH_CALLS,
         childProcess: READERS.CHILD_PROCESS,
         loaderCalls: READERS.LOADER_CALLS,
