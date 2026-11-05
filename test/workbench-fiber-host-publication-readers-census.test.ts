@@ -126,7 +126,9 @@
  * the judged-set case reads every CHANNEL_SPACED_PLANTS and KEY_VALUE_CHANNELS text again through manifestHits with its raw
  * text handed and holds each reading to its declared hits, so each raw-handed text is read at two call sites, and a census
  * edit at one site's hand-off leaves the other site reading the plant's own raw text. Nothing else changes: no row, pin id,
- * test, channel or reader is added, and the helper is untouched.
+ * test, channel or reader is added, and the helper is untouched. The wb-zdwo cut #5 scopes the two-site sentence above to a
+ * reading of what its call hands the reader and of nothing else, beside a one-site edit that changes no shared object in
+ * place; it names the rest NOT CLAIMED.
  *
  * THE wb-zdwo CUT #3 (refusal #2 on cut #2, O:2069, gate-refused M:56383; rung 1, needsRuling false): refusal #2 found the
  * raw-less key-value facet with one call site and no negative control. Every KEY_VALUE_FIELD_PLANTS value is hit-free, so no
@@ -140,7 +142,9 @@
  * KEY_VALUE_PLANTS and every KEY_VALUE_FIELD_PLANTS plant again through manifestHits under its own label with no raw text
  * handed and holds each reading to its declared hit, so each raw-less key-value plant is read at two call sites, and a census
  * edit at one site's hand-off leaves the other site reading the plant itself. Nothing else changes: no row, pin id, test,
- * plant, channel, claim word or reader is added, and the roster and the helper are untouched.
+ * plant, channel, claim word or reader is added, and the roster and the helper are untouched. The wb-zdwo cut #5 scopes
+ * the two-site sentence above to a reading of what its call hands the reader and of nothing else, beside a one-site edit
+ * that changes no shared object in place; it names the rest NOT CLAIMED.
  *
  * THE wb-zdwo CUT #4 (refusal #3 on cut #3, O:2103, gate-refused M:57470; orchestrator ruling R-B569, M:57488, rung 1 for
  * both sets): refusal #3 found two more of the root readers' hand-offs read at one call site with no negative control. Every
@@ -161,7 +165,27 @@
  * manifest again with its raw text withheld and handed, and every ROOT_LOCK_CONTROLS lock again through lockReading, each
  * reading held to its declared hits, so a census edit at one site's hand-off leaves the other site reading the plant itself.
  * Nothing else changes: no row, pin id, test, plant, channel, claim word or reader is added, and the roster and the helper
- * are untouched.
+ * are untouched. The wb-zdwo cut #5 scopes the two-site sentence above to a reading of what its call hands the reader and
+ * of nothing else, beside a one-site edit that changes no shared object in place; it names the rest NOT CLAIMED.
+ *
+ * THE wb-zdwo CUT #5 (refusal #4 on cut #4, O:2124, gate-refused M:58047; orchestrator ruling R-B581, M:58108, rung 1 of a
+ * new claim set): refusal #4 found the reading-order facet at the root readers' two-site hand-offs. Both call sites read the
+ * same plant in one module instance of the helper, and the judged set's direct reads run first in this file, so a hollowing
+ * of the helper that reads a plant otherwise only at its first reading, or only at a re-reading, is seen at one site alone,
+ * and a one-edit census member at that site hides it. Seven gate-authored pairs kept this census and the positions census
+ * at 0 failed: five first-reading hollowings, each hidden by a warm-up re-read at its direct read (GP15-CS1 at the manifest,
+ * GP15-CS3 at the lock, GP15-CS5 at the G32, GP15-CS6 at the raw-less and GP15-CS7 at the compact direct read, with GP15-HS1,
+ * HS3, HS5, HS6 and HS7), and two re-reading hollowings, each hidden by a fresh deep copy at its witness's hand-off (GP15-CS2
+ * at manifestControls and GP15-CS4 at lockControls, with GP15-HS2 and HS4). The same shared state reaches further: a direct
+ * read held to its declared hits unread leaves a re-reading hollowing to a witness that then reads first, and one edit at
+ * one call site that changes a shared plant in place reaches the other site. This cut narrows the claim (R-B581's second
+ * route; narrow the claim, never widen the reader): the root readers' clause claims each plant read at its two call sites
+ * in one module instance of the helper, the judged set's direct read first and its pin's witness after it, each reading of
+ * what its call hands the reader and of nothing else (one insertion, in CLAIMS and the roster's claims alike); NOT CLAIMED
+ * names a reading that depends on anything but what it is handed, whatever one-site edit sits beside it, and one edit at
+ * one call site that changes in place an object both call sites' readings reach, which reaches both sites as an edit made
+ * at both together does; and the two-site sentence of each of cuts #2 to #4 is scoped to those words. Nothing else changes: no
+ * row, pin id, test, plant, channel or reader is added, and the helper is untouched.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -328,12 +352,23 @@
  * other than a string that is another key than fiber-optics, in a field outside KEY_VALUE_FIELDS (bin, exports, scripts
  * and publishConfig among them), at another step than a top-level field's object, under another label than its plant's
  * own and package.json, or under package.json with no raw text handed or with its raw text spelled otherwise than its
- * plant spells it. Edits of this
+ * plant spells it. Nor, at the wb-zdwo cut #5 (refusal #4's reading-order facet; orchestrator ruling R-B581: the root
+ * readers' clause claims each plant read at its two call sites in one module instance of the helper, the judged set's
+ * direct read first and its pin's witness after it, each reading of what its call hands the reader and of nothing else),
+ * is a reading that depends on anything but the plant, the raw text and the label it is handed - on what the helper read
+ * before it in that module instance (state kept between its readings, keyed by the plant object, its raw text, its label
+ * or a count of readings, so that a first reading of a plant, or a re-reading, reads otherwise than the other; refusal
+ * #4's GP15-HS1 to GP15-HS7 among them), on its caller or on the order of this file's cases -, whatever one-site edit of
+ * this file sits beside it (a warm-up re-read ahead of a direct read, refusal #4's GP15-CS1, CS3, CS5, CS6 and CS7; a fresh
+ * deep copy handed at a witness, GP15-CS2 and CS4; a direct read held to its declared hits unread). Edits of this
  * file and the roster together: a plant removed from its table and the
  * roster together where no outside anchor names it, a pin a later cut adds beyond the export's member lists and the
  * claims, removed whole, and one edit of a root reader's hand-off (a raw-handed text's, a raw-less key-value plant's, a root
  * manifest control's, the shadowed manifest's, a lock control's or a G32 package plant's) made at both of its call sites (its
- * pin's witness and the direct read) together are NOT CLAIMED.
+ * pin's witness and the direct read) together are NOT CLAIMED. Nor, at the wb-zdwo cut #5, is one edit of this file at one
+ * call site that changes in place an object both call sites' readings reach (among them a plant, the hits it declares and
+ * a built-in the helper calls), so that the other site reads through the changed object: an in-place change reaches both
+ * sites, as an edit made at both together does.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
  * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
  * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
@@ -688,7 +723,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; a key in a top-level field's object holding a string or each KEY_VALUE_PLANTS value (an object, an empty object, a list, an empty list, a number, zero, true, false, null, an empty string), the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's object (overrides, dependencies, devDependencies, peerDependencies, peerDependenciesMeta, optionalDependencies) read under its plant's own label with no raw text handed (KEY_VALUE_PLANTS in overrides, KEY_VALUE_FIELD_PLANTS in each field) and, its hyphen JSON-escaped, under package.json with its one-line raw text handed, alone and again beside a stem only its raw line sees (a shadowed duplicate keywords list), both read (KEY_VALUE_CHANNELS); its raw text one line, read beside its parsed keys and strings when it is handed, as LIVE-A1 hands the root file's: each CHANNEL_PLANTS text, one line ended by a newline, holds the stem with its hyphen JSON-escaped, so only the parsed reading sees it, alone at each of those five places, and once beside a stem only its raw line sees (a shadowed duplicate key), both read, each of those six texts read again in each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's field, the same field behind it, a space after every colon, and a top-level string field holding the stem's two words split by a space ahead of the stem's field, which neither reading reads as the stem; CHANNEL_SPACED_PLANTS); a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+      words: "the root readers read their file whole, each plant read at its two call sites in one module instance of the helper (the judged set's direct read first, its pin's witness after it), each reading of what its call hands the reader and of nothing else, the file as its plant spells it (package.json's keys and strings at the key and index steps below its root its plant puts them at, two or three: a key in a top-level field's object and a string item in a top-level field's list, two steps down, and a string field of an object in a top-level field's object and a string field and a key of an object item in a top-level field's list, three steps down; a key in a top-level field's object holding a string or each KEY_VALUE_PLANTS value (an object, an empty object, a list, an empty list, a number, zero, true, false, null, an empty string), the key fiber-optics holding each KEY_VALUE_PLANTS value in each KEY_VALUE_FIELDS field's object (overrides, dependencies, devDependencies, peerDependencies, peerDependenciesMeta, optionalDependencies) read under its plant's own label with no raw text handed (KEY_VALUE_PLANTS in overrides, KEY_VALUE_FIELD_PLANTS in each field) and, its hyphen JSON-escaped, under package.json with its one-line raw text handed, alone and again beside a stem only its raw line sees (a shadowed duplicate keywords list), both read (KEY_VALUE_CHANNELS); its raw text one line, read beside its parsed keys and strings when it is handed, as LIVE-A1 hands the root file's: each CHANNEL_PLANTS text, one line ended by a newline, holds the stem with its hyphen JSON-escaped, so only the parsed reading sees it, alone at each of those five places, and once beside a stem only its raw line sees (a shadowed duplicate key), both read, each of those six texts read again in each CHANNEL_SPACINGS form (a top-level string field holding two spaces ahead of the stem's field, the same field behind it, a space after every colon, and a top-level string field holding the stem's two words split by a space ahead of the stem's field, which neither reading reads as the stem; CHANNEL_SPACED_PLANTS); a lock package with its plant's fields), the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
