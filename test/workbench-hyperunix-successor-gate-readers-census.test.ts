@@ -94,7 +94,8 @@
  * identifier it is handed reading green (GP24-B-HARDCODE). Read here, in cut #2, as: one reading, quotesReading, holds every
  * check; the QUOTES reading row runs it over the delivered helper header and catalogs and finds nothing, and each of the 28
  * QUOTES controls runs it over one planted mismatch (the gate's witnesses among them) and holds exactly the findings that
- * mismatch earns, so a check hollowed in the reading reds the control planting what that check finds. This cut changes no
+ * mismatch earns, so a check hollowed in the reading reds a control whenever the hollowing changes what that control's plant
+ * reads (cut #6: a hollowing that changes no control's reading is NOT CLAIMED). This cut changes no
  * reader code, no plant, no landed pin and no landed row: the reading row and the controls replace cut #1's four QUOTES rows,
  * the helper header's block states the reading and names the controls, and FROZEN SHAPE pins the reading row with its
  * catalogs' entry counts and each control with its finding count. Refusal #2 (gate-prep-16, O:2091) found three claim sets
@@ -121,9 +122,11 @@
  * per-tag row, claimed for six sweeps and falsified on the first only (GP13-M-SWEEPS-FIRST; witness GP13-S-WHITE-NBSP). Read
  * here, in cut #4, as: both comparisons run in one reading, plantsReading, over the fixture's controls and the census's; the
  * QUOTES PLANTS reading row runs it over the delivered fixture and controls and finds nothing, and each of the 30 QUOTES
- * PLANTS controls runs it over one planted mismatch (a sweep: one per tag) - a QUOTES control re-pointed (GP13-S-CASE's form among them), every tag
- * of each of the six sweeps re-pointed, the type query's written line with each white space and printable ASCII character
- * written for its space or after it, or fixture entries rewritten, renamed, swapped, removed or added - and holds exactly
+ * PLANTS controls runs it over one planted mismatch (a sweep: one per tag), each in the one form its control plants (cut #6:
+ * ENUMERATION names each form by its content, every other form NOT CLAIMED) - a QUOTES control re-pointed (GP13-S-CASE's
+ * form among them), every tag of each of the six sweeps re-pointed, the type query's written line with each white space and
+ * printable ASCII character written for its space or after it, or fixture entries rewritten, renamed, swapped, removed or
+ * added - and holds exactly
  * the findings that mismatch earns; the fixture names the QUOTES PLANTS controls too, each with its plant's lines, so each is
  * bound to its plant outside this census. This cut changes no reader code, no plant, no QUOTES control and no landed row: the
  * reading row and the controls replace cut #3's two QUOTES PLANTS rows, and FROZEN SHAPE pins the reading row with its control
@@ -138,11 +141,28 @@
  * QP-IDS-FIRST and QP-FIRST-LINE plant the fixture's first entry in the forms of the gate's two fixture witnesses,
  * QP-IDS-EVERY writes every fixture id and QP-LINES-EVERY every fixture line with a mark after it (a whole-fixture write,
  * listed in the fixture as a line opening "* "); QC-VOCAB-FIRST and QC-VOCAB-LAST plant the gate's two Vocabulary witnesses
- * and QC-VOCAB-EVERY leaves the Vocabulary's definitions holding no quote; and QC-RUN-INDENT-TWO ends the quote run at a line
- * opening with two spaces after its asterisk (refusal #3's GP13-M-RUN-STOP-TWO, unrealized there, red here). This cut
- * changes no reader code, no catalog plant and no landed row outside the QUOTES rows: the helper header's block names the
- * four new QUOTES controls, the fixture lists the eight new controls and the QUOTES PLANTS positions they shift, and FROZEN
- * SHAPE pins each new control with its finding count.
+ * and QC-VOCAB-EVERY leaves the Vocabulary's definitions holding no quote; and QC-RUN-INDENT-TWO ends the quote run before
+ * the block's last quote line written with two spaces after its asterisk (refusal #3's GP13-M-RUN-STOP-TWO, unrealized
+ * there, red here). This cut changes no reader code, no catalog plant and no landed row outside the QUOTES rows: the helper
+ * header's block names the four new QUOTES controls, the fixture lists the eight new controls and the QUOTES PLANTS
+ * positions they shift, and FROZEN SHAPE pins each new control with its finding count. Refusal #5 (gate-prep-16, O:2156;
+ * R-B601 adopted PREP's reading (A), executed the structural exit R-B590 pre-bound - the content-form work filed as the
+ * child wb-0fq9 - and ordered this FINAL cut #6 as the fail-closed core) found four one-edit content-form members keeping
+ * this census green while real-tree witnesses red it, each against family words wider than the plants: U1 the quote run
+ * read without the lines left empty once its indent is sliced (GP16E-Q-RUN-DROP-EMPTY; witness GP16E-WQ-RUN-BLANK-MID;
+ * the run's extent words), U2 the fixture read without its empty lines or its entries holding no line
+ * (GP16E-P-FIX-DROP-EMPTY-LINE and -DROP-EMPTY-ENTRY; witnesses GP16E-WP-FIX-EMPTY-LINE and -EMPTY-ENTRY; 'a line ... added'
+ * and 'the ids ... added') and U3 the ids compared without their letters' case (GP16E-P-IDS-CASEFOLD; witness
+ * GP16E-WP-IDS-LOWER-MID; 'the ids renamed' and 'when they differ, position by position'). Read here, in cut #6, as the
+ * fail-closed core - claims equal to pins: the census claims of its two QUOTES readings exactly the two reading rows' empty
+ * readings of the delivered tree and each control's findings for its one plant; ENUMERATION names each plant by its
+ * content, each family word of the QUOTES claim words is narrowed to the content its controls plant, and every other form
+ * is NOT CLAIMED (NOT CLAIMED below), refusal #5's four forms among them. The words that describe what the readings read or
+ * find (QUOTES and QUOTES PLANTS below, the helper header's VOCABULARY QUOTES block, the code's comments and the row
+ * titles) describe the code and claim no form beyond those plants; a control's plant words stay NOT CLAIMED. This cut
+ * changes no reader code, no control, no plant, no fixture byte, no row id and no pin - only this census's comments, the
+ * two QUOTES reading rows' titles and the helper header's prose - so refusal #4's cures and cut #5's position members carry
+ * forward unchanged.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -219,34 +239,45 @@
  *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census. Cut #4 adds TYPE_PLACES,
  *   ACCESS_BASES, EXPORT_PLACES and JSX_PLACES to those catalogs and the TW9- ids to the twins the helper header must name.
  *   wb-cl20 adds CALLEE_WRAPPERS to those catalogs and the TW9C4- ids to the twins the helper header must name.
- *  QUOTES (wb-3uxh cuts #2 and #3; standing rule 16 CT3, CT5 and CT6, outside this census): quotesReading reads a helper header (its
- *   leading comment, line by line), the NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS entries and the census's control ids,
- *   and finds, in order: the count of lines opening " * VOCABULARY QUOTES (" and of lines opening " * Vocabulary (refusal #2 on
- *   wb-tz2.21; " when either is not one, and then nothing else; the quote-run lines (the lines opening " *   " after the
- *   block's heading and prose, each without that indent) that differ, position by position, from the entries' lines - the
- *   catalog, the label in double quotes, a colon, a space and the entry's text written with name (a CALLEE_WRAPPERS entry:
- *   require behind the wrapper, called with ("./lg-x.js")) on one line, its lines each without leading and trailing white
- *   space, the empty ones dropped, joined by one space - reported as their count with the first differing line, what it reads
- *   and the entry's line it is owed; each entry whose one-line text, its final semicolon aside, stands nowhere whole in the
- *   Vocabulary's definitions (the lines from the opening line to the heading, each without its leading " * " or " *", joined
- *   by one space; whole: after the text's start, a space or an opening parenthesis, and before the text's end, a space, a
- *   comma, a semicolon, a closing parenthesis or a full stop the text's end or a space follows); each entry whose text written
- *   with require (a CALLEE_WRAPPERS entry: name) is not its one-line text with that identifier for each occurrence of name
- *   (require); and the QC- ids the block's heading and prose name when they differ, position by position, from the census's
- *   control ids, as the count of positions that differ (cut #5), both counts and the first difference. The QUOTES reading row
- *   holds no finding on the delivered tree; each QUOTES control holds exactly the findings
- *   of its one plant (a sweep's: each tag's, after the tag's name). QUOTES PLANTS (cuts #3 and #4): plantsReading reads the
- *   QUOTES PLANTS fixture's controls (outside this census) and the census's - every QUOTES control's plant written line by
- *   line, each line a header edit removes from and writes into the helper's leading comment (the edit's common leading and
- *   trailing lines dropped) and each entry plant written with both identifiers, a sweep's tags and its plant for <tag>; then
- *   every QUOTES PLANTS control's re-pointings, fixture rewrites and (cut #5) whole-fixture writes written line by line - and
- *   finds, in order: the ids, when they differ position by position, as the count of positions that differ (cut #5), both
- *   counts and the first difference; then each control whose lines differ,
- *   position by position, from those of the fixture's control at its position, as the count of differing lines, both line
- *   counts and the first differing line, what it reads and what it owes; and, for a sweep, each tag whose plant's lines differ
- *   so from the fixture's lines after its tags line with the tag written for each <tag>. The QUOTES PLANTS reading row holds no
- *   finding on the delivered tree; each QUOTES PLANTS control holds exactly the findings of its one plant (a sweep's: each
- *   tag's, after the tag's name).
+ *  QUOTES (wb-3uxh cuts #2 to #6; standing rule 16 CT3, CT5 and CT6, outside this census): quotesReading reads a helper
+ *   header (its leading comment, line by line), the NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS entries and the census's
+ *   control ids. CLAIMED (cut #6, the fail-closed core): exactly the QUOTES reading row's empty reading of the delivered
+ *   helper header and catalogs and each QUOTES control's findings for its one plant (a sweep's: each tag's, after the tag's
+ *   name), each plant named by its content in ENUMERATION; the rest of this paragraph describes what the code computes and
+ *   claims no form beyond those plants (NOT CLAIMED below). The code reports, in order: the count of lines opening
+ *   " * VOCABULARY QUOTES (" and of lines opening " * Vocabulary (refusal #2 on wb-tz2.21; " when either is not one, and then
+ *   nothing else; the quote-run lines (read from the first line opening " *   " after the block's heading and prose to the
+ *   first line that does not open so, each without that indent) that differ, position by position, from the entries' lines -
+ *   the catalog, the label in double quotes, a colon, a space and the entry's text written with name (a CALLEE_WRAPPERS
+ *   entry: require behind the wrapper, called with ("./lg-x.js")) on one line, its lines each without leading and trailing
+ *   white space, the empty ones dropped, joined by one space - reported as their count with the first differing line, what it
+ *   reads and the entry's line it is owed; each entry whose one-line text, its final semicolon aside, stands nowhere whole in
+ *   the Vocabulary's definitions (the lines from the opening line to the heading, each without its leading " * " or " *",
+ *   joined by one space; whole: after the text's start, a space or an opening parenthesis, and before the text's end, a
+ *   space, a comma, a semicolon, a closing parenthesis or a full stop the text's end or a space follows); each entry whose
+ *   text written with require (a CALLEE_WRAPPERS entry: name) is not its one-line text with that identifier for each
+ *   occurrence of name (require); and the QC- ids the block's heading and prose name when they differ, position by position,
+ *   from the census's control ids, as the count of positions that differ (cut #5), both counts and the first difference. The
+ *   run's extent, a line written into or dropped from the run, a heading or opening line's count and a control name's
+ *   difference are claimed only as ENUMERATION's controls plant them: a run line holding nothing or only white space after
+ *   its indent is NOT CLAIMED, as is every other form. The QUOTES reading row holds no finding on the delivered tree; each
+ *   QUOTES control holds exactly the findings of its one plant (a sweep's: each tag's, after the tag's name).
+ *  QUOTES PLANTS (cuts #3 to #6): plantsReading reads the QUOTES PLANTS fixture's controls (outside this census) and the
+ *   census's - every QUOTES control's plant written line by line, each line a header edit removes from and writes into the
+ *   helper's leading comment (the edit's common leading and trailing lines dropped) and each entry plant written with both
+ *   identifiers, a sweep's tags and its plant for <tag>; then every QUOTES PLANTS control's re-pointings, fixture rewrites
+ *   and (cut #5) whole-fixture writes written line by line. CLAIMED (cut #6): exactly the QUOTES PLANTS reading row's empty
+ *   reading of the delivered fixture and controls and each QUOTES PLANTS control's findings for its one plant, each plant
+ *   named by its content in ENUMERATION; the rest describes the code and claims no form beyond those plants. The code
+ *   reports, in order: the ids, when they differ position by position, as the count of positions that differ (cut #5), both
+ *   counts and the first difference; then each control whose lines differ, position by position, from those of the fixture's
+ *   control at its position, as the count of differing lines, both line counts and the first differing line, what it reads
+ *   and what it owes; and, for a sweep, each tag whose plant's lines differ so from the fixture's lines after its tags line
+ *   with the tag written for each <tag>. An id's difference and a line or an entry added to or dropped from the fixture are
+ *   claimed only as ENUMERATION's controls plant them: an id renamed by its letters' case alone, an empty fixture line or one
+ *   of white space only and a fixture entry holding no line are NOT CLAIMED, as is every other form. The QUOTES PLANTS
+ *   reading row holds no finding on the delivered tree; each QUOTES PLANTS control holds exactly the findings of its one
+ *   plant (a sweep's: each tag's, after the tag's name).
  *  FROZEN SHAPE (standing rule 16): one literal pins every row as table:id - a GATE or TWIN row with its pin keys, a MEMBERS row
  *   with its claim, its place among that claim's pieces and its pin count, the QUOTES reading row with its catalogs' entry
  *   counts, each QUOTES control with its finding count, the QUOTES PLANTS reading row with its QUOTES and QUOTES PLANTS control
@@ -413,30 +444,69 @@
  *    QP-IDS-FIRST and QP-IDS-EVERY) and the position members cut #5 authored red-first (the S5-P- members: each loop of
  *    plantsReading - the ids, the controls, a control's lines and a sweep's tags - skipping its first position, its last or
  *    one inside), each red on at least one control.
- * ENUMERATION (wb-3uxh cut #5, the enumerate-the-resolvable form R-B590 orders for the frozen QUOTES class; every case named is
- * in this file): the census claims exactly these pinned forms of its two QUOTES readings, each loop at its first position, its
- * last and every position:
- *  - quotesReading: the quote run against the entries - first QC-ORDER (line 1), last QC-MISSING, QC-EXTRA and
- *    QC-RUN-INDENT-TWO, every position QC-PROSE-BREAK (49 of 49 lines differ); the Vocabulary leg - first QC-VOCAB-FIRST, last
- *    QC-VOCAB-LAST, every entry QC-VOCAB-EVERY (49 findings); the second identifier - every entry QC-HARDCODE-EVERY (49
- *    findings; refusal #3's GP13-M-SECOND-INCLUDES and -SECOND-LENGTH, the check holding an entry written with the second
- *    identifier anywhere or by length only, read 0 failed alone and stay unrealized - their witnesses GP13-W-SECOND-PARTIAL
- *    and -SECOND-SAMELEN red beside them through QC-HARDCODE-EVERY, R-B262 as refusals #3 and #4 record); the control names -
- *    first QC-NAMES-ABOVE, last QC-NAMES-BELOW, every position QC-PROSE-BREAK (40 of 40 differ); the run's extent - its lines
- *    open with three spaces after the asterisk (QC-RUN-INDENT-TWO) and it starts
- *    directly after the block's prose (QC-PROSE-BREAK), under one heading and one opening (QC-HEADING-TWICE, QC-HEADING-NONE,
- *    QC-OPENING-TWICE, QC-OPENING-NONE); and the quote-run comparison and flattening forms R-B564 guards - exactly the forms the
- *    NOT CLAIMED sentence below lists by control (the flattening's dropping of white space trailing an entry's line is NOT
- *    CLAIMED: no entry's line carries any, and refusal #3's GP13-M-ONELINE-TRIMSTART, which keeps it, reads more, never less).
- *  - plantsReading: the ids - first QP-IDS-FIRST, last QP-IDS-EXTRA and QP-IDS-DROP, every position QP-IDS-EVERY (74 of 74
- *    differ); the controls - first QP-FIRST-LINE, last QP-IDS-DROP, every position QP-LINES-EVERY (a finding for each of the 74
- *    controls); a control's lines - first QP-LEAD, last QP-LINE-DROPPED, QP-LINE-ADDED and QP-EVERY-LAST, every line of every
- *    control QP-LINES-EVERY (each control's lines all differing); a sweep's tags - every tag of each of the six QUOTES sweeps
- *    (the QP-TAGS- controls), of both QUOTES PLANTS sweeps (QP-TEMPLATE-QP) and of all eight (QP-LINES-EVERY); and the
- *    comparison's forms - exactly those the NOT CLAIMED sentence below lists by control.
- *  - the census-local re-pointing family: every QUOTES and QUOTES PLANTS control, the first included, is bound to its plant by
- *    the fixture at its position, so a control re-pointed at an unrelated passing case, its findings following, reds the
- *    reading row and the other QUOTES PLANTS controls.
+ * ENUMERATION (wb-3uxh cuts #5 and #6: the enumerate-the-resolvable form R-B590 orders for the frozen QUOTES class, narrowed
+ * by cut #6 to the fail-closed core R-B601 orders; every case named is in this file): the census claims of its two QUOTES
+ * readings exactly the two reading rows' empty readings of the delivered tree and the plants below, each read with exactly
+ * its control's findings - each plant named by its content, each loop at its first position, its last and every position as
+ * these plants reach it - and no other form (NOT CLAIMED below):
+ *  - quotesReading, the heading and the opening: the VOCABULARY QUOTES heading line written a second time after itself
+ *    (QC-HEADING-TWICE) and its word QUOTES written QUOTE (QC-HEADING-NONE); the Vocabulary's opening line written a second
+ *    time after itself (QC-OPENING-TWICE) and its semicolon written as a comma (QC-OPENING-NONE) - each read as a count of
+ *    two or of none, and then nothing else.
+ *  - quotesReading, the run's extent: its start directly after the block's prose, a comment line holding only its asterisk
+ *    written directly after the heading line, so no run is read (QC-PROSE-BREAK: 0 lines, 49 of 49 differ); its end, the
+ *    block's last quote line written with two spaces after its asterisk (QC-RUN-INDENT-TWO) or deleted (QC-MISSING), each
+ *    read as a run of 48 lines; and the two lines written into it, the block's last quote line written a second time after
+ *    itself (QC-EXTRA) and the one prose line QC-UNPARSED writes after the three JSX_PLACES lines,
+ *    (the CALLEE_WRAPPERS quotes follow, each called with ("./lg-x.js")), each read as a run of 50 lines.
+ *  - quotesReading, the run against the entries: first QC-ORDER (the first two lines swapped, line 1), last QC-MISSING and
+ *    QC-RUN-INDENT-TWO (line 49) and QC-EXTRA (line 50), every position QC-PROSE-BREAK; the three JSX_PLACES lines moved
+ *    after the five CALLEE_WRAPPERS lines (QC-CATORDER); and the one-line forms R-B564 guards - exactly the forms the NOT
+ *    CLAIMED sentence below lists by control (the flattening's dropping of white space trailing an entry's line is NOT
+ *    CLAIMED: no entry's line carries any, and refusal #3's GP13-M-ONELINE-TRIMSTART, which keeps it, reads more, never
+ *    less).
+ *  - quotesReading, the Vocabulary leg: first QC-VOCAB-FIRST (the first entry's one whole occurrence written m.name()), last
+ *    QC-VOCAB-LAST (the last entry's written require!("./lg-x.js")()), every entry QC-VOCAB-EVERY (the opening line moved
+ *    directly above the heading; 49 findings); the <T> wrapper's quote dropped from the Vocabulary's callee sentence
+ *    (QC-VOCAB-DROP) and, so dropped, written in the line above the Vocabulary's opening (QC-VOCAB-ABOVE) and in the
+ *    VOCABULARY QUOTES heading line (QC-VOCAB-BELOW); the default import plant's second statement dropped (QC-VOCAB-SECOND);
+ *    the type reference's and the type query's own plants dropped, so each quote stands only as the head of a longer plant
+ *    (QC-VOCAB-HEAD); the type reference's own plant followed by each printable ASCII character but a comma, a semicolon and
+ *    a closing parenthesis (QC-VOCAB-AFTER) and preceded by each but an opening parenthesis (QC-VOCAB-BEFORE); and the
+ *    property key's entry written with two spaces, or with each white space character but the space, after its brace, so its
+ *    quote stands nowhere whole (QC-SPACE-ENTRY, QC-ENTRY-WHITE) - the NOT CLAIMED sentence below bounds the characters
+ *    around a quote.
+ *  - quotesReading, the second identifier: an entry written with the block's identifier whatever identifier it is handed -
+ *    NONVALUE_PLACES' type literal set accessor key (QC-HARDCODE), JSX_PLACES' JSX attribute's name with no value
+ *    (QC-HARDCODE-JSX), CALLEE_WRAPPERS' satisfies expression (QC-HARDCODE-CW) and every entry of the three catalogs
+ *    (QC-HARDCODE-EVERY, 49 findings; refusal #3's GP13-M-SECOND-INCLUDES and -SECOND-LENGTH, the check holding an entry
+ *    written with the second identifier anywhere or by length only, read 0 failed alone and stay unrealized - their witnesses
+ *    GP13-W-SECOND-PARTIAL and -SECOND-SAMELEN red beside them through QC-HARDCODE-EVERY, R-B262 as refusals #3 and #4
+ *    record).
+ *  - quotesReading, the control names: QC-PLANT moved into the helper header above the block (QC-NAMES-ABOVE, first
+ *    position), QC-NAMES-BELOW moved below it (QC-NAMES-BELOW, last position), the prose ended directly after the heading so
+ *    the block names none (QC-PROSE-BREAK, 40 of 40 differ), QC-NAMES dropped (QC-NAMES) and QC-LABEL and QC-ORDER swapped
+ *    (QC-NAMES-ORDER).
+ *  - plantsReading, the ids: the fixture's first id written QC-PLANTS for QC-PLANT, a letter added at its end (QP-IDS-FIRST,
+ *    first position); QC-CATORDER written QC-CAT-ORDER, a hyphen added inside it (QP-IDS-RENAME); every id written with -X
+ *    after it (QP-IDS-EVERY, every position: 74 of 74 differ); QC-MISSING's and QC-EXTRA's entries swapped (QP-IDS-SWAP); a
+ *    second QC-PLANT entry, QC-PLANT's lines in it, added after the last (QP-IDS-EXTRA, last position); and the last entry
+ *    removed (QP-IDS-DROP, last position).
+ *  - plantsReading, the controls and their lines: first QP-FIRST-LINE (the fixture's first entry written with
+ *    require: string for require: number) and QP-LEAD (QC-SPACE-QUOTE's entry written with a space before its removed line,
+ *    its first line); last QP-IDS-DROP (the last entry removed), QP-LINE-DROPPED (QC-LABEL's entry written without its
+ *    written line, its last line), QP-LINE-ADDED (QC-CATALOG's entry with its written line written a second time after
+ *    itself) and QP-EVERY-LAST (QC-HARDCODE-EVERY's last entry plant re-pointed, line 49); every line of every control
+ *    QP-LINES-EVERY (each written with ! after it); and the other one-line forms exactly as the NOT CLAIMED sentence below
+ *    lists them by control.
+ *  - plantsReading, a sweep's tags: every tag of each of the six QUOTES sweeps re-pointed, each sweep's plant for every tag
+ *    but <tag> at its tag written at another place of its line (the QP-TAGS- controls), both QUOTES PLANTS sweeps' plants for
+ *    <tag> written with a space after it (QP-TEMPLATE-QP), QC-ENTRY-WHITE's with a space before it (QP-TEMPLATE),
+ *    QC-RUN-WHITE's tags line without U+00A0 (QP-TAGS-LINE), and every tag of all eight (QP-LINES-EVERY).
+ *  - the census-local re-pointing family: every QUOTES and QUOTES PLANTS control, the first included, is bound to its plant
+ *    by the fixture at its position, so a control re-pointed at an unrelated passing case, its findings following, reds the
+ *    reading row and the other QUOTES PLANTS controls whenever the re-pointed plant's lines differ from the fixture's in a
+ *    form this list or the NOT CLAIMED sentence below claims for the QUOTES PLANTS comparison.
  * NOT CLAIMED: each mode the helper header's NOT CLAIMED block names NOT CLAIMED is NOT CLAIMED by this census, and so is every
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
  * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee; a
@@ -453,49 +523,72 @@
  * CLAIMED by this census beyond its catalog's count and the readings its MEMBERS pins hold; an entry written with an
  * identifier other than name and require (a CALLEE_WRAPPERS entry: around a callee other than require and name) is NOT
  * CLAIMED by the QUOTES reading, nor are a plant's line breaks and the white space leading or trailing each of its lines (the
- * reading writes an entry on one line); the quote-run comparison is claimed (cut #3, refusal #2's U2) for exactly the
- * differences the controls plant - a white space character (the engine's set) or a printable ASCII character after or before
- * a quote line's text (QC-RUN-AFTER, QC-RUN-BEFORE), its final semicolon dropped (QC-RUN-NOSEMI), a white space character but
- * the space written for a space inside a quote line or an entry (QC-RUN-WHITE, QC-ENTRY-WHITE), two spaces for one
- * (QC-SPACE-QUOTE, QC-SPACE-ENTRY), a letter in its other case (QC-CASE), a quote line opening with two spaces after its
- * asterisk, which ends the run (QC-RUN-INDENT-TWO, cut #5), and the labels, catalogs, plants, orders and
- * missing, extra and unparsed lines the other controls plant - and every other difference between a quote line and its
- * entry's line is NOT CLAIMED, though the reading compares each pair exactly: a character outside printable ASCII and that
+ * reading writes an entry on one line); the quote-run comparison is claimed (cut #3, refusal #2's U2; narrowed to the plants
+ * by cut #6) for exactly the differences the controls plant, each at the line its control writes it on - a white space
+ * character (the engine's set) or a printable ASCII character after or before the get accessor key's quote line's text,
+ * line 6 (QC-RUN-AFTER, QC-RUN-BEFORE), that line's final semicolon dropped (QC-RUN-NOSEMI), a white space character but the
+ * space written for the space after that line's first brace and after the property key entry's brace (QC-RUN-WHITE,
+ * QC-ENTRY-WHITE), two spaces for the one after the property key's brace in its quote line, line 4, and in its entry
+ * (QC-SPACE-QUOTE, QC-SPACE-ENTRY), the type query's LgT written lgT, line 15 (QC-CASE), the block's last quote line opening
+ * with two spaces after its asterisk, which ends the run before it (QC-RUN-INDENT-TWO, cut #5), the block label's quote line
+ * relabelled 'a labeled block', line 41 (QC-LABEL), the pair of parentheses' line written under the catalog CALLEE_WRAPPER,
+ * line 45 (QC-CATALOG), NONVALUE_PLACES' type literal set accessor key's entry re-pointed at a type literal property
+ * signature, line 36 (QC-PLANT), and the orders and run lines ENUMERATION names (QC-ORDER, QC-CATORDER, QC-MISSING, QC-EXTRA,
+ * QC-UNPARSED) - and every other difference between a quote line and its entry's line is NOT CLAIMED, though the code
+ * compares each pair in full (a description, not a claim): a character outside printable ASCII and that
  * white space set before or after the text, and, inside it, a character added, dropped or written for another beyond those
  * forms (a quote character for another, a bracket dropped, say); the characters a whole quote stands between are pinned, at
  * the type reference's quote, for every printable ASCII character directly before or after it (QC-VOCAB-BEFORE,
- * QC-VOCAB-AFTER), each entry's quote standing nowhere whole is pinned for every entry (QC-VOCAB-EVERY, cut #5) and for the
- * first and the last as the gate's witnesses plant them (QC-VOCAB-FIRST, QC-VOCAB-LAST), and a character outside printable
- * ASCII there is NOT CLAIMED, as is a quote standing whole only as the head
- * or tail of a longer plant it meets across a character the reading accepts (export type LgT = name | lgO, say); an entry and
- * its quote line re-pointed together at another plant the Vocabulary quotes are pinned since cut #3, through the QUOTES
- * PLANTS fixture, which writes every entry of the three catalogs (QC-HARDCODE-EVERY's plant) with both identifiers outside
- * this census (refusal #1's F2, GP24-B-COORD, reads 1 failed), though the Vocabulary leg itself binds plant texts, not labels;
- * and a control's plant words are NOT CLAIMED (its plant is pinned: QUOTES PLANTS). The QUOTES PLANTS comparison is claimed
- * (cut #4, refusal #3's U1 and U2) for exactly the differences its controls plant - two spaces for one (QP-CASE), a letter's
- * case (QP-CASE-LETTER), each white space character but the space and each printable ASCII character written for a space
- * (QP-CHAR-FOR-SPACE), each white space and printable ASCII character after a line (QP-CHAR-AFTER, QP-TRAIL), a space before
- * a line (QP-LEAD), a line's final character dropped (QP-SEMI), an entry line's text, its first identifier's half alone and
- * its second identifier's half alone (QP-ENTRY, QP-ENTRY-FIRST, QP-ENTRY-SECOND), the line a header edit removes and the last
- * line of a long plant re-pointed at another plant's (QP-MINUS, QP-EVERY-LAST), two lines swapped (QP-ORDER-LINES), a line
- * dropped or added (QP-LINE-DROPPED, QP-LINE-ADDED), a sweep's tags line and its plant for <tag> (QP-TAGS-LINE, QP-TEMPLATE,
- * QP-TEMPLATE-QP), a QUOTES sweep's plant for every tag of each of the six re-pointed at another sweep's form (the QP-TAGS-
- * controls), a QUOTES PLANTS control's written line and its position, id and re-pointed-id lines (QP-QP, QP-MARKS), the ids
- * renamed, swapped, dropped and added (the QP-IDS- controls, QP-IDS-FIRST at the first position and QP-IDS-EVERY at every
- * position, cut #5), and a line written with a character after it at the first position (QP-FIRST-LINE's form, an entry
- * line's second identifier's half) and at every line of every control (QP-LINES-EVERY, cut #5) - and every other difference
- * between a control's lines and
- * the fixture's is NOT CLAIMED, though the reading compares each line exactly: inside a line, a character written for
- * another beyond those forms (a comma for a semicolon, a tab for a no-break space, say), a character added or dropped beyond
- * them, and a character outside printable ASCII and that white space set anywhere in a line; a QUOTES PLANTS control's plant
- * words are NOT CLAIMED (its plant is pinned by the fixture).
- * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family: every
- * mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are pins (wb-cl20), as
- * are the cut #5 gate's boundary members on those sets; none is a residual. wb-3uxh names no residual: F2's class is pinned
- * for the three catalogs F2 names, refusal #1's U1-U4 forms and refusal #2's U1 and U2 forms are QUOTES controls, refusal
- * #2's U3 form is pinned by the QUOTES PLANTS fixture, refusal #3's U1 and U2 forms are QUOTES PLANTS controls, refusal #4's
- * U1 forms are QUOTES PLANTS controls and its U2 forms QUOTES controls (cut #5, ENUMERATION above), and every other form is
- * the scope sentence above.
+ * QC-VOCAB-AFTER), each entry's quote standing nowhere whole is pinned for every entry as QC-VOCAB-EVERY's plant leaves it,
+ * the Vocabulary reduced to its opening line (cut #5), and for the first and the last as the gate's witnesses plant them
+ * (QC-VOCAB-FIRST, QC-VOCAB-LAST), and a character outside printable ASCII there is NOT CLAIMED, as is a quote standing whole
+ * only as the head or tail of a longer plant it meets across a character the reading accepts (export type LgT = name | lgO,
+ * say); an entry and its quote line re-pointed together at another plant the Vocabulary quotes are pinned since cut #3
+ * whenever the re-pointing changes the entry's line in a form the QUOTES PLANTS comparison claims, through the QUOTES PLANTS
+ * fixture, which writes every entry of the three catalogs (QC-HARDCODE-EVERY's plant) with both identifiers outside this
+ * census (refusal #1's F2, GP24-B-COORD, reads 1 failed), though the Vocabulary leg itself binds plant texts, not labels; and
+ * a control's plant words are NOT CLAIMED (its plant is pinned: QUOTES PLANTS). The QUOTES PLANTS comparison is claimed (cut
+ * #4, refusal #3's U1 and U2; narrowed to the plants by cut #6) for exactly the differences its controls plant, each at the
+ * line its control writes it on - QC-CASE re-pointed at the type query's quote line written with two spaces after its '='
+ * (QP-CASE) and written export type LGT = typeof name; (QP-CASE-LETTER), QC-CASE's written line with each white space
+ * character but the space and each printable ASCII character written for the space before typeof (QP-CHAR-FOR-SPACE), with
+ * each white space and printable ASCII character after it (QP-CHAR-AFTER) and without its final semicolon (QP-SEMI),
+ * QC-SPACE-QUOTE's written line with a space after it (QP-TRAIL) and its fixture entry with a space before its removed line
+ * (QP-LEAD), QC-HARDCODE's entry line re-pointed at QC-PLANT's, at its first identifier's half alone and at its second
+ * identifier's half alone (QP-ENTRY, QP-ENTRY-FIRST, QP-ENTRY-SECOND), QC-MISSING's removed line re-pointed at the <T>
+ * assertion's (QP-MINUS) and QC-HARDCODE-EVERY's last entry line at the pair of parentheses' text (QP-EVERY-LAST), QC-ORDER's
+ * fixture entry with its two written lines swapped (QP-ORDER-LINES), QC-LABEL's without its written line (QP-LINE-DROPPED)
+ * and QC-CATALOG's with its written line written a second time after itself (QP-LINE-ADDED), QC-RUN-WHITE's tags line without
+ * U+00A0 (QP-TAGS-LINE), QC-ENTRY-WHITE's plant for <tag> with a space before each <tag> (QP-TEMPLATE) and
+ * QP-CHAR-FOR-SPACE's and QP-CHAR-AFTER's with a space after it (QP-TEMPLATE-QP), each of the six QUOTES sweeps' plants for
+ * every tag but <tag> re-pointed at its tag written at another place of its line (the QP-TAGS- controls), QP-CASE's fixture
+ * entry with one space after the type query's '=' (QP-QP) and QP-QP's with its position, id and re-pointed-id lines each
+ * naming another (QP-MARKS), the ids in the six forms ENUMERATION names (the QP-IDS- controls), the fixture's first entry
+ * written with require: string for require: number (QP-FIRST-LINE) and every line of every fixture entry written with ! after
+ * it (QP-LINES-EVERY, cut #5) - and every other difference between a control's lines and the fixture's is NOT CLAIMED, though
+ * the code compares each line in full (a description, not a claim): inside a line, a character written for another beyond
+ * those forms (a comma for a semicolon, a tab for a no-break space, say), a character added or dropped beyond them, and a
+ * character outside printable ASCII and that white space set anywhere in a line; a QUOTES PLANTS control's plant words are
+ * NOT CLAIMED (its plant is pinned by the fixture).
+ * Cut #6 (the fail-closed core R-B601 orders; a scope sentence, no residual): every form of the helper header, the three
+ * catalogs or the QUOTES PLANTS fixture but the delivered one and the plants of the QUOTES and QUOTES PLANTS controls is NOT
+ * CLAIMED by this census, whatever finding the code would report for it - refusal #5's four forms among them: a quote-run
+ * line holding nothing after its indent (GP16E-WQ-RUN-BLANK-MID's line) or only white space, an empty fixture line or one of
+ * white space only (GP16E-WP-FIX-EMPTY-LINE's form), a fixture entry holding no line (GP16E-WP-FIX-EMPTY-ENTRY's) and an id
+ * renamed by its letters' case alone (GP16E-WP-IDS-LOWER-MID's); and so are, among the rest, a heading or opening line
+ * written in any other form, number or place, a line written into, dropped from or moved within the run in any other form or
+ * place, the run started or ended at any other line, the Vocabulary's text, its extent or the characters around a quote
+ * changed in any other form, an entry written with its second identifier in any other form, a control name added, renamed,
+ * written twice or moved in any other form, a fixture entry or id added, dropped, renamed or moved in any other form or
+ * place, and any other line of a control or of the fixture added, dropped, moved or rewritten.
+ * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family:
+ * every mode refusal #3 records for the two frozen claim sets stays a pin, and the fifteen refusal #4 records are pins
+ * (wb-cl20), as are the cut #5 gate's boundary members on those sets; none is a residual. wb-3uxh names no residual: F2's
+ * class is pinned for the three catalogs F2 names, refusal #1's U1-U4 forms and refusal #2's U1 and U2 forms are QUOTES
+ * controls, refusal #2's U3 form is pinned by the QUOTES PLANTS fixture, refusal #3's U1 and U2 forms are QUOTES PLANTS
+ * controls, refusal #4's U1 forms are QUOTES PLANTS controls and its U2 forms QUOTES controls (cut #5, ENUMERATION above),
+ * refusal #5's four forms are the cut #6 scope sentence above (NOT CLAIMED, no residual), and every other form is the scope
+ * sentences above.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -2766,7 +2859,10 @@ const TWIN_ROWS: readonly TwinRow[] = [
 // census's literals. Refusal #1 (gate-prep-24, O:2063) found cut #1's checks pinned only by their live reading (U1-U3) and the
 // block's heading never asserted unique (U4). Cut #2 runs every check in one reading, quotesReading: the live row runs it over
 // the delivered header and catalogs, and each QUOTES control runs it over one planted mismatch, holding exactly the findings
-// that mismatch earns - so a check hollowed in the reading reds the control that plants what the check finds.
+// that mismatch earns - so a check hollowed in the reading reds a control whenever the hollowing changes what that control's
+// plant reads. Cut #6 (R-B601's fail-closed core): the comments of this section and of the two QUOTES PLANTS sections below
+// describe what the code computes; the census claims of its QUOTES readings exactly what the header's ENUMERATION lists, and
+// every other form is NOT CLAIMED there.
 
 /** A catalog the QUOTES reading binds: each entry's label and its text written with a given identifier; `quoted` is the
  * identifier the block's quotes are written with and `other` the identifier each entry is written with a second time. */
@@ -3091,7 +3187,8 @@ function plantsFixture(text: string): readonly FixtureControl[] {
 // GP13-S-WHITE-NBSP). Cut #4 runs both comparisons in one reading, plantsReading: the QUOTES PLANTS reading row runs it over
 // the delivered fixture and controls and finds nothing, and each QUOTES PLANTS control runs it over one planted mismatch (a
 // sweep: one per tag) - a QUOTES control re-pointed, every tag of a sweep re-pointed, or fixture entries rewritten - holding
-// exactly the findings that mismatch earns, so a comparison hollowed in the reading reds the control planting what it finds. The fixture names
+// exactly the findings that mismatch earns, so a comparison hollowed in the reading reds a control whenever the hollowing
+// changes what that control's plant reads (cut #6: every other hollowing NOT CLAIMED). The fixture names
 // the QUOTES PLANTS controls too, each with its plant's lines, so each is bound to its plant outside this census as the
 // QUOTES controls are.
 
@@ -3664,13 +3761,13 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   it("TILE: every MEMBERS row is keyed to a claim the header makes, in the header's order", () => {
     expect([...new Set(MEMBER_ROWS.map(row => row.key))]).toEqual(CLAIMS.map(([key]) => key));
   });
-  it("QUOTES: the reading of the delivered helper header and catalogs finds nothing - one VOCABULARY QUOTES heading and one Vocabulary opening, every quote line equal to its entry's line, every entry standing whole in the Vocabulary's definitions and written alike with its second identifier, and the block naming the census's controls in order", () => {
+  it("QUOTES: the reading of the delivered helper header and catalogs finds nothing - one VOCABULARY QUOTES heading and one Vocabulary opening, the 49 quote lines equal to the 49 entries' lines, every entry standing whole in the Vocabulary's definitions and written alike with its second identifier, and the block naming the census's 40 controls in order (the delivered tree only; each form the QUOTES controls plant is its own row)", () => {
     expect(quotesReading(HEADER, QUOTE_ROWS, QUOTE_CONTROLS.map(row => row.id))).toEqual([]);
   });
   it.each(QUOTE_CONTROLS)("QUOTES $id: the reading over $plant holds exactly the findings that plant earns", row => {
     expect(controlReading(row)).toEqual(row.findings);
   });
-  it("QUOTES PLANTS: the reading of the delivered fixture and controls finds nothing - the fixture names every QUOTES control and then every QUOTES PLANTS control, in the census's order, each with its plant's lines (a sweep: its tags, then its plant for the tag <tag>), and every sweep's plant for each of its tags is the fixture's plant for <tag> with that tag written for <tag>", { timeout: CENSUS_TIMEOUT }, () => {
+  it("QUOTES PLANTS: the reading of the delivered fixture and controls finds nothing - the delivered fixture's 74 entries name the 40 QUOTES controls and then the 34 QUOTES PLANTS controls, in the census's order, each with its plant's lines (a sweep: its tags, then its plant for the tag <tag>), and every sweep's plant for each of its tags is the fixture's plant for <tag> with that tag written for <tag> (the delivered tree only; each form the QUOTES PLANTS controls plant is its own row)", { timeout: CENSUS_TIMEOUT }, () => {
     expect(plantsPlantReading(NO_PLANTS_PLANT)).toEqual([]);
   });
   it.each(PLANTS_CONTROLS)("QUOTES PLANTS $id: the reading over $plant holds exactly the findings that plant earns", { timeout: CENSUS_TIMEOUT }, row => {

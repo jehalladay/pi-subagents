@@ -55,7 +55,8 @@
  * wb-3uxh (the R694 follow-up of wb-cl20's landing-925 F2: the census pinned each NONVALUE_PLACES, JSX_PLACES and
  * CALLEE_WRAPPERS entry by count only) changes no reader code and no plant: the VOCABULARY QUOTES block below lists, by label,
  * the plant of each entry of those three catalogs as the Vocabulary quotes it, and the census's QUOTES reading binds every entry
- * to its quote; the Vocabulary now quotes the four import plants and the variable declaration's binding-key plant whole, and
+ * to its quote, for exactly the forms the census's QUOTES controls plant (cut #6; the block's own sentences below); the
+ * Vocabulary now quotes the four import plants and the variable declaration's binding-key plant whole, and
  * quotes the satisfies and <T> wrappers in a call.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
@@ -133,13 +134,18 @@
  * catalog and the entry's label, one line per entry, in catalog order: the entry's text written with the identifier name (a
  * CALLEE_WRAPPERS entry: require behind the wrapper, called with ("./lg-x.js")) on one line - its lines, each without its
  * leading and trailing white space, the empty ones dropped, joined by one space, every other white space as written. The
- * census's QUOTES reading (cut #2, after refusal #1, gate-prep-24, O:2063) holds this heading line and the Vocabulary's
- * opening line (the one line opening "Vocabulary (refusal #2 on wb-tz2.21; ") one each in this header, then: every line of
- * the quote run below (the lines opening with three spaces after the asterisk, directly after this prose, whose every line
- * opens with one) equal to its entry's line, position by position; each entry's text, a final semicolon aside, standing
- * whole in the Vocabulary's definitions (the lines from that opening line to this heading); each entry written with a second
- * identifier (require; a CALLEE_WRAPPERS entry, name) as its text with that identifier for the first; and this block naming
- * the census's QUOTES controls in the census's order. The census's QUOTES PLANTS fixture (cut #3, after refusal #2,
+ * census's QUOTES reading (cut #2, after refusal #1, gate-prep-24, O:2063) runs five checks: this heading line and the
+ * Vocabulary's opening line (the one line opening "Vocabulary (refusal #2 on wb-tz2.21; ") one each in this header; the
+ * quote run below against the entries' lines, position by position; each entry's text, a final semicolon aside, standing
+ * whole in the Vocabulary's definitions (the lines from that opening line to this heading); each entry written with a
+ * second identifier (require; a CALLEE_WRAPPERS entry, name) as its text with that identifier for the first; and this
+ * block's control names against the census's QUOTES controls, in the census's order. Cut #6 (after refusal #5,
+ * gate-prep-16, O:2156; the fail-closed core R-B601 orders) claims each check, and the census's QUOTES PLANTS reading of
+ * the fixture named next, only for this header, the three catalogs and that fixture as written, where they find nothing,
+ * and for the one plant of each control, where they find exactly its findings (the census header's ENUMERATION names each
+ * plant by its content); every other form is NOT CLAIMED (the census header's NOT CLAIMED), a quote-run line holding
+ * nothing or only white space after its indent, an empty line or an entry holding no line in that fixture and an id renamed
+ * by its letters' case alone among them. The census's QUOTES PLANTS fixture (cut #3, after refusal #2,
  * gate-prep-16, O:2091) names each control with every line its plant removes from and writes into this comment and every
  * entry it plants; a sweep plants once per tag. Each control runs the same reading over one planted mismatch: QC-PLANT,
  * QC-LABEL, QC-ORDER, QC-CATALOG, QC-CASE, QC-SPACE-ENTRY, QC-SPACE-QUOTE, QC-RUN-AFTER, QC-RUN-BEFORE, QC-RUN-NOSEMI,
