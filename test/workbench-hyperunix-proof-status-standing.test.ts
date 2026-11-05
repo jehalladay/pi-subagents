@@ -113,12 +113,16 @@
  *      and fresh on each read, each [reading, verdict] pair in it frozen; each recorded reading a copy fired took at the call, not
  *      the reading it was handed, frozen at every depth; and, before the control runs, the probe list fired filters frozen, each
  *      probe and its expected list too, and the variants list the control rebuilds its readings from frozen, each variant at every
- *      depth), and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted
- *      status fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced
- *      reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone
- *      refuses it while the plain reading clones with the member), and R2's rows, and the channels the quiet rows visit, equal the
- *      out-of-file trap roster test/fixtures/hyperunix-proof-status-trap-roster.json (each family's id and channels), both ways and
- *      in order.
+ *      depth; and each judgement fired makes, made while neither Object.prototype nor Array.prototype holds an own toJSON and
+ *      Array.prototype's prototype is Object.prototype, read after fired takes its copy and before it reads that copy (P15: fired
+ *      refuses any other call, removing what it can of the three, recording nothing and throwing; P15's controls set each of the
+ *      three for one call, a toJSON on Object.prototype through a getter of the handed reading while fired copies it, and one that
+ *      removes itself when fired first serializes its copy, and read each such call refused, unrecorded and its member removed)),
+ *      and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted status
+ *      fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced reading
+ *      while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone refuses it
+ *      while the plain reading clones with the member), and R2's rows, and the channels the quiet rows visit, equal the out-of-file
+ *      trap roster test/fixtures/hyperunix-proof-status-trap-roster.json (each family's id and channels), both ways and in order.
  * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
  * pinned by its quiet row in Q): for K1's judge, R-INFLECTED an inflection of "prove" that drops its final e (proving, provable,
  * unprovable); R-SYNONYM a word of the same reading built on no named stem (unconfirmed, falsified, certified, attested, untrusted,
@@ -197,8 +201,25 @@
  * MEMBERS, which fired reads through valuesOf and planted), beside a probe hollow that reads them, is NOT CLAIMED by this census. A
  * coordinated hollow of one of K1's word-residual rows across this file's literals is NOT CLAIMED by this census: those rows have no
  * anchor outside this file, as before this cut.
+ * wb-2g18 (the R694 follow-up of landing 940, its gate's F1): one edit at the control's call could still change what fired's later
+ * serializations read without writing fired's data or replacing a builtin: it set Object.prototype.toJSON, the member JSON.stringify
+ * consults on each object it serializes, for the call and deleted it after (the gate's PROTOJSON, PROTOJSONL and PROTOJSON6), so the
+ * copy fired took read exact while a probe hollow's serialization of that copy read the hook's rewrite, and each read green beside
+ * the hollow the control otherwise reds (HODD, L05, L06). fired now refuses such a call at P15 (Q above; P15 reads through
+ * Object.hasOwn and Object.getPrototypeOf, builtins fired reads through). An edit at the control's call that adds a member, or a
+ * prototype holding one, that a builtin or an operator consults (a property read, a destructuring, an iteration), beside a probe
+ * hollow that reads through it, is NOT CLAIMED by this census unless P15 reads it as set: among those NOT CLAIMED are any other
+ * member of Object.prototype or Array.prototype, a member of another intrinsic (such as a return method on the array iterator
+ * prototypes, which the destructuring in valuesOf calls after P15's read), and a toJSON on either prototype that code run after
+ * P15's read sets. An edit at the control's call that sets one of the three so that fired cannot remove it (such as a
+ * non-configurable toJSON), beside a probe hollow, is NOT CLAIMED by this census either: fired still refuses the call, but the
+ * toJSON left set also reaches vitest's own serializer, which then recurses and drops Q's failure (measured: Q reported failed with
+ * no message, or Q and P1 reported pending and the file passed).
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
- * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. */
+ * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. The only
+ * global state written is P15's: its controls set a toJSON on Object.prototype or Array.prototype, or a prototype for
+ * Array.prototype, for one call each and remove it after, and fired removes what it can of one it finds (Q reads that none of the
+ * three is left set). */
 import {readFileSync} from 'node:fs';
 import {inspect, types} from 'node:util';
 import {
@@ -1324,6 +1345,25 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       Object.isFrozen(variants), variants.filter(variant => !frozenThrough(variant)).map(variant => variant.label)],
     '(P13: the probe list, a probe or its expected list, or the variants list or a variant at some depth, not frozen before the control)')
       .toStrictEqual([true, [], true, []]);
+    // P15 (wb-2g18): JSON.stringify consults a toJSON member on each object and list it serializes, read through the object's
+    // prototypes, and the copy fired takes holds plain objects and lists only, which inherit from Object.prototype and Array.prototype
+    // alone. So fired reads, after it takes its copy and before it reads that copy, whether Object.prototype or Array.prototype holds an
+    // own toJSON or Array.prototype's prototype is not Object.prototype; while one of the three is set, fired refuses the call: it
+    // removes what it can of the three (unhook), records nothing and throws. Removing them lets the refusal reach the report: a
+    // toJSON left on Object.prototype also reaches vitest's own serializer, which then recurses and drops Q's failure message or
+    // reports Q pending. So an edit at the control's call that sets a toJSON for fired's call and deletes it after (the gate's
+    // PROTOJSON, PROTOJSONL and PROTOJSON6, which a probe hollow's serialization of the copy read through while the copy itself read
+    // exact) reds here, alone and beside a probe hollow.
+    const hooks = (): readonly string[] => [
+      ...(Object.hasOwn(Object.prototype, 'toJSON') ? ['Object.prototype.toJSON'] : []),
+      ...(Object.hasOwn(Array.prototype, 'toJSON') ? ['Array.prototype.toJSON'] : []),
+      ...(Object.getPrototypeOf(Array.prototype) === Object.prototype ? [] : ["Array.prototype's prototype"]),
+    ];
+    const unhook = (): void => {
+      Reflect.deleteProperty(Object.prototype, 'toJSON');
+      Reflect.deleteProperty(Array.prototype, 'toJSON');
+      Object.setPrototypeOf(Array.prototype, Object.prototype);
+    };
     // fired records each reading it is given beside its verdict on that reading (the ids of the probes the reading fires, frozen) and
     // returns that same list, in call order, so the positive control below reads the readings it judged off the probe's own record, not
     // off the readings it built (wb-i3iu), and its verdict on each off that record too, not only off the value its assertion holds; and
@@ -1332,12 +1372,18 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     // only through record(), which returns a fresh frozen copy of kept on each read. And the reading fired judges and records is not the
     // one it is handed (wb-68s5): it is a copy taken at the call, the handed reading's serialization parsed back and frozen at every
     // depth, so an edit at the control's call that writes the handed reading for the call and restores it after (the gate's RMUT)
-    // leaves that write in the reading fired judged and recorded, where P5 reads it.
+    // leaves that write in the reading fired judged and recorded, where P5 reads it. Between taking that copy and reading it, fired
+    // reads P15 (wb-2g18, above).
     const {fired, record} = (() => {
       const kept: (readonly [JsonValue, readonly string[]])[] = [];
       return {
         fired: (handed: JsonValue): readonly string[] => {
           const reading = deepFreeze(json(handed));
+          const found = hooks();
+          if (found.length > 0) {
+            unhook();
+            throw new Error(`fired refused a call: P15 read ${found.join(', ')}`);
+          }
           const values = valuesOf(reading);
           const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
           kept.push(Object.freeze([reading, verdict] as const));
@@ -1346,6 +1392,46 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         record: (): readonly (readonly [JsonValue, readonly string[]])[] => Object.freeze([...kept]),
       };
     })();
+    // P15's controls: each of the three P15 reads, set for one call of fired, makes fired refuse that call, record nothing for it and
+    // remove that member before it throws: a toJSON on Object.prototype, one on Array.prototype and a prototype for Array.prototype
+    // that holds one, each set before the call; a toJSON on Object.prototype that a getter of the handed reading sets while fired takes
+    // its copy (so P15 reads after the copy); and a toJSON on Object.prototype set before the call that removes itself at its second
+    // top-level call, the first serialization fired makes of its copy (so P15 reads before fired reads its copy). Each toJSON set here
+    // returns the object it is given, so no serialization changes while it is set; after the controls none of the three is left set.
+    const passive = {configurable: true, writable: true, value(this: unknown): unknown { return this; }};
+    let consulted = 0;
+    const fleeting = {configurable: true, writable: true, value(this: unknown, key: string): unknown {
+      if (key === '' && ++consulted === 2) Reflect.deleteProperty(Object.prototype, 'toJSON');
+      return this;
+    }};
+    const refused = (set: () => unknown, handed: JsonValue): readonly [string, readonly string[], number] => {
+      const before = record().length;
+      set();
+      try {
+        const refusal = thrown(() => fired(handed));
+        return [refusal instanceof Error ? refusal.message : String(refusal), hooks(), record().length - before];
+      } finally {
+        unhook();
+      }
+    };
+    const copied: JsonValue = Object.defineProperty({...asRecord(cell.reading)}, 'source', {enumerable: true, get: (): JsonValue => {
+      Object.defineProperty(Object.prototype, 'toJSON', passive);
+      return asRecord(asRecord(cell.reading).source);
+    }});
+    expect([
+      refused(() => Object.defineProperty(Object.prototype, 'toJSON', passive), cell.reading),
+      refused(() => Object.defineProperty(Array.prototype, 'toJSON', passive), cell.reading),
+      refused(() => Object.setPrototypeOf(Array.prototype, Object.create(Object.prototype, {toJSON: passive})), cell.reading),
+      refused(() => undefined, copied),
+      refused(() => Object.defineProperty(Object.prototype, 'toJSON', fleeting), cell.reading),
+    ], '(P15\'s controls: a member P15 reads, set for one call, not refused, recorded, or left set by fired)').toStrictEqual([
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+      ['fired refused a call: P15 read Array.prototype.toJSON', [], 0],
+      ["fired refused a call: P15 read Array.prototype's prototype", [], 0],
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+    ]);
+    expect(hooks(), '(P15: a member P15 reads left set after its controls)').toStrictEqual([]);
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
     // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and

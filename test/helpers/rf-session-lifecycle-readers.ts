@@ -3,8 +3,10 @@
  * wb-khhg's FINAL cut #4 wrote them (machine/flywheel/wb-khhg tip b6182e1b335cd22fe35b1d04ddf0f625f68b604c, that census's blob
  * 41d75e9443fb0838f6436296072955e8d6544a2b, sha256 6f1d4f02bb62fb6bd0c3c4802713c55a7ecf35b9313177d550115f97c0bf453d), moved here
  * so that the wb-4zgj reach census (test/workbench-rf-session-lifecycle-reach-census.test.ts) can hold their readings. Under the
- * rule-19 dependency inversion R-B301 the parent wb-khhg is parked and waits on wb-4zgj; its later re-cut can import these
- * readers. The code of every declaration below the imports, from its first line to its closing line, is copied byte for byte from
+ * rule-19 dependency inversion R-B301 the parent wb-khhg stayed parked until wb-4zgj landed (landing 893, merge 29a99c4c); its
+ * cut #5 re-cut that census to import these readers, and since its cut #6 landed (landing 926, merge 441ad3ba) trunk's census
+ * imports them from here.
+ * The code of every declaration below the imports, from its first line to its closing line, is copied byte for byte from
  * that blob: lines 177-178, 196-198, 200-201, 203, 205-238, 240-242, 250-251, 253-259, 529-544, 547-564, 567, 569-573, 595-600,
  * 602-635, 637-658, 670-677, 721-727, 729-743, 745, 748-768, 770-776, 781-854, 856-863, 867-896, 898-902, 906-921, 973-989,
  * 992-1008, 1010-1017 and 1019-1028, in that order. descriptorJudgeOf wraps the descriptor judge of that census's C1 case (lines
