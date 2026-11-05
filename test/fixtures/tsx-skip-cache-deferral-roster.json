@@ -220,6 +220,18 @@
      "two"
     ]
    },
+   "emptyLine": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "otherCountWord": {
+    "counts": [
+     "three",
+     "many"
+    ]
+   },
    "noAntecedent": {
     "antecedent": false
    },
@@ -235,6 +247,12 @@
    "indentedLine": {
     "antecedent": false
    },
+   "columnStar": {
+    "antecedent": false
+   },
+   "tabStar": {
+    "antecedent": false
+   },
    "measureLater": {
     "measure": null
    },
@@ -242,6 +260,9 @@
     "measure": null
    },
    "measureNoSpace": {
+    "measure": null
+   },
+   "measureComma": {
     "measure": null
    },
    "casedMeasure": {
@@ -286,6 +307,12 @@
    "detachedDocComment": {
     "docComment": ""
    },
+   "docTrailingSpace": {
+    "docComment": "/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk 1234567, landing 7. */ "
+   },
+   "docIndented": {
+    "docComment": "  /** KNOWN FINDINGS (header): exact, re-measured on the export of trunk 1234567, landing 7. */"
+   },
    "trailingSpaceBlank": {},
    "spacing": {},
    "belowHeader": {},
@@ -297,6 +324,108 @@
    "quietCapitalCount": {},
    "quietCapitalPhrase": {},
    "quietSecondMeasure": {}
+  },
+  "lists": {
+   "listBounded": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta"
+    ]
+   },
+   "listTrailingSpaceBound": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta"
+    ]
+   },
+   "listUnbounded": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta"
+    ]
+   },
+   "listIndentedBlank": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta",
+     "removedControl"
+    ]
+   },
+   "listEmptyLine": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta",
+     "removedControl"
+    ]
+   },
+   "listColumnStar": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta",
+     "removedControl"
+    ]
+   },
+   "listStarEnding": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "beta",
+     "removedControl"
+    ]
+   },
+   "listCapitalizedId": {
+    "openings": 1,
+    "ids": [
+     "alpha",
+     "RemovedControl"
+    ]
+   },
+   "listOtherId": {
+    "openings": 1,
+    "ids": [
+     "alpha"
+    ]
+   },
+   "listIdLengths": {
+    "openings": 1,
+    "ids": [
+     "a",
+     "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "alpha"
+    ]
+   },
+   "listStaleBefore": {
+    "openings": 2,
+    "ids": [
+     "secondOpening",
+     "removedControl"
+    ]
+   },
+   "listStaleAfter": {
+    "openings": 2,
+    "ids": [
+     "alpha",
+     "beta"
+    ]
+   },
+   "listNone": {
+    "openings": 0,
+    "ids": []
+   },
+   "listSpacedOpening": {
+    "openings": 0,
+    "ids": []
+   },
+   "listIndentedOpening": {
+    "openings": 0,
+    "ids": []
+   }
   },
   "compositions": [
    {
@@ -951,7 +1080,7 @@
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the owner filing agree",
   "the KNOWN record: knownRecord reads this file's text as the record knownComposed gives for KNOWN - one KNOWN paragraph opening with the re-measure its doc comment names, one C1/C2 sentence and one count phrase listing and counting KNOWN's rows - and the roster's live reading agrees with both",
-  "the KNOWN record's controls: knownRecord reads the well-formed synthetic text and each control as the roster holds them, KNOWN_CONTROLS, the roster and the header's KNOWN CONTROLS list name KNOWN_CONTROL_IDS in order, the long controls reach past this file's header, and knownComposed and NUMBER_WORDS read as the roster's compositions and number words",
+  "the KNOWN record's controls: knownRecord reads the well-formed synthetic text and each control as the roster holds them, the list reader reads each list control as the roster holds it, KNOWN_CONTROLS, KNOWN_LIST_CONTROLS and the roster name KNOWN_CONTROL_IDS and KNOWN_LIST_CONTROL_IDS in order, this file's text opens one KNOWN CONTROLS list naming KNOWN_LIST_CONTROL_IDS then KNOWN_CONTROL_IDS, the long controls reach past this file's header, and knownComposed and NUMBER_WORDS read as the roster's compositions and number words",
   "A1",
   "A2",
   "B1",

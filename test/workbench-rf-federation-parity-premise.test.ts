@@ -501,6 +501,20 @@ function liveReceipts(): ReadonlyMap<string, string> {
 }
 
 const exportLines = (): string[] => readFileSync(join(ROOT, BEAD_EXPORT), "utf8").split("\n");
+/**
+ * The live bead export scan's budget (wb-coyr: F4 of the wb-021.9 landing-912 gate, cmd_5da3b69d9465). live bead export (c)
+ * reads the whole bead export and judges every row of it (scanBeadExport), so its wall follows the export's size and the host's
+ * load, not its judgements. Measured: 3087 and 3100 ms file-alone at load1 about 27 (base 4bfe0ac1 with this budget, an export
+ * of 82704321 bytes and 1225 rows); 6898 ms in that gate's merge-tree targeted run (187 files, load1 73.84 at start), where
+ * vitest's default 5000 ms failed it ('Test timed out in 5000ms.'). 60000 ms is 8.7 x that 6898 ms wall. vitest fails a
+ * synchronous body that outran its budget only once the body has finished, so the budget decides whether a finished scan fails;
+ * it never stops or shortens one. The case holds its own task's timeout, as vitest's task tree states it, to 60000, so that
+ * case registered with any other budget, vitest's default 5000 ms among them, reds. Any other case's budget (the live tree (a)
+ * walk's and the filing anchor's export read's among them), a run-time write to a task's timeout (vitest binds a test's budget
+ * when it collects the test, so such a write changes the task tree, not the budget) and an edit of EXPORT_SCAN_BUDGET_MS and
+ * the pin's literal together are NOT CLAIMED by this guard.
+ */
+const EXPORT_SCAN_BUDGET_MS = 60_000;
 
 // ---- judged rows (every non-ASCII input is built with String.fromCodePoint) ----
 const CYRILLIC_A = String.fromCodePoint(0x0430);
@@ -1115,7 +1129,8 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     expect(scanFiles(self, FIXTURE_AT_PIN, new Map(), []).length).toBeGreaterThanOrEqual(MIN_SELF_FINDINGS);
   });
 
-  it("live bead export (c): every exported row with a claim-id mention carries the verdict verbatim and the audit pin", () => {
+  it("live bead export (c): every exported row with a claim-id mention carries the verdict verbatim and the audit pin", { timeout: EXPORT_SCAN_BUDGET_MS }, ({ task }) => {
+    expect(task.timeout, "the live bead export scan's own budget (wb-coyr): 60000 ms, never vitest's default 5000 ms").toBe(60_000);
     const lines = exportLines();
     expect(lines.filter(line => line.trim() !== "").length).toBeGreaterThanOrEqual(EXPORT_FLOOR);
     expect(scanBeadExport(lines)).toEqual([]);

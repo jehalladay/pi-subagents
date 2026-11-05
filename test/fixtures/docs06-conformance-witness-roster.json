@@ -1,0 +1,387 @@
+{
+  "bead": "wb-ouo3",
+  "census": "test/workbench-docs06-conformance.census.ts",
+  "outside": [
+    {
+      "id": "W-OUT-REEXPORT",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import ts, { type Node } from \"typescript\";",
+      "removes": [],
+      "adds": [
+        "export * from \"node:os\";"
+      ],
+      "precedes": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";"
+    },
+    {
+      "id": "W-OUT-TYPEONLY-REEXPORT",
+      "twin": "GP9-TWIN-NODE-TYPEONLY",
+      "form": "outside",
+      "follows": "import { type Dirent, readFileSync } from \"node:fs\";",
+      "removes": [],
+      "adds": [
+        "export { statSync } from \"node:fs\";"
+      ],
+      "precedes": "import { basename, dirname, join } from \"node:path\";"
+    },
+    {
+      "id": "W-OUT-SHARED-REPEATED",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import ts, { type Node } from \"typescript\";",
+      "removes": [],
+      "adds": [
+        "import { moduleImports, propertyWrites, spelledAnywhere } from \"./helpers/docs06-leg-readers.js\";"
+      ],
+      "precedes": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";"
+    },
+    {
+      "id": "W-OUT-SHARED-MOVED",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import { fileURLToPath } from \"node:url\";",
+      "removes": [
+        "import ts, { type Node } from \"typescript\";",
+        "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";",
+        "import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from \"./helpers/census.js\";",
+        "import { moduleImports, propertyWrites, spelledAnywhere } from \"./helpers/docs06-leg-readers.js\";"
+      ],
+      "adds": [
+        "import { moduleImports, propertyWrites, spelledAnywhere } from \"./helpers/docs06-leg-readers.js\";",
+        "import ts, { type Node } from \"typescript\";",
+        "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";",
+        "import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from \"./helpers/census.js\";"
+      ],
+      "precedes": ""
+    },
+    {
+      "id": "W-OUT-AFTER-PUSH",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "    AC2_RAN.push(judgedKey({ row, half }));",
+      "removes": [],
+      "adds": [
+        "    sink.length = 2;"
+      ],
+      "precedes": "    const verdicts = judge("
+    },
+    {
+      "id": "W-OUT-BEFORE-IMPORTS",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": " */",
+      "removes": [],
+      "adds": [
+        "export * from \"node:os\";"
+      ],
+      "precedes": "import { createHash } from \"node:crypto\";"
+    },
+    {
+      "id": "W-OUT-BEFORE-HEAD",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "",
+      "removes": [],
+      "adds": [
+        "  const early = { length: 0 };",
+        "  early.length = 1;"
+      ],
+      "precedes": "  it.each(JUDGED)(\"AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report\", JUDGING, ({ row, half }) => {"
+    },
+    {
+      "id": "W-OUT-BLANK-LINE",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import ts, { type Node } from \"typescript\";",
+      "removes": [],
+      "adds": [
+        ""
+      ],
+      "precedes": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";"
+    },
+    {
+      "id": "W-OUT-LINE-COMMENT",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import ts, { type Node } from \"typescript\";",
+      "removes": [],
+      "adds": [
+        "// a line comment"
+      ],
+      "precedes": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";"
+    },
+    {
+      "id": "W-OUT-TRAILING-SPACE",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "import { fileURLToPath } from \"node:url\";",
+      "removes": [
+        "import ts, { type Node } from \"typescript\";"
+      ],
+      "adds": [
+        "import ts, { type Node } from \"typescript\"; "
+      ],
+      "precedes": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";"
+    },
+    {
+      "id": "W-OUT-PW-BLANK-LINE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "    AC2_RAN.push(judgedKey({ row, half }));",
+      "removes": [],
+      "adds": [
+        ""
+      ],
+      "precedes": "    const verdicts = judge("
+    },
+    {
+      "id": "W-OUT-PW-LINE-COMMENT",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "    AC2_RAN.push(judgedKey({ row, half }));",
+      "removes": [],
+      "adds": [
+        "    // a line comment"
+      ],
+      "precedes": "    const verdicts = judge("
+    },
+    {
+      "id": "W-OUT-PW-TRAILING-SPACE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "    AC2_RAN.push(judgedKey({ row, half }));",
+      "removes": [
+        "    const verdicts = judge("
+      ],
+      "adds": [
+        "    const verdicts = judge( "
+      ],
+      "precedes": "      REPORT,"
+    },
+    {
+      "id": "W-OUT-DEEP-CODE",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        "void 0;"
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-DEEP-BLANK-LINE",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        ""
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-DEEP-LINE-COMMENT",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        "// a line comment"
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-DEEP-TRAILING-SPACE",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "outside",
+      "follows": " */",
+      "removes": [
+        "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */"
+      ],
+      "adds": [
+        "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */ "
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-PW-DEEP-CODE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        "void 0;"
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-PW-DEEP-BLANK-LINE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        ""
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-PW-DEEP-LINE-COMMENT",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */",
+      "removes": [],
+      "adds": [
+        "// a line comment"
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-PW-DEEP-TRAILING-SPACE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": " */",
+      "removes": [
+        "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */"
+      ],
+      "adds": [
+        "/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */ "
+      ],
+      "precedes": "const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };"
+    },
+    {
+      "id": "W-OUT-PW-EARLY-CODE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** Every (file, title) a half pins more than once, as \"bullet/half: file > title\"; the frozen table holds none. */",
+      "removes": [],
+      "adds": [
+        "void 0;"
+      ],
+      "precedes": "const duplicatePins = (rows: readonly Row[]): string[] =>"
+    },
+    {
+      "id": "W-OUT-PW-EARLY-BLANK-LINE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** Every (file, title) a half pins more than once, as \"bullet/half: file > title\"; the frozen table holds none. */",
+      "removes": [],
+      "adds": [
+        ""
+      ],
+      "precedes": "const duplicatePins = (rows: readonly Row[]): string[] =>"
+    },
+    {
+      "id": "W-OUT-PW-EARLY-LINE-COMMENT",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "/** Every (file, title) a half pins more than once, as \"bullet/half: file > title\"; the frozen table holds none. */",
+      "removes": [],
+      "adds": [
+        "// a line comment"
+      ],
+      "precedes": "const duplicatePins = (rows: readonly Row[]): string[] =>"
+    },
+    {
+      "id": "W-OUT-PW-EARLY-TRAILING-SPACE",
+      "twin": "G-TWIN2-PW",
+      "form": "outside",
+      "follows": "  rows.flatMap(row => row.halves.flatMap(half => half.pins.map((entry, index) => `${row.bullet}/${half.id}/${index + 1} ${half.tier} ${entry.file} > ${entry.title}`)));",
+      "removes": [
+        "/** Every (file, title) a half pins more than once, as \"bullet/half: file > title\"; the frozen table holds none. */"
+      ],
+      "adds": [
+        "/** Every (file, title) a half pins more than once, as \"bullet/half: file > title\"; the frozen table holds none. */ "
+      ],
+      "precedes": "const duplicatePins = (rows: readonly Row[]): string[] =>"
+    },
+    {
+      "id": "W-UNIT-SECOND-EDIT",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "unit",
+      "follows": "import { createHash } from \"node:crypto\";",
+      "removes": [
+        "import { readFileSync } from \"node:fs\";"
+      ],
+      "adds": [
+        "import { readFileSync, statSync } from \"node:fs\";"
+      ],
+      "precedes": "import { basename, dirname, join } from \"node:path\";"
+    },
+    {
+      "id": "W-UNIT-ONE-LINE",
+      "twin": "G-TWIN2-PW",
+      "form": "unit",
+      "follows": "  it.each(JUDGED)(\"AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report\", JUDGING, ({ row, half }) => {",
+      "removes": [
+        "    const sink = { length: 1 };"
+      ],
+      "adds": [],
+      "precedes": "    ({ [\"length\"]: sink.length } = { length: 0 });"
+    },
+    {
+      "id": "W-DROPPED-LAST-IMPORT",
+      "twin": "G-TWIN-TS-NAMED",
+      "form": "dropped",
+      "follows": "import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from \"vitest\";",
+      "removes": [
+        "import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from \"./helpers/census.js\";"
+      ],
+      "adds": [],
+      "precedes": "import { moduleImports, propertyWrites, spelledAnywhere } from \"./helpers/docs06-leg-readers.js\";"
+    },
+    {
+      "id": "W-PARTS-NO-PUSH",
+      "twin": "G-TWIN2-PW",
+      "form": "parts",
+      "follows": "    ({ [\"length\"]: sink.length } = { length: 0 });",
+      "removes": [
+        "    AC2_RAN.push(judgedKey({ row, half }));"
+      ],
+      "adds": [],
+      "precedes": "    const verdicts = judge("
+    }
+  ],
+  "readingEdits": [
+    {
+      "id": "E-MOVED",
+      "follows": " */",
+      "removes": [
+        "import { createHash } from \"node:crypto\";",
+        "import { readFileSync } from \"node:fs\";",
+        "import { basename, dirname, join } from \"node:path\";",
+        "import { fileURLToPath } from \"node:url\";"
+      ],
+      "adds": [
+        "import { readFileSync } from \"node:fs\";",
+        "import { basename, dirname, join } from \"node:path\";",
+        "import { fileURLToPath } from \"node:url\";",
+        "import { createHash } from \"node:crypto\";"
+      ],
+      "precedes": "import ts from \"typescript\";"
+    },
+    {
+      "id": "E-SWAPPED",
+      "follows": "import { readFileSync } from \"node:fs\";",
+      "removes": [
+        "import { basename, dirname, join } from \"node:path\";",
+        "import { fileURLToPath } from \"node:url\";"
+      ],
+      "adds": [
+        "import { fileURLToPath } from \"node:url\";",
+        "import { basename, dirname, join } from \"node:path\";"
+      ],
+      "precedes": "import ts from \"typescript\";"
+    },
+    {
+      "id": "E-REPEATED",
+      "follows": "import { readFileSync } from \"node:fs\";",
+      "removes": [],
+      "adds": [
+        "import { readFileSync } from \"node:fs\";"
+      ],
+      "precedes": "import { basename, dirname, join } from \"node:path\";"
+    }
+  ]
+}

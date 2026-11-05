@@ -17,10 +17,15 @@
  * order given, that a text spells out in any letter case, every run of white space (what JavaScript's \s matches) read as one space.
  *
  * PINNED READER SET (this file; one case per pin, titled '<row id> <row label>' > '<pin>'; every result below is green at this cut):
- * - BASELINE (anchored, not a judged row): the page on disk binds; its source is 1121 bytes with the digest prefix refusal #3 records,
- *   byte for byte the file's own bytes over the span (the file's bytes are its UTF-8 text); the page is tiled; tokenText is the source; no
- *   parked term is stated; the edits outside the span named below leave the source the baseline; and marked's level-2 headings of the page
- *   hold the heading's line once and none of refusal #1's twin heading lines (so a twin planted on disk reds the census).
+ * - BASELINE (anchored, not a judged row): the page on disk is the PARKED PAGE (the page refusals #1 to #4 measured) with one line added,
+ *   clause (d)'s bullet (wb-rdlh.4, owner security-design ruling R-B459), right after the eighth bullet; every reading of this census
+ *   but the page-on-disk readings of this BASELINE is taken on the parked page, the page on disk with that line set aside where it follows
+ *   the eighth exactly once. The page on disk binds, tiled, its source byte for byte the file's own bytes over the span (the file's bytes
+ *   are its UTF-8 text) and longer than the parked source by that line alone, stating both parked terms. The parked page binds; its
+ *   source is 1121 bytes with the digest prefix refusal #3 records, byte for byte the parked page's own bytes over the span; the parked
+ *   page is tiled; tokenText is the source; no parked term is stated; the edits outside the span named below leave the source the
+ *   baseline; and marked's level-2 headings of the parked page hold the heading's line once and none of refusal #1's twin heading lines
+ *   (so a twin planted on disk reds the census).
  * - CR (1 pin) LONE-CR, a lone CR in place of the second bullet's LF: the source carries that CR (1121 bytes, the CR before no LF) and is not
  *   the baseline; with an LF after its CR it has the bytes and sha-256/16 refusal #3's gate measured for L2G-CR-BULLET2 (one CR before the
  *   second bullet's LF); with the CR read as LF it is the baseline, and tokenText is the baseline (the CR blind spot, reproduced).
@@ -93,6 +98,9 @@
  * offset map 31, the end bound's depth above and below level 2 2 and 2, the binding's depth 2, count 3 and HTML rule 2, termsStated's case
  * 2 and white space 2, the byte count 2, the tiling's page 6, the CR count 2, the nested steps 44, a slice of the LF text 6, a span to the
  * page's end 42); dropping the instrumented-tokens equality check survives (no page reaches that refusal; NOT CLAIMED below).
+ * wb-rdlh.4 (clause (d)'s sentence delivered as the section's ninth bullet) ran this census with every pinned reading and witness
+ * equal on the parked page (the mutant and battery counts above are wb-rdlh.3's cut's, not re-measured by it) and added BASELINE's
+ * page-on-disk readings; without the bullet on disk (the page as before that cut) BASELINE alone reds (1 failed | 49 passed).
  *
  * OUTSIDE ANCHORS (.beads/issues.jsonl, read at run time; the first match of each): wb-rdlh.3's description (its blind spots 'CR, CRLF,
  * duplicate definition', the labels of rows CR, CRLF and DUPDEF in order, each holding a pin); wb-rdlh.1's notes: refusal #3's GATE PLANTS
@@ -114,6 +122,8 @@
  *   character between its words, a paraphrase) is NOT CLAIMED by this census's terms reading.
  * - A page other than docs/workbench/12-security.md, a heading other than 'Authorization design', and a heading that marked's top-level
  *   tokens do not hold (one nested in a list item or a block quote) are NOT CLAIMED by this census.
+ * - The page on disk's section beyond BASELINE's readings of it (clause (d)'s bullet and its wording are the wb-gs2.3 census's and
+ *   wb-rdlh.1's D1's) is NOT CLAIMED by this census.
  * - The reader's refusal when its instrumented lexer's tokens are not marked.lexer's own, or when its recorded steps miss a token or push
  *   more than one, is NOT CLAIMED by this census (no page here reaches either).
  * - A page string with a lone surrogate (which has no UTF-8 spelling) is NOT CLAIMED by this census's byte count.
@@ -144,8 +154,20 @@ const PARENT = "wb-rdlh.1";
 const HEADING = "Authorization design";
 const PARKED_TERMS: readonly string[] = ["authorization input", "never softens"];
 const CR = String.fromCodePoint(0x0d);
-const PAGE = readFileSync(join(REPO, DOCS_FILE), "utf8");
-const PAGE_BYTES = readFileSync(join(REPO, DOCS_FILE));
+/** The section's eighth bullet: clause (d)'s bullet follows it on the page on disk, and refusal #4's member (a) edits follow it. */
+const EIGHTH_BULLET = "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.\n";
+/** Clause (d)'s bullet (wb-rdlh.4; owner security-design ruling R-B459): the one line the page on disk adds, right after the eighth bullet,
+ * to the parked page every reading below is measured on. */
+const CLAUSE_BULLET =
+  "- A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.\n";
+/** The page on disk and its bytes (BASELINE's page-on-disk readings). */
+const LIVE_PAGE = readFileSync(join(REPO, DOCS_FILE), "utf8");
+const LIVE_BYTES = readFileSync(join(REPO, DOCS_FILE));
+/** The parked page: the page on disk with clause (d)'s bullet set aside where it follows the eighth bullet exactly once (the page
+ * refusals #1 to #4 measured); the page on disk itself when the bullet does not follow the eighth exactly once, which BASELINE reds. */
+const ADDED = `${EIGHTH_BULLET}${CLAUSE_BULLET}`;
+const PAGE = LIVE_PAGE.split(ADDED).length === 2 ? LIVE_PAGE.replace(ADDED, () => EIGHTH_BULLET) : LIVE_PAGE;
+const PAGE_BYTES = Buffer.from(PAGE, "utf8");
 
 // --- the outside anchors: the tracked bead export ---------------------------------------------------------------------------------------
 interface ExportRow {
@@ -332,7 +354,6 @@ const HEADING_LINE = `## ${HEADING}\n`;
 const NEXT_HEADING_LINE = "## Credential boundaries\n";
 const FIRST_BULLET = "- Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited.\n";
 const SECOND_BULLET = "- Separate discover, inspect, observe, invoke and control grants.\n";
-const EIGHTH_BULLET = "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.\n";
 /** The page's text from the section's heading line up to the next section's heading line, found by the two lines (plant machinery). */
 const sectionSlice = (page: string): string => page.slice(page.indexOf(HEADING_LINE), page.indexOf(NEXT_HEADING_LINE));
 /** A CR before the LF of the line given. */
@@ -577,11 +598,20 @@ describe("wb-rdlh.3 docs12 'Authorization design' raw-source reader census (LIBR
     expect([ROWS[6]?.pins, ROWS[6]?.pins.reduce((sum, pin) => sum + Number(pin.split(":")[2]), 0)], "member (c)'s four raws and their sum").toEqual([rawPins(FOUR_RAWS?.[1] ?? "", ","), Number(FOUR_RAWS?.[2])]);
   });
 
-  it("BASELINE: the real page's section is its own 1121 bytes, tiled, stating no parked term; the page holds none of refusal #1's twin heading lines", () => {
+  it("BASELINE: the page on disk is the parked page plus clause (d)'s one bullet after the eighth; the parked page's section is its own 1121 bytes, tiled, stating no parked term; the page holds none of refusal #1's twin heading lines", () => {
+    expect([LIVE_PAGE.split(ADDED).length - 1, PAGE === LIVE_PAGE], "the page on disk carries clause (d)'s bullet once, right after the eighth, and the parked page sets it aside").toEqual([1, false]);
+    expect(LIVE_PAGE, "the page on disk is the parked page with that one line added").toBe(PAGE.replace(EIGHTH_BULLET, () => ADDED));
+    const live = sectionSource(LIVE_PAGE, HEADING);
+    const liveStart = Buffer.byteLength(LIVE_PAGE.slice(0, live.start), "utf8");
+    expect(
+      [live.ok, live.crs, live.tiled, live.tokenText === live.source, live.source === BASE.source.replace(EIGHTH_BULLET, () => ADDED), termsStated(live.source, PARKED_TERMS)],
+      "the page on disk binds, tiled; its source is the parked source with that line added, stating both parked terms",
+    ).toEqual([true, 0, true, true, true, PARKED_TERMS]);
+    expect(Buffer.from(LIVE_PAGE, "utf8").equals(LIVE_BYTES), "the file's bytes are its UTF-8 text").toBe(true);
+    expect(LIVE_BYTES.subarray(liveStart, liveStart + live.bytes).equals(Buffer.from(live.source, "utf8")), "the source is the file's own bytes over the span").toBe(true);
     const start = Buffer.byteLength(PAGE.slice(0, BASE.start), "utf8");
     expect([BASE.ok, BASE.why, BASE.crs, BASE.tiled, BASE.tokenText === BASE.source, termsStated(BASE.source, PARKED_TERMS)]).toEqual([true, "", 0, true, true, []]);
-    expect(Buffer.from(PAGE, "utf8").equals(PAGE_BYTES), "the file's bytes are its UTF-8 text").toBe(true);
-    expect(PAGE_BYTES.subarray(start, start + BASE.bytes).equals(Buffer.from(BASE.source, "utf8")), "the source is the file's own bytes over the span").toBe(true);
+    expect(PAGE_BYTES.subarray(start, start + BASE.bytes).equals(Buffer.from(BASE.source, "utf8")), "the parked source is the parked page's own bytes over the span").toBe(true);
     expect([BASE.source, BASE.bytes], "the span is the heading line through the line before the next heading").toEqual([sectionSlice(PAGE), FROZEN_BYTES]);
     expect(sectionSource(outsideEdits(PAGE), HEADING).source, "edits outside the span leave the source the baseline").toBe(BASE.source);
     const twinHeadingLines = [...GATE_TWINS.values()];
