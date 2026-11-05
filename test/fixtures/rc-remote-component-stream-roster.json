@@ -97,6 +97,7 @@
       "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
       "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
       "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+      "test/workbench-edc-static-reach-readers-census.test.ts: import() pathToFileURL(file).href",
       "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
       "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href"
     ],
@@ -570,6 +571,7 @@
               "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
               "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
               "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+              "test/workbench-edc-static-reach-readers-census.test.ts: import() pathToFileURL(file).href",
               "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
               "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href"
             ],
