@@ -34,7 +34,8 @@
  * wb-dixg names each plant and facets no plant holds). A file holding a NUL byte is binary and its
  * content is not read. Every other file is read as raw text ("raw"); a script (.ts .tsx .mts .cts .js .jsx .mjs .cjs)
  * also through the TypeScript AST (parsed as TSX for .tsx and .jsx, as JavaScript, JSX included, for .js, .mjs and
- * .cjs, and as TypeScript for .ts, .mts and .cts) - each string-like literal by its cooked value, each identifier
+ * .cjs, and as TypeScript for .ts, .mts and .cts) - each string-like literal by its cooked value (in a type, exactly
+ * the two type texts FOLLOW-UP wb-14z1 names), each identifier
  * spelled with an escape by its cooked name and each part of a template expression by its cooked text, a substitution
  * ending the part ("cooked"; these two readings are claimed for exactly the scripts their plants spell - FOLLOW-UP
  * wb-dixg's name and template plants and the plants of THE JUDGE'S PINS it names - each script whole as its plant
@@ -511,6 +512,31 @@
  *   in a script kind other than .ts beyond THE JUDGE'S PINS' statement-start templates in .js, .mjs and .cjs; the
  *   same readings in T1's release entries and Z1's pin blobs beyond the plants (one verdictOf judges every leg); and
  *   a judge edited to tell a plant from a real file by its path or its text.
+ * FOLLOW-UP wb-14z1 (R694, from the wb-dixg gate cmd_9945b9cde395 at landing 950; F1 leads; the R-B375 landed-scope
+ *   form, claims equal to pins, pin preferred): THE JUDGE's landed words 'each string-like literal by its cooked
+ *   value' were wider than their pins for a string literal type, as no plant spelled the record in a string-like
+ *   literal in a type other than Q13's typeNoSubstitution: GP12-X-STR-LITTYPE-QUIET (scriptUnits' string-like branch
+ *   narrowed to skip a plain string literal whose parent is a literal type node) kept this census green with its
+ *   real-tree witness in the tree - an exported type alias whose type is a double-quoted string literal spelling the
+ *   record's O with a four-digit u escape, which the delivered judge reads as a mention (FAIL-OPEN realized).
+ *   PINNED READER SET: case Z2 (its witness's
+ *   piPlants hold src/workbench/zz-boundary-string-type.ts with exactly the form "cooked", held to the roster) and
+ *   the closing case. The plant is the witness's shape: a .ts script whose exported type alias N has the type
+ *   "Furnace\u004fbserverBoundaryV0", a double-quoted string literal (falsifier: GP12-X-STR-LITTYPE-QUIET, which
+ *   drops it and so reds Z2 and the closing case). In a type, THE JUDGE's cooked reading of a string-like literal is
+ *   claimed for exactly two type texts, this plant's and Q13's typeNoSubstitution (R-TYPE-TEMPLATE), each whole as
+ *   it is spelled: its quote, the escape's spelling and place, the record's other characters, the declaration that
+ *   holds the type and the script kind are claimed only together, as one text holds them. No reader is added;
+ *   READERS, ROWS, the frozen literal, CLAIMS, IMPL, Q13, the docs/09 reading and the shared reader are unchanged;
+ *   PI_PLANTS and the roster (its constants and Z2's witness) gain the one plant.
+ *   NOT CLAIMED by this census, either way: a string-like literal in a type that neither text spells, whatever sets
+ *   it apart from both - among them another quote (a single-quoted string literal type), another place for the type
+ *   (a parameter's, a variable's, a property's or a return type's annotation, a member of a union or an
+ *   intersection, a type argument, an indexed access type, a conditional type's branch, a mapped type, a tuple's
+ *   element, an import type's argument), a quoted member name of an interface or a type literal, a type alias that
+ *   is not exported, another escape (an x escape, a braced code point, an escape at another place in the record) and
+ *   a type in a script kind other than .ts; and the same reading in T1's release entries and Z1's pin blobs beyond
+ *   the plant (one verdictOf judges every leg).
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -1130,7 +1156,7 @@ const piListing = lazy((): PiListing => {
   const excluded = listed.filter(path => path.startsWith(TRACKER) || holders.has(path));
   return { paths: listed.filter(path => !excluded.includes(path) && existsSync(join(REPO, path))), excluded };
 });
-/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants), and since cut #7 the escape decoder's (two escapes in one file, an upper-case digit in each form, separator escapes for the digits 0, 9, a and A in each form, U+10FFFF, a single-quoted and a literal string), one plant per script extension, and a .json page JSON.parse refuses; and since cut #8 the script-kind plants that tell each extension's parse mode from the others (JSX text and an instantiation expression in .tsx and .jsx, a regular expression and a statement-start template in .js, .mjs and .cjs, and a type assertion in a .ts page whose path holds .tsx and .js), a run of separator escapes holding every hex digit of each escape form, one of hex references, and an all-literal group in parentheses before and after a computed operand; and (wb-dixg) the path, name and template plants FOLLOW-UP wb-dixg lists, each claimed as itself for THE JUDGE's path, escaped-name or template-part reading (as are the plants of THE JUDGE'S PINS it names). */
+/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants), and since cut #7 the escape decoder's (two escapes in one file, an upper-case digit in each form, separator escapes for the digits 0, 9, a and A in each form, U+10FFFF, a single-quoted and a literal string), one plant per script extension, and a .json page JSON.parse refuses; and since cut #8 the script-kind plants that tell each extension's parse mode from the others (JSX text and an instantiation expression in .tsx and .jsx, a regular expression and a statement-start template in .js, .mjs and .cjs, and a type assertion in a .ts page whose path holds .tsx and .js), a run of separator escapes holding every hex digit of each escape form, one of hex references, and an all-literal group in parentheses before and after a computed operand; and (wb-dixg) the path, name and template plants FOLLOW-UP wb-dixg lists, each claimed as itself for THE JUDGE's path, escaped-name or template-part reading (as are the plants of THE JUDGE'S PINS it names); and (wb-14z1) the string literal type plant FOLLOW-UP wb-14z1 names, claimed as itself for THE JUDGE's cooked reading of a string-like literal in a type. */
 const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-escaped.ts": 'export const RECORD_NAME = "\\u0046urnaceObserver\\u0042oundaryV0";\n',
   "src/workbench/zz-boundary-split.ts": 'export const SPELLED = "Furnace" + "Obs" + "erverBoundaryV0";\n',
@@ -1243,6 +1269,7 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-template-tagged-head.ts":
     "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`Furnace\\u004fbserverBoundaryV0$" + "{a}x`;\n",
   "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x$" + "{a}Furnace\\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-string-type.ts": 'export type N = "Furnace\\u004fbserverBoundaryV0";\n',
 };
 /**
  * The texts W1 asserts THE JUDGE's markup and escape decoders on (its cut #3, #5, #6 and #7 decoding assertions), held with
