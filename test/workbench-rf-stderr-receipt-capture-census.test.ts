@@ -6,20 +6,29 @@
  * Cut #3, authored in the enumerate-the-resolvable form (orchestrator ruling R-B75 on gate refusal #2): C1 and G2 claim exactly
  * the surfaces the ENUMERATION block below lists, one checkable item per resolvable surface, each bound to a falsifier this
  * census runs (planted modules through the pin's src readers, planted children through its run-time reader); every route those
- * readers do not resolve is a named residual in the RESIDUALS block, each with a pinned quiet row. Cut #4 is the final cut, the
- * fail-closed core orchestrator ruling R-B92 binds after gate refusal #3: the src readers resolve an identifier by NAME, never
- * by its binding, exactly as C1-NAME-RESOLUTION states, so an identifier a let, a parameter or any other non-const binding of
- * its name may hold (refusal #3's S1, S2 and S3) reads unresolved instead of as a same-named const's text, and C1-REGISTRATIONS
- * reads a field a member it does not resolve may set as that member; resolving an identifier through its own binding is child
- * wb-jwc.10's. Where a reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a
- * builder or an identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a
- * named residual states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim:
- * ANCHOR holds each entry to its table row word for word, and FROZEN SHAPE pins the rows.
+ * readers do not resolve is a named residual in the RESIDUALS block, each with a pinned quiet row. Cut #4 was the final cut, the
+ * fail-closed core orchestrator ruling R-B92 bound after gate refusal #3 (history): its src readers resolved an identifier by
+ * NAME, never by its binding; gate refusal #4 measured that reading partial (an id whose reactivefiber.* side was not its first
+ * readable side registered nothing, and an unresolvable part of a launch program read as no word), and ruling R-B115 inverted the
+ * dependency onto child wb-jwc.10. Cut #5 is the mechanical restatement over the child's landed fix that R-B115 binds: the
+ * census's own by-name readers (nameResolved, the identifier branches of textsOf and commandText, resolvedProperties and
+ * rfRegistrations' joined id) are gone, and every text, command word, launch program and registration the src readers read is
+ * the landed reader's (bindingTextReader, test/helpers/rf-binding-text-reader.ts, which wb-jwc.13 landed and whose claim of record
+ * is wb-jwc.10's census test/workbench-rf-binding-text-reader-census.test.ts): C1-NAME-RESOLUTION, C1-COMMAND-WORDS, C1-INVENTORY,
+ * C1-SPECIFIER-TEXT, C1-REGISTRATIONS, R-OPAQUE-LAUNCHER and R-OPAQUE-REGISTRATION are restated to what it reads, every reading
+ * the swap moved is a row, and refusal #4's members are rows (R-ALT1 to R-ALT4, E1 to E3 and a10, each byte for byte). Where a
+ * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
+ * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
+ * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
+ * entry to its table row word for word, and FROZEN SHAPE pins the rows.
  *
  * MEASURED (read-only; cut #1 by seat ws-06, run g10-work-s123 at base bb96515; cut #2 by ws-06, run g10-work-s133 at trunk
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
- * providers/reactivefiber.ts is byte-identical at all four and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; every
- * C1 and G2 witness below reads the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read).
+ * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; providers/reactivefiber.ts is
+ * byte-identical at all five and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; every C1 and G2 witness below reads
+ * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
+ * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
+ * restates).
  * Pi: src makes five child_process launch calls: three execFileSync("git", ...) in src/index.ts, the detached host's
  * spawn(process.execPath, ...) in src/workbench/hosts/local-detached.ts, and one rf launch, nativeReactiveFiberRender's
  * `const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"],env:...})` in src/workbench/providers/reactivefiber.ts. src names
@@ -54,10 +63,10 @@
  *    readers parse (TypeScript AST) every script file under src (.ts, .mts, .cts, .js, .mjs, .cjs; declaration files excluded)
  *    and, as a module of its own, the text of every src string or template that calls require( or getBuiltinModule( (today
  *    only the workflow worker's inlined source, which the host evaluates with new Worker(..., { eval: true })); the argv
- *    binding and its builder resolve through TypeScript's checker over the launching file alone, every other identifier by name
- *    as C1-NAME-RESOLUTION states. C1's witness holds (a) the rf launch sites, (b) the launch inventory, (b2) the child_process
- *    module sites and the opaque loads, (c) each rf launch's
- *    argv reading, its builder's lines and the declarations of the builder's name, (d) the launching declaration and its
+ *    binding and its builder resolve through TypeScript's checker over the launching file alone, every other identifier through
+ *    the landed reader as C1-NAME-RESOLUTION states. C1's witness holds (a) the rf launch sites, (b) the launch inventory, (b2)
+ *    the child_process module sites and the opaque loads, (c) each rf launch's argv reading, its builder's lines and the
+ *    declarations of the builder's name, (d) the launching declaration and its
  *    references, (g) the launching declaration's text, (e) the reactivefiber registrations and (f) both arms' recorded argv.
  *    C2 UNTIL-THEN: the acceptance's own scenario run through Pi's one rf launch, journaled as a committing (write-class) node by a
  *    test host: a stand-in rf writes the receipt line on stderr (the acceptance's JSON form and the two measured rf 0.1.845 forms)
@@ -95,7 +104,8 @@
  * ", and " and a spaced dash), the SURFACES line is this file's, and G1's ranges, escalation and kills come from the export's
  * own text. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, WITNESS's keys are exactly the
  * pins, every reading of READINGS is pinned exactly once (a pin swapped onto another pin's reading reds), ENUMERATION pins
- * `${id}:${pin}` and RESIDUALS pins `${id}:${pins}`.
+ * `${id}:${pin}` and each item's falsifier rows `${id}:${rows}` (cut #5: a row deleted from an item reds), and RESIDUALS pins
+ * `${id}:${pins}`.
  * ENUMERATION (one checkable item per resolvable surface, each bound to a falsifier this census runs; ANCHOR holds every entry
  * below to its table row word for word, and FROZEN SHAPE pins the rows):
  *  C1-LAUNCH-ROUTES: C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync,
@@ -103,40 +113,50 @@
  *    bound to a launcher's name or to a member naming one; a member call naming a launcher under any receiver, by name or by
  *    literal key; and an execve member call on the identifier process. It is an rf launch when its command words
  *    (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher.
- *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument - a string, a template's literal parts (each
- *    substitution read by these same rules, or as a space when it does not resolve), an identifier through every same-file const
- *    of its name as C1-NAME-RESOLUTION resolves it (no word when it does not resolve), either side of ?? / || / ?:, a + join -
- *    read as a shell line split at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd
- *    dropped), plus each literal element of an array second argument.
+ *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument and from each element of an array second
+ *    argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(),
+ *    C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ??
+ *    / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe
+ *    and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a
+ *    part that does not resolve) gives no word.
  *  C1-INVENTORY: C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding
  *    (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the
- *    program being its first command word or <opaque text> when that does not resolve; a member call under any other receiver is
- *    no member.
+ *    program being the landed reader's program() of its first argument: when every alternative is a text with a first command
+ *    word (C1-COMMAND-WORDS), those first words, sorted, each once, joined by |; otherwise <opaque text>, so a program with an
+ *    alternative that does not resolve reads <opaque text> (gate members E1 and E2 of refusal #4: observedPackageHead's git
+ *    program read through process.env.PI_VCS ?? "git", and through a const whose initializer does not resolve shadowing a
+ *    same-named const); a member call under any other receiver is no member.
  *  C1-MODULE-BINDINGS: C1 (b) reads as a child_process module binding: a namespace import, a default import, an import specifier
  *    naming its default, an import-equals require, and a const bound to, or destructured for the default of, a call whose first
  *    argument resolves to child_process (C1-SPECIFIER-TEXT) - require, import(), getBuiltinModule or any other callee - or to
  *    such a call's default member; a member call on such a call, or on its default member, is read as one too.
- *  C1-SPECIFIER-TEXT: C1 (b) resolves a module specifier as exact text: a string, a no-substitution template, an identifier
- *    through every same-file const of its name as C1-NAME-RESOLUTION resolves it, a template whose every substitution resolves, a
- *    + join, or a ?: / ?? / || / && whose sides both resolve (either side counts); a specifier that does not resolve binds no
- *    module, and C1-OPAQUE-LOADS reads its load (gate member LC1: a same-file const specifier).
+ *  C1-SPECIFIER-TEXT: C1 (b) resolves a module specifier as exact text, as the landed reader's exact() reads it: a string, a
+ *    no-substitution template, an identifier C1-NAME-RESOLUTION resolves, a template whose every substitution resolves, a + join,
+ *    or a ?: / ?? / || / && whose sides both resolve (either side counts); a specifier with an alternative that does not resolve
+ *    binds no module, and C1-OPAQUE-LOADS reads its load (gate member LC1: a same-file const specifier).
  *  C1-MODULE-SITES: C1 (b2) reads every place src spells or resolves child_process or node:child_process: each import,
  *    export-from and import-equals declaration (type-only ones included), each call, whatever its callee, whose first argument
  *    resolves to one (C1-SPECIFIER-TEXT), each other string or no-substitution template literal whose text is one, and each other
  *    template or + join, at its outermost, whose texts resolve to one, in any role; read as path:declaration:role:specifier.
  *  C1-OPAQUE-LOADS: C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or
  *    getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a
- *    same-file const of any scope binds to createRequire(...), whatever binding the identifier has - whatever it would load, read
- *    as path:declaration:loader:<opaque text>; G2 holds the same list.
- *  C1-NAME-RESOLUTION: C1 (b2) resolves an identifier by NAME, never by its binding, for C1-COMMAND-WORDS, C1-SPECIFIER-TEXT and
- *    C1-REGISTRATIONS: through the initializer of every const the file declares with that name, in any scope, so a const shadowing
- *    a const reads both; and only when the file binds the name no other way - no let, var, using or await using, parameter, catch
- *    clause, destructuring element, function, class, import, enum or namespace of that name, and no const without an initializer
- *    or in an ambient (declare) context - makes no eval call by name, and the identifier lies inside the block, module, switch
- *    body or for statement that declares one of those consts and outside every with statement's body, namespace body and enum; any
- *    other identifier does not resolve, so a load whose specifier it is reads as an opaque load (C1-OPAQUE-LOADS), a launch
- *    program as <opaque text> (C1-INVENTORY), a registration's effectClass as unresolved and its id as no registration
- *    (R-OPAQUE-REGISTRATION) (gate members S1, S2 and S3 of refusal #3: a let, a parameter and a let shadowing a same-file const).
+ *    same-file variable declaration of any kind, scope or context binds to createRequire(...) (a const, let, var, using or await
+ *    using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as
+ *    path:declaration:loader:<opaque text>; G2 holds the same list.
+ *  C1-NAME-RESOLUTION: C1 (b2) resolves an identifier for C1-COMMAND-WORDS, C1-INVENTORY, C1-SPECIFIER-TEXT and C1-REGISTRATIONS
+ *    as the landed reader's resolve() does (bindingTextReader, test/helpers/rf-binding-text-reader.ts, whose claim of record is
+ *    wb-jwc.10's census), by its binding: the declaration TypeScript's checker binds it to by scope in a program over its own
+ *    module alone, read through that declaration's initializer when it is one const declaration with an initializer outside an
+ *    ambient (declare) context, so a name read within the scope of a const that shadows a same-named const reads through the
+ *    shadowing const alone and outside that scope through the shadowed one, and a name in a namespace body or an enum, or beside
+ *    an ambient namespace's same-named const, reads through the const it binds to; a let, var, using or await using, parameter,
+ *    catch clause, destructuring element, function, class, import, enum or namespace binding of the name, a const without an
+ *    initializer or in an ambient context, a name the checker binds to no declaration in its scope, a name inside a with
+ *    statement's body and every name of a module that calls eval by name do not resolve, so a load whose specifier it is reads as
+ *    an opaque load (C1-OPAQUE-LOADS), a launch program as <opaque text> (C1-INVENTORY), a registration's effectClass as <opaque
+ *    name:kind> and its id as no registration (R-OPAQUE-REGISTRATION) (gate members S1, S2 and S3 of refusal #3: a let, a
+ *    parameter and a let shadowing a same-file const; a10 of refusal #4: a const whose initializer does not resolve shadowing a
+ *    same-named const).
  *  C1-ARGV-BINDING: C1 (c) reads each rf launch's argv argument: an inline array; or an identifier that TypeScript's checker (a
  *    no-lib program over the launching file alone) binds by scope to one const declaration, read through its initializer, with
  *    its use count (every identifier the checker resolves to it); anything else reads unresolved.
@@ -156,14 +176,18 @@
  *    declaration by its name - an identifier or a literal key - as a call with its arity, a value, an import or an export.
  *  C1-DECLARATION-TEXT: C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at
  *    module level, the whole file), so any edit inside the launching declaration moves it.
- *  C1-REGISTRATIONS: C1 (e) reads every object literal src writes whose id resolves to a reactivefiber.* name, as
- *    path:id:effectClass, each as the literal itself sets it: the id and the effectClass each read as C1-COMMAND-WORDS reads a
- *    first argument's text (a string, a template's literal text, a same-file const C1-NAME-RESOLUTION resolves, a + join, either
- *    side of ?: / ?? / ||), through a property assignment by name or literal key, a shorthand property, or a spread of a name
- *    C1-NAME-RESOLUTION resolves to exactly one same-file const object literal with no opaque member (properties in source order,
- *    a later one overriding) (gate member LC3: a spread with an effectClass override); any other member is opaque - a spread of
- *    anything else or a computed key that is no literal may set every property, a method, getter or setter its own name - and a
- *    field an opaque member may set after its last resolved route, or in place of one, reads as <opaque member>.
+ *  C1-REGISTRATIONS: C1 (e) reads every registration entry the landed reader's registrations() reads in src, as
+ *    path:id:effectClass: an object literal whose id field has a text alternative that is a reactivefiber.* name, one entry per
+ *    such text and per opaque alternative of that id (gate members R-ALT1, R-ALT2 and R-ALT4 of refusal #4: the reactivefiber
+ *    side second of a ?:, and beside an opaque side of ?? and of ||), each field read as the literal itself sets it - the id
+ *    through C1-NAME-RESOLUTION (a string, a const it resolves, a template or + join whose every part resolves, either side of ?:
+ *    / ?? / ||), the effectClass as its alternatives, sorted and joined by | (an opaque one as <opaque LABEL>, LABEL the landed
+ *    reader's label of that alternative), or <none> - through a property assignment by name or literal key, a shorthand property,
+ *    or a spread of a name C1-NAME-RESOLUTION resolves to a const whose initializer is an object literal with no opaque member
+ *    (properties in source order, a later one overriding) (gate member LC3: a spread with an effectClass override); any other
+ *    member is opaque - a spread of anything else or a computed key that is no literal may set every property, a method, getter
+ *    or setter its own name - and a field an opaque member may set after its last resolved route, or in place of one, reads as
+ *    <opaque member>.
  *  C1-RUNTIME-ARGV: C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv
  *    lists no --no-commit.
  *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to
@@ -207,7 +231,8 @@
  * found escape that contradicts no enumerated item is a residual-list addition):
  *  R-OPAQUE-LAUNCHER (C1): a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a
  *    parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no
- *    child_process binding with a program that does not resolve - is no launch to C1 (a)-(d); such a launch moves C1 only through
+ *    child_process binding with a program no text alternative of which holds the word rf (C1-COMMAND-WORDS: a parameter, or a
+ *    template or + join with a part that does not resolve) - is no launch to C1 (a)-(d); such a launch moves C1 only through
  *    C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row:
  *    those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module
  *    site or opaque load).
@@ -218,14 +243,17 @@
  *    render reached that way with a program that does not resolve moves no C1 field, and a diagnostics_channel subscriber reached
  *    that way moves no G2 static field, while G2's run-time leg still reads what it does to the stream (quiet row: such loads of
  *    both modules, their names built from character codes and a join, add nothing to either pin's site, load or launch readings).
- *  R-OPAQUE-REGISTRATION (C1): a descriptor whose id resolves to no text - a parameter, an import, an identifier
- *    C1-NAME-RESOLUTION does not resolve (a shorthand property's included), a string built at run time, or an id only an opaque
- *    member supplies (C1-REGISTRATIONS: a spread of a call result, an import, a parameter, or a name that does not resolve to
- *    exactly one same-file const object literal) - or to no reactivefiber.* name is no registration to C1 (e), and a descriptor
- *    changed after its literal is written (an assignment to its property, Object.assign or a helper's copy) reads as its literal;
- *    a committing launch behind either is still read by (a)-(d) (quiet row: write-class descriptors with a parameter id, a
- *    shorthand parameter id, a let-shadowed id, an rf.* id, a spread call result and a let-shadowed spread read no registration,
- *    and literals whose effectClass is assigned write after they are written read as written).
+ *  R-OPAQUE-REGISTRATION (C1): a descriptor whose id has no text alternative that is a reactivefiber.* name - a parameter, an
+ *    import, an identifier C1-NAME-RESOLUTION does not resolve (a shorthand property's included), a string built at run time (a
+ *    template or + join with a part that does not resolve among them), texts that are no reactivefiber.* name beside opaque
+ *    alternatives, or an id only an opaque member supplies (C1-REGISTRATIONS: a spread of a call result, an import, a parameter,
+ *    or a name C1-NAME-RESOLUTION does not resolve to a const whose initializer is an object literal with no opaque member) - is
+ *    no registration to C1 (e), and a descriptor changed after its literal is written (an assignment to its property,
+ *    Object.assign or a helper's copy) reads as its literal; a committing launch behind either is still read by (a)-(d) (quiet
+ *    row: write-class descriptors with a parameter id, a shorthand parameter id, a let-shadowed id, an rf.* id, a template id and
+ *    a + join id with a part that does not resolve, a forge.* id beside an opaque side of ??, a spread call result and a
+ *    let-shadowed spread read no registration, and literals whose effectClass is assigned write after they are written read as
+ *    written).
  *  R-PROTOTYPE-PATCH (C1): a launcher or ChildProcess method patched on a shared prototype that the src readers never see written
  *    - for instance ChildProcess.prototype.spawn reached through an existing child with Object.getPrototypeOf - rewriting an rf
  *    launch's argv or program after its builder returns, under a condition this census does not set (an environment variable), is
@@ -256,7 +284,9 @@
  * SCOPE AND NOT CLAIMED: the src readers read src only (today every src file is .ts; a committing path in a module outside src,
  * such as the detached host's operator-loaded local provider, is not read), and the rf child's environment allowlist is
  * pinned by test/workbench-env-scrub-census.test.ts, not here. No reading claims more than its items name: a surface no item
- * or residual names is unread, and a newly found escape that contradicts no item is a residual-list addition. C2, C3, R1 and
+ * or residual names is unread, and a newly found escape that contradicts no item is a residual-list addition. The landed
+ * reader's readings are claimed here only as this census's rows and witnesses read them; any other reading of that reader is NOT
+ * CLAIMED by this census (wb-jwc.10's census is its claim of record). C2, C3, R1 and
  * R2 drive Pi's noncommitted launch under a test host's write class because Pi has no committing one; they show what the
  * runtime journals today, not how a future committing provider spells its argv or its capture, and R2 drives the write class
  * only. G1 byte-pins the two blocks the clause's ranges name; lines outside them (the finally block's timer clearing, the close
@@ -286,6 +316,7 @@ import { nativeReactiveFiberPreview, nativeReactiveFiberRender, type ReactiveFib
 import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { runWorkflow, type WorkflowHost, type WorkflowRunResult } from "../src/workflow/runtime.js";
+import { type BindingTextReader, bindingTextReader, commandWords } from "./helpers/rf-binding-text-reader.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -495,120 +526,27 @@ const DIAGNOSTICS_CHANNEL: ReadonlySet<string> = new Set(["diagnostics_channel",
 interface Scan {
   readonly file: SourceText;
   readonly source: ts.SourceFile;
-  /** Every const the file declares with an identifier name and an initializer outside an ambient (declare) context, by name, in any
-   * scope, with the scope that declares it. The readers resolve through these by NAME, never by binding (C1-NAME-RESOLUTION,
-   * nameResolved): a const shadowing a const over-reports (both are read); a name another binding shares resolves through none. */
-  readonly consts: ReadonlyMap<string, readonly ConstBinding[]>;
-  /** Every name the file binds some other way - a let, var, using or await using, a parameter, a catch clause, a destructuring
-   * element, a function, a class, an import, an enum or a namespace, or a const with no initializer or in an ambient context. */
-  readonly otherBindings: ReadonlySet<string>;
-  /** Whether the file calls eval by name (a direct eval can bind a name the readers never see). */
-  readonly evaluates: boolean;
+  /** The landed binding text reader over this module (bindingTextReader, test/helpers/rf-binding-text-reader.ts): every text, command
+   * word, launch program and registration this census reads is its reading (C1-NAME-RESOLUTION), and source is its own parse. */
+  readonly reader: BindingTextReader;
+  /** The initializers of every variable declaration the file makes with an identifier name and an initializer - a const, let, var,
+   * using or await using declaration, in any scope, a declare one included - by name: read only by loaderOf, for a call through a
+   * name such a declaration binds to createRequire(...), whatever binding the called identifier has (C1-OPAQUE-LOADS). */
+  readonly initializers: ReadonlyMap<string, readonly ts.Expression[]>;
   /** Local names for a launcher: an import or destructuring that renames one, or a const bound to one. */
   readonly aliases: ReadonlyMap<string, string>;
   /** Local names bound to the child_process module: a namespace or default import, an import of its default, an import-equals, or a const bound to a loading call or its default. */
   readonly modules: ReadonlySet<string>;
 }
-/** A const the file declares (Scan.consts): its initializer, and the block, module, switch body or for statement that declares it. */
-interface ConstBinding {
-  readonly initializer: ts.Expression;
-  readonly scope: ts.Node;
+/** C1-NAME-RESOLUTION: the landed reader over a module (bindingTextReader caches one per path and text). */
+function readerOf(file: SourceText): BindingTextReader {
+  return bindingTextReader(file.path, file.text);
 }
-/** The identifier a declaration binds, for every kind declaredKind reads (a function, class, variable, destructuring element,
- * parameter, import, named function or class expression, enum or namespace), when that name is an identifier. */
-function bindingNameOf(node: ts.Node): string | undefined {
-  const name =
-    ts.isFunctionDeclaration(node) ||
-    ts.isClassDeclaration(node) ||
-    ts.isVariableDeclaration(node) ||
-    ts.isBindingElement(node) ||
-    ts.isParameter(node) ||
-    ts.isImportSpecifier(node) ||
-    ts.isImportClause(node) ||
-    ts.isNamespaceImport(node) ||
-    ts.isImportEqualsDeclaration(node) ||
-    ts.isFunctionExpression(node) ||
-    ts.isClassExpression(node) ||
-    ts.isEnumDeclaration(node) ||
-    ts.isModuleDeclaration(node)
-      ? node.name
-      : undefined;
-  return name !== undefined && ts.isIdentifier(name) ? name.text : undefined;
-}
-/** Whether a node sits in an ambient context: it, or a statement or namespace around it, carries the declare modifier. */
-function isAmbient(node: ts.Node): boolean {
-  for (let at: ts.Node | undefined = node; at !== undefined; at = at.parent)
-    if (ts.canHaveModifiers(at) && (ts.getModifiers(at) ?? []).some((modifier) => modifier.kind === ts.SyntaxKind.DeclareKeyword)) return true;
-  return false;
-}
-/** A plain const declaration with an initializer outside an ambient context (no let, var, using or await using). */
-function isResolvableConst(node: ts.Node): node is ts.VariableDeclaration & { readonly initializer: ts.Expression; readonly parent: ts.VariableDeclarationList } {
-  return (
-    ts.isVariableDeclaration(node) &&
-    node.initializer !== undefined &&
-    ts.isVariableDeclarationList(node.parent) &&
-    (node.parent.flags & ts.NodeFlags.BlockScoped) === ts.NodeFlags.Const &&
-    !isAmbient(node)
-  );
-}
-/** The scope a const's binding is visible in: the block, module, switch body or for statement whose declaration list declares it. */
-function scopeOf(list: ts.VariableDeclarationList): ts.Node {
-  const holder = list.parent;
-  if (!ts.isVariableStatement(holder)) return holder;
-  return ts.isCaseClause(holder.parent) || ts.isDefaultClause(holder.parent) ? holder.parent.parent : holder.parent;
-}
-/**
- * C1-NAME-RESOLUTION: the initializers an identifier resolves through, by NAME and never by its binding: every const of its name the
- * file declares (Scan.consts; a const shadowing a const reads both, over-reporting). It resolves only when the file binds the name no
- * other way (Scan.otherBindings) and makes no eval call by name, and the identifier lies inside the scope of one of those consts and
- * outside every with statement's body, namespace body and enum; otherwise undefined: it does not resolve (fail closed). Reading a
- * binding's own value (a let's, a parameter's) is wb-jwc.10's binding-aware resolution, not this census's.
- */
-function nameResolved(identifier: ts.Identifier, scan: Scan): readonly ts.Expression[] | undefined {
-  const bound = scan.consts.get(identifier.text) ?? [];
-  if (bound.length === 0 || scan.otherBindings.has(identifier.text) || scan.evaluates) return undefined;
-  const scopes = new Set(bound.map((binding) => binding.scope));
-  let inside = false;
-  let child: ts.Node = identifier;
-  for (let at: ts.Node | undefined = identifier.parent; at !== undefined; at = at.parent) {
-    if ((ts.isWithStatement(at) && at.statement === child) || ts.isModuleBlock(at) || ts.isEnumDeclaration(at)) return undefined;
-    if (scopes.has(at)) inside = true;
-    child = at;
-  }
-  return inside ? bound.map((binding) => binding.initializer) : undefined;
-}
-/** Every exact text an expression spells: a string, a no-substitution template, an identifier through C1-NAME-RESOLUTION (every
- * same-named const it resolves through), a template whose every substitution resolves, a + join, either side of ?: / ?? / || / &&;
- * undefined when any part does not resolve. */
-function textsOf(node: ts.Expression | undefined, scan: Scan, depth = 0): string[] | undefined {
-  if (node === undefined || depth > 8) return undefined;
-  const at = unwrapped(node);
-  const literal = literalText(at);
-  if (literal !== undefined) return [literal];
-  const all = (parts: readonly (string[] | undefined)[]): string[] | undefined =>
-    parts.some((part) => part === undefined) ? undefined : [...new Set(parts.flatMap((part) => part ?? []))];
-  const product = (parts: readonly (string[] | undefined)[]): string[] | undefined => {
-    let texts = [""];
-    for (const part of parts) {
-      if (part === undefined) return undefined;
-      texts = texts.flatMap((prefix) => part.map((text) => `${prefix}${text}`));
-      if (texts.length > 64) return undefined;
-    }
-    return [...new Set(texts)];
-  };
-  if (ts.isIdentifier(at)) {
-    const bound = nameResolved(at, scan);
-    return bound === undefined ? undefined : all(bound.map((initializer) => textsOf(initializer, scan, depth + 1)));
-  }
-  if (ts.isTemplateExpression(at)) return product([[at.head.text], ...at.templateSpans.flatMap((span) => [textsOf(span.expression, scan, depth + 1), [span.literal.text]])]);
-  if (ts.isConditionalExpression(at)) return all([textsOf(at.whenTrue, scan, depth + 1), textsOf(at.whenFalse, scan, depth + 1)]);
-  if (ts.isBinaryExpression(at)) {
-    const operator = at.operatorToken.kind;
-    if (operator === ts.SyntaxKind.PlusToken) return product([textsOf(at.left, scan, depth + 1), textsOf(at.right, scan, depth + 1)]);
-    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken || operator === ts.SyntaxKind.AmpersandAmpersandToken)
-      return all([textsOf(at.left, scan, depth + 1), textsOf(at.right, scan, depth + 1)]);
-  }
-  return undefined;
+/** An expression's exact texts as the landed reader reads them (its exact(): the alternatives' texts when none is opaque), or
+ * undefined: no expression, or an opaque alternative. */
+function textsOf(node: ts.Expression | undefined, scan: Scan): string[] | undefined {
+  const texts = node === undefined ? undefined : scan.reader.exact(node);
+  return texts === undefined ? undefined : [...texts];
 }
 /** Whether an expression's texts include one of the specifiers. */
 function resolvesTo(node: ts.Expression | undefined, scan: Scan, specifiers: ReadonlySet<string>): boolean {
@@ -638,23 +576,16 @@ function memberName(node: ts.Expression): string | undefined {
   return undefined;
 }
 function scanOf(file: SourceText): Scan {
-  const source = parsed(file);
-  const consts = new Map<string, ConstBinding[]>();
-  const otherBindings = new Set<string>();
+  const reader = readerOf(file);
+  const source = reader.source;
+  const initializers = new Map<string, ts.Expression[]>();
   const aliases = new Map<string, string>();
   const modules = new Set<string>();
-  let evaluates = false;
   visit(source, (node) => {
-    if (ts.isCallExpression(node)) {
-      const callee = unwrapped(node.expression);
-      if (ts.isIdentifier(callee) && callee.text === "eval") evaluates = true;
-    }
-    const name = bindingNameOf(node);
-    if (name === undefined) return;
-    if (isResolvableConst(node)) consts.set(name, [...(consts.get(name) ?? []), { initializer: node.initializer, scope: scopeOf(node.parent) }]);
-    else otherBindings.add(name);
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined)
+      initializers.set(node.name.text, [...(initializers.get(node.name.text) ?? []), node.initializer]);
   });
-  const scan: Scan = { file, source, consts, otherBindings, evaluates, aliases, modules };
+  const scan: Scan = { file, source, reader, initializers, aliases, modules };
   visit(source, (node) => {
     if ((ts.isImportSpecifier(node) || ts.isBindingElement(node)) && ts.isIdentifier(node.name)) {
       const imported = node.propertyName ?? node.name;
@@ -683,35 +614,10 @@ function scanOf(file: SourceText): Scan {
   });
   return scan;
 }
-/** A command line's words: split on whitespace, quotes and shell operators, each path reduced to its base name (.exe/.cmd dropped). */
-function commandWords(command: string | undefined): string[] {
-  return (command ?? "")
-    .split(/[\s"'`;&|()<>]+/)
-    .filter(Boolean)
-    .map((word) => (word.split(/[\\/]/).pop() ?? word).replace(/\.(?:exe|cmd)$/i, ""));
-}
-/** The literal text an expression spells: a string, a template's literal parts, an identifier through C1-NAME-RESOLUTION (every
- * same-named const it resolves through), either side of ?? / || / ?: or a + join. */
-function commandText(node: ts.Expression | undefined, scan: Scan, depth = 0): string | undefined {
-  if (node === undefined || depth > 8) return undefined;
-  const at = unwrapped(node);
-  const literal = literalText(at);
-  if (literal !== undefined) return literal;
-  if (ts.isTemplateExpression(at)) return [at.head.text, ...at.templateSpans.map((span) => `${commandText(span.expression, scan, depth + 1) ?? " "}${span.literal.text}`)].join("");
-  if (ts.isIdentifier(at)) {
-    const texts = (nameResolved(at, scan) ?? []).map((initializer) => commandText(initializer, scan, depth + 1));
-    return texts.every((text) => text === undefined) ? undefined : texts.map((text) => text ?? " ").join(" ");
-  }
-  const joined = (parts: readonly (string | undefined)[], separator: string): string | undefined =>
-    parts.every((part) => part === undefined) ? undefined : parts.map((part) => part ?? " ").join(separator);
-  if (ts.isConditionalExpression(at)) return joined([commandText(at.whenTrue, scan, depth + 1), commandText(at.whenFalse, scan, depth + 1)], " ");
-  if (ts.isBinaryExpression(at)) {
-    const operator = at.operatorToken.kind;
-    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken)
-      return joined([commandText(at.left, scan, depth + 1), commandText(at.right, scan, depth + 1)], " ");
-    if (operator === ts.SyntaxKind.PlusToken) return joined([commandText(at.left, scan, depth + 1), commandText(at.right, scan, depth + 1)], "");
-  }
-  return undefined;
+/** C1-COMMAND-WORDS: the command words of every text alternative the landed reader reads in an expression (its alternatives(), each
+ * text split by its commandWords()); an opaque alternative gives no word. */
+function wordsOf(node: ts.Expression | undefined, scan: Scan): string[] {
+  return node === undefined ? [] : scan.reader.alternatives(node).flatMap((alternative) => ("text" in alternative ? commandWords(alternative.text) : []));
 }
 /** The declaration a node sits in: the nearest function or method declaration, else the module-level binding of a function. */
 function declarationOf(node: ts.Node): { readonly name: string; readonly body: ts.Node; readonly nameNode: ts.Node | undefined } {
@@ -757,8 +663,8 @@ function launchesIn(scan: Scan): Launch[] {
     }
     if (launcher === undefined || !(LAUNCHERS.has(launcher) || route === "process")) return;
     const argv = node.arguments[1] === undefined ? undefined : unwrapped(node.arguments[1]);
-    const elements = argv !== undefined && ts.isArrayLiteralExpression(argv) ? argv.elements.map((element) => (ts.isSpreadElement(element) ? undefined : commandText(element, scan))) : [];
-    const words = [commandText(node.arguments[0], scan), ...elements].flatMap(commandWords);
+    const elements = argv !== undefined && ts.isArrayLiteralExpression(argv) ? argv.elements.filter((element) => !ts.isSpreadElement(element)) : [];
+    const words = [node.arguments[0], ...elements].flatMap((part) => wordsOf(part, scan));
     const declaration = declarationOf(node).name;
     launches.push({ scan, call: node, launcher, route, declaration, words, site: `${scan.file.path}:${declaration}:${launcher}` });
   });
@@ -777,13 +683,13 @@ function launchInventory(files: readonly SourceText[]): string[] {
     .flatMap((file) => launchesIn(scanOf(file)))
     .filter((launch) => launch.route !== "member")
     .map((launch) => {
-      const program = commandWords(commandText(launch.call.arguments[0], launch.scan))[0];
-      return `${launch.launcher}:${program ?? `<opaque ${launch.call.arguments[0]?.getText(launch.scan.source) ?? "no argument"}>`}`;
+      const first = launch.call.arguments[0];
+      return `${launch.launcher}:${first === undefined ? "<opaque no argument>" : launch.scan.reader.program(first)}`;
     })
     .sort();
 }
 /** A load call's loader: import(), require or getBuiltinModule (by name or as a member), createRequire(...)(...), or a call through an
- * identifier whose name a same-file const of any scope binds to createRequire(...), by name whatever its binding (over-reporting). */
+ * identifier whose name any same-file variable declaration binds to createRequire(...), by name whatever its binding (over-reporting). */
 function loaderOf(call: ts.CallExpression, scan: Scan): string | undefined {
   if (call.expression.kind === ts.SyntaxKind.ImportKeyword) return "import()";
   const callee = unwrapped(call.expression);
@@ -793,7 +699,7 @@ function loaderOf(call: ts.CallExpression, scan: Scan): string | undefined {
     const at = unwrapped(node);
     return ts.isCallExpression(at) && memberName(at.expression) === "createRequire";
   };
-  if (requires(callee) || (ts.isIdentifier(callee) && (scan.consts.get(callee.text) ?? []).some((binding) => requires(binding.initializer)))) return "createRequire()";
+  if (requires(callee) || (ts.isIdentifier(callee) && (scan.initializers.get(callee.text) ?? []).some(requires))) return "createRequire()";
   return undefined;
 }
 /**
@@ -961,7 +867,7 @@ function argvReadings(files: readonly SourceText[]): string[] {
   return rfLaunchesIn(files).map((launch) => {
     const options = `options=${launch.call.arguments[2]?.getText(launch.scan.source) ?? "none"}`;
     if (SHELL_LAUNCHERS.has(launch.launcher))
-      return `${launch.site} command --no-commit=${commandWords(commandText(launch.call.arguments[0], launch.scan)).includes("--no-commit") ? "unconditional" : "absent"} ${options}`;
+      return `${launch.site} command --no-commit=${wordsOf(launch.call.arguments[0], launch.scan).includes("--no-commit") ? "unconditional" : "absent"} ${options}`;
     const argv = launch.call.arguments[1] === undefined ? undefined : unwrapped(launch.call.arguments[1]);
     if (argv === undefined) return `${launch.site} argv=none ${options}`;
     if (ts.isArrayLiteralExpression(argv)) return `${launch.site} argv=<inline> --no-commit=${noCommitOf([argv])} ${options}`;
@@ -1053,70 +959,10 @@ function launchingDeclarations(files: readonly SourceText[]): Array<{ readonly d
     return { declaration: `${launch.scan.file.path}:${owner.name}(${parameters.join(",")})`, references: references.sort() };
   });
 }
-/** An object literal's properties as C1 (e) resolves them (C1-REGISTRATIONS). values: each property as its last resolved route sets it
- * - a property assignment by name or literal key (its initializer), a shorthand (the name itself), or a spread of a name
- * C1-NAME-RESOLUTION resolves to exactly one same-file const object literal with no opaque member (that literal's properties).
- * opaque: per property, the opaque member that may set it after its last resolved route - a spread of anything else or a computed key
- * that is no literal may set every property (held under "*" for a property no resolved route sets), and a method, getter or setter
- * sets its own name - as its label (`...spread`, `[key]`, `get name`, `set name`, `name()`). */
-interface Properties {
-  readonly values: ReadonlyMap<string, ts.Expression>;
-  readonly opaque: ReadonlyMap<string, string>;
-}
-function resolvedProperties(object: ts.ObjectLiteralExpression, scan: Scan, depth = 0): Properties {
-  const values = new Map<string, ts.Expression>();
-  const opaque = new Map<string, string>();
-  const resolved = (name: string, value: ts.Expression): void => {
-    values.set(name, value);
-    opaque.delete(name);
-  };
-  const everyProperty = (label: string): void => {
-    for (const name of values.keys()) opaque.set(name, label);
-    opaque.set("*", label);
-  };
-  for (const member of object.properties) {
-    if (ts.isSpreadAssignment(member)) {
-      const spread = unwrapped(member.expression);
-      const bound = ts.isIdentifier(spread) ? nameResolved(spread, scan) : undefined;
-      const literal = bound?.length === 1 && bound[0] !== undefined ? unwrapped(bound[0]) : undefined;
-      const inner = literal !== undefined && ts.isObjectLiteralExpression(literal) && depth < 8 ? resolvedProperties(literal, scan, depth + 1) : undefined;
-      if (inner === undefined || inner.opaque.size > 0) everyProperty(`...${member.expression.getText(scan.source)}`);
-      else for (const [name, value] of inner.values) resolved(name, value);
-    } else if (ts.isShorthandPropertyAssignment(member)) resolved(member.name.text, member.name);
-    else {
-      const name = propertyText(member.name);
-      if (ts.isPropertyAssignment(member)) {
-        if (name === undefined) everyProperty(member.name.getText(scan.source));
-        else resolved(name, member.initializer);
-      } else {
-        const label = `${ts.isGetAccessorDeclaration(member) ? "get " : ts.isSetAccessorDeclaration(member) ? "set " : ""}${name ?? member.name.getText(scan.source)}${ts.isMethodDeclaration(member) ? "()" : ""}`;
-        if (name === undefined) everyProperty(label);
-        else opaque.set(name, label);
-      }
-    }
-  }
-  return { values, opaque };
-}
-/** C1 (e): every object literal src writes whose resolved id (as commandText reads text) is a reactivefiber.* name, as
- * `path:id:effectClass`; a field an opaque member may set after its last resolved route, or in place of one, reads `<opaque label>`. */
+/** C1 (e): every registration entry the landed reader reads in a module (its registrations(): one ID:EFFECT entry per reactivefiber.*
+ * text alternative and per opaque alternative of an object literal's id), as `path:ID:EFFECT`, sorted. */
 function rfRegistrations(files: readonly SourceText[]): string[] {
-  const found: string[] = [];
-  for (const file of files) {
-    const scan = scanOf(file);
-    visit(scan.source, (node) => {
-      if (!ts.isObjectLiteralExpression(node)) return;
-      const properties = resolvedProperties(node, scan);
-      const id = commandText(properties.values.get("id"), scan);
-      if (id === undefined || !id.startsWith("reactivefiber.")) return;
-      const field = (name: string, text: string): string => {
-        const label = properties.opaque.get(name) ?? (properties.values.has(name) ? undefined : properties.opaque.get("*"));
-        return label === undefined ? text : `<opaque ${label}>`;
-      };
-      const effect = properties.values.get("effectClass");
-      found.push(`${file.path}:${field("id", id)}:${field("effectClass", commandText(effect, scan) ?? `<${effect?.getText(scan.source) ?? "none"}>`)}`);
-    });
-  }
-  return found.sort();
+  return files.flatMap((file) => readerOf(file).registrations().map((entry) => `${file.path}:${entry}`)).sort();
 }
 /** A listener's chunk parameter uses (`chunk => chunk.length`), plus `this` / `arguments` in a non-arrow listener. */
 function chunkUsesOf(listener: ts.ArrowFunction | ts.FunctionExpression): string {
@@ -2094,6 +1940,97 @@ const LC2_PLANT: readonly string[] = [
 const TEMPLATE_COMMAND = ["  exec(`rf --workspace ", "$", "{root} context render --json`);"].join("");
 /** A descriptor whose id is a template with an interpolation, spelled the same way. */
 const TEMPLATE_ID = ['register({ id: `reactivefiber.render.', "$", '{kind}`, effectClass: "write" });'].join("");
+/** TEMPLATE_COMMAND with its substitution a const the landed reader resolves (ROOT), spelled the same way. */
+const RESOLVED_TEMPLATE_COMMAND = ["  exec(`rf --workspace ", "$", "{ROOT} context render --json`);"].join("");
+/** TEMPLATE_ID with its substitution a const the landed reader resolves (KIND), spelled the same way. */
+const RESOLVED_TEMPLATE_ID = ['register({ id: `reactivefiber.render.', "$", '{KIND}`, effectClass: "write" });'].join("");
+/** A member call through a helper whose command is a template with an unresolved substitution, spelled the same way. */
+const HELPER_TEMPLATE_COMMAND = [
+  "export function viaHelperTemplate(helpers: { exec(command: string): void }, root: string): void { helpers.exec(`rf --workspace ",
+  "$",
+  '{root} context render --json`); }',
+].join("");
+/** src/index.ts's observedPackageHead at trunk 2646305 (:406-415), the existing launch refusal #4's E1, E2 and E3 rewrite, as a
+ * module of its own beside its child_process import. */
+const OBSERVED_HEAD: readonly string[] = [
+  'import { execFileSync } from "node:child_process";',
+  "export function observedPackageHead(root: string): ForgeObservedHead | undefined {",
+  '  const revision = (spec: string): string => execFileSync("git", ["-C", root, "rev-parse", "--verify", "--quiet", spec], {',
+  '    timeout: 5_000, maxBuffer: 64 * 1024, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],',
+  "  }).trim();",
+  "  try {",
+  '    return { commit: revision("HEAD"), tree: revision("HEAD^{tree}") };',
+  "  } catch {",
+  "    return undefined;",
+  "  }",
+  "}",
+];
+/** Refusal #4's E1 (gate-prep-1, run g10-gate-s148, outbox row O:1399), its edit of observedPackageHead verbatim: the program read
+ * through process.env.PI_VCS ?? "git", and a committing argv when PI_VCS is set. */
+const E1_FIND = 'const revision = (spec: string): string => execFileSync("git", ["-C", root, "rev-parse", "--verify", "--quiet", spec], {';
+const E1_REPLACE =
+  'const revision = (spec: string): string => execFileSync(process.env.PI_VCS ?? "git", process.env.PI_VCS === undefined ? ["-C", root, "rev-parse", "--verify", "--quiet", spec] : ["--workspace", root, "context", "render", "--json"], {';
+/** Refusal #4's E2, its edit verbatim: a module-level const VCS_PROGRAM = "git" and, inside observedPackageHead, a same-named const
+ * whose initializer does not resolve, feeding the program and a committing argv. */
+const E2_FIND = `export function observedPackageHead(root: string): ForgeObservedHead | undefined {\n  ${E1_FIND}`;
+const E2_REPLACE = [
+  'const VCS_PROGRAM = "git";',
+  "export function observedPackageHead(root: string): ForgeObservedHead | undefined {",
+  '  const VCS_PROGRAM = String(process.env.PI_VCS ?? "git");',
+  '  const revision = (spec: string): string => execFileSync(VCS_PROGRAM, VCS_PROGRAM === "git" ? ["-C", root, "rev-parse", "--verify", "--quiet", spec] : ["--workspace", root, "context", "render", "--json"], {',
+].join("\n");
+/** Refusal #4's control E3, its edit verbatim: E1's program as a NEW execFileSync launch beside the unchanged one. */
+const E3_FIND = "export function observedPackageHead(root: string): ForgeObservedHead | undefined {";
+const E3_REPLACE = [
+  "/** gate-prep-1 LEG 2 control E3 (throwaway): E1's env-chosen program as a NEW launch. */",
+  "export function observedRender(root: string): Buffer {",
+  '  return execFileSync(process.env.PI_VCS ?? "git", process.env.PI_VCS === undefined ? ["-C", root, "status"] : ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "export function observedPackageHead(root: string): ForgeObservedHead | undefined {",
+].join("\n");
+/** OBSERVED_HEAD with one gate member's edit applied (the find text must occur exactly once), as lines; no edit for an empty find. */
+function observedHead(find: string, replace: string): string[] {
+  const head = OBSERVED_HEAD.join("\n");
+  if (find !== "" && head.split(find).length !== 2) throw new Error(`the gate member's find text does not occur once: ${find}`);
+  return (find === "" ? head : head.replace(find, replace)).split("\n");
+}
+/** Where refusal #4's R-ALT members plant their module. */
+const ALIAS_PATH = "src/workbench/providers/zz-gp1-alias.ts";
+/** Refusal #4's R-ALT1 to R-ALT4 module (gate-prep-1, run g10-gate-s148, outbox row O:1399) for an id expression, byte for byte
+ * (R-ALT4's const COMMIT_ID passed as its extra line; R-ALT3 the control, its reactivefiber side first). */
+function rAltModule(id: string, extra: readonly string[] = []): string[] {
+  return [
+    `/** gate-prep-1 LEG 2 plant (throwaway, never committed): a write-class reactivefiber registration, id '${id}'. */`,
+    'import type { CapabilityRegistry } from "../capability-registry.js";',
+    ...extra,
+    "export function registerCommitAlias(registry: CapabilityRegistry): void {",
+    "  registry.register({",
+    "    descriptor: {",
+    `      id: ${id},`,
+    '      version: "1.0.0",',
+    '      description: "gate-prep-1 plant: a committing render alias",',
+    '      inputSchema: { type: "object" },',
+    '      effectClass: "write",',
+    '      permissions: ["reactivefiber:render"],',
+    '      supportedModes: ["invoke"],',
+    "    },",
+    "    invoke: async () => null,",
+    "  });",
+    "}",
+    "",
+  ];
+}
+/** Refusal #4's a10 (its A batch): a const whose initializer does not resolve shadowing a same-named const, at the gate's path, byte for byte. */
+const A10_PATH = "src/workbench/providers/zz-gp1-a10-s1const.ts";
+const A10_PLANT: readonly string[] = [
+  'const MODULE = "node:fs";',
+  "export const FS_MODULE = MODULE;",
+  "export async function commitRender(): Promise<unknown> {",
+  "  const MODULE = String.fromCharCode(110, 111, 100, 101, 58, 99, 104, 105, 108, 100, 95, 112, 114, 111, 99, 101, 115, 115);",
+  "  return import(MODULE);",
+  "}",
+  "",
+];
 /** A module specifier that is a template with a resolving substitution, spelled the same way. */
 const TEMPLATE_SPECIFIER = ["const cp = require(`", "$", "{NODE}:child_process`);"].join("");
 /** A module specifier spelled as a template with a resolving substitution outside any call, spelled the same way. */
@@ -2149,36 +2086,83 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-COMMAND-WORDS",
     pin: "C1",
-    words: "C1 (a) reads a launch's command words from its first argument - a string, a template's literal parts (each substitution read by these same rules, or as a space when it does not resolve), an identifier through every same-file const of its name as C1-NAME-RESOLUTION resolves it (no word when it does not resolve), either side of ?? / || / ?:, a + join - read as a shell line split at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd dropped), plus each literal element of an array second argument.",
+    words: "C1 (a) reads a launch's command words from its first argument and from each element of an array second argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ?? / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word.",
     falsifier: async () => {
       const count = (lines: readonly string[]): number => sites(lines).length;
       return {
         literal: count(['spawn("rf", []);']),
+        noSubstitution: count(["spawn(`rf`, []);"]),
         constBound: count(['const RF = "rf";', 'execFileSync(RF, ["--json"]);']),
-        everySameNamedConst: count(['const RF = "rf";', "export function launch(): void {", '  const RF = "forge";', "  execFileSync(RF, []);", "}"]),
+        shadowingConst: count(['const RF = "forge";', "export function launch(): void {", '  const RF = "rf";', "  execFileSync(RF, []);", "}"]),
+        shadowedConst: count(['const RF = "rf";', "export function launch(): void {", '  const RF = "forge";', "  execFileSync(RF, []);", "}"]),
         unresolvedName: count(['const RF = "rf";', "export function launch(): void {", '  let RF = "rf";', "  execFileSync(RF, []);", "}"]),
-        template: count([TEMPLATE_COMMAND]),
+        template: count(['const ROOT = "/workspace";', RESOLVED_TEMPLATE_COMMAND]),
+        templateUnresolved: count([TEMPLATE_COMMAND]),
+        conditional: count(['spawn(process.env.PI_FORGE_ONLY === "1" ? "forge" : "rf", []);']),
         alternative: count(['const RF_BIN = process.env.PI_RF_BIN ?? "rf";', "spawn(RF_BIN, []);"]),
+        orAlternative: count(['const RF_BIN = process.env.PI_RF_BIN || "rf";', "spawn(RF_BIN, []);"]),
         join: count(['spawn("r" + "f", []);']),
+        joinUnresolved: count(["export function launch(args: string): void {", '  exec("rf context render " + args);', "}"]),
         shellLine: count(['exec("cd /tmp && /opt/bin/rf.exe --version");']),
         argvElement: count(['spawn("sh", ["-c", "rf --version"]);']),
+        spreadElement: count(['spawn("sh", [...["-c", "rf --version"]]);']),
         otherProgram: count(['execSync("forge run lint --json");']),
         regexExec: count(["/rf/.exec(text);"]),
       };
     },
-    caught: { literal: 1, constBound: 1, everySameNamedConst: 1, unresolvedName: 0, template: 1, alternative: 1, join: 1, shellLine: 1, argvElement: 1, otherProgram: 0, regexExec: 0 },
+    caught: {
+      literal: 1,
+      noSubstitution: 1,
+      constBound: 1,
+      shadowingConst: 1,
+      shadowedConst: 0,
+      unresolvedName: 0,
+      template: 1,
+      templateUnresolved: 0,
+      conditional: 1,
+      alternative: 1,
+      orAlternative: 1,
+      join: 1,
+      joinUnresolved: 0,
+      shellLine: 1,
+      argvElement: 1,
+      spreadElement: 0,
+      otherProgram: 0,
+      regexExec: 0,
+    },
   },
   {
     id: "C1-INVENTORY",
     pin: "C1",
-    words: "C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the program being its first command word or <opaque text> when that does not resolve; a member call under any other receiver is no member.",
+    words: "C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the program being the landed reader's program() of its first argument: when every alternative is a text with a first command word (C1-COMMAND-WORDS), those first words, sorted, each once, joined by |; otherwise <opaque text>, so a program with an alternative that does not resolve reads <opaque text> (gate members E1 and E2 of refusal #4: observedPackageHead's git program read through process.env.PI_VCS ?? \"git\", and through a const whose initializer does not resolve shadowing a same-named const); a member call under any other receiver is no member.",
     falsifier: async () => ({
       opaqueProgram: inventory(['import { RF_PROGRAM } from "./bin.js";', "spawn(RF_PROGRAM, []);"]),
       envProgram: inventory(['import { spawn } from "node:child_process";', "spawn(process.env.RF_BIN as string, []);"]),
       shellProgram: inventory(['spawn("sh", ["-c", command]);']),
       otherReceiver: inventory(["manager.spawn(pi, ctx);"]),
+      conditionalProgram: inventory(['spawn(process.env.PI_FAST === "1" ? "rf" : "git", []);']),
+      sameFirstWord: inventory(['execSync(process.env.PI_FAST === "1" ? "git status" : "git log");']),
+      templateProgram: inventory([TEMPLATE_COMMAND]),
+      joinProgram: inventory(["export function launch(args: string): void {", '  exec("rf context render " + args);', "}"]),
+      observedHead: inventory(observedHead("", "")),
+      e1EnvProgram: inventory(observedHead(E1_FIND, E1_REPLACE)),
+      e2ShadowingConst: inventory(observedHead(E2_FIND, E2_REPLACE)),
+      e3NewLaunch: inventory(observedHead(E3_FIND, E3_REPLACE)),
     }),
-    caught: { opaqueProgram: ["spawn:<opaque RF_PROGRAM>"], envProgram: ["spawn:<opaque process.env.RF_BIN as string>"], shellProgram: ["spawn:sh"], otherReceiver: [] },
+    caught: {
+      opaqueProgram: ["spawn:<opaque RF_PROGRAM>"],
+      envProgram: ["spawn:<opaque process.env.RF_BIN as string>"],
+      shellProgram: ["spawn:sh"],
+      otherReceiver: [],
+      conditionalProgram: ["spawn:git|rf"],
+      sameFirstWord: ["execSync:git"],
+      templateProgram: [["exec:<opaque `rf --workspace ", "$", "{root} context render --json`>"].join("")],
+      joinProgram: ['exec:<opaque "rf context render " + args>'],
+      observedHead: ["execFileSync:git"],
+      e1EnvProgram: ['execFileSync:<opaque process.env.PI_VCS ?? "git">'],
+      e2ShadowingConst: ["execFileSync:<opaque VCS_PROGRAM>"],
+      e3NewLaunch: ['execFileSync:<opaque process.env.PI_VCS ?? "git">', "execFileSync:git"],
+    },
   },
   {
     id: "C1-MODULE-BINDINGS",
@@ -2208,19 +2192,27 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-SPECIFIER-TEXT",
     pin: "C1",
-    words: "C1 (b) resolves a module specifier as exact text: a string, a no-substitution template, an identifier through every same-file const of its name as C1-NAME-RESOLUTION resolves it, a template whose every substitution resolves, a + join, or a ?: / ?? / || / && whose sides both resolve (either side counts); a specifier that does not resolve binds no module, and C1-OPAQUE-LOADS reads its load (gate member LC1: a same-file const specifier).",
+    words: "C1 (b) resolves a module specifier as exact text, as the landed reader's exact() reads it: a string, a no-substitution template, an identifier C1-NAME-RESOLUTION resolves, a template whose every substitution resolves, a + join, or a ?: / ?? / || / && whose sides both resolve (either side counts); a specifier with an alternative that does not resolve binds no module, and C1-OPAQUE-LOADS reads its load (gate member LC1: a same-file const specifier).",
     falsifier: async () => ({
       constSpecifier: inventory(LC1_PLANT),
+      noSubstitutionSpecifier: inventory(["const cp = require(`node:child_process`);", "cp.fork(entry);"]),
       joinSpecifier: inventory(['const cp = require("node:" + "child_process");', "cp.fork(entry);"]),
       templateSpecifier: inventory(['const NODE = "node";', TEMPLATE_SPECIFIER, "cp.fork(entry);"]),
       alternativeSpecifier: inventory(['const cp = require(process.env.PREFIXED ? "node:child_process" : "child_process");', "cp.fork(entry);"]),
+      nullishSpecifier: inventory(['const PREFERRED = "node:child_process";', 'const cp = require(PREFERRED ?? "child_process");', "cp.fork(entry);"]),
+      orSpecifier: inventory(['const PREFERRED = "node:child_process";', 'const cp = require(PREFERRED || "child_process");', "cp.fork(entry);"]),
+      andSpecifier: inventory(['const PREFERRED = "node:child_process";', 'const cp = require(PREFERRED && "child_process");', "cp.fork(entry);"]),
       unresolved: inventory(['const cp = require(process.env.CP_MODULE ?? "node:child_process");', "cp.fork(entry);"]),
     }),
     caught: {
       constSpecifier: ["spawn:<opaque RF_PROGRAM>"],
+      noSubstitutionSpecifier: ["fork:<opaque entry>"],
       joinSpecifier: ["fork:<opaque entry>"],
       templateSpecifier: ["fork:<opaque entry>"],
       alternativeSpecifier: ["fork:<opaque entry>"],
+      nullishSpecifier: ["fork:<opaque entry>"],
+      orSpecifier: ["fork:<opaque entry>"],
+      andSpecifier: ["fork:<opaque entry>"],
       unresolved: [],
     },
   },
@@ -2244,7 +2236,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-OPAQUE-LOADS",
     pin: "C1",
-    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file const of any scope binds to createRequire(...), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list.",
+    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file variable declaration of any kind, scope or context binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list.",
     falsifier: async () =>
       opaqueLoads(
         planted([
@@ -2255,24 +2247,36 @@ const ENUMERATION: readonly Item[] = [
           "process.getBuiltinModule(name);",
           "createRequire(import.meta.url)(name);",
           "export function viaShadowedLoader(req: (name: string) => unknown, name: string): unknown { return req(name); }",
+          "export function viaLet(letName: string): unknown { let letRequire = createRequire(import.meta.url); return letRequire(letName); }",
+          "export function viaVar(varName: string): unknown { var varRequire = createRequire(import.meta.url); return varRequire(varName); }",
+          "export function viaUsing(usingName: string): unknown { using usingRequire = createRequire(import.meta.url); return usingRequire(usingName); }",
+          "export async function viaAwaitUsing(awaitName: string): Promise<unknown> { await using awaitRequire = createRequire(import.meta.url); return awaitRequire(awaitName); }",
+          "declare const ambientRequire = createRequire(import.meta.url);",
+          "ambientRequire(ambientName);",
         ]),
       ),
     caught: [
+      "plant.ts:<module>:createRequire():<opaque ambientName>",
       "plant.ts:<module>:createRequire():<opaque modulePath>",
       "plant.ts:<module>:createRequire():<opaque name>",
       "plant.ts:<module>:getBuiltinModule:<opaque name>",
       "plant.ts:<module>:require:<opaque name>",
       "plant.ts:load:import():<opaque name>",
+      "plant.ts:viaAwaitUsing:createRequire():<opaque awaitName>",
+      "plant.ts:viaLet:createRequire():<opaque letName>",
       "plant.ts:viaShadowedLoader:createRequire():<opaque name>",
+      "plant.ts:viaUsing:createRequire():<opaque usingName>",
+      "plant.ts:viaVar:createRequire():<opaque varName>",
     ],
   },
   {
     id: "C1-NAME-RESOLUTION",
     pin: "C1",
-    words: "C1 (b2) resolves an identifier by NAME, never by its binding, for C1-COMMAND-WORDS, C1-SPECIFIER-TEXT and C1-REGISTRATIONS: through the initializer of every const the file declares with that name, in any scope, so a const shadowing a const reads both; and only when the file binds the name no other way - no let, var, using or await using, parameter, catch clause, destructuring element, function, class, import, enum or namespace of that name, and no const without an initializer or in an ambient (declare) context - makes no eval call by name, and the identifier lies inside the block, module, switch body or for statement that declares one of those consts and outside every with statement's body, namespace body and enum; any other identifier does not resolve, so a load whose specifier it is reads as an opaque load (C1-OPAQUE-LOADS), a launch program as <opaque text> (C1-INVENTORY), a registration's effectClass as unresolved and its id as no registration (R-OPAQUE-REGISTRATION) (gate members S1, S2 and S3 of refusal #3: a let, a parameter and a let shadowing a same-file const).",
+    words: "C1 (b2) resolves an identifier for C1-COMMAND-WORDS, C1-INVENTORY, C1-SPECIFIER-TEXT and C1-REGISTRATIONS as the landed reader's resolve() does (bindingTextReader, test/helpers/rf-binding-text-reader.ts, whose claim of record is wb-jwc.10's census), by its binding: the declaration TypeScript's checker binds it to by scope in a program over its own module alone, read through that declaration's initializer when it is one const declaration with an initializer outside an ambient (declare) context, so a name read within the scope of a const that shadows a same-named const reads through the shadowing const alone and outside that scope through the shadowed one, and a name in a namespace body or an enum, or beside an ambient namespace's same-named const, reads through the const it binds to; a let, var, using or await using, parameter, catch clause, destructuring element, function, class, import, enum or namespace binding of the name, a const without an initializer or in an ambient context, a name the checker binds to no declaration in its scope, a name inside a with statement's body and every name of a module that calls eval by name do not resolve, so a load whose specifier it is reads as an opaque load (C1-OPAQUE-LOADS), a launch program as <opaque text> (C1-INVENTORY), a registration's effectClass as <opaque name:kind> and its id as no registration (R-OPAQUE-REGISTRATION) (gate members S1, S2 and S3 of refusal #3: a let, a parameter and a let shadowing a same-file const; a10 of refusal #4: a const whose initializer does not resolve shadowing a same-named const).",
     falsifier: async () => {
       const loads = (lines: readonly string[]): string[] => opaqueLoads(planted(lines));
       const fs = 'const MODULE = "node:fs";';
+      const cp = 'const MODULE = "node:child_process";';
       const built = "String.fromCharCode(110, 111, 100, 101, 58, 99, 104, 105, 108, 100, 95, 112, 114, 111, 99, 101, 115, 115)";
       const inside = (binding: string): string[] => loads([fs, "export function load(): unknown {", `  ${binding}`, "  return require(MODULE);", "}"]);
       return {
@@ -2306,14 +2310,14 @@ const ENUMERATION: readonly Item[] = [
         namespaceDeclaration: loads([fs, "namespace MODULE {}", "export const loaded = require(MODULE);"]),
         constWithoutInitializer: loads([fs, "export async function loadAll(specifiers: string[]): Promise<void> {", "  for (const MODULE of specifiers) await import(MODULE);", "}"]),
         ambientConst: loads(['declare const MODULE = "node:fs";', "export const loaded = require(MODULE);"]),
-        ambientNamespaceConst: loads([fs, 'declare namespace Ambient { const MODULE = "node:path"; }', "export const loaded = require(MODULE);"]),
+        ambientNamespaceConst: moduleSites(planted([cp, 'declare namespace Ambient { const MODULE = "node:path"; }', "export const loaded = require(MODULE);"]), CHILD_PROCESS),
         directEval: inside('eval("var MODULE = process.env.PI_RF_MODULE");'),
         outsideItsBlock: loads(["export function decoy(): string {", '  const MODULE = "node:fs";', "  return MODULE;", "}", "export async function load(): Promise<unknown> {", "  return import(MODULE);", "}"]),
         outsideItsSwitch: loads(["export function load(kind: string): unknown {", "  switch (kind) {", '    case "fs":', '      const MODULE = "node:fs";', "      return MODULE;", "  }", "  return require(MODULE);", "}"]),
         outsideItsFor: loads(["export function load(): unknown {", '  for (const MODULE = "node:fs"; ; ) break;', "  return require(MODULE);", "}"]),
         withBody: loads([fs, "export function load(scope: object): unknown {", "  with (scope) {", "    return require(MODULE);", "  }", "}"]),
-        namespaceBody: loads([fs, "namespace Loaded {", "  export const value = require(MODULE);", "}"]),
-        enumBody: loads([fs, "enum Loaded {", "  Value = require(MODULE),", "}"]),
+        namespaceBody: moduleSites(planted([cp, "namespace Loaded {", "  export const value = require(MODULE);", "}"]), CHILD_PROCESS),
+        enumBody: moduleSites(planted([cp, "enum Loaded {", "  Value = require(MODULE),", "}"]), CHILD_PROCESS),
         s4bChannel: loads([
           'const CHANNELS = "node:util";',
           "export async function arm(): Promise<void> {",
@@ -2327,12 +2331,14 @@ const ENUMERATION: readonly Item[] = [
           planted([fs, "export function decoy(): string {", '  const MODULE = "node:child_process";', "  return MODULE;", "}", "export const loaded = require(MODULE);"]),
           CHILD_PROCESS,
         ),
+        shadowInside: moduleSites(planted([fs, "export function load(): unknown {", `  ${cp}`, "  return require(MODULE);", "}"]), CHILD_PROCESS),
+        a10ShadowingConst: opaqueLoads([plant(A10_PATH, A10_PLANT)]),
       };
     },
     caught: {
       s1Let: ["plant.ts:commitRender:import():<opaque MODULE>"],
       s2Parameter: ["plant.ts:commitRenderWith:createRequire():<opaque SPECIFIER>"],
-      s3Let: ["plant.ts:reactivefiber.render.preview:<EFFECT_CLASS>"],
+      s3Let: ["plant.ts:reactivefiber.render.preview:<opaque EFFECT_CLASS:let>"],
       varDeclaration: ["plant.ts:load:require:<opaque MODULE>"],
       usingDeclaration: ["plant.ts:load:require:<opaque MODULE>"],
       awaitUsingDeclaration: ["plant.ts:load:import():<opaque MODULE>"],
@@ -2345,18 +2351,20 @@ const ENUMERATION: readonly Item[] = [
       namespaceDeclaration: ["plant.ts:<module>:require:<opaque MODULE>"],
       constWithoutInitializer: ["plant.ts:loadAll:import():<opaque MODULE>"],
       ambientConst: ["plant.ts:<module>:require:<opaque MODULE>"],
-      ambientNamespaceConst: ["plant.ts:<module>:require:<opaque MODULE>"],
+      ambientNamespaceConst: ["plant.ts:<module>:call require:node:child_process", "plant.ts:<module>:literal:node:child_process"],
       directEval: ["plant.ts:load:require:<opaque MODULE>"],
       outsideItsBlock: ["plant.ts:load:import():<opaque MODULE>"],
       outsideItsSwitch: ["plant.ts:load:require:<opaque MODULE>"],
       outsideItsFor: ["plant.ts:load:require:<opaque MODULE>"],
       withBody: ["plant.ts:load:require:<opaque MODULE>"],
-      namespaceBody: ["plant.ts:<module>:require:<opaque MODULE>"],
-      enumBody: ["plant.ts:<module>:require:<opaque MODULE>"],
+      namespaceBody: ["plant.ts:<module>:call require:node:child_process", "plant.ts:<module>:literal:node:child_process"],
+      enumBody: ["plant.ts:<module>:call require:node:child_process", "plant.ts:<module>:literal:node:child_process"],
       s4bChannel: ["plant.ts:arm:import():<opaque CHANNELS>"],
       program: ["spawn:<opaque PROGRAM>"],
       inScope: ["plant.ts:load:call require:node:child_process", "plant.ts:load:literal:node:child_process"],
-      constShadowingConst: ["plant.ts:<module>:call require:node:child_process", "plant.ts:decoy:literal:node:child_process"],
+      constShadowingConst: ["plant.ts:decoy:literal:node:child_process"],
+      shadowInside: ["plant.ts:load:call require:node:child_process", "plant.ts:load:literal:node:child_process"],
+      a10ShadowingConst: [`${A10_PATH}:commitRender:import():<opaque MODULE>`],
     },
   },
   {
@@ -2402,7 +2410,9 @@ const ENUMERATION: readonly Item[] = [
       conditional: argvOf(builder('["context", "render", ...(commit ? [] : ["--no-commit"])]')),
       absent: argvOf(builder('["context", "render"]')),
       unresolved: argvOf(builder("finalize()")),
-      shellCommand: argvOf([TEMPLATE_COMMAND]),
+      shellCommand: argvOf(['const ROOT = "/workspace";', RESOLVED_TEMPLATE_COMMAND]),
+      shellListed: argvOf(['exec("rf context render --no-commit --json");']),
+      shellUnresolved: argvOf([TEMPLATE_COMMAND]),
     }),
     caught: {
       unconditional: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
@@ -2410,6 +2420,8 @@ const ENUMERATION: readonly Item[] = [
       absent: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=absent options=none"],
       unresolved: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unresolved options=none"],
       shellCommand: ["plant.ts:<module>:exec command --no-commit=absent options=none"],
+      shellListed: ["plant.ts:<module>:exec command --no-commit=unconditional options=none"],
+      shellUnresolved: [],
     },
   },
   {
@@ -2469,7 +2481,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-REGISTRATIONS",
     pin: "C1",
-    words: "C1 (e) reads every object literal src writes whose id resolves to a reactivefiber.* name, as path:id:effectClass, each as the literal itself sets it: the id and the effectClass each read as C1-COMMAND-WORDS reads a first argument's text (a string, a template's literal text, a same-file const C1-NAME-RESOLUTION resolves, a + join, either side of ?: / ?? / ||), through a property assignment by name or literal key, a shorthand property, or a spread of a name C1-NAME-RESOLUTION resolves to exactly one same-file const object literal with no opaque member (properties in source order, a later one overriding) (gate member LC3: a spread with an effectClass override); any other member is opaque - a spread of anything else or a computed key that is no literal may set every property, a method, getter or setter its own name - and a field an opaque member may set after its last resolved route, or in place of one, reads as <opaque member>.",
+    words: "C1 (e) reads every registration entry the landed reader's registrations() reads in src, as path:id:effectClass: an object literal whose id field has a text alternative that is a reactivefiber.* name, one entry per such text and per opaque alternative of that id (gate members R-ALT1, R-ALT2 and R-ALT4 of refusal #4: the reactivefiber side second of a ?:, and beside an opaque side of ?? and of ||), each field read as the literal itself sets it - the id through C1-NAME-RESOLUTION (a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ?? / ||), the effectClass as its alternatives, sorted and joined by | (an opaque one as <opaque LABEL>, LABEL the landed reader's label of that alternative), or <none> - through a property assignment by name or literal key, a shorthand property, or a spread of a name C1-NAME-RESOLUTION resolves to a const whose initializer is an object literal with no opaque member (properties in source order, a later one overriding) (gate member LC3: a spread with an effectClass override); any other member is opaque - a spread of anything else or a computed key that is no literal may set every property, a method, getter or setter its own name - and a field an opaque member may set after its last resolved route, or in place of one, reads as <opaque member>.",
     falsifier: async () => {
       const registrations = (lines: readonly string[]): string[] => rfRegistrations(planted(lines));
       return {
@@ -2480,7 +2492,8 @@ const ENUMERATION: readonly Item[] = [
           'const WRITE = "write";',
           "register({ id: PREVIEW_ID, effectClass: WRITE });",
           'register({ id: "reactivefiber." + "render.commit", effectClass: "wr" + "ite" });',
-          TEMPLATE_ID,
+          'const KIND = "view";',
+          RESOLVED_TEMPLATE_ID,
         ]),
         shorthand: registrations(['const id = "reactivefiber.render.commit";', 'register({ id, effectClass: "write" });']),
         spreadOverride: registrations(['const nativeDescriptor = { id: "reactivefiber.render.preview", effectClass: "read" } as const;', 'registry.register({ descriptor: { ...nativeDescriptor, effectClass: "write" } });']),
@@ -2512,12 +2525,19 @@ const ENUMERATION: readonly Item[] = [
           '  registry.register({ descriptor: { id: "reactivefiber.render.preview", ...BASE } });',
           "}",
         ]),
+        effectAlternatives: registrations(['register({ id: "reactivefiber.render.view", effectClass: process.env.PI_RF_WRITE === "1" ? "write" : "read" });']),
+        effectNullish: registrations(['register({ id: "reactivefiber.render.view", effectClass: process.env.PI_RF_EFFECT ?? "read" });']),
+        noEffect: registrations(['register({ id: "reactivefiber.render.view" });']),
+        rAlt1: rfRegistrations([plant(ALIAS_PATH, rAltModule('process.env.PI_FORGE_ONLY === "1" ? "forge.render.commit" : "reactivefiber.render.commit"'))]),
+        rAlt2: rfRegistrations([plant(ALIAS_PATH, rAltModule('process.env.PI_RF_COMMIT_ID ?? "reactivefiber.render.commit"'))]),
+        rAlt3: rfRegistrations([plant(ALIAS_PATH, rAltModule('process.env.PI_FORGE_ONLY === "1" ? "reactivefiber.render.commit" : "forge.render.commit"'))]),
+        rAlt4: rfRegistrations([plant(ALIAS_PATH, rAltModule("process.env.PI_RF_COMMIT_ID || COMMIT_ID", ['const COMMIT_ID = "reactivefiber.render.commit";']))]),
       };
     },
     caught: {
       literal: ["plant.ts:reactivefiber.render.commit:write"],
       keyed: ["plant.ts:reactivefiber.render.commit:write"],
-      resolved: ["plant.ts:reactivefiber.render. :write", "plant.ts:reactivefiber.render.commit:write", "plant.ts:reactivefiber.render.preview:write"],
+      resolved: ["plant.ts:reactivefiber.render.commit:write", "plant.ts:reactivefiber.render.preview:write", "plant.ts:reactivefiber.render.view:write"],
       shorthand: ["plant.ts:reactivefiber.render.commit:write"],
       spreadOverride: ["plant.ts:reactivefiber.render.preview:read", "plant.ts:reactivefiber.render.preview:write"],
       trailingSpread: ["plant.ts:<opaque ...overrides()>:<opaque ...overrides()>"],
@@ -2531,10 +2551,17 @@ const ENUMERATION: readonly Item[] = [
         "plant.ts:reactivefiber.render.preview:<opaque get effectClass>",
         "plant.ts:reactivefiber.render.view:<opaque set effectClass>",
       ],
-      severalConsts: ["plant.ts:<opaque ...BASE>:<opaque ...BASE>"],
+      severalConsts: ["plant.ts:reactivefiber.render.preview:write"],
       nonLiteralConst: ["plant.ts:<opaque ...BASE>:<opaque ...BASE>"],
       innerOpaque: ["plant.ts:<opaque ...BASE>:<opaque ...BASE>"],
       shadowedSpread: ["plant.ts:<opaque ...BASE>:<opaque ...BASE>"],
+      effectAlternatives: ["plant.ts:reactivefiber.render.view:read|write"],
+      effectNullish: ["plant.ts:reactivefiber.render.view:<opaque process.env.PI_RF_EFFECT>|read"],
+      noEffect: ["plant.ts:reactivefiber.render.view:<none>"],
+      rAlt1: [`${ALIAS_PATH}:reactivefiber.render.commit:write`],
+      rAlt2: [`${ALIAS_PATH}:<opaque process.env.PI_RF_COMMIT_ID>:write`, `${ALIAS_PATH}:reactivefiber.render.commit:write`],
+      rAlt3: [`${ALIAS_PATH}:reactivefiber.render.commit:write`],
+      rAlt4: [`${ALIAS_PATH}:<opaque process.env.PI_RF_COMMIT_ID>:write`, `${ALIAS_PATH}:reactivefiber.render.commit:write`],
     },
   },
   {
@@ -2777,7 +2804,7 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-OPAQUE-LAUNCHER",
     pins: ["C1"],
-    words: "a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no child_process binding with a program that does not resolve - is no launch to C1 (a)-(d); such a launch moves C1 only through C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row: those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module site or opaque load).",
+    words: "a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a parameter, Reflect.apply, call/apply/bind, a computed key that is no literal, or as a member of a receiver that is no child_process binding with a program no text alternative of which holds the word rf (C1-COMMAND-WORDS: a parameter, or a template or + join with a part that does not resolve) - is no launch to C1 (a)-(d); such a launch moves C1 only through C1-MODULE-SITES when its module adds a site, so one fed from an existing child_process import moves no C1 field (quiet row: those calls, added to a module that already holds its child_process imports, add no launch site, inventory member, module site or opaque load).",
     quiet: async () => {
       const existing = [
         'import * as cp from "node:child_process";',
@@ -2791,6 +2818,8 @@ const RESIDUALS: readonly Residual[] = [
         'export function viaComputed(key: "spawn"): void { cp[key]("rf", ["context", "render", "--json"]); }',
         'export function viaHelper(helpers: { spawn(program: string, argv: string[]): void }, bin: string): void { helpers.spawn(bin, ["context", "render", "--json"]); }',
         "export function viaExisting(): void { viaParameter(execFileSync); }",
+        HELPER_TEMPLATE_COMMAND,
+        'export function viaHelperJoin(helpers: { exec(command: string): void }, args: string): void { helpers.exec("rf context render " + args); }',
       ];
       const before = [plant("existing.ts", existing)];
       const after = [plant("existing.ts", [...existing, ...escapes])];
@@ -2832,7 +2861,7 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-OPAQUE-REGISTRATION",
     pins: ["C1"],
-    words: "a descriptor whose id resolves to no text - a parameter, an import, an identifier C1-NAME-RESOLUTION does not resolve (a shorthand property's included), a string built at run time, or an id only an opaque member supplies (C1-REGISTRATIONS: a spread of a call result, an import, a parameter, or a name that does not resolve to exactly one same-file const object literal) - or to no reactivefiber.* name is no registration to C1 (e), and a descriptor changed after its literal is written (an assignment to its property, Object.assign or a helper's copy) reads as its literal; a committing launch behind either is still read by (a)-(d) (quiet row: write-class descriptors with a parameter id, a shorthand parameter id, a let-shadowed id, an rf.* id, a spread call result and a let-shadowed spread read no registration, and literals whose effectClass is assigned write after they are written read as written).",
+    words: "a descriptor whose id has no text alternative that is a reactivefiber.* name - a parameter, an import, an identifier C1-NAME-RESOLUTION does not resolve (a shorthand property's included), a string built at run time (a template or + join with a part that does not resolve among them), texts that are no reactivefiber.* name beside opaque alternatives, or an id only an opaque member supplies (C1-REGISTRATIONS: a spread of a call result, an import, a parameter, or a name C1-NAME-RESOLUTION does not resolve to a const whose initializer is an object literal with no opaque member) - is no registration to C1 (e), and a descriptor changed after its literal is written (an assignment to its property, Object.assign or a helper's copy) reads as its literal; a committing launch behind either is still read by (a)-(d) (quiet row: write-class descriptors with a parameter id, a shorthand parameter id, a let-shadowed id, an rf.* id, a template id and a + join id with a part that does not resolve, a forge.* id beside an opaque side of ??, a spread call result and a let-shadowed spread read no registration, and literals whose effectClass is assigned write after they are written read as written).",
     quiet: async () => ({
       registrations: rfRegistrations([
         plant("opaque-registration.ts", [
@@ -2850,6 +2879,9 @@ const RESIDUALS: readonly Residual[] = [
           "  let BASE = base();",
           '  registry.register({ descriptor: { ...BASE, effectClass: "write" } });',
           "}",
+          TEMPLATE_ID,
+          'register({ id: "reactivefiber.render." + kind, effectClass: "write" });',
+          'register({ id: process.env.PI_RF_ID ?? "forge.render.commit", effectClass: "write" });',
         ]),
       ]),
       mutated: rfRegistrations([
@@ -3008,6 +3040,11 @@ const RESIDUALS: readonly Residual[] = [
     reads: { stream: CLEAN_STREAM, seen: { bytes: RECEIPT_BYTES, parsed: STDERR_OPERATION } },
   },
 ];
+/** An enumerated item's falsifier rows, as FROZEN SHAPE pins them: its caught object's keys in order, or its caught list's length. */
+function rowShapeOf(caught: unknown): string {
+  if (Array.isArray(caught)) return `[${caught.length}]`;
+  return caught !== null && typeof caught === "object" ? Object.keys(caught).join(",") : typeof caught;
+}
 function residualsOf(pin: PinId): string[] {
   return RESIDUALS.filter((residual) => residual.pins.includes(pin)).map((residual) => residual.id);
 }
@@ -3221,7 +3258,7 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     expect(Object.keys(kills !== null && typeof kills === "object" ? kills : {}), "G1's witnessed kills are the statement's").toStrictEqual(killKindsOf(statement));
   });
 
-  it("FROZEN SHAPE (standing rule 16): ROWS' ids and pin counts, WITNESS keyed by exactly the pins, every reading pinned exactly once, the enumerated surfaces and their pins, the residuals and their pins", () => {
+  it("FROZEN SHAPE (standing rule 16): ROWS' ids and pin counts, WITNESS keyed by exactly the pins, every reading pinned exactly once, the enumerated surfaces, their pins and their falsifier rows, the residuals and their pins", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toStrictEqual(["capture:3", "reconcile:2", "preview-guard:2"]);
     expect(Object.keys(WITNESS)).toStrictEqual(PINS.map((pin) => pin.id));
     expect(PINS.map((pin) => pin.reading)).toStrictEqual(Object.keys(READINGS));
@@ -3254,6 +3291,36 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       "G2-OWN-PROPERTIES:G2",
       "G2-PROTOTYPES:G2",
       "G2-SINKS:G2",
+    ]);
+    expect(ENUMERATION.map((item) => `${item.id}:${rowShapeOf(item.caught)}`)).toStrictEqual([
+      "C1-LAUNCH-ROUTES:name,importAlias,destructure,constAlias,member,keyed,execve",
+      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec",
+      "C1-INVENTORY:opaqueProgram,envProgram,shellProgram,otherReceiver,conditionalProgram,sameFirstWord,templateProgram,joinProgram,observedHead,e1EnvProgram,e2ShadowingConst,e3NewLaunch",
+      "C1-MODULE-BINDINGS:namespace,defaultImport,defaultSpecifier,importEquals,loadBinding,defaultMember,defaultDestructure,onTheCall",
+      "C1-SPECIFIER-TEXT:constSpecifier,noSubstitutionSpecifier,joinSpecifier,templateSpecifier,alternativeSpecifier,nullishSpecifier,orSpecifier,andSpecifier,unresolved",
+      "C1-MODULE-SITES:declarations,call,literal,text",
+      "C1-OPAQUE-LOADS:[11]",
+      "C1-NAME-RESOLUTION:s1Let,s2Parameter,s3Let,varDeclaration,usingDeclaration,awaitUsingDeclaration,catchClause,destructuringElement,functionDeclaration,classDeclaration,importBinding,enumDeclaration,namespaceDeclaration,constWithoutInitializer,ambientConst,ambientNamespaceConst,directEval,outsideItsBlock,outsideItsSwitch,outsideItsFor,withBody,namespaceBody,enumBody,s4bChannel,program,inScope,constShadowingConst,shadowInside,a10ShadowingConst",
+      "C1-ARGV-BINDING:inline,mutated,shadowed,letBound",
+      "C1-ARGV-BUILDER:nested,nestedLines,arrow,imported",
+      "C1-ARGV-RETURNS:unconditional,conditional,absent,unresolved,shellCommand,shellListed,shellUnresolved",
+      "C1-BUILDER-DECLARATIONS:nested,parameter",
+      "C1-OPTIONS:[1]",
+      "C1-DECLARATION-REFERENCES:calls,keyed,exported",
+      "C1-DECLARATION-TEXT:lines,moved",
+      "C1-REGISTRATIONS:literal,keyed,resolved,shorthand,spreadOverride,trailingSpread,spreadBetween,leadingSpread,inPlace,laterRoute,computedKey,accessors,severalConsts,nonLiteralConst,innerOpaque,shadowedSpread,effectAlternatives,effectNullish,noEffect,rAlt1,rAlt2,rAlt3,rAlt4",
+      "C1-RUNTIME-ARGV:[1]",
+      "G2-BINDING-USES:[10]",
+      "G2-STDIO:unbound,inherit",
+      "G2-CHANNEL-SITES:importDeclaration,builtin,constSpecifier",
+      "G2-OPAQUE-LOADS:[1]",
+      "G2-TRAP:preset,reassigned,launched,bytes",
+      "G2-LISTENER-LOG:added,dataListeners,seen",
+      "G2-DATA-LISTENERS:dataListeners,encoding,seen",
+      "G2-LISTENER-COUNTS:[1]",
+      "G2-OWN-PROPERTIES:ownProperties,seen",
+      "G2-PROTOTYPES:swapped,onreadShared,wrappedOwn",
+      "G2-SINKS:warning,errorText",
     ]);
     expect(RESIDUALS.map((residual) => `${residual.id}:${residual.pins.join("+")}`)).toStrictEqual([
       "R-OPAQUE-LAUNCHER:C1",
