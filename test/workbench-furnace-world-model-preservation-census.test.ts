@@ -14,7 +14,9 @@
  * changed from 5fbe25e to b3d410f); the wb-40zp seats, 2026-10-30, read the src tree, vendor/, package.json, package-lock.json
  * and docs/12 byte-identical from b3d410f to trunk ee48709 and, for the respin, to trunk 42ab54d, the wb-40zp cut #3 seat,
  * 2026-10-31, read them so to trunk 89109cd, and the wb-40zp cut #4 seat, 2026-10-31, to trunk f63d389 (empty git diffs), so
- * these readings carry over. Producer (Furnace's own tree, read
+ * these readings carry over; the wb-40zp cut #5 seat, 2026-11-05, read vendor/, package.json and package-lock.json
+ * byte-identical from f63d389 to trunk 95fb815, where src and docs/12 differ from f63d389 only by one doc comment of
+ * src/workbench/hyperunix-observer.ts (its CONFLICT_CODE doc) and one added docs/12 bullet. Producer (Furnace's own tree, read
  * with git show at the filing pin 0f791db71b9d and at Furnace main
  * 0d41031, and re-read so by the cut #3 seat on 2026-10-29 with main still at 0d41031: the same three blobs at both; this
  * census never reads it): docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN
@@ -105,13 +107,19 @@
  * and after close(), every observe() yield, the Run snapshot, the topology, the projection and the reply) and reach none of
  * them. E1 the log evidence presentation of either stream (STREAMS) keeps every HELD line redacted and redacts every CORPUS
  * class. S1 the execute body S1 reads, through the AST of src/index.ts (S1 runs none of it): the initializer of the execute
- * property assignment (keyed by the identifier execute) of the one object literal in src/index.ts that holds a name property
- * assignment, keyed by the identifier name, whose value is the string literal "furnace_observe" (registrations() counts such
- * literals anywhere in the file, one nested in another included, wherever that assignment stands among their properties and
- * whether or not they hold an execute, and finds one; a name keyed by a quoted or computed key, or valued by a template
- * literal, a parenthesized or as const string, a constant, a concatenation or a string literal of another name (a longer or a
- * shorter one), is a name neither reads, and an execute keyed by a quoted or computed key, or held by a method, a shorthand
- * property or an accessor, is no body S1 reads, each pinned).
+ * property assignment of the one object literal in src/index.ts that holds a name property assignment whose value is the
+ * string literal "furnace_observe", each of the two keyed by the identifier as written, name and execute, with no escape in
+ * it (registrations() counts such literals anywhere in the file, one nested in another included, wherever that assignment
+ * stands among their properties and whether or not they hold an execute, and finds one). The boundary of that finder and of
+ * that counter is claimed at the forms their pinned rows write and at no other: every other key, value or execute form is
+ * NOT CLAIMED by this census, read or not. Read by both: the plain literal, and one whose name's string literal spells a
+ * character with a four-hex \u escape (its cooked text read). No name either reads: a name keyed by the quoted key "name", the
+ * computed key ["name"] or the identifier name spelled with a \u escape (four-hex or braced); and a name valued by a template
+ * literal, by the string literal in parentheses, under as const or under satisfies string, by a constant, by a
+ * concatenation, or by the string literal of another name (the other names the rows write: a longer one, a shorter one and
+ * one in another letter case). No body S1 reads: an execute keyed by the quoted key "execute", the computed key
+ * ["execute"] or the identifier execute spelled with a \u escape (four-hex or braced), or held by a method, a shorthand
+ * property or an accessor.
  * The body binds the reading as `const reading = await observer.snapshot()` and holds the refresh
  * `projection.refresh(observer.projectionSnapshot(reading))` and the data reply
  * `return textResult(sanitizeWorkbenchJsonText(reading))`. It names that reading exactly three times, its binding and the
@@ -154,11 +162,14 @@
  * module (an alias import or a namespace import); the projection the body refreshes, read by its name only (a body-local
  * projection standing in for the module's); a built-in the sanitizer or the observer uses changed (JSON.stringify replaced,
  * say); a reference the checker binds to no symbol (the import-equals alias import zzAlias = textResult); and code held only in
- * a string. NOT CLAIMED (scope sentences of the wb-40zp final cut under ruling R-B208, which defers the reader coverage of the
- * first two to wb-g20x): which execute pi serves under the name furnace_observe is NOT CLAIMED by this census - S1 holds the
- * one literal and the body stated above and has no reading of a registration call, so whether a further registration names
- * the tool another way (a quoted "name" key, a template literal, a constant, a concatenation, or a string under as const or in
- * parentheses, say), whether a spread after its execute sets that literal's execute, and whether a wrapped pi.registerTool or
+ * a string. NOT CLAIMED (scope sentences of the wb-40zp final cut #4 under ruling R-B208, which deferred the reader coverage of
+ * the first two to wb-g20x, kept by this post-inversion restatement, cut #5; that coverage landed with wb-g20x's carrier
+ * wb-bk8a at landing 908, in test/workbench-furnace-observe-served-census.test.ts): which execute pi serves under the name
+ * furnace_observe is NOT CLAIMED by this census - S1 holds the one literal and the body stated above and has no reading of a
+ * registration call, so whether a further registration names the tool another way (a quoted "name" key, an identifier key
+ * spelled with a \u escape, a template literal, a constant, a concatenation, another letter case, or a string under as const,
+ * under satisfies or in parentheses, say), whether a spread after its execute sets that literal's execute, and whether a
+ * wrapped pi.registerTool or
  * a binding standing in for defineTool changes the tool pi serves are not read by S1; what the two literal replies say and
  * what the sanitizeWorkbenchText reply is handed are NOT CLAIMED by this census - S1 reads their shape only; what the body
  * hands new Furnace(...) and new FurnaceObserver(...) (the client's options and the observer's options, limits and signal) is
@@ -348,7 +359,7 @@ const CASES = {
   E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation of either stream keeps a producer's redaction redacted and redacts every corpus class" },
   S1: {
     rows: ["surfaces"],
-    title: "the execute S1 reads (the one literal naming furnace_observe by a string literal) returns textResult(sanitizeWorkbenchJsonText(reading)) as its one reply naming the reading, which it names only there, at its binding and in the refresh's Run snapshot (which execute pi serves, what its other replies say and whether the body reaches them are not read)",
+    title: "the execute S1 reads (the one literal whose name, keyed by the identifier name as written, is the string literal furnace_observe) returns textResult(sanitizeWorkbenchJsonText(reading)) as its one reply naming the reading, which it names only there, at its binding and in the refresh's Run snapshot (which execute pi serves, what its other replies say and whether the body reaches them are not read)",
   },
   A1: { rows: [], title: "outside anchors: the export title and notes, docs/12's floor sentence, the observer's operands, NativeSnapshot, RunState and OutputStream" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows' pin counts and every table's ids" },
@@ -1147,11 +1158,11 @@ interface ToolBody {
   readonly replier: string[];
 }
 /** The execute body S1 reads for a name in src/index.ts (or in a planted source), through the AST: the initializer of the execute
- * property assignment (keyed by the identifier execute) of an object literal holding a name property assignment, keyed by the
- * identifier name, whose value is that string literal, wherever either stands among its properties; none when no such literal
- * holds one (a quoted or computed key, a name valued by anything but that string literal, another name's included, and an
- * execute held by a method, a shorthand property or an accessor are not read). S1 holds src/index.ts to one such literal
- * (registrations()); which execute pi serves under the name is not read. */
+ * property assignment of an object literal holding a name property assignment whose value is the string literal of that name,
+ * each of the two keyed by the identifier as written, name and execute, with no escape in it, wherever either stands among
+ * its properties; none when no such literal holds one. Its boundary is claimed at the forms S1's finder rows write and at no
+ * other (the header's Read, No name and No body lists); every other key, value or execute form is NOT CLAIMED. S1 holds
+ * src/index.ts to one such literal (registrations()); which execute pi serves under the name is not read. */
 function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "utf8")): ToolBody | undefined {
   const source = parsed(text);
   const squeeze = (node: ts.Node): string => node.getText(source).replace(/\s+/g, "");
@@ -1334,7 +1345,8 @@ const TEXT_RESULT = 'functiontextResult(msg:string,details?:AgentDetails){return
 /** The furnace_observe slice of a src/index.ts text, each piece as written: its import declarations, the module's textResult
  * function, and the functions that enclose the literal S1 reads (their heads as written), each holding only the next, down to
  * the expression statement that holds that literal. S1's witnesses are planted on it, so each reads one small module rather
- * than the whole file. */
+ * than the whole file. It reads that literal's name key as the finder does (the identifier name as written, with no escape in
+ * it), so a decoy before it keyed by n\u0061me is passed by (pinned). */
 function observeSlice(text: string): string {
   const source = parsed(text);
   const find = (node: ts.Node): ts.Node | undefined =>
@@ -1352,9 +1364,11 @@ function observeSlice(text: string): string {
   const kept = source.statements.filter(node => ts.isImportDeclaration(node) || (ts.isFunctionDeclaration(node) && node.name?.text === "textResult"));
   return [...kept.map(node => node.getText(source)), piece].join("\n");
 }
-/** How many object literals in a source hold a name property assignment, keyed by the identifier name, whose value is that
- * string literal, anywhere in the source (one nested in another included), wherever it stands among their properties and
- * whether or not they hold an execute: each a literal toolBody could read an execute body from. */
+/** How many object literals in a source hold a name property assignment whose value is the string literal of that name, keyed
+ * by the identifier name as written, with no escape in it, anywhere in the source (one nested in another included), wherever
+ * it stands among their properties and whether or not they hold an execute: each a literal toolBody could read an execute
+ * body from. Its boundary is claimed at the forms S1's counter rows write and at no other (the header's Read and No name
+ * lists); every other key or value form is NOT CLAIMED. */
 function registrations(name: string, text: string): number {
   const source = parsed(text);
   let found = 0;
@@ -1768,32 +1782,41 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     // The finder reads a literal's name wherever it stands among the literal's properties (wb-40zp cut #4).
     const late = toolBody("zz-late", 'tools.push({ execute: async () => textResult("{}"), name: "zz-late" });');
     expect(late?.replies, "and reads the execute of a literal whose name follows it").toStrictEqual(['textResult("<literal>")']);
-    // The finder's boundary (wb-40zp cut #4, the R-B208 final cut): a name keyed by a quoted or computed key, or valued by a
-    // template literal, a parenthesized or as const string, a constant, a concatenation or another name's string literal (a
-    // longer or a shorter one), is no name it reads, and an execute keyed by a quoted or computed key, or held by a method, a
-    // shorthand property or an accessor, is no body; the plain literal after them reads one.
+    // The finder's boundary (wb-40zp cut #4, the R-B208 final cut, and cut #5, the post-inversion restatement): a name keyed by
+    // a quoted, computed or \u-escaped key, or valued by a template literal, the string literal in parentheses, under as const
+    // or under satisfies string, a constant, a concatenation or another name's string literal (a longer, a shorter or a
+    // re-cased one), is no name it reads, and an execute keyed by a quoted, computed or \u-escaped key, or held by a method, a
+    // shorthand property or an accessor, is no body; the plain literal after them reads one, and so does one whose name's
+    // string literal spells a character with a four-hex \u escape.
     const EXECUTE = 'execute: async () => textResult("{}")';
     const forms = [
       `{ "name": "zz-form", ${EXECUTE} }`,
       `{ ["name"]: "zz-form", ${EXECUTE} }`,
+      `{ n\\u0061me: "zz-form", ${EXECUTE} }`,
+      `{ n\\u{61}me: "zz-form", ${EXECUTE} }`,
       `{ name: \`zz-form\`, ${EXECUTE} }`,
       `{ name: ("zz-form"), ${EXECUTE} }`,
       `{ name: "zz-form" as const, ${EXECUTE} }`,
+      `{ name: "zz-form" satisfies string, ${EXECUTE} }`,
       `{ name: zzForm, ${EXECUTE} }`,
       `{ name: "zz-" + "form", ${EXECUTE} }`,
       '{ name: "zz-form", "execute": async () => textResult("{}") }',
       '{ name: "zz-form", ["execute"]: async () => textResult("{}") }',
+      '{ name: "zz-form", ex\\u0065cute: async () => textResult("{}") }',
+      '{ name: "zz-form", ex\\u{65}cute: async () => textResult("{}") }',
       '{ name: "zz-form", async execute() { return textResult("{}"); } }',
       '{ name: "zz-form", execute }',
       '{ name: "zz-form", get execute() { return async () => textResult("{}"); } }',
       `{ name: "zz-form-x", ${EXECUTE} }`,
       `{ name: "zz-for", ${EXECUTE} }`,
+      `{ name: "Zz-Form", ${EXECUTE} }`,
+      `{ name: "zz\\u002dform", ${EXECUTE} }`,
       `{ name: "zz-form", ${EXECUTE} }`,
     ];
     expect(
       forms.map(form => toolBody("zz-form", `tools.push(${form});`)?.replies),
-      "a quoted or computed key, a non-literal or another name, and a method, shorthand or accessor execute are no body, and the plain literal is one",
-    ).toStrictEqual([...Array.from({ length: 14 }, () => undefined), ['textResult("<literal>")']]);
+      "a quoted, computed or escaped key, a wrapped or non-literal value or another name, and a method, shorthand or accessor execute are no body, and the plain literal, an escape in its name's string or not, is one",
+    ).toStrictEqual([...Array.from({ length: 20 }, () => undefined), ['textResult("<literal>")'], ['textResult("<literal>")']]);
     // A nested function's return is read too (the returns doc).
     const nested = toolBody("zz-nested", 'tools.push({ name: "zz-nested", execute: async () => { const zzInner = () => { return 1; }; return textResult(String(zzInner())); } });');
     expect([nested?.returns, nested?.replies], "a nested function's return is read").toStrictEqual([["1", "textResult(String(...))"], ["textResult(String(...))"]]);
@@ -1894,6 +1917,13 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const slice = observeSlice(index);
     const base = toolBody("furnace_observe", slice);
     expect(readings(base), "the furnace_observe slice reads as src/index.ts does").toStrictEqual(readings(tool));
+    // observeSlice reads the literal's name key as the finder does (wb-40zp cut #5; refusal #4 U1 named it beside the finder and
+    // the counter): a decoy before it, keyed by the identifier name spelled with a \u escape, is passed by.
+    const DECOYED = 'tools.push({ name: "furnace_observe", execute: async () => textResult("{}") });';
+    expect(
+      observeSlice(`tools.push({ n\\u0061me: "furnace_observe", execute: async () => textResult("zz-decoy") });\n${DECOYED}`),
+      "the slice passes by a decoy keyed by an escaped name and holds the literal after it",
+    ).toBe(DECOYED);
     const TRY = "        try {";
     const READING = "          const reading = await observer.snapshot();";
     const REFRESH = "          projection.refresh(observer.projectionSnapshot(reading));";
@@ -1910,7 +1940,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const atModule = (code: string): readonly [string, string] => ["\nexport default function (", `\n${code}\nexport default function (`];
     const inBody = (code: string): readonly [string, string] => [TRY, `        ${code}\n${TRY}`];
     const beforeClient = (code: string): readonly [string, string] => [SCOPE, `        ${code}\n${SCOPE}`];
-    expect(registrations("furnace_observe", index), "src/index.ts holds one object literal whose name property assignment is the string literal furnace_observe, the literal whose execute S1 reads").toBe(1);
+    expect(registrations("furnace_observe", index), "src/index.ts holds one object literal whose name property assignment, keyed by the identifier name as written, is the string literal furnace_observe, the literal whose execute S1 reads").toBe(1);
     expect(registrations("furnace_observe", planted(slice, [["\nexport default function (", '\nexport const zzTools = [{ name: "furnace_observe", execute: async () => textResult("{}") }];\nexport default function (']])), "and a second such literal is counted").toBe(2);
     expect(
       registrations(
@@ -1919,20 +1949,29 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ),
       "and so are one whose name follows its execute and one that holds no execute",
     ).toBe(3);
-    // The counter's boundary (wb-40zp cut #4): none of the finder's unread name forms (another name's included) is counted, and a
-    // literal nested in another is.
+    // The counter's boundary (wb-40zp cut #4, and cut #5's escaped key, satisfies value and re-cased name): none of the finder's
+    // unread name forms (another name's included) is counted, a literal whose name's string literal spells a character with a
+    // four-hex \u escape is, and a literal nested in another is.
     const unnamed = [
       '{ "name": "furnace_observe" }',
       '{ ["name"]: "furnace_observe" }',
+      '{ n\\u0061me: "furnace_observe" }',
+      '{ n\\u{61}me: "furnace_observe" }',
       "{ name: `furnace_observe` }",
       '{ name: ("furnace_observe") }',
       '{ name: "furnace_observe" as const }',
+      '{ name: "furnace_observe" satisfies string }',
       "{ name: zzName }",
       '{ name: "furnace_" + "observe" }',
       '{ name: "furnace_observe_x" }',
       '{ name: "furnace" }',
+      '{ name: "Furnace_Observe" }',
     ];
     expect(registrations("furnace_observe", planted(slice, [["\nexport default function (", `\nexport const zzForms = [${unnamed.join(", ")}];\nexport default function (`]])), "and counts none of the unread name forms").toBe(1);
+    expect(
+      registrations("furnace_observe", planted(slice, [["\nexport default function (", '\nexport const zzEscaped = { name: "furnace\\u005fobserve" };\nexport default function (']])),
+      "and counts a literal whose name's string literal spells a character with a four-hex escape (its cooked text read)",
+    ).toBe(2);
     expect(
       registrations("furnace_observe", planted(slice, [["\nexport default function (", '\nexport const zzNested = { name: "furnace_observe", zz: { name: "furnace_observe" } };\nexport default function (']])),
       "and counts a literal nested in another",
