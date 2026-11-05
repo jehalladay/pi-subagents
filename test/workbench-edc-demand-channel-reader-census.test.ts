@@ -74,6 +74,13 @@
  * further control for each of this cut's own one-edit members of the four families that read no control; and the judged checks'
  * words narrowed to exactly their controls - each check is claimed at its real input and at the edits its controls make, every
  * control named family by family (JUDGED CHECKS), and no other edit (NOT CLAIMED, the judged checks).
+ * Cut #11 (wb-c8nb: the R694 carry of landing 973's F2, a PASS-WITH-FINDING - a rule 14 residual-list addition, the owner's finding)
+ * names the wb-u6ho line check's one residual, R-GLUED-CODE, the helper, every top-level table, the claims, the kills, the controls
+ * and the test titles unchanged: the gate member GP7-SL-CODE-LAZY (the line check's code pattern made lazy before its bracket) read
+ * its paired witness W1-GLUEDCODE - GP2-N2's code in wb-u6ho's F1 line with a second bracket glued to it, '[1e-3][0]' - as no
+ * contradiction where the delivered check reads one, and no control wrote that shape; the controls case now holds W1-GLUEDCODE's
+ * edit as R-GLUED-CODE's pinned quiet row with its one contradiction, its witness id and its edit held to wb-u6ho's F2 line in the
+ * tracker export and its payload to a frozen literal of its own (RESIDUALS).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -196,8 +203,11 @@
  * WW-EXTRA: a line naming one id more); and those refusal #3's U1, U2, U3 and F4 lines name - each 'X-' id, its parts capitals
  * and digits joined by '-' - are exactly the controls whose names start with 'X-' (X-TOKENCOLON, refusal #3's U3 witness: a line
  * whose first ':' precedes its first ': ').
+ * wb-u6ho's F2 line (its first '- F2 LOW LEADS: W1 for the residual list' notes line, landing 973's verdict) anchors R-GLUED-CODE's
+ * row: the paired witnesses it names - each 'W', one or more digits, then '-' parts of capitals and digits - are exactly the
+ * residual's rows, and the edit it pairs GP2-N2 as is W1-GLUEDCODE's.
  * The controls' frozen literal holds every control, table by table, by its name and the exact contradictions its check reads
- * (firstLine's: the line it reads).
+ * (firstLine's: the line it reads). R-GLUED-CODE's row is no control: a frozen literal of its own holds its witness id and payload.
  * JUDGED CHECKS (the R-B574 enumeration; the claims equal the controls): each judged check is claimed at its real input (no
  * contradiction; firstLine's: the F1 line) and at exactly the edits its controls make, each control's contradictions the ones the
  * controls' frozen literal holds, in four families, every control named: (a) the row K list's receiver words (R-B555's guard (a): a
@@ -284,14 +294,22 @@
  * NOT CLAIMED (the judged checks, R-B574: each claim word narrowed to its controls): an edit of a judged check's input that no
  * control makes - in the row K list another receiver form, separator, white space, case, quote or empty part or name than its
  * controls write (another Unicode white space, a carriage return, a vertical tab or a form feed among them); in wb-u6ho's F1 line
- * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls
- * write; in its notes another line shape before the F1 line; and in a refusal line another place of its first ': ' or another id
- * form - and a further control removed from its table and from the controls' frozen literal together (no outside anchor names it).
- * The judged checks name no residual: every edit of their inputs is one a control makes, or NOT CLAIMED here.
- * RESIDUALS (named; each member with its pinned quiet reading in its row): R-CUT (row C) a subject and a family on two sides of a
- * cut read no finding, each member held by LIVE QUIET (fail closed); R-TYPED-DEFAULT (row M, M-TYPED-DEFAULT) a subject and a
- * family that only a typed parameter's default value joined with its key would bring together read no finding, each member's
- * family word held by LIVE QUIET as a subjectless access reading (fail closed).
+ * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls write
+ * (R-GLUED-CODE's one pinned row aside, RESIDUALS); in its notes another line shape before the F1 line; and in a refusal line
+ * another place of its first ': ' or another id form - and a further control removed from its table and from the controls' frozen
+ * literal together (no outside anchor names it).
+ * The judged checks name one residual, R-GLUED-CODE (the wb-u6ho line check's, RESIDUALS): every edit of their inputs is one a
+ * control makes, the one its pinned row makes, or NOT CLAIMED here.
+ * RESIDUALS (named; each member with its pinned reading in its row - a reader residual's quiet reading, the line check residual's
+ * one contradiction): R-CUT (row C) a subject and a family on two sides of a cut read no finding, each member held by LIVE QUIET
+ * (fail closed); R-TYPED-DEFAULT (row M, M-TYPED-DEFAULT) a subject and a family that only a typed parameter's default value joined
+ * with its key would bring together read no finding, each member's family word held by LIVE QUIET as a subjectless access reading
+ * (fail closed); R-GLUED-CODE (the controls case, its pinned quiet row W1-GLUEDCODE; wb-u6ho's F2 line, landing 973's rule 14
+ * residual-list addition, the owner's finding) a second bracket glued to a mutant's code in wb-u6ho's F1 line, no white space
+ * between, which no control writes: the line check reads its one pinned member, GP2-N2's code written '[1e-3][0]', as that code with
+ * its glued bracket, which GP2-N2's witness does not spell - one contradiction (fail closed), where a code read that stops at the
+ * first bracket reads no contradiction and reds the row. Every other glued shape (a third bracket, a bracket or other text glued
+ * before a code, other text glued after one) and every other mutant's code glued so is NOT CLAIMED.
  *
  * Display paths added: none. Test-only and hermetic: every plant is read in memory; the bead export and the roster are only read.
  * Input-hygiene pins only: no security claim is made here.
@@ -347,6 +365,9 @@ const REFUSAL1_WITNESS = /\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 const REFUSAL2_WITNESS = /\bW[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b/g;
 /** A paired witness id as wb-u6ho's refusal #3 lines spell it: "X-", then parts of capitals and digits joined by "-". */
 const REFUSAL3_WITNESS = /\bX-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
+/** A paired witness id as wb-u6ho's F2 line (landing 973's PASS-WITH-FINDING, the residual R-GLUED-CODE) spells it: "W", one or
+ * more digits, then "-" parts of capitals and digits. */
+const RESIDUAL_WITNESS = /\bW\d+(?:-[A-Z0-9]+)+\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
 const PLANT_TSX = "src/plant.tsx";
@@ -1387,7 +1408,8 @@ function subLineIds(subLine: string): { readonly controlAt: number; readonly sub
  * plant row K holds under that id spells, of a K pin KILLS kills it at. Returns the contradictions: a missing marker, alone; else
  * the count's, the control's, each unpaired id's, then each paired id's. That reading is claimed at the real line, plants and
  * kills and at the edits the line controls make, each with exactly its payload (JUDGED CHECKS (c)); another word, case, white
- * space or code shape around a mutant's code or the control's 'under' is NOT CLAIMED (R-B574). */
+ * space or code shape around a mutant's code or the control's 'under' is NOT CLAIMED (R-B574), the residual R-GLUED-CODE's one
+ * pinned row aside (W1-GLUEDCODE: GP2-N2's code with a second bracket glued to it reads as that code with the bracket). */
 function subLineContradictions(subLine: string, plants: KPlants, kills: Kills): string[] {
   const { controlAt, subMutants, subControl } = subLineIds(subLine);
   if (controlAt === -1) return ["wb-u6ho's F1 line holds no ' The control ' marker"];
@@ -2244,6 +2266,25 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
     ];
     expect(subLineContradictions(subLine, K_PLANTS, KILLS), "the wb-u6ho line check reads no contradiction in the real line, plants and kills").toEqual([]);
     for (const [control, line, plants, kills, contradictions] of lineControls) expect(subLineContradictions(line, plants, kills), `${control}: the wb-u6ho line check reports exactly this edit's contradictions`).toEqual(contradictions);
+    // the residual R-GLUED-CODE (wb-c8nb, the R694 carry of landing 973's F2: a rule 14 residual-list addition, the owner's
+    // finding): a second bracket glued to a mutant's code, no white space between, which no control writes (CODE-TWO-BRACKETS
+    // writes a space between). Its pinned quiet row is the gate's paired witness W1-GLUEDCODE, GP2-N2's code written '[1e-3][0]':
+    // the line check reads the code with its glued bracket, a code GP2-N2's witness does not spell - that one contradiction (fail
+    // closed). A code read that stops at the first bracket (the gate member GP7-SL-CODE-LAZY) reads the edit as no contradiction,
+    // the page silenced, and reds this row. wb-u6ho's F2 line (its first '- F2 LOW LEADS: W1 for the residual list' notes line)
+    // anchors the row from outside: the paired witnesses it names and the edit it pairs GP2-N2 as.
+    const residualLine = firstLine(notes, "- F2 LOW LEADS: W1 for the residual list");
+    const glued = "): [1e-3][0], text only.";
+    expect(between(residualLine, "GP2-N2 is paired as '", "', a second bracket"), "wb-u6ho's F2 line pairs GP2-N2 as W1-GLUEDCODE's edit writes it").toBe(glued);
+    const residualRows: readonly (readonly [witness: string, line: string, plants: KPlants, kills: Kills, contradictions: readonly string[]])[] = [
+      ["W1-GLUEDCODE", edited(subLine, "): [1e-3], text only.", glued), K_PLANTS, KILLS, ["GP2-N2: K-NUMBER's witness does not spell [1e-3][0]"]],
+    ];
+    expect(idsIn(residualLine, RESIDUAL_WITNESS), "the paired witnesses wb-u6ho's F2 line names are exactly R-GLUED-CODE's pinned rows").toEqual(residualRows.map(([witness]) => witness));
+    for (const [witness, line, plants, kills, contradictions] of residualRows) expect(subLineContradictions(line, plants, kills), `${witness}: R-GLUED-CODE's pinned quiet row reads exactly its contradictions`).toEqual(contradictions);
+    expect(
+      residualRows.map(([witness, line, plants, kills]): readonly [string, readonly string[]] => [witness, subLineContradictions(line, plants, kills)]),
+      "R-GLUED-CODE's pinned quiet rows, each with its payload (the residual's own frozen literal)",
+    ).toEqual([["W1-GLUEDCODE", ["GP2-N2: K-NUMBER's witness does not spell [1e-3][0]"]]]);
     // KILLS' order check (refusal #1's U3: KILLS held as a set): the lines name KILLS' own order, as the judged set holds
     const named = Object.keys(KILLS);
     const moved = Object.fromEntries(Object.entries(KILLS).flatMap(([mutant, pins]): [string, readonly string[]][] => (mutant === "GP2-I1" ? [] : mutant === "GP2-I2" ? [["GP2-I1", KILLS["GP2-I1"] ?? []], [mutant, pins]] : [[mutant, pins]])));
