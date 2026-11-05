@@ -444,6 +444,10 @@
    "two-argument-mid-band-numeral-infinity-callee-method",
    "element-called-mid-band-numeral-method",
    "element-called-upper-case-exponent-numeral-method",
+   "renamed-parameter-mid-band-numeral-infinity-callee-method",
+   "renamed-const-mid-band-numeral-infinity-callee-method",
+   "statement-call-mid-band-numeral-infinity-callee-method",
+   "aliased-object-mid-band-numeral-infinity-callee-method",
    "code-point-escaped-string-named-method",
    "hex-escaped-string-named-method",
    "identity-escaped-string-named-method",
@@ -805,6 +809,10 @@
     "two-argument-mid-band-numeral-infinity-callee-method": "45d9e0a1361e0f7f",
     "element-called-mid-band-numeral-method": "648039c3a8913518",
     "element-called-upper-case-exponent-numeral-method": "a27029c8c3e7a5cc",
+    "renamed-parameter-mid-band-numeral-infinity-callee-method": "54ee97b683b7bb70",
+    "renamed-const-mid-band-numeral-infinity-callee-method": "30cc3cf926168cd3",
+    "statement-call-mid-band-numeral-infinity-callee-method": "76dfe49517c1acba",
+    "aliased-object-mid-band-numeral-infinity-callee-method": "f0386e29fe737b7f",
     "code-point-escaped-string-named-method": "efe50f5d7eaac215",
     "hex-escaped-string-named-method": "05d3aa61c031f0e5",
     "identity-escaped-string-named-method": "8948f4be321860ff",
@@ -2453,6 +2461,18 @@
          "2 declaration unpinned"
         ],
         "element-called-upper-case-exponent-numeral-method": [
+         "2 declaration unpinned"
+        ],
+        "renamed-parameter-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "renamed-const-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "statement-call-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "aliased-object-mid-band-numeral-infinity-callee-method": [
          "2 declaration unpinned"
         ],
         "code-point-escaped-string-named-method": [
