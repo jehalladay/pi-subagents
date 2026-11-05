@@ -203,9 +203,14 @@
  * nothing): BINDINGS - every declaration in this file of IMPL, adoption, memberOutcome and Object is held (every declaration of the
  * name counts, as in declarations below): IMPL, adoption and memberOutcome have exactly one each, their module-scope
  * `const IMPL = Object.freeze({ ... })`, `function adoption` and `const memberOutcome` (topLevel), and Object has none, so each of
- * those three names denotes that one declaration wherever this file names it, and every reference this file makes to the
- * identifier Object reads the global binding of that name, through the identifier Object as the file binds it when it runs
- * (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS); the SELF-READ reads that IMPL's object
+ * those three names denotes that one declaration wherever this file names it as a value, and every value reference this file
+ * makes to the identifier Object reads the global binding of that name, through the identifier Object as the file binds it when it
+ * runs (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS); BINDINGS' reader runs today on nine
+ * plants (BINDING_PROBES, each parsed as a module text of its own; bindingProbes), and the judged set pins each reading, the one
+ * entry below with every other name reading none: `other member Object` for an enum member named Object written as an identifier
+ * (its enum's body reading it, and not), an escaped identifier, a string literal and a computed string literal; `other member <its
+ * name>` for one named IMPL, adoption or memberOutcome (an identifier its enum's body reads); and `other enum Object` for the
+ * control, an enum declaration of Object in a block; the SELF-READ reads that IMPL's object
  * literal, the one argument of the call its initializer writes as Object.freeze (the callee's source text, exactly; not what Object
  * holds when it runs), and no other object literal (moduleImpl; a module-scope IMPL written in another form reads no member), and
  * the judged set holds Object.isFrozen(IMPL) read through the identifier Object as the file binds it when that line runs; so, while
@@ -230,7 +235,10 @@
  * (occurrences), so, with calls, any other identifier reference to the name reds; that B1 member's first three statements are the
  * three THE MEMBER CHECK names (b1); and each name those calls and statements read has exactly one declaration where the
  * SELF-READ searches for it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a
- * function, a class, an enum, a namespace or an import binding): inside memberOutcome, text (the name its call reads) has its
+ * function, a class, an enum, an enum member, a namespace or an import binding, each by its name as the parser reads it, escapes
+ * resolved: an identifier, and for an enum member also a string literal or a computed string literal (declaredName); an interface,
+ * a type alias and a type parameter, which declare a type and no value, are not read): inside memberOutcome, text (the name its
+ * call reads) has its
  * parameter
  * `text: string`; inside B1, text and members have B1's first two statements; and in this whole file each other name B1's three
  * statements read, and each name a variable's initializer among those declarations reads in turn, has one: readFileSync, join,
@@ -310,7 +318,8 @@
  * roster witness together, is not detected, except where an anchor outside the literals holds it: a falsifier (its title duty or
  * gate), the adoption judge's refusals, the precedent's two HX reads, a carrier pair, a B1 member journey (the member reader's
  * entries of observation.ts), B1's three U1 probes (the export's refusal-#4 U1 item) and a C2 render whose JSON kind or empty-or-not
- * member no other render states; a registration that names its
+ * member no other render states; a BINDINGS probe removed from BINDING_PROBES together with its reading in the judged set is not
+ * detected; a registration that names its
  * import's binding but runs a stand-in adapter is not detected (the registration check holds the module path, the import, the
  * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
  * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
@@ -322,10 +331,13 @@
  * reads of the real text); a reference to the helper module that is not a static import declaration (a dynamic import
  * expression, which reaches the reader through a string, not an identifier) is NOT CLAIMED by the SELF-READ; and what the runtime's
  * Object.freeze and Object.isFrozen do is NOT CLAIMED by this census, and neither is what the identifier Object holds when a line
- * naming it runs: BINDINGS holds only that this file declares no Object, so a replacement of the global Object binding itself at
+ * naming it runs: BINDINGS holds only that this file declares no Object of a kind declarations reads, so a replacement of the
+ * global Object binding itself at
  * run time, by this file's code or by any other code that runs before or beside it (an assignment to globalThis.Object, a
  * definition of that property, or a Proxy or any other value put in its place), is not detected, and neither is a rewrite of a
- * member of the global Object; IMPL's Object.freeze, the roster's deep freeze and the judged set's Object.isFrozen checks read
+ * member of the global Object; what a type position naming IMPL, adoption, memberOutcome or Object denotes is NOT CLAIMED (an
+ * interface, a type alias or a type parameter of that name, which declarations does not read, would shadow it there); IMPL's
+ * Object.freeze, the roster's deep freeze and the judged set's Object.isFrozen checks read
  * whatever that binding holds when they run, and so does every other reading this file makes through a global or a built-in (what
  * a global or a built-in holds or does after any code replaced or rewrote it is NOT CLAIMED). THE MEMBER CHECK hands the landed
  * reader observation.ts's text (B1) or that text with one probe's plant (memberOutcome), and what that reader does not read reds
@@ -338,7 +350,13 @@
  * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
  * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
  * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
- * MEASURED (seat records, read-only; not assertions): cut #9 over trunk 3041aacc, 2026-11-04: 192 judged files (src 117, qa 67,
+ * MEASURED (seat records, read-only; not assertions): wb-vktz (the cure of landing 951's F1) over trunk d3a0dc3b, 2026-11-04: the
+ * roster is cut #9's byte for byte (this cut adds the enum member to declarations, BINDINGS' probes and their words, and changes
+ * no pin's witness); an enum member named Object written as an identifier, an escaped identifier, a string literal or a computed
+ * string literal is that member inside its own enum's body under tsc (rc 0 where the global ObjectConstructor would read TS2362)
+ * and under the transform vitest runs here (vitest 4.1.10 on vite 8.2.1: a member initialized `Object * 2` reads 2); no type
+ * position in this file names IMPL, adoption, memberOutcome or Object. Cut #9 over trunk 3041aacc, 2026-11-04: 192 judged files
+ * (src 117, qa 67,
  * examples 7, package.json), 0 hits, 0 symlinks, 0 non-UTF-8, and package.json names reactive[-_]?lenses in no key or value; the
  * roster is cut #8's byte for byte (cut #9 changes the SELF-READ's words on the identifier Object, holderOf's holders and the
  * LIMITS on globals, and no pin's witness). Cut #8 over trunk a14c87f8, 2026-11-04: 192 judged files (src 117, qa 67,
@@ -1250,10 +1268,33 @@ function moduleImpl(source: ts.SourceFile): ts.ObjectLiteralExpression | undefin
 /** BINDINGS: the names the SELF-READ reads by their module-scope declaration (IMPL, adoption, memberOutcome) and the global binding
  * the IMPL initializer and the judged set's freeze check name through the identifier Object (what it holds when they run: LIMITS). */
 const BOUND_NAMES: readonly string[] = ["IMPL", "adoption", "memberOutcome", "Object"];
+/** BINDINGS of a parsed module text: every declaration in it of each of BOUND_NAMES (declarationsOf), as `module <kind> <name>` for its
+ * module-scope declaration (topLevel) and as `other <kind> <name>` for any other. */
+function bindingsOf(source: ts.SourceFile): Readonly<Record<string, readonly string[]>> {
+  return Object.fromEntries(BOUND_NAMES.map(name => [name, declarationsOf(source, name).map(node => `${node === topLevel(source, name) ? "module" : "other"} ${declarationText(node).split(" ")[0] ?? ""} ${name}`)] as const));
+}
+/** BINDINGS' probes (wb-vktz, the cure of landing 951's F1): plants, each parsed as a module text of its own and read by bindingsOf
+ * (bindingProbes; the judged set pins each reading). The gate's G9 members: an enum member named one of BOUND_NAMES, an identifier
+ * its enum's body reads, the one named Object also unread, and the control, an enum declaration of Object in a block; this cut's:
+ * the member named Object written as an escaped identifier, a string literal and a computed string literal. */
+const BINDING_PROBES: Readonly<Record<string, string>> = {
+  enumMemberObject: "enum ObjectShadow { Object = 1, Twice = Object * 2 }",
+  enumMemberObjectOnly: "enum ObjectOnly { Object = 1 }",
+  escapedMemberObject: "enum EscapedShadow { Obj\\u0065ct = 1, Twice = Object * 2 }",
+  quotedMemberObject: 'enum QuotedShadow { "Object" = 1, Twice = Object * 2 }',
+  computedMemberObject: 'enum ComputedShadow { ["Object"] = 1 }',
+  enumMemberImpl: "enum ImplShadow { IMPL = 1, Twice = IMPL * 2 }",
+  enumMemberAdoption: "enum AdoptionShadow { adoption = 1, Twice = adoption * 2 }",
+  enumMemberOutcome: "enum OutcomeShadow { memberOutcome = 1, Twice = memberOutcome * 2 }",
+  localEnumObject: "{ enum Object { Member } }",
+};
+/** BINDINGS of each of BINDING_PROBES: the probe's plant parsed as the SELF-READ parses this file. */
+function bindingProbes(): Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> {
+  return Object.fromEntries(Object.entries(BINDING_PROBES).map(([id, plant]) => [id, bindingsOf(ts.createSourceFile(`${id}.ts`, plant, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS))] as const));
+}
 /** The SELF-READ, parsed from this file's AST: each member's direct identifiers of the module-scope IMPL's literal (moduleImpl), every
- * static import that binds a value, the identifiers the module-scope function adoption's body names, and every declaration in this
- * file of each of BOUND_NAMES (declarationsOf), as `module <kind> <name>` for its module-scope declaration (topLevel) and as
- * `other <kind> <name>` for any other. */
+ * static import that binds a value, the identifiers the module-scope function adoption's body names, and BINDINGS of this file
+ * (bindingsOf). */
 function selfRead(): SelfRead {
   const text = readFileSync(join(REPO, SELF), "utf8");
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -1282,8 +1323,7 @@ function selfRead(): SelfRead {
   }
   const adoptionFunction = topLevel(source, "adoption");
   if (adoptionFunction !== undefined && ts.isFunctionDeclaration(adoptionFunction) && adoptionFunction.body !== undefined) identifiersOf(adoptionFunction.body, adoptionNames);
-  const bound = Object.fromEntries(BOUND_NAMES.map(name => [name, declarationsOf(source, name).map(node => `${node === topLevel(source, name) ? "module" : "other"} ${declarationText(node).split(" ")[0] ?? ""} ${name}`)] as const));
-  return { impl, imports, adoptionNames: [...adoptionNames].sort(byName), bindings: bound };
+  return { impl, imports, adoptionNames: [...adoptionNames].sort(byName), bindings: bindingsOf(source) };
 }
 /** THE MEMBER CHECK's reader module: the landed member reader this file imports observationMembers from (SELF-READ). */
 const MEMBER_READER = "test/helpers/observation-members.ts";
@@ -1326,6 +1366,7 @@ type Declared =
   | ts.ClassDeclaration
   | ts.ClassExpression
   | ts.EnumDeclaration
+  | ts.EnumMember
   | ts.ModuleDeclaration
   | ts.ImportSpecifier
   | ts.ImportClause
@@ -1333,21 +1374,33 @@ type Declared =
   | ts.ImportEqualsDeclaration;
 const isDeclared = (node: ts.Node): node is Declared =>
   ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) ||
-  ts.isClassExpression(node) || ts.isEnumDeclaration(node) || ts.isModuleDeclaration(node) || ts.isImportSpecifier(node) || ts.isImportClause(node) || ts.isNamespaceImport(node) ||
+  ts.isClassExpression(node) || ts.isEnumDeclaration(node) || ts.isEnumMember(node) || ts.isModuleDeclaration(node) || ts.isImportSpecifier(node) || ts.isImportClause(node) || ts.isNamespaceImport(node) ||
   ts.isImportEqualsDeclaration(node);
-/** Every declaration inside `scope` whose identifier name is `name` (a variable, a parameter, a binding element, a function, a class,
- * an enum, a namespace or an import binding), in source order. */
+/** The name a declaration binds, as the parser reads it (escapes resolved): its identifier's, or an enum member's written as a string
+ * literal or a computed string literal (inside its enum's body such a member is in scope under that name as an identifier-named
+ * one is); undefined for any other name (a binding pattern, a module's string name). */
+function declaredName(node: Declared): string | undefined {
+  const name = node.name;
+  if (name === undefined) return undefined;
+  if (ts.isIdentifier(name)) return name.text;
+  if (!ts.isEnumMember(node)) return undefined;
+  if (ts.isStringLiteral(name)) return name.text;
+  return ts.isComputedPropertyName(name) && ts.isStringLiteralLike(name.expression) ? name.expression.text : undefined;
+}
+/** Every declaration inside `scope` whose name is `name` (declaredName: a variable, a parameter, a binding element, a function, a
+ * class, an enum, an enum member, a namespace or an import binding), in source order. */
 function declarationsOf(scope: ts.Node, name: string): Declared[] {
   const found: Declared[] = [];
   const visit = (node: ts.Node): void => {
-    if (isDeclared(node) && node.name !== undefined && ts.isIdentifier(node.name) && node.name.text === name) found.push(node);
+    if (isDeclared(node) && declaredName(node) === name) found.push(node);
     ts.forEachChild(node, visit);
   };
   visit(scope);
   return found;
 }
 /** A declaration as `<kind> <its text>`: a variable with its keyword (catch for a catch clause's), an import binding with its braces
- * and module, a parameter, a binding element, and a function, class, enum or namespace by its name. */
+ * and module, a parameter, a binding element, an enum member (`member <its text>`), and a function, class, enum or namespace by its
+ * name. */
 function declarationText(node: Declared): string {
   if (ts.isVariableDeclaration(node)) {
     const list = node.parent;
@@ -1362,6 +1415,7 @@ function declarationText(node: Declared): string {
   }
   if (ts.isParameter(node)) return `parameter ${node.getText()}`;
   if (ts.isBindingElement(node)) return `binding ${node.getText()}`;
+  if (ts.isEnumMember(node)) return `member ${node.getText()}`;
   if (ts.isImportEqualsDeclaration(node)) return node.getText();
   const kind = ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) ? "function" : ts.isClassDeclaration(node) || ts.isClassExpression(node) ? "class" : ts.isEnumDeclaration(node) ? "enum" : "namespace";
   return `${kind} ${node.name?.getText() ?? ""}`;
@@ -2075,6 +2129,21 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     // this file names it (and the identifier Object the global binding as the file binds it when the line runs: LIMITS).
     const self = selfRead();
     expect(self.bindings).toEqual({ IMPL: ["module const IMPL"], adoption: ["module function adoption"], memberOutcome: ["module const memberOutcome"], Object: [] });
+    // SELF-READ, BINDINGS on its probes (BINDING_PROBES, each plant parsed as a module text of its own): an enum member named one of
+    // BOUND_NAMES (an identifier its enum's body reads; the one named Object also unread, and written as an escaped identifier, a
+    // string literal and a computed string literal) reads as an other member declaration of that name, and the control, an enum
+    // declaration of Object in a block, as an other enum.
+    expect(bindingProbes()).toEqual({
+      enumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      enumMemberObjectOnly: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      escapedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      quotedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      computedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      enumMemberImpl: { IMPL: ["other member IMPL"], adoption: [], memberOutcome: [], Object: [] },
+      enumMemberAdoption: { IMPL: [], adoption: ["other member adoption"], memberOutcome: [], Object: [] },
+      enumMemberOutcome: { IMPL: [], adoption: [], memberOutcome: ["other member memberOutcome"], Object: [] },
+      localEnumObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other enum Object"] },
+    });
     // SELF-READ: no member of that IMPL's literal names the roster, and IMPL and the roster read frozen through the identifier Object
     // as the file binds it when this line runs (LIMITS: a replacement of the global Object binding itself is not detected).
     expect(Object.keys(self.impl).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
