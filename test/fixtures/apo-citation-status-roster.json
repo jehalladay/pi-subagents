@@ -74,6 +74,12 @@
   "read": "read",
   "identity": "src/workbench/identity.ts",
   "schemaLiteral": "workflow-script/v1",
+  "judgeEntries": [
+   "judgeFiles",
+   "causesOf",
+   "bindingOf",
+   "READS"
+  ],
   "floors": {
    "product": 329,
    "docs": 106,
