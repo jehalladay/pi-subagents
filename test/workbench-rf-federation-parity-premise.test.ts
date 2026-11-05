@@ -14,16 +14,19 @@
  * the executed forge test command exiting 0; (c) a Pi bead note or docs row citing h2fp-C004 carries UNDETERMINED
  * verbatim and the 740c1a817 pin, never a Pi-minted status."
  *
- * PINNED READER SET (wb-wfpj cut 3, the enumerate-the-resolvable form of R-B330): this census claims what its
- * registered row cases pin - each a case of this file whose assertion is readRow(row) equal to row.expect, mirrored in
- * test/fixtures/rf-federation-parity-premise-roster.json (registered title, findings and input digest) - and nothing
- * a row does not pin. READINGS states those readings with the rows that pin each one; the FOLLOW-UP, CUT 2 and CUT 3
+ * PINNED READER SET (wb-wfpj cut 3, the enumerate-the-resolvable form of R-B330; cut 4, the fail-closed core of R-B585):
+ * this census claims what its registered row cases pin - each a case of this file whose assertion is readRow(row) equal
+ * to row.expect, mirrored in test/fixtures/rf-federation-parity-premise-roster.json (registered title, findings and
+ * input digest) - and what its live tree (a), live bead export (c) and filing anchor cases assert, and nothing they do
+ * not pin. READINGS states those readings with the rows that pin each one; the FOLLOW-UP, CUT 2, CUT 3 and CUT 4
  * sections name, row by row, the one-edit reader hollowing that turns each added row red. A mode no row pins is NOT
  * CLAIMED by this census; the escapes it names are residuals, each with a pinned quiet row (RESIDUALS).
  * READINGS
  * - MENTION: a match of one of the claim's FAMILIES in the folded text of a block (a maximal run of non-blank lines; a
- *   line of white space only is blank, row R8; a file's last block is read whether or not the file ends with a line
- *   break, row F75) of a scanned file, or in one exported bead row; a match joined, in the folded text, to a letter
+ *   line of WHITE SPACE only is blank, row R8: each white-space code point on a line of its own, a space after it; a
+ *   line of a NUL, a next-line control, a zero-width space, a word joiner or a hyphen only is not, row F79; a file's
+ *   last block is read whether or not the file ends with a line break, row F75) of a scanned file, or in one exported
+ *   bead row; a match joined, in the folded text, to a letter
  *   a-z or a digit 0-9 before or after it is no mention (rows N07, N18). The families: the claim id; "disabled-mode
  *   parity"; "using RF-CLI normally" (README:7 and BEADS:57; use, uses, using or used, an optional "the", and the rf
  *   spellings rf, RF-CLI, RFCLI, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI: rows F01, F04, F64,
@@ -36,11 +39,17 @@
  *   (&#x2d;, &#X2D;), one of the fourteen NAMED_REFERENCES names (&shy;), and the JS escapes \u{X} of one to six hex
  *   digits, \uXXXX and \xHH, hex digits in either case (rows F45, F46, F52-F55: every name, both cases, each width
  *   bound, a code point past U+FFFF and a form standing for a letter; a three-digit \u and a one-digit \x escape stay
- *   as written, N23); then NFKC (rows F09, F66), lower case, every run of ASCII punctuation, space, tab, line feed or
- *   carriage return one space (rows F57, F58: five tabs, five carriage returns, five marks of each ASCII punctuation
- *   range, a run of line feeds), and every other code point one wildcard, one per code point (a non-ASCII letter,
- *   hyphen, dash, space or invisible: rows F07, F08, F48; an astral code point: F73; the ASCII controls VT and FF: N21;
- *   DEL, SOH and ESC: N24); a block's lines are folded one by one and joined by a space. A word of a family reads as
+ *   as written, N23); then NFKC (rows F09, F66; it makes a no-break space and an ideographic space a space, so five of
+ *   either between two words are one space: row F85), lower case, every run of ASCII punctuation, space, tab, line feed
+ *   or carriage return one space (rows F57, F58: five tabs, five carriage returns, five marks of each ASCII punctuation
+ *   range, a run of line feeds), and every other code point one wildcard, one per code point: a non-ASCII letter (rows
+ *   F07, F34), an astral code point (F73), a zero-width space (F08, F50, N13, N14), and a soft hyphen, U+2010, U+2011
+ *   or an en dash (F48 one between two words, F84 two between two spaces at the separator bound, N28 five between two
+ *   words: one wildcard each, never none, two or a space); a block's lines are folded one by one and joined by a
+ *   space. The ASCII controls VT, FF, DEL, SOH and ESC are not folded to a space: five of one of them between two words
+ *   make no mention (rows N21, N24). How many wildcards an ASCII control reads as (one to four controls between two
+ *   words: wb-mpuo, R-B585), and how an ASCII control other than tab, line feed, carriage return, VT, FF, DEL, SOH and
+ *   ESC folds, are NOT CLAIMED by this census. A word of a family reads as
  *   itself, with one letter read as a wildcard (any letter, the first and the last included: rows F07, F34, F56), or
  *   with one to three spaces or wildcards between two of its letters (any two, after the first letter and before the
  *   last included: rows F08, F51, F56; four is past the bound, N14), and the words of a phrase, those of a two- or
@@ -64,12 +73,20 @@
  *   in the four trees is an echo or it is refused (row F12).
  * - (b) Once a later cut re-measures the rf tree and records the fixture present, a scanned mention whose window is not
  *   an echo is admitted only when the first receipt the window names (docs/workbench/receipts/<file>.md, the name in
- *   ASCII letters of either case, digits, dots, hyphens or underscores: row N22) exists, names "rf sha" then 12 to 40
- *   lower-case hex digits followed by no further hex digit, rf joined to no ASCII letter or digit before it (rows F26,
- *   F27, F67, F70, N22), and carries FIXTURE_COMMAND exactly (no further flag, row F29: the command then the end of
- *   its line, a closing mark ` ' " ) ] . , or ;, or a run of spaces or tabs then the end of the line, an arrow or a
- *   word: rows F68, N22, N25) with "exit 0" as written, joined to no ASCII letter or digit on either side, after the
- *   command on that line (rows F30, F68, F71, F72); one such line admits it, before or after a failed run (N25).
+ *   ASCII letters of either case, digits, dots, hyphens or underscores: row N22; of two, the first decides, F80)
+ *   exists, names "rf sha" as written (rf, one space, sha, one space, in lower case: two spaces, a tab or no character
+ *   between them, or an upper-case letter, is none, F81) then 12 to 40 lower-case hex digits followed by no further hex
+ *   digit, rf joined to no ASCII letter or digit before it (rows F26, F27, F67, F70, N22), and carries FIXTURE_COMMAND
+ *   exactly (its words, single spaces and lower case as written: two spaces or a tab between two of its words, or an
+ *   upper-case letter, is none, F82; no further flag, row F29: the command then the end of its line, a closing mark
+ *   ` ' " ) ] . , or ;, or a run of spaces or tabs then the end of the line, an arrow, or a character that is neither
+ *   white space nor a hyphen, such as a word, an opening parenthesis or a hash: rows F68, N22, N25, N27; a colon, an
+ *   opening parenthesis or a letter right after the command, or a no-break space or a VT right after it or after its
+ *   run of spaces, is none: F77) with "exit 0" as written (exit, one space, 0: two spaces, a tab, no character, a
+ *   no-break space, a VT, a hyphen or an underscore between them is none, F76), joined to no ASCII letter or digit on
+ *   either side, after the command on that line (rows F30, F68, F71, F72); one such line admits it, before or after a
+ *   failed run (N25). Another character between exit and 0, between the words of rf sha or of the command, or right
+ *   after the command, is NOT CLAIMED by this census.
  *   Otherwise receipt-not-cited, receipt-absent, receipt-no-rf-sha, receipt-no-command, receipt-no-exit-0. While the
  *   fixture is absent no receipt admits a mention (row F16). Until FIXTURE_AT_PIN flips, (b) is exercised by rows
  *   F24-F31, F67, F68, F70-F72, N08, N22 and N25; the live scan already reads the receipts directory (RECEIPTS_FLOOR)
@@ -79,11 +96,20 @@
  *   window lacks, receipt or not (row F31). An exported bead row (.beads/issues.jsonl: every string value of the row,
  *   nested ones included) with a claim-id mention draws echo-no-undetermined and echo-no-pin: bead rows are judged at row
  *   granularity on those two required tokens only, because collector and gate notes accumulate on a filing's own row
- *   (residuals R4, R5). An export line that does not parse is a finding of its own (row F44), save an empty line or a
- *   line of white space only, which is skipped (row N26).
+ *   (residuals R4, R5). An export line that does not parse is a finding of its own (rows F44, F78: a line of a NUL, a
+ *   next-line control, a zero-width space or a word joiner alone does not parse), save an empty line or a line of
+ *   WHITE SPACE only, which is skipped (row N26: each white-space code point alone on an export line).
+ * - WHITE SPACE (MENTION, (c), FINDING): tab, VT, FF, CR, space, U+00A0, U+1680, U+2000-U+200A, U+2028, U+2029,
+ *   U+202F, U+205F, U+3000 and U+FEFF (WHITE_SPACE): the code points JavaScript's \s and String.prototype.trim read as
+ *   white space or a line terminator, line feed aside (it ends a line); rows R8 and N26 carry each one, and the frozen
+ *   shape reads the list against the engine's own \s.
  * - SCOPE: the four trees the filing names, walked from disk with dot directories (node_modules, dist and .git skipped;
- *   a symlink is refused, never followed); FLOORS count the walked files per tree and extension, and the live walk must
- *   read test/helpers/scratch.ts, so a walk that skips directories named helpers reds (Q27). This file is the one
+ *   a symlink is refused, never followed); FLOORS count the walked files per tree and extension, the live walk must
+ *   read test/helpers/scratch.ts, so a walk that skips directories named helpers reds (Q27), and the walked files equal
+ *   the regular files node:fs's recursive readdirSync lists under the four trees outside directories named
+ *   node_modules, dist or .git, so a walk that skips any other directory, a dot directory included, reds (CUT 4). The
+ *   four trees hold no directory of those three names and no symlink at this cut, so that skip and the symlink refusal
+ *   are NOT CLAIMED by a case of this census (only the frozen shape reads the skipped names). This file is the one
  *   exemption (its falsifier inputs spell the refused forms on purpose), and the exemption is load-bearing: lifted, the
  *   scan reads this file's mentions as refused.
  * - PIN STATE (measured at this cut: git ls-tree -r at rf 6a251bf73af5 lists no tests/journeys/test_federation_disabled_parity.py):
@@ -99,9 +125,9 @@
  * file's registered tests (vitest's task tree) against it, in order and both ways, so a row removed from every literal
  * of this file still reds. Not claimed: an edit of this file and the roster together.
  * FROZEN SHAPE (standing rule 16): one row pins every judged row (table, id, findings, input digest prefix), the family
- * slots, the grades, the trees, the floors, the exemption, the decoded references, the residual families and the
- * tolerance bounds (SEPARATOR, and the in-word gap as tolerantWord's forms for a two-letter word) as literals read at
- * this cut.
+ * slots, the grades, the trees, the floors, the exemption, the decoded references, the residual families, the skipped
+ * directory names, the white-space code points and the tolerance bounds (SEPARATOR, and the in-word gap as
+ * tolerantWord's forms for a two-letter word) as literals read at this cut.
  * RESIDUALS (named; each has a pinned quiet row): R1 a paraphrase outside the four families; R2 a phrase assembled at
  * runtime around another token; R3 ASCII look-alikes (1 for l, 0 for o), two alterations in one word, or one code point
  * standing for several letters; R4 a bead row naming a family but not the claim id (wb-a9l2.6 quotes README:51's
@@ -204,11 +230,45 @@
  *   lines reds it.
  * - The claims are narrowed to the pins (R-B60): the boundaries of required text, grades, phrases and receipt tokens to
  *   ASCII letters and digits (titles F40, F41, F59, F60 and N15-N18), emphasis to markdown marks (F47), the decoded
- *   forms to the ones F45 and F46 hold, the controls to the ones N21 holds, and the white space after the command to
+ *   forms to the ones F45 and F46 hold, the controls to the ones N21 holds (CUT 4: the five-control side), and the white space after the command to
  *   spaces or tabs. Two residual families are added, each with its quiet row: R14 (a non-ASCII letter beside the
  *   verdict, the pin, rf or exit 0, and a letter that is no hex digit after an rf sha: those boundaries made
  *   Unicode-aware, or the sha's given a letter boundary, red it) and R15 (an HTML tag inside a word or between two
  *   words: a fold that drops tags first reds it).
+ * CUT 4 (refusal #3 of wb-wfpj, R-B585: the structural exit routed the one-to-four-controls side to wb-mpuo, and this
+ * final cut is the fail-closed core of the enumerate set: claims equal to pins). The pinned set it adds or narrows, by
+ * row id, with the one-edit reader hollowing that turns each added row red (refusal #3's GP3 ids and this cut's C4
+ * ids; measured at this cut on throwaway edits; a hollowing that reds a row also reds the roster):
+ * - U1: N21 gains five VT and five FF on their own, and N21 and N24 are retitled to what they pin: five of one control
+ *   between two words make no mention, because no such control is folded to a space (VT, FF, DEL, SOH or ESC added to
+ *   the space run reds its file: C4:VT-SPACE, C4:FF-SPACE, C4:DEL-SPACE, C4:SOH-SPACE, C4:ESC-SPACE). FOLDED TEXT says
+ *   that much and no more; the one-to-four side (GP3:CTRL-DELETE, GP3:CTRL-DOUBLE: zero or two wildcards per control)
+ *   is NOT CLAIMED, and wb-mpuo carries it.
+ * - U2: F76 (exit and 0 two spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore apart) draws
+ *   receipt-no-exit-0: GP3:EXIT-WS, C4:EXIT-OPT, C4:EXIT-S and C4:EXIT-ANY red it. N27 (a run of spaces or a tab, then
+ *   an opening parenthesis or a hash, after the command) is admitted: COMMAND_END's end narrowed to a word reds it
+ *   (C4:END-WORD). F77 (a colon, an opening parenthesis or a letter right after the command; a no-break space or a VT
+ *   right after it or after a space) draws receipt-no-command and receipt-no-exit-0: the run widened to white space (C4:END-RUN-WS), the end
+ *   widened to any character but a hyphen (C4:END-NONHYPHEN) and a colon or an opening parenthesis added to the closing
+ *   marks (C4:END-COLON, C4:END-PAREN) red it.
+ * - U3: N26 gains every WHITE_SPACE code point alone on an export line: GP3:N26-WS-NARROW reds it. F78 (a NUL, a
+ *   next-line control, a zero-width space or a word joiner alone on an export line) stays unreadable: the skip widened
+ *   past white space (C4:SKIP-WIDE) reds it.
+ * - U4: R8 gains every WHITE_SPACE code point on a blank line of its own, a space after it: GP3:BLK-WS-NARROW reds it.
+ *   F79 (a line of a NUL, a next-line control, a zero-width space, a word joiner or a hyphen only, inside a phrase) is
+ *   refused: blank widened past white space (C4:BLANK-WIDE) reds it.
+ * - The words refusal #3 recorded INFO: F80 (of two receipts a window names, the first decides, both orders:
+ *   GP3:REF-LAST), F81 (rf sha with two spaces, a tab or nothing between rf and sha or between sha and its hex
+ *   digits, or with an upper-case letter: GP3:RFSHA-WS, GP3:RFSHA-WORDS-CI, C4:RFSHA-OPT, C4:RFSHA-HEX-OPT), F82 (the
+ *   command with two spaces or a tab between two of its words,
+ *   or with an upper-case letter: GP3:CMD-WS, GP3:CMD-CI, C4:CMD-TAB), F83 (two decoded mathematical bold letters in
+ *   one word, as hex and decimal references and as braced escapes: GP3:DECODE-AFTER-NFKC) and the live tree (a) case's
+ *   walk-listing equality (GP3:SKIP-WORKFLOW, GP3:SKIP-UI, C4:WALK-NODOT).
+ * - FOLDED TEXT's one wildcard per code point: F84 (two soft hyphens, two U+2010, two U+2011 or two en dashes between
+ *   two spaces, the separator bound: each read as two wildcards reds it, C4:HYPHEN-DOUBLE), N28 (five of each between
+ *   two words: each folded to a space reds it, C4:HYPHEN-SPACE) and F85 (five no-break or five ideographic spaces
+ *   between two words: NFC for NFKC reds it, C4:NFC). The reading no longer calls a non-ASCII space one wildcard: NFKC
+ *   makes a no-break space a space (F85).
  * Other spellings of the R11-R15 families are NOT CLAIMED by a quiet row of their own; the F4 boundary above (an edit
  * of this file and the roster together) is unchanged.
  * Display paths added: none. This file is test-only: it spawns nothing and writes nothing; it reads the four trees, the
@@ -589,6 +649,13 @@ const FULLWIDTH_RF_CLI = String.fromCodePoint(0xff32, 0xff26, 0xff0d, 0xff23, 0x
 const FULLWIDTH_UNDETERMINED = String.fromCodePoint(0xff35, 0xff2e, 0xff24, 0xff25, 0xff34, 0xff25, 0xff32, 0xff2d, 0xff29, 0xff2e, 0xff25, 0xff24);
 const FULLWIDTH_ZERO = String.fromCodePoint(0xff10);
 const E_ACUTE = String.fromCodePoint(0xe9);
+const NUL = String.fromCodePoint(0);
+const NEXT_LINE = String.fromCodePoint(0x85);
+const WORD_JOINER = String.fromCodePoint(0x2060);
+const IDEOGRAPHIC_SPACE = String.fromCodePoint(0x3000);
+/** WHITE SPACE (READINGS): the code points JavaScript reads as white space or a line terminator, line feed aside. */
+const WHITE_SPACE: readonly number[] = [0x09, 0x0b, 0x0c, 0x0d, 0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
+const hex4 = (codePoint: number): string => codePoint.toString(16).padStart(4, "0");
 /** The audit pin extended to a full 40-hex sha. */
 const FULL_PIN_SHA = "740c1a8170123456789abcdef0123456789abcde";
 const COMPLETE_RECEIPT = ["# wb-x: installed journey", "", "## 2026-10-22 run", "rf sha 0123456789abcdef0123456789abcdef01234567", `\`${FIXTURE_COMMAND}\` -> exit 0`, ""].join("\n");
@@ -1069,6 +1136,210 @@ const ROWS: readonly Row[] = [
     ],
     expect: ["docs/f75a.md:1 mode-parity: unechoed-claim", "docs/f75b.md:3 rf-normally: unechoed-claim"],
   },
+  // CUT 4 (R-B585, the fail-closed core): exit 0, the command's end and the command as written, the first receipt, rf sha
+  {
+    table: "FALSIFIERS",
+    id: "F76",
+    label: "present, a receipt whose exit and 0 stand two spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore apart",
+    files: [
+      { path: "docs/f76-spaces.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-e2sp.md).\n" },
+      { path: "docs/f76-tab.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-etab.md).\n" },
+      { path: "docs/f76-none.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-enone.md).\n" },
+      { path: "docs/f76-nbsp.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-enbsp.md).\n" },
+      { path: "docs/f76-vt.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-evt.md).\n" },
+      { path: "docs/f76-hyphen.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ehy.md).\n" },
+      { path: "docs/f76-underscore.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-eus.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-e2sp.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit  0"),
+      "wb-etab.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit\t0"),
+      "wb-enone.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit0"),
+      "wb-enbsp.md": COMPLETE_RECEIPT.replace("-> exit 0", `-> exit${NO_BREAK_SPACE}0`),
+      "wb-evt.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit\v0"),
+      "wb-ehy.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit-0"),
+      "wb-eus.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit_0"),
+    },
+    expect: [
+      "docs/f76-spaces.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-tab.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-none.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-nbsp.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-vt.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-hyphen.md:1 mode-parity: receipt-no-exit-0",
+      "docs/f76-underscore.md:1 mode-parity: receipt-no-exit-0",
+    ],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F77",
+    label: "present, a receipt whose command is followed right away by a colon, an opening parenthesis, a letter, a no-break space or a VT, or by a space then a no-break space or a VT",
+    files: [
+      { path: "docs/f77-colon.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-acolon.md).\n" },
+      { path: "docs/f77-paren.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-aparen.md).\n" },
+      { path: "docs/f77-letter.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-aletter.md).\n" },
+      { path: "docs/f77-nbsp.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-anbsp.md).\n" },
+      { path: "docs/f77-vt.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-avt.md).\n" },
+      { path: "docs/f77-space-nbsp.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-asnbsp.md).\n" },
+      { path: "docs/f77-space-vt.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-asvt.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-acolon.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}: exit 0`),
+      "wb-aparen.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}(exit 0)`),
+      "wb-aletter.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}x exit 0`),
+      "wb-anbsp.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}${NO_BREAK_SPACE}-> exit 0`),
+      "wb-avt.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}\v-> exit 0`),
+      "wb-asnbsp.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND} ${NO_BREAK_SPACE}-> exit 0`),
+      "wb-asvt.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND} \v-> exit 0`),
+    },
+    expect: [
+      "docs/f77-colon.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-paren.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-letter.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-space-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f77-space-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+    ],
+  },
+  // CUT 4 (R-B585 U3, U4): white space only, and three invisibles and a hyphen that are not white space
+  {
+    table: "FALSIFIERS",
+    id: "F78",
+    label: "export lines of a NUL, a next-line control, a zero-width space or a word joiner alone are unreadable",
+    bead: [NUL, NEXT_LINE, ZERO_WIDTH_SPACE, WORD_JOINER],
+    expect: ["line 1 unreadable", "line 2 unreadable", "line 3 unreadable", "line 4 unreadable"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F79",
+    label: "a line of a NUL, a next-line control, a zero-width space, a word joiner or a hyphen only, inside a phrase, is no blank line",
+    files: [
+      { path: "docs/f79-nul.md", text: `agents continue using\n${NUL}\nRF-CLI normally\n` },
+      { path: "docs/f79-nel.md", text: `agents continue using\n${NEXT_LINE}\nRF-CLI normally\n` },
+      { path: "docs/f79-zwsp.md", text: `agents continue using\n${ZERO_WIDTH_SPACE}\nRF-CLI normally\n` },
+      { path: "docs/f79-wj.md", text: `agents continue using\n${WORD_JOINER}\nRF-CLI normally\n` },
+      { path: "docs/f79-hyphen.md", text: "agents continue using\n-\nRF-CLI normally\n" },
+    ],
+    expect: [
+      "docs/f79-nul.md:1 rf-normally: unechoed-claim",
+      "docs/f79-nel.md:1 rf-normally: unechoed-claim",
+      "docs/f79-zwsp.md:1 rf-normally: unechoed-claim",
+      "docs/f79-wj.md:1 rf-normally: unechoed-claim",
+      "docs/f79-hyphen.md:1 rf-normally: unechoed-claim",
+    ],
+  },
+  // CUT 4 (refusal #3 F7, landed words): the first receipt, rf sha and the command as written, decode then NFKC
+  {
+    table: "FALSIFIERS",
+    id: "F80",
+    label: "present, of two receipts a window names the first decides: an absent first one refuses though the second is complete, a complete first one admits though the second is absent",
+    files: [
+      { path: "docs/f80-absent-first.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-gone.md, docs/workbench/receipts/wb-x.md).\n" },
+      { path: "docs/f80-complete-first.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-x.md, docs/workbench/receipts/wb-gone.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: { "wb-x.md": COMPLETE_RECEIPT },
+    expect: ["docs/f80-absent-first.md:1 mode-parity: receipt-absent"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F81",
+    label: "present, a receipt whose rf sha has two spaces, a tab or no character between rf and sha or between sha and its hex digits, or an upper-case letter",
+    files: [
+      { path: "docs/f81-rf-spaces.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-r2sp.md).\n" },
+      { path: "docs/f81-rf-tab.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-rtab.md).\n" },
+      { path: "docs/f81-rf-none.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-rnone.md).\n" },
+      { path: "docs/f81-sha-spaces.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-h2sp.md).\n" },
+      { path: "docs/f81-sha-tab.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-htab.md).\n" },
+      { path: "docs/f81-sha-none.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-hnone.md).\n" },
+      { path: "docs/f81-upper.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-wupper.md).\n" },
+      { path: "docs/f81-rf-capital.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-wrf.md).\n" },
+      { path: "docs/f81-sha-upper.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-wsha.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-r2sp.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf  sha 0123456789abcdef0123456789abcdef01234567"),
+      "wb-rtab.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf\tsha 0123456789abcdef0123456789abcdef01234567"),
+      "wb-rnone.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rfsha 0123456789abcdef0123456789abcdef01234567"),
+      "wb-h2sp.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha  0123456789abcdef0123456789abcdef01234567"),
+      "wb-htab.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha\t0123456789abcdef0123456789abcdef01234567"),
+      "wb-hnone.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha0123456789abcdef0123456789abcdef01234567"),
+      "wb-wupper.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "RF SHA 0123456789abcdef0123456789abcdef01234567"),
+      "wb-wrf.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "Rf sha 0123456789abcdef0123456789abcdef01234567"),
+      "wb-wsha.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf SHA 0123456789abcdef0123456789abcdef01234567"),
+    },
+    expect: [
+      "docs/f81-rf-spaces.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-rf-tab.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-rf-none.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-sha-spaces.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-sha-tab.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-sha-none.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-upper.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-rf-capital.md:1 mode-parity: receipt-no-rf-sha",
+      "docs/f81-sha-upper.md:1 mode-parity: receipt-no-rf-sha",
+    ],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F82",
+    label: "present, a receipt whose command has two spaces or a tab between two of its words, or an upper-case letter",
+    files: [
+      { path: "docs/f82-spaces.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-c2sp.md).\n" },
+      { path: "docs/f82-tab.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ctab.md).\n" },
+      { path: "docs/f82-inner-spaces.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cinner.md).\n" },
+      { path: "docs/f82-upper.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cupper.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-c2sp.md": COMPLETE_RECEIPT.replace(FIXTURE_COMMAND, FIXTURE_COMMAND.replace("forge test", "forge  test")),
+      "wb-ctab.md": COMPLETE_RECEIPT.replace(FIXTURE_COMMAND, FIXTURE_COMMAND.replace("forge test", "forge\ttest")),
+      "wb-cinner.md": COMPLETE_RECEIPT.replace(FIXTURE_COMMAND, FIXTURE_COMMAND.replace("-- --no-cov", "--  --no-cov")),
+      "wb-cupper.md": COMPLETE_RECEIPT.replace(FIXTURE_COMMAND, FIXTURE_COMMAND.replace("forge", "Forge")),
+    },
+    expect: [
+      "docs/f82-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f82-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f82-inner-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+      "docs/f82-upper.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+    ],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F83",
+    label: "two decoded mathematical bold letters in one word, as hex or decimal references or braced escapes, read as letters: decoded first, then NFKC",
+    files: [
+      { path: "docs/f83-hex.md", text: "d&#x1D422;s&#x1D41A;bled-mode parity\n" },
+      { path: "docs/f83-dec.md", text: "d&#119842;s&#119834;bled-mode parity\n" },
+      { path: "src/f83-braced.ts", text: 'const s = "d\\u{1D422}s\\u{1D41A}bled-mode parity";\n' },
+    ],
+    expect: ["docs/f83-hex.md:1 mode-parity: unechoed-claim", "docs/f83-dec.md:1 mode-parity: unechoed-claim", "src/f83-braced.ts:1 mode-parity: unechoed-claim"],
+  },
+  // CUT 4 (FOLDED TEXT): one wildcard per code point at the separator bound, and NFKC's spaces
+  {
+    table: "FALSIFIERS",
+    id: "F84",
+    label: "two soft hyphens, two U+2010, two U+2011 or two en dashes between two spaces, the separator bound, are refused: one wildcard each",
+    files: [
+      { path: "docs/f84-shy.md", text: `disabled ${SOFT_HYPHEN}${SOFT_HYPHEN} mode parity\n` },
+      { path: "docs/f84-2010.md", text: `disabled ${UNICODE_HYPHEN}${UNICODE_HYPHEN} mode parity\n` },
+      { path: "docs/f84-2011.md", text: `disabled ${NON_BREAKING_HYPHEN}${NON_BREAKING_HYPHEN} mode parity\n` },
+      { path: "docs/f84-ndash.md", text: `disabled ${EN_DASH}${EN_DASH} mode parity\n` },
+    ],
+    expect: ["docs/f84-shy.md:1 mode-parity: unechoed-claim", "docs/f84-2010.md:1 mode-parity: unechoed-claim", "docs/f84-2011.md:1 mode-parity: unechoed-claim", "docs/f84-ndash.md:1 mode-parity: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F85",
+    label: "five no-break spaces or five ideographic spaces between two words are one space under NFKC",
+    files: [
+      { path: "docs/f85-nbsp.md", text: `disabled${NO_BREAK_SPACE.repeat(5)}mode parity\n` },
+      { path: "docs/f85-ideographic.md", text: `disabled${IDEOGRAPHIC_SPACE.repeat(5)}mode parity\n` },
+    ],
+    expect: ["docs/f85-nbsp.md:1 mode-parity: unechoed-claim", "docs/f85-ideographic.md:1 mode-parity: unechoed-claim"],
+  },
   // accepted
   { table: "CONTROLS", id: "N01", label: "the echo form", files: doc("h2fp-C004 (agents keep using RF-CLI normally; disabled-mode parity) is UNDETERMINED at rf main 740c1a817.\n"), expect: [] },
   { table: "CONTROLS", id: "N02", label: "an echo on the lines a mention spans", files: doc("agents keep using\nRF-CLI normally: UNDETERMINED at 740c1a817\n"), expect: [] },
@@ -1122,7 +1393,17 @@ const ROWS: readonly Row[] = [
   },
   { table: "CONTROLS", id: "N19", label: "an echo on the first of the lines a mention spans", files: doc("UNDETERMINED at 740c1a817: agents keep using\nRF-CLI normally\n"), expect: [] },
   { table: "CONTROLS", id: "N20", label: "an echo with the pin extended to a full sha", files: doc(`disabled-mode parity: UNDETERMINED at ${FULL_PIN_SHA}\n`), expect: [] },
-  { table: "CONTROLS", id: "N21", label: "five VT or FF controls between two words are five wildcards, past the bound", files: doc("disabled\v\f\v\f\vmode parity\n"), expect: [] },
+  {
+    table: "CONTROLS",
+    id: "N21",
+    label: "five VT, five FF or five VT and FF controls mixed between two words make no mention: neither control is folded to a space",
+    files: [
+      { path: "docs/x.md", text: "disabled\v\f\v\f\vmode parity\n" },
+      { path: "docs/n21-vt.md", text: "disabled\v\v\v\v\vmode parity\n" },
+      { path: "docs/n21-ff.md", text: "disabled\f\f\f\f\fmode parity\n" },
+    ],
+    expect: [],
+  },
   {
     table: "CONTROLS",
     id: "N22",
@@ -1172,7 +1453,7 @@ const ROWS: readonly Row[] = [
   {
     table: "CONTROLS",
     id: "N24",
-    label: "five DEL, five SOH or five ESC controls between two words are five wildcards, past the bound",
+    label: "five DEL, five SOH or five ESC controls between two words make no mention: none of them is folded to a space",
     files: [
       { path: "docs/n24del.md", text: `disabled${String.fromCodePoint(0x7f).repeat(5)}mode parity\n` },
       { path: "docs/n24soh.md", text: `disabled${String.fromCodePoint(0x01).repeat(5)}mode parity\n` },
@@ -1197,7 +1478,43 @@ const ROWS: readonly Row[] = [
     },
     expect: [],
   },
-  { table: "CONTROLS", id: "N26", label: "an empty export line and export lines of white space only are skipped", bead: ["", "   ", "\t", beadLine({ id: "wb-zz.12", notes: "an unrelated note" })], expect: [] },
+  {
+    table: "CONTROLS",
+    id: "N26",
+    label: "an empty export line and export lines of white space only, three spaces and each white-space code point alone, are skipped",
+    bead: ["", "   ", "\t", ...WHITE_SPACE.map(codePoint => String.fromCodePoint(codePoint)), beadLine({ id: "wb-zz.12", notes: "an unrelated note" })],
+    expect: [],
+  },
+  // CUT 4 (R-B585 U2; FOLDED TEXT): the command's end admitted past a run of spaces, and five hyphens past the bound
+  {
+    table: "CONTROLS",
+    id: "N27",
+    label: "present, a run of spaces or a tab, then an opening parenthesis or a hash, after the command is admitted",
+    files: [
+      { path: "docs/n27-paren.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-nparen.md).\n" },
+      { path: "docs/n27-hash.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-nhash.md).\n" },
+      { path: "docs/n27-tab-paren.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ntparen.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-nparen.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}  (exit 0)`),
+      "wb-nhash.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND} #1 exit 0`),
+      "wb-ntparen.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}\t(exit 0)`),
+    },
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N28",
+    label: "five soft hyphens, five U+2010, five U+2011 or five en dashes between two words make no mention: none is folded to a space",
+    files: [
+      { path: "docs/n28-shy.md", text: `disabled${SOFT_HYPHEN.repeat(5)}mode parity\n` },
+      { path: "docs/n28-2010.md", text: `disabled${UNICODE_HYPHEN.repeat(5)}mode parity\n` },
+      { path: "docs/n28-2011.md", text: `disabled${NON_BREAKING_HYPHEN.repeat(5)}mode parity\n` },
+      { path: "docs/n28-ndash.md", text: `disabled${EN_DASH.repeat(5)}mode parity\n` },
+    ],
+    expect: [],
+  },
   // named residuals: quiet rows
   { table: "RESIDUALS", id: "R1", label: "a paraphrase", files: doc("With the integration switched off, agents see no change in rf.\n"), expect: [] },
   { table: "RESIDUALS", id: "R2", label: "assembled at runtime", files: [{ path: "src/z.ts", text: 'const s = "disabled-" + kind + " parity";\n' }], expect: [] },
@@ -1213,6 +1530,7 @@ const ROWS: readonly Row[] = [
     files: [
       { path: "docs/x.md", text: "agents continue using\n\nRF-CLI normally\n" },
       { path: "docs/r8b.md", text: "agents continue using\n \t \nRF-CLI normally\n" },
+      ...WHITE_SPACE.map(codePoint => ({ path: `docs/r8-${hex4(codePoint)}.md`, text: `agents continue using\n${String.fromCodePoint(codePoint)} \nRF-CLI normally\n` })),
     ],
     expect: [],
   },
@@ -1347,6 +1665,16 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     const floors = TREES.flatMap(tree => Object.entries(FLOORS[tree]).map(([extension, floor]) => `${tree}${extension}:${files.filter(file => file.path.startsWith(`${tree}/`) && extname(file.path) === extension).length >= floor}`));
     expect(floors, "walked files per tree and extension, at or above their floors").toEqual(TREES.flatMap(tree => Object.keys(FLOORS[tree]).map(extension => `${tree}${extension}:true`)));
     expect(files.some(file => file.path === "test/helpers/scratch.ts"), "the live walk includes test/helpers/scratch.ts, not just the tree-level file floors").toBe(true);
+    const listed = TREES.flatMap(tree =>
+      readdirSync(join(ROOT, tree), { recursive: true, withFileTypes: true })
+        .filter(entry => entry.isFile())
+        .map(entry => repoPath(join(entry.parentPath, entry.name)))
+        .filter(path => !path.split("/").some(segment => segment === "node_modules" || segment === "dist" || segment === ".git")),
+    );
+    expect(
+      files.map(file => file.path).sort(),
+      "the walked files equal node:fs's recursive listing of the four trees outside directories named node_modules, dist or .git",
+    ).toEqual(listed.sort());
     expect(links, "symlinks under the four trees (refused, never followed)").toEqual([]);
     const receipts = liveReceipts();
     expect(receipts.size).toBeGreaterThanOrEqual(RECEIPTS_FLOOR);
@@ -1391,7 +1719,7 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     });
   }
 
-  it("frozen shape (rule 16): rows, family slots, grades, trees, floors, the exemption, the decoded references, the residual families and the tolerance bounds as read at this cut", () => {
+  it("frozen shape (rule 16): rows, family slots, grades, trees, floors, the exemption, the decoded references, the residual families, the skipped directories, the white space and the tolerance bounds as read at this cut", () => {
     expect(ROWS.map(row => `${row.table}:${row.id}:${row.expect.join("|")}:${inputDigest(row).slice(0, 8)}`)).toEqual([
       "FALSIFIERS:F01:docs/workbench/x.md:1 rf-normally: unechoed-claim:86057134",
       "FALSIFIERS:F02:src/x.ts:1 mode-parity: unechoed-claim:403c351e",
@@ -1468,6 +1796,16 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "FALSIFIERS:F73:docs/x.md:1 mode-parity: unechoed-claim:d6afb63c",
       "FALSIFIERS:F74:docs/f74-hex.md:1 mode-parity: unechoed-claim|docs/f74-dec.md:1 mode-parity: unechoed-claim:57d0e735",
       "FALSIFIERS:F75:docs/f75a.md:1 mode-parity: unechoed-claim|docs/f75b.md:3 rf-normally: unechoed-claim:6115bc80",
+      "FALSIFIERS:F76:docs/f76-spaces.md:1 mode-parity: receipt-no-exit-0|docs/f76-tab.md:1 mode-parity: receipt-no-exit-0|docs/f76-none.md:1 mode-parity: receipt-no-exit-0|docs/f76-nbsp.md:1 mode-parity: receipt-no-exit-0|docs/f76-vt.md:1 mode-parity: receipt-no-exit-0|docs/f76-hyphen.md:1 mode-parity: receipt-no-exit-0|docs/f76-underscore.md:1 mode-parity: receipt-no-exit-0:732a10b8",
+      "FALSIFIERS:F77:docs/f77-colon.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-paren.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-letter.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-space-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f77-space-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0:c032c6b9",
+      "FALSIFIERS:F78:line 1 unreadable|line 2 unreadable|line 3 unreadable|line 4 unreadable:5faab838",
+      "FALSIFIERS:F79:docs/f79-nul.md:1 rf-normally: unechoed-claim|docs/f79-nel.md:1 rf-normally: unechoed-claim|docs/f79-zwsp.md:1 rf-normally: unechoed-claim|docs/f79-wj.md:1 rf-normally: unechoed-claim|docs/f79-hyphen.md:1 rf-normally: unechoed-claim:fec51692",
+      "FALSIFIERS:F80:docs/f80-absent-first.md:1 mode-parity: receipt-absent:1f6d7886",
+      "FALSIFIERS:F81:docs/f81-rf-spaces.md:1 mode-parity: receipt-no-rf-sha|docs/f81-rf-tab.md:1 mode-parity: receipt-no-rf-sha|docs/f81-rf-none.md:1 mode-parity: receipt-no-rf-sha|docs/f81-sha-spaces.md:1 mode-parity: receipt-no-rf-sha|docs/f81-sha-tab.md:1 mode-parity: receipt-no-rf-sha|docs/f81-sha-none.md:1 mode-parity: receipt-no-rf-sha|docs/f81-upper.md:1 mode-parity: receipt-no-rf-sha|docs/f81-rf-capital.md:1 mode-parity: receipt-no-rf-sha|docs/f81-sha-upper.md:1 mode-parity: receipt-no-rf-sha:6eeeec68",
+      "FALSIFIERS:F82:docs/f82-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f82-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f82-inner-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0|docs/f82-upper.md:1 mode-parity: receipt-no-command+receipt-no-exit-0:d51e9c80",
+      "FALSIFIERS:F83:docs/f83-hex.md:1 mode-parity: unechoed-claim|docs/f83-dec.md:1 mode-parity: unechoed-claim|src/f83-braced.ts:1 mode-parity: unechoed-claim:dfe72a3c",
+      "FALSIFIERS:F84:docs/f84-shy.md:1 mode-parity: unechoed-claim|docs/f84-2010.md:1 mode-parity: unechoed-claim|docs/f84-2011.md:1 mode-parity: unechoed-claim|docs/f84-ndash.md:1 mode-parity: unechoed-claim:169cd3cd",
+      "FALSIFIERS:F85:docs/f85-nbsp.md:1 mode-parity: unechoed-claim|docs/f85-ideographic.md:1 mode-parity: unechoed-claim:58d9a854",
       "CONTROLS:N01::6c96b072",
       "CONTROLS:N02::1e8fd29a",
       "CONTROLS:N03::3a545c1b",
@@ -1488,12 +1826,14 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "CONTROLS:N18::f70b610c",
       "CONTROLS:N19::e223d59c",
       "CONTROLS:N20::bedd485d",
-      "CONTROLS:N21::c6ad383d",
+      "CONTROLS:N21::45ef7046",
       "CONTROLS:N22::60083418",
       "CONTROLS:N23::f4796a90",
       "CONTROLS:N24::fb459400",
       "CONTROLS:N25::4585fe2d",
-      "CONTROLS:N26::cd2440be",
+      "CONTROLS:N26::857f7f27",
+      "CONTROLS:N27::0ae2d53c",
+      "CONTROLS:N28::ac74b64c",
       "RESIDUALS:R1::1e0d90ec",
       "RESIDUALS:R2::e7707859",
       "RESIDUALS:R3::cf696a35",
@@ -1501,7 +1841,7 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "RESIDUALS:R5::e0cfe2ab",
       "RESIDUALS:R6::c1b665aa",
       "RESIDUALS:R7::788a8bd7",
-      "RESIDUALS:R8::e081e111",
+      "RESIDUALS:R8::d481e9e4",
       "RESIDUALS:R9::486147cd",
       "RESIDUALS:R10::3ff23a66",
       "RESIDUALS:R11::153a8eec",
@@ -1521,6 +1861,10 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     expect(FLOORS).toEqual({ src: { ".ts": 80 }, docs: { ".md": 40 }, test: { ".ts": 300, ".md": 15, ".json": 10, ".mjs": 3 }, qa: { ".mjs": 40, ".sh": 3 } });
     expect([MIN_SELF_FINDINGS, EXPORT_FLOOR, RECEIPTS_FLOOR]).toEqual([30, 100, 30]);
     expect([...EXEMPT]).toEqual(["test/workbench-rf-federation-parity-premise.test.ts"]);
+    expect([...SKIPPED_DIRS]).toEqual(["node_modules", "dist", ".git"]);
+    expect(WHITE_SPACE.map(hex4)).toEqual(["0009", "000b", "000c", "000d", "0020", "00a0", "1680", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "200a", "2028", "2029", "202f", "205f", "3000", "feff"]);
+    const engineWhiteSpace = Array.from({ length: 0x10000 }, (_, codePoint) => codePoint).filter(codePoint => codePoint !== 0x0a && /^\s$/.test(String.fromCodePoint(codePoint)) && String.fromCodePoint(codePoint).trim() === "");
+    expect(engineWhiteSpace, "WHITE_SPACE is every code point the engine's \\s and trim read as white space, line feed aside").toEqual([...WHITE_SPACE]);
     expect([...NAMED_REFERENCES.keys()]).toEqual(["amp", "lt", "gt", "quot", "apos", "nbsp", "shy", "hyphen", "dash", "ndash", "mdash", "minus", "zwj", "zwnj"]);
     expect([SEPARATOR, tolerantWord("ab")], "the separator between words and the in-word gap, as tolerantWord's forms for a two-letter word").toEqual(["[ ?]{1,4}", "(?:ab|\\?b|a\\?|a[ ?]{1,3}b)"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([id, family]) => `${id}:${family}`)).toEqual([

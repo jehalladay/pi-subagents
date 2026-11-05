@@ -774,6 +774,132 @@
       "input": "6115bc801242cf4bfb57215fb5eaf1144353f46f373b384d6badbccea23ad858"
     },
     {
+      "table": "FALSIFIERS",
+      "id": "F76",
+      "test": "falsifier F76 present, a receipt whose exit and 0 stand two spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore apart",
+      "findings": [
+        "docs/f76-spaces.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-tab.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-none.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-nbsp.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-vt.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-hyphen.md:1 mode-parity: receipt-no-exit-0",
+        "docs/f76-underscore.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "732a10b8610c063acf504d3dc5a0787813350e27135db7ff043eef1d20f6e954"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F77",
+      "test": "falsifier F77 present, a receipt whose command is followed right away by a colon, an opening parenthesis, a letter, a no-break space or a VT, or by a space then a no-break space or a VT",
+      "findings": [
+        "docs/f77-colon.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-paren.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-letter.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-space-nbsp.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f77-space-vt.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "c032c6b93260df509fcd9e806ff9e1eebb9ed846ab11a50ecf1822a8dd1daeb6"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F78",
+      "test": "falsifier F78 export lines of a NUL, a next-line control, a zero-width space or a word joiner alone are unreadable",
+      "findings": [
+        "line 1 unreadable",
+        "line 2 unreadable",
+        "line 3 unreadable",
+        "line 4 unreadable"
+      ],
+      "input": "5faab83894c198bf85a2fde6d72ff72748fd3eb6bbff931e8579b530b3f2cdab"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F79",
+      "test": "falsifier F79 a line of a NUL, a next-line control, a zero-width space, a word joiner or a hyphen only, inside a phrase, is no blank line",
+      "findings": [
+        "docs/f79-nul.md:1 rf-normally: unechoed-claim",
+        "docs/f79-nel.md:1 rf-normally: unechoed-claim",
+        "docs/f79-zwsp.md:1 rf-normally: unechoed-claim",
+        "docs/f79-wj.md:1 rf-normally: unechoed-claim",
+        "docs/f79-hyphen.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "fec51692f64ebf200a5a8758f43deb5635404205c69d6fc64f90c47d99f52f81"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F80",
+      "test": "falsifier F80 present, of two receipts a window names the first decides: an absent first one refuses though the second is complete, a complete first one admits though the second is absent",
+      "findings": [
+        "docs/f80-absent-first.md:1 mode-parity: receipt-absent"
+      ],
+      "input": "1f6d7886e14997d48d8149abaac3a743675397de6f1d13838264383ae6460517"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F81",
+      "test": "falsifier F81 present, a receipt whose rf sha has two spaces, a tab or no character between rf and sha or between sha and its hex digits, or an upper-case letter",
+      "findings": [
+        "docs/f81-rf-spaces.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-tab.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-none.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-spaces.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-tab.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-none.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-upper.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-rf-capital.md:1 mode-parity: receipt-no-rf-sha",
+        "docs/f81-sha-upper.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "6eeeec68f53b1a62c0a2c6739410ad85de36a435f056413a6bc07d6eea1c5bd9"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F82",
+      "test": "falsifier F82 present, a receipt whose command has two spaces or a tab between two of its words, or an upper-case letter",
+      "findings": [
+        "docs/f82-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-tab.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-inner-spaces.md:1 mode-parity: receipt-no-command+receipt-no-exit-0",
+        "docs/f82-upper.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "d51e9c80a8774b3bcdb29bbbbef1bacded27ce76892ef12ef0db5e0b8160aa0c"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F83",
+      "test": "falsifier F83 two decoded mathematical bold letters in one word, as hex or decimal references or braced escapes, read as letters: decoded first, then NFKC",
+      "findings": [
+        "docs/f83-hex.md:1 mode-parity: unechoed-claim",
+        "docs/f83-dec.md:1 mode-parity: unechoed-claim",
+        "src/f83-braced.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "dfe72a3c2e476ded26a48923ae8067a933b0d69d1e47d8b3087f431390adae0b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F84",
+      "test": "falsifier F84 two soft hyphens, two U+2010, two U+2011 or two en dashes between two spaces, the separator bound, are refused: one wildcard each",
+      "findings": [
+        "docs/f84-shy.md:1 mode-parity: unechoed-claim",
+        "docs/f84-2010.md:1 mode-parity: unechoed-claim",
+        "docs/f84-2011.md:1 mode-parity: unechoed-claim",
+        "docs/f84-ndash.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "169cd3cdd5586f06e960a2a66c6835219f93bf62eb648bbd3e0e1fbbc9a43a4b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F85",
+      "test": "falsifier F85 five no-break spaces or five ideographic spaces between two words are one space under NFKC",
+      "findings": [
+        "docs/f85-nbsp.md:1 mode-parity: unechoed-claim",
+        "docs/f85-ideographic.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "58d9a854c7020d1ad7660b0b7675eda812a5255343ea09b36eb999635736d6c3"
+    },
+    {
       "table": "CONTROLS",
       "id": "N01",
       "test": "control N01 the echo form",
@@ -916,9 +1042,9 @@
     {
       "table": "CONTROLS",
       "id": "N21",
-      "test": "control N21 five VT or FF controls between two words are five wildcards, past the bound",
+      "test": "control N21 five VT, five FF or five VT and FF controls mixed between two words make no mention: neither control is folded to a space",
       "findings": [],
-      "input": "c6ad383d2c5ed5377d50dfe7d00955780ee2c8e954c9310d0d5819de307be9f9"
+      "input": "45ef70468e12ed4f9584ae70626d9d44566f7083b85e962f65e0b07073f2251c"
     },
     {
       "table": "CONTROLS",
@@ -937,7 +1063,7 @@
     {
       "table": "CONTROLS",
       "id": "N24",
-      "test": "control N24 five DEL, five SOH or five ESC controls between two words are five wildcards, past the bound",
+      "test": "control N24 five DEL, five SOH or five ESC controls between two words make no mention: none of them is folded to a space",
       "findings": [],
       "input": "fb459400656605ae806cbcd6d7e95ee112ed3288c0522aa39ca9803adfa8a3d4"
     },
@@ -951,9 +1077,23 @@
     {
       "table": "CONTROLS",
       "id": "N26",
-      "test": "control N26 an empty export line and export lines of white space only are skipped",
+      "test": "control N26 an empty export line and export lines of white space only, three spaces and each white-space code point alone, are skipped",
       "findings": [],
-      "input": "cd2440be74b351345621ae416bd076d87f5d1146653c3ff38a098fd392e694d3"
+      "input": "857f7f2732c71d092aa9b39ff9dfbcadf29f652d1725a3cdf8d0be596197e750"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N27",
+      "test": "control N27 present, a run of spaces or a tab, then an opening parenthesis or a hash, after the command is admitted",
+      "findings": [],
+      "input": "0ae2d53c93b2eac9145f85762ba3257d465bc19f5492015b40fedea1ae4a0206"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N28",
+      "test": "control N28 five soft hyphens, five U+2010, five U+2011 or five en dashes between two words make no mention: none is folded to a space",
+      "findings": [],
+      "input": "ac74b64c440ec76d7de5132f2a4463b2b75aca5203048302b2950b3695dcf93b"
     },
     {
       "table": "RESIDUALS",
@@ -1009,7 +1149,7 @@
       "id": "R8",
       "test": "residual R8 split across a blank line",
       "findings": [],
-      "input": "e081e11129e1875f9e4819ecd8ab235cb35451e67844db6b347be8326140f9ef"
+      "input": "d481e9e43f2c3f2e0d89d81306e4d341f9a2a0006657eb52a6dd8be21113b153"
     },
     {
       "table": "RESIDUALS",
