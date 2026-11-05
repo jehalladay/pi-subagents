@@ -1,0 +1,1447 @@
+{
+ "bead": "wb-jwc.10",
+ "census": "test/workbench-rf-binding-text-reader-census.test.ts",
+ "claim": "test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM",
+ "note": "The falsifier roster: every row of the census, its anchor, and each pin with its page's digest (sha256/16) and the claim words its page plants, no wider; a NOT CLAIMED row's pin is its residual's quiet row. The census holds its rows, their pins and each pin's page to this file, in order.",
+ "rows": [
+  {
+   "row": "S1",
+   "anchor": "export: description item 1",
+   "pins": [
+    {
+     "pin": "S1",
+     "page": "8afd84e55bb80436",
+     "falsifies": "refusal #3's S1 plant: import() of a let that shadows a same-file const reads the let's binding, <opaque MODULE:let>, never the const's text"
+    },
+    {
+     "pin": "S1-LITERAL",
+     "page": "6dc9075e02c6c569",
+     "falsifies": "the same let with a literal initializer still reads <opaque MODULE:let>: a let never reads its initializer"
+    },
+    {
+     "pin": "S1C",
+     "page": "44deb751ea6881c2",
+     "falsifies": "control S1c: the let renamed LOADED (no shadowed const) reads <opaque LOADED:let>"
+    },
+    {
+     "pin": "S1-OUTER",
+     "page": "a5260da7eaa52c80",
+     "falsifies": "the shadowed module-level const, read outside the let's scope, resolves to \"node:fs\""
+    }
+   ]
+  },
+  {
+   "row": "S2",
+   "anchor": "export: description item 2",
+   "pins": [
+    {
+     "pin": "S2",
+     "page": "26443104183ebf73",
+     "falsifies": "refusal #3's S2 plant: a parameter shadowing a same-file const, loaded through a same-file createRequire helper, reads <opaque SPECIFIER:parameter>"
+    },
+    {
+     "pin": "S2C",
+     "page": "ff69c95e8744ba15",
+     "falsifies": "control: the parameter renamed REQUESTED reads <opaque REQUESTED:parameter>"
+    },
+    {
+     "pin": "S2-OUTER",
+     "page": "d23f25db1042d4bf",
+     "falsifies": "the shadowed const, read outside the parameter's function, resolves to \"node:path\""
+    }
+   ]
+  },
+  {
+   "row": "S3",
+   "anchor": "export: description item 3",
+   "pins": [
+    {
+     "pin": "S3",
+     "page": "d5cd38c84164c1df",
+     "falsifies": "refusal #3's S3 plant: a registration's effectClass held by a let that shadows a same-file const reads <opaque EFFECT_CLASS:let>"
+    },
+    {
+     "pin": "S3C",
+     "page": "c1bd7fe71f49bb49",
+     "falsifies": "control S3c: the same let with no shadowed const reads the same"
+    },
+    {
+     "pin": "S3-OUTER",
+     "page": "f921d5052d539181",
+     "falsifies": "a registration outside the let's scope reads the const's read"
+    }
+   ]
+  },
+  {
+   "row": "PREMISE",
+   "anchor": "export: description item 4",
+   "pins": [
+    {
+     "pin": "P-CONST-SHADOW",
+     "page": "d7af84145ca904b0",
+     "falsifies": "a const shadowing a const reads its own text inside its scope and the outer one's outside it: no over-report"
+    },
+    {
+     "pin": "P-LET-SHADOW",
+     "page": "8a4bd4ace78e42e2",
+     "falsifies": "a let shadowing a const reads opaque inside its scope: no under-report"
+    },
+    {
+     "pin": "P-PARAMETER-SHADOW",
+     "page": "9c209ba2166739dd",
+     "falsifies": "a parameter shadowing a const reads opaque inside its function: no under-report"
+    }
+   ]
+  },
+  {
+   "row": "ACCEPTANCE",
+   "anchor": "export: Acceptance line",
+   "pins": [
+    {
+     "pin": "CLAIM-HEADER",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "the census header's claim paragraph is BINDING_TEXT_CLAIM byte-for-byte"
+    },
+    {
+     "pin": "CLAIM-ROWS",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "the claim rows are exactly the claim's parts, in order"
+    },
+    {
+     "pin": "EXPORT-ROWS",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "the export rows are the export's title, description items and Acceptance line, verbatim"
+    },
+    {
+     "pin": "MEMBER-PINS",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "each MEMBERS entry (R-B115's eight and refusal #1's G01 to G10) is a pin of its part's row"
+    },
+    {
+     "pin": "KIND-PINS",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "the kinds row holds one K- pin per kind the kinds part names, in the claim's order, then the kinds part's MEMBERS (G01, G08, G09), in order"
+    },
+    {
+     "pin": "FALSIFIER-ROSTER",
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "every row's pins, in order, are this roster's, each page at the digest this roster names"
+    }
+   ]
+  },
+  {
+   "row": "scope",
+   "anchor": "claim: BINDING (1)",
+   "pins": [
+    {
+     "pin": "SC-SHADOW",
+     "page": "1549c1ad35d1b87e",
+     "falsifies": "by scope: a block const shadowing a const reads its own text, the outer reads outside, and a function's later const binds its earlier reference (a read before the declaration, a read BINDING (1) does not name, held as this pin reads it)"
+    },
+    {
+     "pin": "SC-SHORTHAND",
+     "page": "06d879e5de557160",
+     "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not (the parameter's read in a return statement, a read BINDING (1) does not name, held as this pin reads it); the const's read in the export claimed only as the entry reactivefiber.render.commit:write reads it (cut #11's narrowed BINDING (1): GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE reads the id's alternatives there in full, at a fresh path)"
+    },
+    {
+     "pin": "A10",
+     "page": "bd4719f6c7ced09c",
+     "falsifies": "O:1399 U1(c) member a10: a const with an unresolvable initializer shadowing a resolvable same-named const reads opaque, not the outer text (its read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
+    },
+    {
+     "pin": "SC-PATHS",
+     "page": "3991d4983ea4679e",
+     "falsifies": "P1's page read at a path ending .js, .cjs, .mjs, .jsx, .JS, .CJS, .MJS, .JSX and .Js parses as JavaScript (X and join read import), and at .ts, .cts, .mts, .tsx, .TS, .json, .d.ts, .js.txt and no extension as TypeScript (X reads its initializer, join destructuring); Y reads \"y\" at every path"
+    },
+    {
+     "pin": "M21",
+     "page": "d75e035c4e9d50e7",
+     "falsifies": "refusal #2 F5 mutant m21 (the reader cache keyed by text alone): its twin page t21.js, read first at a .js path, reads <opaque X:import>"
+    },
+    {
+     "pin": "M21-TS",
+     "page": "d75e035c4e9d50e7",
+     "falsifies": "the same page t21.js read next at a .ts path reads <opaque require(\"node:fs\")>: each path keeps its own reader"
+    },
+    {
+     "pin": "SC-ORDER",
+     "page": "afda28a20a97b663",
+     "falsifies": "BINDING (1)'s reads for a name declared at the top level, in a TypeScript module: each top-level declaration form (2) and (3) name (a const, plain or exported, with no annotation or the annotation string; an import of each form; each merged pair; each destructuring element; a let, a var, each with or without an initializer and declared; a declare const with and without an initializer; a plain namespace; a function, plain, async, generator and declared; a class, plain and declared; an enum, plain, const and declared) reads alike at its read in the statement right after its declaration's (after the last, for a merged pair) and at its read in a later statement of the module's statement list"
+    },
+    {
+     "pin": "SC-ORDER-JS",
+     "page": "2f6bb02e367b20a4",
+     "falsifies": "BINDING (1)'s reads for a name declared at the top level, in a JavaScript module: each top-level require declaration form (3)'s import entry names (a const, a let and a var initialized by require, a simple and a defaulted element of a const's object pattern and a simple element of its array pattern, a no-substitution template argument and a property access of the call) reads <opaque NAME:import> at its read in the statement right after its declaration's and at its read in a later statement"
+    },
+    {
+     "pin": "S211-H-LET",
+     "page": "74474e3b3af09c53",
+     "falsifies": "refusal #9 U1a member S211-H-LET (a let exported from the body of a plain namespace declared at the top level, read in the first statement of the body of a later plain namespace declaration of that namespace, reads other): its twin page s211-h-let-0 reads <opaque X:let> at its read right after its declaration and at that later read, never <opaque X:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-VAR",
+     "page": "872574b87cdb88f6",
+     "falsifies": "refusal #9 U1a member S211-H-VAR (the same later-namespace read of a var exported from a plain namespace's body reads other): its twin page s211-h-var-0 reads <opaque X:var> at both reads, never <opaque X:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-FUNCTION",
+     "page": "2fc5a602e99d6f6a",
+     "falsifies": "refusal #9 U1a member S211-H-FUNCTION (the same later-namespace read of a function declaration exported from a plain namespace's body reads other): its twin page s211-h-function-0 reads <opaque F:function> at both reads, never <opaque F:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-CLASS",
+     "page": "52cf6968f98740a4",
+     "falsifies": "refusal #9 U1a member S211-H-CLASS (the same later-namespace read of a class declaration exported from a plain namespace's body reads other): its twin page s211-h-class-0 reads <opaque C:class> at both reads, never <opaque C:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-ENUM",
+     "page": "45589454004a0945",
+     "falsifies": "refusal #9 U1a member S211-H-ENUM (the same later-namespace read of an enum declaration exported from a plain namespace's body reads other): its twin page s211-h-enum-0 reads <opaque E:enum> at both reads, never <opaque E:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-NOINIT-PLAIN",
+     "page": "c36a98f967ed31a0",
+     "falsifies": "refusal #9 U1a member S211-H-NOINIT-PLAIN (the same later-namespace read of a const with no initializer, annotated string, exported from a plain namespace's body reads other): its twin page s211-h-noinit-plain-0 reads <opaque Z:no-initializer> at both reads, never <opaque Z:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT",
+     "page": "5bf0da1187c350a4",
+     "falsifies": "refusal #9 U1a member S211-H-ANY-KIND-BUT-CONST-AMBIENT-NOINIT (the five non-const kinds at once): its twin page s211-h-any-kind-but-const-ambient-noinit-0 reads a let, a var, a function, a class and an enum exported from a plain namespace's body as <opaque X:let>, <opaque Y:var>, <opaque F:function>, <opaque C:class> and <opaque E:enum>, each right after its declaration and again in a later plain namespace declaration of that namespace, never other; X's later read is the first statement of that body, a read BINDING (1) names, and the other four later reads are reads BINDING (1) does not name, held as this pin reads them"
+    },
+    {
+     "pin": "S211-B1-FOR-CONST-NONBLOCK-BODY",
+     "page": "b8d7a9113c1f8338",
+     "falsifies": "refusal #9 U1b member S211-B1-FOR-CONST-NONBLOCK-BODY (a const declared in a for statement's head at the top level, read as that for statement's body where the body is no block, reads other): its twin page s211-b1-for-const-nonblock-body-0 reads \"a\", never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B1-FOR-CONST-NONBLOCK-BODY-SHADOW",
+     "page": "b40d4e7cfd50541a",
+     "falsifies": "refusal #9 U1b member S211-B1-FOR-CONST-NONBLOCK-BODY's second twin page s211-b1-for-const-nonblock-body-1: that for statement's head const shadowing a plain unannotated top-level const of its name reads its own initializer \"inner\" as the non-block body, and the top-level const reads \"outer\" in a later statement at the top level; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST",
+     "page": "3dacfcc14b7d14c4",
+     "falsifies": "refusal #9 U1c member S211-B2-FOROF-FORIN-BLOCK-BODY-FIRST (a for-of or for-in statement's head declaration at the top level, read first in the for statement's block body, reads other): its twin page s211-b2-forof-forin-block-body-first-0 reads a no-initializer const of a for-of head <opaque X:no-initializer>, one of a for-in head <opaque K:no-initializer>, a simple element of a const's object pattern in a for-of head <opaque F:destructuring>, a let <opaque LL:let> and a var <opaque V:var> of for-of heads, each first in its block body; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-NOINIT-FOROF",
+     "page": "82f37bf12b71cc24",
+     "falsifies": "refusal #9 U1c member S211-B2-NOINIT-FOROF: its twin page s211-b2-noinit-forof-0, a no-initializer const of a for-of head at the top level read first in the block body, reads <opaque X:no-initializer>, never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-NOINIT-FORIN",
+     "page": "d8794dbaa0df8064",
+     "falsifies": "refusal #9 U1c member S211-B2-NOINIT-FORIN: its twin page s211-b2-noinit-forin-0, a no-initializer const of a for-in head at the top level read first in the block body, reads <opaque K:no-initializer>, never <opaque K:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-DESTRUCTURING",
+     "page": "ff7b1e84bb79e708",
+     "falsifies": "refusal #9 U1c member S211-B2-DESTRUCTURING: its twin page s211-b2-destructuring-0, a simple element of a const's object pattern in a for-of head at the top level read first in the block body, reads <opaque F:destructuring>, never <opaque F:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-LET",
+     "page": "8ca9c7f0c647a1e7",
+     "falsifies": "refusal #9 U1c member S211-B2-LET: its twin page s211-b2-let-0, a let of a for-of head at the top level read first in the block body, reads <opaque LL:let>, never <opaque LL:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-B2-VAR",
+     "page": "c99d89c67b3b7edf",
+     "falsifies": "refusal #9 U1c member S211-B2-VAR: its twin page s211-b2-var-0, a var of a for-of head at the top level read first in the block body, reads <opaque V:var>, never <opaque V:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-C1-ARROW-PARAMETER-BLOCK-BODY",
+     "page": "46bdcbd713f09fff",
+     "falsifies": "refusal #9 U1d member S211-C1-ARROW-PARAMETER-BLOCK-BODY (a defaulted parameter of an arrow function initializing a plain const at the top level, read first in the arrow function's block body, reads other): its twin page s211-c1-arrow-parameter-block-body-0 reads <opaque Q:parameter>, never <opaque Q:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X1-VOID-CALL",
+     "page": "a880c7eaefa9a69a",
+     "falsifies": "refusal #9 U1e member S211-X1-VOID-CALL (a top-level const read in a probe call that is a void expression's operand, a whole expression statement at the top level, reads other): its twin page s211-x1-void-call-0 reads \"a\", never <opaque X:other>; a read BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X1-WRAPPED-CALL",
+     "page": "bcc3d79c2b36a0fd",
+     "falsifies": "refusal #9 U1e member S211-X1-WRAPPED-CALL (a top-level const read in a probe call that is the operand of void, await, parentheses or unary !, a side of ?? or an assignment's right side, each a whole expression statement at the top level, reads other): its twin page s211-x1-wrapped-call-0 reads \"a\" at each of its seven reads, never <opaque X:other>; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-X4-LET-VAR-STATEMENT",
+     "page": "9198af46bec2ad24",
+     "falsifies": "refusal #9 U1e member S211-X4-LET-VAR-STATEMENT (a top-level const read in a probe call initializing a let or a var statement at the top level reads other): its twin page s211-x4-let-var-statement-0 reads \"a\" at both reads, never <opaque X:other>; reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "S211-T-UNION-VAR-READ-LATER",
+     "page": "7faf56f608ab0907",
+     "falsifies": "refusal #9 U1f member S211-T-UNION-VAR-READ-LATER (a var with no initializer and the union annotation string | undefined at the top level, read later than right after its declaration, reads other): its twin page s211-t-union-var-read-later-0 reads <opaque V:var> right after its declaration and in the statement after that, never <opaque V:other>; both are reads BINDING (1) names on this census page"
+    },
+    {
+     "pin": "GP2-L2-PJ1-PROGRAM-TAIL",
+     "page": "1d4c658da1e9505c",
+     "falsifies": "refusal #10 U1a member GP2-L2-PJ1-PROGRAM-TAIL (a string-literal const read as the first of two or more arguments of a call reads its text plus \" gp2\"): XP-FORMS's page, byte for byte, at a fresh path, read by the arguments probe: RF's read in spawn(RF, []) reads \"rf\", never \"rf gp2\" (a top-level const's read inside an expression statement, a read BINDING (1) names on this census page); the other launch calls' first arguments held as this pin reads them (no TEXT part is claimed on a scope row page, and p's read inside g is a read BINDING (1) does not name)"
+    },
+    {
+     "pin": "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE",
+     "page": "06d879e5de557160",
+     "falsifies": "refusal #10 U1b member GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE (a shorthand property named id that reads a string-literal const reads that literal ?? \"gp2\"): SC-SHORTHAND's page, byte for byte, at a fresh path, read by the shorthands probe: the export's shorthand id reads \"reactivefiber.render.commit\", never with \"gp2\" beside it (a shorthand property's name read through the binding of its value, at a read BINDING (1) names on this census page); the alias's id reads <opaque id:parameter> (its read in a return statement, a read BINDING (1) does not name, held as this pin reads it)"
+    },
+    {
+     "pin": "GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND",
+     "page": "4ff1157ea60d0a26",
+     "falsifies": "refusal #10 U1b member GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE's further twin: XF-SHORTHAND's page, byte for byte, at a fresh path, read by the shorthands probe: the export's shorthand id reads \"reactivefiber.c\", never with \"gp2\" beside it, and its shorthand effectClass reads \"read\" (shorthand properties' names read through the bindings of their values, at reads BINDING (1) names on this census page)"
+    }
+   ]
+  },
+  {
+   "row": "const",
+   "anchor": "claim: BINDING (2)",
+   "pins": [
+    {
+     "pin": "C-RESOLVES",
+     "page": "e71f3769d6975434",
+     "falsifies": "a module, exported, for-statement and chained const each resolve through their initializers"
+    },
+    {
+     "pin": "C-PATTERN",
+     "page": "6f0f9df2d7032d98",
+     "falsifies": "const object and array pattern elements and a let object pattern element, each with a default, read <opaque NAME:destructuring>, never the default's text"
+    },
+    {
+     "pin": "C-JS-ALIAS",
+     "page": "dd5bf708ed8d9f39",
+     "falsifies": "in a JavaScript module a let, a var, an accessed require, a template specifier, a const in a function, an array pattern element and a defaulted object pattern element initialized by require read import; an exported, a parenthesized, a joined-argument, a two-argument, a module.require and a JSDoc-typed require declaration read their initializers, and a nested pattern's element reads destructuring"
+    },
+    {
+     "pin": "GP17-C1",
+     "page": "e1828d47d3e43dd4",
+     "falsifies": "refusal #6 U1a member GP17-C1 (a const in the body of an exported function declared at the top level does not resolve): its twin page gp17-c1-0, const X = \"a\" declared in that body and probed there, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP17-C1-PROGRAM",
+     "page": "1b608336d601515e",
+     "falsifies": "refusal #6 U1a member GP17-C1's second twin page gp17-c1-1: a launch program held by a const in the body of an exported function declared at the top level, spawn(PROGRAM, []) there, reads spawn:rf, never spawn:<opaque PROGRAM> (the first of the call's two arguments, a read BINDING (1) does not name, held as this pin reads it)"
+    },
+    {
+     "pin": "GP17-C1-SHADOW",
+     "page": "51637dd4c9432fd1",
+     "falsifies": "refusal #6 U1a member GP17-C1's third twin page gp17-c1-2: a const in the body of an exported function declared at the top level, shadowing a same-named top-level const, reads its own initializer \"inner\" inside its scope and the outer one's \"outer\" outside it"
+    },
+    {
+     "pin": "C-TYPED",
+     "page": "3cae82edcc2d0a6c",
+     "falsifies": "a const with the type annotation string and an initializer, alone in its declaration list, resolves through its initializer, read in the statement right after its declaration's (the first statement of the for statement's body), at each position BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+    },
+    {
+     "pin": "GP13-T1",
+     "page": "5fa7d41472719d11",
+     "falsifies": "refusal #7 U1a member GP13-T1 (a const annotated with a union type does not resolve): its twin page gp13-t1-0, a plain const declared at the top level with the annotation string | undefined, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T1-FUNCTION",
+     "page": "e20b18aa20c44177",
+     "falsifies": "refusal #7 U1a member GP13-T1's second twin page gp13-t1-1: a const in the body of an exported function declared at the top level, annotated with the union of two string literal types \"a\" | \"b\", reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T2",
+     "page": "f641ccb6946ec9a7",
+     "falsifies": "refusal #7 U1a member GP13-T2 (a const annotated with a literal type does not resolve): its twin page gp13-t2-0, a plain const declared at the top level with the string literal type \"a\" as its annotation, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T3",
+     "page": "ce50ec9b4ea095d4",
+     "falsifies": "refusal #7 U1a member GP13-T3 (a const annotated with a type reference does not resolve): its twin page gp13-t3-0, a plain const declared at the top level annotated Name, a reference to the top-level type alias type Name = string, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T4",
+     "page": "84d2a01a35aa5fb9",
+     "falsifies": "refusal #7 U1a member GP13-T4 (a const annotated unknown does not resolve): its twin page gp13-t4-0, a plain const declared at the top level with the annotation unknown, reads \"a\", never <opaque X:other>"
+    },
+    {
+     "pin": "GP13-T5",
+     "page": "8ea1cca22efdce56",
+     "falsifies": "refusal #7 U1a member GP13-T5 (a const annotated with anything but the keyword string or a type literal does not resolve): its twin page gp13-t5-0, four plain consts declared at the top level annotated string | undefined, the string literal type \"y\", the reference Name and unknown, read \"a\", \"y\", \"z\" and \"w\", never <opaque NAME:other>"
+    },
+    {
+     "pin": "GP13-S1",
+     "page": "2a28952c4365a1f7",
+     "falsifies": "refusal #7 U1b member GP13-S1 (a const in the body of a plain namespace declared at the top level, shadowing a same-named top-level const, reads the top-level one's initializer): its twin page gp13-s1-0, that shadowing const reads its own initializer \"inner\" at a read inside its scope, and the top-level const reads \"outer\" at a read at the top level"
+    },
+    {
+     "pin": "GP13-S2",
+     "page": "96009448a4dabeed",
+     "falsifies": "refusal #7 U1c member GP13-S2 (a const in a for statement's head at the top level, shadowing a same-named top-level const, reads the top-level one's initializer): its twin page gp13-s2-0, that shadowing const reads its own initializer \"inner\" at a read inside its scope, and the top-level const reads \"outer\" at a read at the top level"
+    },
+    {
+     "pin": "C-ANNOTATED",
+     "page": "f50cd40becde54ad",
+     "falsifies": "a const with an initializer, alone in its declaration list, annotated with each of seven forms beside the keyword string that BINDING (2) does not claim, each held as this pin reads it (the keyword unknown, a string literal type, a union of two string literal types, the union string | undefined, the reference Name to the top-level type alias of string, and a type literal of one string property, required and optional), resolves through its initializer, read in the statement right after its declaration's (the first statement of the for statement's body), at each of the nine positions BINDING (2) names: the top level, plain and exported, a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head"
+    },
+    {
+     "pin": "C-SHADOWS",
+     "page": "f2d9546ee5e72ff8",
+     "falsifies": "at each BINDING (2) position other than the top level (a block at the top level and a block nested in one, the body of a plain, an exported and an exported async function declared at the top level, a plain namespace's body and a for statement's head), a const with no annotation, with the annotation string and with each of seven forms BINDING (2) does not claim (each held as this pin reads it), shadowing a plain unannotated same-named const declared at the top level with no other declaration of that name, reads its own initializer at its read in the statement right after its declaration's (the first statement of the for statement's body), and the top-level const reads its own at a read at the top level"
+    },
+    {
+     "pin": "C-NESTED",
+     "page": "9619b928dbd096a1",
+     "falsifies": "in a TypeScript module, the one simple element of a one-element object pattern that is, with no default, the one element of a plain top-level const declaration's object pattern, under the identifier property name a (a: { B }), or of its array pattern ({ C }) reads <opaque NAME:destructuring>"
+    },
+    {
+     "pin": "C-NESTED-JS",
+     "page": "9619b928dbd096a1",
+     "falsifies": "in a JavaScript module, the same page: the one simple element of a one-element object pattern that is, with no default, the one element of a plain top-level const declaration's object pattern, under the identifier property name a (a: { B }), or of its array pattern ({ C }) reads <opaque NAME:destructuring>"
+    },
+    {
+     "pin": "C-PARAMETER",
+     "page": "9bc2ca340ef73e76",
+     "falsifies": "a simple parameter annotated object of an exported function declared at the top level, the declaration form M19's and M26's pages plant (a parameter alone in its list and the first and the second of two, the second's read, probe(b) after probe(a), a read BINDING (1) does not name, held as this pin reads it), does not resolve: it reads <opaque NAME:parameter>, never a text and never <opaque NAME:other>"
+    },
+    {
+     "pin": "GP22-SH2",
+     "page": "0aa8e4693c05be67",
+     "falsifies": "refusal #8 U1a member GP22-SH2 (a const shadowing a same-named top-level const, read in a block nested in its own block, reads the top-level one's initializer): its twin page gp22-sh2-0, a const in a block at the top level, read in a block nested in that block, reads its own initializer \"inner\", and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH2-FUNCTION",
+     "page": "4b45d2b9286ece59",
+     "falsifies": "refusal #8 U1a member GP22-SH2's second twin page gp22-sh2-1: a const in the body of an exported function declared at the top level, shadowing a same-named top-level const and read in an if statement's block in that body, reads its own initializer \"inner\", and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH3",
+     "page": "ace21b4892521b24",
+     "falsifies": "refusal #8 U1a member GP22-SH3 (a const in a for statement's head, shadowing a same-named top-level const and read in that statement's condition, reads the top-level one's initializer): its twin page gp22-sh3-0, that const reads its own initializer \"inner\" in the condition, and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-SH4",
+     "page": "fa6b564ef0ddc260",
+     "falsifies": "refusal #8 U1a member GP22-SH4 (a const in the body of a plain namespace, shadowing a same-named top-level const and read in a namespace nested in that body, reads the top-level one's initializer): its twin page gp22-sh4-0, that const reads its own initializer \"inner\" in the nested namespace, and the top-level const reads \"outer\" at the top level; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS1",
+     "page": "e2fa48b203577845",
+     "falsifies": "refusal #8 U1b member GP22-RS1 (a const at a BINDING (2) position other than the top level, read inside a function-like nested in its scope, reads other): its twin page gp22-rs1-0, a const in the body of an exported function declared at the top level, read in an arrow function passed to a call in that body, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS1-BLOCK",
+     "page": "4db89fe0131f8a6d",
+     "falsifies": "refusal #8 U1b member GP22-RS1's second twin page gp22-rs1-1: a const in a block at the top level, read in the expression body of an arrow function initializing another const of that block, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS3",
+     "page": "fca2b4eab95a7636",
+     "falsifies": "refusal #8 U1b member GP22-RS3 (a const in a for statement's head, read in that statement's condition, reads other): its twin page gp22-rs3-0, for (const Z = \"z\"; probe(Z); ) at the top level, reads \"z\", never <opaque Z:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-RS5",
+     "page": "d3903635db69e547",
+     "falsifies": "refusal #8 U1b member GP22-RS5 (a const in the body of a plain namespace, read inside a function declared in that body, reads other): its twin page gp22-rs5-0, the const read in an exported function of the namespace body, reads \"a\", never <opaque X:other>; a read BINDING (1) does not name, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN1",
+     "page": "b9d534ec9e605579",
+     "falsifies": "refusal #8 U1c member GP22-AN1 (a const annotated with a parenthesized union does not resolve): its twin page gp22-an1-0, a plain const declared at the top level with the annotation (\"a\" | \"b\"), reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN2",
+     "page": "daae9c12b5567f3a",
+     "falsifies": "refusal #8 U1c member GP22-AN2 (a const annotated with a union whose first member is undefined does not resolve): its twin page gp22-an2-0, a plain const declared at the top level with the annotation undefined | string, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN3",
+     "page": "e5c6ffd721f0b57e",
+     "falsifies": "refusal #8 U1c member GP22-AN3 (a const annotated with a type literal whose property key is a string literal does not resolve): its twin page gp22-an3-0, a plain const declared at the top level with the annotation { \"v\": string }, reads <opaque { v: \"a\" }>, never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN4",
+     "page": "cc52146aa001c2e2",
+     "falsifies": "refusal #8 U1c member GP22-AN4 (a const annotated with a type literal of one readonly property does not resolve): its twin page gp22-an4-0, a plain const declared at the top level with the annotation { readonly v: string }, reads <opaque { v: \"a\" }>, never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN5",
+     "page": "646319a10dff708a",
+     "falsifies": "refusal #8 U1c member GP22-AN5 (a const annotated with a reference to an exported type alias does not resolve): its twin page gp22-an5-0, a plain const declared at the top level annotated Name, a reference to the exported top-level type alias export type Name = string, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN6",
+     "page": "18f832ff8e293e48",
+     "falsifies": "refusal #8 U1c member GP22-AN6 (a const annotated with a reference to a type alias declared after it does not resolve): its twin page gp22-an6-0, a plain const declared at the top level annotated Name, the top-level type alias type Name = string declared after it, reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-AN7",
+     "page": "1b29dd12fdaf8fcc",
+     "falsifies": "refusal #8 U1c member GP22-AN7 (a const annotated with a single-quoted string literal type does not resolve): its twin page gp22-an7-0, a plain const declared at the top level with the annotation 'a', reads \"a\", never <opaque X:other>; an annotation BINDING (2) does not claim, held as this pin reads it"
+    }
+   ]
+  },
+  {
+   "row": "kinds",
+   "anchor": "claim: BINDING (3)",
+   "pins": [
+    {
+     "pin": "K-import",
+     "page": "ea1106db3623af7b",
+     "falsifies": "import: named (twice, merged), import-equals, namespace, default, and an import merged with a namespace"
+    },
+    {
+     "pin": "K-unbound",
+     "page": "898c0f5c16093308",
+     "falsifies": "unbound: a global, a missing name, a type alias and an interface in value position, and the lib names String, undefined and globalThis (no lib)"
+    },
+    {
+     "pin": "K-merged",
+     "page": "3d30bd72f99bdbe2",
+     "falsifies": "merged: a redeclared var, a const merged with a type, function overloads, a var destructuring element declared twice (merged before destructuring) and a namespace declared in two blocks (merged before namespace)"
+    },
+    {
+     "pin": "K-destructuring",
+     "page": "9a68584bb451311b",
+     "falsifies": "destructuring before the declaring kinds: a parameter pattern's element, const object and array pattern elements (one with a default), let and var object pattern elements, a catch clause pattern's element and a for-of head pattern's element all read destructuring"
+    },
+    {
+     "pin": "K-let",
+     "page": "af08458a5a933a9a",
+     "falsifies": "let: with and without an initializer, a declare let (let, not ambient) and a let exported from a namespace body (let, not namespace)"
+    },
+    {
+     "pin": "K-var",
+     "page": "2282675695032160",
+     "falsifies": "var: at module and function level, a declare var (var, not ambient) and a var exported from a namespace body (var, not namespace)"
+    },
+    {
+     "pin": "K-using",
+     "page": "e30364b542bb8a82",
+     "falsifies": "using: a using and an await using declaration"
+    },
+    {
+     "pin": "K-catch",
+     "page": "611bd19b2f472b5f",
+     "falsifies": "catch: an untyped catch clause variable, catch (X), reads <opaque X:catch>"
+    },
+    {
+     "pin": "K-no-initializer",
+     "page": "aa4e8e93b77301e0",
+     "falsifies": "no-initializer: for-of and for-in consts, a declare const with no initializer (before ambient), a const with no initializer exported from a namespace body (before namespace) and one exported from a declare namespace, read from a merged namespace block (before both)"
+    },
+    {
+     "pin": "K-ambient",
+     "page": "0dd6b9fc15fa96a5",
+     "falsifies": "ambient: a declare const, a const in a declare global block, and a const exported from a namespace nested in a declare namespace (ambient through an outer declare, read from a merged dotted namespace block)"
+    },
+    {
+     "pin": "K-namespace",
+     "page": "f125b607ca7f49a2",
+     "falsifies": "namespace: a const exported from a namespace body (two merged blocks), and the namespace itself; an unexported namespace const resolves"
+    },
+    {
+     "pin": "K-parameter",
+     "page": "4a1bf4f67e7dfa5c",
+     "falsifies": "parameter: a function parameter, a constructor parameter property, a defaulted arrow parameter and a rest parameter"
+    },
+    {
+     "pin": "K-function",
+     "page": "066c12d5e4e728fb",
+     "falsifies": "function: a function declaration (plain, async, generator, declare - not ambient - and one exported from a namespace body - not namespace) and a named function expression's own name"
+    },
+    {
+     "pin": "K-class",
+     "page": "095968e279c082a9",
+     "falsifies": "class: a class declaration (plain, declare - not ambient - and one exported from a namespace body - not namespace) and a named class expression's own name"
+    },
+    {
+     "pin": "K-enum",
+     "page": "95fc1c94d0f565b6",
+     "falsifies": "enum: an enum member read inside its enum, the enum, a const enum, a declare enum (not ambient) and an enum exported from a namespace body (not namespace)"
+    },
+    {
+     "pin": "K-other",
+     "page": "736158789dd52378",
+     "falsifies": "other: bindingKindOf on a synthetic type alias declaration reads other"
+    },
+    {
+     "pin": "G01",
+     "page": "3bfce53df3890737",
+     "falsifies": "refusal #1 U1a member g01 (the ambient and namespace checks swapped): its twin page t01a, a const exported from a declare namespace read in a merged namespace block, reads <opaque X:ambient> (ambient before namespace), never <opaque X:namespace>"
+    },
+    {
+     "pin": "G08",
+     "page": "29c4bc12eb74ec8a",
+     "falsifies": "refusal #1 U1h member g08 (declare let and declare var read ambient): its twin page t08 reads <opaque X:let> and <opaque Y:var>; ambient names only a const"
+    },
+    {
+     "pin": "G09",
+     "page": "b7f81187531e8b21",
+     "falsifies": "refusal #1 U1i member g09 (a let or var exported from a namespace body reads namespace): its twin page t09 reads <opaque X:let> and <opaque Y:var>; namespace names only a const exported from a namespace body"
+    },
+    {
+     "pin": "M55",
+     "page": "9279434a239e0430",
+     "falsifies": "refusal #2 U1g member m55 (a typed catch variable read other): its twin page t55, catch (e: unknown), reads <opaque e:catch>"
+    },
+    {
+     "pin": "P1",
+     "page": "3991d4983ea4679e",
+     "falsifies": "refusal #2 U2 plant p1.js: in a JavaScript module a require const reads <opaque X:import>, a require pattern element <opaque join:import>, and a literal const \"y\""
+    },
+    {
+     "pin": "GP6-K3",
+     "page": "4034e4a19b8db124",
+     "falsifies": "refusal #5 U1c member GP6-K3 (namespace only for a top-level namespace's body): its twin page gp6-k3-0, a const exported from the body of a namespace nested in one (A.B) and one exported from a dotted namespace's body (C.D), reads <opaque X:namespace> and <opaque Y:namespace>, never their initializers"
+    },
+    {
+     "pin": "GP6-K1",
+     "page": "e3ab6a3ac8faf8dc",
+     "falsifies": "refusal #5 U1d member GP6-K1 (a class declaration in a block reads other): its twin page gp6-k1-0, a class declared in the body of a function declared at the top level, reads <opaque BK:class>"
+    },
+    {
+     "pin": "GP6-K2",
+     "page": "162e5392eb8854e8",
+     "falsifies": "refusal #5 U1d member GP6-K2 (a function declaration in a block reads other): its twin page gp6-k2-0, a function declared in the body of a function declared at the top level, reads <opaque BF:function>"
+    },
+    {
+     "pin": "GP6-K4",
+     "page": "6dfda9426f8292f5",
+     "falsifies": "refusal #5 U1d member GP6-K4 (a namespace declared in a namespace reads other): its twin page gp6-k4-0, a namespace declared in the body of a namespace declared at the top level, reads <opaque B:namespace>"
+    },
+    {
+     "pin": "GP6-K8",
+     "page": "afe91a64c166c41e",
+     "falsifies": "refusal #5 U1d member GP6-K8 (an enum declared in a block reads other): its twin page gp6-k8-0, an enum declared in the body of a function declared at the top level, reads <opaque BE:enum>"
+    },
+    {
+     "pin": "GP6-K5",
+     "page": "326b22114cf469e1",
+     "falsifies": "refusal #5 U1e member GP6-K5 (a method's parameter reads other): its twin page gp6-k5-0, a parameter of a method of a class declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP6-K6",
+     "page": "2c959bd23bf7daf2",
+     "falsifies": "refusal #5 U1e member GP6-K6 (a set accessor's parameter reads other): its twin page gp6-k6-0, the parameter of a set accessor of a class declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP6-K12",
+     "page": "7ed19c1a940b447a",
+     "falsifies": "refusal #5 U1f member GP6-K12 (a let in a for-of head reads using): its twin page gp6-k12-0, a let declared in a for-of statement's head at the top level, reads <opaque L:let>"
+    },
+    {
+     "pin": "GP6-K13",
+     "page": "b61b896956eece82",
+     "falsifies": "refusal #5 U1f member GP6-K13 (a var in a for-of head reads using): its twin page gp6-k13-0, a var declared in a for-of statement's head at the top level, reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-D1",
+     "page": "4db59603be96c0bc",
+     "falsifies": "refusal #6 U1b member GP17-D1 (an array pattern element with no default reads other): its twin page gp17-d1-0, a simple element of a plain const declaration's array pattern at the top level, const [A] = list, reads <opaque A:destructuring>"
+    },
+    {
+     "pin": "GP17-D2",
+     "page": "c0a6e81a74dd37cf",
+     "falsifies": "refusal #6 U1c member GP17-D2 (a rest element reads other): its twin page gp17-d2-0, the rest elements of a plain const declaration's object and array patterns at the top level, read <opaque R:destructuring> and <opaque S:destructuring>"
+    },
+    {
+     "pin": "GP17-V1",
+     "page": "6dc39b44feb3d38e",
+     "falsifies": "refusal #6 U1d member GP17-V1 (a var with no initializer reads other): its twin page gp17-v1-0, a plain var declaration with no initializer at the top level, reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-V1-FUNCTION",
+     "page": "5a24218e37d82219",
+     "falsifies": "refusal #6 U1d member GP17-V1's second twin page gp17-v1-1: a var declaration with no initializer in the body of a plain function declared at the top level reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-V1-NAMESPACE",
+     "page": "f2638fe172b66c0e",
+     "falsifies": "refusal #6 U1d member GP17-V1's third twin page gp17-v1-2: a var with no initializer exported from the body of a plain namespace declared at the top level reads <opaque V:var>"
+    },
+    {
+     "pin": "GP17-L1",
+     "page": "08b3f92af384a4e6",
+     "falsifies": "refusal #6 U1e member GP17-L1 (a let with no initializer in a function's body reads other): its twin page gp17-l1-0, a let declaration with no initializer in the body of an exported function declared at the top level, reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-L1-ASYNC",
+     "page": "19493c1dc760b763",
+     "falsifies": "refusal #6 U1e member GP17-L1's second twin page gp17-l1-1: a let declaration with no initializer in the body of an exported async function declared at the top level reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-L2",
+     "page": "465a6061821a1efe",
+     "falsifies": "refusal #6 U1e member GP17-L2 (a let with no initializer exported from a namespace body reads other): its twin page gp17-l2-0, a let with no initializer exported from the body of a plain namespace declared at the top level, reads <opaque X:let>"
+    },
+    {
+     "pin": "GP17-P1",
+     "page": "795df80f7676ffca",
+     "falsifies": "refusal #6 U1f member GP17-P1 (a defaulted parameter of a function declaration reads other): its twin page gp17-p1-0, a defaulted parameter of a plain function declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP17-P2",
+     "page": "6819d811ff1b8804",
+     "falsifies": "refusal #6 U1f member GP17-P2 (an optional parameter reads other): its twin page gp17-p2-0, an optional parameter of a plain function declared at the top level, reads <opaque X:parameter>"
+    },
+    {
+     "pin": "GP13-D3",
+     "page": "adf6649f2e5f55d6",
+     "falsifies": "refusal #7 U1d member GP13-D3 (a simple element of an object pattern nested in a top-level const's array pattern reads other): its twin page gp13-d3-0, const [{ B }] = list at the top level, reads <opaque B:destructuring>, never <opaque B:other>"
+    },
+    {
+     "pin": "GP22-NP1",
+     "page": "6900907a5d593ac6",
+     "falsifies": "refusal #8 U1d member GP22-NP1 (a simple element of an object pattern that is the second element of a top-level const's array pattern reads other): its twin page gp22-np1-0, const [{ C }, { D }] = list at the top level, reads <opaque C:destructuring> and <opaque D:destructuring>, never <opaque D:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-NP2",
+     "page": "11bbb954f5a873be",
+     "falsifies": "refusal #8 U1d member GP22-NP2 (the simple elements of a two-element object pattern nested in a top-level const's object pattern read other): its twin page gp22-np2-0, const { a: { B, C } } = o at the top level, reads <opaque B:destructuring> and <opaque C:destructuring>, never <opaque NAME:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
+    },
+    {
+     "pin": "GP22-NP3",
+     "page": "6eb5b7c10c0a0b92",
+     "falsifies": "refusal #8 U1d member GP22-NP3 (a simple element of an object pattern nested under a quoted key of a top-level const's object pattern reads other): its twin page gp22-np3-0, const { \"a\": { B } } = o at the top level, reads <opaque B:destructuring>, never <opaque B:other>; a nested pattern BINDING (3) does not claim, held as this pin reads it"
+    }
+   ]
+  },
+  {
+   "row": "with",
+   "anchor": "claim: BINDING (4)",
+   "pins": [
+    {
+     "pin": "W-SCRIPT",
+     "page": "2bb4edcbd2c23a76",
+     "falsifies": "a script's with body reads <opaque X:with> for a const; the with's object and code outside it resolve"
+    },
+    {
+     "pin": "W-MODULE",
+     "page": "2bb4edcbd2c23a76",
+     "falsifies": "the same in a .ts module"
+    },
+    {
+     "pin": "G02",
+     "page": "a9cb49d86853c407",
+     "falsifies": "refusal #1 U1b member g02 (the with-body walk stops at a function): its twin page t02.js, an identifier inside an arrow function inside a with body, reads <opaque X:with>, and the same identifier outside the with resolves"
+    },
+    {
+     "pin": "W-NESTED",
+     "page": "a3d74edfb3cb49f9",
+     "falsifies": "inside a with body at each planted depth - a function declaration, a function expression, a class method, an object method, a with whose body is no block, a nested with, nested blocks and a with inside a function - the const reads <opaque X:with>; a let, an unbound name and a const declared inside the body read with too; outside every with the const resolves"
+    }
+   ]
+  },
+  {
+   "row": "eval",
+   "anchor": "claim: BINDING (5)",
+   "pins": [
+    {
+     "pin": "V-EVAL",
+     "page": "4f56a5ea6d326840",
+     "falsifies": "eval(\"1\") called as a statement in an exported function's body: the module's const X, probed at the top level, reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-WRAPPED",
+     "page": "834efdc279613272",
+     "falsifies": "eval through parentheses, as, satisfies, a non-null ! and a type assertion still counts"
+    },
+    {
+     "pin": "V-AWAIT",
+     "page": "4f9d587dfcb20493",
+     "falsifies": "eval through await still counts"
+    },
+    {
+     "pin": "V-WITH",
+     "page": "0d7debb6fe26cb27",
+     "falsifies": "eval wins over a with body"
+    },
+    {
+     "pin": "V-INDIRECT",
+     "page": "d65ac9ce97754577",
+     "falsifies": "control: globalThis.eval, (0, eval), an alias of eval, new eval(...) and the tagged template eval`1` are no call by name, so the const resolves"
+    },
+    {
+     "pin": "G03",
+     "page": "1f21c5326c209bf4",
+     "falsifies": "refusal #1 U1c member g03 (an optional call is not counted): its twin page t03, whose only eval call is eval?.(\"1\"), reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-BARE",
+     "page": "ef2878be4c039a49",
+     "falsifies": "eval() with no argument inside a class method counts: a parameter, a const, a let, an import and an unbound name each read <opaque NAME:eval>"
+    },
+    {
+     "pin": "V-LOCAL",
+     "page": "ec5d949e5bf14e05",
+     "falsifies": "eval called through a local binding named eval (a sloppy script's parameter) is still a call of the identifier eval: the module's const reads <opaque X:eval>"
+    },
+    {
+     "pin": "M61",
+     "page": "11cf43be319baee9",
+     "falsifies": "refusal #2 U1a member m61 (an eval call in a with statement not counted): its twin page t61.js, whose only eval call is a with body's statement, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M62",
+     "page": "8997cb28b63915b9",
+     "falsifies": "refusal #2 U1a member m62 (an eval call inside an object literal not counted): its twin page t62, eval returned by an object literal's method, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M63",
+     "page": "cf9e0578e593732e",
+     "falsifies": "refusal #2 U1a member m63 (an eval call inside a template span not counted): its twin page t63, eval as a template substitution, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M64",
+     "page": "fc9d6a51bfbdfc13",
+     "falsifies": "refusal #2 U1a member m64 (an eval call inside an arrow function not counted): its twin page t64, eval as an arrow function's body, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M66",
+     "page": "8223ee89bf93e72e",
+     "falsifies": "refusal #2 U1a member m66 (only an expression statement's eval call counted): its twin page t66, eval as an exported const's initializer, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M72",
+     "page": "1d1ddd6664294ab7",
+     "falsifies": "refusal #2 U1a member m72 (an eval call inside a parameter not counted): its twin page t72, eval as a parameter default, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M11",
+     "page": "1619e1f6855b5544",
+     "falsifies": "refusal #2 U1b member m11 (any callee whose name starts with eval counted): its twin page t11, whose only call is evaluate(\"1\"), reads \"a\""
+    },
+    {
+     "pin": "V-NAMES",
+     "page": "037698bf6cbb0b5a",
+     "falsifies": "calls of evaluate, preval, Eval, EVAL, ev and evalx are no call of eval: the const reads \"a\""
+    },
+    {
+     "pin": "V-STATIC",
+     "page": "e21778172e322b59",
+     "falsifies": "eval called in a class static block counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-FIELD",
+     "page": "b3839edc086946b8",
+     "falsifies": "eval as a class field's initializer counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-GETTER",
+     "page": "b6304654391aaccd",
+     "falsifies": "eval returned by an object literal getter counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-COMPUTED",
+     "page": "f3b7379fc1805593",
+     "falsifies": "eval as a computed property key counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-ENUM",
+     "page": "3d41b40886983272",
+     "falsifies": "eval as an enum member's initializer counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-RETURN",
+     "page": "f2ccd82977cb9490",
+     "falsifies": "eval returned from a function counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-ARGUMENT",
+     "page": "5cafc55ec44752b1",
+     "falsifies": "eval as a call's argument counts: the const reads <opaque X:eval> and that argument <opaque eval(\"1\")>"
+    },
+    {
+     "pin": "V-DECORATOR",
+     "page": "19554415a339174b",
+     "falsifies": "an uncalled decorator @eval is no call: the const reads \"a\""
+    }
+   ]
+  },
+  {
+   "row": "cycle",
+   "anchor": "claim: BINDING (6)",
+   "pins": [
+    {
+     "pin": "Y-PAIR",
+     "page": "477a1897de50b251",
+     "falsifies": "two consts reaching each other read <opaque A:cycle> at the repeated reach"
+    },
+    {
+     "pin": "Y-SELF",
+     "page": "d1877ed980f899d7",
+     "falsifies": "a const reaching itself through a + join and a template reads <opaque NAME:cycle>"
+    },
+    {
+     "pin": "G04",
+     "page": "f13c0485b8771fc7",
+     "falsifies": "refusal #1 U1d member g04 (NAME taken from the first const reached): its twin page t04, A reaching B, B reaching C, C reaching B, reads <opaque B:cycle> - the identifier at the repeated reach, not the probed A"
+    },
+    {
+     "pin": "Y-SHADOW",
+     "page": "e6e24ad042da232e",
+     "falsifies": "the same declaration, not a same-named one: an inner const N reached through M to the outer const N reads the outer's text, no cycle"
+    },
+    {
+     "pin": "Y-BRANCH",
+     "page": "2a9acb9ea6aaf58f",
+     "falsifies": "the expression's other alternatives read as usual: a const whose true branch reaches itself reads <opaque C:cycle> | \"z\""
+    },
+    {
+     "pin": "Y-FORMS",
+     "page": "c3d8b50c58d4f2d8",
+     "falsifies": "a const reaching itself through each side of ??, || and &&, each of the six wrappers, a template's later substitution, the right side of + and a false branch reads <opaque NAME:cycle> at the repeated reach, its other alternatives as usual"
+    }
+   ]
+  },
+  {
+   "row": "literal",
+   "anchor": "claim: TEXT (1)",
+   "pins": [
+    {
+     "pin": "X-LITERAL",
+     "page": "eb1d7c7a7bee5345",
+     "falsifies": "double-quoted, single-quoted and no-substitution template literals read their texts"
+    },
+    {
+     "pin": "X-ESCAPES",
+     "page": "b13c901dac0144fd",
+     "falsifies": "each escape sequence reads as its character: \\x41 in a double-quoted, \\x42 in a single-quoted and \\x43 in a no-substitution template literal read A, B and C"
+    },
+    {
+     "pin": "X-ESCAPE-FORMS",
+     "page": "590aa92676ac0565",
+     "falsifies": "one literal's \\x41, \\u0042, \\u{43}, \\n, \\t, \\\\, \\\", \\' and \\0 read A, B, C, a newline, a tab, a backslash, a quote, an apostrophe and U+0000; an octal \\101 reads A; a line continuation reads nothing"
+    }
+   ]
+  },
+  {
+   "row": "identifier",
+   "anchor": "claim: TEXT (2)",
+   "pins": [
+    {
+     "pin": "X-IDENTIFIER",
+     "page": "71c26db42648b754",
+     "falsifies": "a const identifier reads its text and a let reads opaque"
+    }
+   ]
+  },
+  {
+   "row": "template",
+   "anchor": "claim: TEXT (3)",
+   "pins": [
+    {
+     "pin": "X-TEMPLATE",
+     "page": "59e2a192e79b63e9",
+     "falsifies": "a template reads every combination of its parts, in order"
+    },
+    {
+     "pin": "X-TEMPLATE-PARTS",
+     "page": "89a22cb8ca9b5c03",
+     "falsifies": "a template's literal parts read with their escapes (\\x43 and \\x44 around a const substitution read ChD), and two varying substitutions combine in order, the first varying slowest"
+    }
+   ]
+  },
+  {
+   "row": "plus",
+   "anchor": "claim: TEXT (4)",
+   "pins": [
+    {
+     "pin": "X-PLUS",
+     "page": "e359b1d21d75ae31",
+     "falsifies": "a + join reads every combination of its sides"
+    }
+   ]
+  },
+  {
+   "row": "conditional",
+   "anchor": "claim: TEXT (5)",
+   "pins": [
+    {
+     "pin": "X-CONDITIONAL",
+     "page": "2797a0461868be0f",
+     "falsifies": "both branches are read and the condition is not"
+    }
+   ]
+  },
+  {
+   "row": "nullish",
+   "anchor": "claim: TEXT (6)",
+   "pins": [
+    {
+     "pin": "X-NULLISH",
+     "page": "73b1e8a2957cecb4",
+     "falsifies": "both sides of ?? are read, an opaque left side included"
+    }
+   ]
+  },
+  {
+   "row": "or",
+   "anchor": "claim: TEXT (7)",
+   "pins": [
+    {
+     "pin": "X-OR",
+     "page": "e735eae419d85798",
+     "falsifies": "both sides of || are read"
+    }
+   ]
+  },
+  {
+   "row": "and",
+   "anchor": "claim: TEXT (8)",
+   "pins": [
+    {
+     "pin": "X-AND",
+     "page": "b7d5b22cee00ed7d",
+     "falsifies": "both sides of && are read"
+    }
+   ]
+  },
+  {
+   "row": "wrapper",
+   "anchor": "claim: TEXT (9)",
+   "pins": [
+    {
+     "pin": "X-WRAPPER",
+     "page": "d3758bbdd60be81f",
+     "falsifies": "parentheses, as, satisfies, a non-null !, a type assertion and await read through"
+    }
+   ]
+  },
+  {
+   "row": "other",
+   "anchor": "claim: TEXT (10)",
+   "pins": [
+    {
+     "pin": "X-OTHER",
+     "page": "ff8dd88baf0020bc",
+     "falsifies": "a call, a property access, an element access, a number, a tagged template and an assignment read opaque, and a call's runs of a newline and spaces read as one space"
+    },
+    {
+     "pin": "X-OTHER-FORMS",
+     "page": "ed7941fdfe66b2b6",
+     "falsifies": "each of these reads one <opaque TEXT>: a comma expression, the compound assignments +=, ||=, ??= and &&=, the binary operators - and ===, void, typeof, a prefix !, a postfix ++, delete, an instantiation expression, an optional property access, an optional element access, an optional call, a new expression, null, true, false, this, a bigint, a regular expression, an arrow function, an object literal and an array literal"
+    },
+    {
+     "pin": "X-OPERATORS",
+     "page": "6e8d9f832728ebf5",
+     "falsifies": "each binary operator but +, ??, || and && (* / % ** - << >> >>> < > <= >= instanceof in == != === !== & | ^ and the comma) and each plain or compound assignment reads one <opaque TEXT>"
+    },
+    {
+     "pin": "X-UNARY",
+     "page": "2a89b0d07fed36b9",
+     "falsifies": "prefix -, +, ~, !, ++ and --, postfix ++ and --, typeof, void and delete each read one <opaque TEXT>"
+    },
+    {
+     "pin": "X-KINDS",
+     "page": "9e8cf471905a198d",
+     "falsifies": "a function expression, a class expression, a spread argument, import.meta, yield, new.target, an instantiation expression, a property access through a non-null ! and a property of super each read one <opaque TEXT>"
+    },
+    {
+     "pin": "X-WHITESPACE",
+     "page": "7638549f0168ecbd",
+     "falsifies": "a run of all 25 characters JavaScript's \\s class matches reads as one space in an opaque TEXT; U+0085 and U+200B stay"
+    }
+   ]
+  },
+  {
+   "row": "opaque-part",
+   "anchor": "claim: TEXT (11)",
+   "pins": [
+    {
+     "pin": "X-OPAQUE-PART",
+     "page": "45501e3f38f6a872",
+     "falsifies": "a combination with opaque parts reads as its first opaque part"
+    },
+    {
+     "pin": "G10",
+     "page": "9094d871e755e431",
+     "falsifies": "refusal #1 U1j member g10 (a join collapsed to its first opaque part when any combination holds one): its twin page t10, a template and a + join over (c ? p : \"x\"), each reads <opaque p:parameter> | \"x/bin\" - the exact combination stays"
+    },
+    {
+     "pin": "X-OPAQUE-MIXED",
+     "page": "16aa541030168a5d",
+     "falsifies": "per combination: (c ? \"x\" : p) + (c ? f() : \"y\") reads <opaque f()> | \"xy\" | <opaque p:parameter>: each combination's first opaque part, the text-only combination joined, each once, in combination order"
+    }
+   ]
+  },
+  {
+   "row": "bounds",
+   "anchor": "claim: TEXT (12)",
+   "pins": [
+    {
+     "pin": "X-BOUNDS",
+     "page": "7700e8de7c5875ea",
+     "falsifies": "64 combinations read and 128 bound, for a + join and for a template of two-way conditionals; 16 levels read and 17 bound for nested parentheses, an identifier chain (I15 and I16), a left-nested ?? chain, nested false branches and nested template substitutions"
+    },
+    {
+     "pin": "G05",
+     "page": "843ded306e1d3cab",
+     "falsifies": "refusal #1 U1e member g05 (+ sides count no level): its twin page t05, an 18-term + chain, reads <opaque \"a\":bound>"
+    },
+    {
+     "pin": "G06",
+     "page": "5b631d3c7268684e",
+     "falsifies": "refusal #1 U1f member g06 (|| and && sides count no level): its twin page t06, 18-term || and && chains of parameters, reads p0 and p1 bound and p2 to p17 as parameters, for each chain"
+    },
+    {
+     "pin": "G07",
+     "page": "a1605bb889f6ef87",
+     "falsifies": "refusal #1 U1g member g07 (only parentheses count a wrapper level): its twin page t07, \"a\" under 17 as string wrappers, reads <opaque \"a\":bound>"
+    },
+    {
+     "pin": "X-BOUNDS-JOINS",
+     "page": "7b2f657a3f7d8d4b",
+     "falsifies": "more than 64 combinations, counted before any two read alike: a + join and a template of 5 x 13 alternatives (65 combinations, 17 distinct texts) read bound, and of 8 x 8 (64 combinations) read all 64 texts; A5's and B13's reads inside the bound join and the bound template claimed only as those bound readings read them (cut #11's narrowed BINDING (1))"
+    },
+    {
+     "pin": "X-BOUNDS-WRAPPERS",
+     "page": "1a56f63228be813c",
+     "falsifies": "each wrapper counts exactly one level: parentheses, as, satisfies, a non-null !, a type assertion and await around I14 read \"i\" and around I15 bound, beside I14 and I15 read alone (\"i\")"
+    },
+    {
+     "pin": "X-BOUNDS-SIDES",
+     "page": "bc4db5a94bb3a2b9",
+     "falsifies": "each side counts exactly one level: the left and the right side of +, ??, || and && holding I14 read and holding I15 bound"
+    },
+    {
+     "pin": "X-BOUNDS-BRANCHES",
+     "page": "2cd0e4b495e0ee80",
+     "falsifies": "each branch counts exactly one level: the true and the false branch of ?: holding I14 read and holding I15 bound"
+    },
+    {
+     "pin": "X-BOUNDS-SUBSTITUTIONS",
+     "page": "625211828c6a3002",
+     "falsifies": "each substitution counts exactly one level: a template's first and a later substitution holding I14 read and holding I15 bound"
+    }
+   ]
+  },
+  {
+   "row": "order",
+   "anchor": "claim: TEXT (13)",
+   "pins": [
+    {
+     "pin": "X-ORDER",
+     "page": "0127821fa22acf63",
+     "falsifies": "a conditional's true branch reads first; a conditional of one text twice reads it once; a + join's combinations read by its parts, the first part varying slowest; an opaque part repeated in a ?? chain reads once"
+    },
+    {
+     "pin": "M06",
+     "page": "245acc7e88c7af0c",
+     "falsifies": "refusal #2 U1c member m06 (once() keyed by the bare label): its twin page t06, c ? \"f()\" : f(), reads \"f()\" | <opaque f()>: a text and an opaque part with one label are two alternatives"
+    },
+    {
+     "pin": "X-ONCE",
+     "page": "29497fd3e40186a8",
+     "falsifies": "a + join and a template whose combinations meet read each text once (\"abc\" | \"ac\" | \"abbc\"); a conditional and a ?? of an opaque f() and the text \"f()\" read both"
+    }
+   ]
+  },
+  {
+   "row": "texts",
+   "anchor": "claim: READINGS (1)",
+   "pins": [
+    {
+     "pin": "XT-TEXTS",
+     "page": "17ff55942c562568",
+     "falsifies": "one text (\"only\") and two texts in sorted source order (c ? \"a\" : \"b\") are read in that order, and an opaque alternative before a text (p ?? \"b\") reads unresolved"
+    }
+   ]
+  },
+  {
+   "row": "words",
+   "anchor": "claim: READINGS (2)",
+   "pins": [
+    {
+     "pin": "XW-WORDS",
+     "page": "8dd3d5171b8ea99e",
+     "falsifies": "a path and .EXE reduce to rf; ; | ( ) > < and & split context, render, tee, log, out, in and bg; a quote at a word's end (' \" and `) splits q, d and b; a Windows path with .cmd reduces to rf; a conditional's two texts, whose words' order of first appearance is also their sorted order, read their words each once, in order (rf x y); an opaque alternative before a text (p ?? \"rf\") reads unresolved"
+    },
+    {
+     "pin": "XW-FORMS",
+     "page": "1928d101612b5975",
+     "falsifies": "a tab and a newline split words; a relative path and a Windows path reduce to their base names; .CMD and .Exe drop; a .exe that is not trailing (z.exe.bak) stays"
+    },
+    {
+     "pin": "M59",
+     "page": "ae86fcf35be7d259",
+     "falsifies": "refusal #2 U1h member m59 (a quote inside a word kept): its twin page t59, \"rf con'text\", reads rf con text"
+    },
+    {
+     "pin": "M68",
+     "page": "07241edb496a4a81",
+     "falsifies": "refusal #2 U1h member m68 (= splits a word): its twin page t68 reads rf --workspace=root"
+    },
+    {
+     "pin": "M69",
+     "page": "bb6dd59e1d5c83cb",
+     "falsifies": "refusal #2 U1h member m69 (, splits a word): its twin page t69 reads rf a,b"
+    },
+    {
+     "pin": "M34",
+     "page": "e3a2567ae8ebc277",
+     "falsifies": "refusal #2 U1h member m34 (the empty word a cut leaves dropped): its twin page t34, \"rf .EXE x\", reads rf, the empty word and x (rf  x)"
+    },
+    {
+     "pin": "P2",
+     "page": "309b407fefbe644c",
+     "falsifies": "refusal #2 F4 plant p2.ts: the words of \"rf bin/ C:\\\\tools\\\\\" read rf and the empty word (rf ): a word ending in / or \\ cuts to the empty word"
+    },
+    {
+     "pin": "XW-WHITESPACE",
+     "page": "729b77af153ae821",
+     "falsifies": "a run of all 25 characters JavaScript's \\s class matches splits rf from x; U+0085 and U+200B split nothing"
+    },
+    {
+     "pin": "XW-PUNCTUATION",
+     "page": "f1e0bd6f238ed873",
+     "falsifies": "no other printable ASCII character splits a word: rf, then ! # $ % * + , - . : = ? @ [ ] ^ _ { } ~, every letter and every digit as one word"
+    },
+    {
+     "pin": "XW-QUOTES",
+     "page": "0efc80f079e3fec0",
+     "falsifies": "a quote inside a word splits it, each of \" ` and ': a\"b, c`d and e'f read a b, c d and e f"
+    },
+    {
+     "pin": "XW-CUTS",
+     "page": "4bf62cabfd695a87",
+     "falsifies": "a/b cuts to b and c\\d to d; e/, f\\, .EXE and x/.cmd each cut to the empty word; each word once: rf b d and the empty word"
+    },
+    {
+     "pin": "GP6-W1",
+     "page": "598c82016a34b9ee",
+     "falsifies": "refusal #5 U1a member GP6-W1 (a lower-case trailing .exe kept): its twin page gp6-w1-0, \"rf x.exe\", reads rf x: a trailing .exe in lower case drops"
+    },
+    {
+     "pin": "GP6-W3",
+     "page": "da286de5eeeb7c81",
+     "falsifies": "refusal #5 U1b member GP6-W3 (a word holding both / and \\ cut after its last /): its twin page gp6-w3-0, \"rf a/b\\c\", reads rf c: the word cuts after whichever separator comes last, here a \\"
+    },
+    {
+     "pin": "XW-MIXED",
+     "page": "523724266a858b2f",
+     "falsifies": "a word holding both separators cuts after whichever comes last, in either order: a/b\\c to c, d\\e/f to f and g\\h/i\\j to j (rf c f j)"
+    }
+   ]
+  },
+  {
+   "row": "program",
+   "anchor": "claim: READINGS (3)",
+   "pins": [
+    {
+     "pin": "E1",
+     "page": "989ef4466f3ec475",
+     "falsifies": "O:1399 U1(b) member E1: observedPackageHead's program process.env.PI_VCS ?? \"git\" reads <opaque ...>, not git"
+    },
+    {
+     "pin": "E2",
+     "page": "56eba4274318e4e6",
+     "falsifies": "O:1399 U1(b) member E2: an inner const with an unresolvable initializer shadowing a module const \"git\" reads <opaque VCS_PROGRAM>"
+    },
+    {
+     "pin": "E3",
+     "page": "a8c7ea8b7257b883",
+     "falsifies": "O:1399 U1(b) control E3: E1's program as a new launch reads opaque beside the existing launch's git"
+    },
+    {
+     "pin": "XP-FORMS",
+     "page": "1d4c658da1e9505c",
+     "falsifies": "first words are sorted and each once; an empty or blank program, a call and a parameter read opaque; a base name, a shell line and a const read; RF's read claimed only as its program spawn:rf reads it (cut #11's narrowed BINDING (1): GP2-L2-PJ1-PROGRAM-TAIL reads its alternatives in full, at a fresh path)"
+    },
+    {
+     "pin": "P2-PROGRAM",
+     "page": "309b407fefbe644c",
+     "falsifies": "refusal #2 F4 plant p2.ts: spawn(\"/usr/bin/rf/\") reads the empty first word (spawn:)"
+    },
+    {
+     "pin": "XP-CUTS",
+     "page": "a71f653e19fcf17e",
+     "falsifies": "the program a=b,c reads its one word; .EXE, /usr/bin/rf/ and x/.cmd y read the empty first word"
+    },
+    {
+     "pin": "GP6-W1-PROGRAM",
+     "page": "a5d982bd015b4945",
+     "falsifies": "refusal #5 U1a member GP6-W1's program twin gp6-w1-1: spawn(\"rf.exe\") reads spawn:rf, READINGS (2)'s first word with its lower-case .exe dropped"
+    },
+    {
+     "pin": "GP6-W3-PROGRAM",
+     "page": "c0f58295d8d3b70c",
+     "falsifies": "refusal #5 U1b member GP6-W3's program twin gp6-w3-1: spawn(\"C:/tools\\rf.cmd\") reads spawn:rf, the first word cut after its last separator (a \\, after a /) and its .cmd dropped"
+    }
+   ]
+  },
+  {
+   "row": "properties",
+   "anchor": "claim: READINGS (4)",
+   "pins": [
+    {
+     "pin": "XF-KEYS",
+     "page": "c78a66a5d3990908",
+     "falsifies": "a string literal key and a computed string literal key set their fields, and a numeric key sets neither id nor effectClass (the field it sets, and its value there, are NOT CLAIMED: cut #11's narrowed READINGS (4))"
+    },
+    {
+     "pin": "XF-SHORTHAND",
+     "page": "4ff1157ea60d0a26",
+     "falsifies": "shorthand properties set their fields through their values' bindings; the two consts' reads claimed only as the entry reactivefiber.c:read reads them (cut #11's narrowed BINDING (1): GP2-L2-PJ2-REGISTRATION-ID-EXTRA-ALTERNATIVE-XF-SHORTHAND reads them in full, at a fresh path)"
+    },
+    {
+     "pin": "XF-SPREAD",
+     "page": "6d4d178025a374b2",
+     "falsifies": "a spread of a const object literal sets its fields, and a later property overrides one (gate member LC3's shape)"
+    },
+    {
+     "pin": "XF-SPREAD-OPAQUE",
+     "page": "706c61b34faba034",
+     "falsifies": "a spread of a let, of a const literal holding an opaque member, and of a non-identifier are opaque and may set every field; MIXED's read as h's spread claimed only as h's entry reads it (cut #11's narrowed BINDING (1))"
+    },
+    {
+     "pin": "XF-MEMBERS",
+     "page": "87c5a406050e13cb",
+     "falsifies": "a computed non-literal key may set every field; a getter, method and setter make their own field opaque"
+    },
+    {
+     "pin": "XF-ORDER",
+     "page": "cb08b99cc78c3319",
+     "falsifies": "a property set before an opaque spread is relabelled by it (id reads <opaque ...g()>) and a property after it sets its field again (effectClass reads read); of two properties of one name the later wins (reactivefiber.r:write)"
+    },
+    {
+     "pin": "XF-DEPTH",
+     "page": "f41ea21228896054",
+     "falsifies": "spreads nested 8 deep resolve and 9 deep are opaque; B7's read in B8's initializer and B8's read as t's spread claimed only as t's entry reads them (cut #11's narrowed BINDING (1))"
+    },
+    {
+     "pin": "XF-WRAPPED",
+     "page": "09724e932abc0752",
+     "falsifies": "the wrappers TEXT (9) names read through in each position: a computed key inside parentheses, as, satisfies, a non-null !, a type assertion or await, and a no-substitution template key, sets its field; a spread inside each of the six wrappers resolves; a spread const's initializer inside each of the six wrappers resolves"
+    },
+    {
+     "pin": "XF-OPAQUE-MEMBERS",
+     "page": "3b50a416cbb8f7f9",
+     "falsifies": "a spread of a const literal holding a getter, a setter or a method is opaque and may set every field; a computed number key is any other key, opaque and setting every field; GET's, SET's and METHOD's reads as spreads claimed only as their objects' entries read them (cut #11's narrowed BINDING (1))"
+    },
+    {
+     "pin": "XF-ACCESSOR-KEYS",
+     "page": "e5c45db8c1cce667",
+     "falsifies": "a method with a string literal key, and a getter or setter with a computed string, parenthesized string or no-substitution template key, each make their own field opaque: effectClass reads <opaque LABEL>, the member's label, and id still reads"
+    },
+    {
+     "pin": "M19",
+     "page": "215ee1ce1504d191",
+     "falsifies": "refusal #2 U1f member m19 (a resolved spread after an opaque one left the opaque label): its twin page t19 reads reactivefiber.r:read: the later resolved spread sets effectClass"
+    },
+    {
+     "pin": "M26",
+     "page": "3442717aacef4e75",
+     "falsifies": "refusal #2 U1f member m26 (an unset field kept the first opaque label): its twin page t26, { ...a, ...b, id }, reads <opaque ...b>, the last such member's label"
+    },
+    {
+     "pin": "XF-OVERRIDES",
+     "page": "ad039ce3d0c86122",
+     "falsifies": "the override matrix read by registration(), object by object: effectClass set by a property, a resolved spread, an opaque spread, an accessor or method, or a computed non-literal key, then by another of these; the later member wins, and an opaque member labels every field it may set, the last one's label kept (d3 and d5: a method's field relabelled by a later spread or computed key); BASE's reads as c3's and c5's spreads, each overridden by a later opaque member, claimed only as those objects' registrations read them (cut #11's narrowed BINDING (1))"
+    }
+   ]
+  },
+  {
+   "row": "registration",
+   "anchor": "claim: READINGS (5)",
+   "pins": [
+    {
+     "pin": "R-ALT1",
+     "page": "3c1f8d03c348ba37",
+     "falsifies": "R-B115 U1(a) member R-ALT1: an id whose reactivefiber text is the false branch registers reactivefiber.render.commit:write"
+    },
+    {
+     "pin": "R-ALT2",
+     "page": "54b2d72f2e0becb0",
+     "falsifies": "R-B115 U1(a) member R-ALT2: an id whose reactivefiber text is the right side of ?? registers, its opaque left side an entry too"
+    },
+    {
+     "pin": "R-ALT3",
+     "page": "76fc148f3114cbe8",
+     "falsifies": "R-B115 U1(a) control R-ALT3: the reactivefiber text as the true branch registers"
+    },
+    {
+     "pin": "R-ALT4",
+     "page": "c5575ebe73a2dfa0",
+     "falsifies": "R-B115 U1(a) member R-ALT4: the right side of || through a same-file const registers, its opaque left side an entry too"
+    },
+    {
+     "pin": "XR-FORMS",
+     "page": "6a8fcdd52b392fdc",
+     "falsifies": "the id texts forge.render.commit, an opaque-only id and a reactivefiber field that is no id register nothing; no effectClass reads <none>; effectClass alternatives read sorted and joined (read|write), an opaque one as <opaque p:parameter>; two id texts read one entry each; a conditional of one effect text twice reads it once, its alternatives each once as TEXT (13) lists them"
+    },
+    {
+     "pin": "M12",
+     "page": "8db06d76ef52922e",
+     "falsifies": "refusal #2 U1d member m12 (an id text containing reactivefiber. admitted): its twin page t12, forge.reactivefiber.commit beside an opaque p, registers nothing"
+    },
+    {
+     "pin": "M13",
+     "page": "8cdc88f90daf8a12",
+     "falsifies": "refusal #2 U1d member m13 (an entry starting reactivefiber without the dot kept): its twin page t13 reads reactivefiber.a:read alone"
+    },
+    {
+     "pin": "M14",
+     "page": "063a81d5e278223e",
+     "falsifies": "refusal #2 U1d member m14 (an id text starting reactivefiber without the dot admitted): its twin page t14, reactivefiberx.b beside an opaque p, registers nothing"
+    },
+    {
+     "pin": "M15",
+     "page": "6f548c1b9811f1ce",
+     "falsifies": "refusal #2 U1e member m15 (registration()'s per-object sort dropped): its twin page t15 read by registration() gives reactivefiber.a:read, reactivefiber.b:read, sorted"
+    },
+    {
+     "pin": "XR-PREFIXES",
+     "page": "20f0d6d2c85a0f7b",
+     "falsifies": "reactivefiber, reactivefiberx.b, forge.reactivefiber.c, ReactiveFiber.d and \" reactivefiber.e\" register nothing, nor do reactivefiberx.g, forge.reactivefiber.h, ReactiveFiber.k, \" reactivefiber.l\" and reactivefiber beside an opaque p; reactivefiber. alone registers; reactivefiberx.i and reactivefiber beside a reactivefiber. text add no entry"
+    }
+   ]
+  },
+  {
+   "row": "eval-position",
+   "anchor": "claim: NOT CLAIMED (1)",
+   "pins": [
+    {
+     "pin": "Q-EVAL-POSITION",
+     "page": "49de5761e7f81b25",
+     "falsifies": "NAMED RESIDUAL eval-position, not claimed: eval in a switch statement's head; today the const reads <opaque X:eval>"
+    }
+   ]
+  },
+  {
+   "row": "alias-form",
+   "anchor": "claim: NOT CLAIMED (2)",
+   "pins": [
+    {
+     "pin": "Q-ALIAS-FORM",
+     "page": "02af42170aa0e125",
+     "falsifies": "NAMED RESIDUAL alias-form, not claimed: (0, require)(\"node:fs\") in a JavaScript module; today it reads its initializer"
+    }
+   ]
+  },
+  {
+   "row": "path-form",
+   "anchor": "claim: NOT CLAIMED (3)",
+   "pins": [
+    {
+     "pin": "Q-PATH-FORM",
+     "page": "3991d4983ea4679e",
+     "falsifies": "NAMED RESIDUAL path-form, not claimed: P1's page at a path ending .Mjs; today it parses as JavaScript"
+    }
+   ]
+  },
+  {
+   "row": "expression-form",
+   "anchor": "claim: NOT CLAIMED (4)",
+   "pins": [
+    {
+     "pin": "Q-EXPRESSION-FORM",
+     "page": "af06e0f7765d0f4c",
+     "falsifies": "NAMED RESIDUAL expression-form, not claimed: a JSX element and a JSX fragment in a .tsx module; today each reads one <opaque TEXT>"
+    }
+   ]
+  },
+  {
+   "row": "character-form",
+   "anchor": "claim: NOT CLAIMED (5)",
+   "pins": [
+    {
+     "pin": "Q-CHARACTER-FORM",
+     "page": "d640076fbb9064a1",
+     "falsifies": "NAMED RESIDUAL character-form, not claimed: a word holding the letter U+00E9; today it stays in its word"
+    }
+   ]
+  }
+ ]
+}

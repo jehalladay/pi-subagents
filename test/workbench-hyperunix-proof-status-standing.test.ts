@@ -114,10 +114,18 @@
  *      the reading it was handed, frozen at every depth; and, before the control runs, the probe list fired filters frozen, each
  *      probe and its expected list too, and the variants list the control rebuilds its readings from frozen, each variant at every
  *      depth; and each judgement fired makes, made while neither Object.prototype nor Array.prototype holds an own toJSON and
- *      Array.prototype's prototype is Object.prototype, read after fired takes its copy and before it reads that copy (P15: fired
- *      refuses any other call, removing what it can of the three, recording nothing and throwing; P15's controls set each of the
- *      three for one call, a toJSON on Object.prototype through a getter of the handed reading while fired copies it, and one that
- *      removes itself when fired first serializes its copy, and read each such call refused, unrecorded and its member removed)),
+ *      Array.prototype's prototype is Object.prototype, each of the three read after fired takes its copy and before the first list
+ *      it serializes after it (valuesOf's list of the copy's K3 values) (P15: fired refuses a call while one is set, removing what
+ *      it can of the three, recording nothing and throwing; P15's controls, five calls on Q's cell reading before the positive
+ *      control, set each of the three before the call, a toJSON on Object.prototype through a getter of the handed reading while
+ *      fired copies it, and one that removes itself at its second top-level call, and read each such call refused, unrecorded and
+ *      its member removed; and P15's guards: just before each judgement fired makes in Q after them (the field-less control's,
+ *      the positive control's at each variant's turn, and k3Legs'), one call of fired on that judgement's reading with one of the
+ *      three set for that call, the six settings in turn (each of the three set before the call, then each set through a getter of
+ *      the handed reading's source while fired copies it, each a toJSON that removes what is set at its first top-level call on a
+ *      list), each guard call read refused, naming the member it set, with that member removed, and, at the positive control's
+ *      turns and across k3Legs, nothing recorded (one judgement per variant; the record's growth across k3Legs equal to its
+ *      judgements), and the guards' count equal to those judgements)),
  *      and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted status
  *      fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced reading
  *      while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone refuses it
@@ -215,11 +223,26 @@
  * non-configurable toJSON), beside a probe hollow, is NOT CLAIMED by this census either: fired still refuses the call, but the
  * toJSON left set also reaches vitest's own serializer, which then recurses and drops Q's failure (measured: Q reported failed with
  * no message, or Q and P1 reported pending and the file passed).
+ * wb-ekl1 (the R694 follow-up of landing 958, its gate's F1 and F2): P15's controls held P15 at fired's first five calls only, each
+ * on Q's cell reading, so a fired that read P15 at its first five calls alone (the gate's HKFIRST5), or only on a copy equal to Q's
+ * cell reading (HKCELL), read green beside the landing-940 form PROTOJSON at the positive control's call and HODD; and they pinned
+ * both ends of the read's place for Object.prototype.toJSON's read only, so a fired that took the two Array.prototype reads, or
+ * one of them, before its copy (HKSPLIT, HKSPLITA, HKSPLITC) read green beside the gate's in-copy installs PROTOINA and PROTOINC
+ * and HODD, and one that took them after valuesOf (HKLATE) read green alone. Measured by this cut on the base beside them: one that
+ * read P15 only while it had recorded nothing (HKREC) read green beside PROTOJSON and HODD, and one that read it at the calls
+ * before k3Legs only (HKFIRST2249) read green beside PROTOJSON's form at k3Legs' call and a hollow of the variant twins, which
+ * k3Legs alone reads. P15's guards (Q above) now set one of the three before each judgement fired makes in Q after the controls, the
+ * six settings in turn, so before every judgement one of the three is read set, and each, in each setting, before every sixth;
+ * the controls are unchanged. A fired that tells a guard call from the judgement after it by anything but P15's three reads (its
+ * call count or order, which the guards make regular, or the getter on the handed reading's source an in-copy guard hands it),
+ * and reads one of the three, or reads it at its place, only at the guard calls, beside an edit at a judgement's call that sets
+ * it and a probe hollow, is NOT CLAIMED by this census: each guard is a call of its own, so no finite set of them pins a read at a
+ * call they do not make.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. The only
- * global state written is P15's: its controls set a toJSON on Object.prototype or Array.prototype, or a prototype for
+ * global state written is P15's: its controls and guards set a toJSON on Object.prototype or Array.prototype, or a prototype for
  * Array.prototype, for one call each and remove it after, and fired removes what it can of one it finds (Q reads that none of the
- * three is left set). */
+ * three is left set after the controls, and that fired removed the one each guard set). */
 import {readFileSync} from 'node:fs';
 import {inspect, types} from 'node:util';
 import {
@@ -1432,6 +1455,48 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
     ]);
     expect(hooks(), '(P15: a member P15 reads left set after its controls)').toStrictEqual([]);
+    // P15's guards (wb-ekl1): the controls above hold P15 at fired's first five calls, on Q's cell reading, and pin both ends of the
+    // read's place for Object.prototype.toJSON's read only (the landing-958 gate's F1 and F2). So before each judgement fired makes in
+    // Q after them, the field-less control's, the positive control's at each variant's turn and k3Legs', guard hands fired that
+    // judgement's reading once with one of the three set for that call, the six settings in turn: each of the three set before the
+    // call (so P15 reads it before valuesOf's list, the first list fired serializes after its copy), then each set by a getter of the
+    // handed reading's source while fired copies it (so P15 reads it after the copy and before that list). Each is set to transient, a
+    // toJSON that returns the object it is given and removes what is set (unhook) at its first top-level call on a list, so a read
+    // after valuesOf's list misses it. guard returns the member, the setting and what the call did, and each judgement's guard must
+    // read refused, naming that member, with that member removed. The guard calls record nothing (the positive control reads one
+    // judgement per variant at its turns, P5, and the record's growth across k3Legs equals its judgements), and every judgement is
+    // guarded (the guards' count equals the field-less, positive-control and k3Legs judgements).
+    const transient = {configurable: true, writable: true, value(this: unknown, key: string): unknown {
+      if (key === '' && Array.isArray(this)) unhook();
+      return this;
+    }};
+    const P15_SET: readonly (readonly [string, () => unknown])[] = [
+      ['Object.prototype.toJSON', () => Object.defineProperty(Object.prototype, 'toJSON', transient)],
+      ['Array.prototype.toJSON', () => Object.defineProperty(Array.prototype, 'toJSON', transient)],
+      ["Array.prototype's prototype", () => Object.setPrototypeOf(Array.prototype, Object.create(Object.prototype, {toJSON: transient}))],
+    ];
+    type Guarded = readonly [string, string, string];
+    let guarded = 0;
+    const guard = (reading: JsonValue): Guarded => {
+      const [name, set] = P15_SET[guarded % 3];
+      const inCopy = Math.floor(guarded / 3) % 2 === 1;
+      guarded++;
+      const handed = inCopy ? Object.defineProperty({...asRecord(reading)}, 'source', {enumerable: true, get: (): JsonValue => {
+        set();
+        return asRecord(reading).source;
+      }}) : reading;
+      if (!inCopy) set();
+      const form = inCopy ? 'set while fired copies' : 'set before the call';
+      try {
+        fired(handed);
+        return [name, form, 'not refused'];
+      } catch (error) {
+        return [name, form, `${error instanceof Error ? error.message : String(error)}; left set: ${hooks().join(', ') || 'none'}`];
+      } finally {
+        unhook();
+      }
+    };
+    const refusing = ([name, form]: Guarded): Guarded => [name, form, `fired refused a call: P15 read ${name}; left set: none`];
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
     // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
@@ -1448,12 +1513,16 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       for (const joint of joints) {
         const label = `${id} ${k3Label(joint)}`;
         const twin = `${label} (registration twin)`;
+        const unjoined = guard(k3Reading(cell.reading, joint));
+        expect(unjoined, `${label} (field-less control, P15's guard)`).toStrictEqual(refusing(unjoined));
         expect(fired(k3Reading(cell.reading, joint)), `${label} (field-less control)`).toStrictEqual([twin]);
         const readings = variants.map(variant => k3Reading(variant.reading, joint));
         expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
         const first = record().length;
         const returned: (readonly string[])[] = [];
         for (const [index, reading] of readings.entries()) {
+          const turn = guard(reading);
+          expect(turn, `${label} (positive control, P15's guard, ${variants[index].label})`).toStrictEqual(refusing(turn));
           const verdict = fired(reading);
           returned.push(verdict);
           expect(verdict, `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
@@ -1487,7 +1556,12 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     }
     expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
     const moved = new Map<string, string[]>(probes.map(probe => [probe.id, []]));
-    const legs = await k3Legs(cell, fired, (actual, expected, label) => {
+    const legsFrom = [record().length, guarded] as const;
+    const legs = await k3Legs(cell, (reading: JsonValue): readonly string[] => {
+      const turn = guard(reading);
+      expect(turn, '(k3Legs, P15\'s guard)').toStrictEqual(refusing(turn));
+      return fired(reading);
+    }, (actual, expected, label) => {
       for (const id of [...actual.filter(one => !expected.includes(one)), ...expected.filter(one => !actual.includes(one))]) {
         moved.get(id)?.push(label);
       }
@@ -1495,6 +1569,11 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     });
     const sweep = variants.length * BESIDE_K3S.length;
     expect(legs).toStrictEqual({registered: REGISTERED_K3S.length * 2, swept: sweep, carried: REGISTERED_K3S.length + sweep});
+    const judgements = 1 + REGISTERED_K3S.length + variants.length + sweep;
+    const unjoinedCount = JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0);
+    expect([record().length - legsFrom[0], guarded - legsFrom[1], guarded],
+      '(P15\'s guards: a judgement k3Legs made not recorded once or not guarded, or a judgement in Q not guarded)')
+      .toStrictEqual([judgements, judgements, unjoinedCount + controlled + judgements]);
     expect(variants).toHaveLength(variantCount(cell.kind, cell.shape, VALUES.length));
     for (const probe of probes) expect(moved.get(probe.id), probe.id).toStrictEqual(probe.expected);
   });
