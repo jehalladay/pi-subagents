@@ -202,18 +202,27 @@
  *     G9-enumMemberImpl, G9-enumMemberOutcome, G9-enumMemberAdoption, G9-enumMemberObjectOnly and G9-localEnumObject, in that order
  *     of first mention, and the judged set fails unless each, its G9- prefix cut, is a BINDINGS plant (BINDING_PROBES) reading
  *     exactly one declaration of one of BOUND_NAMES, and enumMemberObject's plant stands in that line exactly once (the line quotes
- *     it for G9-enumMemberObject); so one of those six plants removed from every literal, or rewritten to declare none of those
- *     names, reds.
+ *     it for G9-enumMemberObject); g9Refusals reads those three conditions, and the judged set runs it on that line, BINDING_PROBES
+ *     and their readings (no refusal) and on six controls, each one edit away from them, pinning each control's one refusal: a
+ *     member's plant reading two declarations (enumMemberImpl's beside an enum Object) and one reading none (localEnumObject's,
+ *     its enum renamed Other), a member with no plant (enumMemberAdoption's taken out), the members named out of that order
+ *     (G9-enumMemberImpl named first), a member left unnamed (G9-localEnumObject taken out of the line) and enumMemberObject's
+ *     plant standing in the line twice; so one of those six plants removed from every literal, or rewritten to declare none of
+ *     those names or more than one, reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, TERMS, the carrier map, the gate list
  * and UNBATTERIED, the payload digests, VERDICTS, the battery, the residual table, adoption() and every pin's witness are held to
  * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ (each part read from this file's AST; it runs
  * nothing): BINDINGS - every declaration in this file of IMPL, adoption, memberOutcome and Object is held (every declaration of the
- * name counts, as in declarations below): IMPL, adoption and memberOutcome have exactly one each, their module-scope
+ * name counts, as in declarations below, a name written with an escape as THE ESCAPE MATRIX below pins it): IMPL, adoption and
+ * memberOutcome have exactly one each, their module-scope
  * `const IMPL = Object.freeze({ ... })`, `function adoption` and `const memberOutcome` (topLevel), and Object has none, so each of
  * those three names denotes that one declaration wherever this file names it as a value, and every value reference this file
  * makes to the identifier Object reads the global binding of that name, through the identifier Object as the file binds it when it
- * runs (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS); BINDINGS' reader runs today on 38
- * plants (BINDING_PROBES, each parsed as a module text of its own; bindingProbes), and the judged set pins each reading, the one
+ * runs (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS), as far as declarations reads a name: a
+ * declaration of one of those names written with an escape in a spelling, a form or a place THE ESCAPE MATRIX does not plant is
+ * NOT CLAIMED, and neither is what such a declaration would make the name denote (NOT CLAIMED below); BINDINGS' reader runs today
+ * on THE ESCAPE MATRIX and on 40 plants (BINDING_PROBES, each parsed as a module text of its own; bindingProbes), and the judged
+ * set pins each plant's reading, the one
  * entry below with every other name reading none: `other member Object` for an enum member named Object written as an identifier
  * (its enum's body reading it, and not), an escaped identifier, a string literal, a string literal with an escape, a computed
  * string literal, a computed string literal with an escape and a computed no-substitution template literal, and for one written
@@ -223,7 +232,8 @@
  * declaration of Object of each other kind declarations reads, its name written with the escape `Obj\u0065ct`: `module const
  * Object` for a module-scope const, `other const Object` for a const in a block, `other let Object` and `other var Object` for a
  * module-scope let and var, `other catch Object` for a catch clause's variable, `other parameter Object` for a function's
- * parameter, `other binding Object` for an array binding element, `module function Object` for a module-scope function
+ * parameter, `other binding Object` for an array pattern's binding element and for an object pattern's, shorthand and renamed,
+ * `module function Object` for a module-scope function
  * declaration, `other function Object` for a named function expression, `other class Object` for a class declaration and for a
  * named class expression, `other enum Object` for a module-scope enum, `other namespace Object` for a namespace and `other import
  * Object` for a named import, a renamed import, a default import, a namespace import and an import-equals declaration; and `module
@@ -254,10 +264,12 @@
  * (occurrences), so, with calls, any other identifier reference to the name reds; that B1 member's first three statements are the
  * three THE MEMBER CHECK names (b1); and each name those calls and statements read has exactly one declaration where the
  * SELF-READ searches for it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a
- * function, a class, an enum, an enum member, a namespace or an import binding, each by its name as the parser reads it, escapes
- * resolved: an identifier, and for an enum member also a string literal, or a string literal or a no-substitution template literal
- * as its computed name (declaredName; BINDINGS' plants above run the same reader); an interface, a type alias and a type
- * parameter, which declare a type and no value, are not read; that search runs today on six plants of its own besides this file
+ * function, a class, an enum, an enum member, a namespace or an import binding, each by its name as the parser reads it: an
+ * identifier, and for an enum member also a string literal, or a string literal or a no-substitution template literal as its
+ * computed name (declaredName; BINDINGS' plants above run the same reader); a name written with an escape is read resolved in the
+ * spellings, forms and places THE ESCAPE MATRIX below plants, and in no other this census claims (NOT CLAIMED below); an
+ * interface, a type alias and a type parameter, which declare a type and no value, are not read; that search runs today on six
+ * plants of its own besides this file
  * (MEMBER_CHECK_PROBES, each put in memberCheckModule, a module text of its own whose reading unplanted equals this file's, the
  * judged set holding the two equal; memberCheckProbes), and the judged set pins each as the one entry of declarations its plant
  * changes, the plant read beside the name's one declaration: an enum member and a const written with an escaped identifier, of
@@ -268,7 +280,28 @@
  * statements read, and each name a variable's initializer among those declarations reads in turn, has one: readFileSync, join,
  * dirname and fileURLToPath the static imports of node:fs, node:path and node:url, OBSERVATION_MODULE and observationMembers the
  * helper's static import (each imported under its own name), REPO `const REPO = join(HERE, "..")`, HERE
- * `const HERE = dirname(fileURLToPath(import.meta.url))` and holdMembers its function declaration. RECORDS: the last case holds
+ * `const HERE = dirname(fileURLToPath(import.meta.url))` and holdMembers its function declaration. THE ESCAPE MATRIX (escapeMatrix,
+ * wb-vktz's respin 2; the judged set holds every reading below, that every plant text parses with no syntax diagnostic, and the
+ * plant counts): each search above reads plants of every form of ESCAPE_FORMS declaring each name it reads in each spelling
+ * respelled gives the name - the name plain, then, in each style of ESCAPE_STYLES in turn (the four-digit escape \uHHHH with
+ * lower-case and with upper-case hex digits; the code-point escape \u{H} with lower-case and with upper-case hex digits and no
+ * leading zero; the code-point escape with lower-case hex digits padded with zeros to six), the name with each one of its
+ * characters, at every position, written in that style, and with every character written in it, each spelling once (the judged
+ * set holds Object's 28 spellings, in order). The forms (ESCAPE_FORMS, 29): a const, a const in a block, a let, a var, a catch
+ * clause's variable, a function declaration's parameter, an array pattern's binding element (alone, inside another array
+ * pattern, a rest element and one with a default), an object pattern's (shorthand, renamed, a rest element, and shorthand in a
+ * function declaration's parameter), a function declaration, a named function expression, a class declaration, a named class
+ * expression, an enum, a namespace, a named, a renamed, a default and a namespace import, an import-equals declaration, and a
+ * member of an enum named Shadow, its name an identifier, a string literal, a computed string literal or a computed
+ * no-substitution template literal. The searches, their names and their places: BINDINGS (bindingsOf) over BOUND_NAMES, its
+ * plants at the top of module texts of their own, every plant of a form in one text, each read as `other <the form's kind word>
+ * <its name>`, except that each const and each function declaration stands alone in a text and reads as `module const <its name>`
+ * or `module function <its name>` (topLevel), each text reading nothing else; and THE MEMBER CHECK's three searches
+ * (memberReaderReadOf over memberCheckModule), over the names they read there unplanted (the keys of its declarations), each
+ * plant read as its declaration text after the
+ * name's unplanted entries, in source order: text inside memberOutcome's arrow function, text and members inside B1's member
+ * after its three statements, and the rest (OBSERVATION_MODULE, REPO, join, readFileSync, observationMembers, holdMembers, HERE,
+ * dirname and fileURLToPath) at the end of the module. RECORDS: the last case holds
  * that every registered pin ran to its compare and re-digests each witness against its roster witness, that every falsifier
  * refused an adapter in the adoption judge, and that the HX reader read the precedent's licensed and unlicensed complete-empty
  * answers.
@@ -332,7 +365,13 @@
  * producer fixture; VERDICTS are the producer's answers at cut #1, seen again only when a cut re-measures them; an adoption the
  * judge accepts has passed the battery, which is not a proof the adapter is right (R-OTHER-SHAPE, R-EXPIRY); OWED and
  * UNACCOUNTED are thrown on the real walk only, which holds no hit today, while the accounting itself runs on its probes; a
- * stand-in reader is a model of its family, not the product reader, so a quiet row shows only that no fed input reaches its region.
+ * stand-in reader is a model of its family, not the product reader, so a quiet row shows only that no fed input reaches its region;
+ * and a name written with an escape outside THE ESCAPE MATRIX is NOT CLAIMED by declarations, BINDINGS or THE MEMBER CHECK: another
+ * spelling (two or more of a name's characters escaped but not every one, a code-point escape with another count of leading zeros,
+ * and in a string or template name an escape other than \u - a \x escape, a single-character escape or a line continuation), a
+ * form outside ESCAPE_FORMS (an export or declare declaration, a using declaration, a loop's variable, an arrow function's, a
+ * method's or a constructor's parameter and a member of a const or declare enum among them) or another place (at BINDINGS a form
+ * put inside a block, a function body, a class or a namespace; at THE MEMBER CHECK a place other than its three searches' places).
  * LIMITS: a check deleted or rewritten in this file's code is not detected beyond the SELF-READ (a pin rewritten to return its
  * roster witness through a helper is not); a residual removed together with its planted inputs and their roster readings is not
  * detected (residuals are this census's own reading); a TERM other than the title's CoverageWitness removed from TERMS, its
@@ -344,7 +383,9 @@
  * entries of observation.ts), B1's three U1 probes (the export's refusal-#4 U1 item) and a C2 render whose JSON kind or empty-or-not
  * member no other render states; a BINDINGS plant other than the six G9 members the export's landing-951 F1 names (OUTSIDE
  * ANCHOR), or a plant of THE MEMBER CHECK's search (MEMBER_CHECK_PROBES), removed from its table together with its reading in the
- * judged set is not detected; a registration that names its
+ * judged set is not detected, and neither is a form taken out of ESCAPE_FORMS, or a style out of ESCAPE_STYLES, together with the
+ * plant counts it changes (and, for a style, Object's spellings in the judged set): THE ESCAPE MATRIX is this census's own
+ * reading; a registration that names its
  * import's binding but runs a stand-in adapter is not detected (the registration check holds the module path, the import, the
  * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
  * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
@@ -356,7 +397,8 @@
  * reads of the real text); a reference to the helper module that is not a static import declaration (a dynamic import
  * expression, which reaches the reader through a string, not an identifier) is NOT CLAIMED by the SELF-READ; and what the runtime's
  * Object.freeze and Object.isFrozen do is NOT CLAIMED by this census, and neither is what the identifier Object holds when a line
- * naming it runs: BINDINGS holds only that this file declares no Object of a kind declarations reads, so a replacement of the
+ * naming it runs: BINDINGS holds only that this file declares no Object of a kind declarations reads (a name written with an
+ * escape as THE ESCAPE MATRIX pins it), so a replacement of the
  * global Object binding itself at
  * run time, by this file's code or by any other code that runs before or beside it (an assignment to globalThis.Object, a
  * definition of that property, or a Proxy or any other value put in its place), is not detected, and neither is a rewrite of a
@@ -375,7 +417,11 @@
  * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
  * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
  * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
- * MEASURED (seat records, read-only; not assertions): wb-vktz's respin (its refusal #1: U1, with the riders F1, F2, F3 and F6)
+ * MEASURED (seat records, read-only; not assertions): wb-vktz's respin 2 (its refusal #2: U1, with the riders F1 and F2) over
+ * trunk d7988bc0, 2026-11-05: the roster is cut #9's byte for byte; the respin adds THE ESCAPE MATRIX (29 forms; 4089 BINDINGS
+ * plants and 12818 member-check plants, every plant text with no syntax diagnostic under TypeScript 6.0.3), two object-pattern
+ * BINDINGS plants, g9Refusals and its six controls, and their words, and changes no pin's witness and no reading of this file.
+ * wb-vktz's respin (its refusal #1: U1, with the riders F1, F2, F3 and F6)
  * over trunk 98494c7b, 2026-11-05: the roster is cut #9's byte for byte; the respin adds BINDINGS' and THE MEMBER CHECK's plants,
  * the landing-951 F1 anchor and their words, and moves THE MEMBER CHECK's reader into memberReaderReadOf (memberReaderRead hands it
  * this file's AST), and changes no pin's witness and no reading of this file; each of the 38 BINDINGS plants and the seven
@@ -1310,7 +1356,8 @@ function bindingsOf(source: ts.SourceFile): Readonly<Record<string, readonly str
  * the respin's (refusal #1's U1, F1 and F3): that member written as a string literal and a computed string literal each with an
  * escape and as a computed no-substitution template literal, in a module-scope enum declared const, declare, declare const and
  * export and in an enum in a block, a namespace and a function body, then a declaration of Object of each other kind declarations
- * reads, its name written with an escape, and a module-scope function adoption written with a code-point escape. */
+ * reads, its name written with an escape, and a module-scope function adoption written with a code-point escape; and respin 2's
+ * (refusal #2's F1): an object pattern's binding element of Object, shorthand and renamed, its name written with an escape. */
 const BINDING_PROBES: Readonly<Record<string, string>> = {
   enumMemberObject: "enum ObjectShadow { Object = 1, Twice = Object * 2 }",
   enumMemberObjectOnly: "enum ObjectOnly { Object = 1 }",
@@ -1338,6 +1385,8 @@ const BINDING_PROBES: Readonly<Record<string, string>> = {
   escapedCatch: "try {} catch (Obj\\u0065ct) {}",
   escapedParameter: "function holder(Obj\\u0065ct: number): number { return Obj\\u0065ct; }",
   escapedBinding: "const [Obj\\u0065ct] = [1];",
+  escapedObjectBinding: "const { Obj\\u0065ct } = { Object: 1 };",
+  escapedRenamedBinding: "const { key: Obj\\u0065ct } = { key: 1 };",
   escapedFunction: "function Obj\\u0065ct(): void {}",
   escapedFunctionExpression: "const holder = function Obj\\u0065ct(): void {};",
   escapedClass: "class Obj\\u0065ct {}",
@@ -1364,6 +1413,22 @@ function g9Line(notes: string): string {
 }
 /** The gate members a line names, each `G9-<id>` once with its prefix cut, in order of first mention. */
 const g9Named = (line: string): string[] => [...new Set([...line.matchAll(/\bG9-([A-Za-z]+)/gu)].map(match => match[1] ?? ""))];
+/** The gate's G9 members as landing 951's F1 line names them, in that order of first mention (OUTSIDE ANCHOR). */
+const G9_MEMBERS: readonly string[] = ["enumMemberObject", "enumMemberImpl", "enumMemberOutcome", "enumMemberAdoption", "enumMemberObjectOnly", "localEnumObject"];
+/** Why the G9 anchor refuses a line over BINDINGS' plants and their readings, none when it holds: the members the line names (g9Named)
+ * are not G9_MEMBERS in that order; a member has no plant, or its plant reads other than exactly one declaration of BOUND_NAMES; or
+ * enumMemberObject's plant stands in the line other than once. */
+function g9Refusals(line: string, plants: Readonly<Record<string, string>>, readings: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>>): string[] {
+  const named = g9Named(line);
+  const order = named.join(" ") === G9_MEMBERS.join(" ") ? [] : [`named ${named.join(" ")}`];
+  const reads = named.flatMap(id => {
+    if (!Object.hasOwn(plants, id)) return [`${id} has no plant`];
+    const count = Object.values(readings[id] ?? {}).flat().length;
+    return count === 1 ? [] : [`${id} reads ${count}`];
+  });
+  const quoted = occurrences(line, plants.enumMemberObject ?? "");
+  return [...order, ...reads, ...(quoted === 1 ? [] : [`enumMemberObject's plant stands ${quoted} times`])];
+}
 /** The SELF-READ, parsed from this file's AST: each member's direct identifiers of the module-scope IMPL's literal (moduleImpl), every
  * static import that binds a value, the identifiers the module-scope function adoption's body names, and BINDINGS of this file
  * (bindingsOf). */
@@ -1448,9 +1513,10 @@ const isDeclared = (node: ts.Node): node is Declared =>
   ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) ||
   ts.isClassExpression(node) || ts.isEnumDeclaration(node) || ts.isEnumMember(node) || ts.isModuleDeclaration(node) || ts.isImportSpecifier(node) || ts.isImportClause(node) || ts.isNamespaceImport(node) ||
   ts.isImportEqualsDeclaration(node);
-/** The name a declaration binds, as the parser reads it (escapes resolved): its identifier's, or an enum member's written as a string
- * literal or a computed string literal (inside its enum's body such a member is in scope under that name as an identifier-named
- * one is); undefined for any other name (a binding pattern, a module's string name). */
+/** The name a declaration binds, as the parser reads it (the node's text; a name written with an escape is pinned resolved in THE
+ * ESCAPE MATRIX's spellings, forms and places only): its identifier's, or an enum member's written as a string literal or as a
+ * computed string or no-substitution template literal (inside its enum's body such a member is in scope under that name as an
+ * identifier-named one is); undefined for any other name (a binding pattern, a module's string name). */
 function declaredName(node: Declared): string | undefined {
   const name = node.name;
   if (name === undefined) return undefined;
@@ -1606,6 +1672,134 @@ function memberCheckProbes(self: SelfRead): Readonly<Record<string, Readonly<Rec
     const changed = Object.entries(memberCheckRead(plant, self).declarations).filter(([key, found]) => JSON.stringify(found) !== JSON.stringify(unplanted[key]));
     return [id, Object.fromEntries(changed)] as const;
   }));
+}
+/** THE ESCAPE MATRIX's styles (wb-vktz's respin 2, refusal #2's U1): how one character of a name is written as an escape, from its
+ * code point - the four-digit escape with lower-case and with upper-case hex digits, the code-point escape with lower-case and with
+ * upper-case hex digits and no leading zero, and the code-point escape with lower-case hex digits padded with zeros to six. */
+const ESCAPE_STYLES: Readonly<Record<string, (point: number) => string>> = {
+  fourDigit: point => `\\u${point.toString(16).padStart(4, "0")}`,
+  fourDigitUpper: point => `\\u${point.toString(16).toUpperCase().padStart(4, "0")}`,
+  codePoint: point => `\\u{${point.toString(16)}}`,
+  codePointUpper: point => `\\u{${point.toString(16).toUpperCase()}}`,
+  codePointSix: point => `\\u{${point.toString(16).padStart(6, "0")}}`,
+};
+/** A name's spellings in THE ESCAPE MATRIX: the name plain, then, in each style of ESCAPE_STYLES in turn, the name with each one of its
+ * characters (at every position, in order) written in that style and the name with every character written in it; each spelling
+ * once, at its first place. */
+function respelled(name: string): string[] {
+  const units = [...name];
+  const spellings = [name];
+  for (const style of Object.values(ESCAPE_STYLES)) {
+    const escaped = (unit: string): string => style(unit.codePointAt(0) ?? 0);
+    for (let at = 0; at < units.length; at += 1) spellings.push(units.map((unit, index) => (index === at ? escaped(unit) : unit)).join(""));
+    spellings.push(units.map(escaped).join(""));
+  }
+  return [...new Set(spellings)];
+}
+/** One of THE ESCAPE MATRIX's forms: its plant text, the name's place written @; the kind word BINDINGS reads it by; the text THE
+ * MEMBER CHECK lists it by, the name as written at @ (or as read, at #); and whether it stands alone in a module text at BINDINGS,
+ * where topLevel reads it as the name's module-scope declaration. */
+interface EscapeForm { readonly text: string; readonly kind: string; readonly entry: string; readonly topLevel: boolean }
+/** THE ESCAPE MATRIX's forms, as FROZEN SHAPE's words name them. */
+const ESCAPE_FORMS: Readonly<Record<string, EscapeForm>> = {
+  const: { text: "const @ = 1;", kind: "const", entry: "const @ = 1", topLevel: true },
+  blockConst: { text: "{ const @ = 1; }", kind: "const", entry: "const @ = 1", topLevel: false },
+  let: { text: "let @ = 1;", kind: "let", entry: "let @ = 1", topLevel: false },
+  var: { text: "var @ = 1;", kind: "var", entry: "var @ = 1", topLevel: false },
+  catch: { text: "try {} catch (@) {}", kind: "catch", entry: "catch @", topLevel: false },
+  parameter: { text: "function holder(@: number): void {}", kind: "parameter", entry: "parameter @: number", topLevel: false },
+  arrayBinding: { text: "const [@] = [1];", kind: "binding", entry: "binding @", topLevel: false },
+  nestedBinding: { text: "const [[@]] = [[1]];", kind: "binding", entry: "binding @", topLevel: false },
+  restBinding: { text: "const [...@] = [1];", kind: "binding", entry: "binding ...@", topLevel: false },
+  defaultBinding: { text: "const [@ = 1] = [];", kind: "binding", entry: "binding @ = 1", topLevel: false },
+  objectBinding: { text: "const { @ } = source;", kind: "binding", entry: "binding @", topLevel: false },
+  renamedBinding: { text: "const { key: @ } = source;", kind: "binding", entry: "binding key: @", topLevel: false },
+  objectRestBinding: { text: "const { ...@ } = source;", kind: "binding", entry: "binding ...@", topLevel: false },
+  parameterBinding: { text: "function holder({ @ }: Source): void {}", kind: "binding", entry: "binding @", topLevel: false },
+  function: { text: "function @(): void {}", kind: "function", entry: "function @", topLevel: true },
+  functionExpression: { text: "const holder = function @(): void {};", kind: "function", entry: "function @", topLevel: false },
+  class: { text: "class @ {}", kind: "class", entry: "class @", topLevel: false },
+  classExpression: { text: "const holder = class @ {};", kind: "class", entry: "class @", topLevel: false },
+  enum: { text: "enum @ { Member }", kind: "enum", entry: "enum @", topLevel: false },
+  namespace: { text: "namespace @ {}", kind: "namespace", entry: "namespace @", topLevel: false },
+  namedImport: { text: 'import { @ } from "node:fs";', kind: "import", entry: 'import { @ } from "node:fs"', topLevel: false },
+  renamedImport: { text: 'import { readFileSync as @ } from "node:fs";', kind: "import", entry: 'import { readFileSync as @ } from "node:fs"', topLevel: false },
+  defaultImport: { text: 'import @ from "node:fs";', kind: "import", entry: 'import # from "node:fs"', topLevel: false },
+  namespaceImport: { text: 'import * as @ from "node:fs";', kind: "import", entry: 'import * as @ from "node:fs"', topLevel: false },
+  importEquals: { text: 'import @ = require("node:fs");', kind: "import", entry: 'import @ = require("node:fs");', topLevel: false },
+  member: { text: "enum Shadow { @ = 1 }", kind: "member", entry: "member @ = 1", topLevel: false },
+  stringMember: { text: 'enum Shadow { "@" = 1 }', kind: "member", entry: 'member "@" = 1', topLevel: false },
+  computedMember: { text: 'enum Shadow { ["@"] = 1 }', kind: "member", entry: 'member ["@"] = 1', topLevel: false },
+  templateMember: { text: "enum Shadow { [`@`] = 1 }", kind: "member", entry: "member [`@`] = 1", topLevel: false },
+};
+/** A form's plant of one spelling, and the text THE MEMBER CHECK lists that plant by as a declaration of `name`. */
+const plantOf = (form: EscapeForm, spelling: string): string => form.text.replace("@", () => spelling);
+const entryOf = (form: EscapeForm, spelling: string, name: string): string => form.entry.replace("@", () => spelling).replace("#", () => name);
+/** A plant text parsed as the SELF-READ parses this file, with the parser's syntax diagnostics as `<id>: <message>`. */
+function parsedPlant(id: string, text: string): { readonly source: ts.SourceFile; readonly diagnostics: readonly string[] } {
+  const source = ts.createSourceFile(`${id}.ts`, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found = (source as ts.SourceFile & { readonly parseDiagnostics: readonly ts.Diagnostic[] }).parseDiagnostics;
+  return { source, diagnostics: found.map(diagnostic => `${id}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, " ")}`) };
+}
+/** A search's reading of THE ESCAPE MATRIX: what it misread (`<form> <name or key>: <read> of <planted>`), the plant texts' syntax
+ * diagnostics and how many plants it read. */
+interface EscapeReading { readonly misread: readonly string[]; readonly diagnostics: readonly string[]; readonly plants: number }
+interface Spelled { readonly name: string; readonly spelling: string }
+const spelledAll = (names: readonly string[]): Spelled[] => names.flatMap(name => respelled(name).map(spelling => ({ name, spelling })));
+/** BINDINGS over THE ESCAPE MATRIX: each form's plant of every spelling of BOUND_NAMES, read by bindingsOf from module texts of their
+ * own - a topLevel form one plant to a text, each read `module <kind> <name>`; any other form every plant in one text, each read
+ * `other <kind> <name>` - with every other name of BOUND_NAMES reading none. */
+function bindingsMatrix(): EscapeReading {
+  const misread: string[] = [];
+  const diagnostics: string[] = [];
+  let plants = 0;
+  for (const [id, form] of Object.entries(ESCAPE_FORMS)) {
+    const spelled = spelledAll(BOUND_NAMES);
+    for (const group of form.topLevel ? spelled.map(plant => [plant]) : [spelled]) {
+      const parsed = parsedPlant(`escape-${id}`, group.map(plant => plantOf(form, plant.spelling)).join("\n"));
+      diagnostics.push(...parsed.diagnostics);
+      const read = bindingsOf(parsed.source);
+      for (const name of BOUND_NAMES) {
+        const want = group.filter(plant => plant.name === name).map(() => `${form.topLevel ? "module" : "other"} ${form.kind} ${name}`);
+        const got = read[name] ?? [];
+        if (JSON.stringify(got) !== JSON.stringify(want)) misread.push(`${id} ${name}${group.length === 1 ? ` ${group[0]?.spelling ?? ""}` : ""}: ${got.length} of ${want.length}`);
+      }
+      plants += group.length;
+    }
+  }
+  return { misread, diagnostics, plants };
+}
+/** The keys THE MEMBER CHECK's searches give a name inside memberOutcome's arrow function and inside B1's member. */
+const HOLDER_KEY = "memberOutcome ";
+const B1_KEY = "B1 ";
+/** THE MEMBER CHECK over THE ESCAPE MATRIX: memberCheckModule with each form's plants of every spelling of each name its searches read
+ * there unplanted (the keys of its declarations: memberOutcome's inside memberOutcome's arrow function, B1's inside B1's member after
+ * its three statements, the rest at the end of the module), read by memberReaderReadOf, each entry its unplanted entries followed
+ * by its plants' declaration texts in source order. */
+function memberCheckMatrix(self: SelfRead): EscapeReading {
+  const unplanted = memberCheckRead({}, self).declarations;
+  const keys = Object.keys(unplanted);
+  const namesAt = (prefix: string): string[] => keys.filter(key => key.startsWith(prefix)).map(key => key.slice(prefix.length));
+  const misread: string[] = [];
+  const diagnostics: string[] = [];
+  let plants = 0;
+  for (const [id, form] of Object.entries(ESCAPE_FORMS)) {
+    const holder = spelledAll(namesAt(HOLDER_KEY));
+    const b1 = spelledAll(namesAt(B1_KEY));
+    const atEnd = spelledAll(keys.filter(key => !key.includes(" ")));
+    const joined = (group: readonly Spelled[]): string => group.map(plant => plantOf(form, plant.spelling)).join("\n");
+    const parsed = parsedPlant(`escape-member-check-${id}`, memberCheckModule({ holder: joined(holder), b1: joined(b1), module: joined(atEnd) }));
+    diagnostics.push(...parsed.diagnostics);
+    const read = memberReaderReadOf(parsed.source, self).declarations;
+    for (const key of new Set([...keys, ...Object.keys(read)])) {
+      const [group, name]: readonly [readonly Spelled[], string] = key.startsWith(HOLDER_KEY) ? [holder, key.slice(HOLDER_KEY.length)] : key.startsWith(B1_KEY) ? [b1, key.slice(B1_KEY.length)] : [atEnd, key];
+      const want = [...(unplanted[key] ?? []), ...group.filter(plant => plant.name === name).map(plant => entryOf(form, plant.spelling, name))];
+      const got = read[key] ?? [];
+      if (JSON.stringify(got) !== JSON.stringify(want)) misread.push(`${id} ${key}: ${got.length} of ${want.length}`);
+    }
+    plants += holder.length + b1.length + atEnd.length;
+  }
+  return { misread, diagnostics, plants };
 }
 /** Why a registration is refused, or null: its module must sit below src/, hold a trigger hit, be imported statically by this file
  * with a value binding, and adoption()'s body must name a binding that import introduces. */
@@ -2166,7 +2360,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = Object.freeze({
 const REACHED = new Map<string, string>();
 
 describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUTATION-AND-CONTROL-R12)", () => {
-  it("judged set: frozen shape, roster, and the owner filing's acceptance, title duties, gates, carrier fields, citation and precedent", () => {
+  it("judged set: frozen shape, roster, and the owner filing's acceptance, title duties, gates, carrier fields, citation and precedent", { timeout: 120_000 }, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2"]);
     expect(ROWS).toEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(({ id, quote }) => ({ id, quote })) })));
     expect(Object.keys(IMPL).sort(byName)).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
@@ -2262,7 +2456,8 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     // declare, declare const and export enum and in an enum in a block, a namespace and a function body) reads as an other member
     // declaration of that name, and the control, an enum declaration of Object in a block, as an other enum; a declaration of Object
     // of each other kind declarations reads, its name written with an escape, reads as that declaration (module-scope const and
-    // function declarations as module ones), and a module-scope function adoption written with a code-point escape as the module one.
+    // function declarations as module ones; an array pattern's and an object pattern's binding element, shorthand and renamed, as
+    // other bindings), and a module-scope function adoption written with a code-point escape as the module one.
     const probes = bindingProbes();
     expect(probes).toEqual({
       enumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
@@ -2291,6 +2486,8 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
       escapedCatch: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other catch Object"] },
       escapedParameter: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other parameter Object"] },
       escapedBinding: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other binding Object"] },
+      escapedObjectBinding: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other binding Object"] },
+      escapedRenamedBinding: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other binding Object"] },
       escapedFunction: { IMPL: [], adoption: [], memberOutcome: [], Object: ["module function Object"] },
       escapedFunctionExpression: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other function Object"] },
       escapedClass: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other class Object"] },
@@ -2306,11 +2503,35 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     });
     // Outside anchor, landing 951's verdict finding F1 (G9_LABEL): the gate's six G9 members its line names are BINDINGS plants,
     // each reading exactly one declaration of one of BOUND_NAMES, and enumMemberObject's plant (the enum the line quotes for
-    // G9-enumMemberObject) stands in the line exactly once.
+    // G9-enumMemberObject) stands in the line exactly once (g9Refusals reads none of its refusals).
     const g9 = g9Line(ROW.notes);
     expect(g9Named(g9)).toEqual(["enumMemberObject", "enumMemberImpl", "enumMemberOutcome", "enumMemberAdoption", "enumMemberObjectOnly", "localEnumObject"]);
-    expect(g9Named(g9).filter(id => !Object.hasOwn(BINDING_PROBES, id) || Object.values(probes[id] ?? {}).flat().length !== 1)).toEqual([]);
+    expect(g9Refusals(g9, BINDING_PROBES, probes)).toEqual([]);
     expect(occurrences(g9, BINDING_PROBES.enumMemberObject ?? "")).toBe(1);
+    // The G9 anchor's controls (wb-vktz's respin 2, refusal #2's F2), each one edit away from that line, BINDING_PROBES and their
+    // readings, each refused for its one reason: a member's plant reading two declarations, one reading none, a member with no
+    // plant, the members named out of order, a member left unnamed, and enumMemberObject's plant standing in the line twice.
+    const twoDeclarations = `${BINDING_PROBES.enumMemberImpl ?? ""} enum Object { Member }`;
+    const noDeclaration = (BINDING_PROBES.localEnumObject ?? "").replace("enum Object", "enum Other");
+    const replanted = (id: string, plant: string): [Readonly<Record<string, string>>, Readonly<Record<string, Readonly<Record<string, readonly string[]>>>>] => [
+      { ...BINDING_PROBES, [id]: plant },
+      { ...probes, [id]: bindingsOf(parsedPlant(id, plant).source) },
+    ];
+    expect({
+      twoDeclarations: g9Refusals(g9, ...replanted("enumMemberImpl", twoDeclarations)),
+      noDeclaration: g9Refusals(g9, ...replanted("localEnumObject", noDeclaration)),
+      noPlant: g9Refusals(g9, Object.fromEntries(Object.entries(BINDING_PROBES).filter(([id]) => id !== "enumMemberAdoption")), probes),
+      outOfOrder: g9Refusals(`G9-enumMemberImpl ${g9}`, BINDING_PROBES, probes),
+      unnamed: g9Refusals(g9.split("G9-localEnumObject").join(""), BINDING_PROBES, probes),
+      quotedTwice: g9Refusals(`${g9} ${BINDING_PROBES.enumMemberObject ?? ""}`, BINDING_PROBES, probes),
+    }).toEqual({
+      twoDeclarations: ["enumMemberImpl reads 2"],
+      noDeclaration: ["localEnumObject reads 0"],
+      noPlant: ["enumMemberAdoption has no plant"],
+      outOfOrder: ["named enumMemberImpl enumMemberObject enumMemberOutcome enumMemberAdoption enumMemberObjectOnly localEnumObject"],
+      unnamed: ["named enumMemberObject enumMemberImpl enumMemberOutcome enumMemberAdoption enumMemberObjectOnly"],
+      quotedTwice: ["enumMemberObject's plant stands 2 times"],
+    });
     // SELF-READ: no member of that IMPL's literal names the roster, and IMPL and the roster read frozen through the identifier Object
     // as the file binds it when this line runs (LIMITS: a replacement of the global Object binding itself is not detected).
     expect(Object.keys(self.impl).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
@@ -2355,6 +2576,43 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
       moduleEnumMember: { join: ['import { join } from "node:path"', "member join = 1"] },
       moduleEscapedConst: { join: ['import { join } from "node:path"', "const j\\u006fin = 1"] },
     });
+    // SELF-READ, THE ESCAPE MATRIX (wb-vktz's respin 2, refusal #2's U1): a name's spellings are the name plain and, in each of the five
+    // styles, the name with each one of its characters and with every character written as an escape (Object's, in order, below);
+    // BINDINGS reads each form's plant of each spelling of BOUND_NAMES, and THE MEMBER CHECK each plant of each spelling of the names
+    // its three searches read, as the name it declares; every plant text parses with no syntax diagnostic; and the counts hold.
+    expect(respelled("Object")).toEqual([
+      "Object",
+      "\\u004fbject",
+      "O\\u0062ject",
+      "Ob\\u006aect",
+      "Obj\\u0065ct",
+      "Obje\\u0063t",
+      "Objec\\u0074",
+      "\\u004f\\u0062\\u006a\\u0065\\u0063\\u0074",
+      "\\u004Fbject",
+      "Ob\\u006Aect",
+      "\\u004F\\u0062\\u006A\\u0065\\u0063\\u0074",
+      "\\u{4f}bject",
+      "O\\u{62}ject",
+      "Ob\\u{6a}ect",
+      "Obj\\u{65}ct",
+      "Obje\\u{63}t",
+      "Objec\\u{74}",
+      "\\u{4f}\\u{62}\\u{6a}\\u{65}\\u{63}\\u{74}",
+      "\\u{4F}bject",
+      "Ob\\u{6A}ect",
+      "\\u{4F}\\u{62}\\u{6A}\\u{65}\\u{63}\\u{74}",
+      "\\u{00004f}bject",
+      "O\\u{000062}ject",
+      "Ob\\u{00006a}ect",
+      "Obj\\u{000065}ct",
+      "Obje\\u{000063}t",
+      "Objec\\u{000074}",
+      "\\u{00004f}\\u{000062}\\u{00006a}\\u{000065}\\u{000063}\\u{000074}",
+    ]);
+    const matrix = { bindings: bindingsMatrix(), memberCheck: memberCheckMatrix(self) };
+    expect([matrix.bindings.misread, matrix.memberCheck.misread, matrix.bindings.diagnostics, matrix.memberCheck.diagnostics]).toEqual([[], [], [], []]);
+    expect([Object.keys(ESCAPE_FORMS).length, matrix.bindings.plants, matrix.memberCheck.plants]).toEqual([29, 4089, 12818]);
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
