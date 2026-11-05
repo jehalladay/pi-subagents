@@ -2728,7 +2728,8 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       else if (/[\p{Pf}\p{Pe}]/u.test(char)) closingX.push(char);
     }
     const hexX = (char: string): string => `U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
-    const classX = (char: string): string => ["Pi", "Pf", "Ps", "Pe"].find(name => new RegExp(`\\p{${name}}`, "u").test(char)) ?? "none";
+    const classesX: readonly (readonly [string, RegExp])[] = [["Pi", /\p{Pi}/u], ["Pf", /\p{Pf}/u], ["Ps", /\p{Ps}/u], ["Pe", /\p{Pe}/u]];
+    const classX = (char: string): string => classesX.find(([, pattern]) => pattern.test(char))?.[0] ?? "none";
     const namedHexX: readonly (readonly [number, number])[] = [
       [0x28, 0x29],
       [0x5b, 0x5d],
