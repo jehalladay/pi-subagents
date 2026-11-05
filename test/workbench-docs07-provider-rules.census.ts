@@ -39,9 +39,9 @@
  * the identity's line count and SHA-256 outside this file, so a pin, half or the row removed, swapped or reordered in TABLE
  * and in every literal here together still reds (CT5/CT6).
  *
- * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the seven sections, under
+ * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the eight sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
- * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
+ * as exactly its frozen paragraph (the MechanicalWorkflows section as exactly its five frozen blocks). A dropped or reworded clause names its row. The docs drift falsifiers run over a
  * SYNTHETIC document built from the frozen section bodies, never over the live docs/07 text, so a legitimate edit of an
  * unpinned section (RCP provider, the vertical journey) can never redden a falsifier row.
  *
@@ -74,6 +74,32 @@
  * rendered view - so a pin, half or row removed from TABLE and from every literal here together still reds (CT5/CT6). A
  * renamed or deleted pinned case reds naming the row and its sentence (M5, DEL); docs/19's read example restates the arms.
  *
+ * Row R10 (wb-70xe, RF-NATIVE-TSX-COMPONENTS-R2) binds the RF sentence on the operator-provisioned Deno (RFCLI ruling A4: the
+ * operator provisions Deno at the installed rf's runtime-lock.json pin and no Pi lane installs it): its lock-pinned-engine half
+ * to the rf-preview-tsx tier wiring cases of test/workbench-rf-tsx-tier.test.ts (a passing row's RF-TSX-ENGINE line records the
+ * resolved deno, its realpath and its sha256 beside the four-field receipt line, over a regular file, the operator's
+ * versioned symlink layout, four paths that are not printable ASCII (a Latin-1 letter, TAB, US, DEL: the placeholder) and one
+ * printable path with a space and a tilde (verbatim); each of the sentence's three shim forms is refused before rf runs over
+ * its pinned members (a binary named mise, deno-shim, Deno or mise-deno; shims as the file's parent or two levels above it,
+ * as a regular file there and as a symlink there to an engine-named binary outside any shims directory; a #!/bin/sh script),
+ * as is an unresolved deno, and a mismatched or unpinned one once the render reports the pin (the pin
+ * f*64, and pins off the measured digest only in its first, 33rd or last hex), each by its literal typed code), its
+ * no-lane-install half to the lane census of test/workbench-rf-tsx-deno-provisioning.test.ts (whose walk is held to the
+ * repository's git index, whose hit read is held to each walked file's size and line count, whose reach is held at its
+ * scratch plants in every walked tree and file kind, and whose six shapes are held to their planted forms and to this
+ * sentence's six command families). NOT CLAIMED by row R10 (scope; the forms named here, except the realpath-alone one,
+ * were the deferred scope of wb-j4sm, the rule-19 structural exit child of wb-70xe (ruling R-B292), whose landed census states
+ * its own claims): the sentence's shim forms and its lane clause beyond those pinned members, among them a deno symlinked
+ * from outside any shims directory to a file under one (the mark on its realpath alone, which the tier cases do not
+ * plant), a #! script whose third byte is not /, a shims directory more than two levels above the file,
+ * a manager name that differs from deno only by an extension or by surrounding whitespace, and the lane hit read's reach
+ * past its scratch plants (a hit in a file larger than the largest planted one, past the planted line farthest down or in a
+ * dot-named file, and a line led by #).
+ * Its quote and binding are frozen as literals (rule 16), the RF ANCHOR holds the quote to the live paragraph, and the REPORT
+ * ANCHOR holds each half to exactly the cases the gate's own report collects under that half's describe - the helper's
+ * DENO_IDENTITY_SUITE and DENO_LANE_SUITE (test/helpers/rf-tsx-deno.ts), which both test files register their cases under - so
+ * a pin removed from TABLE and from every literal here together still reds (CT5/CT6).
+ *
  * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
  * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
  * assert them: the wb-693.1 R10 engine-identity cases and the wb-2j3.1 release cases, which absorbed requirement R4 under
@@ -88,8 +114,20 @@
  * that sentence. Both rows' identities are frozen as literals (rule 16), and that census reads both sentences back from this
  * file and from the live docs/07 (its D1-D3), so a row removed from TABLE and from every literal here still reds there.
  *
- * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
- * function library", "RCP provider", "First realistic vertical journey".
+ * Row W1 (wb-klr7, CAC-WORKFLOW-COMPOSITION-R1 (c)) is the MechanicalWorkflows section's composition-reference sentence, the
+ * section's last paragraph: CACWorkflowCompositionV0 is design-only and no Pi surface consumes it; a future consumer carries
+ * each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a row without one as an
+ * unmapped entry, and never mints a Beads task, Forge operation or gate, or Furnace Attempt ID from composition fields. One
+ * half per clause, bound to test/workbench-mw-composition-ref-census.test.ts by file, describe path and verbatim title: today
+ * (T1-T2), producer-references-only (A1), counted-unmapped (A2) and never-mints (A3, B1-B3). "MechanicalWorkflows is an
+ * ordinary function library" joined the frozen sections with that sentence, its five blocks frozen whole (MW_SECTION_BLOCKS).
+ * The row's identity is frozen as the literal FROZEN_W1 (rule 16), and that census reads FROZEN_W1 back from this file and the
+ * sentence from the live docs/07 (its C1-C2), so a row removed from TABLE and from every literal here still reds there. The
+ * sentence carries the program status "design-only" verbatim, the wb-kku9.2 clause (c) duty, and the wb-kku9.2 census holds
+ * it to this file (its C3).
+ *
+ * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "RCP provider", "First realistic vertical
+ * journey".
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -101,6 +139,7 @@ import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 import { RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE } from "./helpers/rf-release-drift.js";
+import { DENO_CASE_SUITES, DENO_IDENTITY_SUITE, DENO_LANE_SUITE } from "./helpers/rf-tsx-deno.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type Tier = "default-gate" | "native-read";
@@ -185,6 +224,13 @@ const LOCATORS_SENTENCE = "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlist
 const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for byte (SCG-R025).";
 
 /**
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the RF paragraph's sentence on the operator-provisioned Deno. Row R10 quotes it whole;
+ * FROZEN_R10_QUOTE and FROZEN_R10_BINDING repeat it as literals (rule 16) and the gate's own report anchors the binding.
+ */
+const DENO_PROVISIONING_SENTENCE =
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it (the lane census reads the root files and the lane trees for six command families: the Deno installer script, a Deno release download, a version-manager install of the engine, a package-manager install of the engine, an engine self-upgrade and the Deno CI setup action or container image): the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path and realpath, a path that is not printable ASCII replaced by a placeholder, and its sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+
+/**
  * wb-kku9.1 (MW-CAC-WORKFLOW-COMPOSITION-R1 (d)): the two observation-class sentences, the last of the HyperUnix and Agent
  * provider paragraphs. Rows H3 and A1 quote them whole; FROZEN_H3 and FROZEN_A1 repeat each row's identity as a literal.
  */
@@ -195,15 +241,32 @@ const AGENT_OBSERVATION_SENTENCE =
 /** The wb-kku9.1 census whose cases rows H3 and A1 bind (test/workbench-observation-class-census.test.ts). */
 const OBSERVATION_CENSUS = "observation-class-census";
 
-/** The seven frozen docs/07 section paragraphs, as the markdown source says them. */
+/** wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c)): the MechanicalWorkflows section, frozen whole with row W1's sentence as its last block. */
+const MW_SECTION = "MechanicalWorkflows is an ordinary function library";
+/** wb-klr7: the MechanicalWorkflows section's composition-reference sentence. Row W1 quotes it whole; FROZEN_W1 repeats the row's identity. */
+const MW_COMPOSITION_SENTENCE =
+  "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.";
+/** The wb-klr7 census whose cases row W1 binds (test/workbench-mw-composition-ref-census.test.ts), and its describe paths. */
+const COMPOSITION_CENSUS = "mw-composition-ref-census";
+const COMPOSITION_TOP = "wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1)";
+const COMPOSITION_ROW_SUITES: Readonly<Record<string, string>> = {
+  T: "T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+  A: "A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id",
+  B: "B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields",
+};
+const compositionPin = (row: string, title: string): Pin => pin(COMPOSITION_CENSUS, title, [COMPOSITION_TOP, COMPOSITION_ROW_SUITES[row] ?? ""]);
+
+/** The eight frozen docs/07 sections, as the markdown source says them: one paragraph each, the MechanicalWorkflows section five blocks. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
+  [MW_SECTION]:
+    "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.\n\nHost integration:\n1. Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.\n2. Validate request against descriptor schema and application invariants.\n3. Construct a scope-limited service dependency object from native SDK clients owned by this host.\n4. Call exported function directly, or delegate to Furnace ExecutorApp where selected.\n5. Validate output and record native evidence references; preserve four existing outcome variants.\n6. Dispose only host-owned clients. Client disconnect does not imply detached native child stop.\n\nNo MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.\n\nCACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
   "Forge provider":
     `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. ${CLAIM_SCOPE_SENTENCE} Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
   "HyperUnix provider": `Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. ${HX_OBSERVATION_SENTENCE}`,
   "ReactiveFiberCLI provider":
-    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
+    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} ${DENO_PROVISIONING_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
   "Agent provider": `Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class. ${AGENT_OBSERVATION_SENTENCE}`,
@@ -212,8 +275,28 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
 };
 /** What a reader sees of each paragraph: the markdown source without its emphasis markers. */
 const renderedOf = (markdown: string): string => markdown.replaceAll("**", "");
-const SECTION_ORDER: readonly string[] = ["Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
+const SECTION_ORDER: readonly string[] = [MW_SECTION, "Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
+/** wb-klr7: the MechanicalWorkflows section's five rendered blocks, written by hand from its markdown (whole-section equality). */
+const MW_SECTION_BLOCKS: readonly RenderedBlock[] = [
+  { kind: "paragraph", text: "Current evidence: https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See TRACEABILITY.md for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.", markdown: "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata." },
+  { kind: "paragraph", text: "Host integration:", markdown: "Host integration:" },
+  {
+    kind: "list",
+    ordered: true,
+    items: [
+      { text: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.", markdown: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI." },
+      { text: "Validate request against descriptor schema and application invariants.", markdown: "Validate request against descriptor schema and application invariants." },
+      { text: "Construct a scope-limited service dependency object from native SDK clients owned by this host.", markdown: "Construct a scope-limited service dependency object from native SDK clients owned by this host." },
+      { text: "Call exported function directly, or delegate to Furnace ExecutorApp where selected.", markdown: "Call exported function directly, or delegate to Furnace ExecutorApp where selected." },
+      { text: "Validate output and record native evidence references; preserve four existing outcome variants.", markdown: "Validate output and record native evidence references; preserve four existing outcome variants." },
+      { text: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop.", markdown: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop." },
+    ],
+  },
+  { kind: "paragraph", text: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.", markdown: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader." },
+  { kind: "paragraph", text: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.", markdown: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields." },
+];
 const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
+  if (heading === MW_SECTION) return MW_SECTION_BLOCKS;
   const markdown = SECTION_MARKDOWN[heading] ?? "";
   return [{ kind: "paragraph", text: renderedOf(markdown), markdown }];
 };
@@ -261,6 +344,20 @@ function isDeepFrozen(value: unknown): boolean {
 }
 
 const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
+  {
+    row: "W1",
+    section: MW_SECTION,
+    source: "docs",
+    quote: MW_COMPOSITION_SENTENCE,
+    // wb-klr7: one half per clause, in the sentence's order, bound to the composition-reference census by file, describe path
+    // and verbatim title; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("today", [compositionPin("T", "T1"), compositionPin("T", "T2")]),
+      gate("producer-references-only", [compositionPin("A", "A1")]),
+      gate("counted-unmapped", [compositionPin("A", "A2")]),
+      gate("never-mints", [compositionPin("A", "A3"), compositionPin("B", "B1"), compositionPin("B", "B2"), compositionPin("B", "B3")]),
+    ],
+  },
   {
     row: "F1",
     section: "Forge provider",
@@ -642,6 +739,49 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     halves: whole([pin("provider-envelope-audit", "SCG-R3: the legacy argv is byte-identical to the measured 0.1.583 form", [ARMS_SUITE])]),
   },
   {
+    // wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the lock-pinned-engine half is the tier wiring cases of the rf-tsx tier test, the
+    // no-lane-install half the lane census of the provisioning test; each binds the describe its cases share (REPORT ANCHOR).
+    row: "R10",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: DENO_PROVISIONING_SENTENCE,
+    halves: [
+      gate("lock-pinned-engine", [
+        pin("rf-tsx-tier", "a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run through the operator's versioned layout (bin/deno a symlink through a current link to tools/deno/2.9.7/bin/deno) records the symlink as deno_resolved and the versioned binary as deno_realpath", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path holds a Latin-1 letter (U+00E9), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path holds a TAB (U+0009, a C0 control), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path holds a US (U+001F, the last C0 control), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path holds a DEL (U+007F), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path holds a space and a tilde, printable ASCII, records its resolved path and its realpath verbatim on the engine line", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno symlinked to a version manager's binary named mise (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno symlinked to a version manager's binary named deno-shim (the engine's name with a suffix) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno symlinked to a version manager's binary named Deno (the engine's name in another case) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno symlinked to a version manager's binary named mise-deno (the engine's name with a prefix) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a file under a shims directory (its parent directory: manager/shims/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a file under a shims directory (an ancestor directory: manager/shims/bin/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a symlink under a shims directory (its parent directory: manager/shims/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a symlink under a shims directory (an ancestor directory: manager/shims/bin/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a #!/bin/sh script fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports (the pin f*64) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports only in its first hex (a greater pin) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports only in its 33rd hex fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports only in its last hex (a lesser pin) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned", [DENO_IDENTITY_SUITE]),
+      ]),
+      gate("no-lane-install", [
+        pin("rf-tsx-deno-provisioning", "the walk lists every regular file at the repository root and the .github, .agents, .pi, .codex, examples, src, test and qa trees above their floors, this file, the helper and the tier among them", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the walked trees and UNWALKED_ROOTS, each named with why, partition the repository's tracked top-level directories, and the walk lists every tracked root file and every tracked file under the walked trees (the git index, an anchor outside this census)", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the hit read takes in every walked file whole: one record per walked file in walk order, each with the file's size on disk in bytes and the count of lines the scan iterated, files past 64 KiB among them (the filesystem, an anchor outside this census)", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the hit read reports no hit of the six shapes over the walked set, this file and the helper judged with the rest", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "each shape reads each of its planted controls, its sub-forms included, as that shape only; the quiet lines, the near-miss lines and every residual family's quiet rows read nothing, and the residual families are exactly those the helper's header names, in its order (an anchor outside this census), each with its frozen count of quiet rows", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "each install line this case plants reds the census, naming the file, the line and the shape: in the root files, in every walked tree, in a file of every kind the real walk reads, on a first line, on a last line with no newline, past the first 64 KiB of the largest planted file and at the end of a line longer than 64 KiB", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the six shapes are the six command families the docs/workbench/07 Deno sentence names, label for label in order, each with its frozen count of planted controls, and that sentence's paragraph reads quiet (an anchor outside this census)", [DENO_LANE_SUITE]),
+      ]),
+    ],
+  },
+  {
     row: "B1",
     section: "Beads provider",
     source: "docs",
@@ -717,7 +857,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -764,9 +904,13 @@ function docsFailures(markdown: string): string[] {
 
 /** The synthetic document the drift falsifiers run over: the frozen bodies under the real heading shape, never the live text. */
 const synthetic = (edit: (heading: string, body: string) => string = (_heading, body) => body, tail = ""): string =>
-  `# ${DOCS_PARENT}\n\n## MechanicalWorkflows is an ordinary function library\n\nNo dependency.\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
+  `# ${DOCS_PARENT}\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
 /** wb-pfl (ORCH-REC-R544 F1): the judged shape frozen as a literal, never derived from TABLE, so deleting a half or a pin cannot pass. */
 const FROZEN_JUDGED_SHAPE: readonly string[] = [
+  "W1/today:2",
+  "W1/producer-references-only:1",
+  "W1/counted-unmapped:1",
+  "W1/never-mints:4",
   "F1/whole:3",
   "F2/whole:3",
   "F4/derived-basis-echoed:4",
@@ -814,6 +958,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R8/both-hosts:3",
   "R8/documented-channel:1",
   "R9/whole:1",
+  "R10/lock-pinned-engine:22",
+  "R10/no-lane-install:7",
   "B1/whole:2",
   "B2/whole:2",
   "A1/claude-snapshots-only:1",
@@ -880,6 +1026,40 @@ const FROZEN_R5_BINDING: readonly string[] = [
   "drift-wiring | test | test/workbench-rf-release-drift.test.ts | SCG-R12 frozen live row source shape (not a live-run claim) | R12-12 a missing workspace guard, renamed row, or commented string cannot satisfy the frozen AST",
   "drift-native | native-read | test/workbench-native-rf-preview.test.ts |  | SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier",
 ];
+/** wb-70xe (rule 16): row R10's quote and binding as literals, never derived from TABLE, in FROZEN_R5_BINDING's form. */
+const FROZEN_R10_QUOTE =
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it (the lane census reads the root files and the lane trees for six command families: the Deno installer script, a Deno release download, a version-manager install of the engine, a package-manager install of the engine, an engine self-upgrade and the Deno CI setup action or container image): the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path and realpath, a path that is not printable ASCII replaced by a placeholder, and its sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+const FROZEN_R10_BINDING: readonly string[] = [
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run through the operator's versioned layout (bin/deno a symlink through a current link to tools/deno/2.9.7/bin/deno) records the symlink as deno_resolved and the versioned binary as deno_realpath",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path holds a Latin-1 letter (U+00E9), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path holds a TAB (U+0009, a C0 control), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path holds a US (U+001F, the last C0 control), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path holds a DEL (U+007F), so it is not printable ASCII, names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path holds a space and a tilde, printable ASCII, records its resolved path and its realpath verbatim on the engine line",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary named mise (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary named deno-shim (the engine's name with a suffix) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary named Deno (the engine's name in another case) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary named mise-deno (the engine's name with a prefix) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a file under a shims directory (its parent directory: manager/shims/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a file under a shims directory (an ancestor directory: manager/shims/bin/deno), with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a symlink under a shims directory (its parent directory: manager/shims/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a symlink under a shims directory (an ancestor directory: manager/shims/bin/deno) to an engine-named binary outside one fails the success row typed rf_tsx_deno_shim before rf is launched, the mark on its resolved path alone",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a #!/bin/sh script fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports (the pin f*64) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports only in its first hex (a greater pin) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports only in its 33rd hex fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports only in its last hex (a lesser pin) fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walk lists every regular file at the repository root and the .github, .agents, .pi, .codex, examples, src, test and qa trees above their floors, this file, the helper and the tier among them",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walked trees and UNWALKED_ROOTS, each named with why, partition the repository's tracked top-level directories, and the walk lists every tracked root file and every tracked file under the walked trees (the git index, an anchor outside this census)",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the hit read takes in every walked file whole: one record per walked file in walk order, each with the file's size on disk in bytes and the count of lines the scan iterated, files past 64 KiB among them (the filesystem, an anchor outside this census)",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the hit read reports no hit of the six shapes over the walked set, this file and the helper judged with the rest",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | each shape reads each of its planted controls, its sub-forms included, as that shape only; the quiet lines, the near-miss lines and every residual family's quiet rows read nothing, and the residual families are exactly those the helper's header names, in its order (an anchor outside this census), each with its frozen count of quiet rows",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | each install line this case plants reds the census, naming the file, the line and the shape: in the root files, in every walked tree, in a file of every kind the real walk reads, on a first line, on a last line with no newline, past the first 64 KiB of the largest planted file and at the end of a line longer than 64 KiB",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the six shapes are the six command families the docs/workbench/07 Deno sentence names, label for label in order, each with its frozen count of planted controls, and that sentence's paragraph reads quiet (an anchor outside this census)",
+];
 /**
  * wb-973.17 (rule 16 anchor): the one sentence of the live RF paragraph no row binds - a posture sentence (use the public
  * APIs, present the interop honestly) that states no adapter rule a case can falsify; R3 binds the falsifiable sentence
@@ -890,15 +1070,15 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the thirty-one frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty-three frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(31);
+    expect(TABLE).toHaveLength(33);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
-  it("AC1: the seven sections are the seven the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
+  it("AC1: the eight sections are the eight the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
     expect(new Set(TABLE.map(row => row.section))).toEqual(new Set(SECTION_ORDER));
     expect(Object.keys(SECTION_MARKDOWN)).toEqual(SECTION_ORDER);
     for (const heading of SECTION_ORDER) {
@@ -943,6 +1123,18 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(row.quote).toBe(FROZEN_R5_QUOTE);
     expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["recorded-release:default-gate:pinned", "drift-wiring:default-gate:pinned", "drift-native:native-read:pinned"]);
     expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R5_BINDING);
+  });
+
+  it("AC1 (wb-70xe): row R10 quotes the Deno provisioning sentence whole, between the contractSource and fixture sentences, and binds its lock-pinned-engine and no-lane-install halves by file, describe path, verbatim title and tier, frozen as literals", () => {
+    const row = TABLE.find(candidate => candidate.row === "R10");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("ReactiveFiberCLI provider");
+    expect(row.source).toBe("docs");
+    expect(row.quote).toBe(FROZEN_R10_QUOTE);
+    expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["lock-pinned-engine:default-gate:pinned", "no-lane-install:default-gate:pinned"]);
+    expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R10_BINDING);
+    expect((SECTION_MARKDOWN["ReactiveFiberCLI provider"] ?? "").split(`${CONTRACT_SOURCE_SENTENCE} ${row.quote} Fixture text is never reported`)).toHaveLength(2);
   });
 
   it("AC1 (wb-kku9.1): rows H3 and A1 quote the observation-class sentences whole, each its paragraph's last sentence, and bind every clause to the observation-class census by file and verbatim title, frozen as literals", () => {
@@ -1129,7 +1321,7 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
 describe("wb-6hb.11 docs drift names the row or the section (synthetic document, rendered view)", () => {
   const edit = (heading: string, from: string, to: string) => (section: string, body: string): string => (section === heading ? body.replace(from, to) : body);
 
-  it("accepts the seven sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
+  it("accepts the eight sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
     expect(docsFailures(synthetic())).toEqual([]);
     expect(docsFailures(synthetic(undefined, "\n## Next\n\nOther text.\n"))).toEqual([]);
   });
@@ -1276,6 +1468,43 @@ describe("wb-973.20 row R5 drift anchors outside the census literals (gate F3 dr
       .map(test => `${DRIFT_FILE} | ${test.ancestorTitles.join(" > ")} | ${test.title}`);
     expect(collected.length, "the frozen-shape describe collects its cases in the gate's own report").toBeGreaterThan(0);
     expect(halfOf("drift-wiring")?.pins.map(pinLine)).toEqual(collected);
+  });
+});
+
+/**
+ * wb-70xe (rule 16 CT5/CT6): row R10's halves anchored OUTSIDE this file's literals. The helper's DENO_CASE_SUITES
+ * (test/helpers/rf-tsx-deno.ts) names each describe the wb-70xe cases are registered under and its file, and both test files
+ * register under those names; R10 must hold one half per entry, and each half must equal exactly the cases the gate's own
+ * report collects under that describe in that file, in report order. So a pin, or a whole half, removed from TABLE and from
+ * FROZEN_R10_BINDING and FROZEN_JUDGED_SHAPE together, or swapped for a passing case of another describe, reds here.
+ */
+describe("wb-70xe row R10 report anchor: each half binds exactly the cases the gate's own report collects under its describe", () => {
+  const halvesOf = (): readonly Half[] => TABLE.find(row => row.row === "R10")?.halves ?? [];
+  const collectedUnder = (file: string, suite: string): string[] => {
+    const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+    if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+    const modules = parsed.testResults.filter(entry => entry.name.endsWith(file));
+    expect(modules, `the gate's own report holds ${file} once`).toHaveLength(1);
+    return (modules[0]?.assertionResults ?? []).filter(test => JSON.stringify(test.ancestorTitles) === JSON.stringify([suite])).map(test => `${file} | ${suite} | ${test.title}`);
+  };
+
+  it("R10 holds one half per describe the helper names, each binding only that describe's file and path", () => {
+    expect(DENO_CASE_SUITES.map(entry => entry.suite)).toEqual([DENO_IDENTITY_SUITE, DENO_LANE_SUITE]);
+    const owners = DENO_CASE_SUITES.map(entry => halvesOf().filter(half => half.pins.length > 0 && half.pins.every(pinned => pinned.file === entry.file && JSON.stringify(pinned.suite) === JSON.stringify([entry.suite]))).map(half => half.id));
+    expect(owners).toEqual([["lock-pinned-engine"], ["no-lane-install"]]);
+    expect(halvesOf()).toHaveLength(DENO_CASE_SUITES.length);
+  });
+
+  it("each R10 half equals the cases the gate's own report collects under its describe, in report order, never a passing case of another describe", () => {
+    let checked = 0;
+    for (const entry of DENO_CASE_SUITES) {
+      const collected = collectedUnder(entry.file, entry.suite);
+      expect(collected.length, `${entry.suite} collects its cases in the gate's own report`).toBeGreaterThan(0);
+      const half = halvesOf().find(candidate => candidate.pins.some(pinned => pinned.file === entry.file));
+      expect(half?.pins.map(pinLine), entry.suite).toEqual(collected);
+      checked += 1;
+    }
+    expect(checked).toBe(2);
   });
 });
 
@@ -4031,5 +4260,53 @@ describe("wb-ur08 the consequence readers of EXPECTATION over the enumerated res
       "CLASSES",
       ...UR08_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
     ]);
+  });
+});
+
+/**
+ * wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c), rule 16): row W1's identity as a literal, never derived from TABLE - the sentence
+ * whole, then every pin as "half | tier | file | describe path | title" (bindingOf's form) - so a shortened sentence or a
+ * dropped, swapped or re-homed pin reads red here. The composition-reference census reads this literal back (its C2) and holds
+ * every pin line to its own registered cases, and the sentence to the live docs/07 (its C1).
+ */
+const FROZEN_W1: readonly string[] = [
+  "quote | CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T1",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T2",
+  "producer-references-only | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A1",
+  "counted-unmapped | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A3",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3",
+];
+
+describe("wb-klr7 docs/workbench/07 row W1: the MechanicalWorkflows composition-reference sentence, frozen and read back by its census", () => {
+  const withMw = (change: (body: string) => string) => (section: string, body: string): string => (section === MW_SECTION ? change(body) : body);
+
+  it("AC1 (wb-klr7): row W1 quotes the composition-reference sentence whole, the MechanicalWorkflows section's last block, and binds every clause to the composition-reference census by file, describe path, verbatim title and tier, frozen as a literal", () => {
+    const row = TABLE.find(candidate => candidate.row === "W1");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe(MW_SECTION);
+    expect(row.source).toBe("docs");
+    expect([`quote | ${row.quote}`, ...bindingOf(row)]).toEqual(FROZEN_W1);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["today:2", "producer-references-only:1", "counted-unmapped:1", "never-mints:4"]);
+    expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.file === T(COMPOSITION_CENSUS) && entry.suite?.[0] === COMPOSITION_TOP))).toBe(true);
+    const last = MW_SECTION_BLOCKS.at(-1);
+    expect(last?.kind === "paragraph" ? last.text : "", "the sentence is the section's last block").toBe(row.quote);
+    expect((SECTION_MARKDOWN[MW_SECTION] ?? "").endsWith(`\n\n${row.quote}`), "and its markdown's last paragraph").toBe(true);
+  });
+
+  it("K10 (wb-klr7) names row W1 (and only it) when the composition sentence lets Pi mint an id from composition fields", () => {
+    const lines = docsFailures(synthetic(withMw(body => body.replace("and never mints a Beads task ID", "and may mint a Beads task ID"))));
+    expect(named(lines)).toEqual(["row W1"]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
+  });
+
+  it("K11 (wb-klr7) reds the MechanicalWorkflows section, naming no row, when a weakening paragraph follows the composition sentence", () => {
+    const lines = docsFailures(synthetic(withMw(body => `${body}\n\nA host may mint composition IDs where the producer has none.`)));
+    expect(named(lines)).toEqual([]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
   });
 });

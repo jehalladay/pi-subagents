@@ -74,12 +74,16 @@
  * - (gate) D1 reads the roster's producer facts: each measured Verdict line's bold verdict word, the packet heading and row. The
  *   gate is OPEN once a verdict reads anything but DEFER or REJECT (ADOPT, or no verdict word at all) or TSX-PF-03 leaves the
  *   not-created packets (its heading drops "not created" or its row is gone); a confirmed ADR status keeps it closed.
- * KNOWN FINDINGS (measured on the export of trunk 4435e2e, landing 304; reported, never admitted): C1 reads exactly wb-km7q.6
- * and C2 reads exactly wb-csbt.2 and wb-km7q.6, two owner filings that name the skip family and ADR-0032 and hold only their
- * parent-child edge. wb-km7q.6 carries no sentence naming ADR-0032 beside a deferral word; wb-csbt.2 left C1 at ledger hop
- * edccd80 (landing 287), where its delivery note gained a sentence naming ADR-0032 beside a deferral word (R-WORDING-ANYWHERE).
- * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the two rows gain
- * the wording and the edge, or whether (c) binds only beads filed after the filing, is the owner's ruling, not this census's.
+ * KNOWN FINDINGS (re-measured on the export of trunk f63d3896, landing 753; reported, never admitted; prior measure was
+ * trunk 4435e2e, landing 304, and before that cut #1's measure at base 6653728 (landing 282)): C1 reads exactly wb-km7q.11
+ * and wb-km7q.6, and C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6. wb-km7q.6 carries no sentence naming ADR-0032
+ * beside a deferral word; wb-csbt.2 left C1 at ledger hop edccd80 (landing 287), where its delivery note gained a sentence
+ * naming ADR-0032 beside a deferral word (R-WORDING-ANYWHERE); wb-km7q.11, the rule-19 structural-exit child of wb-km7q.4
+ * (a flywheel filing labelled orchestrator-exit and rule-19-structural; ruling R-B140 inverted their dependency), quotes
+ * its cut's census subject in a delivery note and carries neither the wording nor an edge to the gate.
+ * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the three rows
+ * KNOWN names gain the wording and the edge they lack, or whether (c) binds only beads filed after the filing, is the
+ * owner's ruling, not this census's.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label with the families replaced):
  *  A, the statement and acceptance (a). A1 the walk (floors, anchors, no symlink, nothing unreadable, each exemption
@@ -98,11 +102,118 @@
  * the vocabulary as themselves; and each pin answers, by position, one atom the row yields (the scopes of (a), the
  * obligations of (b), the carried items of (c), the gating clause), so a row, a pin or a family alternative removed from every
  * literal of this file and of the roster together still reds.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, every pin's witness (each carries
- * its pin id and atom), the scan constants, KNOWN, the residual families, the quiet rows, the producer facts and the
- * registered test titles are held to the out-of-file roster (test/fixtures/tsx-skip-cache-deferral-roster.json). RECORDS: the
- * last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode, not
- * inverted, ran; every pin's case reached its end; no registered suite or test title names a family.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, KNOWN_CONTROL_IDS the KNOWN record's
+ * control ids in order and KNOWN_LIST_CONTROL_IDS the list reader's; the rows, every pin's witness (each carries its pin id
+ * and atom), the scan constants, KNOWN, the residual families, the quiet rows, the producer facts, the KNOWN record's live,
+ * control and composition readings, its control ids and NUMBER_WORDS, the list controls' readings and ids, and the
+ * registered test titles are held to the out-of-file roster
+ * (test/fixtures/tsx-skip-cache-deferral-roster.json). RECORDS: the last case walks this file's registered tests (vitest's task
+ * tree): each roster title once, in order, in run mode, not inverted, ran; every pin's case reached its end, and so did both
+ * KNOWN-record cases, in order; no registered suite or test title names a family.
+ * KNOWN RECORD (wb-4fpf; the two cases after the judged set; cut #3 is in the enumerate-the-resolvable form of ruling R-B284,
+ * the class frozen at refusal #2) reads text through knownRecord, never git or the export. Its text model, as coded: lines
+ * split at each line feed; the header, every line above the first line that is a space and the comment closer alone (no
+ * header without one); the opening lines, the header lines that start with KNOWN_PARAGRAPH_OPENING; the paragraph, from the
+ * first opening line to the next header line that reads " *" once trailing white space is dropped (else to the header's end),
+ * each of its lines losing a leading " *" and at most one space after it, joined by a space, every white space run read as
+ * one; the doc comment, the line above the one line that starts with KNOWN_DECLARATION, when that line is not the first. Its
+ * readings: paragraphs (the opening lines), measure (KNOWN_MEASURE_SOURCE at the paragraph's start), docComment, sets (each
+ * KNOWN_SETS_SOURCE match in the paragraph), counts (each KNOWN_COUNT_SOURCE match in it) and antecedent
+ * (KNOWN_ANTECEDENT_SOURCE tested over it). THE PINNED READER SET (exactly what this census claims of the KNOWN record): the
+ * first case holds knownRecord's reading of this file's own text to the record knownComposed gives for KNOWN and that
+ * reading's measure - paragraphs 1; measure "trunk <7 to 40 lowercase hex digits>, landing <digits>"; docComment
+ * "/** KNOWN FINDINGS (header): exact, re-measured on the export of <measure>." followed by a space and the comment closer;
+ * sets the one sentence "C1 reads exactly <C1 rows>, and C2 reads exactly <C2 rows>." with KNOWN's C1 and C2 row ids in
+ * literal order as English lists ("a", "a and b", "a, b and c"); counts the one NUMBER_WORDS word (no to ten, else the
+ * numeral) for the number of distinct rows KNOWN names; antecedent true - and it holds that reading, that composition and
+ * the roster's knownRecord live reading equal two by two, and the reading's paragraphs and antecedent to 1 and true once
+ * more. The second case holds knownRecord's readings of a well-formed synthetic text and of each knownRecord control the
+ * KNOWN CONTROLS list below names (each one or two edits of that text: measureElsewhere replaces its lead and its opening,
+ * every other control one part) to the roster's knownRecord readings (the well-formed reading, and per control the readings
+ * it moves); KNOWN_CONTROLS and the roster's controls to KNOWN_CONTROL_IDS, in order; the list reader's readings of each list
+ * control that list names (KNOWN_LIST_CONTROLS, each a synthetic text) to the roster's lists, and KNOWN_LIST_CONTROLS and the
+ * roster's lists to KNOWN_LIST_CONTROL_IDS, in order; and this file's text to one opening line whose list names
+ * KNOWN_LIST_CONTROL_IDS followed by KNOWN_CONTROL_IDS. The list reader, as coded (headerControlIds and knownControlList):
+ * lines split at each line feed; the opening lines, every line that starts with the list's opening (a space, the star, a
+ * space, KNOWN CONTROLS, a space and an opening parenthesis); the list, from the first opening line to the next line that
+ * reads " *" once trailing white space is dropped (else to the text's end), joined by a space, and no list without an
+ * opening line; its ids, each back-quoted run of ASCII letters in it, in order; its reading, the number of opening lines
+ * (openings) and those ids. The part lateOpening
+ * and longerParagraph lengthen to more lines than this file's header has;
+ * knownComposed over the composition controls (KNOWN_COMPOSITIONS: KNOWN literals over 0 to 11 distinct rows) to the
+ * roster's compositions; and NUMBER_WORDS, index by index, to the roster's numberWords. So, in the forms and at the positions
+ * this file's text and those controls pin, a KNOWN edit that leaves the header's C1/C2 sentence or its count word behind
+ * reds, and so does a re-measure that moves the header's trunk and landing but leaves the doc comment behind; the case does
+ * not hold the trunk and landing to KNOWN, so a re-measure that leaves them and the doc comment behind while the row lists,
+ * the count and the roster move with KNOWN does not red it; and, in the forms the list controls pin, an id the KNOWN
+ * CONTROLS list names that neither controls table holds, or a second line opening that list, reds; the letters-only id
+ * lengths the list controls lay (one, four, five, 13, 14 and 100 letters; the one and the 100 of listIdLengths) are among
+ * those forms, so a reader that reads ids only from some length above one letter, or only up to some length below 100
+ * letters, reds. NOT CLAIMED (scope
+ * sentences): a list form or position that no list control holds (an opening, bound or id form other than those the list
+ * controls lay, an id split across two lines among them, a letters-only id longer than 100 letters, one of a length
+ * between two lengths they lay that a reader drops while it reads every length they lay, or a third opening line)
+ * is NOT CLAIMED by this census; a form or a
+ * position that neither this file's text nor a control holds - of the text model, of a constant's match or of the doc comment,
+ * among them a line of white space only inside the paragraph, a count word of fewer than three letters or one NUMBER_WORDS
+ * lacks other than many, and a re-measure closed by another mark than the semicolon or a comma - is NOT CLAIMED by
+ * this census; the quiet forms are NOT CLAIMED by this census (knownRecord reads past each, and the quiet controls pin that
+ * reading for the forms they plant): a KNOWN FINDINGS paragraph opened in any other form (another spacing around the star,
+ * another case, a colon in place of the space and parenthesis), a C1/C2 sentence in any other form, a count phrase in any
+ * other form (a numeral, a capital letter, another word between) and a later re-measure inside the paragraph; every other
+ * sentence of the paragraph and text of this file beyond the line starts the first case scans is NOT CLAIMED by this census;
+ * whether KNOWN was measured at the named trunk and landing is NOT CLAIMED by this census, and neither is the prior-measure
+ * history. SELF-ANCHORED (named, never claimed as anchored; the 6ze.39 class at member level, refusal #2's U5): no text
+ * outside this file and the roster names a control, a composition or a number word, so a control removed from
+ * KNOWN_CONTROLS, KNOWN_CONTROL_IDS, the roster and its place in the KNOWN CONTROLS list together (or a list control from
+ * KNOWN_LIST_CONTROLS, KNOWN_LIST_CONTROL_IDS, the roster's lists and that list) - its claim leaving the list with it - stays
+ * green, and so does a reader edit that only that control held; such a coordinated hollow of the
+ * controls, of KNOWN_COMPOSITIONS with the roster's compositions or of NUMBER_WORDS with the roster's numberWords is NOT
+ * CLAIMED by this census.
+ * KNOWN CONTROLS (the second case; each control's id once, the list reader's first, in KNOWN_LIST_CONTROL_IDS order with
+ * the reading each holds, then knownRecord's, in KNOWN_CONTROL_IDS order with the readings each moves; the case holds this
+ * list's ids to KNOWN_LIST_CONTROL_IDS followed by KNOWN_CONTROL_IDS, and this file's text to one opening line; wb-7qsr, the
+ * R694 follow-up of wb-4fpf's landing 808, adds the list reader's controls for that landing's F2 and seven of knownRecord's
+ * for its F1: emptyLine, otherCountWord, columnStar, tabStar, measureComma, docTrailingSpace and docIndented; wb-8vvg, the
+ * R694 follow-up of wb-7qsr's landing 852, adds the list reader's id-length control for that landing's F2): the list
+ * reader's synthetic texts, each read as its opening lines and the ids of its first list - a list bounded by a line of a
+ * space and the star (`listBounded`), by one with trailing spaces (`listTrailingSpaceBound`) or by none, running to the
+ * text's end (`listUnbounded`) - openings 1, two ids; a list going on past a line of two spaces and the star
+ * (`listIndentedBlank`), past an empty line (`listEmptyLine`), past a line of the star alone (`listColumnStar`) or past a
+ * line ending in a space and the star (`listStarEnding`), none of them a bound - openings 1, three ids; an id with a capital
+ * first letter (`listCapitalizedId`) - openings 1, two ids; back-quoted words with a trailing digit, an inner hyphen or an
+ * inner underscore beside one of letters only (`listOtherId`) - openings 1, the one id of letters only; an id of one
+ * letter, one of 100 letters and one of five (`listIdLengths`) - openings 1, the three ids; a stale list before
+ * the list (`listStaleBefore`) - openings 2,
+ * the stale list's ids; a stale list after it (`listStaleAfter`) - openings 2, the first list's ids; no opening line
+ * (`listNone`), and, read past, an opening line with two spaces after the star (`listSpacedOpening`) or two before it
+ * (`listIndentedOpening`) - openings 0, no ids; and knownRecord's: `secondOpening` a second opening line beside the
+ * paragraph, `earlyOpening`
+ * one right after the comment opener (its stale paragraph is then the one read: its measure and its sentence, no count
+ * phrase, antecedent false), `longHeader` one after 48 filler lines and `lateOpening` one after as many filler lines as this
+ * file's header has lines - paragraphs 2; `secondSentence` a second and `repeatedSentence` a repeated C1/C2 sentence - sets;
+ * `secondCount` a second and `repeatedCount` a repeated count phrase, a stale count phrase after 48 filler lines of the
+ * paragraph (`longParagraph`) or after as many as this file's header has lines (`longerParagraph`), one after a line of two
+ * spaces and the star (`indentedBlank`: not a blank line, so the paragraph goes on) and one after an empty line
+ * (`emptyLine`: no blank line either), and a stale count phrase on the word many, which NUMBER_WORDS lacks (`otherCountWord`) -
+ * counts; the count phrase going on neither word (`noAntecedent`), on "known names" (`lowerAntecedent`) or on "KNOWN lists"
+ * (`knownLists`), going on neither beside a numeral phrase that goes on "KNOWN names" (`numeralAntecedent`), and with the
+ * line that carries "KNOWN names" indented by two spaces (`indentedLine`), starting at its star (`columnStar`) or with one
+ * tab before its star (`tabStar`), its star staying in the paragraph each time - antecedent false; the re-measure after the
+ * paragraph's start (`measureLater`), without its semicolon (`measureNoSemicolon`), without the space after it
+ * (`measureNoSpace`) or with a comma in the semicolon's place (`measureComma`), written "Re-measured" (`casedMeasure`) or
+ * "measured" (`measureWithoutRe`), and after the paragraph's
+ * start beside a re-measure on a header line of its own (`measureElsewhere`) - measure null; no opening line (`noOpening`)
+ * and no header (`noHeader`) - paragraphs 0, measure null, no sets, no counts, antecedent false; no blank line after the
+ * paragraph (`noBlank`) - the next paragraph's sentence and count phrase read too; no declaration (`noDeclaration`) and two
+ * declarations (`twoDeclarations`) - docComment null; a blank line between the doc comment and the declaration
+ * (`detachedDocComment`) - docComment empty; the doc comment with one trailing space (`docTrailingSpace`) or indented by two
+ * spaces (`docIndented`) - docComment that line, its white space kept; and, moving none, a blank line with trailing white space
+ * (`trailingSpaceBlank`), irregular spacing (`spacing`), an opening line below the header (`belowHeader`) and the quiet forms:
+ * a colon opening (`quietColonOpening`), a spaced (`quietSpacedOpening`) and a cased opening (`quietCasedOpening`), another
+ * sentence form (`quietOtherSentence`), a numeral (`quietNumeralCount`) and a capital count word (`quietCapitalCount`), a
+ * capitalized phrase (`quietCapitalPhrase`) and a later re-measure (`quietSecondMeasure`).
+ *
  * RESIDUALS (named families, each with pinned quiet rows in QUIET, read false in the roster witnesses): R-MARKER-ANYWHERE a
  * marker anywhere in a sentence admits it, whatever the marker qualifies (a list inside a code comment, or a comment and the
  * code lines after it, read as one sentence, so one marker covers them); R-PARAPHRASE the skip or the cache named outside the
@@ -251,11 +362,234 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 const POSTURE_ANCHORS: readonly string[] = ["wb-csbt.1.title:1 S,K", "wb-csbt.2.title:1 S"];
 /** The rows whose judged fields cite the program at base (the epic and its four children, by tag and path). */
 const CITED_ROW_ANCHORS: readonly string[] = ["wb-csbt", "wb-csbt.1", "wb-csbt.2", "wb-csbt.3", "wb-csbt.4"];
-/** KNOWN FINDINGS (header): exact, measured on the export of trunk 4435e2e. */
+/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk f63d3896, landing 753. */
 const KNOWN: Readonly<Record<string, readonly string[]>> = {
-  C1: ["wb-km7q.6 no-deferral-wording"],
-  C2: ["wb-csbt.2 no-related-edge", "wb-km7q.6 no-related-edge"],
+  C1: ["wb-km7q.11 no-deferral-wording", "wb-km7q.6 no-deferral-wording"],
+  C2: ["wb-csbt.2 no-related-edge", "wb-km7q.11 no-related-edge", "wb-km7q.6 no-related-edge"],
 };
+/** The KNOWN record's forms (header KNOWN RECORD), the only ones knownRecord reads: an opening line starts with
+ * KNOWN_PARAGRAPH_OPENING; the paragraph's re-measure is KNOWN_MEASURE_SOURCE at its start; every match of KNOWN_SETS_SOURCE and
+ * of KNOWN_COUNT_SOURCE in it is read; KNOWN_ANTECEDENT_SOURCE is tested over it; KNOWN's declaration line starts with
+ * KNOWN_DECLARATION. */
+const KNOWN_PARAGRAPH_OPENING = " * KNOWN FINDINGS (";
+const KNOWN_MEASURE_SOURCE = String.raw`^KNOWN FINDINGS \(re-measured on the export of (trunk [0-9a-f]{7,40}, landing [0-9]+); `;
+const KNOWN_SETS_SOURCE = String.raw`\bC1 reads exactly .+?, and C2 reads exactly .+?\.(?=\s|$)`;
+const KNOWN_COUNT_SOURCE = String.raw`\bwhether the ([a-z]+) rows\b`;
+const KNOWN_ANTECEDENT_SOURCE = String.raw`\bwhether the [a-z]+ rows KNOWN names\b`;
+const KNOWN_DECLARATION = "const KNOWN: ";
+const NUMBER_WORDS: readonly string[] = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+/** This file's header length in lines (header KNOWN RECORD): lateOpening and longerParagraph lengthen a part by as many filler
+ * lines, so the line each plants sits past every line this file's header has; the second case holds that length. */
+const SELF_HEADER_LENGTH = readFileSync(join(REPO, SELF), "utf8").split("\n").indexOf(" */");
+interface KnownRecord {
+  readonly paragraphs: number;
+  readonly measure: string | null;
+  readonly docComment: string | null;
+  readonly sets: readonly string[];
+  readonly counts: readonly string[];
+  readonly antecedent: boolean;
+}
+/** A text's KNOWN record (header KNOWN RECORD): the header is the lines above the first line that is a space and the comment
+ * closer alone (no header without one); the paragraph runs from the first opening line to the next header line reading " *"
+ * once trailing white space is dropped (else to the header's end), each of its lines losing a leading " *" and at most one
+ * space, joined by one space with white space runs read as one; the doc comment is the line above the one line starting with
+ * KNOWN_DECLARATION, when that line is not the first (else null). */
+function knownRecord(text: string): KnownRecord {
+  const lines = text.split("\n");
+  const header = lines.slice(0, Math.max(lines.indexOf(" */"), 0));
+  const openings = header.flatMap((line, index) => (line.startsWith(KNOWN_PARAGRAPH_OPENING) ? [index] : []));
+  const start = openings[0] ?? -1;
+  const end = start < 0 ? -1 : header.findIndex((line, index) => index > start && line.trimEnd() === " *");
+  const paragraph = (start < 0 ? [] : header.slice(start, end < 0 ? header.length : end))
+    .map(line => line.replace(/^ \* ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+  const declarations = lines.flatMap((line, index) => (line.startsWith(KNOWN_DECLARATION) ? [index] : []));
+  const declaration = declarations.length === 1 ? (declarations[0] ?? 0) : 0;
+  return {
+    paragraphs: openings.length,
+    measure: new RegExp(KNOWN_MEASURE_SOURCE).exec(paragraph)?.[1] ?? null,
+    docComment: declaration > 0 ? (lines[declaration - 1] ?? null) : null,
+    sets: [...paragraph.matchAll(new RegExp(KNOWN_SETS_SOURCE, "g"))].map(match => match[0]),
+    counts: [...paragraph.matchAll(new RegExp(KNOWN_COUNT_SOURCE, "g"))].map(match => match[1] ?? ""),
+    antecedent: new RegExp(KNOWN_ANTECEDENT_SOURCE).test(paragraph),
+  };
+}
+/** An English list: "a", "a and b", "a, b and c". */
+const englishList = (items: readonly string[]): string => (items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`);
+/** A KNOWN finding's row id: the text before its first space. */
+const knownRowOf = (finding: string): string => finding.split(" ")[0] ?? "";
+/** What a KNOWN literal and a re-measure compose (header KNOWN RECORD): the doc comment naming the re-measure, the one C1/C2
+ * sentence listing the literal's C1 and C2 row ids in order as English lists, and the NUMBER_WORDS word (else the numeral) for
+ * the number of distinct rows it names. */
+function knownComposed(known: Readonly<Record<string, readonly string[]>>, measure: string | null): { readonly docComment: string; readonly sets: readonly string[]; readonly counts: readonly string[] } {
+  const rows = [...new Set(Object.values(known).flatMap(findings => findings.map(knownRowOf)))];
+  return {
+    docComment: `/** KNOWN FINDINGS (header): exact, re-measured on the export of ${measure ?? "(no re-measure read)"}. */`,
+    sets: [`C1 reads exactly ${englishList((known.C1 ?? []).map(knownRowOf))}, and C2 reads exactly ${englishList((known.C2 ?? []).map(knownRowOf))}.`],
+    counts: [NUMBER_WORDS[rows.length] ?? String(rows.length)],
+  };
+}
+/** The composition controls (header KNOWN RECORD, the second case), for n of 0 to 11: a KNOWN literal over the n distinct rows
+ * wb-r1 to wb-r<n>, C1 the first ceil(n/2) of them and C2 those from index floor(n/2), so an odd n shares its middle row. */
+const KNOWN_COMPOSITIONS: readonly Readonly<Record<string, readonly string[]>>[] = Array.from({ length: 12 }, (_, n) => {
+  const rows = Array.from({ length: n }, (_, index) => `wb-r${index + 1}`);
+  return { C1: rows.slice(0, Math.ceil(n / 2)).map(row => `${row} no-deferral-wording`), C2: rows.slice(Math.floor(n / 2)).map(row => `${row} no-related-edge`) };
+});
+/** The control ids the header's KNOWN CONTROLS list names, in order (header KNOWN RECORD): each back-quoted run of ASCII letters
+ * from the first line that opens the list, " * KNOWN CONTROLS (", to the next line reading " *" once trailing white space is
+ * dropped (else to the text's end); none when no line opens it. The list controls pin these forms (header KNOWN CONTROLS). */
+function headerControlIds(text: string): string[] {
+  const lines = text.split("\n");
+  const start = lines.findIndex(line => line.startsWith(" * KNOWN CONTROLS ("));
+  if (start < 0) return [];
+  const end = lines.findIndex((line, index) => index > start && line.trimEnd() === " *");
+  return [...lines.slice(start, end < 0 ? lines.length : end).join(" ").matchAll(/`([A-Za-z]+)`/g)].map(match => match[1] ?? "");
+}
+/** The parts of the KNOWN record's synthetic text (header KNOWN RECORD, the second case), in order: the lead lines, the opening
+ * line, the paragraph's body, the blank header line, the next paragraph (decoys a read past the paragraph would take: a C1/C2
+ * sentence and a count phrase), the header's closing line, the doc comment, the declaration of KNOWN and a tail. */
+interface KnownControlParts {
+  readonly lead: readonly string[];
+  readonly opening: readonly string[];
+  readonly body: readonly string[];
+  readonly blank: readonly string[];
+  readonly next: readonly string[];
+  readonly close: readonly string[];
+  readonly doc: readonly string[];
+  readonly declaration: readonly string[];
+  readonly tail: readonly string[];
+}
+const KNOWN_CONTROL_BASE: KnownControlParts = {
+  lead: ["/**", " * READINGS (the synthetic header of the KNOWN record's controls)."],
+  opening: [" * KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7; reported, never admitted): C1 reads exactly wb-x"],
+  body: [" * and wb-y, and C2 reads exactly wb-other. wb-x carries no wording.", " * KNOWN pins both sets exactly; whether the three rows", " * KNOWN names gain the wording is the owner's ruling."],
+  blank: [" *"],
+  next: [" * JUDGED ROWS (decoys past the paragraph): C1 reads exactly wb-y, and C2 reads exactly wb-x. A count read here is", " * whether the two rows KNOWN names gain it."],
+  close: [" */"],
+  doc: ["/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk 1234567, landing 7. */"],
+  declaration: ["const KNOWN: Readonly<Record<string, readonly string[]>> = {};"],
+  tail: [],
+};
+/** A control's text: the synthetic text with the control's parts in place of the base's, joined at line feeds. */
+function knownControlText(parts: Partial<KnownControlParts> = {}): string {
+  const text = { ...KNOWN_CONTROL_BASE, ...parts };
+  return [...text.lead, ...text.opening, ...text.body, ...text.blank, ...text.next, ...text.close, ...text.doc, ...text.declaration, ...text.tail].join("\n");
+}
+/** Numbered filler lines for a long header or paragraph; they carry no form the record reads. */
+const fillerLines = (count: number, where: string): string[] => Array.from({ length: count }, (_, index) => ` * filler line ${index + 1} of the ${where}.`);
+const KNOWN_STALE_OPENING = " * KNOWN FINDINGS (re-measured on the export of trunk 7654321, landing 3; stale copy): C1 reads exactly wb-y,";
+const KNOWN_STALE_SENTENCE = " * Before the re-measure, C1 reads exactly wb-y, and C2 reads exactly wb-x.";
+const KNOWN_STALE_COUNT = " * At the prior measure the question was whether the two rows gain the wording.";
+/** The KNOWN record's controls (header KNOWN RECORD and its KNOWN CONTROLS list, the second case), by id: each replaces one or
+ * two parts of the synthetic text (measureElsewhere two, every other control one); the roster holds the readings each moves
+ * over the well-formed reading (an empty entry moves none). */
+const KNOWN_CONTROLS: Readonly<Record<string, Partial<KnownControlParts>>> = {
+  secondOpening: { next: [KNOWN_STALE_OPENING, " * and C2 reads exactly wb-x.", " *", ...KNOWN_CONTROL_BASE.next] },
+  earlyOpening: { lead: ["/**", KNOWN_STALE_OPENING, " * and C2 reads exactly wb-x.", " *", ...KNOWN_CONTROL_BASE.lead.slice(1)] },
+  longHeader: { next: [...KNOWN_CONTROL_BASE.next, ...fillerLines(48, "header"), " * KNOWN FINDINGS (stale copy): C1 reads exactly wb-y, and C2 reads exactly wb-x."] },
+  lateOpening: { next: [...KNOWN_CONTROL_BASE.next, ...fillerLines(SELF_HEADER_LENGTH, "header"), KNOWN_STALE_OPENING, " * and C2 reads exactly wb-x."] },
+  secondSentence: { body: [...KNOWN_CONTROL_BASE.body, KNOWN_STALE_SENTENCE] },
+  repeatedSentence: { body: [...KNOWN_CONTROL_BASE.body, " * Again, C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other."] },
+  secondCount: { body: [...KNOWN_CONTROL_BASE.body, KNOWN_STALE_COUNT] },
+  repeatedCount: { body: [...KNOWN_CONTROL_BASE.body, " * Again, whether the three rows KNOWN names gain it is open."] },
+  longParagraph: { body: [...KNOWN_CONTROL_BASE.body, ...fillerLines(48, "paragraph"), KNOWN_STALE_COUNT] },
+  longerParagraph: { body: [...KNOWN_CONTROL_BASE.body, ...fillerLines(SELF_HEADER_LENGTH, "paragraph"), KNOWN_STALE_COUNT] },
+  indentedBlank: { body: [...KNOWN_CONTROL_BASE.body, "  *", KNOWN_STALE_COUNT] },
+  emptyLine: { body: [...KNOWN_CONTROL_BASE.body, "", KNOWN_STALE_COUNT] },
+  otherCountWord: { body: [...KNOWN_CONTROL_BASE.body, " * At the prior measure the question was whether the many rows gain the wording."] },
+  noAntecedent: { body: [" * and wb-y, and C2 reads exactly wb-other. wb-x carries no wording.", " * KNOWN pins both sets exactly; whether the three rows", " * gain the wording is the owner's ruling."] },
+  lowerAntecedent: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), " * known names gain the wording is the owner's ruling."] },
+  knownLists: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), " * KNOWN lists gain the wording is the owner's ruling."] },
+  numeralAntecedent: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), " * gain the wording is the owner's ruling.", " * At the prior measure the question was whether the 2 rows KNOWN names gain the wording."] },
+  indentedLine: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), "  * KNOWN names gain the wording is the owner's ruling."] },
+  columnStar: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), "* KNOWN names gain the wording is the owner's ruling."] },
+  tabStar: { body: [...KNOWN_CONTROL_BASE.body.slice(0, 2), "\t* KNOWN names gain the wording is the owner's ruling."] },
+  measureLater: { opening: [" * KNOWN FINDINGS (prior measure: KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7; reported): C1 reads exactly wb-x"] },
+  measureNoSemicolon: { opening: [" * KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7) reported, never admitted: C1 reads exactly wb-x"] },
+  measureNoSpace: { opening: [" * KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7;reported, never admitted): C1 reads exactly wb-x"] },
+  measureComma: { opening: [" * KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7, reported, never admitted): C1 reads exactly wb-x"] },
+  casedMeasure: { opening: [" * KNOWN FINDINGS (Re-measured on the export of trunk 1234567, landing 7; reported, never admitted): C1 reads exactly wb-x"] },
+  measureWithoutRe: { opening: [" * KNOWN FINDINGS (measured on the export of trunk 1234567, landing 7; reported, never admitted): C1 reads exactly wb-x"] },
+  measureElsewhere: {
+    lead: ["/**", "KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7; a header line of its own).", ...KNOWN_CONTROL_BASE.lead.slice(1)],
+    opening: [" * KNOWN FINDINGS (prior measure: KNOWN FINDINGS (re-measured on the export of trunk 1234567, landing 7; reported): C1 reads exactly wb-x"],
+  },
+  noOpening: { opening: [" * FINDINGS (re-measured on the export of trunk 1234567, landing 7; reported, never admitted): C1 reads exactly wb-x"] },
+  noHeader: { close: [" **/"] },
+  noBlank: { blank: [] },
+  noDeclaration: { declaration: [] },
+  twoDeclarations: { tail: ["const KNOWN: Record<string, string[]> = {};"] },
+  detachedDocComment: { doc: [...KNOWN_CONTROL_BASE.doc, ""] },
+  docTrailingSpace: { doc: KNOWN_CONTROL_BASE.doc.map(line => `${line} `) },
+  docIndented: { doc: KNOWN_CONTROL_BASE.doc.map(line => `  ${line}`) },
+  trailingSpaceBlank: { blank: [" *   "] },
+  spacing: { body: [" *and wb-y,  and C2 reads\texactly wb-other. wb-x carries no wording.", " * KNOWN pins both sets exactly; whether the  three rows", " *  KNOWN names gain the wording is the owner's ruling."] },
+  belowHeader: { tail: ["/**", KNOWN_STALE_OPENING, " * and C2 reads exactly wb-x.", " */"] },
+  quietColonOpening: { next: [" * KNOWN FINDINGS: C1 reads exactly wb-y, and C2 reads exactly wb-x; whether the two rows KNOWN", " * names gain the wording is open.", " *", ...KNOWN_CONTROL_BASE.next] },
+  quietSpacedOpening: { next: [" *  KNOWN FINDINGS (re-measured on the export of trunk 7654321, landing 3; stale copy): C1 reads exactly wb-y,", " * and C2 reads exactly wb-x.", " *", ...KNOWN_CONTROL_BASE.next] },
+  quietCasedOpening: { next: [" * Known findings (re-measured on the export of trunk 7654321, landing 3; stale copy): C1 reads exactly wb-y,", " * and C2 reads exactly wb-x.", " *", ...KNOWN_CONTROL_BASE.next] },
+  quietOtherSentence: { body: [...KNOWN_CONTROL_BASE.body, " * Before the re-measure, C1 reads exactly wb-y; C2 reads exactly wb-x."] },
+  quietNumeralCount: { body: [...KNOWN_CONTROL_BASE.body, " * At the prior measure the question was whether the 2 rows KNOWN names gain the wording."] },
+  quietCapitalCount: { body: [...KNOWN_CONTROL_BASE.body, " * At the prior measure the question was whether the Two rows KNOWN names gain the wording."] },
+  quietCapitalPhrase: { body: [...KNOWN_CONTROL_BASE.body, " * Whether the two rows KNOWN names gain the wording was the prior question."] },
+  quietSecondMeasure: { body: [...KNOWN_CONTROL_BASE.body, " * It was also re-measured on the export of trunk 7654321, landing 3; stale."] },
+};
+/** KNOWN_CONTROLS' ids in order (standing rule 16, the controls table's frozen shape; header KNOWN RECORD): the second case holds
+ * KNOWN_CONTROLS, the roster's knownRecord.controls and the header's KNOWN CONTROLS list after KNOWN_LIST_CONTROL_IDS to it. */
+const KNOWN_CONTROL_IDS: readonly string[] = [
+  "secondOpening", "earlyOpening", "longHeader", "lateOpening", "secondSentence", "repeatedSentence", "secondCount",
+  "repeatedCount", "longParagraph", "longerParagraph", "indentedBlank", "emptyLine", "otherCountWord", "noAntecedent",
+  "lowerAntecedent", "knownLists", "numeralAntecedent", "indentedLine", "columnStar", "tabStar", "measureLater",
+  "measureNoSemicolon", "measureNoSpace", "measureComma", "casedMeasure", "measureWithoutRe", "measureElsewhere",
+  "noOpening", "noHeader", "noBlank", "noDeclaration", "twoDeclarations", "detachedDocComment", "docTrailingSpace",
+  "docIndented", "trailingSpaceBlank", "spacing", "belowHeader", "quietColonOpening", "quietSpacedOpening",
+  "quietCasedOpening", "quietOtherSentence", "quietNumeralCount", "quietCapitalCount", "quietCapitalPhrase",
+  "quietSecondMeasure",
+];
+/** A text's KNOWN CONTROLS list reading (header KNOWN RECORD, the second case): the lines that start with the list's opening
+ * (openings), and the ids headerControlIds reads from the first of them. */
+interface KnownControlList {
+  readonly openings: number;
+  readonly ids: readonly string[];
+}
+function knownControlList(text: string): KnownControlList {
+  return { openings: text.split("\n").filter(line => line.startsWith(" * KNOWN CONTROLS (")).length, ids: headerControlIds(text) };
+}
+/** The list reader's synthetic lines (header KNOWN CONTROLS): a list opening that names two ids, and a later line naming a third. */
+const KNOWN_LIST_OPENING = " * KNOWN CONTROLS (a synthetic list): `alpha` and `beta`.";
+const KNOWN_LIST_STALE = " * A stale line names `removedControl`.";
+/** A letters-only id of 100 letters, longer than any id this file's KNOWN CONTROLS list names (header KNOWN CONTROLS, the
+ * id-length list control). */
+const KNOWN_LIST_LONG_ID = "z".repeat(100);
+/** The list reader's controls (header KNOWN CONTROLS, the second case), by id: each a synthetic text, as its lines, whose
+ * reading (knownControlList: its opening lines and the ids of its first list) the roster's lists hold. */
+const KNOWN_LIST_CONTROLS: Readonly<Record<string, readonly string[]>> = {
+  listBounded: [KNOWN_LIST_OPENING, " *", KNOWN_LIST_STALE],
+  listTrailingSpaceBound: [KNOWN_LIST_OPENING, " *   ", KNOWN_LIST_STALE],
+  listUnbounded: [" * KNOWN CONTROLS (a synthetic list): `alpha`", " * and `beta`, the text ending without a bound."],
+  listIndentedBlank: [KNOWN_LIST_OPENING, "  *", KNOWN_LIST_STALE, " *"],
+  listEmptyLine: [KNOWN_LIST_OPENING, "", KNOWN_LIST_STALE, " *"],
+  listColumnStar: [KNOWN_LIST_OPENING, "*", KNOWN_LIST_STALE, " *"],
+  listStarEnding: [KNOWN_LIST_OPENING, " * This line ends in a space and the star *", KNOWN_LIST_STALE, " *"],
+  listCapitalizedId: [" * KNOWN CONTROLS (a synthetic list): `alpha` and `RemovedControl`.", " *"],
+  listOtherId: [" * KNOWN CONTROLS (a synthetic list): `alpha`, `id1`, `two-words` and `snake_case`.", " *"],
+  listIdLengths: [` * KNOWN CONTROLS (a synthetic list): \`a\`, \`${KNOWN_LIST_LONG_ID}\` and \`alpha\`.`, " *"],
+  listStaleBefore: [" * KNOWN CONTROLS (a stale copy): `secondOpening` and `removedControl`.", " *", KNOWN_LIST_OPENING, " *"],
+  listStaleAfter: [KNOWN_LIST_OPENING, " *", " * KNOWN CONTROLS (a stale copy): `secondOpening` and `removedControl`.", " *"],
+  listNone: [" * The text opens no list.", KNOWN_LIST_STALE],
+  listSpacedOpening: [" *  KNOWN CONTROLS (a spaced opening): `alpha`.", KNOWN_LIST_STALE],
+  listIndentedOpening: ["  * KNOWN CONTROLS (an indented opening): `alpha`.", KNOWN_LIST_STALE],
+};
+/** KNOWN_LIST_CONTROLS' ids in order (standing rule 16, the list controls table's frozen shape; header KNOWN CONTROLS): the
+ * second case holds KNOWN_LIST_CONTROLS, the roster's knownRecord.lists and the head of the header's KNOWN CONTROLS list to it. */
+const KNOWN_LIST_CONTROL_IDS: readonly string[] = [
+  "listBounded", "listTrailingSpaceBound", "listUnbounded", "listIndentedBlank", "listEmptyLine", "listColumnStar",
+  "listStarEnding", "listCapitalizedId", "listOtherId", "listIdLengths", "listStaleBefore", "listStaleAfter", "listNone",
+  "listSpacedOpening", "listIndentedOpening",
+];
+/** The KNOWN-record cases that reached their ends, in order (RECORDS). */
+const KNOWN_REACHED: string[] = [];
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-MARKER-ANYWHERE",
   "R-PARAPHRASE",
@@ -417,6 +751,18 @@ interface Roster {
   readonly producer: Producer;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  readonly knownRecord: KnownRoster;
+}
+/** The roster's KNOWN record readings (header KNOWN RECORD): this file's live record, the well-formed reading, per control the
+ * readings it moves, per list control its reading, the composition controls' sentence and count word, and NUMBER_WORDS index by
+ * index. */
+interface KnownRoster {
+  readonly live: JsonObject;
+  readonly wellFormed: JsonObject;
+  readonly controls: { readonly [control: string]: JsonObject };
+  readonly lists: { readonly [control: string]: JsonObject };
+  readonly compositions: readonly JsonObject[];
+  readonly numberWords: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -499,6 +845,26 @@ function readRoster(): Roster {
     producer: producerOf(raw.producer),
     rows,
     tests: strings(raw.tests, "tests"),
+    knownRecord: knownRosterOf(raw.knownRecord),
+  };
+}
+/** A roster object read as JSON, refused by name when it is not an object. */
+function jsonObjectOf(value: unknown, field: string): JsonObject {
+  const parsed = json(objectOf(value, field));
+  return isObject(parsed) ? (parsed as JsonObject) : {};
+}
+function knownRosterOf(value: unknown): KnownRoster {
+  const known = objectOf(value, "knownRecord");
+  const controls = objectOf(known.controls, "knownRecord.controls");
+  const lists = objectOf(known.lists, "knownRecord.lists");
+  if (!Array.isArray(known.compositions)) throw new Error("roster knownRecord.compositions must be a list");
+  return {
+    live: jsonObjectOf(known.live, "knownRecord.live"),
+    wellFormed: jsonObjectOf(known.wellFormed, "knownRecord.wellFormed"),
+    controls: Object.fromEntries(Object.entries(controls).map(([id, moved]): [string, JsonObject] => [id, jsonObjectOf(moved, `knownRecord.controls.${id}`)])),
+    lists: Object.fromEntries(Object.entries(lists).map(([id, reading]): [string, JsonObject] => [id, jsonObjectOf(reading, `knownRecord.lists.${id}`)])),
+    compositions: known.compositions.map((entry: unknown, index: number): JsonObject => jsonObjectOf(entry, `knownRecord.compositions[${index}]`)),
+    numberWords: strings(known.numberWords, "knownRecord.numberWords"),
   };
 }
 
@@ -1444,6 +1810,52 @@ describe("wb-csbt.1 TSX skip and cache deferral census (TSX-RESOURCE-EFFICIENCY-
     expect(ROWS.flatMap(row => row.pins).map(rosterAnchor), "each pin's anchor is the bead row's atom at its position").toEqual(pinAtoms(bead));
   });
 
+  it("the KNOWN record: knownRecord reads this file's text as the record knownComposed gives for KNOWN - one KNOWN paragraph opening with the re-measure its doc comment names, one C1/C2 sentence and one count phrase listing and counting KNOWN's rows - and the roster's live reading agrees with both", { timeout: 60_000 }, () => {
+    const record = knownRecord(readFileSync(join(REPO, SELF), "utf8"));
+    const expected = { paragraphs: 1, measure: expect.stringMatching(/^trunk [0-9a-f]{7,40}, landing [0-9]+$/), ...knownComposed(KNOWN, record.measure), antecedent: true };
+    expect(record, "this file's KNOWN record, read from its own text").toStrictEqual(expected);
+    expect(json(record), "this file's KNOWN record, held to the roster's live reading").toStrictEqual(ROSTER.knownRecord.live);
+    expect(ROSTER.knownRecord.live, "the roster's live reading, held to the record composed from KNOWN").toStrictEqual(expected);
+    expect([record.paragraphs, record.antecedent], "this file's text reads one KNOWN paragraph whose count phrase goes on KNOWN names").toStrictEqual([1, true]);
+    KNOWN_REACHED.push("record");
+  });
+
+  it("the KNOWN record's controls: knownRecord reads the well-formed synthetic text and each control as the roster holds them, the list reader reads each list control as the roster holds it, KNOWN_CONTROLS, KNOWN_LIST_CONTROLS and the roster name KNOWN_CONTROL_IDS and KNOWN_LIST_CONTROL_IDS in order, this file's text opens one KNOWN CONTROLS list naming KNOWN_LIST_CONTROL_IDS then KNOWN_CONTROL_IDS, the long controls reach past this file's header, and knownComposed and NUMBER_WORDS read as the roster's compositions and number words", { timeout: 60_000 }, () => {
+    const readings = {
+      wellFormed: json(knownRecord(knownControlText())),
+      controls: Object.fromEntries(Object.entries(KNOWN_CONTROLS).map(([id, parts]): [string, Json] => [id, json(knownRecord(knownControlText(parts)))])),
+    };
+    const { wellFormed, controls, lists, compositions, numberWords } = ROSTER.knownRecord;
+    expect(readings, "knownRecord's readings of the synthetic text and of each control (the roster's well-formed reading with the readings each control moves)").toStrictEqual({
+      wellFormed,
+      controls: Object.fromEntries(Object.entries(controls).map(([id, moved]): [string, Json] => [id, { ...wellFormed, ...moved }])),
+    });
+    // The list reader's controls: knownControlList's reading of each synthetic text (its opening lines and its first list's ids).
+    const listReadings = Object.fromEntries(Object.entries(KNOWN_LIST_CONTROLS).map(([id, lines]): [string, Json] => [id, json(knownControlList(lines.join("\n")))]));
+    expect(listReadings, "the list reader's reading of each list control (the roster's lists)").toStrictEqual(lists);
+    // The controls tables' frozen shapes and their claim: KNOWN_CONTROLS and the roster hold KNOWN_CONTROL_IDS, KNOWN_LIST_CONTROLS and
+    // the roster's lists hold KNOWN_LIST_CONTROL_IDS, and this file's text opens one KNOWN CONTROLS list naming both, in that order.
+    const text = readFileSync(join(REPO, SELF), "utf8");
+    expect({ table: Object.keys(KNOWN_CONTROLS), roster: Object.keys(controls), listTable: Object.keys(KNOWN_LIST_CONTROLS), listRoster: Object.keys(lists), header: knownControlList(text) }, "the control ids of KNOWN_CONTROLS, the roster, KNOWN_LIST_CONTROLS and the roster's lists, and this file's KNOWN CONTROLS list reading").toStrictEqual({
+      table: [...KNOWN_CONTROL_IDS],
+      roster: [...KNOWN_CONTROL_IDS],
+      listTable: [...KNOWN_LIST_CONTROL_IDS],
+      listRoster: [...KNOWN_LIST_CONTROL_IDS],
+      header: { openings: 1, ids: [...KNOWN_LIST_CONTROL_IDS, ...KNOWN_CONTROL_IDS] },
+    });
+    // The long controls lengthen a part past every line this file's header has.
+    const headerLength = text.split("\n").indexOf(" */");
+    expect({ lateOpening: (KNOWN_CONTROLS.lateOpening?.next?.length ?? 0) > headerLength, longerParagraph: (KNOWN_CONTROLS.longerParagraph?.body?.length ?? 0) > headerLength }, "the part each long control lengthens is longer than this file's header").toStrictEqual({ lateOpening: true, longerParagraph: true });
+    // The composition controls (knownComposed over 0 to 11 distinct rows) and NUMBER_WORDS, index by index.
+    const composed = KNOWN_COMPOSITIONS.map(known => {
+      const { sets, counts } = knownComposed(known, null);
+      return json({ sets, counts });
+    });
+    expect(composed, "knownComposed's sentence and count word for each composition control").toStrictEqual(compositions);
+    expect(NUMBER_WORDS.map((word, index) => `${index}:${word}`), "NUMBER_WORDS, index by index").toStrictEqual(numberWords);
+    KNOWN_REACHED.push("controls");
+  });
+
   for (const row of ROWS) {
     describe(titleOf(row), () => {
       for (const pin of row.pins) {
@@ -1479,6 +1891,7 @@ describe("wb-csbt.1 TSX skip and cache deferral census (TSX-RESOURCE-EFFICIENCY-
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(KNOWN_REACHED, "both KNOWN-record cases reached their ends, in order").toEqual(["record", "controls"]);
     expect([...suites, ...titles].filter(name => familiesIn(name).length > 0), "registered titles naming a family").toEqual([]);
   });
 });

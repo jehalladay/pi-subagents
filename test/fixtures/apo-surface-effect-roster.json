@@ -1,0 +1,1921 @@
+{
+ "bead": "wb-021.1",
+ "constants": {
+  "requirementId": "MW-ADAPTIVE-POLICY-ORGANIZATIONS-R1",
+  "programSlug": "adaptive-policy-organizations",
+  "abbreviation": "APO",
+  "readClass": "read",
+  "surfaceKinds": [
+   "views",
+   "node() providers",
+   "UI handlers"
+  ],
+  "acceptance": "a guard pins today's absence; once any APO surface registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler reaches a non-read registry.invoke.",
+  "export": ".beads/issues.jsonl",
+  "tracker": ".beads/",
+  "scope": "src/",
+  "holders": [
+   "test/workbench-apo-surface-effect-census.test.ts",
+   "test/fixtures/apo-surface-effect-roster.json"
+  ],
+  "registrySource": "src/workbench/capability-registry.ts",
+  "providers": "src/workbench/providers/",
+  "nativeModules": "src/workbench/native-modules.ts",
+  "nativeSurface": "registerNativeProviders",
+  "liveness": {
+   "file": "src/workbench/providers/hyperunix.ts",
+   "id": "hyperunix.find"
+  },
+  "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+  "script": "\\.(?:[cm]?[jt]s|[jt]sx)$",
+  "floors": {
+   "srcFiles": 100,
+   "srcScripts": 100,
+   "pinFiles": 100,
+   "realReaches": 8
+  },
+  "stems": [
+   "^adaptives?$",
+   "^polic(?:y|ies)$",
+   "^organi[sz]ations?$"
+  ],
+  "surfaces": [
+   "registerForgeGateStatus",
+   "registerFurnaceRunInspect",
+   "registerHyperUnixFind",
+   "registerNativeForgeGateStatus",
+   "registerNativeFurnaceRunInspect",
+   "registerNativeHyperUnixFind",
+   "registerNativeReactiveFiberRender",
+   "registerReactiveFiberRender"
+  ],
+  "spellingPlants": {
+   "slug": {
+    "path": "src/workbench/zz-spelling-slug.ts",
+    "text": "export const PROGRAM = \"adaptive-policy-organizations\";\n"
+   },
+   "words": {
+    "path": "src/workbench/zz-spelling-words.ts",
+    "text": "// Shows Adaptive Policy Organisations state.\nexport {};\n"
+   },
+   "constant": {
+    "path": "src/workbench/zz-spelling-constant.ts",
+    "text": "export const ADAPTIVE_POLICIES_ORGANIZATION = 1;\n"
+   },
+   "identifier": {
+    "path": "src/workbench/zz-spelling-identifier.ts",
+    "text": "export function adaptivePolicyOrganizationView(): void {}\n"
+   },
+   "requirement": {
+    "path": "src/workbench/zz-spelling-requirement.ts",
+    "text": "export const REQUIREMENT = \"APO-020\";\n"
+   },
+   "capability": {
+    "path": "src/workbench/zz-spelling-capability.ts",
+    "text": "export const CAPABILITY = \"mw.apo.view\";\n"
+   },
+   "pascal": {
+    "path": "src/workbench/zz-spelling-pascal.ts",
+    "text": "export class ApoGraphView {}\n"
+   },
+   "acronym": {
+    "path": "src/workbench/zz-spelling-acronym.ts",
+    "text": "export const APOView = 1;\n"
+   },
+   "plural": {
+    "path": "src/workbench/zz-spelling-plural.ts",
+    "text": "// Lists the APOs.\nexport {};\n"
+   },
+   "pluralCapital": {
+    "path": "src/workbench/zz-spelling-plural-capital.ts",
+    "text": "export const APOsView = 1;\n"
+   },
+   "dotted": {
+    "path": "src/workbench/zz-spelling-dotted.ts",
+    "text": "export const CAPABILITY = \"mw.adaptive.policy.organizations\";\n"
+   },
+   "digits": {
+    "path": "src/workbench/zz-spelling-digits.ts",
+    "text": "export const APO020 = 1;\n"
+   },
+   "digitLetter": {
+    "path": "src/workbench/zz-spelling-digit-letter.ts",
+    "text": "export const LABEL = \"020APO\";\n"
+   },
+   "lowerDigit": {
+    "path": "src/workbench/zz-spelling-lower-digit.ts",
+    "text": "// the apo2 view\nexport {};\n"
+   },
+   "digitLower": {
+    "path": "src/workbench/zz-spelling-digit-lower.ts",
+    "text": "// the 2apo view\nexport {};\n"
+   },
+   "escaped": {
+    "path": "src/workbench/zz-spelling-escaped.ts",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "escapedTemplate": {
+    "path": "src/workbench/zz-spelling-escaped-template.ts",
+    "text": "export const LABEL = `\\u0041PO graph`;\n"
+   },
+   "folded": {
+    "path": "src/workbench/zz-spelling-folded.ts",
+    "text": "export const LABEL = \"A\" + \"PO graph\";\n"
+   },
+   "foldedParenthesized": {
+    "path": "src/workbench/zz-spelling-folded-parenthesized.ts",
+    "text": "export const LABEL = \"A\" + (\"P\" + \"O graph\");\n"
+   },
+   "foldedTemplate": {
+    "path": "src/workbench/zz-spelling-folded-template.ts",
+    "text": "export const LABEL = \"A\" + `PO graph`;\n"
+   },
+   "template": {
+    "path": "src/workbench/zz-spelling-template.ts",
+    "text": "export const LABEL = `apo ${1} view`;\n"
+   },
+   "templateSpan": {
+    "path": "src/workbench/zz-spelling-template-span.ts",
+    "text": "export const LABEL = `view ${1} \\u0041PO`;\n"
+   },
+   "templateMiddle": {
+    "path": "src/workbench/zz-spelling-template-middle.ts",
+    "text": "export const LABEL = `x ${1} \\u0041PO ${2} y`;\n"
+   },
+   "templateLast": {
+    "path": "src/workbench/zz-spelling-template-last.ts",
+    "text": "export const LABEL = `x ${1} y ${2} \\u0041PO`;\n"
+   },
+   "templateArgument": {
+    "path": "src/workbench/zz-spelling-template-argument.ts",
+    "text": "export function show(log: (text: string) => void): void {\n  log(`x ${1} \\u0041PO`);\n}\n"
+   },
+   "kindTs": {
+    "path": "src/workbench/zz-spelling-kind.ts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindMts": {
+    "path": "src/workbench/zz-spelling-kind.mts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindCts": {
+    "path": "src/workbench/zz-spelling-kind.cts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindTsx": {
+    "path": "src/workbench/zz-spelling-kind.tsx",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindJsx": {
+    "path": "src/workbench/zz-spelling-kind.jsx",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindJs": {
+    "path": "src/workbench/zz-spelling-kind.js",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindMjs": {
+    "path": "src/workbench/zz-spelling-kind.mjs",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindCjs": {
+    "path": "src/workbench/zz-spelling-kind.cjs",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "path": {
+    "path": "src/workbench/apo-graph-view.ts",
+    "text": "export {};\n"
+   },
+   "pathDirectory": {
+    "path": "src/workbench/apo-graph/view.ts",
+    "text": "export {};\n"
+   },
+   "pathAcross": {
+    "path": "src/workbench/adaptive-policy/organizations-view.ts",
+    "text": "export {};\n"
+   },
+   "pathExtension": {
+    "path": "src/workbench/zz-spelling-path.apo",
+    "text": "plain text\n"
+   },
+   "text": {
+    "path": "src/workbench/zz-spelling-text.md",
+    "text": "Shows the APO view.\n"
+   },
+   "foldedOperand": {
+    "path": "src/workbench/zz-spelling-folded-operand.ts",
+    "text": "export const LABEL = \"A\" + \"PO graph\" || \"x\";\n"
+   },
+   "foldedReturn": {
+    "path": "src/workbench/zz-spelling-folded-return.ts",
+    "text": "export function label(): string {\n  return \"A\" + \"PO graph\";\n}\n"
+   },
+   "foldedArgument": {
+    "path": "src/workbench/zz-spelling-folded-argument.ts",
+    "text": "export function show(log: (text: string) => void): void {\n  log(\"A\" + \"PO graph\");\n}\n"
+   },
+   "foldedInner": {
+    "path": "src/workbench/zz-spelling-folded-inner.ts",
+    "text": "export const LABEL = \"X\" + (\"A\" + \"PO graph\");\n"
+   },
+   "cookedType": {
+    "path": "src/workbench/zz-spelling-cooked-type.ts",
+    "text": "export type Label = \"\\u0041PO graph\";\n"
+   },
+   "cookedKey": {
+    "path": "src/workbench/zz-spelling-cooked-key.ts",
+    "text": "export const LABELS = { \"\\u0041PO graph\": 1 };\n"
+   },
+   "cookedArgument": {
+    "path": "src/workbench/zz-spelling-cooked-argument.ts",
+    "text": "export function show(log: (text: string) => void): void {\n  log(\"\\u0041PO graph\");\n}\n"
+   },
+   "cookedElement": {
+    "path": "src/workbench/zz-spelling-cooked-element.ts",
+    "text": "export const LABELS = [\"\\u0041PO graph\"];\n"
+   },
+   "pluralDigit": {
+    "path": "src/workbench/zz-spelling-plural-digit.ts",
+    "text": "// the APOs2 view\nexport {};\n"
+   },
+   "pluralCaseless": {
+    "path": "src/workbench/zz-spelling-plural-caseless.ts",
+    "text": "// the APOs<U+4E00> view\nexport {};\n"
+   },
+   "caselessAfter": {
+    "path": "src/workbench/zz-spelling-caseless-after.ts",
+    "text": "// the APO<U+4E00> view\nexport {};\n"
+   },
+   "caselessAfterCapital": {
+    "path": "src/workbench/zz-spelling-caseless-after-capital.ts",
+    "text": "// the Apo<U+4E00> view\nexport {};\n"
+   },
+   "caselessAfterLower": {
+    "path": "src/workbench/zz-spelling-caseless-after-lower.ts",
+    "text": "// the apo<U+4E00> list\nexport {};\n"
+   },
+   "caselessBefore": {
+    "path": "src/workbench/zz-spelling-caseless-before.ts",
+    "text": "// the <U+4E00>apo list\nexport {};\n"
+   },
+   "caselessBeforeCapital": {
+    "path": "src/workbench/zz-spelling-caseless-before-capital.ts",
+    "text": "// the <U+4E00>Apo view\nexport {};\n"
+   },
+   "caselessBeforeUpper": {
+    "path": "src/workbench/zz-spelling-caseless-before-upper.ts",
+    "text": "// the <U+4E00>APO view\nexport {};\n"
+   },
+   "pathGrandparent": {
+    "path": "src/workbench/apo-graph/zz-nested/view.ts",
+    "text": "export {};\n"
+   },
+   "pathTop": {
+    "path": "src/apo-graph-view.ts",
+    "text": "export {};\n"
+   },
+   "foldedLeft": {
+    "path": "src/workbench/zz-spelling-folded-left.ts",
+    "text": "export const LABEL = \"A\" + \"P\" + \"O graph\";\n"
+   },
+   "foldedAnd": {
+    "path": "src/workbench/zz-spelling-folded-and.ts",
+    "text": "export const LABEL = \"A\" + \"PO graph\" && \"x\";\n"
+   },
+   "cookedArgumentLater": {
+    "path": "src/workbench/zz-spelling-cooked-argument-later.ts",
+    "text": "export function show(log: (level: number, text: string) => void): void {\n  log(1, \"\\u0041PO graph\");\n}\n"
+   },
+   "cookedElementLater": {
+    "path": "src/workbench/zz-spelling-cooked-element-later.ts",
+    "text": "export const LABELS = [\"x\", \"\\u0041PO graph\"];\n"
+   },
+   "templateArgumentLater": {
+    "path": "src/workbench/zz-spelling-template-argument-later.ts",
+    "text": "export function show(log: (level: number, text: string) => void): void {\n  log(1, `x ${1} \\u0041PO`);\n}\n"
+   }
+  },
+  "surfacePlants": {
+   "views": {
+    "path": "src/workbench/zz-surface-view.ts",
+    "text": "export function renderView(): string {\n  return \"APO decision graph\";\n}\n"
+   },
+   "node() providers": {
+    "id": "apo.graph.read",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   "UI handlers": {
+    "path": "src/workbench/zz-surface-tool.ts",
+    "text": "export function register(pi: { registerTool(tool: object): void }): void {\n  pi.registerTool({ name: \"apo_graph_view\", label: \"Decision graph\" });\n}\n"
+   }
+  },
+  "quietPlants": {
+   "paraphrase": {
+    "unordered": "// policy adaptive organizations\nexport {};\n",
+    "incomplete": "// adaptive organizations and policy organizations\nexport {};\n",
+    "interrupted": "// adaptive 2 policy organizations\nexport {};\n",
+    "interruptedDigit": "// adaptive <U+0662> policy organizations\nexport {};\n",
+    "separated": "// the A.P.O. view and the a p o list\nexport {};\n",
+    "shortened": "// adaptive-policy-organs\nexport {};\n"
+   },
+   "computed": {
+    "substitution": "export const LABEL = `${\"A\"}PO view`;\n",
+    "join": "export const LABEL = [\"A\", \"P\", \"O\"].join(\"\");\n",
+    "codes": "export const LABEL = String.fromCodePoint(65, 80, 79);\n",
+    "mixed": "export const LABEL = String(1) + \"A\" + \"PO view\";\n",
+    "otherOperator": "export const LABEL = \"A\" || \"PO view\";\n"
+   },
+   "interior": {
+    "formatCharacter": "// the AP<U+200B>O view\nexport {};\n",
+    "softHyphen": "// Adaptive Pol<U+00AD>icy Organizations\nexport {};\n",
+    "confusable": "export const LABEL = \"<U+0410>PO view\";\n",
+    "fullwidth": "export const LABEL = \"<U+FF21><U+FF30><U+FF2F> view\";\n",
+    "caseless": "// adaptive<U+4E00>policy<U+4E00>organizations\nexport {};\n",
+    "caselessModifier": "// adaptive<U+02B0>policy<U+02B0>organizations\nexport {};\n"
+   },
+   "joined": {
+    "joined": "// the apoview list\nexport {};\n",
+    "joinedAccent": "// the apo<U+00F1> list\nexport {};\n",
+    "capitalAccent": "// the Apo<U+00F1> list\nexport {};\n",
+    "acronymAccent": "// the APO<U+00F1> view\nexport {};\n",
+    "pluralAccent": "// the APOs<U+00F1> view\nexport {};\n",
+    "capitalAfter": "// the APO<U+00D1> view\nexport {};\n",
+    "capitalAfterPlural": "// the APO<U+00D1>s view\nexport {};\n",
+    "capitalBefore": "// the <U+00D1>apo list\nexport {};\n",
+    "caselessLower": "// the <U+4E00><U+00F1>apo list\nexport {};\n",
+    "caselessUpper": "// the <U+4E00><U+00D1>APO view\nexport {};\n",
+    "suffixed": "export const APOv1 = 1;\n",
+    "suffixedWord": "// the APOstatus view\nexport {};\n",
+    "foldedSuffix": "export const LABEL = \"A\" + \"PO\" + \"x\";\n",
+    "inflected": "// two Apos and three APOS\nexport {};\n",
+    "slugJoined": "// adaptivepolicyorganizations\nexport {};\n"
+   },
+   "escaped": {
+    "identifier": "export const \\u0041POView = 1;\n",
+    "regex": "export const PATTERN = /\\u0041PO/;\n",
+    "comment": "// \\u0041PO view\nexport {};\n"
+   }
+  },
+  "jsxAttribute": {
+   "text": "export const V = <div title=\"\\u0041PO\">x</div>;\n",
+   "kinds": [
+    ".tsx",
+    ".jsx",
+    ".js",
+    ".mjs",
+    ".cjs"
+   ],
+   "paths": [
+    "src/workbench/zz-quiet-escaped-jsx-attribute.tsx",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.jsx",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.js",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.mjs",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.cjs"
+   ]
+  },
+  "binaryPlants": {
+   "first": {
+    "path": "src/workbench/zz-binary-first.bin",
+    "head": "<U+0000>APO view\n",
+    "padding": 0,
+    "tail": "",
+    "after": 0
+   },
+   "early": {
+    "path": "src/workbench/zz-binary-plant.bin",
+    "head": "APO view",
+    "padding": 0,
+    "tail": "<U+0000>\n",
+    "after": 0
+   },
+   "late": {
+    "path": "src/workbench/zz-binary-late.bin",
+    "head": "APO view\n",
+    "padding": 100000,
+    "tail": "<U+0000>",
+    "after": 0
+   },
+   "named": {
+    "path": "src/workbench/zz-apo-binary.bin",
+    "head": "plain",
+    "padding": 0,
+    "tail": "<U+0000>",
+    "after": 0
+   },
+   "middle": {
+    "path": "src/workbench/zz-binary-middle.bin",
+    "head": "APO view\n",
+    "padding": 20000,
+    "tail": "<U+0000>",
+    "after": 20000
+   }
+  },
+  "paddingLine": "// padding\n",
+  "latePlants": {
+   "lateRaw": {
+    "path": "src/workbench/zz-spelling-late-raw.ts",
+    "padding": 100000,
+    "tail": "// APO view\nexport {};\n"
+   },
+   "lateCooked": {
+    "path": "src/workbench/zz-spelling-late-cooked.ts",
+    "padding": 100000,
+    "tail": "export const LABEL = \"\\u0041PO graph\";\n"
+   }
+  },
+  "middlePlants": {
+   "middleRaw": {
+    "path": "src/workbench/zz-spelling-middle-raw.ts",
+    "before": 50000,
+    "middle": "// APO view\n",
+    "after": 40000
+   },
+   "middleCooked": {
+    "path": "src/workbench/zz-spelling-middle-cooked.ts",
+    "before": 50000,
+    "middle": "export const LABEL = \"\\u0041PO graph\";\n",
+    "after": 40000
+   }
+  },
+  "listingPlant": {
+   "gitignore": "*.log\nnode_modules/\n",
+   "files": [
+    "src/tracked.ts",
+    "src/untracked.ts",
+    "src/ignored.log",
+    "src/node_modules/ignored.ts",
+    "src/deleted.ts",
+    "outside/inner.ts",
+    "outside/apo-view.ts"
+   ],
+   "links": {
+    "src/link.ts": "tracked.ts",
+    "src/linkdir": "../outside",
+    "src/dangling.ts": "missing.ts",
+    "src/link-spelled.ts": "../outside/apo-view.ts"
+   },
+   "staged": [
+    "src/tracked.ts",
+    "src/deleted.ts"
+   ],
+   "deleted": [
+    "src/deleted.ts"
+   ],
+   "texts": {
+    "src/ignored.log": "APO view\n",
+    "src/node_modules/ignored.ts": "// APO view\nexport {};\n"
+   }
+  },
+  "livenessPlants": {
+   "ordered": "await registry.invoke(\"hyperunix.find\", {});",
+   "reordered": "// find hyperunix",
+   "partial": "// the hyperunix reader",
+   "split": "// hyper unix find"
+  },
+  "pinPlant": {
+   "path": "src/workbench/zz-pin-plant.ts",
+   "text": "// Presents MW adaptive-policy-organizations state.\nexport {};\n"
+  },
+  "twinProbe": {
+   "text": "\n// APO census twin probe.\nexport const zzCensusTwinProbe = \"APO census twin probe\";\nexport function registerZzCensusTwinProbe(registry, descriptor) {\n  registry.register({ descriptor: { id: \"zz.census.twin.probe\" } });\n  registry.register(descriptor);\n  return registry.invoke(\"zz.census.twin.probe\");\n}\nexport const zzCensusTwinFolded = \"A\" + \"PO census twin folded\";\nexport function zzCensusTwinShow(log) {\n  log(\"\\u0041PO census twin argument\");\n  log(`x ${1} \\u0041PO census twin template`);\n}\nregistry.register({ descriptor: { id: \"zz.census.twin.top\" } });\n",
+   "registrar": "registerZzCensusTwinProbe",
+   "id": "zz.census.twin.probe",
+   "effectClass": "write",
+   "units": {
+    "probe": "cooked",
+    "folded": "folded",
+    "argument": "cooked",
+    "template": "cooked"
+   }
+  },
+  "roleTwin": "APO census role twin.",
+  "descriptorPlants": [
+   {
+    "id": "apo.policy.apply",
+    "effectClass": "write",
+    "description": "Census plant: applies a policy.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "mw.apo.admit",
+    "effectClass": "external",
+    "description": "Census plant: admits an event.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "workbench.decision.authorize",
+    "effectClass": "unknown",
+    "description": "Census plant: authorizes an adaptive policy organization decision.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "apo.graph.view",
+    "effectClass": "read",
+    "description": "Census plant: a read-only view.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.plant.write",
+    "effectClass": "write",
+    "description": "Census plant: a role-less write.",
+    "permissions": [
+     "census:plant"
+    ]
+   }
+  ],
+  "dualPlants": [
+   [
+    {
+     "id": "census.dual.first",
+     "effectClass": "read",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    },
+    {
+     "id": "census.dual.second",
+     "effectClass": "write",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    }
+   ],
+   [
+    {
+     "id": "census.dual.first",
+     "effectClass": "write",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    },
+    {
+     "id": "census.dual.second",
+     "effectClass": "read",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    }
+   ]
+  ],
+  "fieldPlants": [
+   {
+    "id": "apo.field.view",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.apo",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.description",
+    "effectClass": "read",
+    "description": "Shows Adaptive Policy Organization state.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.description.later",
+    "effectClass": "read",
+    "description": "Census plant. Shows Adaptive Policy Organization state.",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.contract",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "contractSource": "mw@0.0.0:APO-020",
+    "permissions": [
+     "census:plant"
+    ]
+   },
+   {
+    "id": "census.field.permissions",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "apo:read"
+    ]
+   },
+   {
+    "id": "census.field.permissions.middle",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant",
+     "apo:admit",
+     "census:other"
+    ]
+   },
+   {
+    "id": "census.field.permissions.last",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant",
+     "census:other",
+     "apo:admit"
+    ]
+   },
+   {
+    "id": "census.field.none",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant"
+    ]
+   }
+  ],
+  "providerPlant": {
+   "id": "apo.graph.read",
+   "effectClass": "read",
+   "description": "Census plant.",
+   "permissions": [
+    "census:plant"
+   ]
+  },
+  "unnamedDescriptor": {
+   "id": "workbench.policy.gradient",
+   "effectClass": "write",
+   "description": "Policy gradient and credit view.",
+   "permissions": [
+    "census:plant"
+   ]
+  },
+  "handlerPlants": {
+   "src/workbench/zz-handler-read.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO decision-graph view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry.invoke(`hyperunix.find`, { kind: \"y\" });\n  return await registry.invoke(\"hyperunix.find\", { kind: \"x\" });\n}\n",
+   "src/workbench/zz-handler-write.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO policy view handler.\nexport async function apply(registry: Registry): Promise<unknown> {\n  await registry.invoke(\"mw.apo.admit\", {});\n  await registry.invoke(\"workbench.decision.authorize\", {});\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-dual.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO dual view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry.invoke(\"census.dual.first\", {});\n  return await registry.invoke(\"census.dual.second\", {});\n}\n",
+   "src/workbench/zz-handler-unknown.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO ancestry view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.missing.view\", {});\n}\n",
+   "src/workbench/zz-handler-computed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource view handler.\nconst FIND = \"hyperunix.find\";\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  await registry.invoke((\"hyperunix.find\"), {});\n  await registry.invoke(FIND, {});\n  return await registry.invoke(args.capabilityId, {});\n}\n",
+   "src/workbench/zz-handler-inspect.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO certificate view handler.\nexport async function view(registry: Registry, ref: { capabilityId: string }): Promise<unknown> {\n  await registry.inspect();\n  return await registry.inspect(ref.capabilityId, ref);\n}\n",
+   "src/workbench/zz-handler-element.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO gradient view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry[`invoke`](\"apo.policy.apply\", {});\n  return await registry[\"invoke\"](\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-wrapped.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource-pressure view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry?.invoke(\"apo.policy.apply\", {});\n  await registry.invoke?.(\"apo.policy.apply\", {});\n  await (registry.invoke)(\"apo.policy.apply\", {});\n  await registry.invoke!(\"apo.policy.apply\", {});\n  await (registry.invoke as Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  await (registry.invoke satisfies Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  return await (<Registry[\"invoke\"]>registry.invoke)(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-unnamed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Decision-graph view handler.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n",
+   "src/workbench/zz-handler-script.mjs": "// APO script view handler.\nexport async function view(registry) {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-text.md": "// APO text view handler.\nregistry.invoke(\"apo.policy.apply\", {});\n",
+   "src/workbench/zz-handler-binary.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO binary view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n<U+0000>",
+   "src/workbench/zz-apo-handler-path.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Path-named view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.plant.write\", {});\n}\n",
+   "src/workbench/zz-handler-cooked.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nexport const TITLE = \"\\u0041PO view\";\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.plant.write\", {});\n}\n",
+   "src/workbench/zz-handler-folded.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nexport const TITLE = \"A\" + \"PO view\";\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.plant.write\", {});\n}\n",
+   "src/workbench/zz-handler-kind.tsx": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO tsx view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-kind.mts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO mts view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-kind.cts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO cts view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-kind.jsx": "// APO jsx view handler.\nexport async function view(registry) {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-kind.js": "// APO js view handler.\nexport async function view(registry) {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-kind.cjs": "// APO cjs view handler.\nexport async function view(registry) {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-receiver.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO receiver view handler.\nexport async function view(host: { registry?: Registry; lookup(id: string): Registry }): Promise<unknown> {\n  await host.registry!.invoke(\"apo.policy.apply\", {});\n  return await host.lookup(\"x\").inspect();\n}\n"
+  },
+  "residualModules": {
+   "unnamed": {
+    "path": "src/workbench/zz-residual-unnamed.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Policy gradient, operational decision graph and developmental ancestry views.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n"
+   },
+   "aliased": {
+    "path": "src/workbench/zz-residual-aliased.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nimport { callCapability } from \"./zz-residual-helper.js\";\n// APO view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  const { invoke } = registry;\n  await invoke(\"apo.policy.apply\", {});\n  await registry.invoke.call(registry, \"apo.policy.apply\", {});\n  await callCapability(registry, \"apo.policy.apply\");\n  await (0, registry.invoke)(\"apo.policy.apply\", {});\n  await (registry.invoke<unknown>)(\"apo.policy.apply\", {});\n  return await Reflect.apply(registry.invoke, registry, [\"apo.policy.apply\", {}]);\n}\n"
+   },
+   "helper": {
+    "path": "src/workbench/zz-residual-helper.ts",
+    "text": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\nexport async function callCapability(registry: Registry, id: string): Promise<unknown> {\n  return await registry.invoke(id, {});\n}\n"
+   },
+   "direct": {
+    "path": "src/workbench/zz-residual-direct.ts",
+    "text": "// APO policy view handler.\nimport { executeDetachedControl } from \"./detached-control.js\";\nexport async function act(input: Parameters<typeof executeDetachedControl>[0]): Promise<unknown> {\n  return await executeDetachedControl(input);\n}\n"
+   },
+   "registerAlias": {
+    "path": "src/workbench/zz-residual-register-alias.ts",
+    "text": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantAlias(registry: Registry): void {\n  const register = registry.register.bind(registry);\n  register({ descriptor: { id: \"census.plant.alias\" } });\n}\n"
+   }
+  },
+  "registrationPlants": {
+   "src/workbench/zz-register-function.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantFunction(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.function\" } });\n}\n",
+   "src/workbench/zz-register-element.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantElement(registry: Registry): void {\n  registry[\"register\"]({ descriptor: { id: \"census.plant.element\" } });\n}\n",
+   "src/workbench/zz-register-wrapped.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantWrapped(registry: Registry): void {\n  registry.register!({ descriptor: { id: \"census.plant.wrapped\" } });\n}\n",
+   "src/workbench/zz-register-arrow.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport const registerPlantArrow = (registry: Registry): void => {\n  registry.register({ descriptor: { id: \"census.plant.arrow\" } });\n};\n",
+   "src/workbench/zz-register-expression.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport const registerPlantExpression = function (registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.expression\" } });\n};\n",
+   "src/workbench/zz-register-method.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport class PlantHost {\n  registerPlantMethod(registry: Registry): void {\n    registry.register({ descriptor: { id: \"census.plant.method\" } });\n  }\n}\n",
+   "src/workbench/zz-register-callback.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantCallback(registries: Registry[]): void {\n  registries.forEach(registry => registry.register({ descriptor: { id: \"census.plant.callback\" } }));\n}\n",
+   "src/workbench/zz-register-toplevel.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\ndeclare const registry: Registry;\nregistry.register({ descriptor: { id: \"census.plant.toplevel\" } });\n",
+   "src/workbench/zz-register-shorthand.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantShorthand(registry: Registry): void {\n  registry.register({ descriptor });\n  registry.register({ entry: descriptor });\n  registry.register({ \"descriptor\": { id: \"census.plant.quoted\" } });\n}\n",
+   "src/workbench/zz-register-escaped.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantEscaped(registry: Registry): void {\n  registry.register({ \\u0064escriptor: { id: \"census.plant.escaped\" } });\n}\n",
+   "src/workbench/zz-register-script.mjs": "export function registerPlantScript(registry) {\n  registry.register({ descriptor: { id: \"census.plant.script\" } });\n}\n",
+   "src/workbench/zz-register-text.md": "registry.register({ descriptor: { id: \"census.plant.text\" } });\n",
+   "src/workbench/zz-register-binary.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantBinary(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.binary\" } });\n}\n<U+0000>",
+   "src/workbench/zz-register-second.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantSecond(registry: Registry): void {\n  registry.register({ invoke: () => undefined, descriptor: { id: \"census.plant.second\" } });\n}\n",
+   "src/workbench/zz-register-nested.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantOuter(registry: Registry): void {\n  function registerPlantInner(): void {\n    registry.register({ descriptor: { id: \"census.plant.nested\" } });\n  }\n  registerPlantInner();\n}\n",
+   "src/workbench/zz-register-first-argument.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantFirstArgument(registry: Registry, options: object): void {\n  registry.register({ descriptor: { id: \"census.plant.first-argument\" } }, options);\n}\n",
+   "src/workbench/zz-register-second-argument.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantSecondArgument(registry: Registry, options: object): void {\n  registry.register(options, { descriptor: { id: \"census.plant.second-argument\" } });\n}\n",
+   "src/workbench/zz-register-kind.tsx": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantKindTsx(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.kind.tsx\" } });\n}\n",
+   "src/workbench/zz-register-kind.mts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantKindMts(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.kind.mts\" } });\n}\n",
+   "src/workbench/zz-register-kind.cts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantKindCts(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.kind.cts\" } });\n}\n",
+   "src/workbench/zz-register-kind.jsx": "export function registerPlantKindJsx(registry) {\n  registry.register({ descriptor: { id: \"census.plant.kind.jsx\" } });\n}\n",
+   "src/workbench/zz-register-kind.js": "export function registerPlantKindJs(registry) {\n  registry.register({ descriptor: { id: \"census.plant.kind.js\" } });\n}\n",
+   "src/workbench/zz-register-kind.cjs": "export function registerPlantKindCjs(registry) {\n  registry.register({ descriptor: { id: \"census.plant.kind.cjs\" } });\n}\n"
+  },
+  "registrarPlants": {
+   "src/workbench/providers/zz-registrar-exported.ts": "export function registerPlantExported(): void {}\n",
+   "src/workbench/providers/zz-registrar-script.mjs": "export function registerPlantScript() {}\n",
+   "src/workbench/providers/zz-registrar-hidden.ts": "function registerPlantHidden(): void {}\nexport {};\n",
+   "src/workbench/providers/zz-registrar-unprefixed.ts": "export function plantRegister(): void {}\n",
+   "src/workbench/providers/zz-registrar-arrow.ts": "export const registerPlantArrow = (): void => {};\n",
+   "src/workbench/providers/zz-registrar-text.md": "export function registerPlantText(): void {}\n",
+   "src/workbench/zz-registrar-outside.ts": "export function registerPlantOutside(): void {}\n",
+   "src/workbench/providers/zz-registrar-bare.ts": "export function register(): void {}\n",
+   "src/workbench/providers/zz-registrar-lower.ts": "export function registerplant(): void {}\n",
+   "src/workbench/providers/zz-registrar-kind.tsx": "export function registerPlantKindTsx(): void {}\n",
+   "src/workbench/providers/zz-registrar-kind.mts": "export function registerPlantKindMts(): void {}\n",
+   "src/workbench/providers/zz-registrar-kind.cts": "export function registerPlantKindCts(): void {}\n",
+   "src/workbench/providers/zz-registrar-kind.jsx": "export function registerPlantKindJsx() {}\n",
+   "src/workbench/providers/zz-registrar-kind.js": "export function registerPlantKindJs() {}\n",
+   "src/workbench/providers/zz-registrar-kind.cjs": "export function registerPlantKindCjs() {}\n",
+   "src/workbench/providers/zz-registrar-nested/registrar.ts": "export function registerPlantNested(): void {}\n"
+  },
+  "residuals": {
+   "R-TRACKER": "Q1",
+   "R-OUTSIDE-SRC": "Q2",
+   "R-PARAPHRASE": "Q3",
+   "R-COMPUTED": "Q4",
+   "R-INTERIOR": "Q5",
+   "R-UNNAMED-ROLE": "Q6",
+   "R-ALIASED-CALL": "Q7",
+   "R-DIRECT-EFFECT": "Q8",
+   "R-LOCAL-PROVIDER": "Q9",
+   "R-JOINED": "Q10",
+   "R-BINARY": "Q11",
+   "R-ESCAPED-NAME": "Q12"
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's export row binds the requirement id, the program and its abbreviation, the surface kinds, the read class, the acceptance rows and the filing pin",
+  "A1",
+  "A2",
+  "A3",
+  "O1",
+  "O2",
+  "C1",
+  "C2",
+  "C3",
+  "V1",
+  "V2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "a guard pins today's absence",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a guard",
+     "claims": {
+      "a guard": [
+       "spellingForms",
+       "plantFindings"
+      ]
+     },
+     "witness": {
+      "spellingForms": {
+       "slug": [
+        "cooked",
+        "raw"
+       ],
+       "words": [
+        "raw"
+       ],
+       "constant": [
+        "raw"
+       ],
+       "identifier": [
+        "raw"
+       ],
+       "requirement": [
+        "cooked",
+        "raw"
+       ],
+       "capability": [
+        "cooked",
+        "raw"
+       ],
+       "pascal": [
+        "raw"
+       ],
+       "acronym": [
+        "raw"
+       ],
+       "plural": [
+        "raw"
+       ],
+       "pluralCapital": [
+        "raw"
+       ],
+       "dotted": [
+        "cooked",
+        "raw"
+       ],
+       "digits": [
+        "raw"
+       ],
+       "digitLetter": [
+        "cooked",
+        "raw"
+       ],
+       "lowerDigit": [
+        "raw"
+       ],
+       "digitLower": [
+        "raw"
+       ],
+       "escaped": [
+        "cooked"
+       ],
+       "escapedTemplate": [
+        "cooked"
+       ],
+       "folded": [
+        "folded"
+       ],
+       "foldedParenthesized": [
+        "folded"
+       ],
+       "foldedTemplate": [
+        "folded"
+       ],
+       "template": [
+        "cooked",
+        "raw"
+       ],
+       "templateSpan": [
+        "cooked"
+       ],
+       "templateMiddle": [
+        "cooked"
+       ],
+       "templateLast": [
+        "cooked"
+       ],
+       "templateArgument": [
+        "cooked"
+       ],
+       "kindTs": [
+        "cooked"
+       ],
+       "kindMts": [
+        "cooked"
+       ],
+       "kindCts": [
+        "cooked"
+       ],
+       "kindTsx": [
+        "cooked"
+       ],
+       "kindJsx": [
+        "cooked"
+       ],
+       "kindJs": [
+        "cooked"
+       ],
+       "kindMjs": [
+        "cooked"
+       ],
+       "kindCjs": [
+        "cooked"
+       ],
+       "path": [
+        "path"
+       ],
+       "pathDirectory": [
+        "path"
+       ],
+       "pathAcross": [
+        "path"
+       ],
+       "pathExtension": [
+        "path"
+       ],
+       "text": [
+        "raw"
+       ],
+       "foldedOperand": [
+        "folded"
+       ],
+       "foldedReturn": [
+        "folded"
+       ],
+       "foldedArgument": [
+        "folded"
+       ],
+       "foldedInner": [
+        "folded"
+       ],
+       "cookedType": [
+        "cooked"
+       ],
+       "cookedKey": [
+        "cooked"
+       ],
+       "cookedArgument": [
+        "cooked"
+       ],
+       "cookedElement": [
+        "cooked"
+       ],
+       "pluralDigit": [
+        "raw"
+       ],
+       "pluralCaseless": [
+        "raw"
+       ],
+       "caselessAfter": [
+        "raw"
+       ],
+       "caselessAfterCapital": [
+        "raw"
+       ],
+       "caselessAfterLower": [
+        "raw"
+       ],
+       "caselessBefore": [
+        "raw"
+       ],
+       "caselessBeforeCapital": [
+        "raw"
+       ],
+       "caselessBeforeUpper": [
+        "raw"
+       ],
+       "pathGrandparent": [
+        "path"
+       ],
+       "pathTop": [
+        "path"
+       ],
+       "foldedLeft": [
+        "folded"
+       ],
+       "foldedAnd": [
+        "folded"
+       ],
+       "cookedArgumentLater": [
+        "cooked"
+       ],
+       "cookedElementLater": [
+        "cooked"
+       ],
+       "templateArgumentLater": [
+        "cooked"
+       ],
+       "lateRaw": [
+        "raw"
+       ],
+       "lateCooked": [
+        "cooked"
+       ],
+       "middleRaw": [
+        "raw"
+       ],
+       "middleCooked": [
+        "cooked"
+       ]
+      },
+      "plantFindings": [
+       "src/apo-graph-view.ts",
+       "src/workbench/adaptive-policy/organizations-view.ts",
+       "src/workbench/apo-graph-view.ts",
+       "src/workbench/apo-graph/view.ts",
+       "src/workbench/apo-graph/zz-nested/view.ts",
+       "src/workbench/zz-apo-binary.bin",
+       "src/workbench/zz-spelling-acronym.ts",
+       "src/workbench/zz-spelling-capability.ts",
+       "src/workbench/zz-spelling-caseless-after-capital.ts",
+       "src/workbench/zz-spelling-caseless-after-lower.ts",
+       "src/workbench/zz-spelling-caseless-after.ts",
+       "src/workbench/zz-spelling-caseless-before-capital.ts",
+       "src/workbench/zz-spelling-caseless-before-upper.ts",
+       "src/workbench/zz-spelling-caseless-before.ts",
+       "src/workbench/zz-spelling-constant.ts",
+       "src/workbench/zz-spelling-cooked-argument-later.ts",
+       "src/workbench/zz-spelling-cooked-argument.ts",
+       "src/workbench/zz-spelling-cooked-element-later.ts",
+       "src/workbench/zz-spelling-cooked-element.ts",
+       "src/workbench/zz-spelling-cooked-key.ts",
+       "src/workbench/zz-spelling-cooked-type.ts",
+       "src/workbench/zz-spelling-digit-letter.ts",
+       "src/workbench/zz-spelling-digit-lower.ts",
+       "src/workbench/zz-spelling-digits.ts",
+       "src/workbench/zz-spelling-dotted.ts",
+       "src/workbench/zz-spelling-escaped-template.ts",
+       "src/workbench/zz-spelling-escaped.ts",
+       "src/workbench/zz-spelling-folded-and.ts",
+       "src/workbench/zz-spelling-folded-argument.ts",
+       "src/workbench/zz-spelling-folded-inner.ts",
+       "src/workbench/zz-spelling-folded-left.ts",
+       "src/workbench/zz-spelling-folded-operand.ts",
+       "src/workbench/zz-spelling-folded-parenthesized.ts",
+       "src/workbench/zz-spelling-folded-return.ts",
+       "src/workbench/zz-spelling-folded-template.ts",
+       "src/workbench/zz-spelling-folded.ts",
+       "src/workbench/zz-spelling-identifier.ts",
+       "src/workbench/zz-spelling-kind.cjs",
+       "src/workbench/zz-spelling-kind.cts",
+       "src/workbench/zz-spelling-kind.js",
+       "src/workbench/zz-spelling-kind.jsx",
+       "src/workbench/zz-spelling-kind.mjs",
+       "src/workbench/zz-spelling-kind.mts",
+       "src/workbench/zz-spelling-kind.ts",
+       "src/workbench/zz-spelling-kind.tsx",
+       "src/workbench/zz-spelling-late-cooked.ts",
+       "src/workbench/zz-spelling-late-raw.ts",
+       "src/workbench/zz-spelling-lower-digit.ts",
+       "src/workbench/zz-spelling-middle-cooked.ts",
+       "src/workbench/zz-spelling-middle-raw.ts",
+       "src/workbench/zz-spelling-pascal.ts",
+       "src/workbench/zz-spelling-path.apo",
+       "src/workbench/zz-spelling-plural-capital.ts",
+       "src/workbench/zz-spelling-plural-caseless.ts",
+       "src/workbench/zz-spelling-plural-digit.ts",
+       "src/workbench/zz-spelling-plural.ts",
+       "src/workbench/zz-spelling-requirement.ts",
+       "src/workbench/zz-spelling-slug.ts",
+       "src/workbench/zz-spelling-template-argument-later.ts",
+       "src/workbench/zz-spelling-template-argument.ts",
+       "src/workbench/zz-spelling-template-last.ts",
+       "src/workbench/zz-spelling-template-middle.ts",
+       "src/workbench/zz-spelling-template-span.ts",
+       "src/workbench/zz-spelling-template.ts",
+       "src/workbench/zz-spelling-text.md",
+       "src/workbench/zz-spelling-words.ts",
+       "src/workbench/zz-surface-tool.ts",
+       "src/workbench/zz-surface-view.ts"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "pins today's",
+     "claims": {
+      "pins": [
+       "scope",
+       "listedEqualsWalked",
+       "listedEqualsGit",
+       "listingPlant",
+       "judgedEqualsListed",
+       "judgedEach",
+       "entriesReadWhole",
+       "filesAtFloor",
+       "scriptsAtFloor",
+       "binaries"
+      ],
+      "today's": [
+       "liveness",
+       "livenessPlants"
+      ]
+     },
+     "witness": {
+      "scope": "src/",
+      "listedEqualsWalked": true,
+      "listedEqualsGit": true,
+      "listingPlant": {
+       "listed": [
+        "src/dangling.ts",
+        "src/link-spelled.ts",
+        "src/link.ts",
+        "src/linkdir",
+        "src/tracked.ts",
+        "src/untracked.ts"
+       ],
+       "walked": [
+        "src/dangling.ts",
+        "src/ignored.log",
+        "src/link-spelled.ts",
+        "src/link.ts",
+        "src/linkdir",
+        "src/node_modules/ignored.ts",
+        "src/tracked.ts",
+        "src/untracked.ts"
+       ],
+       "ignored": [
+        "src/ignored.log",
+        "src/node_modules/ignored.ts"
+       ],
+       "agrees": true,
+       "findings": {
+        "src/link-spelled.ts": [
+         "raw"
+        ]
+       },
+       "gitAgrees": true,
+       "whole": true
+      },
+      "judgedEqualsListed": true,
+      "judgedEach": {
+       "mentions": [],
+       "registrations": [],
+       "registrars": [],
+       "reaches": []
+      },
+      "entriesReadWhole": true,
+      "filesAtFloor": true,
+      "scriptsAtFloor": true,
+      "binaries": [],
+      "liveness": {
+       "src/workbench/providers/hyperunix.ts": [
+        "cooked",
+        "raw"
+       ]
+      },
+      "livenessPlants": {
+       "ordered": true,
+       "reordered": false,
+       "partial": false,
+       "split": false
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "absence",
+     "claims": {
+      "absence": [
+       "srcMentions",
+       "filingPin",
+       "pinFilesAtFloor",
+       "pinFiles",
+       "pinMentions",
+       "pinPlant",
+       "pinLiveness"
+      ]
+     },
+     "witness": {
+      "srcMentions": {},
+      "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
+      "pinFilesAtFloor": true,
+      "pinFiles": 115,
+      "pinMentions": {},
+      "pinPlant": [
+       "raw"
+      ],
+      "pinLiveness": {
+       "src/workbench/providers/hyperunix.ts": [
+        "cooked",
+        "raw"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "O",
+   "label": "once any APO surface registers",
+   "pins": [
+    {
+     "id": "O1",
+     "quote": "once any APO surface",
+     "claims": {
+      "once": [
+       "fired",
+       "firedPlants",
+       "firedTwin"
+      ],
+      "any APO surface": [
+       "surfaceKinds",
+       "descriptorFields"
+      ]
+     },
+     "witness": {
+      "fired": false,
+      "firedTwin": {
+       "read": true,
+       "write": true,
+       "unnamed": [],
+       "sets": []
+      },
+      "firedPlants": {
+       "module": true,
+       "role": true,
+       "none": false
+      },
+      "surfaceKinds": {
+       "views": [
+        "cooked",
+        "raw"
+       ],
+       "node() providers": [
+        "id"
+       ],
+       "UI handlers": [
+        "cooked",
+        "raw"
+       ]
+      },
+      "descriptorFields": {
+       "apo.field.view": [
+        "id"
+       ],
+       "census.field.apo": [
+        "id"
+       ],
+       "census.field.description": [
+        "description"
+       ],
+       "census.field.description.later": [
+        "description"
+       ],
+       "census.field.contract": [
+        "contractSource"
+       ],
+       "census.field.permissions": [
+        "permissions"
+       ],
+       "census.field.permissions.middle": [
+        "permissions"
+       ],
+       "census.field.permissions.last": [
+        "permissions"
+       ],
+       "census.field.none": []
+      }
+     }
+    },
+    {
+     "id": "O2",
+     "quote": "registers",
+     "claims": {
+      "registers": [
+       "registrationSites",
+       "enclosing",
+       "exportedRegistrars",
+       "nativeComposition",
+       "plantSites",
+       "plantNonLiteral",
+       "plantRegistrars"
+      ]
+     },
+     "witness": {
+      "registrationSites": 8,
+      "enclosing": [
+       "registerForgeGateStatus",
+       "registerFurnaceRunInspect",
+       "registerHyperUnixFind",
+       "registerNativeForgeGateStatus",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeHyperUnixFind",
+       "registerNativeReactiveFiberRender",
+       "registerReactiveFiberRender"
+      ],
+      "exportedRegistrars": [
+       "registerForgeGateStatus",
+       "registerFurnaceRunInspect",
+       "registerHyperUnixFind",
+       "registerNativeForgeGateStatus",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeHyperUnixFind",
+       "registerNativeReactiveFiberRender",
+       "registerReactiveFiberRender"
+      ],
+      "nativeComposition": [
+       "registerNativeForgeGateStatus",
+       "registerNativeHyperUnixFind",
+       "registerNativeFurnaceRunInspect",
+       "registerNativeReactiveFiberRender"
+      ],
+      "plantSites": [
+       "src/workbench/zz-register-function.ts:registerPlantFunction",
+       "src/workbench/zz-register-element.ts:registerPlantElement",
+       "src/workbench/zz-register-wrapped.ts:registerPlantWrapped",
+       "src/workbench/zz-register-arrow.ts:registerPlantArrow",
+       "src/workbench/zz-register-expression.ts:registerPlantExpression",
+       "src/workbench/zz-register-method.ts:registerPlantMethod",
+       "src/workbench/zz-register-callback.ts:registerPlantCallback",
+       "src/workbench/zz-register-toplevel.ts:<none>",
+       "src/workbench/zz-register-escaped.ts:registerPlantEscaped",
+       "src/workbench/zz-register-script.mjs:registerPlantScript",
+       "src/workbench/zz-register-second.ts:registerPlantSecond",
+       "src/workbench/zz-register-nested.ts:registerPlantInner",
+       "src/workbench/zz-register-first-argument.ts:registerPlantFirstArgument",
+       "src/workbench/zz-register-kind.tsx:registerPlantKindTsx",
+       "src/workbench/zz-register-kind.mts:registerPlantKindMts",
+       "src/workbench/zz-register-kind.cts:registerPlantKindCts",
+       "src/workbench/zz-register-kind.jsx:registerPlantKindJsx",
+       "src/workbench/zz-register-kind.js:registerPlantKindJs",
+       "src/workbench/zz-register-kind.cjs:registerPlantKindCjs"
+      ],
+      "plantNonLiteral": {
+       "src/workbench/zz-register-shorthand.ts": 3,
+       "src/workbench/zz-register-second-argument.ts": 1
+      },
+      "plantRegistrars": [
+       "src/workbench/providers/zz-registrar-exported.ts:registerPlantExported",
+       "src/workbench/providers/zz-registrar-script.mjs:registerPlantScript",
+       "src/workbench/providers/zz-registrar-bare.ts:register",
+       "src/workbench/providers/zz-registrar-lower.ts:registerplant",
+       "src/workbench/providers/zz-registrar-kind.tsx:registerPlantKindTsx",
+       "src/workbench/providers/zz-registrar-kind.mts:registerPlantKindMts",
+       "src/workbench/providers/zz-registrar-kind.cts:registerPlantKindCts",
+       "src/workbench/providers/zz-registrar-kind.jsx:registerPlantKindJsx",
+       "src/workbench/providers/zz-registrar-kind.js:registerPlantKindJs",
+       "src/workbench/providers/zz-registrar-kind.cjs:registerPlantKindCjs",
+       "src/workbench/providers/zz-registrar-nested/registrar.ts:registerPlantNested"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "a registry/census falsifier proves every APO-role capability is effectClass read",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "a registry/census falsifier",
+     "claims": {
+      "a registry/census falsifier": [
+       "plantViolations",
+       "plantQuiet",
+       "roleTwinNamed",
+       "roleSetsNamed"
+      ]
+     },
+     "witness": {
+      "plantViolations": [
+       "apo.policy.apply declares effectClass write",
+       "mw.apo.admit declares effectClass external",
+       "workbench.decision.authorize declares effectClass unknown"
+      ],
+      "plantQuiet": [
+       "apo.graph.view",
+       "census.plant.write"
+      ],
+      "roleTwinNamed": [],
+      "roleSetsNamed": []
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "proves every APO-role capability",
+     "claims": {
+      "proves": [
+       "violations"
+      ],
+      "every APO-role capability": [
+       "surfaces",
+       "apoRole",
+       "composed",
+       "boundary",
+       "roleTwin",
+       "roleSets"
+      ]
+     },
+     "witness": {
+      "violations": [],
+      "surfaces": {
+       "registerNativeProviders": [
+        "forge.gate.status:read",
+        "hyperunix.find:read",
+        "furnace.run.inspect:read",
+        "reactivefiber.render.preview:read"
+       ],
+       "registerForgeGateStatus": [
+        "forge.gate.status:read"
+       ],
+       "registerFurnaceRunInspect": [
+        "furnace.run.inspect:read"
+       ],
+       "registerHyperUnixFind": [
+        "hyperunix.find:read"
+       ],
+       "registerNativeForgeGateStatus": [
+        "forge.gate.status:read"
+       ],
+       "registerNativeFurnaceRunInspect": [
+        "furnace.run.inspect:read"
+       ],
+       "registerNativeHyperUnixFind": [
+        "hyperunix.find:read"
+       ],
+       "registerNativeReactiveFiberRender": [
+        "reactivefiber.render.preview:read"
+       ],
+       "registerReactiveFiberRender": [
+        "reactivefiber.render.preview:read"
+       ]
+      },
+      "apoRole": [],
+      "composed": [],
+      "boundary": [],
+      "roleTwin": [],
+      "roleSets": {
+       "lone": 24,
+       "sets": {
+        "read": 4095,
+        "write": 4095
+       },
+       "distinct": {
+        "read": 4095,
+        "write": 4095
+       },
+       "unread": []
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "is effectClass read",
+     "claims": {
+      "is effectClass read": [
+       "vocabulary",
+       "unionMembers",
+       "classVerdicts"
+      ]
+     },
+     "witness": {
+      "vocabulary": [
+       "read",
+       "write",
+       "external",
+       "unknown"
+      ],
+      "unionMembers": [
+       "read",
+       "write",
+       "external",
+       "unknown"
+      ],
+      "classVerdicts": {
+       "read": false,
+       "write": true,
+       "external": true,
+       "unknown": true
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "V",
+   "label": "and no APO view handler reaches a non-read registry.invoke",
+   "pins": [
+    {
+     "id": "V1",
+     "quote": "and no APO view handler",
+     "claims": {
+      "and no APO view handler": [
+       "apoModules",
+       "reachesAtFloor",
+       "readSeen",
+       "computedSeen"
+      ]
+     },
+     "witness": {
+      "apoModules": [],
+      "reachesAtFloor": true,
+      "readSeen": true,
+      "computedSeen": true
+     }
+    },
+    {
+     "id": "V2",
+     "quote": "reaches a non-read registry.invoke",
+     "claims": {
+      "reaches": [
+       "reachVerdicts"
+      ],
+      "a non-read registry.invoke": [
+       "handlerViolations",
+       "handlerQuiet"
+      ]
+     },
+     "witness": {
+      "reachVerdicts": {
+       "src/workbench/zz-handler-read.ts": [
+        "read",
+        "read"
+       ],
+       "src/workbench/zz-handler-write.ts": [
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-dual.ts": [
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unknown.ts": [
+        "unknown"
+       ],
+       "src/workbench/zz-handler-computed.ts": [
+        "computed",
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-inspect.ts": [
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-element.ts": [
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-wrapped.ts": [
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unnamed.ts": [
+        "computed"
+       ],
+       "src/workbench/zz-handler-script.mjs": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-text.md": [],
+       "src/workbench/zz-handler-binary.ts": [],
+       "src/workbench/zz-apo-handler-path.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-cooked.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-folded.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.tsx": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.mts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.cts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.jsx": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.js": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.cjs": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-receiver.ts": [
+        "non-read",
+        "computed"
+       ]
+      },
+      "handlerViolations": {
+       "src/workbench/zz-handler-write.ts": [
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-dual.ts": [
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-unknown.ts": [
+        "unknown"
+       ],
+       "src/workbench/zz-handler-computed.ts": [
+        "computed",
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-inspect.ts": [
+        "computed",
+        "computed"
+       ],
+       "src/workbench/zz-handler-element.ts": [
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-wrapped.ts": [
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-script.mjs": [
+        "non-read"
+       ],
+       "src/workbench/zz-apo-handler-path.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-cooked.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-folded.ts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.tsx": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.mts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.cts": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.jsx": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.js": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-kind.cjs": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-receiver.ts": [
+        "non-read",
+        "computed"
+       ]
+      },
+      "handlerQuiet": [
+       "src/workbench/zz-handler-read.ts",
+       "src/workbench/zz-handler-unnamed.ts",
+       "src/workbench/zz-handler-text.md",
+       "src/workbench/zz-handler-binary.ts"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-TRACKER",
+      "ownRowSpells": true,
+      "trackerInScope": false
+     }
+    },
+    {
+     "id": "Q2",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-OUTSIDE-SRC",
+      "scope": "src/",
+      "outsideInScope": [
+       false,
+       false,
+       false,
+       false
+      ],
+      "holdersInScope": [
+       false,
+       false
+      ],
+      "holdersSpell": [
+       true,
+       true
+      ]
+     }
+    },
+    {
+     "id": "Q3",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-PARAPHRASE",
+      "read": {
+       "unordered": false,
+       "incomplete": false,
+       "interrupted": false,
+       "interruptedDigit": false,
+       "separated": false,
+       "shortened": false
+      }
+     }
+    },
+    {
+     "id": "Q4",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-COMPUTED",
+      "read": {
+       "substitution": false,
+       "join": false,
+       "codes": false,
+       "mixed": false,
+       "otherOperator": false
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-INTERIOR",
+      "read": {
+       "formatCharacter": false,
+       "softHyphen": false,
+       "confusable": false,
+       "fullwidth": false,
+       "caseless": false,
+       "caselessModifier": false
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-UNNAMED-ROLE",
+      "apoModule": false,
+      "reaches": [
+       "computed"
+      ],
+      "descriptorRole": [],
+      "descriptorViolations": []
+     }
+    },
+    {
+     "id": "Q7",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-ALIASED-CALL",
+      "apoModule": true,
+      "reaches": [],
+      "helper": {
+       "apoModule": false,
+       "reaches": [
+        "computed"
+       ]
+      },
+      "violations": []
+     }
+    },
+    {
+     "id": "Q8",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-DIRECT-EFFECT",
+      "apoModule": true,
+      "reaches": [],
+      "imports": [
+       "./detached-control.js"
+      ]
+     }
+    },
+    {
+     "id": "Q9",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-LOCAL-PROVIDER",
+      "nonLiteralRegisterCalls": {
+       "src/workbench/hosts/local-detached.ts": 1
+      },
+      "aliasPlant": {
+       "sites": 0,
+       "nonLiteral": {}
+      }
+     }
+    },
+    {
+     "id": "Q10",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-JOINED",
+      "read": {
+       "joined": false,
+       "joinedAccent": false,
+       "capitalAccent": false,
+       "acronymAccent": false,
+       "pluralAccent": false,
+       "capitalAfter": false,
+       "capitalAfterPlural": false,
+       "capitalBefore": false,
+       "caselessLower": false,
+       "caselessUpper": false,
+       "suffixed": false,
+       "suffixedWord": false,
+       "foldedSuffix": false,
+       "inflected": false,
+       "slugJoined": false
+      }
+     }
+    },
+    {
+     "id": "Q11",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-BINARY",
+      "plants": {
+       "first": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 0,
+        "bytes": 10
+       },
+       "early": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 8,
+        "bytes": 10
+       },
+       "late": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 1100009,
+        "bytes": 1100010
+       },
+       "named": {
+        "binary": true,
+        "forms": [
+         "path"
+        ],
+        "nulAt": 5,
+        "bytes": 6
+       },
+       "middle": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 220009,
+        "bytes": 440010
+       }
+      }
+     }
+    },
+    {
+     "id": "Q12",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-ESCAPED-NAME",
+      "read": {
+       "identifier": false,
+       "regex": false,
+       "comment": false
+      },
+      "jsxAttribute": {
+       ".tsx": false,
+       ".jsx": false,
+       ".js": false,
+       ".mjs": false,
+       ".cjs": false
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
