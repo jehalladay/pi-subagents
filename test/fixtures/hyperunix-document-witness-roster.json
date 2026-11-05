@@ -1,0 +1,1313 @@
+{
+  "comment": "wb-gnj9 cut #5 (the restatement of cut #4 after its refusal #4, R-B544 a member-level respin with the guard bound on W9's naming-words claim set, claims equal to pins; cut #4 was the restatement of cut #3 after its refusal #3, R-B523 rung 1 for both of its claim sets; cut #3 was the restatement of cut #2 after its refusal #2, R-B501 rung 1; cut #2 was the respin of carrier cut #1 after its refusal #1, R-B475 rung 1; the rule-19 carrier of wb-byfw cut #4's roster, which never landed; R-B394 child, R-B422 inversion; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows' ids, readings and case texts of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's initializer text as the census spells it, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, the shared declarations the W3 and W7 rows' probes and presents name, with asSpelled (the function both tables' declarations call), and the reader's statements (caseReading and every top-level declaration it names, directly or through one another), each with the sha256 of its statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file tables, caseReading's reading of its own source and its own node:crypto digests of the reader's statements (never caseReading's or sha256's) to equal these lists exactly, both ways and in order, and its RECORDS case expects a case under the id of every row, site and page listed here. The digests are of text; the census ties the rows its W3 and W7 cases run to that text through asSpelled's freeze (its W10 case), each case's own-row check and caseReading's const and declared-callee rules (the census header's SCOPE), and ties caseReading's readings to its own text through the reader list.",
+  "controls": [
+    {
+      "id": "TV1 an enumerable symbol-keyed data binding",
+      "readBy": [
+        "TV1"
+      ],
+      "path": ".:Symbol(cases).0.document.representation",
+      "calls": [],
+      "probe": "178ea5187b1bbe17e8f892a7a3419a61fb6b2f78d2f13a4d2b90a0da515ac9de",
+      "present": "5a11832bd5226fb8dd9ee01917c91f83fe6b2358d1e58ec66130234a77eea6f4"
+    },
+    {
+      "id": "TV1 the second of two enumerable symbol-keyed data bindings",
+      "readBy": [
+        "TV1"
+      ],
+      "path": ".:Symbol(cases).0.document.representation",
+      "calls": [],
+      "probe": "1b82b82a3caf887a5512d7d40df24d9833745be0548cfc123450fbdea157b498",
+      "present": "b50de6b1350fd47e722513687bffee4cd67f4d3a03dc4a826a60ec3765764775"
+    },
+    {
+      "id": "TV1 a non-enumerable symbol-keyed data binding",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "39c7949af57252ad0d8c82c4c53ac0b082b5aeca7167fe5b17d6e3b83ff2c184",
+      "present": "e73fbb4ada9b61ece8c56583192d6c5fdf56a9851115f50d758b323887b6f05d"
+    },
+    {
+      "id": "TV1 an enumerable symbol-keyed accessor binding",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "d56946934e71a311916771d17225bde5d64cc3fa4f0e8920cfb7cc544bf3abf8",
+      "present": "95ab1bec0aa1c63a87b80fd4a5d996afa0f818769ce3b5387a2f1e448436d839"
+    },
+    {
+      "id": "TV1 an enumerable symbol-keyed data property below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "56ec8e3f5c7294042eb1a05f4107a3b8e902d2840cc5ba54dc6ca5e43fd8db3c",
+      "present": "1824f1e3960d391a3fe4e1d8b57c80b202aec5ed8b2b2ddc9130da01d0c9a6ca"
+    },
+    {
+      "id": "TV1 an enumerable symbol-keyed data binding filled by a sibling binding's call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ],
+      "probe": "a1ae3b2c7a8d340b6a2d802c200a205dca97e974efd24121cde5120701657d47",
+      "present": "34cb859009c40527f3093efba0bcae7b55c7a60a0e38fa607dba2ba8ef27cfac"
+    },
+    {
+      "id": "TV2 a non-enumerable string-keyed data binding",
+      "readBy": [
+        "TV2"
+      ],
+      "path": ".:HIDDEN_CASES.0.document.representation",
+      "calls": [],
+      "probe": "c2a42831464efe83ee01340be7f744abfc8d8d4f8aa03a2d4e5c3348f9e22315",
+      "present": "7ca646a182dc02a0d54b3d7b2f96b2d8f449409d4c4c4611811c91a75c01b5bb"
+    },
+    {
+      "id": "TV2 a non-enumerable string-keyed accessor binding",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "640bebd743d4a7a9b5b79a97ce509680065a0f0112cdd11924b4a035c309bd26",
+      "present": "25028d5d49a3439a68face6f74b93d68d9b930067946469cb307301b0d52e8ba"
+    },
+    {
+      "id": "TV2 a non-enumerable string-keyed data property below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "288ce6ba4d419b2d4fe681a5a83d529943dddefa47c91f6f1bb7a16cce2bfc73",
+      "present": "567a0476210b45bbe00ba77a309e3dc712e9964686b1f1b088c26812dc73afa1"
+    },
+    {
+      "id": "TV2 a non-enumerable string-keyed data binding filled by a sibling binding's call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ],
+      "probe": "ed80fabe28f0ecce64ad34d40f692d74b36c5a437ab2f34fea88e697c7f3b531",
+      "present": "69ef4688b3232928eec6898b89b14419b1d8af2fcde1ec57c3f9023cb81b5328"
+    },
+    {
+      "id": "TV3 a record prototype's enumerable string-keyed data",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "calls": [],
+      "probe": "48f99b9df36a3bf38c258dd86d8a6eeb69c836921b5ffb3b0ce03943e32fc7bd",
+      "present": "71a6f95a0e82c972ceef51587a9dcd81d3d8a63d5edbe9adab76b72cc155c065"
+    },
+    {
+      "id": "TV3 a record prototype's enumerable string-keyed data below the top level",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:HOLDER.inner.documents.0.document.representation",
+      "calls": [],
+      "probe": "e7bc90048f8aa9150136c49fb63ca68fb26df981f0ec47f440cfa5b478cc082f",
+      "present": "976d4ddd011886e08672b6790573fff2cc274c9677a65d92b51c07e5f67e76ae"
+    },
+    {
+      "id": "TV3 a record prototype's enumerable string-keyed data, its own prototype a record",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "calls": [],
+      "probe": "68dde5667d7a68322ccf92a6b7c7206d61800aa551e312d55580c5c87e52a2dc",
+      "present": "75e60a4ef037069b3eb0854a332b8d020cb7acb6faa885e54ba7fb8deea8f0e7"
+    },
+    {
+      "id": "TV3 an array prototype's enumerable string-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "67348b9870e74fc8b64a19140fa35f8250945373d83fd44277da8566296ac772",
+      "present": "c2b9c8094d8609d760d5145ebc6c1b8709243f8d5aae81a2b7b977d5dcdab6b9"
+    },
+    {
+      "id": "TV3 a grandparent prototype's enumerable string-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "8ef0b694bb07cb76ec87a039cdd3bd385f9f07a86a23229988e81f54c7321ebb",
+      "present": "bfeff68ac93d13ba048baab8848dfcb874e5963b7cca08412b932b5da17b8f55"
+    },
+    {
+      "id": "TV3 a record prototype's non-enumerable string-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "637d9002c7f715e6744ce960201d9f966baa65209f846c8563e9b90b1003f280",
+      "present": "360de7cd1a34a123bb7af5435cfd27a8cbbd685119142071cf78d208acf3251f"
+    },
+    {
+      "id": "TV3 a record prototype's enumerable string-keyed accessor",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "f0a580e47b76216b37b410cbe18720cb2fc140b5f573438073e18847c86b27d5",
+      "present": "e13ba70444cd59e099635d08f699251b1b00d29032fa8aba30d3cb7657469967"
+    },
+    {
+      "id": "TV3 a record prototype's enumerable symbol-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "6c08b686db22a2fb9549ad8b33b25121bfafc3f4de0ff80e4546373acafe6684",
+      "present": "169fe6159d148cb588139525bd9d9b5268f301a6c5531b2ef967dd83ecba685c"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "47cc4d3b0f6eae0f9279d169d403a00a697c3561ebc929759d02894905b7eca2",
+      "present": "800b332a2b01eaf779835e0fea3e55606f7f4df8fc9bc93c5c65bdcc6c6ca45e"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data below the top level, the function throwing when called",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:HOLDER.load.cases.0.document.representation",
+      "calls": [
+        "HOLDER.load, throwing"
+      ],
+      "probe": "87b7075a6203b25c2a6e1cc8521b18f0613c88f42d0d1a219d194a5775123b45",
+      "present": "32a5072cb6032efab3a1860d945b2e6bbd274211a757de203894a4d5abf94872"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data, the function throwing when called",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases, throwing"
+      ],
+      "probe": "191880aefa26071d7d694797c05699c72b199dc5aab49f88bb1d71c6bc1a0fd5",
+      "present": "800b332a2b01eaf779835e0fea3e55606f7f4df8fc9bc93c5c65bdcc6c6ca45e"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data, the function with an own prototype property",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "6317e706514760c3be0c82c8bccfa29091000ea7d33cbe785ea8ccb43e740912",
+      "present": "aa734dd00ff8dec443e6cc8b61279b7467abfc81dea5b27bac9c6f57ced198c7"
+    },
+    {
+      "id": "TV4 a function's own non-enumerable string-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "cd8bdca4dc7294ba1d3797717c2dc1ab24cfadc3a748c3f3b6ada276c2d11277",
+      "present": "246f783357b4d70a3cac28a2c03b84d5b9b486087bbc975f11133b6e09a3d41a"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed accessor",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "3363081eaf449a3d72185fb8a6f7afab1aeb375328a89c29cf37b89ec27c1573",
+      "present": "e8b01bb4e755f3817594880df165d719647553945760f3df54da998c338b9f68"
+    },
+    {
+      "id": "TV4 a function's own enumerable symbol-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "31ba569d63bc3865d724fbd36eea24d2af4a1d59987aa4b521b1325944d6ea1b",
+      "present": "6b28c5d7c376c21b9866fe765941a4a7d07600195e143e44f55da8fe179b5515"
+    },
+    {
+      "id": "TV4 a function's return value",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "resultCases"
+      ],
+      "probe": "1526bb23a928257dc266bdae1b57d9d6cb4333c96859f182ab6a70ed208a71f0",
+      "present": "eb53a0ba28fbd79660f0cad1b5d224bbcd34a42422ef96b4ca751824edab32e8"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data filled by the function's call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "bf435211d0568c52eceaa35c5289c25513e1735d1cac0ca283faee243fa19e38",
+      "present": "3c0991f22eedfcbe01ffc9d2f6534212e49c14a91c48b865aabe391f8bf6617e"
+    },
+    {
+      "id": "TV4 an enumerable string-keyed data property below the top level filled by a sibling function's call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "HOLDER.load"
+      ],
+      "probe": "3ee75b8b1df3a298fc78d5163a7aae21cc36a47b766561e537b5687081173dbc",
+      "present": "d46edcab142abc2907a299783328c4e34d981d849baca60d27d5f85c07c898df"
+    },
+    {
+      "id": "TV5 a Uint8Array holding UTF-8 JSON",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "6aed98704a0344e7356dfbc406901aa4a3187f0a7c3cb2af1466d2edb4107833",
+      "present": "1ff5375f7ae18d91c242bebabf6027e77ed36cc7b755065e7b5aa0091387c2c1"
+    },
+    {
+      "id": "TV5 a Buffer holding UTF-8 JSON",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "2d92bbe8d76ed1ebcc9047c65795b94b6e29bdf02cadfc62bbb2cce295ce1871",
+      "present": "776d81046adae68eaff1efcf565fa68d2926c21f13ae0964a9d3282b2890499a"
+    },
+    {
+      "id": "TV5 a Uint8Array holding UTF-8 JSON below the top level",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:HOLDER.bytes",
+      "calls": [],
+      "probe": "7fbd2c75e99a9e72986ccb05bd6eb02f8a231bb6a674cb3ba67281be28d96d99",
+      "present": "fe82fc6be1b0915c5eac3d5668b294603cf4cb94b0bf3de74fbd5ccd3e9c4138"
+    },
+    {
+      "id": "TV5 a Uint8Array holding UTF-8 JSON from byte offset 1 of its buffer",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "00a043c397aaababada9b0db9d6c145e3b6a0969fa3ced962bf5a2e416637d36",
+      "present": "336431f67c5b90b3afb2270b17fb38c1af45ba952e4eab6feea2cbe4663e3805"
+    },
+    {
+      "id": "TV5 a Uint8Array holding UTF-8 text that is not JSON",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "d7ce48825484c34db35172df9cf5d7c026d85e1a09f5f3a70446a714f01f14c9",
+      "present": "71d0ebe39db2e809dc02b2473ab2de855dd8382e957a2ebdd52e606adc2e3f17"
+    },
+    {
+      "id": "TV5 a Uint8Array holding JSON with the dot escape-spelled",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "6082d2d5e9ef503f89dbedc509d65a00f5c63b7cdc1287bccc76e738fcbc5821",
+      "present": "cba4c94ecd61c30ef608f05ec05990bbca768e1ae7f464871c2a207ae2835597"
+    },
+    {
+      "id": "TV5 a Uint8Array holding JSON with the solidus escape-spelled",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "0ce6cf273cfdc312d96f297c5a7f1d9a23649746a678fe38879081bc78d92666",
+      "present": "1373b9222a37d65fc645bec9b8be3e71f7cda7241ae38acd8a626e1d2f335f29"
+    },
+    {
+      "id": "TV5 a Uint16Array holding the JSON's UTF-16 code units",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "daf7712380c37f7078fb8a1d8ae593039a93474973d29b3a632b1b4a45049a0e",
+      "present": "830c63842f920df35cb94b2908ceee1a4a78566b78137515dd3e74ace5f64823"
+    },
+    {
+      "id": "TV5 a Uint8ClampedArray holding UTF-8 JSON",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "c351039a404a6784e9e2d7501295a1438a719786743c0c5f56bcdb244d2b84d4",
+      "present": "e92e53a0730cd9ae81f80204de751c765fab64337d34b747bec4ccf873509a01"
+    },
+    {
+      "id": "TV6 an enumerable string-keyed accessor binding",
+      "readBy": [
+        "TV6"
+      ],
+      "path": ".:CASES.0.document.representation",
+      "calls": [],
+      "probe": "274c3abae2e8bedc3696686ac42477915e79e111dda3a63ef5e37c7fefdfc3f9",
+      "present": "6f80d9e36cbc1c45c87447b137fbc97de9aab5e31c4cefa25f35d7552c8e6f70"
+    },
+    {
+      "id": "TV6 an enumerable string-keyed accessor property below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "a77bd811e04e7e987f6e852e5a71cda34d6b0368345d8de59715a9f7651e5f0b",
+      "present": "c3660a24c7400deb4edea02fc5a679efde929ba898d2a721b2ab21c5dff988fc"
+    },
+    {
+      "id": "TV6 an enumerable string-keyed accessor binding filled by a sibling binding's call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ],
+      "probe": "b093621a28b1c4e33a089246ea75497f852643820dadbe77b590206e3bc340b0",
+      "present": "e84e392ed9aab924be62ea901052af0a2233dcc36d11bcbd2b1bfc87a86762ef"
+    }
+  ],
+  "sites": [
+    {
+      "site": "resultCases<call>",
+      "twin": null
+    },
+    {
+      "site": "loadCases<call>",
+      "twin": null
+    },
+    {
+      "site": "CASES<getter>",
+      "twin": "TV6"
+    },
+    {
+      "site": "HIDDEN_CASES<non-enumerable>",
+      "twin": "TV2"
+    },
+    {
+      "site": "Symbol(cases)<symbol>",
+      "twin": "TV1"
+    },
+    {
+      "site": "INHERITED_CASES<prototype>",
+      "twin": "TV3"
+    },
+    {
+      "site": "loadCases<own>",
+      "twin": "TV4"
+    },
+    {
+      "site": "WEAK_CASES<get>",
+      "twin": null
+    },
+    {
+      "site": "WEAK_SET<has>",
+      "twin": null
+    },
+    {
+      "site": "VAULT<private>",
+      "twin": null
+    },
+    {
+      "site": "PENDING_CASES<resolution>",
+      "twin": null
+    },
+    {
+      "site": "CASE_BYTES<bytes>",
+      "twin": "TV5"
+    }
+  ],
+  "proxies": [
+    {
+      "id": "an object Proxy in an enumerable string-keyed data binding",
+      "throwBy": [
+        "plain",
+        "TV1",
+        "TV2",
+        "TV3",
+        "TV4",
+        "TV5",
+        "TV6"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "7aadbe07d6c9148618fcc9b9b541b836f921e6fae3c1b30b41c58465a42e7a80",
+      "present": "f759129b76cf86eb03dc4ed558843e7f835c0e2477671b3a5743da916b703432"
+    },
+    {
+      "id": "an object Proxy in an enumerable string-keyed data property below the top level",
+      "throwBy": [
+        "plain",
+        "TV1",
+        "TV2",
+        "TV3",
+        "TV4",
+        "TV5",
+        "TV6"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "e4b66971af5161dfec25fa3f5eb773417f8b8004cfea8e90912a54149f766b22",
+      "present": "bb8388fe1cb3e3c7b5da7be22996a4744863a76bbd89777c0c02ff172ea1c8e1"
+    },
+    {
+      "id": "a function-target Proxy in an enumerable string-keyed data binding",
+      "throwBy": [
+        "TV4"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "01bc18f4844366c5e44553275c690ea6e5c7e44013b5a61d54b056c2277b4714",
+      "present": "b4f190f922d16498a8afb4b435cd9d1394c992416fac6987741babc26ec73a07"
+    },
+    {
+      "id": "an object Proxy in an enumerable symbol-keyed data binding",
+      "throwBy": [
+        "TV1"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "795cb9846ffe37f6aab9a011d75a814f529ab3e31f0e20c642b9988c211c8b9b",
+      "present": "d3a3e204adef8e0af08dbb5421169c353af043a9809b0f987dc2c664552a8133"
+    },
+    {
+      "id": "an object Proxy in a non-enumerable string-keyed data binding",
+      "throwBy": [
+        "TV2"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "60f4a73d2de23feaac0a147838a8cd77d89a44ffbd2e04046d03e7cf4de5c9b1",
+      "present": "4179d60925fde176998f7b3259410514ce8366000d354a7253fe60e6727b047d"
+    },
+    {
+      "id": "an object Proxy behind an enumerable string-keyed accessor binding",
+      "throwBy": [
+        "TV6"
+      ],
+      "readBy": [],
+      "path": "",
+      "probe": "fa50ba6da342de422fd8b99ee126af5167c363460a2109954f0617d79279cb41",
+      "present": "f8aaece2579ede9dddb4656f464f08215752b05606de9894f432ab09ec411117"
+    },
+    {
+      "id": "a record in an enumerable string-keyed data binding whose prototype is an object Proxy, its target holding the planted document",
+      "throwBy": [],
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "probe": "1c40e2c3abfce065e9ad1f98f171fc834ae4df6f28abc1a34a8acfad1c9d9e3d",
+      "present": "8c193c46be7dc094e60e334f8fae1a0ad20c4e8bb3fef8222f5ab9095f9ca281"
+    },
+    {
+      "id": "an object Proxy in a non-enumerable symbol-keyed data binding",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "7e070c59445f8fa599da18e055e1f305e950adf27c656481572b2db84c5b7e21",
+      "present": "e73fbb4ada9b61ece8c56583192d6c5fdf56a9851115f50d758b323887b6f05d"
+    },
+    {
+      "id": "an object Proxy behind an enumerable symbol-keyed accessor binding",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "3d9996c6acea0937306eb7f1a61da069f8f00b7fc9b555d58b46a80ea78bb1c1",
+      "present": "95ab1bec0aa1c63a87b80fd4a5d996afa0f818769ce3b5387a2f1e448436d839"
+    },
+    {
+      "id": "an object Proxy in a non-enumerable string-keyed data property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "e55f3dd93de187f84c2889a551082cbea665619487e0cb573df34ffa59368b92",
+      "present": "128c973547ac0f395d2c235f81556c477dcf3cf2438771a2bd7dbf1dcfad1361"
+    },
+    {
+      "id": "an object Proxy in an enumerable symbol-keyed data property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "f400372646ea25acf9f8d5b730ef3f7ff45d4f9d358cef95f8df201102d077a4",
+      "present": "1824f1e3960d391a3fe4e1d8b57c80b202aec5ed8b2b2ddc9130da01d0c9a6ca"
+    },
+    {
+      "id": "an object Proxy behind an enumerable string-keyed accessor property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "e5e158fb39416357888a11c0a8501669d359b8af0fc6593fc4fbc1912765b715",
+      "present": "5d4c4d96ad7bb9422a9f5ffe427b691ff36338144d58f7dadddd6ee974afdbba"
+    }
+  ],
+  "pages": [
+    {
+      "id": "P0 as the anchor words it",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "5c79ba98d4c74014c15093009360b68b4d60839ed206ce7a11bca6494c8851aa"
+    },
+    {
+      "id": "P1 its first two forms swapped",
+      "leads": 1,
+      "forms": [
+        "an accessor",
+        "a function call",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "8e7c15ed44cbef165bfaa714c0a228d27f65f2cc1a2dddbabece31b814660df9"
+    },
+    {
+      "id": "P2 a form named anew inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Proxy's target",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "274cd0c73fa5fc35621de5a922c6bdaf0f5e963a52b5d1147054aee5e3d2481c"
+    },
+    {
+      "id": "P3 a form named twice inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "83fc2916982167089681f47770ded1df1369386d0f220e68146041d041a0ddc0"
+    },
+    {
+      "id": "P4 a form named anew after the bytes form",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)",
+        "a Proxy's target"
+      ],
+      "digest": "eefb64310e8342f579b85ff97b47c22a23c3c7b598b519bb3814a0342c7492e7"
+    },
+    {
+      "id": "P5 a form named again after the bytes form",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)",
+        "a WeakSet"
+      ],
+      "digest": "0204c07dd88dbbb8b11a67ef79189270efd94108499fc585ee2b5e568e4da5dc"
+    },
+    {
+      "id": "P6 a second, earlier lead",
+      "leads": 2,
+      "forms": [],
+      "digest": "bcc029b9f08bd56c29f15be88ac18bd2f46ba4d582574bcf01e6a410615a64db"
+    },
+    {
+      "id": "P7 a line break moved",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "91abca2dc3cc676fb5454dbdc57d88edfb8f436b7838ccf034d7692b8537ebba"
+    },
+    {
+      "id": "P8 a continuation line with one space after its gutter",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "88fd4871d968e84146cf110545e604b21cfff335413c856655d41c100dc98d8a"
+    },
+    {
+      "id": "P9 a form named in the third clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "b2c7e8d7865aef6c843b60988f4d114b28a457e788285fae214fde125a149587"
+    },
+    {
+      "id": "P10 no lead",
+      "leads": 0,
+      "forms": [],
+      "digest": "e4821c400b229b6e85153aee995cbc3f6aeb041efa67107bf2c30374aa0d91d9"
+    },
+    {
+      "id": "P11 a second clause with no closing semicolon",
+      "leads": 1,
+      "forms": [],
+      "digest": "3a62d2b82416a9faf92deaa4ee4258d0bede3716c607e27d15c9aa9467c10461"
+    },
+    {
+      "id": "P12 a form joined to the next by and inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field and a Proxy's target",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "1fb7fb3b309e51fe3202e107a24811a70c06d0c6c572ee6501262f4716a5dbc6"
+    }
+  ],
+  "casePages": [
+    {
+      "id": "Q1 the rows as written",
+      "rows": 2,
+      "shared": 2,
+      "digest": "3c0c111cc4b5da4fdbb6bce037c36e5bd262e30f6987ff17c849d98b1286183b"
+    },
+    {
+      "id": "Q2 row one given row two's case",
+      "rows": 2,
+      "shared": 0,
+      "digest": "a5a9c7603f7d585bd03969ee547ed7dc108c12a3fdac41298cb4e7dee6b46e18"
+    },
+    {
+      "id": "Q3 spacing and a comment inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "3645682e9a8a76882f6e4fbbf02d7ed5d547b61f04984b67c346433588b51643"
+    },
+    {
+      "id": "Q4 a property assignment's name and a name after a dot",
+      "rows": 2,
+      "shared": 0,
+      "digest": "1febcfaf61433bda7b01001506641ca80b35534b9325f98ccda993f78277b9b9"
+    },
+    {
+      "id": "Q5 a shorthand property in a row",
+      "rows": 2,
+      "shared": 1,
+      "digest": "77953c06e273a2c5ae9447b9e203a61505a118ed4c3f11f0ea3015db94b4b30b"
+    },
+    {
+      "id": "Q6 a property a row lacks and an id that is not a string literal",
+      "rows": 3,
+      "shared": 2,
+      "digest": "88c00c6f5fe7bd6289cbd081c5d93be02a214b7a02e6031b1ea5497a4c1be707"
+    },
+    {
+      "id": "Q7 the list declared twice",
+      "rows": 0,
+      "shared": 0,
+      "digest": "425abdcb3d6f007b727c03dfce5501cfc6c6cb5de97bbe99f3e69ba0b987ff93"
+    },
+    {
+      "id": "Q8 the list declared only inside a function",
+      "rows": 0,
+      "shared": 0,
+      "digest": "96ae1a1140fdf797402bea1b922f13f223ca2d50a57e655e872166898eed4a26"
+    },
+    {
+      "id": "Q9 a multi-line initializer and shared declarations out of name order",
+      "rows": 2,
+      "shared": 3,
+      "digest": "fdf6946867c3f80b54af49ca4855ed0b42bdfe72fe3d092d43a89fbf0fe8e65e"
+    },
+    {
+      "id": "Q10 a class a row names, naming a const",
+      "rows": 2,
+      "shared": 2,
+      "digest": "2a44d48841b90a9d0dbb8dde55baf5b164f187702bcebd0650cbe2f547ab6ea9"
+    },
+    {
+      "id": "Q11 a trailing space inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "9928fe20f3738e06d06efc23cb5d6964bfa1f82e4e0c3510ccd674f03a0d78bc"
+    },
+    {
+      "id": "Q12 a tab inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "2441a4bb9a9cd459072f3e2716aa11ff7b341129d05874a779ec84207bdb9c70"
+    },
+    {
+      "id": "Q13 a CRLF line break inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "f6a6e88788c606dfb266dbb981a9ce61e2235006dc0c7b3979628ea79bb82542"
+    },
+    {
+      "id": "Q14 a line comment inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "7d2852869d3390f39089a556941b3f7982f20ba360709d18cd3dfbd3e78a3533"
+    },
+    {
+      "id": "Q15 a row with a spread",
+      "rows": 2,
+      "shared": 0,
+      "digest": "12802bf28536e85416a3e92ac2588d03d20161bec576267ba4d96584c2339d38"
+    },
+    {
+      "id": "Q16 a row with a computed key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "e72165b814f9d8ac6884f98e3bcb28cba05335a332626f58cf80b5d2c2e87b24"
+    },
+    {
+      "id": "Q17 a row with a method",
+      "rows": 2,
+      "shared": 0,
+      "digest": "b0e16a7535cb3f1a8a22645724aa14f7ac39f8d0372c22b76e8925aa8c757401"
+    },
+    {
+      "id": "Q18 the list declared through a call",
+      "rows": 2,
+      "shared": 3,
+      "digest": "c26d5d5da34ccb5857583297534e8b4441d9f13268d3ebc245c57d4c5841f161"
+    },
+    {
+      "id": "Q19 a name three declarations deep",
+      "rows": 2,
+      "shared": 3,
+      "digest": "3e173c68ef5dd032b8c740428819df10ff8a8b6c96c574969b02abb657c526d9"
+    },
+    {
+      "id": "Q20 a name before a dot and a name indexed",
+      "rows": 2,
+      "shared": 2,
+      "digest": "f64994e9f5f75b4fd0c359be7b5d312019b54f739c3a3c19f07e113f21fc4e0c"
+    },
+    {
+      "id": "Q21 the list declared through a call of a call",
+      "rows": 0,
+      "shared": 0,
+      "digest": "192b83755ab2ace7668ac2e40dd8b13d9f5baddc3ddadfd51672c5168628e198"
+    },
+    {
+      "id": "Q22 the list declared through a call of a name an object binding pattern binds",
+      "rows": 0,
+      "shared": 0,
+      "digest": "759ef4ae3385600e932ea90e0c950d9733c4975dd95b5caa546dfa715ccd7107"
+    },
+    {
+      "id": "Q23 the list declared through a call of a name an array binding pattern binds",
+      "rows": 0,
+      "shared": 0,
+      "digest": "62662149f9090a7d0a2d6bef29bf51a74115806c607bda4640dfcd02c651d55b"
+    },
+    {
+      "id": "Q24 the list declared through a call of an imported name",
+      "rows": 0,
+      "shared": 0,
+      "digest": "2c2cca0c5c4067047b57d62f0ab815835acbc3ff72a3712513167e8e7638feb9"
+    },
+    {
+      "id": "Q25 the list declared through a call of a name the source does not declare",
+      "rows": 0,
+      "shared": 0,
+      "digest": "9a6f05d2d42f4d9ee46300fd1078edce63c4f636592657ae1ab7781d25a4751a"
+    },
+    {
+      "id": "Q26 the list declared by a let declaration",
+      "rows": 0,
+      "shared": 0,
+      "digest": "9574b2bd49ae6e561fbe4f8a1e554326d00602c0597623d51ee3b54a3c8a4894"
+    },
+    {
+      "id": "Q27 the list declared by a var declaration",
+      "rows": 0,
+      "shared": 0,
+      "digest": "c7bd37fd796f4932c06ba00261bdb7fc38429e03fc24f2618f0985a62642fc0f"
+    },
+    {
+      "id": "Q28 the list declared through a call of a function declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "80698ba372bcd4487a1bd807a8a54b9d760f367f635ee28f7b433a278ac0979e"
+    },
+    {
+      "id": "Q29 a row with a spread before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "bdb6fd39ec6f1315132b56cab5047ba9bcc5f81d4f4397e2c956ca3d29ed2d2b"
+    },
+    {
+      "id": "Q30 a row with a computed key before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "afb158a635d3f49153ec35c2663de88f6726de765822c12859f6a32c92aa1865"
+    },
+    {
+      "id": "Q31 a leading tab and a trailing tab inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "13d9ceb79cfd8f1df3b2e437d0a35e3b01be5e6ee811ec094f5410ec149cd91b"
+    },
+    {
+      "id": "Q32 a run of three spaces inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "b2fb28ee4eb96e966682663c7a61e21b09e165e6db29b7ad9b55abdcc67630b8"
+    },
+    {
+      "id": "Q33 a doc comment and a block comment across a line break inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "f1dff0dc219d05bb4c39d84d03fb40c1cc310803dc1c95606918af6352e86b7e"
+    },
+    {
+      "id": "Q34 a comment-only line inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "60abf7667f96a2b6fd8b608f4076111da850d015385fdba1a279964d5287e8e9"
+    },
+    {
+      "id": "Q35 a trailing space, a CRLF line break and a line comment after a semicolon inside a probe's and a present's initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "e916ad5989049b8562047aa22dbb74309181b5774cf5c0df893f9d386dde38bc"
+    },
+    {
+      "id": "Q36 a let declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "f73abfd4993b1c8bf2bdbf383b7c5c5c64a2734786a2674dc2abe7ecc8e3b836"
+    },
+    {
+      "id": "Q37 a var declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "e2e58b6ffe5c3942a3a22684f91a6cdbeb12a2723d9134285e04ec27f2d4ceb5"
+    },
+    {
+      "id": "Q38 a using declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "4fa2506553a18c9a007e5e074caeb5a4a7dbdbe25069a0a0fc5b1b89ee724997"
+    },
+    {
+      "id": "Q39 an await using declaration a row names",
+      "rows": 2,
+      "shared": 3,
+      "digest": "6e44792c48947352807037caf1f77c1f66314f9db985a39139b42d550075456a"
+    },
+    {
+      "id": "Q40 the list declared through a call of a let declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "54a2bc5a8fba11507515b137ffbe4fccf048f7adee5f9f8ed71e136823e380f1"
+    },
+    {
+      "id": "Q41 the list declared through a call of a var declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "5eb69b5ef5eda1fc430426a81a9d33ff935900f13d516bb6e0e435bd3825cfe6"
+    },
+    {
+      "id": "Q42 the list declared through a call of a using declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "2ef07ab4fa658051795b986be99c170e1d6d362341cec9a0df705d42525b4afb"
+    },
+    {
+      "id": "Q43 the list declared through a call of an await using declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "813f7d4a2430b84981b343d1a653ed546ae6f03bcbede8e9e2aa33aff9ebc5f2"
+    },
+    {
+      "id": "Q44 the list declared through a call of a class declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "79dfe4103886876dde7b718ecdf570c9236987c316f0003ed5923d052ebc79fc"
+    },
+    {
+      "id": "Q45 a qualified name's right side in a type query names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "d1b360f504034ea642bda991ab2e05cb6993b90351063dfa4ed383d24b78fc8a"
+    },
+    {
+      "id": "Q46 a qualified name's right side in a type annotation names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "c55e74c367506e22e24714dad2a60fcd6eb8f33a04d94988dfb2e72da4549fa3"
+    },
+    {
+      "id": "Q47 a meta-property's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "15297d5b4538438b3508d0dc19894379167dcbcd5507e1a5a3aa2cbf4261d71a"
+    },
+    {
+      "id": "Q48 an object literal method's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "b2fe957afa3094e80cf8d43a09bd63c185bb58e83b6199ce836e5e20f7bb2f38"
+    },
+    {
+      "id": "Q49 an object literal getter's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "f973137391ee2cc0986d180c617d623780caaa5c58fb518a5957e4b5095a8f58"
+    },
+    {
+      "id": "Q50 a type literal property signature's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "ea096c9c0d04a3bb09e6f65e62ceb027effdcea2ddc577bb3aaf35b7cd98d3bf"
+    },
+    {
+      "id": "Q51 a class field's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "8ac28f3b604a2a35488ad210d913ed387dbc0fa72c8d657e21427311d44620c2"
+    },
+    {
+      "id": "Q52 an object binding pattern's key names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "2270ea703bdb6eeb5901bd6b884eb8fde5ec8e965ec1f930c3c299ac96f27c83"
+    },
+    {
+      "id": "Q53 a named tuple member's label names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "196ee99159725c4cb38df6f6c43c3eb2d23d076c442ea73921946755fc528d83"
+    },
+    {
+      "id": "Q54 a parameter's name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "b8d0469c8950ff77e927783b0af05f170dbe9bd115b20e991aac3b5960c5fbf2"
+    },
+    {
+      "id": "Q55 an identifier as a computed key names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "5c3e3c4e7f0aa3d143d456eed0bcb14f773b864862d9a7623557a2dfc70518d8"
+    },
+    {
+      "id": "Q56 a block, a doc and a line comment name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "2acc94bc4ed64e090ab8b00ce10a04050e221cc367033d407900b62ae32f063d"
+    },
+    {
+      "id": "Q57 a string literal and a private name name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "060f3018a16f8f09cdcae78da65a4ac4c706d334e619d2a3ae7c1056b0eecb14"
+    },
+    {
+      "id": "Q58 a row with a numeric-literal key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "d82a0136656a9e286801df1fadff5c088b58c7df24e88c17ef4d795b8198a1c2"
+    },
+    {
+      "id": "Q59 a row with a numeric-literal key before another property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "f4d296cc03f5a6bc1647fcc50f53a05ab61b409729e3fba72534005aecf8b9c5"
+    },
+    {
+      "id": "Q60 a row with a quoted key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "70c7eecbb43010630ea005a680211ec20ebf6cfc7cc344fac569e8035359c6cd"
+    },
+    {
+      "id": "Q61 a row with a bigint-literal key",
+      "rows": 2,
+      "shared": 0,
+      "digest": "691057751d58944180820b1259636cfa9ffbf9d47b02b809315b277003ae3d60"
+    },
+    {
+      "id": "Q62 a row with a getter and a row with a setter",
+      "rows": 2,
+      "shared": 0,
+      "digest": "75d6d20320942021879881e9bdf3801cbfc5a01b28f294f9b5c3a18bacff513a"
+    },
+    {
+      "id": "Q63 a row with a shorthand property",
+      "rows": 2,
+      "shared": 0,
+      "digest": "a33066696c852c8dc9d3b5f0e1373023714ececbace7a238df7ec9cf285e3021"
+    },
+    {
+      "id": "Q64 a row with a reserved word as a key",
+      "rows": 2,
+      "shared": 2,
+      "digest": "1b7e470399ac2d80479383e4a9a577995367d8b11de9ce72ed63ac85afab0e17"
+    },
+    {
+      "id": "Q65 an implemented dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "d11a3c1f6b22e3514963cbdf87577f65963fd84b70998509c0d6f8e48e2e0161"
+    },
+    {
+      "id": "Q66 an interface-extended dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "52c98b5046d2d8968c36b90165b9293298a9bbfc646ba3ff34e4b8a4e09b110b"
+    },
+    {
+      "id": "Q67 a shared class declaration's implemented dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "ec392ed157b9dc9fad5042422da978d1b5c9b1f0ac5998997742b59705e21833"
+    },
+    {
+      "id": "Q68 a nested implemented dotted type name's second and third names name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "fe6a5ed2292bfef70664cf0d1ac35e49addbfca7982252ebf2d6982c3ecb7762"
+    },
+    {
+      "id": "Q69 a shared function's local interface-extended dotted type name's right side names no declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "7ef60205de2f2fa84e0243bd9439de778497fa988a529629fda1e873735b3a6e"
+    },
+    {
+      "id": "Q70 a class-extended dotted name's right side names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "bbef632f4dd19ed2e662d36193ac064bb219ee76519763354d23e76bd2be9bd7"
+    },
+    {
+      "id": "Q71 a plain implemented name names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "7623d41ed9cae35bb1484b240686fd96777de9392d711c334dbdc9033ce3e332"
+    },
+    {
+      "id": "Q72 a qualified name's right side in an implemented type's type argument names a declaration",
+      "rows": 2,
+      "shared": 3,
+      "digest": "0062e3f2a8b7a7225171ce2cdf519d4ef077e8082ccd9a23a87c327dfa3fbf37"
+    },
+    {
+      "id": "Q73 a dotted expression's second and third names name no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "e7afca1cc5976fe38852863b310479237cbc06d9a18875a948005d41ecf7748f"
+    },
+    {
+      "id": "Q74 a property access's name inside an object literal's computed key names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "eac4cef848b4b00663d796364ccf03177603aa2250877faacdd6b3e2e13bfd4d"
+    },
+    {
+      "id": "Q75 a property access's name inside a type literal's computed key names no declaration",
+      "rows": 2,
+      "shared": 2,
+      "digest": "733ea003769751dae359c60387c63e2ed8fa93773c561cdbdf861f74f491d0af"
+    }
+  ],
+  "shared": [
+    {
+      "name": "REPRESENTATION",
+      "digest": "fe248dc3fda135d4a9f1fe164066e6e7c43304688814560913cc2a955e3af3fa"
+    },
+    {
+      "name": "PLANTED_DOCUMENT",
+      "digest": "d2a6d21c21b84462b23d8f1ba586095cb6430d16ec08696f5a94c7697bce75a2"
+    },
+    {
+      "name": "planted",
+      "digest": "1d5591e173983def5140d3501782f0240d71267c24da7fa04537cd1327c073b3"
+    },
+    {
+      "name": "ownData",
+      "digest": "8632639b66ed5861c89eb5a9796750230ef2b7ea7c669f5c87e67cd095f63a58"
+    },
+    {
+      "name": "ownGetter",
+      "digest": "92448418faca5b9386fd9d30c9100e2363680f4bc9ba8fafef579f08a45f65ec"
+    },
+    {
+      "name": "symbolsOf",
+      "digest": "6e8f48e2889b9c11d51388774a5dfdbad3f4be7b2254b8bf17301e8aa93a13b3"
+    },
+    {
+      "name": "prototypeOf",
+      "digest": "531baf946b5537a60bde8e8cdc046cd66a892772bcff083bbde8dbb46e253d7d"
+    },
+    {
+      "name": "isEmptyArray",
+      "digest": "a65c04f9625cd0a25fd846d41bf57d0ff625fbf1bb938d0aef65374e3631da0c"
+    },
+    {
+      "name": "callOwn",
+      "digest": "508356953334fc2f59730f64c13d9c846b072d16c7d4ffbf5aaf0e4d176edc8c"
+    },
+    {
+      "name": "plainBytesText",
+      "digest": "f26cc43fd5f617c19720ffe370dfd5ec5727b1e866edf913fb99131968678b46"
+    },
+    {
+      "name": "parsedIf",
+      "digest": "7dae8fdb4fdfd91c742086ecab5e8616f91edbc1e8cd234463dd021bf802aab3"
+    },
+    {
+      "name": "parsesAsJson",
+      "digest": "1d3ae062d6acd9b2dfbd8c6b43bb5712b67a9b9ba07d8e81aba8c77fb7fcdbeb"
+    },
+    {
+      "name": "bytesOf",
+      "digest": "e32fe14f74153d679a9287785aab7b3a7d2952c997523082cd43e25754cd0cb5"
+    },
+    {
+      "name": "recorded",
+      "digest": "667c12abadda25ecf3af3d3a8692b8595a9b38f343ee15d0aaaeaa448b50d7df"
+    },
+    {
+      "name": "afterLoad",
+      "digest": "c5a5ffb9e9e10031cebb9a3fb7c30acc2d9055633591ebc7917db7ba96d36d97"
+    },
+    {
+      "name": "presentAfterLoad",
+      "digest": "70232d6a522a650748c25beb40f7a9c122e8c4f479a412f4f8955a901c08d4ea"
+    },
+    {
+      "name": "asSpelled",
+      "digest": "368da2b12b36ad752e353416aaf96717591be01d1dd84ac6828e3bb550334cef"
+    }
+  ],
+  "reader": [
+    {
+      "name": "ABSENT",
+      "digest": "488d0fbe8eb522603ae28732b56eae80c03ed3cde44c576f90492745db08d6c3"
+    },
+    {
+      "name": "sha256",
+      "digest": "b76c3c93ce3155c67899cf51dc4f54ad2efbcb92dede0b7255f09a9c40c43b10"
+    },
+    {
+      "name": "assignment",
+      "digest": "bb48585975e861ac947f3d5b07fabdd57ac61b56fc03c41161da164a52d3074b"
+    },
+    {
+      "name": "plainElement",
+      "digest": "5c52267a8db6121077922fd90235165dfd4104ed11c5860c9f5574ec0f31714c"
+    },
+    {
+      "name": "listLiteral",
+      "digest": "e5f6cb4e80c2afe16ed85e6f07701526cbf2fc58f4eb7295fcae1ea97f48fbe7"
+    },
+    {
+      "name": "namedIn",
+      "digest": "f1203c9cc83bb2b19ba4d48b0d8e7a6a562f794a319aeefa6349eac76a22bbab"
+    },
+    {
+      "name": "caseReading",
+      "digest": "5ccb480b4416d3fb3229b9c9d8c7a1603c251f748639d2d3119207149817982f"
+    }
+  ]
+}
