@@ -4017,11 +4017,41 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // THE CLAIMS' SHAPE (wb-qyd6 cut #3, refusal #2 F6): the list holds exactly these 22 claims, each with exactly the numbers its
     // measurements give it, so a claim deleted, shortened past a count or swapped for another reds here; and each counted controls
     // clause of the title, read from the title outside this list, is held by a claim but the three this list has never held (the
-    // SPELLED_STATEMENTS, CLASS_FORMS and EVAL_STATEMENTS controls), so a claim dropped together with its shape element reds there.
+    // SPELLED_STATEMENTS, CLASS_FORMS and EVAL_STATEMENTS controls), so a dropped controls claim reds there with its shape element
+    // unless another claim holds its clause (the bare (288 controls) claim and the &&= NESTINGS claim each hold the other's), and a
+    // dropped claim without a controls clause never does; THE CLAIMS' COVER below reds at the drop of any claim.
     expect(titleClaims.map(claim => claim.match(/\d+/g)?.join(' ') ?? '')).toStrictEqual(['8', '14', '4', '3', '2', '91', '91', '27', '15',
       '4', '5', '432', '18', '288', '33 8 264', '288', '8 18 288', '18', '33 8 45 35 31 540', '62', '941 6', '5']);
     expect(title.match(/\((?:another )?\d+ controls[);]/g)?.filter(clause => !titleClaims.some(claim => claim.includes(clause))))
       .toStrictEqual(['(96 controls)', '(6 controls)', '(6 controls)']);
+    // THE CLAIMS' COVER (wb-7nf4, the landing-970 gate's F3): each count of the title, read from the title outside this list (a run
+    // of digits that no letter or digit precedes, with the word after it when a space and a word follow), lies inside an occurrence
+    // in the title of exactly one claim, but the 29 counts below that no claim holds (the first is the describe name's wb-tz2.12;
+    // the 96 and the two 6 controls are the three clauses above) and the 3 that two claims hold (each 18 NESTINGS, held by the 18
+    // NESTINGS claim and by the claim it sits in, and the one 288 controls). Every claim holds a count, so a claim dropped together
+    // with its shape element, or cut inside a count's word, leaves a count it held held by one claim fewer and reds here; a claim
+    // cut anywhere else is NOT CLAIMED by this cover.
+    const holdersOf = (claims: readonly string[], start: number, end: number): number => claims.filter(claim => {
+      for (let at = title.indexOf(claim); at >= 0; at = title.indexOf(claim, at + 1)) {
+        if (at <= start && end <= at + claim.length) return true;
+      }
+      return false;
+    }).length;
+    const countsOf = (claims: readonly string[]): {readonly count: string; readonly holders: number}[] =>
+      [...title.matchAll(/(?<![A-Za-z\d])\d+(?: [A-Za-z_][\w-]*)?/g)]
+        .map(({0: count, index}) => ({count, holders: holdersOf(claims, index, index + count.length)}));
+    const unheld = (claims: readonly string[]): string[] => countsOf(claims).filter(({holders}) => holders === 0).map(({count}) => count);
+    expect(unheld(titleClaims)).toStrictEqual(['12 standing', '8 TWICE_CELLS',
+      '11 UNREAD_FORMS', '23 positions', '7 WRITE_FORMS', '5 HOLDERS', '8 in', '6 SPELLED_STATEMENTS', '96 controls', '8 in', '928 gate',
+      '2', '2 CLASS_FORMS', '3 forms', '6 controls', '6 controls', '13 ELEMENT_FORMS', '65 positions', '9 key', '845 controls',
+      '5 REFERENCE_FORMS', '27 shipped', '27 shipped', '3 empty-body', '27 pinned', '27 shipped', '11 closed', '12 TIER_MEMBERS', '11 probe']);
+    expect(countsOf(titleClaims).filter(({holders}) => holders > 1).map(({count, holders}) => `${count} ${holders}`))
+      .toStrictEqual(['18 NESTINGS 2', '288 controls 2', '18 NESTINGS 2']);
+    // The cover fires both ways: the HELPERS claim cut by its last letter, inside its count's word, or dropped leaves exactly its
+    // count unheld.
+    const helpersClaim = `${HELPERS.length} HELPERS`;
+    expect([titleClaims.map(claim => claim === helpersClaim ? claim.slice(0, -1) : claim), titleClaims.filter(claim => claim !== helpersClaim)]
+      .map(claims => unheld(claims).filter(count => !unheld(titleClaims).includes(count)))).toStrictEqual([['14 HELPERS'], ['14 HELPERS']]);
     // The judge can fire both ways: an open body departs from a refusal, and a closed one from a decode.
     expect([departure(diagnosticStream({evidence_tier: 'Parsed'}), `SDK_PROTOCOL_MALFORMED body.evidence_tier ${FRAME_INVALID}`),
       departure(supportStream({evidence_tier: 'Parsed'}), 'decoded')]).toStrictEqual([
