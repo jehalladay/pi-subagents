@@ -435,6 +435,15 @@
    "near-maximum-numeral-infinity-callee-methods",
    "mid-band-numeral-infinity-callee-method",
    "upper-case-exponent-numeral-infinity-callee-method",
+   "other-mid-band-numeral-infinity-callee-method",
+   "signed-upper-case-exponent-numeral-infinity-callee-method",
+   "unannotated-mid-band-numeral-infinity-callee-method",
+   "exported-mid-band-numeral-infinity-callee-method",
+   "declared-read-mid-band-numeral-infinity-callee-method",
+   "bound-name-mid-band-numeral-infinity-callee-method",
+   "two-argument-mid-band-numeral-infinity-callee-method",
+   "element-called-mid-band-numeral-method",
+   "element-called-upper-case-exponent-numeral-method",
    "code-point-escaped-string-named-method",
    "hex-escaped-string-named-method",
    "identity-escaped-string-named-method",
@@ -787,6 +796,15 @@
     "near-maximum-numeral-infinity-callee-methods": "6e9e5d7675c98b66",
     "mid-band-numeral-infinity-callee-method": "be20ae14f13583df",
     "upper-case-exponent-numeral-infinity-callee-method": "3e66f0b0d573f865",
+    "other-mid-band-numeral-infinity-callee-method": "3ba624b3ab306419",
+    "signed-upper-case-exponent-numeral-infinity-callee-method": "f348be6a7fed327c",
+    "unannotated-mid-band-numeral-infinity-callee-method": "c80371ddd4ea32c2",
+    "exported-mid-band-numeral-infinity-callee-method": "3258d3514843efe3",
+    "declared-read-mid-band-numeral-infinity-callee-method": "7594af76d8118807",
+    "bound-name-mid-band-numeral-infinity-callee-method": "175747dbccf56503",
+    "two-argument-mid-band-numeral-infinity-callee-method": "45d9e0a1361e0f7f",
+    "element-called-mid-band-numeral-method": "648039c3a8913518",
+    "element-called-upper-case-exponent-numeral-method": "a27029c8c3e7a5cc",
     "code-point-escaped-string-named-method": "efe50f5d7eaac215",
     "hex-escaped-string-named-method": "05d3aa61c031f0e5",
     "identity-escaped-string-named-method": "8948f4be321860ff",
@@ -2408,6 +2426,33 @@
          "2 declaration unpinned"
         ],
         "upper-case-exponent-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "other-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "signed-upper-case-exponent-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "unannotated-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "exported-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "declared-read-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "bound-name-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "two-argument-mid-band-numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "element-called-mid-band-numeral-method": [
+         "2 declaration unpinned"
+        ],
+        "element-called-upper-case-exponent-numeral-method": [
          "2 declaration unpinned"
         ],
         "code-point-escaped-string-named-method": [

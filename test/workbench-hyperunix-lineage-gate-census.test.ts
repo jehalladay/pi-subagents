@@ -69,19 +69,58 @@
  *    reading's plain output, each plant at each node, each plant at every kept node at once): the context's output with one
  *    member added beside source (at the output's root) and one added inside source at each node the context planted (at source
  *    itself for a plain output); each context held once, under its own name (its reading, its plant and its node, every kept
- *    node at once, or the plain output; a second hold of a name refused); each kind's count of controls judged moved held, over
- *    READINGS and per reading, to the count of those contexts and their planted nodes read outside the sweep; and per context,
- *    each control judged moved read back at the node it moved (movedAt, from the control itself), the context's nodes held to
- *    its name's nodes read outside the sweep: beside source the output's root, once, and inside source each node the context
+ *    node at once, or the plain output; a second hold of a name refused); each control counted only when the exactness judge
+ *    (movedOnly, wb-pgzz) reads it as the output its hold was handed plus exactly its MOVED member, that judge held by its own
+ *    controls alone, on the delivered output for R05 with P9 at rows.0: each of that output's held controls kept, and refused,
+ *    each a co-move (the held control with its output also moved by one single edit beside its mark), every EDITS control of
+ *    that output marked MOVED at a held control's node, wherever the edit leaves there an object not yet carrying MOVED (each
+ *    kind's count held to the output's JSON text, less the candidates that mark that node or remove it), and every COMOVES
+ *    control of each held control - FOREIGN, a member named outside the census's namespace, added (set to true) at each object
+ *    node as its last member, each string naming one of READINGS' coverages moved to each other one, and each number nudged up by its own magnitude
+ *    times Number.EPSILON, Number.MIN_VALUE at zero (each kind's count held to the same text) -, each such co-move read back from
+ *    itself (identityOf: its one difference, less its MOVED mark, from the output - the node it moved and how, as JSON text) and
+ *    those identities, as one sorted list per kind, held equal to the candidates the output's JSON text names as the platform's
+ *    own parser reads it (textEdits less the candidates that mark that node or remove it, for the marked co-moves; textComoves,
+ *    for the COMOVES), so a held control co-moved by one of those forms is refused and counts nothing (wb-pgzz respin 1), and a
+ *    swap of which node, which coverage or which number a co-move moves, or of which candidates the marked set holds, reds even
+ *    where every count is kept, as does, each identity being read against the output itself, a held control of that output that
+ *    carries a co-move of its own, in that context only (wb-pgzz respin 2); and each co-move held to the held control itself
+ *    (wb-pgzz respin 3, the enumerate-the-resolvable cut R-B518 ordered, the mark included): the held control's own mark, read
+ *    back from it against the output (MOVED added, set to true, at its node) and placed as its node's last member, is the mark
+ *    each co-move carries, by its node and value in each co-move and by its place wherever addedLast reaches the mark's node -
+ *    each marked co-move, read back against its own unmarked self (identityOf), is that same one difference, and each COMOVES
+ *    co-move, read back against the held control itself, is its one candidate alone -, so a co-move's mark (MOVED's node and its
+ *    value, and its place among that node's members wherever addedLast reaches that node) is the held control's own; and each
+ *    member a co-move adds is its node's last member wherever addedLast reaches that node (addedLast walks the co-move beside the
+ *    value it moves, from the root into each member both hold and each element of an array pair of one length: a marked co-move's
+ *    mark and its added kind's MOVED, read against the output; a COMOVES co-move's FOREIGN, read against the held control), so a
+ *    co-move written with another mark, or with a member at another place at a node addedLast reaches, reds even where every
+ *    identity, count and refusal is kept; addedLast reaches the mark's node of every marked co-move but those whose own edit
+ *    changes the length of an array on the mark's path (the two inside-source removals of a source.rows element, the mark at
+ *    source.rows.0), whose mark's place no pin reads: the named residual RS6 with its pinned quiet row Q6, carried by wb-lt9r
+ *    (wb-pgzz cut #5, the fail-closed core R-B542 ordered);
+ *    each kind's count of controls judged moved held, over READINGS and per reading, to the count of those contexts and their
+ *    planted nodes read outside the sweep; and per context, each control judged moved read back at the node it moved (movedAt,
+ *    from the control itself, so, with the exactness above and as far as its controls hold it, every node that control moved),
+ *    the context's nodes held to its name's nodes read outside the sweep: beside source the output's root, once, and inside
+ *    source each node the context
  *    planted, once each and in document order (OUTSIDE ANCHORS). (2) EDITS, on the delivered output for R05 with P9 at rows.0
  *    only: the census's own single edits
- *    of seven kinds - a member added at each object node, each member and each array element removed, each scalar changed (a
+ *    of seven kinds - a member added at each object node as its last member, each member and each array element removed, each scalar changed (a
  *    string suffixed, a number incremented, a boolean negated, null replaced by 0), each non-string scalar retyped to its own
  *    text, each string's first cased letter recased, each string given a trailing space, and each object's members and each
  *    array's elements rotated once - every such candidate that moves the output's JSON text, inside source (coverage_summary, the
  *    delivered rows, the record) and beside it alike, each kind's count equal to the count of its candidates the output's JSON
- *    text holds as the platform's own parser reads it; and the delivered output itself is judged moved on neither leg (the plain
- *    leg cannot pass by re-planting: a plant never overwrites a member). Outside (1) and (2) the judge is not held: a judge blind,
+ *    text holds as the platform's own parser reads it, and each control read back from itself (identityOf) and those identities,
+ *    as one sorted list per kind, held equal to the candidates that text names (textEdits), so a swap of which node a control
+ *    edits reds even where every count is kept (wb-pgzz respin 2), and each member a control adds is its node's last member
+ *    (addedLast, wb-pgzz respin 3), addedLast itself held by its own controls on that output (FOREIGN added last at the root, at
+ *    the first place of the root, at the first place of source.rows.0 and between runtime's two members, and the output itself,
+ *    each read as PLACES states), identityOf itself held by its own controls on that output (a
+ *    member added with another value than true, the root turned by two, two single edits at once, a member renamed, an element
+ *    appended, and the output itself, each read back as its literal identity); and the delivered output itself is judged moved
+ *    on neither leg (the plain leg cannot pass by re-planting: a plant never overwrites a member). Outside (1) and (2) the judge
+ *    is not held: a judge blind,
  *    in a context other than R05/P9 at rows.0, only to a move outside that context's held controls is the named residual RS4,
  *    and one blind only to an edit other than the census's own or to a combination of edits is RS5;
  *    B3 the full record planted at every object node of a provider reading (positions derived from the reading, their count
@@ -96,7 +135,22 @@
  * clause 3) verbatim, and ON_LANDING as acceptance clauses 1 and 2; F2 READINGS covers exactly the execution kinds the src
  * adapter projects (HYPERUNIX_EXECUTION_KINDS, mutation outcomes refused). A2's member list is held to the SDK's own serializer.
  * B2's node counts are held to each document's JSON text, and its EDITS control counts to the delivered output's JSON text as the
- * platform's own parser reads it (JSON.parse's reviver, textCounts), never to nodePaths or editsOf. B2's held-control counts are
+ * platform's own parser reads it (JSON.parse's reviver, textCounts), never to nodePaths or editsOf; its exactness judge's co-move
+ * counts are held to the same text (wb-pgzz respin 1): each marked EDITS kind to textCounts less the candidates that mark the held
+ * control's node or remove it, and each COMOVES kind to the text's objects, its strings naming one of READINGS' coverages and its
+ * numbers as the parser reads them (parsedCount), never to editsOf, comovesOf or the marked set; and its control identities are
+ * held to the same text (wb-pgzz respin 2): each EDITS control, each marked co-move and each COMOVES co-move is read back from
+ * itself (identityOf walks it beside the output and names each difference by its node and its form, never by a generator) and
+ * held, as one sorted list per kind, to the candidates the parser's own reading of that text names (parsedNodes reads each
+ * value's path back from the holders JSON.parse's reviver hands over; textEdits and textComoves name each candidate from it,
+ * writing each edit's form apart from the generators' helpers), never to nodePaths, objectPaths, editsOf, comovesOf or the
+ * marked set; and each co-move's mark is held to the held control itself (wb-pgzz respin 3): each marked co-move's mark, read
+ * back against its own unmarked self, to the held control's one difference from the output, each COMOVES co-move to its one
+ * difference from the held control, and the place of each member a control or a co-move adds at a node addedLast reaches is read
+ * back from it (addedLast walks it beside the value it moves, from the root into each member both hold and each element of an
+ * array pair of one length), never from plantedAt's, heldOf's, editsOf's or comovesOf's own writing; which marked co-moves' mark
+ * nodes it reaches is read on the same output by Q6 (each co-move with its mark written first, read by B2's own mark reader
+ * remarks: out of place at every one but RS6's two, wb-pgzz cut #5). B2's held-control counts are
  * held to the contexts its judge decides, counted outside the sweep (wb-zf7v, the landing-744 F1 cure): beside source
  * READINGS.length + PLANTS.length x (N + READINGS.length) and inside source READINGS.length + PLANTS.length x (N + K) - today
  * 14 + 9 x 315 = 2849 and 14 + 9 x 462 = 4172 -, N the READINGS documents' object nodes counted from their JSON text (braces) and
@@ -105,7 +159,8 @@
  * (wb-bv75, the landing-773 F1 cure) the same counts are held to the reading's own document: beside source
  * 1 + PLANTS.length x (N_r + 1) and inside source 1 + PLANTS.length x (N_r + K_r), N_r its braces and K_r its codecKept count -
  * today R01 199 and 289, R02 208 and 307 -; and per context (the wb-bv75 respin 1, its refusal's U1), each context's held
- * controls are held, by the node each was read back at (movedAt), to its name's nodes: beside source the output's root; inside
+ * controls are held, by the node each was read back at (movedAt; each counted only as its context's output plus exactly its
+ * MOVED member, movedOnly, wb-pgzz), to its name's nodes: beside source the output's root; inside
  * source, source itself for the plain output, the node it planted for a plant at a node, and for a plant at every kept node at
  * once the nodes at which the SDK codec keeps that plant in the reading's document, in document order (codecKeptAt: the codec
  * read one node at a time, never legsOf, judgeWhole or the sweep's own kept nodes), the names built after the sweep from
@@ -113,10 +168,35 @@
  * the per-reading anchor).
  * FROZEN SHAPE (standing rule 16): S pins the rows and their pins, KINDS, READINGS (id, kind, licence, expected coverage), PLANTS
  * (id and record members), the representation members, the judge controls - the kind judge's (FLAGGED, NAMESAKES) and B2's
- * held and whole-output control kinds (HELD, EDITS) -, the residuals and the on-landing labels as literals; every pin compares a
- * measured witness to WITNESSES (payload identity: B2's carries the plants as they arrived, its held-control counts in sum and
- * per reading and its count of contexts held at their names' nodes, its control output and each control kind's count); Z requires
- * every pin to run once, in row order.
+ * held, whole-output and co-move control kinds (HELD, EDITS, COMOVES and FOREIGN's name) and identityOf's own controls (READER's
+ * count) and addedLast's (PLACES' count, wb-pgzz respin 3) -, the residuals and the on-landing
+ * labels as literals; every pin compares a measured witness to WITNESSES (payload identity: B2's carries the plants as they
+ * arrived, its held-control counts in sum and per reading and its count of contexts held at their names' nodes, its control
+ * output and each control kind's count, the co-moves its exactness judge refused, per held kind and per control kind and per
+ * co-move kind, and how many of its controls and co-moves were read back at the identities their output's text names, per held
+ * kind, each counted only with its mark the held control's own (its node and value, and its place wherever addedLast reaches the
+ * mark's node) and each member it adds its node's last wherever addedLast reaches that node, wb-pgzz respin 3; Q6's the marked
+ * co-moves whose mark's node addedLast does not reach, wb-pgzz cut #5); Z requires every pin to run once, in row order.
+ * ENUMERATED (wb-pgzz respin 3, rule 19(c) and R-B518: the second-stage cap froze the claims-wider-than-pins class of B2's
+ * exactness controls, so this cut is that class's enumerate-the-resolvable form; cut #5 is its fail-closed core, R-B542, claims
+ * equal to pins on what remains): a co-move is the held control with its output also moved by one single edit beside its mark,
+ * and each member of that class this census claims is held by a content pin -
+ * (m1) which node it moves and how: its identity less its mark, read against the output, equal per kind as one sorted list to the
+ * candidates the output's JSON text names (respin 2); (m2) its mark: MOVED's node and value the held control's own (each marked
+ * co-move's mark, read back against its own unmarked self, is the held control's one difference from the output; each COMOVES
+ * co-move reads back against the held control as its candidate alone; respin 3, refusal #3's U1 and U2), and its place the held
+ * control's own wherever addedLast reaches the mark's node (each COMOVES co-move, and each marked co-move but RS6's two); (m3) the
+ * place of each member it adds at a node addedLast reaches (a marked co-move's mark and added MOVED against the output, a COMOVES
+ * co-move's FOREIGN against the held control): its node's last, as the held control places its own mark (addedLast, respin 3);
+ * (m4) which candidates each set holds: the identity lists and each count against the same text (respins 1 and 2). The header
+ * claims exactly these pins. The enumerate cut's refusal #4 found one member of the class they do not hold (GP6-GEN-MARKED-FIRST-
+ * SHORT, a generator writing the mark first only where no pin reads it): the mark's place of a marked co-move whose own edit
+ * changes the length of an array on the mark's path, a node addedLast does not reach - at R05/P9 at rows.0 the two inside-source
+ * removals of a source.rows element (the mark at source.rows.0). It is the named residual RS6 with its pinned quiet row Q6,
+ * carried by wb-lt9r, and (m2) and (m3) claim no place there; a generator so written also masks an exactness judge blind only to
+ * those removals beside a mark written last (refusal #4's realized chain), which stays inside RS6 (RS1-RS5 with Q1-Q5 unchanged).
+ * A member found later is a residual-list addition, not a refusal, unless it contradicts one of these pins (rule 14's shape); an
+ * exactness judge blind only to a co-move of another form is NOT CLAIMED (below).
  * CASE NAMES: no case name here evidences docs/workbench/09's "optional graph traversal of linked native refs" (the RA5/b half of
  * test/workbench-docs09-readers-relationships.census.ts, routed to this bead's on-landing leg), so every case name stays outside
  * that half's title probe; the kind spellings live in data, never in a case name.
@@ -132,10 +212,33 @@
  * outside that context's held controls (RS4), or blind only to an edit other than the census's own single edits or to a
  * combination of edits (RS5), is not excluded: each is a named residual with its pinned quiet row (Q4, Q5). B2's held counts
  * number the held controls its hold judged moved, each count growing only on that comparison, so a hold that counts a context's
- * controls without judging them is NOT CLAIMED (wb-zf7v); B2's held nodes are read back from each control whose comparison held,
+ * controls without judging them, or without its exactness judge reading them (in every context, or only in some - only beside
+ * source, only at the joint: wb-pgzz refusal #2's F5 attribution), is NOT CLAIMED (wb-zf7v); B2's held nodes are read back from
+ * each control whose comparison held,
  * so a hold that records, for a control it judged, the node of another control is NOT CLAIMED (the wb-bv75 respin 1); and a hold
- * knows its context by the name it is given alone, so a hold that judges, under a context's name, the controls of another output
- * or against another context's legs is NOT CLAIMED (wb-bv75).
+ * knows its context by the name, the output and the legs it is handed alone, so a hold handed, under a context's name, another
+ * output or another context's legs is NOT CLAIMED (wb-bv75). The controls a hold counts are held to the output it is handed
+ * (movedOnly, wb-pgzz), so a held control that moves its output beside its MOVED mark (a co-move) by one of the forms its
+ * exactness judge's own controls hold is refused and counts nothing (CLAIM SCOPE (1)); that exactness judge is held by those
+ * controls alone, on the delivered output for R05 with P9 at rows.0 and by single edits only (the census's own EDITS marked MOVED,
+ * FOREIGN added set to true as its node's last member, a string naming one of READINGS' coverages moved to another one, a number
+ * nudged up), so an
+ * exactness judge blind to a co-move only in another context, only to a co-move of two or more edits, or only to a single edit
+ * of any other form (for example a member added under another name than MOVED and FOREIGN, with another value or at another
+ * place than its node's last member (wb-pgzz respin 3), an element
+ * added to an array, a string or a null moved to a value those controls never write there - coverage_summary.completeness
+ * incomplete to complete, for one -, or a number moved by another amount than 1 or the nudge) is NOT CLAIMED (wb-pgzz respin 1).
+ * The identities B2 reads back are compared as one sorted list per kind, so the order in which a generator emits its controls is
+ * NOT CLAIMED (a reordering moves nothing a judge sees); identityOf names a member added by its name and its value, and its place
+ * among its node's members is read apart (addedLast, wb-pgzz respin 3: a control or co-move that adds that member at another
+ * place than its node's last reds wherever addedLast reaches that node, where respin 2 left it NOT CLAIMED; addedLast reaches no
+ * node below an array pair of two lengths, so the mark's place of a marked co-move whose own edit changes the length of an array
+ * on the mark's path is NOT CLAIMED: the named residual RS6, its quiet row Q6, carried by wb-lt9r, wb-pgzz cut #5); identityOf is
+ * held only by READER's six controls and by the
+ * controls the generators write, so a reader blind only to a difference of another form (two members added at one node, an
+ * element moved within its array other than by a turn) is NOT CLAIMED (wb-pgzz respin 2), and addedLast only by PLACES' five
+ * controls and by the controls the generators write, so a place reader blind only to a place none of them writes (the second
+ * place among three or more members, for one) is NOT CLAIMED (wb-pgzz respin 3).
  * Every lineage record, kind spelling and carrier key below is CONSTRUCTED by this census; the producer mints none of them.
  */
 import {readdirSync, readFileSync} from 'node:fs';
@@ -192,7 +295,7 @@ const ROWS: readonly Row[] = Object.freeze([
   {id: 'A', label: 'Artifact: H0/H1 results in a released @hyperunix/sdk (interim contract: RFCLI fixture stand-in).', pins: ['A1', 'A1c', 'A2', 'A3']},
   {id: 'B', label: 'The find-only path stays byte-identical.', pins: ['B1', 'B2', 'B3']},
   {id: 'N', label: 'never collapsing ref meanings or presenting a bounded traversal as complete', pins: ['N1', 'N2']},
-  {id: 'Q', label: 'the named residuals of rows A and B, each with its pinned quiet row', pins: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5']},
+  {id: 'Q', label: 'the named residuals of rows A and B, each with its pinned quiet row', pins: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6']},
 ]);
 
 interface Residual { readonly id: string; readonly family: string; readonly quiet: string; }
@@ -202,6 +305,7 @@ const RESIDUALS: readonly Residual[] = Object.freeze([
   {id: 'RS3', family: 'a lineage payload inside a container the SDK copies whole adds no serializer member, so A2 never sees it', quiet: 'Q3'},
   {id: 'RS4', family: "a judge blind, in a context other than R05/P9 at rows.0, only to a move outside that context's held controls never trips B2", quiet: 'Q4'},
   {id: 'RS5', family: "a judge blind only to an edit other than the census's own single edits (a scalar moved to another of its values) or to a combination of edits (two scalars exchanged) never trips B2", quiet: 'Q5'},
+  {id: 'RS6', family: "a marked co-move whose own edit changes the length of an array on its mark's path (at R05/P9 at rows.0 the two inside-source removals of a source.rows element) written with its mark at another place than its node's last never trips B2: addedLast reaches no node below an array pair of two lengths (carried by wb-lt9r)", quiet: 'Q6'},
 ]);
 
 /** The 12 object nodes of a full SDK document at which an object member survives the provider's codec path verbatim (measured, A2/B2). */
@@ -215,7 +319,7 @@ const COERCING_POSITION = 'evidence.provider_versions';
 const DROPPED_POSITIONS: readonly string[] = Object.freeze([
   '(root)', 'coverage.0', 'coverage.1', 'status', 'status.streams.0', 'execution_status', 'transport', 'coverage_summary', 'evidence',
 ]);
-/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (A2's re-measured on trunk c85be84 by the wb-57n1 respin, B2's, Q4's and Q5's on trunk 0b53dcd by its second; B2's held counts per reading and its contexts held once on trunk f5cb912 by wb-bv75, held at their nodes on trunk 1520111 by its respin 1). */
+/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (A2's re-measured on trunk c85be84 by the wb-57n1 respin, B2's, Q4's and Q5's on trunk 0b53dcd by its second; B2's held counts per reading and its contexts held once on trunk f5cb912 by wb-bv75, held at their nodes on trunk 1520111 by its respin 1, its exactness judge's co-moves on trunk a17a9fd by wb-pgzz, its other co-moves (COMOVES) on trunk 3023c3d by its respin 1, its control identities on trunk de6deb2 by its respin 2, its marks and places on trunk 91060e3 by its respin 3; Q6's on trunk 5c35d3f by its cut #5). */
 const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
   A1: {declarationFiles: 27, kindLiteralFiles: 0, version: '0.1.0', sidecarDeclared: true},
   A1c: {flagged: 9, kinds: 6, namesakes: 4, flaggedHits: 9, namesakeHits: 0},
@@ -234,7 +338,11 @@ const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
     heldBy: {'beside source': {R01: 199, R02: 208, R03: 181, R04: 190, R05: 208, R06: 199, R07: 208, R08: 208, R09: 208, R10: 208, R11: 208, R12: 208, R13: 208, R14: 208},
       'inside source': {R01: 289, R02: 307, R03: 253, R04: 271, R05: 307, R06: 289, R07: 307, R08: 307, R09: 307, R10: 307, R11: 307, R12: 307, R13: 307, R14: 307}},
     heldOnce: 2849,
-    controls: {at: 'R05/P9 at rows.0', added: 63, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60}},
+    identified: {reader: 6, placer: 5, controls: 892, 'beside source': 997, 'inside source': 995},
+    controls: {at: 'R05/P9 at rows.0', added: 63, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60},
+    exactness: {'beside source': {foreign: 63, coverage: 30, nudged: 13}, 'inside source': {foreign: 63, coverage: 30, nudged: 13}},
+    comoves: {'beside source': {added: 62, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60},
+      'inside source': {added: 62, removed: 255, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60}}},
   B3: {readings: ['R01', 'R05'], positions: [23, 24]},
   N1: {topologies: 280, relations: 140, kinds: ['grouping']},
   N2: {complete: 2, partial: 7, unknown: 5},
@@ -248,6 +356,9 @@ const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
       move: 'source.terminal complete to partial', judge: ['model', 'plain'], missed: []},
     {page: 'a combination', seen: {added: 63, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60},
       move: 'contract and runtime.version exchanged', judge: ['model', 'plain'], missed: []}]},
+  Q6: {at: 'R05/P9 at rows.0', held: {
+    'beside source': {mark: '(root)', marked: 891, short: [], kept: 891, misplaced: 0, seen: 891},
+    'inside source': {mark: 'source.rows.0', marked: 889, short: ['["source","rows"] - [0]', '["source","rows"] - [1]'], kept: 889, misplaced: 2, seen: 887}}},
 });
 
 type Coverage = 'complete' | 'partial' | 'unknown';
@@ -436,6 +547,34 @@ const HELD = Object.freeze(['beside source', 'inside source'] as const);
 type Held = (typeof HELD)[number];
 /** The member every held control adds: the census's own carrier key, marked moved. */
 const MOVED = `${CENSUS_KEY}:moved`;
+/** The member the exactness judge's FOREIGN co-moves add (wb-pgzz respin 1): a name outside the census's 'pi-census:' namespace. */
+const FOREIGN = 'foreign-co-move';
+/**
+ * The exactness judge's co-moves beside its marked EDITS controls (wb-pgzz respin 1), in this order; S pins the list: FOREIGN added
+ * at an object node (foreign), a string naming one of READINGS' coverages moved to another one (coverage), a number nudged up.
+ */
+const COMOVES = Object.freeze(['foreign', 'coverage', 'nudged'] as const);
+type Comove = (typeof COMOVES)[number];
+/**
+ * identityOf's own controls (wb-pgzz respin 2), each read back on the delivered output for R05 with P9 at rows.0 as this literal
+ * identity, in this order: FOREIGN added set to false at the root (a value the generators never write), the root's members turned
+ * by two, source.status.exit_code moved 0 to 1 beside source.terminal moved complete to partial (two single edits at once),
+ * runtime's version member renamed release, an element appended to source.diagnostics, and the output itself; S pins the count.
+ */
+const READER: readonly string[] = Object.freeze([
+  '[] + "foreign-co-move": false',
+  '[] turned by 2',
+  '["source","status","exit_code"] 0 -> 1 & ["source","terminal"] "complete" -> "partial"',
+  '["runtime"] rebuilt',
+  '["source","diagnostics"] rebuilt',
+  '(no difference)',
+]);
+/**
+ * addedLast's own controls (wb-pgzz respin 3), each read on the delivered output for R05 with P9 at rows.0 as this literal, in this
+ * order: FOREIGN added (set to true) as the root's last member, as the root's first member, as source.rows.0's first member beside
+ * its record, and between runtime's two members, and the output itself; S pins the count.
+ */
+const PLACES: readonly boolean[] = Object.freeze([true, false, false, false, true]);
 /**
  * A context's held controls: its output with one member added beside source (at the output's root), and one added inside source
  * at each node the context planted (at source itself for a plain output, which plants none).
@@ -447,7 +586,9 @@ function heldOf(output: JsonValue, paths: readonly Path[]): Record<Held, JsonVal
 /**
  * Where a held control moved its output, read back from the control itself (wb-bv75 respin 1): every node carrying MOVED by its
  * dotted path, '(root)' for the output's root, joined by '+' ('(none)' when no node carries it). B2's hold keeps each control it
- * judged moved by this name, so a context's anchor reads the nodes its controls moved, never the loop or the paths that built them.
+ * judged moved by this name, so a context's anchor reads the nodes its controls moved, never the loop or the paths that built them;
+ * it keeps only a control movedOnly keeps (wb-pgzz), so that name is every node a kept control moved, as far as movedOnly's own
+ * controls hold it (B2).
  */
 const movedAt = (control: JsonValue): string => carriers(control, MOVED).map(name => name || '(root)').join('+') || '(none)';
 /**
@@ -514,6 +655,18 @@ const rotatedOnce = <T>(items: readonly T[]): T[] => [...items.slice(1), ...item
 /** A copy of `value` without the member `name` of the object at `path`, or `value` itself when no object is there (Q4's page). */
 const withoutMember = (value: JsonValue, path: Path, name: string): JsonValue =>
   isRecord(nodeAt(value, path)) ? editedAt(value, path, node => Object.fromEntries(membersOf(node).filter(([member]) => member !== name))) : value;
+/**
+ * Whether a held control is `output` plus exactly its MOVED member (wb-pgzz, the landing-837 F1 cure): the control without the
+ * MOVED member at the node movedAt names is `output` itself, as JSON text; one carrying MOVED at two nodes is refused, since the
+ * joined name movedAt gives it names no node of the output. A control carrying no MOVED is read as itself (movedAt's '(none)'
+ * names no node), so `output` itself passes here, and the hold's judge expect refuses such an unmoved control instead (wb-pgzz
+ * refusal #2's F8). This judge is held only by its own controls in B2 (on the delivered output for R05 with P9 at rows.0: the
+ * marked EDITS co-moves and the COMOVES, each refused, and each read back at an identity its output's JSON text names, wb-pgzz
+ * respin 2), so a control that also moves its output beside that mark by one of those forms (a co-move) is refused. B2's hold
+ * counts only a control this keeps, so the node movedAt reads back for a counted control is every node that control moved, as far
+ * as those controls hold this judge.
+ */
+const movedOnly = (control: JsonValue, output: JsonValue): boolean => same(withoutMember(control, pathOf(movedAt(control)), MOVED), output);
 /** A scalar changed: a string suffixed, a number incremented, a boolean negated, null replaced by 0. */
 const changedScalar = (scalar: JsonValue): JsonValue =>
   typeof scalar === 'string' ? `${scalar}-moved` : typeof scalar === 'number' ? scalar + 1 : typeof scalar === 'boolean' ? !scalar : 0;
@@ -552,6 +705,200 @@ function editsOf(output: JsonValue): Record<Edit, JsonValue[]> {
   for (const edit of EDITS) edits[edit] = edits[edit].filter(control => JSON.stringify(control) !== text);
   return edits;
 }
+/** A number nudged up by a sub-unit step: its own magnitude times Number.EPSILON (Number.MIN_VALUE at zero), so its JSON text moves. */
+const nudged = (value: number): number => (value === 0 ? Number.MIN_VALUE : value + Math.abs(value) * Number.EPSILON);
+/** The coverages READINGS expects, in first-seen order: the values the exactness judge's coverage co-moves move a string between. */
+const COVERAGES: readonly string[] = Object.freeze([...new Set(READINGS.map(row => row.coverage))]);
+/**
+ * How many values of a JSON text `keep` accepts, read by the platform's own parser (JSON.parse's reviver visits each value once),
+ * never by nodePaths or comovesOf: the anchor of the exactness judge's COMOVES counts outside this file's literals.
+ */
+function parsedCount(text: string, keep: (value: unknown) => boolean): number {
+  let count = 0;
+  JSON.parse(text, (_key: string, value: unknown) => {
+    if (keep(value)) count++;
+    return value;
+  });
+  return count;
+}
+/**
+ * The exactness judge's COMOVES of a held `control` of `output` (wb-pgzz respin 1), each one single edit beside the control's mark
+ * and derived from the output itself: the control with FOREIGN added (set to true) at each object node of the output; with each
+ * string of the output that names one of READINGS' coverages moved to each other one; and with each number of the output nudged.
+ */
+function comovesOf(control: JsonValue, output: JsonValue): Record<Comove, JsonValue[]> {
+  const scalars = nodePaths(output).filter(path => {
+    const node = nodeAt(output, path);
+    return !isRecord(node) && !Array.isArray(node);
+  });
+  return {
+    foreign: objectPaths(output).map(path => plantedAt(control, path, FOREIGN, true)),
+    coverage: scalars.flatMap(path => {
+      const value = nodeAt(output, path);
+      if (typeof value !== 'string' || !COVERAGES.includes(value)) return [];
+      return COVERAGES.filter(other => other !== value).map(other => editedAt(control, path, () => other));
+    }),
+    nudged: scalars.filter(path => typeof nodeAt(output, path) === 'number').map(path => editedAt(control, path, node => (typeof node === 'number' ? nudged(node) : node))),
+  };
+}
+/** One value of a JSON text with its path, as the platform's own parser handed it over (parsedNodes). */
+interface Parsed { readonly path: Path; readonly value: unknown; }
+/**
+ * Every value of a JSON text with its path, read by the platform's own parser (wb-pgzz respin 2): JSON.parse's reviver visits each
+ * value once, children before their holder and the root last, and hands each over with its holder and its key, so each path is
+ * read back from the holders the parser itself built, never from objectPaths, nodePaths, editsOf or comovesOf - the anchor of B2's
+ * control identities outside the generators (OUTSIDE ANCHORS).
+ */
+function parsedNodes(text: string): Parsed[] {
+  const visits: {readonly holder: unknown; readonly key: string; readonly value: unknown}[] = [];
+  const visitOf = new Map<unknown, number>();
+  JSON.parse(text, function (this: unknown, key: string, value: unknown): unknown {
+    if (typeof value === 'object' && value !== null) visitOf.set(value, visits.length);
+    visits.push({holder: this, key, value});
+    return value;
+  });
+  const pathAt = (index: number): Path => {
+    const {holder, key} = visits[index];
+    const parent = visitOf.get(holder);
+    return parent === undefined ? [] : [...pathAt(parent), Array.isArray(holder) ? Number(key) : key];
+  };
+  return visits.map((visit, index) => ({path: pathAt(index), value: visit.value}));
+}
+/**
+ * The candidates of each EDITS kind a JSON text holds, each named by its node and its edit as identityOf names a move (wb-pgzz
+ * respin 2), read from the platform's own parser (parsedNodes), never by nodePaths, editsOf or the marked set, and each edit's form
+ * written here apart from the generators' helpers: an object adds MOVED (set to true) and, with two or more members, turns by one;
+ * an array whose elements are not all equal turns by one; every member and element is removed; every scalar changes (a string
+ * suffixed '-moved', a number incremented, a boolean negated, null replaced by 0); every non-string scalar is retyped to its own
+ * text; every string gains a trailing space and, when its first letter has a case, has that letter's case flipped. The anchor of
+ * the EDITS controls' and the marked co-moves' identities.
+ */
+function textEdits(text: string): Record<Edit, string[]> {
+  const named: Record<Edit, string[]> = {added: [], removed: [], changed: [], retyped: [], recased: [], spaced: [], rotated: []};
+  for (const {path, value} of parsedNodes(text)) {
+    const at = JSON.stringify(path);
+    const movedTo = (now: unknown): string => `${at} ${JSON.stringify(value)} -> ${JSON.stringify(now)}`;
+    if (Array.isArray(value)) {
+      for (let index = 0; index < value.length; index++) named.removed.push(`${at} - [${index}]`);
+      if (value.some(item => JSON.stringify(item) !== JSON.stringify(value[0]))) named.rotated.push(`${at} turned by 1`);
+    } else if (isRecord(value)) {
+      named.added.push(`${at} + ${JSON.stringify(MOVED)}: true`);
+      for (const name of Object.keys(value)) named.removed.push(`${at} - ${JSON.stringify(name)}`);
+      if (Object.keys(value).length > 1) named.rotated.push(`${at} turned by 1`);
+    } else if (typeof value === 'string') {
+      named.changed.push(movedTo(`${value}-moved`));
+      named.spaced.push(movedTo(`${value} `));
+      const letter = value.match(/\p{L}/u)?.[0];
+      if (letter !== undefined && letter.toUpperCase() !== letter.toLowerCase()) {
+        const flipped = letter === letter.toUpperCase() ? letter.toLowerCase() : letter.toUpperCase();
+        const index = value.indexOf(letter);
+        named.recased.push(movedTo(`${value.slice(0, index)}${flipped}${value.slice(index + letter.length)}`));
+      }
+    } else {
+      named.changed.push(movedTo(typeof value === 'number' ? value + 1 : typeof value === 'boolean' ? !value : 0));
+      named.retyped.push(movedTo(String(value)));
+    }
+  }
+  return named;
+}
+/**
+ * The COMOVES candidates a JSON text holds, named as identityOf names a move (wb-pgzz respin 2), read from the platform's own parser
+ * (parsedNodes), never by nodePaths or comovesOf, each form written here apart from the generator's helpers: FOREIGN added, set to
+ * true, at each object; each string naming one of READINGS' coverages moved to each other one; each number nudged up by its own
+ * magnitude times Number.EPSILON (Number.MIN_VALUE at zero). The anchor of the COMOVES' identities.
+ */
+function textComoves(text: string): Record<Comove, string[]> {
+  const named: Record<Comove, string[]> = {foreign: [], coverage: [], nudged: []};
+  for (const {path, value} of parsedNodes(text)) {
+    const at = JSON.stringify(path);
+    if (isRecord(value)) named.foreign.push(`${at} + ${JSON.stringify(FOREIGN)}: true`);
+    if (typeof value === 'string' && COVERAGES.includes(value)) {
+      for (const other of COVERAGES) if (other !== value) named.coverage.push(`${at} ${JSON.stringify(value)} -> ${JSON.stringify(other)}`);
+    }
+    if (typeof value === 'number') named.nudged.push(`${at} ${JSON.stringify(value)} -> ${JSON.stringify(value === 0 ? Number.MIN_VALUE : value + Math.abs(value) * Number.EPSILON)}`);
+  }
+  return named;
+}
+/**
+ * `named` less the candidates that mark a held control's node at `mark` or remove it, as identityOf names them (wb-pgzz respin 2):
+ * MOVED added at that node, and the removal of each member on its path.
+ */
+const lessAtMark = (named: readonly string[], mark: Path): string[] => {
+  const atMark = [`${JSON.stringify(mark)} + ${JSON.stringify(MOVED)}: true`, ...mark.flatMap((step, index) => (typeof step === 'string' ? [`${JSON.stringify(mark.slice(0, index))} - ${JSON.stringify(step)}`] : []))];
+  return named.filter(candidate => !atMark.includes(candidate));
+};
+/** The smallest positive turn that brings `items` to `turned`, each compared as JSON text, or 0 when no turn does. */
+function turnOf(items: readonly unknown[], turned: readonly unknown[]): number {
+  for (let turn = 1; turn < items.length; turn++) if (same([...items.slice(turn), ...items.slice(0, turn)], turned)) return turn;
+  return 0;
+}
+/**
+ * The differences of `after` from `before`, each named by its node (the JSON text of its path) and its form (wb-pgzz respin 2), read
+ * by walking both values together, never by a generator: a member added (its name and value) or removed (its name), an element
+ * removed (its index), a node's members or elements turned (the smallest turn), a scalar moved (from and to, as JSON text), and any
+ * other change at a node read as that node 'rebuilt'.
+ */
+function differencesOf(before: unknown, after: unknown, path: Path = []): string[] {
+  const at = JSON.stringify(path);
+  if (isRecord(before) && isRecord(after)) {
+    const left = Object.entries(before);
+    const right = Object.entries(after);
+    if (left.length === right.length && left.every(([name], index) => name === right[index][0])) {
+      return left.flatMap(([name, value]) => differencesOf(value, after[name], [...path, name]));
+    }
+    const added = right.filter(([name]) => !Object.hasOwn(before, name));
+    const removed = left.filter(([name]) => !Object.hasOwn(after, name));
+    if (added.length === 1 && removed.length === 0 && same(right.filter(([name]) => Object.hasOwn(before, name)), left)) {
+      return [`${at} + ${JSON.stringify(added[0][0])}: ${JSON.stringify(added[0][1])}`];
+    }
+    if (removed.length === 1 && added.length === 0 && same(left.filter(([name]) => Object.hasOwn(after, name)), right)) {
+      return [`${at} - ${JSON.stringify(removed[0][0])}`];
+    }
+    const turn = turnOf(left, right);
+    return [turn > 0 ? `${at} turned by ${turn}` : `${at} rebuilt`];
+  }
+  if (Array.isArray(before) && Array.isArray(after)) {
+    if (before.length === after.length) {
+      const inner = before.flatMap((item: unknown, index) => differencesOf(item, after[index], [...path, index]));
+      const turn = inner.length > 1 ? turnOf(before, after) : 0;
+      return turn > 0 ? [`${at} turned by ${turn}`] : inner;
+    }
+    const gone = before.findIndex((_item: unknown, index) => same([...before.slice(0, index), ...before.slice(index + 1)], after));
+    return [gone >= 0 ? `${at} - [${gone}]` : `${at} rebuilt`];
+  }
+  const was = JSON.stringify(before);
+  const now = JSON.stringify(after);
+  return was === now ? [] : [`${at} ${was} -> ${now}`];
+}
+/** A control's identity: its differences from `output`, joined, so one single edit reads as exactly one difference (wb-pgzz respin 2). */
+const identityOf = (output: JsonValue, control: JsonValue): string => differencesOf(output, control).join(' & ') || '(no difference)';
+/**
+ * Whether each member `after` adds to an object node this walk reaches is that node's last member (wb-pgzz respin 3), read by
+ * walking both values together from the root, never by a generator: the place the hold writes its own mark (plantedAt appends), so
+ * a control or co-move that adds its member at another place among the members of a node it reaches reads false. It reaches the
+ * root, each member both values hold below an object it reaches, and each element of an array pair of one length it reaches; it
+ * reaches nothing below an array pair of two lengths or a pair of other shapes, which adds no member here, so the mark's node of a
+ * marked co-move whose own edit changes the length of an array on the mark's path is not reached (the named residual RS6, Q6).
+ */
+function addedLast(before: unknown, after: unknown): boolean {
+  if (isRecord(before) && isRecord(after)) {
+    const names = Object.keys(after);
+    const added = names.filter(name => !Object.hasOwn(before, name));
+    if (!same(names.slice(names.length - added.length), added)) return false;
+    return names.every(name => !Object.hasOwn(before, name) || addedLast(before[name], after[name]));
+  }
+  if (Array.isArray(before) && Array.isArray(after) && before.length === after.length) return before.every((item: unknown, index) => addedLast(item, after[index]));
+  return true;
+}
+/**
+ * Whether a marked co-move of `output` carries the held control's own mark as B2 reads it (wb-pgzz respin 3; one reader for B2's
+ * remarked count and Q6's page, wb-pgzz cut #5): read back against its own unmarked self it is `heldMark`, the held control's one
+ * difference from the output (MOVED's node and value), and each member it adds is its node's last wherever addedLast, walking it
+ * beside `output`, reaches that node - the mark's place included where addedLast reaches the mark's node, which it does for every
+ * marked co-move but those whose own edit changes the length of an array on the mark's path (the named residual RS6, read by Q6).
+ */
+const remarks = (comove: JsonValue, output: JsonValue, mark: Path, heldMark: string): boolean =>
+  identityOf(withoutMember(comove, mark, MOVED), comove) === heldMark && addedLast(output, comove);
 const CTX = {grants: ['hyperunix:read'], signal: new AbortController().signal};
 /** The registered provider's output for a document, through a stub reader and the capability registry. */
 async function provided(document: Json): Promise<JsonValue> {
@@ -732,7 +1079,10 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     // that context's own judgment judged, so a judge blind in any one context (a node, a reading, a plant, the joint) reds there.
     // Each context is held once, under its own name (wb-bv75): a second hold of a name is refused here, and each control its hold
     // judged moved is kept per context (heldAt) by the node it moved, read back from that control (movedAt; the wb-bv75 respin 1),
-    // beside the totals, so the anchors below read each context, each of its nodes and each reading.
+    // beside the totals, so the anchors below read each context, each of its nodes and each reading. A control counts only as the
+    // output its hold was handed plus exactly its MOVED member (movedOnly; wb-pgzz), so the node it is kept by is every node it
+    // moved: a co-move, a control that also moves its output beside its mark, would carry the judge's sight to a node movedAt
+    // never reads, and a co-move of the forms movedOnly's own controls hold (below) is refused here and counts nothing.
     const held: Record<Held, number> = {'beside source': 0, 'inside source': 0};
     const heldAt = new Map<string, Record<Held, string[]>>();
     const hold = (output: JsonValue, judgment: Judgment, base: Json, plain: JsonValue, paths: readonly Path[], record: Json, at: string): void => {
@@ -746,7 +1096,9 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
         for (const control of controls[kind]) {
           const seen = judgeWhole(control, base, plain, paths, record);
           expect(seen, `${at}: the judge sees its held control ${kind} on every leg`).toStrictEqual(everyLeg);
-          if (same(seen, everyLeg)) {
+          const exact = movedOnly(control, output);
+          expect(exact, `${at}: its held control ${kind} is the context's output plus exactly its MOVED member`).toBe(true);
+          if (same(seen, everyLeg) && exact) {
             held[kind]++;
             here[kind].push(movedAt(control));
           }
@@ -819,11 +1171,139 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     // Every kind's count against the output's JSON text as the platform's parser reads it (respin 2: the G24C1 coordinated hollow).
     const counted = textCounts(JSON.stringify(output));
     for (const edit of EDITS) expect(edits[edit].length, `as many ${edit} controls as the output's JSON text holds`).toBe(counted[edit]);
+    // Each control's identity, read back from the control itself (identityOf), against the candidates the parser's reading of the
+    // output's JSON text names (textEdits; wb-pgzz respin 2): a count-preserving swap of which node a control edits reds here, and
+    // identified grows only on an identity list that holds.
+    const textual = textEdits(JSON.stringify(output));
+    const identified: Record<string, number> = {reader: 0, placer: 0, controls: 0, 'beside source': 0, 'inside source': 0};
+    for (const edit of EDITS) {
+      const identities = edits[edit].map(control => identityOf(output, control)).sort();
+      const candidates = [...textual[edit]].sort();
+      expect(identities, `each ${edit} control, read back from itself, is one candidate the output's JSON text names, each once`).toStrictEqual(candidates);
+      // Respin 3: each member a control adds is its node's last member (addedLast, read back from the control itself).
+      const placed = edits[edit].filter(control => addedLast(output, control)).length;
+      expect(placed, `each ${edit} control adds each member it adds as its node's last member`).toBe(edits[edit].length);
+      if (same(identities, candidates) && placed === edits[edit].length) identified.controls += identities.length;
+    }
+    // identityOf's own controls (wb-pgzz respin 2), on the same output: a difference of each form the generators never write - a
+    // member added with another value than true, a node turned by two, two single edits at once, a member renamed, an element
+    // appended - and the output itself, each read back as its literal identity, so a reader that names an added member without
+    // its value, a turn without its amount, only one of two differences, or a renamed member or an appended element as one single
+    // edit, reds here even while every generator's control keeps its identity; identified.reader grows only when all hold, and S
+    // pins READER's count.
+    const readerAs = [
+      plantedAt(output, [], FOREIGN, false),
+      editedAt(output, [], node => Object.fromEntries([...membersOf(node).slice(2), ...membersOf(node).slice(0, 2)])),
+      editedAt(editedAt(output, ['source', 'terminal'], () => 'partial'), ['source', 'status', 'exit_code'], () => 1),
+      editedAt(output, ['runtime'], node => Object.fromEntries(membersOf(node).map(([name, value]) => [name === 'version' ? 'release' : name, value]))),
+      editedAt(output, ['source', 'diagnostics'], node => [...elementsOf(node), 'appended']),
+      output,
+    ].map(control => identityOf(output, control));
+    expect(readerAs, 'identityOf reads each of its own controls as its literal identity (READER)').toStrictEqual([...READER]);
+    identified.reader = same(readerAs, READER) ? readerAs.length : 0;
+    // addedLast's own controls (wb-pgzz respin 3), on the same output: FOREIGN added as the root's last member, as its first, as
+    // source.rows.0's first beside its record and between runtime's two members, and the output itself, each read as PLACES states,
+    // so a place reader blind to a member added at the first place, inside source or between two members, or one that reads every
+    // added member out of place, reds here even while every generator's control keeps its place; identified.placer grows only
+    // when all hold, and S pins PLACES' count.
+    const firstAt = (value: JsonValue, path: Path): JsonValue => editedAt(value, path, node => Object.fromEntries([[FOREIGN, true], ...membersOf(node)]));
+    const placedAs = [
+      plantedAt(output, [], FOREIGN, true),
+      firstAt(output, []),
+      firstAt(output, ['source', 'rows', 0]),
+      editedAt(output, ['runtime'], node => Object.fromEntries([...membersOf(node).slice(0, 1), [FOREIGN, true], ...membersOf(node).slice(1)])),
+      output,
+    ].map(control => addedLast(output, control));
+    expect(placedAs, 'addedLast reads each of its own controls as PLACES states').toStrictEqual([...PLACES]);
+    identified.placer = same(placedAs, PLACES) ? placedAs.length : 0;
     const controls: Record<string, JsonValue> = {at: `R05/${full.id} at ${dotted(first)}`};
     for (const edit of EDITS) {
       const seen = edits[edit].filter(control => JSON.stringify(judgeWhole(control, base, plain, [first], full.record).moved) === JSON.stringify(['model', 'plain'])).length;
       expect(seen, `the judge sees every ${edit} move on both legs`).toBe(edits[edit].length);
       controls[edit] = seen;
+    }
+    // The exactness judge's own controls (wb-pgzz), on the same output and only there: each of its held controls is kept, and each
+    // co-move below (the held control with its output also moved by one single edit beside the mark) is refused, so an exactness
+    // judge that keeps one of them reds here. (1) Every EDITS control of that output marked MOVED at the held control's node,
+    // wherever the edit leaves there an object not yet carrying MOVED; each kind's count is held to the output's JSON text
+    // (textCounts) less the candidates that mark that node or remove it - its own added candidate, and the removal of each member
+    // on its path (rows holds two elements, so removing the first leaves an object at rows.0) -, never to the marked set or its
+    // literal (respin 1, the cut #1 refusal's U3). (2) The COMOVES (respin 1, its U1 and U2), each kind's count held to the same
+    // text as the platform's parser reads it: FOREIGN added at each object node (its objects), each string naming one of
+    // READINGS' coverages moved to each other one (those strings, once per other coverage), each number nudged (its numbers), and
+    // every kind together. Each count grows only on a refusal. (3) Respin 2 (the cut #2 refusal's U1 and U2): each marked co-move
+    // and each COMOVES co-move is read back from itself, less its MOVED mark (identityOf), and each kind's identities, as one
+    // sorted list, are held to the candidates the parser's reading of the output's JSON text names (textEdits less those at the
+    // mark, textComoves), so a generator swap that keeps every count (every co-move of a kind at one node, or at one target
+    // coverage) reds here; identified grows only on an identity list that holds. (4) Respin 3 (the cut #3 refusal's U1 and U2, the
+    // enumerate-the-resolvable cut R-B518 ordered): each co-move is held to the held control itself - each marked co-move's mark,
+    // read back against its own unmarked self, is the held control's one difference from the output; each COMOVES co-move reads
+    // back against the held control as its one candidate - so its mark (MOVED's node and value, and its place wherever addedLast
+    // reaches the mark's node) is the held control's own, and each member it adds is its node's last wherever addedLast reaches
+    // that node; identified grows only when those hold too. addedLast reaches no node below an array whose length a co-move's own
+    // edit changes, so the mark's place of the two inside-source marked co-moves that remove a source.rows element is read by no
+    // pin here: the named residual RS6, its quiet row Q6 (wb-pgzz cut #5, R-B542; carried by wb-lt9r).
+    const comoves: Record<string, JsonValue> = {};
+    const exactness: Record<string, JsonValue> = {};
+    const outputText = JSON.stringify(output);
+    const coverageStrings = parsedCount(outputText, value => typeof value === 'string' && COVERAGES.includes(value));
+    const numbers = parsedCount(outputText, value => typeof value === 'number');
+    const outside: Record<Comove, number> = {foreign: counted.added, coverage: coverageStrings * (COVERAGES.length - 1), nudged: numbers};
+    const textualToo = textComoves(outputText);
+    for (const kind of HELD) {
+      for (const control of heldOf(output, [first])[kind]) {
+        expect(movedOnly(control, output), `${kind}: the exactness judge keeps the held control`).toBe(true);
+        const mark = pathOf(movedAt(control));
+        // The held control's own mark (respin 3), read back from it against the output: MOVED added, set to true, at its node
+        // (heldMark), as that node's last member (heldLast) - the mark each co-move below must carry.
+        const heldMark = identityOf(output, control);
+        const heldLast = addedLast(output, control);
+        expect(heldLast, `${kind}: the held control adds its mark as its node's last member`).toBe(true);
+        const refused: Record<string, number> = {};
+        // The candidates that mark the held control's node or remove it: its own added candidate (MOVED is there already) and the
+        // removal of each member on its path; no other edit leaves anything but an object without MOVED there.
+        const atMark: Record<Edit, number> = {added: 1, removed: mark.filter(step => typeof step === 'string').length, changed: 0, retyped: 0, recased: 0, spaced: 0, rotated: 0};
+        for (const edit of EDITS) {
+          const marked = edits[edit].filter(moved => {
+            const node = nodeAt(moved, mark);
+            return isRecord(node) && !Object.hasOwn(node, MOVED);
+          }).map(moved => plantedAt(moved, mark, MOVED, true));
+          expect(marked.length, `${kind}: as many marked ${edit} co-moves as the output's JSON text holds, less those at the mark`).toBe(counted[edit] - atMark[edit]);
+          refused[edit] = marked.filter(comove => !movedOnly(comove, output)).length;
+          expect(refused[edit], `${kind}: the exactness judge refuses every ${edit} co-move`).toBe(marked.length);
+          const markedAs = marked.map(comove => identityOf(output, withoutMember(comove, mark, MOVED))).sort();
+          const markable = lessAtMark(textual[edit], mark).sort();
+          expect(markedAs, `${kind}: each marked ${edit} co-move, read back from itself less its mark, is one candidate the output's JSON text names, less those at the mark, each once`).toStrictEqual(markable);
+          // Respin 3 (refusal #3's U1): each marked co-move carries the held control's own mark - read back against its own
+          // unmarked self it is the held control's one difference from the output (heldMark: MOVED's node and value) - and adds
+          // each member it adds as its node's last member wherever addedLast reaches that node (remarks: the mark's place too where
+          // addedLast reaches the mark's node; RS6 names the two co-moves whose mark's node it does not reach, Q6 reads them).
+          const remarked = marked.filter(comove => remarks(comove, output, mark, heldMark)).length;
+          expect(remarked, `${kind}: each marked ${edit} co-move carries the held control's own mark (its node and value, and its place where addedLast reaches it) and adds each member last where addedLast reaches it`).toBe(marked.length);
+          if (same(markedAs, markable) && heldLast && remarked === marked.length) identified[kind] += marked.length;
+        }
+        comoves[kind] = refused;
+        const others = comovesOf(control, output);
+        const refusedToo: Record<string, number> = {};
+        for (const comove of COMOVES) {
+          expect(others[comove].length, `${kind}: as many ${comove} co-moves as the output's JSON text holds`).toBe(outside[comove]);
+          refusedToo[comove] = others[comove].filter(moved => !movedOnly(moved, output)).length;
+          expect(refusedToo[comove], `${kind}: the exactness judge refuses every ${comove} co-move`).toBe(others[comove].length);
+          const movedAs = others[comove].map(moved => identityOf(output, withoutMember(moved, mark, MOVED))).sort();
+          const movable = [...textualToo[comove]].sort();
+          expect(movedAs, `${kind}: each ${comove} co-move, read back from itself less its mark, is one candidate the output's JSON text names, each once`).toStrictEqual(movable);
+          // Respin 3 (refusal #3's U2): each COMOVES co-move, read back against the held control itself, is that same one candidate,
+          // so its mark is the held control's own (MOVED's node, value and place), and it adds FOREIGN as its node's last member.
+          const heldAs = others[comove].map(moved => identityOf(control, moved)).sort();
+          expect(heldAs, `${kind}: each ${comove} co-move, read back against the held control itself, is one candidate the output's JSON text names, each once`).toStrictEqual(movable);
+          const placed = others[comove].filter(moved => addedLast(control, moved)).length;
+          expect(placed, `${kind}: each ${comove} co-move adds each member it adds as its node's last member`).toBe(others[comove].length);
+          if (same(movedAs, movable) && heldLast && same(heldAs, movable) && placed === others[comove].length) identified[kind] += others[comove].length;
+        }
+        const allKinds = COMOVES.reduce((sum, comove) => sum + others[comove].length, 0);
+        expect(allKinds, `${kind}: every co-move kind together, against the output's JSON text`).toBe(counted.added + coverageStrings * (COVERAGES.length - 1) + numbers);
+        exactness[kind] = refusedToo;
+      }
     }
     // HELD against counts and nodes read outside the sweep (wb-zf7v, the landing-744 F1 cure; per reading and per context,
     // wb-bv75, the landing-773 F1 cure; per node, its respin 1): every context the judge decides - each reading's plain output,
@@ -836,9 +1316,11 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     // codec keeps that plant in the reading's document (codecKeptAt) -, the names built here from READINGS, PLANTS and each
     // document's object paths. So a hold skipped, a control left unjudged, or a context or a control held twice moves that context
     // off its anchor, even when the witness literal moves with it, when another context's count is moved to offset it in its
-    // reading's sum or in the total, and when another of its own nodes is held twice to offset it in the context's count; a hold
-    // that counts a context's controls without judging them, records for a control the node of another control than the one it
-    // judged, or judges under its name another output's controls or against another context's legs, is NOT CLAIMED.
+    // reading's sum or in the total, and when another of its own nodes is held twice to offset it in the context's count; a
+    // control that moves its output beside its MOVED mark by a co-move of the forms movedOnly's own controls hold counts nothing
+    // (movedOnly, wb-pgzz), so it moves its context off these anchors too; a hold that counts a context's controls
+    // without judging them, records for a control the node of another control than the one it judged, or is handed under its name
+    // another output or another context's legs, is NOT CLAIMED.
     const documents = READINGS.map(row => documentOf(row.kind, row.licensed));
     const objects = documents.reduce((sum, document) => sum + braces(document), 0);
     const keptByCodec = documents.reduce((sum, document) => sum + codecKept(document, full.record), 0);
@@ -876,7 +1358,7 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     }
     expect(heldBy, "per reading, each kind's held count against the reading's contexts and planted nodes counted outside the sweep").toStrictEqual(anchors);
     expect(Object.fromEntries(heldAt), "per context, by name: held once, each control its hold judged moved read back at the node it moved - beside source the output's root, inside source each node the context planted, once each and in document order").toStrictEqual(named);
-    settle('B2', {plants: [...plants], positions, nodes, kept, unmoved, compared, together, held, heldBy, heldOnce, controls});
+    settle('B2', {plants: [...plants], positions, nodes, kept, unmoved, compared, together, held, heldBy, heldOnce, identified, controls, exactness, comoves});
   }, 120_000);
 
   it('B3: the full record planted at every object node of a provider reading moves no output byte', () => {
@@ -1071,6 +1553,64 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     settle('Q5', {at: `R05/${full.id} at ${dotted(first)}`, pages});
   }, 60_000);
 
+  it('Q6 (residual RS6): the mark reader of B2 keeps a marked co-move whose own edit changes the length of an array on the path to its mark with that mark written first, while the member order of its node reads the mark out of place', async () => {
+    // The quiet page (refusal #4's GP6-GEN-MARKED-FIRST-SHORT, wb-pgzz cut #5): B2's marked co-moves at R05/P9 at rows.0, each
+    // with its mark written as its node's first member exactly where the co-move's own edit changes the length of an array on
+    // the path to the mark (an array the output holds there, held at another length or not at all), every other one as B2's
+    // generator writes it, each read by B2's own mark reader (remarks). addedLast reaches nothing below an array pair of two
+    // lengths, so remarks keeps every co-move of the page; read directly, the member order of the mark's node shows exactly those
+    // marks out of place; and the analog, each marked co-move with its mark written first, is refused by remarks at every one but
+    // those (B2's place pin holds wherever addedLast reaches the mark's node). A page silenced (those marks written last), a
+    // reader that reaches them, or one that reaches fewer marks moves this row's witness.
+    const full = plantOf('P9');
+    const base = documentOf('incomplete', false);
+    const first: Path = ['rows', 0];
+    const output = await provided(plantedAt(base, first, CENSUS_KEY, full.record));
+    const edits = editsOf(output);
+    /** `comove` with MOVED moved to the first place of the node at `mark`. */
+    const markFirst = (comove: JsonValue, mark: Path): JsonValue =>
+      editedAt(comove, mark, node => Object.fromEntries([[MOVED, true], ...membersOf(node).filter(([name]) => name !== MOVED)]));
+    /** Whether `moved` holds, at an array the output holds on the path to `mark`, an array of another length or none. */
+    const shortens = (moved: JsonValue, mark: Path): boolean =>
+      mark.some((_step, index) => {
+        const was = nodeAt(output, mark.slice(0, index));
+        const now = nodeAt(moved, mark.slice(0, index));
+        return Array.isArray(was) && !(Array.isArray(now) && now.length === was.length);
+      });
+    const held: Record<string, JsonValue> = {};
+    for (const kind of HELD) {
+      for (const control of heldOf(output, [first])[kind]) {
+        const mark = pathOf(movedAt(control));
+        const heldMark: string = identityOf(output, control);
+        const short: string[] = [];
+        let marked = 0;
+        let kept = 0;
+        let misplaced = 0;
+        let seen = 0;
+        for (const edit of EDITS) {
+          for (const moved of edits[edit]) {
+            const node = nodeAt(moved, mark);
+            if (!isRecord(node) || Object.hasOwn(node, MOVED)) continue;
+            marked++;
+            const comove = plantedAt(moved, mark, MOVED, true);
+            const quiet = shortens(moved, mark);
+            if (quiet) short.push(identityOf(output, moved));
+            const page = quiet ? markFirst(comove, mark) : comove;
+            if (remarks(page, output, mark, heldMark)) kept++;
+            const names = membersOf(nodeAt(page, mark) as JsonValue).map(([name]) => name);
+            if (names[names.length - 1] !== MOVED) misplaced++;
+            if (!remarks(markFirst(comove, mark), output, mark, heldMark)) seen++;
+          }
+        }
+        expect(kept, `${kind}: B2's mark reader keeps every co-move of the page`).toBe(marked);
+        expect(misplaced, `${kind}: the page writes out of place exactly the marks of the co-moves whose edit changes such an array's length`).toBe(short.length);
+        expect(seen, `${kind}: B2's mark reader refuses every other marked co-move with its mark written first`).toBe(marked - short.length);
+        held[kind] = {mark: movedAt(control), marked, short, kept, misplaced, seen};
+      }
+    }
+    settle('Q6', {at: `R05/${full.id} at ${dotted(first)}`, held});
+  }, 60_000);
+
   it('F1: the tracked export row of wb-4ap.13 states KINDS in order and every row label and on-landing clause verbatim', () => {
     const description = exportDescription(BEAD);
     const statement = between(description, 'STATEMENT: ', '\n\nRATIONALE: ');
@@ -1109,14 +1649,18 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
       namesakes: NAMESAKES.map(item => item.file),
       edits: [...EDITS],
       held: [...HELD],
+      comoves: [...COMOVES],
+      foreign: FOREIGN,
+      reader: READER.length,
+      placer: PLACES.length,
       derived: DERIVED.length,
       identifiers: IDENTIFIERS.length,
       residuals: RESIDUALS.map(item => `${item.id}:${item.quiet}`),
       onLanding: ON_LANDING.length,
     }).toStrictEqual({
-      rows: ['A:4', 'B:3', 'N:2', 'Q:5'],
-      pins: ['A1', 'A1c', 'A2', 'A3', 'B1', 'B2', 'B3', 'N1', 'N2', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
-      witnesses: ['A1', 'A1c', 'A2', 'A3', 'B1', 'B2', 'B3', 'N1', 'N2', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
+      rows: ['A:4', 'B:3', 'N:2', 'Q:6'],
+      pins: ['A1', 'A1c', 'A2', 'A3', 'B1', 'B2', 'B3', 'N1', 'N2', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
+      witnesses: ['A1', 'A1c', 'A2', 'A3', 'B1', 'B2', 'B3', 'N1', 'N2', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
       kinds: ['produces', 'consumes', 'depends', 'blocks', 'verifies', 'related-to'],
       readings: [
         'R01:complete:true:complete', 'R02:complete:false:partial', 'R03:complete-empty:true:complete', 'R04:complete-empty:false:partial',
@@ -1130,9 +1674,13 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
       namesakes: ['protocol/mutation.d.ts', 'client.d.ts', 'execution.d.ts', 'provider.d.ts'],
       edits: ['added', 'removed', 'changed', 'retyped', 'recased', 'spaced', 'rotated'],
       held: ['beside source', 'inside source'],
+      comoves: ['foreign', 'coverage', 'nudged'],
+      foreign: 'foreign-co-move',
+      reader: 6,
+      placer: 5,
       derived: 6,
       identifiers: 3,
-      residuals: ['RS1:Q1', 'RS2:Q2', 'RS3:Q3', 'RS4:Q4', 'RS5:Q5'],
+      residuals: ['RS1:Q1', 'RS2:Q2', 'RS3:Q3', 'RS4:Q4', 'RS5:Q5', 'RS6:Q6'],
       onLanding: 2,
     });
   });
