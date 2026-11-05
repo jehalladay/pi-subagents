@@ -4,6 +4,23 @@
  * orchestrator ruling R-B96, in the enumerate-the-resolvable form (the standing rule 14 shape) that R-B79 bound for T1 identity
  * and R-B96 binds for the export-field class: the census claims exactly the items CLAIMS lists, each bound to an executable
  * falsifier this file runs, and every form outside them is a named residual with a pinned quiet row (RESIDUALS).
+ * wb-ulnv (the R694 follow-up of wb-tz2.7's landing 708) adds R-DECODER and R-HIDDEN's wrapped members: its cut #1 (seat ws-05,
+ *   run g10-work-s151, trunk 42ab54d2) named them; its cut #2 (seat ws-01, run g10-work-s158; authored at trunk e792b37, base
+ *   of record 89109cd3) answers wb-ulnv refusal #1 (U1-U3 and F5-F7 in that bead's note) by pinning the plants those quiet rows
+ *   and T2 claim; its cut #3 (seat ws-04, run g10-work-s162; authored at trunk ee72db2, base of record f63d3896) answers
+ *   wb-ulnv refusal #2 (its U1: the planted bindings were pinned by name and property kind only, so the gate's GV1-GV6 emptied
+ *   six bindings' documents unread) under orchestrator ruling R-B201, in the enumerate-the-resolvable form: R-HIDDEN's DOCUMENT
+ *   WITNESS reads the documents behind every planted binding but WRAPPED_CASES (whose wrapped members the wrapped-kind literal
+ *   reads) through the channel its form names, the content digest pins the planted module entries' bytes, and R-SELF-HOLLOW
+ *   pins both emptyings as unseen by every outside reading; its cut #4 (seat ws-04, run g10-work-s182; authored at trunk
+ *   04c8bbb0, base of record f5cb9129) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of
+ *   the gate's TV3 and TV5) under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED
+ *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219, base of record 108a2025), cut once
+ *   the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier wb-gnj9 had landed (landing
+ *   952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels were named twins of the
+ *   gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and
+ *   GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no channel's twin identity is claimed
+ *   (R-HIDDEN below).
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -96,7 +113,10 @@
  *   fixture, in any case. So no corpus entry ships as a data file or under a corpus-word path.
  *   (drift) representation-entries: only the codec's two files spell the literal hyperunix.result/1 in their bytes;
  *   exported-representations: the only string the walk reaches from the three export subpaths' namespaces that spells it is
- *   SDK_REPRESENTATION itself. The walk reads a string (it carries the representation when it includes it); the own
+ *   SDK_REPRESENTATION itself. The walk reads a string, a primitive (it carries the representation when it includes it; a
+ *   String wrapper object is an object, read by its own enumerable properties: its index characters one character each, so
+ *   its string value is never read whole, as R-HIDDEN's quiet row shows, and any other own property, as T2's planted String
+ *   wrapper shows); the own
  *   enumerable string-keyed data properties of an object or an array; a Map's keys and values, read through
  *   Map.prototype.entries, and a Set's members, read through Set.prototype.values (both as the realm holds them when the walk
  *   runs, never through the value's own iterator or methods), plus the Map's or Set's own enumerable data properties. It calls
@@ -107,20 +127,22 @@
  *   refuses a Proxy before any trap could run (the readings then read unread).
  *   It reads the subpaths as this file imports them, which with no alias or override in place resolve to
  *   node_modules/@hyperunix/sdk, the installed copy T0 holds to the tarball. So no result document ships with
- *   hyperunix.result/1 spelled byte for byte in an entry, or as a value the walk reaches whose representation string spells
- *   it, however that string is written or built.
+ *   hyperunix.result/1 spelled byte for byte in an entry, or as a primitive string the walk reaches that spells it, however
+ *   that string is written or built (a value that is not a string but whose string value includes it is R-HIDDEN's).
  *   (second-entry) exports and files: the manifest's export subpath names and its files list (a member that is not a string
  *   read as its JSON) are today's, so no new subpath name or files member is declared. A corpus behind an existing subpath
  *   name is read by the walk, which imports every subpath, or is R-HIDDEN, as is a corpus in a form none of these reads.
  * T2 the same readers find every signal in a planted release that ships a corpus: a corpus directory, a mixed-case corpus
  *   module, a JSONL data file, a fixtures declaration, a files member that is not a string, exported documents in an array, a
- *   Map's values, a Map's keys (an object key and a string key), a Set, a Map's and a Set's own property, and a Map whose own
- *   iterator and entries method hide its entries, and additions to exports and files. The planted values also carry an
+ *   Map's values, a Map's keys (an object key and a string key), a Set, a Map's and a Set's own property, a String wrapper
+ *   object's own property, and a Map whose own iterator and entries method hide its entries, and additions to exports and
+ *   files. The planted values also carry an
  *   accessor, a Map key's toString and that Map's own entries method, each throwing when called (its own iterator yields
  *   nothing), so a walk that invokes one fails T2. Every pin sees its plant, so a reader hollowed to miss any planted signal
  *   reds.
- * A1 the outside anchors: the export holds exactly one row whose id is the bead's (each non-blank line parsed, the rows counted
- *   by id before any other field is read, as ROW_CONTROLS pin with second rows carrying no title or description, or fields that
+ * A1 the outside anchors: the export holds exactly one row whose id is the bead's (each non-blank line parsed as JSON.parse
+ *   decodes it, member names case-sensitive, so a member another decoder reads as id, title or description is R-DECODER's;
+ *   the rows counted by id before any other field is read, as ROW_CONTROLS pin with second rows carrying no title or description, or fields that
  *   are not strings; that row then carries a string title and a string description); the export title is the statement; A1
  *   description holds the description to the one measured, by the sha256 of its text as JSON decodes it, so any edit to it, in
  *   any line form, reds there whatever the field reader reads (its controls edit it after each boundary, with a second value,
@@ -143,41 +165,102 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every reading is pinned exactly once; WATCHED's
  *   keys and facets are literals (held to package.json by T1 identity and RECORDS); LINE_BOUNDARIES' names and code points,
  *   REFUSALS, FORMS' ids and facets, SURFACE_CONTROLS' and ROW_CONTROLS' counts and FIELD_CONTROLS' fields and counts are
- *   literals; every REFUSALS rule has a FORMS row; the FORMS ROSTER above equals FORMS' ids; and the RESIDUALS lines below
- *   equal QUIET's keys.
+ *   literals; every REFUSALS rule has a FORMS row; the FORMS ROSTER above equals FORMS' ids; R-DECODER's PLACEMENTS ids and
+ *   members, its plant-set reading by placement, the engine's fold classes and the spelling counts are literals; and the
+ *   RESIDUALS lines below equal QUIET's keys.
  * RECORDS (the last case): T1 identity judged every HX-scoped package package.json names (an anchor outside the census's
  *   literals), and every classification pin's case, every FORMS row's case and every residual's quiet row ran to its end.
- * RESIDUALS (named families, each with a pinned quiet row in QUIET; FROZEN SHAPE reads the four lines below):
+ * RESIDUALS (named families, each with a pinned quiet row in QUIET; FROZEN SHAPE reads the five lines below):
  * R-HIDDEN a corpus in any form the classification readings do not read. Known members: documents behind a function call, an
  *   accessor, a non-enumerable, symbol-keyed or inherited property or a function's own property; documents in a WeakMap or a
  *   WeakSet, a class instance's private field, a Promise's resolution, or bytes (a typed array holding a document's JSON);
- *   documents the walk would read through a built-in that the release's import-time code replaced (Map.prototype.entries);
+ *   documents whose representation is not a string but a value whose string value includes it: a String wrapper object (new
+ *   String(SDK_REPRESENTATION), the gate's G-STRING-OBJECT, whose index characters the walk reads one at a time), an object
+ *   whose toString or Symbol.toPrimitive returns it, a symbol whose description holds it, or a function whose source
+ *   spells it; documents the walk would read through a built-in that the release's import-time code replaced (Map.prototype.entries);
  *   documents in a neutral-named module that no export subpath re-exports and whose bytes never spell hyperunix.result/1 byte
  *   for byte (the representation imported from the codec, or escape-spelled); and documents declared only in types. Shipped
  *   in the vendored release, each still changes T1 identity's tarballs facet (the strict reader reads the new content or
  *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (it replaces
- *   Map.prototype.entries for one walk and restores it): every classification pin reads today's set, and the tarballs facet's
- *   reading of the planted entries is not the measured one.
+ *   Map.prototype.entries for one walk and restores it), and every classification pin reads today's set. Literals pin the
+ *   plant itself (hiddenPlant): the planted namespace's bindings beside the SDK's own, by name and property kind
+ *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
+ *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
+ *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, census-side channels, none of which
+ *   the walk itself reads), each read through the channel its form names and then walked as the walk walks a value:
+ *   resultCases and loadCases called (call), loadCases's own enumerable data (own), INHERITED_CASES's prototype's own
+ *   enumerable data (prototype), WEAK_CASES's entry and WEAK_SET's membership for the planted document (get, has), VAULT's
+ *   private field through Vault's own static reader (private), PENDING_CASES's resolution as node:util's inspect renders it
+ *   (resolution), CASE_BYTES decoded as UTF-8 JSON (bytes), CASES's getter invoked (getter), HIDDEN_CASES's value
+ *   (non-enumerable) and the symbol-keyed binding's value (symbol): the walk reaches the representation in them at exactly the
+ *   twelve paths the literal names, so any of those bindings emptied of its documents (the gate's GV1-GV6 among them) is read
+ *   there unless the witness's own reads put them back (NOT CLAIMED below); the wrapped members,
+ *   WRAPPED_CASES'
+ *   documents' representations, as the namespace carries them where the walk reads (reached through own enumerable data
+ *   properties; beside the quiet, the same plant with each member replaced by the representation itself is read by the walk at
+ *   exactly those five paths): one of each kind by the realm's own checks (a String wrapper by node:util's isStringObject, an
+ *   object whose own toString or own Symbol.toPrimitive is a function, a symbol, a function), each one's string value
+ *   (String.prototype.valueOf, the method's result, the description, Function.prototype.toString) including the representation;
+ *   and the planted module entries (cases, samples, shapes and wrapped, with the declarations of cases and wrapped), each of
+ *   which, shipped alone in today's release, makes T1 identity's tarballs facet read another release, and whose paths and bytes
+ *   the content digest of the six pins, so no entry's documents change unread. No DOCUMENT WITNESS channel is claimed as the
+ *   twin of a walk change: its prototype and bytes channels as twins of the gate's TV3 and TV5 (wb-ulnv refusal #3's GV3X,
+ *   GV5X and GV5Y) and its own, getter, non-enumerable and symbol channels as twins of the gate's TV4, TV6, TV2 and TV1 are
+ *   NOT CLAIMED by this census, and neither are documents that a binding holds only as an effect of the witness's own reads
+ *   (refusal #4's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD, whose documents stand
+ *   only while a loadCases call's effect stands). The twin coverage cut #4 deferred to wb-byfw is the DOCUMENT WITNESS twin
+ *   census that wb-byfw's carrier wb-gnj9 landed (landing 952): test/workbench-hyperunix-document-witness-census.test.ts.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
  *   such packages in two dependency fields and in those three manifest fields: the HX-scoped set stays @hyperunix/sdk alone,
  *   and the unnamed one has no naming.
  * R-SELF-HOLLOW a census member removed from every literal that names it is unseen by the outside anchors, which bind ROWS'
- *   clauses (A1), the export description (A1 description), package.json's HX-scoped packages (T1 identity and RECORDS) and
- *   ECMAScript's four line terminators (the engine, in A1), and nothing else: a pin (from ROWS, ReadingId, READINGS,
+ *   clauses (A1), the export description (A1 description), package.json's HX-scoped packages (T1 identity and RECORDS),
+ *   ECMAScript's four line terminators (the engine, in A1) and Unicode simple case folding (the engine, in R-DECODER's fold
+ *   classes and plant sets), and nothing else: a pin (from ROWS, ReadingId, READINGS,
  *   PLANTED_READINGS and the frozen literal), a residual (from QUIET, the frozen literal and its header line), a planted signal
  *   (from PLANTED_ENTRIES or PLANTED_MODULES and PLANTED_READINGS), a surface control (from SURFACE_CONTROLS and its frozen
  *   counts), a field or row control (from FIELD_CONTROLS or ROW_CONTROLS and its frozen literal), a re-vendor form (from FORMS,
- *   its frozen literal and CLAIMS), or a line boundary other than LF, CR, LS and PS (from LINE_BOUNDARIES, its frozen literals
- *   and CLAIMS). The quiet row pins that each pin's removal leaves A1's anchor reading unchanged while each row's removal
- *   changes it, and that a boundary's removal leaves the engine anchor's reading unchanged for exactly CR LF, VT, FF, FS, GS,
- *   RS and NEL.
+ *   its frozen literal and CLAIMS), a residual's known member (from its quiet row's plant, the quiet row's literals that name
+ *   it and the residual's header text; R-HIDDEN's planted bindings, the documents behind each, wrapped members and planted
+ *   entries among them), an R-DECODER placement (from PLACEMENTS and its frozen literals), or a line boundary other than LF,
+ *   CR, LS and PS (from LINE_BOUNDARIES, its frozen literals and CLAIMS). The quiet row pins that each pin's removal leaves
+ *   A1's anchor reading unchanged while each row's removal changes it, and that a boundary's removal leaves the engine anchor's
+ *   reading unchanged for exactly CR LF, VT, FF, FS, GS, RS and NEL. For the two member kinds wb-ulnv names it pins that each
+ *   R-HIDDEN planted binding's, wrapped member's and planted entry's removal from the plant alone leaves every classification
+ *   pin's reading of the planted release unchanged and T1 identity's tarballs facet still reading it as another release, while
+ *   R-HIDDEN's literal for that member reads the removal; that the documents behind each DOCUMENT WITNESS channel, emptied in
+ *   the plant alone (the binding kept), leave those readings unchanged while the witness loses exactly that channel's paths,
+ *   and each planted entry's bytes, emptied (the entry kept), leave them unchanged while the content digest reads it; and that
+ *   each R-DECODER placement's removal leaves the engine fold anchor's reading (the placements whose plant set is not the one
+ *   the engine's folds predict: none) unchanged, while one name's removal from any placement's plant set is read.
  * R-UNLOADED a re-vendor whose module code fails when this file imports the SDK's three export subpaths (a throw at import, or
  *   a subpath retargeted to a file Node cannot import as a module): the file then fails at load with the loader's error,
  *   before any case runs, so no case's message (the OWED text included) is read, though its package.json, tarball or
  *   installed copy would read changed if the cases ran. The quiet row reads this file's import declarations (TypeScript AST):
  *   its only imports from the @hyperunix/ scope are the three static subpath imports MODULES walks.
+ * R-DECODER a member another decoder reads as one A1 reads (id, title or description) while JSON.parse, by which A1 reads the
+ *   export, keeps it apart. bd is a Go program (go version -m reads go1.26.2), and Go's encoding/json matches each member name
+ *   to a field case-insensitively, so a later member spelled in another case sets the field over the exact one; go 1.26.2
+ *   matched, at every position of the three names, exactly the code points Unicode simple case folding takes to the name's
+ *   letter (MEASURED over every code point by wb-ulnv cut #1, seat ws-05, run g10-work-s151, trunk 42ab54d2, and again by the
+ *   gate at wb-ulnv refusal #1; the only one outside ASCII is U+017F for s), the folding the engine's case-insensitive Unicode
+ *   match reads (engineFolds, an anchor outside this file's literals). Which decoder bd's import runs is unread (PLAUSIBLE).
+ *   Known members: every spelling of id, title and description other than the exact one whose code points each fold to the
+ *   name's letter (3, 31 and 3071), in each PLACEMENTS placement: a later member of the bead's row holding another id, an
+ *   edited title or an edited description (the gate's G-DESC-CASEKEY, Description), a second row whose only id member holds
+ *   the bead's id (G-IDKEY-UPPER, ID), or another bead's row with a later id member holding the bead's id. go 1.26.2 read
+ *   every one of these texts as the exact name's edit (MEASURED by the same two readings, 3, 31, 3071, 3 and 3 texts by
+ *   placement). The quiet row plants every spelling in every placement in memory and pins the names it reads at the engine:
+ *   in each placement they number the product of the engine's fold-class sizes over the member's letters less one, all
+ *   distinct, of which all but the all-ASCII spellings hold a code point outside ASCII (1024 for description), each one the
+ *   engine's case-insensitive Unicode match reads as the member and none the member itself (FROZEN SHAPE holds each
+ *   placement's plant-set reading as a literal too). A1's reading (the rows counted by id, the title against the statement
+ *   and the description against its digest) reads today's for each name; beside the quiet, a decoder that sets id, title or
+ *   description from each member whose name that engine match reads as one, a later member over an earlier one, reads each of
+ *   those texts as its placement's exact edit and the bead's row re-encoded alone as A1 does; and each placement under the
+ *   exact name reads the edit.
  * PARKED (the external remainder; standing rules 21(1) and 24): the acceptance's three clauses need a consumer-facing
  * hyperunix.result/1 corpus in a release Pi vendors, and the request for it travels the wb-kqx upstream-feedback channel, a
  * HyperUnix-CLI new-feedback write outside Pi-subagents that this cut does not make. A landing of this cut closes only the
@@ -188,7 +271,7 @@ import { createHash } from "node:crypto";
 import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { types } from "node:util";
+import { inspect, types } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";
 import * as sdkRoot from "@hyperunix/sdk";
 import * as sdkProtocol from "@hyperunix/sdk/protocol";
@@ -647,9 +730,15 @@ const PLANTED_ENTRIES: readonly (readonly [string, string])[] = [
   ["package/dist/fixture-names.d.ts", "export declare const NAMES: readonly string[];"],
 ];
 /** The planted release's export subpaths: documents exported in an array, a Map's values, a Map's keys, a Set, a Map's and a
- * Set's own property and a Map whose own iteration hides its entries, beside an accessor and methods that throw if called. */
+ * Set's own property, a String wrapper object's own property (beside its index characters) and a Map whose own iteration hides
+ * its entries, beside an accessor and methods that throw if called. */
 const PLANTED_MODULES: Readonly<Record<string, object>> = {
-  ".": { SDK_REPRESENTATION: REPRESENTATION, RESULT_CASES: [PLANTED_DOCUMENT], TRAPPED: ACCESSOR_TRAP },
+  ".": {
+    SDK_REPRESENTATION: REPRESENTATION,
+    RESULT_CASES: [PLANTED_DOCUMENT],
+    BOXED_CASES: Object.assign(new String("find-incomplete"), { cases: [PLANTED_DOCUMENT] }),
+    TRAPPED: ACCESSOR_TRAP,
+  },
   "./conformance": {
     default: new Map([["find-complete-empty", { representation: REPRESENTATION }]]),
     INDEX: new Map([[KEY_TRAP, "find-incomplete"]]),
@@ -678,6 +767,7 @@ const PLANTED_READINGS: Readonly<Record<ReadingId, readonly string[]>> = {
     "./conformance:default.find-complete-empty.representation",
     "./protocol:MODES.1",
     "./protocol:MODE_CASES.cases.0.document.representation",
+    ".:BOXED_CASES.cases.0.document.representation",
     ".:RESULT_CASES.0.document.representation",
     ".:SDK_REPRESENTATION",
   ],
@@ -703,16 +793,29 @@ const ROW_CONTROLS: readonly (readonly [string, number])[] = [
   [`{"id":"${BEAD}","title":"t","description":"d"}\n\n{"id":"wb-other","title":"t","description":"d"}\n`, 1],
   [`["${BEAD}"]\n{"id":"${BEAD}","title":"t","description":"d"}\n{"id":"${BEAD} "}`, 1],
 ];
+/** A1's reading of an export text: how many rows carry the bead's id (counted before any field is read) and, when exactly one
+ * does, that row's title and description, as JSON.parse decodes them (member names case-sensitive; R-DECODER). */
+function rowFields(text: string): { readonly rows: number; readonly title: unknown; readonly description: unknown } {
+  const mine = beadRows(text);
+  const row = mine.length === 1 ? mine[0] : undefined;
+  return { rows: mine.length, title: isRecord(row) ? row.title : undefined, description: isRecord(row) ? row.description : undefined };
+}
 /** The bead's own export row: the rows whose id is the bead's counted before any field is read (exactly one), then that row's
  * title and description, which must be strings (later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const mine = beadRows(readFileSync(join(REPO, EXPORT), "utf8"));
-  expect(mine.length, "the export holds exactly one row whose id is the bead's (counted by id, before any field is read)").toBe(1);
-  const row = mine[0];
-  const title = isRecord(row) ? row.title : undefined;
-  const description = isRecord(row) ? row.description : undefined;
+  const { rows, title, description } = rowFields(readFileSync(join(REPO, EXPORT), "utf8"));
+  expect(rows, "the export holds exactly one row whose id is the bead's (counted by id, before any field is read)").toBe(1);
   if (typeof title !== "string" || typeof description !== "string") throw new Error(`the export row of ${BEAD} carries no string title and description`);
   return { title, description };
+}
+/** What A1 reads of an export text, in one line: how many rows carry the bead's id, then the one row's title against the
+ * statement and its description against the measured digest (the R-DECODER quiet row reads its plants through it). */
+function rowReading(text: string): string {
+  const { rows, title, description } = rowFields(text);
+  if (rows !== 1) return `${rows} rows`;
+  const titled = title === `${TITLE_ID} ${STATEMENT}` ? "the statement" : "another title";
+  const described = typeof description === "string" && sha256(description) === DESCRIPTION_SHA256 ? "the measured description" : "another description";
+  return `1 row: ${titled}, ${described}`;
 }
 /** A Python list item as the export's ACCEPTANCE list spells it: double quotes exactly when the text holds a single quote. */
 function listItem(text: string): string {
@@ -766,6 +869,28 @@ let engineLineTerminators: string[] | undefined;
 function engineTerminators(): string[] {
   engineLineTerminators ??= Array.from({ length: 0x10000 }, (_, code) => String.fromCharCode(code)).filter((char) => /^b/m.test(`a${char}b`));
   return engineLineTerminators;
+}
+/** The names of the members A1 reads from an export row: the id its rows are counted by, the title and the description. */
+const READ_MEMBERS = ["id", "title", "description"] as const;
+type ReadMember = (typeof READ_MEMBERS)[number];
+let engineFoldClasses: Readonly<Record<string, string>> | undefined;
+/** For each letter of READ_MEMBERS' names, every code point the engine's case-insensitive Unicode match reads as that letter,
+ * scanned over every code point: Unicode simple case folding (the engine: an anchor outside this file's literals; R-DECODER). */
+function engineFolds(): Readonly<Record<string, string>> {
+  if (engineFoldClasses !== undefined) return engineFoldClasses;
+  const letters = [...new Set(READ_MEMBERS.join(""))].sort();
+  const anyLetter = new RegExp(`^[${letters.join("")}]$`, "iu");
+  const classes: Record<string, string> = Object.fromEntries(letters.map((letter) => [letter, ""]));
+  for (let code = 0; code <= 0x10ffff; code++) {
+    const char = String.fromCodePoint(code);
+    if (anyLetter.test(char)) for (const letter of letters) if (new RegExp(`^${letter}$`, "iu").test(char)) classes[letter] += char;
+  }
+  engineFoldClasses = classes;
+  return classes;
+}
+/** Every spelling of a member name whose code points each fold to the name's letter (engineFolds), the name itself included. */
+function spellings(name: string): string[] {
+  return [...name].reduce<string[]>((prefixes, letter) => prefixes.flatMap((prefix) => [...engineFolds()[letter]].map((char) => `${prefix}${char}`)), [""]);
 }
 /** The engine's line terminators a boundary set does not hold as a boundary of its own. */
 const engineMisses = (boundaries: readonly (readonly [string, string])[]): string[] =>
@@ -1296,6 +1421,83 @@ const FORMS: readonly Form[] = [
   },
 ];
 
+/** A title or description no store write gave the bead's row: what a member spelled in another case holds (R-DECODER). */
+const EDIT = "a value no store write gave the bead's row";
+/** An export line for the bead's row as A1 reads it (its id, title and description), then any later members. */
+const beadLine = (row: { readonly title: string; readonly description: string }, later: Readonly<Record<string, string>> = {}): string =>
+  JSON.stringify({ id: BEAD, title: row.title, description: row.description, ...later });
+/** Where a member spelled other than exactly can sit in an export text (R-DECODER): the member it spells, the text it plants
+ * for a spelling given the bead's row, and A1's reading of that text when the spelling is the member's exact name. */
+interface Placement {
+  readonly id: string;
+  readonly member: ReadMember;
+  readonly plant: (row: { readonly title: string; readonly description: string }, name: string) => string;
+  readonly exact: string;
+}
+const PLACEMENTS: readonly Placement[] = [
+  { id: "later-id", member: "id", plant: (row, name) => beadLine(row, { [name]: "wb-other" }), exact: "0 rows" },
+  { id: "later-title", member: "title", plant: (row, name) => beadLine(row, { [name]: EDIT }), exact: "1 row: another title, the measured description" },
+  { id: "later-description", member: "description", plant: (row, name) => beadLine(row, { [name]: EDIT }), exact: "1 row: the statement, another description" },
+  { id: "second-row", member: "id", plant: (row, name) => `${beadLine(row)}\n${JSON.stringify({ [name]: BEAD, title: row.title, description: EDIT })}`, exact: "2 rows" },
+  {
+    id: "other-row",
+    member: "id",
+    plant: (row, name) => `${beadLine(row)}\n${JSON.stringify({ id: "wb-other", title: row.title, description: EDIT, [name]: BEAD })}`,
+    exact: "2 rows",
+  },
+];
+/** Each placement's plant set: every spelling of its member other than the exact one (spellings, from engineFolds). */
+const decoderPlants = (): { readonly placement: Placement; readonly names: readonly string[] }[] =>
+  PLACEMENTS.map((placement) => ({ placement, names: spellings(placement.member).filter((name) => name !== placement.member) }));
+/** Whether a text holds a code point outside ASCII. */
+const outsideAscii = (text: string): boolean => [...text].some((char) => (char.codePointAt(0) ?? 0) > 0x7f);
+/** A plant set's reading: how many names it holds, how many are distinct, how many hold a code point outside ASCII, and how many
+ * are not another spelling of the member (the member itself, or a name the engine's case-insensitive Unicode match of the whole
+ * member name does not read as it: the engine, an anchor outside this file's literals). */
+function plantSet(member: ReadMember, names: readonly string[]): string {
+  const folds = new RegExp(`^${member}$`, "iu");
+  const strays = names.filter((name) => name === member || !folds.test(name)).length;
+  return `${names.length} names, ${new Set(names).size} distinct, ${names.filter(outsideAscii).length} outside ASCII, ${strays} not another spelling`;
+}
+/** The plant set the engine's fold classes (engineFolds, scanned over every code point) predict for a member: every spelling but
+ * the exact one, the product of its letters' class sizes less one, of which all but the all-ASCII spellings hold a code point
+ * outside ASCII. */
+function predictedPlantSet(member: ReadMember): string {
+  const product = (keep: (char: string) => boolean): number => [...member].reduce((count, letter) => count * [...engineFolds()[letter]].filter(keep).length, 1);
+  const every = product(() => true);
+  const ascii = product((char) => !outsideAscii(char));
+  return `${every - 1} names, ${every - 1} distinct, ${every - ascii} outside ASCII, 0 not another spelling`;
+}
+/** What the engine fold anchor reads of a set of plant sets: each placement whose plant set is not the one the engine's folds
+ * predict (none today; R-SELF-HOLLOW pins that a placement's removal leaves this reading unchanged). */
+const foldAnchorMisses = (plants: readonly { readonly placement: Placement; readonly names: readonly string[] }[]): string[] =>
+  plants.filter(({ placement, names }) => plantSet(placement.member, names) !== predictedPlantSet(placement.member)).map(({ placement }) => placement.id);
+/** The members A1 reads, each with the engine's case-insensitive Unicode match of its whole name. */
+const FOLDED_MEMBERS = READ_MEMBERS.map((member) => [member, new RegExp(`^${member}$`, "iu")] as const);
+/** A row's id, title and description as a decoder that matches member names case-insensitively sets them: each member whose name
+ * the engine's case-insensitive Unicode match reads as one of the three sets it, a later member over an earlier one (the matching
+ * the MEASURED go 1.26.2 readings show for encoding/json; R-DECODER). */
+function foldedFields(row: Readonly<Record<string, unknown>>): Partial<Record<ReadMember, unknown>> {
+  const fields: Partial<Record<ReadMember, unknown>> = {};
+  for (const [key, value] of Object.entries(row)) for (const [member, folds] of FOLDED_MEMBERS) if (folds.test(key)) fields[member] = value;
+  return fields;
+}
+/** rowReading's line for an export text read through the folding decoder: the rows whose folded id is the bead's, then the one
+ * row's folded title against the statement and its folded description against the measured digest. */
+function foldedRowReading(text: string): string {
+  const mine = text
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .map((line): unknown => JSON.parse(line))
+    .flatMap((row) => (isRecord(row) ? [foldedFields(row)] : []))
+    .filter((fields) => fields.id === BEAD);
+  if (mine.length !== 1) return `${mine.length} rows`;
+  const [{ title, description }] = mine;
+  const titled = title === `${TITLE_ID} ${STATEMENT}` ? "the statement" : "another title";
+  const described = typeof description === "string" && sha256(description) === DESCRIPTION_SHA256 ? "the measured description" : "another description";
+  return `1 row: ${titled}, ${described}`;
+}
+
 /** The residual families this file's header names, one per line (the RESIDUALS lines). */
 function headerResiduals(): string[] {
   const header = readFileSync(SELF, "utf8").split("*/")[0];
@@ -1307,52 +1509,235 @@ function headerRoster(): string[] {
   const roster = /FORMS ROSTER \(FROZEN SHAPE holds it equal to FORMS' ids\): ([^.]+)\./.exec(header)?.[1];
   return roster === undefined ? [] : roster.split(", ");
 }
-/** A class whose instances hold documents in a private field only. */
+/** A class whose instances hold documents in a private field only; the DOCUMENT WITNESS reads it through the class's own static
+ * reader, the one channel a private field has (the walk reads an instance's own enumerable data, which holds none). */
 class Vault {
   readonly #cases: readonly object[];
   constructor(cases: readonly object[]) {
     this.#cases = cases;
   }
+  static held(vault: Vault): readonly object[] {
+    return vault.#cases;
+  }
   count(): number {
     return this.#cases.length;
   }
+}
+/** R-HIDDEN's wrapped members, one of each kind the residual names: a String wrapper object (the gate's G-STRING-OBJECT), an
+ * object whose own toString returns the representation, one whose own Symbol.toPrimitive returns it, a symbol whose description
+ * holds it, and a function whose source spells it. */
+const WRAPPED: readonly unknown[] = [
+  new String(REPRESENTATION),
+  { toString: () => REPRESENTATION },
+  { [Symbol.toPrimitive]: () => REPRESENTATION },
+  Symbol(REPRESENTATION),
+  () => "hyperunix.result/1",
+];
+/** A wrapped value's kind by the realm's own checks, with whether its string value includes the representation: a String wrapper
+ * (node:util's isStringObject; its value by String.prototype.valueOf), a symbol (its description), a function (its source by
+ * Function.prototype.toString), or an object whose own Symbol.toPrimitive, else whose own toString, is a function (its result). */
+function wrappedKind(value: unknown): string {
+  if (types.isStringObject(value)) return `string-object:${String.prototype.valueOf.call(value).includes(REPRESENTATION)}`;
+  if (typeof value === "symbol") return `symbol:${(value.description ?? "").includes(REPRESENTATION)}`;
+  if (typeof value === "function") return `function:${Function.prototype.toString.call(value).includes(REPRESENTATION)}`;
+  if (typeof value === "object" && value !== null) {
+    const primitive: unknown = Object.getOwnPropertyDescriptor(value, Symbol.toPrimitive)?.value;
+    if (typeof primitive === "function") return `to-primitive:${String(primitive.call(value, "string")).includes(REPRESENTATION)}`;
+    const stringify: unknown = Object.getOwnPropertyDescriptor(value, "toString")?.value;
+    if (typeof stringify === "function") return `to-string:${String(stringify.call(value)).includes(REPRESENTATION)}`;
+  }
+  return "other";
+}
+/** The values at a key path through own enumerable string-keyed data properties (dataValue: an accessor is never invoked), the
+ * walk's channel into an object or an array; none where a step is absent. */
+function walked(value: unknown, keys: readonly string[]): readonly unknown[] {
+  return keys.reduce<readonly unknown[]>(
+    (values, key) => values.flatMap((holder) => (typeof holder === "object" && holder !== null && Object.keys(holder).includes(key) ? dataValue(holder, key) : [])),
+    [value],
+  );
+}
+/** R-HIDDEN's planted release: today's release with module entries the bytes readers cannot see, and its root namespace with
+ * documents in every hidden form the residual names, the given wrapped members (WRAPPED by default) among them. Each binding's
+ * documents but WRAPPED_CASES' are held under the DOCUMENT WITNESS label that reads them (documentChannels): the site the
+ * `emptied` label names holds none (R-SELF-HOLLOW's emptied-documents reading), every other site the planted document. */
+function hiddenPlant(wrapped: readonly unknown[] = WRAPPED, emptied = ""): { readonly release: Release; readonly namespace: object } {
+  const today = vendoredRelease();
+  const documents = [PLANTED_DOCUMENT];
+  const held = (label: string): readonly object[] => (label === emptied ? [] : documents);
+  const entries = new Map(today.entries);
+  entries.set(
+    "package/dist/cases.js",
+    Buffer.from(
+      `import { SDK_REPRESENTATION as representation } from "./result.js";\nconst CASES = [{ id: "find-incomplete", sha256: "${"0".repeat(64)}", document: { representation } }];\nexport function resultCases() {\n  return CASES;\n}\n`,
+    ),
+  );
+  entries.set("package/dist/cases.d.ts", Buffer.from("export declare function resultCases(): readonly object[];\n"));
+  entries.set("package/dist/samples.js", Buffer.from('export const SAMPLES = [{ representation: "hyperunix\\u002eresult/1" }];\n'));
+  entries.set("package/dist/shapes.d.ts", Buffer.from('export declare const SHAPES: readonly [{ readonly representation: "hyperunix\\u002eresult/1" }];\n'));
+  // The module form of the String wrapper member (the gate's G-STRING-OBJECT): its bytes never spell the representation.
+  entries.set(
+    "package/dist/wrapped.js",
+    Buffer.from('import { SDK_REPRESENTATION } from "./result.js";\nexport const WRAPPED_CASES = [{ id: "find-incomplete", document: { representation: new String(SDK_REPRESENTATION) } }];\n'),
+  );
+  entries.set("package/dist/wrapped.d.ts", Buffer.from("export declare const WRAPPED_CASES: readonly object[];\n"));
+  const loadCases = Object.assign(() => held("loadCases<call>"), { cases: held("loadCases<own>") });
+  const namespace: Record<string | symbol, unknown> = {
+    ...sdkRoot,
+    resultCases: () => held("resultCases<call>"),
+    loadCases,
+    INHERITED_CASES: Object.create({ documents: held("INHERITED_CASES<prototype>") }),
+    [Symbol("cases")]: held("Symbol(cases)<symbol>"),
+    WEAK_CASES: new WeakMap([[PLANTED_DOCUMENT, held("WEAK_CASES<get>")]]),
+    WEAK_SET: new WeakSet(held("WEAK_SET<has>")),
+    VAULT: new Vault(held("VAULT<private>")),
+    PENDING_CASES: Promise.resolve(held("PENDING_CASES<resolution>")),
+    CASE_BYTES: new Uint8Array(Buffer.from(JSON.stringify(held("CASE_BYTES<bytes>")))),
+    WRAPPED_CASES: wrapped.map((representation) => ({ id: "find-incomplete", sha256: "0".repeat(64), document: { representation, operation: "find" } })),
+  };
+  Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => held("CASES<getter>") });
+  Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: held("HIDDEN_CASES<non-enumerable>") });
+  return { release: { ...today, entries, modules: { ...today.modules, ".": namespace } }, namespace };
+}
+/** A namespace's bindings beside the SDK's own, by name and property kind (R-HIDDEN's binding roster). */
+function bindingRoster(namespace: object): string[] {
+  return Reflect.ownKeys(namespace)
+    .filter((key) => typeof key === "symbol" || !Object.hasOwn(sdkRoot, key))
+    .map((key) => {
+      const property = Object.getOwnPropertyDescriptor(namespace, key);
+      return `${String(key)}:${property !== undefined && "value" in property ? "data" : "accessor"}:${property?.enumerable === true ? "enumerable" : "non-enumerable"}`;
+    });
+}
+/** The kinds of the wrapped members a namespace carries where the walk reads them: each WRAPPED_CASES document's representation. */
+function wrappedKinds(namespace: object): string[] {
+  return walked(namespace, ["WRAPPED_CASES"])
+    .flatMap((cases) => (typeof cases === "object" && cases !== null ? Object.keys(cases).flatMap((index) => walked(cases, [index, "document", "representation"])) : []))
+    .map(wrappedKind);
+}
+/** A release's entries beyond today's, each with what T1 identity's tarballs facet reads when it alone ships in today's release
+ * (R-HIDDEN's entry roster). */
+function entryRoster(release: Release): string[] {
+  const today = vendoredRelease().entries;
+  return [...release.entries]
+    .filter(([path]) => !today.has(path))
+    .map(([path, bytes]) => `${path}: ${JSON.stringify(readingOf(new Map([...today, [path, bytes]]))) === JSON.stringify(MEASURED) ? "the measured release" : "another release"}`)
+    .sort();
+}
+/** The documents a namespace's planted bindings (beside the SDK's own) hold, each read census-side through the channel its form
+ * names and labelled `<binding><channel>` (R-HIDDEN's DOCUMENT WITNESS; the walk itself reads none of these channels): an
+ * accessor's getter invoked (getter); a symbol-keyed or non-enumerable binding's value (symbol, non-enumerable); a function
+ * called with no arguments (call) and its own enumerable data, when it has any (own); bytes decoded as UTF-8 JSON (bytes); a
+ * WeakMap's entry and a WeakSet's membership for the planted document, through the realm's own WeakMap.prototype.get and
+ * WeakSet.prototype.has (get, has); a Vault's private field through Vault's own static reader (private); a Promise's
+ * resolution as node:util's inspect renders it, synchronously (resolution); and an object's prototype's own enumerable data,
+ * when that prototype is neither Object.prototype nor null and has any (prototype). */
+function documentChannels(namespace: object): Record<string, unknown> {
+  const channels: Record<string, unknown> = {};
+  const ownData = (holder: object): Record<string, unknown> =>
+    Object.fromEntries(Object.keys(holder).flatMap((key) => dataValue(holder, key).map((member) => [key, member] as const)));
+  for (const key of Reflect.ownKeys(namespace)) {
+    const property = Object.getOwnPropertyDescriptor(namespace, key);
+    if (property === undefined || (typeof key === "string" && Object.hasOwn(sdkRoot, key))) continue;
+    const name = String(key);
+    if (!("value" in property)) {
+      channels[`${name}<getter>`] = property.get?.call(namespace);
+      continue;
+    }
+    const value: unknown = property.value;
+    if (typeof key === "symbol") channels[`${name}<symbol>`] = value;
+    else if (property.enumerable !== true) channels[`${name}<non-enumerable>`] = value;
+    else if (typeof value === "function") {
+      channels[`${name}<call>`] = Reflect.apply(value, undefined, []);
+      if (Object.keys(value).length > 0) channels[`${name}<own>`] = ownData(value);
+    } else if (types.isUint8Array(value)) channels[`${name}<bytes>`] = JSON.parse(Buffer.from(value).toString("utf8"));
+    else if (types.isWeakMap(value)) channels[`${name}<get>`] = WeakMap.prototype.get.call(value, PLANTED_DOCUMENT);
+    else if (types.isWeakSet(value)) channels[`${name}<has>`] = WeakSet.prototype.has.call(value, PLANTED_DOCUMENT) ? [PLANTED_DOCUMENT] : [];
+    else if (value instanceof Vault) channels[`${name}<private>`] = Vault.held(value);
+    else if (types.isPromise(value)) channels[`${name}<resolution>`] = inspect(value, { depth: Number.POSITIVE_INFINITY });
+    else if (typeof value === "object" && value !== null) {
+      const prototype: unknown = Object.getPrototypeOf(value);
+      if (typeof prototype === "object" && prototype !== null && prototype !== Object.prototype && Object.keys(prototype).length > 0)
+        channels[`${name}<prototype>`] = ownData(prototype);
+    }
+  }
+  return channels;
+}
+/** What the walk's own reader (carriers) reads in each channel's documents: every path, under the channel's label, to a string
+ * spelling the representation. */
+const documentWitness = (namespace: object): string[] =>
+  Object.entries(documentChannels(namespace)).flatMap(([label, value]) => carriers(value, label, new Set()));
+/** A release's entries beyond today's (R-HIDDEN's planted module entries). */
+function plantedEntries(release: Release): Map<string, Buffer> {
+  const today = vendoredRelease().entries;
+  return new Map([...release.entries].filter(([path]) => !today.has(path)));
 }
 /** Each named residual family's quiet row. */
 const QUIET: Readonly<Record<string, () => void>> = {
   "R-HIDDEN": () => {
     const today = vendoredRelease();
-    const documents = [PLANTED_DOCUMENT];
-    const entries = new Map(today.entries);
-    entries.set(
-      "package/dist/cases.js",
-      Buffer.from(
-        `import { SDK_REPRESENTATION as representation } from "./result.js";\nconst CASES = [{ id: "find-incomplete", sha256: "${"0".repeat(64)}", document: { representation } }];\nexport function resultCases() {\n  return CASES;\n}\n`,
-      ),
-    );
-    entries.set("package/dist/cases.d.ts", Buffer.from("export declare function resultCases(): readonly object[];\n"));
-    entries.set("package/dist/samples.js", Buffer.from('export const SAMPLES = [{ representation: "hyperunix\\u002eresult/1" }];\n'));
-    entries.set("package/dist/shapes.d.ts", Buffer.from('export declare const SHAPES: readonly [{ readonly representation: "hyperunix\\u002eresult/1" }];\n'));
-    const loadCases = Object.assign(() => documents, { cases: documents });
-    const namespace: Record<string | symbol, unknown> = {
-      ...sdkRoot,
-      resultCases: () => documents,
-      loadCases,
-      INHERITED_CASES: Object.create({ documents }),
-      [Symbol("cases")]: documents,
-      WEAK_CASES: new WeakMap([[PLANTED_DOCUMENT, documents]]),
-      WEAK_SET: new WeakSet(documents),
-      VAULT: new Vault(documents),
-      PENDING_CASES: Promise.resolve(documents),
-      CASE_BYTES: new Uint8Array(Buffer.from(JSON.stringify(documents))),
-    };
-    Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => documents });
-    Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: documents });
-    const hidden: Release = { ...today, entries, modules: { ...today.modules, ".": namespace } };
+    const { release: hidden, namespace } = hiddenPlant();
     expect(
       PINS.filter((pin) => !same(READINGS[pin.reading](hidden), pin.today)).map(pinId),
       "R-HIDDEN: every classification pin reads today's set",
     ).toStrictEqual([]);
-    expect(readingOf(entries), "R-HIDDEN: T1 identity's tarballs facet reads the planted entries as another release").not.toStrictEqual(MEASURED);
+    expect(bindingRoster(namespace), "R-HIDDEN: the planted namespace's bindings beside the SDK's own, by name and property kind").toStrictEqual([
+      "resultCases:data:enumerable",
+      "loadCases:data:enumerable",
+      "INHERITED_CASES:data:enumerable",
+      "WEAK_CASES:data:enumerable",
+      "WEAK_SET:data:enumerable",
+      "VAULT:data:enumerable",
+      "PENDING_CASES:data:enumerable",
+      "CASE_BYTES:data:enumerable",
+      "WRAPPED_CASES:data:enumerable",
+      "CASES:accessor:enumerable",
+      "HIDDEN_CASES:data:non-enumerable",
+      "Symbol(cases):data:enumerable",
+    ]);
+    expect(
+      documentWitness(namespace),
+      "R-HIDDEN: the documents each planted binding but WRAPPED_CASES holds, read through the channel its form names and walked, reach the representation at these paths",
+    ).toStrictEqual([
+      "resultCases<call>.0.document.representation",
+      "loadCases<call>.0.document.representation",
+      "loadCases<own>.cases.0.document.representation",
+      "INHERITED_CASES<prototype>.documents.0.document.representation",
+      "WEAK_CASES<get>.0.document.representation",
+      "WEAK_SET<has>.0.document.representation",
+      "VAULT<private>.0.document.representation",
+      "PENDING_CASES<resolution>",
+      "CASE_BYTES<bytes>.0.document.representation",
+      "CASES<getter>.0.document.representation",
+      "HIDDEN_CASES<non-enumerable>.0.document.representation",
+      "Symbol(cases)<symbol>.0.document.representation",
+    ]);
+    expect(
+      wrappedKinds(namespace),
+      "R-HIDDEN: the wrapped members, read where the walk reads them, are one of each kind, each one's string value including the representation",
+    ).toStrictEqual(["string-object:true", "to-string:true", "to-primitive:true", "symbol:true", "function:true"]);
+    expect(
+      READINGS["exported-representations"](hiddenPlant(WRAPPED.map(() => REPRESENTATION)).release),
+      "beside the quiet, the same plant with each wrapped member replaced by the representation itself is read by the walk at each WRAPPED_CASES document",
+    ).toStrictEqual([
+      ".:SDK_REPRESENTATION",
+      ".:WRAPPED_CASES.0.document.representation",
+      ".:WRAPPED_CASES.1.document.representation",
+      ".:WRAPPED_CASES.2.document.representation",
+      ".:WRAPPED_CASES.3.document.representation",
+      ".:WRAPPED_CASES.4.document.representation",
+    ]);
+    expect(entryRoster(hidden), "R-HIDDEN: each planted module entry, shipped alone in today's release, makes the tarballs facet read another release").toStrictEqual([
+      "package/dist/cases.d.ts: another release",
+      "package/dist/cases.js: another release",
+      "package/dist/samples.js: another release",
+      "package/dist/shapes.d.ts: another release",
+      "package/dist/wrapped.d.ts: another release",
+      "package/dist/wrapped.js: another release",
+    ]);
+    expect(readingOf(plantedEntries(hidden)), "R-HIDDEN: the planted module entries' paths and bytes, by their content digest").toStrictEqual({
+      entries: 6,
+      digest: "a97c78eb9e5be53c828469aeeae52052039bcae83a06ee94c90437b89e0b2e8f",
+    });
+    expect(readingOf(hidden.entries), "R-HIDDEN: T1 identity's tarballs facet reads the planted entries as another release").not.toStrictEqual(MEASURED);
     // A built-in the walk calls, replaced by import-time code: Map.prototype.entries, for one walk, then restored.
     const indexed: Release = { ...today, modules: { ".": { INDEX: new Map([["find-incomplete", PLANTED_DOCUMENT]]) } } };
     const intrinsic = Map.prototype.entries;
@@ -1366,7 +1751,7 @@ const QUIET: Readonly<Record<string, () => void>> = {
     expect(replaced, "R-HIDDEN: a Map read through a replaced Map.prototype.entries reads none").toStrictEqual([]);
     expect(READINGS["exported-representations"](indexed), "beside the quiet, the same Map read through the built-in is read").toStrictEqual([".:INDEX.find-incomplete.document.representation"]);
     expect(
-      READINGS["exported-representations"]({ ...hidden, modules: { ".": { RESULT_CASES: documents } } }),
+      READINGS["exported-representations"]({ ...hidden, modules: { ".": { RESULT_CASES: [PLANTED_DOCUMENT] } } }),
       "beside the quiet, the same documents exported as a plain value are read",
     ).toStrictEqual([".:RESULT_CASES.0.document.representation"]);
   },
@@ -1398,11 +1783,122 @@ const QUIET: Readonly<Record<string, () => void>> = {
       LINE_BOUNDARIES.filter((boundary) => engineMisses(LINE_BOUNDARIES.filter((other) => other !== boundary)).length === 0).map(([name]) => name),
       "R-SELF-HOLLOW: a boundary's removal leaves the engine anchor's reading unchanged exactly for the boundaries it does not anchor",
     ).toStrictEqual(["CR LF", "VT", "FF", "FS", "GS", "RS", "NEL"]);
+    // The two member kinds wb-ulnv names (refusal #1 F5): a removal from the plant alone is read by the quiet row's own literal for
+    // that member, never by an outside anchor.
+    const hidden = hiddenPlant();
+    const outside = (release: Release): string =>
+      JSON.stringify([PINS.map((pin) => READINGS[pin.reading](release)), JSON.stringify(readingOf(release.entries)) === JSON.stringify(MEASURED)]);
+    const baseline = outside(hidden.release);
+    const unchanged = (release: Release): boolean => outside(release) === baseline;
+    // The copy is built from every other binding's descriptor (CASES and HIDDEN_CASES are not configurable, so none is deleted).
+    const withoutBinding = (key: string | symbol): object =>
+      Object.defineProperties(
+        {},
+        Object.fromEntries(
+          Reflect.ownKeys(hidden.namespace).flatMap((other) => {
+            const property = Object.getOwnPropertyDescriptor(hidden.namespace, other);
+            return other === key || property === undefined ? [] : [[other, property] as const];
+          }),
+        ),
+      );
+    const bindings = Reflect.ownKeys(hidden.namespace).filter((key) => typeof key === "symbol" || !Object.hasOwn(sdkRoot, key));
+    const roster = bindingRoster(hidden.namespace);
+    expect(
+      bindings
+        .filter((key) => {
+          const namespace = withoutBinding(key);
+          return unchanged({ ...hidden.release, modules: { ...hidden.release.modules, ".": namespace } }) && !same(bindingRoster(namespace), roster);
+        })
+        .map(String),
+      "R-SELF-HOLLOW: each R-HIDDEN planted binding's removal leaves every outside reading unchanged, while the binding roster reads it",
+    ).toStrictEqual(bindings.map(String));
+    const kinds = wrappedKinds(hidden.namespace);
+    expect(
+      WRAPPED.map((_, index) => hiddenPlant(WRAPPED.filter((__, other) => other !== index)))
+        .map((without, index) => (unchanged(without.release) && !same(wrappedKinds(without.namespace), kinds) ? index : -1))
+        .filter((index) => index >= 0),
+      "R-SELF-HOLLOW: each wrapped member's removal leaves every outside reading unchanged, while the wrapped-kind literal reads it",
+    ).toStrictEqual(WRAPPED.map((_, index) => index));
+    const planted = [...hidden.release.entries.keys()].filter((path) => !vendoredRelease().entries.has(path)).sort();
+    const entryReading = entryRoster(hidden.release);
+    expect(
+      planted.filter((path) => {
+        const entries = new Map(hidden.release.entries);
+        entries.delete(path);
+        const release: Release = { ...hidden.release, entries };
+        return unchanged(release) && !same(entryRoster(release), entryReading);
+      }),
+      "R-SELF-HOLLOW: each planted entry's removal leaves every outside reading unchanged, while the entry roster reads it",
+    ).toStrictEqual(planted);
+    // wb-ulnv refusal #2's class: a known member's documents emptied in the plant alone, the binding or the entry kept.
+    const witness = documentWitness(hidden.namespace);
+    const labels = Object.keys(documentChannels(hidden.namespace));
+    const under =
+      (label: string) =>
+      (path: string): boolean =>
+        path === label || path.startsWith(`${label}.`);
+    expect(
+      labels.filter((label) => {
+        const emptied = hiddenPlant(WRAPPED, label);
+        return witness.some(under(label)) && unchanged(emptied.release) && same(documentWitness(emptied.namespace), witness.filter((path) => !under(label)(path)));
+      }),
+      "R-SELF-HOLLOW: the documents behind each DOCUMENT WITNESS channel, emptied in the plant alone, leave every outside reading unchanged, while the witness loses exactly that channel's paths",
+    ).toStrictEqual(labels);
+    const entryDigest = JSON.stringify(readingOf(plantedEntries(hidden.release)));
+    expect(
+      planted.filter((path) => {
+        const release: Release = { ...hidden.release, entries: new Map(hidden.release.entries).set(path, Buffer.alloc(0)) };
+        return unchanged(release) && JSON.stringify(readingOf(plantedEntries(release))) !== entryDigest;
+      }),
+      "R-SELF-HOLLOW: each planted entry's bytes, emptied, leave every outside reading unchanged, while the content digest reads it",
+    ).toStrictEqual(planted);
+    const plants = decoderPlants();
+    const misses = foldAnchorMisses(plants);
+    expect(
+      PLACEMENTS.filter((placement) => same(foldAnchorMisses(plants.filter(({ placement: other }) => other !== placement)), misses)).map(
+        (placement) => placement.id,
+      ),
+      "R-SELF-HOLLOW: each R-DECODER placement's removal leaves the engine fold anchor's reading unchanged",
+    ).toStrictEqual(PLACEMENTS.map((placement) => placement.id));
+    expect(
+      plants.map((plant) => foldAnchorMisses([{ placement: plant.placement, names: plant.names.slice(1) }])),
+      "while one name's removal from any placement's plant set is read",
+    ).toStrictEqual(PLACEMENTS.map((placement) => [placement.id]));
   },
   "R-UNLOADED": () => {
     expect(scopedImports(), "R-UNLOADED: the file imports the SDK's export subpaths statically, so it loads only when they do").toStrictEqual(
       Object.keys(MODULES).map((subpath) => (subpath === "." ? SDK : `${SDK}${subpath.slice(1)}`)),
     );
+  },
+  "R-DECODER": () => {
+    const row = exportRow();
+    const today = rowReading(beadLine(row));
+    expect(today, "A1 reads the bead's row, re-encoded alone, as the statement and the measured description").toBe("1 row: the statement, the measured description");
+    const read = decoderPlants().map(({ placement, names }) => ({
+      placement,
+      readings: names.map((name) => {
+        const text = placement.plant(row, name);
+        return { name, a1: rowReading(text), folded: foldedRowReading(text) };
+      }),
+    }));
+    expect(
+      read.map(({ placement, readings }) => `${placement.id}: ${plantSet(placement.member, readings.map(({ name }) => name))}`),
+      "R-DECODER: in each placement the names the quiet row reads are every spelling the engine's folds predict but the exact one",
+    ).toStrictEqual(PLACEMENTS.map((placement) => `${placement.id}: ${predictedPlantSet(placement.member)}`));
+    const loud = read.flatMap(({ placement, readings }) => readings.filter(({ a1 }) => a1 !== today).map(({ name }) => `${placement.id} ${name}`));
+    expect(loud, "R-DECODER: every other spelling of a member A1 reads, in every placement, leaves A1's reading today's").toStrictEqual([]);
+    const unfolded = read.flatMap(({ placement, readings }) => readings.filter(({ folded }) => folded !== placement.exact).map(({ name }) => `${placement.id} ${name}`));
+    expect(
+      unfolded,
+      "beside the quiet, a decoder that matches member names case-insensitively, a later member over an earlier one, reads each planted text as its placement's exact edit",
+    ).toStrictEqual([]);
+    expect(foldedRowReading(beadLine(row)), "and reads the bead's row, re-encoded alone, as A1 does").toBe(today);
+    const exact = PLACEMENTS.map((placement) => rowReading(placement.plant(row, placement.member)));
+    expect(exact, "beside the quiet, each placement under the exact name reads the edit").toStrictEqual(PLACEMENTS.map((placement) => placement.exact));
+    expect(
+      exact.filter((reading) => reading === today),
+      "and no placement's exact reading is today's",
+    ).toStrictEqual([]);
   },
 };
 
@@ -1494,7 +1990,9 @@ describe("wb-tz2.7 HyperUnix result-corpus census (until a consumer-facing hyper
 
   describe("residuals: each named family's quiet row", () => {
     for (const [family, quiet] of Object.entries(QUIET)) {
-      it(`${family} reads quiet`, () => {
+      // The quiet rows parse the whole bead export and replay whole plants: under ambient load one ran past vitest's 5 s default
+      // (R-SELF-HOLLOW, 5448 ms, in wb-ulnv cut #2's battery), so each carries the suite's common 60 s bound.
+      it(`${family} reads quiet`, { timeout: 60_000 }, () => {
         quiet();
         QUIETED.add(family);
       });
@@ -1598,7 +2096,35 @@ describe("wb-tz2.7 HyperUnix result-corpus census (until a consumer-facing hyper
       "SURFACES:1",
       "SURFACES:1",
     ]);
-    expect(Object.keys(QUIET)).toStrictEqual(["R-HIDDEN", "R-OTHER-PACKAGE", "R-SELF-HOLLOW", "R-UNLOADED"]);
+    expect(PLACEMENTS.map((placement) => `${placement.id}:${placement.member}`)).toStrictEqual([
+      "later-id:id",
+      "later-title:title",
+      "later-description:description",
+      "second-row:id",
+      "other-row:id",
+    ]);
+    expect(Object.entries(engineFolds()).map(([letter, chars]) => `${letter}:${codePoints(chars).join(",")}`)).toStrictEqual([
+      "c:67,99",
+      "d:68,100",
+      "e:69,101",
+      "i:73,105",
+      "l:76,108",
+      "n:78,110",
+      "o:79,111",
+      "p:80,112",
+      "r:82,114",
+      "s:83,115,383",
+      "t:84,116",
+    ]);
+    expect(READ_MEMBERS.map((member) => `${member}:${spellings(member).length}`)).toStrictEqual(["id:4", "title:32", "description:3072"]);
+    expect(decoderPlants().map(({ placement, names }) => `${placement.id}: ${plantSet(placement.member, names)}`)).toStrictEqual([
+      "later-id: 3 names, 3 distinct, 0 outside ASCII, 0 not another spelling",
+      "later-title: 31 names, 31 distinct, 0 outside ASCII, 0 not another spelling",
+      "later-description: 3071 names, 3071 distinct, 1024 outside ASCII, 0 not another spelling",
+      "second-row: 3 names, 3 distinct, 0 outside ASCII, 0 not another spelling",
+      "other-row: 3 names, 3 distinct, 0 outside ASCII, 0 not another spelling",
+    ]);
+    expect(Object.keys(QUIET)).toStrictEqual(["R-HIDDEN", "R-OTHER-PACKAGE", "R-SELF-HOLLOW", "R-UNLOADED", "R-DECODER"]);
     expect(headerResiduals(), "the header's RESIDUALS lines name exactly QUIET's families, in order").toStrictEqual(Object.keys(QUIET));
   });
 
