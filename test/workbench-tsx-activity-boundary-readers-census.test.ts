@@ -20,7 +20,8 @@
  * O:1864) names in its F2 finding, GP24-C2 at U2.4 and GP3-C5, GP24-C1 and GP24-C3 at S.2, are FALSIFIERS rows since wb-1mqk, the
  * R694 follow-up that carries that finding. The members wb-1mqk's landing-896 PASS (proposed-closure row O:1956) names in its F1
  * finding, G2-E01 at U2.4 and G2-S01, G2-S02 and G2-S07 at S.2, are FALSIFIERS rows since wb-74dw, the R694 follow-up that carries
- * that finding.
+ * that finding. The members wb-74dw's landing-937 PASS (proposed-closure row O:2045) names in its F1 finding, GP15-E01a and
+ * GP15-E01b at U2.4, are FALSIFIERS rows since wb-vgy4, the R694 follow-up that carries that finding.
  * NOT CARRIED (each changes a reading wb-km7q.6's census keeps for itself, not a reader moved here): G1-M06 (a nested qa/src/ path
  * read as a surface: the surface set) and G1-P03 (the status phrase read short: the producer reading).
  * CUT #2 (refusal #1, O:1569: claims wider than their pins, R514/R515/R668): U1.1's three break-step classes are held whole by
@@ -67,6 +68,14 @@
  *   base holding no file. A form read from an importer outside the three (R-ROOT-FORM, R-ESCAPE-FORM) and a sweep member read
  *   through the default probe with its file present (R-ROOT-FORM) are residual families with pinned quiet rows. The F1 finding's
  *   line in wb-1mqk's notes anchors the O:1956 rows outside this file.
+ * wb-vgy4 (the R694 follow-up of wb-74dw's landing-937 PASS F1 finding, proposed-closure row O:2045: GP15-E01a and GP15-E01b
+ *   each kept this census at 0 failed | 27 passed): no reader changes. The length sweep reads each written candidate from each
+ *   sweep importer through the three sweep spellings (SWEEP_SPELLINGS: the climb to the root, that climb then zz/../ and that
+ *   climb then ./), its witness holds each spelling's specifier for the four-unit name from each sweep importer, and U2.4 names
+ *   the spellings; a two-dot candidate read through a spelling outside the three (R-ESCAPE-FORM: the climb then a second slash,
+ *   and the climb then the named segment qa climbed back out of) is a residual family with pinned quiet rows. The F1 finding's
+ *   line in wb-74dw's notes anchors the O:2045 rows outside this file, and the O:1731 claim-line spelling leaves the
+ *   GP15-E<digits><letter> ids to O:2045's.
  *
  * ROWS (one test per pin, titled by the pin id under its row; every pin's output is held to its WITNESS entry):
  *  U1 ADOPTION 'read by WORDS': U1-STEPS each WORDS step's calibration names, recorded with every step and unrecorded with that
@@ -84,7 +93,7 @@
  *   directory candidate passed over, a dot form and the dot specifier; U2-PROBES the probe log of every importer (an absolute one
  *   among them) and specifier of the corpus and of ./zz.<e> for every U3 sweep suffix, against claimedCandidates (this census's
  *   own statement of the five), and the stop at the first accepted one; U2-NON every non-candidate (each read unresolved with its
- *   file present); U2-ESCAPE the ".." filter (a long outside path and the length sweep, read from the three sweep importers, among its forms); U2-FILE the default probe over the paths it plants (a character device, an empty
+ *   file present); U2-ESCAPE the ".." filter (a long outside path and the length sweep, read from the three sweep importers through the three sweep spellings, among its forms); U2-FILE the default probe over the paths it plants (a character device, an empty
  *   file, a mixed-case name, a trailing-slash path and an absolute path among them), each beside the kind the census reads its
  *   path as.
  *  U3 PLAUSIBLE: the page and module closed-set complements: U3-PAGE and U3-MODULE, each the sweep (at the root, below docs/ and
@@ -97,7 +106,7 @@
  *   over the same tree (every path asked, in order).
  * RESIDUALS (named; each has a pinned quiet row beside its loud twin, held under `quiet` in its pin's witness): R-STEP-TEXT
  *   (U1-CLASSES), R-DEPENDENCY-NAME (U1-NAMES), R-DEPENDENCY-FIELD and R-DEPENDENCY-VALUE (U1-FIELDS), R-UNTRIED-CANDIDATE
- *   (U2-NON), R-ESCAPE-FORM (U2-ESCAPE, since wb-1mqk; its importer row since wb-74dw), R-FILE-PATH (U2-FILE), R-PAGE-NAME
+ *   (U2-NON), R-ESCAPE-FORM (U2-ESCAPE, since wb-1mqk; its importer row since wb-74dw and its spelling row since wb-vgy4), R-FILE-PATH (U2-FILE), R-PAGE-NAME
  *   (U3-PAGE), R-MODULE-NAME (U3-MODULE), R-SPECIFIER-FORM (SPEC-LOCAL) and R-ROOT-FORM (SPEC-ROOT, since wb-1mqk; its
  *   default-probe and importer rows since wb-74dw).
  * OUTSIDE ANCHORS (standing rule 16, CT5 and CT6; outside this file's literals): the tracked bead export's wb-km7q.12 row - its
@@ -105,12 +114,13 @@
  *   label (the item ids are the U rows), and the R-B150 paragraph's member ids are the O:1499 SPEC members and its quoted reading
  *   is the SPEC label; and the helper - its claim block (the lines and the pins they name), WORD_STEPS, DEPENDENCY_FIELDS,
  *   CANDIDATE_RULES, PAGE_SUFFIX and MODULE_SUFFIXES, each member of which has its own calibration, form or sweep entry here; the
- *   claim block also names each O:1569, O:1624, O:1696, O:1731, O:1820, O:1864 and O:1956 member on the line whose pins hold it, and WORD_STEPS names the
+ *   claim block also names each O:1569, O:1624, O:1696, O:1731, O:1820, O:1864, O:1956 and O:2045 member on the line whose pins hold it, and WORD_STEPS names the
  *   break steps that BREAK_STEPS lists and BREAK_CLASSES states; and, since wb-km7q.15 cut #1, the carrier's row - its description
  *   names the O:1696 members - and wb-km7q.12's refusal #4 lines (its U1 item and its F5 finding), which name the O:1731 members;
  *   and, since wb-km7q.15 cut #2, the carrier's refusal #1 lines (its U1 item and its F1 finding), which name the O:1820 members;
  *   and, since wb-1mqk, the carrier's landing-847 PASS F2 finding line, which names the O:1864 members; and, since wb-74dw,
- *   wb-1mqk's landing-896 PASS F1 finding line, which names the O:1956 members.
+ *   wb-1mqk's landing-896 PASS F1 finding line, which names the O:1956 members; and, since wb-vgy4, wb-74dw's landing-937 PASS F1
+ *   finding line, which names the O:2045 members.
  * PIN ANCHORS (refusal #1 F5): each pin is held by its IMPL entry against its own WITNESS literal; the anchors outside those two
  *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys and, since cut #3 (refusal #2 F8), each
  *   residual's quiet rows, which its claim line names), the export's counts and labels and the U3 sweeps' dotted suffixes, never a
@@ -191,6 +201,8 @@
  *   G2-S01 O:1956 SPEC SPEC-ROOT slash-sweep: a "/" specifier ending .cts forms candidates from the root importer
  *   G2-S02 O:1956 SPEC SPEC-ROOT slash-sweep: every "/" specifier forms candidates from a qa/ importer
  *   G2-S07 O:1956 SPEC SPEC-ROOT root-cjs: a "/" .cjs root form read resolved through the default probe, its file present
+ *   GP15-E01a O:2045 U2 U2-ESCAPE length sweep: a two-dot candidate kept when its specifier climbs out of a named segment
+ *   GP15-E01b O:2045 U2 U2-ESCAPE length sweep: a two-dot candidate kept when its specifier holds a dot segment
  *
  * Display paths added: none. Test-only: the trees live in makeScratch scratch with the leak guard installed; the helper, this file
  * and the bead export are only read; U2-FILE stats /dev/null and plants a symlink to it, and a symlink to a file its scratch holds
@@ -242,7 +254,7 @@ interface ClaimLine {
 }
 interface Falsifier {
   readonly id: string;
-  readonly outbox: "O:1415" | "O:1499" | "O:1569" | "O:1624" | "O:1696" | "O:1731" | "O:1820" | "O:1864" | "O:1956";
+  readonly outbox: "O:1415" | "O:1499" | "O:1569" | "O:1624" | "O:1696" | "O:1731" | "O:1820" | "O:1864" | "O:1956" | "O:2045";
   readonly row: RowId;
   readonly pin: string;
   readonly keys: readonly string[];
@@ -269,6 +281,11 @@ const CARRIER_PASS_F2 = "- F2 LOW RIDES: [PREP qualifier: CONFIRMED; hypothetica
 const FOLLOW_UP = "wb-1mqk";
 /** The first line of wb-1mqk's landing-896 PASS F1 finding in its notes (O:1956). */
 const FOLLOW_UP_PASS_F1 = "- F1 LOW RIDES: [PREP qualifier: CONFIRMED survivals measured on the probe bytes; hypothetical survivors";
+/** The bead whose landing-937 PASS names the O:2045 members (wb-vgy4 is the R694 follow-up of its F1 finding). */
+const IMPORTER_FOLLOW_UP = "wb-74dw";
+/** The first line of wb-74dw's landing-937 PASS F1 finding in its notes (O:2045). */
+const IMPORTER_FOLLOW_UP_PASS_F1 =
+  "- F1 LOW RIDES: [PREP qualifier: CONFIRMED survivals measured on the probe bytes; hypothetical survivors, unrealized under R-B262 as clarified by M:46698; the claim-scope reading is PLAUSIBLE] The specifier-spelling facet of U2.4's length sweep.";
 
 // ------------------------------------------------------------------------------------------------------------------ the rows
 const ROWS: readonly Row[] = [
@@ -329,7 +346,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U2.4",
     pins: ["U2-ESCAPE"],
-    text: 'A candidate opening with ".." is never probed: claimed for exactly the forms U2-ESCAPE holds, each read from src/ui/zz-inspector.ts unless the form names another importer, a path outside the repository (a file there reads unresolved; one whose written candidate is 64 or more code units long among them), an in-repository name opening with two dots (fail-closed), and its length sweep (for every length from 2 to 4096 code units, a written candidate of that length opening with two dots inside the repository, a z-run name, and from 4 one outside it, each read from each sweep importer, src/ui/zz-inspector.ts, zz-main.ts and qa/zz-tool.mjs: none forms a candidate or asks an accepting probe); it answers the O:1864 member GP24-C2 and the O:1956 member G2-E01; no other candidate or importer is claimed (R-ESCAPE-FORM).',
+    text: 'A candidate opening with ".." is never probed: claimed for exactly the forms U2-ESCAPE holds, each read from src/ui/zz-inspector.ts unless the form names another importer, a path outside the repository (a file there reads unresolved; one whose written candidate is 64 or more code units long among them), an in-repository name opening with two dots (fail-closed), and its length sweep (for every length from 2 to 4096 code units, a written candidate of that length opening with two dots inside the repository, a z-run name, and from 4 one outside it, each read from each sweep importer, src/ui/zz-inspector.ts, zz-main.ts and qa/zz-tool.mjs, through each sweep spelling, the climb to the root from the directory of the importer (../../, ./ and ../ from those three), that climb then the named segment zz climbed back out of (zz/../) and that climb then a dot segment (./), each followed by the written candidate: none forms a candidate or asks an accepting probe); it answers the O:1864 member GP24-C2, the O:1956 member G2-E01 and the O:2045 members GP15-E01a and GP15-E01b; no other candidate, importer or spelling is claimed (R-ESCAPE-FORM).',
   },
   {
     id: "U2.5",
@@ -380,7 +397,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "R-ESCAPE-FORM",
     pins: ["U2-ESCAPE"],
-    text: "A two-dot candidate outside the forms and the length sweep, or one read from an importer other than those U2.4 names, is not claimed: a z-run name of 4097 code units inside the repository reads unprobed beside its 4096-unit twin, and the four-unit z-run name read from scripts/zz-build.mjs reads unprobed beside its read from qa/zz-tool.mjs (quiet rows: a longer z-run name; an importer outside the sweep importers).",
+    text: "A two-dot candidate outside the forms and the length sweep, or one read from an importer other than those U2.4 names or through a spelling other than its sweep spellings, is not claimed: a z-run name of 4097 code units inside the repository reads unprobed beside its 4096-unit twin, the four-unit z-run name read from scripts/zz-build.mjs reads unprobed beside its read from qa/zz-tool.mjs, the four-unit z-run name read from zz-main.ts through the climb then a second slash (.//..zz) reads unprobed beside its read through the climb (./..zz), and the four-unit z-run name read from qa/zz-tool.mjs through the climb then the named segment qa climbed back out of (../qa/../..zz) reads unprobed beside its read through the climb (../..zz) (quiet rows: a longer z-run name; an importer outside the sweep importers; a doubled slash; another named segment).",
   },
   {
     id: "R-FILE-PATH",
@@ -466,6 +483,8 @@ const FALSIFIERS: readonly Falsifier[] = [
   { id: "G2-S01", outbox: "O:1956", row: "SPEC", pin: "SPEC-ROOT", keys: ["slash-sweep"], reading: 'a "/" specifier ending .cts forms candidates from the root importer' },
   { id: "G2-S02", outbox: "O:1956", row: "SPEC", pin: "SPEC-ROOT", keys: ["slash-sweep"], reading: 'every "/" specifier forms candidates from a qa/ importer' },
   { id: "G2-S07", outbox: "O:1956", row: "SPEC", pin: "SPEC-ROOT", keys: ["root-cjs"], reading: 'a "/" .cjs root form read resolved through the default probe, its file present' },
+  { id: "GP15-E01a", outbox: "O:2045", row: "U2", pin: "U2-ESCAPE", keys: ["length sweep"], reading: "a two-dot candidate kept when its specifier climbs out of a named segment" },
+  { id: "GP15-E01b", outbox: "O:2045", row: "U2", pin: "U2-ESCAPE", keys: ["length sweep"], reading: "a two-dot candidate kept when its specifier holds a dot segment" },
 ];
 
 // ---------------------------------------------------------------------------------------------------------------- the readings
@@ -746,6 +765,17 @@ function climb(from: string): string {
   const dir = posix.dirname(from);
   return dir === "." ? "./" : "../".repeat(dir.split("/").length);
 }
+/** The spellings U2.4's length sweep reads each written candidate through (wb-vgy4, O:2045), each the text that precedes the
+ * candidate: the climb to the root, that climb then the named segment zz climbed back out of (zz/../) and that climb then a dot
+ * segment (./); and two spellings outside them, the climb then a second slash (a doubled slash) and the climb then the named segment
+ * qa climbed back out of (another named segment), which only the residual's quiet rows read. */
+const SWEEP_SPELLINGS: Readonly<Record<string, (from: string) => string>> = {
+  climb: from => climb(from),
+  "named segment": from => `${climb(from)}zz/../`,
+  "dot segment": from => `${climb(from)}./`,
+};
+const DOUBLED_SLASH = (from: string): string => `${climb(from)}/`;
+const OTHER_SEGMENT = (from: string): string => `${climb(from)}qa/../`;
 /** S.2's slash sweep (wb-1mqk, O:1864; read from every sweep importer since wb-74dw, O:1956): /<stem>.<e> and /<stem><e> for every
  * suffix e of the U3 sweep and every sweep stem, each read from each sweep importer through an accepting probe over a base holding
  * no file - the reads (importer, then specifier) that form a candidate, that ask the probe anything, or that read resolved. */
@@ -791,18 +821,33 @@ function escapeRead(length: number, from = "zz-main.ts"): { [key: string]: Json 
   });
   return { from, length, formed: candidatesOf(from, specifier).length, asked: paths.length };
 }
-/** U2.4's length sweep (read from every sweep importer since wb-74dw, O:1956): for every length from 2 to ESCAPE_TOP, the written
- * candidate of that length opening with two dots inside the repository (the climb to the root, then ..<z-run>) and, from 4, outside
- * it (the climb, then ../<z-run>), each read from each sweep importer - the reads (importer, then length) whose specifier forms a
- * candidate or asks an accepting probe anything. */
+/** The four-unit z-run name ..zz read from `from` through `spell` (R-ESCAPE-FORM's spelling rows, wb-vgy4, O:2045): the specifier
+ * as spelled, the written candidate it names, how many candidates it forms and how many paths an accepting probe is asked. */
+function spelledRead(from: string, spell: (from: string) => string): { [key: string]: Json } {
+  const specifier = `${spell(from)}..zz`;
+  const paths: string[] = [];
+  resolveLocal("/zz-no-base", from, specifier, path => {
+    paths.push(path);
+    return true;
+  });
+  return { from, specifier, written: posix.normalize(posix.join(posix.dirname(from), specifier)), formed: candidatesOf(from, specifier).length, asked: paths.length };
+}
+/** U2.4's length sweep (read from every sweep importer since wb-74dw, O:1956, through every sweep spelling since wb-vgy4, O:2045):
+ * for every length from 2 to ESCAPE_TOP, the written candidate of that length opening with two dots inside the repository (..<z-run>)
+ * and, from 4, outside it (../<z-run>), each read from each sweep importer through each sweep spelling (the spelling, then the
+ * candidate) - each spelling's specifier for the four-unit name from each sweep importer, and the reads (importer, then length) whose
+ * specifier forms a candidate or asks an accepting probe anything. */
 function lengthSweep(): { [key: string]: Json } {
   const formed: string[] = [];
   const asked: string[] = [];
   let specifiers = 0;
   for (let length = 2; length <= ESCAPE_TOP; length += 1) {
     for (const from of SWEEP_IMPORTERS) {
-      const reads: string[] = [`${climb(from)}..${"z".repeat(length - 2)}`];
-      if (length >= 4) reads.push(`${climb(from)}../${"z".repeat(length - 3)}`);
+      const reads: string[] = [];
+      for (const spell of Object.values(SWEEP_SPELLINGS)) {
+        reads.push(`${spell(from)}..${"z".repeat(length - 2)}`);
+        if (length >= 4) reads.push(`${spell(from)}../${"z".repeat(length - 3)}`);
+      }
       for (const specifier of reads) {
         specifiers += 1;
         if (candidatesOf(from, specifier).length > 0) formed.push(`${from} ${length}`);
@@ -815,7 +860,8 @@ function lengthSweep(): { [key: string]: Json } {
       }
     }
   }
-  return { top: ESCAPE_TOP, importers: [...SWEEP_IMPORTERS], specifiers, formed, asked };
+  const spellings = Object.fromEntries(Object.entries(SWEEP_SPELLINGS).map(([name, spell]) => [name, SWEEP_IMPORTERS.map(from => `${spell(from)}..zz`)]));
+  return { top: ESCAPE_TOP, importers: [...SWEEP_IMPORTERS], spellings, specifiers, formed, asked };
 }
 const PAGE_FORMS: Readonly<Record<string, string>> = {
   md: "docs/zz.md",
@@ -1203,6 +1249,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
           "a longer z-run name": [escapeRead(ESCAPE_TOP + 1), escapeRead(ESCAPE_TOP)],
           // wb-74dw (O:1956): the four-unit z-run name read from an importer outside the sweep importers, beside its read from qa/.
           "an importer outside the sweep importers": [escapeRead(4, OUTSIDE_IMPORTER), escapeRead(4, "qa/zz-tool.mjs")],
+          // wb-vgy4 (O:2045): the four-unit z-run name read through a spelling outside the sweep spellings, each beside its read through
+          // the climb from the same importer.
+          "a doubled slash": [spelledRead("zz-main.ts", DOUBLED_SLASH), spelledRead("zz-main.ts", climb)],
+          "another named segment": [spelledRead("qa/zz-tool.mjs", OTHER_SEGMENT), spelledRead("qa/zz-tool.mjs", climb)],
         },
       },
     };
@@ -1884,7 +1934,18 @@ const WITNESS: Readonly<Record<string, Json>> = {
         "recorded": null,
         "probes": [],
       },
-      "length sweep": { "top": 4096, "importers": ["src/ui/zz-inspector.ts", "zz-main.ts", "qa/zz-tool.mjs"], "specifiers": 24564, "formed": [], "asked": [] },
+      "length sweep": {
+        "top": 4096,
+        "importers": ["src/ui/zz-inspector.ts", "zz-main.ts", "qa/zz-tool.mjs"],
+        "spellings": {
+          "climb": ["../../..zz", "./..zz", "../..zz"],
+          "named segment": ["../../zz/../..zz", "./zz/../..zz", "../zz/../..zz"],
+          "dot segment": ["../.././..zz", "././..zz", ".././..zz"],
+        },
+        "specifiers": 73692,
+        "formed": [],
+        "asked": [],
+      },
     },
     "quiet": {
       "R-ESCAPE-FORM": {
@@ -1895,6 +1956,14 @@ const WITNESS: Readonly<Record<string, Json>> = {
         "an importer outside the sweep importers": [
           { "from": "scripts/zz-build.mjs", "length": 4, "formed": 0, "asked": 0 },
           { "from": "qa/zz-tool.mjs", "length": 4, "formed": 0, "asked": 0 },
+        ],
+        "a doubled slash": [
+          { "from": "zz-main.ts", "specifier": ".//..zz", "written": "..zz", "formed": 0, "asked": 0 },
+          { "from": "zz-main.ts", "specifier": "./..zz", "written": "..zz", "formed": 0, "asked": 0 },
+        ],
+        "another named segment": [
+          { "from": "qa/zz-tool.mjs", "specifier": "../qa/../..zz", "written": "..zz", "formed": 0, "asked": 0 },
+          { "from": "qa/zz-tool.mjs", "specifier": "../..zz", "written": "..zz", "formed": 0, "asked": 0 },
         ],
       },
     },
@@ -2287,6 +2356,8 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       "G2-S01:SPEC-ROOT",
       "G2-S02:SPEC-ROOT",
       "G2-S07:SPEC-ROOT",
+      "GP15-E01a:U2-ESCAPE",
+      "GP15-E01b:U2-ESCAPE",
     ]);
     expect(Object.keys(IMPL).sort(byName)).toEqual([...pins].sort(byName));
     expect(Object.keys(WITNESS).sort(byName)).toEqual([...pins].sort(byName));
@@ -2356,6 +2427,18 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
         .sort(byName),
     ]);
   });
+  it("outside anchors: wb-74dw's landing-937 PASS F1 finding names the O:2045 members", () => {
+    // wb-vgy4 (that finding's R694 follow-up): the first line of wb-74dw's notes opening with the PASS verdict's F1 finding names the
+    // members it carried; once each, they are the O:2045 rows.
+    const line = exportRowOf(IMPORTER_FOLLOW_UP).notes.split("\n").find(entry => entry.startsWith(IMPORTER_FOLLOW_UP_PASS_F1)) ?? "";
+    const named = [...new Set([...line.matchAll(/GP15-[A-Z]\d\d[a-z]/g)].map(match => match[0]))].sort(byName);
+    expect([line.length > 0, named]).toEqual([
+      true,
+      FALSIFIERS.filter(falsifier => falsifier.outbox === "O:2045")
+        .map(falsifier => falsifier.id)
+        .sort(byName),
+    ]);
+  });
   it("claim: the helper's claim block is CLAIM_LINES byte for byte, its pins are the rows' pins, its tables have entries here", () => {
     const helper = readFileSync(join(REPO, HELPER), "utf8");
     // wb-km7q.15 cut #2 (its refusal #1 F2): the claim block's opener stands once in the helper, so no second block stands unread.
@@ -2406,18 +2489,21 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       expect([falsifier.id, ROWS.find(row => row.id === falsifier.row)?.pins.some(pin => pin.id === falsifier.pin)]).toEqual([falsifier.id, true]);
       expect([falsifier.id, falsifier.keys.filter(key => !(key in witnessForms(falsifier.pin)))]).toEqual([falsifier.id, []]);
     }
-    // The O:1569, O:1624, O:1696, O:1731, O:1820, O:1864 and O:1956 members are named, in roster order, by the claim lines whose pins hold
-    // them (the helper's claim block names them too): each outbox's member ids as the claim lines spell them, in claim-line order.
+    // The O:1569, O:1624, O:1696, O:1731, O:1820, O:1864, O:1956 and O:2045 members are named, in roster order, by the claim lines whose
+    // pins hold them (the helper's claim block names them too): each outbox's member ids as the claim lines spell them, in claim-line order.
     // wb-1mqk: O:1864's GP24-C<digit> ids are spelled by O:1864's expression, so O:1820's leaves them to it.
     // wb-74dw: O:1956's ids open G2-, a spelling no other outbox's expression reads.
+    // wb-vgy4: O:2045's GP15-E<digits><letter> ids are spelled by O:2045's expression, so O:1731's (one digit, then a word boundary)
+    // leaves them to it.
     const spellings: readonly (readonly [Falsifier["outbox"], RegExp])[] = [
       ["O:1569", /GM-[A-Z]\d\d/g],
       ["O:1624", /L2-[A-Z]\d\d[a-z]?/g],
       ["O:1696", /GP5-[A-Z]\d\d/g],
-      ["O:1731", /GP15-[A-Z]\d/g],
+      ["O:1731", /GP15-[A-Z]\d\b/g],
       ["O:1820", /GP24-(?!C\d\b)[A-Z][A-Z0-9]*/g],
       ["O:1864", /GP3-C\d\b|GP24-C\d\b/g],
       ["O:1956", /G2-[A-Z]\d\d/g],
+      ["O:2045", /GP15-[A-Z]\d\d[a-z]\b/g],
     ];
     for (const [outbox, spelling] of spellings) {
       const answered = CLAIM_LINES.flatMap(line => [...line.text.matchAll(spelling)].map(match => ({ id: match[0], pins: line.pins })));

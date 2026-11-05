@@ -132,7 +132,9 @@
  * length, the listing and three absent reads of the very array it read (that it read that very array is WB-ZG1K's read,
  * below), taken after it (THE INDEX ORDER, below), so a content reading moved off its array's length, off the probe or off
  * its listing reds row S3c (the landed analog C07, the
- * probed dense content control moved off the probe, among them). F2 (the clause and the WB-VM56 paragraph defined the twin
+ * probed dense content control moved off the probe, among them; a reading handed another array is WB-ZG1K's read and
+ * WB-S4EZ's held, below, and a reading that moves the very array in place during the reading and restores it before these
+ * after-reads is WB-GBMP's frozen, below). F2 (the clause and the WB-VM56 paragraph defined the twin
  * by a property, a last-block text that is not its subject's source, while the pin held one text per array, so the gate's
  * K07 SOURCE-PREFIX6-AT-LIMIT and K10 SOURCE-INCLUDES-SOURCE-AT-LIMIT kept the census green) is cured both ways: each
  * length-2^32 - 1 dense blocks array has four content twins (TWIN_TEXTS) whose last block's text is 'misquoted <subject>',
@@ -194,6 +196,37 @@
  * header's NOT CLAIMED pin case replaced by one that returns its roster witness. The pinned reader set is still this
  * file's case S3c: to query providers, mint coverage or admit work; this control adds no registered case, mutant, row or
  * title.
+ *
+ * WB-GBMP (seat ws-02, run g10-work-s212; the R694 follow-up of landing 944's PASS-WITH-FINDING, gate cmd_59411f42ac93,
+ * whose F1 leads): F1 (claim precision: every pin the WB-Y3YO cure takes of the very array - its length, its listing and
+ * its absent reads - is taken after the reading, so the gate's one-expression edits of contentOn's content line that
+ * move the very array in place during the reading and restore it before those after-reads - GL1, its length set to its
+ * first absent index on each array of length 2^32 - 1 but the stairs', and GL-LIST, an own key defined on it and deleted
+ * after - kept the census green, and GL1 masked the reader member V01S, V01's trigger (document.blocks.length ===
+ * INDEX_LIMIT) spelled to record under the document before it returns no finding; the words wider than those pins were
+ * the WB-Y3YO length and listing words, contentOn's doc and THE INDEX ORDER content sentence) is cured by the finding's
+ * first cure, the state witnessed across the reading: contentOn freezes, before the reading, the document it hands and
+ * every object reachable from it through own keys - the very array, every block it holds, each block's evidence array
+ * and items, and its empty unmet - and the request, its subjects, evidence and sources arrays and their items
+ * (freezeThrough), and pins frozen beside held - true only when each of those objects is frozen before the reading
+ * (frozenThrough). A frozen object's own keys are fixed and each of its data properties is non-writable and
+ * non-configurable (these objects hold no accessor), so a write to any of them during the reading - the very array's
+ * length (GL1), an own key defined on it (GL-LIST; an own index key as well) or deleted, an item, a block's text, a
+ * source - either throws, in this module's strict code, or is refused and moves nothing (written through Reflect, or its
+ * throw caught): a throw out of contentOn reds row S3c whatever the reading returns (GL1 and GL-LIST, alone and beside
+ * V01S), and a refused write leaves the very array as its after-reads read it (GL1 spelled through Reflect.set, beside
+ * V01S, reds as V01S does). Behind the probe the write reaches the frozen target, since the probe has no set,
+ * defineProperty or deleteProperty trap; freezing and the frozen check read own keys and descriptors only, so they probe
+ * no absent index (the absent reads still read ends, ends, probed). The WB-Y3YO words, contentOn's doc and THE INDEX
+ * ORDER content sentence now name both ways a content reading is moved off its array: by another array (read, held) or
+ * in place during the reading (frozen). A content control that rewrites, during the reading, a shared intrinsic or a
+ * value a binding of this module holds (the INDEX pattern or the CONTENT_READS record among them) and restores it after
+ * is NOT CLAIMED by this census (the realm's shared intrinsics are the header's NOT CLAIMED class). As for read and
+ * held, a witness expression of contentOn replaced by the value it reads (frozen: true among them) or moved after the
+ * reading, or an edit of frozenThrough that reads the same on these bytes (beside an edit of freezeThrough that only it
+ * refuses, it hides that edit), is NOT CLAIMED by this census: an edit of a pin's own witness. The pinned reader set is
+ * still this file's case S3c: to query providers, mint coverage or admit work; this control adds no registered case,
+ * mutant, row or title.
  *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
@@ -277,13 +310,16 @@
  *  each dense subjects array of length 2^32 - 1, three reads of absent indices (has, get and own descriptor: the third is
  *  probed) - no control walks an array of length 2^32 - 1 - so a listing control that left the probe or its listing reds,
  *  and so does an absent-read control that left the probe. Each K-SPLIT content reading above (wb-y3yo) pins beside its
- *  findings read and held (wb-zg1k, wb-s4ez: contentOn hands the reading a frozen document whose own blocks is a data
- *  property holding the very array - held - and the content reading's own record under that very document, CONTENT_READS,
- *  holds that very array and the very findings it returned - read) and the length, the listing and three absent reads
+ *  findings read, held and frozen (wb-zg1k, wb-s4ez, wb-gbmp: contentOn hands the reading a frozen document whose own
+ *  blocks is a data property holding the very array - held - and the content reading's own record under that very
+ *  document, CONTENT_READS, holds that very array and the very findings it returned - read - and before the reading
+ *  contentOn freezes that document and the request and every object reachable from either through own keys, each of them
+ *  frozen there - frozen) and the length, the listing and three absent reads
  *  (from its first absent index) of that very array, taken after it - on a plain array all three end; behind the probe
  *  the third is probed, so the content reading probed none of that array's absent indices - and each twin also the last
  *  block's text read back from its array, so a content reading handed another document or another array, or moved off
- *  its array's length, the probe or its listing, reds too. Any other control - presentItems', itemsOf's, the
+ *  its array's length, the probe or its listing - by another array, or in place during the reading and restored before
+ *  the after-reads (frozen: the write throws or is refused) - reds too. Any other control - presentItems', itemsOf's, the
  *  walk's, the listing's, the absent reads', K-DEMAND's placement and demand readings' and the judge's - moved onto another
  *  array on which its own reading reads the same (the in-order placement control behind the probe moved off it, or a
  *  listing or absent-read control moved to another length, among them) is NOT CLAIMED by this census to red. Every other
@@ -1520,8 +1556,9 @@ const TWIN_TEXTS: readonly { readonly id: string; readonly text: (subject: strin
  * On the dense arrays behind the probe at length 2^32 - 1, presentItems, itemsOf's holes, the listing, the absent reads and K-SPLIT's content
  * (wb-vm56: the blocks with no finding; wb-y3yo: their four content twins, TWIN_TEXTS, each with source:<subject>) read them; K-DEMAND's
  * placement and demand readings read the dense arrays plain and behind the probe only. Each K-SPLIT content reading here pins, beside its
- * findings, that it read the very array it was handed (read, wb-zg1k F1) in the frozen document that holds it (held, wb-s4ez F1) and that
- * array's length, listing and absent reads (contentOn, wb-y3yo F1). */
+ * findings, that it read the very array it was handed (read, wb-zg1k F1) in the frozen document that holds it (held, wb-s4ez F1), that the
+ * document and the request, and every object reachable from either through own keys, were frozen before it read (frozen, wb-gbmp F1) and
+ * that array's length, listing and absent reads (contentOn, wb-y3yo F1). */
 function indexOrderReadings(): unknown {
   const named = (count: number): string[] => Array.from({ length: count }, (_, index) => `s${index + 1}`);
   const requestOf = (subjects: readonly string[]): Request => ({
@@ -1574,25 +1611,49 @@ function indexOrderReadings(): unknown {
    * that array, and through a proxy whose trap would answer another value the read throws (the proxy invariants). */
   const heldBy = (document: ContextDocument, blocks: readonly Block[]): boolean =>
     Object.isFrozen(document) && Reflect.getOwnPropertyDescriptor(document, "blocks")?.value === blocks;
+  /** Freezes a value and every object reachable from it through its own keys, string or symbol, each read by its own descriptor, so an array
+   * behind the probe is read through its own keys only and probes none of its absent indices (wb-gbmp F1). */
+  const freezeThrough = <T>(value: T, seen: Set<object> = new Set()): T => {
+    if (typeof value !== "object" || value === null || seen.has(value)) return value;
+    seen.add(value);
+    for (const key of Reflect.ownKeys(value)) freezeThrough(Reflect.getOwnPropertyDescriptor(value, key)?.value, seen);
+    Object.freeze(value);
+    return value;
+  };
+  /** Whether a value and every object reachable from it through its own keys are frozen, read the way freezeThrough reads them (wb-gbmp F1). */
+  const frozenThrough = (value: unknown, seen: Set<object> = new Set()): boolean => {
+    if (typeof value !== "object" || value === null || seen.has(value)) return true;
+    const object: object = value;
+    seen.add(object);
+    return Object.isFrozen(object) && Reflect.ownKeys(object).every(key => frozenThrough(Reflect.getOwnPropertyDescriptor(object, key)?.value, seen));
+  };
   /** K-SPLIT's content on one blocks array, beside that very array's length, listing and three absent reads from at (its first absent index), each
    * taken after the content reading (wb-y3yo F1): on a plain array all three end; behind the probe the third is probed, so the content reading
-   * probed none of its absent indices. A content control moved off its array's length, the probe or its listing reds here even where its
-   * findings read the same on every variant. The reading is handed a frozen document this control builds, its own blocks a data property
+   * probed none of its absent indices. A content control moved off its array's length, the probe or its listing - handed another document
+   * or array (read, held), or writing that very array in place during the reading (frozen) - reds here even where its findings read the
+   * same on every variant. The reading is handed a frozen document this control builds, its own blocks a data property
    * holding this very array, so every read of that document's blocks - the reading's own and any check a reader member takes - reads this
    * very array (wb-s4ez F1). held witnesses that document (heldBy), so a document whose blocks reads differ between reads (an accessor, as
    * the gate's GP14-H7), that is not frozen or that holds another array reds here. read is the coupling (wb-zg1k F1, wb-s4ez F1): the
    * content reading's own record under that very document (CONTENT_READS) holds this very array and the very findings it returned, so a
    * content reading handed any other document, or any other array - a copy of its present items, plain, behind the probe at their own
    * count or at this array's length (the gate's G01-G03) - reads read false and reds here, and so does one whose returned findings are
-   * another reading's. */
+   * another reading's. frozen witnesses the state across the reading (wb-gbmp F1): before the reading this control freezes the document and
+   * the request, and every object reachable from either through own keys (this very array, every block it holds, each block's evidence, the
+   * request's arrays and items) (freezeThrough), and frozen is true only when each of them is frozen there (frozenThrough), so a write to any
+   * of them during the reading - this very array's length or own keys (the gate's GL1 and GL-LIST), a block's text, a source - throws in this
+   * module's strict code, which reds here, or is refused (through Reflect, or its throw caught) and moves nothing. */
   const contentOn = (blocks: readonly Block[], request: Request, at: number) => {
-    const document: ContextDocument = Object.freeze({ blocks, unmet: [] });
+    const document: ContextDocument = freezeThrough({ blocks, unmet: [] });
+    freezeThrough(request);
+    const frozen = frozenThrough(document) && frozenThrough(request);
     const findings = contentFindings(document, request);
     const record = CONTENT_READS.get(document);
     return {
       findings,
       read: record?.blocks === blocks && record.findings === findings,
       held: heldBy(document, blocks),
+      frozen,
       length: blocks.length,
       listing: listingOf(blocks),
       absent: absentReads(blocks, at),
