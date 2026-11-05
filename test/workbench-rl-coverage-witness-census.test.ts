@@ -174,9 +174,9 @@
  * OUTSIDE ANCHOR: the wb-km7q.4 row of the tracked bead export (.beads/issues.jsonl): its title (the record, the gate list, the
  * field count and the four duty clauses are parsed from it) and the first span after each of the notes labels "Citations: ",
  * "Carrier fields: ", "House precedent to reuse, not re-derive: " and "Acceptance: " (to a full stop before white space or the
- * end), and the line after the first label of the gate's refusal-#4 unmet item U1 (below); appended notes and status writes do
- * not move them. What it anchors, and so what a removal made in every literal of this file and the roster together still
- * reds:
+ * end), the line after the first label of the gate's refusal-#4 unmet item U1 and the line after the first label of landing 951's
+ * verdict finding F1 (both below); appended notes and status writes do not move them. What it anchors, and so what a removal made
+ * in every literal of this file and the roster together still reds:
  *   - the acceptance's words: the labels joined are the acceptance, each row's pin quotes joined are its label, and each quote
  *     sits in the acceptance once, so a row, or any word of the acceptance, removed or shortened reds; how a row's words split
  *     into its pins is this census's own reading (a pin merged into another pin of its row is not detected; LIMITS);
@@ -196,7 +196,14 @@
  *   - the gate's refusal-#4 unmet item U1 (the line after the first "U1-MEDIUM-CONFIRMED-R514-R515-B1-FAIL-CLOSED-MEMBER-READER-
  *     MISSES-SAME-MODULE-MERGES: " in the notes) quotes its plants O7, O15 and O8, and B1 throws unless those three texts, in that
  *     order, are U1_PLANTS, the plants of the probes classMergeSnapshot, classMergeTrace and augmentationBlock, each refused; so
- *     one of those probes removed from every literal and the roster, or read accepted, reds.
+ *     one of those probes removed from every literal and the roster, or read accepted, reds;
+ *   - landing 951's verdict finding F1 (the line after the first "F1 LOW CONFIRMED (rides; equivalent on its own, recorded and NOT
+ *     counted, the R-B538 F1 form; cheap cure): " in the notes, G9_LABEL) names the gate's members G9-enumMemberObject,
+ *     G9-enumMemberImpl, G9-enumMemberOutcome, G9-enumMemberAdoption, G9-enumMemberObjectOnly and G9-localEnumObject, in that order
+ *     of first mention, and the judged set fails unless each, its G9- prefix cut, is a BINDINGS plant (BINDING_PROBES) reading
+ *     exactly one declaration of one of BOUND_NAMES, and enumMemberObject's plant stands in that line exactly once (the line quotes
+ *     it for G9-enumMemberObject); so one of those six plants removed from every literal, or rewritten to declare none of those
+ *     names, reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, TERMS, the carrier map, the gate list
  * and UNBATTERIED, the payload digests, VERDICTS, the battery, the residual table, adoption() and every pin's witness are held to
  * the out-of-file roster (test/fixtures/rl-coverage-witness-roster.json). SELF-READ (each part read from this file's AST; it runs
@@ -205,12 +212,24 @@
  * `const IMPL = Object.freeze({ ... })`, `function adoption` and `const memberOutcome` (topLevel), and Object has none, so each of
  * those three names denotes that one declaration wherever this file names it as a value, and every value reference this file
  * makes to the identifier Object reads the global binding of that name, through the identifier Object as the file binds it when it
- * runs (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS); BINDINGS' reader runs today on nine
+ * runs (bindings; what that binding holds when such a line runs is NOT CLAIMED: LIMITS); BINDINGS' reader runs today on 38
  * plants (BINDING_PROBES, each parsed as a module text of its own; bindingProbes), and the judged set pins each reading, the one
  * entry below with every other name reading none: `other member Object` for an enum member named Object written as an identifier
- * (its enum's body reading it, and not), an escaped identifier, a string literal and a computed string literal; `other member <its
- * name>` for one named IMPL, adoption or memberOutcome (an identifier its enum's body reads); and `other enum Object` for the
- * control, an enum declaration of Object in a block; the SELF-READ reads that IMPL's object
+ * (its enum's body reading it, and not), an escaped identifier, a string literal, a string literal with an escape, a computed
+ * string literal, a computed string literal with an escape and a computed no-substitution template literal, and for one written
+ * as an identifier in a module-scope enum declared const, declare, declare const or export and in an enum declared in a block,
+ * inside a namespace and inside a function body; `other member <its name>` for one named IMPL, adoption or memberOutcome (an
+ * identifier its enum's body reads); `other enum Object` for the control, an enum declaration of Object in a block; for a
+ * declaration of Object of each other kind declarations reads, its name written with the escape `Obj\u0065ct`: `module const
+ * Object` for a module-scope const, `other const Object` for a const in a block, `other let Object` and `other var Object` for a
+ * module-scope let and var, `other catch Object` for a catch clause's variable, `other parameter Object` for a function's
+ * parameter, `other binding Object` for an array binding element, `module function Object` for a module-scope function
+ * declaration, `other function Object` for a named function expression, `other class Object` for a class declaration and for a
+ * named class expression, `other enum Object` for a module-scope enum, `other namespace Object` for a namespace and `other import
+ * Object` for a named import, a renamed import, a default import, a namespace import and an import-equals declaration; and `module
+ * function adoption` for a module-scope function declaration of adoption written with the code-point escape `adopti\u{6f}n`; six
+ * of those plants are the gate's G9 members of landing 951, held to the bead export (OUTSIDE ANCHOR); the SELF-READ reads that
+ * IMPL's object
  * literal, the one argument of the call its initializer writes as Object.freeze (the callee's source text, exactly; not what Object
  * holds when it runs), and no other object literal (moduleImpl; a module-scope IMPL written in another form reads no member), and
  * the judged set holds Object.isFrozen(IMPL) read through the identifier Object as the file binds it when that line runs; so, while
@@ -236,9 +255,14 @@
  * three THE MEMBER CHECK names (b1); and each name those calls and statements read has exactly one declaration where the
  * SELF-READ searches for it (declarations; every declaration of the name counts: a variable, a parameter, a binding element, a
  * function, a class, an enum, an enum member, a namespace or an import binding, each by its name as the parser reads it, escapes
- * resolved: an identifier, and for an enum member also a string literal or a computed string literal (declaredName); an interface,
- * a type alias and a type parameter, which declare a type and no value, are not read): inside memberOutcome, text (the name its
- * call reads) has its
+ * resolved: an identifier, and for an enum member also a string literal, or a string literal or a no-substitution template literal
+ * as its computed name (declaredName; BINDINGS' plants above run the same reader); an interface, a type alias and a type
+ * parameter, which declare a type and no value, are not read; that search runs today on six plants of its own besides this file
+ * (MEMBER_CHECK_PROBES, each put in memberCheckModule, a module text of its own whose reading unplanted equals this file's, the
+ * judged set holding the two equal; memberCheckProbes), and the judged set pins each as the one entry of declarations its plant
+ * changes, the plant read beside the name's one declaration: an enum member and a const written with an escaped identifier, of
+ * text inside memberOutcome's arrow function, of members inside B1's member and of join in the whole module): inside
+ * memberOutcome, text (the name its call reads) has its
  * parameter
  * `text: string`; inside B1, text and members have B1's first two statements; and in this whole file each other name B1's three
  * statements read, and each name a variable's initializer among those declarations reads in turn, has one: readFileSync, join,
@@ -318,8 +342,9 @@
  * roster witness together, is not detected, except where an anchor outside the literals holds it: a falsifier (its title duty or
  * gate), the adoption judge's refusals, the precedent's two HX reads, a carrier pair, a B1 member journey (the member reader's
  * entries of observation.ts), B1's three U1 probes (the export's refusal-#4 U1 item) and a C2 render whose JSON kind or empty-or-not
- * member no other render states; a BINDINGS probe removed from BINDING_PROBES together with its reading in the judged set is not
- * detected; a registration that names its
+ * member no other render states; a BINDINGS plant other than the six G9 members the export's landing-951 F1 names (OUTSIDE
+ * ANCHOR), or a plant of THE MEMBER CHECK's search (MEMBER_CHECK_PROBES), removed from its table together with its reading in the
+ * judged set is not detected; a registration that names its
  * import's binding but runs a stand-in adapter is not detected (the registration check holds the module path, the import, the
  * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
  * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
@@ -350,7 +375,12 @@
  * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
  * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
  * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
- * MEASURED (seat records, read-only; not assertions): wb-vktz (the cure of landing 951's F1) over trunk d3a0dc3b, 2026-11-04: the
+ * MEASURED (seat records, read-only; not assertions): wb-vktz's respin (its refusal #1: U1, with the riders F1, F2, F3 and F6)
+ * over trunk 98494c7b, 2026-11-05: the roster is cut #9's byte for byte; the respin adds BINDINGS' and THE MEMBER CHECK's plants,
+ * the landing-951 F1 anchor and their words, and moves THE MEMBER CHECK's reader into memberReaderReadOf (memberReaderRead hands it
+ * this file's AST), and changes no pin's witness and no reading of this file; each of the 38 BINDINGS plants and the seven
+ * memberCheckModule texts parses with no syntax diagnostic (ts.createSourceFile under TypeScript 6.0.3). wb-vktz (the cure of
+ * landing 951's F1) over trunk d3a0dc3b, 2026-11-04: the
  * roster is cut #9's byte for byte (this cut adds the enum member to declarations, BINDINGS' probes and their words, and changes
  * no pin's witness); an enum member named Object written as an identifier, an escaped identifier, a string literal or a computed
  * string literal is that member inside its own enum's body under tsc (rc 0 where the global ObjectConstructor would read TS2362)
@@ -1273,10 +1303,14 @@ const BOUND_NAMES: readonly string[] = ["IMPL", "adoption", "memberOutcome", "Ob
 function bindingsOf(source: ts.SourceFile): Readonly<Record<string, readonly string[]>> {
   return Object.fromEntries(BOUND_NAMES.map(name => [name, declarationsOf(source, name).map(node => `${node === topLevel(source, name) ? "module" : "other"} ${declarationText(node).split(" ")[0] ?? ""} ${name}`)] as const));
 }
-/** BINDINGS' probes (wb-vktz, the cure of landing 951's F1): plants, each parsed as a module text of its own and read by bindingsOf
- * (bindingProbes; the judged set pins each reading). The gate's G9 members: an enum member named one of BOUND_NAMES, an identifier
- * its enum's body reads, the one named Object also unread, and the control, an enum declaration of Object in a block; this cut's:
- * the member named Object written as an escaped identifier, a string literal and a computed string literal. */
+/** BINDINGS' probes: plants, each parsed as a module text of its own and read by bindingsOf (bindingProbes; the judged set pins each
+ * reading). The gate's G9 members of landing 951 (an enum member named one of BOUND_NAMES, an identifier its enum's body reads, the
+ * one named Object also unread, and the control, an enum declaration of Object in a block; held to the bead export, G9_LABEL);
+ * wb-vktz cut #1's: the member named Object written as an escaped identifier, a string literal and a computed string literal; and
+ * the respin's (refusal #1's U1, F1 and F3): that member written as a string literal and a computed string literal each with an
+ * escape and as a computed no-substitution template literal, in a module-scope enum declared const, declare, declare const and
+ * export and in an enum in a block, a namespace and a function body, then a declaration of Object of each other kind declarations
+ * reads, its name written with an escape, and a module-scope function adoption written with a code-point escape. */
 const BINDING_PROBES: Readonly<Record<string, string>> = {
   enumMemberObject: "enum ObjectShadow { Object = 1, Twice = Object * 2 }",
   enumMemberObjectOnly: "enum ObjectOnly { Object = 1 }",
@@ -1287,11 +1321,49 @@ const BINDING_PROBES: Readonly<Record<string, string>> = {
   enumMemberAdoption: "enum AdoptionShadow { adoption = 1, Twice = adoption * 2 }",
   enumMemberOutcome: "enum OutcomeShadow { memberOutcome = 1, Twice = memberOutcome * 2 }",
   localEnumObject: "{ enum Object { Member } }",
+  quotedEscapedMemberObject: 'enum QuotedEscapedShadow { "Obj\\u0065ct" = 1, Twice = Object * 2 }',
+  computedEscapedMemberObject: 'enum ComputedEscapedShadow { ["Obj\\u0065ct"] = 1 }',
+  templateMemberObject: "enum TemplateShadow { [`Object`] = 1 }",
+  constEnumMemberObject: "const enum ConstShadow { Object = 1, Twice = Object * 2 }",
+  ambientEnumMemberObject: "declare enum AmbientShadow { Object = 1 }",
+  ambientConstEnumMemberObject: "declare const enum AmbientConstShadow { Object = 1 }",
+  exportedEnumMemberObject: "export enum ExportedShadow { Object = 1, Twice = Object * 2 }",
+  blockEnumMemberObject: "{ enum BlockShadow { Object = 1, Twice = Object * 2 } }",
+  namespaceEnumMemberObject: "namespace EnumHolder { export enum Shadow { Object = 1, Twice = Object * 2 } }",
+  functionEnumMemberObject: "function shadowTwice(): number { enum Shadow { Object = 1, Twice = Object * 2 } return Shadow.Twice; }",
+  escapedModuleConst: "const Obj\\u0065ct = 1;",
+  escapedBlockConst: "{ const Obj\\u0065ct = 1; }",
+  escapedLet: "let Obj\\u0065ct = 1;",
+  escapedVar: "var Obj\\u0065ct = 1;",
+  escapedCatch: "try {} catch (Obj\\u0065ct) {}",
+  escapedParameter: "function holder(Obj\\u0065ct: number): number { return Obj\\u0065ct; }",
+  escapedBinding: "const [Obj\\u0065ct] = [1];",
+  escapedFunction: "function Obj\\u0065ct(): void {}",
+  escapedFunctionExpression: "const holder = function Obj\\u0065ct(): void {};",
+  escapedClass: "class Obj\\u0065ct {}",
+  escapedClassExpression: "const holder = class Obj\\u0065ct {};",
+  escapedEnum: "enum Obj\\u0065ct { Member }",
+  escapedNamespace: "namespace Obj\\u0065ct {}",
+  escapedNamedImport: 'import { Obj\\u0065ct } from "node:fs";',
+  escapedRenamedImport: 'import { readFileSync as Obj\\u0065ct } from "node:fs";',
+  escapedDefaultImport: 'import Obj\\u0065ct from "node:fs";',
+  escapedNamespaceImport: 'import * as Obj\\u0065ct from "node:fs";',
+  escapedImportEquals: 'import Obj\\u0065ct = require("node:fs");',
+  codePointEscapedAdoption: "function adopti\\u{6f}n(): void {}",
 };
 /** BINDINGS of each of BINDING_PROBES: the probe's plant parsed as the SELF-READ parses this file. */
 function bindingProbes(): Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> {
   return Object.fromEntries(Object.entries(BINDING_PROBES).map(([id, plant]) => [id, bindingsOf(ts.createSourceFile(`${id}.ts`, plant, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS))] as const));
 }
+/** The label of landing 951's verdict finding F1 in the bead export's notes (the gate's G9 members of BINDINGS). */
+const G9_LABEL = "F1 LOW CONFIRMED (rides; equivalent on its own, recorded and NOT counted, the R-B538 F1 form; cheap cure): ";
+/** Outside anchor: the first line after G9_LABEL in the bead export's notes (the gate's verdict note; appended notes do not move it). */
+function g9Line(notes: string): string {
+  const at = notes.indexOf(G9_LABEL);
+  return at < 0 ? "" : (notes.slice(at + G9_LABEL.length).split("\n")[0] ?? "");
+}
+/** The gate members a line names, each `G9-<id>` once with its prefix cut, in order of first mention. */
+const g9Named = (line: string): string[] => [...new Set([...line.matchAll(/\bG9-([A-Za-z]+)/gu)].map(match => match[1] ?? ""))];
 /** The SELF-READ, parsed from this file's AST: each member's direct identifiers of the module-scope IMPL's literal (moduleImpl), every
  * static import that binds a value, the identifiers the module-scope function adoption's body names, and BINDINGS of this file
  * (bindingsOf). */
@@ -1441,7 +1513,11 @@ function holderOf(node: ts.Node): { readonly name: string; readonly fn: ts.Node 
 }
 /** THE MEMBER CHECK's reader, read from this file's AST (SELF-READ; MemberReaderRead). */
 function memberReaderRead(self: SelfRead): MemberReaderRead {
-  const source = ts.createSourceFile(SELF, readFileSync(join(REPO, SELF), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return memberReaderReadOf(ts.createSourceFile(SELF, readFileSync(join(REPO, SELF), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), self);
+}
+/** THE MEMBER CHECK's reader over a parsed module text's AST (MemberReaderRead): this file's (memberReaderRead) or a probe module's
+ * (memberCheckProbes); named reads this file's SELF-READ either way. */
+function memberReaderReadOf(source: ts.SourceFile, self: SelfRead): MemberReaderRead {
   const b1Member = moduleImpl(source)?.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText() === "B1");
   const b1Function = b1Member !== undefined && ts.isArrowFunction(b1Member.initializer) ? b1Member.initializer : undefined;
   const b1: readonly ts.Statement[] = b1Function !== undefined && ts.isBlock(b1Function.body) ? b1Function.body.statements.slice(0, 3) : [];
@@ -1479,6 +1555,57 @@ function memberReaderRead(self: SelfRead): MemberReaderRead {
     b1: b1.map(statement => statement.getText()),
     declarations,
   };
+}
+/** Where a member-check probe plants its text in memberCheckModule: inside memberOutcome's arrow function (the holder of its call),
+ * inside B1's member after its first three statements, or at the end of the module. */
+interface MemberCheckPlant { readonly holder?: string; readonly b1?: string; readonly module?: string }
+/** THE MEMBER CHECK's probe module (wb-vktz's respin, refusal #1's F2): a module text of its own holding the static imports, HERE,
+ * REPO, holdMembers, the module-scope memberOutcome and IMPL's B1 member in the parts THE MEMBER CHECK's reader reads (the judged
+ * set holds that, unplanted, it reads as this file reads), with one plant. */
+function memberCheckModule(plant: MemberCheckPlant): string {
+  return [
+    'import { readFileSync } from "node:fs";',
+    'import { dirname, join } from "node:path";',
+    'import { fileURLToPath } from "node:url";',
+    'import { OBSERVATION_MODULE, type ObservationMembers, observationMembers } from "./helpers/observation-members.js";',
+    "const HERE = dirname(fileURLToPath(import.meta.url));",
+    'const REPO = join(HERE, "..");',
+    "function holdMembers(members: ObservationMembers): void {}",
+    "const memberOutcome = (text: string): string => {",
+    `  ${plant.holder ?? ""}`,
+    "  return String(observationMembers(text));",
+    "};",
+    "const IMPL = Object.freeze({",
+    "  B1: async () => {",
+    '    const text = readFileSync(join(REPO, OBSERVATION_MODULE), "utf8");',
+    "    const members = observationMembers(text);",
+    "    holdMembers(members);",
+    `    ${plant.b1 ?? ""}`,
+    "  },",
+    "});",
+    plant.module ?? "",
+  ].join("\n");
+}
+/** THE MEMBER CHECK's probes: each plants, where that reader searches for a name's declarations, an enum member or a const written
+ * with an escaped identifier of the name it searches for there (text in memberOutcome, members in B1, join in the whole module). */
+const MEMBER_CHECK_PROBES: Readonly<Record<string, MemberCheckPlant>> = {
+  holderEnumMember: { holder: "enum TextShadow { text = 1, Twice = text * 2 }" },
+  holderEscapedConst: { holder: "{ const t\\u0065xt = 1; }" },
+  b1EnumMember: { b1: "enum MembersShadow { members = 1, Twice = members * 2 }" },
+  b1EscapedConst: { b1: "{ const m\\u0065mbers = 1; }" },
+  moduleEnumMember: { module: "enum JoinShadow { join = 1, Twice = join * 2 }" },
+  moduleEscapedConst: { module: "const j\\u006fin = 1;" },
+};
+/** THE MEMBER CHECK's reader over memberCheckModule with a plant (memberReaderReadOf). */
+const memberCheckRead = (plant: MemberCheckPlant, self: SelfRead): MemberReaderRead =>
+  memberReaderReadOf(ts.createSourceFile("member-check-probe.ts", memberCheckModule(plant), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), self);
+/** Each of MEMBER_CHECK_PROBES as the entries of declarations its plant changes from the unplanted module's reading. */
+function memberCheckProbes(self: SelfRead): Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> {
+  const unplanted = memberCheckRead({}, self).declarations;
+  return Object.fromEntries(Object.entries(MEMBER_CHECK_PROBES).map(([id, plant]) => {
+    const changed = Object.entries(memberCheckRead(plant, self).declarations).filter(([key, found]) => JSON.stringify(found) !== JSON.stringify(unplanted[key]));
+    return [id, Object.fromEntries(changed)] as const;
+  }));
 }
 /** Why a registration is refused, or null: its module must sit below src/, hold a trigger hit, be imported statically by this file
  * with a value binding, and adoption()'s body must name a binding that import introduces. */
@@ -2130,10 +2257,14 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     const self = selfRead();
     expect(self.bindings).toEqual({ IMPL: ["module const IMPL"], adoption: ["module function adoption"], memberOutcome: ["module const memberOutcome"], Object: [] });
     // SELF-READ, BINDINGS on its probes (BINDING_PROBES, each plant parsed as a module text of its own): an enum member named one of
-    // BOUND_NAMES (an identifier its enum's body reads; the one named Object also unread, and written as an escaped identifier, a
-    // string literal and a computed string literal) reads as an other member declaration of that name, and the control, an enum
-    // declaration of Object in a block, as an other enum.
-    expect(bindingProbes()).toEqual({
+    // BOUND_NAMES (an identifier its enum's body reads; the one named Object also unread, written as an escaped identifier, a string
+    // literal and a computed string literal, those two also with an escape, and a computed template literal, and declared in a const,
+    // declare, declare const and export enum and in an enum in a block, a namespace and a function body) reads as an other member
+    // declaration of that name, and the control, an enum declaration of Object in a block, as an other enum; a declaration of Object
+    // of each other kind declarations reads, its name written with an escape, reads as that declaration (module-scope const and
+    // function declarations as module ones), and a module-scope function adoption written with a code-point escape as the module one.
+    const probes = bindingProbes();
+    expect(probes).toEqual({
       enumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
       enumMemberObjectOnly: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
       escapedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
@@ -2143,7 +2274,43 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
       enumMemberAdoption: { IMPL: [], adoption: ["other member adoption"], memberOutcome: [], Object: [] },
       enumMemberOutcome: { IMPL: [], adoption: [], memberOutcome: ["other member memberOutcome"], Object: [] },
       localEnumObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other enum Object"] },
+      quotedEscapedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      computedEscapedMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      templateMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      constEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      ambientEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      ambientConstEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      exportedEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      blockEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      namespaceEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      functionEnumMemberObject: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other member Object"] },
+      escapedModuleConst: { IMPL: [], adoption: [], memberOutcome: [], Object: ["module const Object"] },
+      escapedBlockConst: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other const Object"] },
+      escapedLet: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other let Object"] },
+      escapedVar: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other var Object"] },
+      escapedCatch: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other catch Object"] },
+      escapedParameter: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other parameter Object"] },
+      escapedBinding: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other binding Object"] },
+      escapedFunction: { IMPL: [], adoption: [], memberOutcome: [], Object: ["module function Object"] },
+      escapedFunctionExpression: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other function Object"] },
+      escapedClass: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other class Object"] },
+      escapedClassExpression: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other class Object"] },
+      escapedEnum: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other enum Object"] },
+      escapedNamespace: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other namespace Object"] },
+      escapedNamedImport: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other import Object"] },
+      escapedRenamedImport: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other import Object"] },
+      escapedDefaultImport: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other import Object"] },
+      escapedNamespaceImport: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other import Object"] },
+      escapedImportEquals: { IMPL: [], adoption: [], memberOutcome: [], Object: ["other import Object"] },
+      codePointEscapedAdoption: { IMPL: [], adoption: ["module function adoption"], memberOutcome: [], Object: [] },
     });
+    // Outside anchor, landing 951's verdict finding F1 (G9_LABEL): the gate's six G9 members its line names are BINDINGS plants,
+    // each reading exactly one declaration of one of BOUND_NAMES, and enumMemberObject's plant (the enum the line quotes for
+    // G9-enumMemberObject) stands in the line exactly once.
+    const g9 = g9Line(ROW.notes);
+    expect(g9Named(g9)).toEqual(["enumMemberObject", "enumMemberImpl", "enumMemberOutcome", "enumMemberAdoption", "enumMemberObjectOnly", "localEnumObject"]);
+    expect(g9Named(g9).filter(id => !Object.hasOwn(BINDING_PROBES, id) || Object.values(probes[id] ?? {}).flat().length !== 1)).toEqual([]);
+    expect(occurrences(g9, BINDING_PROBES.enumMemberObject ?? "")).toBe(1);
     // SELF-READ: no member of that IMPL's literal names the roster, and IMPL and the roster read frozen through the identifier Object
     // as the file binds it when this line runs (LIMITS: a replacement of the global Object binding itself is not detected).
     expect(Object.keys(self.impl).sort(byName)).toEqual(Object.keys(IMPL).sort(byName));
@@ -2154,7 +2321,8 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     // name are held by the module-scope memberOutcome and that B1 member, each observationMembers(text), the identifier stands three
     // times, the B1 member's first three statements, and the one declaration each name of those calls and statements resolves to
     // (the key "observationMembers" is quoted: occurrences counts every identifier).
-    expect(memberReaderRead(self)).toEqual({
+    const member = memberReaderRead(self);
+    expect(member).toEqual({
       named: true,
       imported: ['import { OBSERVATION_MODULE, type ObservationMembers, observationMembers } from "./helpers/observation-members.js";'],
       calls: ["memberOutcome: observationMembers(text)", "B1: observationMembers(text)"],
@@ -2174,6 +2342,18 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
         dirname: ['import { dirname } from "node:path"'],
         fileURLToPath: ['import { fileURLToPath } from "node:url"'],
       },
+    });
+    // SELF-READ, THE MEMBER CHECK's declarations on its own probes: memberCheckModule unplanted reads as this file reads, and each
+    // plant (an enum member, and a const written with an escaped identifier, of the name each place's search reads) is read beside
+    // that name's one declaration, the one entry its plant changes.
+    expect(memberCheckRead({}, self)).toEqual(member);
+    expect(memberCheckProbes(self)).toEqual({
+      holderEnumMember: { "memberOutcome text": ["parameter text: string", "member text = 1"] },
+      holderEscapedConst: { "memberOutcome text": ["parameter text: string", "const t\\u0065xt = 1"] },
+      b1EnumMember: { "B1 members": ["const members = observationMembers(text)", "member members = 1"] },
+      b1EscapedConst: { "B1 members": ["const members = observationMembers(text)", "const m\\u0065mbers = 1"] },
+      moduleEnumMember: { join: ['import { join } from "node:path"', "member join = 1"] },
+      moduleEscapedConst: { join: ['import { join } from "node:path"', "const j\\u006fin = 1"] },
     });
   });
   for (const row of ROWS) {
