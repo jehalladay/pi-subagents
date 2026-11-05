@@ -10,26 +10,27 @@
  * first lands." The filing measured "0 git-grep hits for adaptive-policy-organizations/APO- in the Pi tree at 4ae0470" and
  * cites the producer line 01-vision-decisions.md:21@4b8b974ca72b.
  *
- * CUT #9 (this cut), the restatement that orchestrator ruling R-B556 (M:56759, the 22(d) post-ladder disposition of refusal #8,
- * gate-refused M:56755 / O:2080, cut #8 35f9460a) binds: "NEXT CUT #9 = a further restatement in the same lineage with CLAIMS
- * EQUAL TO PINS (the R-B383/R-B406/R-B512/R-B534 form): kill-or-pin per set - pin the live-root keying of each live check
- * red-first (a stand-in-tree witness that reds when the check is keyed on root === REPO rather than on the checked tree) at
- * docsChecks :543, schemaChecks :547 and landedChecks :755, or narrow C1's live page and receipt claims, C2's live schema claim
- * and THE LANDED JUDGE's live claim to exactly the pinned root". This cut narrows each of those four sets. Refusal #8's twelve
- * members (GK01-GK12) each test the root itself at one of the three checks' reader calls, so each edit acts on the live root only
- * and no stand-in tree, written at another root, can hold it; NOT CLAIMED (d) below therefore names a live check keyed on a root
- * in so many words (the form refusal #8's F2 cites from the wb-p28b landing-711 reading), and the claim words of C1, C2 and THE
- * LANDED JUDGE below, THE LANDED JUDGE case's title, overTree's and the three checks' doc comments and the three cases' live
- * messages claim each check's reading of a tree only as its stand-in tree pins it, and its live reading only as the result it
- * returns there - C1's no headingless page and no untitled receipt, C2's src/workbench/identity.ts alone, THE LANDED JUDGE's four
- * entries among the exports and the imports, no shadowed name and no foreign import - never as a reading of every page, receipt,
- * src file, declaration or import of the live tree. It also adds docs/workbench/0.md to C1's stand-in tree, a text-only page that
- * sorts first in that tree's list (refusal #8's F3: a docsChecks that skips the first listed page, GN01, read the tree as listed
- * because its first page, a.md, is headed). The code of the readers (liveScope, headingless, untitled, schemaHolders,
- * declaredNames, shadowed, judgeImports and tiles), of the three checks and of overTree is byte-identical to cut #8's; only the
- * doc comments of the three checks and overTree change. Besides C1's witness (its stand-in tree's files and reading gain 0.md) and
- * that title in the roster's tests, no pin's witness and no row, label, quote, constant, floor, fixed tree, plant or residual
- * changes.
+ * CUT #10 (this cut), the restatement that orchestrator ruling R-B572 (M:57680, the 22(d) post-ladder disposition of refusal #9,
+ * gate-refused M:57669 / O:2110, cut #9 640e20d4) binds: "NEXT CUT #10 = a further restatement in the same lineage with CLAIMS
+ * EQUAL TO PINS: kill-or-pin per member - pin the live root AT EACH CALL (the C1 overTree callback :995 against GQ01/GQ02, the C2
+ * callback :1153 against GQ03, the landed judge :1775 against GQ04/GQ05) with the paired witnesses shown RED against the claim, or
+ * narrow the live-claim words to the roots the pins hold and name the call-site forms NOT CLAIMED (guidance, not a hold)". This
+ * cut pins all five. Each of refusal #9's members substitutes a check's live reading at its call, in its case's overTree callback,
+ * when root === REPO (GQ01 docsChecks's headingless list, GQ02 its untitled list, GQ03 schemaChecks's holders, GQ04 landedChecks's
+ * shadowed list and GQ05 its foreign list), so the case compared the substitute while the unedited check returned the plant there;
+ * refusal #9's F5 (GQ08) substitutes landedChecks's live reading at its compare by the reading's index. C1, C2 and THE LANDED
+ * JUDGE now each call their check once more at the live root by a direct call outside overTree and its callback (the live anchor),
+ * hold overTree's live reading equal to that direct result, and hold the direct result against the live expectations by a literal
+ * of its own beside overTree's compare: a reading substituted at either call, or one of the three compares hollowed, leaves the
+ * other call and two compares in place, so refusal #9's paired witnesses (a page, a receipt, a src file, a census declaration and
+ * an import of a stand-in form added to the live tree) red the census under GQ01-GQ05 and GQ08 as they red it unedited. The live
+ * claim words of C1, C2 and THE LANDED JUDGE, the PINNED READER SET preamble, FALSIFIERS, NOT CLAIMED (d) and (e) and the doc
+ * comments of overTree and the three checks name the live anchor; (d) names a live check keyed on a root at the result it returns
+ * as well as from its listing or its reads to its readers, and (e) names a live reading substituted at both calls together. The
+ * code of the readers (liveScope, headingless, untitled, schemaHolders, declaredNames, shadowed, judgeImports and tiles), of the
+ * three checks and of overTree is byte-identical to cut #9's (only the doc comments of the three checks and of overTree change),
+ * and THE LANDED JUDGE's overTree call moves from an expect argument into a const. No row, label, quote, constant, floor, fixed
+ * tree, plant, residual, witness or test title changes, the roster is unchanged and the test count stays 40.
  * LINEAGE. Cuts #1-#5 (63b8cbc7, 54827238, d98d322d, 3fa62517, cdea135d) carried this file's own copy of the judge; R-B160
  * (M:40301) exited the rule-19 loop at refusal #4 with the child wb-021.9, and R-B205 (M:42017) executed the dependency inversion
  * at refusal #5 (M:42009 / O:1577), parking this bead behind wb-021.9. Refusal #5's BIND note (its NEXT STEP, after the R-B193
@@ -50,7 +51,11 @@
  * of it (overTree), gave those trees the forms of refusal #7's ten witnesses and narrowed the checks' claim words to their trees;
  * refusal #8 (M:56755 / O:2080) found the live root of those calls unpinned (twelve members keyed on root === REPO, fail-open on
  * paired real-tree witnesses; F3 rode beside them: a reading that skips the first listed page), and R-B556 ruled it in the R-B534
- * post-ladder form.
+ * post-ladder form. Cut #9 (640e20d4) narrowed C1's, C2's and THE LANDED JUDGE's live claims to the results the three checks
+ * return at the live root, named a live check keyed on a root NOT CLAIMED in so many words ((d)) and added docs/workbench/0.md to
+ * C1's stand-in tree (refusal #8's F3); refusal #9 (M:57669 / O:2110) found the checks' call unpinned (five members keyed on root
+ * === REPO in the cases' overTree callbacks, fail-open on paired real-tree witnesses; F5 rode beside them: THE LANDED JUDGE's
+ * compare keyed on the reading's index), and R-B572 ruled it in the R-B556 post-ladder form.
  * MEASURED (read-only, with this census's readers). At the base 04123dc (cut #1, 2026-10-29): the producer (the local
  * MechanicalWorkflows checkout at 4b8b974ca72bf2ed36b99e315e45857c6181fbe8, git show; PRODUCER below and the roster's producer
  * block hold its lines and blobs, and the hermetic census never re-reads it) reads README.md:3 (blob 512de7eeb579)
@@ -74,15 +79,19 @@
  * 11351 doc units and 16809 strings, with no citing unit. At trunk 883ee7c (landing 948's ledger hop), merged into this branch
  * before cut #9's handoff, git diff 222b706 883ee7c outside test/ and .beads/ is empty, and the landed judge reads the product
  * scope as the same 352 files (129 markdown, 198 scripts of which 117 under src/, 18 other text files, 5 binaries and the 2
- * locks), 159381 units, 11351 doc units and 16809 strings, with no citing unit. No src, docs or tracker text is edited by this
- * cut.
+ * locks), 159381 units, 11351 doc units and 16809 strings, with no citing unit. At trunk bfc7fcd (landing 967's ledger hop),
+ * merged into this branch before cut #10's handoff, git diff 883ee7c bfc7fcd outside test/ and .beads/ is one modified path
+ * (docs/workbench/12-security.md, one line added), and the landed judge reads the product scope as the same 352 files (129
+ * markdown, 198 scripts of which 117 under src/, 18 other text files, 5 binaries and the 2 locks), 159382 units, 11352 doc units
+ * and 16809 strings, with no citing unit. No src, docs or tracker text is edited by this cut.
  * PINNED READER SET (the claim form: each case of this file, test/workbench-apo-citation-status-census.test.ts, by its id, with
  * what it asserts; observed at the handoff: 40 passed (40)). This file reads the judge by calls of the landed module's exports:
  * judgeFiles (directly, through its causesOf, or through this file's readScope), unitsOf (C1's and C2's live checks), cites (C3
- * and the outside anchors) and bindingOf (G1 and M2); THE LANDED JUDGE holds landedChecks's reading of this file in the live tree:
- * no shadowed name, claimed only as its result there. A CONTROL is a text judged alone as a whole file at its path
- * (docs/workbench/x.md unless it names one) whose causes must equal its literal list, and a quiet row's PROBE is a text judged
- * alone at its path whose causes must be empty; each such literal is claimed for its own text at its own path only.
+ * and the outside anchors) and bindingOf (G1 and M2); THE LANDED JUDGE holds landedChecks's reading of this file in the live tree,
+ * by overTree's call and by the live anchor's direct call, the two equal: no shadowed name, claimed only as its result there. A
+ * CONTROL is a text judged alone as a whole file at its path (docs/workbench/x.md unless it names one) whose causes must equal its
+ * literal list, and a quiet row's PROBE is a text judged alone at its path whose causes must be empty; each such literal is
+ * claimed for its own text at its own path only.
  * - THE JUDGED SET ("the judged set: ..."): ROWS' frozen-shape literal ["P:1", "E:3", "C:5", "G:2", "M:2", "Q:23"]; ROWS' ids,
  *   labels and pins equal the roster's rows; IMPL's keys are the pins and QUOTES' keys the pins of rows P, E, C, G and M; the
  *   roster names this bead; PRODUCER equals the roster's producer block; constantsOf() equals the roster's constants - among
@@ -118,8 +127,10 @@
  *   describe block is the form of refusal #7's witness WG10), importing the three and Unit as not exported. Over the live tree
  *   landedChecks's reading, by the same call, holds judgeFiles, causesOf, bindingOf and READS among the landed module's exports
  *   and among the names it reads from this file's imports of "./helpers/apo-citation-status-judge.js", no shadowed name and no
- *   import the module does not export; this census claims that live reading only as landedChecks's result there, never as a
- *   reading of every top-level declaration and import of this file (a landedChecks keyed on a root is NOT CLAIMED, (d)).
+ *   import the module does not export; the live anchor, a direct call of landedChecks at the live root outside overTree and its
+ *   callback, returns a reading equal to it (its four lists) that holds the same against a literal of its own; this census claims
+ *   that live reading only as landedChecks's result there, as both calls return it, never as a reading of every top-level
+ *   declaration and import of this file (a landedChecks keyed on a root is NOT CLAIMED, (d)).
  *   The two readers read their stand-in sources as their literals list, which is all they claim. shadowed, over declaredNames,
  *   reads its 27: a function declaration (a bodiless, an async and a generator one beside it), a class (and an abstract one), an
  *   interface, a type alias and an enum (and a const one) by its name; a const, a let (its second declarator), a var and a declare
@@ -154,12 +165,14 @@
  *   space after the colon, an indented title and one naming the bead in another case, the forms of refusal #7's witnesses
  *   WG01-WG08, are each among its files, and so are a page and a receipt whose first unit is not on their first line and a
  *   headingless page listed first (refusal #8's F3). Over the live tree docsChecks's reading, by the same call, holds no
- *   headingless page and no untitled receipt (C1's pagesOpenH1 and receiptsOpenTitle); this census claims that live reading only
- *   as docsChecks's result there, never as a reading of every page and receipt of the live tree (a docsChecks keyed on a root is
- *   NOT CLAIMED, (d)). liveScope reads its 9 stand-in paths as listed, which is all it claims: pages at the top of docs/workbench/
- *   and below a subdirectory, a page named receipts.md and one under a receipts/ directory below a subdirectory; receipts named
- *   for a bead and not, and one below a subdirectory of receipts/; and, read as neither, a path under docs/workbench-old/ and one
- *   under docs/other/.
+ *   headingless page and no untitled receipt (C1's pagesOpenH1 and receiptsOpenTitle); the live anchor, a direct call of
+ *   docsChecks at the live root outside overTree and its callback, returns a reading equal to it (its pages, its receipts and its
+ *   two lists) that holds no headingless page and no untitled receipt against a literal of its own; this census claims that live
+ *   reading only as docsChecks's result there, as both calls return it, never as a reading of every page and receipt of the live
+ *   tree (a docsChecks keyed on a root is NOT CLAIMED, (d)). liveScope reads its 9 stand-in paths as listed, which is all it
+ *   claims: pages at the top of docs/workbench/ and below a subdirectory, a page named receipts.md and one under a receipts/
+ *   directory below a subdirectory; receipts named for a bead and not, and one below a subdirectory of receipts/; and, read as
+ *   neither, a path under docs/workbench-old/ and one under docs/other/.
  *   headingless reads its 6 stand-ins as listed: a page opening "# " headed; a page opening "## ", one whose heading is not its
  *   first unit, one opening "#" with no space, one indented a space and one with no unit, each headingless. untitled reads its 10
  *   stand-ins as listed: its own bead's title, and one below a subdirectory, titled; another bead's title, a title with no colon,
@@ -174,10 +187,12 @@
  *   index, src/k.ts holding it - read as the holders src/a.ts, src/e.ts, src/f.ts, src/j.tsx, src/k.ts, src/sub/i.mjs and
  *   src/workbench/h.ts, so holders outside src/workbench/ (the form of refusal #7's witness WG09) are among them. Over the live
  *   tree schemaChecks's reading, by the same call, is src/workbench/identity.ts alone as the holder of the schema literal
- *   "workflow-script/v1" as a string unit; this census claims that live reading only as schemaChecks's result there, never as a
- *   reading of every src file of the live tree (a schemaChecks keyed on a root is NOT CLAIMED, (d)). schemaHolders reads its 7
- *   stand-ins as listed. One call over every listed script and PLANT_STRING reads each as a script, at least 15100 strings, and
- *   only the plant's line-1 status and scope findings; 34 controls.
+ *   "workflow-script/v1" as a string unit; the live anchor, a direct call of schemaChecks at the live root outside overTree and
+ *   its callback, returns a reading equal to it that is src/workbench/identity.ts alone against a literal of its own; this census
+ *   claims that live reading only as schemaChecks's result there, as both calls return it, never as a reading of every src file of
+ *   the live tree (a schemaChecks keyed on a root is NOT CLAIMED, (d)). schemaHolders reads its 7 stand-ins as listed. One call
+ *   over every listed script and PLANT_STRING reads each as a script, at least 15100 strings, and only the plant's line-1 status
+ *   and scope findings; 34 controls.
  * - C3: 21 controls, and cites reads the program id. C4: 56 controls, refusal #5's eight P-CV pages among them. C5: 32
  *   controls, refusal #5's three P-SC-LIT pages among them.
  * - G1: git's product list holds at least 329 files, both locks and no path under test/ or .beads/; one call over every listed
@@ -206,9 +221,10 @@
  * FALSIFIERS (outside this file's literals): the out-of-file roster for every witness, title and constant; the tracker export row
  * for the rows, labels, quotes, carriers and filing facts; the src registry for E2's effect classes; git's listing against the
  * filesystem walk for src/ and docs/ (and, for C1's parts, docs/workbench in the live tree and in its stand-in tree); the fixed
- * trees' exact counts; the landed module's own source for THE LANDED JUDGE; a page, a receipt, a src file or a census declaration
- * of a stand-in form added to the live tree, for the three checks' live results as the delivered checks read the live root; and
- * the vitest task tree for the closing case.
+ * trees' exact counts; the landed module's own source for THE LANDED JUDGE; a page, a receipt, a src file, a census declaration or
+ * an import of a stand-in form added to the live tree, for the three checks' live results as the delivered checks read the live
+ * root; the live anchor's direct call of each check at the live root, outside overTree and its callback, for overTree's live
+ * reading at the check's call, and overTree's call for the direct one; and the vitest task tree for the closing case.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the producer block, the constants and every registered test title - is held to the out-of-file
  * roster (test/fixtures/apo-citation-status-roster.json); the residual families are held to the RESIDUALS line of this header.
@@ -225,13 +241,14 @@
  * that a named judge member reds this census (no case runs a member; the cutting seat and the gate replay members as edited
  * judges); (d) a reading of docsChecks, schemaChecks or landedChecks beyond their stand-in trees (a file form, a path or a tree
  * layout their trees do not hold), and, in so many words, a live check keyed on a root: docsChecks, schemaChecks or landedChecks
- * reading the live root (REPO) otherwise than its stand-in root, at any step from its listing or its reads to its readers, whether
- * it tests the root itself (root === REPO or root !== REPO, as refusal #8's twelve members GK01-GK12 do at the three checks'
- * reader calls) or tells the live tree's files from its stand-in tree's by a path, a name, a position, a count or a text the live
- * tree holds and its stand-in tree does not - the stand-in trees pin the three checks at their own roots only, and the census
- * claims their live readings only as the results they return there, as it compares them (docsChecks's pages and receipts, together
- * equal to docs/workbench's walk, and its empty headingless and untitled lists; schemaChecks's holders, src/workbench/identity.ts
- * alone; landedChecks's four lists); or of liveScope, headingless, untitled, schemaHolders, the tiling rule, declaredNames or
+ * reading the live root (REPO) otherwise than its stand-in root, at any step from its listing or its reads to its readers and to
+ * the result it returns, whether it tests the root itself (root === REPO or root !== REPO, as refusal #8's twelve members
+ * GK01-GK12 do at the three checks' reader calls) or tells the live tree's files from its stand-in tree's by a path, a name, a
+ * position, a count or a text the live tree holds and its stand-in tree does not - the stand-in trees pin the three checks at
+ * their own roots only, and the census claims their live readings only as the results they return there, as both calls return them
+ * (overTree's and the live anchor's direct call) and as it compares them (docsChecks's pages and receipts, together equal to
+ * docs/workbench's walk, and its empty headingless and untitled lists; schemaChecks's holders, src/workbench/identity.ts alone;
+ * landedChecks's four lists); or of liveScope, headingless, untitled, schemaHolders, the tiling rule, declaredNames or
  * judgeImports beyond their stand-ins - for THE LANDED JUDGE, among others, a declaration nested below the top level, a namespace,
  * module or global declaration, an import-equals declaration, a using declaration, a module export written as an export clause, an
  * export assignment, a re-export or a default export, and an import other than by named specifiers of that exact specifier; (e)
@@ -244,7 +261,9 @@
  * the landed module and the roster together. Nor, in this file alone, a reader that tells the product scope's files from the
  * files Q1 reads, the plants or M1's scratch repository (by path, by root or by content): Q1 reads three citing test/ files
  * through readScope at the repository root, so a reader that neutralizes every file it reads from that root reds, and one that
- * neutralizes only the product scope's files does not.
+ * neutralizes only the product scope's files does not. Nor a live reading substituted at both of its calls together, overTree's
+ * callback and the live anchor's direct call (keyed on the root or not): the live anchor holds each call against the other, never
+ * the two against a third.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE test/ and .beads/ are not read (Q1); R-LOCKFILE the two dependency
  * locks are set aside (Q2); R-BINARY a file holding a NUL byte at the place Q3 holds one is not read (Q3); R-PATH a file's
  * path is not read (Q4);
@@ -526,7 +545,7 @@ interface StandInTree {
   readonly files: readonly FileText[];
   readonly untracked: readonly FileText[];
 }
-/** overTree: writes a stand-in tree into a fresh scratch directory (test/helpers/scratch.ts, leak guard installed), reads the live tree (REPO) and that tree by one call of the check, the live tree first, and removes the tree (C1, C2 and THE LANDED JUDGE). The stand-in tree pins the check's reading at its own root only; the live reading is claimed only as the result the check returns there (NOT CLAIMED (d): a check keyed on a root). */
+/** overTree: writes a stand-in tree into a fresh scratch directory (test/helpers/scratch.ts, leak guard installed), reads the live tree (REPO) and that tree by one call of the check, the live tree first, and removes the tree (C1, C2 and THE LANDED JUDGE). The stand-in tree pins the check's reading at its own root only; the live reading is claimed only as the result the check returns there, which each case holds equal to the live anchor's direct call of the check at the live root outside overTree (NOT CLAIMED (d): a check keyed on a root). */
 function overTree<T>(prefix: string, tree: StandInTree, check: (root: string) => T): T[] {
   const root = makeScratch(prefix);
   try {
@@ -561,13 +580,13 @@ function untitled(receipts: readonly FileText[]): string[] {
 function schemaHolders(files: readonly FileText[]): string[] {
   return files.filter(file => file.path.startsWith("src/") && unitsOf(file.path, file.text).some(unit => unit.kind === "string" && unit.text === SCHEMA_LITERAL)).map(file => file.path);
 }
-/** docsChecks: C1's two live checks over one tree root, from its listing to its readers - the docs/ markdown files git lists there (productList), parted by liveScope, each part read whole from that root and handed to headingless and untitled. overTree reads the live tree and C1's stand-in tree by one call of it; what it claims is its reading of that tree's 30 files, and of the live tree only the result it returns there (C1; NOT CLAIMED (d): a docsChecks keyed on a root). */
+/** docsChecks: C1's two live checks over one tree root, from its listing to its readers - the docs/ markdown files git lists there (productList), parted by liveScope, each part read whole from that root and handed to headingless and untitled. overTree reads the live tree and C1's stand-in tree by one call of it; what it claims is its reading of that tree's 30 files, and of the live tree only the result it returns there, by overTree's call and by the live anchor's direct call, the two equal (C1; NOT CLAIMED (d): a docsChecks keyed on a root). */
 function docsChecks(root: string): { readonly pages: string[]; readonly receipts: string[]; readonly headingless: string[]; readonly untitled: string[] } {
   const { pages, receipts } = liveScope(productList(root).filter(path => path.startsWith("docs/") && MARKDOWN.test(path)));
   const read = (path: string): FileText => ({ path, text: readFileSync(join(root, path), "utf8") });
   return { pages, receipts, headingless: headingless(pages.map(read)), untitled: untitled(receipts.map(read)) };
 }
-/** schemaChecks: C2's live schema check over one tree root - the scripts git lists there (productList), each read whole from that root and handed to schemaHolders. overTree reads the live tree and C2's stand-in tree by one call of it; what it claims is its reading of that tree's 11 files, and of the live tree only the result it returns there (C2; NOT CLAIMED (d): a schemaChecks keyed on a root). */
+/** schemaChecks: C2's live schema check over one tree root - the scripts git lists there (productList), each read whole from that root and handed to schemaHolders. overTree reads the live tree and C2's stand-in tree by one call of it; what it claims is its reading of that tree's 11 files, and of the live tree only the result it returns there, by overTree's call and by the live anchor's direct call, the two equal (C2; NOT CLAIMED (d): a schemaChecks keyed on a root). */
 function schemaChecks(root: string): string[] {
   return schemaHolders(productList(root).filter(path => SCRIPT.test(path)).map(path => ({ path, text: readFileSync(join(root, path), "utf8") })));
 }
@@ -771,7 +790,7 @@ function judgeImports(text: string): string[] {
     return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => (element.propertyName ?? element.name).text) : [];
   });
 }
-/** landedChecks: THE LANDED JUDGE's live check over one tree root - the judge module (JUDGE_MODULE) and this census (CENSUS_PATH) read whole from that root by their paths, the judge's top-level export declarations (declaredNames), this census's top-level names among them (shadowed), the names it imports by name from the judge specifier (judgeImports) and those the judge does not export. overTree reads the live tree and the case's stand-in tree by one call of it; what it claims is its reading of that tree's 2 files, and of the live tree only the result it returns there (THE LANDED JUDGE; NOT CLAIMED (d): a landedChecks keyed on a root). */
+/** landedChecks: THE LANDED JUDGE's live check over one tree root - the judge module (JUDGE_MODULE) and this census (CENSUS_PATH) read whole from that root by their paths, the judge's top-level export declarations (declaredNames), this census's top-level names among them (shadowed), the names it imports by name from the judge specifier (judgeImports) and those the judge does not export. overTree reads the live tree and the case's stand-in tree by one call of it; what it claims is its reading of that tree's 2 files, and of the live tree only the result it returns there, by overTree's call and by the live anchor's direct call, the two equal (THE LANDED JUDGE; NOT CLAIMED (d): a landedChecks keyed on a root). */
 function landedChecks(root: string): { readonly exported: string[]; readonly shadowed: string[]; readonly imported: string[]; readonly foreign: string[] } {
   const judge = readFileSync(join(root, JUDGE_MODULE), "utf8");
   const census = readFileSync(join(root, CENSUS_PATH), "utf8");
@@ -1005,6 +1024,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { headingless: treeReading.headingless, untitled: treeReading.untitled },
     ]);
     const [live, standIn] = readings;
+    // The live anchor: docsChecks called once more at the live root by a direct call outside overTree and its callback; overTree's live reading must equal that result, and the result must hold no headingless page and no untitled receipt against a literal of its own.
+    const direct = docsChecks(REPO);
+    expect(
+      { pages: live.pages, receipts: live.receipts, headingless: live.headingless, untitled: live.untitled },
+      "overTree's live reading is docsChecks's result at the live root: it equals the live anchor's direct call outside overTree",
+    ).toEqual(direct);
+    expect({ headingless: direct.headingless, untitled: direct.untitled }, "the live anchor's direct call reads no headingless page and no untitled receipt in the live tree").toEqual({ headingless: [], untitled: [] });
     expect({ pages: standIn.pages, receipts: standIn.receipts }, "docsChecks parts the stand-in tree's docs/ markdown files as listed").toEqual({ pages: treeReading.pages, receipts: treeReading.receipts });
     const scopePaths: readonly string[] = [
       "docs/workbench/a.md",
@@ -1156,6 +1182,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       `schemaChecks's reading of the live tree is ${IDENTITY} alone as the holder of the schema literal "${SCHEMA_LITERAL}", claimed only as its result there, and its reading of the stand-in tree is as listed`,
     ).toEqual([[IDENTITY], treeHolders]);
     const [holders, standInHolders] = readings;
+    // The live anchor: schemaChecks called once more at the live root by a direct call outside overTree and its callback; overTree's live reading must equal that result, and the result must be IDENTITY alone against a literal of its own.
+    const direct = schemaChecks(REPO);
+    expect(holders, "overTree's live reading is schemaChecks's result at the live root: it equals the live anchor's direct call outside overTree").toEqual(direct);
+    expect(direct, `the live anchor's direct call reads ${IDENTITY} alone as the holder of the schema literal "${SCHEMA_LITERAL}" in the live tree`).toEqual([IDENTITY]);
     const schemaFiles: readonly FileText[] = [
       { path: "src/a.ts", text: `export const S = "${SCHEMA_LITERAL}";\n` },
       { path: "src/b.ts", text: `export const S = "${SCHEMA_LITERAL} extra";\n` },
@@ -1771,13 +1801,23 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       untracked: [],
     };
     // THE LANDED JUDGE's live check: overTree reads the live tree and the stand-in tree by one call of landedChecks (the live tree first).
+    const readings = overTree("wb-021.6-landed-tree-", landedTree, root => landedChecks(root));
     expect(
-      overTree("wb-021.6-landed-tree-", landedTree, root => landedChecks(root)),
+      readings,
       "landedChecks's reading of the live tree holds the four entries among the judge module's exports and this file's imports of it, no shadowed name and no foreign import, claimed only as its result there, and its reading of the stand-in tree is as listed",
     ).toEqual([
       { exported: expect.arrayContaining([...JUDGE_ENTRIES]), shadowed: [], imported: expect.arrayContaining([...JUDGE_ENTRIES]), foreign: [] },
       { exported: ["BLANK", "judgeFiles", "cites", "first", "READS"], shadowed: ["BLANK", "first"], imported: ["judgeFiles", "READS", "Unit"], foreign: ["Unit"] },
     ]);
+    // The live anchor: landedChecks called once more at the live root by a direct call outside overTree and its callback; overTree's live reading must equal that result, and the result must hold the four entries, no shadowed name and no foreign import against a literal of its own.
+    const direct = landedChecks(REPO);
+    expect(readings[0], "overTree's live reading is landedChecks's result at the live root: it equals the live anchor's direct call outside overTree").toEqual(direct);
+    expect(direct, "the live anchor's direct call reads the four entries among the judge module's exports and this file's imports of it, no shadowed name and no foreign import in the live tree").toEqual({
+      exported: expect.arrayContaining([...JUDGE_ENTRIES]),
+      shadowed: [],
+      imported: expect.arrayContaining([...JUDGE_ENTRIES]),
+      foreign: [],
+    });
     const standInJudge = [
       "export const BLANK = /x/;",
       "export function judgeFiles(): void {}",
