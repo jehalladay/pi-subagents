@@ -67,6 +67,13 @@
  * controls' frozen literal holds every control's payload - its name and the exact contradictions its check reads -, so one
  * control's row swapped for another input reds the census (refusal #2's U5). Further controls beside them, named in neither
  * refusal's witness form, are held by that literal alone (no outside anchor names them, and no claim here names them).
+ * Cut #10 (wb-u6ho respin 3: refusal #3's U1-U3, orchestrator ruling R-B574 - the SECOND-STAGE CAP: the class frozen, this cut in
+ * the enumerate-the-resolvable form) kills or pins every member family of the judged checks, the helper, every table, the claims
+ * and the kills still unchanged: for every paired witness refusal #3's U1, U2 and U3 lines and its F4 line name (wb-u6ho's first
+ * notes lines with those prefixes; each id 'X-' and its parts), a control of that name in that witness's shape; beside them a
+ * further control for each of this cut's own one-edit members of the four families that read no control; and the judged checks'
+ * words narrowed to exactly their controls - each check is claimed at its real input and at the edits its controls make, every
+ * control named family by family (JUDGED CHECKS), and no other edit (NOT CLAIMED, the judged checks).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -84,7 +91,10 @@
  * (W-MARK-TWICE); and in the shape of each paired witness refusal #2's U1 and U2 lines name for it: the words before the claim
  * probe's receivers reworded (WR-PROBEWORD), a name in another case (WN-CASE), with other white space (WN-WS), in other quotes
  * (WN-QUOTE) or under another id (WN-ID), a part's pin id in another case (WP-CASE) and the list's marker reworded before its
- * 'other' (WM-SCOPE).
+ * 'other' (WM-SCOPE); and in the shape of each paired witness refusal #3's U1 line names for it: an empty part (X-EMPTYPART), an
+ * empty name (X-EMPTYNAME) or an empty last name (X-TRAILNAME), white space at a part's end (X-PARTSPACE) or before its names
+ * (X-PINSPACE), a space after the list's '.' (X-LISTSPACE), and ',' or ';' before a line end (X-COMMANL, X-SEMINL); and its F4
+ * line names: an index form's witness beside the key's claim probe receiver (X-CROSSRECV).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness - every plant's findings,
  * its LIVE QUIET entries and the texts of its access and import readings, so bare()'s text is held byte for byte - held to the
@@ -174,14 +184,49 @@
  * the shape of each paired witness refusal #2's U3 line names too: a bracket after an earlier ': ' inside a mutant's clause
  * (WC-COLON), an earlier mention of its id with '): ' and a bracket before its clause (WC-EARLY), a code in another case
  * (WS-CASE), with other white space (WS-WS) or in other quotes (WS-QUOTE), and a mutant KILLS kills at two other pins
- * (WK-MULTI). wb-u6ho's F1 line is its notes line 2, the first notes line that starts with its prefix (lineTwoContradictions;
- * WE-LINE: a line inserted before it). The paired witnesses refusal #1's U1, U2, U3 and F5 lines name - each 'W-' id, its parts
+ * (WK-MULTI); and in the shape of each paired witness refusal #3's U2 line names: another word (X-CODEWORD), no space
+ * (X-CODETIGHT) or a tab (X-CODETAB) between '):' and the code, 'witness' twice (X-CODETWICE) or in another case (X-CODECASE),
+ * and a code cut short (X-CODECUT). wb-u6ho's F1 line is its notes line 2, the first notes line that starts with its prefix
+ * (lineTwoContradictions;
+ * WE-LINE: a line inserted before it; X-LEADBLANK, refusal #3's F4 witness: a line end before the notes' first line). The
+ * paired witnesses refusal #1's U1, U2, U3 and F5 lines name - each 'W-' id, its parts
  * capitals and digits joined by '-' - and those refusal #2's U1, U2, U3 and U4 lines name - each id of 'W', a capital and more
  * capitals or digits, then '-' parts of capitals and digits -, each line read after its first ': ' (wb-u6ho's first notes
  * lines with those prefixes), are exactly the controls whose names start with an id of that form (witnessContradictions;
- * WW-EXTRA: a line naming one id more).
+ * WW-EXTRA: a line naming one id more); and those refusal #3's U1, U2, U3 and F4 lines name - each 'X-' id, its parts capitals
+ * and digits joined by '-' - are exactly the controls whose names start with 'X-' (X-TOKENCOLON, refusal #3's U3 witness: a line
+ * whose first ':' precedes its first ': ').
  * The controls' frozen literal holds every control, table by table, by its name and the exact contradictions its check reads
- * (firstLine's: the line it reads). The TypeScript compiler anchors T-TOKENS,
+ * (firstLine's: the line it reads).
+ * JUDGED CHECKS (the R-B574 enumeration; the claims equal the controls): each judged check is claimed at its real input (no
+ * contradiction; firstLine's: the F1 line) and at exactly the edits its controls make, each control's contradictions the ones the
+ * controls' frozen literal holds, in four families, every control named: (a) the row K list's receiver words (R-B555's guard (a): a
+ * witness's receiver held against the claim probe's receiver the clause names for its form's site): W-RECV-UPPER, W-RECV-SPACED,
+ * RECV-AROUND, RECV-AFTER, RECV-INSIDE, W-PROBE-KEY, W-PROBE-INDEX, WR-PROBEWORD, PROBE-KEY-OPENER, PROBE-KEY-CLOSER,
+ * PROBE-INDEX-OPENER, PROBE-INDEX-CLOSER, RECV-UPPER-INDEX, RECV-SPACED-KEY, RECV-PREFIX-INDEX, RECV-SUFFIX-KEY, RECV-LINE-END,
+ * PROBE-KEY-PADDED, PROBE-INDEX-PADDED, X-CROSSRECV, RECV-NESTED; (b) the row K list's part, name, order and separator words (guard
+ * (b)): W-NAME-SHORT, W-NAME-SWAP, NAME-ADDED, NAME-DROPPED, PIN-RENAMED, W-NAME-DOT, NAME-COMMA, NAME-SEMICOLON, W-MARK-TWICE,
+ * MARK-MISSING, WN-CASE, WP-CASE, WN-WS, WN-QUOTE, WN-ID, WM-SCOPE, MARK-FIRST, LIST-NODOT, LIST-DOTS, NAME-SPACE-AFTER,
+ * NAME-SPACE-BEFORE, NAME-COMMA-NOSPACE, PART-SEMI-NOSPACE, PIN-SWAP, PIN-EXTENDED, NAME-EXTENDED, NAME-DOUBLED, PART-DOUBLED,
+ * PART-AFTER, PART-DROPPED, PART-SEMI-TWOSPACE, X-EMPTYPART, X-EMPTYNAME, X-TRAILNAME, X-PARTSPACE, X-PINSPACE, X-LISTSPACE,
+ * X-COMMANL, X-SEMINL, PIN-FIRST, LIST-LEADSPACE, PIN-TAB, PART-SEMI-TAB, PART-SEMI-NBSP, NAME-COMMA-TAB, NAME-COMMA-NBSP; (c) the
+ * wb-u6ho F1 line's count, marker, pairing, code-read and spelling words (guard (c)): W-COUNT-15, COUNT-17, W-CONTROL-ITS,
+ * CONTROL-WORD, MARKER-TWICE, W-CODE-RECV, CODE-KEY, W-CTRL-RECV, CONTROL-KEY, CONTROL-COUNTED, CONTROL-SECOND, UNPAIRED,
+ * UNPLANTED, W-KILLED-ELSEWHERE, W-ID-TWODIGIT, WC-COLON, WC-EARLY, WS-CASE, WS-WS, WS-QUOTE, WK-MULTI, CODE-NEXT-MENTION,
+ * CODE-TWO-BRACKETS, CODE-AFTER-ALL, CODE-FIRST-CHAR, CLAUSE-LATER-MENTION, CTRL-UNDER-WORD, KILLED-SECOND, KILLS-MISSING,
+ * PLANTED-TWICE, MARK-LOWER, MARK-CONTROLLING, MARK-BEFORE, COUNT-OPENER, COUNT-CLOSER, COUNT-WORDS, COUNT-SUFFIX, ID-TWOLETTER,
+ * ID-GLUED, ID-TRAILING, COUNT-TAB, COUNT-NOSPACE, X-CODEWORD, X-CODETIGHT, X-CODETAB, X-CODETWICE, X-CODECASE, X-CODECUT,
+ * CTRL-UNDER-SPACE, CTRL-UNDER-CASE, CODE-TWOSPACE, CODE-NBSP, CODE-WITNESS-TWOSPACE, CODE-WITNESS-TAB, CTRL-UNDER-TAB,
+ * CTRL-UNDER-SPACE-AFTER, CTRL-UNDER-TAB-AFTER, CTRL-RECV-OPEN, CODE-UNCLOSED, with KILLS' order (W-KILLS-ORDER, KILLS-DROPPED,
+ * KILLS-ADDED) and firstLine (W-FIRST-DECOY, FIRST-INSIDE, FIRST-NONE, FIRST-INDENTED); (d) the controls case's export anchors
+ * (refusal #2's U4 set: the F1 line's place in its notes and the refusal lines' bodies): WE-LINE, LINE-FIRST, LINE-NONE,
+ * LINE-COPIED, LINE-INSIDE, X-LEADBLANK, LINE-BLANK-BEFORE, LINE-INDENTED-BEFORE (lineTwoContradictions), WW-EXTRA,
+ * IDS-EXTRA-TWICE, IDS-MULTIPART, IDS-UNNAMED, IDS-NO-LINE, IDS-OWN-PARTIAL, IDS-OWN-INSIDE, IDS2-MULTIPART, IDS2-BODY-START,
+ * IDS2-DIGITS, IDS-GLUED, IDS-TRAILING, IDS2-GLUED, IDS2-TRAILING, X-TOKENCOLON, BODY-COLON-TAB, IDS3-EXTRA, IDS3-MULTIPART,
+ * IDS3-BODY-START, IDS3-DIGITS, IDS3-NO-LINE, IDS3-GLUED, IDS3-TRAILING (witnessContradictions). A key form's witness beside the
+ * index's claim probe receiver is no edit a control can make: the compiler reads 'Opts<Context.Inner>[key]' as two comparisons, no
+ * element access.
+ * The TypeScript compiler anchors T-TOKENS,
  * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
  * and for the identifier, private name and keyword classes, each comment run right after its own token in the compiler's token
@@ -236,6 +281,13 @@
  * mutant's first, each row K witness beside the 10 wb-ft52's F1 line and the 17 wb-u6ho's F1 line pair with their mutants (its
  * K_PLANTS entry, its name in AS-WRITTEN and its roster cell removed together), and the M-ARRAY-PATTERN and
  * M-TYPED-DEFAULT plants.
+ * NOT CLAIMED (the judged checks, R-B574: each claim word narrowed to its controls): an edit of a judged check's input that no
+ * control makes - in the row K list another receiver form, separator, white space, case, quote or empty part or name than its
+ * controls write (another Unicode white space, a carriage return, a vertical tab or a form feed among them); in wb-u6ho's F1 line
+ * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls
+ * write; in its notes another line shape before the F1 line; and in a refusal line another place of its first ': ' or another id
+ * form - and a further control removed from its table and from the controls' frozen literal together (no outside anchor names it).
+ * The judged checks name no residual: every edit of their inputs is one a control makes, or NOT CLAIMED here.
  * RESIDUALS (named; each member with its pinned quiet reading in its row): R-CUT (row C) a subject and a family on two sides of a
  * cut read no finding, each member held by LIVE QUIET (fail closed); R-TYPED-DEFAULT (row M, M-TYPED-DEFAULT) a subject and a
  * family that only a typed parameter's default value joined with its key would bring together read no finding, each member's
@@ -293,6 +345,8 @@ const REFUSAL1_WITNESS = /\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 /** A paired witness id as wb-u6ho's refusal #2 lines spell it: "W", a capital and more capitals or digits, then one or more
  * "-" parts of capitals and digits. */
 const REFUSAL2_WITNESS = /\bW[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b/g;
+/** A paired witness id as wb-u6ho's refusal #3 lines spell it: "X-", then parts of capitals and digits joined by "-". */
+const REFUSAL3_WITNESS = /\bX-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
 const PLANT_TSX = "src/plant.tsx";
@@ -1282,7 +1336,9 @@ function firstDiffering(left: readonly string[], right: readonly string[]): numb
  * its form's site ("beside the claim probe's receiver, <a key's> for a key and <an index's> for an index"); no name holds the
  * list's separators (", ", "; " or a "." last); no other pin, witness, key or index. Returns the contradictions: a list opened
  * other than once, alone; a list not ending in its ".", alone (wb-u6ho refusal #2's further control LIST-NODOT); else each name
- * holding a separator, then the first part whose pin differs or else each pin's first name that differs. */
+ * holding a separator, then the first part whose pin differs or else each pin's first name that differs. That reading is claimed
+ * at the real clause and plants and at the edits the list controls make, each with exactly its payload (JUDGED CHECKS (a) and
+ * (b)); another receiver form, separator, white space, case, quote or empty part or name is NOT CLAIMED (R-B574). */
 function kListContradictions(asWritten: string, plants: KPlants): string[] {
   const listMark = "no other key or index of those seven forms is claimed: ";
   const marks = asWritten.split(listMark).length - 1;
@@ -1329,7 +1385,9 @@ function subLineIds(subLine: string): { readonly controlAt: number; readonly sub
  * none of those mutants; and each mutant and the control is paired with a witness - a mutant with the code after its clause's
  * "): " (an optional "witness " between), the control with its "[...] under (...)" read as the receiver then the code - which the
  * plant row K holds under that id spells, of a K pin KILLS kills it at. Returns the contradictions: a missing marker, alone; else
- * the count's, the control's, each unpaired id's, then each paired id's. */
+ * the count's, the control's, each unpaired id's, then each paired id's. That reading is claimed at the real line, plants and
+ * kills and at the edits the line controls make, each with exactly its payload (JUDGED CHECKS (c)); another word, case, white
+ * space or code shape around a mutant's code or the control's 'under' is NOT CLAIMED (R-B574). */
 function subLineContradictions(subLine: string, plants: KPlants, kills: Kills): string[] {
   const { controlAt, subMutants, subControl } = subLineIds(subLine);
   if (controlAt === -1) return ["wb-u6ho's F1 line holds no ' The control ' marker"];
@@ -1372,7 +1430,8 @@ function killsOrderContradictions(named: readonly string[], kills: Kills): strin
  * case's export anchors had no negative control): in each line's text after its first ": " (its own id token before it never
  * counts), every distinct id of the form, against every control whose name starts with an id of that form. Returns the
  * contradictions: each line not found (an empty line), alone; else each id the lines name that no control has, then each control
- * of the form that no line names. */
+ * of the form that no line names. Claimed at the real refusal lines and at the witness controls' edits, each with exactly its
+ * payload (JUDGED CHECKS (d)); another place of a line's first ': ' or another id form is NOT CLAIMED (R-B574). */
 function witnessContradictions(lines: readonly string[], controls: readonly string[], form: RegExp): string[] {
   const missing = lines.flatMap((line, index) => (line === "" ? [`the refusal line ${index + 1} is not in the notes`] : []));
   if (missing.length > 0) return missing;
@@ -1386,7 +1445,8 @@ function witnessContradictions(lines: readonly string[], controls: readonly stri
 }
 /** wb-u6ho's F1 line held to its place in its notes (wb-u6ho refusal #2's U4: the check read every line after the first as line 2):
  * notes line 2 is the first line that starts with the F1 prefix. Returns the contradiction: no line starts with the prefix, or the
- * first that does is another line. */
+ * first that does is another line. Claimed at the real notes and at the line-2 controls' edits, each with exactly its payload
+ * (JUDGED CHECKS (d)); another line shape before the F1 line is NOT CLAIMED (R-B574). */
 function lineTwoContradictions(notes: string, prefix: string): string[] {
   const at = notes.split("\n").findIndex(line => line.startsWith(prefix));
   if (at === -1) return ["wb-u6ho's notes hold no line that starts with the F1 prefix"];
@@ -1872,6 +1932,8 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       expect(Object.hasOwn(K_PLANTS[pin]?.[1] ?? {}, after), `${pin} plants ${after}`).toBe(true);
       return replanted(pin, witnesses => witnesses.flatMap(([name, text]): [string, string][] => (name === after ? [[name, text], [id, plant]] : [[name, text]])));
     };
+    /** A no-break space (U+00A0), the further controls' one white space character beyond the ASCII ones. */
+    const nbsp = String.fromCodePoint(0xa0);
     // the row K list check (refusal #1's U1: the receivers; U2: the names, their order and the separators)
     const listControls: readonly (readonly [control: string, clause: string, plants: KPlants, contradictions: readonly string[]])[] = [
       ["W-RECV-UPPER", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "(Context.inner)")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (Context.inner)"]],
@@ -2035,6 +2097,29 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
           "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>",
       ]],
       ["PART-SEMI-TWOSPACE", edited(asWritten, "`demand now`; K-CONCATENATION", "`demand now`;  K-CONCATENATION"), K_PLANTS, ["the list's part 2 is  where K pin 2 is K-CONCATENATION"]],
+      // refusal #3's U1: the list's parts, names and separators - an empty part (X-EMPTYPART), an empty name (X-EMPTYNAME) or an
+      // empty last name (X-TRAILNAME), white space at a part's end (X-PARTSPACE) or before its names (X-PINSPACE), a space after the
+      // list's '.' (X-LISTSPACE), and ',' or ';' before a line end (X-COMMANL, X-SEMINL); its F4: an index form's witness beside
+      // the key's claim probe receiver (X-CROSSRECV)
+      ["X-EMPTYPART", edited(asWritten, "GP2-I2 demands; K-PARENTHESIZED", "GP2-I2 demands; ; K-PARENTHESIZED"), K_PLANTS, ["the list's part 5 is  where K pin 5 is K-PARENTHESIZED"]],
+      ["X-EMPTYNAME", edited(asWritten, "N1 0, N2 1", "N1 0, , N2 1"), K_PLANTS, ["K-NUMBER: the list names  where its plant writes N2 1"]],
+      ["X-TRAILNAME", edited(asWritten, "GP2-I2 demands; K-PARENTHESIZED", "GP2-I2 demands, ; K-PARENTHESIZED"), K_PLANTS, ["K-IDENTIFIER: the list names  where its plant writes nothing"]],
+      ["X-PARTSPACE", edited(asWritten, "GP2-I2 demands; K-PARENTHESIZED", "GP2-I2 demands ; K-PARENTHESIZED"), K_PLANTS, ["K-IDENTIFIER: the list names GP2-I2 demands  where its plant writes GP2-I2 demands"]],
+      ["X-PINSPACE", edited(asWritten, "; K-PARENTHESIZED P1", "; K-PARENTHESIZED  P1"), K_PLANTS, ['K-PARENTHESIZED: the list names  P1 ("demand") where its plant writes P1 ("demand")']],
+      ["X-LISTSPACE", edited(asWritten, "GP2-R2 demand.", "GP2-R2 demand. "), K_PLANTS, ["AS-WRITTEN's row K list ends without its '.'"]],
+      ["X-COMMANL", edited(asWritten, "N1 0, N2 1", "N1 0,\nN2 1"), K_PLANTS, ["K-NUMBER: the list names N1 0,\nN2 1 where its plant writes N1 0"]],
+      ["X-SEMINL", edited(asWritten, "GP2-I2 demands; K-PARENTHESIZED", "GP2-I2 demands;\nK-PARENTHESIZED"), K_PLANTS, ["the list's part 5 is K-NUMBER-TYPE where K pin 5 is K-PARENTHESIZED"]],
+      ["X-CROSSRECV", asWritten, swapped("K-NUMBER-TYPE", "L2", "export type Value = (context.inner)[1.5];\n"), ["K-NUMBER-TYPE: the list names L2 1.5 where its plant writes L2 1.5 under (context.inner)"]],
+      // further controls (this cut's own one-edit members): the first part's pin, white space before the list's first part, a tab
+      // after a pin id, and ';' or ',' before a tab or a no-break space
+      ["PIN-FIRST", edited(asWritten, "is claimed: K-TEMPLATE T1", "is claimed: K-TEMPLATES T1"), K_PLANTS, ["the list's part 1 is K-TEMPLATES where K pin 1 is K-TEMPLATE"]],
+      ["LIST-LEADSPACE", edited(asWritten, "is claimed: K-TEMPLATE T1", "is claimed:  K-TEMPLATE T1"), K_PLANTS, ["the list's part 1 is  where K pin 1 is K-TEMPLATE"]],
+      ["PIN-TAB", edited(asWritten, "; K-PARENTHESIZED P1", "; K-PARENTHESIZED\tP1"), K_PLANTS, ["the list's part 5 is K-PARENTHESIZED\tP1 where K pin 5 is K-PARENTHESIZED"]],
+      ["PART-SEMI-TAB", edited(asWritten, "`demand now`; K-CONCATENATION", "`demand now`;\tK-CONCATENATION"), K_PLANTS, ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      ["PART-SEMI-NBSP", edited(asWritten, "`demand now`; K-CONCATENATION", `\`demand now\`;${nbsp}K-CONCATENATION`), K_PLANTS, ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      ["NAME-COMMA-TAB", edited(asWritten, "T1 `demand`, T2", "T1 `demand`,\tT2"), K_PLANTS, ["K-TEMPLATE: the list names T1 `demand`,\tT2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["NAME-COMMA-NBSP", edited(asWritten, "T1 `demand`, T2", `T1 \`demand\`,${nbsp}T2`), K_PLANTS, [`K-TEMPLATE: the list names T1 \`demand\`,${nbsp}T2 \`de\\x6dand\` where its plant writes T1 \`demand\``]],
+      ["RECV-NESTED", asWritten, swapped("K-IDENTIFIER", "I1", keyPlant("key", "(context.inner)[0]")), ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)[0]"]],
     ];
     expect(kListContradictions(asWritten, K_PLANTS), "the row K list check reads no contradiction in the real clause and plants").toEqual([]);
     for (const [control, clause, plants, contradictions] of listControls) expect(kListContradictions(clause, plants), `${control}: the row K list check reports exactly this edit's contradictions`).toEqual(contradictions);
@@ -2134,6 +2219,28 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["ID-TRAILING", edited(subLine, "All 16 are hypothetical", "All 16 (and none of GP2-X1a) are hypothetical"), K_PLANTS, KILLS, []],
       ["COUNT-TAB", edited(subLine, ". 16 gate-authored", ". 16\tgate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
       ["COUNT-NOSPACE", edited(subLine, "generically. 16 gate-authored", "generically.16 gate-authored"), K_PLANTS, KILLS, ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      // refusal #3's U2: a mutant's code read after its clause's '): ' - another word (X-CODEWORD), no space (X-CODETIGHT) or a tab
+      // (X-CODETAB) after '):', 'witness' twice (X-CODETWICE) or in another case (X-CODECASE) - and its spelling, a code cut short
+      // (X-CODECUT); its F4: the control's 'under' with other white space (CTRL-UNDER-SPACE) or in another case (CTRL-UNDER-CASE)
+      ["X-CODEWORD", edited(subLine, "): [`demand now`]", "): code [`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETIGHT", edited(subLine, "): [`demand now`]", "):[`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETAB", edited(subLine, "): [`demand now`]", "):\t[`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETWICE", edited(subLine, "): [`demand now`]", "): witness witness [`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODECASE", edited(subLine, "): [`demand now`]", "): Witness [`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODECUT", edited(subLine, "[`demand now`]", "[`demand no]"), K_PLANTS, KILLS, ["GP2-T3: K-TEMPLATE's witness does not spell [`demand no]"]],
+      ["CTRL-UNDER-SPACE", edited(subLine, "[context] under (demand.inner)", "[context]  under (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-CASE", edited(subLine, "[context] under (demand.inner)", "[context] Under (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      // further controls (this cut's own one-edit members): two spaces or a no-break space after '):', two spaces or a tab after
+      // 'witness', a tab before the control's 'under' and two spaces or a tab after it, and the control's receiver left open
+      ["CODE-TWOSPACE", edited(subLine, "): [`demand now`]", "):  [`demand now`]"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["CODE-NBSP", edited(subLine, "): [`demand now`]", `):${nbsp}[\`demand now\`]`), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
+      ["CODE-WITNESS-TWOSPACE", edited(subLine, "witness (demand.inner)[`context`]", "witness  (demand.inner)[`context`]"), K_PLANTS, KILLS, ["GP2-T1: the line pairs it with no witness"]],
+      ["CODE-WITNESS-TAB", edited(subLine, "witness (demand.inner)[`context`]", "witness\t(demand.inner)[`context`]"), K_PLANTS, KILLS, ["GP2-T1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-TAB", edited(subLine, "[context] under (demand.inner)", "[context]\tunder (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-SPACE-AFTER", edited(subLine, "[context] under (demand.inner)", "[context] under  (demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-TAB-AFTER", edited(subLine, "[context] under (demand.inner)", "[context] under\t(demand.inner)"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-RECV-OPEN", edited(subLine, subLine.slice(subLine.indexOf("[context] under (demand.inner)")), "[context] under (demand.inner"), K_PLANTS, KILLS, ["GP2-I1: the line pairs it with no witness"]],
+      ["CODE-UNCLOSED", edited(subLine, "[`demand now`]", "[`demand now`"), K_PLANTS, KILLS, ["GP2-T3: the line pairs it with no witness"]],
     ];
     expect(subLineContradictions(subLine, K_PLANTS, KILLS), "the wb-u6ho line check reads no contradiction in the real line, plants and kills").toEqual([]);
     for (const [control, line, plants, kills, contradictions] of lineControls) expect(subLineContradictions(line, plants, kills), `${control}: the wb-u6ho line check reports exactly this edit's contradictions`).toEqual(contradictions);
@@ -2154,6 +2261,7 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["W-FIRST-DECOY", [lines[0] ?? "", decoy, ...lines.slice(1)].join("\n"), decoy],
       ["FIRST-INSIDE", [`${lines[0] ?? ""} ${decoy}`, ...lines.slice(1)].join("\n"), subLine],
       ["FIRST-NONE", lines.filter(line => !line.startsWith(prefix)).join("\n"), ""],
+      ["FIRST-INDENTED", [lines[0] ?? "", ` ${decoy}`, ...lines.slice(1)].join("\n"), subLine],
     ];
     for (const [control, text, first] of firstControls) expect(firstLine(text, prefix), `${control}: firstLine reads the first line that starts with its prefix`).toBe(first);
     // wb-u6ho's F1 line is notes line 2, the first with its prefix (refusal #2's U4: that check read every line after the first as
@@ -2164,12 +2272,18 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["LINE-NONE", lines.filter(line => !line.startsWith(prefix)).join("\n"), ["wb-u6ho's notes hold no line that starts with the F1 prefix"]],
       ["LINE-COPIED", [...lines, subLine].join("\n"), []],
       ["LINE-INSIDE", [`${lines[0] ?? ""} ${prefix}`, ...lines.slice(1)].join("\n"), []],
+      // refusal #3's F4: a line end before the notes' first line (X-LEADBLANK)
+      ["X-LEADBLANK", `\n${notes}`, ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      // further controls: a blank line, and an indented copy of the F1 line, before it
+      ["LINE-BLANK-BEFORE", [lines[0] ?? "", "", ...lines.slice(1)].join("\n"), ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      ["LINE-INDENTED-BEFORE", [lines[0] ?? "", ` ${subLine}`, ...lines.slice(1)].join("\n"), ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
     ];
     expect(lineTwoContradictions(notes, prefix), "firstLine reads wb-u6ho's notes line 2, the first with the prefix").toEqual([]);
     for (const [control, text, contradictions] of lineTwoControls) expect(lineTwoContradictions(text, prefix), `${control}: the line-2 check reports exactly this edit's contradictions`).toEqual(contradictions);
     // the paired witnesses refusal #1's U1, U2, U3 and F5 lines name (their "W-..." ids) and refusal #2's U1, U2, U3 and U4 lines
     // name (their ids of the form "W", a capital and its parts), each line read after its first ": " (wb-u6ho's first notes lines
-    // with those prefixes): exactly the controls of those forms (witnessContradictions; refusal #2's U4: no negative control)
+    // with those prefixes): exactly the controls of those forms (witnessContradictions; refusal #2's U4: no negative control); and
+    // refusal #3's U1, U2, U3 and F4 lines name (their "X-..." ids): exactly the controls of that form (R-B574)
     const refused = [
       "- U1-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-RECEIVER-WORDS-",
       "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-R-B489-U4-AS-WRITTEN-ROW-K-LIST-NAME-ORDER-SEPARATOR-WORDS-",
@@ -2181,6 +2295,12 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL2-ROW-K-LIST-NAME-PIN-MARKER-WORDS-",
       "- U3-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL2-WB-U6HO-F1-LINE-PAIRING-WORDS-",
       "- U4-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-CONTROLS-CASE-EXPORT-ANCHOR-WORDS-",
+    ].map(start => firstLine(notes, start));
+    const refused3 = [
+      "- U1-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL3-ROW-K-LIST-PART-NAME-SEPARATOR-WORDS-",
+      "- U2-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL3-WB-U6HO-F1-LINE-CODE-READ-SPELLING-WORDS-",
+      "- U3-LOW-CONFIRMED-R514-R515-R668-RULE16-LEG2-REFUSAL3-CONTROLS-CASE-REFUSAL-LINE-BODY-WORDS-",
+      "- F4 INFO: [record.prep F4 verbatim after this bracket; PREP grade INFO kept] F4 INFO (gate-prep-9's survivors that are not members, 7 of the 23).",
     ].map(start => firstLine(notes, start));
     const witnessControls: readonly (readonly [control: string, texts: readonly string[], form: RegExp, contradictions: readonly string[], extra: readonly string[]])[] = [
       ["WW-EXTRA", [`${refused[0] ?? ""} W-EXTRA`, ...refused.slice(1)], REFUSAL1_WITNESS, ["the refusal lines name W-EXTRA, which is no control"], []],
@@ -2203,6 +2323,35 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["IDS-TRAILING", [`${refused[0] ?? ""} W-EXTRAx`, ...refused.slice(1)], REFUSAL1_WITNESS, [], []],
       ["IDS2-GLUED", [...refused2.slice(0, 3), `${refused2[3] ?? ""} XWX-A`], REFUSAL2_WITNESS, [], []],
       ["IDS2-TRAILING", [...refused2.slice(0, 3), `${refused2[3] ?? ""} WX-Ab`], REFUSAL2_WITNESS, [], []],
+      // refusal #3's U3: a refusal line whose first ':' precedes its first ': ' (X-TOKENCOLON: refusal #2's U3 line carries
+      // ':WK-MULTI' right after its token, and its body's one WK-MULTI mention reads 'the kills witness'); then refusal #3's own form
+      [
+        "X-TOKENCOLON",
+        [...refused2.slice(0, 2), edited(edited(refused2[2] ?? "", "-FAIL-OPEN: U3 LOW, fail-open: ", "-FAIL-OPEN:WK-MULTI: U3 LOW, fail-open: "), "; WK-MULTI (KILLS", "; the kills witness (KILLS"), ...refused2.slice(3)],
+        REFUSAL2_WITNESS,
+        ["the control WK-MULTI is named by no refusal line"],
+        [],
+      ],
+      [
+        "BODY-COLON-TAB",
+        [...refused2.slice(0, 2), edited(edited(refused2[2] ?? "", "-FAIL-OPEN: U3 LOW, fail-open: ", "-FAIL-OPEN:\tWK-MULTI: U3 LOW, fail-open: "), "; WK-MULTI (KILLS", "; the kills witness (KILLS"), ...refused2.slice(3)],
+        REFUSAL2_WITNESS,
+        ["the control WK-MULTI is named by no refusal line"],
+        [],
+      ],
+      ["IDS3-EXTRA", [`${refused3[0] ?? ""} X-EXTRA`, ...refused3.slice(1)], REFUSAL3_WITNESS, ["the refusal lines name X-EXTRA, which is no control"], []],
+      [
+        "IDS3-MULTIPART",
+        [edited(refused3[0] ?? "", "Witness X-EMPTYPART:", "Witness X-EMPTY-PART-TWO:"), ...refused3.slice(1)],
+        REFUSAL3_WITNESS,
+        ["the refusal lines name X-EMPTY-PART-TWO, which is no control", "the control X-EMPTYPART is named by no refusal line"],
+        [],
+      ],
+      ["IDS3-BODY-START", [...refused3.slice(0, 2), edited(refused3[2] ?? "", "-FAIL-OPEN: U3 LOW, fail-open, ", "-FAIL-OPEN: X-START U3 LOW, fail-open, "), ...refused3.slice(3)], REFUSAL3_WITNESS, ["the refusal lines name X-START, which is no control"], []],
+      ["IDS3-DIGITS", [...refused3.slice(0, 3), `${refused3[3] ?? ""} X-A1`], REFUSAL3_WITNESS, ["the refusal lines name X-A1, which is no control"], []],
+      ["IDS3-NO-LINE", [...refused3.slice(0, 3), ""], REFUSAL3_WITNESS, ["the refusal line 4 is not in the notes"], []],
+      ["IDS3-GLUED", [`${refused3[0] ?? ""} XX-EXTRA`, ...refused3.slice(1)], REFUSAL3_WITNESS, [], []],
+      ["IDS3-TRAILING", [`${refused3[0] ?? ""} X-EXTRAx`, ...refused3.slice(1)], REFUSAL3_WITNESS, [], []],
     ];
     const controls = [
       ...listControls.map(([control]) => control),
@@ -2216,6 +2365,10 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
     expect(
       witnessContradictions(refused2, controls, REFUSAL2_WITNESS),
       "the paired witnesses refusal #2's U1, U2, U3 and U4 lines name are exactly the controls named 'W', a capital and its parts",
+    ).toEqual([]);
+    expect(
+      witnessContradictions(refused3, controls, REFUSAL3_WITNESS),
+      "the paired witnesses refusal #3's U1, U2, U3 and F4 lines name are exactly the controls named 'X-' and its parts",
     ).toEqual([]);
     for (const [control, texts, form, contradictions, extra] of witnessControls) expect(witnessContradictions(texts, [...controls, ...extra], form), `${control}: the witness check reports exactly this edit's contradictions`).toEqual(contradictions);
     // the controls' payloads (refusal #2's U5: the frozen literal held the controls' names only, so one control's row swapped for
@@ -2283,6 +2436,23 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["PROBE-KEY-PADDED", ["K-TEMPLATE: the list names T1 `demand` where its plant writes T1 `demand` under (context.inner)", "K-CONCATENATION: the list names C1 \"de\" + \"mand\" where its plant writes C1 \"de\" + \"mand\" under (context.inner)", "K-NUMBER: the list names N1 0 where its plant writes N1 0 under (context.inner)", "K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)"]],
       ["PROBE-INDEX-PADDED", ["K-PARENTHESIZED: the list names P1 (\"demand\") where its plant writes P1 (\"demand\") under Opts<Context.Inner>", "K-NUMBER-TYPE: the list names L1 0 where its plant writes L1 0 under Opts<Context.Inner>", "K-TYPE-REFERENCE: the list names R1 Key where its plant writes R1 Key under Opts<Context.Inner>"]],
       ["PART-SEMI-TWOSPACE", ["the list's part 2 is  where K pin 2 is K-CONCATENATION"]],
+      ["X-EMPTYPART", ["the list's part 5 is  where K pin 5 is K-PARENTHESIZED"]],
+      ["X-EMPTYNAME", ["K-NUMBER: the list names  where its plant writes N2 1"]],
+      ["X-TRAILNAME", ["K-IDENTIFIER: the list names  where its plant writes nothing"]],
+      ["X-PARTSPACE", ["K-IDENTIFIER: the list names GP2-I2 demands  where its plant writes GP2-I2 demands"]],
+      ["X-PINSPACE", ['K-PARENTHESIZED: the list names  P1 ("demand") where its plant writes P1 ("demand")']],
+      ["X-LISTSPACE", ["AS-WRITTEN's row K list ends without its '.'"]],
+      ["X-COMMANL", ["K-NUMBER: the list names N1 0,\nN2 1 where its plant writes N1 0"]],
+      ["X-SEMINL", ["the list's part 5 is K-NUMBER-TYPE where K pin 5 is K-PARENTHESIZED"]],
+      ["X-CROSSRECV", ["K-NUMBER-TYPE: the list names L2 1.5 where its plant writes L2 1.5 under (context.inner)"]],
+      ["PIN-FIRST", ["the list's part 1 is K-TEMPLATES where K pin 1 is K-TEMPLATE"]],
+      ["LIST-LEADSPACE", ["the list's part 1 is  where K pin 1 is K-TEMPLATE"]],
+      ["PIN-TAB", ["the list's part 5 is K-PARENTHESIZED\tP1 where K pin 5 is K-PARENTHESIZED"]],
+      ["PART-SEMI-TAB", ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      ["PART-SEMI-NBSP", ["the list's part 2 is K-NUMBER where K pin 2 is K-CONCATENATION"]],
+      ["NAME-COMMA-TAB", ["K-TEMPLATE: the list names T1 `demand`,\tT2 `de\\x6dand` where its plant writes T1 `demand`"]],
+      ["NAME-COMMA-NBSP", [`K-TEMPLATE: the list names T1 \`demand\`,${nbsp}T2 \`de\\x6dand\` where its plant writes T1 \`demand\``]],
+      ["RECV-NESTED", ["K-IDENTIFIER: the list names I1 key where its plant writes I1 key under (context.inner)[0]"]],
       ["W-COUNT-15", ["wb-u6ho's F1 line names 16 mutants before its control and counts 15"]],
       ["COUNT-17", ["wb-u6ho's F1 line names 16 mutants before its control and counts 17"]],
       ["W-CONTROL-ITS", ["wb-u6ho's F1 line holds no ' The control ' marker"]],
@@ -2325,17 +2495,38 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["ID-TRAILING", []],
       ["COUNT-TAB", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
       ["COUNT-NOSPACE", ["wb-u6ho's F1 line names 16 mutants before its control and counts 0"]],
+      ["X-CODEWORD", ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETIGHT", ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETAB", ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODETWICE", ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODECASE", ["GP2-T3: the line pairs it with no witness"]],
+      ["X-CODECUT", ["GP2-T3: K-TEMPLATE's witness does not spell [`demand no]"]],
+      ["CTRL-UNDER-SPACE", ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-CASE", ["GP2-I1: the line pairs it with no witness"]],
+      ["CODE-TWOSPACE", ["GP2-T3: the line pairs it with no witness"]],
+      ["CODE-NBSP", ["GP2-T3: the line pairs it with no witness"]],
+      ["CODE-WITNESS-TWOSPACE", ["GP2-T1: the line pairs it with no witness"]],
+      ["CODE-WITNESS-TAB", ["GP2-T1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-TAB", ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-SPACE-AFTER", ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-UNDER-TAB-AFTER", ["GP2-I1: the line pairs it with no witness"]],
+      ["CTRL-RECV-OPEN", ["GP2-I1: the line pairs it with no witness"]],
+      ["CODE-UNCLOSED", ["GP2-T3: the line pairs it with no witness"]],
       ["W-KILLS-ORDER", ["KILLS' mutant 40 is GP2-I1 where the lines name GP2-I2"]],
       ["KILLS-DROPPED", ["KILLS' mutant 48 is missing where the lines name GP2-I1"]],
       ["KILLS-ADDED", ["KILLS' mutant 49 is GP2-X9 where the lines name none"]],
       ["W-FIRST-DECOY", ["[leads] - F1 LOW LEADS: a decoy leads line."]],
       ["FIRST-INSIDE", ["the F1 line"]],
       ["FIRST-NONE", ["no line"]],
+      ["FIRST-INDENTED", ["the F1 line"]],
       ["WE-LINE", ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
       ["LINE-FIRST", ["wb-u6ho's first line with the F1 prefix is notes line 1, not line 2"]],
       ["LINE-NONE", ["wb-u6ho's notes hold no line that starts with the F1 prefix"]],
       ["LINE-COPIED", []],
       ["LINE-INSIDE", []],
+      ["X-LEADBLANK", ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      ["LINE-BLANK-BEFORE", ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
+      ["LINE-INDENTED-BEFORE", ["wb-u6ho's first line with the F1 prefix is notes line 3, not line 2"]],
       ["WW-EXTRA", ["the refusal lines name W-EXTRA, which is no control"]],
       ["IDS-EXTRA-TWICE", ["the refusal lines name W-EXTRA, which is no control"]],
       ["IDS-MULTIPART", ["the refusal lines name W-RECV-UPPER-TWO, which is no control"]],
@@ -2350,6 +2541,15 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["IDS-TRAILING", []],
       ["IDS2-GLUED", []],
       ["IDS2-TRAILING", []],
+      ["X-TOKENCOLON", ["the control WK-MULTI is named by no refusal line"]],
+      ["BODY-COLON-TAB", ["the control WK-MULTI is named by no refusal line"]],
+      ["IDS3-EXTRA", ["the refusal lines name X-EXTRA, which is no control"]],
+      ["IDS3-MULTIPART", ["the refusal lines name X-EMPTY-PART-TWO, which is no control", "the control X-EMPTYPART is named by no refusal line"]],
+      ["IDS3-BODY-START", ["the refusal lines name X-START, which is no control"]],
+      ["IDS3-DIGITS", ["the refusal lines name X-A1, which is no control"]],
+      ["IDS3-NO-LINE", ["the refusal line 4 is not in the notes"]],
+      ["IDS3-GLUED", []],
+      ["IDS3-TRAILING", []],
     ]);
   });
 
