@@ -1407,10 +1407,12 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * W-OUT-PW-EARLY-BLANK-LINE, W-OUT-PW-EARLY-LINE-COMMENT, W-OUT-PW-EARLY-TRAILING-SPACE); W-OUT-SHARED-MOVED moves the
  * shared readers' load in G-TWIN-TS-NAMED's planted text from the line right after the census helpers' import, that
  * text's last other import declaration, to before the twin's edited import (cut #11, refusal #10 U1). So the witnesses
- * row holds the outside comparison to read a twin's planted text with one of those kinds added at a place where a
- * witness of that twin adds it as another outside, and that comparison narrowed as refusal #9's GP24-P1-EDGES3 (to each
- * piece's first and last three lines) or GP24-P2-EDGES400 (to its first and last 400 characters) narrows it reds that
- * row (cut #11, refusal #10 U2: the edges narrowings this census claims are the four the falsifiers name);
+ * row holds the outside comparison to read each "outside" witness's text - its twin's planted text with that witness's
+ * own line edit made, as its witness roster entry records it - as another outside (wb-kb9f, landing 956's F7: a
+ * twin's planted text with one of those kinds added where a witness adds it, by any content but that witness's own, is
+ * NOT CLAIMED, below), and that comparison narrowed as refusal #9's GP24-P1-EDGES3 (to each piece's first and last
+ * three lines) or GP24-P2-EDGES400 (to its first and last 400 characters) narrows it reds that row (cut #11, refusal
+ * #10 U2: the edges narrowings this census claims are the four the falsifiers name);
  * (E) readingEdit reads each READING_EDIT_WITNESSES text through the shared readers - this file's text with its
  * node:crypto import moved after its node:url import, with its node:path and node:url imports swapped, and with its
  * node:fs import repeated, each witness's line edit of this file's text the witness roster's - as exactly the edit
@@ -1424,8 +1426,9 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * sink declared, then its length written through an object pattern property with a computed key) - and this file's own
  * import declarations, the shared readers' load set aside, P-RECORD (the cut #5 block wb-mcoj's census plants), its
  * reading the record's first seven entries, the shared readers' load the eighth. Falsifiers, each measured red on this
- * census by the cut #11 battery: the gate narrowing each twin witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS,
- * GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied to the shared module, hides its twin from the leg
+ * census by the cut #11 battery and re-measured on these bytes by the wb-kb9f battery: the gate narrowing each twin
+ * witnessed (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS, GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied
+ * to the shared module, hides its twin from the leg
  * and reds that twin's row and rows (B) and (C); an edit of a twin's plant inside its unit reds (C); one outside its
  * unit, of a kind and at a place one of that twin's "outside" witnesses adds it - a line of code, a blank line, a line
  * comment or a trailing space added next to the unit, after DEEP_DOC or after EARLY_DOC - reds (D), with the twin's
@@ -1433,13 +1436,13 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * GN1, GN3, GN7, GN8 and GN2, which red (B) as well, and refusal #8's GP4-TS-BLANK, GP4-PW-BLANK and GP4-TS-COMMENT,
  * cut #9's X9-TS-TSPACE, X9-PW-TSPACE and X9-PW-COMMENT and cut #10's X10-TS-DEEP-CODE, X10-TS-DEEP-TSPACE,
  * X10-PW-DEEP-COMMENT and X10-PW-EARLY-BLANK, which do not); plantReading's outside comparison narrowed to trimmed
- * pieces (refusal #8's GP4-N-OUT-TRIM), to pieces with their line comments dropped (GP4-N-OUT-NOCOMMENT), to pieces
- * with their blank lines dropped (cut #9's X9-N-OUT-NOBLANK), to lines with their trailing spaces dropped
- * (X9-N-OUT-TRIMEND), to the set of each piece's lines (cut #10's X10-P-LINE-SET) or to one of four windows of each
- * piece's edges - its first and last three lines (refusal #9's GP24-P1-EDGES3), its first and last 400 characters
- * (GP24-P2-EDGES400), its first and last hundred lines (cut #10's X10-P-EDGES-100-LINES) or its first and last three
- * lines and its line count (X10-P-EDGES3+COUNT) - reds row (D) witnesses, alone and paired with a twin plant it would
- * hide; a witness's plant edited (refusal #8's GP4-W1 to GP4-W11, cut #10's
+ * pieces (refusal #8's GP4-N-OUT-TRIM), to pieces with every line comment dropped (GP4-N-OUT-NOCOMMENT), to pieces
+ * with every blank line dropped, empty or white space alone (cut #9's X9-N-OUT-NOBLANK), to lines with every trailing
+ * space dropped (X9-N-OUT-TRIMEND), to the set of each piece's lines (cut #10's X10-P-LINE-SET) or to one of four
+ * windows of each piece's edges - its first and last three lines (refusal #9's GP24-P1-EDGES3), its first and last 400
+ * characters (GP24-P2-EDGES400), its first and last hundred lines (cut #10's X10-P-EDGES-100-LINES) or its first and
+ * last three lines and its line count (X10-P-EDGES3+COUNT) - reds row (D) witnesses, alone and paired with a twin plant
+ * it would hide; a witness's plant edited (refusal #8's GP4-W1 to GP4-W11, cut #10's
  * X10-N-DEEP-CODE-TO-EDGE, X10-N-PWEARLY-BLANK-TO-COMMENT, X10-N-PWDEEP-TSPACE-EMPTY, X10-N-DEEP-DOC-SWAP and
  * X10-N-EARLY-DOC-SWAP, and GP4-E1C and GP4-E2C with their READING_EDITS entries) or moved to another place (refusal
  * #9's GP24-R1 and GP24-R2: W-OUT-BEFORE-IMPORTS' and W-OUT-BEFORE-HEAD's plants written after another line of the text
@@ -1474,6 +1477,18 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * NOT CLAIMED by this census either (cut #11, refusal #10 U2): whether plantReading's outside comparison narrowed to
  * any window of each piece's edges but the four the falsifiers name reds a row - a wider one, each piece's first and
  * last 1420 or 1500 lines (refusal #10's GQ-E1-EDGES-1420-LINES and GQ-E2-EDGES-1500-LINES), say.
+ * NOT CLAIMED by this census either (wb-kb9f, landing 956's F7, refusal #10's F5): what plantReading's outside
+ * comparison reads for a twin's planted text with one of the four kinds added where one of that twin's "outside"
+ * witnesses adds that kind, by any content but that witness's own line edit - another line of code (a let
+ * declaration, say), another line comment ("// another comment"), a line of white space alone, or trailing spaces
+ * past the one the witness adds; so whether that comparison narrowed to hide only some content of a kind reds a row -
+ * refusal #10's GQ-C1-DROP-LET-LINES (lines opening let dropped), GQ-C2-DROP-OTHER-COMMENTS (line comments but
+ * "// a line comment" dropped) and GQ-C3-DROP-WS-ONLY-LINES (lines of white space alone dropped) each leave this
+ * census green. The twin plants of such content the gate measured are held red by the witness roster row, not by that
+ * reading: refusal #10's GQ-TS-DEEP-LET, GQ-TS-DEEP-OTHERCOMMENT, GQ-TS-DEEP-WSLINE, GQ-TS-NEXT-LET and
+ * GQ-PW-EARLY-LET each red rows (D), (D) witnesses and the witness roster on this census, and each paired with the
+ * narrowing that hides it (GQ-C1+TS-DEEP-LET, GQ-C2+TS-DEEP-OTHERCOMMENT, GQ-C3+TS-DEEP-WSLINE, GQ-C1+TS-NEXT-LET,
+ * GQ-C1+PW-EARLY-LET) still reds the witness roster row.
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -2347,13 +2362,16 @@ function unitCut(text: string, writes: boolean): UnitCut {
   };
 }
 /**
- * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U2; cut #10, refusal #9 U1): row (D)'s reading of a
- * planted text's cut against this file's, as "<outside> | <unit>": "this file's outside" when the two outsides are the
- * same, piece for piece, as written, else "another outside" - CLAIMED as row (D)'s witnesses pin it: a twin's planted
- * text with a line of code, a blank line, a line comment or a trailing space added to its outside at a place where one
- * of that twin's "outside" witnesses adds that kind (the places the witness roster records: next to the twin's unit,
- * and deep inside an outside piece after DEEP_DOC or EARLY_DOC) reads "another outside"; for an outside that differs in
- * any other way or at any other place it is NOT CLAIMED; then "one import declaration edited" when an import twin's
+ * The restatement (cut #8, refusal #7 U1; cut #9, refusal #8 U2; cut #10, refusal #9 U1; wb-kb9f, landing 956's F7):
+ * row (D)'s reading of a planted text's cut against this file's, as "<outside> | <unit>": "this file's outside" when
+ * the two outsides are the same, piece for piece, as written, else "another outside" - CLAIMED as row (D)'s witnesses
+ * pin it: each "outside" witness's text - its twin's planted text with that witness's own line edit made to its
+ * outside, as its witness roster entry records it (the line of code, blank line, line comment or trailing space it
+ * adds, or the load it moves, next to the twin's unit or deep inside an outside piece after DEEP_DOC or EARLY_DOC) -
+ * reads "another outside"; for an outside that differs in any other way, at any other place or by any other content
+ * it is NOT CLAIMED - one of those kinds added where a witness adds it, by any content but that witness's own, among
+ * them (the content refusal #10's GQ-C1-DROP-LET-LINES, GQ-C2-DROP-OTHER-COMMENTS and GQ-C3-DROP-WS-ONLY-LINES hide,
+ * as the census header's NOT CLAIMED list names it); then "one import declaration edited" when an import twin's
  * parts are this file's one for one with exactly one changed, "two lines added before its push" when G-TWIN2-PW's
  * part is this file's lines with exactly two lines added before the last (the push), else "another unit". A cut whose
  * parts are not its text's twinUnit reads "parts other than twinUnit's".
