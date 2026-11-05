@@ -342,7 +342,8 @@
       "src/workbench/zz-boundary-template-array.ts": "export const n = (a: string): string[] => [`x${a}Furnace\\u004fbserverBoundaryV0`];\n",
       "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x${a}Furnace\\u004fbserverBoundaryV0`);\n",
       "src/workbench/zz-boundary-template-tagged-head.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`Furnace\\u004fbserverBoundaryV0${a}x`;\n",
-      "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x${a}Furnace\\u004fbserverBoundaryV0`;\n"
+      "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-string-type.ts": "export type N = \"Furnace\\u004fbserverBoundaryV0\";\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4977,6 +4978,9 @@
                 "cooked"
               ],
               "src/workbench/zz-boundary-template-tagged-raw.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-string-type.ts": [
                 "cooked"
               ]
             },
