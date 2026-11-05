@@ -382,7 +382,8 @@
  * readRoster takes other than one plain parameter'), so THE ORDER's read holds readRoster's parameters too (below). Each of these members
  * is lint- and type-clean (biome rc 0, the binding-pattern form with one noUnusedFunctionParameters warning; tsc 0 errors with every copy
  * present). The judged set pins it: import.meta frozen ('READ_FIRST froze import.meta before readRoster ran'), a function shaped like the
- * gate's default parameter reading its argument frozen there and its write refused, and eight planted sources, read by THE GUARD at
+ * gate's default parameter reading its argument frozen there and its write refused (its argument a frozen stand-in, not import.meta:
+ * it witnesses the order an argument is evaluated in, not READ_FIRST's freeze, wb-ymb8), and eight planted sources, read by THE GUARD at
  * collection and again by the judged set: cut #8's ROSTER declaration, which left the freeze to readRoster, and a ROSTER declaration
  * rewriting the url before its freeze ('ROSTER is not readRoster() alone'); the gate's default parameter, its binding-pattern form, the
  * one parameter given a default, a rest beside an optional parameter (two readings) and an overload whose implementation takes a
@@ -3325,9 +3326,11 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect([Reflect.set(import.meta, "url", "file:///another-copy.test.ts"), Reflect.defineProperty(import.meta, "url", { value: "file:///another-copy.test.ts" })], "a write of import.meta's url is refused").toEqual([false, false]);
     // wb-5333 cut #9 (refusal #8's U1, the DP form): an argument is evaluated before the parameters of the function it is passed to, so
     // READ_FIRST's freeze precedes every parameter of readRoster - a function shaped like the gate's default parameter reads its argument
-    // frozen there, and the write that default makes is refused.
+    // frozen there, and the write that default makes is refused. Its argument is a frozen stand-in, not import.meta, so it witnesses that
+    // order, not READ_FIRST's freeze, which the two pins above read (wb-ymb8, landing 942's F1: with that freeze and those two pins dropped
+    // it still reads [true, false]).
     const shapedLikeTheDp = (target: object, atFreeze = Object.isFrozen(target), written = Reflect.set(target, "url", "file:///another-copy.test.ts")): readonly boolean[] => [atFreeze, written];
-    expect(shapedLikeTheDp(Object.freeze({ url: "file:///this-module.test.ts" })), "a default parameter reads READ_FIRST's argument frozen and its write refused").toEqual([true, false]);
+    expect(shapedLikeTheDp(Object.freeze({ url: "file:///this-module.test.ts" })), "a default parameter reads its argument frozen and its write refused (a frozen stand-in, not import.meta)").toEqual([true, false]);
     expect(selfTextMisses(SELF_TEXT, readFileSync(fileURLToPath(import.meta.url), "utf8")), "SELF_TEXT is the file import.meta.url names").toEqual([]);
     expect(SELF_TEXT_MISSES).toEqual([]);
     const selfSource = [

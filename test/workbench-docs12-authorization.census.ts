@@ -1,5 +1,5 @@
 /**
- * wb-gs2.3 (W19 / docs-12): census falsifier for docs/workbench/12-security.md "Authorization design" (eight bullets)
+ * wb-gs2.3 (W19 / docs-12): census falsifier for docs/workbench/12-security.md "Authorization design" (nine bullets)
  * and "Auditability" (three sentences), a census leg of the wb-nl8 census tier (vitest.census.config.ts, include
  * test/**\/*.census.ts) judged in wb-u62 REPORT MODE. It is a member of the sequenced census class (owner program ruling
  * 2026-10-16: one post-u62/post-nl8 adoption cut per census, report mode, no bare-text title scanning). It replaces the
@@ -29,6 +29,11 @@
  * FROZEN SHAPE (owner standing order 2026-10-18, rule 16): the table pins its own shape as literals in the same cut:
  * the row/pin-count list and one digest per row of its requirement and pin identities. Deleting a pin, shortening a
  * requirement, or swapping a pin for an unrelated passing case reds the census (AC1, falsified in-memory below).
+ *
+ * The ninth bullet (wb-rdlh.4, clause (d) of the wb-rdlh.1 filing; owner security-design ruling R-B459) is that filing's one
+ * falsifiable sentence, added after the eighth: row A9 binds it to the wb-rdlh.1 provenance cases of
+ * test/workbench-control-provenance.test.ts, which drive that roster's three design-program records through the decision core
+ * and the three adapters; the row's gap writes what those cases evidence and what they do not.
  *
  * Landing-order rule (owner, 2026-10-16): once this lands, any later edit to docs/12 "Authorization design" or
  * "Auditability" reddens it by design, and the editing change updates this census in the same commit.
@@ -75,7 +80,7 @@ interface Row {
   readonly gap?: string;
 }
 
-/** The eight "Authorization design" bullets as the markdown source says them (the A6 text carries inline code). */
+/** The nine "Authorization design" bullets as the markdown source says them (the A6 text carries inline code; the ninth is wb-rdlh.4's). */
 const AUTH_MARKDOWN: readonly string[] = [
   "Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited.",
   "Separate discover, inspect, observe, invoke and control grants.",
@@ -85,6 +90,7 @@ const AUTH_MARKDOWN: readonly string[] = [
   'A control adapter executes only the decision object the decision core minted in this process: `isCoreMintedDecision` (src/workbench/control.ts) is an identity check against a module-private WeakSet, so a copy, a deserialized or audit/journal-replayed receipt and a hand-built look-alike are refused with the fixed text "decision was not minted by the decision core" however exact their shape, and structural vetting stays behind it as defense in depth.',
   "Treat unknown permission data as deny.",
   "Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.",
+  "A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.",
 ];
 /** What a reader sees of each bullet: the markdown source without emphasis and code markers. */
 const renderedOf = (markdown: string): string => markdown.replaceAll("*", "").replaceAll("`", "");
@@ -251,6 +257,18 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
     ],
   },
   {
+    id: "A9",
+    section: "authorization",
+    requirement: auth(8),
+    status: "pinned",
+    gap: "The ninth bullet wb-rdlh.4 added (clause (d) of the wb-rdlh.1 filing): the provenance cases drive that filing's roster of three design-program records (a PASS record, a status UNKNOWN record and an expired guardOrRelyReceipt) through the decision core and the three adapters - no record or permit-shaped wrapper reads minted, a record beside a request's own fields changes no decision (every denial stays the same denial), a record in place of a native value denies, and every adapter refuses each record before any native verb. They evidence the core and the adapters at those three records only; the rendered half (a producer denial beside an UNKNOWN row renders unchanged) is wb-rdlh.1 row B's, a census this table never pins (AC3).",
+    pins: [
+      pin(PROVENANCE, "isCoreMintedDecision answers false for each record and for every permit-shaped wrapper around one, and asking never demotes the genuine permit"),
+      pin(PROVENANCE, "decideControl never turns a denial into a permit when a record rides a request field, and decides a permitted request carrying one beside its fields exactly as without it"),
+      eachPin(PROVENANCE, "$adapter refuses each record, alone and inside a permit look-alike, with the fixed unminted text before any native verb", 3),
+    ],
+  },
+  {
     id: "D1",
     section: "auditability",
     requirement: audit(0),
@@ -283,7 +301,7 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 ]);
 
 /** AC1 literal 1 (rule 16): the row order and the pin count of every row, frozen at the cut's base. */
-const FROZEN_SHAPE: readonly string[] = ["A1:4", "A2:3", "A3:3", "A4a:2", "A4b:0", "A5:2", "A6:8", "A7:2", "A8:4", "D1:2", "D2:0", "D3:4"];
+const FROZEN_SHAPE: readonly string[] = ["A1:4", "A2:3", "A3:3", "A4a:2", "A4b:0", "A5:2", "A6:8", "A7:2", "A8:4", "A9:3", "D1:2", "D2:0", "D3:4"];
 /** AC1 literal 2 (rule 16): one digest per row of its section, requirement and every pin's file, title and minimum, so a swap, a shortened requirement or a re-titled pin reddens the row it sits in. */
 const FROZEN_DIGESTS: readonly string[] = [
   "A1:6e98ff9ecab8",
@@ -295,6 +313,7 @@ const FROZEN_DIGESTS: readonly string[] = [
   "A6:f03c96aa82b9",
   "A7:4c536e87217b",
   "A8:db9a5a6600de",
+  "A9:a0ffde41838c",
   "D1:915189d59af7",
   "D2:7183bbdc6d75",
   "D3:778a0913ba42",
@@ -309,7 +328,7 @@ const digestOf = (row: Row): string =>
 const digestsOf = (rows: readonly Row[]): string[] => rows.map(digestOf);
 
 const UNPINNED_IDS: readonly string[] = ["A4b", "D2"];
-const PINNED_IDS: readonly string[] = ["A1", "A2", "A3", "A4a", "A5", "A6", "A7", "A8", "D1", "D3"];
+const PINNED_IDS: readonly string[] = ["A1", "A2", "A3", "A4a", "A5", "A6", "A7", "A8", "A9", "D1", "D3"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER, ...(entry.suite === undefined ? {} : { suite: entry.suite }), ...(entry.minCases === undefined ? {} : { each: { minCases: entry.minCases } }) });
@@ -358,13 +377,13 @@ const editSection = (section: Section, from: string, to: string) => (current: Se
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
 describe("wb-gs2.3 docs/12 authorization-and-auditability census (report mode): the table and the requirement text", () => {
-  it("AC1: the table holds the twelve frozen rows (nine Authorization design incl. the A4 split, three Auditability), deeply frozen, with unique ids", () => {
+  it("AC1: the table holds the thirteen frozen rows (ten Authorization design incl. the A4 split, three Auditability), deeply frozen, with unique ids", () => {
     expect(isDeepFrozen(ROWS)).toBe(true);
-    expect(ROWS).toHaveLength(12);
-    expect(new Set(ROWS.map(row => row.id)).size).toBe(12);
-    expect(ROWS.filter(row => row.section === "authorization")).toHaveLength(9);
+    expect(ROWS).toHaveLength(13);
+    expect(new Set(ROWS.map(row => row.id)).size).toBe(13);
+    expect(ROWS.filter(row => row.section === "authorization")).toHaveLength(10);
     expect(ROWS.filter(row => row.section === "auditability")).toHaveLength(3);
-    expect(AUTH_MARKDOWN).toHaveLength(8);
+    expect(AUTH_MARKDOWN).toHaveLength(9);
     expect(AUDIT_SENTENCES).toHaveLength(3);
   });
 
@@ -387,6 +406,7 @@ describe("wb-gs2.3 docs/12 authorization-and-auditability census (report mode): 
       A6: auth(5),
       A7: auth(6),
       A8: auth(7),
+      A9: auth(8),
       D1: audit(0),
       D2: audit(1),
       D3: audit(2),
@@ -425,18 +445,23 @@ describe("wb-gs2.3 docs/12 authorization-and-auditability census (report mode): 
     expect(reasons.D2).toContain("keep-unpinned-with-reason");
   });
 
-  it("AC3: the half-coverage limits are written on their rows: A1 owns the before-dispatch case, A4a is the covered half, A8 pins its table, D3 names the provenance flip", () => {
+  it("AC3: the half-coverage limits are written on their rows: A1 owns the before-dispatch case, A4a is the covered half, A8 pins its table, D3 names the provenance flip, A9 names its records and its limit", () => {
     const gap = (id: string): string => ROWS.find(row => row.id === id)?.gap ?? "";
     expect(gap("A1")).toContain("BEFORE dispatch");
     expect(gap("A4a")).toContain("COVERED HALF");
     expect(gap("A8")).toContain("at least 28 cases");
     expect(gap("D3")).toContain("wb-pjj landed");
     expect(gap("A6")).toContain("wb-pjj");
+    expect(gap("A9")).toContain("wb-rdlh.4");
+    expect(gap("A9")).toContain("three records only");
   });
 
-  it("AC3: only the A8 schema template carries an it.each minimum, and it is the real 28-case table", () => {
+  it("AC3: only the A8 schema template and the A9 adapter template carry an it.each minimum, each its real table (28 and 3 cases)", () => {
     const eaches = ROWS.flatMap(row => row.pins.filter(entry => entry.minCases !== undefined).map(entry => [row.id, entry.minCases]));
-    expect(eaches).toEqual([["A8", 28]]);
+    expect(eaches).toEqual([
+      ["A8", 28],
+      ["A9", 3],
+    ]);
   });
 
   it("AC3: no row pins a case from another bead's census, and none pins this file", () => {
@@ -616,11 +641,16 @@ describe("wb-gs2.3 docs drift names the row or the section (synthetic document, 
     expect(named(docsFailures(synthetic(editSection("auditability", "Logs are not a source of entitlement.", "Logs are a source of entitlement."))))).toEqual(["row D3"]);
   });
 
-  it("K4 goes red on the section, naming no row, when a ninth bullet is added (the wb-pjj eighth-bullet class)", () => {
-    const lines = docsFailures(synthetic(editSection("authorization", "- Treat unknown permission data as deny.", "- Treat unknown permission data as deny.\n- A ninth bullet a later change adds.")));
+  it("K4 goes red on the section, naming no row, when a tenth bullet is added (the wb-pjj eighth-bullet and wb-rdlh.4 ninth-bullet class)", () => {
+    const lines = docsFailures(synthetic(editSection("authorization", "- Treat unknown permission data as deny.", "- Treat unknown permission data as deny.\n- A tenth bullet a later change adds.")));
     expect(named(lines)).toEqual([]);
     expect(lines).toHaveLength(1);
     expect(lines[0]).toContain("Authorization design is not exactly its frozen blocks");
+  });
+
+  it("K5 names row A9 (and only it) when the ninth bullet drops its never-softens clause or rewords its authorization-input clause", () => {
+    expect(named(docsFailures(synthetic(editSection("authorization", ", and an UNKNOWN evaluation never softens a denial", ""))))).toEqual(["row A9"]);
+    expect(named(docsFailures(synthetic(editSection("authorization", "is never an authorization input", "is an authorization input"))))).toEqual(["row A9"]);
   });
 
   it("D1 goes red on the section when a weakening qualifier is appended as a lazy continuation of a bullet", () => {
@@ -630,13 +660,13 @@ describe("wb-gs2.3 docs drift names the row or the section (synthetic document, 
   });
 
   it("D2 goes red on the section when a weakening prose paragraph is appended inside Authorization design", () => {
-    const lines = docsFailures(synthetic(editSection("authorization", "fails closed.", "fails closed.\n\nThese rules are advisory: a trusted local workflow script may bypass any of them.")));
+    const lines = docsFailures(synthetic(editSection("authorization", "an existing denial.", "an existing denial.\n\nThese rules are advisory: a trusted local workflow script may bypass any of them.")));
     expect(lines).toHaveLength(1);
     expect(lines[0]).toContain("the section has 2 blocks; the census pins 1");
   });
 
   it("D3 goes red when a weakening ### subsection is appended inside a section (it belongs to the section)", () => {
-    const lines = docsFailures(synthetic(editSection("authorization", "fails closed.", "fails closed.\n\n### Exceptions\n\nA host may skip these rules.")));
+    const lines = docsFailures(synthetic(editSection("authorization", "an existing denial.", "an existing denial.\n\n### Exceptions\n\nA host may skip these rules.")));
     expect(lines.length).toBeGreaterThan(0);
   });
 

@@ -11,7 +11,8 @@
  * helper as exactly its typescript import and its four declarations.
  *
  * The helper's readers are wb-ouo3 cut #5's code (afda7b0d8d45), byte for byte (the CODE cases), shared so the docs06
- * census's fail-closed leg can ride them. wb-ouo3 is parked behind this bead and its cut #5 census is unlanded, so this
+ * census's fail-closed leg can ride them. wb-ouo3 was parked behind this bead, its cut #5 census unlanded, when this
+ * census was cut, and wb-ouo3's restatement (R-B309: its cut #7, which restates this sentence) rides the helper; this
  * census claims these plants and these readings, not that census's leg.
  *
  * PINNED READER SET (every case named here is a registered test of this file; observed at this cut: 20 passed (20)):
@@ -23,7 +24,9 @@
  *   twin's line in place) where the gate wrote one, and as the row's S- plants spell it from each module kind that block
  *   holds (a node: builtin, a package, a relative module; row MI-NODE-TYPEONLY also plants an aliased inline type-only
  *   specifier and a type-only clause of a node: builtin); row MI-PLANTED plants that block itself (P-RECORD, whose
- *   reading is that census's MODULE_IMPORTS_OF_RECORD) and its "the modules loaded" row's loads.ts (P-LOADS).
+ *   reading was that census's MODULE_IMPORTS_OF_RECORD at cut #5; from wb-ouo3's restatement that record holds the
+ *   helper's load as an eighth entry, last, and P-RECORD's reading is the record less that entry - pinned by that
+ *   census's restatement row (C), NOT CLAIMED here) and its "the modules loaded" row's loads.ts (P-LOADS).
  *   Falsifier: the row's member, applied to the helper.
  * - WRITES, the cases "WRITES '<row>': propertyWrites reads each planted text as exactly its pinned reading" (2 rows, 9
  *   plants): likewise for propertyWrites. Row PW-COMPUTED-KEY plants an object pattern property with a computed key
