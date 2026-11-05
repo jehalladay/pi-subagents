@@ -1563,7 +1563,23 @@
        ]
       }
      },
-     "content": [],
+     "content": {
+      "findings": [],
+      "read": true,
+      "held": true,
+      "frozen": true,
+      "length": 4294967295,
+      "listing": [
+       "length",
+       "4294967294",
+       "4294967293"
+      ],
+      "absent": [
+       "ends",
+       "ends",
+       "probed"
+      ]
+     },
      "judge": {
       "ordered": {
        "K-WIRING": "ok",
@@ -1661,8 +1677,139 @@
        }
       },
       "content": {
-       "plain": [],
-       "probed": []
+       "plain": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 12,
+        "listing": [
+         "0",
+         "1",
+         "2"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "ends"
+        ]
+       },
+       "probed": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 12,
+        "listing": [
+         "length",
+         "11",
+         "10"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "oversized": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 4294967295,
+        "listing": [
+         "length",
+         "11",
+         "10"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "twins": {
+        "misquoted": {
+         "text": "misquoted s12",
+         "findings": [
+          "source:s12"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "11",
+          "10"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "another": {
+         "text": "source of s1",
+         "findings": [
+          "source:s12"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "11",
+          "10"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "appended": {
+         "text": "source of s12 ",
+         "findings": [
+          "source:s12"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "11",
+          "10"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "empty": {
+         "text": "",
+         "findings": [
+          "source:s12"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "11",
+          "10"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        }
+       }
       }
      },
      "101": {
@@ -1744,8 +1891,139 @@
        }
       },
       "content": {
-       "plain": [],
-       "probed": []
+       "plain": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 101,
+        "listing": [
+         "0",
+         "1",
+         "2"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "ends"
+        ]
+       },
+       "probed": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 101,
+        "listing": [
+         "length",
+         "100",
+         "99"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "oversized": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 4294967295,
+        "listing": [
+         "length",
+         "100",
+         "99"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "twins": {
+        "misquoted": {
+         "text": "misquoted s101",
+         "findings": [
+          "source:s101"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "100",
+          "99"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "another": {
+         "text": "source of s1",
+         "findings": [
+          "source:s101"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "100",
+          "99"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "appended": {
+         "text": "source of s101 ",
+         "findings": [
+          "source:s101"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "100",
+          "99"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "empty": {
+         "text": "",
+         "findings": [
+          "source:s101"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "100",
+          "99"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        }
+       }
       }
      },
      "1000": {
@@ -1827,8 +2105,139 @@
        }
       },
       "content": {
-       "plain": [],
-       "probed": []
+       "plain": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 1000,
+        "listing": [
+         "0",
+         "1",
+         "2"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "ends"
+        ]
+       },
+       "probed": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 1000,
+        "listing": [
+         "length",
+         "999",
+         "998"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "oversized": {
+        "findings": [],
+        "read": true,
+        "held": true,
+        "frozen": true,
+        "length": 4294967295,
+        "listing": [
+         "length",
+         "999",
+         "998"
+        ],
+        "absent": [
+         "ends",
+         "ends",
+         "probed"
+        ]
+       },
+       "twins": {
+        "misquoted": {
+         "text": "misquoted s1000",
+         "findings": [
+          "source:s1000"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "999",
+          "998"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "another": {
+         "text": "source of s1",
+         "findings": [
+          "source:s1000"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "999",
+          "998"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "appended": {
+         "text": "source of s1000 ",
+         "findings": [
+          "source:s1000"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "999",
+          "998"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        },
+        "empty": {
+         "text": "",
+         "findings": [
+          "source:s1000"
+         ],
+         "read": true,
+         "held": true,
+         "frozen": true,
+         "length": 4294967295,
+         "listing": [
+          "length",
+          "999",
+          "998"
+         ],
+         "absent": [
+          "ends",
+          "ends",
+          "probed"
+         ]
+        }
+       }
       }
      }
     }

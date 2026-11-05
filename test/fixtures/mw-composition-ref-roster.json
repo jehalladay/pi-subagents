@@ -4029,6 +4029,44 @@
     ],
     "misplaced": []
    },
+   "lead-no-open": {
+    "runs": [
+     "x)"
+    ],
+    "misplaced": []
+   },
+   "lead-no-close": {
+    "runs": [
+     "(x"
+    ],
+    "misplaced": []
+   },
+   "lead-no-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
+   "lead-glued": {
+    "runs": [
+     "(x)alpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "lead-two-spaces": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-space-kept": {
+    "runs": [],
+    "misplaced": []
+   },
+   "lead-no-body": {
+    "runs": [],
+    "misplaced": []
+   },
    "no-lead": {
     "runs": [],
     "misplaced": []
@@ -4173,7 +4211,11 @@
     "0020"
    ],
    "leadSecond": [],
-   "leadBefore": []
+   "leadBefore": [],
+   "leadAfter": [],
+   "leadGlued": [
+    "0020"
+   ]
   }
  }
 }

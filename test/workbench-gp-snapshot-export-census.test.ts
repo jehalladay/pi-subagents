@@ -302,8 +302,10 @@
  *    over the member's TypeScript parse, held to the roster as the witnesses' codeLive), so a member silenced where no code runs
  *    reds its row; the full-surface row pins every Q1 and Q2 source member silenced in each SILENCINGS place as reading nothing
  *    through the code reader, the code reader composing no literal token but a double-quoted string (COMPOSE_PLANTS), its parse
- *    kind pinned on each of its readers (PARSE_PLANTS, JSX_SHAPED; wb-4z24's F1) and its shape reader reading no key from a
- *    type literal's members or a destructuring's bindings (SHAPE_QUIET; wb-4z24's F2). A
+ *    kind pinned on each of its readers (PARSE_PLANTS, JSX_SHAPED; wb-4z24's F1) and its shape reader reading no key from
+ *    SHAPE_QUIET's five plants, each at its own place (wb-4z24's F2 and wb-oddy's F1: a type alias's type literal, a type
+ *    literal as a type reference's argument and an interface's members, a variable declaration's and a parameter's object
+ *    binding pattern). A
  *    member whose code is made unreachable still reads live (R-UNREACHABLE, FULL SURFACE).
  * FAIL CLOSED (R-B73, the final cut's fail-closed core, in R-B67's form): every claim above is exactly its pinned set, and
  * outside it the census refuses with a typed refusal instead of passing. G1's fail-closed reader (unpinnedSiteFindings) and
@@ -395,10 +397,40 @@
  * (codeComposedOf: GraphPolicy, a site word; codeShapeKeysOf: four keys of the vendored v1 document) as its TypeScript parse
  * reads it and, under that reader's TSX control, as nothing (a TSX parse reads a type assertion as a JSX element: its tokens
  * hold JSX text, the TypeScript parse's none), so the code
- * reader's parse kind is pinned on each of its readers (F1); and SHAPE_QUIET's two plants, keys of the vendored v1 document
- * held as a type literal's members (PropertySignature names) and as a destructuring's bindings (BindingElement names), each
- * held name read by its node kind (heldNamesOf) and every one of them a key of the document, read through codeShapeKeysOf as
- * no key, with the raw proxy's reading recorded beside (F2). Two named residuals
+ * reader's parse kind is pinned on each of its readers (F1); and SHAPE_QUIET's five plants (F2, and wb-oddy's F1, F2 and F4:
+ * the R694 follow-up from wb-4z24's landing 791), keys of the vendored v1 document written where no object literal assigns
+ * them, one plant per place, the place each holds its first name at (quietPlacesOf, which reads every held name's place, each
+ * held to the roster): PropertySignature names of a type alias's type literal, of a type literal that is a type reference's
+ * argument and of an interface's members, and BindingElement names of a variable declaration's and of a parameter's object
+ * binding pattern; each plant answers the shape-reader survivor its R694 row names in the tracker export and holds the node
+ * kind that row names for it (quietSurvivorsOf: wb-4z24's GP20-U5-CSK-READS-TYPE-MEMBERS and GP20-U5-CSK-READS-BINDINGS,
+ * wb-oddy's G-P1, G-P2 and G-P3), every such survivor answered once, QUIET_BEADS held to the R694 follow-up chain of the
+ * tracker export's titles (wb-4z24's names wb-0lf.8, wb-oddy's wb-4z24 and the control's row wb-rzqi's wb-oddy as the row it
+ * follows up), and the reader's reading of QUIET_CONTROL pinned, an R694-shaped control note each of whose lines tries one
+ * of the reader's rules on the form that line writes, so the rules are pinned on those forms only (wb-rzqi's F1 and F2;
+ * wb-04yp's F1, the R694 follow-up from wb-rzqi's landing 883, narrows the claim to those forms; quietSurvivorsOf's docstring
+ * names each rule's control survivors): the control reads, in order, G-C1, G-C3, GP9-C4, G-C7, G-C9, G-C8, G-C16 and G-C17,
+ * each with its kind, and nothing else - not the survivor of either of its lines of another role, the one that starts
+ * "[owner-routed: OWNER WEIGH-IN] - " (G-C5) and the one that starts "[not carried: INFO] - " and quotes "[rides] - "
+ * mid-line (G-C15), not its carried line after its first line that starts "Context: " (G-C6), where reading stops, though
+ * its carried line holding "Context: " mid-line is read (G-C17), and none of the five words of its name-shape line as a new
+ * name (N-C10, GP-C11, G-c12, XG-C13, G-C14x; G-C14x read as its prefix G-C1, a name already read, would read nothing new);
+ * each kind is the first QUIET_KINDS kind written after the survivor's first mention and before the line's next mention of
+ * another survivor, as the control writes kinds: G-C1's first of two, none for G-C2 before G-C3's mention, G-C7's past a
+ * re-mention of its own name and G-C16's inside the longer word BindingElements' - each kind in its own case with no letter
+ * on its left, ending at most 59 characters after its mention's end with no ";" or ". " before it, and no window writing
+ * its first kind again after the other; G-C8, kindless at its first mention on a line that names it again with a kind, is
+ * read from its later line only; and G-C1, named again on a later line with its first kind, is read once; wb-4z24's and
+ * wb-oddy's carried lines pin the names and kinds they write in those same forms (GP20-U5-CSK-READS-TYPE-MEMBERS and
+ * GP20-U5-CSK-READS-BINDINGS in hyphen-joined parts, G-P1, G-P2 and G-P3); a form of those rules that none of these lines
+ * writes is NOT CLAIMED (NOT CLAIMED names wb-04yp's F1 members); and the control answers every member wb-rzqi's row names
+ * before its first Context: line (controlMembersOf: its F1 line's five reader mutants, its F2 line's four control survivors
+ * and two kind-order mutants), each by the QUIET_CONTROL_ANSWERS survivor written on the control, each F1 reader mutant and
+ * each F2 kind-order mutant by a word the control writes on one line only (the kind-order mutants' since wb-nk7k, the R694
+ * follow-up from wb-04yp's landing 927) and each control survivor by itself;
+ * each held name is read by its node kind (heldNamesOf), the plant read as the other kind holding none, and every one of
+ * them is a key of the document; and each plant is read through codeShapeKeysOf as no key, with the raw proxy's reading
+ * recorded beside. Two named residuals
  * carry their pinned quiet readings in the same row: R-NON-ASCII-PART (G1, refusal #5's F6: a site-word part with one letter
  * written outside ASCII, another script's look-alike or a fullwidth form, built through String.fromCodePoint, reads as no
  * site word through either G1 reader, while its Latin spelling reads as the word) and
@@ -419,7 +451,7 @@
  * edits), and `src/workbench/q1-shape.ts line-comment=FC-S2-Q1-COMMENTED` and
  * `src/workbench/q2-joined.ts line-comment=FC-S2-Q2-COMMENTED` (FAIL_CLOSED's two commented-out S2 member edits; its six
  * other S2 member edits, wb-0x41's, are none of the full surface's forms). Every other full-surface
- * form is none of the core's: the row compares each of surfaceForms' 675 forms (a spelling, an edit of the live page or a
+ * form is none of the core's: the row compares each of surfaceForms' 678 forms (a spelling, an edit of the live page or a
  * member text) with each of coreForms' 209 (the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms
  * refuse; the edits DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members make; the residual source members'
  * texts and FAIL_CLOSED's member edits of them) by coreOverlapOf, text against text, holds both lists to the tables they are
@@ -464,8 +496,7 @@
  * gRaphPolicy or eXecutorRequest; a GraphPolicy owner cell in a case mix such as GRAPHpolicyCLI; a lead or an ownership block
  * in another syntax form; another arrangement of the section's tables: refused by the fail-closed readers or by G3's
  * default-deny rules, pinned on no form); a coordinated removal, from every literal of these files and from the roster
- * together, of a residual member, of the fail-closed row, of a SHAPE_QUIET plant (wb-4z24's F2: no anchor binds its node
- * kinds), or of a full-surface member whose rule or
+ * together, of a residual member, of the fail-closed row, or of a full-surface member whose rule or
  * family another member of its table still covers (a lead of SURFACE_LEADS beside another lead of its gfm rule, one of
  * SURFACE_RUN_LENGTHS' lengths or of the two mixed runs, a SURFACE_POSITIONS place after the first, a NON_ASCII_PARTS member,
  * the regular-expression silencing): the census's own choices, whose rules, families and characters marked's grammar, the
@@ -491,7 +522,44 @@
  * in a module (COMPOSE_PLANTS pins the kinds, not the places); a parse kind other
  * than TypeScript's and TSX's (PARSE_PLANTS separate those two only); a key written under another node kind than an object
  * literal's property assignments and SHAPE_QUIET's two (a method, an accessor, a class or enum member, a parameter) or under a
- * string-literal, numeric or computed name (codeShapeKeysOf reads identifier names only).
+ * string-literal, numeric or computed name (codeShapeKeysOf reads identifier names only); a name held in one of SHAPE_QUIET's
+ * two node kinds at a place no plant's text holds one at (SHAPE_QUIET pins its kinds at its plants' places, not every place:
+ * a type literal annotating a variable, a parameter or a return type, or a member of a union or an intersection; a binding
+ * nested in another binding or in an array binding pattern); a coordinated edit of one SHAPE_QUIET plant's text together
+ * with its place, its frozen literal and its roster reading in these files, to a place no other plant holds (the rows anchor
+ * each plant's survivor and node kind, and quietPlacesOf its place among the plants', not its text); a coordinated edit of a
+ * QUIET_CONTROL line or clause whose survivor answers no member wb-rzqi's row names (G-C3's clause, GP9-C4's line, G-C1's
+ * second mention and its second kind, G-C8's later line, the name-shape line's words but N-C10, the two Context: lines) or of
+ * an answering line's text keeping its survivor, together with the control's frozen literal, its reading and the roster in these
+ * files, and a coordinated edit of quietSurvivorsOf together with the control's reading and the roster that changes no
+ * reading of the export's rows (the row anchors which members the control answers, not the text that tries each rule: the
+ * reader mutants each line kills are this cut's battery's, not a reading of the census); a single edit of quietSurvivorsOf or
+ * SURVIVOR_NAME that changes no reading of QUIET_CONTROL's lines or of wb-4z24's and wb-oddy's carried lines, so that it reads
+ * differently only a form none of those lines writes (wb-04yp's F1: the gate's one-edit members of landing 883 - a role
+ * prefix with no dash after the role, after leading whitespace, in other letter case, of another role word or of another
+ * word that opens with the role's stem, G10-R1-NO-DASH, G10-R1-TRIM, G10-R1-CASE, G10-R1-ANY-WORD-ROLE and G10-R1-ROLE-STEM;
+ * a stop line spelled "Context:" with no space, in other letter case, after leading whitespace or with another label word,
+ * G10-R2-NO-SPACE, G10-R2-CASE, G10-R2-TRIM and G10-R2-ANY-LABEL; a name with a part in small letters after a hyphen, with G
+ * and digits or G, another capital than P and digits before its hyphen, with an underscore in a part or after an underscore or
+ * a digit, or read as its prefix where a letter follows the prefix's digits, as G-C14x would be as G-C1, a name the control
+ * already reads, G10-R3-LOWER-LATER-PARTS, G10-R3-G-DIGITS, G10-R3-GX-DIGITS, G10-R3-UNDERSCORE, G10-R3-LEFT-NONLETTER and
+ * G10-R3-RIGHT-NONLETTER; a kind in other letter case, after a letter, in a window that writes the first kind again after the
+ * other, past a ";" or a ". ", or ending more than 59 characters after its mention, G10-R4-CASE, G10-R4-LEFT-BOUNDARY,
+ * G10-R4-LAST-OCCURRENCE-ORDER, G10-R4-SEMICOLON-BOUND, G10-R4-SENTENCE-BOUND and G10-R4-WINDOW-CAP-60 with its -80, -120,
+ * -200 and -400 sizes; and a later line naming a survivor already read with another kind, G10-R6-LAST-READING-WINS); a
+ * re-point of a member's answer, in QUIET_CONTROL_ANSWERS and the census's frozen literal of it, to another word the control
+ * writes on one line only, together with the removal of the line that answered it from every literal of these files and the
+ * roster (wb-04yp's F2: which line answers which member is this census's own choice, held by those two literals only, while
+ * wb-rzqi's row anchors the members; the gate's G10-QA-REPOINT-G-C7 and G10-QA-REPOINT-G-C15 re-point to G-C1, which the
+ * control writes on two lines, and red at the one-line check, and wb-04yp's gate's G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and
+ * G207-QA-KIND-ORDER-REPOINT-TO-G-C8 re-point both kind-order mutants to G-C1 and to G-C8, each written on two lines, and red
+ * at the kind-order one-line check, G-C16's line removed or not, wb-nk7k's F1, while a re-point to G-C1 once G-C1's second
+ * mention is removed, G-C1 then written on one line, is a re-point to a one-line word; an edit of one of those one-line checks
+ * or of the self-answer check together with a re-point it would refuse is NOT CLAIMED as well); controlMembersOf's reading of a
+ * note but wb-rzqi's and the chain's reading of a title but its three rows' (each is pinned on those rows only); and a
+ * coordinated edit of the listing re-read's control (its swap of the two listing forms' anchors together with the form it
+ * expects named) in this file (the control is this census's own choice: wb-0x41's row anchors the hollowing U1 names and each
+ * form's git listings its links, not the swap).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
@@ -502,9 +570,10 @@
  * removed paths, and each one's outside anchor), LISTED_SCOPES and the full surface's tables (its case forms, run lengths,
  * runs, gaps, spellings with their family counts, D3's spellings, the non-ASCII residual's members, the leads, the ownership
  * blocks with their places, the owner-cell spellings, the rules outside, the silencings and the unreachable form, the literal
- * kinds with the kinds outside, the JSX-shaped module, the compose plants, the parse plants, the shape-quiet plants and the
- * core overlap) as literals; the judged set (every row's id, label
- * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
+ * kinds with the kinds outside, the JSX-shaped module, the compose plants, the parse plants, the shape-quiet plants with
+ * their places and the survivors they answer, their node kinds and rows, the survivor reader's control note, the control's row
+ * with the survivors answering its members, and the core overlap) as literals; the judged set
+ * (every row's id, label and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
  * members, FAIL_CLOSED's refusals, one reading per form, the full-surface row's readings, each source member's code
  * reading among the Q1 and Q2 witnesses, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-snapshot-export-roster.json.
@@ -526,25 +595,37 @@
  * written with its pattern) - every form answers exactly one of those twenty-two names and every name is answered, a form
  * answering a refusal #5 item holds its line's claim, a form answering a refusal #1 hollowing refuses with the typed refusal
  * its line names, each S2 form answering a U2 hollowing is that hollowing's falsifier (its pattern, read from the export,
- * counts none of the openers the form's text holds), the listing form answering U1's holds links only git's index lists, and
+ * counts none of the openers the form's text holds), the listing form answering U1's holds links only git's index lists and
+ * is that hollowing's falsifier (of the links each listing form's refusal names, its scratch listing re-read without --cached,
+ * its untracked premise, leaves out exactly its tracked links, FC-LISTING-TRACKED's four and FC-LISTING-SYMLINK's none, and
+ * the form answering U1 leaves out at least one, so the two listing forms' anchors swapped is refused, that swap held as the
+ * check's control; wb-m2gs, the R694 follow-up from wb-0x41's landing 802, F1), and
  * an S2 form edits a member of the family its anchor names or, answering a refusal #1 hollowing, a residual source member;
  * marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
  * is pinned by; TypeScript's SyntaxKind enum (FirstLiteralToken to LastTemplateToken) holds the literal token kinds
  * COMPOSE_PLANTS covers; the residual source members (RESIDUALS' Q1 and Q2) hold the live kinds, and so the code readers,
- * PARSE_PLANTS covers, one plant each; and the core's own tables (G1's and D3's spelling tables, FAIL_CLOSED, DOCS_PLANTS and
+ * PARSE_PLANTS covers, one plant each; wb-4z24's and wb-oddy's rows in the tracker export, whose carried finding lines name the
+ * shape-reader survivors SHAPE_QUIET's plants answer, each with the node kind it makes the code reader read (quietSurvivorsOf),
+ * and whose titles, with wb-rzqi's, hold the R694 follow-up chain from wb-0lf.8 QUIET_BEADS lists; wb-rzqi's row, whose lines
+ * before its first Context: line name the reader mutants and control survivors QUIET_CONTROL answers (controlMembersOf);
+ * and the core's own tables (G1's and D3's spelling tables, FAIL_CLOSED, DOCS_PLANTS and
  * RESIDUALS) hold the forms CORE OVERLAP is computed against. So a judged row of ROWS (A-G) or a FAIL_CLOSED form removed
  * from every literal of this file, the helper and the roster together still reds, and so do the full-surface row, a member
  * of a generated full-surface spelling
  * table (SURFACE_SITE_SPELLINGS, SURFACE_REQUEST_SPELLINGS, SURFACE_OWNERS), which the full-surface row derives again from the
  * word parts and the tables it is built from, a full-surface lead or ownership block that is its gfm rule's only one at its
  * place, a silencing of a WORD_PLACES place and a SURFACE_CASES form, which wb-0lf.8's row names, a compose plant, each its
- * literal kind's only one, a parse plant, each its live kind's only one, and a CORE_OVERLAP pair, which the full-surface row
- * computes again from the tables; these anchors bind the full surface's rules, families and generated products and
- * FAIL_CLOSED's forms, not a member another member of its table still covers, a SHAPE_QUIET plant, the residual members or
- * the fail-closed row (NOT CLAIMED, refusal #1's F1). The last case reads the vitest task tree (every registered test, in
- * roster order, in run mode, ran before it), REACHED (every pin reached its witness compare, and each compare's result) and
- * ENDS (wb-0x41 cut #2, refusal #1's F1: the rule 16 and outside-anchors cases reached their ends, the fail-closed case each
- * of its five blocks), and holds its own assertion count (expect.assertions).
+ * literal kind's only one, a parse plant, each its live kind's only one, a SHAPE_QUIET plant, each its survivor's only answer,
+ * a QUIET_BEADS row, which the chain's titles name, a QUIET_CONTROL line whose survivor answers a member wb-rzqi's row names
+ * (unless that member's answer is re-pointed to another word the control writes on one line only: NOT CLAIMED, wb-04yp's F2),
+ * and a CORE_OVERLAP pair, which the full-surface row
+ * computes again from the tables; these anchors bind the full surface's rules, families and generated products,
+ * SHAPE_QUIET's survivors, QUIET_BEADS, the control's answers and FAIL_CLOSED's forms, not a member another member of its
+ * table still covers, the residual members or the fail-closed row (NOT CLAIMED, refusal #1's F1). The last case reads the
+ * vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED (every pin reached its
+ * witness compare, and each compare's result) and ENDS (wb-0x41 cut #2, refusal #1's F1: the rule 16 and outside-anchors
+ * cases reached their ends, the fail-closed case each of its five blocks; wb-04yp's F3: the full-surface case its end, after
+ * its roster compare), and holds its own assertion count (expect.assertions).
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI exporter, seam, package or fake binary.
  */
@@ -579,6 +660,7 @@ import {
   commentFindings,
   commentOpeners,
   composedOf,
+  controlMembersOf,
   controlProof,
   coreForms,
   coreOverlapOf,
@@ -601,6 +683,7 @@ import {
   type Exported,
   executorRequestNamers,
   exportFindings,
+  exportLinesOf,
   FACETS,
   FAIL_CLOSED,
   type FailClosedListing,
@@ -650,7 +733,14 @@ import {
   placedSites,
   presentedBytes,
   probeValue,
+  QUIET_BEADS,
+  QUIET_CONTROL,
+  QUIET_CONTROL_ANSWERS,
+  QUIET_CONTROL_BEAD,
+  QUIET_KINDS,
   QUOTES,
+  quietPlacesOf,
+  quietSurvivorsOf,
   READ_CALLS,
   READ_METHODS,
   REFUSAL_ITEMS_BEAD,
@@ -907,11 +997,12 @@ const REACHED: { pin: string; same: boolean }[] = [];
 /**
  * The reach markers of the cases that are no pin (wb-0x41 cut #2, refusal #1's F1: an early return before a case's last block
  * read green): the rule 16 and outside-anchors cases mark their ends, the fail-closed case the end of each of its five blocks,
- * and the roster case holds the list, so a return before any marked line reds it.
+ * the full-surface case its end after its roster compare (wb-04yp's F3: a return before its quiet chain or its roster compare
+ * read green), and the roster case holds the list, so a return before any marked line reds it.
  */
 const ENDS: string[] = [];
 /** The markers ENDS holds once every case ran to its end, in run order. */
-const ENDS_EXPECTED = ["rule 16", "outside anchors", "fail closed: tree", "fail closed: forms", "fail closed: anchors", "fail closed: hollowings", "fail closed: families"] as const;
+const ENDS_EXPECTED = ["rule 16", "outside anchors", "fail closed: tree", "fail closed: forms", "fail closed: anchors", "fail closed: hollowings", "fail closed: families", "full surface"] as const;
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, (context: TestContext) => Json | Promise<Json>>> = {
@@ -1604,9 +1695,45 @@ describe(SUITE, () => {
       'type-assertion-composed:composed:"export const label = <string>\\"Graph\\" + \\"Policy\\";\\n"',
       'type-assertion-shape:shape:"export const shape = <unknown>{ schema_ref: { namespace: \\"x\\" }, entities: [], relations: [] };\\n"',
     ]);
-    expect(SHAPE_QUIET.map(plant => `${plant.id}:${plant.holds}:${JSON.stringify(plant.text)}`)).toEqual([
-      'type-literal:PropertySignature:"export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\\n"',
-      'destructuring:BindingElement:"export const keysOf = (input: Record<string, unknown>): unknown[] => {\\n  const { schema_ref, entities, relations } = input;\\n  return [schema_ref, entities, relations];\\n};\\n"',
+    expect(SHAPE_QUIET.map(plant => `${plant.id}:${plant.holds}:${plant.place}:${plant.answers.bead}:${plant.answers.name}:${JSON.stringify(plant.text)}`)).toEqual([
+      'type-literal:PropertySignature:TypeAliasDeclaration:wb-4z24:GP20-U5-CSK-READS-TYPE-MEMBERS:"export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\\n"',
+      'destructuring:BindingElement:VariableDeclaration:wb-4z24:GP20-U5-CSK-READS-BINDINGS:"export const keysOf = (input: Record<string, unknown>): unknown[] => {\\n  const { schema_ref, entities, relations } = input;\\n  return [schema_ref, entities, relations];\\n};\\n"',
+      'parameter-destructuring:BindingElement:Parameter:wb-oddy:G-P1:"export const keysOf = ({ schema_ref, entities, relations }: Record<string, unknown>): unknown[] => [schema_ref, entities, relations];\\n"',
+      'type-argument:PropertySignature:TypeReference:wb-oddy:G-P2:"export type Snapshot = Readonly<{ schema_ref: { namespace: string }; entities: unknown[]; relations: [] }>;\\n"',
+      'interface:PropertySignature:InterfaceDeclaration:wb-oddy:G-P3:"export interface Snapshot {\\n  schema_ref: { namespace: string };\\n  entities: unknown[];\\n  relations: [];\\n}\\n"',
+    ]);
+    expect([[...QUIET_KINDS], [...QUIET_BEADS]]).toEqual([
+      ["PropertySignature", "BindingElement"],
+      ["wb-4z24", "wb-oddy"],
+    ]);
+    expect(QUIET_CONTROL.split("\n")).toEqual([
+      "[leads] - G-C1 (BindingElement names, then PropertySignature names) and G-C2, a parse survivor; G-C3 reads PropertySignature names.",
+      "[rides] - GP9-C4 reads PropertySignature names; G-C1 reads BindingElement names again.",
+      "[owner-routed: OWNER WEIGH-IN] - G-C5 reads BindingElement names.",
+      "[leads] - G-C7 (G-C7 is named again before its kind) reads BindingElement names.",
+      "[rides] - G-C8, then G-C9 reads PropertySignature names; G-C8 reads BindingElement names.",
+      "[leads] - G-C8 reads PropertySignature names on a later line.",
+      "[rides] - N-C10 reads BindingElement names; GP-C11 reads PropertySignature names; G-c12 reads BindingElement names; XG-C13 reads PropertySignature names; G-C14x reads BindingElement names.",
+      "[not carried: INFO] - this line quotes '[rides] - G-C15 reads PropertySignature names.'",
+      "[rides] - G-C16 reads BindingElements' names, not PropertySignature names.",
+      "[leads] - G-C17 reads BindingElement names (a Context: written mid-line).",
+      "Context: the control's end.",
+      "[leads] - G-C6 reads PropertySignature names.",
+      "Context: the control's second Context: line.",
+    ]);
+    expect([QUIET_CONTROL_BEAD, ...QUIET_CONTROL_ANSWERS.map(entry => `${entry.name}=${entry.survivor}`)]).toEqual([
+      "wb-rzqi",
+      "G2-QS-SAME-NAME-BOUND=G-C7",
+      "G2-QS-REMENTION-FALLBACK=G-C9",
+      "G2-QS-CONTEXT-ANYWHERE=G-C17",
+      "G2-QS-ROLE-ANYWHERE=G-C15",
+      "G2-QS-NAME-LOOSE=N-C10",
+      "G-C5=G-C5",
+      "G-C6=G-C6",
+      "G-C2=G-C2",
+      "G-C1=G-C1",
+      "F-QS-LAST-KIND=G-C16",
+      "F-QS-ENUM-ORDER=G-C16",
     ]);
     expect(CORE_OVERLAP.map(entry => `${entry.form}=${entry.core.join(",")}`)).toEqual([
       "GraphPolicy/none/camel=FC-G1-CAMEL,FC-G1-EVERY-MATCH",
@@ -1793,6 +1920,26 @@ describe(SUITE, () => {
       }),
     );
     expect(indexOnly, "the listing form answering U1's hollowing holds links only git's index lists (the listing's tracked half): each of its tracked links, which ls-files --cached reads and no untracked listing does").toEqual(Object.fromEntries(answering.flatMap(form => (form.kind === "listing" ? [[form.id, Object.keys(form.links).filter(path => form.tracked.includes(path)).sort()] as const] : []))));
+    // wb-m2gs (the R694 follow-up from wb-0x41's landing 802, F1): the listing form answering U1's hollowing is that hollowing's
+    // falsifier. Each listing form's refused links that its scratch listing re-read without --cached leaves out (its untracked
+    // premise, ls-files --others --exclude-standard: the reader's own listing with L2-NR-NO-CACHED's edit) are exactly its
+    // tracked links, and the form answering U1 must leave out at least one; FC-LISTING-SYMLINK, whose links git's index does not
+    // hold, leaves out none, so the two listing forms' anchors swapped (the gate's GP15-FC-ANCHOR-SWAP-LISTING) is refused, and
+    // that swap is this block's control.
+    const uncached = Object.fromEntries(
+      FAIL_CLOSED.flatMap(form => {
+        if (form.kind !== "listing") return [];
+        const premise = premises.get(form.id) ?? { index: [], untracked: [] };
+        const refusal = (refused[form.id] as { readonly refusal?: readonly string[] } | undefined)?.refusal ?? [];
+        return [[form.id, findingPaths(refusal).filter(path => !premise.untracked.includes(path)).sort()] as const];
+      }),
+    );
+    expect(uncached, "each listing form's refused links that its scratch listing re-read without --cached leaves out (L2-NR-NO-CACHED: the reader's listing less --cached, the form's untracked premise) are exactly its tracked links: FC-LISTING-TRACKED's four, FC-LISTING-SYMLINK's none").toEqual(Object.fromEntries(FAIL_CLOSED.flatMap(form => (form.kind === "listing" ? [[form.id, Object.keys(form.links).filter(path => form.tracked.includes(path)).sort()] as const] : []))));
+    const unfalsifying = (forms: typeof FAIL_CLOSED): string[] => forms.filter(form => form.kind === "listing" && form.anchor.bead === CARRIED_BEAD && lineOf.has(form.anchor.name) && (uncached[form.id] ?? []).length === 0).map(form => form.id);
+    expect(unfalsifying(FAIL_CLOSED), "so the listing form answering U1's hollowing is that hollowing's falsifier: its scratch listing re-read without --cached leaves out at least one link its refusal names").toEqual([]);
+    const listings = FAIL_CLOSED.filter((form): form is FailClosedListing => form.kind === "listing");
+    const swapped = FAIL_CLOSED.map(form => (form.kind === "listing" ? { ...form, anchor: listings[listings.length - 1 - listings.indexOf(form)]?.anchor ?? form.anchor } : form));
+    expect(unfalsifying(swapped), "and the control: with the two listing forms' anchors swapped (the gate's GP15-FC-ANCHOR-SWAP-LISTING), the form then answering U1, FC-LISTING-SYMLINK, leaves out none and is named").toEqual(["FC-LISTING-SYMLINK"]);
     ENDS.push("fail closed: hollowings");
     const familyOf = (name: string): string => /(?:^|-)(Q\d+)(?:-|$)/.exec(name)?.[1] ?? "";
     const strays = FAIL_CLOSED.flatMap(form => {
@@ -1811,7 +1958,8 @@ describe(SUITE, () => {
     expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "the src listing read the tree").toBe(true);
     // The outside anchor: wb-0lf.8's row in the tracker export, whose U1-U4 lines name refusal #5's reader hollowings and whose
     // U5 line names the residual families its liveness reading covers.
-    const description = descriptionOf(textOf(EXPORT), SURFACE_BEAD);
+    const exported = textOf(EXPORT);
+    const description = descriptionOf(exported, SURFACE_BEAD);
     expect(description, `${SURFACE_BEAD}'s description was read from the tracker export`).toBeDefined();
     const items = surfaceItems(description ?? "");
     const sources = Object.entries(RESIDUALS).flatMap(([family, members]) => members.flatMap(member => (member.kind === "source" ? [{ family, member }] : [])));
@@ -2036,17 +2184,119 @@ describe(SUITE, () => {
       "type-assertion-composed": { ts: "GraphPolicy", tsx: "", words: ["GraphPolicy"], jsx: [[], ["JsxText"]] },
       "type-assertion-shape": { ts: ["schema_ref", "namespace", "entities", "relations"], tsx: [], jsx: [[], ["JsxText", "JsxText"]] },
     });
-    // wb-4z24's F2 (SHAPE_QUIET): keys of the vendored v1 document held as a type literal's members and as a destructuring's
-    // bindings, each held name read by its node kind and every one a key of the document, read as no key through
-    // codeShapeKeysOf (the raw proxy's reading recorded beside).
-    const shapeQuiet = Object.fromEntries(SHAPE_QUIET.map(plant => [plant.id, { holds: heldNamesOf(plant), code: codeShapeKeysOf(plant.text, keys), raw: shapeKeysOf(plant.text, keys) }]));
+    // wb-4z24's F2 and wb-oddy's F1, F2 and F4 (SHAPE_QUIET): keys of the vendored v1 document written where no object literal
+    // assigns them, one plant per place, five places, each plant answering the shape-reader survivor its R694 row names in the
+    // tracker export (the outside anchor: wb-4z24's and wb-oddy's carried finding lines, read by quietSurvivorsOf, whose rules
+    // QUIET_CONTROL pins on the forms its lines write, wb-04yp's F1) and holding the node kind that row names for it; each held
+    // name read by its node kind only (read as the other kind, a plant holds none) and every one a key of the document, its
+    // first one at the plant's place
+    // (quietPlacesOf); and every plant read as no key through codeShapeKeysOf (the raw proxy's reading recorded beside).
+    // wb-rzqi's F2: QUIET_BEADS is held to the R694 follow-up chain the tracker export's titles hold, from wb-0lf.8 to the control's
+    // row (each row's title names the row before it), so a row removed from QUIET_BEADS and from every literal still reds here.
+    const chain = [SURFACE_BEAD, ...QUIET_BEADS, QUIET_CONTROL_BEAD];
+    const quietChain = chain.slice(1).map(bead => /^R694 follow-up from (\S+) landing /.exec(beadRow(exportLinesOf(exported, bead), bead)?.title ?? "")?.[1] ?? "");
+    expect(quietChain, `each of ${chain.slice(1).join(", ")} is the R694 follow-up of the row before it (its title opens "R694 follow-up from <that row> landing ")`).toEqual(chain.slice(0, -1));
+    const quietSurvivors = QUIET_BEADS.flatMap(bead => quietSurvivorsOf(beadRow(exportLinesOf(exported, bead), bead)?.notes ?? "").map(entry => `${bead}:${entry.name}:${entry.holds}`));
+    expect(quietSurvivors, "wb-4z24's carried F2 line names GP20-U5-CSK-READS-TYPE-MEMBERS and GP20-U5-CSK-READS-BINDINGS, and wb-oddy's carried F1 line G-P1, G-P2 and G-P3, each with the node kind it makes codeShapeKeysOf read").toEqual([
+      "wb-4z24:GP20-U5-CSK-READS-TYPE-MEMBERS:PropertySignature",
+      "wb-4z24:GP20-U5-CSK-READS-BINDINGS:BindingElement",
+      "wb-oddy:G-P1:BindingElement",
+      "wb-oddy:G-P2:PropertySignature",
+      "wb-oddy:G-P3:PropertySignature",
+    ]);
+    expect(
+      SHAPE_QUIET.map(plant => `${plant.answers.bead}:${plant.answers.name}:${plant.holds}`).sort(),
+      "each SHAPE_QUIET plant answers a survivor those rows name and holds the node kind its row names for it, and every such survivor is answered once",
+    ).toEqual([...quietSurvivors].sort());
+    expect([...new Set(quietSurvivors.map(entry => entry.split(":")[2]))].sort(), "the survivors' node kinds are QUIET_KINDS'").toEqual([...QUIET_KINDS].sort());
+    const quietControl = quietSurvivorsOf(QUIET_CONTROL).map(entry => `${entry.name}:${entry.holds}`);
+    expect(
+      quietControl,
+      "and the reader reads its control as its rules say: G-C1's first kind written, not G-C2 (no kind before G-C3's mention), G-C3, GP9-C4, G-C1 once, not the owner-routed line's G-C5, G-C7 (its own re-mention ends nothing), G-C9 and not G-C8 from G-C8's first line (a kindless first mention; its later mention there passed over), G-C8 from its later line, none of the name-shape line's five words, not G-C15 (another role's line quoting [rides] - ), G-C16's first kind (written inside BindingElements'), G-C17 (a Context: inside a line), nothing after the first Context: line",
+    ).toEqual([
+      "G-C1:BindingElement",
+      "G-C3:PropertySignature",
+      "GP9-C4:PropertySignature",
+      "G-C7:BindingElement",
+      "G-C9:PropertySignature",
+      "G-C8:PropertySignature",
+      "G-C16:BindingElement",
+      "G-C17:BindingElement",
+    ]);
+    // wb-rzqi's F1 and F2 (the outside anchor of QUIET_CONTROL): the control answers every member the control's row names before
+    // its first Context: line - the reader mutants of its F1 line, the control survivors and the kind-order mutants of its F2 line -
+    // each by a survivor written on the control, so a line answering one, removed from every literal of these files and the
+    // roster, still reds here unless that member's answer is re-pointed to another word the control writes on one line only
+    // (wb-04yp's F2: NOT CLAIMED, the map is this census's own choice); re-pointed to a word the control writes on two lines, as
+    // the gate's G10-QA-REPOINT-G-C7 and G10-QA-REPOINT-G-C15 re-point a reader mutant to G-C1 and wb-04yp's gate's
+    // G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and -TO-G-C8 re-point both kind-order mutants to G-C1 and G-C8, it reds at a one-line
+    // check below (the reader mutants' or, since wb-nk7k's F1, the kind-order mutants'), and a control survivor re-pointed to
+    // any word but itself reds at the self-answer check.
+    const quietControlMembers = controlMembersOf(beadRow(exportLinesOf(exported, QUIET_CONTROL_BEAD), QUIET_CONTROL_BEAD)?.notes ?? "");
+    expect(quietControlMembers, `${QUIET_CONTROL_BEAD}'s F1 line names the five reader mutants it filed and its F2 line four control survivors and two kind-order mutants, before its first Context: line`).toEqual([
+      "G2-QS-SAME-NAME-BOUND",
+      "G2-QS-REMENTION-FALLBACK",
+      "G2-QS-CONTEXT-ANYWHERE",
+      "G2-QS-ROLE-ANYWHERE",
+      "G2-QS-NAME-LOOSE",
+      "G-C5",
+      "G-C6",
+      "G-C2",
+      "G-C1",
+      "F-QS-LAST-KIND",
+      "F-QS-ENUM-ORDER",
+    ]);
+    expect(QUIET_CONTROL_ANSWERS.map(entry => entry.name), "the control answers exactly the members its row names, each once, in the row's order").toEqual(quietControlMembers);
+    const controlWords = new Set(QUIET_CONTROL.split(/[^A-Za-z0-9-]+/));
+    expect(QUIET_CONTROL_ANSWERS.filter(entry => !controlWords.has(entry.survivor)).map(entry => entry.name), "and each answering survivor is written on the control, a whole word").toEqual([]);
+    // wb-04yp's F2: the ANSWERS docstring's words held - each reader mutant of the row's F1 line (G<n>-QS-...) is answered by a
+    // word the control writes on one line only, and each control survivor of its F2 line (G-C<n>) answers itself; and, since
+    // wb-nk7k, each kind-order mutant of its F2 line (F-QS-...) by a word the control writes on one line only (the check after
+    // the self-answer check); which one-line word answers which reader mutant or kind-order mutant stays this census's own
+    // choice (NOT CLAIMED).
+    const answerOf = (name: string): string => QUIET_CONTROL_ANSWERS.find(entry => entry.name === name)?.survivor ?? "";
+    const controlLines = QUIET_CONTROL.split("\n");
+    const linesWriting = (word: string): number => controlLines.filter(line => line.split(/[^A-Za-z0-9-]+/).includes(word)).length;
+    expect(
+      quietControlMembers.filter(name => /^G\d+-QS-/.test(name) && linesWriting(answerOf(name)) !== 1),
+      "each reader mutant of the row's F1 line is answered by a word the control writes on one line only",
+    ).toEqual([]);
+    expect(
+      quietControlMembers.filter(name => /^G-C\d+$/.test(name) && answerOf(name) !== name),
+      "and each control survivor its F2 line names answers itself",
+    ).toEqual([]);
+    // wb-nk7k's F1 (the R694 follow-up from wb-04yp's landing 927): and each kind-order mutant of the row's F2 line (F-QS-...)
+    // is answered by a word the control writes on one line only as well, so a re-point of either to a word the control writes on
+    // two lines (wb-04yp's gate's G207-QA-KIND-ORDER-REPOINT-TO-G-C1 and -TO-G-C8, G-C16's line removed or not) reds here.
+    expect(
+      quietControlMembers.filter(name => linesWriting(answerOf(name)) !== 1 && /^F-QS-/.test(name)),
+      "and each kind-order mutant its F2 line names is answered by a word the control writes on one line only",
+    ).toEqual([]);
+    const shapeQuiet = Object.fromEntries(
+      SHAPE_QUIET.map(plant => [
+        plant.id,
+        { holds: heldNamesOf(plant), other: QUIET_KINDS.filter(kind => kind !== plant.holds).flatMap(kind => heldNamesOf({ ...plant, holds: kind })), places: quietPlacesOf(plant), code: codeShapeKeysOf(plant.text, keys), raw: shapeKeysOf(plant.text, keys) },
+      ]),
+    );
     expect(
       Object.entries(shapeQuiet).flatMap(([id, reading]) => (reading.holds.length > 0 && reading.holds.every(name => keys.has(name)) ? [] : [id])),
       "each SHAPE_QUIET plant holds names of its node kind, every one a key of the vendored v1 document",
     ).toEqual([]);
     expect(
+      Object.entries(shapeQuiet).flatMap(([id, reading]) => (reading.other.length > 0 ? [id] : [])),
+      "and names of its node kind only: read as the other QUIET_KINDS kind, each plant holds none (heldNamesOf's kind filter rejects it)",
+    ).toEqual([]);
+    expect(
+      SHAPE_QUIET.map(plant => `${plant.id}:${shapeQuiet[plant.id]?.places[0] ?? ""}:${shapeQuiet[plant.id]?.places.length === shapeQuiet[plant.id]?.holds.length}`),
+      "each plant holds its first name at the place it declares (quietPlacesOf: one place per held name)",
+    ).toEqual(SHAPE_QUIET.map(plant => `${plant.id}:${plant.place}:true`));
+    expect(
+      SHAPE_QUIET.filter((plant, index) => SHAPE_QUIET.findIndex(other => other.place === plant.place) !== index).map(plant => plant.id),
+      "one plant per place: no two plants declare one place",
+    ).toEqual([]);
+    expect(
       Object.entries(shapeQuiet).flatMap(([id, reading]) => (reading.code.length > 0 ? [id] : [])),
-      "and codeShapeKeysOf reads no key from either: a type literal's members and a destructuring's bindings assign none",
+      "and codeShapeKeysOf reads no key from any of the five plants: no object literal assigns a name any of them holds",
     ).toEqual([]);
     // CORE OVERLAP (refusal #2's U1 under R-B164): the full-surface forms that are forms of the fail-closed core, computed from the
     // tables by coreOverlapOf over surfaceForms and coreForms, both lists held to the tables they are read from, the reader proven
@@ -2086,7 +2336,7 @@ describe(SUITE, () => {
       ...members.map(member => ({ table: "RESIDUALS source", id: member.path, key: member.text })),
       ...FAIL_CLOSED.flatMap(form => (form.kind === "member" ? [{ table: "FAIL_CLOSED member", id: form.id, key: form.edit(members.find(member => member.path === form.member)?.text ?? "") }] : [])),
     ]);
-    expect([surface.length, core.length], "675 full-surface forms against 209 core forms (FAIL_CLOSED's eight S2 member edits among them)").toEqual([675, 209]);
+    expect([surface.length, core.length], "678 full-surface forms against 209 core forms (FAIL_CLOSED's eight S2 member edits among them)").toEqual([678, 209]);
     const plantedSurface = coreOverlapOf(
       surface,
       surface.map((form, index) => ({ ...form, id: `planted #${index}` })),
@@ -2132,10 +2382,15 @@ describe(SUITE, () => {
       compose,
       jsx,
       parse,
+      quietChain,
+      quietSurvivors,
+      quietControl,
+      quietControlMembers,
       shapeQuiet,
       coreOverlap: { surface: tally(surface), core: tally(core), pairs: overlap },
     });
     expect(readings, "and every reading equals the roster's (fullSurface), so a form removed from its table and from its frozen literal still reds").toStrictEqual(ROSTER.fullSurface);
+    ENDS.push("full surface");
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
@@ -2172,6 +2427,6 @@ describe(SUITE, () => {
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(entry => entry.name), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED.map(entry => entry.pin), "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
     expect(REACHED.filter(entry => !entry.same).map(entry => entry.pin), "and each compare held").toEqual([]);
-    expect(ENDS, "every case that is no pin ran to its end: the rule 16 and outside-anchors cases, and the fail-closed case through each of its five blocks").toEqual([...ENDS_EXPECTED]);
+    expect(ENDS, "every case that is no pin ran to its end: the rule 16 and outside-anchors cases, the fail-closed case through each of its five blocks, and the full-surface case").toEqual([...ENDS_EXPECTED]);
   });
 });

@@ -4312,6 +4312,41 @@
         ]
       }
     },
+    "quietChain": [
+      "wb-0lf.8",
+      "wb-4z24",
+      "wb-oddy"
+    ],
+    "quietSurvivors": [
+      "wb-4z24:GP20-U5-CSK-READS-TYPE-MEMBERS:PropertySignature",
+      "wb-4z24:GP20-U5-CSK-READS-BINDINGS:BindingElement",
+      "wb-oddy:G-P1:BindingElement",
+      "wb-oddy:G-P2:PropertySignature",
+      "wb-oddy:G-P3:PropertySignature"
+    ],
+    "quietControl": [
+      "G-C1:BindingElement",
+      "G-C3:PropertySignature",
+      "GP9-C4:PropertySignature",
+      "G-C7:BindingElement",
+      "G-C9:PropertySignature",
+      "G-C8:PropertySignature",
+      "G-C16:BindingElement",
+      "G-C17:BindingElement"
+    ],
+    "quietControlMembers": [
+      "G2-QS-SAME-NAME-BOUND",
+      "G2-QS-REMENTION-FALLBACK",
+      "G2-QS-CONTEXT-ANYWHERE",
+      "G2-QS-ROLE-ANYWHERE",
+      "G2-QS-NAME-LOOSE",
+      "G-C5",
+      "G-C6",
+      "G-C2",
+      "G-C1",
+      "F-QS-LAST-KIND",
+      "F-QS-ENUM-ORDER"
+    ],
     "shapeQuiet": {
       "type-literal": {
         "holds": [
@@ -4319,6 +4354,13 @@
           "namespace",
           "entities",
           "relations"
+        ],
+        "other": [],
+        "places": [
+          "TypeAliasDeclaration",
+          "PropertySignature",
+          "TypeAliasDeclaration",
+          "TypeAliasDeclaration"
         ],
         "code": [],
         "raw": [
@@ -4334,8 +4376,73 @@
           "entities",
           "relations"
         ],
+        "other": [],
+        "places": [
+          "VariableDeclaration",
+          "VariableDeclaration",
+          "VariableDeclaration"
+        ],
         "code": [],
         "raw": []
+      },
+      "parameter-destructuring": {
+        "holds": [
+          "schema_ref",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "Parameter",
+          "Parameter",
+          "Parameter"
+        ],
+        "code": [],
+        "raw": []
+      },
+      "type-argument": {
+        "holds": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "TypeReference",
+          "PropertySignature",
+          "TypeReference",
+          "TypeReference"
+        ],
+        "code": [],
+        "raw": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ]
+      },
+      "interface": {
+        "holds": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "other": [],
+        "places": [
+          "InterfaceDeclaration",
+          "PropertySignature",
+          "InterfaceDeclaration",
+          "InterfaceDeclaration"
+        ],
+        "code": [],
+        "raw": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ]
       }
     },
     "coreOverlap": {
@@ -4350,7 +4457,7 @@
         "unreachable": 5,
         "COMPOSE_PLANTS": 4,
         "PARSE_PLANTS": 2,
-        "SHAPE_QUIET": 2
+        "SHAPE_QUIET": 5
       },
       "core": {
         "SITE_WORD_SPELLINGS": 48,

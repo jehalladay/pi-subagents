@@ -53,12 +53,18 @@
  *   correction's whose chain of corrected records ends at that team outcome, one naming an actor and one whose chain
  *   passes through such a correction included, the original kept beside its corrections; another episode's team outcome
  *   derives nothing. The cases hold chains one to four corrections deep from a team outcome, a feedback and a decision,
- *   and two to four deep through an actor-naming correction (R-DEEP-CHAIN names the bound this leaves). An admitted
- *   record is appended: the log returned is the input plus the record, every prior record byte-identical, and the
- *   caller's log untouched.
- * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (51),
+ *   and two to four deep through an actor-naming correction (R-DEEP-CHAIN names the bound this leaves); a per-actor
+ *   reward equal to the reward, and one equal to the share, of the correction past each of the four actor-naming forms
+ *   (k48 past k9, k45 past k31, k54 past k32, k57 past k33) is a case, and past each of the three forms besides k9's (k45,
+ *   k54, k57) each of those two values is a case as a1's feedback causal benefit, and as the reward and as the causal benefit
+ *   of a correction of a1's feedback naming no actor and of one naming a1 itself, each the record's only value; and, beside
+ *   7 (a value nothing in those logs derives) in the other field, as a1's feedback reward and causal benefit and as the
+ *   reward and the causal benefit of a correction of a1's feedback naming no actor - every one on a1's receipt. An admitted
+ *   record is appended: the log returned is the input plus the record, every prior record byte-identical, and the caller's
+ *   log untouched.
+ * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (111),
  *   K-APPEND (8), K-OPERATOR (9). A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller
- *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 62
+ *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 70
  *   validators, one fault each, each refused by exactly its declared checks; every check refuses one alone, and every
  *   typed refusal is some case's.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its validator
@@ -113,7 +119,10 @@
  * actor: any actor's admits, and A2b pins another actor's); the vocabulary in
  * live docs or test text (the live vocabulary leg reads src; the live docs leg reads the three cited sections only); that
  * a producer line reads the same past the pin; which case refuses a mutant (the battery reads each mutant's refusing
- * checks, not its killing case); the members of R-COORDINATED (the labels, the statuses, the vocabulary,
+ * checks, not its killing case); past the three forms besides k9's (k45, k54, k57), a copier other than a1 (a correction
+ * naming another actor itself included), an outcome other than a1's receipt, a correction of a decision or of a
+ * correction as the copier, a correction naming a1 itself beside a second value, and a second value other than 7; the
+ * members of R-COORDINATED (the labels, the statuses, the vocabulary,
  * the shared words, the docs lines and the producer lines are anchored outside this file).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
  * as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the cases and their
@@ -284,6 +293,10 @@ function derivedValues(log: Log, episode: string, faults: ReadonlySet<Fault> = N
     if (entry.kind !== "correction" || has("team-correction-unread")) return false;
     if (entry.actor !== undefined && has("actor-naming-correction-underived")) return false;
     if (has("chain-through-actor-naming-underived") && chainOf(log, entry, faults).slice(1, -1).some(link => link.actor !== undefined)) return false;
+    const throughNaming = (form: (link: FeedbackRecord) => boolean): boolean => chainOf(log, entry, faults).slice(1, -1).some(link => link.actor !== undefined && form(link));
+    if (has("chain-through-outsider-naming-underived") && throughNaming(link => !(team.actors ?? []).includes(link.actor ?? ""))) return false;
+    if (has("chain-through-verifier-naming-underived") && throughNaming(link => link.outcome?.kind === "verifier")) return false;
+    if (has("chain-through-indirect-naming-underived") && throughNaming(link => link.corrects !== team.id)) return false;
     if (has("correction-of-actor-naming-underived") && log.find(other => other.id === entry.corrects)?.actor !== undefined) return false;
     if (has("chained-team-correction-unread")) return entry.corrects === team.id;
     const root = chainOf(log, entry, faults).slice(-1)[0];
@@ -367,7 +380,26 @@ type Fault =
   | "decision-actor-through-unknown-only"
   | "chain-through-actor-naming-underived"
   | "correction-of-actor-naming-underived"
-  | "decision-actor-within-four-steps";
+  | "decision-actor-within-four-steps"
+  | "chain-through-outsider-naming-underived"
+  | "chain-through-verifier-naming-underived"
+  | "chain-through-indirect-naming-underived"
+  | "correction-copier-past-other-forms-unchecked"
+  | "causal-past-other-forms-unread"
+  | "own-actor-copier-past-other-forms-unchecked"
+  | "two-field-correction-past-other-forms-unread"
+  | "two-field-feedback-past-other-forms-unread";
+
+/** M63-M65's faults together: a correction past an actor-naming form besides k9's (k45, k54, k57 in the cases) derives nothing. */
+const OTHER_FORMS_UNDERIVED: readonly Fault[] = ["chain-through-outsider-naming-underived", "chain-through-verifier-naming-underived", "chain-through-indirect-naming-underived"];
+/** M66-M70's faults: each reads some per-actor value against the derived values OTHER_FORMS_UNDERIVED's faults together leave. */
+const PAST_OTHER_FORMS: readonly Fault[] = [
+  "correction-copier-past-other-forms-unchecked",
+  "causal-past-other-forms-unread",
+  "own-actor-copier-past-other-forms-unchecked",
+  "two-field-correction-past-other-forms-unread",
+  "two-field-feedback-past-other-forms-unread",
+];
 
 function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const has = (fault: Fault): boolean => faults.has(fault);
@@ -454,9 +486,23 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
       const actor = record.kind === "correction" ? (has("correction-bypasses-team") ? undefined : named) : record.kind === "feedback" ? record.actor : undefined;
       if (actor !== undefined && !has("team-copy-unread")) {
         const derived = derivedValues(log, record.episode, faults);
+        // correction-copier-past-other-forms-unchecked (a correction's values, either field), causal-past-other-forms-unread
+        // (a causal benefit, either kind), own-actor-copier-past-other-forms-unchecked (the values of a correction that names
+        // an actor itself, either field), two-field-correction-past-other-forms-unread and two-field-feedback-past-other-forms-unread
+        // (the values of a correction, or of a feedback, carrying both fields) read the derived values M63-M65 together leave:
+        // no correction past those forms.
+        const bothFields = record.reward !== undefined && record.causalBenefit !== undefined;
+        const otherFormsUnread = (field: ValueField): boolean =>
+          (record.kind === "correction" && has("correction-copier-past-other-forms-unchecked")) ||
+          (field === "causalBenefit" && has("causal-past-other-forms-unread")) ||
+          (record.kind === "correction" && record.actor !== undefined && has("own-actor-copier-past-other-forms-unchecked")) ||
+          (bothFields && record.kind === "correction" && has("two-field-correction-past-other-forms-unread")) ||
+          (bothFields && record.kind === "feedback" && has("two-field-feedback-past-other-forms-unread"));
+        const withoutOtherForms = PAST_OTHER_FORMS.some(has) ? derivedValues(log, record.episode, new Set([...faults, ...OTHER_FORMS_UNDERIVED])) : derived;
         for (const field of VALUE_FIELDS) {
           if (field === "causalBenefit" && (has("causal-benefit-uncopied") || (record.kind === "correction" && has("correction-causal-uncopied")))) continue;
           const value = fieldValue(record, field);
+          if (otherFormsUnread(field) && value !== undefined && !withoutOtherForms.includes(value)) continue;
           if (value !== undefined && derived.includes(value) && !actorLevelVerifier(record.outcome)) return refuse(record, "team-outcome-copied", field);
         }
       }
@@ -540,6 +586,16 @@ const NAMING_FIX_FIXES: Readonly<Record<string, FeedbackRecord>> = {
   "through k15, a team actor, on a verifier": correction("k54", { corrects: "k32", status: "observed", reward: 54, outcome: teamVerifier(EPISODE) }),
   "through k15, an actor outside the team, on a receipt": correction("k57", { corrects: "k33", status: "observed", reward: 57, outcome: teamVerifier(EPISODE) }),
 };
+/** An actor-naming form's log with the form and its correction (NAMING_FIX_FIXES) appended, by the form's label: A2a's namedFixed log. */
+const namedFixedLog = (label: string): Log => {
+  const form = ACTOR_NAMING_FIXES.find(([name]) => name === label);
+  const fixOfFix = NAMING_FIX_FIXES[label];
+  return form === undefined || fixOfFix === undefined ? [] : [...form[1], form[2], fixOfFix];
+};
+/** The three forms besides k9's, each corrected again: k31 to 45 (k45, share 15), k32 to 54 (k54, 18) and k33 to 57 (k57, 19). */
+const K31_FIXED: Log = namedFixedLog("direct, an actor outside the team, on a verifier");
+const K32_FIXED: Log = namedFixedLog("through k15, a team actor, on a verifier");
+const K33_FIXED: Log = namedFixedLog("through k15, an actor outside the team, on a receipt");
 /** The operator's correction of a1's feedback, on a1's own verifier: the chained per-actor case corrects it. */
 const F1_FIX = correction("k6", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") });
 /** k6 corrected (k25), and that correction corrected again (k26), each unknown and carrying no value. */
@@ -737,6 +793,66 @@ const TEAM_CASES: readonly Case[] = [
   at("t-correction-copy-corrected", CORRECTED, correction("c60", { corrects: "f1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-correction-copy-named", [...BASE, ACTOR_TEAM_FIX], correction("c62", { corrects: "f1", status: "observed", reward: 9, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-correction-copy-through-named", NAMED_CHAINED2, correction("c61", { corrects: "f1", status: "observed", reward: 30, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-copy", K31_FIXED, feedback("c63", { actor: "a1", status: "observed", reward: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-share", K31_FIXED, feedback("c64", { actor: "a1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-copy", K32_FIXED, feedback("c65", { actor: "a1", status: "observed", reward: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-share", K32_FIXED, feedback("c66", { actor: "a1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-copy", K33_FIXED, feedback("c67", { actor: "a1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-share", K33_FIXED, feedback("c68", { actor: "a1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-copy", K31_FIXED, correction("c69", { corrects: "f1", status: "observed", reward: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-share", K31_FIXED, correction("c70", { corrects: "f1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-copy", K32_FIXED, correction("c71", { corrects: "f1", status: "observed", reward: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-share", K32_FIXED, correction("c72", { corrects: "f1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-copy", K33_FIXED, correction("c73", { corrects: "f1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-share", K33_FIXED, correction("c74", { corrects: "f1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-copy-causal", K31_FIXED, correction("c75", { corrects: "f1", status: "observed", causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-correction-share-causal", K31_FIXED, correction("c76", { corrects: "f1", status: "observed", causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-copy-causal", K32_FIXED, correction("c77", { corrects: "f1", status: "observed", causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-share-causal", K32_FIXED, correction("c78", { corrects: "f1", status: "observed", causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-copy-causal", K33_FIXED, correction("c79", { corrects: "f1", status: "observed", causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-share-causal", K33_FIXED, correction("c80", { corrects: "f1", status: "observed", causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-copy-causal", K31_FIXED, feedback("c81", { actor: "a1", status: "observed", causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-share-causal", K31_FIXED, feedback("c82", { actor: "a1", status: "observed", causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-copy-causal", K32_FIXED, feedback("c83", { actor: "a1", status: "observed", causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-share-causal", K32_FIXED, feedback("c84", { actor: "a1", status: "observed", causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-copy-causal", K33_FIXED, feedback("c85", { actor: "a1", status: "observed", causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-share-causal", K33_FIXED, feedback("c86", { actor: "a1", status: "observed", causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-own-actor-correction-copy", K31_FIXED, correction("c87", { corrects: "f1", actor: "a1", status: "observed", reward: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-own-actor-correction-share", K31_FIXED, correction("c88", { corrects: "f1", actor: "a1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-own-actor-correction-copy", K32_FIXED, correction("c89", { corrects: "f1", actor: "a1", status: "observed", reward: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-own-actor-correction-share", K32_FIXED, correction("c90", { corrects: "f1", actor: "a1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-own-actor-correction-copy", K33_FIXED, correction("c91", { corrects: "f1", actor: "a1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-own-actor-correction-share", K33_FIXED, correction("c92", { corrects: "f1", actor: "a1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-own-actor-correction-copy-causal", K31_FIXED, correction("c93", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-own-actor-correction-share-causal", K31_FIXED, correction("c94", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-own-actor-correction-copy-causal", K32_FIXED, correction("c95", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-own-actor-correction-share-causal", K32_FIXED, correction("c96", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-own-actor-correction-copy-causal", K33_FIXED, correction("c97", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-own-actor-correction-share-causal", K33_FIXED, correction("c98", { corrects: "f1", actor: "a1", status: "observed", causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-correction-copy-causal-beside-reward", K31_FIXED, correction("c99", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-correction-share-causal-beside-reward", K31_FIXED, correction("c100", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-copy-causal-beside-reward", K32_FIXED, correction("c101", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-correction-share-causal-beside-reward", K32_FIXED, correction("c102", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-copy-causal-beside-reward", K33_FIXED, correction("c103", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-correction-share-causal-beside-reward", K33_FIXED, correction("c104", { corrects: "f1", status: "observed", reward: 7, causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-correction-copy-beside-causal", K31_FIXED, correction("c105", { corrects: "f1", status: "observed", reward: 45, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-correction-share-beside-causal", K31_FIXED, correction("c106", { corrects: "f1", status: "observed", reward: 15, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-copy-beside-causal", K32_FIXED, correction("c107", { corrects: "f1", status: "observed", reward: 54, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-correction-share-beside-causal", K32_FIXED, correction("c108", { corrects: "f1", status: "observed", reward: 18, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-copy-beside-causal", K33_FIXED, correction("c109", { corrects: "f1", status: "observed", reward: 57, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-correction-share-beside-causal", K33_FIXED, correction("c110", { corrects: "f1", status: "observed", reward: 19, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-copy-causal-beside-reward", K31_FIXED, feedback("c111", { actor: "a1", status: "observed", reward: 7, causalBenefit: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-share-causal-beside-reward", K31_FIXED, feedback("c112", { actor: "a1", status: "observed", reward: 7, causalBenefit: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-copy-causal-beside-reward", K32_FIXED, feedback("c113", { actor: "a1", status: "observed", reward: 7, causalBenefit: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-actor-correction-fixed-share-causal-beside-reward", K32_FIXED, feedback("c114", { actor: "a1", status: "observed", reward: 7, causalBenefit: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-copy-causal-beside-reward", K33_FIXED, feedback("c115", { actor: "a1", status: "observed", reward: 7, causalBenefit: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-chained-outsider-correction-fixed-share-causal-beside-reward", K33_FIXED, feedback("c116", { actor: "a1", status: "observed", reward: 7, causalBenefit: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
+  at("t-outsider-team-correction-fixed-copy-beside-causal", K31_FIXED, feedback("c117", { actor: "a1", status: "observed", reward: 45, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-share-beside-causal", K31_FIXED, feedback("c118", { actor: "a1", status: "observed", reward: 15, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-copy-beside-causal", K32_FIXED, feedback("c119", { actor: "a1", status: "observed", reward: 54, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-share-beside-causal", K32_FIXED, feedback("c120", { actor: "a1", status: "observed", reward: 18, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-copy-beside-causal", K33_FIXED, feedback("c121", { actor: "a1", status: "observed", reward: 57, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-share-beside-causal", K33_FIXED, feedback("c122", { actor: "a1", status: "observed", reward: 19, causalBenefit: 7, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
 ];
 const APPEND_CASES: readonly Case[] = [
   at("a-correct-feedback", BASE, correction("k1", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") }), "ok"),
@@ -881,6 +997,14 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M60", "decision-actor-through-unknown-only", ["K-TEAM"]),
   mutant("M61", "chain-through-actor-naming-underived", ["K-TEAM"]),
   mutant("M62", "correction-of-actor-naming-underived", ["K-TEAM"]),
+  mutant("M63", "chain-through-outsider-naming-underived", ["K-TEAM"]),
+  mutant("M64", "chain-through-verifier-naming-underived", ["K-TEAM"]),
+  mutant("M65", "chain-through-indirect-naming-underived", ["K-TEAM"]),
+  mutant("M66", "correction-copier-past-other-forms-unchecked", ["K-TEAM"]),
+  mutant("M67", "causal-past-other-forms-unread", ["K-TEAM"]),
+  mutant("M68", "own-actor-copier-past-other-forms-unchecked", ["K-TEAM"]),
+  mutant("M69", "two-field-correction-past-other-forms-unread", ["K-TEAM"]),
+  mutant("M70", "two-field-feedback-past-other-forms-unread", ["K-TEAM"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 
@@ -1552,10 +1676,22 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy",
       "t-actor-team-correction-depth3-copy",
       "t-actor-team-correction-depth4-copy",
+      "t-outsider-team-correction-fixed-copy",
+      "t-outsider-team-correction-fixed-share",
+      "t-chained-actor-correction-fixed-copy",
+      "t-chained-actor-correction-fixed-share",
+      "t-chained-outsider-correction-fixed-copy",
+      "t-chained-outsider-correction-fixed-share",
+      "t-outsider-team-correction-fixed-copy-beside-causal",
+      "t-outsider-team-correction-fixed-share-beside-causal",
+      "t-chained-actor-correction-fixed-copy-beside-causal",
+      "t-chained-actor-correction-fixed-share-beside-causal",
+      "t-chained-outsider-correction-fixed-copy-beside-causal",
+      "t-chained-outsider-correction-fixed-share-beside-causal",
     ]);
     expect(
       read,
-      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor)",
+      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor), as does the correction past each of the other three actor-naming forms (k45, k54, k57: its reward and its share as a1's feedback reward, its only value or beside 7 as its causal benefit)",
     ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1572,6 +1708,18 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
     });
     return { derived, fixes, corrected, actorNamed, namedFixed, namedChained, read };
   },
@@ -1618,10 +1766,46 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-correction-decision-depth3-copy-causal",
       "t-correction-decision-depth4-copy",
       "t-correction-decision-depth4-copy-causal",
+      "t-outsider-team-correction-fixed-correction-copy",
+      "t-outsider-team-correction-fixed-correction-share",
+      "t-chained-actor-correction-fixed-correction-copy",
+      "t-chained-actor-correction-fixed-correction-share",
+      "t-chained-outsider-correction-fixed-correction-copy",
+      "t-chained-outsider-correction-fixed-correction-share",
+      "t-outsider-team-correction-fixed-correction-copy-causal",
+      "t-outsider-team-correction-fixed-correction-share-causal",
+      "t-chained-actor-correction-fixed-correction-copy-causal",
+      "t-chained-actor-correction-fixed-correction-share-causal",
+      "t-chained-outsider-correction-fixed-correction-copy-causal",
+      "t-chained-outsider-correction-fixed-correction-share-causal",
+      "t-outsider-team-correction-fixed-own-actor-correction-copy",
+      "t-outsider-team-correction-fixed-own-actor-correction-share",
+      "t-chained-actor-correction-fixed-own-actor-correction-copy",
+      "t-chained-actor-correction-fixed-own-actor-correction-share",
+      "t-chained-outsider-correction-fixed-own-actor-correction-copy",
+      "t-chained-outsider-correction-fixed-own-actor-correction-share",
+      "t-outsider-team-correction-fixed-own-actor-correction-copy-causal",
+      "t-outsider-team-correction-fixed-own-actor-correction-share-causal",
+      "t-chained-actor-correction-fixed-own-actor-correction-copy-causal",
+      "t-chained-actor-correction-fixed-own-actor-correction-share-causal",
+      "t-chained-outsider-correction-fixed-own-actor-correction-copy-causal",
+      "t-chained-outsider-correction-fixed-own-actor-correction-share-causal",
+      "t-outsider-team-correction-fixed-correction-copy-causal-beside-reward",
+      "t-outsider-team-correction-fixed-correction-share-causal-beside-reward",
+      "t-chained-actor-correction-fixed-correction-copy-causal-beside-reward",
+      "t-chained-actor-correction-fixed-correction-share-causal-beside-reward",
+      "t-chained-outsider-correction-fixed-correction-copy-causal-beside-reward",
+      "t-chained-outsider-correction-fixed-correction-share-causal-beside-reward",
+      "t-outsider-team-correction-fixed-correction-copy-beside-causal",
+      "t-outsider-team-correction-fixed-correction-share-beside-causal",
+      "t-chained-actor-correction-fixed-correction-copy-beside-causal",
+      "t-chained-actor-correction-fixed-correction-share-beside-causal",
+      "t-chained-outsider-correction-fixed-correction-copy-beside-causal",
+      "t-chained-outsider-correction-fixed-correction-share-beside-causal",
     ]);
     expect(
       read,
-      "the causal benefit, and a correction of a per-actor record - a feedback or a decision, directly or through a chain of corrections one to four deep, in either field, or naming its actor itself or along its chain - are held to the same reference",
+      "the causal benefit, and a correction of a per-actor record - a feedback or a decision, directly or through a chain of corrections one to four deep, in either field, or naming its actor itself or along its chain - are held to the same reference, and so is a correction of a1's feedback, on a1's receipt, carrying the reward or the share of the correction past each of the other three actor-naming forms (k45, k54, k57) in either field, as its only value (naming no actor, or naming a1 itself) or, naming no actor, beside 7, a value nothing derives, in its other field",
     ).toEqual({
       "t-copy-causal": "team-outcome-copied:causalBenefit",
       "t-actor-verifier": "ok",
@@ -1644,6 +1828,42 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-correction-decision-depth3-copy-causal": "team-outcome-copied:causalBenefit",
       "t-correction-decision-depth4-copy": "team-outcome-copied:reward",
       "t-correction-decision-depth4-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-own-actor-correction-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-own-actor-correction-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-own-actor-correction-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-own-actor-correction-share-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-correction-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-correction-share-beside-causal": "team-outcome-copied:reward",
     });
     return { matrix, read };
   },
@@ -1890,10 +2110,34 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy",
       "t-actor-team-correction-depth3-copy",
       "t-actor-team-correction-depth4-copy",
+      "t-outsider-team-correction-fixed-copy",
+      "t-outsider-team-correction-fixed-share",
+      "t-chained-actor-correction-fixed-copy",
+      "t-chained-actor-correction-fixed-share",
+      "t-chained-outsider-correction-fixed-copy",
+      "t-chained-outsider-correction-fixed-share",
+      "t-outsider-team-correction-fixed-copy-causal",
+      "t-outsider-team-correction-fixed-share-causal",
+      "t-chained-actor-correction-fixed-copy-causal",
+      "t-chained-actor-correction-fixed-share-causal",
+      "t-chained-outsider-correction-fixed-copy-causal",
+      "t-chained-outsider-correction-fixed-share-causal",
+      "t-outsider-team-correction-fixed-copy-causal-beside-reward",
+      "t-outsider-team-correction-fixed-share-causal-beside-reward",
+      "t-chained-actor-correction-fixed-copy-causal-beside-reward",
+      "t-chained-actor-correction-fixed-share-causal-beside-reward",
+      "t-chained-outsider-correction-fixed-copy-causal-beside-reward",
+      "t-chained-outsider-correction-fixed-share-causal-beside-reward",
+      "t-outsider-team-correction-fixed-copy-beside-causal",
+      "t-outsider-team-correction-fixed-share-beside-causal",
+      "t-chained-actor-correction-fixed-copy-beside-causal",
+      "t-chained-actor-correction-fixed-share-beside-causal",
+      "t-chained-outsider-correction-fixed-copy-beside-causal",
+      "t-chained-outsider-correction-fixed-share-beside-causal",
     ]);
     expect(
       read,
-      "a team-level reward and its share - the team outcome's, or a correction's whose chain ends at it (up to four corrections deep, naming an actor, or passing through one that does), the original kept beside it - copied into a per-actor reward or causal benefit, are refused naming the field",
+      "a team-level reward and its share - the team outcome's, or a correction's whose chain ends at it (up to four corrections deep, naming an actor, or passing through one that does), the original kept beside it - copied into a per-actor reward or causal benefit, are refused naming the field, and the correction past each of the other three actor-naming forms (k45, k54, k57) has its reward and its share refused as a1's feedback reward and as a1's feedback causal benefit, on a1's receipt, each the feedback's only value or beside 7, a value nothing derives, in its other field",
     ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1915,6 +2159,30 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-share-causal": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-actor-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-copy-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-chained-outsider-correction-fixed-share-causal-beside-reward": "team-outcome-copied:causalBenefit",
+      "t-outsider-team-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy-beside-causal": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share-beside-causal": "team-outcome-copied:reward",
     });
     return read;
   },
@@ -2200,7 +2468,7 @@ describe(SUITE, () => {
       "team-outcome-copied",
     ]);
     expect(BASE.map(record => `${record.id}:${record.kind}:${record.writer}`)).toEqual(["t1:team-outcome:host", "d1:decision:policy", "d2:decision:policy", "f1:feedback:host"]);
-    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:51", "K-APPEND:8", "K-OPERATOR:9"]);
+    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:111", "K-APPEND:8", "K-OPERATOR:9"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:open-status:K-STATUS",
       "M02:missing-status-observed:K-STATUS",
@@ -2264,6 +2532,14 @@ describe(SUITE, () => {
       "M60:decision-actor-through-unknown-only:K-TEAM",
       "M61:chain-through-actor-naming-underived:K-TEAM",
       "M62:correction-of-actor-naming-underived:K-TEAM",
+      "M63:chain-through-outsider-naming-underived:K-TEAM",
+      "M64:chain-through-verifier-naming-underived:K-TEAM",
+      "M65:chain-through-indirect-naming-underived:K-TEAM",
+      "M66:correction-copier-past-other-forms-unchecked:K-TEAM",
+      "M67:causal-past-other-forms-unread:K-TEAM",
+      "M68:own-actor-copier-past-other-forms-unchecked:K-TEAM",
+      "M69:two-field-correction-past-other-forms-unread:K-TEAM",
+      "M70:two-field-feedback-past-other-forms-unread:K-TEAM",
     ]);
     expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:3", "Q3:2", "Q4:3", "Q5:3", "Q6:5", "Q7:3"]);
     expect(DEEP_CHAIN.map(member => `${member.id}:${member.fault}`)).toEqual([
