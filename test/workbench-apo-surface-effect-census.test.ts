@@ -11,6 +11,59 @@
  * registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler
  * reaches a non-read registry.invoke."
  *
+ * wb-yf7o, THE ROLE SETS' IDENTITY (the one R694 follow-up of wb-39g8's PASS-WITH-FINDING landing 953, gate
+ * cmd_b373fe656860: its F1, LOW, a count-only projection of THE ROLE SETS, unrealized under R-B262 as M:46698 clarified
+ * it). wb-39g8 CUT #2's C2 roleSets held THE ROLE SETS by count only (lone 24, sets 4095 at read and 4095 at write,
+ * unread []), while C2's falsifier words claim the set twin's sets hollowed; so the landing-953 gate's GP14S1 - one
+ * edit to roleSetsOf making every set also hold position 0, each class keeping 4095 sets of which 2048 are distinct -
+ * kept the census at 0 failed | 25 passed (25) on two runs. This cut reads the family's identity. C2 roleSets distinct
+ * (a new fact of C2 roleSets, held in the roster) counts, at each class, the distinct sets of record positions the
+ * class's role sets hold (distinctSets), each set read as its positions - a position counted once and in any order -
+ * and counted only when it is nonempty and every position is one of the record's. Beside the role sets' count at that
+ * class, 4095 distinct (2^12 - 1) is every nonempty set of the record's twelve positions, each once; C2 roleSets'
+ * readings then read each set's catalog as before (unread).
+ * PINNED READER SET OF THIS CUT (test/workbench-apo-surface-effect-census.test.ts; held to the roster): case C2, fact
+ * roleSets.distinct - target the role sets at each class, read as sets of the record's positions; observed 4095 at read
+ * and 4095 at write; falsifier the landing-953 gate's GP14S1 and GP14S2 and the seat's W3S1-W3S8. A role set whose
+ * positions all hold one id listed out of record order, and the identity reading's own rules dropped or its count
+ * handed the role sets' count, are NOT CLAIMED by this census ((h) and (b) below).
+ * MEASURED (seat ws-02, run g10-work-s216, 2026-11-05, at trunk 018c8ac with the two files in the worktree; trunk
+ * changed no src/ path after 7466871 and neither file after wb-39g8's tip 941e6bd9; each member a throwaway copy of the
+ * census run with --expect.requireAssertions, two runs each unless stated; each page an in-place src/ edit restored
+ * byte-identical, porcelain equal, one run each). RED-0, on wb-39g8 CUT #2's bytes (census sha256/16 0e631f74a49c67ea,
+ * roster a8c29f20ac20fc04): GP14S1 0 failed | 25 passed (25); GP14S2 (the sets the bits of 0 to 2^12 - 2 select: the
+ * empty set in, the full set out) 2 failed | 23 passed (25) (O1, closing). RED-1, roster first (C2's roleSets.distinct
+ * written in the roster, no reader yet; roster sha256/16 5333e75afbfdf652): 2 failed | 23 passed (25), C2 and the
+ * closing case. AFTER, on this cut's bytes: GP14S1 2 failed | 23 passed (25) (C2, closing), its identity 2048 at each
+ * class; GP14S2 3 failed | 22 passed (25) (O1, C2, closing), 4094 at each class. The seat's members of the identity:
+ * W3S1 (every set also holding the record's last position; 2048 at each class), W3S2 (the write sets alone each also
+ * holding position 0; 4095 at read, 2048 at write), W3S3 (the full set read as the set before it; 4094) and W3S7 (the
+ * set of positions 0 and 1 replaced by the set of 0 and 4 listed as 4,0, a set already held whose two positions hold
+ * one id; 4094) each 2|23 (C2, closing); W3S4 (each set without its last position; 2047), W3S5 (the sets over the first
+ * eleven positions; 2047) and W3S6 (the empty set in place of the set of position 0; 4094) each 3|22 (O1, C2, closing);
+ * W3S8 (the set of position 0 with position 12, past the record; 4094) 4|21 (O1, C1, C2, closing). A diagnostic copy
+ * per member (one run) reads C2's departure as the identity alone, unread [], under every member but W3S8, which C2's
+ * readings name at both classes too. The order and the repetition of a set's positions: W3S9 (the full set listing
+ * position 0 twice) and W3S10 (every set's positions reversed) each 4|21 (O1, C1, C2, closing), read by C2's readings
+ * while the identity reads 4095. The identity reading's own members: W3D1 (without its nonempty rule), W3D2 (each set's
+ * positions as listed), W3D3 (the class's count of sets) and W3D4 (without its range rule) each 0 failed | 25 passed
+ * (25), an equivalent on this tree; under the member each rule answers, W3D1 with GP14S2 and with W3S6 2|23 (O1,
+ * closing), W3D2 with W3S7 and W3D3 with GP14S1 0|25, and W3D4 with W3S8 4|21 (O1, C1, C2, closing), C2's readings
+ * naming W3S8 still: NOT CLAIMED ((b)). Carried, on this cut's bytes: the landing-953 gate's LEG 2 - GP14S3 4|21 (O1,
+ * C1, C2, closing), GP14S4 and GP14R3 3|22 (C1, C2, closing), GP14R1, GP14R2 and GP14R4 3|22 (O1, C2, closing), GP14C1,
+ * GP14C2 and GP14E1 0|25 - and its 18 carried members, each as that gate recorded them on wb-39g8 CUT #2's bytes
+ * (G202H1, G202H2, G202H3, G202H6 and G202H7 2|23 (C2, closing); GP14X1, GP14X2, GP14X3, GP14X5, GP14X6, GP5J1, GP5J3,
+ * GP5J4 and GP5J5 3|22 (O1, C2, closing); GP14X4 and GP5J2 3|22 (C1, C2, closing); G202R1 and GP5B1 0|25); and the
+ * wb-39g8 CUT #2 seat's W2S1-W2S12, each as that seat recorded them. That gate's 15 pages: the delivered census and
+ * GP14S1 each red every page as that gate recorded wb-39g8 CUT #2's census there (WD1, WD3, WD4, WD5, GP14P1, GP14P3,
+ * GP5P1, GP5P3, GQ14X2R, GQ14X3R and GQ14ALL 3|22 (O1, C2, closing); WD6 4|21 (O1, C1, C2, closing); GP14P2 and GQ14X2W
+ * 5|20 (O1, C1, C2, V1, closing); GP5P2 5|20 (O1, C1, C2, V2, closing)); a diagnostic copy reads the identity 4095 at
+ * each class on the eleven pages where C2 reaches its witness, and on WD6, GP14P2, GP5P2 and GQ14X2W C2 reds at its own
+ * violation assertion before it. Not replayed by this seat: the 69-member replay, S4, and the K4, G203, W6R and W1
+ * members. CT-BATTERY v2 (rule 16; the landing-953 gate's specs, CT4 and CT5 as wb-39g8 CUT #2's seat re-anchored them,
+ * applied verbatim): CT1 red=3; CT1b red=3; CT2 red=2; CT3 red=2; CT4 red=3; CT5 red=3; CT6 red=1 - CT4, CT5 and CT6
+ * killed through the outside anchors.
+ *
  * wb-39g8 CUT #2, THE ROLE SETS (the member-level respin of wb-39g8's refusal #1, gate run g10-gate-s210, outbox row
  * O:2056; ruling R-B541: rung 1 of this carrier's own per-descriptor, joint-state claim set, no guard, cap or freeze).
  * Refusal #1's U1-U3: both role-twin catalogs register every recorded descriptor with the role twin's sentence at once
@@ -250,9 +303,14 @@
  * beside an APO-role neighbour - and GP5J2 of effectViolations, by per-id consensus; this seat's W2S1-W2S7, W2S10 and
  * W2S11 of the set twin]: KILLED by C2 roleSets, and by O1 firedTwin sets for roles (GP5J1, GP5J3, GP5J4, GP5J5) and C1
  * roleSetsNamed for the falsifier (GP5J2), every role set of the record's positions read per descriptor at each class;
- * the role sets' own departures dropped [W2S8, W2S9, W2S12] are NOT CLAIMED ((b) below), and a set mixing the two
- * classes is NOT CLAIMED ((h) below). No other member family of the frozen class is known to this seat or to the
- * earlier seats (family (11), which refusal #1 found, is named and killed above). No residual is added, since no
+ * and (wb-yf7o) the role sets' family hollowed with its count kept [the landing-953 gate's GP14S1 and GP14S2; this
+ * seat's W3S1-W3S8]: KILLED by C2 roleSets distinct, THE ROLE SETS' IDENTITY at each class (GP14S2, W3S4, W3S5 and
+ * W3S6 by O1 firedTwin sets too, W3S8 by C2's readings, O1 and C1 too); the role sets' own departures dropped [W2S8,
+ * W2S9, W2S12] and the identity reading's own rules dropped [W3D1-W3D4] are NOT CLAIMED ((b) below), and a set mixing
+ * the two classes, or one whose positions all hold one id listed out of record order, is NOT CLAIMED ((h) below). No
+ * other member family of the frozen class is known to this seat or to the earlier seats (family (11), which refusal #1
+ * found, is named and killed above, with its identity members, which the landing-953 gate found). No residual is
+ * added, since no
  * known-unpinned real-tree mode of the claimed subject remains ((g) names a change of both sides alike and the fields
  * the readings do not read, and no real-tree page makes either; (h) names the role sets mixing the two classes, which
  * every claim sentence below leaves outside its words and no page of refusal #1 makes); the catalog's named residual
@@ -262,7 +320,9 @@
  * members and W6R1-W6R3 all red; S4 kills 32 of 87, each as on cut #5; and (wb-39g8 CUT #1) the five members of family
  * (10) and the six of family (7) red, G202R1 an equivalent (nothing departs for it to blind); and (wb-39g8 CUT #2) the
  * five members of family (11) red, GP5B1 an equivalent (THE REGISTER BOUNDARY's list run through HandedRegistry without
- * a twin departs on no page).
+ * a twin departs on no page); and (wb-yf7o) GP14S1, GP14S2 and W3S1-W3S8 red C2, the landing-953 gate's LEG 2 and
+ * carried members and the W2 members reading as recorded (wb-yf7o's MEASURED above; the 69-member replay, S4 and the
+ * K4, G203, W6R and W1 members are not replayed by wb-yf7o's seat).
  *
  * wb-021.12 CUT #3 (the respin of refusal #2, gate run g10-gate-s198, outbox row O:1927; ruled by R-B443 rung 1 of the
  * falsifier-word set, a member-level respin, with the class guard bound on both of this bead's claim sets: the
@@ -432,13 +492,16 @@
  * by wb-39g8 CUT #2's seat (2026-11-04, on trunk 3041aac merged, the same way; trunk changed no src/ path after
  * 7466871): each of the 24 lone twins composes its own position with the role twin's sentence at its class and every
  * other position equal to the record's in the read fields; each of the 8190 role sets' catalogs reads exactly its set's
- * ids as roles and, at write, exactly its set's descriptors named, in C2, in O1 and in C1 before the plants.
+ * ids as roles and, at write, exactly its set's descriptors named, in C2, in O1 and in C1 before the plants. Re-taken
+ * by wb-yf7o's seat (2026-11-05, at trunk 018c8ac, the same way; trunk changed no src/ path after 7466871): the 4095
+ * role sets at each class hold 4095 distinct sets of the record's positions, each nonempty and each of its positions
+ * one of the record's twelve, so every nonempty set of them once (C2 roleSets distinct).
  * THE JUDGE, CLAIMED ON ITS PLANTS AND ITS TWINS (cut #4's form; the carrier cut adds the plants it names, cut #2 the
  * twin, cut #3 the twin's four units, its top-level site and its registrar reading, and the role twin; this bead's cut
  * #4 composes the role twin through the catalog's own composition and adds the register-time record, cut #5 claims the
  * role twin from that record on, wb-39g8 CUT #1 holds the record to THE REGISTER BOUNDARY and each twin reading per
- * descriptor, and CUT #2 reads every role set). Each sentence below states a reader's rule, which is the code's and is
- * disclosed
+ * descriptor, CUT #2 reads every role set, and wb-yf7o holds the role sets' identity). Each sentence below states a
+ * reader's rule, which is the code's and is disclosed
  * so that the plants can be followed, and claims that reader only on the plant texts and paths it names (the roster's
  * constants hold each one), on today's src/ tree and catalog (MEASURED) and on the twins: THE TWIN, each listed entry
  * with the twin probe at its end, in memory only (A2 judgedEach: the mention judge judges every listed entry, and in a
@@ -450,8 +513,9 @@
  * keeps of each descriptor it registers) (C2 roleTwin, O1 firedTwin, C1 roleTwinNamed, each twin reading held per
  * descriptor at the record's positions; and, wb-39g8 CUT #2, THE ROLE SETS: the lone twins, each one position at one
  * class through the same composition, and every role set's catalog, its positions from the lone twins and the rest from
- * the real catalog, read by the same readings, C2 roleSets, O1 firedTwin sets, C1 roleSetsNamed; the real catalog's
- * composition is held to that record, C2 composed, and the
+ * the real catalog, read by the same readings, C2 roleSets, O1 firedTwin sets, C1 roleSetsNamed, every nonempty set of
+ * the record's positions once at each class, C2 roleSets distinct (wb-yf7o); the real catalog's composition is held to
+ * that record, C2 composed, and the
  * record to THE REGISTER BOUNDARY's list, what each registration function hands registries of the product's own class
  * by calls written apart from the composition, in the read fields, C2 boundary: (g)). At a listed path or a catalog
  * descriptor a sentence claims the twins' own texts only: a text, a path, a form or a field that is no named plant's,
@@ -773,9 +837,12 @@
  * to the record - its own position composed with the record's id at its class and APO-role by its description, every
  * other position equal to the record's in the read fields, its length the record's - and each role set's catalog read
  * by roleReadings, its roles exactly the set's ids in record order and its violations exactly the set's descriptors
- * named at write and none at read, beside the lone twins' count and the role sets' count at each class); observed: four
- * ids in twelve descriptors, all read, no APO role, no violation, no departure, no boundary departure, no twin misread,
- * 24 lone twins and 4095 role sets at each class, none unread; falsifier: real APO-role non-read descriptors as the
+ * named at write and none at read, beside the lone twins' count and the role sets' count at each class, and (wb-yf7o)
+ * THE ROLE SETS' IDENTITY, distinct: at each class the distinct sets of record positions the role sets hold, each read
+ * as its positions without order or repetition and counted only when nonempty and every position is the record's);
+ * observed: four ids in twelve descriptors, all read, no APO role, no violation, no departure, no boundary departure,
+ * no twin misread, 24 lone twins and 4095 role sets at each class, 4095 of them distinct - every nonempty set of the
+ * record's twelve positions, once - none unread; falsifier: real APO-role non-read descriptors as the
  * twins hold them (their register-time records holding the role twin's sentence as their whole description, all at
  * write, at any nonempty set of the record's positions), and no other real descriptor or set of descriptors, a role or
  * falsifier reading of a real descriptor hollowed (W6R1, W6R2, W6R3,
@@ -786,8 +853,10 @@
  * composition's calls into its registries (W1B1, W1B2) or in a SURFACES entry (W1B3) - or THE REGISTER BOUNDARY's list
  * short of the record (W1B6), the twin readings per descriptor (roleTwin: GP14X1-GP14X6, W1T3, W1T4), the role readings
  * per role set (roleSets: GP5J1-GP5J5) or the set twin's composition, its sets, a set's catalog or a set's expected
- * roles hollowed (W2S1-W2S7), a surface that registers nothing; NOT CLAIMED: a change of both sides of C2 boundary
- * alike, a field readFields omits ((g)), and a role set mixing the two classes ((h)).
+ * roles hollowed (W2S1-W2S7; and, wb-yf7o, the role sets' family with its count kept: distinct, GP14S1, GP14S2,
+ * W3S1-W3S8), a surface that registers nothing; NOT CLAIMED: a change of both sides of C2 boundary alike, a field
+ * readFields omits ((g)), and a role set mixing the two classes, or one whose positions all hold one id listed out of
+ * record order ((h)).
  * C3: the registry's effect vocabulary (the EFFECT_CLASSES
  * literal and the CapabilityDescriptor effectClass union of src/workbench/capability-registry.ts) and the falsifier's
  * verdict on an APO-role plant of each class; observed: read, write, external and unknown in both, every class but read
@@ -889,7 +958,11 @@
  * twins and the boundary's list read each page's descriptors through the same registration functions as the record; and
  * (wb-39g8 CUT #2) the role sets' departures dropped from O1, from C2's readings or from C2's lone twins [W2S8, W2S9,
  * W2S12]: each reads 0 failed | 25 passed (25) and as delivered on all eleven pages of refusal #1, since O1's fired
- * reading and C2's apoRole and violations still read each page's descriptors in the real catalog.
+ * reading and C2's apoRole and violations still read each page's descriptors in the real catalog; and (wb-yf7o) C2
+ * roleSets distinct read without its nonempty rule, with each set's positions as listed, as the class's count of sets,
+ * or without its range rule [W3D1-W3D4]: each reads 0 failed | 25 passed (25), since the role sets roleSetsOf builds
+ * are every nonempty set once already, and under the identity member each rule answers it lets that member past C2
+ * (wb-yf7o's MEASURED above), but W3D4, whose member W3S8 C2's readings name as well.
  * A case reading the roster by a route the SELF-READ names do not cover (a file read of the roster path), or naming a
  * reader only in a comment. (c) Readings no sentence above names: a role spelled only in a descriptor's version,
  * inputSchema, outputSchema or supportedModes; a reach, a registration or a spelling in a module the readers above do
@@ -922,8 +995,11 @@
  * the two classes (some of its positions at read, others at write); a role set's catalog composed otherwise than
  * setCatalog builds it (each of the set's positions from its lone twin's catalog, every other from the real catalog's),
  * so a composition whose registries rewrite two to eleven positions at once is not read (the role twin rewrites all
- * twelve, each lone twin one); and the role sets of a record longer than today's twelve positions, which double with
- * each position added.
+ * twelve, each lone twin one); the role sets of a record longer than today's twelve positions, which double with
+ * each position added; and (wb-yf7o) a role set whose positions all hold one id listed out of record order, which
+ * every reading reads the same - THE ROLE SETS' IDENTITY reads a set as its positions, without order or repetition,
+ * and C2's, O1's and C1's readings read the order and the repetition only where a set's expected roles or violations
+ * depart (W3S9 and W3S10: wb-yf7o's MEASURED above).
  * ARMED HALF: rows C and V already read the real catalog and the real modules at every run; today they find no APO-role
  * descriptor and no APO module, so their real legs are empty and their plants carry the proof. A first surface as the
  * twins hold one reds: a listed entry ending with the twin probe's text reds A3 with the reason and V1 by its non-read
@@ -2154,6 +2230,19 @@ function setUnread(handed: readonly CapabilityDescriptor[], set: RoleSet, held: 
   const { roles, violations } = roleReadings(held);
   return [...(isDeepStrictEqual(roles, setRoles(handed, set)) ? [] : [`${setName(set)} roles`]), ...(isDeepStrictEqual(violations, setViolations(handed, set)) ? [] : [`${setName(set)} violations`])];
 }
+/**
+ * C2 roleSets, THE ROLE SETS' IDENTITY (wb-yf7o): at one class, how many distinct sets of record positions the class's
+ * role sets hold - each set read as its positions, a position counted once and in any order, and counted only when it
+ * is nonempty and every position is one of the record's. Beside the role sets' count at that class (sets), 4095 of each
+ * (2^12 - 1) is every nonempty set of the record's twelve positions, each once.
+ */
+function distinctSets(sets: readonly RoleSet[], twin: TwinClass, positions: number): number {
+  const held = sets
+    .filter(set => set.twin === twin)
+    .map(set => [...new Set(set.at)].sort((left, right) => left - right))
+    .filter(at => at.length > 0 && at.every(position => Number.isInteger(position) && position >= 0 && position < positions));
+  return new Set(held.map(at => at.join(","))).size;
+}
 /** O1's fired reading: whether any APO module or APO-role descriptor is named. */
 function firedOf(modules: readonly string[], roles: readonly string[]): boolean {
   return modules.length > 0 || roles.length > 0;
@@ -2559,6 +2648,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       roleSets: {
         lone: lone.size,
         sets: { read: sets.filter(entry => entry.set.twin === "read").length, write: sets.filter(entry => entry.set.twin === "write").length },
+        distinct: { read: distinctSets(sets.map(entry => entry.set), "read", real.handed.length), write: distinctSets(sets.map(entry => entry.set), "write", real.handed.length) },
         unread: [
           ...(["read", "write"] as const).flatMap(twin => real.handed.flatMap((_, at) => loneUnread(real.handed, twin, at, lone.get(`${twin} ${at}`)))),
           ...sets.flatMap(entry => setUnread(real.handed, entry.set, entry.catalog)),
