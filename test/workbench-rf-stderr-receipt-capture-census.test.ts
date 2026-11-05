@@ -16,7 +16,14 @@
  * the landed reader's (bindingTextReader, test/helpers/rf-binding-text-reader.ts, which wb-jwc.13 landed and whose claim of record
  * is wb-jwc.10's census test/workbench-rf-binding-text-reader-census.test.ts): C1-NAME-RESOLUTION, C1-COMMAND-WORDS, C1-INVENTORY,
  * C1-SPECIFIER-TEXT, C1-REGISTRATIONS, R-OPAQUE-LAUNCHER and R-OPAQUE-REGISTRATION are restated to what it reads, every reading
- * the swap moved is a row, and refusal #4's members are rows (R-ALT1 to R-ALT4, E1 to E3 and a10, each byte for byte). Where a
+ * the swap moved is a row, and refusal #4's members are rows (R-ALT1 to R-ALT4, E1 to E3 and a10, each byte for byte). Gate
+ * refusal #5 measured cut #5's C1-COMMAND-WORDS claim wider than its rows - its words read every text alternative of each argv
+ * element while its rows pinned elements only as a string and a spread, so its hollows H1 (string elements only) and H2 (each
+ * element's first alternative only) kept the census green - and orchestrator ruling R-B599 bound the next cut to claims equal to
+ * pins. Cut #6 changes no reader and widens no claim: it adds the pins, one row per claimed element form (a string as a
+ * no-substitution template, a const it resolves and the shadow forms, a template and a + join, each side of ?: / ?? / ||, their
+ * opaque counterparts reading no word, a shell line, a program with no rf word), the first side of ?: / ?? / || at the first
+ * argument (the last-alternative hollow's kill there), and refusal #5's plants P1, P2 and P2b as rows, byte for byte. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -24,8 +31,9 @@
  *
  * MEASURED (read-only; cut #1 by seat ws-06, run g10-work-s123 at base bb96515; cut #2 by ws-06, run g10-work-s133 at trunk
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
- * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; providers/reactivefiber.ts is
- * byte-identical at all five and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; every C1 and G2 witness below reads
+ * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; cut #6 by seat ws-04, run g10-work-s219 at
+ * trunk 108a202, landing 987; providers/reactivefiber.ts is byte-identical at all six and at 04123dc, sha256/16 d8b764b855600103
+ * over its 203 lines; cut #6 moves no reader, so every witness reads as at cut #5; every C1 and G2 witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
  * restates).
@@ -118,7 +126,8 @@
  *    C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ??
  *    / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe
  *    and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a
- *    part that does not resolve) gives no word.
+ *    part that does not resolve) gives no word (gate members P1, P2 and P2b of refusal #5: a member-route env launch whose rf
+ *    word is only an argv element - a const, the second side of ?: and the right side of ??).
  *  C1-INVENTORY: C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding
  *    (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the
  *    program being the landed reader's program() of its first argument: when every alternative is a text with a first command
@@ -1944,6 +1953,10 @@ const TEMPLATE_ID = ['register({ id: `reactivefiber.render.', "$", '{kind}`, eff
 const RESOLVED_TEMPLATE_COMMAND = ["  exec(`rf --workspace ", "$", "{ROOT} context render --json`);"].join("");
 /** TEMPLATE_ID with its substitution a const the landed reader resolves (KIND), spelled the same way. */
 const RESOLVED_TEMPLATE_ID = ['register({ id: `reactivefiber.render.', "$", '{KIND}`, effectClass: "write" });'].join("");
+/** An argv element of an env launch that is a template whose substitution is a const the landed reader resolves (ROOT), spelled the same way. */
+const RESOLVED_TEMPLATE_ELEMENT = ['spawn("env", [`', "$", '{ROOT}/bin/rf`, "--json"]);'].join("");
+/** RESOLVED_TEMPLATE_ELEMENT with its substitution a parameter (dir) that does not resolve, spelled the same way. */
+const TEMPLATE_ELEMENT = ['  spawn("env", [`', "$", '{dir}/bin/rf`, "--json"]);'].join("");
 /** A member call through a helper whose command is a template with an unresolved substitution, spelled the same way. */
 const HELPER_TEMPLATE_COMMAND = [
   "export function viaHelperTemplate(helpers: { exec(command: string): void }, root: string): void { helpers.exec(`rf --workspace ",
@@ -2031,6 +2044,34 @@ const A10_PLANT: readonly string[] = [
   "}",
   "",
 ];
+/** Refusal #5's P1, P2 and P2b (gate-prep-14, run g10-gate-s218, outbox row O:2153): a committing rf render launched by a member
+ * route through env, its rf word only in an argv element (a const, the second side of ?:, the right side of ??), at the gate's
+ * paths, byte for byte. */
+const P1_PATH = "src/workbench/providers/zz-gp14-env.ts";
+const P1_PLANT: readonly string[] = [
+  "/** gate-prep-14 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, its rf word an argv element const. */",
+  'const RF = "rf";',
+  "export function viaEnv(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", [RF, "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P2_PATH = "src/workbench/providers/zz-gp14-envcond.ts";
+const P2_PLANT: readonly string[] = [
+  "/** gate-prep-14 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, rf the second side of a conditional argv element. */",
+  "export function viaEnvConditional(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", [process.env.PI_GP14_VCS === "1" ? "git" : "rf", "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P2B_PATH = "src/workbench/providers/zz-gp14-envnullish.ts";
+const P2B_PLANT: readonly string[] = [
+  "/** gate-prep-14 LEG 2 plant (throwaway, never committed): a committing rf render launched through env, rf the right side of a ?? argv element. */",
+  "export function viaEnvNullish(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn("env", [process.env.PI_GP14_RF ?? "rf", "--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
 /** A module specifier that is a template with a resolving substitution, spelled the same way. */
 const TEMPLATE_SPECIFIER = ["const cp = require(`", "$", "{NODE}:child_process`);"].join("");
 /** A module specifier spelled as a template with a resolving substitution outside any call, spelled the same way. */
@@ -2086,7 +2127,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-COMMAND-WORDS",
     pin: "C1",
-    words: "C1 (a) reads a launch's command words from its first argument and from each element of an array second argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ?? / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word.",
+    words: "C1 (a) reads a launch's command words from its first argument and from each element of an array second argument that is no spread: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION) - a string, a const it resolves, a template or + join whose every part resolves, either side of ?: / ?? / || - each split as a shell line at whitespace, quotes and shell operators with each path reduced to its base name (.exe and .cmd dropped) by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word (gate members P1, P2 and P2b of refusal #5: a member-route env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??).",
     falsifier: async () => {
       const count = (lines: readonly string[]): number => sites(lines).length;
       return {
@@ -2108,6 +2149,29 @@ const ENUMERATION: readonly Item[] = [
         spreadElement: count(['spawn("sh", [...["-c", "rf --version"]]);']),
         otherProgram: count(['execSync("forge run lint --json");']),
         regexExec: count(["/rf/.exec(text);"]),
+        conditionalFirst: count(['spawn(process.env.PI_RF_ONLY === "1" ? "rf" : "forge", []);']),
+        alternativeLeft: count(['const RF_BIN: string | undefined = "rf";', 'spawn(RF_BIN ?? "forge", []);']),
+        orAlternativeLeft: count(['const RF_BIN: string | undefined = "rf";', 'spawn(RF_BIN || "forge", []);']),
+        elementNoSubstitution: count(['spawn("env", [`rf`, "--json"]);']),
+        elementConstBound: count(['const RF = "rf";', 'spawn("env", [RF, "--json"]);']),
+        elementShadowingConst: count(['const RF = "forge";', "export function launch(): void {", '  const RF = "rf";', '  spawn("env", [RF]);', "}"]),
+        elementShadowedConst: count(['const RF = "rf";', "export function launch(): void {", '  const RF = "forge";', '  spawn("env", [RF]);', "}"]),
+        elementUnresolvedName: count(['const RF = "rf";', "export function launch(): void {", '  let RF = "rf";', '  spawn("env", [RF]);', "}"]),
+        elementTemplate: count(['const ROOT = "/workspace";', RESOLVED_TEMPLATE_ELEMENT]),
+        elementTemplateUnresolved: count(["export function launch(dir: string): void {", TEMPLATE_ELEMENT, "}"]),
+        elementConditional: count(['spawn("env", [process.env.PI_FORGE_ONLY === "1" ? "forge" : "rf", "--json"]);']),
+        elementConditionalFirst: count(['spawn("env", [process.env.PI_RF_ONLY === "1" ? "rf" : "forge", "--json"]);']),
+        elementAlternative: count(['spawn("env", [process.env.PI_RF_BIN ?? "rf", "--json"]);']),
+        elementAlternativeLeft: count(['const RF_BIN: string | undefined = "rf";', 'spawn("env", [RF_BIN ?? "forge", "--json"]);']),
+        elementOrAlternative: count(['spawn("env", [process.env.PI_RF_BIN || "rf", "--json"]);']),
+        elementOrAlternativeLeft: count(['const RF_BIN: string | undefined = "rf";', 'spawn("env", [RF_BIN || "forge", "--json"]);']),
+        elementJoin: count(['spawn("env", ["r" + "f", "--json"]);']),
+        elementJoinUnresolved: count(["export function launch(dir: string): void {", '  spawn("env", [dir + "/bin/rf", "--json"]);', "}"]),
+        elementShellLine: count(['spawn("sh", ["-c", "cd /tmp && /opt/bin/rf.exe --version"]);']),
+        elementOtherProgram: count(['spawn("env", ["forge", "run", "lint", "--json"]);']),
+        p1EnvConst: launchSites([plant(P1_PATH, P1_PLANT)]),
+        p2EnvConditional: launchSites([plant(P2_PATH, P2_PLANT)]),
+        p2bEnvNullish: launchSites([plant(P2B_PATH, P2B_PLANT)]),
       };
     },
     caught: {
@@ -2129,6 +2193,29 @@ const ENUMERATION: readonly Item[] = [
       spreadElement: 0,
       otherProgram: 0,
       regexExec: 0,
+      conditionalFirst: 1,
+      alternativeLeft: 1,
+      orAlternativeLeft: 1,
+      elementNoSubstitution: 1,
+      elementConstBound: 1,
+      elementShadowingConst: 1,
+      elementShadowedConst: 0,
+      elementUnresolvedName: 0,
+      elementTemplate: 1,
+      elementTemplateUnresolved: 0,
+      elementConditional: 1,
+      elementConditionalFirst: 1,
+      elementAlternative: 1,
+      elementAlternativeLeft: 1,
+      elementOrAlternative: 1,
+      elementOrAlternativeLeft: 1,
+      elementJoin: 1,
+      elementJoinUnresolved: 0,
+      elementShellLine: 1,
+      elementOtherProgram: 0,
+      p1EnvConst: [`${P1_PATH}:viaEnv:spawn`],
+      p2EnvConditional: [`${P2_PATH}:viaEnvConditional:spawn`],
+      p2bEnvNullish: [`${P2B_PATH}:viaEnvNullish:spawn`],
     },
   },
   {
@@ -3294,7 +3381,7 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     ]);
     expect(ENUMERATION.map((item) => `${item.id}:${rowShapeOf(item.caught)}`)).toStrictEqual([
       "C1-LAUNCH-ROUTES:name,importAlias,destructure,constAlias,member,keyed,execve",
-      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec",
+      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec,conditionalFirst,alternativeLeft,orAlternativeLeft,elementNoSubstitution,elementConstBound,elementShadowingConst,elementShadowedConst,elementUnresolvedName,elementTemplate,elementTemplateUnresolved,elementConditional,elementConditionalFirst,elementAlternative,elementAlternativeLeft,elementOrAlternative,elementOrAlternativeLeft,elementJoin,elementJoinUnresolved,elementShellLine,elementOtherProgram,p1EnvConst,p2EnvConditional,p2bEnvNullish",
       "C1-INVENTORY:opaqueProgram,envProgram,shellProgram,otherReceiver,conditionalProgram,sameFirstWord,templateProgram,joinProgram,observedHead,e1EnvProgram,e2ShadowingConst,e3NewLaunch",
       "C1-MODULE-BINDINGS:namespace,defaultImport,defaultSpecifier,importEquals,loadBinding,defaultMember,defaultDestructure,onTheCall",
       "C1-SPECIFIER-TEXT:constSpecifier,noSubstitutionSpecifier,joinSpecifier,templateSpecifier,alternativeSpecifier,nullishSpecifier,orSpecifier,andSpecifier,unresolved",
