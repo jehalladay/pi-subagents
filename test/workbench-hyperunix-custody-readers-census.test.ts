@@ -156,6 +156,16 @@
  * narrows. The new CARRIER REFUSAL #5 ANCHOR reads the members, and by name the two members refusal #5's F3 finding states
  * red on cut #5 (CARRIER_RED_5), and the new FAIL-CLOSED PARAGRAPHS case reads the narrowing of every paragraph claim line
  * before the RESIDUALS heading. No reader code changes: the helper differs from cut #5 in its header words only.
+ * wb-zchj (the R694 follow-up bead of wb-tz2.24's landing 969) answers that landing's F1 finding (LOW RIDES):
+ * narrowsToPinnedPages, the census-local predicate the FAIL-CLOSED cases apply to the header's claim lines, read no line it
+ * must hold unnarrowed, so the finding's two members, CL-NOWIDEN (its widening test dropped) and CL-ANYWHERE (the phrase read
+ * anywhere on the line), kept this census green. Each NARROWING_CONTROLS row is a pair, a narrowed line the predicate reads
+ * narrowed and a line one edit away that it reads unnarrowed: one row per named widening word, that word added; one row per
+ * place the predicate reads the phrase at, the phrase moved out of it; one row with the phrase dropped; and the members' two
+ * witnesses, replayed verbatim from the finding on the header's own L016, so each member's hollowing reds this census. The
+ * new FOLLOW-UP ANCHOR reads the finding's requirement lines, members, witnesses and control classes, and the new PREDICATE
+ * WORDS ANCHOR reads the widening words and places the predicate names, from the tracker export. No reader code changes and
+ * no header words change: the helper is unchanged.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -287,6 +297,23 @@
  *   control beside it.
  *  LOCATIONS (wb-tz2.20): each LOCATED statement, read by its kind inside each LOCATIONS wrapper, reads as its row states; the
  *   located words are the C2, driver and shape roster words in order.
+ *  NARROWING CONTROLS (wb-zchj): each row's narrowed line reads narrowed and its line, one edit away, reads unnarrowed under
+ *   narrowsToPinnedPages: the seven named widening words, each added to a narrowed line; the ten places the predicate reads
+ *   the phrase at, the phrase moved out of each (its start lowered to "on", its "on" after an entry colon raised to "On", and
+ *   the mark at each other place dropped or respelled); the phrase dropped; and the F1 members' witnesses on L016,
+ *   P-L016-WIDEN (a widening word added) and ENDCLAUSE (the clause moved to the line end).
+ *  FOLLOW-UP ANCHOR (wb-zchj, outside this census): every wb-zchj requirement line this census answers occurs verbatim in that
+ *   bead's notes in the export, and the requirement lines are exactly its F1 finding's defect sentence and optional cure
+ *   sentence; the members the finding names, each with the text it replaces and its replacement as the finding quotes them
+ *   and in order, are exactly the NARROWING_MEMBERS rows, each with the witness the finding names for it; each witness, as the
+ *   finding states it, is a NARROWING_CONTROLS row on the helper header's own L016; and the control classes the finding's
+ *   cure names are, in order, the NARROWING_CONTROLS rows' items.
+ *  PREDICATE WORDS ANCHOR (wb-zchj, outside this census): the widening words the carrier's cut #1 delivery note names for
+ *   refusal #4 F2, then the one its cut #5 delivery note adds, are, in order, the words of the widening rows, the witness
+ *   aside, each row's line spelling its word and no other and its narrowed line none; and the line's start, as wb-tz2.20's
+ *   refusal #4 F2 finding quotes the start form, then the places after and before the phrase that the cut #1 note names, are,
+ *   in order, the places of the out-of-place rows, the witness aside, each row's narrowed line holding the phrase at its place
+ *   and its line not.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -366,6 +393,12 @@
  * stays is NOT CLAIMED by an anchor outside this census (they are its own literals, like the GP22S plants); and a line
  * from the RESIDUALS heading on is NOT CLAIMED by the FAIL-CLOSED PARAGRAPHS case (it reads the paragraph lines before
  * that heading only).
+ * wb-zchj: a widening word, or a spelling of a place before or after the phrase, other than the ones a NARROWING_CONTROLS
+ * row plants is NOT CLAIMED by those rows (each row plants one spelling, read by the predicate alone, not the line's
+ * meaning); the phrase's case is NOT CLAIMED by them beyond the two rows that respell it; that the '(POSITIONS;' place is
+ * read apart from the semicolon place is NOT CLAIMED by its row (the semicolon place reads every line the '(POSITIONS;'
+ * place reads); and which one-edit member of the predicate reds which row is NOT CLAIMED by this census (the seat measures
+ * it on scratch copies).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -450,6 +483,7 @@ const BEAD = "wb-tz2.16";
 const PARENT = "wb-tz2.11";
 const CHILD = "wb-tz2.20";
 const CARRIER = "wb-tz2.24";
+const FOLLOW_UP = "wb-zchj";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -959,6 +993,47 @@ function narrowsToPinnedPages(line: string): boolean {
   const widened = /every (?:other )?page|beyond (?:them|its pinned pages)|not only on its pinned pages|on its pinned pages and |on any receiver/.test(line);
   return clause && !widened;
 }
+/** wb-zchj: the follow-up bead's F1 finding in its notes in the export, as filed: its first "[leads] - F1 LOW RIDES: " line (a later note leaves that line in place). */
+function followUpFinding(): string {
+  const notes = exportRecord(FOLLOW_UP).notes;
+  const start = notes.indexOf("\n[leads] - F1 LOW RIDES: ");
+  if (start < 0) return "";
+  const end = notes.indexOf("\n", start + 1);
+  return notes.slice(start + 1, end < 0 ? notes.length : end);
+}
+/** The control classes the F1 finding's cure names, in order: the items of its "control lines (...)" parenthesis. */
+function cureClasses(finding: string): string[] {
+  return (/ control lines \(([^)]*)\)/.exec(finding)?.[1] ?? "").split(", ").filter(item => item !== "");
+}
+/** The widening words narrowsToPinnedPages names, as the export states them: the list the carrier's cut #1 delivery note gives for refusal #4 F2, then the word its cut #5 delivery note adds. */
+function predicateWideningWords(): string[] {
+  const notes = exportRecord(CARRIER).notes;
+  const listed = / and no widening word on the line \(([^)]*)\)\./.exec(notes)?.[1] ?? "";
+  const added = /narrowsToPinnedPages now reads '([^']+)' as a widening word/.exec(notes)?.[1];
+  return [...listed.split(", ").filter(word => word !== ""), ...(added === undefined ? [] : [added])];
+}
+/** The places narrowsToPinnedPages reads the phrase at, as the export states them: the line's start, as wb-tz2.20's refusal #4 F2 finding quotes the case's start form, then each place after and before the phrase the carrier's cut #1 delivery note names (each "after" or "before" group split at its commas and "or"). */
+function predicatePlaces(): string[] {
+  const start = /\(or (starts with '[^']+')\)/.exec(exportRecord(CHILD).notes)?.[1];
+  const listed = /as a clause of its own \((after .*?)\) and no widening word on the line \(/.exec(exportRecord(CARRIER).notes)?.[1] ?? "";
+  const sides = listed.split(/, (?=before )/).flatMap(group => {
+    const at = group.indexOf(" ");
+    return at < 0 ? [] : group.slice(at + 1).split(/, | or /).map(place => `${group.slice(0, at)} ${place}`);
+  });
+  return [...(start === undefined ? [] : [start]), ...sides];
+}
+/** The mark each place the cut #1 note names in words stands for. */
+const PLACE_MARKS: Readonly<Record<string, string>> = { "an entry colon": ":", "a semicolon": ";", "a comma": ",", "a dash": "-", "a parenthesis": "(" };
+/** Whether a text holds the phrase "on its pinned pages" at a place as the export words it: "starts with '<start>'", or "after" or "before" a mark, a quoted spelling or one of the PLACE_MARKS (a comma right after the phrase, every other mark one space from it). */
+function placeHeld(text: string, place: string): boolean {
+  const start = /^starts with '(.+)'$/.exec(place);
+  if (start !== null) return text.startsWith(start[1] ?? "");
+  const side = /^(after|before) (.+)$/.exec(place);
+  const named = side?.[2] ?? "";
+  const mark = /^'(.+)'$/.exec(named)?.[1] ?? PLACE_MARKS[named];
+  if (side === null || mark === undefined) return false;
+  return side[1] === "after" ? text.includes(`${mark} on its pinned pages`) : text.includes(`on its pinned pages${mark === "," ? "" : " "}${mark}`);
+}
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
   const marker = "ROOT KINDS is not: ";
@@ -1273,6 +1348,22 @@ interface RebindWrite {
   readonly shape: string;
   readonly target: string;
   readonly write: string;
+}
+/** wb-zchj: a control of narrowsToPinnedPages: its narrowed line, read narrowed, and its line, one edit away, read unnarrowed, with the control class the F1 finding's cure names for it (item), the widening word or place it plants (place) and its edit (claim). */
+interface NarrowingControl {
+  readonly id: string;
+  readonly item: string;
+  readonly place: string;
+  readonly claim: string;
+  readonly narrowed: string;
+  readonly line: string;
+}
+/** wb-zchj: a member of narrowsToPinnedPages the F1 finding names, with the text it replaces and its replacement as the finding quotes them, and the witness the finding names for it. */
+interface NarrowingMember {
+  readonly id: string;
+  readonly replaces: string;
+  readonly replacement: string;
+  readonly witness: string;
 }
 /** The lifecycle file's K2 client line: every calibration and residual line is planted right after it. */
 const K2_CLIENT = "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };";
@@ -3349,6 +3440,39 @@ const CARRIER_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-tz2.24 refusal #5 U3", source: "notes", text: "U3-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-CHAINS-ALIAS-SPELLINGS-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2688-L014" },
   { key: "wb-tz2.24 refusal #5 U4", source: "notes", text: "U4-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-ENVIRONMENT-PROTOTYPE-LINK-WORDS-1-FAIL-OPEN-GATE-HOLLOWING-SURVIVES-0of2688-L026" },
   { key: "wb-tz2.24 refusal #5 U5", source: "notes", text: "U5-MEDIUM-CONFIRMED-R514-R515-R668-RULE-16-LEG-2-CARRIER-CUT-5-UNNARROWED-HEX-ESCAPE-ZERO-WORDS-2-FAIL-OPEN-GATE-HOLLOWINGS-SURVIVE-0of2688-L103" },
+];
+/** wb-zchj: the controls of narrowsToPinnedPages (F1 of wb-tz2.24's landing 969): the seven named widening words and the P-L016-WIDEN witness, the phrase moved out of each of the ten places the predicate reads it at and the ENDCLAUSE witness, and the phrase dropped. */
+const NARROWING_CONTROLS: readonly NarrowingControl[] = [
+  { id: "NW-EVERY-PAGE", item: "each named widening word", place: "every page", claim: "', as on every page' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, as on every page." },
+  { id: "NW-EVERY-OTHER-PAGE", item: "each named widening word", place: "every other page", claim: "', and on every other page' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, and on every other page." },
+  { id: "NW-BEYOND-THEM", item: "each named widening word", place: "beyond them", claim: "', and beyond them' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, and beyond them." },
+  { id: "NW-BEYOND-PINNED", item: "each named widening word", place: "beyond its pinned pages", claim: "', and beyond its pinned pages' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, and beyond its pinned pages." },
+  { id: "NW-NOT-ONLY", item: "each named widening word", place: "not only on its pinned pages", claim: "', not only on its pinned pages' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, not only on its pinned pages." },
+  { id: "NW-PAGES-AND", item: "each named widening word", place: "on its pinned pages and", claim: "', on its pinned pages and on others' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding, on its pinned pages and on others." },
+  { id: "NW-ANY-RECEIVER", item: "each named widening word", place: "on any receiver", claim: "' on any receiver' added", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: on its pinned pages, a chain read through its own binding on any receiver." },
+  { id: "P-L016-WIDEN", item: "each named widening word", place: "on every page", claim: "the F1 witness, verbatim: L016 gains 'on every page'", narrowed: "(a root of any other kind is NOT CLAIMED); on its pinned pages, a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", line: "(a root of any other kind is NOT CLAIMED); on its pinned pages, a local root reads, as candidates, the chains of every value its own binding may hold on every page. ROOT_FORMS:" },
+  { id: "NP-AT-START", item: "the phrase outside clause position", place: "starts with 'On its pinned pages, '", claim: "its start lowered to 'on'", narrowed: "On its pinned pages, a form reads the chain through its own binding.", line: "on its pinned pages, a form reads the chain through its own binding." },
+  { id: "NP-AFTER-COLON", item: "the phrase outside clause position", place: "after an entry colon", claim: "its 'on' after the colon raised to 'On'", narrowed: "- form: on its pinned pages, a chain read through its own binding.", line: "- form: On its pinned pages, a chain read through its own binding." },
+  { id: "NP-AFTER-SEMICOLON", item: "the phrase outside clause position", place: "after a semicolon", claim: "the semicolon dropped", narrowed: "(a form is NOT CLAIMED); on its pinned pages, a chain read through its own binding.", line: "(a form is NOT CLAIMED) on its pinned pages, a chain read through its own binding." },
+  { id: "NP-AFTER-COMMA", item: "the phrase outside clause position", place: "after a comma", claim: "the comma dropped", narrowed: "a form reads, on its pinned pages, the chain through its own binding.", line: "a form reads on its pinned pages, the chain through its own binding." },
+  { id: "NP-AFTER-FOR-IT", item: "the phrase outside clause position", place: "after 'for it'", claim: "'for it' respelled 'for them'", narrowed: "a write reads nothing for it on its pinned pages (a chain read through its own binding).", line: "a write reads nothing for them on its pinned pages (a chain read through its own binding)." },
+  { id: "NP-AFTER-POSITIONS", item: "the phrase outside clause position", place: "after '(POSITIONS;'", claim: "the semicolon of '(POSITIONS;' dropped", narrowed: "an override at each k from 1 to 10 (POSITIONS; on its pinned pages only, a chain).", line: "an override at each k from 1 to 10 (POSITIONS on its pinned pages only, a chain)." },
+  { id: "NP-BEFORE-COMMA", item: "the phrase outside clause position", place: "before a comma", claim: "the comma dropped", narrowed: "- entry: on its pinned pages, a chain read once.", line: "- entry: on its pinned pages a chain read once." },
+  { id: "NP-BEFORE-DASH", item: "the phrase outside clause position", place: "before a dash", claim: "the dash respelled as a colon", narrowed: "- entry: on its pinned pages - a chain read once.", line: "- entry: on its pinned pages: a chain read once." },
+  { id: "NP-BEFORE-PARENTHESIS", item: "the phrase outside clause position", place: "before a parenthesis", claim: "the parenthesis respelled as a bracket", narrowed: "- entry: on its pinned pages (a chain read once).", line: "- entry: on its pinned pages [a chain read once]." },
+  { id: "NP-BEFORE-ONLY", item: "the phrase outside clause position", place: "before 'only,'", claim: "the comma after 'only' dropped", narrowed: "- entry: on its pinned pages only, a chain read once.", line: "- entry: on its pinned pages only a chain read once." },
+  { id: "ENDCLAUSE", item: "the phrase outside clause position", place: "the line end", claim: "the F1 witness: L016's clause moved to the line end", narrowed: "(a root of any other kind is NOT CLAIMED); on its pinned pages, a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold on its pinned pages. ROOT_FORMS:" },
+  { id: "NU-PHRASE-DROPPED", item: "an unnarrowed line", place: "no phrase", claim: "the phrase and the comma after it dropped", narrowed: "- entry: on its pinned pages, a chain read once.", line: "- entry: a chain read once." },
+];
+/** wb-zchj: the two members of narrowsToPinnedPages the F1 finding names, in its order, each with its witness. */
+const NARROWING_MEMBERS: readonly NarrowingMember[] = [
+  { id: "CL-NOWIDEN", replaces: "'  return clause && !widened;'", replacement: "  return clause;", witness: "P-L016-WIDEN" },
+  { id: "CL-ANYWHERE", replaces: "the clause regex", replacement: "/[Oo]n its pinned pages/.test(line)", witness: "ENDCLAUSE" },
+];
+/** wb-zchj's own requirement lines: its F1 finding's defect sentence and its optional cure sentence. */
+const FOLLOW_UP_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-zchj F1 defect", source: "notes", text: "No census row plants a control line that the predicate must reject (a named widening word, the phrase outside clause position, an unnarrowed line), yet the census's own NOT CLAIMED sentence says the FAIL-CLOSED cases 'read the phrase's place and those words'." },
+  { key: "wb-zchj F1 cure", source: "notes", text: "Optional cure: plant red-first predicate control lines (each named widening word, the phrase outside clause position, an unnarrowed line) read by narrowsToPinnedPages with expected false, or narrow the census's words to 'the cases apply narrowsToPinnedPages to the header's lines'." },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -5828,6 +5952,30 @@ const FROZEN: readonly string[] = [
   "CARRIER_SURVIVORS_5:GP2-CHN-MIXEDGLOBAL:331eada504d1",
   "CARRIER_SURVIVORS_5:GP2-CMD-VAREMPTY:fcffebdfae48",
   "CARRIER_SURVIVORS_5:GP2-SHP-F4-UNDERSCORE:7e07fbeda63f",
+  "NARROWING_CONTROLS:NW-EVERY-PAGE:8e5f3f9af143",
+  "NARROWING_CONTROLS:NW-EVERY-OTHER-PAGE:61a866288678",
+  "NARROWING_CONTROLS:NW-BEYOND-THEM:95add59d9d86",
+  "NARROWING_CONTROLS:NW-BEYOND-PINNED:37a88cfcfcbd",
+  "NARROWING_CONTROLS:NW-NOT-ONLY:5d068cbf3d20",
+  "NARROWING_CONTROLS:NW-PAGES-AND:b6c6e1fa1392",
+  "NARROWING_CONTROLS:NW-ANY-RECEIVER:e1677bb65cdb",
+  "NARROWING_CONTROLS:P-L016-WIDEN:fd3bc7c0903e",
+  "NARROWING_CONTROLS:NP-AT-START:ed7072f15b3a",
+  "NARROWING_CONTROLS:NP-AFTER-COLON:1786fb559779",
+  "NARROWING_CONTROLS:NP-AFTER-SEMICOLON:f18918aa97a3",
+  "NARROWING_CONTROLS:NP-AFTER-COMMA:f75db92120e9",
+  "NARROWING_CONTROLS:NP-AFTER-FOR-IT:6ee0548d1faf",
+  "NARROWING_CONTROLS:NP-AFTER-POSITIONS:138d4fbc8bdf",
+  "NARROWING_CONTROLS:NP-BEFORE-COMMA:77883165e710",
+  "NARROWING_CONTROLS:NP-BEFORE-DASH:79e4a015d4a2",
+  "NARROWING_CONTROLS:NP-BEFORE-PARENTHESIS:6d07e216b666",
+  "NARROWING_CONTROLS:NP-BEFORE-ONLY:5145a08261f8",
+  "NARROWING_CONTROLS:ENDCLAUSE:f2b4493b12cb",
+  "NARROWING_CONTROLS:NU-PHRASE-DROPPED:de272903bd06",
+  "NARROWING_MEMBERS:CL-NOWIDEN:fac91773a7b4",
+  "NARROWING_MEMBERS:CL-ANYWHERE:5d12b5258c9a",
+  "FOLLOW_UP_REQUIREMENTS:wb-zchj F1 defect:ac6923c96f36",
+  "FOLLOW_UP_REQUIREMENTS:wb-zchj F1 cure:e99195c29d18",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -6704,6 +6852,84 @@ describe(SUITE, () => {
     });
   });
 
+  describe("NARROWING CONTROLS (wb-zchj, F1 of wb-tz2.24's landing 969): narrowsToPinnedPages reads each row's narrowed line narrowed and its line, one edit away, unnarrowed - each named widening word added, the phrase moved out of each place the predicate reads it at, the phrase dropped, and the F1 members' witnesses P-L016-WIDEN and ENDCLAUSE on L016", () => {
+    it.each(NARROWING_CONTROLS.map(row => [row.id, row] as const))("%s", (_id, row) => {
+      expect({ narrowed: narrowsToPinnedPages(row.narrowed), line: narrowsToPinnedPages(row.line) }).toStrictEqual({ narrowed: true, line: false });
+    });
+  });
+
+  describe("FOLLOW-UP ANCHOR (wb-zchj, outside this census): the follow-up bead's F1 finding in the tracker export", () => {
+    it("every wb-zchj requirement line this census answers occurs verbatim in its notes, and the requirement lines are exactly the F1 finding's defect sentence and its optional cure sentence, in both directions", () => {
+      const notes = exportRecord(FOLLOW_UP).notes;
+      const finding = followUpFinding();
+      const defect = finding.indexOf("No census row plants ");
+      const defectEnd = defect < 0 ? -1 : finding.indexOf(". ", defect);
+      const cure = finding.indexOf("Optional cure: ");
+      expect({
+        missing: FOLLOW_UP_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: FOLLOW_UP_REQUIREMENTS.map(requirement => requirement.text),
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(defectEnd < 0 ? [] : [finding.slice(defect, defectEnd + 1)]), ...(cure < 0 ? [] : [finding.slice(cure)])],
+      });
+    });
+    it("the members the F1 finding names, each with the text it replaces and its replacement as the finding quotes them and in order, are exactly the NARROWING_MEMBERS rows, each with the witness the finding names for it", () => {
+      const finding = followUpFinding();
+      const witnesses = new Map([...finding.matchAll(/For (CL-[A-Z]+) the witness is (?:the seat battery entry )?([A-Z][A-Z0-9-]*)[,:]/g)].map(match => [match[1] ?? "", match[2] ?? ""] as const));
+      const members = [...finding.matchAll(/(CL-[A-Z]+) replaces (.+?) with '(.+?)'\. /g)].map(match => ({ id: match[1] ?? "", replaces: match[2] ?? "", replacement: match[3] ?? "", witness: witnesses.get(match[1] ?? "") ?? "" }));
+      expect(members).toStrictEqual(NARROWING_MEMBERS);
+    });
+    it("each member's witness, as the F1 finding states it, is a NARROWING_CONTROLS row on the helper header's own line it names: P-L016-WIDEN that line with the finding's quoted words added, ENDCLAUSE that line with its clause moved to the line end, ending in the finding's quoted tail", () => {
+      const finding = followUpFinding();
+      const lines = new Map(helperClaimLines().map(entry => [entry.id, entry.line] as const));
+      const held = [...finding.matchAll(/For (CL-[A-Z]+) the witness is (?:the seat battery entry )?([A-Z][A-Z0-9-]*)[,:] (.*?)(?= For CL-| No census row )/g)].map(match => {
+        const control = NARROWING_CONTROLS.find(row => row.id === match[2]);
+        const description = match[3] ?? "";
+        const gains = /(L\d{3}) gains '([^']+)'/.exec(description);
+        const moved = /(L\d{3})'s clause moved to the line end \('\.\.\. ([^']+)'\)/.exec(description);
+        const id = gains?.[1] ?? moved?.[1] ?? "";
+        const narrowed = lines.get(id);
+        const added = gains?.[2];
+        const tail = moved?.[2];
+        const replayed =
+          control !== undefined &&
+          narrowed !== undefined &&
+          control.narrowed === narrowed &&
+          (added !== undefined
+            ? control.line.includes(added) && control.line.replace(` ${added}`, "") === narrowed
+            : tail !== undefined && control.line.endsWith(tail) && control.line.replace(" on its pinned pages.", ".") === narrowed.replace("on its pinned pages, ", ""));
+        return `${match[1] ?? ""} ${match[2] ?? ""} on ${id}: ${replayed ? "replayed" : "not replayed"}`;
+      });
+      expect(held).toStrictEqual(NARROWING_MEMBERS.map(member => `${member.id} ${member.witness} on L016: replayed`));
+    });
+    it("the control classes the F1 finding's cure names - each named widening word, the phrase outside clause position, an unnarrowed line - are, in order, the items of the NARROWING_CONTROLS rows", () => {
+      expect([...new Set(NARROWING_CONTROLS.map(row => row.item))]).toStrictEqual(cureClasses(followUpFinding()));
+    });
+  });
+
+  describe("PREDICATE WORDS ANCHOR (wb-zchj, outside this census): the widening words and the places narrowsToPinnedPages names, as the tracker export states them", () => {
+    it("the widening words the carrier's cut #1 delivery note names for refusal #4 F2, then the one its cut #5 delivery note adds, are, in order, the words of the widening rows, the witness aside; each row's line spells its word and no other, and its narrowed line none", () => {
+      const [widening = ""] = cureClasses(followUpFinding());
+      const words = predicateWideningWords();
+      const witnesses = NARROWING_MEMBERS.map(member => member.witness);
+      const rows = NARROWING_CONTROLS.filter(row => row.item === widening && !witnesses.includes(row.id));
+      expect({
+        words: rows.map(row => row.place),
+        misspelled: rows.filter(row => words.filter(word => row.line.includes(word)).join(" | ") !== row.place || words.some(word => row.narrowed.includes(word))).map(row => row.id),
+      }).toStrictEqual({ words, misspelled: [] });
+    });
+    it("the line's start, as wb-tz2.20's refusal #4 F2 finding quotes the case's start form, then each place after and before the phrase the carrier's cut #1 delivery note names, are, in order, the places of the out-of-place rows, the witness aside; each row's narrowed line holds the phrase at its place and its line does not", () => {
+      const [, outside = ""] = cureClasses(followUpFinding());
+      const places = predicatePlaces();
+      const witnesses = NARROWING_MEMBERS.map(member => member.witness);
+      const rows = NARROWING_CONTROLS.filter(row => row.item === outside && !witnesses.includes(row.id));
+      expect({
+        places: rows.map(row => row.place),
+        misplaced: rows.filter(row => !placeHeld(row.narrowed, row.place) || placeHeld(row.line, row.place)).map(row => row.id),
+      }).toStrictEqual({ places, misplaced: [] });
+    });
+  });
+
   describe("FROZEN SHAPE (standing rule 16)", () => {
     it("every table row is pinned as table:id:digest of its own JSON", () => {
       const rows = (table: string, entries: readonly { readonly id?: string; readonly word?: string; readonly key?: string }[]): string[] =>
@@ -6752,6 +6978,9 @@ describe(SUITE, () => {
         ...rows("CARRIER_SURVIVORS_3", CARRIER_SURVIVORS_3),
         ...rows("CARRIER_SURVIVORS_4", CARRIER_SURVIVORS_4),
         ...rows("CARRIER_SURVIVORS_5", CARRIER_SURVIVORS_5),
+        ...rows("NARROWING_CONTROLS", NARROWING_CONTROLS),
+        ...rows("NARROWING_MEMBERS", NARROWING_MEMBERS),
+        ...rows("FOLLOW_UP_REQUIREMENTS", FOLLOW_UP_REQUIREMENTS),
       ]).toStrictEqual(FROZEN);
     });
   });
