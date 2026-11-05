@@ -186,8 +186,18 @@
  * declaredNames(): an edit of the source the reader reads, with what it reads from the edited source. readerImports() reads an
  * aliased, a second and a renamed import of the reader; judgmentReadings() reads a copy of the reader, a local alias of it and
  * a local shadow of its name at T-ARMS's call, a reference to armsJudgment() that is no call (an alias, a shorthand property and
- * an export specifier) and a second declaration of armsJudgment(); topLevelFunctions() reads a function added to the reader
- * module; and headerKinds() reads a kind taken out of this header's list.
+ * an export specifier), a second declaration of armsJudgment(), armsJudgment() handed on as the second and as the third
+ * argument of a call whose first argument is a call of the import (a reference inside a call that is not its callee; wb-m14y
+ * refusal #6 U1), the import's call as the second and as the third argument of an armsJudgment() call whose first argument
+ * is a copy's call, and the import's name as an armsJudgment() call's first argument in six forms that are no call (a property
+ * access and an element access, each plain and optional, an as assertion and an angle-bracket assertion);
+ * topLevelFunctions() reads a function added to the reader module; and headerKinds() reads a kind taken out of this header's
+ * list. Each condition under which judgmentReadings() reads a reference as the import's reading has a control that misses
+ * it: the reference is the callee of a call (RC13: armsJudgment() handed on after the import's call), that call's first
+ * argument is a call (RC15: the import's name there in six forms that are no call), and that argument's callee is a name the
+ * checker binds to the import (RC4 to RC6: the copy, the alias and the shadow; RC14: a copy's call first and the import's
+ * call after it). How judgmentReadings() reads a form neither this file nor a control holds (an argument position after the
+ * third, for one) is NOT CLAIMED by this census.
  * T-ARMS-FORWARD pins each requirement on a judgment of its own: armsJudgment() over refusedRuns() and the reading of an
  * edited copy of this file's source, or over the live reading and edited runs. With one statement written directly before the
  * last statement of judgeTsxRow's body, a pushed string (the census's AF1 form) reads as the live arms and one more after
@@ -1287,9 +1297,20 @@ const IMPORT_READING = "a call of the readJudgeArms import";
 const LIVE_JUDGMENT_READINGS: readonly string[] = [`T-ARMS: ${IMPORT_READING}`, ...Array.from({ length: 6 }, () => `T-ARMS-FORWARD: ${IMPORT_READING}`)];
 /** The readers T-ARMS-READER-CONTROLS gives a negative control. */
 type ControlReader = "readerImports" | "judgmentReadings" | "topLevelFunctions" | "headerKinds";
-/** T-ARMS-READER-CONTROLS's plants (wb-m14y refusal #5, the no-negative-control class of its U2): each an edit of the source its
- * reader reads - this file's for readerImports(), judgmentReadings() and headerKinds(), the reader module's for
- * topLevelFunctions() - with what that reader reads from the edited source. */
+/** RC15's first arguments: the import's name in six forms that are no call - a property access and an element access, each
+ * plain and optional, an as assertion and an angle-bracket assertion (T-ARMS-READER-CONTROLS). */
+const NON_CALL_FIRSTS: readonly string[] = [
+  "readJudgeArms.prototype",
+  "readJudgeArms?.prototype",
+  'readJudgeArms["prototype"]',
+  'readJudgeArms?.["prototype"]',
+  "readJudgeArms as never",
+  "<never>readJudgeArms",
+];
+/** T-ARMS-READER-CONTROLS's plants (wb-m14y refusal #5, the no-negative-control class of its U2; refusal #6 U1, the same class
+ * for judgmentReadings()'s callee condition: RC13 to RC15): each an edit of the source its reader reads - this file's for
+ * readerImports(), judgmentReadings() and headerKinds(), the reader module's for topLevelFunctions() - with what that reader
+ * reads from the edited source. */
 const READER_CONTROLS: readonly (readonly [id: string, reader: ControlReader, edit: (source: string) => string, reads: readonly string[]])[] = [
   ["RC1 aliased import", "readerImports", (source) => source.replace("quotedPattern, readJudgeArms, SELF", "quotedPattern, readJudgeArms as readArms, SELF"), [`${ARMS_READER} readJudgeArms as readArms`]],
   ["RC2 second import", "readerImports", (source) => `${source}\nimport { readJudgeArms } from "./w10-copy.js";\n`, [`${ARMS_READER} readJudgeArms as readJudgeArms`, "./w10-copy.js readJudgeArms as readJudgeArms"]],
@@ -1312,6 +1333,36 @@ const READER_CONTROLS: readonly (readonly [id: string, reader: ControlReader, ed
     "headerKinds",
     (source) => `${source.slice(0, source.indexOf("*/")).replace(" enum, namespace,", " namespace,")}${source.slice(source.indexOf("*/"))}`,
     ["variable", "parameter", "binding element", "function", "function expression", "class", "class expression", "namespace", "import-equals", "default import", "namespace import", "named import", "interface", "type alias", "type parameter"],
+  ],
+  [
+    "RC13 armsJudgment() handed on after the import's call",
+    "judgmentReadings",
+    (source) => `${source}\nhandOn(readJudgeArms(readText(SELF)), armsJudgment);\nhandOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment);\n`,
+    [...LIVE_JUDGMENT_READINGS, "module: handOn(readJudgeArms(readText(SELF)), armsJudgment)", "module: handOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment)"],
+  ],
+  [
+    "RC14 the import's call after a copy's",
+    "judgmentReadings",
+    (source) => `${source}\narmsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF)));\narmsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)));\n`,
+    [
+      ...LIVE_JUDGMENT_READINGS,
+      "module: armsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF)))",
+      "module: armsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)))",
+    ],
+  ],
+  [
+    "RC15 the import's name, no call, first",
+    "judgmentReadings",
+    (source) => `${source}\n${NON_CALL_FIRSTS.map((first) => `armsJudgment(${first}, refusedRuns());`).join("\n")}\n`,
+    [
+      ...LIVE_JUDGMENT_READINGS,
+      "module: armsJudgment(readJudgeArms.prototype, refusedRuns())",
+      "module: armsJudgment(readJudgeArms?.prototype, refusedRuns())",
+      'module: armsJudgment(readJudgeArms["prototype"], refusedRuns())',
+      'module: armsJudgment(readJudgeArms?.["prototype"], refusedRuns())',
+      "module: armsJudgment(readJudgeArms as never, refusedRuns())",
+      "module: armsJudgment(<never>readJudgeArms, refusedRuns())",
+    ],
   ],
 ];
 
@@ -3720,7 +3771,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
       expect(helper.filter((name) => !READER_NAMES.includes(name)), "each a reader name").toEqual([]);
     }, 60_000);
 
-    it("T-ARMS-READER-CONTROLS (wb-m14y refusal #5, the negative controls of readerImports(), judgmentReadings(), topLevelFunctions() and headerKinds(); standing rule 16 frozen shape): each reader reads its planted edit - readerImports() an aliased, a second and a renamed import of the reader; judgmentReadings() a copy, an alias and a shadow of the reader at T-ARMS's call, an alias, a shorthand property and an export specifier of armsJudgment() and a second declaration of it; topLevelFunctions() a function added to the reader module; headerKinds() a kind taken out of this header's list", () => {
+    it("T-ARMS-READER-CONTROLS (wb-m14y refusals #5 and #6, the negative controls of readerImports(), judgmentReadings(), topLevelFunctions() and headerKinds(); standing rule 16 frozen shape): each reader reads its planted edit - readerImports() an aliased, a second and a renamed import of the reader; judgmentReadings() a copy, an alias and a shadow of the reader at T-ARMS's call, an alias, a shorthand property and an export specifier of armsJudgment(), a second declaration of it, armsJudgment() handed on as the second and the third argument of a call whose first argument is the import's call, the import's call as the second and the third argument of an armsJudgment() call whose first is a copy's, and the import's name in six forms that are no call as an armsJudgment() call's first argument; topLevelFunctions() a function added to the reader module; headerKinds() a kind taken out of this header's list", () => {
       const readers: Readonly<Record<ControlReader, (source: string) => string[]>> = { readerImports, judgmentReadings, topLevelFunctions, headerKinds };
       const own = readText(SELF);
       const sources: Readonly<Record<ControlReader, string>> = { readerImports: own, judgmentReadings: own, topLevelFunctions: readText(ARMS_HELPER), headerKinds: own };
@@ -3732,7 +3783,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         expect(readers[reader](edited), id).toEqual(reads);
         ran++;
       }
-      expect(ran).toBe(12);
+      expect(ran).toBe(15);
       expect(READER_CONTROLS.map(([id, reader, , reads]) => `${id} ${reader}: ${reads.join(" | ")}`)).toEqual([
         "RC1 aliased import readerImports: ./helpers/w10-tsx-judge-arms.js readJudgeArms as readArms",
         "RC2 second import readerImports: ./helpers/w10-tsx-judge-arms.js readJudgeArms as readJudgeArms | ./w10-copy.js readJudgeArms as readJudgeArms",
@@ -3746,6 +3797,9 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         "RC10 second declaration judgmentReadings: 2 top-level declarations of armsJudgment()",
         "RC11 function added to the reader module topLevelFunctions: bindingChecker | readJudgeArms | judgeArms",
         "RC12 kind taken out of the header headerKinds: variable | parameter | binding element | function | function expression | class | class expression | namespace | import-equals | default import | namespace import | named import | interface | type alias | type parameter",
+        "RC13 armsJudgment() handed on after the import's call judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: handOn(readJudgeArms(readText(SELF)), armsJudgment) | module: handOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment)",
+        "RC14 the import's call after a copy's judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF))) | module: armsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)))",
+        'RC15 the import\'s name, no call, first judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment(readJudgeArms.prototype, refusedRuns()) | module: armsJudgment(readJudgeArms?.prototype, refusedRuns()) | module: armsJudgment(readJudgeArms["prototype"], refusedRuns()) | module: armsJudgment(readJudgeArms?.["prototype"], refusedRuns()) | module: armsJudgment(readJudgeArms as never, refusedRuns()) | module: armsJudgment(<never>readJudgeArms, refusedRuns())',
       ]);
     }, 60_000);
 
