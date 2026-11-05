@@ -22,9 +22,10 @@
  * MEASURED AT BASE (c2695d7, landing 686; seat ws-02, run g10-work-s146, 2026-10-30; cut #1 measured 864dff9, cut #2 04123dc,
  * cut #3 57cb1c0; cut #5 re-measured 38ce23b, landing 891, seat ws-03, run g10-work-s201, 2026-11-03, cut #6 08a61f1,
  * landing 912, seat ws-06, run g10-work-s204, 2026-11-04, cut #7 a14c87f, landing 925, seat ws-05, run g10-work-s208,
- * 2026-11-04, cut #8 3041aac, landing 939, seat ws-06, run g10-work-s209, 2026-11-04, and cut #9 883ee7c, landing 948, seat
- * ws-05, run g10-work-s212, 2026-11-04, each with the same results, the manifests read being every tracked path outside test/
- * that the helper's manifestForm selects): no tracked file below
+ * 2026-11-04, cut #8 3041aac, landing 939, seat ws-06, run g10-work-s209, 2026-11-04, cut #9 883ee7c, landing 948, seat
+ * ws-05, run g10-work-s212, 2026-11-04, and cut #10 bfc7fcd, landing 967, seat ws-06, run g10-work-s216, 2026-11-05, each
+ * with the same results, the manifests read being every tracked path outside test/ that the helper's manifestForm selects):
+ * no tracked file below
  * src, no tracked dependency manifest, package.json or package-lock.json spells the producer's stem, a hosted class or a
  * publication entry (git grep, 0 rows each), and every tracked file below src (117) is a script module. Pi's one Fiber surface
  * is rf: the two reactivefiber.render.preview registrations (effectClass read, supportedModes [invoke], the carrier contract
@@ -109,6 +110,18 @@
  * (SEGMENTS among it) and B2 are restated to those pins, and the three self-descriptions are bounded to what their pins hold.
  * Controls and their readings are added; no row, pin or test is.
  *
+ * CUT #10 (the further restatement orchestrator ruling R-B578 orders after refusal #9; seat ws-06, run g10-work-s216):
+ * refusal #9 (BIND 2026-11-05T04:28:07Z, gate-prep-12, run g10-gate-s214) found three one-edit members of this file's own code
+ * that kept it green inside cut #9's words: readSrc's hosting scan reading a judged text only to its fifth segment, and its
+ * entry scan reading only a text's last five segments or dropping its second, because every SEGMENT_TREE line held the four
+ * hosting needles only at segments two to five and the four entry needles only at segments six to nine, so the per-line,
+ * per-needle hit pins proved each needle's hit only at the one segment place it was planted at (U1). Claims equal pins here:
+ * SEGMENT_TREE holds, per separator, eight lines in each file, one per SEGMENT_ROTATIONS rotation of REACH_DENSE.partial.words,
+ * so across them each needle of both sets sits once at each of segments two to nine of a ten-segment judged text, and the
+ * pipeline's hosting (A2) and entry (B2) readings pin each needle's hit on every such line; A2's SEGMENTS and B2 are restated
+ * to those pins, and SEGMENTS' bounds name the segment places no line holds a needle at. Controls and their readings are
+ * added; no row, pin or test is.
+ *
  * THE VOCABULARY (the helper's fold, segmentFolds, needlesIn and needle sets; their rules are the helper's, stated in its header
  * and claimed by the readers censuses). The needles are the folds of three word lists: STEM, the title's distribution word (the
  * one word after "hosts") with its SDK suffix dropped, held to every DISTRIBUTIONS name; HOSTED_CLASSES (FiberRuntime,
@@ -118,8 +131,9 @@
  * readSrc's hosting scan with HOSTING_NEEDLES and its entry scan with ENTRY_NEEDLES, every needle of both sets on every REACH
  * probe line, there a string literal of its own in a script module and a space-separated word on a raw line (A2's REACH names,
  * per scan and per needle, the files a needle's hit is missing from), and on every SEGMENT_TREE line, there a middle segment
- * (neither the first nor the last) of the line's needle-holding judged text, cut by a slash, a backslash, a space or a tab
- * (the pipeline readings of A2 and B2 pin each such hit; A2's SEGMENTS bounds what they claim); A2's SOURCE_CONTROLS reading
+ * (neither the first nor the last; across a separator's eight lines, each of segments two to nine) of the line's
+ * needle-holding judged text, cut by a slash, a backslash, a space or a tab (the pipeline readings of A2 and B2 pin each such
+ * hit; A2's SEGMENTS bounds what they claim); A2's SOURCE_CONTROLS reading
  * with HOSTING_NEEDLES and B2's ENTRY_CONTROLS reading with ENTRY_NEEDLES, the controls' pinned hits naming every needle of
  * the set. A1's manifest readers (STEM alone) and A3's registry and descriptor readers (both sets) are the helper's,
  * claimed as the readers censuses claim them (the composed-readers NOT CLAIMED entry below). The needle set a quiet row
@@ -214,20 +228,28 @@
  *    SEGMENTS: SEGMENT_TREE, planted in the pipeline tree's src beside PIPELINE_TREE and read through readSrc with it, holds a
  *    script module (src/hosts/value-segments.ts, one exported string literal per line) and a raw file
  *    (src/hosts/value-segments.txt, one line each) whose lines join, per SEGMENT_SEPARATORS separator in order (a slash, a
- *    backslash, a space and a tab), every REACH_DENSE.partial.words word between the leading word lead and the ending word
- *    end, which hold no needle; so on each line every needle's hit comes only from a segment that is neither the first nor the
- *    last of its judged text (the string literal; the raw line). The pipeline's hosting reading (A2) and entry reading (B2)
- *    give every line of both files the hit of each needle of the scan's set, and the roster pins each hit, per line and per
- *    needle. So a hosting or entry scan that leaves unread any middle segment of those judged texts (as one that keeps only
- *    the part before a text's first slash, backslash, space or tab, or only the part after its last, does), in every file, in
- *    every script module or in every other file, reds A2 for a hosting scan and B2 for an entry scan. NOT CLAIMED by this
- *    census: such a reading keyed on anything else (a file's path, directory or text, one extension of its kind, .tsx alone
- *    for one, a line's number, a judged text's own spelling or length, the walk or its size); a judged text cut by another
- *    character the helper's fold cuts at (another whitespace character, a no-break space or a line break inside a template
- *    literal, for two); a needle past a separator in a judged text of another kind than a string literal or a raw line (a
- *    template part, a regular expression or JSX text); and a needle a judged text holds in more than one of its segments. The
- *    live reading's hosting hits (a HOSTING_NEEDLES fold: STEM or a HOSTED_CLASSES fold) are none (hits are pinned, never the
- *    list of files, so an unrelated file a later cut adds below src reds nothing); the walk and git's listing both list a
+ *    backslash, a space and a tab) and per SEGMENT_ROTATIONS rotation in order (eight lines per separator in each file:
+ *    rotation r starts REACH_DENSE.partial.words at its word r, counted from 0, and wraps), every REACH_DENSE.partial.words
+ *    word between the leading word lead and the ending word end, which hold no needle; so every such judged text (the string
+ *    literal; the raw line) has ten segments, on each line every needle's hit comes only from one segment that is neither the
+ *    first nor the last, and across a separator's eight lines in either file each needle of both sets sits once at each of
+ *    segments two to nine (counted from the front; from the back, the same eight places). The pipeline's hosting reading (A2)
+ *    and entry reading (B2) give every line of both files the hit of each needle of the scan's set, and the roster pins each
+ *    hit, per line and per needle. So a hosting or entry scan that leaves unread any of segments two to nine of those judged
+ *    texts, counted from the front or from the back, for any needle of its set (as one that keeps only the part before a
+ *    text's first slash, backslash, space or tab, or only the part after its last, or only a text's first five or its last
+ *    five segments, or that drops its second, does), on the texts cut by any one or more of the four separators, in every
+ *    file, in every script module or in every other file, reds A2 for a hosting scan and B2 for an entry scan. NOT CLAIMED by
+ *    this census: such a reading keyed on anything else (a file's path, directory or text, one extension of its kind, .tsx
+ *    alone for one, a line's number, a judged text's own words, length or segment count, the walk or its size), or one that
+ *    leaves unread only segments past a text's ninth, counted from the front or from the back (on a SEGMENT_TREE text, its
+ *    tenth and its first, end and lead, which hold no needle); a judged text cut by two or more of the separators, or by
+ *    another character the helper's fold cuts at (another whitespace character, a no-break space or a line break inside a
+ *    template literal, for two); a needle past a separator in a judged text of another kind than a string literal or a raw
+ *    line (a template part, a regular expression or JSX text); and a needle a judged text holds in more than one of its
+ *    segments. The live reading's hosting hits (a HOSTING_NEEDLES fold: STEM or a HOSTED_CLASSES fold) are none (hits are
+ *    pinned, never the list of files, so an unrelated file a later cut adds below src reds nothing); the walk and git's
+ *    listing both list a
  *    non-script file (the roster); the planted modules read in the positions they hold (SOURCE_CONTROLS:
  *    a named import, a dynamic import, a require call, a spawn argument, a constructed class, a type, a template, a regular
  *    expression, a private name, JSX text, a class in a path string, template head, middle, tail and no-substitution parts,
@@ -295,8 +317,9 @@
  *    the A2 reading (each listed file reaching the entry scan, for each of the four needles, as A2's REACH states it, each
  *    judged text's segments as A2's SEGMENTS states it, and no further), so no host publication and no flush exist for the rule
  *    to judge; planted calls read (snake, camel, string key, destructured, and the scratch tree's Python sidecar; the four
- *    entries named among them), SEGMENT_TREE's lines read (each entry in a middle segment of every line, as A2's SEGMENTS
- *    states), near misses (flush, publish, render, requestRender) quiet.
+ *    entries named among them), SEGMENT_TREE's lines read (each entry in a middle segment of every line and, across a
+ *    separator's eight lines, at each of segments two to nine, as A2's SEGMENTS states), near misses (flush, publish, render,
+ *    requestRender) quiet.
  *  C, "a query change alone produces zero publication or inference side effects".
  *    C1 NO REACTIVE ENTRY: the registry's members (its prototype chain, an instance's own keys, so a class field, and the static
  *    members along its constructor chain) and the two preview providers' own keys ({descriptor, invoke}) hold no
@@ -338,8 +361,8 @@
  * (node_modules/fiber-optics and node_modules/alias, with their fillers and quiet paths), so a lock
  * package holding the stem in another segment of its path (node_modules/fiber-optics/node_modules/left-pad, which lockReading
  * reads here and refusal #5's F3 member GP12-A1-LOCK-LASTSEG, reading a path by its last segment only, does not) is claimed
- * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5, at cut #6, at cut #7, at cut #8 and
- * again at cut #9:
+ * by neither landed readers census and is NOT CLAIMED by this census. Measured at cut #5, at cut #6, at cut #7, at cut #8, at
+ * cut #9 and again at cut #10:
  * - refusal #4's carrier members H-A3-CARRIER-WEAK (isCarrier reads every contract ending with a space and --no-commit as the
  *   carrier) and H-A3-CARRIER (every contract the carrier) keep this census 0 failed | 17 passed: it reads isCarrier on the
  *   two live legs only. A registered preview whose contract meets the same four criteria and ends with a space and
@@ -783,22 +806,29 @@ const REACH_DENSE = {
 const PIPELINE_LINK = { path: "src/linked", target: "../outside", files: { "outside/value.ts": "export const runtime = new FiberRuntime();\n" } } as const;
 /** The separators of the helper's segmented fold that SEGMENT_TREE plants, by name, in its line order. */
 const SEGMENT_SEPARATORS: Readonly<Record<string, string>> = { slash: "/", backslash: "\\", space: " ", tab: "\t" };
-/** A SEGMENT_TREE line's needle-holding text: every REACH_DENSE.partial.words word joined by the separator between lead and end, which hold no needle. */
-function segmentLine(separator: string): string {
-  return ["lead", ...REACH_DENSE.partial.words, "end"].join(separator);
+/** SEGMENT_TREE's rotations of REACH_DENSE.partial.words, in line order per separator: rotation r starts the words at word r (counted from 0) and wraps. */
+const SEGMENT_ROTATIONS: readonly number[] = REACH_DENSE.partial.words.map((_, rotation) => rotation);
+/**
+ * A SEGMENT_TREE line's needle-holding text: REACH_DENSE.partial.words rotated by `rotation`, joined by the separator between
+ * lead and end, which hold no needle; ten segments, each needle word one of segments two to nine.
+ */
+function segmentLine(separator: string, rotation: number): string {
+  const words = REACH_DENSE.partial.words;
+  return ["lead", ...words.slice(rotation), ...words.slice(0, rotation), "end"].join(separator);
 }
 /**
  * A2's and B2's segment plants (A2's SEGMENTS), planted in the pipeline tree's src beside PIPELINE_TREE and read through readSrc
- * with it: a script module whose line per SEGMENT_SEPARATORS separator exports segmentLine's text as a string literal (its one
- * judged text holding a needle), and a raw file whose line per separator is that text; every needle's hit on a line comes only
- * from a segment that is neither the first nor the last of its judged text.
+ * with it: a script module whose lines, per SEGMENT_SEPARATORS separator and per SEGMENT_ROTATIONS rotation, each export
+ * segmentLine's text as a string literal (its one judged text holding a needle), and a raw file whose lines, in the same order,
+ * are those texts; every needle's hit on a line comes only from a segment that is neither the first nor the last of its judged
+ * text, and across a separator's eight lines each needle sits once at each of segments two to nine.
  */
 const SEGMENT_TREE: Readonly<Record<string, string>> = {
   "src/hosts/value-segments.ts": Object.entries(SEGMENT_SEPARATORS)
-    .map(([name, separator]) => `export const ${name} = ${JSON.stringify(segmentLine(separator))};\n`)
+    .flatMap(([name, separator]) => SEGMENT_ROTATIONS.map(rotation => `export const ${name}${rotation} = ${JSON.stringify(segmentLine(separator, rotation))};\n`))
     .join(""),
   "src/hosts/value-segments.txt": Object.values(SEGMENT_SEPARATORS)
-    .map(separator => `${segmentLine(separator)}\n`)
+    .flatMap(separator => SEGMENT_ROTATIONS.map(rotation => `${segmentLine(separator, rotation)}\n`))
     .join(""),
 };
 /**
