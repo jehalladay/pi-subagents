@@ -49,3 +49,7 @@
 The fork remains jehalladay/pi-subagents. "Pi Workflow Workbench" is a proposed product label, not an already-installed extension. Upstream source is intentionally untouched by this documentation commit. Future implementation commits should label experimental functionality and retain an explicit feature flag until end-to-end conformance passes.
 
 All references to node provider methods, SDK names, example operation names, host config, and schemas below are **proposals** unless identified as observed upstream interfaces. Validate them against pinned releases before implementing.
+
+## Coordinated MechanicalWorkflows integration audit (2026-11-04)
+
+[New audit and implementation program](programs/mechanical-workflows-interop-2026-11-04/README.md) — source-based findings, native function-host protocol, staged QA and agent handoff. W11 is still **planned**: Pi cannot yet invoke the Mechanical `develop()` function via `workflow_execute`, notwithstanding implemented Claude SDK, provider, detached and Furnace infrastructure. The program is design-only and records no new live acceptance. Its matching Mechanical program is in `jehalladay/MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`.

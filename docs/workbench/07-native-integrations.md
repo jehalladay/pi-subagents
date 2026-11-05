@@ -51,3 +51,7 @@ Every live adapter records: SDK package + revision, native operation IDs, owner/
 ## First realistic vertical journey
 
 Real HX scope -> real RF context -> Claude SDK implementing agent in controlled workspace -> real Forge verification -> optional Furnace-supervised full gate. First usable cut may deploy HX + Forge nodes independently before RF/MechanicalWorkflows reach live vertical readiness. Never call fixture success a live end-to-end journey.
+
+## Follow-up: executable function-host program (2026-11-04)
+
+The [cross-repository audit and integration program](programs/mechanical-workflows-interop-2026-11-04/README.md) supersedes the early descriptor-only implementation *assumption*, not the ownership model. At the audited heads, Mechanical has a tested local SHA-256-pinned tarball loader but Pi's function dispatch and native service binding are absent; the committed Mechanical descriptor's schema paths differ from those the host currently accepts. Fix the actual manifest, then ship an explicitly authorized, observable function launch using the real package. Git-census development is an honest first vertical; certified task-scoped HX and committed RF rendering remain separate acceptance gates.

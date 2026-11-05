@@ -247,3 +247,7 @@ bd prime                # Refresh Beads context
 
 **Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/SYNC_CONCEPTS.md for details and anti-patterns.
 <!-- END BEADS CODEX SETUP -->
+
+## Pi / MechanicalWorkflows interop program (2026-11-04)
+
+For changes that invoke MechanicalWorkflows functions through Workbench, read [the cross-repository design program](docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md) and the project skill `.agents/skills/pi-mechanical-interop/SKILL.md`, and inspect the matching MechanicalWorkflows program. W11 is not shipped merely because the descriptor and `function` enum exist. Consumer-first negative tests must use the committed descriptor, real pinned artifact and native producer evidence. Keep the program docs, skill, W11 status and relevant public reference current in the same implementation cut. Do not conflate Git census with HX task completeness or RF preview with committed render. No GitHub CI; rely on Forge. 

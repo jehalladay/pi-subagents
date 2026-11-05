@@ -1,5 +1,7 @@
 # @tintinweb/pi-subagents
 
+> **MechanicalWorkflows integration (design program):** [Cross-repository audit and W11 execution plan](docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md). Pi Workbench currently launches script definitions, not Mechanical `develop()` function definitions. No cross-repository native end-to-end run is claimed; the program identifies missing function dispatch, descriptor binding, source/effect proof and the staged path to acceptance.
+
 
 > **Experimental Workbench mode:** [Specifications and status ledger](docs/workbench/README.md). Set `"workbench": {"workflowAgentBackend": "claude"}` in `.pi/subagents.json` to route *workflow* `agent()` through `@anthropic-ai/claude-agent-sdk` rather than Pi's AgentManager. The upstream Pi workflow path remains the default; the standalone `Agent` tool is unchanged. With explicit `workbench.capabilityGrants: ["forge:inspect"]`, scripts may call read-only `node("forge.gate.status", {target: "<authorized Forge workspace root>"})` through the native Forge TypeScript SDK; its result is historical readiness, never an automatically verified PASS. Direct and registered Pi real-SDK parallel-structured proofs passed. Explicit native grants, bounded observations and selectable native details remain experimental. Actual terminal operator proof and the complete inspector/observer/designer program remain open. This mode is not a release-certified Workbench.
 
