@@ -12,9 +12,15 @@
  *   six bindings' documents unread) under orchestrator ruling R-B201, in the enumerate-the-resolvable form: R-HIDDEN's DOCUMENT
  *   WITNESS reads the documents behind every planted binding but WRAPPED_CASES (whose wrapped members the wrapped-kind literal
  *   reads) through the channel its form names, the content digest pins the planted module entries' bytes, and R-SELF-HOLLOW
- *   pins both emptyings as unseen by every outside reading; and its cut #4 (seat ws-04, run g10-work-s182, authored at trunk
- *   04c8bbb0) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of the gate's TV3 and TV5)
- *   under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED (R-HIDDEN below).
+ *   pins both emptyings as unseen by every outside reading; its cut #4 (seat ws-04, run g10-work-s182; authored at trunk
+ *   04c8bbb0, base of record f5cb9129) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of
+ *   the gate's TV3 and TV5) under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED
+ *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219, base of record 108a2025), cut once
+ *   the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier wb-gnj9 had landed (landing
+ *   952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels were named twins of the
+ *   gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and
+ *   GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no channel's twin identity is claimed
+ *   (R-HIDDEN below).
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -180,15 +186,15 @@
  *   plant itself (hiddenPlant): the planted namespace's bindings beside the SDK's own, by name and property kind
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
- *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, the census-side twins of the gate's
- *   TV1, TV2, TV4 and TV6 walk changes and seven more channels, none of which the walk itself reads), each read through the
- *   channel its form names and then walked as the walk walks a value: resultCases and loadCases called (call), loadCases's own
- *   enumerable data (own, TV4's), INHERITED_CASES's prototype's own enumerable data (prototype), WEAK_CASES's entry and
- *   WEAK_SET's membership for the planted document (get, has), VAULT's private field through Vault's own static reader
- *   (private), PENDING_CASES's resolution as node:util's inspect renders it (resolution), CASE_BYTES decoded as UTF-8 JSON
- *   (bytes), CASES's getter invoked (getter, TV6's), HIDDEN_CASES's value (non-enumerable, TV2's) and the symbol-keyed
- *   binding's value (symbol, TV1's): the walk reaches the representation in them at exactly the twelve paths the literal names,
- *   so any of those bindings emptied of its documents (the gate's GV1-GV6 among them) is read there; the wrapped members,
+ *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, census-side channels, none of which
+ *   the walk itself reads), each read through the channel its form names and then walked as the walk walks a value:
+ *   resultCases and loadCases called (call), loadCases's own enumerable data (own), INHERITED_CASES's prototype's own
+ *   enumerable data (prototype), WEAK_CASES's entry and WEAK_SET's membership for the planted document (get, has), VAULT's
+ *   private field through Vault's own static reader (private), PENDING_CASES's resolution as node:util's inspect renders it
+ *   (resolution), CASE_BYTES decoded as UTF-8 JSON (bytes), CASES's getter invoked (getter), HIDDEN_CASES's value
+ *   (non-enumerable) and the symbol-keyed binding's value (symbol): the walk reaches the representation in them at exactly the
+ *   twelve paths the literal names, so any of those bindings emptied of its documents (the gate's GV1-GV6 among them) is read
+ *   there unless the witness's own reads put them back (NOT CLAIMED below); the wrapped members,
  *   WRAPPED_CASES'
  *   documents' representations, as the namespace carries them where the walk reads (reached through own enumerable data
  *   properties; beside the quiet, the same plant with each member replaced by the representation itself is read by the walk at
@@ -197,9 +203,13 @@
  *   (String.prototype.valueOf, the method's result, the description, Function.prototype.toString) including the representation;
  *   and the planted module entries (cases, samples, shapes and wrapped, with the declarations of cases and wrapped), each of
  *   which, shipped alone in today's release, makes T1 identity's tarballs facet read another release, and whose paths and bytes
- *   the content digest of the six pins, so no entry's documents change unread. The DOCUMENT WITNESS's prototype and bytes
- *   channels are NOT CLAIMED as twins of the gate's TV3 and TV5 (wb-ulnv refusal #3's GV3X, GV5X and GV5Y): that exact-twin
- *   coverage is deferred to wb-byfw.
+ *   the content digest of the six pins, so no entry's documents change unread. No DOCUMENT WITNESS channel is claimed as the
+ *   twin of a walk change: its prototype and bytes channels as twins of the gate's TV3 and TV5 (wb-ulnv refusal #3's GV3X,
+ *   GV5X and GV5Y) and its own, getter, non-enumerable and symbol channels as twins of the gate's TV4, TV6, TV2 and TV1 are
+ *   NOT CLAIMED by this census, and neither are documents that a binding holds only as an effect of the witness's own reads
+ *   (refusal #4's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD, whose documents stand
+ *   only while a loadCases call's effect stands). The twin coverage cut #4 deferred to wb-byfw is the DOCUMENT WITNESS twin
+ *   census that wb-byfw's carrier wb-gnj9 landed (landing 952): test/workbench-hyperunix-document-witness-census.test.ts.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
