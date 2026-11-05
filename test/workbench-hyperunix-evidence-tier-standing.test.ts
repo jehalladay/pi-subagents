@@ -32,12 +32,24 @@
  * leaves unread), pins that context under its own FALSIFIER, checkStream so rebound three block statements deep at its module's
  * top level (the gate's P-DEEP3, byte-identical), and under an 18th NESTINGS member, a block inside a block inside a block (each
  * HOLDER written by &&= and by = nested in it at its module's start and end), with each member's run of blocks read by the
- * parser, and binds each title clause's NESTINGS count to its own clause, leaving the acceptance reading unchanged): each case
+ * parser, and binds each title clause's NESTINGS count to its own clause, leaving the acceptance reading unchanged; and wb-qyd6,
+ * the follow-up landing 928's gate routed (its realized escape: a compound-assignment write of a HOLDER at a middle top-level
+ * statement of its module other than its second and the one after decoder.js's ANSWER_COVERAGE_REQUIRED declaration, which that
+ * gate's GA-MID-OTHER leaves unread and its plants P-GA-MID-HXCP and P-GA-MID-2 realize), pins the plain assignment and the &&=
+ * statement writing each HOLDER after each top-level statement of its module but its last, so at each of its middle positions,
+ * and the compound cell's statement rebinding checkStream at each of the decoder module's (those two plants among them,
+ * byte-identical), with the deep key in its seat key's place as well (the statement the landing-941 PREP's paired page W-R6
+ * plants for its GQ-R6-COMPOUND-KEY, byte-identical, among them), its cut #2 restating its cut #1 over wb-1aei's landed census
+ * (landing 941) and its cut #3 restating its cut #2 over wb-b9ot's landed census (landing 959), with each of those controls' texts
+ * planted once and its misread reading and its place both read from that one text, each cell's places read from those texts and
+ * run against the parser's count of the installed module, and the T2 title claims list's shape pinned, leaving the acceptance
+ * reading unchanged): each case
  * claims exactly the cells and pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
- * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins,
- * except the realized escape landing 928's gate routed to follow-up wb-qyd6 (a compound-assignment write of a HOLDER at another
- * middle top-level statement of its module, which that gate's GA-MID-OTHER leaves unread), which is not named here. The
+ * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins
+ * (the realized escape landing 928's gate routed to follow-up wb-qyd6, a compound-assignment write of a HOLDER at another middle
+ * top-level statement of its module, which that gate's GA-MID-OTHER leaves unread and wb-1aei's cut excepted here, is pinned in T2
+ * since wb-qyd6). The
  * statement (STATEMENT below,
  * verbatim, the bead's title): "When a GC-D13 ADR plus an SDK result field carry provider evidence tiers
  * (14-decisions-and-migration.md:19@6ed14cab8d; HXGC-PROV-001 DESIGN requirements.jsonl:22), Pi shall read the tier as a separate
@@ -125,8 +137,20 @@
  *      statement writing each of the 8 HOLDERS nested in each of the 18 NESTINGS (each write read by the parser below its module's
  *      top level, in the run of blocks blockRun() reads for its member: none to two, and three in the block inside a block inside a
  *      block) at the start and at the end of its module (288 controls), and in SPELLED_STATEMENTS' plain-assignment statement
- *      writing each of the 8 HOLDERS so nested at the start and at the end of its module (another 288 controls), each departing as
- *      a binding; a spelling
+ *      writing each of the 8 HOLDERS so nested at the start and at the end of its module (another 288 controls), and in that
+ *      plain-assignment statement and the &&= statement writing each of the 8 HOLDERS after each top-level statement of its module
+ *      but its last, so at each of its middle positions (45 in result.js, 35 in protocol/query.js and 31 in protocol/decoder.js,
+ *      each planted statement read by the parser at its place in the one text its misread reading reads, and each HOLDER's
+ *      places for each of the two, read from those texts, each of its module's middle positions once, run against the parser's
+ *      count of the installed module; 540 controls, which with the plants at its start and end pin each of the two at every
+ *      top-level position of its module), each departing as a binding, and in the compound cell's statement
+ *      rebinding checkStream, and in that statement with the deep key (DEEP_BUILT) in its seat key's place, before each top-level
+ *      statement of its module but its first, after that statement's leading comments, so each at each of its 31 middle positions
+ *      (62 controls, each read by the parser at its place in the one text its misread reading reads, each key's places, read
+ *      from those texts, each of the 31 once; with the landing-928 gate's keys before the HXMP and the MAX_SEQ
+ *      declarations byte-identical to that gate's P-GA-MID-HXCP and P-GA-MID-2, each planted decoder's sha256 pinned, and with
+ *      the deep key the statement the landing-941 PREP's paired page W-R6 plants before the MODES declaration for its
+ *      GQ-R6-COMPOUND-KEY, byte-identical, its sha256 pinned), departing as that cell does; a spelling
  *      of the class holding the StreamChecker HOLDERS in another consulted module departs naming its forms (an identifier in
  *      result.js, that WRITE_FORMS row; a string literal there through a namespace import and a no-substitution template literal
  *      so in protocol/query.js, the 2 CLASS_FORMS; and a statement spelling it in each of those 3 forms at the end of each of the 2
@@ -135,8 +159,10 @@
  *      either form at the end of each of the three modules, 6 controls), through which a direct eval could write a HOLDER or a list
  *      by a name built from a string. Any other statement, form, context or position of these spellings than these plants
  *      (another statement or operand, a nested write by another operator than &&= and = or in another nesting, a run of four or
- *      more blocks among them, a spelling at
- *      another middle top-level statement, a compound, update, destructuring or for-head write of a member target, another member
+ *      more blocks among them, a spelling by another of those 33 statements than the plain assignment and the &&= statement at a
+ *      middle top-level statement other than its module's second, the compound cell's statement rebinding another HOLDER or with
+ *      another key than its seat key and the deep key at a middle top-level statement (the landing-928 gate's two at their two
+ *      places aside), a compound, update, destructuring or for-head write of a member target, another member
  *      or key position, an alias of eval, an optional or tagged call) is NOT CLAIMED, its label included; a write
  *      from another consulted module through a checker it reaches without that class's name, or by a name built at run time, is
  *      R-ACCEPTANCE's;
@@ -237,10 +263,116 @@
  *      these 11 kinds are the bodies this file calls closed; its exported ENVELOPE_KEYS constant, which the 27 shipped modules spell
  *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
  *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
- *      on a copy of the tables holding a tier name in each of those five places. THE BYTES: the installed package's package.json and
- *      its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of them (a table, a refusal site or any other
- *      line) reds T2. PROBED through decodeResultStream: each closed body refuses each of the 12
- *      TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
+ *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot; cut #8, the restatement with
+ *      claims equal to pins ruling R-B506 binds at refusal #7 of cut #7, the restatement with claims equal to pins ruling R-B486 bound
+ *      at refusal #6 of cut #6, the restatement ruling R-B452 bound at refusal #5 of cut #5,
+ *      the restatement over the landed carrier wb-rv3o, landing 865, that ruling R-B286 bound at the dependency inversion on refusal
+ *      #4 of cut #4, the fail-closed core ruling R-B270 bound on refusal #3 of the enumerate-the-resolvable cut #3 ruling R-B238
+ *      bound): T2 claims exactly the readings (1)-(4) below of the package this file and the provider execute, each pinned with its
+ *      falsifiers, and no wider conclusion. The frame readings read
+ *      the TEXT of a stack's FRAME-FORM LINES (the lines of Error.stack that start, after four spaces, with 'at '), never where a
+ *      frame's code lies and whatever wrote the line: the realm writes the error's name and message, then one FRAME LINE for each
+ *      frame, and a line of that name or message, or a piece of a frame line that holds a line break, that starts so is a frame-form
+ *      line too and is read like any other (T2's controls: a thrown error whose message carries two such lines, one whose name does
+ *      after its first line, one whose name's first line is one, so that its stack's first line is (wb-b9ot refusal #6's gate member
+ *      G10-R-LINE0 read the stack from its second line), and a frame line of a function whose name holds them after a line break); a
+ *      stack is WRITTEN WHOLE when each of its frame-form
+ *      lines is a frame line the realm writes whole for one frame. Each reading places a frame-form line by its READ LOCATION:
+ *      firstFrame() reads the first frame-form line only in the form 'at <function> (<location>:<line>:<column>)', with a <function>
+ *      holding no white space and a <location> that starts 'file:///' and holds no ')', that <location> being its read location, and
+ *      reports any other first frame-form line whole, as unread; callerOf() reads each frame-form line by its CALLER LOCATION, the
+ *      text after its last '(' (after its 'at ' or 'at async ' when it holds no '(') up to the ':<line>:<column>' that ends it, a
+ *      final ')' allowed, when that text holds no white space and no ')', that being its read location, and a frame-form line without
+ *      one names no location. THE PACKAGE'S MODULES (the pinned modules) are the 27 SDK_BYTES pins (its dist/ keys): the frame
+ *      readings count a frame-form line as the package's only when its read location is one of those modules' own file: URLs under
+ *      SDK_DIST, compared whole, as text (pinnedModuleAt(), its comparison held as written by THE READERS' TEXT below; T2's controls
+ *      read result.js's and protocol/decoder.js's own URLs as those modules and as none each of 18 near spellings of result.js's URL:
+ *      with a suffix (gate member GP9-PREFIX's result.js-gp18.mjs), a query (W6-SURL-QUERY's ?q=1), an empty query (G10-EMPTYQ-PAGE's
+ *      bare '?'), a fragment, an empty fragment (G10-EMPTYF-PAGE's bare '#'), its name's case changed (G16-CASE-PAGE's RESULT.JS),
+ *      another extension, a './', a '../' or a doubled '/' segment, its scheme upper-cased, its file://localhost/ form
+ *      (G10-HOST-PAGE's), a percent-encoded '.', a trailing space, as its path, as its directory, as a name it starts with, and as
+ *      another copy's URL), and THE BYTES, spelledIn() and T1 read the .js
+ *      files under dist/ (T1 also the .d.ts files), so a file under dist/ outside the 27 is never the package's: a .js or .d.ts one
+ *      reds T1's count (a .js one THE BYTES too), and one of any other extension (an .mjs shim, a source map) is read by no case, a
+ *      frame-form line whose read location is its URL reading by that location. THE READERS' TEXT: the frame readers' declarations
+ *      (thrown(), pinnedModuleAt(), firstFrame(), located(), callerOf(), raisedFrom() and registrationRaised()) and four of the
+ *      constants they read (SDK_DIST, ROOT, SELF and BUILT_IN_FRAME; SDK_BYTES, whose dist/ keys pinnedModuleAt() reads, is held by
+ *      THE BYTES), each the one top-level statement declaring its name in this file's own source (import.meta.url's file), equal
+ *      READER_TEXT, one sha256 of each statement's whole text (its doc comment aside), read twice (wb-b9ot cut #8): by its parse
+ *      (readerTexts(), the TypeScript parser's statement) and by its lines (lineTexts(), without the parser: the lines from the one
+ *      that begins 'function <name>(', 'async function <name>(' or 'const <name> ' through the first line after it that is '}' alone,
+ *      or that one line for a const), so an edit anywhere in one (a location rewritten inside pinnedModuleAt()'s comparison or at the
+ *      call that hands it the location, a stack line dropped before a reader reads it) reds T2 whatever the edited reader then reads.
+ *      T2's controls hold each reading at each of the 11 names (wb-b9ot refusal #7's gate members G6-RT-SKIP-<name> had
+ *      readerTexts() return READER_TEXT's own digest for one name, and cut #7's controls held its reading at pinnedModuleAt() and
+ *      located() alone): a copy of that source with a neutral comment written into one name's statement (at the end of the line
+ *      before a function's closing brace, before a const's ';') reads, in each reading, that edited statement's sha256 for that name
+ *      and READER_TEXT for every other name, and a copy with that name declared a second time reads its count, '2 declarations', for
+ *      that name and READER_TEXT for every other name; a source holding none of them reads '0 declarations' for each name by its
+ *      parse, and one holding thrown()'s first lines without its closing line reads 'no closing line' for it and '0 declarations'
+ *      for every other name by its lines (and, by its parse, that source with pinnedModuleAt()'s comparison edited reads another
+ *      digest for it alone, and with located() declared a second time reads its count). An edit that both readings
+ *      read past at once (readerTexts() and lineTexts() each hollowed, or T2's hold of one removed and the other hollowed, so that
+ *      both read the edited statement as READER_TEXT) is NOT CLAIMED by this census. The reading of the decoder refusal in (3) is
+ *      raisedFrom()'s, and THE READERS' TEXT holds no other statement of this file (T2's own, which call the readers, readerTexts()
+ *      and lineTexts(), which read them, and the stand-in registration included).
+ *      (1) SDK_DIST, the dist/ directory import.meta.resolve
+ *      names for this file's '@hyperunix/sdk' (Node's resolution from test/, where a git-ignored test/node_modules copy would resolve
+ *      first; a test-config alias or plugin, which it does not see, is left to (2) and (3)), is SDK_INSTALLED
+ *      (../node_modules/@hyperunix/sdk/dist/), compared by real path. (2) Each value this file's import declaration names (read with
+ *      the TypeScript parser: decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson, resultToJson and ProtocolError) is
+ *      the same object (Object.is) as the export of that name of the module vi.importActual loads for SDK_INSTALLED's index.js file
+ *      URL, so an alias or a module mock of the bare specifier that substitutes one of them (a call-through included) while that URL
+ *      loads the installed copy reds T2; an alias of that URL too is left to (3). (3) Each of the five functions, called on null,
+ *      throws an error whose stack (Error.stack as the realm writes it) reads first a frame-form line of that function's name whose
+ *      read location is SDK_DIST's result.js file: URL, and as its first caller location outside the pinned modules one located()
+ *      reads as this file; a decoder refusal is a ProtocolError (this file's binding) whose stack reads first a frame-form line of
+ *      StreamChecker.fail whose read location is SDK_DIST's protocol/decoder.js URL, and as its first caller location outside the
+ *      pinned modules one located() reads as this file. A frame-form line of the stack that names no location is skipped only in a
+ *      built-in's form ('at Array.map (<anonymous>)'), and any other one (an eval or new Function frame line that names no location)
+ *      reads as the caller. So a substitute of one of the five that is on the stack its null call throws with (a call-through, or one
+ *      that throws itself) reds T2 when that stack is written whole, each frame line before the substitute's first one there is a
+ *      pinned module's or a built-in's, and each of its frame lines there has a caller location that is neither a pinned module's own
+ *      URL nor one located() reads as this file, or names no location in a form other than a built-in's: under SDK_DIST included
+ *      (gate member G21-S5, an .mjs shim there reached through an alias of the bare specifier and of the installed index.js URL) and
+ *      in code built by eval or new Function whose frame lines name no location. (4) Of the three READER_MODULES only the provider
+ *      (PROVIDER, src/workbench/providers/hyperunix.ts) imports the package (its value names Bounds, HyperUnix and resultToJson; each
+ *      import and export declaration and import() call of the three read with the TypeScript parser); Node's resolution from its own
+ *      path (module.findPackageJSON) finds the installed package, compared by real path (a git-ignored node_modules copy under src/
+ *      would resolve first for it alone); and its registration, handed a null result, throws an error whose stack reads first a
+ *      resultToJson frame-form line whose read location is SDK_DIST's result.js URL, and as its first caller location outside the
+ *      pinned modules one located() reads as the provider (the same reading of a stand-in registration in this file reads its own
+ *      function and this file), so a substitute of its resultToJson on that stack reds T2 when that stack is written whole, each
+ *      frame line before the substitute's first one there is a pinned module's or a built-in's, and each of its frame lines there has
+ *      a caller location that is neither a pinned module's own URL nor one located() reads as the provider, or names no location in a
+ *      form other than a built-in's: under SDK_DIST included (gate member G21-S6, an .mjs shim there reached through a redirect of
+ *      src importers). NOT CLAIMED by this census: an import of the package by a module outside READER_MODULES; the provider's Bounds
+ *      and HyperUnix bindings (its registration hands its reader a Bounds value, and the readers the cases hand it are this file's
+ *      stand-ins, which never read one); the content of a file under dist/ that is neither a .js module nor a .d.ts declaration file
+ *      (a source map, an .mjs or a .cjs file), which no case reads (a frame-form line whose read location is such a file's URL reads
+ *      by that location, as above); code other than the pinned modules' or this file's bytes served under their own URLs (a loader
+ *      hook, or a plugin's transform of this file); a substitute on the stack a reading of (3) or (4) reads one of whose frame lines
+ *      there has a caller location that is a pinned module's own URL or one located() reads as the file of the caller that reading
+ *      expects (this file in (3) and for the stand-in registration, the provider in (4): a file: URL of that file, its query and
+ *      fragment aside, or a path to it), or names no location in a built-in's form, whatever the line holds before its last '(' and
+ *      wherever the substitute's code lies (code compiled by new Function, eval or vm.Script under a //# sourceURL or a vm.Script
+ *      filename that is such a URL or path or holds one after its last '(': wb-b9ot refusal #3's gate members GP9-SURL, GP9-SURL-OUT,
+ *      GP9-SURL-EVAL, GP9-VM, GP9-SURL-THROW and GP9-SURL-PROV, and refusal #4's GP18-PAREN, GP18-PAREN-OUT, GP18-PAREN-EVAL,
+ *      GP18-PAREN-VM, GP18-PAREN-SELF, GP18-PAREN-PROV and GP18-PAREN-PROVIDER); that coverage is the landed carrier wb-rv3o's
+ *      (landing 865): its census test/workbench-hyperunix-same-view-frames-census.test.ts pins those 13 members' substitutes over its
+ *      helper test/helpers/hyperunix-same-view-frames.ts, a reader of V8's call sites rather than of this text, and no case here
+ *      reads that helper, so this census claims none of its readings; a substitute on a stack a reading of (3) or (4) reads that is
+ *      not written whole, whatever its frame-form lines name (a line its thrown error's message or name carries, as wb-b9ot refusal
+ *      #5's gate members G16-INJ, G16-INJ-OUT and G16-INJ-PROV carry two in the message, the first at SDK_DIST's result.js or
+ *      protocol/decoder.js URL and the second at the expected caller's path, or a piece of a frame line whose function name, the name
+ *      it is called under or its file name holds a line break), as the readings read the text and read such a line like any other; a
+ *      substitute with a frame line of other code than a pinned module's or a built-in's before its own first one on that stack (code
+ *      it calls that throws); a substitute whose frame the stack does not show (one that rewrites the stacks of what it throws, or
+ *      native code); a test configuration that changes the realm's Error stacks, its built-ins or the installed copy's exported
+ *      objects; and Pi's own modules substituted by a test configuration. THE BYTES: the installed package's package.json and its 27
+ *      shipped modules equal SDK_BYTES, one sha256 each, so a change to any of
+ *      them (a table, a refusal site or any other line) reds T2. PROBED through decodeResultStream: each closed body refuses each of
+ *      the 12 TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
  *      (native code HX-PROTOCOL-FRAME-INVALID), the empty-body kinds refuse them at body and the frame envelope at the member, and
  *      a diagnostic frame, an open body, decodes each of them; each decoder evidence status decodes and becomes exactly that
  *      evidence class, and every tier word but parsed is refused as an evidence status (SDK_PROTOCOL_INCOMPATIBLE at body.status,
@@ -288,11 +420,16 @@
  *      topology, live-invariant verdict and native evidence below, the baseline the on-landing toStrictEqual compares against.
  *   Q  the residuals' quiet rows (RESIDUALS below): the title names exactly the table's seven families; the frozen shape pins each
  *      row's id, the names of its pins and the length of its family label; the table holds one family per measured gap
- *      (GAP_WITNESSES, which name no family); and each quiet row reads exactly its frozen reading.
+ *      (GAP_WITNESSES, which name no family); each quiet row reads exactly its frozen reading; and, anchored outside the table and
+ *      its witness list (wb-b9ot), each kind of facet the adapter relays (measured from the adapter) is a string one of those frozen
+ *      readings holds, so R-VALUE removed with its witness and its gap still reds there (the other six families' gaps are anchored by
+ *      the witness list alone), while the decoder module's unknown-key refusals that T2 reads no key set from (measured from the
+ *      module) are none, T2 reading each since wb-tz2.23 (landing 857); and R-VALUE's deviating judge fires at each of its 12220
+ *      cells and reads which labels move, not how many (valueEchoes()'s liveness below).
  * T1-T4, R0 and R1 assert today's tier-blindness and are re-pinned by the on-landing leg (each failure message names it); A1, A2 and
  * P1 assert only the licence axis and the pre-landing snapshot, which the statement and its acceptance keep unchanged at landing.
- * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reds when its family stops reading quiet, and the family is
- * then promoted to a pinned case):
+ * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reads its family at the readings and cells it names, by the
+ * comparison it states, and reds when the family stops reading quiet there; the family is then promoted to a pinned case):
  *   R-SPELLING a tier member under a spelling the 12 TIER_MEMBERS do not probe (OFF_ROSTER: kebab, upper snake, a qualified plural
  *      and another qualifier). Closed outside the roster by T1's type walk and name scans and R0's traced reads and code scan; in the
  *      decoder T2 reads exactly the keys the envelope and the seven OBSERVATION_FIELDS bodies accept, none holding a tier, and its
@@ -310,8 +447,20 @@
  *      placements do not see it.
  *      Quiet row: the same four surfaces as R-SPELLING's, with the same readings.
  *   R-VALUE a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete
- *      region's scope and target, the execution id). Quiet row: each is relayed by its own field's meaning (its facet, the native
- *      id) and the licence axis does not move.
+ *      region's scope and target, the execution id, and every other string a reader reads). Quiet row: each of the first five is
+ *      relayed by its own field's meaning (its facet, the native id) and the licence axis does not move; and (wb-b9ot) at each of
+ *      the 1222 string read sites of the 104 base readings (a string at a path READS names: 9 in each weak and strong reading, 12 in
+ *      each certified one and 17 in each full one, the contract, representation, operation, batch id, execution kind, diagnostic
+ *      code, view, incomplete region's target and scope, support id, derivation handle, listed provider and its version, execution
+ *      id, workspace root, runtime version and runtime digest), each of the ten TIER_WORDS moves, against the reading's own string,
+ *      exactly the output labels (of the projection or its refusal, the live verdict and the native evidence) that the neutral
+ *      word moves there: 12220 cells, none deviating. Absolute against the reading's own string: the neutral word's labels at the
+ *      17 sites of the complete full reading under each licence are frozen (echoes), and the sites at which it moves the licence
+ *      axis (axisOf) of a base reading are exactly the five frozen in axisSites, each with the axis labels it moves there (the
+ *      contract, representation, execution kind, workspace root and runtime digest, at each of which it refuses the reading), so
+ *      at every other site neither the neutral word nor a tier word moves the licence axis of a base reading. The row
+ *      reads which labels move, not their values: at a label the neutral word moves too, the value a tier word writes there is NOT
+ *      CLAIMED by this census.
  *   R-UNSEEN-READING a reading outside the 104 base readings and the live twin (other row, certificate, provider, sidecar-frame or
  *      diagnostic counts), a read gated on such a reading included when its member's name is never spelled in code (built at run
  *      time), which neither R0's traced reads nor its code scan reaches. Quiet row: a held-out reading with two of each is read
@@ -363,28 +512,55 @@
  * GP17-COMPOUND-CHECKSTREAM's write and GP19-REBIND-CHECKSTREAM's), the position reading (the last top-level statement for every
  * compound and plain row but GP12-COMPOUND-MIDDLE's, and the first for a write planted at the decoder module's start), the run
  * reading (none at the module's top level, four for a statement four blocks deep, and its read-aside values for a call and for a
- * name spelled twice) and the sweeps' judges
+ * name spelled twice), the sweeps' judges
  * (ELEMENTS on a string literal planted in a list deciding each part, SPELLINGS on a callee and on another form, BINDINGS on a
  * callee and on a compound write of a member at the module's start, its form reading on a statement that reads the name without
  * writing it, NESTED BINDINGS on a nested callee and on a nested compound write of a member, its context reading on the statement
  * at the top level, MIDDLE SPELLINGS AND BINDINGS on a callee and on a compound write of a member after the module's first
  * top-level statement, its position check on a text planting another statement before its statement, NESTED PLAIN BINDINGS on a
- * nested callee and on a nested plain write of a member, its context reading on the statement at the top level, and the class and
- * eval statements on the class in its own module and on eval spelled as a string). Pure: no HX
- * binary, scratch directory, clock,
- * network or file write; the files read are the
- * installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES. Display paths added: none
- * (test-only). */
+ * nested callee and on a nested plain write of a member, its context reading on the statement at the top level, EVERY MIDDLE
+ * POSITION on a callee and on a plain write of a member after the decoder module's HXCP declaration, its compound sweep on the
+ * unplanted module and on its statement rebinding a member there, its deep statement's key reading (the deep key, not the seat
+ * key, in its right operand), its position check on a text planting another statement before
+ * its statement and its position reading on a write planted after the module's last top-level statement, its place reading (the
+ * HXMP declaration's place for the &&= statement planted after the statement before it and for the compound cell's statement
+ * planted before it, and none for a text holding no top-level statement equal to its planted statement), and the class and eval
+ * statements on the class in its own module and on eval spelled as a string), firstFrame()
+ * (a first frame-form line whose read location is another copy's URL or a file under
+ * SDK_DIST outside the pinned modules reads as that URL, one whose read location is a pinned module's own URL by its path from
+ * SDK_DIST), pinnedModuleAt() (result.js's and protocol/decoder.js's own URLs read as those modules, and each of 18 near spellings of
+ * result.js's URL as none), readerTexts() and lineTexts() (at each of the 11 READER_TEXT names, a copy of this file's source with a
+ * neutral comment written into its statement reads that edited statement's sha256 for it and READER_TEXT for every other name, and
+ * one with that name declared a second time reads '2 declarations' for it and READER_TEXT for every other name; readerTexts() reads
+ * a source holding none of them as '0 declarations' for each, and lineTexts() one holding thrown()'s first lines without its closing
+ * line as 'no closing line' for it and '0 declarations' for every other; and readerTexts() reads this file's source with
+ * pinnedModuleAt()'s comparison edited as another digest for it alone, and with located() declared a second time as its count),
+ * callerOf() (a caller location outside the repository reads
+ * whole, one in it by its path from the root, a
+ * file under SDK_DIST outside the pinned modules included, a built-in's frame-form line is skipped, an eval frame line that names no
+ * location reads as the caller, and a stack with no caller location outside the pinned modules reads as none), substituted() (a
+ * substituted binding reads
+ * by name), sdkImportsOf() (a control text's imports of the package read in each form, type-only names and other packages left out),
+ * differing() (a changed leaf, an added member and a longer list each read by label), valueEchoes()'s deviating judge (a stand-in
+ * that also counts the tier words a reading holds, in any case, deviates at each of the 12220 cells, and one that relays a tier-word
+ * runtime version at another label than the neutral word's deviates at exactly the 1040 runtime.version cells) and unheld() (with no
+ * residual, every unread refusal and relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file
+ * write; the files read are the installed SDK's package.json, shipped declaration files and modules, the three READER_MODULES (their
+ * code and their import and export declarations), this file's own source (its import declaration and THE READERS' TEXT's
+ * declarations), and the real paths of SDK_DIST,
+ * SDK_INSTALLED and the package.json Node resolves for the provider. Display paths added: none (test-only). */
 import {createHash} from 'node:crypto';
-import {readdirSync, readFileSync} from 'node:fs';
+import {readdirSync, readFileSync, realpathSync} from 'node:fs';
+import {findPackageJSON} from 'node:module';
+import {fileURLToPath} from 'node:url';
 import {isDeepStrictEqual} from 'node:util';
 import {
   assembleQueryResult, type ClaimBody, type Coverage, type CoverageSummary, decodeResultStream, type EvidenceSummary, type ExecutionStatus,
   evidenceOf, type ProcessResult, ProtocolError, type QueryResult, resultFromJson, resultToJson, type StreamSummary, type TransportTelemetry,
 } from '@hyperunix/sdk';
 import ts from 'typescript';
-import {describe, expect, expectTypeOf, it} from 'vitest';
-import {CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
+import {describe, expect, expectTypeOf, it, vi} from 'vitest';
+import {type CapabilityProvider, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {
   HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, type HyperUnixLiveVerdict, type HyperUnixProjectionTopology,
   type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
@@ -407,7 +583,19 @@ const context: HyperUnixTopologyContext = {scope: SCOPE, target: {kind: 'hx.fs/r
 const invokedContext: HyperUnixTopologyContext = {...context, invocationId: 'wf_hx_tz2.12',
   operationRef: {provider: 'pi-workflow', type: 'node-call', id: 'wf_hx_tz2.12:0'}};
 const CAPABILITY_CONTEXT = {grants: ['hyperunix:read'], signal: new AbortController().signal};
-const SDK_DIST = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
+/** The runtime version every provided reading carries (providedResult's runtime). */
+const RUNTIME_VERSION = '0.1.0';
+/** Where npm ci installs the package: the repository root's node_modules/@hyperunix/sdk (package-lock.json's entry). */
+const SDK_INSTALLED = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
+/** The dist/ directory import.meta.resolve names for this file's '@hyperunix/sdk' (Node's resolution from test/, so a git-ignored
+ * test/node_modules copy would resolve first; a test-config alias or plugin it does not see). Every read of the package below reads
+ * it; T2 holds it to SDK_INSTALLED and reads the frames the functions this file imports throw with against its pinned modules' own
+ * URLs (THE SAME VIEW). */
+const SDK_DIST = new URL('./', import.meta.resolve('@hyperunix/sdk'));
+/** The repository root: the directory test/ sits in. */
+const ROOT = new URL('../', import.meta.url);
+/** The one READER_MODULES module whose imports name '@hyperunix/sdk' (T2 reads them): the hyperunix.find provider. */
+const PROVIDER = 'src/workbench/providers/hyperunix.ts';
 
 /** The statement this leg holds before its trigger, verbatim (the bead's title). */
 const STATEMENT = 'When a GC-D13 ADR plus an SDK result field carry provider evidence tiers (14-decisions-and-migration.md:19@6ed14cab8d; '
@@ -449,6 +637,14 @@ const QUIET = 'wb-tz2.12 residual: its family stopped reading quiet; promote it 
 const BYTES_MOVED = 'wb-tz2.12: the installed @hyperunix/sdk runtime bytes moved; if the SDK now carries a provider evidence tier, '
   + 'build the on-landing leg first, else re-read the decoder (its tables, the HOLDERS and their consulted sites, and the HELPERS: '
   + "R-ACCEPTANCE) before re-pinning SDK_BYTES and the HOLDERS' digests";
+const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file or the provider executes is not the repository's installed copy (a node_modules "
+  + 'copy under test/ or src/, a test-config alias, a module mock or a frame-form line whose read location is outside the 27 '
+  + 'modules SDK_BYTES pins, under dist/ included, read before the expected caller); SDK_BYTES and every decoder reading pin the '
+  + 'installed copy, so remove the other copy and re-read';
+const SDK_IMPORTS = 'wb-b9ot: a reader module other than the provider now imports @hyperunix/sdk, or the provider imports other names; pin '
+  + "that module's resolution and frames as the provider's are pinned before re-pinning this roster";
+const READERS_MOVED = "wb-b9ot: a frame reader's declaration in this file moved (THE READERS' TEXT); re-read THE SAME VIEW's claims against "
+  + 'its new text and re-run their falsifiers before re-pinning READER_TEXT';
 
 /** The words of a name: split at each run of characters other than letters and digits, at each lower-to-upper camelCase step and
  * inside an upper run before its last capital (XTier), each word lowercased. */
@@ -665,7 +861,7 @@ function contentOf(reading: JsonValue): Json {
 /** What a reader returns for a result: the real hyperunix.find registration, invoked through the registry. */
 async function providedResult(native: QueryResult<ClaimBody>): Promise<JsonValue> {
   const registry = new CapabilityRegistry();
-  registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: '0.1.0', binarySha256: BINARY}),
+  registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: RUNTIME_VERSION, binarySha256: BINARY}),
     close: async () => {}}, WS);
   return registry.invoke('hyperunix.find', {kind: 'hx.fs/regular-file', root: 'src'}, CAPABILITY_CONTEXT);
 }
@@ -871,6 +1067,170 @@ const sdkBytes = (): Record<string, string> => ({'package.json': sha256(readFile
 /** How many times each shipped module spells a text, the modules that never spell it left out. */
 const spelledIn = (text: string): Record<string, number> => Object.fromEntries(shippedModules()
   .map(name => [name, readFileSync(new URL(name, SDK_DIST), 'utf8').split(text).length - 1] as const).filter(([, count]) => count > 0));
+/** THE PACKAGE'S MODULES (wb-b9ot cut #3): the module a frame-form line's read location is (the location firstFrame() or callerOf()
+ * reads in the line), by its path from SDK_DIST, when it is the own file: URL of one of the 27 modules SDK_BYTES pins (its dist/
+ * keys), compared whole, as text (cut #7: T2's controls read result.js's and protocol/decoder.js's own URLs as those modules and 18
+ * near spellings of result.js's URL as none, and THE READERS' TEXT holds this declaration as written), else none, so a location
+ * naming a file under SDK_DIST outside them (an .mjs shim) is
+ * never the package's here, as it is not in THE BYTES; a frame line of other code whose read location is a pinned module's URL reads
+ * as the package's (cut #5: NOT CLAIMED, whatever the line holds before its last '('; the landed carrier wb-rv3o's census pins such
+ * frames over a reader of their call sites). */
+function pinnedModuleAt(location: string): string | undefined {
+  return Object.keys(SDK_BYTES).filter(key => key.startsWith('dist/')).map(key => key.slice('dist/'.length))
+    .find(module => new URL(module, SDK_DIST).href === location);
+}
+/** The first frame-form line of a stack's text, whatever wrote it, as its function and its read location, read only in the form
+ * 'at <function> (<location>:<line>:<column>)' after its indent, with a <function> holding no white space and a <location> that
+ * starts 'file:///' and holds no ')': a pinned module's own URL by its path from SDK_DIST, any other file: URL (another copy's, or a
+ * file under SDK_DIST outside the pinned modules) whole; a first frame-form line of another form is reported whole, unread. */
+function firstFrame(stack: string): string {
+  const frame = stack.split('\n').find(line => line.startsWith('    at ')) ?? 'no frame';
+  const match = frame.match(/^ {4}at (\S+) \((file:\/\/\/[^)]+):\d+:\d+\)$/);
+  if (match === null) return `unread: ${frame.trim()}`;
+  return `${match[1]} ${pinnedModuleAt(match[2]) ?? match[2]}`;
+}
+/** A frame location as this file names it: a file inside the repository by its path from the root, any other location whole. */
+function located(location: string): string {
+  const path = location.startsWith('file://') ? fileURLToPath(location) : location;
+  const root = fileURLToPath(ROOT);
+  return path.startsWith(root) ? path.slice(root.length) : location;
+}
+/** This file, as frames name it (its copies name themselves). */
+const SELF = located(import.meta.url);
+/** A frame the realm writes for a built-in that names no location: its function, then (<anonymous>), (native) or (index <n>). */
+const BUILT_IN_FRAME = /^ {4}at (?:async |new )?[\w$.<>[\] ]+ \((?:<anonymous>|native|index \d+)\)$/;
+/** The first frame-form line of a stack's text, whatever wrote it, whose CALLER LOCATION is not a pinned module's own URL, by that
+ * location (located()): the caller location is the text after the line's last '(' (after its 'at ' or 'at async ' when it holds no
+ * '(') up to the ':<line>:<column>' that ends it, a final ')' allowed, when that text holds no white space and no ')', so whatever
+ * the line holds before its last '(' is not read; a line without one names no location and is skipped only in a built-in's form
+ * (BUILT_IN_FRAME), any other one (an eval or new Function frame line that names no location) reading as the caller, whole; a stack
+ * with no such line reads 'no caller frame'. */
+function callerOf(stack: string): string {
+  for (const line of stack.split('\n').filter(frame => frame.startsWith('    at '))) {
+    const location = line.match(/^ {4}at (?:async )?(?:.*\()?([^()\s]+):\d+:\d+\)?$/)?.[1];
+    if (location === undefined) {
+      if (!BUILT_IN_FRAME.test(line)) return `unread: ${line.trim()}`;
+    } else if (pinnedModuleAt(location) === undefined) {
+      return located(location);
+    }
+  }
+  return 'no caller frame';
+}
+/** Where a call raises from, as the stack of what it throws reads: its first frame-form line (firstFrame), then its first frame-form
+ * line whose caller location is not a pinned module's own URL (callerOf), whatever wrote those lines. */
+function raisedFrom(call: () => unknown): string {
+  const error = thrown(call);
+  return error instanceof Error ? `${firstFrame(error.stack ?? '')} from ${callerOf(error.stack ?? '')}` : `not an Error: ${String(error)}`;
+}
+/** The values this file imports from '@hyperunix/sdk', by name: T2 holds them to its import declaration and to the installed copy's own
+ * exports. */
+const BOUND: Readonly<Record<string, unknown>> = {decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson, resultToJson,
+  ProtocolError};
+/** The names among the given bindings that are not the module's own export of that name (Object.is). */
+const substituted = (bound: Readonly<Record<string, unknown>>, module: Readonly<Record<string, unknown>>): string[] =>
+  Object.keys(bound).filter(name => !Object.is(bound[name], module[name]));
+/** What a module source imports from '@hyperunix/sdk' or a path below it, read with the TypeScript parser and sorted: each value name of
+ * an import or export declaration naming it ('default' for a default import), and '*' for a namespace import or export, a bare import
+ * and an import() call naming it; type-only names and declarations left out. */
+function sdkImportsOf(source: string): string[] {
+  const names: string[] = [];
+  const sdk = (node: ts.Node | undefined): boolean =>
+    node !== undefined && ts.isStringLiteralLike(node) && (node.text === '@hyperunix/sdk' || node.text.startsWith('@hyperunix/sdk/'));
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && sdk(node.moduleSpecifier) && node.importClause?.isTypeOnly !== true) {
+      const clause = node.importClause;
+      const bindings = clause?.namedBindings;
+      if (clause?.name !== undefined) names.push('default');
+      if (clause === undefined || (bindings !== undefined && ts.isNamespaceImport(bindings))) names.push('*');
+      if (bindings !== undefined && ts.isNamedImports(bindings)) names.push(...bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text));
+    } else if (ts.isExportDeclaration(node) && sdk(node.moduleSpecifier) && !node.isTypeOnly) {
+      const clause = node.exportClause;
+      if (clause === undefined || ts.isNamespaceExport(clause)) names.push('*');
+      else names.push(...clause.elements.filter(element => !element.isTypeOnly).map(element => element.name.text));
+    } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword && sdk(node.arguments[0])) {
+      names.push('*');
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(ts.createSourceFile('module.ts', source, ts.ScriptTarget.Latest, true));
+  return names.sort();
+}
+/** What each of the READER_MODULES imports from '@hyperunix/sdk' (sdkImportsOf), by module. */
+const sdkImporters = (): Record<string, string[]> =>
+  Object.fromEntries(READER_MODULES.map(path => [path, sdkImportsOf(readFileSync(new URL(path, ROOT), 'utf8'))] as const));
+/** A stand-in registration in this file: its invoke applies resultFromJson to what its reader finds (registrationRaised's control). */
+const standInRegistration: typeof registerHyperUnixFind = (registry, reader) =>
+  registry.register({invoke: async () => json(resultFromJson(json(await reader.find({kind: 'hx.fs/regular-file'}))))} as unknown as CapabilityProvider);
+/** Where a hyperunix.find registration raises when its reader hands it a null result (raisedFrom's form). The registration is captured
+ * by a registry stand-in that keeps what is registered and invoked directly: the registry reports a provider's failure as its own. */
+async function registrationRaised(register: typeof registerHyperUnixFind): Promise<string> {
+  const registered: CapabilityProvider[] = [];
+  const capture = {register: (provider: CapabilityProvider): void => { registered.push(provider); }};
+  register(capture as unknown as CapabilityRegistry, {find: async () => null as unknown as QueryResult<ClaimBody>,
+    runtime: async () => ({version: RUNTIME_VERSION, binarySha256: BINARY}), close: async () => {}}, WS);
+  if (registered.length !== 1) return `registered ${registered.length}`;
+  let error: unknown;
+  try {
+    await registered[0].invoke({kind: 'hx.fs/regular-file', root: 'src'}, CAPABILITY_CONTEXT);
+  } catch (caught) {
+    error = caught;
+  }
+  return error instanceof Error ? `${firstFrame(error.stack ?? '')} from ${callerOf(error.stack ?? '')}` : `not an Error: ${String(error)}`;
+}
+/** The value bindings this file imports from '@hyperunix/sdk': its own import declaration, read with the TypeScript parser, type-only
+ * names left out. */
+function sdkBindings(): string[] {
+  const source = ts.createSourceFile('self.ts', readFileSync(new URL(import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true);
+  return source.statements.filter(ts.isImportDeclaration)
+    .filter(statement => ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === '@hyperunix/sdk')
+    .flatMap(statement => {
+      const bindings = statement.importClause?.namedBindings;
+      return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text) : [];
+    });
+}
+/** THE READERS' TEXT (wb-b9ot cut #7): THE SAME VIEW's frame readers' declarations and four of the constants they read, each the one
+ * top-level statement of this file's own source declaring its name (a function, or a const), by the sha256 of that statement's whole
+ * text as written (its doc comment aside). T2 holds this file's source to it by two readings, readerTexts() (its parse) and
+ * lineTexts() (its lines, cut #8), each held at each name by T2's controls, so an edit anywhere in one reds T2 whatever the edited
+ * reader then reads (an edit both readings read past at once is NOT CLAIMED). */
+const READER_TEXT: Readonly<Record<string, string>> = {
+  SDK_DIST: '54662c018f540eb422045518357a78c6b4e8573bef24cc554a60ec2f2c126aff',
+  ROOT: '651efb901fd77902bdcea5e0c9307065f864b153aad7c9ace561ab2ce0c0b349',
+  thrown: '109e74a3731427c1bc2ae86be3dfa701533adb5f91231347a190a70c8e4d4fe2',
+  pinnedModuleAt: '5a8d6e89318e6060c0e0863f6e6ca2151e165b854ca0499159bdfeab8415f93f',
+  firstFrame: '5388a46e2edaf402eca23d6d1e6a081b4037a6820f32ad9dafc76212cbba8dee',
+  located: '2fe3d00fd4729d0b984e79a0760a5c2c68fe81a89ebcd1e6c3cf5b70b75549ca',
+  SELF: 'e2b8c5670aa12dacfed9e4dab004d2acdbf11308549345fb64ddf9fc4bb70579',
+  BUILT_IN_FRAME: '0c8921070d6580348aad295a6460b851b1d1df197db4eb3a7c3f848cc5f42f8d',
+  callerOf: '05caa385a32b7c9c49d30e90617dee26db538c47511e5f04b2b9f9cb8178b741',
+  raisedFrom: '27a8bd652526671f4f715d37fe057e0973d4ed0841ccde442c18259d4c82bde1',
+  registrationRaised: 'd45be629939c08f3aa465b72507203f7bada602194f1c8269f9bfe5a45180442',
+};
+/** The sha256 of the whole text of each READER_TEXT name's top-level declaration in a source (read with the TypeScript parser), a
+ * name declared other than once read as its count of declarations. */
+function readerTexts(source: string): Record<string, string> {
+  const file = ts.createSourceFile('self.ts', source, ts.ScriptTarget.Latest, true);
+  return Object.fromEntries(Object.keys(READER_TEXT).map(name => {
+    const found = file.statements.filter(statement => ts.isFunctionDeclaration(statement) ? statement.name?.text === name
+      : ts.isVariableStatement(statement) && statement.declarationList.declarations.some(declaration => declaration.name.getText() === name));
+    return [name, found.length === 1 ? sha256(Buffer.from(found[0].getText(), 'utf8')) : `${found.length} declarations`] as const;
+  }));
+}
+/** THE READERS' TEXT's second reading (wb-b9ot cut #8, refusal #7's U1), sharing no code with readerTexts() but READER_TEXT's names:
+ * the sha256 of each READER_TEXT name's declaration in a source read by its lines, without the TypeScript parser - the lines from the
+ * one that begins 'function <name>(', 'async function <name>(' or 'const <name> ' through the first line after it that is '}' alone,
+ * or that one line for a const - a name whose declaration begins no line, or more than one, read as its count of such lines, and a
+ * function with no such line after it as 'no closing line'. */
+function lineTexts(source: string): Record<string, string> {
+  const lines = source.split('\n');
+  return Object.fromEntries(Object.keys(READER_TEXT).map(name => {
+    const starts = lines.flatMap((line, at) => [`function ${name}(`, `async function ${name}(`, `const ${name} `]
+      .some(words => line.startsWith(words)) ? [at] : []);
+    if (starts.length !== 1) return [name, `${starts.length} declarations`] as const;
+    const end = lines[starts[0]].startsWith('const ') ? starts[0] : lines.findIndex((line, at) => at > starts[0] && line === '}');
+    return [name, end < 0 ? 'no closing line' : createHash('sha256').update(lines.slice(starts[0], end + 1).join('\n'), 'utf8').digest('hex')] as const;
+  }));
+}
 /** The installed @hyperunix/sdk's runtime bytes, one sha256 each: its package.json and its 27 shipped modules. T2 fails closed over
  * them: a changed byte reds T2. */
 const SDK_BYTES: Readonly<Record<string, string>> = {
@@ -932,7 +1292,10 @@ interface Holder {
  * WRITE_FORMS, written, compound, nested compound, middle compound, nested written and deep compound rows, SPELLED_STATEMENTS,
  * BINDING_STATEMENTS
  * (each also after each module's first top-level statement, and the &&= statement of the latter and the plain assignment of the
- * former nested in each of the NESTINGS), CLASS_FORMS, CLASS_STATEMENTS, eval plants and EVAL_STATEMENTS pin it in exactly their
+ * former nested in each of the NESTINGS and after each top-level statement of its module but its last), the compound cell's
+ * statement, with its seat key and with the deep key, at each of the decoder module's middle positions, CLASS_FORMS,
+ * CLASS_STATEMENTS, eval plants and EVAL_STATEMENTS pin
+ * it in exactly their
  * planted statements (any other statement or spelling NOT CLAIMED). */
 const HOLDERS: readonly Holder[] = [
   {module: 'result.js', name: 'decodeResultStream', sha256: '10e4c6aa57673c77a8f11d5eb3d30e6a05ec500d4dd6f93a50f382f95c8555fa'},
@@ -1228,7 +1591,9 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
  * departure naming its forms, as T2 pins it in its WRITE_FORMS, written, compound, nested compound, middle compound, nested
  * written and deep compound rows, SPELLED_STATEMENTS, BINDING_STATEMENTS (each also after each module's first top-level
  * statement, and the &&=
- * statement of the latter and the plain assignment of the former nested in each of the NESTINGS), CLASS_FORMS, CLASS_STATEMENTS,
+ * statement of the latter and the plain assignment of the former nested in each of the NESTINGS and after each top-level
+ * statement of its module but its last), the compound cell's statement, with its seat key and with the deep key, at each of the
+ * decoder module's middle positions, CLASS_FORMS, CLASS_STATEMENTS,
  * eval, parenthesized-eval and EVAL_STATEMENTS plants only, any other statement NOT CLAIMED); each
  * consulted site is read by its shape, its sets' names read from it; the
  * set the filter tests, the dispatched set and the table the check consults are read as string literals in their declared
@@ -1280,7 +1645,10 @@ function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
   // nested compound, middle compound, nested written and deep compound rows, its SPELLED_STATEMENTS and BINDING_STATEMENTS at each
   // HOLDER module's
   // start, after its first top-level statement and at its end, BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain
-  // assignment nested in each of the NESTINGS there, its CLASS_FORMS and CLASS_STATEMENTS, and its eval rows and EVAL_STATEMENTS
+  // assignment nested in each of the NESTINGS there and after each of its top-level statements but its last, the compound
+  // cell's statement, with its seat key and with the deep key, at each of the decoder module's middle positions, its CLASS_FORMS
+  // and CLASS_STATEMENTS, and its eval rows
+  // and EVAL_STATEMENTS
   // only, any other statement or spelling NOT CLAIMED.
   const spellings = (module: ConsultedModule, name: string): readonly ts.Node[] => spellingsIn(parsedModule(module, texts[module]), name);
   const inHolders = (module: ConsultedModule, node: ts.Node): boolean => HOLDERS.some(({name}) => within(spans[name], module, node.getStart()));
@@ -1616,7 +1984,8 @@ const elementForm = (element: ts.Node | undefined): string => element === undefi
  * prototype, of this and of another object, a string literal and a no-substitution template literal (each Object.defineProperty's
  * key) and a binding; each planted at the start and at the end of the HOLDER's module (96 controls) and, with BINDING_STATEMENTS',
  * after its first top-level statement (264 controls), the binding's also nested in each of the 18 NESTINGS at its start and end
- * (288 controls). Any other statement, context or position of a spelling is NOT CLAIMED beyond BINDING_STATEMENTS and the
+ * (288 controls) and, with BINDING_STATEMENTS' &&= statement, after each top-level statement of its module but its last (540
+ * controls). Any other statement, context or position of a spelling is NOT CLAIMED beyond BINDING_STATEMENTS and the
  * FALSIFIERS that plant one. */
 const SPELLED_STATEMENTS: readonly (readonly [form: string, statement: string])[] = [['prototype', 'Function.prototype.<name> = undefined;'],
   ['instance', 'this.<name> = undefined;'], ['member', 'globalThis.<name> = undefined;'],
@@ -1632,8 +2001,9 @@ const COMPOUND_OPERATORS: readonly string[] = ['+=', '-=', '*=', '**=', '/=', '%
  * object destructuring target as a shorthand, as a property's value and as the rest, a for-of head, a for-in head and a parenthesized
  * assignment target; each statement is of the form its label names (bindingForm(), read by the parser) and is planted exactly as
  * written here, at the start and at the end of the HOLDER's module (432 controls) and, with SPELLED_STATEMENTS', after its first
- * top-level statement (264 controls); the &&= statement is also planted nested in each of the 18 NESTINGS there (288 controls).
- * Any other statement, operand, target, position or nesting is NOT CLAIMED. */
+ * top-level statement (264 controls); the &&= statement is also planted nested in each of the 18 NESTINGS there (288 controls)
+ * and, with SPELLED_STATEMENTS' plain assignment, after each top-level statement of its module but its last (540 controls). Any
+ * other statement, operand, target, position or nesting is NOT CLAIMED. */
 const BINDING_STATEMENTS: readonly (readonly [form: string, statement: string])[] = [
   ...COMPOUND_OPERATORS.map(operator => [operator, `<name> ${operator} undefined;`] as const),
   ['postfix-increment', '<name>++;'], ['postfix-decrement', '<name>--;'], ['prefix-increment', '++<name>;'], ['prefix-decrement', '--<name>;'],
@@ -2283,8 +2653,79 @@ async function familyQuiet(names: readonly string[]): Promise<JsonValue> {
   return {refusedBy: refusedBy(names), roundTripCarried, roundTripOther, live, readers};
 }
 
-/** A named residual family and its quiet row: the reading the row measures today, which reds when the family stops reading quiet
- * (its family is then promoted to a pinned case). */
+/** A reading with the value at a path replaced: the nodes on the path are copied, every other node is shared with the reading. */
+function valued(value: JsonValue, path: Path, leaf: JsonValue): JsonValue {
+  if (path.length === 0) return leaf;
+  const [step, ...rest] = path;
+  if (typeof step === 'number') {
+    const list = [...asList(value)];
+    list[step] = valued(list[step], rest, leaf);
+    return list;
+  }
+  const node = asRecord(value);
+  return {...node, [step]: valued(node[step], rest, leaf)};
+}
+/** A path as READS writes it: members joined by '.', each list index written []. */
+const readLabel = (path: Path): string => path.map((step, index) => typeof step === 'number' ? '[]' : index === 0 ? step : `.${step}`).join('');
+/** The paths of a reading's strings that a reader reads (a path READS names for one of the three readers), in walk order. */
+function readStrings(reading: JsonValue): Path[] {
+  const reads = new Set(READER_NAMES.flatMap(reader => READS[reader]));
+  const walk = (value: JsonValue, path: Path): Path[] => {
+    if (typeof value === 'string') return reads.has(readLabel(path)) ? [path] : [];
+    if (Array.isArray(value)) return value.flatMap((item, index) => walk(item, [...path, index]));
+    if (value === null || typeof value !== 'object') return [];
+    return Object.entries(value).flatMap(([key, child]) => walk(child, [...path, key]));
+  };
+  return walk(reading, []);
+}
+/** The leaves at which two JSON values differ, by label: a member or element only one of them holds included. */
+function differing(a: JsonValue | undefined, b: JsonValue | undefined, path: Path = []): string[] {
+  if (isDeepStrictEqual(a, b)) return [];
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return Array.from({length: Math.max(a.length, b.length)}, (_, index) => differing(a[index], b[index], [...path, index])).flat();
+  }
+  if (a !== null && b !== null && typeof a === 'object' && typeof b === 'object' && !Array.isArray(a) && !Array.isArray(b)) {
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].flatMap(key => differing(a[key], b[key], [...path, key]));
+  }
+  return [label(path)];
+}
+/** A word that is no tier word in any case and holds no tier: the replacement R-VALUE's echoes are measured with. */
+const NEUTRAL_WORD = 'neutral';
+/** The tier words, case-folded. */
+const FOLDED_TIER_WORDS: ReadonlySet<string> = new Set(TIER_WORDS.map(word => word.toLowerCase()));
+/** Whether a string is a tier word, in any case. */
+const isTierWord = (text: string): boolean => FOLDED_TIER_WORDS.has(text.toLowerCase());
+/** The value a reading holds at a path. */
+const valueAt = (reading: JsonValue, path: Path): JsonValue | undefined =>
+  path.reduce<JsonValue | undefined>((node, step) => typeof step === 'number' ? asList(node)[step] : asRecord(node)[step], reading);
+/** What R-VALUE reads of a word at each string a reader reads (wb-b9ot). A word's moves at a string read site (readStrings) of a base
+ * reading are the output labels (outputs: by default the three readers': the projection or its refusal, the live verdict and the
+ * native evidence) that differ from the reading's own when the word stands at that site in place of the reading's own string. echoes:
+ * the neutral word's moves at each site of the complete full readings, under each licence; axisSites: each site, with the axis labels
+ * (axisOf) that differ, at which the neutral word moves the licence axis of a base reading; deviating: each base reading, site and
+ * tier word whose moves are not the neutral word's. */
+function valueEchoes(bases: readonly Base[], outputs: (reading: JsonValue) => unknown = outputsOf): {echoes: Json; axisSites: string[];
+  deviating: string[]} {
+  const echoes: Json = {};
+  const axisSites = new Set<string>();
+  const deviating: string[] = [];
+  for (const base of bases) {
+    const own = json(outputs(base.reading));
+    const ownAxis = json(axisOf(base.reading));
+    for (const path of readStrings(base.reading)) {
+      const site = readLabel(path);
+      const moves = (word: string): string[] => differing(json(outputs(valued(base.reading, path, word))), own);
+      const neutral = moves(NEUTRAL_WORD);
+      if (base.kind === 'complete' && base.shape === 'full') echoes[`${base.licensed ? 'licensed' : 'unlicensed'} ${site}`] = neutral;
+      const axis = differing(json(axisOf(valued(base.reading, path, NEUTRAL_WORD))), ownAxis);
+      if (axis.length > 0) axisSites.add(`${site}: ${axis.join(', ')}`);
+      for (const word of TIER_WORDS) if (!isDeepStrictEqual(moves(word), neutral)) deviating.push(`${base.name} ${site} ${word}`);
+    }
+  }
+  return {echoes, axisSites: [...axisSites].sort(), deviating};
+}
+/** A named residual family and its quiet row: the reading the row measures today at the readings and cells it names, which reds when
+ * the family stops reading quiet there (its family is then promoted to a pinned case). */
 interface Residual {
   readonly id: string;
   readonly family: string;
@@ -2298,7 +2739,7 @@ const RESIDUALS: readonly Residual[] = [
   {id: 'R-SYNONYM', family: 'a tier carried under a name that holds no tier word (SYNONYMS: level, grade, rank, evidence_level, evidencetier): the word scans and the roster do not see it',
     quiet: () => familyQuiet(SYNONYMS),
     reading: {refusedBy: [11, 11, 11, 11, 11], roundTripCarried: [...CARRIED], roundTripOther: [], live: [], readers: []}},
-  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id): each is read by its own field's meaning",
+  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id, and every other string a reader reads: the 1222 string read sites of the 104 base readings)",
     quiet: async () => {
       const document = baseDocument('complete', false, 'full');
       document.view = 'Contextual';
@@ -2308,13 +2749,67 @@ const RESIDUALS: readonly Residual[] = [
       document.execution_id = 'Inventory';
       const reading = await provided(document);
       const reference = await provided(baseDocument('complete', false, 'full'));
+      // Every other string a reader reads (wb-b9ot, gate plant GP-VAL, refusal #1 U3): at each string read site of each base reading,
+      // each tier word moves, against the reading's own string, exactly the output labels the neutral word moves; the neutral word's
+      // labels at the complete full readings and the sites at which it moves the licence axis are frozen below.
+      const {echoes, axisSites, deviating} = valueEchoes(await baseReadings(HYPERUNIX_EXECUTION_KINDS));
       return json({facets: hyperunixTopology(reading, context).facets, axisMoved: moved(axisOf, reading, axisOf(reference)),
-        native: nativeEvidence('hyperunix.find', reading)});
+        native: nativeEvidence('hyperunix.find', reading), echoes, axisSites, deviating});
     },
     reading: {facets: [{kind: 'view', view: 'Contextual'}, {kind: 'provider-version', provider: 'hx.fs/builtin', version: 'Parsed'},
       {kind: 'conflict', code: 'HX-CONTEXTUAL-TIER-CONFLICT'}, {kind: 'incomplete-region', scope: 'Contextual', target: 'Parsed'}],
       axisMoved: false, native: {provider: 'hyperunix', nativeId: 'Inventory', domainStatus: 'complete',
-        evidenceRefs: ['hx-fs/b1/s1', 'hx-fs/b1/s1/dependency[0]:file:c3Jj']}}},
+        evidenceRefs: ['hx-fs/b1/s1', 'hx-fs/b1/s1/dependency[0]:file:c3Jj']},
+      echoes: {
+        'licensed contract': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'licensed source.representation': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'licensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
+        'licensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
+        'licensed source.execution_status.kind': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'verdict.violations[1]', 'verdict.absenceLicensed', 'native.domainStatus'],
+        'licensed source.diagnostics[].code': ['projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
+        'licensed source.view': ['projection.facets[0].view'],
+        'licensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
+        'licensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
+        'licensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
+        'licensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
+        'licensed source.evidence.providers[]': ['projection.facets[1].kind', 'projection.facets[1].code', 'projection.facets[1].provider', 'projection.facets[1].version', 'projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
+        'licensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
+        'licensed source.execution_id': ['native.nativeId'],
+        'licensed workspaceRoot': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets'],
+        'licensed runtime.version': ['projection.snapshots[0].sourceVersion'],
+        'licensed runtime.binarySha256': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'verdict.absenceLicensed'],
+        'unlicensed contract': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'unlicensed source.representation': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'unlicensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
+        'unlicensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
+        'unlicensed source.execution_status.kind': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'native.domainStatus'],
+        'unlicensed source.diagnostics[].code': ['projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
+        'unlicensed source.view': ['projection.facets[0].view'],
+        'unlicensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
+        'unlicensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
+        'unlicensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
+        'unlicensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
+        'unlicensed source.evidence.providers[]': ['projection.facets[1].kind', 'projection.facets[1].code', 'projection.facets[1].provider', 'projection.facets[1].version', 'projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
+        'unlicensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
+        'unlicensed source.execution_id': ['native.nativeId'],
+        'unlicensed workspaceRoot': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets'],
+        'unlicensed runtime.version': ['projection.snapshots[0].sourceVersion'],
+        'unlicensed runtime.binarySha256': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]'],
+      },
+      axisSites: [
+        'contract: refused',
+        'contract: refused, coverage, statusTone, statusText',
+        'runtime.binarySha256: refused',
+        'runtime.binarySha256: refused, absenceLicensed, coverage, statusTone, statusText',
+        'runtime.binarySha256: refused, coverage, statusTone, statusText',
+        'source.execution_status.kind: refused',
+        'source.execution_status.kind: refused, absenceLicensed, coverage, statusTone, statusText',
+        'source.execution_status.kind: refused, coverage, statusTone, statusText',
+        'source.representation: refused',
+        'source.representation: refused, coverage, statusTone, statusText',
+        'workspaceRoot: refused, coverage, statusTone, statusText',
+      ],
+      deviating: []}},
   {id: 'R-UNSEEN-READING', family: 'a reading outside the 104 base readings and the live twin (more rows, certificates, listed providers, sidecar frames or diagnostics)',
     quiet: async () => {
       const document = baseDocument('complete', false, 'full');
@@ -2413,6 +2908,18 @@ const GAP_WITNESSES: readonly (() => Promise<number>)[] = [
   },
   async () => calleesOf(installedTexts()).filter(callee => !HOLDERS.some(({module, name}) => callee === `${module}#${name}`)).length,
 ];
+/** Every string a JSON value holds, at any depth. */
+const stringsOf = (value: JsonValue): string[] => typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(stringsOf)
+  : value !== null && typeof value === 'object' ? Object.values(value).flatMap(stringsOf) : [];
+/** The kinds of the facets the adapter relays from the complete licensed full reading, measured from the adapter. */
+const relayedFacetKinds = async (): Promise<string[]> =>
+  (hyperunixTopology(await provided(baseDocument('complete', true, 'full')), context).facets ?? []).map(facet => facet.kind);
+/** The measured gap items that none of the given residuals' frozen readings holds as a string: the decoder module's unknown-key
+ * refusals that T2 reads no key set from, and the kinds of the facets the adapter relays. */
+async function unheld(residuals: readonly Residual[]): Promise<{refusals: string[]; facets: string[]}> {
+  const held = new Set(residuals.flatMap(residual => stringsOf(residual.reading)));
+  return {refusals: unreadRefusals().filter(message => !held.has(message)), facets: (await relayedFacetKinds()).filter(kind => !held.has(kind))};
+}
 /** A read is inside the adapter's consumed-field manifest when it is a manifest field or a container on the way to one, a member
  * read below a '.*' map field included (test/workbench-hyperunix-consumed-fields.test.ts inside()). */
 const inManifest = (read: string): boolean => HYPERUNIX_CONSUMED_FIELDS.some(({path}) => path === read || path.startsWith(`${read}.`)
@@ -2566,7 +3073,151 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell, so in a block statement at its module\'s top level in its nested compound cell and so after its module\'s ANSWER_COVERAGE_REQUIRED declaration, a middle top-level statement, in its middle compound cell, and rebound by a plain assignment in a block statement at its module\'s top level in its nested written cell and by a compound assignment three block statements deep there in its deep compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), each of those 33 statements spelling each of the 8 after its module\'s first top-level statement, a middle one, departing in its own form (264 controls), a statement writing each of the 8 by &&= nested in each of the 18 NESTINGS at its module\'s start and end as a binding (288 controls) and one writing each by = so nested (another 288 controls), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 18 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 91 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM, GP11-NESTED-COMPOUND-LANE, GP12-COMPOUND-MIDDLE, GP12-PLAIN-NESTED and GP12-DEEP3-COMPOUND among them, one in each of the 91 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier, name form and position NOT CLAIMED; in the installed modules each spelled in code (comments are never read) outside the HOLDERS in its own module only as a callee or a named import, its class in no other consulted module and eval in none of the three, a spelling departing in exactly these planted statements: one in each of the 7 WRITE_FORMS, a write of each of the 5 HOLDERS those leave unwritten in its written cell, checkStream rebound by a compound assignment in its compound cell, so in a block statement at its module\'s top level in its nested compound cell and so after its module\'s ANSWER_COVERAGE_REQUIRED declaration, a middle top-level statement, in its middle compound cell, and rebound by a plain assignment in a block statement at its module\'s top level in its nested written cell and by a compound assignment three block statements deep there in its deep compound cell, a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end in exactly that form (96 controls), a statement writing each of the 8 in each of the 27 BINDING_STATEMENTS forms (each of the 15 COMPOUND_OPERATORS, 4 updates, 5 destructuring targets, a for-of head, a for-in head and a parenthesized target) at its module\'s start and end as a binding (432 controls), each of those 33 statements spelling each of the 8 after its module\'s first top-level statement, a middle one, departing in its own form (264 controls), a statement writing each of the 8 by &&= nested in each of the 18 NESTINGS at its module\'s start and end as a binding (288 controls) and one writing each by = so nested (another 288 controls), of those 33 the plain assignment and the &&= statement writing each of the 8 after each top-level statement of its module but its last, so at each of its middle positions (45 in result.js, 35 in protocol/query.js, 31 in protocol/decoder.js), as a binding (540 controls), its compound cell\'s statement rebinding checkStream, with its seat key and with the deep key, before each top-level statement of its module but its first, so at each of its middle positions, departing as that cell does (62 controls; with the landing-928 gate\'s keys before its HXMP and MAX_SEQ declarations, its P-GA-MID-HXCP and P-GA-MID-2, byte-identical, and with the deep key before its MODES declaration the statement of the landing-941 PREP\'s W-R6, byte-identical), the class in each of the 2 CLASS_FORMS and a statement in each of its 3 forms at the end of each other consulted module (6 controls), and eval as a callee, as a parenthesized one and in a statement in each form at the end of each module (6 controls), every other statement, spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing and any other container NOT CLAIMED, every member a string literal, an element in each of the 13 ELEMENT_FORMS, each its one planted text, at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form or text NOT CLAIMED, and every table member a key list, one in each of the 5 MEMBER_FORMS departing, any other member form NOT CLAIMED) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 18 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a third identifier of each and a spelling in each of the 5 REFERENCE_FORMS departing, any other spelling form, statement, context or module NOT CLAIMED), every unknown-key refusal read and each of the 91 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT, GP19-REBIND-CHECKSTREAM, GP17-COMPOUND-CHECKSTREAM, GP11-NESTED-COMPOUND-LANE, GP12-COMPOUND-MIDDLE, GP12-PLAIN-NESTED and GP12-DEEP3-COMPOUND among them, one in each of the 91 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, Node\'s resolution of this file\'s @hyperunix/sdk (import.meta.resolve) names the installed copy, each value it imports is the export vi.importActual loads from that copy\'s index.js URL, and each function it imports and a decoder refusal throw with first frame lines read at its modules\' URLs, the first caller location (the text after a frame line\'s last opening parenthesis) outside its 27 pinned modules\' URLs this file\'s, and for the provider, the one of the three reader modules importing it, Node\'s resolution from its path (findPackageJSON) names that package and its registration\'s resultToJson throws with a first frame line read at that copy\'s result.js URL, the first caller location outside the pinned modules\' URLs the provider\'s, and its package.json and 27 shipped modules equal SDK_BYTES, and the frame readers\' declarations in this file\'s own source equal READER_TEXT, read by their parse and by their lines, and each reading reads a copy with one of them edited as its edited digest and one with it declared twice as its count, a source without them as no declaration of each, and, by their lines, one unclosed as unclosed; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
+    // THE SAME VIEW (wb-b9ot: gate plant G13, refusal #1's S1-S3, refusal #2's G21-S5 and G21-S6): exactly these readings of the package
+    // this file and the provider execute. (1) Node's resolution of this file's import (import.meta.resolve) names the installed copy
+    // (a git-ignored test/node_modules copy would resolve first; real paths, so a symlinked node_modules reads as its target).
+    expect(realpathSync(SDK_DIST), SAME_VIEW).toBe(realpathSync(SDK_INSTALLED));
+    // (2) Each value its import declaration names is the same object as the export of the module vi.importActual loads for
+    // SDK_INSTALLED's index.js file URL, so an alias or a module mock of the bare specifier substituting a binding (a call-through
+    // included) while that URL loads the installed copy reds; an alias of that URL too is left to (3); the reading names a
+    // substituted binding.
+    const installed = await vi.importActual<Record<string, unknown>>(new URL('index.js', SDK_INSTALLED).href);
+    expect(Object.keys(BOUND).sort()).toStrictEqual(sdkBindings().sort());
+    expect(substituted(BOUND, installed), SAME_VIEW).toStrictEqual([]);
+    expect(substituted({...BOUND, resultToJson: () => null}, installed)).toStrictEqual(['resultToJson']);
+    // (3) Each function it imports, called on null, throws with a first frame-form line of its name read at that copy's result.js URL
+    // and, as the first caller location outside the 27 pinned modules (a file under SDK_DIST outside them, an .mjs shim, is outside),
+    // one located() reads as this file; and a decoder refusal is this file's ProtocolError thrown with a first frame-form line of
+    // StreamChecker.fail read at its protocol/decoder.js URL, this file's again the first caller location outside them. A substitute
+    // frame line whose caller location (the text after its last '(') is a pinned module's own URL or names this file (a //# sourceURL
+    // or vm.Script filename that is one or holds one after its last '(') is NOT CLAIMED: the landed carrier wb-rv3o's census pins
+    // those members. Nor is a stack that is not written whole (refusal #5's G16-INJ and G16-INJ-OUT: their thrown errors' messages
+    // carry frame-form lines, which the readers read like any other), or one with a frame line of other code before the substitute's.
+    // The refusal is read by raisedFrom() (cut #7), a reader THE READERS' TEXT holds.
+    const refusal = thrown(() => decodeResultStream(envelopeStream({unknown_key: 'r1'})));
+    expect([refusal instanceof ProtocolError, raisedFrom(() => { throw refusal; })], SAME_VIEW)
+      .toStrictEqual([true, `StreamChecker.fail protocol/decoder.js from ${SELF}`]);
+    const raised: Record<string, string> = {
+      decodeResultStream: raisedFrom(() => decodeResultStream(null as unknown as string)),
+      assembleQueryResult: raisedFrom(() => assembleQueryResult('find', null as unknown as ProcessResult, WS)),
+      evidenceOf: raisedFrom(() => evidenceOf(null as unknown as Parameters<typeof evidenceOf>[0])),
+      resultFromJson: raisedFrom(() => resultFromJson(null)),
+      resultToJson: raisedFrom(() => resultToJson(null as unknown as QueryResult<ClaimBody>)),
+    };
+    expect(raised, SAME_VIEW).toStrictEqual(Object.fromEntries(['decodeResultStream', 'assembleQueryResult', 'evidenceOf', 'resultFromJson',
+      'resultToJson'].map(name => [name, `${name} result.js from ${SELF}`])));
+    // Those are every value this file imports from the package: its own import declaration names exactly them and ProtocolError.
+    expect(sdkBindings().sort()).toStrictEqual([...Object.keys(raised), 'ProtocolError'].sort());
+    // (4) Of the READER_MODULES only the provider imports the package; Node's resolution from its own path finds the installed
+    // package (a git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null
+    // result, throws with a first frame-form line of resultToJson read at the installed copy's result.js URL and, as the first caller
+    // location outside the pinned modules, one located() reads as the provider, where a stand-in registration in this file reads its
+    // own function and this file (a substitute frame line whose caller location is a pinned module's own URL or names the provider is
+    // NOT CLAIMED, wb-rv3o, and so is a stack that is not written whole, refusal #5's G16-INJ-PROV, or one with a frame line of other
+    // code before the substitute's).
+    expect(sdkImporters(), SDK_IMPORTS).toStrictEqual({[PROVIDER]: ['Bounds', 'HyperUnix', 'resultToJson'], 'src/workbench/hyperunix-observer.ts': [],
+      'src/workbench/native-evidence.ts': []});
+    const resolved = findPackageJSON('@hyperunix/sdk', new URL(PROVIDER, ROOT));
+    expect(resolved === undefined ? 'unresolved' : realpathSync(resolved), SAME_VIEW).toBe(realpathSync(new URL('../package.json', SDK_INSTALLED)));
+    expect([await registrationRaised(registerHyperUnixFind), await registrationRaised(standInRegistration)], SAME_VIEW)
+      .toStrictEqual([`resultToJson result.js from ${PROVIDER}`, `resultFromJson result.js from ${SELF}`]);
+    // The readers can fire: a first frame-form line whose read location is another copy's URL, or a file under SDK_DIST outside the
+    // pinned modules (an .mjs shim), reads as that URL, one whose read location is a pinned module's own URL by its path from
+    // SDK_DIST; a caller location outside the repository reads whole, one in it by its path from the root (a file under SDK_DIST
+    // outside the pinned modules included), a built-in's frame-form line is skipped and an eval frame line that names no location
+    // reads as the caller; pinnedModuleAt() compares whole; the readers read a frame-form line whatever wrote it; and the import
+    // reader reads each form.
+    expect([firstFrame('E\n    at resultFromJson (file:///elsewhere/@hyperunix/sdk/dist/result.js:526:15)'),
+      firstFrame(`E\n    at resultFromJson (${new URL('result.js', SDK_DIST).href}:526:15)`), firstFrame(`E\n    at resultFromJson (${new URL('zz-shim.mjs', SDK_DIST).href}:5:15)`)])
+      .toStrictEqual(['resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js', 'resultFromJson result.js', `resultFromJson ${new URL('zz-shim.mjs', SDK_DIST).href}`]);
+    const inCopy = `E\n    at fail (${new URL('protocol/decoder.js', SDK_DIST).href}:1:2)\n    at Array.map (<anonymous>)\n    at decodeResultStream (${new URL('result.js', SDK_DIST).href}:3:4)`;
+    const evalFrame = 'at decodeResultStream (eval at <anonymous> (file:///elsewhere/shim/index.js:3:24), <anonymous>:1:42)';
+    expect([callerOf(`${inCopy}\n    at decodeResultStream (file:///elsewhere/shim/index.js:5:6)`), callerOf(`${inCopy}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
+      callerOf(`${inCopy}\n    at decodeResultStream (${new URL('zz-shim.mjs', SDK_DIST).href}:5:6)`), callerOf(`${inCopy}\n    ${evalFrame}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
+      callerOf(inCopy)]).toStrictEqual(['file:///elsewhere/shim/index.js', PROVIDER, 'node_modules/@hyperunix/sdk/dist/zz-shim.mjs', `unread: ${evalFrame}`,
+      'no caller frame']);
+    // pinnedModuleAt() compares a read location whole, as text (cut #6, refusal #5's U2; cut #7, refusal #6's U1): result.js's and
+    // protocol/decoder.js's own URLs read as those modules and each of these 18 near spellings of result.js's URL as none, among them
+    // the labels of the plants on which refusal #5's and refusal #6's one-edit hollowings diverge: GP9-PREFIX's result.js-gp18.mjs
+    // (HV-G2, a prefix match), W6-SURL-QUERY's ?q=1 (G16-QRY, the query and fragment cut before the comparison), G16-CASE-PAGE's
+    // RESULT.JS (G16-CASE, case folded), G10-EMPTYQ-PAGE's bare '?' (G10-EMPTYQ, an empty query removed), G10-EMPTYF-PAGE's bare '#'
+    // (G10-EMPTYF, an empty fragment removed) and G10-HOST-PAGE's file://localhost/ form (G10-HOST, read as file:///).
+    const resultUrl = new URL('result.js', SDK_DIST).href;
+    const nearSpellings: Record<string, string> = {suffix: `${SDK_DIST.href}result.js-gp18.mjs`, query: `${resultUrl}?q=1`,
+      emptyQuery: `${resultUrl}?`, fragment: `${resultUrl}#q`, emptyFragment: `${resultUrl}#`, nameCase: `${SDK_DIST.href}RESULT.JS`,
+      extension: `${SDK_DIST.href}result.mjs`, dotSegment: `${SDK_DIST.href}./result.js`, dotDotSegment: `${SDK_DIST.href}protocol/../result.js`,
+      doubledSlash: `${SDK_DIST.href}/result.js`, schemeCase: `FILE${resultUrl.slice('file'.length)}`,
+      localhost: `file://localhost${new URL(resultUrl).pathname}`, percentDot: `${SDK_DIST.href}result%2Ejs`, trailingSpace: `${resultUrl} `,
+      path: fileURLToPath(resultUrl), directory: SDK_DIST.href, nameStart: `${SDK_DIST.href}result`,
+      otherCopy: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'};
+    expect([pinnedModuleAt(resultUrl), pinnedModuleAt(new URL('protocol/decoder.js', SDK_DIST).href),
+      Object.fromEntries(Object.entries(nearSpellings).map(([spelling, location]) => [spelling, pinnedModuleAt(location) ?? 'none']))])
+      .toStrictEqual(['result.js', 'protocol/decoder.js', {suffix: 'none', query: 'none', emptyQuery: 'none', fragment: 'none',
+        emptyFragment: 'none', nameCase: 'none', extension: 'none', dotSegment: 'none', dotDotSegment: 'none', doubledSlash: 'none',
+        schemeCase: 'none', localhost: 'none', percentDot: 'none', trailingSpace: 'none', path: 'none', directory: 'none', nameStart: 'none',
+        otherCopy: 'none'}]);
+    // The readers read a frame-form line whatever wrote it (cut #6, refusal #5's U1: a stack that is not written whole is NOT
+    // CLAIMED): an error this file's code throws whose message carries a result.js frame-form line and a line at the provider's path,
+    // one whose name carries them after its first line, one whose name's first line is the result.js line, so that its stack's first
+    // line is a frame-form line (cut #7, refusal #6's U2: gate member G10-R-LINE0 read the stack from its second line, as on its page
+    // G10-R-LINE0-PAGE, whose name ends in a 'TypeError' line as this one does: vitest's stack formatter writes the header as
+    // '<name>: <message>' even for an empty message), and one thrown by a function whose name holds them after a line break each read
+    // as raised from result.js and the provider, as refusal #5's G16-INJ family reads.
+    const injected = `decodeResultStream (${resultUrl}:1:2)\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:3:4`;
+    const namedError = new TypeError('null');
+    namedError.name = `TypeError\n    at ${injected}\nTypeError`;
+    const firstLineError = new TypeError('');
+    firstLineError.name = `    at ${injected}\nTypeError`;
+    expect(firstLineError.stack?.split('\n')[0]).toBe(`    at decodeResultStream (${resultUrl}:1:2)`);
+    const namedThrower = (): never => { throw new TypeError('null'); };
+    Object.defineProperty(namedThrower, 'name', {value: `${injected}\n    at namedThrower`});
+    const fromProvider = `decodeResultStream result.js from ${PROVIDER}`;
+    expect({message: raisedFrom(() => { throw new TypeError(`null\n    at ${injected}`); }), name: raisedFrom(() => { throw namedError; }),
+      firstLine: raisedFrom(() => { throw firstLineError; }), functionName: raisedFrom(namedThrower)})
+      .toStrictEqual({message: fromProvider, name: fromProvider, firstLine: fromProvider, functionName: fromProvider});
+    // THE READERS' TEXT (cut #7, refusal #6's U1 and U2): each frame reader's declaration in this file's own source is the text
+    // READER_TEXT pins, so an edit anywhere in one reds here whatever the edited reader then reads (G10-EMPTYQ, G10-EMPTYF and G10-HOST
+    // rewrite the location inside pinnedModuleAt()'s comparison and G10-R-LINE0 drops raisedFrom()'s first stack line, as would the
+    // same rewrite at the call that hands pinnedModuleAt() its location or the same drop in callerOf() or registrationRaised()); that
+    // source with the comparison edited reads another digest for pinnedModuleAt() alone, and with located() declared a second time
+    // reads its count.
+    const ownSource = readFileSync(new URL(import.meta.url), 'utf8');
+    expect(readerTexts(ownSource), READERS_MOVED).toStrictEqual(READER_TEXT);
+    const readersAt = ownSource.indexOf('function pinnedModuleAt(');
+    const editedReaders = readerTexts(`${ownSource.slice(0, readersAt)}${ownSource.slice(readersAt).replace('=== location)', '=== location.trim())')}`);
+    expect([Object.keys(READER_TEXT).filter(name => editedReaders[name] !== READER_TEXT[name]),
+      readerTexts(`${ownSource}\nfunction located(): void {}\n`).located]).toStrictEqual([['pinnedModuleAt'], '2 declarations']);
+    // Cut #8 (refusal #7's U1: the gate's G6-RT-SKIP-<name>, readerTexts() returning READER_TEXT's own digest for one name, kept this
+    // case green at ten of the 11 names): the second reading, lineTexts(), reads this source as READER_TEXT too, and each reading is
+    // held at each of the 11 names - a copy with a neutral comment written into one name's statement (at the end of the line before a
+    // function's closing brace, before a const's ';') reads that edited statement's sha256 for that name and READER_TEXT for every
+    // other, and a copy with that name declared a second time reads '2 declarations' for that name and READER_TEXT for every other; a
+    // source holding none of them reads '0 declarations' for each name by its parse, and one holding thrown()'s first lines without its
+    // closing line reads 'no closing line' for it and '0 declarations' for every other name by its lines.
+    expect(lineTexts(ownSource), READERS_MOVED).toStrictEqual(READER_TEXT);
+    const ownStatements = ts.createSourceFile('self.ts', ownSource, ts.ScriptTarget.Latest, true).statements;
+    const heldCopies = Object.keys(READER_TEXT).map(name => {
+      const statement = ownStatements.find(node => ts.isFunctionDeclaration(node) ? node.name?.text === name
+        : ts.isVariableStatement(node) && node.declarationList.declarations.some(declaration => declaration.name.getText() === name));
+      const text = statement?.getText() ?? '';
+      const start = statement?.getStart() ?? 0;
+      const at = text.endsWith('\n}') ? text.length - 2 : text.length - 1;
+      const editedText = `${text.slice(0, at)} /* wb-b9ot cut #8 control */${text.slice(at)}`;
+      return {name, digest: sha256(Buffer.from(editedText, 'utf8')), twice: `${ownSource}\nfunction ${name}(): void {}\n`,
+        edited: `${ownSource.slice(0, start)}${editedText}${ownSource.slice(start + text.length)}`};
+    });
+    expect(heldCopies.map(({name, edited, twice}) => ({name, edited: [readerTexts(edited), lineTexts(edited)],
+      twice: [readerTexts(twice), lineTexts(twice)]}))).toStrictEqual(heldCopies.map(({name, digest}) => ({name,
+      edited: [{...READER_TEXT, [name]: digest}, {...READER_TEXT, [name]: digest}],
+      twice: [{...READER_TEXT, [name]: '2 declarations'}, {...READER_TEXT, [name]: '2 declarations'}]})));
+    const none = Object.fromEntries(Object.keys(READER_TEXT).map(name => [name, '0 declarations']));
+    expect([readerTexts(''), lineTexts('function thrown(fn: () => unknown): unknown {\n  return fn;\n')])
+      .toStrictEqual([none, {...none, thrown: 'no closing line'}]);
+    expect(sdkImportsOf("import {a, type b} from '@hyperunix/sdk'; import type {c} from '@hyperunix/sdk'; import d, * as e from '@hyperunix/sdk/raw';\n"
+      + "import '@hyperunix/sdk/protocol'; export {f, type g} from '@hyperunix/sdk'; export * from '@hyperunix/sdk'; export type {h} from '@hyperunix/sdk';\n"
+      + "const i = import('@hyperunix/sdk'); import {j} from '@hyperunix/sdkx'; import {k} from 'other';"))
+      .toStrictEqual(['*', '*', '*', '*', 'a', 'default', 'f']);
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -2899,6 +3550,128 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect([spelledMisread('protocol/decoder.js', 'checkStream', '{\n<name>([]);\n}', 'binding', true),
       spelledMisread('protocol/decoder.js', 'checkStream', '{\nglobalThis.<name> = undefined;\n}', 'binding', false),
       statementContext(plainStatement)]).toStrictEqual([true, true, 'top-level']);
+    // EVERY MIDDLE POSITION (wb-qyd6): of those 33 statements, the plain assignment and the &&= statement (the operators the nested
+    // written and the compound cells write by) writing each of the 8 HOLDERS' names, planted after each top-level statement of its
+    // module but its last, so at each of its middle positions (45 in result.js, 35 in protocol/query.js and 31 in
+    // protocol/decoder.js), departs naming the binding form and only so (540 controls); with the SPELLINGS and BINDINGS plants at
+    // each module's start and end, each of the two is so pinned at every top-level position of its HOLDER's module. THE SAME TEXT
+    // (wb-qyd6 cut #3, refusal #2 U1 and U1a): each control's module text is planted once and judged, and its place is read from the
+    // text that judgment read, so no edit moves the text the misread reading judges without moving the text its place is read from.
+    const positionStatements = [plainStatement, nestedStatement];
+    expect(positionStatements).toStrictEqual(['<name> = undefined;', '<name> &&= undefined;']);
+    const afterStatement = (module: ConsultedModule, after: number, statement: string): string => {
+      const at = parsedModule(module, texts[module]).statements[after]?.getEnd() ?? 0;
+      return `${texts[module].slice(0, at)}\n${statement}${texts[module].slice(at)}`;
+    };
+    const middlePositions = CONSULTED.map(module => parsedModule(module, texts[module]).statements.length - 1);
+    expect(middlePositions).toStrictEqual([45, 35, 31]);
+    const positionPlants = HOLDERS.flatMap(({module, name}) => Array.from({length: parsedModule(module, texts[module]).statements.length - 1},
+      (_, after) => after).flatMap(after => positionStatements.map(statement => [module, name, statement, after] as const)));
+    expect(positionPlants.length).toBe(540);
+    // A planted text's place and position reading, read by the parser from that text: the place is the index of the top-level
+    // statement whose text is the planted statement (-1 when none is), and the position reading reads the name's spellings in it.
+    const plantedAt = (module: ConsultedModule, member: string, planted: string, statement: string): readonly [number, string] => {
+      const file = ts.createSourceFile(module, planted, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+      const place = file.statements.findIndex(held => held.getText() === statement);
+      const held = file.statements[place];
+      if (held === undefined) return [place, 'not planted'];
+      return [place, spellingsIn(file, member).filter(node => held.getStart() <= node.getStart() && node.getEnd() <= held.getEnd()).map(writePosition).join(', ')];
+    };
+    // A planted text's acceptance departures, returned with the text the reading read, so a place is read from the text a judgment
+    // judged.
+    const judged = (module: ConsultedModule, planted: string): readonly [readonly string[], string] =>
+      [departing(readingWith(texts, module, planted), acceptance), planted];
+    // One control's reading: its statement planted once after its module's top-level statement at after and judged, then from the
+    // text that judgment read its place and position reading; misread when it departs otherwise than naming the binding form.
+    const positionReading = (module: ConsultedModule, name: string, statement: string, after: number) => {
+      const member = name.slice(name.indexOf('.') + 1);
+      const spelled = statement.replace('<name>', () => member);
+      const [departures, read] = judged(module, afterStatement(module, after, spelled));
+      const [place, position] = plantedAt(module, member, read, spelled);
+      return {module, name, statement, after, place, position, misread: !isDeepStrictEqual(departures, [`${name}: spelled outside a call (binding)`])};
+    };
+    const positionReadings = positionPlants.map(plant => positionReading(...plant));
+    expect(positionReadings.filter(({misread}) => misread).map(({name, statement, after}) => `${name} ${statement} after ${after}`))
+      .toStrictEqual([]);
+    // Each planted statement is its module's top-level statement right after the one it is planted after, exactly as written, and the
+    // position reading reads its one spelling of the name at a middle one (540 controls), each read from the text its judgment read.
+    expect(positionReadings.filter(({after, place, position}) => place !== after + 1 || position !== 'middle')
+      .map(({name, statement, after}) => `${name} ${statement} after ${after}`)).toStrictEqual([]);
+    // THE PLACES HELD (wb-qyd6 cut #3): over its controls each of the 16 cells (a HOLDER and one of the two statements) stands at
+    // each middle top-level statement of its module once, the places read from the planted texts and run against the parser's count
+    // of the installed module (SDK_BYTES holds its text), not against the sweep's own range.
+    expect(HOLDERS.flatMap(({module, name}) => positionStatements.filter(statement => positionReadings
+      .filter(reading => reading.name === name && reading.statement === statement).map(({place}) => place).join(' ')
+      !== parsedModule(module, texts[module]).statements.slice(1).map((_, index) => index + 1).join(' ')).map(statement => `${name} ${statement}`)))
+      .toStrictEqual([]);
+    // THE COMPOUND CELL'S STATEMENT AT EVERY MIDDLE POSITION (wb-qyd6): GP17-COMPOUND-CHECKSTREAM's statement (its right operand a
+    // function expression), and that statement with the deep key (DEEP_BUILT, deep_tier) in seat_tier's place, each planted before
+    // each top-level statement of the decoder module but its first, after that statement's leading comments, so rebinding
+    // checkStream at each of the module's 31 middle positions, departs as the compound cell does (62 controls), each planted
+    // statement read by the parser at its place; with far_tier and with near_tier in seat_tier's place before the HXMP and the
+    // MAX_SEQ declarations (so after the HXCP and the JSON_LIMITS ones) it is byte-identical to the landing-928 gate's P-GA-MID-HXCP
+    // and P-GA-MID-2 (its planted decoders' sha256), the plants its GA-MID-OTHER left unread, which so depart; with the deep key it is
+    // byte-identical to the statement the landing-941 PREP's paired page W-R6 plants before the MODES declaration (its sha256), the
+    // write that PREP's GQ-R6-COMPOUND-KEY leaves unread at every middle position, which so departs at each; the position sweep holds
+    // all 10 of the decoder module's plants at each of the two landing-928 places. THE SAME TEXT (wb-qyd6 cut #3, refusal #2 U1b):
+    // each control's decoder text is planted once and judged, and its place is read from the text that judgment read.
+    const decoderStatements = parsedModule('protocol/decoder.js', decoderText).statements;
+    const beforeStatement = (at: number, statement: string): string => {
+      const start = decoderStatements[at]?.getStart() ?? 0;
+      return `${decoderText.slice(0, start)}${statement}\n${decoderText.slice(start)}`;
+    };
+    const compoundStatement = compoundCheckStream().slice(0, -'\n//# sourceMappingURL=decoder.js.map'.length);
+    const deepStatement = compoundStatement.replace(SEAT_BUILT, () => DEEP_BUILT);
+    const compoundMisread = (planted: string): boolean => !isDeepStrictEqual(departing(readingWith(texts, 'protocol/decoder.js', planted), acceptance),
+      ['checkStream: spelled outside a call (binding)']);
+    const compoundPositions = Array.from({length: decoderStatements.length - 1}, (_, index) => index + 1);
+    const compoundPlants = compoundPositions.flatMap(at => [compoundStatement, deepStatement].map(statement => [at, statement] as const));
+    expect([compoundPositions.length, compoundPlants.length]).toStrictEqual([31, 62]);
+    const compoundReading = (at: number, statement: string) => {
+      const [departures, read] = judged('protocol/decoder.js', beforeStatement(at, statement));
+      const [place, position] = plantedAt('protocol/decoder.js', 'checkStream', read, statement);
+      return {at, key: statement === deepStatement ? 'deep' : 'seat', place, position,
+        misread: !isDeepStrictEqual(departures, ['checkStream: spelled outside a call (binding)'])};
+    };
+    const compoundReadings = compoundPlants.map(plant => compoundReading(...plant));
+    expect(compoundReadings.filter(({at, place, position, misread}) => misread || place !== at || position !== 'middle')
+      .map(({at, key}) => `${key} before ${at}`)).toStrictEqual([]);
+    // THE PLACES HELD (wb-qyd6 cut #3): over its 31 controls each key stands at each middle top-level statement of the decoder module
+    // once, the places read from the planted texts and run against the parser's count of the installed module.
+    expect(['seat', 'deep'].filter(key => compoundReadings.filter(reading => reading.key === key).map(({place}) => place).join(' ')
+      !== decoderStatements.slice(1).map((_, index) => index + 1).join(' '))).toStrictEqual([]);
+    // The deep statement holds the deep key and not the seat key, and before the MODES declaration it is W-R6's statement (its
+    // sha256), one of the 62 plants.
+    const deepPlace = decoderStatements.findIndex(statement => statement.getText().startsWith('export const MODES '));
+    expect([deepStatement.includes(DEEP_BUILT), deepStatement.includes(SEAT_BUILT), sha256(Buffer.from(deepStatement, 'utf8')), deepPlace,
+      compoundReadings.filter(({place, key}) => place === deepPlace && key === 'deep').length])
+      .toStrictEqual([true, false, '59bb4e85d3aa1b2faf21aa00ec523e7ca89d83e53482028777c46e5de4134fcf', 10, 1]);
+    const gatePlaces = ['const HXMP ', 'export const MAX_SEQ '].map(lead => decoderStatements.findIndex(statement => statement.getText().startsWith(lead)));
+    const gateKeys = ['["far", "ti" + "er"].join("_")', '["near", "ti" + "er"].join("_")'];
+    const gatePlants = gatePlaces.map((at, index) => beforeStatement(at, compoundStatement.replace(SEAT_BUILT, () => gateKeys[index] ?? '')));
+    expect([gatePlaces, gatePlants.map(planted => sha256(Buffer.from(planted, 'utf8'))), gatePlants.filter(compoundMisread),
+      gatePlaces.map(at => positionReadings.filter(({module, place}) => module === 'protocol/decoder.js' && place === at).length)])
+      .toStrictEqual([[15, 2], ['3ed25ddb864fae80cf6c674a179640fca46dea4f047b635f91633444f744c6b7',
+        '4ee554b29ad135df43d23c9c475ae52a3eb3990b21b3886681d3c0ee1e505d22'], [], [10, 10]]);
+    // The judges fire: the position sweep's on a statement calling the HOLDER and on one plainly assigning it as another object's
+    // member, and the compound sweep's on the unplanted module and on its statement rebinding another object's member, each at the
+    // first gate plant's place; the position check's on a text planting another statement before its statement; and the position
+    // reading's on a write planted after its module's last top-level statement.
+    const [hxmpAt] = gatePlaces;
+    expect([positionReading('protocol/decoder.js', 'checkStream', '<name>([]);', hxmpAt - 1).misread,
+      positionReading('protocol/decoder.js', 'checkStream', 'globalThis.<name> = undefined;', hxmpAt - 1).misread,
+      compoundMisread(decoderText),
+      compoundReading(hxmpAt, compoundStatement.replace('checkStream &&=', () => 'globalThis.checkStream &&=')).misread,
+      positionReading('protocol/decoder.js', 'checkStream', 'void 0;\n<name> &&= undefined;', hxmpAt - 1).position,
+      positionReading('protocol/decoder.js', 'checkStream', '<name> &&= undefined;', decoderStatements.length - 1).position])
+      .toStrictEqual([true, true, true, true, 'not planted', 'last']);
+    // The place reading fires: the &&= statement planted after the statement before the HXMP declaration and the compound cell's
+    // statement planted before that declaration each read the HXMP declaration's place, and a text holding no top-level statement
+    // equal to its planted statement reads none.
+    expect([positionReading('protocol/decoder.js', 'checkStream', '<name> &&= undefined;', hxmpAt - 1).place,
+      compoundReading(hxmpAt, compoundStatement).place,
+      positionReading('protocol/decoder.js', 'checkStream', 'void 0;\n<name> &&= undefined;', hxmpAt - 1).place])
+      .toStrictEqual([hxmpAt, hxmpAt, -1]);
     // The HOLDERS' class spelled in each of its 3 forms (an identifier, then the 2 CLASS_FORMS) at the end of each other consulted
     // module departs naming exactly that form, and eval in each of the 2 EVAL_STATEMENTS forms at the end of each of the three modules
     // likewise (6 controls each).
@@ -3226,7 +3999,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const title = expect.getState().currentTestName ?? '';
     expect(title.match(/GP(?:11|12|17|19|20|29|30|31)?-[A-Z]+[0-9a-z]*(?:-[A-Z]+)*/g)?.sort()).toStrictEqual(['GP-ENV0', ...FALSIFIERS.map(({id}) => id)
       .filter(id => id.startsWith('GP'))].sort());
-    expect([`${HOLDERS.length} HOLDERS`, `${HELPERS.length} HELPERS`, `${Object.keys(acceptance.sites).length} consulted sites`,
+    const titleClaims = [`${HOLDERS.length} HOLDERS`, `${HELPERS.length} HELPERS`, `${Object.keys(acceptance.sites).length} consulted sites`,
       `${acceptance.lists.length} literal lists`, `${acceptance.references.length} references`, `${FALSIFIERS.length} FALSIFIERS`,
       `${new Set(FALSIFIERS.map(({cell}) => cell)).size} claim cells`, `${BINDING_STATEMENTS.length} BINDING_STATEMENTS forms`,
       `${COMPOUND_OPERATORS.length} COMPOUND_OPERATORS`, `${BINDING_STATEMENTS.filter(([form]) => /^(?:postfix|prefix)-/.test(form)).length} updates`,
@@ -3236,8 +4009,19 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       `one writing each by = so nested (another ${nestedPlainPlants.length} controls)`,
       `a statement writing each of the ${HOLDERS.length} by &&= nested in each of the ${NESTINGS.length} NESTINGS at its module's start and end as a binding (${nestedBoundPlants.length} controls)`,
       `each moved into each of the ${NESTINGS.length} NESTINGS departing`,
-      `${MEMBER_FORMS.length} MEMBER_FORMS`]
-      .filter(claim => !title.includes(claim))).toStrictEqual([]);
+      `of those ${middleStatements.length} the plain assignment and the &&= statement writing each of the ${HOLDERS.length} after each top-level statement of its module but its last, so at each of its middle positions (${CONSULTED.map((module, index) => `${middlePositions[index]} in ${module}`).join(', ')}), as a binding (${positionPlants.length} controls)`,
+      `its compound cell's statement rebinding checkStream, with its seat key and with the deep key, before each top-level statement of its module but its first, so at each of its middle positions, departing as that cell does (${compoundPlants.length} controls;`,
+      `and with the deep key before its MODES declaration the statement of the landing-941 PREP's W-R6, byte-identical)`,
+      `${MEMBER_FORMS.length} MEMBER_FORMS`];
+    expect(titleClaims.filter(claim => !title.includes(claim))).toStrictEqual([]);
+    // THE CLAIMS' SHAPE (wb-qyd6 cut #3, refusal #2 F6): the list holds exactly these 22 claims, each with exactly the numbers its
+    // measurements give it, so a claim deleted, shortened past a count or swapped for another reds here; and each counted controls
+    // clause of the title, read from the title outside this list, is held by a claim but the three this list has never held (the
+    // SPELLED_STATEMENTS, CLASS_FORMS and EVAL_STATEMENTS controls), so a claim dropped together with its shape element reds there.
+    expect(titleClaims.map(claim => claim.match(/\d+/g)?.join(' ') ?? '')).toStrictEqual(['8', '14', '4', '3', '2', '91', '91', '27', '15',
+      '4', '5', '432', '18', '288', '33 8 264', '288', '8 18 288', '18', '33 8 45 35 31 540', '62', '941 6', '5']);
+    expect(title.match(/\((?:another )?\d+ controls[);]/g)?.filter(clause => !titleClaims.some(claim => claim.includes(clause))))
+      .toStrictEqual(['(96 controls)', '(6 controls)', '(6 controls)']);
     // The judge can fire both ways: an open body departs from a refusal, and a closed one from a decode.
     expect([departure(diagnosticStream({evidence_tier: 'Parsed'}), `SDK_PROTOCOL_MALFORMED body.evidence_tier ${FRAME_INVALID}`),
       departure(supportStream({evidence_tier: 'Parsed'}), 'decoded')]).toStrictEqual([
@@ -3502,7 +4286,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     }
   });
 
-  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings', async () => {
+  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings, the decoder has no unknown-key refusal that T2 reads no key set from and each facet kind the adapter relays is held by one of those readings, and the value row\'s deviating judge fires at each of its 12220 cells and reads which labels move, not how many', async () => {
     expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(['R-SPELLING', 'R-SYNONYM', 'R-VALUE', 'R-UNSEEN-READING', 'R-OPEN-BODY',
       'R-LIVE-UNSEEN', 'R-ACCEPTANCE']);
     // The title claims exactly the table's families, each row's pins are pinned by count, and each family answers a measured gap.
@@ -3512,7 +4296,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const pins = (reading: JsonValue): string => Array.isArray(reading) ? reading.map(row => asList(row)[0]).join('+') : Object.keys(asRecord(reading)).join('+');
     expect(RESIDUALS.map(residual => `${residual.id}:${pins(residual.reading)}:${residual.family.length}`)).toStrictEqual([
       'R-SPELLING:refusedBy+roundTripCarried+roundTripOther+live+readers:174', 'R-SYNONYM:refusedBy+roundTripCarried+roundTripOther+live+readers:157',
-      'R-VALUE:facets+axisMoved+native:207',
+      'R-VALUE:facets+axisMoved+native+echoes+axisSites+deviating:258',
       'R-UNSEEN-READING:outside+nodes+moved:132', 'R-OPEN-BODY:decodedAndCarried+liveOutcomes+moved:130',
       'R-LIVE-UNSEEN:node-claim.attributes.nested+node-claim.identities[0]+node-claim.kinds[0]+node-claim.locators[0]+coverage.scope.path[0]:173',
       'R-ACCEPTANCE:envelope+bodies:452']);
@@ -3520,6 +4304,35 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     for (const witness of GAP_WITNESSES) gaps.push(await witness());
     expect(gaps).toStrictEqual([5, 4, 4, 6, 48, 44, 14]);
     expect(RESIDUALS.length).toBe(GAP_WITNESSES.length);
+    // Anchored outside the table and its witness list (wb-b9ot, gate copy H03): the decoder module's unknown-key refusals that T2
+    // reads no key set from (measured from the module) are none, T2 reading each since wb-tz2.23 (landing 857), and the kinds of the
+    // facets the adapter relays (measured from the adapter) are each held by a residual's frozen reading, so R-VALUE removed with its
+    // witness and its gap still reds here; and with no residual, every one of them is unheld.
+    const relayed = await relayedFacetKinds();
+    expect([unreadRefusals(), relayed.length > 0]).toStrictEqual([[], true]);
+    expect(await unheld(RESIDUALS)).toStrictEqual({refusals: [], facets: []});
+    expect(await unheld([])).toStrictEqual({refusals: unreadRefusals(), facets: relayed});
+    // differing(), R-VALUE's label judge, can fire: a changed leaf, an added member and a longer list each read by label.
+    expect(differing({a: {b: 1, c: [1]}}, {a: {b: 2, c: [1, 2]}, d: 0})).toStrictEqual(['a.b', 'a.c[1]', 'd']);
+    // R-VALUE's deviating judge fires at each cell it claims (wb-b9ot, refusal #1 U2), enumerated here: each base reading, each string
+    // read site of it and each tier word (12220 cells; no base reading holds the neutral word or a tier word, in any case, at one). A
+    // stand-in that also counts the tier words a reading holds, in any case, deviates at each of them; and the judge reads which labels
+    // move, not how many: a stand-in relaying a tier-word runtime version at another label than the neutral word's deviates at exactly
+    // the 1040 runtime.version cells.
+    const bases = await baseReadings(HYPERUNIX_EXECUTION_KINDS);
+    const cells = bases.flatMap(base => readStrings(base.reading).flatMap(path => TIER_WORDS.map(word => `${base.name} ${readLabel(path)} ${word}`)));
+    expect(cells.length).toBe(12220);
+    expect(Object.fromEntries(SHAPES.map(shape => [shape, [...new Set(bases.filter(base => base.shape === shape).map(base => readStrings(base.reading).length))]])))
+      .toStrictEqual({weak: [9], strong: [9], full: [17], certified: [12]});
+    expect([isTierWord(NEUTRAL_WORD), holdsTier(NEUTRAL_WORD), bases.flatMap(base => readStrings(base.reading).map(path => String(valueAt(base.reading, path))))
+      .filter(text => text === NEUTRAL_WORD || isTierWord(text))]).toStrictEqual([false, false, []]);
+    const marking = (reading: JsonValue): unknown => ({...outputsOf(reading), tierWords: stringsOf(reading).filter(isTierWord).length});
+    expect(valueEchoes(bases, marking).deviating).toStrictEqual(cells);
+    const swapping = (reading: JsonValue): unknown => {
+      const version = String(asRecord(asRecord(reading).runtime).version);
+      return isTierWord(version) ? {...outputsOf(valued(reading, ['runtime', 'version'], RUNTIME_VERSION)), relayed: version} : outputsOf(reading);
+    };
+    expect(valueEchoes(bases, swapping).deviating).toStrictEqual(cells.filter(cell => / runtime\.version \S+$/.test(cell)));
     const readings: Record<string, JsonValue> = {};
     for (const residual of RESIDUALS) readings[residual.id] = await residual.quiet();
     for (const residual of RESIDUALS) expect(readings[residual.id], `${residual.id}: ${QUIET}`).toStrictEqual(residual.reading);

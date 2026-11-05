@@ -16,9 +16,12 @@
  * wb-8i1; its cell is now plain P1 parity and the known-widening list is empty.
  * Fixture providers only; no src change.
  */
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { afterAll, beforeAll, describe, expect, it, TestRunner } from "vitest";
+import ts from "typescript";
+import { afterAll, beforeAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from "vitest";
 import { CapabilityError, CapabilityRegistry, type InvocationContext, type JsonValue } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
@@ -659,5 +662,671 @@ describe("R687 (wb-9rto): the suite hook is registered with its backstop, read f
     const registered = TestRunner.getSuiteHooks(task.file).beforeAll.map((hook): unknown => Reflect.get(hook, REGISTERED_HOOK_TIMEOUT));
     expect(registered, "the timeout vitest registered for each file-scope beforeAll of this file").toEqual([PARITY_SUITE_HOOK_BACKSTOP_MS]);
     expect(PARITY_SUITE_HOOK_BACKSTOP_MS, "the backstop of record is 2 x the budget").toBe(2 * PARITY_SUITE_HOOK_BUDGET_MS);
+  });
+});
+
+/**
+ * R692 (wb-ouo3, the wb-9rto F1/F5 class): the R687 row above reads the stamp of the FILE-SCOPE beforeAll, which binds a
+ * position, not what the hook guards. The gate's L2-P1 decoy (the guarded hook moved into a describe with no timeout and a
+ * no-op file-scope beforeAll planted holding the backstop) left that row and every other row green, and so did a
+ * describe-scoped unbudgeted beforeAll (F5, L2-P8). The rows below bind what vitest holds and what each held hook guards,
+ * wherever it sits:
+ * - the walk reads TestRunner.getSuiteHooks for EVERY suite of this file, never file scope alone, and the suites it reaches
+ *   must be exactly the describe calls in this file's AST (an anchor outside the walk);
+ * - the held-hook census lists every hook vitest holds as its suite, its registrar and the timeout vitest stamped on it.
+ *   vitest 4.1.10 also keeps the stack of each beforeAll / beforeEach / aroundAll / aroundEach registration call on the
+ *   hook it stores, source-mapped to this file's line and column, so the census resolves each such hook to its
+ *   registration in this file's AST and names the hook that registration's callback guards (in its own code, not in a
+ *   nested function) and the timeout argument as written. An afterAll / afterEach carries neither a stamp nor a site, and
+ *   the census says so: cut #1 bound it by the literal list alone, so this file's cleanup afterAll replaced by the
+ *   runner's own on("afterAll") beside its registration dead-coded under an if read 111/111 green (P-DEADWRAP-AFTER,
+ *   measured by the respin on the cut #1 bytes) - the respin rows below bind it;
+ * - the guard census lists every direct call of withinHookBudget in this file with the hook registration or case whose
+ *   callback makes it, so a second guard of the suite hook (a dead-branch decoy beside a relocated body, or a copy carried
+ *   by a case, a describe callback or module code) is a red, and withinHookBudget named any other way (an alias, a member,
+ *   an argument, a shadowing binding) is a finding, so no call escapes the census;
+ * - the work binding places every write of the matrix the rows read (oracles / outcomes, anything but a .get read) in the
+ *   body the PARITY_SUITE_HOOK guard runs, so a guarded no-op body beside a matrix built outside every hook is a red.
+ * Each reading is syntactic where it reads the source: a same-value literal timeout or a guard reached through a helper
+ * function reads red here (fail-closed), never green.
+ * The respin (wb-ouo3 refusal #1, the U1 class: every hook vitest holds, in any suite, binds to a registration that RUNS,
+ * and every reading the R673 rows count is written inside withinHookBudget) adds five rows, as in the docs06 census:
+ * - the executing-registration rule (in hookSource, so every row that asserts its findings reads it): every registration
+ *   and describe call the AST reads is a statement of its own at file scope or in the own body of a plain inline describe
+ *   callback whose own code neither returns nor throws, and every guard call of a registration is a statement of its own,
+ *   the return value or the concise body of the registration callback; a dead or conditional form is a finding;
+ * - the held-hook census bound to the AST: every hook vitest holds is one registration the AST reads in its suite (an
+ *   afterAll / afterEach by count), each of which runs by the rule above;
+ * - the readings binding: every reference to HOOK_READINGS is the push in withinHookBudget's own body or a read by an R673
+ *   row, and no other declaration of the name (a shadow a row could read) exists;
+ * - the runtime-handle binding: vitest is imported by name from "vitest" alone, nothing is loaded at run time, and
+ *   TestRunner (the runner's own registrar and record of held hooks) is read only by the census rows' getSuiteHooks and
+ *   declared nowhere else;
+ * - named residual, with its pinned quiet row: run-time code built from strings and the globals that reach a module loader
+ *   or vitest's worker state are beyond any reading of source syntax; this file names none of them, and the quiet row reds
+ *   the moment one is written as an identifier, a member name or a string key (a name built from parts at run time - a
+ *   computed key - is read as nothing: the disclosed edge of the quiet row, not claimed). The second respin (wb-ouo3
+ *   refusal #2) adds global to the list: Node's alias of globalThis, through which vitest's worker and matcher state are
+ *   reachable too.
+ */
+const SELF = fileURLToPath(import.meta.url);
+const HOOK_REGISTRARS: readonly string[] = ["beforeAll", "afterAll", "beforeEach", "afterEach", "aroundAll", "aroundEach"];
+/** The key vitest stamps a beforeAll's or beforeEach's registration stack under (its timeout: REGISTERED_HOOK_TIMEOUT). */
+const REGISTRATION_STACK = Symbol.for("VITEST_CLEANUP_STACK_TRACE");
+/** The keys vitest stamps an aroundAll's or aroundEach's resolved timeout and registration stack under. */
+const AROUND_TIMEOUT = Symbol.for("VITEST_AROUND_TIMEOUT");
+const AROUND_STACK = Symbol.for("VITEST_AROUND_STACK_TRACE");
+const R673_SUITE = "R673 (wb-csne): the suite hook runs under its file-local budget, and an overrun is a real red naming it";
+
+/** A hook registration in a source: a direct call of one of vitest's own named hook imports. */
+interface SourceRegistration {
+  readonly registrar: string;
+  /** The titles of the describe calls around the registration, outermost first; "(file scope)" for none. */
+  readonly chain: string;
+  /** Where the registration call starts, as line:column (1-based): the site vitest's registration stack names. */
+  readonly at: string;
+  /** The first argument of each withinHookBudget call in the callback's own code (not a nested function), as written; "nothing" for none. */
+  readonly guards: string;
+  /** The timeout argument as written; "(none)" when the registration passes none and vitest applies its default hookTimeout. */
+  readonly timeout: string;
+}
+interface HookSource {
+  /** Every describe call, as its chain of titles, outermost first, in source order. */
+  readonly describes: readonly string[];
+  readonly registrations: readonly SourceRegistration[];
+  /** Every direct call of withinHookBudget as "<first argument> | <the hook registration or case whose callback makes it>". */
+  readonly guards: readonly string[];
+  /** Every way withinHookBudget or a hook registrar is reached other than a direct call of the binding it must resolve to, and (R692 respin) every registration, describe call or registration guard call that might not run. */
+  readonly findings: readonly string[];
+  /** R692 respin (wb-ouo3 U1): every reference to a watched binding - never its file-scope declaration of record, an import specifier, a member or key name or a type position - as "<reference> | <where it runs>", and every other declaration of the name (a shadow a row could read) as "<name> declared in a <construct> | <where>". */
+  readonly references: readonly string[];
+}
+
+/**
+ * Reads one source through the TypeScript binder (a single-file program: no lib, no module resolution): its describe calls,
+ * its hook registrations, its withinHookBudget calls with the registration or case each runs in, and its findings.
+ */
+function hookSource(file: string, text: string, watched: readonly string[] = []): HookSource {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const host: ts.CompilerHost = {
+    getSourceFile: name => (name === file ? sf : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "/",
+    getCanonicalFileName: name => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: name => name === file,
+    readFile: name => (name === file ? text : undefined),
+  };
+  const checker = ts.createProgram({ rootNames: [file], options: { noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext }, host }).getTypeChecker();
+  const at = (node: ts.Node): string => {
+    const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
+    return `${line + 1}:${character + 1}`;
+  };
+  const declaration = (id: ts.Identifier): ts.Declaration | undefined => {
+    const declarations = checker.getSymbolAtLocation(id)?.declarations ?? [];
+    return declarations.length === 1 ? declarations[0] : undefined;
+  };
+  const viaVitest = (id: ts.Identifier): boolean => {
+    const bound = declaration(id);
+    if (bound === undefined || !ts.isImportSpecifier(bound) || bound.propertyName !== undefined) return false;
+    const statement = bound.parent.parent.parent;
+    return ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === "vitest";
+  };
+  const rootOf = (callee: ts.Expression): ts.Expression => (ts.isCallExpression(callee) || ts.isPropertyAccessExpression(callee) ? rootOf(callee.expression) : callee);
+  /** What a call registers through vitest's own named import: a hook (its registrar), "a case" or "a describe callback"; undefined for anything else. */
+  const kindOf = (call: ts.CallExpression): string | undefined => {
+    const callee = call.expression;
+    if (ts.isIdentifier(callee) && HOOK_REGISTRARS.includes(callee.text)) return viaVitest(callee) ? callee.text : undefined;
+    if (ts.isIdentifier(callee) && callee.text === "describe") return viaVitest(callee) ? "a describe callback" : undefined;
+    const root = rootOf(callee);
+    return ts.isIdentifier(root) && (root.text === "it" || root.text === "test") && viaVitest(root) ? "a case" : undefined;
+  };
+  const titleOf = (call: ts.CallExpression): string => {
+    const title = call.arguments[0];
+    return title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(call)})`;
+  };
+  const chainOf = (node: ts.Node): string => {
+    const titles: string[] = [];
+    for (let up = node.parent; up !== undefined; up = up.parent) if (ts.isCallExpression(up) && kindOf(up) === "a describe callback") titles.unshift(titleOf(up));
+    return titles.join(" > ") || "(file scope)";
+  };
+  /** A describe call's own chain: the describes around it, then its own title. */
+  const ownChain = (call: ts.CallExpression): string => (chainOf(call) === "(file scope)" ? titleOf(call) : `${chainOf(call)} > ${titleOf(call)}`);
+  const isGuardCall = (node: ts.Node): node is ts.CallExpression => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "withinHookBudget";
+  const ownGuards = (callback: ts.Node | undefined): string => {
+    const found: string[] = [];
+    const find = (node: ts.Node): void => {
+      if (isGuardCall(node)) found.push(node.arguments[0]?.getText(sf) ?? "(no argument)");
+      if (!ts.isFunctionLike(node)) ts.forEachChild(node, find);
+    };
+    if (callback !== undefined && ts.isFunctionLike(callback)) ts.forEachChild(callback, find);
+    return found.join(", ") || "nothing";
+  };
+  /** The hook registration or case whose callback runs a call (or any node), and whether it is that callback's own code. */
+  const siteOf = (call: ts.Node): string => {
+    let innermost: ts.Node | undefined;
+    let child: ts.Node = call;
+    for (let node = call.parent; node !== undefined; child = node, node = node.parent) {
+      if (ts.isCallExpression(node) && node.arguments.some(argument => argument === child)) {
+        const kind = kindOf(node);
+        if (kind !== undefined) return `${kind} @ ${kind === "a describe callback" ? ownChain(node) : chainOf(node)}${innermost === child ? "" : ", in a nested function"}`;
+      }
+      if (innermost === undefined && ts.isFunctionLike(node)) innermost = node;
+    }
+    return innermost === undefined ? "module code" : `a function outside every hook and case (${at(innermost)})`;
+  };
+  // R692 respin (wb-ouo3 U1, the executing-registration rule, as in the docs06 census): every registration, describe call
+  // and registration guard call this reader reads must RUN - whenever its suite is collected, or whenever its hook runs - or
+  // it is a finding. vitest keeps no stamp and no site on an afterAll / afterEach, so the held-hook census binds such a hook
+  // by count alone, and a dead-coded or conditional registration beside a hook registered some way this reader cannot read
+  // (the cleanup afterAll of this file, replaced under an if beside the runner's own on("afterAll"), read 111/111 green on
+  // the cut #1 bytes) would keep that count. A registration or a describe call is a statement of its own at file scope or in
+  // the own body of a plain inline describe callback (a literal title, a non-async, non-generator function) whose own code
+  // neither returns nor throws; a guard call is a statement of its own (under at most one await), the return value or the
+  // concise body of the registration callback, whose own code neither returns before it nor throws.
+  /** The return and throw statements of a function's own code (never a nested function's). */
+  const exitsOf = (fn: ts.ArrowFunction | ts.FunctionExpression): ts.Statement[] => {
+    const out: ts.Statement[] = [];
+    const find = (node: ts.Node): void => {
+      if (ts.isReturnStatement(node) || ts.isThrowStatement(node)) out.push(node);
+      if (!ts.isFunctionLike(node)) ts.forEachChild(node, find);
+    };
+    ts.forEachChild(fn.body, find);
+    return out;
+  };
+  const exitText = (exit: ts.Statement): string => `${ts.isReturnStatement(exit) ? "returns" : "throws"} at ${at(exit)}`;
+  /** The construct a statement sits in, named by the owner of its block for a block. */
+  const holderKind = (statement: ts.Node): string => ts.SyntaxKind[(ts.isBlock(statement.parent) ? statement.parent.parent : statement.parent).kind];
+  const isInline = (node: ts.Node | undefined): node is ts.ArrowFunction | ts.FunctionExpression => node !== undefined && (ts.isArrowFunction(node) || ts.isFunctionExpression(node));
+  const isPlain = (fn: ts.ArrowFunction | ts.FunctionExpression): boolean => !(ts.getModifiers(fn) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword) && !(ts.isFunctionExpression(fn) && fn.asteriskToken !== undefined);
+  /** Why a hook registration or describe call would not run whenever its suite is collected; undefined when it would. */
+  function whyNotRun(call: ts.CallExpression): string | undefined {
+    const statement = call.parent;
+    if (!ts.isExpressionStatement(statement) || statement.expression !== call) return `the call is not a statement of its own (it sits in a ${ts.SyntaxKind[statement.kind]})`;
+    if (statement.parent === sf) return undefined;
+    const callback = ts.isBlock(statement.parent) ? statement.parent.parent : undefined;
+    const owner = callback?.parent;
+    if (callback === undefined || owner === undefined || !ts.isCallExpression(owner) || kindOf(owner) !== "a describe callback" || !owner.arguments.some(argument => argument === callback)) return `its statement sits in a ${holderKind(statement)}, neither file scope nor a describe callback's own body`;
+    const why = whyDescribeNotRun(owner);
+    return why === undefined ? undefined : `its describe at ${at(owner)} does not run its callback: ${why}`;
+  }
+  /** Why a describe call would not run its callback as a suite of this file; undefined when it would. */
+  function whyDescribeNotRun(call: ts.CallExpression): string | undefined {
+    const [title, callback] = call.arguments;
+    if (call.arguments.length !== 2 || title === undefined || !ts.isStringLiteralLike(title) || !isInline(callback) || !isPlain(callback)) return "it is not describe(<a literal title>, <a plain inline function>)";
+    const exit = exitsOf(callback)[0];
+    if (exit !== undefined) return `its callback ${exitText(exit)}`;
+    return whyNotRun(call);
+  }
+  /** Why a withinHookBudget call in a registration's callback would not run whenever the hook runs; undefined when it would. */
+  const whyGuardNotRun = (call: ts.CallExpression, callback: ts.Expression | undefined): string | undefined => {
+    if (!isInline(callback)) return "the registration's callback is no inline function";
+    const expression: ts.Expression = ts.isAwaitExpression(call.parent) && call.parent.expression === call ? call.parent : call;
+    const holder = expression.parent;
+    if (holder === callback) return undefined;
+    if (!(ts.isExpressionStatement(holder) || ts.isReturnStatement(holder)) || holder.expression !== expression) return `the call is not a statement of its own (it sits in a ${ts.SyntaxKind[holder.kind]})`;
+    if (holder.parent !== callback.body) return `its statement sits in a ${holderKind(holder)}, not the callback's own body`;
+    const exit = exitsOf(callback).find(statement => statement !== holder);
+    return exit === undefined ? undefined : `the callback ${exitText(exit)}`;
+  };
+  const guardCallsIn = (callback: ts.Node | undefined): ts.CallExpression[] => {
+    const out: ts.CallExpression[] = [];
+    const find = (node: ts.Node): void => {
+      if (isGuardCall(node)) out.push(node);
+      ts.forEachChild(node, find);
+    };
+    if (callback !== undefined) find(callback);
+    return out;
+  };
+  /** Whether an identifier refers to a binding: never a declaration's name, an import specifier, a member or key name, or a type position. */
+  const isReference = (id: ts.Identifier): boolean => {
+    const parent = id.parent;
+    if ((ts.isVariableDeclaration(parent) || ts.isFunctionDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent)) && parent.name === id) return false;
+    if (ts.isImportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent)) return false;
+    if ((ts.isPropertyAccessExpression(parent) || ts.isPropertyAssignment(parent)) && parent.name === id) return false;
+    for (let up: ts.Node = parent; !ts.isSourceFile(up); up = up.parent) if (ts.isTypeNode(up)) return false;
+    return true;
+  };
+  /** Where a node runs: withinHookBudget's own body, the body a guard runs, or the registration, case, describe callback or module code that holds it. */
+  const placeOf = (node: ts.Node): string => {
+    let child: ts.Node = node;
+    for (let up = node.parent; up !== undefined; child = up, up = up.parent) {
+      if (ts.isFunctionDeclaration(up) && up.name?.text === "withinHookBudget" && up.parent === sf) return "withinHookBudget's own body";
+      if (isGuardCall(up) && up.arguments[3] === child) return `the body the ${up.arguments[0]?.getText(sf) ?? "(no argument)"} guard runs`;
+    }
+    return siteOf(node);
+  };
+  /** The construct declaring a watched name anywhere but its file-scope declaration of record (a file-scope const, function or import): a shadow; undefined for none. */
+  const shadowOf = (id: ts.Identifier): string | undefined => {
+    const parent = id.parent;
+    const named = (ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent) || ts.isFunctionDeclaration(parent) || ts.isFunctionExpression(parent) || ts.isClassDeclaration(parent) || ts.isClassExpression(parent)) && parent.name === id;
+    if (!named) return undefined;
+    const ofRecord = (ts.isVariableDeclaration(parent) && ts.isVariableDeclarationList(parent.parent) && ts.isVariableStatement(parent.parent.parent) && parent.parent.parent.parent === sf) || (ts.isFunctionDeclaration(parent) && parent.parent === sf);
+    return ofRecord ? undefined : ts.SyntaxKind[parent.kind];
+  };
+  const references: string[] = [];
+  const describes: string[] = [];
+  const registrations: SourceRegistration[] = [];
+  const guards: string[] = [];
+  const findings: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const kind = kindOf(node);
+      if (kind === "a describe callback") {
+        describes.push(ownChain(node));
+        const why = whyDescribeNotRun(node);
+        if (why !== undefined) findings.push(`${at(node)}: describe does not run its callback whenever this file is collected: ${why}`);
+      } else if (kind !== undefined && kind !== "a case") {
+        registrations.push({ registrar: kind, chain: chainOf(node), at: at(node), guards: ownGuards(node.arguments[0]), timeout: node.arguments[1]?.getText(sf) ?? "(none)" });
+        const why = whyNotRun(node);
+        if (why !== undefined) findings.push(`${at(node)}: ${kind} does not run whenever its suite is collected: ${why}`);
+        for (const guard of guardCallsIn(node.arguments[0])) {
+          const guardWhy = whyGuardNotRun(guard, node.arguments[0]);
+          if (guardWhy !== undefined) findings.push(`${at(guard)}: the withinHookBudget call guarding ${guard.arguments[0]?.getText(sf) ?? "(no argument)"} does not run whenever its ${kind} runs: ${guardWhy}`);
+        }
+      } else if (kind === undefined && ts.isIdentifier(node.expression) && HOOK_REGISTRARS.includes(node.expression.text)) {
+        findings.push(`${at(node)}: ${node.expression.text} is called, but not through vitest's own named import`);
+      }
+      if (ts.isIdentifier(node.expression) && node.expression.text === "withinHookBudget") {
+        const bound = declaration(node.expression);
+        if (bound === undefined || !ts.isFunctionDeclaration(bound) || bound.parent !== sf) findings.push(`${at(node)}: withinHookBudget is called, but binds no file-scope function declaration`);
+        guards.push(`${node.arguments[0]?.getText(sf) ?? "(no argument)"} | ${siteOf(node)}`);
+      }
+    } else if (ts.isIdentifier(node) && node.text === "withinHookBudget") {
+      const called = ts.isCallExpression(node.parent) && node.parent.expression === node;
+      const declared = ts.isFunctionDeclaration(node.parent) && node.parent.name === node;
+      if (!called && !declared) findings.push(`${at(node)}: withinHookBudget is named in a ${ts.SyntaxKind[node.parent.kind]}, never called directly`);
+    }
+    if (ts.isIdentifier(node) && watched.includes(node.text)) {
+      const shadow = shadowOf(node);
+      const member = ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node ? node.parent.name.text : undefined;
+      if (shadow !== undefined) references.push(`${node.text} declared in a ${shadow} | ${placeOf(node)}`);
+      else if (isReference(node)) references.push(`${member === undefined ? `${node.text} in a ${ts.SyntaxKind[node.parent.kind]}` : `${node.text}.${member}`} | ${placeOf(node)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return { describes, registrations, guards, findings, references };
+}
+
+/** Every suite of a file: the file first, then each describe depth-first in collection order, as its chain of titles. */
+function suitesOf(file: RunnerTestFile): { readonly chain: string; readonly suite: RunnerTestFile | RunnerTestSuite }[] {
+  const out: { chain: string; suite: RunnerTestFile | RunnerTestSuite }[] = [{ chain: "(file scope)", suite: file }];
+  const walk = (tasks: readonly RunnerTask[], titles: readonly string[]): void => {
+    for (const child of tasks) {
+      if (child.type !== "suite") continue;
+      out.push({ chain: [...titles, child.name].join(" > "), suite: child });
+      walk(child.tasks, [...titles, child.name]);
+    }
+  };
+  walk(file.tasks, []);
+  return out;
+}
+
+/** The line of a registration stack vitest stamped, resolved to this file's line:column; undefined when none names this file. */
+const stackSite = (stamped: unknown): string | undefined => {
+  const frame = (stamped instanceof Error ? (stamped.stack ?? "") : "").split("\n").find(line => line.includes(`${SELF}:`));
+  const position = frame?.match(/:(\d+):(\d+)\)?$/);
+  return position === undefined || position === null ? undefined : `${position[1]}:${position[2]}`;
+};
+
+/** One hook vitest holds, as the held-hook census reads it: suite | registrar | stamped timeout | what its registration guards. */
+const heldLine = (chain: string, registrar: string, hook: object, registrations: readonly SourceRegistration[]): string => {
+  const keys = registrar.startsWith("before") ? { timeout: REGISTERED_HOOK_TIMEOUT, stack: REGISTRATION_STACK } : registrar.startsWith("around") ? { timeout: AROUND_TIMEOUT, stack: AROUND_STACK } : undefined;
+  if (keys === undefined) return `${chain} | ${registrar} | no stamp and no registration site (vitest keeps neither on it)`;
+  const site = stackSite(Reflect.get(hook, keys.stack));
+  const registration = registrations.find(entry => entry.at === site && entry.registrar === registrar && entry.chain === chain);
+  const source = registration === undefined ? `its registration site ${site ?? "(none)"} is no ${registrar} of this suite in this file` : `registered guarding ${registration.guards}, timeout ${registration.timeout}`;
+  return `${chain} | ${registrar} | stamped ${String(Reflect.get(hook, keys.timeout))} | ${source}`;
+};
+
+/**
+ * The work a guard runs: every reference to the named state in a source - but its declaration and the member reads the
+ * rows make - with the withinHookBudget body that holds it ("outside every guard's body" for none). The suite hook
+ * exists to build the matrix the rows read inside its budget, so a guarded no-op body beside a matrix built elsewhere
+ * (module code, a case, an unguarded hook, a helper) keeps the hook, its stamp and its guard call standing, and reads
+ * red here.
+ */
+function guardedWork(file: string, text: string, names: readonly string[], reads: readonly string[]): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const bodyOf = (node: ts.Node): string => {
+    let child: ts.Node = node;
+    for (let up = node.parent; up !== undefined; child = up, up = up.parent) {
+      if (ts.isCallExpression(up) && ts.isIdentifier(up.expression) && up.expression.text === "withinHookBudget" && up.arguments[3] === child) return `in the body the ${up.arguments[0]?.getText(sf) ?? "(no argument)"} guard runs`;
+    }
+    return "outside every guard's body";
+  };
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && names.includes(node.text)) {
+      const parent = node.parent;
+      const member = ts.isPropertyAccessExpression(parent) && parent.expression === node ? parent.name.text : undefined;
+      const declared = ts.isVariableDeclaration(parent) && parent.name === node;
+      if (!declared && (member === undefined || !reads.includes(member))) out.push(`${member === undefined ? `${node.text} in a ${ts.SyntaxKind[parent.kind]}` : `${node.text}.${member}`} | ${bodyOf(node)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
+
+/**
+ * R692 respin (wb-ouo3 U1): every import from the vitest family (vitest, vitest/*, @vitest/*) as "<module> | <what it
+ * binds>", and every module a source loads at run time (import(), require(), import x = require()), as written. The one
+ * named import from "vitest" is the only way this file reaches vitest: a namespace import would reach any export through
+ * a computed key, and vitest/suite or @vitest/runner hold the runner's own registrar and its record of held hooks.
+ */
+function vitestImports(file: string, text: string): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && /^(vitest(\/|$)|@vitest\/)/.test(node.moduleSpecifier.text)) {
+      const clause = node.importClause;
+      const bound: string[] = [];
+      if (clause?.name !== undefined) bound.push(`default as ${clause.name.text}`);
+      const bindings = clause?.namedBindings;
+      if (bindings !== undefined && ts.isNamespaceImport(bindings)) bound.push(`* as ${bindings.name.text}`);
+      if (bindings !== undefined && ts.isNamedImports(bindings)) {
+        for (const element of bindings.elements) bound.push(`${element.isTypeOnly ? "type " : ""}${element.propertyName === undefined ? element.name.text : `${element.propertyName.getText(sf)} as ${element.name.text}`}`);
+      }
+      out.push(`${node.moduleSpecifier.text} | ${clause?.isTypeOnly === true ? "type " : ""}${bound.join(", ") || "(nothing bound)"}`);
+    } else if (ts.isImportEqualsDeclaration(node) || (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require")))) {
+      out.push(`${node.getText(sf)} | loaded at run time`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
+
+/**
+ * R692 respin (wb-ouo3, the named residual of the U1 class): run-time code built from strings, and the globals that reach a
+ * module loader or vitest's worker state, are beyond any reading of source syntax - a census reads what a file says, not
+ * what a string evaluates to. This file names none of them; namedAnywhere lists every identifier, member name or
+ * string-literal element key that spells one, so the quiet row below reds the moment one is written.
+ */
+const RUNTIME_ESCAPES: readonly string[] = ["eval", "Function", "constructor", "globalThis", "global", "process", "require", "__vitest_worker__", "getBuiltinModule", "createRequire"];
+function namedAnywhere(file: string, text: string, names: readonly string[]): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    const keyed = ts.isStringLiteralLike(node) && ts.isElementAccessExpression(node.parent) && node.parent.argumentExpression === node;
+    if ((ts.isIdentifier(node) || keyed) && names.includes(node.text)) {
+      const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
+      out.push(`${node.text} at ${line + 1}:${character + 1}${keyed ? " (a string key)" : ""}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
+const R687_SUITE = "R687 (wb-9rto): the suite hook is registered with its backstop, read from vitest's own record of the registration";
+const R692_SUITE = "R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, and what each held hook guards";
+const byText = (a: string, b: string): number => a.localeCompare(b);
+
+describe("R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, and what each held hook guards", () => {
+  it("the walk reaches every suite of this file: the suites vitest collected are exactly the describe calls in this file's AST", ({ task }) => {
+    const source = hookSource(SELF, readFileSync(SELF, "utf8"));
+    expect(source.findings, "withinHookBudget or a hook registrar reached any way but a direct call of its own binding").toEqual([]);
+    expect(
+      suitesOf(task.file).map(entry => entry.chain),
+      "the suites the walk reaches, file scope first",
+    ).toEqual(["(file scope)", ...source.describes]);
+    expect(source.describes.length, "the describe calls of this file").toBeGreaterThanOrEqual(10);
+  });
+
+  it("the held-hook census: every hook vitest holds in any suite of this file, its stamped timeout and what its registration guards, is the literal list", ({ task }) => {
+    const source = hookSource(SELF, readFileSync(SELF, "utf8"));
+    const census: string[] = [];
+    let walked = 0;
+    for (const { chain, suite } of suitesOf(task.file)) {
+      walked += 1;
+      for (const [registrar, listeners] of Object.entries(TestRunner.getSuiteHooks(suite))) for (const hook of listeners) census.push(heldLine(chain, registrar, hook, source.registrations));
+    }
+    expect(walked, "the census read vitest's record of every suite the AST holds, never file scope alone").toBe(source.describes.length + 1);
+    expect(census, "suite | registrar | stamped timeout | what the registration guards, for every hook vitest holds").toEqual([
+      `(file scope) | beforeAll | stamped ${PARITY_SUITE_HOOK_BACKSTOP_MS} | registered guarding PARITY_SUITE_HOOK, timeout PARITY_SUITE_HOOK_BACKSTOP_MS`,
+      "(file scope) | afterAll | no stamp and no registration site (vitest keeps neither on it)",
+    ]);
+  });
+
+  it("the guard census: every direct call of withinHookBudget in this file, with the registration or case whose callback makes it, is the literal list", () => {
+    const source = hookSource(SELF, readFileSync(SELF, "utf8"));
+    expect(source.findings, "withinHookBudget or a hook registrar reached any way but a direct call of its own binding").toEqual([]);
+    expect(source.guards, "first argument | the hook registration or case that runs the call").toEqual([
+      "PARITY_SUITE_HOOK | beforeAll @ (file scope)",
+      `"probe late" | a case @ ${R673_SUITE}, in a nested function`,
+      `"probe hung" | a case @ ${R673_SUITE}, in a nested function`,
+      `"probe quick" | a case @ ${R673_SUITE}`,
+      `"probe broken" | a case @ ${R673_SUITE}`,
+    ]);
+  });
+
+  it("the work the guard runs: every write of the matrix the rows read sits in the body the PARITY_SUITE_HOOK guard runs, and the reader is no constant", () => {
+    expect(guardedWork(SELF, readFileSync(SELF, "utf8"), ["oracles", "outcomes"], ["get"]), "every reference to oracles / outcomes but a .get read, with the guard body that holds it").toEqual([
+      "oracles.set | in the body the PARITY_SUITE_HOOK guard runs",
+      "outcomes.set | in the body the PARITY_SUITE_HOOK guard runs",
+    ]);
+    const hollow = [
+      'beforeAll(() => withinHookBudget(HOOK, "B", 1, async () => undefined), BACKSTOP);',
+      "for (const row of ROWS) oracles.set(row.name, row);",
+      "const alias = outcomes;",
+      'it("c", () => withinHookBudget(HOOK, "B", 1, () => outcomes.clear()));',
+    ].join("\n");
+    expect(guardedWork("hollow.ts", hollow, ["oracles", "outcomes"], ["get"])).toEqual([
+      "oracles.set | outside every guard's body",
+      "outcomes in a VariableDeclaration | outside every guard's body",
+      "outcomes.clear | in the body the HOOK guard runs",
+    ]);
+  });
+
+  it("the reader is no constant: a relocated guard, a guard outside every hook and a guard reached any other way each read as they stand", () => {
+    const relocated = hookSource(
+      "relocated.ts",
+      [
+        'import { beforeAll, describe, it } from "vitest";',
+        "beforeAll(() => undefined, BACKSTOP);",
+        'describe("d", () => {',
+        "  beforeAll(async () => {",
+        '    await withinHookBudget(HOOK, "B", 1, () => undefined);',
+        "  });",
+        '  it("c", () => undefined);',
+        "});",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    );
+    expect(relocated.registrations.map(entry => `${entry.registrar} @ ${entry.chain} :${entry.at} | guards ${entry.guards} | timeout ${entry.timeout}`)).toEqual([
+      "beforeAll @ (file scope) :2:1 | guards nothing | timeout BACKSTOP",
+      "beforeAll @ d :4:3 | guards HOOK | timeout (none)",
+    ]);
+    expect(relocated.guards).toEqual(["HOOK | beforeAll @ d"]);
+    expect(relocated.findings).toEqual([]);
+    const outside = hookSource(
+      "outside.ts",
+      [
+        'import { beforeAll, describe, it } from "vitest";',
+        "beforeAll(() => {",
+        "  if (Number.NaN > 0) withinHookBudget(HOOK);",
+        "}, BACKSTOP);",
+        "await withinHookBudget(HOOK);",
+        'describe("d", () => {',
+        "  withinHookBudget(HOOK);",
+        '  it("c", async () => {',
+        "    await withinHookBudget(HOOK);",
+        "  });",
+        "});",
+        "const later = () => withinHookBudget(HOOK);",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    );
+    expect(outside.guards).toEqual([
+      "HOOK | beforeAll @ (file scope)",
+      "HOOK | module code",
+      "HOOK | a describe callback @ d",
+      "HOOK | a case @ d",
+      "HOOK | a function outside every hook and case (12:15)",
+    ]);
+    const named = hookSource(
+      "named.ts",
+      [
+        'import { describe } from "vitest";',
+        "const run = withinHookBudget;",
+        "withinHookBudget.call(undefined, HOOK);",
+        "Reflect.apply(withinHookBudget, undefined, [HOOK]);",
+        "{",
+        "  const beforeAll = (fn: () => void): void => fn();",
+        "  beforeAll(() => withinHookBudget(HOOK));",
+        "}",
+        'describe("d", () => {',
+        "  const withinHookBudget = (): void => undefined;",
+        "  withinHookBudget(HOOK);",
+        "});",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    );
+    expect(named.findings).toEqual([
+      "2:13: withinHookBudget is named in a VariableDeclaration, never called directly",
+      "3:1: withinHookBudget is named in a PropertyAccessExpression, never called directly",
+      "4:15: withinHookBudget is named in a CallExpression, never called directly",
+      "7:3: beforeAll is called, but not through vitest's own named import",
+      "10:9: withinHookBudget is named in a VariableDeclaration, never called directly",
+      "11:3: withinHookBudget is called, but binds no file-scope function declaration",
+    ]);
+    expect(named.guards).toEqual(["HOOK | a function outside every hook and case (7:13)", "HOOK | a describe callback @ d"]);
+  });
+
+  it("the executing-registration rule (U1): every registration and describe call this file's AST reads runs whenever its suite is collected, and every guard call of a registration runs whenever its hook runs", () => {
+    expect(hookSource(SELF, readFileSync(SELF, "utf8")).findings, "a registration, describe call or guard call of this file that might not run, or any other finding").toEqual([]);
+    const read = hookSource(
+      "executing.ts",
+      [
+        'import { afterAll, beforeAll, describe, it } from "vitest";',
+        "beforeAll(async () => {",
+        '  await withinHookBudget(HOOK, "B", 1, async () => undefined);',
+        "}, BACKSTOP);",
+        "if (BUDGET < 0) afterAll(async () => undefined);",
+        "const later = () => afterAll(async () => undefined);",
+        "beforeAll(async () => {",
+        '  if (BUDGET < 0) await withinHookBudget(HOOK, "B", 1, async () => undefined);',
+        "}, BACKSTOP);",
+        'describe("early", () => {',
+        "  if (BUDGET > 0) return;",
+        "  afterAll(() => undefined);",
+        "});",
+        'describe("d", async () => {',
+        "  afterAll(() => undefined);",
+        "});",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    );
+    expect(read.findings, "each dead, conditional or unreached registration, describe call and guard call, as it stands; the live registration and guard at :2-:3 read none").toEqual([
+      "5:17: afterAll does not run whenever its suite is collected: its statement sits in a IfStatement, neither file scope nor a describe callback's own body",
+      "6:21: afterAll does not run whenever its suite is collected: the call is not a statement of its own (it sits in a ArrowFunction)",
+      "8:25: the withinHookBudget call guarding HOOK does not run whenever its beforeAll runs: its statement sits in a IfStatement, not the callback's own body",
+      "10:1: describe does not run its callback whenever this file is collected: its callback returns at 11:19",
+      "12:3: afterAll does not run whenever its suite is collected: its describe at 10:1 does not run its callback: its callback returns at 11:19",
+      "14:1: describe does not run its callback whenever this file is collected: it is not describe(<a literal title>, <a plain inline function>)",
+      "15:3: afterAll does not run whenever its suite is collected: its describe at 14:1 does not run its callback: it is not describe(<a literal title>, <a plain inline function>)",
+    ]);
+  });
+
+  it("the held-hook census is bound to the AST (U1): every hook vitest holds in any suite of this file is one registration the AST reads in that suite, an afterAll / afterEach by count", ({ task }) => {
+    const source = hookSource(SELF, readFileSync(SELF, "utf8"));
+    const held: string[] = [];
+    for (const { chain, suite } of suitesOf(task.file)) for (const [registrar, listeners] of Object.entries(TestRunner.getSuiteHooks(suite))) held.push(...Array.from(listeners, () => `${chain} | ${registrar}`));
+    expect([...held].sort(byText), "suite | registrar for every hook vitest holds, against every registration the AST reads (each of which runs: the row above)").toEqual(source.registrations.map(entry => `${entry.chain} | ${entry.registrar}`).sort(byText));
+    expect(held, "the hooks of record").toEqual(["(file scope) | beforeAll", "(file scope) | afterAll"]);
+  });
+
+  it("the readings binding (U1): every reference to HOOK_READINGS is the push in withinHookBudget's own body or a read by an R673 row, and nothing else declares the name, so no reading the R673 rows count is written outside the guard", () => {
+    expect(hookSource(SELF, readFileSync(SELF, "utf8"), ["HOOK_READINGS"]).references, "every reference to HOOK_READINGS, with where it runs").toEqual([
+      "HOOK_READINGS.push | withinHookBudget's own body",
+      `HOOK_READINGS.filter | a case @ ${R673_SUITE}`,
+    ]);
+    const forged = hookSource(
+      "forged.ts",
+      [
+        'import { afterAll, describe, it } from "vitest";',
+        "HOOK_READINGS.push(FORGED);",
+        'describe("d", () => {',
+        "  afterAll(() => {",
+        "    HOOK_READINGS.push(FORGED);",
+        "  });",
+        "  const alias = HOOK_READINGS;",
+        '  it("c", () => withinHookBudget(HOOK, "B", 1, () => HOOK_READINGS.splice(0)));',
+        '  it("r", () => {',
+        "    const HOOK_READINGS = [FORGED];",
+        "    return HOOK_READINGS.filter(reading => reading);",
+        "  });",
+        "});",
+        "function withinHookBudget(): void {",
+        "  HOOK_READINGS.push(READING);",
+        "}",
+      ].join("\n"),
+      ["HOOK_READINGS"],
+    );
+    expect(forged.references, "a reading planted in module code or a hook, an alias, a write in a guarded body and a shadow a row reads each read as they stand").toEqual([
+      "HOOK_READINGS.push | module code",
+      "HOOK_READINGS.push | afterAll @ d",
+      "HOOK_READINGS in a VariableDeclaration | a describe callback @ d",
+      "HOOK_READINGS.splice | the body the HOOK guard runs",
+      "HOOK_READINGS declared in a VariableDeclaration | a case @ d",
+      "HOOK_READINGS.filter | a case @ d",
+      "HOOK_READINGS.push | withinHookBudget's own body",
+    ]);
+  });
+
+  it("the runtime-handle binding (U1): vitest is imported by name from \"vitest\" alone, nothing is loaded at run time, and TestRunner is read only by the R687 / R692 census rows' getSuiteHooks", () => {
+    const text = readFileSync(SELF, "utf8");
+    expect(vitestImports(SELF, text), "every import from the vitest family, and every module loaded at run time").toEqual(["vitest | afterAll, beforeAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner"]);
+    expect(hookSource(SELF, text, ["TestRunner"]).references, "every run-time reference to TestRunner, with where it runs").toEqual([
+      `TestRunner.getSuiteHooks | a case @ ${R687_SUITE}`,
+      `TestRunner.getSuiteHooks | a case @ ${R692_SUITE}`,
+      `TestRunner.getSuiteHooks | a case @ ${R692_SUITE}`,
+    ]);
+    const handles = [
+      'import { getCurrentSuite } from "vitest/suite";',
+      'import * as vitestNs from "vitest";',
+      'import { afterAll as later, it, TestRunner, type RunnerTask } from "vitest";',
+      'import type { Suite } from "@vitest/runner";',
+      'const runner = await import("vitest");',
+      "const T = TestRunner;",
+      'TestRunner.getCurrentSuite().on("afterAll", () => undefined);',
+      'it("c", () => TestRunner["getSuiteHooks"](task));',
+      'it("d", () => {',
+      "  const TestRunner = { getSuiteHooks: () => FAKE };",
+      "  return TestRunner.getSuiteHooks(task);",
+      "});",
+    ].join("\n");
+    expect(vitestImports("handles.ts", handles), "the runner's own module, a namespace import, an alias and a run-time load each read as they stand").toEqual([
+      "vitest/suite | getCurrentSuite",
+      "vitest | * as vitestNs",
+      "vitest | afterAll as later, it, TestRunner, type RunnerTask",
+      "@vitest/runner | type Suite",
+      'import("vitest") | loaded at run time',
+    ]);
+    expect(hookSource("handles.ts", handles, ["TestRunner"]).references, "the runner reached as a value, through its own registrar and by a string key").toEqual([
+      "TestRunner in a VariableDeclaration | module code",
+      "TestRunner.getCurrentSuite | module code",
+      "TestRunner in a ElementAccessExpression | a case @ (file scope)",
+      "TestRunner declared in a VariableDeclaration | a case @ (file scope)",
+      "TestRunner.getSuiteHooks | a case @ (file scope)",
+    ]);
+  });
+
+  it("named residual, pinned quiet: this file names no run-time code from strings and no global that reaches a module loader or vitest's worker state, and the reader sees each spelling as written", () => {
+    expect(namedAnywhere(SELF, readFileSync(SELF, "utf8"), RUNTIME_ESCAPES), "eval, Function, a constructor member, globalThis or global, process, require, vitest's worker global or a module loader, named anywhere in this file").toEqual([]);
+    const escapes = ["const f = (() => 0).constructor;", "const g = globalThis.process;", 'require("vitest/suite");', 'const w = Reflect.get(globalThis, "__vitest_worker__");', 'const m = g["getBuiltinModule"];', 'const t = global[Symbol.for("$$jest-matchers-object")];'].join("\n");
+    expect(namedAnywhere("escapes.ts", escapes, RUNTIME_ESCAPES), "a member name, a global, a loader call and a string key, each read as it stands").toEqual([
+      "constructor at 1:21",
+      "globalThis at 2:11",
+      "process at 2:22",
+      "require at 3:1",
+      "globalThis at 4:23",
+      "getBuiltinModule at 5:13 (a string key)",
+      "global at 6:11",
+    ]);
   });
 });
