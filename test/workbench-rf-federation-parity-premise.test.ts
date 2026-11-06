@@ -15,22 +15,25 @@
  * verbatim and the 740c1a817 pin, never a Pi-minted status."
  *
  * PINNED READER SET (wb-wfpj cut 3, the enumerate-the-resolvable form of R-B330; cut 4, the fail-closed core of R-B585;
- * wb-mpuo cut 1, the carrier of R-B596):
+ * wb-mpuo cut 1, the carrier of R-B596; wb-mpuo cut 2, the rung-1 respin of R-B619):
  * this census claims what its registered row cases pin - each a case of this file whose assertion is readRow(row) equal
  * to row.expect, mirrored in test/fixtures/rf-federation-parity-premise-roster.json (registered title, findings and
  * input digest) - and what its live tree (a), live bead export (c) and filing anchor cases assert, and nothing they do
- * not pin. READINGS states those readings with the rows that pin each one; the FOLLOW-UP, CUT 2, CUT 3, CUT 4 and
- * WB-MPUO sections name, row by row, the one-edit reader hollowing that turns each added row red. A mode no row pins
+ * not pin. READINGS states those readings with the rows that pin each one; the FOLLOW-UP, CUT 2, CUT 3, CUT 4,
+ * WB-MPUO and WB-MPUO CUT 2 sections name, row by row, the one-edit reader hollowing that turns each added row red. A mode no row pins
  * is NOT CLAIMED by this census; the escapes it names are residuals, each with a pinned quiet row (RESIDUALS).
  * READINGS
- * - MENTION: a match of one of the claim's FAMILIES in the folded text of a block (a maximal run of non-blank lines; a
- *   line of WHITE SPACE only, of up to sixty-four code points, is blank, row R8: an empty line, a space then a tab then
- *   a space, each white-space code point on a line of its own (alone, with a space after it, twice and four times
- *   over), a space and a tab, a tab and a no-break space, a no-break space and a space, every white-space code point in
- *   turn with and without the space, the non-ASCII ones NFKC makes a space in turn, and sixty-four spaces, sixty-four
- *   tabs or sixty-four white-space code points in turn
- *   (a longer line of white space only is NOT CLAIMED by this census); a line of a NUL, a next-line control, a
- *   zero-width space, a word joiner or a hyphen only is not, row F79; a file's
+ * - MENTION: a match of one of the claim's FAMILIES in the folded text of a block (a maximal run of non-blank lines;
+ *   these lines of WHITE SPACE only are blank, row R8, each set between the lines "agents continue using" and "RF-CLI
+ *   normally" (the rf-normally phrase split after its verb): an empty line, a space then a tab then a space, each
+ *   white-space code point on a line of its own alone, with a space after it, and one to sixty-four times over (each
+ *   code point at each count), a space and a tab, a tab and a no-break space, a no-break space and a space, every
+ *   white-space code point in turn with and without the space, the non-ASCII ones NFKC makes a space in turn, and
+ *   sixty-four white-space code points in turn; and SPLIT_LINES (an empty line, a space, a tab, a carriage return, a
+ *   no-break space, an ideographic space, a VT, sixty-four spaces and sixty-four tabs), each set between two words of
+ *   each phrase of FOLD_PHRASES at each of its gaps (another line of white space only, and one of these lines set
+ *   elsewhere, are NOT CLAIMED by this census); a line of a NUL, a next-line control, a zero-width space, a word joiner
+ *   or a hyphen only is not, row F79; a file's
  *   last block is read whether or not the file ends with a line break, row F75) of a scanned file, or in one exported
  *   bead row; a match joined, in the folded text, to a letter
  *   a-z or a digit 0-9 before or after it is no mention (rows N07, N18). The families: the claim id; "disabled-mode
@@ -52,17 +55,22 @@
  *   F07, F34), an astral code point (F73), a zero-width space (F08, F50, N13, N14), and a soft hyphen, U+2010, U+2011
  *   or an en dash (F48 one between two words, F84 two between two spaces at the separator bound, N28 five between two
  *   words: one wildcard each, never none, two or a space); a block's lines are folded one by one and joined by a
- *   space. The ASCII controls VT, FF, DEL, SOH and ESC are not folded to a space, and between two words, with nothing
- *   else between them, each is one wildcard: one, two, three or four of one of them there (each control at each
- *   count), or one of the mixed runs VT
- *   FF, DEL SOH ESC and VT FF DEL SOH, make a mention (row F86), and five of one of them, or five VT and FF mixed,
- *   make none (rows N21, N24). How an ASCII control other than tab, line feed, carriage return, VT, FF, DEL, SOH and
- *   ESC folds, and another mixed run of them, are NOT CLAIMED by this census. A word of a family reads as
+ *   space. Between two words of a phrase of FOLD_PHRASES (each family's phrase as the program writes it: the claim id's
+ *   two parts; disabled, mode and parity; using, RF, CLI and normally; leaves, existing, RF, CLI, graph, and, agent,
+ *   usage and unchanged), each phrase alone on its line, at each of the fourteen gaps those phrases have, with nothing else
+ *   between the two words, the
+ *   ASCII controls VT, FF, DEL, SOH and ESC are not folded to a space: each is one wildcard. One, two, three or four of
+ *   one of them there (each control at each count), or one of the mixed runs VT FF, DEL SOH ESC and VT FF DEL SOH, make
+ *   a mention (rows F86 between disabled and mode, F90 at the thirteen other gaps), and five of one of them, or the run
+ *   VT FF VT FF VT, make none (rows N21 and N24 between disabled and mode, N31 at the thirteen other gaps). How an ASCII
+ *   control other than tab, line feed, carriage return, VT, FF, DEL, SOH and ESC folds, another mixed run of them, and
+ *   one of them anywhere else (between other words, beside another verb, the optional "the" or another rf spelling, or
+ *   inside a word) are NOT CLAIMED by this census. A word of a family reads as
  *   itself, with one letter read as a wildcard (any letter, the first and the last included: rows F07, F34, F56), or
  *   with one to three spaces or wildcards between two of its letters (any two, after the first letter and before the
  *   last included: rows F08, F51, F56; four is past the bound, N14), and the words of a phrase, those of a two- or
- *   three-word rf spelling included, stand one to four spaces or wildcards apart (SEPARATOR: rows F48-F50, F65, F69, F86;
- *   five is past the bound, N13, N21 and N24; a line join can leave two or three spaces between them, F49): a hyphen,
+ *   three-word rf spelling included, stand one to four spaces or wildcards apart (SEPARATOR: rows F48-F50, F65, F69, F86, F90;
+ *   five is past the bound, N13, N21, N24 and N31; a line join can leave two or three spaces between them, F49): a hyphen,
  *   a line break inside a block, markdown emphasis marks inside a word (F47), a look-alike letter, an inserted
  *   invisible or a hyphen encoded in the decoded set hides no mention, while a run of wildcards never reads as a word
  *   (N11). A hyphen encoded outside that set can hide one (residuals R10 and R13), and so can markup letters, an HTML
@@ -87,21 +95,37 @@
  *   then 12 to 40 lower-case hex digits followed by no further hex digit, rf joined to no ASCII letter or digit before
  *   it (rows F26, F27, F67, F70, N22), and carries FIXTURE_COMMAND exactly (its words, single spaces and lower case as
  *   written: two spaces or a tab between any two of its words, or an upper-case letter at any one of its letters, is
- *   none, F82; no further flag, row F29: the command then the end of its line, a closing mark ` ' " ) ] . , or ;
- *   (N22), or a run of one to sixty-four spaces or tabs, mixed or not, then the end of the line (F68, F88), an arrow
- *   followed by a space, a tab, exit or the end of the line (N22, N25, N27, F88), or a printable ASCII character other
- *   than the hyphen, each of them (N27); a colon, an opening parenthesis or a letter right after the command, or a
- *   no-break space or a VT right after it or after its run of spaces, is none: F77) with "exit 0" as written (exit in
- *   lower case, one space, 0: an upper-case letter at any one of exit's four letters, F87, or at all four, F68, and two
- *   spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore between exit and 0, F76, are none),
- *   joined to no ASCII letter or digit on either side, after the command on that line (rows F30, F68, F71, F72); one
- *   such line admits it, before or after a failed run (N25). Another character between exit and 0, between the words of
- *   rf sha or of the command, or right after the command, a non-ASCII character after the command's run of spaces or
- *   tabs, anything else after its arrow, and a run of more than sixty-four spaces or tabs after it are NOT CLAIMED by
- *   this census.
+ *   none, F82) followed by one of the endings END lists that read it, with "exit 0" as written (exit in lower case, one
+ *   space, 0: an upper-case letter at any one of exit's four letters, F87, or at all four, F68, and two spaces, a tab,
+ *   no character, a no-break space, a VT, a hyphen or an underscore between exit and 0, F76, are none), joined to no
+ *   ASCII letter or digit on either side, after the command on that line (rows F30, F68, F71, F72); one such line
+ *   admits it, before or after a failed run (N25).
+ * - END ((b), the command's endings, each one pinned): the command is read when the line feed that ends its line
+ *   follows it (F68, exit 0 on the next line: receipt-no-exit-0 alone); when a closing mark follows it with the rest
+ *   of the line as N08 and N22 write it (a backtick, a quote or a double quote, then one space, an arrow, one space and
+ *   exit 0; a closing parenthesis or bracket, a dot, a comma or a semicolon, then one space and exit 0; each then the
+ *   line feed); when a run of
+ *   END_RUNS follows it - every run of one to four spaces or tabs, mixed or not, and five to sixty-four spaces only or
+ *   tabs only - and after that run the line feed (F68, F88, F89: exit 0 on the next line, receipt-no-exit-0 alone), an
+ *   arrow then exit 0, joined to the arrow or after one space or one tab, and the line feed (N22, N25, N27, N29), or a
+ *   printable ASCII character other than the hyphen, one space, exit 0 and the line feed (N27, N30), each run with each
+ *   of those endings; and
+ *   when one space, an arrow and the line feed follow it (F88). It is not read on the lines F77 and F29 write: a colon
+ *   then one space and exit 0, an opening parenthesis then exit 0 and a closing parenthesis, the letter x then one space
+ *   and exit 0, or a no-break space or a VT then an arrow, one space and exit 0, right after the command, or one space
+ *   and then one of those last two (F77); one space, -k smoke, a closing backtick, one space, an arrow, one space and
+ *   exit 0 (F29: no further flag). The rows set each ending with the command first on its line, save the closing
+ *   marks', which N08 and N22 set right after the opening mark that pairs with them or after ran and a space (a comma's
+ *   and a semicolon's first on the line), and F29's, after a backtick; and they set the command's line right after the rf sha line, or after a failed run's line
+ *   (N25). Any other ending (another character right after the command or after its run, another rest of the line
+ *   after a closing mark or after the characters F77 and F29 write, a mixed run of five or more, a run of more than
+ *   sixty-four, anything else after its arrow or after its printable character, anything after exit 0 or after F77's
+ *   closing parenthesis on the command's line, a line break other than a line feed),
+ *   another character between exit and 0, between the words of rf sha or of the command, and another place of the
+ *   command on its line or of its line in the receipt are NOT CLAIMED by this census.
  *   Otherwise receipt-not-cited, receipt-absent, receipt-no-rf-sha, receipt-no-command, receipt-no-exit-0. While the
  *   fixture is absent no receipt admits a mention (row F16). Until FIXTURE_AT_PIN flips, (b) is exercised by rows
- *   F24-F31, F67, F68, F70-F72, F76, F77, F80-F82, F87, F88, N08, N22, N25 and N27; the live scan already reads the
+ *   F24-F31, F67, F68, F70-F72, F76, F77, F80-F82, F87-F89, N08, N22, N25, N27, N29 and N30; the live scan already reads the
  *   receipts directory (RECEIPTS_FLOOR) for that flip. The tokens' boundaries are ASCII: a non-ASCII letter beside rf
  *   or exit 0, or a letter that is no hex digit after the sha, does not join (residual R14).
  * - (c) A scanned claim-id mention also draws echo-no-undetermined, echo-no-pin and echo-minted-status for what its
@@ -109,12 +133,14 @@
  *   nested ones included) with a claim-id mention draws echo-no-undetermined and echo-no-pin: bead rows are judged at row
  *   granularity on those two required tokens only, because collector and gate notes accumulate on a filing's own row
  *   (residuals R4, R5). An export line that does not parse is a finding of its own (rows F44, F78: a line of a NUL, a
- *   next-line control, a zero-width space or a word joiner alone does not parse), save an empty line or a line of
- *   WHITE SPACE only, of up to sixty-four code points, which is skipped (row N26: three spaces, a tab, and each
+ *   next-line control, a zero-width space or a word joiner alone does not parse), save an empty line or one of
+ *   these lines of WHITE SPACE only, which is skipped (row N26: an empty line, three spaces, a tab, and each
  *   white-space code point alone, twice and four times over on an export line, a space and a tab, a tab and a no-break
  *   space, a no-break space and a space, every white-space code point in turn with and without the space, the
  *   non-ASCII ones NFKC makes a space in turn, and sixty-four spaces, sixty-four tabs or sixty-four white-space code
- *   points in turn; a longer line of white space only is NOT CLAIMED by this census).
+ *   points in turn, each before the export's first readable row; and each white-space code point one to sixty-four
+ *   times over, in twenty-four runs of lines that each follow a readable row, the last of them ending the export;
+ *   another line of white space only, and one of these lines set otherwise, are NOT CLAIMED by this census).
  * - WHITE SPACE (MENTION, (c), FINDING): tab, VT, FF, CR, space, U+00A0, U+1680, U+2000-U+200A, U+2028, U+2029,
  *   U+202F, U+205F, U+3000 and U+FEFF (WHITE_SPACE): the code points JavaScript's \s and String.prototype.trim read as
  *   white space or a line terminator, line feed aside (it ends a line); rows R8 and N26 carry each one, and the frozen
@@ -132,7 +158,7 @@
  *   FIXTURE_AT_PIN is absent. A later cut that re-measures the rf tree flips it, never this guard's readers.
  * FINDING: `<path>:<line> <family>: <diagnoses>` per refused mention (line = the first line its phrase spans),
  * `<bead id> claim-id: <diagnoses>` per refused bead row, `line <n> unreadable` per export line that does not parse
- * (an empty line or a line of white space only, of up to sixty-four code points, is skipped: row N26).
+ * (an empty line or one of the lines of white space only (c) lists, set as N26 sets it, is skipped: row N26).
  * OUTSIDE ANCHORS. The owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-a9l2.1) carries every
  * pinned constant verbatim, names the scan trees ("no Pi src/docs/test/qa string") and the fixture's absence ("git
  * ls-tree at 6a251bf73af5 has no such file"), and its quoted spellings read as mentions of their families. The
@@ -198,8 +224,8 @@
  *   F64 (use, uses, used and both families' optional "the"), F65 (the rf spellings RFCLI, ReactiveFiber CLI,
  *   ReactiveFiberCLI and Reactive Fiber CLI, and a two- or three-word spelling's words four wildcards apart) and F66 (a
  *   precomposed letter between two words) are refused; N18 (a phrase joined to an ASCII letter or a digit), N19 (an
- *   echo on a mention's first line), N20 (the pin extended to a full sha) and N21 (five VT or FF controls between two
- *   words) stay quiet; R8 gains a line of white space only and R13 gains a hex and a named reference without the
+ *   echo on a mention's first line), N20 (the pin extended to a full sha) and N21 (five VT or FF controls between disabled
+ *   and mode) stay quiet; R8 gains a line of white space only and R13 gains a hex and a named reference without the
  *   semicolon, a seven-digit hex, an eight-digit decimal and a seven-digit braced form, and an ampersand encoded as
  *   &amp;. The hollowings measured at this cut each red one of them: each alternative dropped from a family slot that
  *   has several (the verbs, the optional "the", the rf spellings of the shared list; from NEG-05's own slot only since
@@ -237,16 +263,16 @@
  *   width bound moved by one) red it.
  * - U4: F73 (an astral code point in place of a letter) and F74 (&#x10FFFF; and &#1114111; between two words) are
  *   refused: Q24 (the wildcard fold without its u flag) and Q21 (code points capped below U+10FFFF) red them. N24 (five
- *   DEL, five SOH or five ESC between two words) stays quiet: Q25 and Q26 (DEL or the other C0 controls folded to a
+ *   DEL, five SOH or five ESC between disabled and mode) stays quiet: Q25 and Q26 (DEL or the other C0 controls folded to a
  *   space) red it.
  * - U5: F75 (a mention in the last block of a file that does not end with a line break, on its first or third line)
  *   is refused: Q23 (blocks() stops before that block) reds it.
  * - The live tree (a) case asserts that the walk reads test/helpers/scratch.ts: Q27 (directories named helpers
- *   skipped) reds it. N26 (an empty export line and lines of white space only) stays quiet: the skip narrowed to empty
+ *   skipped) reds it. N26 (an empty export line and the lines of white space only it lists) stays quiet: the skip narrowed to empty
  *   lines reds it.
  * - The claims are narrowed to the pins (R-B60): the boundaries of required text, grades, phrases and receipt tokens to
  *   ASCII letters and digits (titles F40, F41, F59, F60 and N15-N18), emphasis to markdown marks (F47), the decoded
- *   forms to the ones F45 and F46 hold, the controls to the ones N21 holds (CUT 4: the five-control side; WB-MPUO widens it with F86's pins), and the white space after the command to
+ *   forms to the ones F45 and F46 hold, the controls to the ones N21 holds (CUT 4: the five-control side; WB-MPUO widens it with F86's pins; WB-MPUO CUT 2 sets them at every gap of FOLD_PHRASES), and the white space after the command to
  *   spaces or tabs. Two residual families are added, each with its quiet row: R14 (a non-ASCII letter beside the
  *   verdict, the pin, rf or exit 0, and a letter that is no hex digit after an rf sha: those boundaries made
  *   Unicode-aware, or the sha's given a letter boundary, red it) and R15 (an HTML tag inside a word or between two
@@ -256,13 +282,13 @@
  * row id, with the one-edit reader hollowing that turns each added row red (refusal #3's GP3 ids and this cut's C4
  * ids; measured at this cut on throwaway edits; a hollowing that reds a row also reds the roster):
  * - U1: N21 gains five VT and five FF on their own, and N21 and N24 are retitled to what they pin: five of one control
- *   between two words make no mention, because no such control is folded to a space (VT, FF, DEL, SOH or ESC added to
+ *   between disabled and mode make no mention, because no such control is folded to a space (VT, FF, DEL, SOH or ESC added to
  *   the space run reds its file: C4:VT-SPACE, C4:FF-SPACE, C4:DEL-SPACE, C4:SOH-SPACE, C4:ESC-SPACE). FOLDED TEXT says
  *   that much and no more; the one-to-four side (GP3:CTRL-DELETE, GP3:CTRL-DOUBLE: zero or two wildcards per control)
  *   was NOT CLAIMED at cut 4, and wb-mpuo carries it (WB-MPUO: F86).
  * - U2: F76 (exit and 0 two spaces, a tab, no character, a no-break space, a VT, a hyphen or an underscore apart) draws
- *   receipt-no-exit-0: GP3:EXIT-WS, C4:EXIT-OPT, C4:EXIT-S and C4:EXIT-ANY red it. N27 (a run of spaces or a tab, then
- *   an opening parenthesis or a hash, after the command) is admitted: COMMAND_END's end narrowed to a word reds it
+ *   receipt-no-exit-0: GP3:EXIT-WS, C4:EXIT-OPT, C4:EXIT-S and C4:EXIT-ANY red it. N27 (two spaces or a tab, then
+ *   an opening parenthesis, or a space then a hash, after the command) is admitted: COMMAND_END's end narrowed to a word reds it
  *   (C4:END-WORD). F77 (a colon, an opening parenthesis or a letter right after the command; a no-break space or a VT
  *   right after it or after a space) draws receipt-no-command and receipt-no-exit-0: the run widened to white space (C4:END-RUN-WS), the end
  *   widened to any character but a hyphen (C4:END-NONHYPHEN) and a colon or an opening parenthesis added to the closing
@@ -290,7 +316,7 @@
  * widens, by row id, with the gate-authored one-edit reader hollowing that turns each red (refusal #3's GP3 ids and
  * refusal #4's GP11 ids, each measured at this cut on a throwaway copy; a hollowing that reds a row also reds the
  * roster):
- * - F86 (one, two, three or four VT, FF, DEL, SOH or ESC between two words, each control at each count, and the mixed
+ * - F86 (one, two, three or four VT, FF, DEL, SOH or ESC between disabled and mode, each control at each count, and the mixed
  *   runs VT FF, DEL SOH ESC and VT FF DEL SOH): GP3:CTRL-DELETE (zero wildcards per control) and GP3:CTRL-DOUBLE
  *   (two) red it.
  * - R8 (U1) gains each white-space code point alone, twice and four times over on a line of its own, a space and a
@@ -305,15 +331,39 @@
  *   GP11:RFSHA-A-CI red it.
  * - F82 (U4) gains each letter of the command but its first upper-cased alone, two spaces at the three inner gaps
  *   between its words and a tab at the four later gaps: GP11:CMD-INNER-CI and GP11:CMD-TAB-FLAG red it.
- * - N27 (U5) gains runs of three spaces, three tabs, a space-tab mix and a tab-space mix of four, eight spaces,
- *   sixty-four spaces and sixty-four tabs before the arrow, the arrow joined to exit or followed by a tab, and each
- *   printable ASCII character
- *   but the hyphen after one space; F88 (the command line ending after a run of three tabs, a space-tab mix or
- *   sixty-four spaces, or after an arrow, with exit 0 on the next line) draws receipt-no-exit-0 alone, the command
+ * - N27 (U5) gains runs of three spaces, three tabs, the alternations space tab space tab and tab space tab space, eight spaces,
+ *   sixty-four spaces and sixty-four tabs before the arrow, one space then the arrow joined to exit 0 or followed by a
+ *   tab and exit 0, and one space then each printable ASCII character but the hyphen, one space and exit 0; F88 (the command line ending after three tabs, the run space tab space tab or
+ *   sixty-four spaces, or after a space and an arrow, with exit 0 on the next line) draws receipt-no-exit-0 alone, the command
  *   read: GP11:END-RUN-BOUNDED (a run of one or two only) and GP11:END-ARROW-SPACE (an arrow then a space only) red
  *   N27 and F88, and GP11:END-NO-DIGIT (no digit after the run) reds N27.
  * - F87 (Exit, eXit, exIt and exiT before 0) draws receipt-no-exit-0: GP11:EXIT-E-CI (refusal #4's F6, recorded INFO
  *   there) reds it.
+ * WB-MPUO CUT 2 (refusal #1 of wb-mpuo, R-B619: rung 1 of wb-mpuo's own ladder, the class guard bound over the claim
+ * sets G1-G4 of refusal #1's U1-U6; this cut cures each: it pins the cross-product cells the words claim, and narrows
+ * the words to what the rows pin, the rest NOT CLAIMED). The pinned set it adds or narrows, by row id, with the
+ * gate-authored one-edit reader hollowing (refusal #1's GP14 ids) that turns each red (measured at this cut on
+ * throwaway copies; a hollowing that reds a row also reds the roster):
+ * - U1 (G1, the line feed after the command's run): F89 (the command line ending after each run of END_RUNS, exit 0 on
+ *   the next line, draws receipt-no-exit-0 alone): GP14:EOL-RUN2, GP14:EOL-SPACE-FIRST and GP14:EOL-TABS-UPTO3 red it.
+ * - U2 (G1, the arrow): N29 (after each run of END_RUNS an arrow, then exit 0 joined to it or after one space or one
+ *   tab, ending the line): GP14:ARROW-FOLLOW-AFTER-1SP reds it. The words after the arrow are narrowed to exit 0 right after it, after one
+ *   space or after one tab, and, after one space, the line feed (F88); an arrow, a space and other text is NOT
+ *   CLAIMED, so the inputs GP14:ARROW-SPACE-EXIT diverges on (an arrow, a space, then ok or passed) are outside them.
+ * - U3 (G1, the printable character): N30 (after each run of END_RUNS each printable ASCII character but the hyphen,
+ *   then one space and exit 0, ending the line): GP14:CHAR-AFTER-1SP reds it.
+ * - U4 (G2, MENTION and R8): R8 gains each white-space code point one to sixty-four times over between its two lines,
+ *   and SPLIT_LINES at every gap of FOLD_PHRASES: GP14:BLK-GAP-5-14 and GP14:BLK-RUN5 red it.
+ * - U5 (G3, (c), FINDING and N26): N26 gains each white-space code point one to sixty-four times over, in runs that
+ *   each follow a readable row, the last ending the export: GP14:N26-GAP-5-14 and GP14:N26-RUN5 red it.
+ * - U6 (G4, FOLDED TEXT): F90 (one to four of each control, and the three mixed runs, at the thirteen gaps of
+ *   FOLD_PHRASES but the one F86 holds) and N31 (five of each, and the run VT FF VT FF VT, there): GP14:CTRL-AFTER-D
+ *   reds F90.
+ * The words narrowed to the pins: the command's endings (END: the runs END_RUNS lists, the arrow's followers, the
+ * printable character's one space and exit 0, the rest of the line after a closing mark and on F77's and F29's lines,
+ * and where the rows set the command and its line), the blank lines (the lines R8 lists, where it sets them), the skipped export lines (the lines N26
+ * lists, where it sets them) and the controls between words (the gaps of FOLD_PHRASES); F86, F88, N21, N24, N26 and
+ * N27 are retitled to what they pin.
  * Other spellings of the R11-R15 families are NOT CLAIMED by a quiet row of their own; the F4 boundary above (an edit
  * of this file and the roster together) is unchanged.
  * Display paths added: none. This file is test-only: it spawns nothing and writes nothing; it reads the four trees, the
@@ -755,6 +805,72 @@ const ARROW_RUNS: readonly (readonly [string, string])[] = [
   ["8sp", " ".repeat(8)],
   ["64sp", " ".repeat(64)],
   ["64tab", "\t".repeat(64)],
+];
+/**
+ * END_RUNS (END in READINGS (b); rows F89, N29 and N30): every run of one to four spaces or tabs, mixed or not, named by
+ * its characters (s a space, t a tab), and five to sixty-four spaces only or tabs only, named by kind and length.
+ */
+const END_RUNS: readonly (readonly [string, string])[] = [
+  ...[1, 2, 3, 4].flatMap(length =>
+    Array.from({ length: 2 ** length }, (_, mask) => {
+      const run = Array.from({ length }, (_, at) => (Math.floor(mask / 2 ** at) % 2 === 1 ? "\t" : " ")).join("");
+      return [run.replace(/ /g, "s").replace(/\t/g, "t"), run] as const;
+    }),
+  ),
+  ...Array.from({ length: 60 }, (_, offset) => [`s${offset + 5}`, " ".repeat(offset + 5)] as const),
+  ...Array.from({ length: 60 }, (_, offset) => [`t${offset + 5}`, "\t".repeat(offset + 5)] as const),
+];
+/** What N29 sets between the arrow after an END_RUNS run and exit 0: a space, a tab, or nothing. */
+const ARROW_FOLLOWERS: readonly (readonly [string, string])[] = [
+  ["space", " "],
+  ["tab", "\t"],
+  ["joined", ""],
+];
+interface FoldPhrase {
+  readonly name: string;
+  readonly family: string;
+  /** The phrase's words as the program writes them, one space between them. */
+  readonly words: readonly string[];
+  /** What an unechoed mention of the phrase draws. */
+  readonly diagnoses: string;
+}
+/** FOLDED TEXT, R8: each family's phrase; F86, N21 and N24 hold the gap between disabled and mode, F90 and N31 the rest. */
+const FOLD_PHRASES: readonly FoldPhrase[] = [
+  { name: "claim", family: "claim-id", words: ["h2fp", "C004"], diagnoses: "echo-no-undetermined+echo-no-pin+unechoed-claim" },
+  { name: "mode", family: "mode-parity", words: ["disabled", "mode", "parity"], diagnoses: "unechoed-claim" },
+  { name: "normally", family: "rf-normally", words: ["using", "RF", "CLI", "normally"], diagnoses: "unechoed-claim" },
+  { name: "neg05", family: "neg-05", words: ["leaves", "existing", "RF", "CLI", "graph", "and", "agent", "usage", "unchanged"], diagnoses: "unechoed-claim" },
+];
+/** A phrase's words with `between` at gap `gap` (0: after its first word) and one space at its other gaps. */
+const phraseAt = (words: readonly string[], gap: number, between: string): string => `${words.slice(0, gap + 1).join(" ")}${between}${words.slice(gap + 1).join(" ")}`;
+/** The thirteen gaps of FOLD_PHRASES but the one F86, N21 and N24 hold (mode-parity's, after disabled). */
+const OTHER_GAPS: readonly (FoldPhrase & { readonly gap: number })[] = FOLD_PHRASES.flatMap(phrase =>
+  phrase.words.slice(1).flatMap((_, gap) => (phrase.name === "mode" && gap === 0 ? [] : [{ ...phrase, gap }])),
+);
+/** Five of one control, and the run VT FF VT FF VT (N21 and N24 between disabled and mode; N31 at OTHER_GAPS). */
+const FIVE_CONTROLS: readonly (readonly [string, string])[] = [
+  ["vt", "\v".repeat(5)],
+  ["ff", "\f".repeat(5)],
+  ["vt-ff", "\v\f\v\f\v"],
+  ["del", String.fromCodePoint(0x7f).repeat(5)],
+  ["soh", String.fromCodePoint(0x01).repeat(5)],
+  ["esc", String.fromCodePoint(0x1b).repeat(5)],
+];
+/** Each WHITE_SPACE code point one to sixty-four times over (R8 and N26). */
+const WHITE_SPACE_GRID: readonly (readonly [string, string])[] = WHITE_SPACE.flatMap(codePoint =>
+  Array.from({ length: 64 }, (_, offset) => [`${hex4(codePoint)}-x${offset + 1}`, String.fromCodePoint(codePoint).repeat(offset + 1)] as const),
+);
+/** The lines R8 sets between two words of each phrase of FOLD_PHRASES, at each of its gaps. */
+const SPLIT_LINES: readonly (readonly [string, string])[] = [
+  ["empty", ""],
+  ["space", " "],
+  ["tab", "\t"],
+  ["cr", "\r"],
+  ["nbsp", NO_BREAK_SPACE],
+  ["ideographic", IDEOGRAPHIC_SPACE],
+  ["vt", "\v"],
+  ["space-x64", " ".repeat(64)],
+  ["tab-x64", "\t".repeat(64)],
 ];
 const FILLER = "filler line\n".repeat(60_000);
 
@@ -1457,11 +1573,11 @@ const ROWS: readonly Row[] = [
     ],
     expect: ["docs/f85-nbsp.md:1 mode-parity: unechoed-claim", "docs/f85-ideographic.md:1 mode-parity: unechoed-claim"],
   },
-  // WB-MPUO (R-B585/R-B596): one to four ASCII controls between two words, exit 0 in lower case, the command line's end
+  // WB-MPUO (R-B585/R-B596): one to four ASCII controls between disabled and mode, exit 0 in lower case, the command line's end
   {
     table: "FALSIFIERS",
     id: "F86",
-    label: "one, two, three or four VT, FF, DEL, SOH or ESC controls of one kind, or the mixed runs VT FF, DEL SOH ESC and VT FF DEL SOH, with nothing else between two words, are refused: one wildcard each",
+    label: "one, two, three or four VT, FF, DEL, SOH or ESC controls of one kind, or the mixed runs VT FF, DEL SOH ESC and VT FF DEL SOH, with nothing else between disabled and mode, are refused: one wildcard each",
     files: CONTROL_RUNS.map(([name, run]) => ({ path: `docs/f86-${name}.md`, text: `disabled${run}mode parity\n` })),
     expect: CONTROL_RUNS.map(([name]) => `docs/f86-${name}.md:1 mode-parity: unechoed-claim`),
   },
@@ -1487,7 +1603,7 @@ const ROWS: readonly Row[] = [
   {
     table: "FALSIFIERS",
     id: "F88",
-    label: "present, a receipt whose command line ends after a run of three tabs, a space-tab mix or sixty-four spaces, or after an arrow, with exit 0 on the next line, draws receipt-no-exit-0 alone: the command is read",
+    label: "present, a receipt whose command line ends after three tabs, after the run space tab space tab or sixty-four spaces, or after a space and an arrow, with exit 0 on the next line, draws receipt-no-exit-0 alone: the command is read",
     files: [
       { path: "docs/f88-tabs.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ytabs.md).\n" },
       { path: "docs/f88-mix.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ymix.md).\n" },
@@ -1502,6 +1618,23 @@ const ROWS: readonly Row[] = [
       "wb-yarrow.md": commandLine(`${FIXTURE_COMMAND} ->\nexit 0`),
     },
     expect: ["docs/f88-tabs.md:1 mode-parity: receipt-no-exit-0", "docs/f88-mix.md:1 mode-parity: receipt-no-exit-0", "docs/f88-64sp.md:1 mode-parity: receipt-no-exit-0", "docs/f88-arrow.md:1 mode-parity: receipt-no-exit-0"],
+  },
+  // WB-MPUO CUT 2 (refusal #1 of wb-mpuo, R-B619: U1, U6): the line feed after each END_RUNS run; controls at the other gaps
+  {
+    table: "FALSIFIERS",
+    id: "F89",
+    label: "present, a receipt whose command line ends after a run of one to four spaces or tabs, mixed or not, or of five to sixty-four spaces only or tabs only, each run, with exit 0 on the next line, draws receipt-no-exit-0 alone: the command is read",
+    files: END_RUNS.map(([name]) => ({ path: `docs/f89-${name}.md`, text: `Disabled-mode parity holds (docs/workbench/receipts/wb-z${name}.md).\n` })),
+    fixture: FIXTURE_LANDED,
+    receipts: Object.fromEntries(END_RUNS.map(([name, run]) => [`wb-z${name}.md`, commandLine(`${FIXTURE_COMMAND}${run}\nexit 0`)])),
+    expect: END_RUNS.map(([name]) => `docs/f89-${name}.md:1 mode-parity: receipt-no-exit-0`),
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F90",
+    label: "one, two, three or four VT, FF, DEL, SOH or ESC controls of one kind, or the mixed runs VT FF, DEL SOH ESC and VT FF DEL SOH, with nothing else between two words of a fold phrase, at each of the thirteen gaps but the one F86 holds, are refused: one wildcard each",
+    files: OTHER_GAPS.flatMap(({ name, words, gap }) => CONTROL_RUNS.map(([run, controls]) => ({ path: `docs/f90-${name}-g${gap}-${run}.md`, text: `${phraseAt(words, gap, controls)}\n` }))),
+    expect: OTHER_GAPS.flatMap(({ name, family, diagnoses, gap }) => CONTROL_RUNS.map(([run]) => `docs/f90-${name}-g${gap}-${run}.md:1 ${family}: ${diagnoses}`)),
   },
   // accepted
   { table: "CONTROLS", id: "N01", label: "the echo form", files: doc("h2fp-C004 (agents keep using RF-CLI normally; disabled-mode parity) is UNDETERMINED at rf main 740c1a817.\n"), expect: [] },
@@ -1559,7 +1692,7 @@ const ROWS: readonly Row[] = [
   {
     table: "CONTROLS",
     id: "N21",
-    label: "five VT, five FF or five VT and FF controls mixed between two words make no mention: neither control is folded to a space",
+    label: "five VT, five FF or the run VT FF VT FF VT between disabled and mode make no mention: neither control is folded to a space",
     files: [
       { path: "docs/x.md", text: "disabled\v\f\v\f\vmode parity\n" },
       { path: "docs/n21-vt.md", text: "disabled\v\v\v\v\vmode parity\n" },
@@ -1616,7 +1749,7 @@ const ROWS: readonly Row[] = [
   {
     table: "CONTROLS",
     id: "N24",
-    label: "five DEL, five SOH or five ESC controls between two words make no mention: none of them is folded to a space",
+    label: "five DEL, five SOH or five ESC controls between disabled and mode make no mention: none of them is folded to a space",
     files: [
       { path: "docs/n24del.md", text: `disabled${String.fromCodePoint(0x7f).repeat(5)}mode parity\n` },
       { path: "docs/n24soh.md", text: `disabled${String.fromCodePoint(0x01).repeat(5)}mode parity\n` },
@@ -1644,15 +1777,24 @@ const ROWS: readonly Row[] = [
   {
     table: "CONTROLS",
     id: "N26",
-    label: "an empty export line and export lines of white space only are skipped: three spaces, a tab, each white-space code point alone, twice and four times over, three mixed pairs, every code point in turn with and without the space, the non-ASCII ones NFKC makes a space in turn, and sixty-four spaces, tabs or code points in turn",
-    bead: ["", "   ", "\t", ...WHITE_SPACE.map(codePoint => String.fromCodePoint(codePoint)), ...WHITE_SPACE_RUNS.map(([, line]) => line), beadLine({ id: "wb-zz.12", notes: "an unrelated note" })],
+    label: "an empty export line and these export lines of white space only are skipped: before a readable row three spaces, a tab, each white-space code point alone, twice and four times over, three mixed pairs, every code point in turn with and without the space, the non-ASCII ones NFKC makes a space in turn, and sixty-four spaces, tabs or code points in turn; then each code point one to sixty-four times over, in runs that each follow a readable row, the last ending the export",
+    bead: [
+      "",
+      "   ",
+      "\t",
+      ...WHITE_SPACE.map(codePoint => String.fromCodePoint(codePoint)),
+      ...WHITE_SPACE_RUNS.map(([, line]) => line),
+      beadLine({ id: "wb-zz.12", notes: "an unrelated note" }),
+      // WB-MPUO CUT 2 (U5): each white-space code point one to sixty-four times over, in runs that each follow a readable row, the last ending the export
+      ...WHITE_SPACE.flatMap(codePoint => [beadLine({ id: "wb-zz.13", notes: "an unrelated note" }), ...Array.from({ length: 64 }, (_, offset) => String.fromCodePoint(codePoint).repeat(offset + 1))]),
+    ],
     expect: [],
   },
   // CUT 4 (R-B585 U2; FOLDED TEXT): the command's end admitted past a run of spaces, and five hyphens past the bound
   {
     table: "CONTROLS",
     id: "N27",
-    label: "present, after the command a run of one to sixty-four spaces or tabs, mixed or not, then an arrow followed by a space, a tab or exit, an opening parenthesis, a hash or any printable ASCII character but the hyphen, is admitted",
+    label: "present, after the command two spaces or a tab then an opening parenthesis and exit 0 and a closing parenthesis, one space then a hash, 1, one space and exit 0, three spaces, three tabs, the alternations space tab space tab and tab space tab space, eight or sixty-four spaces or sixty-four tabs then an arrow, one space and exit 0, one space then an arrow and exit 0 joined to it or after one tab, or one space then each printable ASCII character but the hyphen, one space and exit 0, each line ending there, is admitted",
     files: [
       { path: "docs/n27-paren.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-nparen.md).\n" },
       { path: "docs/n27-hash.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-nhash.md).\n" },
@@ -1686,6 +1828,32 @@ const ROWS: readonly Row[] = [
     ],
     expect: [],
   },
+  // WB-MPUO CUT 2 (refusal #1 of wb-mpuo, R-B619: U2, U3, U6): after each END_RUNS run the arrow's followers and each printable character; five controls at the other gaps
+  {
+    table: "CONTROLS",
+    id: "N29",
+    label: "present, after the command a run of one to four spaces or tabs, mixed or not, or of five to sixty-four spaces only or tabs only, then an arrow and exit 0, joined to the arrow or after one space or one tab, ending the line, each run with each, is admitted",
+    files: END_RUNS.flatMap(([name]) => ARROW_FOLLOWERS.map(([follower]) => ({ path: `docs/n29-${name}-${follower}.md`, text: `Disabled-mode parity holds (docs/workbench/receipts/wb-a${name}-${follower}.md).\n` }))),
+    fixture: FIXTURE_LANDED,
+    receipts: Object.fromEntries(END_RUNS.flatMap(([name, run]) => ARROW_FOLLOWERS.map(([follower, between]) => [`wb-a${name}-${follower}.md`, commandLine(`${FIXTURE_COMMAND}${run}->${between}exit 0`)]))),
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N30",
+    label: "present, after the command a run of one to four spaces or tabs, mixed or not, or of five to sixty-four spaces only or tabs only, then a printable ASCII character other than the hyphen, one space and exit 0, ending the line, each run with each character, is admitted",
+    files: END_RUNS.flatMap(([name]) => PRINTABLE_NOT_HYPHEN.map(character => ({ path: `docs/n30-${name}-c${hex4(character.codePointAt(0) ?? 0)}.md`, text: `Disabled-mode parity holds (docs/workbench/receipts/wb-c${name}-${hex4(character.codePointAt(0) ?? 0)}.md).\n` }))),
+    fixture: FIXTURE_LANDED,
+    receipts: Object.fromEntries(END_RUNS.flatMap(([name, run]) => PRINTABLE_NOT_HYPHEN.map(character => [`wb-c${name}-${hex4(character.codePointAt(0) ?? 0)}.md`, commandLine(`${FIXTURE_COMMAND}${run}${character} exit 0`)]))),
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N31",
+    label: "five VT, five FF, the run VT FF VT FF VT, five DEL, five SOH or five ESC controls between two words of a fold phrase, at each of the thirteen gaps but the one N21 and N24 hold, make no mention: none of them is folded to a space",
+    files: OTHER_GAPS.flatMap(({ name, words, gap }) => FIVE_CONTROLS.map(([run, controls]) => ({ path: `docs/n31-${name}-g${gap}-${run}.md`, text: `${phraseAt(words, gap, controls)}\n` }))),
+    expect: [],
+  },
   // named residuals: quiet rows
   { table: "RESIDUALS", id: "R1", label: "a paraphrase", files: doc("With the integration switched off, agents see no change in rf.\n"), expect: [] },
   { table: "RESIDUALS", id: "R2", label: "assembled at runtime", files: [{ path: "src/z.ts", text: 'const s = "disabled-" + kind + " parity";\n' }], expect: [] },
@@ -1705,6 +1873,9 @@ const ROWS: readonly Row[] = [
       // CRLF line breaks, so a carriage return alone, or four of them, stays the white-space line it is
       ...WHITE_SPACE.map(codePoint => ({ path: `docs/r8-${hex4(codePoint)}-alone.md`, text: `agents continue using\r\n${String.fromCodePoint(codePoint)}\r\nRF-CLI normally\r\n` })),
       ...WHITE_SPACE_RUNS.map(([name, line]) => ({ path: `docs/r8-${name}.md`, text: `agents continue using\r\n${line}\r\nRF-CLI normally\r\n` })),
+      // WB-MPUO CUT 2 (U4): each white-space code point one to sixty-four times over between the same two lines, and SPLIT_LINES between two words of each fold phrase, at each of its gaps
+      ...WHITE_SPACE_GRID.map(([name, line]) => ({ path: `docs/r8-grid-${name}.md`, text: `agents continue using\r\n${line}\r\nRF-CLI normally\r\n` })),
+      ...FOLD_PHRASES.flatMap(({ name, words }) => words.slice(1).flatMap((_, gap) => SPLIT_LINES.map(([line, between]) => ({ path: `docs/r8-${name}-g${gap}-${line}.md`, text: `${phraseAt(words, gap, `\r\n${between}\r\n`)}\r\n` })))),
     ],
     expect: [],
   },
@@ -1983,6 +2154,8 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "FALSIFIERS:F86:docs/f86-vt-1.md:1 mode-parity: unechoed-claim|docs/f86-vt-2.md:1 mode-parity: unechoed-claim|docs/f86-vt-3.md:1 mode-parity: unechoed-claim|docs/f86-vt-4.md:1 mode-parity: unechoed-claim|docs/f86-ff-1.md:1 mode-parity: unechoed-claim|docs/f86-ff-2.md:1 mode-parity: unechoed-claim|docs/f86-ff-3.md:1 mode-parity: unechoed-claim|docs/f86-ff-4.md:1 mode-parity: unechoed-claim|docs/f86-del-1.md:1 mode-parity: unechoed-claim|docs/f86-del-2.md:1 mode-parity: unechoed-claim|docs/f86-del-3.md:1 mode-parity: unechoed-claim|docs/f86-del-4.md:1 mode-parity: unechoed-claim|docs/f86-soh-1.md:1 mode-parity: unechoed-claim|docs/f86-soh-2.md:1 mode-parity: unechoed-claim|docs/f86-soh-3.md:1 mode-parity: unechoed-claim|docs/f86-soh-4.md:1 mode-parity: unechoed-claim|docs/f86-esc-1.md:1 mode-parity: unechoed-claim|docs/f86-esc-2.md:1 mode-parity: unechoed-claim|docs/f86-esc-3.md:1 mode-parity: unechoed-claim|docs/f86-esc-4.md:1 mode-parity: unechoed-claim|docs/f86-vt-ff.md:1 mode-parity: unechoed-claim|docs/f86-del-soh-esc.md:1 mode-parity: unechoed-claim|docs/f86-vt-ff-del-soh.md:1 mode-parity: unechoed-claim:89ce294a",
       "FALSIFIERS:F87:docs/f87-e.md:1 mode-parity: receipt-no-exit-0|docs/f87-x.md:1 mode-parity: receipt-no-exit-0|docs/f87-i.md:1 mode-parity: receipt-no-exit-0|docs/f87-t.md:1 mode-parity: receipt-no-exit-0:152d70a6",
       "FALSIFIERS:F88:docs/f88-tabs.md:1 mode-parity: receipt-no-exit-0|docs/f88-mix.md:1 mode-parity: receipt-no-exit-0|docs/f88-64sp.md:1 mode-parity: receipt-no-exit-0|docs/f88-arrow.md:1 mode-parity: receipt-no-exit-0:4783f50f",
+      "FALSIFIERS:F89:docs/f89-s.md:1 mode-parity: receipt-no-exit-0|docs/f89-t.md:1 mode-parity: receipt-no-exit-0|docs/f89-ss.md:1 mode-parity: receipt-no-exit-0|docs/f89-ts.md:1 mode-parity: receipt-no-exit-0|docs/f89-st.md:1 mode-parity: receipt-no-exit-0|docs/f89-tt.md:1 mode-parity: receipt-no-exit-0|docs/f89-sss.md:1 mode-parity: receipt-no-exit-0|docs/f89-tss.md:1 mode-parity: receipt-no-exit-0|docs/f89-sts.md:1 mode-parity: receipt-no-exit-0|docs/f89-tts.md:1 mode-parity: receipt-no-exit-0|docs/f89-sst.md:1 mode-parity: receipt-no-exit-0|docs/f89-tst.md:1 mode-parity: receipt-no-exit-0|docs/f89-stt.md:1 mode-parity: receipt-no-exit-0|docs/f89-ttt.md:1 mode-parity: receipt-no-exit-0|docs/f89-ssss.md:1 mode-parity: receipt-no-exit-0|docs/f89-tsss.md:1 mode-parity: receipt-no-exit-0|docs/f89-stss.md:1 mode-parity: receipt-no-exit-0|docs/f89-ttss.md:1 mode-parity: receipt-no-exit-0|docs/f89-ssts.md:1 mode-parity: receipt-no-exit-0|docs/f89-tsts.md:1 mode-parity: receipt-no-exit-0|docs/f89-stts.md:1 mode-parity: receipt-no-exit-0|docs/f89-ttts.md:1 mode-parity: receipt-no-exit-0|docs/f89-ssst.md:1 mode-parity: receipt-no-exit-0|docs/f89-tsst.md:1 mode-parity: receipt-no-exit-0|docs/f89-stst.md:1 mode-parity: receipt-no-exit-0|docs/f89-ttst.md:1 mode-parity: receipt-no-exit-0|docs/f89-sstt.md:1 mode-parity: receipt-no-exit-0|docs/f89-tstt.md:1 mode-parity: receipt-no-exit-0|docs/f89-sttt.md:1 mode-parity: receipt-no-exit-0|docs/f89-tttt.md:1 mode-parity: receipt-no-exit-0|docs/f89-s5.md:1 mode-parity: receipt-no-exit-0|docs/f89-s6.md:1 mode-parity: receipt-no-exit-0|docs/f89-s7.md:1 mode-parity: receipt-no-exit-0|docs/f89-s8.md:1 mode-parity: receipt-no-exit-0|docs/f89-s9.md:1 mode-parity: receipt-no-exit-0|docs/f89-s10.md:1 mode-parity: receipt-no-exit-0|docs/f89-s11.md:1 mode-parity: receipt-no-exit-0|docs/f89-s12.md:1 mode-parity: receipt-no-exit-0|docs/f89-s13.md:1 mode-parity: receipt-no-exit-0|docs/f89-s14.md:1 mode-parity: receipt-no-exit-0|docs/f89-s15.md:1 mode-parity: receipt-no-exit-0|docs/f89-s16.md:1 mode-parity: receipt-no-exit-0|docs/f89-s17.md:1 mode-parity: receipt-no-exit-0|docs/f89-s18.md:1 mode-parity: receipt-no-exit-0|docs/f89-s19.md:1 mode-parity: receipt-no-exit-0|docs/f89-s20.md:1 mode-parity: receipt-no-exit-0|docs/f89-s21.md:1 mode-parity: receipt-no-exit-0|docs/f89-s22.md:1 mode-parity: receipt-no-exit-0|docs/f89-s23.md:1 mode-parity: receipt-no-exit-0|docs/f89-s24.md:1 mode-parity: receipt-no-exit-0|docs/f89-s25.md:1 mode-parity: receipt-no-exit-0|docs/f89-s26.md:1 mode-parity: receipt-no-exit-0|docs/f89-s27.md:1 mode-parity: receipt-no-exit-0|docs/f89-s28.md:1 mode-parity: receipt-no-exit-0|docs/f89-s29.md:1 mode-parity: receipt-no-exit-0|docs/f89-s30.md:1 mode-parity: receipt-no-exit-0|docs/f89-s31.md:1 mode-parity: receipt-no-exit-0|docs/f89-s32.md:1 mode-parity: receipt-no-exit-0|docs/f89-s33.md:1 mode-parity: receipt-no-exit-0|docs/f89-s34.md:1 mode-parity: receipt-no-exit-0|docs/f89-s35.md:1 mode-parity: receipt-no-exit-0|docs/f89-s36.md:1 mode-parity: receipt-no-exit-0|docs/f89-s37.md:1 mode-parity: receipt-no-exit-0|docs/f89-s38.md:1 mode-parity: receipt-no-exit-0|docs/f89-s39.md:1 mode-parity: receipt-no-exit-0|docs/f89-s40.md:1 mode-parity: receipt-no-exit-0|docs/f89-s41.md:1 mode-parity: receipt-no-exit-0|docs/f89-s42.md:1 mode-parity: receipt-no-exit-0|docs/f89-s43.md:1 mode-parity: receipt-no-exit-0|docs/f89-s44.md:1 mode-parity: receipt-no-exit-0|docs/f89-s45.md:1 mode-parity: receipt-no-exit-0|docs/f89-s46.md:1 mode-parity: receipt-no-exit-0|docs/f89-s47.md:1 mode-parity: receipt-no-exit-0|docs/f89-s48.md:1 mode-parity: receipt-no-exit-0|docs/f89-s49.md:1 mode-parity: receipt-no-exit-0|docs/f89-s50.md:1 mode-parity: receipt-no-exit-0|docs/f89-s51.md:1 mode-parity: receipt-no-exit-0|docs/f89-s52.md:1 mode-parity: receipt-no-exit-0|docs/f89-s53.md:1 mode-parity: receipt-no-exit-0|docs/f89-s54.md:1 mode-parity: receipt-no-exit-0|docs/f89-s55.md:1 mode-parity: receipt-no-exit-0|docs/f89-s56.md:1 mode-parity: receipt-no-exit-0|docs/f89-s57.md:1 mode-parity: receipt-no-exit-0|docs/f89-s58.md:1 mode-parity: receipt-no-exit-0|docs/f89-s59.md:1 mode-parity: receipt-no-exit-0|docs/f89-s60.md:1 mode-parity: receipt-no-exit-0|docs/f89-s61.md:1 mode-parity: receipt-no-exit-0|docs/f89-s62.md:1 mode-parity: receipt-no-exit-0|docs/f89-s63.md:1 mode-parity: receipt-no-exit-0|docs/f89-s64.md:1 mode-parity: receipt-no-exit-0|docs/f89-t5.md:1 mode-parity: receipt-no-exit-0|docs/f89-t6.md:1 mode-parity: receipt-no-exit-0|docs/f89-t7.md:1 mode-parity: receipt-no-exit-0|docs/f89-t8.md:1 mode-parity: receipt-no-exit-0|docs/f89-t9.md:1 mode-parity: receipt-no-exit-0|docs/f89-t10.md:1 mode-parity: receipt-no-exit-0|docs/f89-t11.md:1 mode-parity: receipt-no-exit-0|docs/f89-t12.md:1 mode-parity: receipt-no-exit-0|docs/f89-t13.md:1 mode-parity: receipt-no-exit-0|docs/f89-t14.md:1 mode-parity: receipt-no-exit-0|docs/f89-t15.md:1 mode-parity: receipt-no-exit-0|docs/f89-t16.md:1 mode-parity: receipt-no-exit-0|docs/f89-t17.md:1 mode-parity: receipt-no-exit-0|docs/f89-t18.md:1 mode-parity: receipt-no-exit-0|docs/f89-t19.md:1 mode-parity: receipt-no-exit-0|docs/f89-t20.md:1 mode-parity: receipt-no-exit-0|docs/f89-t21.md:1 mode-parity: receipt-no-exit-0|docs/f89-t22.md:1 mode-parity: receipt-no-exit-0|docs/f89-t23.md:1 mode-parity: receipt-no-exit-0|docs/f89-t24.md:1 mode-parity: receipt-no-exit-0|docs/f89-t25.md:1 mode-parity: receipt-no-exit-0|docs/f89-t26.md:1 mode-parity: receipt-no-exit-0|docs/f89-t27.md:1 mode-parity: receipt-no-exit-0|docs/f89-t28.md:1 mode-parity: receipt-no-exit-0|docs/f89-t29.md:1 mode-parity: receipt-no-exit-0|docs/f89-t30.md:1 mode-parity: receipt-no-exit-0|docs/f89-t31.md:1 mode-parity: receipt-no-exit-0|docs/f89-t32.md:1 mode-parity: receipt-no-exit-0|docs/f89-t33.md:1 mode-parity: receipt-no-exit-0|docs/f89-t34.md:1 mode-parity: receipt-no-exit-0|docs/f89-t35.md:1 mode-parity: receipt-no-exit-0|docs/f89-t36.md:1 mode-parity: receipt-no-exit-0|docs/f89-t37.md:1 mode-parity: receipt-no-exit-0|docs/f89-t38.md:1 mode-parity: receipt-no-exit-0|docs/f89-t39.md:1 mode-parity: receipt-no-exit-0|docs/f89-t40.md:1 mode-parity: receipt-no-exit-0|docs/f89-t41.md:1 mode-parity: receipt-no-exit-0|docs/f89-t42.md:1 mode-parity: receipt-no-exit-0|docs/f89-t43.md:1 mode-parity: receipt-no-exit-0|docs/f89-t44.md:1 mode-parity: receipt-no-exit-0|docs/f89-t45.md:1 mode-parity: receipt-no-exit-0|docs/f89-t46.md:1 mode-parity: receipt-no-exit-0|docs/f89-t47.md:1 mode-parity: receipt-no-exit-0|docs/f89-t48.md:1 mode-parity: receipt-no-exit-0|docs/f89-t49.md:1 mode-parity: receipt-no-exit-0|docs/f89-t50.md:1 mode-parity: receipt-no-exit-0|docs/f89-t51.md:1 mode-parity: receipt-no-exit-0|docs/f89-t52.md:1 mode-parity: receipt-no-exit-0|docs/f89-t53.md:1 mode-parity: receipt-no-exit-0|docs/f89-t54.md:1 mode-parity: receipt-no-exit-0|docs/f89-t55.md:1 mode-parity: receipt-no-exit-0|docs/f89-t56.md:1 mode-parity: receipt-no-exit-0|docs/f89-t57.md:1 mode-parity: receipt-no-exit-0|docs/f89-t58.md:1 mode-parity: receipt-no-exit-0|docs/f89-t59.md:1 mode-parity: receipt-no-exit-0|docs/f89-t60.md:1 mode-parity: receipt-no-exit-0|docs/f89-t61.md:1 mode-parity: receipt-no-exit-0|docs/f89-t62.md:1 mode-parity: receipt-no-exit-0|docs/f89-t63.md:1 mode-parity: receipt-no-exit-0|docs/f89-t64.md:1 mode-parity: receipt-no-exit-0:2ef11e35",
+      "FALSIFIERS:F90:docs/f90-claim-g0-vt-1.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-vt-2.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-vt-3.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-vt-4.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-ff-1.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-ff-2.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-ff-3.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-ff-4.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-del-1.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-del-2.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-del-3.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-del-4.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-soh-1.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-soh-2.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-soh-3.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-soh-4.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-esc-1.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-esc-2.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-esc-3.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-esc-4.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-vt-ff.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-del-soh-esc.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-claim-g0-vt-ff-del-soh.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f90-mode-g1-vt-1.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-vt-2.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-vt-3.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-vt-4.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-ff-1.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-ff-2.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-ff-3.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-ff-4.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-del-1.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-del-2.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-del-3.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-del-4.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-soh-1.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-soh-2.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-soh-3.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-soh-4.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-esc-1.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-esc-2.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-esc-3.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-esc-4.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-vt-ff.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-del-soh-esc.md:1 mode-parity: unechoed-claim|docs/f90-mode-g1-vt-ff-del-soh.md:1 mode-parity: unechoed-claim|docs/f90-normally-g0-vt-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-vt-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-vt-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-vt-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-ff-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-ff-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-ff-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-ff-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-del-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-del-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-del-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-del-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-soh-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-soh-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-soh-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-soh-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-esc-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-esc-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-esc-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-esc-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-vt-ff.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-del-soh-esc.md:1 rf-normally: unechoed-claim|docs/f90-normally-g0-vt-ff-del-soh.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-ff-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-ff-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-ff-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-ff-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-del-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-del-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-del-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-del-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-soh-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-soh-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-soh-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-soh-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-esc-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-esc-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-esc-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-esc-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-ff.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-del-soh-esc.md:1 rf-normally: unechoed-claim|docs/f90-normally-g1-vt-ff-del-soh.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-ff-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-ff-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-ff-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-ff-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-del-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-del-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-del-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-del-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-soh-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-soh-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-soh-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-soh-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-esc-1.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-esc-2.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-esc-3.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-esc-4.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-ff.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-del-soh-esc.md:1 rf-normally: unechoed-claim|docs/f90-normally-g2-vt-ff-del-soh.md:1 rf-normally: unechoed-claim|docs/f90-neg05-g0-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g0-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g1-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g2-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g3-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g4-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g5-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g6-vt-ff-del-soh.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-ff-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-ff-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-ff-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-ff-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-del-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-del-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-del-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-del-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-soh-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-soh-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-soh-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-soh-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-esc-1.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-esc-2.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-esc-3.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-esc-4.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-ff.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-del-soh-esc.md:1 neg-05: unechoed-claim|docs/f90-neg05-g7-vt-ff-del-soh.md:1 neg-05: unechoed-claim:e3a99c12",
       "CONTROLS:N01::6c96b072",
       "CONTROLS:N02::1e8fd29a",
       "CONTROLS:N03::3a545c1b",
@@ -2008,9 +2181,12 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "CONTROLS:N23::f4796a90",
       "CONTROLS:N24::fb459400",
       "CONTROLS:N25::4585fe2d",
-      "CONTROLS:N26::5c6c86f6",
+      "CONTROLS:N26::57adb6c8",
       "CONTROLS:N27::37732f91",
       "CONTROLS:N28::ac74b64c",
+      "CONTROLS:N29::77c8b320",
+      "CONTROLS:N30::89482574",
+      "CONTROLS:N31::1c378026",
       "RESIDUALS:R1::1e0d90ec",
       "RESIDUALS:R2::e7707859",
       "RESIDUALS:R3::cf696a35",
@@ -2018,7 +2194,7 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "RESIDUALS:R5::e0cfe2ab",
       "RESIDUALS:R6::c1b665aa",
       "RESIDUALS:R7::788a8bd7",
-      "RESIDUALS:R8::bf867439",
+      "RESIDUALS:R8::d69b3008",
       "RESIDUALS:R9::486147cd",
       "RESIDUALS:R10::3ff23a66",
       "RESIDUALS:R11::153a8eec",
