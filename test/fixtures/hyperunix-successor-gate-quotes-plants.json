@@ -1,7 +1,7 @@
 {
  "bead": "wb-3uxh",
  "reader": "test/workbench-hyperunix-successor-gate-readers-census.test.ts",
- "anchor": "cut #3, after refusal #2 (gate-prep-16, O:2091), U3: the QUOTE_CONTROLS table was bound by id and finding count only, so a control re-pointed at an unrelated passing case left the census green; this fixture, outside the census, binds each control to its plant; cut #4, after refusal #3 (gate-prep-13, O:2120), U1 and U2: the census's QUOTES PLANTS reading binds every control listed here, and the QUOTES PLANTS controls it runs over planted mismatches are listed here too, each bound to its plant; cut #5, after refusal #4 (gate-prep-15, O:2139; R-B590's enumerate-the-resolvable form), U1 and U2: the census's two QUOTES readings are pinned at the first position, the last and every position, and the eight controls cut #5 adds are listed here too, each bound to its plant, the QUOTES PLANTS positions they shift with them",
+ "anchor": "cut #3, after refusal #2 (gate-prep-16, O:2091), U3: the QUOTE_CONTROLS table was bound by id and finding count only, so a control re-pointed at an unrelated passing case left the census green; this fixture, outside the census, binds each control to its plant; cut #4, after refusal #3 (gate-prep-13, O:2120), U1 and U2: the census's QUOTES PLANTS reading binds every control listed here, and the QUOTES PLANTS controls it runs over planted mismatches are listed here too, each bound to its plant; cut #5, after refusal #4 (gate-prep-15, O:2139; R-B590's enumerate-the-resolvable form), U1 and U2: the census's two QUOTES readings are pinned at the first position, the last and every position, and the eight controls cut #5 adds are listed here too, each bound to its plant, the QUOTES PLANTS positions they shift with them; wb-z79l (the R694 follow-up of wb-3uxh's landing-991 F1): the two QUOTES controls it adds after QC-RUN-INDENT-TWO, QC-RUN-NOCOLON and QC-RUN-NOCOLON-EVERY, are listed here too, each bound to its plant, the QUOTES PLANTS positions they shift with them",
  "format": "controls lists every QUOTES control of the census and then every QUOTES PLANTS control, in the census's order, each with its plant's lines: '- ' and a line of the helper's leading comment (test/helpers/hyperunix-successor-gate-readers.ts) the plant removes, or '+ ' and a line it writes there, each edit's common leading and trailing lines dropped; or '= ' and an entry it plants: its catalog, its label in double quotes, a colon, a space and the entry written with the block's identifier on one line, then ' / ', the second identifier, a colon, a space and the entry written with that identifier. A sweep's lines open with 'tags' and its tags' names (a printable ASCII character as itself, any other character as U+ and its four hex digits), then its plant's lines with <tag> where each tag is written. A QUOTES PLANTS control's lines are its re-pointings, each '~ ' and the id of the QUOTES control it re-points, then the lines of the plant it is re-pointed at (a sweep's for <tag>), then its rewrites of this fixture, each '# ' and the position it rewrites, counted from 1, then 'id ', the id written there and its lines (no 'id' line when the rewrite removes the entry). A QUOTES PLANTS control's lines end with its whole-fixture writes (cut #5), each '* ', the part it writes ('id': every entry's id; 'line': every line of every entry), a space and the mark written after it.",
  "controls": [
   {
@@ -135,6 +135,116 @@
    "plant": [
     "-  *   CALLEE_WRAPPERS \"a non-null assertion\": require!(\"./lg-x.js\")",
     "+  *  CALLEE_WRAPPERS \"a non-null assertion\": require!(\"./lg-x.js\")"
+   ]
+  },
+  {
+   "id": "QC-RUN-NOCOLON",
+   "plant": [
+    "-  *   NONVALUE_PLACES \"a namespace import\": import * as name from \"./lg-x.js\"; export const lgW = 1;",
+    "+  *   NONVALUE_PLACES \"a namespace import\" import * as name from \"./lg-x.js\"; export const lgW = 1;"
+   ]
+  },
+  {
+   "id": "QC-RUN-NOCOLON-EVERY",
+   "plant": [
+    "-  *   NONVALUE_PLACES \"a member name\": export const lgW = (m: Record<string, unknown>): unknown => m.name;",
+    "-  *   NONVALUE_PLACES \"an optional member name\": export const lgW = (m?: Record<string, unknown>): unknown => m?.name;",
+    "-  *   NONVALUE_PLACES \"the right of a qualified name\": export type LgT = typeof lgO.name;",
+    "-  *   NONVALUE_PLACES \"a property key\": export const lgW = { name: 1 };",
+    "-  *   NONVALUE_PLACES \"an object method key\": export const lgW = { name(): number { return 1; } };",
+    "-  *   NONVALUE_PLACES \"a get accessor key\": export const lgW = { get name(): number { return 1; } };",
+    "-  *   NONVALUE_PLACES \"a set accessor key\": export const lgW = { set name(lgV: number) { void lgV; } };",
+    "-  *   NONVALUE_PLACES \"a class field key\": export class LgC { name = 1; }",
+    "-  *   NONVALUE_PLACES \"a class method key\": export class LgC { name(): void {} }",
+    "-  *   NONVALUE_PLACES \"a property signature key\": export interface LgI { name: number; }",
+    "-  *   NONVALUE_PLACES \"a method signature key\": export interface LgI { name(): void; }",
+    "-  *   NONVALUE_PLACES \"an enum member\": export enum LgE { name = 1, }",
+    "-  *   NONVALUE_PLACES \"a binding key\": export const lgW = ({ name: lgV }: Record<string, unknown>): unknown => lgV;",
+    "-  *   NONVALUE_PLACES \"a type reference\": export type LgT = name;",
+    "-  *   NONVALUE_PLACES \"a type query\": export type LgT = typeof name;",
+    "-  *   NONVALUE_PLACES \"a break label\": name: for (;;) break name;",
+    "-  *   NONVALUE_PLACES \"a continue label\": name: for (;;) continue name;",
+    "-  *   NONVALUE_PLACES \"an import specifier\": import { name } from \"./lg-x.js\"; export const lgW = 1;",
+    "-  *   NONVALUE_PLACES \"an aliased import specifier\": import { name as lgV } from \"./lg-x.js\"; export const lgW = lgV;",
+    "-  *   NONVALUE_PLACES \"a default import\": import name from \"./lg-x.js\"; export const lgW = 1;",
+    "-  *   NONVALUE_PLACES \"a namespace import\": import * as name from \"./lg-x.js\"; export const lgW = 1;",
+    "-  *   NONVALUE_PLACES \"a re-exported name\": export { name } from \"./lg-x.js\";",
+    "-  *   NONVALUE_PLACES \"an aliased re-exported name\": export { name as lgV } from \"./lg-x.js\";",
+    "-  *   NONVALUE_PLACES \"the right of a qualified name in a type reference\": export type LgT = lgO.name;",
+    "-  *   NONVALUE_PLACES \"a class get accessor key\": export class LgC { get name(): number { return 1; } }",
+    "-  *   NONVALUE_PLACES \"a class set accessor key\": export class LgC { set name(lgV: number) { void lgV; } }",
+    "-  *   NONVALUE_PLACES \"an interface get accessor key\": export interface LgI { get name(): number; }",
+    "-  *   NONVALUE_PLACES \"an exported alias\": const lgV = 1; export { lgV as name };",
+    "-  *   NONVALUE_PLACES \"a declaration's binding key\": const { name: lgV } = lgO; void lgV;",
+    "-  *   NONVALUE_PLACES \"a call argument's property key\": export const lgW = String({ name: 1 });",
+    "-  *   NONVALUE_PLACES \"a nested property key\": export const lgW = { lgO: { name: 1 } };",
+    "-  *   NONVALUE_PLACES \"a type literal property signature key\": export type LgT = { name: number };",
+    "-  *   NONVALUE_PLACES \"a type literal method signature key\": export type LgT = { name(): void };",
+    "-  *   NONVALUE_PLACES \"a type literal get accessor key\": export type LgT = { get name(): number };",
+    "-  *   NONVALUE_PLACES \"an interface set accessor key\": export interface LgI { set name(lgV: number); }",
+    "-  *   NONVALUE_PLACES \"a type literal set accessor key\": export type LgT = { set name(lgV: number) };",
+    "-  *   NONVALUE_PLACES \"a class expression field key\": export const LgC = class { name = 1; };",
+    "-  *   NONVALUE_PLACES \"a class expression method key\": export const LgC = class { name(): void {} };",
+    "-  *   NONVALUE_PLACES \"an enum member with no initializer\": export enum LgE { name, }",
+    "-  *   NONVALUE_PLACES \"a parameter's type reference\": export const lgW = (lgP: name): unknown => lgP;",
+    "-  *   NONVALUE_PLACES \"a block label\": name: { break name; }",
+    "-  *   JSX_PLACES \"a JSX attribute's name\": export const lgW = <lgX name={1} />;",
+    "-  *   JSX_PLACES \"a JSX attribute's value\": export const lgW = <lgX lgK={name} />;",
+    "-  *   JSX_PLACES \"a JSX attribute's name with no value\": export const lgW = <lgX name />;",
+    "-  *   CALLEE_WRAPPERS \"a pair of parentheses\": (require)(\"./lg-x.js\")",
+    "-  *   CALLEE_WRAPPERS \"an as assertion\": (require as (lgS: string) => unknown)(\"./lg-x.js\")",
+    "-  *   CALLEE_WRAPPERS \"a satisfies expression\": (require satisfies (lgS: string) => unknown)(\"./lg-x.js\")",
+    "-  *   CALLEE_WRAPPERS \"a <T> assertion\": (<(lgS: string) => unknown>require)(\"./lg-x.js\")",
+    "-  *   CALLEE_WRAPPERS \"a non-null assertion\": require!(\"./lg-x.js\")",
+    "+  *   NONVALUE_PLACES \"a member name\" export const lgW = (m: Record<string, unknown>): unknown => m.name;",
+    "+  *   NONVALUE_PLACES \"an optional member name\" export const lgW = (m?: Record<string, unknown>): unknown => m?.name;",
+    "+  *   NONVALUE_PLACES \"the right of a qualified name\" export type LgT = typeof lgO.name;",
+    "+  *   NONVALUE_PLACES \"a property key\" export const lgW = { name: 1 };",
+    "+  *   NONVALUE_PLACES \"an object method key\" export const lgW = { name(): number { return 1; } };",
+    "+  *   NONVALUE_PLACES \"a get accessor key\" export const lgW = { get name(): number { return 1; } };",
+    "+  *   NONVALUE_PLACES \"a set accessor key\" export const lgW = { set name(lgV: number) { void lgV; } };",
+    "+  *   NONVALUE_PLACES \"a class field key\" export class LgC { name = 1; }",
+    "+  *   NONVALUE_PLACES \"a class method key\" export class LgC { name(): void {} }",
+    "+  *   NONVALUE_PLACES \"a property signature key\" export interface LgI { name: number; }",
+    "+  *   NONVALUE_PLACES \"a method signature key\" export interface LgI { name(): void; }",
+    "+  *   NONVALUE_PLACES \"an enum member\" export enum LgE { name = 1, }",
+    "+  *   NONVALUE_PLACES \"a binding key\" export const lgW = ({ name: lgV }: Record<string, unknown>): unknown => lgV;",
+    "+  *   NONVALUE_PLACES \"a type reference\" export type LgT = name;",
+    "+  *   NONVALUE_PLACES \"a type query\" export type LgT = typeof name;",
+    "+  *   NONVALUE_PLACES \"a break label\" name: for (;;) break name;",
+    "+  *   NONVALUE_PLACES \"a continue label\" name: for (;;) continue name;",
+    "+  *   NONVALUE_PLACES \"an import specifier\" import { name } from \"./lg-x.js\"; export const lgW = 1;",
+    "+  *   NONVALUE_PLACES \"an aliased import specifier\" import { name as lgV } from \"./lg-x.js\"; export const lgW = lgV;",
+    "+  *   NONVALUE_PLACES \"a default import\" import name from \"./lg-x.js\"; export const lgW = 1;",
+    "+  *   NONVALUE_PLACES \"a namespace import\" import * as name from \"./lg-x.js\"; export const lgW = 1;",
+    "+  *   NONVALUE_PLACES \"a re-exported name\" export { name } from \"./lg-x.js\";",
+    "+  *   NONVALUE_PLACES \"an aliased re-exported name\" export { name as lgV } from \"./lg-x.js\";",
+    "+  *   NONVALUE_PLACES \"the right of a qualified name in a type reference\" export type LgT = lgO.name;",
+    "+  *   NONVALUE_PLACES \"a class get accessor key\" export class LgC { get name(): number { return 1; } }",
+    "+  *   NONVALUE_PLACES \"a class set accessor key\" export class LgC { set name(lgV: number) { void lgV; } }",
+    "+  *   NONVALUE_PLACES \"an interface get accessor key\" export interface LgI { get name(): number; }",
+    "+  *   NONVALUE_PLACES \"an exported alias\" const lgV = 1; export { lgV as name };",
+    "+  *   NONVALUE_PLACES \"a declaration's binding key\" const { name: lgV } = lgO; void lgV;",
+    "+  *   NONVALUE_PLACES \"a call argument's property key\" export const lgW = String({ name: 1 });",
+    "+  *   NONVALUE_PLACES \"a nested property key\" export const lgW = { lgO: { name: 1 } };",
+    "+  *   NONVALUE_PLACES \"a type literal property signature key\" export type LgT = { name: number };",
+    "+  *   NONVALUE_PLACES \"a type literal method signature key\" export type LgT = { name(): void };",
+    "+  *   NONVALUE_PLACES \"a type literal get accessor key\" export type LgT = { get name(): number };",
+    "+  *   NONVALUE_PLACES \"an interface set accessor key\" export interface LgI { set name(lgV: number); }",
+    "+  *   NONVALUE_PLACES \"a type literal set accessor key\" export type LgT = { set name(lgV: number) };",
+    "+  *   NONVALUE_PLACES \"a class expression field key\" export const LgC = class { name = 1; };",
+    "+  *   NONVALUE_PLACES \"a class expression method key\" export const LgC = class { name(): void {} };",
+    "+  *   NONVALUE_PLACES \"an enum member with no initializer\" export enum LgE { name, }",
+    "+  *   NONVALUE_PLACES \"a parameter's type reference\" export const lgW = (lgP: name): unknown => lgP;",
+    "+  *   NONVALUE_PLACES \"a block label\" name: { break name; }",
+    "+  *   JSX_PLACES \"a JSX attribute's name\" export const lgW = <lgX name={1} />;",
+    "+  *   JSX_PLACES \"a JSX attribute's value\" export const lgW = <lgX lgK={name} />;",
+    "+  *   JSX_PLACES \"a JSX attribute's name with no value\" export const lgW = <lgX name />;",
+    "+  *   CALLEE_WRAPPERS \"a pair of parentheses\" (require)(\"./lg-x.js\")",
+    "+  *   CALLEE_WRAPPERS \"an as assertion\" (require as (lgS: string) => unknown)(\"./lg-x.js\")",
+    "+  *   CALLEE_WRAPPERS \"a satisfies expression\" (require satisfies (lgS: string) => unknown)(\"./lg-x.js\")",
+    "+  *   CALLEE_WRAPPERS \"a <T> assertion\" (<(lgS: string) => unknown>require)(\"./lg-x.js\")",
+    "+  *   CALLEE_WRAPPERS \"a non-null assertion\" require!(\"./lg-x.js\")"
    ]
   },
   {
@@ -591,13 +701,13 @@
   {
    "id": "QP-TEMPLATE-QP",
    "plant": [
-    "# 43",
+    "# 45",
     "id QP-CHAR-FOR-SPACE",
     "tags U+0009 U+000B U+000C U+000D U+00A0 U+1680 U+2000 U+2001 U+2002 U+2003 U+2004 U+2005 U+2006 U+2007 U+2008 U+2009 U+200A U+2028 U+2029 U+202F U+205F U+3000 U+FEFF ! \" # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ \\ ] ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~",
     "~ QC-CASE",
     "-  *   NONVALUE_PLACES \"a type query\": export type LgT = typeof name;",
     "+  *   NONVALUE_PLACES \"a type query\": export type lgT =<tag> typeof name;",
-    "# 44",
+    "# 46",
     "id QP-CHAR-AFTER",
     "tags U+0009 U+000B U+000C U+000D U+0020 U+00A0 U+1680 U+2000 U+2001 U+2002 U+2003 U+2004 U+2005 U+2006 U+2007 U+2008 U+2009 U+200A U+2028 U+2029 U+202F U+205F U+3000 U+FEFF ! \" # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ \\ ] ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~",
     "~ QC-CASE",
@@ -608,7 +718,7 @@
   {
    "id": "QP-QP",
    "plant": [
-    "# 41",
+    "# 43",
     "id QP-CASE",
     "~ QC-CASE",
     "-  *   NONVALUE_PLACES \"a type query\": export type LgT = typeof name;",
@@ -618,9 +728,9 @@
   {
    "id": "QP-MARKS",
    "plant": [
-    "# 65",
+    "# 67",
     "id QP-QP",
-    "# 42",
+    "# 44",
     "id QP-CASES",
     "~ QC-CASES",
     "-  *   NONVALUE_PLACES \"a type query\": export type LgT = typeof name;",
@@ -692,7 +802,7 @@
   {
    "id": "QP-IDS-EXTRA",
    "plant": [
-    "# 75",
+    "# 77",
     "id QC-PLANT",
     "= NONVALUE_PLACES \"a type literal set accessor key\": export type LgT = { name: number }; / require: export type LgT = { require: number };"
    ]
@@ -700,7 +810,7 @@
   {
    "id": "QP-IDS-DROP",
    "plant": [
-    "# 74"
+    "# 76"
    ]
   }
  ]
