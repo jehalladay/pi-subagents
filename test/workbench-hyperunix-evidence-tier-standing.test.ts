@@ -64,11 +64,14 @@
  * that cut, leaving the acceptance reading unchanged; and wb-ant2, the follow-up landing 1000's gate routed (its remainder: such a
  * write at a middle top-level statement past its module's second, the penultimate included, which that gate's members
  * G17-B-IDX2PLUS-NONDECODER and G17-B-PENULTIMATE and that cut's seat page W-RUN4-MID-IDX3PLUS leave unread), pins each HOLDER
- * written by &&= and by = in an unbroken run of each of the 5 DEEP_RUNS after each top-level statement of its module but its
- * first and its last, so at each of its middle positions past its second, each planted text judged once and its place and each
- * write's operator, run of blocks, run of bare block statements, context and top-level position read by the parser from the one
- * text that judgment read, each such place once, run against the parser's count of the installed module, so each of the two in
- * each of the DEEP_RUNS is pinned at every top-level position of its module, leaving the acceptance reading unchanged): each case
+ * written by &&= and by = in an unbroken run of each of the 5 DEEP_RUNS after each top-level statement of its module but its first
+ * and its last, so at each of its middle positions past its second, each planted text judged by one call that takes the text and
+ * no statement (judgedParse()), its verdict that judgment's departures and its place and each write's operator, run of blocks, run
+ * of bare block statements, context and top-level position read by the parser from the parse that judgment read, each such place
+ * once, run against the parser's count of the installed module, so each of the two in each of the DEEP_RUNS is pinned at every
+ * top-level position of its module, its cut #2, the respin of its refusal #1 (U1), taking that parse from the judgment itself and
+ * holding each verdict to its own text against one judged on a text built from its module and statement or carried over from an
+ * earlier control of that module and statement (THE VERDICT ITS OWN), leaving the acceptance reading unchanged): each case
  * claims exactly the cells and
  * pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
@@ -615,8 +618,10 @@
  * top-level statement (misread, no write read), and its place reading on a text planting another statement before its statement
  * (none, no write read), DEEP RUNS AT EVERY MIDDLE POSITION on a callee four bare block statements deep after the decoder
  * module's penultimate top-level statement (misread, no write read), its position reading on a write so deep after the module's
- * last top-level statement (its last), its place reading on a text planting another statement before its statement (none) and
- * its parse release (a planted text's parse released, the installed module's kept), and the class and eval
+ * last top-level statement (its last), its place reading on a text planting another statement before its statement (none),
+ * its parse release (a planted text's parse released, the installed module's kept) and its verdict reading (cut #2: the &&=
+ * statement so deep after that penultimate statement, in a text spelling eval after the module's last statement as well, misread
+ * at its own place, beside the binding the same text without eval reads), and the class and eval
  * statements on the class in its own module and on eval spelled as a string), firstFrame()
  * (a first frame-form line whose read location is another copy's URL or a file under
  * SDK_DIST outside the pinned modules reads as that URL, one whose read location is a pinned module's own URL by its path from
@@ -4065,21 +4070,32 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // (one so at the penultimate top-level statement) and that cut's seat page W-RUN4-MID-IDX3PLUS (a compound write so past the
     // third) leave unread, which that gate replayed at 0 failed | 11 passed on the census before this sweep. With DEEP RUNS' plants
     // at each module's start and end and DEEP RUNS AT A MIDDLE POSITION's at its second, each of the two in each of the DEEP_RUNS
-    // is so pinned at every top-level position of its HOLDER's module. THE SAME TEXT: each control's text is planted once and
-    // judged by acceptanceOf() with that text in its module's place, and its place and its writes are read from that text
-    // (sameParseReading(), which takes the text's parse from parsedModule()'s memo, where the judgment left it, so each control's
-    // text is parsed once, and then releases it as readingWith() releases its copies: a cost measure, a planted text's parse
-    // released and the installed module's kept, as the judges below read); the reading has deepMiddleReading()'s form, and the
-    // two read DEEP RUNS AT A MIDDLE POSITION's 80 plants and P-DEEP4-MID2 alike. THE PLACES HELD: the 2620
+    // is so pinned at every top-level position of its HOLDER's module. THE SAME TEXT (wb-ant2 cut #2, refusal #1 U1): each
+    // control's text is planted once and judged by one judgedParse() call, which takes that text and no statement: acceptanceOf()
+    // judges the three module texts with it in its module's place, and the call returns that judgment's departures with the parse
+    // the judgment read, taken from parsedModule()'s memo where the judgment left it (none when it parsed no such text) and then
+    // released as readingWith() releases its copies (a cost measure: each control's text parsed once, a planted text's parse
+    // released and the installed module's kept, as the judges below read). sameParseReading() reads its verdict from those
+    // departures and its place and its writes from that parse alone (unjudged when there is none): an edit handing the judgment
+    // a text that holds the statement at another place or none moves the readings with it, and THE PLACES HELD reds, as for one
+    // that parsed no such text; its verdict is its text's (THE VERDICT ITS OWN, below); the reading has deepMiddleReading()'s form,
+    // and the two read DEEP RUNS AT A MIDDLE POSITION's 80 plants and P-DEEP4-MID2 alike. THE PLACES HELD: the 2620
     // readings are exactly one for each HOLDER, each of &&= and = (the operators the NESTED BINDINGS and NESTED PLAIN BINDINGS
     // sweeps write by, read by the parser), each of the DEEP_RUNS and each place of its module past its second but its last,
     // those places run against the parser's count of the installed module (SDK_BYTES holds its text), not against the sweep's
     // own range, so a plant dropped, doubled, moved, or written by another operator or in another run reds here.
+    const judgedParse = (module: ConsultedModule, planted: string): readonly [readonly string[], ts.SourceFile | undefined] => {
+      const judgedTexts: ModuleTexts = {...texts, [module]: planted};
+      const departures = departing(acceptanceOf(judgedTexts), acceptance);
+      const key = `${module}\n${judgedTexts[module]}`;
+      const file = parsedModules.get(key);
+      if (judgedTexts[module] !== texts[module]) parsedModules.delete(key);
+      return [departures, file];
+    };
     const sameParseReading = (module: ConsultedModule, name: string, planted: string, statement: string): string => {
       const member = name.slice(name.indexOf('.') + 1);
-      const departures = departing(acceptanceOf({...texts, [module]: planted}), acceptance);
-      const file = parsedModule(module, planted);
-      if (planted !== texts[module]) parsedModules.delete(`${module}\n${planted}`);
+      const [departures, file] = judgedParse(module, planted);
+      if (file === undefined) return `${module} ${name} unjudged`;
       const place = file.statements.findIndex(top => top.getText() === statement);
       const at = file.statements[place];
       const verdict = isDeepStrictEqual(departures, [`${name}: spelled outside a call (binding)`]) ? 'binding' : 'misread';
@@ -4123,6 +4139,23 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       everyControl(decoderLast - 1, `void 0;\n${inBlocks(4, nestedStatement)}`), releasedPlant, keptInstalled])
       .toStrictEqual([`protocol/decoder.js checkStream misread at ${decoderLast}`,
       `protocol/decoder.js checkStream binding at ${decoderLast + 1} &&= 4 4 nested last`, 'protocol/decoder.js checkStream binding at -1', true, true]);
+    // THE VERDICT ITS OWN (wb-ant2 cut #2, refusal #1 U1): a control's verdict is the departures of the judgment of its own text.
+    // The &&= statement four bare block statements deep, planted after the decoder module's penultimate top-level statement in a
+    // text that also spells eval after the module's last statement (EVAL_STATEMENTS' callee form), departs in both (the premise,
+    // read from judgedParse()) and so reads misread, its place and its write read from that text as the sweep's control on the
+    // text without eval reads them (binding): a verdict judged on another text built from a control's module and statement (that
+    // statement after the module's first top-level statement, after its last, or before its first, as refusal #1's gate members
+    // G29-S1-JUDGE-MIDDLEOF, G29-S3-JUDGE-END and G29-S4-JUDGE-START judge) or carried over from an earlier control of that module
+    // and statement (as its G29-S2-JUDGE-ONCE-PER-STATEMENT carries it) reads binding here, whatever text its readings come from.
+    // A verdict carried over under any key telling two texts of one module and statement apart (length, say) is NOT CLAIMED by this census.
+    const ownStatement = inBlocks(4, nestedStatement).replace('<name>', () => 'checkStream');
+    const ownPlanted = afterStatement('protocol/decoder.js', decoderLast - 1, ownStatement);
+    const ownText = `${ownPlanted}\n${EVAL_STATEMENTS.find(([form]) => form === 'callee')?.[1] ?? ''}`;
+    expect([judgedParse('protocol/decoder.js', ownText)[0], sameParseReading('protocol/decoder.js', 'checkStream', ownText, ownStatement),
+      sameParseReading('protocol/decoder.js', 'checkStream', ownPlanted, ownStatement)]).toStrictEqual([
+      ['checkStream: spelled outside a call (binding)', 'protocol/decoder.js: eval (callee)'],
+      `protocol/decoder.js checkStream misread at ${decoderLast} &&= 4 4 nested middle`,
+      `protocol/decoder.js checkStream binding at ${decoderLast} &&= 4 4 nested middle`]);
     // The HOLDERS' class spelled in each of its 3 forms (an identifier, then the 2 CLASS_FORMS) at the end of each other consulted
     // module departs naming exactly that form, and eval in each of the 2 EVAL_STATEMENTS forms at the end of each of the three modules
     // likewise (6 controls each).
