@@ -1,0 +1,99 @@
+{
+  "schema": "workbench.forge-transport-probe/v1",
+  "bead": "wb-muip",
+  "requirement": "EAT-R081",
+  "utc": "2026-11-06T09:00:45.010Z",
+  "probe": {
+    "script": "qa/workbench/forge-transport-probe.mjs",
+    "scriptSha256": "1f30d7c9844a5f4ae2b99e1f5f7691c30e941e0ec8489b8a79e9b066484cdb39"
+  },
+  "producer": {
+    "name": "forge",
+    "version": "0.2.1",
+    "revision": "f7d4a6a8ae17",
+    "variant": "python-reference",
+    "executableSha256": "190a9873d07b6b4fef900ef6ddab5fe33dc48ae6bb35900d066b4ef1f8b32534"
+  },
+  "exitCodeContract": {
+    "argv": [
+      "forge",
+      "codes",
+      "--json"
+    ],
+    "processExit": 0,
+    "exitCodes": {
+      "error": 1,
+      "no_verdict": 69,
+      "partial": 3,
+      "success": 0,
+      "usage": 2
+    }
+  },
+  "transcripts": [
+    {
+      "id": "pass-control",
+      "source": "native-transcript",
+      "stepCommand": "node -e \"process.exit(0)\"",
+      "argv": [
+        "forge",
+        "build",
+        "--json"
+      ],
+      "processExit": 0,
+      "envelopeStatus": "success",
+      "envelopeExitCode": null,
+      "gateVerdict": "PASS",
+      "operationId": "op-3b95ab9c0c66487cb07a4ce3a5b6bd9b",
+      "producer": {
+        "name": "forge",
+        "version": "0.2.1",
+        "revision": "f7d4a6a8ae17",
+        "variant": "python-reference"
+      }
+    },
+    {
+      "id": "fail",
+      "source": "native-transcript",
+      "stepCommand": "node -e \"process.exit(1)\"",
+      "argv": [
+        "forge",
+        "build",
+        "--json"
+      ],
+      "processExit": 1,
+      "envelopeStatus": "error",
+      "envelopeExitCode": 1,
+      "gateVerdict": "FAIL",
+      "operationId": "op-81ce935368ee4b608f831b602f093d5d",
+      "producer": {
+        "name": "forge",
+        "version": "0.2.1",
+        "revision": "f7d4a6a8ae17",
+        "variant": "python-reference"
+      }
+    },
+    {
+      "id": "fail-keep-going",
+      "source": "native-transcript",
+      "stepCommand": "node -e \"process.exit(1)\"",
+      "argv": [
+        "forge",
+        "build",
+        "--keep-going",
+        "--no-replay",
+        "--json"
+      ],
+      "processExit": 1,
+      "envelopeStatus": "error",
+      "envelopeExitCode": 1,
+      "gateVerdict": "FAIL",
+      "operationId": "op-53a56227b10446b28534c7fa4c534dbe",
+      "producer": {
+        "name": "forge",
+        "version": "0.2.1",
+        "revision": "f7d4a6a8ae17",
+        "variant": "python-reference"
+      }
+    }
+  ]
+}
