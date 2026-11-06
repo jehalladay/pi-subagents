@@ -223,6 +223,94 @@
  * equal this census's FORMS rows, word for word; and every piece of every claim the helper's header makes is the quote of one
  * MEMBERS row whose pins read what the piece says (refusal #1 on this bead, U1: the header claimed more than the rows pinned).
  *
+ * wb-euc6 (the R694 follow-up of wb-tz2.3's landing-988 PASS-WITH-FINDING, F1, gate cmd_9066aafa0c49; CONFIRMED there by PREP's
+ * gate twin GP5-CH1c) found setupFiles reading every property named setupFiles in the vouched config, test.sequence.setupFiles
+ * among them: the census guard requires sequence: { setupFiles: "list" } of two or more setup files, so that "list" read as a
+ * setup file naming no file, a fail-closed false red of any second setup file. Cut #1 (2cdbaee2) added isSetupOrder (through
+ * holderOf), which setupFiles consults at each setupFiles key, and gave "MEMBERS CHANNEL:setup file, piece 1" pins 5-12. Refusal
+ * #1 on wb-euc6 (gate-prep-19, O:2179; rung 1, claims wider than pins) found cut #1's words claiming the sequence and test values
+ * written through parentheses and assertions and a test key written as a string, where piece 1 planted a bare object, one as const
+ * and a name-keyed test: U1 the sequence value (P1-PAREN-BLIND, P2-AS-ONLY-ONE-LEVEL, P3-SATISFIES-BLIND, P4-NONNULL-BLIND,
+ * P5-ANGLE-BLIND), U2 the test value (P6-TEST-LEVEL-UNWRAPPED-ONLY) and U3 the string-keyed test (P7-TEST-NAME-KEY-ONLY), each
+ * keeping this census green. Cut #2 (ff98f8df) planted those forms (pins 13-33). Refusal #2 on wb-euc6 (gate-prep-30, O:2191;
+ * member level, the class guard R-B628 bound on these wrapper words) found entries of cut #2's lists naming wider forms than their
+ * plants: U1 'an as assertion', 'a satisfies expression' and 'a <T> assertion' named every asserted type where each plant asserts
+ * Record<string, unknown> (GP30-AS-TYPEREF-ONLY, GP30-SAT-TYPEREF-ONLY, GP30-ANGLE-TYPEREF-ONLY, GP30-ASSERT-TYPEREF-ONLY); U2 the
+ * loud controls' 'another key' where the plants key lgO by its name (GP30-CHILD-STRINGKEY-AS-ORDER, GP30-CONFIG-CHILD-STRINGKEY);
+ * U3 the key and value spellings where the plants write escape-free keys and double-quoted values (GP30-KEY-RAW-TEXT,
+ * GP30-ORDER-VALUE-DQ-ONLY, GP30-LIST-VALUE-SQ-SKIP); each keeping this census green. Cut #3 (b0dc02b9) planted those forms (pins
+ * 34-64). Refusal #3 on wb-euc6 (gate-prep-5, O:2198; rung 1 of a new claim set, the class guard R-B634 bound on these setup-file
+ * words) found the Pins 5-9 entries' setup-file nouns, 'two setup files' (pin 5) and 'one file' (pins 8 and 9), naming every
+ * spelling and path of the test object's setupFiles where every piece 1 order plant writes double-quoted "./helpers/..." array
+ * elements: U1 pins 8-9 and U2 pin 5 (GP5-ORDER-HELPERS-SETUPFILES-ONLY, GP5-ORDER-ARRAY-SETUPFILES-ONLY,
+ * GP5-ORDER-DQ-SETUPFILES-ONLY), each keeping this census green. Read here, in cut #4, as claims equal to pins, with no reader
+ * code changed since cut #1: each entry below quotes its plant's config text whole, or quotes orderPlant's text and names the one
+ * place its pins write otherwise, V standing for the value's own object literal; each plant below is the config
+ * test/lg-setup.config.ts unless its entry says the root; and setupFiles passes over the order in each config text piece 1 plants
+ * with one. Pins 5-9: export default { test: { setupFiles: ["./helpers/census-guard.ts", "./helpers/lg-a.ts"], sequence: {
+ * setupFiles: "list" } } }; (ORDERED_SETUP), read as test/helpers/census-guard.ts and test/helpers/lg-a.ts (pin 5); its setup-file
+ * findings with test/helpers/lg-a.ts planted as the line export const lgA = 1; read none (pin 6), and with test/helpers/lg-a.ts
+ * planted as the two lines import { it } from "vitest"; and export const lgIt = it; read that file's one carrier finding alone
+ * (pin 7), with test/helpers/census-guard.ts read from the disk in both; export default { test: { setupFiles:
+ * ["./helpers/census-guard.ts"], sequence: { setupFiles: "parallel" } } };, read as test/helpers/census-guard.ts (pin 8); and
+ * export default { test: { setupFiles: ["./helpers/lg-a.ts"], "sequence": { "setupFiles": "list" } as const } };, read as
+ * test/helpers/lg-a.ts (pin 9). Pins 13-32, 34-49 and 56-64 are orderPlant's text, export default { test: { setupFiles:
+ * ["./helpers/<file>"], sequence: { setupFiles: "list" } } };, <file> the pin's own setup file - lg-sequence-<slug>.ts (pins
+ * 13-19, 34-39), lg-test-<slug>.ts (pins 20-26, 40-45), lg-<key>-<slug>.ts (pins 27-32, 56-64) and lg-order-<slug>.ts (pins
+ * 46-49), <slug> its catalog entry's slug - with exactly one of its places written otherwise: the test key, the sequence key and
+ * the order's own setupFiles key (each written as its name), the test and sequence values (each a bare object literal) and the
+ * order (the double-quoted "list"); each reads test/helpers/<file> alone. The sequence value written as each of the seven
+ * ORDER_WRAPPERS texts - (V), V as Record<string, unknown>, V as const, V satisfies Record<string, unknown>, V!, <Record<string,
+ * unknown>>V and (V) as const (pins 13-19); the test value written as each of them (pins 20-26); each of the three keys written as
+ * "<key>" and as '<key>' (ORDER_KEY_STRINGS, pins 27-32); the sequence value written as each of the six ORDER_TYPED_WRAPPERS texts
+ * - V as { [key: string]: unknown }, V as object, V satisfies { [key: string]: unknown }, V satisfies object, <{ [key: string]:
+ * unknown }>V and <object>V (pins 34-39); the test value written as each of them (pins 40-45); the order written as each
+ * ORDER_SPELLINGS text - 'list', `list`, 'parallel' and `parallel` (pins 46-49); and each of the three keys written with its first
+ * letter as a \u escape of four hex digits - \u0074est, \u0073equence and \u0073etupFiles - as a name, as a double-quoted and as a
+ * single-quoted string (ORDER_KEY_ESCAPES, pins 56-64). Pin 33 (DEFINED_ORDER): import { defineConfig } from "vitest/config"; then
+ * export default defineConfig({ test: { sequence: { shuffle: false, setupFiles: "list" }, setupFiles:
+ * ["./helpers/lg-defined-order.ts"] } });, read as test/helpers/lg-defined-order.ts - the order as defineConfig's argument holds
+ * it, the sequence key before the test object's setupFiles key and shuffle before the order. Pins 65-67 (cut #4, refusal #3 U1 and
+ * U2) write the test object's setupFiles before the order otherwise than as the double-quoted "./helpers/..." array elements of
+ * every other order plant: export default { test: { setupFiles: ["./test/helpers/census-guard.ts",
+ * "./test/helpers/lg-root-order.ts"], sequence: { setupFiles: "list" } } }; (ROOT_ORDERED_SETUP), planted as the config
+ * lg-setup.config.ts at the root, read as test/helpers/census-guard.ts and test/helpers/lg-root-order.ts (pin 65); export default
+ * { test: { setupFiles: "./helpers/lg-setup-string.ts", sequence: { setupFiles: "list" } } }; (STRING_ORDERED_SETUP), read as
+ * test/helpers/lg-setup-string.ts (pin 66); and export default { test: { setupFiles: ['./helpers/lg-setup-single.ts'], sequence: {
+ * setupFiles: "list" } } }; (SINGLE_ORDERED_SETUP), read as test/helpers/lg-setup-single.ts (pin 67). Three loud controls are
+ * still read as setup files: export default { test: { setupFiles: "list" } };, read as test/list, its "list" written "list" (pin
+ * 10), 'list' and `list` (LIST_SPELLINGS, pins 54-55) - the key's place draws the line, the value "list" does not; export default
+ * { test: { setupFiles: ["./helpers/lg-a.ts"], lgO: { setupFiles: ["./helpers/lg-b.ts"] } } };, read as test/helpers/lg-a.ts and
+ * test/helpers/lg-b.ts (pin 11), and childPlant's text, the same with the key lgO written as "lgO" and as 'lgO' and lg-b.ts
+ * written as lg-child-double.ts and as lg-child-single.ts, each read as test/helpers/lg-a.ts and its own
+ * test/helpers/lg-child-<slug>.ts (pins 50-51); and export default { test: { setupFiles: ["./helpers/lg-a.ts"] }, lgO: { sequence:
+ * { setupFiles: ["./helpers/lg-b.ts"] } } };, read as test/helpers/lg-a.ts and test/helpers/lg-b.ts (pin 12), and
+ * configChildPlant's text, the same with lgO written as "lgO" and as 'lgO' and lg-b.ts written as lg-config-child-double.ts and as
+ * lg-config-child-single.ts, each read as test/helpers/lg-a.ts and its own test/helpers/lg-config-child-<slug>.ts (pins 52-53).
+ * The words that describe what holderOf, isSetupOrder and setupFiles read (this paragraph, the PINNED READER SET entry below, the
+ * helper's comments on them and the catalog comments) describe the code and claim no config text beyond those plants; a catalog's
+ * slugs name its plants' setup files, never a form. FROZEN SHAPE's pin count for that piece grows 64 -> 67; no other row, pin,
+ * plant or reading changes, and this cut leaves the helper byte-unchanged, its one change since cut #2 being landing 1005's merged
+ * comment line (the piece's words name test.setupFiles only). NOT CLAIMED by this census (scope sentences; no residual, no
+ * follow-up bead): any config text piece 1 does not plant - among them a setupFiles key in any other place; a config object
+ * written other than as export default { ... } or as pin 33's defineConfig argument; a test key that is not a key of that object;
+ * orderPlant's text with two or more of its places written otherwise at once (the sequence and test values wrapped at once among
+ * them); any other wrapper or stack of wrappers, and an as, satisfies or <T> wrapper asserting any type but the ones its entries
+ * write (Record<string, unknown>, { [key: string]: unknown }, object, and const for as); a value written other than as an object
+ * literal in place (a name bound elsewhere, a shorthand property, a spread, a call); the test key, the sequence key or the order's
+ * setupFiles key written other than as its name, "<key>", '<key>' or the three spellings of its first letter's \u escape above (a
+ * computed key, any other escape and an escape of another letter among them); an order other than "list" and "parallel", or either
+ * written other than as the double-quoted string or an ORDER_SPELLINGS text (an array, a wrapped string and an escape among them);
+ * the test object's own setupFiles beside an order written other than as an entry above quotes it - its key other than the name
+ * setupFiles, another file, path, quote or element count, a template literal or a template element, a string other than pin 66's,
+ * a single-quoted element other than pin 67's, and a "./test/helpers/..." element in any config but pin 65's at the root (the real
+ * vitest.config.ts given an order among them); a test.setupFiles "list" written other than as "list", 'list' or `list`; a loud
+ * control's key other than lgO, lgO written other than as lgO, "lgO" or 'lgO', or a loud control's setupFiles holding anything but
+ * the array its entry quotes; any text a plant writes spelled with other white space or comments; and keys other than the planted
+ * ones beside them. NOT CLAIMED either: a MEMBERS pin deleted with its FROZEN SHAPE count lowered to match, replaced by a copy of
+ * another pin, or rewritten to a plant that reads the same (a catalog entry among them) - FROZEN SHAPE binds each MEMBERS row's
+ * pin count, as landed.
+ *
  * ROWS:
  *  BASE: the unplanted subject. The cited suite test/workbench-hyperunix-observer.test.ts reads IMPORT sound (its one load reaching
  *   vitest is its vitest import declaration; its loads equal the ones TypeScript's own preprocessor lists) and CHANNEL quiet; the
@@ -389,6 +477,27 @@
  *    below a local setup file and by a package's own module one, two and three loads below a package setup file; target: the
  *    IMPORT section and the setup-file findings. Falsifiers: GP12-IMP-PARENT-REL, GP12-IMP-PARENT-REL-SUITE, GP12-IMP-PKG-OWN,
  *    L17, GP14-IMP-DOT-DEPTH2, GP14-SETUP-DOTDOT-DEPTH2.
+ *  - "MEMBERS CHANNEL:setup file, piece 1" (wb-euc6): its pins 5-12 (cut #1), 13-33 (cut #2), 34-64 (cut #3) and 65-67 (cut #4),
+ *    each over setupFiles' injected reader; target: setupFiles' file list and channelReading's setup-file findings. Pins 13-19
+ *    plant the sequence value as each ORDER_WRAPPERS text, pins 20-26 the test value as each, pins 27-32 each ORDER_KEYS key as
+ *    each ORDER_KEY_STRINGS string, pin 33 DEFINED_ORDER, pins 34-39 the sequence value as each ORDER_TYPED_WRAPPERS text, pins
+ *    40-45 the test value as each, pins 46-49 the order as each ORDER_SPELLINGS text, pins 50-53 the loud controls' key lgO (pins
+ *    11 and 12) as each ORDER_KEY_STRINGS string, pins 54-55 pin 10's "list" as each LIST_SPELLINGS text, pins 56-64 each
+ *    ORDER_KEYS key as each ORDER_KEY_ESCAPES spelling, and pins 65-67 the test object's setupFiles before the order as
+ *    ROOT_ORDERED_SETUP (planted at the root), STRING_ORDERED_SETUP and SINGLE_ORDERED_SETUP. Falsifiers: the cut's base reader
+ *    (pins 5-9, 13-49 and 56-67 red: every setupFiles key read); refusal #1's gate members P1-P7 (P1 pins 13, 19, 20 and 26; P2
+ *    13, 16-20, 23-26, 36-39 and 42-45; P3 16, 23, 36, 37, 42 and 43; P4 17 and 24; P5 18, 25, 38, 39, 44 and 45; P6 20-26 and
+ *    40-45; P7 27, 28, 57 and 58) and its N-series (N1 8, 10, 48, 49, 54 and 55; N2 12, 52 and 53; N3 11, 50 and 51; N6 9, 31, 32,
+ *    63 and 64; N7 9, 27-30, 57, 58, 60 and 61; N8 9, 13-26 and 34-45; N10 as the base reader; N4 reads every piece 1 plant as the
+ *    delivered reader does and differs on an array order value, NOT CLAIMED); refusal #2's gate members GP30-AS-TYPEREF-ONLY (34,
+ *    35, 40 and 41), GP30-SAT-TYPEREF-ONLY (36, 37, 42 and 43), GP30-ANGLE-TYPEREF-ONLY (38, 39, 44 and 45),
+ *    GP30-ASSERT-TYPEREF-ONLY (34-45), GP30-ORDER-VALUE-DQ-ONLY (46-49), GP30-CHILD-STRINGKEY-AS-ORDER (50 and 51),
+ *    GP30-CONFIG-CHILD-STRINGKEY (52 and 53), GP30-LIST-VALUE-SQ-SKIP (54) and GP30-KEY-RAW-TEXT (56-61), its four NOT CLAIMED
+ *    calibration members reading every piece 1 plant as the delivered reader does; refusal #3's gate members
+ *    GP5-ORDER-HELPERS-SETUPFILES-ONLY (65), GP5-ORDER-ARRAY-SETUPFILES-ONLY (66) and GP5-ORDER-DQ-SETUPFILES-ONLY (66 and 67),
+ *    its five NOT CLAIMED calibration members reading every piece 1 plant as the delivered reader does; and the seat's EUC2-M-,
+ *    EUC3-M- and EUC4-M- one-edit hollowings of holderOf, isSetupOrder and setupFiles' visit, each red on at least one of pins
+ *    5-67, every EUC4-M- member on pin 65, 66 or 67.
  *  - "MEMBERS RUN:statements, pieces 1-3": each of the 22 CONFIG_NAMES imported by a second declaration right after the
  *    defineConfig import and as a second element before and after defineConfig; an import declaration naming no element before
  *    and after it; four other specifiers; six other statements; a declaration after the default export; four sound repeats and
@@ -1333,10 +1442,101 @@ const WRITE_CHANNEL: readonly (readonly [extra: string, found: string, offset: n
   ["const lgS = vi.hoisted;", "spy or mock member .hoisted", 0],
   ['const lgO: Record<string, number> = {};\nconst lgK = "x";\nvoid lgO[lgK];', "computed member lgO[lgK]", 2],
 ];
-/** A tier config planted through setupFiles' injected reader (refusal #2 U3, G27): nothing is written. */
+/** A tier config planted through setupFiles' injected reader (refusal #2 U3, G27): nothing is written. The config is
+ * test/lg-setup.config.ts unless another path is handed (wb-euc6 cut #4: pin 65 plants lg-setup.config.ts at the root). */
 const PLANTED_CONFIG = join(ROOT, "test/lg-setup.config.ts");
-const plantedSetup = (text: string): ReturnType<typeof setupFiles> =>
-  setupFiles(ROOT, () => ({ ok: true, config: PLANTED_CONFIG, why: "" }), file => (file === PLANTED_CONFIG ? text : readFileSync(file, "utf8")));
+const PLANTED_ROOT_CONFIG = join(ROOT, "lg-setup.config.ts");
+const plantedSetup = (text: string, config = PLANTED_CONFIG): ReturnType<typeof setupFiles> =>
+  setupFiles(ROOT, () => ({ ok: true, config, why: "" }), file => (file === config ? text : readFileSync(file, "utf8")));
+/** wb-euc6 (F1 of wb-tz2.3's landing 988): the test object's setupFiles key holding the array ["./helpers/census-guard.ts",
+ * "./helpers/lg-a.ts"], then the order sequence: { setupFiles: "list" } the census guard requires of two or more (pin 5). */
+const ORDERED_SETUP = 'export default { test: { setupFiles: ["./helpers/census-guard.ts", "./helpers/lg-a.ts"], sequence: { setupFiles: "list" } } };\n';
+/** The setup-file findings of ORDERED_SETUP's reading with test/helpers/lg-a.ts planted as `second` (pins 6-7). */
+const orderedChannel = (second: string): string[] | string => {
+  const read = plantedSetup(ORDERED_SETUP);
+  return "why" in read ? read.why : setupChannel(read.files, files(["test/helpers/lg-a.ts", second]));
+};
+/** wb-euc6 cut #2 (refusal #1 U1, U2): the wrappers piece 1 plants around the sequence value and, apart, around the test value,
+ * each with the slug of the one setup file its plant names (so each pin reads its own file). */
+const ORDER_WRAPPERS: readonly (readonly [slug: string, wrap: (literal: string) => string])[] = [
+  ["paren", literal => `(${literal})`],
+  ["as", literal => `${literal} as Record<string, unknown>`],
+  ["as-const", literal => `${literal} as const`],
+  ["satisfies", literal => `${literal} satisfies Record<string, unknown>`],
+  ["non-null", literal => `${literal}!`],
+  ["angle", literal => `<Record<string, unknown>>${literal}`],
+  ["paren-as-const", literal => `(${literal}) as const`],
+];
+/** wb-euc6 cut #3 (refusal #2 U1): the as, satisfies and <T> wrappers piece 1 also plants asserting the type literal
+ * { [key: string]: unknown } and the keyword type object (ORDER_WRAPPERS asserts Record<string, unknown> and const); each slug
+ * names its plant's one setup file, never a form. */
+const ORDER_TYPED_WRAPPERS: readonly (readonly [slug: string, wrap: (literal: string) => string])[] = [
+  ["as-type-literal", literal => `${literal} as { [key: string]: unknown }`],
+  ["as-object", literal => `${literal} as object`],
+  ["satisfies-type-literal", literal => `${literal} satisfies { [key: string]: unknown }`],
+  ["satisfies-object", literal => `${literal} satisfies object`],
+  ["angle-type-literal", literal => `<{ [key: string]: unknown }>${literal}`],
+  ["angle-object", literal => `<object>${literal}`],
+];
+/** wb-euc6 cut #2 (refusal #1 U3): the three keys of the order's place; "setupFiles" is the sequence object's key, the order's. */
+type OrderKey = "test" | "sequence" | "setupFiles";
+const ORDER_KEYS: readonly OrderKey[] = ["test", "sequence", "setupFiles"];
+/** The two string spellings piece 1 plants for each of ORDER_KEYS, one key at a time (the other two written as names); pins 50-53
+ * write the loud controls' key lgO with them too (wb-euc6 cut #3). */
+const ORDER_KEY_STRINGS: readonly (readonly [slug: string, spell: (key: string) => string])[] = [
+  ["double", key => `"${key}"`],
+  ["single", key => `'${key}'`],
+];
+/** A key with its first letter written as a \u escape of four hex digits (test -> \u0074est), which TypeScript reads as the key. */
+const escapeFirst = (key: string): string => `\\u${key.charCodeAt(0).toString(16).padStart(4, "0")}${key.slice(1)}`;
+/** wb-euc6 cut #3 (refusal #2 U3): the escaped spellings piece 1 plants for each of ORDER_KEYS, one key at a time (the other two
+ * written as names): the escaped key as a name, as a double-quoted and as a single-quoted string (pins 56-64). */
+const ORDER_KEY_ESCAPES: readonly (readonly [slug: string, spell: (key: string) => string])[] = [
+  ["escaped-name", key => escapeFirst(key)],
+  ["escaped-double", key => `"${escapeFirst(key)}"`],
+  ["escaped-single", key => `'${escapeFirst(key)}'`],
+];
+interface OrderText {
+  readonly keys?: Partial<Record<OrderKey, string>>;
+  readonly testValue?: (literal: string) => string;
+  readonly sequenceValue?: (literal: string) => string;
+  readonly order?: string;
+}
+const asWritten = (literal: string): string => literal;
+/** A config text whose test object names test/helpers/<file> as its one setup file and holds the order "list" under its sequence
+ * key: each key a name, each value a bare object literal and the order the double-quoted "list" unless handed a spelling, a
+ * wrapper or an order text (wb-euc6 cuts #2 and #3). */
+const orderPlant = (file: string, { keys = {}, testValue = asWritten, sequenceValue = asWritten, order = '"list"' }: OrderText): string =>
+  `export default { ${keys.test ?? "test"}: ${testValue(`{ setupFiles: ["./helpers/${file}"], ${keys.sequence ?? "sequence"}: ${sequenceValue(`{ ${keys.setupFiles ?? "setupFiles"}: ${order} }`)} }`)} };\n`;
+/** A piece 1 pin over orderPlant (pins 13-32, 34-49 and 56-64): the plant reads test/helpers/<file> alone, its order read as no file. */
+const orderPin = (file: string, text: OrderText): Pin => pin(() => plantedSetup(orderPlant(file, text)), { files: [`test/helpers/${file}`] });
+/** wb-euc6 cut #3 (refusal #2 U3): the order texts piece 1 plants beside the double-quoted "list" every other orderPlant plant
+ * writes (pins 46-49), each slug naming its plant's one setup file. */
+const ORDER_SPELLINGS: readonly (readonly [slug: string, order: string])[] = [
+  ["list-single", "'list'"],
+  ["list-template", "`list`"],
+  ["parallel-single", "'parallel'"],
+  ["parallel-template", "`parallel`"],
+];
+/** wb-euc6 cut #3 (refusal #2 U2): pin 11's loud control, test.lgO.setupFiles, with the key lgO written as `key` (pins 50-51). */
+const childPlant = (key: string, file: string): string =>
+  `export default { test: { setupFiles: ["./helpers/lg-a.ts"], ${key}: { setupFiles: ["./helpers/${file}"] } } };\n`;
+/** wb-euc6 cut #3 (refusal #2 U2): pin 12's loud control, lgO.sequence.setupFiles after test, with lgO written as `key` (pins 52-53). */
+const configChildPlant = (key: string, file: string): string =>
+  `export default { test: { setupFiles: ["./helpers/lg-a.ts"] }, ${key}: { sequence: { setupFiles: ["./helpers/${file}"] } } };\n`;
+/** wb-euc6 cut #3 (refusal #2 U3): pin 10's loud control, a test.setupFiles "list", with the value written as these (pins 54-55). */
+const LIST_SPELLINGS: readonly string[] = ["'list'", "`list`"];
+/** The order as a config written with defineConfig holds it (wb-euc6 cut #2, pin 33): defineConfig's argument holding the
+ * sequence key before the setupFiles key, and shuffle before the order. */
+const DEFINED_ORDER = 'import { defineConfig } from "vitest/config";\nexport default defineConfig({ test: { sequence: { shuffle: false, setupFiles: "list" }, setupFiles: ["./helpers/lg-defined-order.ts"] } });\n';
+/** wb-euc6 cut #4 (refusal #3 U1, U2): the test object's setupFiles before the order "list" written otherwise than as the
+ * double-quoted "./helpers/<file>" array elements every other piece 1 order plant writes - the array of the two double-quoted
+ * elements "./test/helpers/census-guard.ts" and "./test/helpers/lg-root-order.ts", planted as lg-setup.config.ts at the root
+ * (pin 65); the double-quoted string "./helpers/lg-setup-string.ts" (pin 66); and the array of the one single-quoted element
+ * './helpers/lg-setup-single.ts' (pin 67). Each names its own setup file. */
+const ROOT_ORDERED_SETUP = 'export default { test: { setupFiles: ["./test/helpers/census-guard.ts", "./test/helpers/lg-root-order.ts"], sequence: { setupFiles: "list" } } };\n';
+const STRING_ORDERED_SETUP = 'export default { test: { setupFiles: "./helpers/lg-setup-string.ts", sequence: { setupFiles: "list" } } };\n';
+const SINGLE_ORDERED_SETUP = "export default { test: { setupFiles: ['./helpers/lg-setup-single.ts'], sequence: { setupFiles: \"list\" } } };\n";
 /** Every node kind C reads and the two it never reads, in one module of each code extension (the C:code line names the crossing). */
 const kindsSite = (extension: string): Pin => {
   const file = `src/workbench/lg-kinds${extension}`;
@@ -2562,7 +2762,29 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => setupFiles(ROOT), { files: ["test/helpers/census-guard.ts"] }),
     pin(() => setupChannel(["test/helpers/census-guard.ts"]), []),
     pin(() => plantedSetup('export default { test: { "setupFiles": ["./helpers/lg-a.ts"] } };\n'), { files: ["test/helpers/lg-a.ts"] }),
-    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] as string[] } };\n'), { files: ["test/helpers/lg-a.ts"] })),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] as string[] } };\n'), { files: ["test/helpers/lg-a.ts"] }),
+    pin(() => plantedSetup(ORDERED_SETUP), { files: ["test/helpers/census-guard.ts", "test/helpers/lg-a.ts"] }),
+    pin(() => orderedChannel("export const lgA = 1;\n"), []),
+    pin(() => orderedChannel('import { it } from "vitest";\nexport const lgIt = it;\n'), ["setup file test/helpers/lg-a.ts: carrier (test/helpers/lg-a.ts:1 loads 'vitest' (vitest vitest))"]),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/census-guard.ts"], sequence: { setupFiles: "parallel" } } };\n'), { files: ["test/helpers/census-guard.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"], "sequence": { "setupFiles": "list" } as const } };\n'), { files: ["test/helpers/lg-a.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: "list" } };\n'), { files: ["test/list"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"], lgO: { setupFiles: ["./helpers/lg-b.ts"] } } };\n'), { files: ["test/helpers/lg-a.ts", "test/helpers/lg-b.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] }, lgO: { sequence: { setupFiles: ["./helpers/lg-b.ts"] } } };\n'), { files: ["test/helpers/lg-a.ts", "test/helpers/lg-b.ts"] }),
+    ...ORDER_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-sequence-${slug}.ts`, { sequenceValue: wrap })),
+    ...ORDER_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-test-${slug}.ts`, { testValue: wrap })),
+    ...ORDER_KEYS.flatMap(key => ORDER_KEY_STRINGS.map(([slug, spell]) => orderPin(`lg-${key}-${slug}.ts`, { keys: { [key]: spell(key) } }))),
+    pin(() => plantedSetup(DEFINED_ORDER), { files: ["test/helpers/lg-defined-order.ts"] }),
+    ...ORDER_TYPED_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-sequence-${slug}.ts`, { sequenceValue: wrap })),
+    ...ORDER_TYPED_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-test-${slug}.ts`, { testValue: wrap })),
+    ...ORDER_SPELLINGS.map(([slug, order]) => orderPin(`lg-order-${slug}.ts`, { order })),
+    ...ORDER_KEY_STRINGS.map(([slug, spell]) => pin(() => plantedSetup(childPlant(spell("lgO"), `lg-child-${slug}.ts`)), { files: ["test/helpers/lg-a.ts", `test/helpers/lg-child-${slug}.ts`] })),
+    ...ORDER_KEY_STRINGS.map(([slug, spell]) => pin(() => plantedSetup(configChildPlant(spell("lgO"), `lg-config-child-${slug}.ts`)), { files: ["test/helpers/lg-a.ts", `test/helpers/lg-config-child-${slug}.ts`] })),
+    ...LIST_SPELLINGS.map(list => pin(() => plantedSetup(`export default { test: { setupFiles: ${list} } };\n`), { files: ["test/list"] })),
+    ...ORDER_KEYS.flatMap(key => ORDER_KEY_ESCAPES.map(([slug, spell]) => orderPin(`lg-${key}-${slug}.ts`, { keys: { [key]: spell(key) } }))),
+    pin(() => plantedSetup(ROOT_ORDERED_SETUP, PLANTED_ROOT_CONFIG), { files: ["test/helpers/census-guard.ts", "test/helpers/lg-root-order.ts"] }),
+    pin(() => plantedSetup(STRING_ORDERED_SETUP), { files: ["test/helpers/lg-setup-string.ts"] }),
+    pin(() => plantedSetup(SINGLE_ORDERED_SETUP), { files: ["test/helpers/lg-setup-single.ts"] })),
   member("CHANNEL:setup file", "it names one file as a string literal",
     pin(() => plantedSetup('export default { test: { setupFiles: "./helpers/census-guard.ts" } };\n'), { files: ["test/helpers/census-guard.ts"] }),
     pin(() => plantedSetup("export default { test: { setupFiles: `./helpers/lg-b.ts` } };\n"), { files: ["test/helpers/lg-b.ts"] })),
@@ -3723,7 +3945,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:WRITES:spy or mock member:1:109", "MEMBERS:WRITES:spy or mock member:2:50", "MEMBERS:WRITES:spy or mock member:3:46", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:1792",
   "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1", "MEMBERS:WRITES:computed member:6:5",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
-  "MEMBERS:CHANNEL:setup file:1:4", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
+  "MEMBERS:CHANNEL:setup file:1:67", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
   "MEMBERS:CHANNEL:cited suite:1:9", "MEMBERS:CHANNEL:cited suite:2:5", "MEMBERS:CHANNEL:cited suite:3:18", "MEMBERS:CHANNEL:cited suite:4:1",
   "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:2", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:32", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
   "MEMBERS:RUN:argv:1:4",
