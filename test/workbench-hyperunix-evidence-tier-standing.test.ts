@@ -70,15 +70,24 @@
  * of bare block statements, context and top-level position read by the parser from the parse that judgment read, each such place
  * once, run against the parser's count of the installed module, so each of the two in each of the DEEP_RUNS is pinned at every
  * top-level position of its module, its cut #2, the respin of its refusal #1 (U1), taking that parse from the judgment itself and
- * holding each verdict to its own text against one judged on a text built from its module and statement or carried over from an
- * earlier control of that module and statement (THE VERDICT ITS OWN), leaving the acceptance reading unchanged): each case
+ * holding each verdict to its own text against one judged on a text built from the installed module and its statement or carried
+ * over from an earlier control of that module and statement (THE VERDICT ITS OWN), and its cut #3, the enumerate-the-resolvable
+ * cut of its refusal #2 under the second-stage cap ruling R-B635 types (U1) and the respin of that refusal's U2, holding each
+ * verdict to its own text against one judged on a text built from its own by copying its statement after its module's first
+ * top-level statement, moving it there, moving it after the text's end or moving it before its start, and against one carried
+ * over between a text and its twin under a key the two share, their length among them (THE VERDICT ITS OWN TEXT'S), a verdict
+ * judged on another text that reads as its own does, its place and writes read from another parse of its own text, being the
+ * named residual R-JUDGED-ALIKE, whose quiet row T2 pins, and reading a verdict binding only on a judgment departing in exactly
+ * the one departure naming its HOLDER's binding form (THE VERDICT EXACT), how a verdict reads any other list of departures
+ * NOT CLAIMED, leaving the acceptance reading unchanged): each case
  * claims exactly the cells and
  * pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
  * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins
  * (the realized escape landing 928's gate routed to follow-up wb-qyd6, a compound-assignment write of a HOLDER at another middle
  * top-level statement of its module, which that gate's GA-MID-OTHER leaves unread and wb-1aei's cut excepted here, is pinned in T2
- * since wb-qyd6). The
+ * since wb-qyd6, and R-JUDGED-ALIKE, a mode of T2's own DEEP RUNS AT EVERY MIDDLE POSITION reading that wb-ant2 cut #3 names, is a
+ * named residual whose quiet row T2 pins). The
  * statement (STATEMENT below,
  * verbatim, the bead's title): "When a GC-D13 ADR plus an SDK result field carry provider evidence tiers
  * (14-decisions-and-migration.md:19@6ed14cab8d; HXGC-PROV-001 DESIGN requirements.jsonl:22), Pi shall read the tier as a separate
@@ -180,7 +189,8 @@
  *      declaration and its leading comment, byte-identical, its planted decoder's sha256 pinned, departing as that cell does) and
  *      after each top-level statement of its module but its first and its last, so at each of its middle positions past its
  *      second (2620 controls, wb-ant2: 44 in result.js, 34 in protocol/query.js and 30 in protocol/decoder.js, the penultimate
- *      included, each read at its place in the one text its misread reading reads, for its write's operator, run of blocks, run
+ *      included, each read at its place in the one text its misread reading reads, that text its own as T2's THE VERDICT ITS OWN
+ *      and THE VERDICT ITS OWN TEXT'S hold it beside the named residual R-JUDGED-ALIKE, for its write's operator, run of blocks, run
  *      of bare block statements, context and top-level position, the 2620 readings exactly one for each HOLDER, each of &&= and
  *      =, each of the DEEP_RUNS and each such place, those places run against the parser's count of the installed module, which
  *      with the plants at its start and end and at its second pin each of the two in each of the DEEP_RUNS at every top-level
@@ -579,7 +589,8 @@
  * the parser) times the DEEP_RUNS times the ends those sweeps plant at (the first and the last top-level statement), one plant
  * each, and the 80 DEEP_RUNS plants after each module's first top-level statement (wb-imm0), read so from the text their judge
  * reads, are exactly the HOLDERS times those operators times the DEEP_RUNS at that module's second top-level statement, one plant
- * each, and the 2620 after each later top-level statement but its last (wb-ant2), read so from the text their judgment reads,
+ * each, and the 2620 after each later top-level statement but its last (wb-ant2), read so from the text their judgment reads
+ * (their own, as T2's THE VERDICT ITS OWN and THE VERDICT ITS OWN TEXT'S hold it beside the named residual R-JUDGED-ALIKE),
  * exactly those times each place of the module past its second but its last, those places the parser's count of the installed
  * module, one plant each. LIVENESS: each
  * judgment is one
@@ -2071,7 +2082,8 @@ const NESTINGS: readonly (readonly [label: string, before: string, after: string
  * statement (one for each HOLDER, operator and run, 80) after its module's first top-level statement, so at its second, a middle
  * one, and reads each so from the text its judge reads (80 controls), beside the landing-941 gate's P-DEEP4-MID2, byte-identical;
  * and (wb-ant2) plants each after each later top-level statement of its module but its last, so at each of its middle positions
- * past its second, and reads each so from the text its judgment reads (2620 controls). A run of more than eight blocks and a run
+ * past its second, and reads each so from the text its judgment reads (2620 controls; its own, as T2's THE VERDICT ITS OWN and
+ * THE VERDICT ITS OWN TEXT'S hold it beside the named residual R-JUDGED-ALIKE). A run of more than eight blocks and a run
  * of four to eight that is not all bare block statements are NOT CLAIMED. */
 const DEEP_RUNS: readonly number[] = [4, 5, 6, 7, 8];
 /** A statement text nested in an unbroken run of bare block statements, each brace on its own line, as the NESTINGS' block inside
@@ -4065,7 +4077,8 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // unbroken run of each of the 5 DEEP_RUNS), each planted after each top-level statement of its module but its first and its
     // last, as EVERY MIDDLE POSITION plants its statements (afterStatement()), so at each of its middle positions past its second
     // (44 in result.js, 34 in protocol/query.js and 30 in protocol/decoder.js, the penultimate included), departs naming the
-    // binding form and only so (2620 controls): the writes the landing-1000 gate's members G17-B-IDX2PLUS-NONDECODER (a write
+    // binding form and only so (2620 controls; only so as THE VERDICT EXACT, below, reads it): the writes the landing-1000 gate's
+    // members G17-B-IDX2PLUS-NONDECODER (a write
     // four or more blocks deep at a middle top-level statement past the second, outside the decoder module) and G17-B-PENULTIMATE
     // (one so at the penultimate top-level statement) and that cut's seat page W-RUN4-MID-IDX3PLUS (a compound write so past the
     // third) leave unread, which that gate replayed at 0 failed | 11 passed on the census before this sweep. With DEEP RUNS' plants
@@ -4078,7 +4091,10 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // released and the installed module's kept, as the judges below read). sameParseReading() reads its verdict from those
     // departures and its place and its writes from that parse alone (unjudged when there is none): an edit handing the judgment
     // a text that holds the statement at another place or none moves the readings with it, and THE PLACES HELD reds, as for one
-    // that parsed no such text; its verdict is its text's (THE VERDICT ITS OWN, below); the reading has deepMiddleReading()'s form,
+    // that parsed no such text; its verdict is its text's against the judged texts THE VERDICT ITS OWN and
+    // THE VERDICT ITS OWN TEXT'S name (below), a verdict judged on another text that reads as its own does, its place and writes
+    // read from another parse of its own text, being the named residual R-JUDGED-ALIKE (its quiet row, below); the reading has
+    // deepMiddleReading()'s form,
     // and the two read DEEP RUNS AT A MIDDLE POSITION's 80 plants and P-DEEP4-MID2 alike. THE PLACES HELD: the 2620
     // readings are exactly one for each HOLDER, each of &&= and = (the operators the NESTED BINDINGS and NESTED PLAIN BINDINGS
     // sweeps write by, read by the parser), each of the DEEP_RUNS and each place of its module past its second but its last,
@@ -4139,15 +4155,18 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       everyControl(decoderLast - 1, `void 0;\n${inBlocks(4, nestedStatement)}`), releasedPlant, keptInstalled])
       .toStrictEqual([`protocol/decoder.js checkStream misread at ${decoderLast}`,
       `protocol/decoder.js checkStream binding at ${decoderLast + 1} &&= 4 4 nested last`, 'protocol/decoder.js checkStream binding at -1', true, true]);
-    // THE VERDICT ITS OWN (wb-ant2 cut #2, refusal #1 U1): a control's verdict is the departures of the judgment of its own text.
-    // The &&= statement four bare block statements deep, planted after the decoder module's penultimate top-level statement in a
-    // text that also spells eval after the module's last statement (EVAL_STATEMENTS' callee form), departs in both (the premise,
-    // read from judgedParse()) and so reads misread, its place and its write read from that text as the sweep's control on the
-    // text without eval reads them (binding): a verdict judged on another text built from a control's module and statement (that
-    // statement after the module's first top-level statement, after its last, or before its first, as refusal #1's gate members
-    // G29-S1-JUDGE-MIDDLEOF, G29-S3-JUDGE-END and G29-S4-JUDGE-START judge) or carried over from an earlier control of that module
-    // and statement (as its G29-S2-JUDGE-ONCE-PER-STATEMENT carries it) reads binding here, whatever text its readings come from.
-    // A verdict carried over under any key telling two texts of one module and statement apart (length, say) is NOT CLAIMED by this census.
+    // THE VERDICT ITS OWN (wb-ant2 cut #2, refusal #1 U1): a control's verdict is the departures of the judgment of its own text,
+    // against the texts this paragraph and THE VERDICT ITS OWN TEXT'S (below) name. The &&= statement four bare block statements
+    // deep, planted after the decoder module's penultimate top-level statement in a text that also spells eval after the module's
+    // last statement (EVAL_STATEMENTS' callee form), departs in both (the premise, read from judgedParse()) and so reads misread,
+    // its place and its write read from that text as the sweep's control on the text without eval reads them (binding): a verdict
+    // judged on another text built from the installed module and a control's statement (that statement after the module's first
+    // top-level statement, after its last, or before its first, as refusal #1's gate members G29-S1-JUDGE-MIDDLEOF,
+    // G29-S3-JUDGE-END and G29-S4-JUDGE-START judge) or carried over from an earlier control of that module and statement (as its
+    // G29-S2-JUDGE-ONCE-PER-STATEMENT carries it) reads binding here, whatever text its readings come from. A verdict carried over
+    // under a key telling two texts of one module and statement apart is THE VERDICT ITS OWN TEXT'S where a text and its twin share
+    // it (their length among them), this paragraph's where its two texts do, and R-JUDGED-ALIKE's (below) where the texts sharing
+    // it read alike.
     const ownStatement = inBlocks(4, nestedStatement).replace('<name>', () => 'checkStream');
     const ownPlanted = afterStatement('protocol/decoder.js', decoderLast - 1, ownStatement);
     const ownText = `${ownPlanted}\n${EVAL_STATEMENTS.find(([form]) => form === 'callee')?.[1] ?? ''}`;
@@ -4156,6 +4175,63 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       ['checkStream: spelled outside a call (binding)', 'protocol/decoder.js: eval (callee)'],
       `protocol/decoder.js checkStream misread at ${decoderLast} &&= 4 4 nested middle`,
       `protocol/decoder.js checkStream binding at ${decoderLast} &&= 4 4 nested middle`]);
+    // THE VERDICT ITS OWN TEXT'S (wb-ant2 cut #3, refusal #2 U1, in the enumerate-the-resolvable form under the second-stage cap
+    // ruling R-B635 types for the judged-text identity set the guard R-B627 binds): the same &&= statement planted at the same
+    // place inside a block comment of its own (each of its markers on a line of its own) departs not at all (the premise, read from
+    // judgedParse(): comments are never read) and so reads misread at no place, and its twin, that statement planted there in code
+    // with an empty comment after it, a text of the same module and statement as long as it, on as many lines and holding the same
+    // characters, reads binding at that place. A verdict judged on the commented text with its statement copied after its module's
+    // first top-level statement, moved there, moved after the text's end or moved before its start (the gate's
+    // GP8-V1-BYPASS-PLANTED-MIDDLE-COPY, GP8-V2-BYPASS-PLANTED-MOVED-MIDDLE, GP8-V3-BYPASS-PLANTED-MOVED-END and
+    // GP8-V4-BYPASS-PLANTED-MOVED-START, each judging a text built from the planted text and its statement), or on any other text
+    // holding that statement in code and departing only by its write, reads binding here; and a verdict carried over between the
+    // two texts under a key they share (their length, as the gate's GP8-C1-CARRY-BY-LENGTH carries it, their lines or their
+    // characters) reads the two alike; each reds here.
+    const commentedPlanted = afterStatement('protocol/decoder.js', decoderLast - 1, `/*\n${ownStatement}\n*/`);
+    const twinPlanted = afterStatement('protocol/decoder.js', decoderLast - 1, `${ownStatement}\n/**/\n`);
+    const textShape = (text: string): string => `${text.length} ${text.split('\n').length} ${[...text].sort().join('')}`;
+    expect([textShape(commentedPlanted) === textShape(twinPlanted), judgedParse('protocol/decoder.js', commentedPlanted)[0],
+      sameParseReading('protocol/decoder.js', 'checkStream', commentedPlanted, ownStatement),
+      sameParseReading('protocol/decoder.js', 'checkStream', twinPlanted, ownStatement)]).toStrictEqual([true, [],
+      'protocol/decoder.js checkStream misread at -1', `protocol/decoder.js checkStream binding at ${decoderLast} &&= 4 4 nested middle`]);
+    // R-JUDGED-ALIKE (wb-ant2 cut #3, THE VERDICT ITS OWN TEXT'S named residual): a verdict judged on another text that reads as its
+    // own text does, its place and writes read from another parse of its own text, reads as its own, so no reading here tells the
+    // two apart: the sweep's control at the decoder module's penultimate place (the cell the landing-1000 gate's G17-B-PENULTIMATE
+    // reads none of) with a statement appended after its text's end departs exactly as that control's own text does, and both read
+    // binding at that place. A verdict so judged on a text built from the planted text (one with a statement appended after its
+    // end) or carried over between texts that read alike (under a key the commented text and its twin do not share, the set of
+    // their top-level statements, say) is this family's, and the family is realized: a verdict so carried keeps this census
+    // green with a reader reading none of a cell that none of the verdict witnesses above plants (refusal #1's gate members
+    // G29-B2-QUERY-IDX18, G29-B3-RESULT-IDX40PLUS, G29-B4-DECODER-IDX3-ANDAND-RUN8, G29-B8-RUN6TO7-IDX5TO9 and
+    // G29-B9-DECODER-PENULT-PLAIN-RUN4 among them). Its quiet row: the appended text is another text departing as the
+    // control's does; silenced (the two texts one), this row reds.
+    const alikeText = `${ownPlanted}\nvoid 0;`;
+    expect([alikeText === ownPlanted, judgedParse('protocol/decoder.js', alikeText)[0], judgedParse('protocol/decoder.js', ownPlanted)[0],
+      sameParseReading('protocol/decoder.js', 'checkStream', alikeText, ownStatement)]).toStrictEqual([false,
+      ['checkStream: spelled outside a call (binding)'], ['checkStream: spelled outside a call (binding)'],
+      `protocol/decoder.js checkStream binding at ${decoderLast} &&= 4 4 nested middle`]);
+    // THE VERDICT EXACT (wb-ant2 cut #3, refusal #2 U2, rung 1 of the 'only so' verdict-exactness claim set the guard R-B635
+    // binds): a control reads binding only on a judgment departing in exactly the one departure naming its HOLDER's write in the
+    // binding form. The same &&= statement at the same place departs so after another departure in a text that also writes
+    // parseFrameJson (a HOLDER before checkStream in HOLDERS, so its departure leads), names another form beside the binding form in
+    // one that also spells checkStream as a string, and a text writing parseFrameJson there instead departs naming that HOLDER
+    // alone (the premises, read from judgedParse()); each reads misread, as THE VERDICT ITS OWN's text departing so before an eval
+    // and the judges' call above departing not at all do: a verdict read from the last departure (the gate's
+    // GP8-X1-VERDICT-LAST-DEPARTURE, under which its GP8-R1-LEADING-EXTRA-DEPARTURE reader escapes), from the first, from any one
+    // departure naming the binding form, from a lone departure of its HOLDER in any form or from a lone departure of any HOLDER's
+    // write reads one of them binding and reds here. How a verdict reads any other list of departures is NOT CLAIMED by this census.
+    const leadText = `${ownPlanted}\nparseFrameJson = undefined;`;
+    const formsText = `${ownPlanted}\nvoid "checkStream";`;
+    const otherStatement = inBlocks(4, 'parseFrameJson &&= undefined;');
+    const otherText = afterStatement('protocol/decoder.js', decoderLast - 1, otherStatement);
+    expect([[leadText, formsText, otherText].map(text => judgedParse('protocol/decoder.js', text)[0]),
+      sameParseReading('protocol/decoder.js', 'checkStream', leadText, ownStatement),
+      sameParseReading('protocol/decoder.js', 'checkStream', formsText, ownStatement),
+      sameParseReading('protocol/decoder.js', 'checkStream', otherText, otherStatement)]).toStrictEqual([
+      [['parseFrameJson: spelled outside a call (binding)', 'checkStream: spelled outside a call (binding)'],
+        ['checkStream: spelled outside a call (binding, string)'], ['parseFrameJson: spelled outside a call (binding)']],
+      `protocol/decoder.js checkStream misread at ${decoderLast} &&= 4 4 nested middle`,
+      `protocol/decoder.js checkStream misread at ${decoderLast} &&= 4 4 nested middle`, `protocol/decoder.js checkStream misread at ${decoderLast}`]);
     // The HOLDERS' class spelled in each of its 3 forms (an identifier, then the 2 CLASS_FORMS) at the end of each other consulted
     // module departs naming exactly that form, and eval in each of the 2 EVAL_STATEMENTS forms at the end of each of the three modules
     // likewise (6 controls each).
