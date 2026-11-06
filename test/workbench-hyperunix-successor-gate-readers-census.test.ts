@@ -191,6 +191,29 @@
  * with the QUOTES PLANTS positions they shift, moves the counts the controls and the reading rows' titles state (44 QUOTES
  * controls, 43 QUOTES PLANTS controls, 87 fixture entries), reads QP-LINES-EVERY's findings as none for an entry holding no
  * line, and narrows the words below to the plants.
+ * wb-z79l (the R694 follow-up of wb-3uxh's landing-991 PASS-WITH-FINDING, gate cmd_712f4c684312, F1 LOW;
+ * PREP gate-prep-6, g10-gate-s223) found the quote-run comparison pinned by no content difference on lines 7-14, 16-35 and
+ * 37-40 and by no colon: two one-edit members kept this census green, 0 failed | 553 passed - GP6-Q-RUN-CONTENT-SKIP-21 (the
+ * comparison skips line 21's content when both lines exist; QC-PROSE-BREAK's missing lines still count) and
+ * GP6-Q-RUN-CMP-COLON (each line compared with its first '": ' written '" ') - while the real-tree witness
+ * GP6-W-RUN21-NOCOLON (the namespace import's quote line written without the colon after its label) reds it, 36 failed |
+ * 517 passed alone and 0 failed beside either member. wb-0fq9's controls (landing 1002) leave both members as they were: on
+ * the census as wb-0fq9 landed it (trunk 1b707ef0, 566 tests) each reads 0 failed | 566 passed, and the witness 40 failed |
+ * 526 passed alone and 0 failed beside either. Read here as two QUOTES controls, each red under both members (replayed
+ * verbatim from the PREP pack's specs/leg2-gp6.json): QC-RUN-NOCOLON plants that witness, line 21, and QC-RUN-NOCOLON-EVERY
+ * writes every quote line of the block without the colon after its label, so the run differs from the entries at every
+ * position (49 of 49; a comparison that skips one whole line when both lines exist reads 48). The two controls stand after
+ * QC-RUN-INDENT-TWO and before QC-PROSE-BREAK, wb-0fq9's four run controls after them (this re-cut by reference re-applies
+ * the bead's first cut, 9659231a, over wb-0fq9's landed census, helper and fixture). This cut changes no reader code and
+ * no landed control's plant beyond the fixture positions the two inserted controls shift (QP-TEMPLATE-QP, QP-QP, QP-MARKS,
+ * QP-IDS-CASE, QP-IDS-CASE-LAST, QP-LINE-EMPTY, QP-LINE-EMPTY-LAST, QP-LINE-BLANK, QP-IDS-EMPTY-ENTRY, QP-LINES-NONE,
+ * QP-IDS-EXTRA and QP-IDS-DROP rewrite the same entries at their shifted positions): the helper header's block names the
+ * two controls after QC-RUN-INDENT-TWO, the fixture lists them at those positions with the QUOTES PLANTS positions they
+ * shift, the counts and positions the control-names, ids and position findings state follow (QC-PROSE-BREAK, QC-NAMES,
+ * QC-NAMES-ORDER, QC-NAMES-ABOVE, QC-NAMES-BELOW, QP-MARKS, QP-IDS-FIRST, QP-IDS-EVERY, QP-IDS-RENAME, QP-IDS-SWAP,
+ * QP-IDS-CASE, QP-IDS-CASE-FIRST, QP-IDS-CASE-LAST, QP-IDS-EMPTY-ENTRY, QP-IDS-EXTRA and QP-IDS-DROP), the counts the
+ * reading rows' titles state move to 46 QUOTES controls, 43 QUOTES PLANTS controls and 89 fixture entries, and FROZEN
+ * SHAPE pins each new control with its finding count.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -267,7 +290,7 @@
  *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census. Cut #4 adds TYPE_PLACES,
  *   ACCESS_BASES, EXPORT_PLACES and JSX_PLACES to those catalogs and the TW9- ids to the twins the helper header must name.
  *   wb-cl20 adds CALLEE_WRAPPERS to those catalogs and the TW9C4- ids to the twins the helper header must name.
- *  QUOTES (wb-3uxh cuts #2 to #6 and wb-0fq9; standing rule 16 CT3, CT5 and CT6, outside this census): quotesReading reads a helper
+ *  QUOTES (wb-3uxh cuts #2 to #6, wb-0fq9 and wb-z79l; standing rule 16 CT3, CT5 and CT6, outside this census): quotesReading reads a helper
  *   header (its leading comment, line by line), the NONVALUE_PLACES, JSX_PLACES and CALLEE_WRAPPERS entries and the census's
  *   control ids. CLAIMED (cut #6, the fail-closed core): exactly the QUOTES reading row's empty reading of the delivered
  *   helper header and catalogs and each QUOTES control's findings for its one plant (a sweep's: each tag's, after the tag's
@@ -439,7 +462,7 @@
  *    gate-prep-24); refusal #2's witnesses GP16-W-RUN-TRAIL-MID, -RUN-LEAD-MID, -BLOCK-NOSEMI-MID, -JSX-REQHARD, -CW-HARDCODE
  *    and -ENTRY-TAB (replayed verbatim from the wb-3uxh PREP specs, gate-prep-16); refusal #5's witness GP16E-WQ-RUN-BLANK-MID
  *    (replayed verbatim, gate-prep-16; wb-0fq9).
- *  - "QUOTES <id>: the reading over <plant> holds exactly the findings that plant earns" (44 rows, QC-PLANT to QC-NAMES-BELOW):
+ *  - "QUOTES <id>: the reading over <plant> holds exactly the findings that plant earns" (46 rows, QC-PLANT to QC-NAMES-BELOW):
  *    target controlReading of the control - quotesReading over its plant, a sweep's over its plant for each of its tags;
  *    observed exactly its findings (pass). Falsifiers: the 37 one-edit hollowings of quotesReading and its constants cut #2
  *    authored red-first (the SQ2-M- members, refusal #1's GP24-M-PLANT, -LABEL, -ORDER, -CATSET, -UNPARSED, -REGION and -SEMI
@@ -454,9 +477,15 @@
  *    each red on at least one control; wb-0fq9: refusal #5's GP16E-Q-RUN-DROP-EMPTY (replayed verbatim, gate-prep-16; red on
  *    QC-RUN-EMPTY, QC-RUN-EMPTIED-FIRST and QC-RUN-EMPTIED-LAST) and the seat's S0-Q- siblings (the run read without its lines
  *    of white space alone, without an empty line but at its first and last position, without one at its first or its last
- *    position only, or ended at an empty line), each red on at least one of wb-0fq9's four QUOTES controls.
+ *    position only, or ended at an empty line), each red on at least one of wb-0fq9's four QUOTES controls; and wb-z79l's:
+ *    the gate's GP6-Q-RUN-CONTENT-SKIP-21 and GP6-Q-RUN-CMP-COLON (replayed verbatim from the wb-3uxh PREP pack,
+ *    gate-prep-6, specs/leg2-gp6.json; each red on QC-RUN-NOCOLON and QC-RUN-NOCOLON-EVERY, and the witness
+ *    GP6-W-RUN21-NOCOLON beside either red too) and the S-Z79L- members of the bead's first cut, replayed verbatim
+ *    (the comparison skipping line 1's, 22's, 37's or 49's content when both lines exist, colon-blind at line 21 alone or
+ *    at every line but 21, reading each line with every colon dropped or with its first '" ' written '": '), each red on
+ *    QC-RUN-NOCOLON-EVERY.
  *  - "QUOTES PLANTS: the reading of the delivered fixture and controls finds nothing - ..." (wb-3uxh cut #4): target
- *    plantsReading over test/fixtures/hyperunix-successor-gate-quotes-plants.json's controls and the census's 44 QUOTES and
+ *    plantsReading over test/fixtures/hyperunix-successor-gate-quotes-plants.json's controls and the census's 46 QUOTES and
  *    43 QUOTES PLANTS controls; observed [] (pass). Falsifiers, each red on a throwaway copy of this cut: refusal #5's
  *    GP16E-P-FIX-DROP-EMPTY-LINE and -DROP-EMPTY-ENTRY (replayed verbatim, gate-prep-16; wb-0fq9), red through the delivered
  *    fixture's own entries for QP-LINE-EMPTY, QP-LINE-EMPTY-LAST and QP-NO-PLANT; refusal #3's
@@ -490,8 +519,8 @@
  *    or case-insensitively but at the first and the last position, from the second position or but at the last), each red
  *    on at least one of wb-0fq9's QUOTES PLANTS controls.
  * ENUMERATION (wb-3uxh cuts #5 and #6: the enumerate-the-resolvable form R-B590 orders for the frozen QUOTES class, narrowed
- * by cut #6 to the fail-closed core R-B601 orders; wb-0fq9 adds the content-form plants marked with its id; every case named
- * is in this file): the census claims of its two QUOTES
+ * by cut #6 to the fail-closed core R-B601 orders; wb-0fq9 adds the content-form plants marked with its id and wb-z79l the
+ * two colon plants marked with its id; every case named is in this file): the census claims of its two QUOTES
  * readings exactly the two reading rows' empty readings of the delivered tree and the plants below, each read with exactly
  * its control's findings - each plant named by its content, each loop at its first position, its last and every position as
  * these plants reach it - and no other form (NOT CLAIMED below):
@@ -508,7 +537,10 @@
  *    line holding nothing after its indent written after the run's 25th line, the class get accessor key's (QC-RUN-EMPTY),
  *    read as a run of 50 lines whose line 26 reads nothing after its indent (25 of 50 differ).
  *  - quotesReading, the run against the entries: first QC-ORDER (the first two lines swapped, line 1), last QC-MISSING and
- *    QC-RUN-INDENT-TWO (line 49) and QC-EXTRA (line 50), every position QC-PROSE-BREAK; the three JSX_PLACES lines moved
+ *    QC-RUN-INDENT-TWO (line 49) and QC-EXTRA (line 50), every position QC-PROSE-BREAK (no line read) and
+ *    QC-RUN-NOCOLON-EVERY (all 49 lines read, each written without the colon after its label at once: 49 of 49 differ,
+ *    the first line 1; wb-z79l), a middle position QC-RUN-NOCOLON (line 21 alone, the namespace import's quote line so
+ *    written; wb-z79l); the three JSX_PLACES lines moved
  *    after the five CALLEE_WRAPPERS lines (QC-CATORDER); and the one-line forms R-B564 guards - exactly the forms the NOT
  *    CLAIMED sentence below lists by control (the flattening's dropping of white space trailing an entry's line is NOT
  *    CLAIMED: no entry's line carries any, and refusal #3's GP13-M-ONELINE-TRIMSTART, which keeps it, reads more, never
@@ -536,15 +568,15 @@
  *    record).
  *  - quotesReading, the control names: QC-PLANT moved into the helper header above the block (QC-NAMES-ABOVE, first
  *    position), QC-NAMES-BELOW moved below it (QC-NAMES-BELOW, last position), the prose ended directly after the heading so
- *    the block names none (QC-PROSE-BREAK, 44 of 44 differ), QC-NAMES dropped (QC-NAMES) and QC-LABEL and QC-ORDER swapped
+ *    the block names none (QC-PROSE-BREAK, 46 of 46 differ), QC-NAMES dropped (QC-NAMES) and QC-LABEL and QC-ORDER swapped
  *    (QC-NAMES-ORDER).
  *  - plantsReading, the ids: the fixture's first id written QC-PLANTS for QC-PLANT, a letter added at its end (QP-IDS-FIRST,
  *    first position); QC-CATORDER written QC-CAT-ORDER, a hyphen added inside it (QP-IDS-RENAME); every id written with -X
- *    after it (QP-IDS-EVERY, every position: 87 of 87 differ); QC-MISSING's and QC-EXTRA's entries swapped (QP-IDS-SWAP); a
+ *    after it (QP-IDS-EVERY, every position: 89 of 89 differ); QC-MISSING's and QC-EXTRA's entries swapped (QP-IDS-SWAP); a
  *    second QC-PLANT entry, QC-PLANT's lines in it, added after the last (QP-IDS-EXTRA, last position); the last entry
  *    removed (QP-IDS-DROP, last position); and (wb-0fq9) an id renamed by its letters' case alone, its lines kept - the first
  *    id written qc-plant (QP-IDS-CASE-FIRST, first position), QC-VOCAB-BELOW written qc-vocab-below (QP-IDS-CASE, position
- *    25) and the last id written qp-ids-drop (QP-IDS-CASE-LAST, last position) - and an entry QC-ZZ holding no line added
+ *    27) and the last id written qp-ids-drop (QP-IDS-CASE-LAST, last position) - and an entry QC-ZZ holding no line added
  *    after the last (QP-IDS-EMPTY-ENTRY, last position).
  *  - plantsReading, the controls and their lines: first QP-FIRST-LINE (the fixture's first entry written with
  *    require: string for require: number) and QP-LEAD (QC-SPACE-QUOTE's entry written with a space before its removed line,
@@ -552,7 +584,7 @@
  *    written line, its last line), QP-LINE-ADDED (QC-CATALOG's entry with its written line written a second time after
  *    itself) and QP-EVERY-LAST (QC-HARDCODE-EVERY's last entry plant re-pointed, line 49); every line of every control
  *    QP-LINES-EVERY (each written with ! after it); the other one-line forms exactly as the NOT CLAIMED sentence below
- *    lists them by control; and (wb-0fq9) QC-VOCAB-BELOW's entry, position 25, written with an empty line before its first
+ *    lists them by control; and (wb-0fq9) QC-VOCAB-BELOW's entry, position 27, written with an empty line before its first
  *    line (QP-LINE-EMPTY) and after its last (QP-LINE-EMPTY-LAST), with a line of one white space character, each character
  *    of the engine's set, before its first (QP-LINE-BLANK, a sweep) and with no line (QP-LINES-NONE), each rewrite read by
  *    plantsFixture from the fixture's text; and the delivered fixture's own entries holding those forms, read by
@@ -598,7 +630,9 @@
  * signature, line 36 (QC-PLANT), the block's first and last quote lines written with nothing after the indent for their
  * text, lines 1 and 49, and its 25th with one white space character after the indent for its text, each character of the
  * engine's set, line 25 (QC-RUN-EMPTIED-FIRST, QC-RUN-EMPTIED-LAST, QC-RUN-BLANK; wb-0fq9), a line holding nothing after its
- * indent written after line 25 (QC-RUN-EMPTY; wb-0fq9), and the orders and run lines ENUMERATION names (QC-ORDER,
+ * indent written after line 25 (QC-RUN-EMPTY; wb-0fq9), the colon after its label dropped from the namespace import's quote
+ * line alone, line 21 (QC-RUN-NOCOLON, wb-z79l), and from all 49 quote lines at once (QC-RUN-NOCOLON-EVERY, wb-z79l), and
+ * the orders and run lines ENUMERATION names (QC-ORDER,
  * QC-CATORDER, QC-MISSING, QC-EXTRA, QC-UNPARSED) - and every other difference between a quote line and its entry's line is
  * NOT CLAIMED, though the code
  * compares each pair in full (a description, not a claim): a character outside printable ASCII and that
@@ -663,7 +697,11 @@
  * controls, refusal #4's U1 forms are QUOTES PLANTS controls and its U2 forms QUOTES controls (cut #5, ENUMERATION above),
  * refusal #5's four forms are pins of this census at wb-0fq9's plants (ENUMERATION above) and the cut #6 scope sentence above
  * names each of them at any other line or position NOT CLAIMED (no residual), and every other form is the scope
- * sentences above.
+ * sentences above. wb-z79l names no residual: F1's two forms, a content difference at a middle position of the quote run
+ * and a quote line written without the colon after its label, are pinned as the plants of QC-RUN-NOCOLON (the colon
+ * dropped at the middle line 21 alone) and QC-RUN-NOCOLON-EVERY (the colon dropped at all 49 lines at once, a content
+ * difference at every position), ENUMERATION above; every other form of either is the NOT CLAIMED sentences above (a
+ * scope sentence, no residual).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
  * cited suite and its closure, the census tier's config, the default tier's config through the census guard, the landed
@@ -3065,6 +3103,10 @@ const ANGLE_NOWHERE = 'Vocabulary: CALLEE_WRAPPERS "a <T> assertion" (<(lgS: str
 const QUOTE_TAIL = `${HEADER.filter(line => line.startsWith(`${QUOTE_INDENT}JSX_PLACES "`) || line.startsWith(`${QUOTE_INDENT}CALLEE_WRAPPERS "`)).join("\n")}\n`;
 /** The block's quote lines, each without its indent, as the helper writes them (QC-VOCAB-EVERY's findings name every entry so). */
 const QUOTE_RUN: readonly string[] = HEADER.filter(line => QUOTE_ROWS.some(row => line.startsWith(`${QUOTE_INDENT}${row.catalog} "`))).map(line => line.slice(QUOTE_INDENT.length));
+/** wb-z79l: the block's quote lines, each with its indent and line break, as the helper writes them, and the same lines each
+ * written without the colon after its label (its first '": ' written '" '; QC-RUN-NOCOLON-EVERY's plant). */
+const QUOTE_BLOCK = QUOTE_RUN.map(line => `${QUOTE_INDENT}${line}\n`).join("");
+const QUOTE_BLOCK_NOCOLON = QUOTE_RUN.map(line => `${QUOTE_INDENT}${line.replace('": ', '" ')}\n`).join("");
 /** The helper's VOCABULARY QUOTES heading line and its Vocabulary's opening line, each with its line break. */
 const QUOTES_HEADING_LINE = `${HEADER.find(line => line.startsWith(QUOTES_HEADING)) ?? QUOTES_HEADING}\n`;
 const VOCABULARY_OPENING_LINE = `${HEADER.find(line => line.startsWith(VOCABULARY_OPENING)) ?? VOCABULARY_OPENING}\n`;
@@ -3143,8 +3185,14 @@ const QUOTE_CONTROLS: readonly QuoteControl[] = [
     headerPlant([' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n', ' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n']), 'block: 1 of 50 quote lines differ from the entries (50 lines, 49 entries); the first, line 50, reads CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js") for nothing'),
   quoteControl("QC-RUN-INDENT-TWO", "the block's last quote line written with two spaces after its asterisk, so the quote run ends before it (cut #5: the run's lines open with three spaces; refusal #3's GP13-M-RUN-STOP-TWO)",
     headerPlant([' *   CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n', ' *  CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")\n']), 'block: 1 of 49 quote lines differ from the entries (48 lines, 49 entries); the first, line 49, reads nothing for CALLEE_WRAPPERS "a non-null assertion": require!("./lg-x.js")'),
+  quoteControl("QC-RUN-NOCOLON", "the namespace import's quote line, line 21, written without the colon after its label (wb-z79l: the gate's witness GP6-W-RUN21-NOCOLON, wb-3uxh landing 991 F1)",
+    headerPlant([' *   NONVALUE_PLACES "a namespace import": import * as name from "./lg-x.js"; export const lgW = 1;\n', ' *   NONVALUE_PLACES "a namespace import" import * as name from "./lg-x.js"; export const lgW = 1;\n']),
+    'block: 1 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 21, reads NONVALUE_PLACES "a namespace import" import * as name from "./lg-x.js"; export const lgW = 1; for NONVALUE_PLACES "a namespace import": import * as name from "./lg-x.js"; export const lgW = 1;'),
+  quoteControl("QC-RUN-NOCOLON-EVERY", "every quote line of the block written without the colon after its label (wb-z79l: the quote run against the entries at every position)",
+    headerPlant([QUOTE_BLOCK, QUOTE_BLOCK_NOCOLON]),
+    'block: 49 of 49 quote lines differ from the entries (49 lines, 49 entries); the first, line 1, reads NONVALUE_PLACES "a member name" export const lgW = (m: Record<string, unknown>): unknown => m.name; for NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;'),
   quoteControl("QC-PROSE-BREAK", "a comment line holding only its asterisk inserted after the VOCABULARY QUOTES heading line",
-    headerPlant([QUOTES_HEADING_LINE, `${QUOTES_HEADING_LINE} *\n`]), 'block: 49 of 49 quote lines differ from the entries (0 lines, 49 entries); the first, line 1, reads nothing for NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;', 'controls: 44 of 44 differ (the block names 0, the census runs 44); the first, 1, names nothing for QC-PLANT'),
+    headerPlant([QUOTES_HEADING_LINE, `${QUOTES_HEADING_LINE} *\n`]), 'block: 49 of 49 quote lines differ from the entries (0 lines, 49 entries); the first, line 1, reads nothing for NONVALUE_PLACES "a member name": export const lgW = (m: Record<string, unknown>): unknown => m.name;', 'controls: 46 of 46 differ (the block names 0, the census runs 46); the first, 1, names nothing for QC-PLANT'),
   quoteControl("QC-RUN-EMPTY", "a line holding nothing after its indent written after the run's 25th line, the class get accessor key's (wb-0fq9: refusal #5's U1 witness GP16E-WQ-RUN-BLANK-MID)",
     headerPlant([` *   ${CLASS_GET_LINE}\n`, ` *   ${CLASS_GET_LINE}\n${QUOTE_INDENT}\n`]), afterClassGetDiffers("")),
   quoteSweep("QC-RUN-BLANK", "the run's 25th line, the class get accessor key's, written with one white space character after its indent for its text, each of the engine's set (wb-0fq9: refusal #5's U1 form holding white space only)", WHITE_SPACE,
@@ -3196,12 +3244,12 @@ const QUOTE_CONTROLS: readonly QuoteControl[] = [
     headerPlant([VOCABULARY_OPENING_LINE, `${VOCABULARY_OPENING_LINE}${VOCABULARY_OPENING_LINE}`]), 'VOCABULARY QUOTES heading lines 1, Vocabulary opening lines 2: one each is owed'),
   quoteControl("QC-OPENING-NONE", "the Vocabulary's opening written with a comma for its semicolon",
     headerPlant([" * Vocabulary (refusal #2 on wb-tz2.21; narrowed", " * Vocabulary (refusal #2 on wb-tz2.21, narrowed"]), 'VOCABULARY QUOTES heading lines 1, Vocabulary opening lines 0: one each is owed'),
-  quoteControl("QC-NAMES", "QC-NAMES dropped from the block's control names", headerPlant(["QC-OPENING-NONE, QC-NAMES,\n", "QC-OPENING-NONE,\n"]), 'controls: 4 of 44 differ (the block names 43, the census runs 44); the first, 41, names QC-NAMES-ORDER for QC-NAMES'),
-  quoteControl("QC-NAMES-ORDER", "QC-LABEL and QC-ORDER swapped in the block's control names", headerPlant(["QC-LABEL, QC-ORDER", "QC-ORDER, QC-LABEL"]), 'controls: 2 of 44 differ (the block names 44, the census runs 44); the first, 2, names QC-ORDER for QC-LABEL'),
+  quoteControl("QC-NAMES", "QC-NAMES dropped from the block's control names", headerPlant(["QC-OPENING-NONE, QC-NAMES,\n", "QC-OPENING-NONE,\n"]), 'controls: 4 of 46 differ (the block names 45, the census runs 46); the first, 43, names QC-NAMES-ORDER for QC-NAMES'),
+  quoteControl("QC-NAMES-ORDER", "QC-LABEL and QC-ORDER swapped in the block's control names", headerPlant(["QC-LABEL, QC-ORDER", "QC-ORDER, QC-LABEL"]), 'controls: 2 of 46 differ (the block names 46, the census runs 46); the first, 2, names QC-ORDER for QC-LABEL'),
   quoteControl("QC-NAMES-ABOVE", "QC-PLANT moved from the block's control names into the helper header above the block",
-    headerPlant(["mismatch: QC-PLANT,\n", "mismatch:\n"], [" * quotes the satisfies and <T> wrappers in a call.\n", " * quotes the satisfies and <T> wrappers in a call (QC-PLANT).\n"]), 'controls: 44 of 44 differ (the block names 43, the census runs 44); the first, 1, names QC-LABEL for QC-PLANT'),
+    headerPlant(["mismatch: QC-PLANT,\n", "mismatch:\n"], [" * quotes the satisfies and <T> wrappers in a call.\n", " * quotes the satisfies and <T> wrappers in a call (QC-PLANT).\n"]), 'controls: 46 of 46 differ (the block names 45, the census runs 46); the first, 1, names QC-LABEL for QC-PLANT'),
   quoteControl("QC-NAMES-BELOW", "QC-NAMES-BELOW moved from the block's control names into the helper header below the block",
-    headerPlant([" and QC-NAMES-BELOW. No entry", ". No entry"], [" * PINNED by wb-cl20 (R-B438), by name,", " * PINNED by wb-cl20 (R-B438; QC-NAMES-BELOW), by name,"]), 'controls: 1 of 44 differ (the block names 43, the census runs 44); the first, 44, names nothing for QC-NAMES-BELOW'),
+    headerPlant([" and QC-NAMES-BELOW. No entry", ". No entry"], [" * PINNED by wb-cl20 (R-B438), by name,", " * PINNED by wb-cl20 (R-B438; QC-NAMES-BELOW), by name,"]), 'controls: 1 of 46 differ (the block names 45, the census runs 46); the first, 46, names nothing for QC-NAMES-BELOW'),
 ];
 
 // ---- wb-3uxh cut #3 (refusal #2, gate-prep-16, O:2091, U3): QUOTES PLANTS ----------------------------------------------------
@@ -3545,72 +3593,72 @@ const PLANTS_CONTROLS: readonly PlantsControl[] = [
     ...sweepTags("QC-ENTRY-WHITE").map(tag => plantLineDiffers(`QC-ENTRY-WHITE ${tagName(tag)}`, 1, 1, `= NONVALUE_PLACES "a property key": export const lgW = {${tag}name: 1 }; / require: export const lgW = {${tag}require: 1 };`, `= NONVALUE_PLACES "a property key": export const lgW = { ${tag}name: 1 }; / require: export const lgW = { ${tag}require: 1 };`))),
   plantsControl("QP-TEMPLATE-QP", "the fixture's QP-CHAR-FOR-SPACE and QP-CHAR-AFTER entries written with a space after the <tag> of each plant for <tag>",
     rewritePlant(
-      [46, ["QP-CHAR-FOR-SPACE", [`tags ${[...WHITE_SPACE.filter(char => char !== " "), ...PRINTABLE].map(tagName).join(" ")}`, "~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type lgT =<tag> typeof name;']]],
-      [47, ["QP-CHAR-AFTER", [`tags ${[...WHITE_SPACE, ...PRINTABLE].map(tagName).join(" ")}`, "~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type lgT = typeof name;<tag> ']]],
+      [48, ["QP-CHAR-FOR-SPACE", [`tags ${[...WHITE_SPACE.filter(char => char !== " "), ...PRINTABLE].map(tagName).join(" ")}`, "~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type lgT =<tag> typeof name;']]],
+      [49, ["QP-CHAR-AFTER", [`tags ${[...WHITE_SPACE, ...PRINTABLE].map(tagName).join(" ")}`, "~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type lgT = typeof name;<tag> ']]],
     ),
     plantLineDiffers("QP-CHAR-FOR-SPACE", 4, 4, '+  *   NONVALUE_PLACES "a type query": export type lgT =<tag>typeof name;', '+  *   NONVALUE_PLACES "a type query": export type lgT =<tag> typeof name;'),
     ...[...WHITE_SPACE.filter(char => char !== " "), ...PRINTABLE].map(tag => plantLineDiffers(`QP-CHAR-FOR-SPACE ${tagName(tag)}`, 3, 3, `+  *   NONVALUE_PLACES "a type query": export type lgT =${tag}typeof name;`, `+  *   NONVALUE_PLACES "a type query": export type lgT =${tag} typeof name;`)),
     plantLineDiffers("QP-CHAR-AFTER", 4, 4, `${TYPE_QUERY_WRITTEN}<tag>`, `${TYPE_QUERY_WRITTEN}<tag> `),
     ...[...WHITE_SPACE, ...PRINTABLE].map(tag => plantLineDiffers(`QP-CHAR-AFTER ${tagName(tag)}`, 3, 3, `${TYPE_QUERY_WRITTEN}${tag}`, `${TYPE_QUERY_WRITTEN}${tag} `))),
   plantsControl("QP-QP", "the fixture's QP-CASE entry written with one space after the type query's '='",
-    rewritePlant([44, ["QP-CASE", ["~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;']]]),
+    rewritePlant([46, ["QP-CASE", ["~ QC-CASE", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;']]]),
     plantLineDiffers("QP-CASE", 3, 3, '+  *   NONVALUE_PLACES "a type query": export type LgT =  typeof name;', '+  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;')),
   plantsControl("QP-MARKS", "the fixture's QP-QP entry written with its position line, its id line and its re-pointed id line each naming another",
-    rewritePlant([68, ["QP-QP", ["# 46", "id QP-CASES", "~ QC-CASES", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;']]]),
-    "QP-QP: 3 of 5 lines differ from the fixture's (the census writes 5, the fixture 5); the first, line 1, reads # 45 for # 46"),
+    rewritePlant([70, ["QP-QP", ["# 48", "id QP-CASES", "~ QC-CASES", '-  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;', '+  *   NONVALUE_PLACES "a type query": export type LgT = typeof name;']]]),
+    "QP-QP: 3 of 5 lines differ from the fixture's (the census writes 5, the fixture 5); the first, line 1, reads # 47 for # 48"),
   plantsControl("QP-IDS-FIRST", "the fixture's first entry, QC-PLANT's, named QC-PLANTS, its lines kept (cut #5: the ids at the first position; refusal #4's GP15-W-FIXTURE-RENAME-FIRST)",
     () => rewritePlant([0, ["QC-PLANTS", quoteLines("QC-PLANT")]]),
-    "ids: 1 of 87 differ (the fixture names 87, the census runs 87); the first, 1, names QC-PLANTS for QC-PLANT"),
+    "ids: 1 of 89 differ (the fixture names 89, the census runs 89); the first, 1, names QC-PLANTS for QC-PLANT"),
   plantsControl("QP-FIRST-LINE", "the fixture's first entry, QC-PLANT's, written with require: string for require: number (cut #5: a control's lines at the first position; refusal #4's GP15-W-FIXTURE-FIRST-LINE)",
     rewritePlant([0, ["QC-PLANT", ['= NONVALUE_PLACES "a type literal set accessor key": export type LgT = { name: number }; / require: export type LgT = { require: string };']]]),
     plantLineDiffers("QC-PLANT", 1, 1, '= NONVALUE_PLACES "a type literal set accessor key": export type LgT = { name: number }; / require: export type LgT = { require: number };', '= NONVALUE_PLACES "a type literal set accessor key": export type LgT = { name: number }; / require: export type LgT = { require: string };')),
   plantsControl("QP-IDS-EVERY", "every fixture entry's id written with -X after it (cut #5: the ids at every position)",
     everyPlant("id", "-X"),
-    "ids: 87 of 87 differ (the fixture names 87, the census runs 87); the first, 1, names QC-PLANT-X for QC-PLANT"),
+    "ids: 89 of 89 differ (the fixture names 89, the census runs 89); the first, 1, names QC-PLANT-X for QC-PLANT"),
   plantsControlOf("QP-LINES-EVERY", "every line of every fixture entry written with ! after it (cut #5: every control at every line and every sweep at every tag)",
     everyPlant("line", "!"),
     () => everyLineFindings("!")),
   plantsControl("QP-IDS-RENAME", "the fixture's QC-CATORDER entry named QC-CAT-ORDER, its lines kept",
     () => rewritePlant([12, ["QC-CAT-ORDER", quoteLines("QC-CATORDER")]]),
-    "ids: 1 of 87 differ (the fixture names 87, the census runs 87); the first, 13, names QC-CAT-ORDER for QC-CATORDER"),
+    "ids: 1 of 89 differ (the fixture names 89, the census runs 89); the first, 13, names QC-CAT-ORDER for QC-CATORDER"),
   plantsControl("QP-IDS-SWAP", "the fixture's QC-MISSING and QC-EXTRA entries swapped",
     rewritePlant([14, ["QC-EXTRA", [NON_NULL_PLUS]]], [15, ["QC-MISSING", [NON_NULL_MINUS]]]),
-    "ids: 2 of 87 differ (the fixture names 87, the census runs 87); the first, 15, names QC-EXTRA for QC-MISSING",
+    "ids: 2 of 89 differ (the fixture names 89, the census runs 89); the first, 15, names QC-EXTRA for QC-MISSING",
     plantLineDiffers("QC-MISSING", 1, 1, NON_NULL_MINUS, NON_NULL_PLUS),
     plantLineDiffers("QC-EXTRA", 1, 1, NON_NULL_PLUS, NON_NULL_MINUS)),
   plantsControl("QP-IDS-CASE", "the fixture's QC-VOCAB-BELOW entry named qc-vocab-below, its lines kept (wb-0fq9: an id renamed by its letters' case alone; refusal #5's U3 witness GP16E-WP-IDS-LOWER-MID)",
-    () => rewritePlant([24, ["qc-vocab-below", quoteLines("QC-VOCAB-BELOW")]]),
-    "ids: 1 of 87 differ (the fixture names 87, the census runs 87); the first, 25, names qc-vocab-below for QC-VOCAB-BELOW"),
+    () => rewritePlant([26, ["qc-vocab-below", quoteLines("QC-VOCAB-BELOW")]]),
+    "ids: 1 of 89 differ (the fixture names 89, the census runs 89); the first, 27, names qc-vocab-below for QC-VOCAB-BELOW"),
   plantsControl("QP-IDS-CASE-FIRST", "the fixture's first entry, QC-PLANT's, named qc-plant, its lines kept (wb-0fq9: the case-only rename at the first position)",
     () => rewritePlant([0, ["qc-plant", quoteLines("QC-PLANT")]]),
-    "ids: 1 of 87 differ (the fixture names 87, the census runs 87); the first, 1, names qc-plant for QC-PLANT"),
+    "ids: 1 of 89 differ (the fixture names 89, the census runs 89); the first, 1, names qc-plant for QC-PLANT"),
   plantsControl("QP-IDS-CASE-LAST", "the fixture's last entry, QP-IDS-DROP's, named qp-ids-drop, its line kept (wb-0fq9: the case-only rename at the last position)",
-    rewritePlant([86, ["qp-ids-drop", ["# 87"]]]),
-    "ids: 1 of 87 differ (the fixture names 87, the census runs 87); the first, 87, names qp-ids-drop for QP-IDS-DROP"),
+    rewritePlant([88, ["qp-ids-drop", ["# 89"]]]),
+    "ids: 1 of 89 differ (the fixture names 89, the census runs 89); the first, 89, names qp-ids-drop for QP-IDS-DROP"),
   plantsControl("QP-LINE-EMPTY", "the fixture's QC-VOCAB-BELOW entry written with an empty line before its first line (wb-0fq9: refusal #5's U2 witness GP16E-WP-FIX-EMPTY-LINE)",
-    () => rewritePlant([24, ["QC-VOCAB-BELOW", ["", ...quoteLines("QC-VOCAB-BELOW")]]]),
+    () => rewritePlant([26, ["QC-VOCAB-BELOW", ["", ...quoteLines("QC-VOCAB-BELOW")]]]),
     `QC-VOCAB-BELOW: 5 of 5 lines differ from the fixture's (the census writes 4, the fixture 5); the first, line 1, reads ${ANGLE_MINUS} for `),
   plantsControl("QP-LINE-EMPTY-LAST", "the fixture's QC-VOCAB-BELOW entry written with an empty line after its last line (wb-0fq9: the empty line at an entry's last line)",
-    () => rewritePlant([24, ["QC-VOCAB-BELOW", [...quoteLines("QC-VOCAB-BELOW"), ""]]]),
+    () => rewritePlant([26, ["QC-VOCAB-BELOW", [...quoteLines("QC-VOCAB-BELOW"), ""]]]),
     "QC-VOCAB-BELOW: 1 of 5 lines differ from the fixture's (the census writes 4, the fixture 5); the first, line 5, reads nothing for "),
   plantsSweep("QP-LINE-BLANK", "the fixture's QC-VOCAB-BELOW entry written with a line of one white space character, each of the engine's set, before its first line (wb-0fq9: QP-LINE-EMPTY's line holding white space only)", WHITE_SPACE,
-    tag => rewritePlant([24, ["QC-VOCAB-BELOW", [tag, ...quoteLines("QC-VOCAB-BELOW")]]]),
+    tag => rewritePlant([26, ["QC-VOCAB-BELOW", [tag, ...quoteLines("QC-VOCAB-BELOW")]]]),
     tag => `QC-VOCAB-BELOW: 5 of 5 lines differ from the fixture's (the census writes 4, the fixture 5); the first, line 1, reads ${ANGLE_MINUS} for ${tag}`),
   plantsControl("QP-IDS-EMPTY-ENTRY", "an entry QC-ZZ holding no line added after the fixture's last entry (wb-0fq9: refusal #5's U2 witness GP16E-WP-FIX-EMPTY-ENTRY)",
-    rewritePlant([87, ["QC-ZZ", []]]),
-    "ids: 1 of 88 differ (the fixture names 88, the census runs 87); the first, 88, names QC-ZZ for nothing"),
+    rewritePlant([89, ["QC-ZZ", []]]),
+    "ids: 1 of 90 differ (the fixture names 90, the census runs 89); the first, 90, names QC-ZZ for nothing"),
   plantsControl("QP-LINES-NONE", "the fixture's QC-VOCAB-BELOW entry written with no line (wb-0fq9: an entry holding no line at a middle position)",
-    rewritePlant([24, ["QC-VOCAB-BELOW", []]]),
+    rewritePlant([26, ["QC-VOCAB-BELOW", []]]),
     `QC-VOCAB-BELOW: 4 of 4 lines differ from the fixture's (the census writes 4, the fixture 0); the first, line 1, reads ${ANGLE_MINUS} for nothing`),
   plantsControl("QP-NO-PLANT", "nothing planted: the delivered fixture and controls, this control's own fixture entry holding no line (wb-0fq9: an entry holding no line in the delivered fixture, so plantsFixture reads that form as the fixture is delivered)",
     NO_PLANTS_PLANT),
   plantsControl("QP-IDS-EXTRA", "a second QC-PLANT entry added after the fixture's last entry",
-    () => rewritePlant([87, ["QC-PLANT", quoteLines("QC-PLANT")]]),
-    "ids: 1 of 88 differ (the fixture names 88, the census runs 87); the first, 88, names QC-PLANT for nothing"),
+    () => rewritePlant([89, ["QC-PLANT", quoteLines("QC-PLANT")]]),
+    "ids: 1 of 90 differ (the fixture names 90, the census runs 89); the first, 90, names QC-PLANT for nothing"),
   plantsControl("QP-IDS-DROP", "the fixture's last entry removed",
-    rewritePlant([86, undefined]),
-    "ids: 1 of 87 differ (the fixture names 86, the census runs 87); the first, 87, names nothing for QP-IDS-DROP",
-    "QP-IDS-DROP: 1 of 1 lines differ from the fixture's (the census writes 1, the fixture 0); the first, line 1, reads # 87 for nothing"),
+    rewritePlant([88, undefined]),
+    "ids: 1 of 89 differ (the fixture names 88, the census runs 89); the first, 89, names nothing for QP-IDS-DROP",
+    "QP-IDS-DROP: 1 of 1 lines differ from the fixture's (the census writes 1, the fixture 0); the first, line 1, reads # 89 for nothing"),
 ];
 
 /** MEMBERS rows with their place among their claim's pieces. */
@@ -3701,19 +3749,19 @@ const FROZEN_SHAPE: readonly string[] = [
   "QUOTES:QC-PLANT:1", "QUOTES:QC-LABEL:1", "QUOTES:QC-ORDER:1", "QUOTES:QC-CATALOG:1", "QUOTES:QC-CASE:1", "QUOTES:QC-SPACE-ENTRY:2",
   "QUOTES:QC-SPACE-QUOTE:1", "QUOTES:QC-RUN-AFTER:118", "QUOTES:QC-RUN-BEFORE:118", "QUOTES:QC-RUN-NOSEMI:1", "QUOTES:QC-RUN-WHITE:23",
   "QUOTES:QC-ENTRY-WHITE:23", "QUOTES:QC-CATORDER:1", "QUOTES:QC-UNPARSED:1", "QUOTES:QC-MISSING:1", "QUOTES:QC-EXTRA:1",
-  "QUOTES:QC-RUN-INDENT-TWO:1", "QUOTES:QC-PROSE-BREAK:2", "QUOTES:QC-RUN-EMPTY:1", "QUOTES:QC-RUN-BLANK:24", "QUOTES:QC-RUN-EMPTIED-FIRST:1",
+  "QUOTES:QC-RUN-INDENT-TWO:1", "QUOTES:QC-RUN-NOCOLON:1", "QUOTES:QC-RUN-NOCOLON-EVERY:1", "QUOTES:QC-PROSE-BREAK:2", "QUOTES:QC-RUN-EMPTY:1", "QUOTES:QC-RUN-BLANK:24", "QUOTES:QC-RUN-EMPTIED-FIRST:1",
   "QUOTES:QC-RUN-EMPTIED-LAST:1", "QUOTES:QC-VOCAB-DROP:1", "QUOTES:QC-VOCAB-ABOVE:1", "QUOTES:QC-VOCAB-BELOW:1", "QUOTES:QC-VOCAB-SECOND:1",
   "QUOTES:QC-VOCAB-HEAD:2", "QUOTES:QC-VOCAB-AFTER:91", "QUOTES:QC-VOCAB-BEFORE:93", "QUOTES:QC-VOCAB-FIRST:1", "QUOTES:QC-VOCAB-LAST:1", "QUOTES:QC-VOCAB-EVERY:49",
   "QUOTES:QC-HARDCODE:1", "QUOTES:QC-HARDCODE-JSX:1",
   "QUOTES:QC-HARDCODE-CW:1", "QUOTES:QC-HARDCODE-EVERY:49", "QUOTES:QC-HEADING-TWICE:1", "QUOTES:QC-HEADING-NONE:1",
   "QUOTES:QC-OPENING-TWICE:1", "QUOTES:QC-OPENING-NONE:1", "QUOTES:QC-NAMES:1", "QUOTES:QC-NAMES-ORDER:1", "QUOTES:QC-NAMES-ABOVE:1",
   "QUOTES:QC-NAMES-BELOW:1",
-  "PLANTS:reading:QC=44,QP=43,QC-RUN-AFTER=118,QC-RUN-BEFORE=118,QC-RUN-WHITE=23,QC-ENTRY-WHITE=23,QC-RUN-BLANK=24,QC-VOCAB-AFTER=91,QC-VOCAB-BEFORE=93",
+  "PLANTS:reading:QC=46,QP=43,QC-RUN-AFTER=118,QC-RUN-BEFORE=118,QC-RUN-WHITE=23,QC-ENTRY-WHITE=23,QC-RUN-BLANK=24,QC-VOCAB-AFTER=91,QC-VOCAB-BEFORE=93",
   "PLANTS:QP-CASE:1", "PLANTS:QP-CASE-LETTER:1", "PLANTS:QP-CHAR-FOR-SPACE:117", "PLANTS:QP-CHAR-AFTER:118", "PLANTS:QP-SEMI:1", "PLANTS:QP-TRAIL:1", "PLANTS:QP-LEAD:1", "PLANTS:QP-ENTRY:1", "PLANTS:QP-ENTRY-FIRST:1", "PLANTS:QP-ENTRY-SECOND:1", "PLANTS:QP-MINUS:1",
   "PLANTS:QP-EVERY-LAST:1", "PLANTS:QP-ORDER-LINES:1", "PLANTS:QP-LINE-DROPPED:1", "PLANTS:QP-LINE-ADDED:1", "PLANTS:QP-TAGS-LINE:1",
   "PLANTS:QP-TAGS-RUN-AFTER:118", "PLANTS:QP-TAGS-RUN-BEFORE:118", "PLANTS:QP-TAGS-RUN-WHITE:23", "PLANTS:QP-TAGS-ENTRY-WHITE:23",
   "PLANTS:QP-TAGS-VOCAB-AFTER:91", "PLANTS:QP-TAGS-VOCAB-BEFORE:93", "PLANTS:QP-TEMPLATE:24", "PLANTS:QP-TEMPLATE-QP:237", "PLANTS:QP-QP:1", "PLANTS:QP-MARKS:1",
-  "PLANTS:QP-IDS-FIRST:1", "PLANTS:QP-FIRST-LINE:1", "PLANTS:QP-IDS-EVERY:1", "PLANTS:QP-LINES-EVERY:835", "PLANTS:QP-IDS-RENAME:1",
+  "PLANTS:QP-IDS-FIRST:1", "PLANTS:QP-FIRST-LINE:1", "PLANTS:QP-IDS-EVERY:1", "PLANTS:QP-LINES-EVERY:837", "PLANTS:QP-IDS-RENAME:1",
   "PLANTS:QP-IDS-SWAP:3", "PLANTS:QP-IDS-CASE:1", "PLANTS:QP-IDS-CASE-FIRST:1", "PLANTS:QP-IDS-CASE-LAST:1", "PLANTS:QP-LINE-EMPTY:1",
   "PLANTS:QP-LINE-EMPTY-LAST:1", "PLANTS:QP-LINE-BLANK:24", "PLANTS:QP-IDS-EMPTY-ENTRY:1", "PLANTS:QP-LINES-NONE:1", "PLANTS:QP-NO-PLANT:0", "PLANTS:QP-IDS-EXTRA:1", "PLANTS:QP-IDS-DROP:2",
 ];
@@ -3892,13 +3940,13 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   it("TILE: every MEMBERS row is keyed to a claim the header makes, in the header's order", () => {
     expect([...new Set(MEMBER_ROWS.map(row => row.key))]).toEqual(CLAIMS.map(([key]) => key));
   });
-  it("QUOTES: the reading of the delivered helper header and catalogs finds nothing - one VOCABULARY QUOTES heading and one Vocabulary opening, the 49 quote lines equal to the 49 entries' lines, every entry standing whole in the Vocabulary's definitions and written alike with its second identifier, and the block naming the census's 44 controls in order (the delivered tree only; each form the QUOTES controls plant is its own row)", () => {
+  it("QUOTES: the reading of the delivered helper header and catalogs finds nothing - one VOCABULARY QUOTES heading and one Vocabulary opening, the 49 quote lines equal to the 49 entries' lines, every entry standing whole in the Vocabulary's definitions and written alike with its second identifier, and the block naming the census's 46 controls in order (the delivered tree only; each form the QUOTES controls plant is its own row)", () => {
     expect(quotesReading(HEADER, QUOTE_ROWS, QUOTE_CONTROLS.map(row => row.id))).toEqual([]);
   });
   it.each(QUOTE_CONTROLS)("QUOTES $id: the reading over $plant holds exactly the findings that plant earns", row => {
     expect(controlReading(row)).toEqual(row.findings);
   });
-  it("QUOTES PLANTS: the reading of the delivered fixture and controls finds nothing - the delivered fixture's 87 entries name the 44 QUOTES controls and then the 43 QUOTES PLANTS controls, in the census's order, each with its plant's lines (a sweep: its tags, then its plant for the tag <tag>), and every sweep's plant for each of its tags is the fixture's plant for <tag> with that tag written for <tag> (the delivered tree only; each form the QUOTES PLANTS controls plant is its own row)", { timeout: CENSUS_TIMEOUT }, () => {
+  it("QUOTES PLANTS: the reading of the delivered fixture and controls finds nothing - the delivered fixture's 89 entries name the 46 QUOTES controls and then the 43 QUOTES PLANTS controls, in the census's order, each with its plant's lines (a sweep: its tags, then its plant for the tag <tag>), and every sweep's plant for each of its tags is the fixture's plant for <tag> with that tag written for <tag> (the delivered tree only; each form the QUOTES PLANTS controls plant is its own row)", { timeout: CENSUS_TIMEOUT }, () => {
     expect(plantsPlantReading(NO_PLANTS_PLANT)).toEqual([]);
   });
   it.each(PLANTS_CONTROLS)("QUOTES PLANTS $id: the reading over $plant holds exactly the findings that plant earns", { timeout: CENSUS_TIMEOUT }, row => {
