@@ -4,8 +4,8 @@
  *
  * Spec of record: docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md
  * at pi-subagents master 0b25e14e084a5b1d612e780bc12a927b3a80dd62, lines 892-930 (TDD-MATRIX.md rows EAT-R028..EAT-R031 carry
- * the same red and mutant columns). Each describe block pins one requirement; its acceptance line and adversarial mutant,
- * verbatim:
+ * the same red and mutant columns). Each EAT describe block pins one requirement; its acceptance line and adversarial
+ * mutant, verbatim:
  *   EAT-R028  "Remove workbench:execute from an otherwise admitted function request; assert zero loader/provider calls."
  *             mutant: "Allow descriptor metadata to confer execute rights."
  *   EAT-R029  "A reviewed descriptor plus no action grant refuses; another function action grant refuses; only the adopted
@@ -17,6 +17,12 @@
  * The condition all four share: "Exact action grant spelling is proposed; MW-CONTRACT must bind it. It must be representable
  * through Pi grant settings and detached transport; no silent grammar bypass."
  *
+ * The other describe blocks pin further claims of the module's doc comments and of the receipt: the action grammar,
+ * judged through loadSettings and through launchDetachedWorkflow's launch-grant check; adoption's bounds and binding
+ * members; the rule order; the refusal reasons; unknown permission data; the function-definition boundary; and the
+ * not-wired clause, judged through workflow_execute. Cut #2 (the respin of gate refusal #1) added the judged mirror and
+ * every block after the function-definition boundary, and added cases inside the EAT blocks.
+ *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
  * below are TEST FIXTURES: the fixture-fn:* grants are not a proposed, adopted or recommended spelling, only a representable
@@ -24,11 +30,14 @@
  * authority holds (import the pinned export, then run it); the harness counts both, and the admission wait is a park the test
  * releases by hand.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { loadSettings } from "../src/settings.js";
-import type { JsonValue } from "../src/workbench/capability-registry.js";
+import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { decideExecute, EXECUTE_GRANT, type ExecuteAdmission } from "../src/workbench/execute.js";
+import { createWorkflowExecuteTool, DETACH_GRANT, type WorkflowExecuteDeps } from "../src/workbench/execute-tool.js";
 import {
   adoptFunctionActions,
   decideFunctionAuthority,
@@ -37,10 +46,14 @@ import {
   type FunctionActionBinding,
   type FunctionActionContract,
   type FunctionAuthorityHost,
+  type FunctionAuthorityInput,
+  type FunctionAuthorityRefusal,
+  type FunctionAuthorityRefused,
   type FunctionDispatchAuthority,
   type FunctionDispatchResult,
   type FunctionIdentity,
 } from "../src/workbench/function-authority.js";
+import { launchDetachedWorkflow } from "../src/workbench/hosts/local-detached.js";
 import type { DefinitionRef } from "../src/workbench/identity.js";
 import { hermeticDir } from "./helpers/boot-extension.js";
 
@@ -64,10 +77,10 @@ const CONTRACT: FunctionActionContract = adoptFunctionActions([
 ]);
 
 /** A real workflow_execute admission of a digest-pinned function definition, optionally carrying a caller policy and input. */
-function admissionFor(id = FUNCTION_ID, policy?: JsonValue, input: JsonValue = TASK, kind: DefinitionRef["kind"] = "function"): ExecuteAdmission {
+function admissionFor(id = FUNCTION_ID, policy?: JsonValue, input: JsonValue = TASK, kind: DefinitionRef["kind"] = "function", invocationId = INVOCATION): ExecuteAdmission {
   const decision = decideExecute(
     { definitionRef: { kind, id, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, input, hostMode: "embedded", ...(policy !== undefined ? { policy } : {}) },
-    { grants: [EXECUTE_GRANT], invocationId: INVOCATION },
+    { grants: [EXECUTE_GRANT], invocationId },
   );
   if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
   return decision.admission;
@@ -116,6 +129,65 @@ afterEach(() => {
   sandbox?.restore();
   sandbox = undefined;
 });
+
+/** A canonical scratch directory for the two judges below (hermeticDir composes test/helpers/scratch.ts; afterEach removes it). */
+function judgeDir(): string {
+  sandbox = hermeticDir();
+  return realpathSync(sandbox.dir);
+}
+
+/** Whether workbench.capabilityGrants carries the spelling: loadSettings over project settings listing it after workbench:execute. */
+function settingsCarry(dir: string, spelling: string): boolean {
+  writeFileSync(join(dir, ".pi", "subagents.json"), JSON.stringify({ workbench: { workflowAgentBackend: "claude", capabilityGrants: [EXECUTE_GRANT, spelling] } }));
+  try {
+    return loadSettings(dir).workbench?.capabilityGrants?.includes(spelling) === true;
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith("workbench.capabilityGrants")) return false;
+    throw error;
+  }
+}
+
+/**
+ * Whether the detached transport carries the grants: launchDetachedWorkflow's launch-grant check, on a request whose
+ * permissions omit inspect, so validation stops at the permissions check that follows it and nothing is created or spawned.
+ */
+async function transportCarries(cwd: string, grants: readonly string[]): Promise<boolean> {
+  const outcome = await launchDetachedWorkflow({
+    directory: join(cwd, "never-created"),
+    invocationId: "fa_transport_probe",
+    scriptPath: join(cwd, "never-read.js"),
+    cwd,
+    input: {},
+    trustedScript: true,
+    backend: "deterministic",
+    grants,
+    permissions: ["execute"],
+  }).then(
+    () => "launched",
+    (error: unknown) => (error instanceof Error ? error.message : String(error)),
+  );
+  if (outcome === "Invalid invocation permissions.") return true;
+  if (outcome === "Invalid explicit grants.") return false;
+  throw new Error(`unexpected detached validation outcome: ${outcome}`);
+}
+
+/** Whether adoption takes the spelling as a function action grant; any refusal must be the grammar refusal. */
+function adoptable(actionGrant: string): boolean {
+  try {
+    adoptFunctionActions([{ definitionId: FUNCTION_ID, actionGrant }]);
+    return true;
+  } catch (error) {
+    if (error instanceof CapabilityError && /not representable/.test(error.message)) return false;
+    throw error;
+  }
+}
+
+/** Freezes a value and everything it holds, so a decision that writes to its input throws. */
+function deepFreeze<T>(value: T): T {
+  if (typeof value !== "object" || value === null) return value;
+  for (const key of Reflect.ownKeys(value)) deepFreeze(Reflect.get(value, key));
+  return Object.freeze(value);
+}
 
 describe("EAT-R028: a function dispatch requires workbench:execute (wb-201v)", () => {
   it("refuses an otherwise authorized function request without workbench:execute before any wait, with zero loader and provider calls", async () => {
@@ -169,6 +241,13 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     ["a namespace sibling", "fixture-fn:write"],
   ])("refuses %s in the adopted action's namespace (%s)", async (_what, grant) => {
     const h = harness({ grants: [EXECUTE_GRANT, grant] });
+    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("refuses the adopted permission under another namespace (other-fn:develop-write): the namespace is part of the exact spelling", async () => {
+    const h = harness({ grants: [EXECUTE_GRANT, "other-fn:develop-write"] });
     expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
     expect(h.loader).not.toHaveBeenCalled();
     expect(h.provider).not.toHaveBeenCalled();
@@ -251,14 +330,69 @@ describe("the action grammar: representable through Pi grant settings and the de
     ["a leading space", ` ${ACTION}`],
     ["an empty string", ""],
     ["257 characters, past the detached transport's 256", `fixture-fn:${"a".repeat(246)}`],
-  ])("refuses to adopt %s", (_what, actionGrant) => {
+    ["an empty namespace", ":develop-write"],
+    ["an upper-case permission", "fixture-fn:Develop-write"],
+    ["two colons", PROPOSED_EXAMPLE],
+    ["an underscore", "fixture_fn:develop-write"],
+    ["a namespace that starts with a digit", "1fixture:develop-write"],
+    ["a permission that starts with a hyphen", "fixture-fn:-write"],
+    ["a trailing space", `${ACTION} `],
+  ])("refuses to adopt %s", async (_what, actionGrant) => {
     expect(() => adoptFunctionActions([{ definitionId: FUNCTION_ID, actionGrant }])).toThrow(/not representable/);
+    // The mirror, judged: workbench.capabilityGrants or the detached transport refuses the same spelling.
+    const dir = judgeDir();
+    expect(settingsCarry(dir, actionGrant) && (await transportCarries(dir, [EXECUTE_GRANT, actionGrant]))).toBe(false);
   });
 
-  it("adopts a grammar-valid spelling of exactly 256 characters, the detached transport's bound", () => {
+  it("adopts a grammar-valid spelling of exactly 256 characters, the detached transport's bound", async () => {
     const actionGrant = `fixture-fn:${"a".repeat(245)}`;
     expect(actionGrant).toHaveLength(256);
     expect(adoptFunctionActions([{ definitionId: FUNCTION_ID, actionGrant }])).toEqual({ state: "adopted", bindings: [{ definitionId: FUNCTION_ID, actionGrant }] });
+    const dir = judgeDir();
+    expect([settingsCarry(dir, actionGrant), await transportCarries(dir, [EXECUTE_GRANT, actionGrant])]).toEqual([true, true]);
+  });
+
+  it.each([
+    ["hyphens in both parts", ACTION],
+    ["a dot in the permission", "fixture-fn:develop.write"],
+    ["a digit in the permission", "fixture-fn:develop-write2"],
+    ["a dot and a digit in the namespace", "fixture.fn2:write"],
+    ["one letter in each part", "f:w"],
+    ["parts that end in a digit, a dot and a hyphen", "fixture0.-:write0.-"],
+  ])("adopts a spelling with %s, which workbench.capabilityGrants and the detached transport both carry", async (_what, actionGrant) => {
+    expect(adoptFunctionActions([{ definitionId: FUNCTION_ID, actionGrant }]).state).toBe("adopted");
+    const dir = judgeDir();
+    expect([settingsCarry(dir, actionGrant), await transportCarries(dir, [EXECUTE_GRANT, actionGrant])]).toEqual([true, true]);
+  });
+
+  it("for each probe character at the head or the tail of a namespace or a permission, adoption accepts the spelling exactly when workbench.capabilityGrants and the detached transport both carry it", async () => {
+    const dir = judgeDir();
+    const letters = [..."abcdefghijklmnopqrstuvwxyz"];
+    const grammar = [...letters, ..."0123456789.-"];
+    const outside = [..."AZ_*:/@ \t", "\u00e9"];
+    const disagreements: string[] = [];
+    let adopted = 0;
+    for (const char of [...grammar, ...outside]) {
+      for (const spelling of [`${char}fixture:write`, `fixture${char}:write`, `fixture:${char}write`, `fixture:write${char}`]) {
+        const seam = adoptable(spelling);
+        const carried = settingsCarry(dir, spelling) && (await transportCarries(dir, [EXECUTE_GRANT, spelling]));
+        if (seam !== carried) disagreements.push(`${JSON.stringify(spelling)}: adopted ${seam}, carried ${carried}`);
+        if (seam) adopted += 1;
+      }
+    }
+    expect(disagreements).toEqual([]);
+    // A part starts with a letter and continues with letters, digits, dots and hyphens.
+    expect(adopted).toBe(letters.length * 2 + grammar.length * 2);
+  });
+
+  it("the 256-character bound is the detached transport's own: launchDetachedWorkflow's launch-grant check carries 256 characters and refuses 257, first, last or alone in the grant list, while workbench.capabilityGrants carries both", async () => {
+    const at256 = `fixture-fn:${"a".repeat(245)}`;
+    const at257 = `${at256}a`;
+    expect([at256.length, at257.length]).toEqual([256, 257]);
+    const dir = judgeDir();
+    expect([settingsCarry(dir, at256), settingsCarry(dir, at257)]).toEqual([true, true]);
+    for (const grants of [[at256], [EXECUTE_GRANT, at256], [at256, EXECUTE_GRANT]]) expect(await transportCarries(dir, grants)).toBe(true);
+    for (const grants of [[at257], [EXECUTE_GRANT, at257], [at257, EXECUTE_GRANT]]) expect(await transportCarries(dir, grants)).toBe(false);
   });
 
   it("the transport bound mirrored by the seam is the one local-detached enforces on every launch grant", () => {
@@ -289,13 +423,22 @@ describe("the action grammar: representable through Pi grant settings and the de
     ).toThrow(/once/);
   });
 
-  it.each([
+  const MALFORMED: readonly (readonly [string, unknown])[] = [
     ["an empty binding list", []],
     ["a blank definition id", [{ definitionId: " ", actionGrant: ACTION }]],
     ["a definition id with an escape", [{ definitionId: `${FUNCTION_ID}\u001b[0m`, actionGrant: ACTION }]],
     ["a binding with an extra member", [{ definitionId: FUNCTION_ID, actionGrant: ACTION, grants: [EXECUTE_GRANT] }]],
-  ])("refuses %s", (_what, bindings) => {
-    expect(() => adoptFunctionActions(bindings as readonly FunctionActionBinding[])).toThrow();
+    ["a binding list that is not an array", { 0: { definitionId: FUNCTION_ID, actionGrant: ACTION }, length: 1 }],
+    ["a null binding", [null]],
+    ["an array binding", [[FUNCTION_ID, ACTION]]],
+    ["a binding with a non-plain prototype", [Object.assign(Object.create({ inherited: true }), { definitionId: FUNCTION_ID, actionGrant: ACTION })]],
+    ["a binding with a symbol-keyed member", [{ definitionId: FUNCTION_ID, actionGrant: ACTION, [Symbol("extra")]: true }]],
+    ["a binding without its action grant", [{ definitionId: FUNCTION_ID }]],
+    ["a binding without its definition id", [{ actionGrant: ACTION }]],
+    ["a non-text definition id", [{ definitionId: 7, actionGrant: ACTION }]],
+  ];
+  it.each(MALFORMED)("refuses %s", (_what, bindings) => {
+    expect(() => adoptFunctionActions(bindings as readonly FunctionActionBinding[])).toThrow(CapabilityError);
   });
 });
 
@@ -319,6 +462,32 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     wait.release();
     expect(refusalOf(await pending)).toEqual({ stage: "dispatch", policy: "changed-effective-identity", category: "authorization" });
     expect(h.loader).not.toHaveBeenCalled();
+  });
+
+  const COMPOSED: FunctionIdentity = { principal: "local-operator:1000:caf\u00e9", sessionId: "s\u00e9" };
+  const LOSSY_READINGS: readonly (readonly [string, FunctionIdentity, FunctionIdentity, (identity: FunctionIdentity) => string])[] = [
+    ["the two fields concatenated", HOST, { principal: "local-operator:1000:s1s", sessionId: "1" }, identity => identity.principal + identity.sessionId],
+    ["the two fields joined by a colon", HOST, { principal: "local-operator:1000", sessionId: "s1:s1" }, identity => `${identity.principal}:${identity.sessionId}`],
+    ["the pair read as an unordered set", HOST, { principal: HOST.sessionId, sessionId: HOST.principal }, identity => [identity.principal, identity.sessionId].sort().join("\n")],
+    ["each field case-folded", HOST, { principal: "LOCAL-OPERATOR:1000:S1", sessionId: "S1" }, identity => `${identity.principal.toLowerCase()}\n${identity.sessionId.toLowerCase()}`],
+    ["each field trimmed", HOST, { principal: ` ${HOST.principal}`, sessionId: `${HOST.sessionId} ` }, identity => `${identity.principal.trim()}\n${identity.sessionId.trim()}`],
+    [
+      "each field Unicode-normalized (composed at entry, decomposed after)",
+      COMPOSED,
+      { principal: "local-operator:1000:cafe\u0301", sessionId: "se\u0301" },
+      identity => `${identity.principal.normalize("NFC")}\n${identity.sessionId.normalize("NFC")}`,
+    ],
+  ];
+  it.each(LOSSY_READINGS)("park, change both fields so that %s still reads the same, release: refused before import", async (_reading, entered, changed, reading) => {
+    expect([changed.principal === entered.principal, changed.sessionId === entered.sessionId, reading(changed) === reading(entered)]).toEqual([false, false, true]);
+    const h = harness({ identity: entered });
+    const wait = parked();
+    const pending = h.run(admissionFor(), CONTRACT, wait.park);
+    h.state.identity = changed;
+    wait.release();
+    expect(refusalOf(await pending)).toEqual({ stage: "dispatch", policy: "changed-effective-identity", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
   });
 
   it("a caller principal or session field cannot override host identity, in either direction", async () => {
@@ -351,12 +520,34 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     ["a blank principal", { principal: " ", sessionId: "s1" }],
     ["a missing session", { principal: HOST.principal }],
     ["a non-text session", { principal: HOST.principal, sessionId: 1 }],
+    ["a principal of 257 bytes in 256 characters", { principal: `${"a".repeat(255)}\u00e9`, sessionId: "s1" }],
+    ["a principal carrying an escape", { principal: `${HOST.principal}\u001b[0m`, sessionId: "s1" }],
   ])("denies %s as unknown identity data before any dispatch", async (_what, identity) => {
     const dispatch = vi.fn(async () => "ran");
     const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
     const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
     expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
     expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  it("reads the identity through its own property descriptors: an accessor principal is unknown identity data and its getter never runs", async () => {
+    const getter = vi.fn(() => HOST.principal);
+    const identity = Object.defineProperty({ sessionId: HOST.sessionId }, "principal", { get: getter, enumerable: true });
+    const dispatch = vi.fn(async () => "ran");
+    const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
+    const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
+    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
+    expect(getter).not.toHaveBeenCalled();
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  it("the identity an authorized dispatch rests on is a frozen copy of the host's read, not the object the host returned", async () => {
+    const returned = { principal: HOST.principal, sessionId: HOST.sessionId };
+    const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host: { grants: () => [EXECUTE_GRANT, ACTION], identity: () => returned }, dispatch: async () => "ran" });
+    if (result.status !== "dispatched") throw new Error(`expected a dispatch, got ${result.status}`);
+    expect(result.authority.identity).toEqual(HOST);
+    expect(result.authority.identity).not.toBe(returned);
+    expect(Object.isFrozen(result.authority.identity)).toBe(true);
   });
 });
 
@@ -393,6 +584,76 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     expect(refusalOf(await pending)).toEqual({ stage: "dispatch", policy: "unknown-permission-data", category: "authorization" });
     expect(h.loader).not.toHaveBeenCalled();
   });
+
+  it("a revocation queued as a microtask right after release lands after the dispatch: dispatch is invoked while the host still holds both grants", async () => {
+    const h = harness();
+    const wait = parked();
+    const held: (readonly string[] | undefined)[] = [];
+    const pending = dispatchFunctionWithAuthority({
+      admission: admissionFor(),
+      contract: CONTRACT,
+      host: h.host,
+      park: wait.park,
+      dispatch: async () => {
+        held.push(h.state.grants);
+        return "ran";
+      },
+    });
+    wait.release();
+    queueMicrotask(() => {
+      h.state.grants = [EXECUTE_GRANT];
+    });
+    expect((await pending).status).toBe("dispatched");
+    expect(held).toEqual([[EXECUTE_GRANT, ACTION]]);
+  });
+
+  type HostState = { grants: readonly string[]; identity: FunctionIdentity };
+  const CHANGES: readonly (readonly [string, (state: HostState) => void])[] = [
+    [
+      "a revoked action grant",
+      state => {
+        state.grants = [EXECUTE_GRANT];
+      },
+    ],
+    [
+      "a changed effective principal",
+      state => {
+        state.identity = { principal: "local-operator:1001:s1", sessionId: HOST.sessionId };
+      },
+    ],
+  ];
+  it.each(CHANGES)("%s, queued as a microtask by the final read itself, never precedes the dispatch: dispatch is invoked on what the host held at that read", async (_change, change) => {
+    const state: HostState = { grants: [EXECUTE_GRANT, ACTION], identity: HOST };
+    let released = false;
+    let queued = false;
+    const host: FunctionAuthorityHost = {
+      grants: () => {
+        if (released && !queued) {
+          queued = true;
+          queueMicrotask(() => change(state));
+        }
+        return state.grants;
+      },
+      identity: () => ({ ...state.identity }),
+    };
+    const wait = parked();
+    const atDispatch: HostState[] = [];
+    const pending = dispatchFunctionWithAuthority({
+      admission: admissionFor(),
+      contract: CONTRACT,
+      host,
+      park: wait.park,
+      dispatch: async () => {
+        atDispatch.push({ grants: state.grants, identity: { ...state.identity } });
+        return "ran";
+      },
+    });
+    released = true;
+    wait.release();
+    expect((await pending).status).toBe("dispatched");
+    expect(queued).toBe(true);
+    expect(atDispatch).toEqual([{ grants: [EXECUTE_GRANT, ACTION], identity: HOST }]);
+  });
 });
 
 describe("the boundary admits function definitions only (wb-201v)", () => {
@@ -400,5 +661,216 @@ describe("the boundary admits function definitions only (wb-201v)", () => {
     const h = harness();
     expect(refusalOf(await h.run(admissionFor(FUNCTION_ID, undefined, TASK, kind)))).toEqual({ stage: "entry", policy: "not-a-function-definition", category: "validation" });
     expect(h.loader).not.toHaveBeenCalled();
+  });
+});
+
+describe("adoptFunctionActions: the binding list's bounds and each binding's members (wb-201v)", () => {
+  const bulk = (count: number): FunctionActionBinding[] =>
+    Array.from({ length: count }, (_, index) => ({ definitionId: `fixture.bulk-${index}.v1`, actionGrant: `fixture-fn:bulk-${index}` }));
+
+  it("binds 1 to 64 definitions: one and 64 bindings are adopted, none and 65 throw", () => {
+    for (const count of [1, 64]) {
+      const contract = adoptFunctionActions(bulk(count));
+      expect(contract.state === "adopted" ? contract.bindings.length : 0).toBe(count);
+    }
+    for (const count of [0, 65]) expect(() => adoptFunctionActions(bulk(count))).toThrow(/binds 1 to 64 definitions/);
+  });
+
+  it("the returned contract, its binding list and each binding are frozen", () => {
+    const contract = adoptFunctionActions(bulk(3));
+    if (contract.state !== "adopted") throw new Error("expected an adopted contract");
+    expect([contract, contract.bindings, ...contract.bindings].map(value => Object.isFrozen(value))).toEqual([true, true, true, true, true]);
+  });
+
+  it("reads each binding member through its own property descriptor: an accessor member is refused and its getter never runs", () => {
+    const definitionGetter = vi.fn(() => FUNCTION_ID);
+    const grantGetter = vi.fn(() => ACTION);
+    const accessorId = Object.defineProperty({ actionGrant: ACTION }, "definitionId", { get: definitionGetter, enumerable: true });
+    const accessorGrant = Object.defineProperty({ definitionId: FUNCTION_ID }, "actionGrant", { get: grantGetter, enumerable: true });
+    expect(() => adoptFunctionActions([accessorId as FunctionActionBinding])).toThrow(/clean definition id/);
+    expect(() => adoptFunctionActions([accessorGrant as FunctionActionBinding])).toThrow(/not representable/);
+    expect(definitionGetter).not.toHaveBeenCalled();
+    expect(grantGetter).not.toHaveBeenCalled();
+  });
+
+  it("a definition id is at most 256 bytes, counted in bytes: 256 ASCII bytes are adopted, 257 bytes in 256 characters throw", () => {
+    const at256 = `fixture.${"a".repeat(248)}`;
+    const wide = `${"a".repeat(255)}é`;
+    expect([Buffer.byteLength(at256), Buffer.byteLength(wide), wide.length]).toEqual([256, 257, 256]);
+    expect(adoptFunctionActions([{ definitionId: at256, actionGrant: ACTION }]).state).toBe("adopted");
+    expect(() => adoptFunctionActions([{ definitionId: wide, actionGrant: ACTION }])).toThrow(/clean definition id/);
+  });
+});
+
+describe("decideFunctionAuthority: its rules apply in order and the first match wins (wb-201v)", () => {
+  type Fault = "kind" | "unknown-identity" | "changed-identity" | "unknown-permissions" | "no-execute" | "unadopted" | "no-action";
+  /** The rules in their stated order, each named by the one fault that breaks it and the policy that fault reports alone. */
+  const ORDER: readonly (readonly [Fault, FunctionAuthorityRefusal])[] = [
+    ["kind", "not-a-function-definition"],
+    ["unknown-identity", "unknown-identity-data"],
+    ["changed-identity", "changed-effective-identity"],
+    ["unknown-permissions", "unknown-permission-data"],
+    ["no-execute", "missing-execute-grant"],
+    ["unadopted", "function-action-unadopted"],
+    ["no-action", "missing-function-action-grant"],
+  ];
+  function withFaults(...faults: Fault[]): FunctionAuthorityInput {
+    const has = (fault: Fault) => faults.includes(fault);
+    const grants = [...(has("no-execute") ? [] : [EXECUTE_GRANT]), has("no-action") ? OTHER_FUNCTION_ACTION : ACTION, ...(has("unknown-permissions") ? [PROPOSED_EXAMPLE] : [])];
+    const identity = has("unknown-identity") ? { principal: " ", sessionId: HOST.sessionId } : has("changed-identity") ? { principal: "local-operator:1001:s1", sessionId: HOST.sessionId } : HOST;
+    const admission = admissionFor(FUNCTION_ID, undefined, TASK, has("kind") ? "script" : "function");
+    return { admission, contract: has("unadopted") ? FUNCTION_ACTION_CONTRACT : CONTRACT, entered: HOST, current: { grants, identity } };
+  }
+  /** Every pair of rules that can fail together, earlier rule first; an unknown identity cannot also be a changed one. */
+  const PAIRS = ORDER.flatMap(([first, policy], index) =>
+    ORDER.slice(index + 1)
+      .filter(([second]) => !(first === "unknown-identity" && second === "changed-identity"))
+      .map(([second]) => [first, second, policy] as const),
+  );
+
+  // Every decision below runs on a deeply frozen input, so a rule that writes to what it is given throws on its own path.
+  it("with no fault the decision authorizes, so each fault below is what refuses", () => {
+    expect(decideFunctionAuthority(deepFreeze(withFaults())).decision).toBe("authorized");
+  });
+
+  it.each(ORDER)("the %s fault alone reports %s", (fault, policy) => {
+    expect(decideFunctionAuthority(deepFreeze(withFaults(fault)))).toMatchObject({ decision: "refused", policy });
+  });
+
+  it("the pair set is every pair of the seven rules but unknown with changed identity: 20 pairs", () => {
+    expect(PAIRS).toHaveLength(20);
+  });
+
+  it.each(PAIRS)("the %s and %s faults together report the earlier rule, %s", (first, second, policy) => {
+    expect(decideFunctionAuthority(deepFreeze(withFaults(first, second)))).toMatchObject({ decision: "refused", policy });
+  });
+});
+
+describe("each refusal reason is fixed text for its refusal policy (wb-201v)", () => {
+  interface Scenario {
+    readonly id: string;
+    readonly action: string;
+    readonly invocation: string;
+    readonly identity: FunctionIdentity;
+  }
+  const A: Scenario = { id: "fixture.zq-alpha.v1", action: "fixture-fn:zq-alpha", invocation: "fn_aaaaaaaaaaaa", identity: { principal: "local-operator:1000:zq-alpha", sessionId: "zq-alpha" } };
+  const B: Scenario = { id: "fixture.zq-beta.v1", action: "fixture-fn:zq-beta", invocation: "fn_bbbbbbbbbbbb", identity: { principal: "local-operator:1001:zq-beta", sessionId: "zq-beta" } };
+  const BOTH = adoptFunctionActions([
+    { definitionId: A.id, actionGrant: A.action },
+    { definitionId: B.id, actionGrant: B.action },
+  ]);
+  const POLICIES: readonly FunctionAuthorityRefusal[] = [
+    "not-a-function-definition",
+    "unknown-identity-data",
+    "changed-effective-identity",
+    "unknown-permission-data",
+    "missing-execute-grant",
+    "function-action-unadopted",
+    "missing-function-action-grant",
+  ];
+  /** The pure decision for scenario `s`, built to reach `policy`. */
+  function refusalFor(s: Scenario, policy: FunctionAuthorityRefusal): FunctionAuthorityRefused {
+    const other = s === A ? B : A;
+    const held =
+      policy === "missing-execute-grant"
+        ? [s.action]
+        : policy === "missing-function-action-grant"
+          ? [EXECUTE_GRANT, other.action]
+          : policy === "unknown-permission-data"
+            ? [EXECUTE_GRANT, s.action, `${s.action}:more`]
+            : [EXECUTE_GRANT, s.action];
+    const identity =
+      policy === "unknown-identity-data"
+        ? { principal: `${s.identity.principal}\u001b[0m`, sessionId: s.identity.sessionId }
+        : policy === "changed-effective-identity"
+          ? { principal: `${s.identity.principal}-moved`, sessionId: s.identity.sessionId }
+          : s.identity;
+    const admission = admissionFor(s.id, undefined, TASK, policy === "not-a-function-definition" ? "script" : "function", s.invocation);
+    const contract = policy === "function-action-unadopted" ? FUNCTION_ACTION_CONTRACT : BOTH;
+    const decision = decideFunctionAuthority({ admission, contract, entered: s.identity, current: { grants: held, identity } });
+    if (decision.decision !== "refused") throw new Error(`expected a ${policy} refusal`);
+    return decision;
+  }
+
+  it.each(POLICIES)("%s: one reason for two requests that differ in definition, invocation, identity and held grants, naming none of them", policy => {
+    const a = refusalFor(A, policy);
+    const b = refusalFor(B, policy);
+    expect([a.policy, b.policy, a.invocationId, b.invocationId]).toEqual([policy, policy, A.invocation, B.invocation]);
+    expect(a.reason).toBe(b.reason);
+    for (const s of [A, B]) for (const text of [s.id, s.action, s.invocation, s.identity.principal, s.identity.sessionId]) expect(a.reason).not.toContain(text);
+  });
+
+  it("the boundary returns the decision's refusal unchanged, at entry and at the final boundary", async () => {
+    const atEntry = await harness({ grants: [ACTION] }).run(admissionFor());
+    const pureEntry = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [ACTION], identity: HOST } });
+    expect(atEntry.status === "refused" ? atEntry.refusal : undefined).toEqual(pureEntry);
+    const h = harness();
+    const wait = parked();
+    const pending = h.run(admissionFor(), CONTRACT, wait.park);
+    h.state.grants = [EXECUTE_GRANT];
+    wait.release();
+    const atFinal = await pending;
+    const pureFinal = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT], identity: HOST } });
+    expect(atFinal.status === "refused" ? atFinal.refusal : undefined).toEqual(pureFinal);
+  });
+});
+
+describe("decideFunctionAuthority: unknown permission data and its input (wb-201v)", () => {
+  it.each([
+    ["no read at all", undefined],
+    ["a single grant that is not a list", EXECUTE_GRANT],
+    ["a list holding a non-text entry", [EXECUTE_GRANT, ACTION, 7]],
+    ["a list holding a spelling outside the grammar", [EXECUTE_GRANT, ACTION, PROPOSED_EXAMPLE]],
+  ])("denies %s as unknown permission data (docs/workbench/12-security.md)", (_what, grants) => {
+    expect(decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants, identity: HOST } })).toMatchObject({
+      decision: "refused",
+      policy: "unknown-permission-data",
+    });
+  });
+
+  it("decides synchronously and mutates nothing it is given: a deeply frozen input yields the decision itself, never a promise", () => {
+    const input = deepFreeze({ admission: admissionFor(), contract: CONTRACT, entered: { ...HOST }, current: { grants: [EXECUTE_GRANT, ACTION], identity: { ...HOST } } });
+    const decision = decideFunctionAuthority(input);
+    expect("then" in decision).toBe(false);
+    expect(decision).toMatchObject({ decision: "authorized", authority: { grants: [EXECUTE_GRANT, ACTION], identity: HOST } });
+  });
+});
+
+describe("not wired: workflow_execute resolves and launches no function definition (wb-201v)", () => {
+  const ctx = { cwd: "/ws" } as unknown as ExtensionContext;
+  async function executeFunction(rights: readonly string[], hostMode: "embedded" | "detached") {
+    const resolveSource = vi.fn((): never => {
+      throw new Error("a function definition is never resolved");
+    });
+    const launchEmbedded = vi.fn(async () => []);
+    const launchDetached = vi.fn(async () => []);
+    const deps: WorkflowExecuteDeps = {
+      grants: () => rights,
+      observerScope: () => ({ workspace: "/ws", principal: HOST.principal }),
+      localPrincipal: () => HOST.principal,
+      sessionIdOf: () => HOST.sessionId,
+      mintInvocationId: () => INVOCATION,
+      resolveSource,
+      launchEmbedded,
+      launchDetached,
+    };
+    const params = { definitionRef: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, input: TASK, hostMode };
+    const result = await createWorkflowExecuteTool(deps).execute("call-1", params as never, undefined, undefined, ctx as never);
+    const text = result.content[0]?.type === "text" ? result.content[0].text : "";
+    const reply = JSON.parse(text) as { error?: { code?: string } };
+    return { code: reply.error?.code, calls: [resolveSource.mock.calls.length, launchEmbedded.mock.calls.length, launchDetached.mock.calls.length] };
+  }
+
+  it.each([
+    ["embedded", [EXECUTE_GRANT], "unsupported-definition-kind"],
+    ["embedded", [EXECUTE_GRANT, DETACH_GRANT], "unsupported-definition-kind"],
+    ["detached", [EXECUTE_GRANT, DETACH_GRANT], "unsupported-definition-kind"],
+    ["detached", [EXECUTE_GRANT], "missing-detach-grant"],
+    ["embedded", [], "missing-execute-grant"],
+    ["embedded", [DETACH_GRANT], "missing-execute-grant"],
+    ["detached", [], "missing-execute-grant"],
+    ["detached", [DETACH_GRANT], "missing-execute-grant"],
+  ] as const)("with hostMode %s and %j held, a function definition refuses as %s, with zero resolve and launch calls", async (hostMode, rights, code) => {
+    expect(await executeFunction(rights, hostMode)).toEqual({ code, calls: [0, 0, 0] });
   });
 });

@@ -3,8 +3,8 @@
  * B-authority, slice PI-1: EAT-R028..EAT-R031 of the mechanical-workflows-interop-2026-11-04 triage,
  * requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e).
  *
- * workflow_execute's admission (execute.ts) decides once, when a request arrives. A function launch may then wait (an
- * admission queue, backpressure, an operator hold) before its loader imports the pinned export and its provider runs.
+ * Once decideExecute (execute.ts) admits a function request, its launch may wait (an admission queue, backpressure, an
+ * operator hold) before its loader imports the pinned export and its provider runs.
  * dispatchFunctionWithAuthority is the boundary such a launch passes through: it decides the function's authority when
  * the request enters and again, from FRESH host reads, once the wait settles, and nothing is awaited between that final
  * decision and the one dispatch it permits. No decision taken at entry is carried across the wait.
@@ -13,21 +13,25 @@
  * The request, its input, its JSON policy and the reviewed definition's metadata never confer a right.
  *   EAT-R028  workbench:execute must be held; a definition the adopted contract binds never confers it.
  *   EAT-R029  the exact host-issued action grant the adopted contract binds to the definition must be held, by string
- *             equality: another function's grant, a sibling action, or a longer or shorter spelling never stands in.
- *   EAT-R030  the effective principal and session at dispatch must equal those read at entry.
+ *             equality: another function's grant, a sibling action, the same permission under another namespace, or a
+ *             longer or shorter spelling never stands in.
+ *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
  *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
  *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
- * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted and every function dispatch
- * refuses as function-action-unadopted. adoptFunctionActions accepts only a spelling Pi can carry through its grant
+ * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
+ * refuses, and one that passes the earlier rules refuses as function-action-unadopted. adoptFunctionActions accepts only a spelling Pi can carry through its grant
  * settings (workbench.capabilityGrants in settings.ts: namespace:permission, no wildcard) and its detached transport
  * (local-detached.ts admits a launch grant of at most 256 characters), and throws on any other, so no grammar is
- * bypassed silently; only a contract it returned is ever honored. No production caller dispatches a function yet:
- * workflow_execute refuses every function definition as unsupported-definition-kind until a function launcher is
- * routed through this boundary.
+ * bypassed silently; only a contract it returned is ever honored.
  *
- * Nothing here performs I/O, reads a clock or launches: the host supplies its two reads, the wait and the dispatch.
- * Reasons are constant text that never echoes caller input.
+ * Not wired: a well-formed workflow_execute request naming a function definition resolves and launches nothing. With
+ * workbench:execute held (and workbench:detach as well for a detached request) it refuses as unsupported-definition-kind;
+ * without workbench:execute it refuses as missing-execute-grant, and a detached request without workbench:detach refuses
+ * as missing-detach-grant. Routing a function launcher through this boundary is a later cut.
+ *
+ * The host supplies the two reads, the wait and the dispatch. Each refusal reason is fixed text for its refusal policy:
+ * no reason composes the definition, the invocation, the held grants or the identity.
  */
 import { CapabilityError, type CapabilityErrorCategory } from "./capability-registry.js";
 import { EXECUTE_GRANT, type ExecuteAdmission } from "./execute.js";
@@ -126,12 +130,12 @@ function plainObject(value: unknown): value is Record<string, unknown> {
   const prototype = Object.getPrototypeOf(value);
   return prototype === Object.prototype || prototype === null;
 }
-/** An own data property's value; an inherited value is never read and a getter is never invoked. */
+/** An own data property's value, read through its property descriptor, so a getter is never invoked. */
 function own(record: Record<string, unknown>, key: string): unknown {
   const descriptor = Object.getOwnPropertyDescriptor(record, key);
   return descriptor && Object.hasOwn(descriptor, "value") ? descriptor.value : undefined;
 }
-/** Bounded, non-blank text the shared sanitizer leaves unchanged (the rule execute.ts admits identity text by). */
+/** At most 256 bytes of non-blank text that the shared sanitizer leaves unchanged. */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && stripUnsafeText(value) === value;
 }
@@ -144,9 +148,11 @@ function invalid(message: string): never {
 }
 
 /**
- * Adopts the exact action grants a producer contract binds, one per reviewed definition. Throws on a spelling Pi cannot
- * carry, on a Pi workbench grant, on a definition or grant bound twice and on any malformed binding; the returned
- * contract is frozen and is the only kind decideFunctionAuthority honors.
+ * Adopts the exact action grants a producer contract binds, one per reviewed definition. Throws on a binding list that
+ * is not an array of 1 to 64 bindings, on a binding that is not a plain object holding exactly definitionId and
+ * actionGrant as own data properties, on a definition id that is not clean text, on a spelling Pi cannot carry, on a Pi
+ * workbench grant and on a definition or grant bound twice. The returned contract, its binding list and each binding
+ * are frozen, and only a contract returned here is honored by decideFunctionAuthority.
  */
 export function adoptFunctionActions(bindings: readonly FunctionActionBinding[]): FunctionActionContract {
   if (!Array.isArray(bindings) || bindings.length === 0 || bindings.length > MAX_BINDINGS) invalid(`A function action contract binds 1 to ${MAX_BINDINGS} definitions.`);
@@ -180,7 +186,10 @@ function identityOf(value: unknown): FunctionIdentity | undefined {
   const sessionId = own(value, "sessionId");
   return cleanText(principal) && cleanText(sessionId) ? Object.freeze({ principal, sessionId }) : undefined;
 }
-/** A snapshot of the grants, or undefined when any entry is unknown permission data (docs/workbench/12: treat it as deny). */
+/**
+ * The grants as read, or undefined for unknown permission data: a read that is not an array, or an entry outside the
+ * capabilityGrants grammar (docs/workbench/12-security.md: "Treat unknown permission data as deny.").
+ */
 function grantList(value: unknown): readonly string[] | undefined {
   if (!Array.isArray(value)) return undefined;
   const grants: unknown[] = Array.from(value);
@@ -193,9 +202,9 @@ function boundAction(contract: FunctionActionContract, definitionId: string): st
 }
 
 /**
- * Synchronous and side-effect free. Rules apply in order and the first match wins: a function definition, a known and
- * unchanged effective identity, known permission data, workbench:execute, an adopted action for this definition, then
- * that exact action grant. Only the two host reads in `current` and `entered` are consulted.
+ * Synchronous: it returns the decision itself and mutates nothing it is given. Rules apply in order and the first match
+ * wins: a function definition, a known and unchanged effective identity, known permission data, workbench:execute, an
+ * adopted action for this definition, then that exact action grant.
  */
 export function decideFunctionAuthority(input: FunctionAuthorityInput): FunctionAuthorityDecision {
   const { invocationId, definition } = input.admission;
