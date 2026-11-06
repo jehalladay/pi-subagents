@@ -15,12 +15,18 @@
  *   pins both emptyings as unseen by every outside reading; its cut #4 (seat ws-04, run g10-work-s182; authored at trunk
  *   04c8bbb0, base of record f5cb9129) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of
  *   the gate's TV3 and TV5) under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED
- *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219, base of record 108a2025), cut once
- *   the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier wb-gnj9 had landed (landing
- *   952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels were named twins of the
- *   gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and
- *   GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no channel's twin identity is claimed
- *   (R-HIDDEN below).
+ *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219; authored at trunk 108a2025, base of
+ *   record 95fb8156), cut once the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier
+ *   wb-gnj9 had landed (landing 952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels
+ *   were named twins of the gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD,
+ *   GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no
+ *   channel's twin identity is claimed (R-HIDDEN below).
+ * wb-33z6 (the R694 follow-up of wb-ulnv's landing 990; seat ws-03, run g10-work-s226, authored at trunk b45f46ad) answers
+ *   that landing's F1 by pinning the plant's identity in R-HIDDEN: the release its classification pins read ships, as its
+ *   root namespace, the very namespace its binding roster, DOCUMENT WITNESS and wrapped-kind literal read, so a plant whose
+ *   release ships a copy of that namespace (the gate's one-site GP2-SPLIT-* and two-site GP2-SPLIT2-* split hollows, which
+ *   empty one binding's documents in the copy alone) reds there; and that landing's F3 by the history clause above (108a2025
+ *   is the trunk the restatement was authored at, 95fb8156 its base of record).
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -183,7 +189,10 @@
  *   in the vendored release, each still changes T1 identity's tarballs facet (the strict reader reads the new content or
  *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (it replaces
  *   Map.prototype.entries for one walk and restores it), and every classification pin reads today's set. Literals pin the
- *   plant itself (hiddenPlant): the planted namespace's bindings beside the SDK's own, by name and property kind
+ *   plant itself (hiddenPlant, as the quiet row builds it): its release's root namespace is the planted namespace itself,
+ *   one object (an identity pin, wb-33z6: a plant whose release ships a copy of that namespace reds there, whatever the copy
+ *   holds), so the literals below read the root namespace of the release every classification pin reads; the planted
+ *   namespace's bindings beside the SDK's own, by name and property kind
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
  *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, census-side channels, none of which
@@ -1675,6 +1684,10 @@ const QUIET: Readonly<Record<string, () => void>> = {
   "R-HIDDEN": () => {
     const today = vendoredRelease();
     const { release: hidden, namespace } = hiddenPlant();
+    expect(
+      hidden.modules["."],
+      "R-HIDDEN: the planted release's root namespace is the planted namespace itself (one object), so the literals below read the root namespace every classification pin reads",
+    ).toBe(namespace);
     expect(
       PINS.filter((pin) => !same(READINGS[pin.reading](hidden), pin.today)).map(pinId),
       "R-HIDDEN: every classification pin reads today's set",
