@@ -166,6 +166,20 @@
  * new FOLLOW-UP ANCHOR reads the finding's requirement lines, members, witnesses and control classes, and the new PREDICATE
  * WORDS ANCHOR reads the widening words and places the predicate names, from the tracker export. No reader code changes and
  * no header words change: the helper is unchanged.
+ * wb-o3f8 (the R694 follow-up bead of wb-zchj's landing 984) answers that landing's F1 finding (LOW RIDES): nine one-edit
+ * members of narrowsToPinnedPages - G-RET-EQ, G-RET-XOR, G-W-EVERY-PERIOD, G-W-BEYOND-PERIOD, G-W-NOTONLY-PERIOD,
+ * G-W-RECEIVER-PERIOD, G-W-EVERY-ON, G-W-PAGESAND-ON and G-W-AFTERPHRASE - kept this census green, each, as the finding
+ * measures it, realized by a witness that re-widens the helper header's L017 in a spelling no NARROWING_CONTROLS row plants.
+ * This cut takes the finding's first cure alternative, red-first controls for the realized spellings: each MEMBER_WITNESSES
+ * row is one of the eight witnesses the finding names, spelled as the finding words it (its line copied from the landing-984
+ * PREP archive's witness spec), a narrowed line, L017 as the helper holds it, that the predicate reads narrowed, and the
+ * witness line, that it reads unnarrowed - the phrase replaced by a named word, a named word mid-line (four rows), after
+ * 'for' and before the phrase, and 'on its pinned pages and' with another follower - so each of the nine members'
+ * hollowing reds this census. The new FOLLOW-UP 2 ANCHOR
+ * reads the finding's requirement lines, members, witnesses, witnessed line and control classes from the tracker export. No
+ * reader code changes and no header words change: the helper is unchanged, and the landed words of this census, the
+ * FAIL-CLOSED cases and the NOT CLAIMED parenthetical the finding's second cure alternative names among them, stand as
+ * landed.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -314,6 +328,24 @@
  *   refusal #4 F2 finding quotes the start form, then the places after and before the phrase that the cut #1 note names, are,
  *   in order, the places of the out-of-place rows, the witness aside, each row's narrowed line holding the phrase at its place
  *   and its line not.
+ *  MEMBER WITNESSES (wb-o3f8): each row's narrowed line, the helper header's own L017, reads narrowed and its line, a
+ *   witness the F1 finding of wb-zchj's landing 984 names, spelled as the finding words it, reads unnarrowed under
+ *   narrowsToPinnedPages:
+ *   W-PHRASE-TO-EVERYPAGE (the phrase replaced by a named word); W-MIDLINE-EVERYPAGE, W-MIDLINE-BEYONDTHEM,
+ *   W-MIDLINE-NOTONLY and W-MIDLINE-ANYRECEIVER (a named word mid-line); W-FOR-EVERYPAGE (a named word after 'for');
+ *   W-PAGESAND-ELSEWHERE ('on its pinned pages and' with another follower); and W-WORD-BEFORE-PHRASE (a named word before
+ *   the phrase).
+ *  FOLLOW-UP 2 ANCHOR (wb-o3f8, outside this census): every wb-o3f8 requirement line this census answers occurs verbatim in
+ *   that bead's notes in the export, and the requirement lines are exactly its F1 finding's members sentence and its
+ *   optional cheap cure sentence; the members the finding names, each with its parenthetical as the finding words it and in
+ *   order, are exactly the PREDICATE_MEMBERS rows; the witnesses it names, each with the finding's words for its spelling
+ *   and in order, are exactly the MEMBER_WITNESSES rows; the helper header line the finding names and quotes is the
+ *   helper's own line and every row's narrowed line; each row's line is that line with the spelling the finding gives it
+ *   (its quoted replacement, one item inserted mid-line right after its quoted place, or its quoted spelling as one
+ *   insertion), the line spelling one of the widening words the export names for the predicate, the row's, and its
+ *   narrowed line none; and the control classes the finding's cheap cure names are, in order, the rows' items, each row's
+ *   item the class its spelling falls in (the phrase's for a quoted replacement of the phrase by text without it, the
+ *   follower's for the word that class quotes, else the place class).
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -399,6 +431,13 @@
  * read apart from the semicolon place is NOT CLAIMED by its row (the semicolon place reads every line the '(POSITIONS;'
  * place reads); and which one-edit member of the predicate reds which row is NOT CLAIMED by this census (the seat measures
  * it on scratch copies).
+ * wb-o3f8: a widening word, a place or a follower spelling other than the ones a MEMBER_WITNESSES row plants is NOT
+ * CLAIMED by those rows (each row plants one witness on L017, read by the predicate alone, not the line's meaning); that a
+ * mid-line row's inserted item is the PREP archive's own spelling is NOT CLAIMED by an anchor outside this census (the
+ * finding words the item's class and place, not its text; the item is this census's own literal); which of the nine
+ * members reds which row is NOT CLAIMED by this census (the seat measures it on scratch copies); and that a one-edit member
+ * of narrowsToPinnedPages other than the nine the finding names reds this census is NOT CLAIMED by this census (a finite
+ * set of spelling rows cannot pin an open spelling family, as the finding's lineage note states).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -484,6 +523,7 @@ const PARENT = "wb-tz2.11";
 const CHILD = "wb-tz2.20";
 const CARRIER = "wb-tz2.24";
 const FOLLOW_UP = "wb-zchj";
+const FOLLOW_UP_2 = "wb-o3f8";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -1034,6 +1074,77 @@ function placeHeld(text: string, place: string): boolean {
   if (side === null || mark === undefined) return false;
   return side[1] === "after" ? text.includes(`${mark} on its pinned pages`) : text.includes(`on its pinned pages${mark === "," ? "" : " "}${mark}`);
 }
+/** wb-o3f8: a follow-up bead's F1 finding in its notes in the export, as filed: its first "[leads] - F1 LOW RIDES: " line (a later note leaves that line in place). */
+function ridesFinding(bead: string): string {
+  const notes = exportRecord(bead).notes;
+  const start = notes.indexOf("\n[leads] - F1 LOW RIDES: ");
+  if (start < 0) return "";
+  const end = notes.indexOf("\n", start + 1);
+  return notes.slice(start + 1, end < 0 ? notes.length : end);
+}
+/** wb-o3f8: the members the F1 finding names, in order, each with its parenthetical (its edit as the finding words it): the items of its list after " on the probe: ", up to ". Each one is realized". */
+function findingMembers(finding: string): PredicateMember[] {
+  const marker = " on the probe: ";
+  const from = finding.indexOf(marker);
+  const to = from < 0 ? -1 : finding.indexOf(". Each one is realized", from);
+  if (to < 0) return [];
+  const list = finding.slice(from + marker.length, to);
+  const heads = [...list.matchAll(/(?:^|, (?:and )?)(G-[A-Z]+(?:-[A-Z]+)*) \(/g)];
+  return heads.map((head, at) => {
+    const body = list.slice((head.index ?? 0) + head[0].length, heads[at + 1]?.index ?? list.length);
+    return { id: head[1] ?? "", edit: body.endsWith(")") ? body.slice(0, -1) : body };
+  });
+}
+/** wb-o3f8: the witnesses the F1 finding names, in order, each with its parenthetical (the finding's words for its spelling): the groups of its list after "The witnesses are: ", up to ". Each witness re-widens", the ids of a group sharing its parenthetical. */
+function findingWitnesses(finding: string): { readonly id: string; readonly spelling: string }[] {
+  const marker = "The witnesses are: ";
+  const from = finding.indexOf(marker);
+  const to = from < 0 ? -1 : finding.indexOf(". Each witness re-widens", from);
+  if (to < 0) return [];
+  return finding
+    .slice(from + marker.length, to)
+    .split(/; (?:and )?/)
+    .flatMap(group => {
+      const open = group.indexOf(" (");
+      if (open < 0 || !group.endsWith(")")) return [];
+      const spelling = group.slice(open + 2, -1);
+      return group
+        .slice(0, open)
+        .split(/, | and /)
+        .map(id => ({ id, spelling }));
+    });
+}
+/** wb-o3f8: the control classes the F1 finding's cheap cure names, in order: the items after its " with expected false: ", up to ". Or take ". */
+function cheapCureClasses(finding: string): string[] {
+  const cure = finding.indexOf("Optional cheap cure (R694 follow-up): ");
+  const marker = " with expected false: ";
+  const from = cure < 0 ? -1 : finding.indexOf(marker, cure);
+  const to = from < 0 ? -1 : finding.indexOf(". Or take ", from);
+  return to < 0 ? [] : finding.slice(from + marker.length, to).split(/; (?:and )?/);
+}
+/** wb-o3f8: whether a witness row's line is its narrowed line with the spelling the F1 finding gives it: a quoted replacement ('<old>' -> '<new>', the old text replaced once), one item inserted mid-line right after a quoted place (ending ", " before the rest of the line and spelling the row's word), or a quoted spelling the line holds and its narrowed line does not, the line being the narrowed line with one insertion. */
+function spelledAsFound(row: MemberWitness): boolean {
+  const replaced = /^'(.+?)' -> '(.+?)'/.exec(row.spelling);
+  if (replaced !== null) {
+    const [, from = "", to = ""] = replaced;
+    return row.narrowed.includes(from) && row.line === row.narrowed.replace(from, to);
+  }
+  const midline = /^the named word inserted mid-line after '(.+)'$/.exec(row.spelling);
+  if (midline !== null) {
+    const place = midline[1] ?? "";
+    const at = row.narrowed.indexOf(place) + place.length;
+    const rest = row.narrowed.slice(at);
+    const inserted = row.line.slice(at, row.line.length - rest.length);
+    return row.narrowed.includes(place) && row.line.length > row.narrowed.length && row.line.startsWith(row.narrowed.slice(0, at)) && row.line.endsWith(rest) && inserted.endsWith(", ") && inserted.includes(row.word);
+  }
+  const spelled = /^'(.+)'$/.exec(row.spelling)?.[1];
+  if (spelled === undefined) return false;
+  let head = 0;
+  while (head < row.narrowed.length && row.narrowed[head] === row.line[head]) head += 1;
+  let tail = 0;
+  while (tail < row.narrowed.length - head && row.narrowed[row.narrowed.length - 1 - tail] === row.line[row.line.length - 1 - tail]) tail += 1;
+  return row.line.includes(spelled) && !row.narrowed.includes(spelled) && row.line.length > row.narrowed.length && head + tail === row.narrowed.length;
+}
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
   const marker = "ROOT KINDS is not: ";
@@ -1364,6 +1475,20 @@ interface NarrowingMember {
   readonly replaces: string;
   readonly replacement: string;
   readonly witness: string;
+}
+/** wb-o3f8: a member of narrowsToPinnedPages the F1 finding of wb-zchj's landing 984 names, with its parenthetical as the finding words it (edit). */
+interface PredicateMember {
+  readonly id: string;
+  readonly edit: string;
+}
+/** wb-o3f8: a witness the F1 finding names, on the helper header's own L017, its line copied from the PREP archive's witness spec: the control class the finding's cheap cure names for it (item), the finding's words for its spelling (spelling), the widening word its line spells (word), L017 as the helper holds it (narrowed) and the witness line (line). */
+interface MemberWitness {
+  readonly id: string;
+  readonly item: string;
+  readonly spelling: string;
+  readonly word: string;
+  readonly narrowed: string;
+  readonly line: string;
 }
 /** The lifecycle file's K2 client line: every calibration and residual line is planted right after it. */
 const K2_CLIENT = "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };";
@@ -3473,6 +3598,36 @@ const NARROWING_MEMBERS: readonly NarrowingMember[] = [
 const FOLLOW_UP_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-zchj F1 defect", source: "notes", text: "No census row plants a control line that the predicate must reject (a named widening word, the phrase outside clause position, an unnarrowed line), yet the census's own NOT CLAIMED sentence says the FAIL-CLOSED cases 'read the phrase's place and those words'." },
   { key: "wb-zchj F1 cure", source: "notes", text: "Optional cure: plant red-first predicate control lines (each named widening word, the phrase outside clause position, an unnarrowed line) read by narrowsToPinnedPages with expected false, or narrow the census's words to 'the cases apply narrowsToPinnedPages to the header's lines'." },
+];
+/** wb-o3f8: the nine members of narrowsToPinnedPages the F1 finding of wb-zchj's landing 984 names, in its order, each with its parenthetical as the finding words it. */
+const PREDICATE_MEMBERS: readonly PredicateMember[] = [
+  { id: "G-RET-EQ", edit: "'  return clause && !widened;' -> '  return clause === !widened;'" },
+  { id: "G-RET-XOR", edit: "-> '  return clause !== widened;'" },
+  { id: "G-W-EVERY-PERIOD", edit: "widening alternative 'every (?:other )?page' -> 'every (?:other )?page\\.'" },
+  { id: "G-W-BEYOND-PERIOD", edit: "'beyond (?:them|its pinned pages)' -> 'beyond (?:them|its pinned pages)\\.'" },
+  { id: "G-W-NOTONLY-PERIOD", edit: "'not only on its pinned pages' -> 'not only on its pinned pages\\.'" },
+  { id: "G-W-RECEIVER-PERIOD", edit: "'on any receiver' -> 'on any receiver\\.'" },
+  { id: "G-W-EVERY-ON", edit: "'every (?:other )?page' -> 'on every (?:other )?page'" },
+  { id: "G-W-PAGESAND-ON", edit: "'on its pinned pages and ' -> 'on its pinned pages and on '" },
+  { id: "G-W-AFTERPHRASE", edit: "the widened test reads line.slice(line.indexOf(\"on its pinned pages\") + 1)" },
+];
+/** wb-o3f8: the helper header's own L017, the line the F1 finding's witnesses edit, as the helper holds it. */
+const WITNESSED_LINE = "- initializer: on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)";
+/** wb-o3f8: the eight witnesses the F1 finding names, in its order, each on L017, its line copied from the witnessLine of its '@delivered' entry in specs/witness.json or specs/witness2.json of the landing-984 PREP archive (provenance; the census holds each line to the finding's words, not to the archive). */
+const MEMBER_WITNESSES: readonly MemberWitness[] = [
+  { id: "W-PHRASE-TO-EVERYPAGE", item: "the phrase replaced by a named word", spelling: "'on its pinned pages, ' -> 'on every page, ', for EQ and XOR", word: "every page", narrowed: WITNESSED_LINE, line: "- initializer: on every page, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-MIDLINE-EVERYPAGE", item: "a named word mid-line, before the phrase and after 'for'", spelling: "the named word inserted mid-line after 'on its pinned pages, '", word: "every page", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, as on every page, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-MIDLINE-BEYONDTHEM", item: "a named word mid-line, before the phrase and after 'for'", spelling: "the named word inserted mid-line after 'on its pinned pages, '", word: "beyond them", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, and beyond them, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-MIDLINE-NOTONLY", item: "a named word mid-line, before the phrase and after 'for'", spelling: "the named word inserted mid-line after 'on its pinned pages, '", word: "not only on its pinned pages", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, not only on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-MIDLINE-ANYRECEIVER", item: "a named word mid-line, before the phrase and after 'for'", spelling: "the named word inserted mid-line after 'on its pinned pages, '", word: "on any receiver", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, on any receiver, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-FOR-EVERYPAGE", item: "a named word mid-line, before the phrase and after 'for'", spelling: "'a variable's initializer for every page ('", word: "every page", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, a variable's initializer for every page (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-PAGESAND-ELSEWHERE", item: "'on its pinned pages and' with another follower", spelling: "', on its pinned pages and elsewhere ('", word: "on its pinned pages and", narrowed: WITNESSED_LINE, line: "- initializer: on its pinned pages, a variable's initializer, on its pinned pages and elsewhere (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+  { id: "W-WORD-BEFORE-PHRASE", item: "a named word mid-line, before the phrase and after 'for'", spelling: "'- initializer: every page aside, on its pinned pages, '", word: "every page", narrowed: WITNESSED_LINE, line: "- initializer: every page aside, on its pinned pages, a variable's initializer (the initializer of a third or later declarator of a declaration list is NOT CLAIMED)" },
+];
+/** wb-o3f8's own requirement lines: its F1 finding's members sentence and its optional cheap cure sentence. */
+const FOLLOW_UP_2_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-o3f8 F1 members", source: "notes", text: "nine gate-authored members of the predicate at census :991-995 keep the delivered census at 0 failed | 2743 passed on the probe: G-RET-EQ ('  return clause && !widened;' -> '  return clause === !widened;'), G-RET-XOR (-> '  return clause !== widened;'), G-W-EVERY-PERIOD (widening alternative 'every (?:other )?page' -> 'every (?:other )?page\\.'), G-W-BEYOND-PERIOD ('beyond (?:them|its pinned pages)' -> 'beyond (?:them|its pinned pages)\\.'), G-W-NOTONLY-PERIOD ('not only on its pinned pages' -> 'not only on its pinned pages\\.'), G-W-RECEIVER-PERIOD ('on any receiver' -> 'on any receiver\\.'), G-W-EVERY-ON ('every (?:other )?page' -> 'on every (?:other )?page'), G-W-PAGESAND-ON ('on its pinned pages and ' -> 'on its pinned pages and on '), and G-W-AFTERPHRASE (the widened test reads line.slice(line.indexOf(\"on its pinned pages\") + 1))." },
+  { key: "wb-o3f8 F1 cure", source: "notes", text: "Optional cheap cure (R694 follow-up): plant red-first controls for the realized spellings, each read by narrowsToPinnedPages with expected false: the phrase replaced by a named word; a named word mid-line, before the phrase and after 'for'; and 'on its pinned pages and' with another follower." },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -5976,6 +6131,25 @@ const FROZEN: readonly string[] = [
   "NARROWING_MEMBERS:CL-ANYWHERE:5d12b5258c9a",
   "FOLLOW_UP_REQUIREMENTS:wb-zchj F1 defect:ac6923c96f36",
   "FOLLOW_UP_REQUIREMENTS:wb-zchj F1 cure:e99195c29d18",
+  "PREDICATE_MEMBERS:G-RET-EQ:f391d2e77d1e",
+  "PREDICATE_MEMBERS:G-RET-XOR:f114ccb8499a",
+  "PREDICATE_MEMBERS:G-W-EVERY-PERIOD:459fcbc94b93",
+  "PREDICATE_MEMBERS:G-W-BEYOND-PERIOD:9b59ce2d37b0",
+  "PREDICATE_MEMBERS:G-W-NOTONLY-PERIOD:357bd9089776",
+  "PREDICATE_MEMBERS:G-W-RECEIVER-PERIOD:83aded22c303",
+  "PREDICATE_MEMBERS:G-W-EVERY-ON:d87f1dbf1737",
+  "PREDICATE_MEMBERS:G-W-PAGESAND-ON:08115cd44da0",
+  "PREDICATE_MEMBERS:G-W-AFTERPHRASE:611cb784c843",
+  "MEMBER_WITNESSES:W-PHRASE-TO-EVERYPAGE:395061ef76d2",
+  "MEMBER_WITNESSES:W-MIDLINE-EVERYPAGE:36531381894f",
+  "MEMBER_WITNESSES:W-MIDLINE-BEYONDTHEM:d458f13f3c86",
+  "MEMBER_WITNESSES:W-MIDLINE-NOTONLY:c7f20f5f19bf",
+  "MEMBER_WITNESSES:W-MIDLINE-ANYRECEIVER:2b8110478924",
+  "MEMBER_WITNESSES:W-FOR-EVERYPAGE:f03f6ca98208",
+  "MEMBER_WITNESSES:W-PAGESAND-ELSEWHERE:595f29e962bc",
+  "MEMBER_WITNESSES:W-WORD-BEFORE-PHRASE:e589013afa2d",
+  "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 members:efeb312a4f4b",
+  "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 cure:513986d9f226",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -6930,6 +7104,56 @@ describe(SUITE, () => {
     });
   });
 
+  describe("MEMBER WITNESSES (wb-o3f8, F1 of wb-zchj's landing 984): narrowsToPinnedPages reads each row's narrowed line, the helper header's own L017, narrowed and its line, a witness the finding names spelled as it words it, unnarrowed - the phrase replaced by a named word, a named word mid-line, after 'for' and before the phrase, and 'on its pinned pages and' with another follower", () => {
+    it.each(MEMBER_WITNESSES.map(row => [row.id, row] as const))("%s", (_id, row) => {
+      expect({ narrowed: narrowsToPinnedPages(row.narrowed), line: narrowsToPinnedPages(row.line) }).toStrictEqual({ narrowed: true, line: false });
+    });
+  });
+
+  describe("FOLLOW-UP 2 ANCHOR (wb-o3f8, outside this census): the follow-up bead's F1 finding in the tracker export", () => {
+    it("every wb-o3f8 requirement line this census answers occurs verbatim in its notes, and the requirement lines are exactly the F1 finding's members sentence and its optional cheap cure sentence, in both directions", () => {
+      const notes = exportRecord(FOLLOW_UP_2).notes;
+      const finding = ridesFinding(FOLLOW_UP_2);
+      const members = finding.indexOf("nine gate-authored members ");
+      const membersEnd = members < 0 ? -1 : finding.indexOf(". Each one is realized", members);
+      const cure = finding.indexOf("Optional cheap cure (R694 follow-up): ");
+      const cureEnd = cure < 0 ? -1 : finding.indexOf(". Or take ", cure);
+      expect({
+        missing: FOLLOW_UP_2_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: FOLLOW_UP_2_REQUIREMENTS.map(requirement => requirement.text),
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(membersEnd < 0 ? [] : [finding.slice(members, membersEnd + 1)]), ...(cureEnd < 0 ? [] : [finding.slice(cure, cureEnd + 1)])],
+      });
+    });
+    it("the members the F1 finding names, each with its parenthetical as the finding words it and in order, are exactly the PREDICATE_MEMBERS rows", () => {
+      expect(findingMembers(ridesFinding(FOLLOW_UP_2))).toStrictEqual(PREDICATE_MEMBERS);
+    });
+    it("the witnesses the F1 finding names, each with the finding's words for its spelling and in order, are exactly the MEMBER_WITNESSES rows; the helper header line it names and quotes is the helper's own line and every row's narrowed line; and each row's line is that line with the spelling the finding gives it, spelling one widening word the export names for the predicate, the row's, and its narrowed line none", () => {
+      const finding = ridesFinding(FOLLOW_UP_2);
+      const quoted = /The witness edits the helper header line (L\d{3}) \('(.*?)'\) and its CLAIM_LINES mirror/.exec(finding);
+      const own = helperClaimLines().find(entry => entry.id === quoted?.[1])?.line ?? "no such helper line";
+      const words = predicateWideningWords();
+      expect({
+        witnesses: MEMBER_WITNESSES.map(row => ({ id: row.id, spelling: row.spelling })),
+        quoted: quoted?.[2] ?? "no quoted line",
+        elsewhere: MEMBER_WITNESSES.filter(row => row.narrowed !== own).map(row => row.id),
+        misspelled: MEMBER_WITNESSES.filter(row => !spelledAsFound(row) || words.filter(word => row.line.includes(word)).join(" | ") !== row.word || words.some(word => row.narrowed.includes(word))).map(row => row.id),
+      }).toStrictEqual({ witnesses: findingWitnesses(finding), quoted: own, elsewhere: [], misspelled: [] });
+    });
+    it("the control classes the F1 finding's cheap cure names - the phrase replaced by a named word; a named word mid-line, before the phrase and after 'for'; 'on its pinned pages and' with another follower - are, in order, the items of the MEMBER_WITNESSES rows, each row's item the class its spelling falls in: the phrase's, a quoted replacement of the phrase by text without it; the follower's, its word the one that class quotes; else the place class", () => {
+      const classes = cheapCureClasses(ridesFinding(FOLLOW_UP_2));
+      const [phrased = "", placed = "", followed = ""] = classes;
+      const follower = /^'(.+?)' with another follower$/.exec(followed)?.[1];
+      const classOf = (row: MemberWitness): string => {
+        const [, from = "", to = ""] = /^'(.+?)' -> '(.+?)'/.exec(row.spelling) ?? [];
+        if (from.includes("on its pinned pages") && to !== "" && !to.includes("on its pinned pages")) return phrased;
+        return row.word === follower ? followed : placed;
+      };
+      expect({ classes: [...new Set(MEMBER_WITNESSES.map(row => row.item))], misclassed: MEMBER_WITNESSES.filter(row => row.item !== classOf(row)).map(row => row.id) }).toStrictEqual({ classes, misclassed: [] });
+    });
+  });
+
   describe("FROZEN SHAPE (standing rule 16)", () => {
     it("every table row is pinned as table:id:digest of its own JSON", () => {
       const rows = (table: string, entries: readonly { readonly id?: string; readonly word?: string; readonly key?: string }[]): string[] =>
@@ -6981,6 +7205,9 @@ describe(SUITE, () => {
         ...rows("NARROWING_CONTROLS", NARROWING_CONTROLS),
         ...rows("NARROWING_MEMBERS", NARROWING_MEMBERS),
         ...rows("FOLLOW_UP_REQUIREMENTS", FOLLOW_UP_REQUIREMENTS),
+        ...rows("PREDICATE_MEMBERS", PREDICATE_MEMBERS),
+        ...rows("MEMBER_WITNESSES", MEMBER_WITNESSES),
+        ...rows("FOLLOW_UP_2_REQUIREMENTS", FOLLOW_UP_2_REQUIREMENTS),
       ]).toStrictEqual(FROZEN);
     });
   });
