@@ -2618,15 +2618,34 @@ Terse command-style prompts produce shallow, generic work.
     void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));
     return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
   }
+  /**
+   * The Claude half of a registered detached launch (wb-wupg, MWI EAT-R012/EAT-R013), for both producers: the host's own
+   * Claude settings with absent members left out (a launch request is a JSON value, so an undefined member never crosses
+   * the preflight), and host-validated bounded grants - exactly the rights the local-detached preflight demands of that
+   * configuration (claude:invoke and one claude:tool:<name> per settings or role tool), each forwarded only when the
+   * operator's capabilityGrants hold it. Nothing comes from the script, its input or the model's policy, and nothing is
+   * decided here: the preflight stays the one denial, so a right the operator did not grant refuses there before any child.
+   */
+  function detachedClaudeLaunch(ctx: ExtensionContext, settings: WorkbenchSettings | undefined) {
+    const tools = settings?.tools ?? [];
+    const roles = settings?.roles;
+    const roleTools = Object.values(roles ?? {}).flatMap(role => role.tools ?? []);
+    const required = new Set(["claude:invoke", ...[...tools, ...roleTools].map(tool => `claude:tool:${tool}`)]);
+    const held = grants(ctx);
+    return {
+      claude: { ...(settings?.model !== undefined ? { model: settings.model } : {}), tools, ...(roles !== undefined ? { roles } : {}) },
+      grants: [...required].filter(grant => held.includes(grant)),
+    };
+  }
   async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
     const settings = sourceSettings(ctx);
-    const claude = settings?.workflowAgentBackend === "claude";
+    const claude = settings?.workflowAgentBackend === "claude" ? detachedClaudeLaunch(ctx, settings) : undefined;
     // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
     const receipt = await workbenchNative().launchDetachedWorkflow({
       directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
       cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
-      providers: [], grants: [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
-      ...(claude ? { claude: { model: settings?.model, tools: settings?.tools ?? [], roles: settings?.roles } } : {}),
+      providers: [], grants: claude?.grants ?? [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
+      ...(claude ? { claude: claude.claude } : {}),
     });
     return [
       { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
@@ -2876,10 +2895,10 @@ Terse command-style prompts produce shallow, generic work.
           if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
-          const settings=sourceSettings(ctx);
+          const claude=params.backend === "claude" ? detachedClaudeLaunch(ctx,sourceSettings(ctx)) : undefined;
           const receipt=await workbenchNative().launchDetachedWorkflow({ directory,invocationId:params.invocationId,scriptPath:source.sourceRef,cwd:ctx.cwd,input:null,trustedScript:true,
-            backend:params.backend ?? "deterministic",providers:[],grants:[],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
-            ...(params.backend === "claude" ? {claude:{model:settings?.model,tools:settings?.tools ?? [],roles:settings?.roles}} : {}),
+            backend:params.backend ?? "deterministic",providers:[],grants:claude?.grants ?? [],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
+            ...(claude ? {claude:claude.claude} : {}),
           });
           return textResult(sanitizeWorkbenchJsonText(receipt, 4096));
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
