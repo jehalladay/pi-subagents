@@ -311,20 +311,30 @@
  * helper's static import (each imported under its own name), REPO `const REPO = join(HERE, "..")`, HERE
  * `const HERE = dirname(fileURLToPath(import.meta.url))` and holdMembers its function declaration. THE ESCAPE MATRIX (wb-vktz's
  * respins 2 and 3, and wb-h6rt: bindingsMatrix, memberCheckMatrix, placedBindings and placedMemberCheck; the judged set holds every
- * reading below and the plant counts, and that no text the matrix composes reads a syntax diagnostic parsedPlant reads -
- * parsedPlant reads the diagnostics the parser records for a text, each as `<id>: <message>` in the parser's order, and its
- * controls pin that: MALFORMED_PLANTS, eight texts written with syntax errors, each with every diagnostic it reads - an enum with a
+ * reading below and the plant counts, and that no text the matrix composes holds a syntax diagnostic, by two readers of the
+ * parser's record of each text, each red on any diagnostic it reads there: parsedPlant reads none in it, and parserCount (wb-h6rt's
+ * cut #2, refusal #1's U1: the number of syntax diagnostics the parser records for a text, counted from the parser's own record
+ * and not through parsedPlant) counts none in it - so a diagnostic that an edit to one reader drops, at any place of a composed
+ * text (its head and its middle among them), the other still reads (a drop written into both is in LIMITS). parsedPlant reads
+ * the diagnostics the parser records for a text, each as `<id>: <message>` in the parser's order, and its controls pin that at
+ * the places they plant a diagnostic: MALFORMED_PLANTS, nine texts written with syntax errors, each read whole with every
+ * diagnostic it holds and counted by parserCount as their number - an enum with a
  * stray comma (Enum member expected), a const with no value (Expression expected), an import whose module string is unterminated
  * (Unterminated string literal), a const whose escape names no character (Invalid character), a function's parameter list left
  * open (',' expected, then ')' expected), a namespace with no name (Namespace must be given a name), that stray comma before a
- * const with no name (Enum member expected, then Variable declaration expected twice), and everyControl (wb-h6rt's), those seven
- * texts in one, each on a line of its own and the open parameter list last, reading their ten diagnostics in that order - and the
- * MALFORMED TWIN of each text those four functions compose (twinMisread, wb-h6rt's, refusal #5's U1): that text with
- * everyControl appended on a line of its own, parsed under the text's own name, which the judged set holds reads the text's own
- * diagnostics followed by everyControl's ten messages as its MALFORMED_PLANTS check pins them, each under the text's name (it
- * pins how many twins each of the four reads, in that order: 732, 32, 707 - 705 texts after a leading statement and this file's
- * own two - and 1); a diagnostic whose
- * message those controls do not plant is NOT CLAIMED). CLAIMED of the
+ * const with no name (Enum member expected, then Variable declaration expected twice), everyControl (wb-h6rt's), those seven
+ * texts in one, each on a line of its own and the open parameter list last, reading their ten diagnostics in that order, and
+ * headControl (wb-h6rt's cut #2), everyControl's text without its last line, the open parameter list (which would read the text
+ * after it as its parameters), reading everyControl's first eight in that order - and the two MALFORMED TWINS of each text those
+ * four functions compose (twinMisread, wb-h6rt's: its END twin refusal #5's U1, its HEAD twin refusal #1's U1), each parsed under
+ * the text's own name: the END twin, that text with everyControl appended on a line of its own, which the judged set holds reads
+ * the text's own diagnostics followed by everyControl's ten messages, and the HEAD twin, that text with headControl prepended on a
+ * line of its own, which it holds reads headControl's eight messages followed by the text's own, each control's messages as its
+ * MALFORMED_PLANTS check pins them, under the text's name (it pins how many texts each of the four reads so, in that order: 732,
+ * 32, 707 - 705 texts after a leading statement and this file's own two - and 1); what parsedPlant reads of a diagnostic at any
+ * other place of a text (after a composed text's head and before its end, where no control plants one), or of one whose message
+ * those controls do not plant, is NOT CLAIMED, and so is what parserCount counts of a text other than MALFORMED_PLANTS' nine and
+ * those the matrix composes). CLAIMED of the
  * matrix (respin 4, the fail-closed core ruling R-B609 orders): exactly what the judged set pins of the texts it composes - each
  * plant one spelling below written in one form's plant text exactly as ESCAPE_FORMS writes it, the name at @, in the text composed
  * at its place below - and nothing of any other text; the words naming a form below name its one plant text, never its kind (the
@@ -500,10 +510,12 @@
  * its pinned readings only, OUTSIDE ANCHOR), and neither is a form taken out of ESCAPE_FORMS, or a style out of ESCAPE_STYLES,
  * together with the
  * plant counts it changes (and, for a style, Object's spellings in the judged set): THE ESCAPE MATRIX is this census's own
- * reading; nor is a place of THE ESCAPE MATRIX, a control of the G9 anchor or of parsedPlant (MALFORMED_PLANTS, and the
- * malformed twins), an ESCAPE RESIDUAL with its regions, or escapedNames' check of a place, taken out together with what the
- * judged set pins of it (plant counts, refusals, diagnostics, twin counts or region counts): those, too, are this census's own
- * reading; a registration that names its
+ * reading; nor is a place of THE ESCAPE MATRIX, a control of the G9 anchor, of parsedPlant or of parserCount (MALFORMED_PLANTS,
+ * and the malformed twins), an ESCAPE RESIDUAL with its regions, or escapedNames' check of a place, taken out together with what
+ * the judged set pins of it (plant counts, refusals, diagnostics, parser counts, twin counts or region counts): those, too, are
+ * this census's own reading; a diagnostic of a composed text that parsedPlant and parserCount both leave unread (an edit to
+ * each, the same diagnostic dropped by both) is not detected, each reader being the other's guard against an edit to one
+ * (wb-h6rt's cut #2); a registration that names its
  * import's binding but runs a stand-in adapter is not detected (the registration check holds the module path, the import, the
  * name and the one value export; the battery judges the behaviour), and neither is a reading of the record reached through
  * another member of the registered adapter's value or through the registered module's own top-level code (the battery calls the
@@ -535,7 +547,16 @@
  * to coverage and the event list's entries equal to sourceSequence, so either entry, however often the reader reads it, is not
  * compared (the journeys state those two members themselves: coverage on each refresh, sourceSequence as a number, a string and
  * absent); an expansion of either is compared (the probes coverageExpanded and sourceSequenceExpanded).
- * MEASURED (seat records, read-only; not assertions): wb-h6rt (the structural-exit child ruling R-B609 files, carrying refusal #5's
+ * MEASURED (seat records, read-only; not assertions): wb-h6rt's cut #2 (its refusal #1: U1 under ruling R-B625, the enumerate form
+ * under the spent second-stage cap) over trunk 15de5c51, 2026-11-06: this file is cut #1's with headControl in MALFORMED_PLANTS,
+ * every composed text's HEAD twin beside its END twin (twinMisread; 1472 texts, two twins each), parserCount with its controls
+ * and the composed texts' parser counts (EscapeReading's counted), and their words; the roster is cut #9's byte for byte and
+ * every pin's witness is unchanged; under TypeScript 6.0.3 every text the matrix composes reads no syntax diagnostic and
+ * parserCount counts none in it, every END twin reads exactly everyControl's ten and every HEAD twin exactly headControl's
+ * eight; refusal #1's U1 member G25-diagTailOnly and the gate's G25-diagHead1kDropped keep cut #1's bytes green beside
+ * W-moduleHeadComma and W-moduleHeadEnum and red this file's alone and beside each (the seat's battery, counts in its
+ * delivery note).
+ * wb-h6rt's cut #1 (the structural-exit child ruling R-B609 files, carrying refusal #5's
  * U1 under ruling R-B614's dependency inversion) over trunk d7b5e894, 2026-11-06: this file is wb-vktz's cut #5 (24d561f3) with
  * three const forms in ESCAPE_FORMS (32 forms; 4512 BINDINGS plants, 14144 member-check plants, 9729 placed BINDINGS plants and
  * 14144 placed member-check plants), everyControl in MALFORMED_PLANTS, the malformed twins (twinMisread; 1472 texts) and their
@@ -1886,21 +1907,42 @@ const ESCAPE_FORMS: Readonly<Record<string, EscapeForm>> = {
 const plantOf = (form: EscapeForm, spelling: string): string => form.text.replace("@", () => spelling);
 const entryOf = (form: EscapeForm, spelling: string, name: string): string => form.entry.replace("@", () => spelling).replace("#", () => name);
 /** A plant text parsed as the SELF-READ parses this file (under the name `<id>.ts`), with the diagnostics the parser records for it,
- * each as `<id>: <message>`, every one in the parser's order (MALFORMED_PLANTS pins that on eight texts, and twinMisread on the
- * malformed twin of every text THE ESCAPE MATRIX composes). */
+ * each as `<id>: <message>`, in the parser's order - pinned at the places a control plants a diagnostic: MALFORMED_PLANTS' nine
+ * texts, each whole, and the two malformed twins of every text THE ESCAPE MATRIX composes (twinMisread: everyControl after the
+ * text's last line, headControl before its first); what it reads of a diagnostic at any other place of a text, or of one whose
+ * message those controls do not plant, is NOT CLAIMED (wb-h6rt's cut #2: parserCount, not parsedPlant, is the second reader of a
+ * composed text's diagnostics, wherever they stand). */
 function parsedPlant(id: string, text: string): { readonly source: ts.SourceFile; readonly diagnostics: readonly string[] } {
   const source = ts.createSourceFile(`${id}.ts`, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const found = (source as ts.SourceFile & { readonly parseDiagnostics: readonly ts.Diagnostic[] }).parseDiagnostics;
   return { source, diagnostics: found.map(diagnostic => `${id}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, " ")}`) };
 }
+/** The number of syntax diagnostics the parser records for a text parsed as parsedPlant parses it (under the name `<id>.ts`),
+ * counted from the parser's own record of the text and not through parsedPlant (wb-h6rt's cut #2, refusal #1's U1): the judged
+ * set pins it on each of MALFORMED_PLANTS' nine texts as the number of the diagnostics their check reads, and holds it 0 for
+ * every text THE ESCAPE MATRIX composes (EscapeReading's counted), the second reader beside parsedPlant; what it counts of any
+ * other text is NOT CLAIMED. */
+function parserCount(id: string, text: string): number {
+  const source = ts.createSourceFile(`${id}.ts`, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return (source as ts.SourceFile & { readonly parseDiagnostics: readonly ts.Diagnostic[] }).parseDiagnostics.length;
+}
+/** A composed text's parser count as THE ESCAPE MATRIX records it (EscapeReading's counted): none when the parser records no
+ * syntax diagnostic for the text, else `<id>: <count>`. */
+function countedOf(id: string, text: string): string[] {
+  const count = parserCount(id, text);
+  return count === 0 ? [] : [`${id}: ${count}`];
+}
 /** A search's reading of THE ESCAPE MATRIX: what it misread (`<form> <name or key>: <read> of <planted>`), the plant texts' syntax
- * diagnostics, what each text's malformed twin misread (twinMisread: `<id>: <read> of <wanted>`) and how many texts it read so,
+ * diagnostics as parsedPlant reads them, the texts the parser counts a syntax diagnostic in (parserCount: `<id>: <count>`), what
+ * each text's malformed twins misread (twinMisread: `<id>: <read> of <wanted>`, `<id> head: ...` for the HEAD twin) and how many
+ * texts it read so,
  * what escapedNames misread of each text (ESCAPE-FREE: `<form or place>: <read> of <planted>`, the planted being every
  * plant whose spelling is not its name's plain one, as written), how many plants it read and which, and, for each of its places in
  * this file's own text, the line of this file that place follows (selfFollows) and the name its text was parsed under. */
 interface EscapeReading {
   readonly misread: readonly string[];
   readonly diagnostics: readonly string[];
+  readonly counted: readonly string[];
   readonly twins: readonly string[];
   readonly controlled: number;
   readonly escapes: readonly string[];
@@ -1973,6 +2015,7 @@ function escapesMisread(where: string, source: ts.SourceFile, planted: readonly 
 function bindingsMatrix(): EscapeReading {
   const misread: string[] = [];
   const diagnostics: string[] = [];
+  const counted: string[] = [];
   const twins: string[] = [];
   const escapes: string[] = [];
   const planted: EscapePlant[] = [];
@@ -1984,6 +2027,7 @@ function bindingsMatrix(): EscapeReading {
       const composed = group.map(plant => plantOf(form, plant.spelling)).join("\n");
       const parsed = parsedPlant(`escape-${id}`, composed);
       diagnostics.push(...parsed.diagnostics);
+      counted.push(...countedOf(`escape-${id}`, composed));
       twins.push(...twinMisread(`escape-${id}`, composed, parsed.diagnostics));
       controlled += 1;
       const read = bindingsOf(parsed.source);
@@ -1997,7 +2041,7 @@ function bindingsMatrix(): EscapeReading {
       planted.push(...group.map(plant => ({ search: "bindings" as const, place: form.topLevel ? "alone" : "grouped", self: false, nested: false, form: id, ...plant })));
     }
   }
-  return { misread, diagnostics, twins, controlled, escapes, plants, planted, follows: [], parsedAs: [] };
+  return { misread, diagnostics, counted, twins, controlled, escapes, plants, planted, follows: [], parsedAs: [] };
 }
 /** The keys THE MEMBER CHECK's searches give a name inside memberOutcome's arrow function and inside B1's member. */
 const HOLDER_KEY = "memberOutcome ";
@@ -2012,6 +2056,7 @@ function memberCheckMatrix(self: SelfRead): EscapeReading {
   const namesAt = (prefix: string): string[] => keys.filter(key => key.startsWith(prefix)).map(key => key.slice(prefix.length));
   const misread: string[] = [];
   const diagnostics: string[] = [];
+  const counted: string[] = [];
   const twins: string[] = [];
   const escapes: string[] = [];
   const planted: EscapePlant[] = [];
@@ -2025,6 +2070,7 @@ function memberCheckMatrix(self: SelfRead): EscapeReading {
     const composed = memberCheckModule({ holder: joined(holder), b1: joined(b1), module: joined(atEnd) });
     const parsed = parsedPlant(`escape-member-check-${id}`, composed);
     diagnostics.push(...parsed.diagnostics);
+    counted.push(...countedOf(`escape-member-check-${id}`, composed));
     twins.push(...twinMisread(`escape-member-check-${id}`, composed, parsed.diagnostics));
     controlled += 1;
     const read = memberReaderReadOf(parsed.source, self).declarations;
@@ -2040,19 +2086,20 @@ function memberCheckMatrix(self: SelfRead): EscapeReading {
       planted.push(...group.map(plant => ({ search: "memberCheck" as const, place, self: false, nested, form: id, ...plant })));
     }
   }
-  return { misread, diagnostics, twins, controlled, escapes, plants, planted, follows: [], parsedAs: [] };
+  return { misread, diagnostics, counted, twins, controlled, escapes, plants, planted, follows: [], parsedAs: [] };
 }
 /** This file's own text as THE ESCAPE MATRIX plants it (wb-vktz's respin 3, refusal #3's U1), parsed under this file's name (SELF): the
- * text with each block of plants inserted at its offset, in offset order, with its malformed twin's misread (wb-h6rt). */
+ * text with each block of plants inserted at its offset, in offset order, with its malformed twins' misread (wb-h6rt) and its parser
+ * count (parserCount, wb-h6rt's cut #2). */
 const SELF_ID = SELF.replace(/[.]ts$/u, "");
 /** The line of this file a place in its own text follows: its last line with text, up to the place. */
 const selfFollows = (text: string, offset: number): string => text.slice(0, offset).trimEnd().split("\n").at(-1) ?? "";
-function selfPlanted(text: string, blocks: readonly (readonly [offset: number, block: string])[]): { readonly source: ts.SourceFile; readonly diagnostics: readonly string[]; readonly twins: readonly string[] } {
+function selfPlanted(text: string, blocks: readonly (readonly [offset: number, block: string])[]): { readonly source: ts.SourceFile; readonly diagnostics: readonly string[]; readonly counted: readonly string[]; readonly twins: readonly string[] } {
   const sorted = [...blocks].sort(([a], [b]) => a - b);
   const parts = sorted.map(([offset, block], index) => `${text.slice(index === 0 ? 0 : (sorted[index - 1]?.[0] ?? 0), offset)}\n${block}\n`);
   const composed = `${parts.join("")}${text.slice(sorted.at(-1)?.[0] ?? 0)}`;
   const parsed = parsedPlant(SELF_ID, composed);
-  return { ...parsed, twins: twinMisread(SELF_ID, composed, parsed.diagnostics) };
+  return { ...parsed, counted: countedOf(SELF_ID, composed), twins: twinMisread(SELF_ID, composed, parsed.diagnostics) };
 }
 /** THE ESCAPE MATRIX's further BINDINGS places (wb-vktz's respin 3, refusal #3's U1): each plant of a topLevel form (the four const
  * forms and the function declaration) after a leading statement, `void 0;`, in a text of its own, read `module <kind> <name>`; and
@@ -2063,6 +2110,7 @@ function selfPlanted(text: string, blocks: readonly (readonly [offset: number, b
 function placedBindings(self: SelfRead): EscapeReading {
   const misread: string[] = [];
   const diagnostics: string[] = [];
+  const counted: string[] = [];
   const twins: string[] = [];
   const escapes: string[] = [];
   const recorded: EscapePlant[] = [];
@@ -2075,6 +2123,7 @@ function placedBindings(self: SelfRead): EscapeReading {
       const composed = `void 0;\n${plantOf(form, plant.spelling)}`;
       const parsed = parsedPlant(`escape-lead-${id}`, composed);
       diagnostics.push(...parsed.diagnostics);
+      counted.push(...countedOf(`escape-lead-${id}`, composed));
       twins.push(...twinMisread(`escape-lead-${id}`, composed, parsed.diagnostics));
       controlled += 1;
       escapes.push(...escapesMisread(`lead ${id} ${plant.spelling}`, parsed.source, [{ form, plant }]));
@@ -2097,6 +2146,7 @@ function placedBindings(self: SelfRead): EscapeReading {
     const parsed = selfPlanted(text, [[offset, block]]);
     parsedAs.push(parsed.source.fileName);
     diagnostics.push(...parsed.diagnostics);
+    counted.push(...parsed.counted);
     twins.push(...parsed.twins);
     controlled += 1;
     escapes.push(...escapesMisread(where, parsed.source, planted));
@@ -2113,7 +2163,7 @@ function placedBindings(self: SelfRead): EscapeReading {
     plants += planted.length;
     recorded.push(...planted.map(({ id, plant }) => ({ search: "bindings" as const, place: where, self: true, nested: false, form: id, ...plant })));
   }
-  return { misread, diagnostics, twins, controlled, escapes, plants, planted: recorded, follows: places.map(([, offset]) => selfFollows(text, offset)), parsedAs };
+  return { misread, diagnostics, counted, twins, controlled, escapes, plants, planted: recorded, follows: places.map(([, offset]) => selfFollows(text, offset)), parsedAs };
 }
 /** THE ESCAPE MATRIX's further MEMBER CHECK places (wb-vktz's respin 3, refusal #3's U1): this file's own text, parsed under its name,
  * with the plants of every form of each name THE MEMBER CHECK's searches read in it unplanted (the keys of member's declarations) -
@@ -2151,13 +2201,15 @@ function placedMemberCheck(member: MemberReaderRead, self: SelfRead): EscapeRead
     planting(group).map(({ id, plant }) => ({ search: "memberCheck" as const, place, self: true, nested, form: id, ...plant })),
   );
   const follows = [holderAt, b1At, text.length].map(offset => selfFollows(text, offset));
-  return { misread, diagnostics: parsed.diagnostics, twins: parsed.twins, controlled: 1, escapes, plants: forms.length * (holder.length + b1.length + atEnd.length), planted, follows, parsedAs: [parsed.source.fileName] };
+  return { misread, diagnostics: parsed.diagnostics, counted: parsed.counted, twins: parsed.twins, controlled: 1, escapes, plants: forms.length * (holder.length + b1.length + atEnd.length), planted, follows, parsedAs: [parsed.source.fileName] };
 }
 /** parsedPlant's controls (wb-vktz's respin 3, refusal #3's U3): texts written with syntax errors, each read with the diagnostics the
  * judged set pins - THE ESCAPE MATRIX's forms malformed (an enum with a stray comma, a const with no value, an import whose module
  * string is unterminated, a const whose escape names no character, a function's parameter list left open, a namespace with no name)
- * and the stray comma followed by a const with no name - and everyControl (wb-h6rt's, refusal #5's U1), those seven in one text,
- * each on a line of its own and the open parameter list last, the text every malformed twin appends (twinMisread). */
+ * and the stray comma followed by a const with no name - everyControl (wb-h6rt's, refusal #5's U1), those seven in one text,
+ * each on a line of its own and the open parameter list last, the text every END twin appends (twinMisread), and headControl
+ * (wb-h6rt's cut #2, refusal #1's U1), everyControl's text without its last line, the open parameter list, which would read the
+ * text after it as its parameters - the text every HEAD twin prepends, reading everyControl's first eight diagnostics. */
 const MALFORMED_PLANTS: Readonly<Record<string, string>> = {
   strayComma: "enum Shadow { Member,, }",
   noValue: "const Object = ;",
@@ -2168,17 +2220,25 @@ const MALFORMED_PLANTS: Readonly<Record<string, string>> = {
   strayCommaThenNoName: "enum Shadow { Member,, }\nconst = 1;",
   everyControl:
     'enum Shadow { Member,, }\nconst Object = ;\nimport { Object } from "node:fs;\nconst Obj\\u00ct = 1;\nnamespace {}\nenum Shadow { Member,, }\nconst = 1;\nfunction holder(Object: number {}',
+  headControl:
+    'enum Shadow { Member,, }\nconst Object = ;\nimport { Object } from "node:fs;\nconst Obj\\u00ct = 1;\nnamespace {}\nenum Shadow { Member,, }\nconst = 1;',
 };
-/** A text's MALFORMED TWIN (wb-h6rt, refusal #5's U1): the text with MALFORMED_PLANTS' everyControl appended on a line of its own,
- * parsed under the text's own name; its misread, or none: the twin reads the text's own diagnostics followed by everyControl's
- * messages as MALFORMED_PLANTS' check reads them (under everyControl's own name, malformed-everyControl, which the judged set
- * pins), each written under the text's name. */
+/** A text's two MALFORMED TWINS (wb-h6rt: the END twin refusal #5's U1, the HEAD twin cut #2's, refusal #1's U1), each parsed under
+ * the text's own name: its END twin, the text with MALFORMED_PLANTS' everyControl appended on a line of its own, reads the text's
+ * own diagnostics followed by everyControl's messages; its HEAD twin, the text with headControl prepended on a line of its own,
+ * reads headControl's messages followed by the text's own - each control's messages as MALFORMED_PLANTS' check reads them (under
+ * the control's own name, malformed-everyControl or malformed-headControl, which the judged set pins), each written under the
+ * text's name. Their misreads, or none: `<id>: <read> of <wanted>` for the END twin, `<id> head: <read> of <wanted>` for the HEAD. */
 function twinMisread(id: string, text: string, own: readonly string[]): string[] {
   const control = MALFORMED_PLANTS.everyControl ?? "";
+  const head = MALFORMED_PLANTS.headControl ?? "";
   const pinned = parsedPlant("malformed-everyControl", control).diagnostics.map(diagnostic => `${id}: ${diagnostic.slice("malformed-everyControl: ".length)}`);
-  const want = [...own, ...pinned];
-  const got = parsedPlant(id, `${text}\n${control}`).diagnostics;
-  return JSON.stringify(got) === JSON.stringify(want) ? [] : [`${id}: ${got.length} of ${want.length}`];
+  const headPinned = parsedPlant("malformed-headControl", head).diagnostics.map(diagnostic => `${id}: ${diagnostic.slice("malformed-headControl: ".length)}`);
+  const twins: readonly (readonly [where: string, want: readonly string[], got: readonly string[]])[] = [
+    [id, [...own, ...pinned], parsedPlant(id, `${text}\n${control}`).diagnostics],
+    [`${id} head`, [...headPinned, ...own], parsedPlant(id, `${head}\n${text}`).diagnostics],
+  ];
+  return twins.flatMap(([where, want, got]) => (JSON.stringify(got) === JSON.stringify(want) ? [] : [`${where}: ${got.length} of ${want.length}`]));
 }
 /** THE ESCAPE MATRIX's places in this file's own text (placedBindings and placedMemberCheck). */
 const SELF_PLACES: readonly string[] = ["selfAfterImports", "selfEnd", "selfHolder", "selfB1"];
@@ -3050,7 +3110,8 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     // styles, the name with each one of its characters and with every character written as an escape (Object's, in order, below);
     // BINDINGS reads each form's plant of each spelling of BOUND_NAMES, and THE MEMBER CHECK each plant of each spelling of the names
     // its three searches read, as the name it declares (each form its one plant text; respin 4; wb-h6rt adds three const forms);
-    // every plant text parses with no syntax diagnostic; and the counts hold.
+    // every plant text parses with no syntax diagnostic (parsedPlant reads none here, and parserCount counts none below); and the
+    // counts hold.
     expect(respelled("Object")).toEqual([
       "Object",
       "\\u004fbject",
@@ -3093,8 +3154,14 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     // with an escape, as written, at every place of the matrix, and none in this file.
     const placed = { bindings: placedBindings(self), memberCheck: placedMemberCheck(member, self) };
     expect([placed.bindings.misread, placed.memberCheck.misread, placed.bindings.diagnostics, placed.memberCheck.diagnostics]).toEqual([[], [], [], []]);
-    // The malformed twins (wb-h6rt, refusal #5's U1): every text the matrix composes, read again with everyControl appended on a
-    // line of its own under the text's own name, reads its own diagnostics followed by everyControl's; and the twins each search reads.
+    // The parser's own count (wb-h6rt's cut #2, refusal #1's U1): every text the matrix composes holds no syntax diagnostic by
+    // parserCount too, the second reader of the parser's record beside parsedPlant, counted without it - a diagnostic an edit to one
+    // reader drops, at any place of a composed text (its head and its middle among them), the other still reads.
+    expect([matrix.bindings.counted, matrix.memberCheck.counted, placed.bindings.counted, placed.memberCheck.counted]).toEqual([[], [], [], []]);
+    // The malformed twins (wb-h6rt: the END twin refusal #5's U1, the HEAD twin cut #2's, refusal #1's U1): every text the matrix
+    // composes, read again under the text's own name with everyControl appended on a line of its own, reads its own diagnostics
+    // followed by everyControl's, and with headControl prepended on a line of its own, headControl's followed by its own; and the
+    // texts each search reads so.
     expect([matrix.bindings.twins, matrix.memberCheck.twins, placed.bindings.twins, placed.memberCheck.twins]).toEqual([[], [], [], []]);
     expect([matrix.bindings.controlled, matrix.memberCheck.controlled, placed.bindings.controlled, placed.memberCheck.controlled]).toEqual([732, 32, 707, 1]);
     expect([matrix.bindings.escapes, matrix.memberCheck.escapes, placed.bindings.escapes, placed.memberCheck.escapes]).toEqual([[], [], [], []]);
@@ -3145,8 +3212,8 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
     });
     expect(Object.keys(fed).filter(id => fed[id] === 0)).toEqual(ESCAPE_RESIDUALS.map(residual => residual.quiet));
     expect(ESCAPE_RESIDUALS.filter(residual => (fed[residual.twin] ?? 0) === 0).map(residual => residual.id)).toEqual([]);
-    // parsedPlant's controls (refusal #3's U3; wb-h6rt's everyControl, the seven in one text): each malformed text reads its syntax
-    // diagnostics, every one, in the parser's order.
+    // parsedPlant's controls (refusal #3's U3; wb-h6rt's everyControl, the seven in one text, and cut #2's headControl, everyControl
+    // without its open parameter list): each malformed text reads its syntax diagnostics, every one, in the parser's order.
     expect(Object.fromEntries(Object.entries(MALFORMED_PLANTS).map(([id, text]) => [id, parsedPlant(`malformed-${id}`, text).diagnostics]))).toEqual({
       strayComma: ["malformed-strayComma: Enum member expected."],
       noValue: ["malformed-noValue: Expression expected."],
@@ -3167,6 +3234,28 @@ describe("wb-km7q.4 CoverageWitness adoption census (SDK-REACTIVE-FIBER-ADAPTIVE
         "malformed-everyControl: ',' expected.",
         "malformed-everyControl: ')' expected.",
       ],
+      headControl: [
+        "malformed-headControl: Enum member expected.",
+        "malformed-headControl: Expression expected.",
+        "malformed-headControl: Unterminated string literal.",
+        "malformed-headControl: Invalid character.",
+        "malformed-headControl: Namespace must be given a name.",
+        "malformed-headControl: Enum member expected.",
+        "malformed-headControl: Variable declaration expected.",
+        "malformed-headControl: Variable declaration expected.",
+      ],
+    });
+    // parserCount's controls (wb-h6rt's cut #2): it counts the diagnostics of each malformed text above as their number.
+    expect(Object.fromEntries(Object.entries(MALFORMED_PLANTS).map(([id, text]) => [id, parserCount(`malformed-${id}`, text)]))).toEqual({
+      strayComma: 1,
+      noValue: 1,
+      unterminatedModule: 1,
+      brokenEscape: 1,
+      openParameters: 2,
+      unnamedNamespace: 1,
+      strayCommaThenNoName: 3,
+      everyControl: 10,
+      headControl: 8,
     });
   });
   for (const row of ROWS) {
