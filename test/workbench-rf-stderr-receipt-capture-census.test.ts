@@ -74,7 +74,19 @@
  * Cut #10 changes no reader and no row: it writes the declaration as the one function or method declaration around a launch,
  * enumerates (7) exactly as its rows write it, byte for byte, claims parameters only of the declarations its rows plant them in, a
  * loader member only under an identifier receiver, an edit only inside the exported function declaration its row edits and a
- * binding only as its declaration's initializer itself, and names every other such form NOT CLAIMED. Where a
+ * binding only as its declaration's initializer itself, and names every other such form NOT CLAIMED. Gate refusal #10 measured the
+ * launch beneath those nouns still claimed wider than its rows plant it - the five C1 (c) items, C1-ARGV-BINDING to C1-OPTIONS,
+ * read each rf launch C1 (a) reads while every row plants its launch under spawn (the shell arm under exec and execSync),
+ * G2-BINDING-USES and G2-STDIO each rf launch while their rows plant bare spawn launches in function declarations only, and
+ * G2-BINDING-USES's data listener and bare-use entries every listen method and syntax kind while its rows plant on and two kinds -
+ * so its hollows GP12-L1 to GP12-L6, GP12-B5, GP12-B1, GP12-B2 and GP12-B3 kept the census green while its plants realized them,
+ * and its plants PX1, PX1b and PX2 (options at the launcher's index 1: execSync, exec with a callback and spawn with no args array)
+ * contradicted C1-OPTIONS's and G2-STDIO's options reading - and orchestrator ruling R-B640 bound the next cut to move only those
+ * words. Cut #11 changes no reader and no row: it writes each of those seven items' launch as the rf launch under spawn
+ * (C1-ARGV-RETURNS's shell arm under exec and execSync) in the modules its rows plant, exactly as they write them, byte for byte,
+ * and Pi's own launch, narrows C1-OPTIONS and G2-STDIO to spawn with an args array as its second argument, the data listener to one
+ * added by on and the bare use to the two kinds its rows plant, and names every other launch, launcher shape, listener and kind
+ * NOT CLAIMED. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -85,9 +97,9 @@
  * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; cut #6 by seat ws-04, run g10-work-s219 at
  * trunk 108a202, landing 987; cut #7 by seat ws-04, run g10-work-s219 at trunk fd8f71c, landing 991; cut #8 by seat ws-04, run
  * g10-work-s226 at trunk b45f46a, landing 993; cut #9 by seat ws-04, run g10-work-s226 at trunk 1b707ef, landing 1002; cut #10
- * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; providers/reactivefiber.ts is byte-identical at all ten and
- * at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #10 move no reader, so every witness reads as at
- * cut #5; every C1 and G2 witness
+ * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; cut #11 by seat ws-03, run g10-work-s230 at trunk 600a253,
+ * landing 1011; providers/reactivefiber.ts is byte-identical at all eleven and at 04123dc, sha256/16 d8b764b855600103 over
+ * its 203 lines; cuts #6 to #11 move no reader, so every witness reads as at cut #5; every C1 and G2 witness
  * below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
@@ -303,41 +315,71 @@
  *    shadowing a same-file const; a10 of refusal #4: a const whose initializer does not resolve shadowing a same-named const). It
  *    claims that reading exactly at the forms its rows plant, one or more rows per form named (an unbound launch program among
  *    them); every other binding form is NOT CLAIMED by this census.
- *  C1-ARGV-BINDING: C1 (c) reads each rf launch's argv argument: an inline array; or an identifier that TypeScript's checker (a
- *    no-lib program over the launching file alone) binds by scope to one const declaration, read through its initializer, with its
- *    use count (every identifier the checker resolves to it); anything else reads unresolved, and a launch with no second argument
- *    reads none. It claims that reading exactly at the forms its rows plant: an inline array, bare and as const; a const in the
- *    launching declaration, mutated, and one shadowing a module-level const; unresolved, a let and a call; and no second argument;
- *    every other argv form is NOT CLAIMED by this census.
- *  C1-ARGV-BUILDER: C1 (c) reads, when that const's initializer calls an identifier, the builder the checker binds it to by scope -
- *    a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching
- *    declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads
- *    unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its
- *    rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function declaration
- *    nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function
- *    expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an undeclared
- *    one; every other builder binding, and an optional call (?.()) of the builder, is NOT CLAIMED by this census.
- *  C1-ARGV-RETURNS: C1 (c) reads every return of the resolved builder (an arrow's expression body included; nested functions
- *    excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved when a return is no array
- *    literal; otherwise unconditional when every return lists it as an element, conditional when a return's source text holds it
- *    double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for
- *    exec and execSync it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant:
- *    one return listing it as a string and as a no-substitution template, holding it double-quoted in a spread, holding it
- *    double-quoted in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and
- *    beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows);
- *    and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's
- *    listing it; every other return shape, --no-commit held otherwise in single quotes or as a template among them, is NOT CLAIMED
+ *  C1-ARGV-BINDING: C1 (c) reads the argv argument of each rf launch under spawn in the modules its rows plant, exactly as they
+ *    write them, byte for byte (each module one launch, a call by spawn's own name, its callee bare, with the string rf as its
+ *    first argument, at module level or in a module-level function declaration with export alone), and of Pi's own launch as src
+ *    writes it (the C1 witness): an inline array; or an identifier that TypeScript's checker (a no-lib program over the launching
+ *    file alone) binds by scope to one const declaration, read through its initializer, with its use count (every identifier the
+ *    checker resolves to it); anything else reads unresolved, and a launch with no second argument reads none. It claims that
+ *    reading exactly at the forms its rows plant: an inline array, bare and as const; a const in the launching declaration,
+ *    mutated, and one shadowing a module-level const; unresolved, a let and a call; and no second argument; every other argv form,
+ *    and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form,
+ *    with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED by this
+ *    census.
+ *  C1-ARGV-BUILDER: C1 (c) reads, for each rf launch under spawn in the modules its rows plant and those C1-ARGV-RETURNS's rows
+ *    plant under spawn, exactly as they write them, byte for byte (each such module one launch, a call by spawn's own name, its
+ *    callee bare, with the string rf as its first argument, in a module-level function declaration with export alone), and for Pi's
+ *    own launch as src writes it (the C1 witness), when that const's initializer calls an identifier, the builder the checker binds
+ *    it to by scope - a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested
+ *    in the launching declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound
+ *    callee reads unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at
+ *    the forms its rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function
+ *    declaration nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a
+ *    function expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an
+ *    undeclared one; every other builder binding, an optional call (?.()) of the builder, and every other launch (one under
+ *    spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in
+ *    another declaration or beside another launch in its module among them), is NOT CLAIMED by this census.
+ *  C1-ARGV-RETURNS: C1 (c) reads, for each rf launch under spawn in the modules its rows plant under spawn and those
+ *    C1-ARGV-BUILDER's rows plant, exactly as they write them, byte for byte (each such module one launch, a call by spawn's own
+ *    name, its callee bare, with the string rf as its first argument, in a module-level function declaration with export alone),
+ *    and for Pi's own launch as src writes it (the C1 witness), every return of the resolved builder (an arrow's expression body
+ *    included; nested functions excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved
+ *    when a return is no array literal; otherwise unconditional when every return lists it as an element, conditional when a
+ *    return's source text holds it double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and
+ *    absent when none does; for exec and execSync, in the modules its rows plant under them, exactly as they write them, byte for
+ *    byte (each such module one launch, a call by its launcher's own name, its callee bare, at module level), it reads whether the
+ *    command's words list it. It claims that reading exactly at the forms its rows plant: one return listing it as a string and as
+ *    a no-substitution template, holding it double-quoted in a spread, holding it double-quoted in a conditional element, not
+ *    holding it, and a call; two returns, one listing it beside one that does not and beside a call; a nested function's array
+ *    return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's command words listing it, not
+ *    listing it, and with a part that does not resolve (no rf launch), and execSync's listing it; every other return shape,
+ *    --no-commit held otherwise in single quotes or as a template among them, and every other launch (one under spawnSync,
+ *    execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another
+ *    declaration or beside another launch in its module among them), is NOT CLAIMED by this census.
+ *  C1-BUILDER-DECLARATIONS: C1 (c) reads, for each rf launch under spawn in the modules its rows plant, exactly as they write them,
+ *    byte for byte (each module one launch, a call by spawn's own name, its callee bare, with the string rf as its first argument,
+ *    in a module-level function declaration with export alone), and for Pi's own launch as src writes it (the C1 witness), every
+ *    declaration in the launching file that binds the builder's name - a function, a class, a const, let or var, a destructuring
+ *    element, a parameter, an import, a named function or class expression, an enum or a namespace - as path:name:kind@declaration.
+ *    It claims that reading exactly at the forms its rows plant: a module-level and a nested function declaration and a parameter
+ *    of the launching declaration, and at module level a class, a const, a let, a var, an object destructuring element, an import
+ *    specifier, a default import, a namespace import, an import-equals, a named function expression, a named class expression, an
+ *    enum and a namespace; every other binding form, a using declaration and a declaration of the name carrying export itself among
+ *    them, and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee
+ *    form, with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED
  *    by this census.
- *  C1-BUILDER-DECLARATIONS: C1 (c) reads every declaration in the launching file that binds the builder's name - a function, a
- *    class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or
- *    a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a
- *    nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var,
- *    an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function
- *    expression, a named class expression, an enum and a namespace; every other binding form, a using declaration and a declaration
- *    of the name carrying export itself among them, is NOT CLAIMED by this census.
- *  C1-OPTIONS: C1 (c) reads each rf launch's options argument as its source text, or none. It claims that reading exactly at the
- *    forms its rows plant: an object literal's text, and none (every other argv row); every other options form is NOT CLAIMED by
- *    this census.
+ *  C1-OPTIONS: C1 (c) reads, for each rf launch under spawn with an args array as its second argument among the launches the argv
+ *    rows plant (C1-ARGV-BINDING's, C1-ARGV-BUILDER's, C1-ARGV-RETURNS's and its own), exactly as they write them, byte for byte
+ *    (each a call by spawn's own name, its callee bare, with the string rf as its first argument and an inline array, bare or as
+ *    const, or a const in the launching declaration as its second, at module level or in a module-level function declaration with
+ *    export alone, one launch to a module), and for Pi's own launch as src writes it (the C1 witness), its third argument, the
+ *    options argument of that launcher shape, as its source text, or none when it has no third argument. It claims that reading
+ *    exactly at the forms its rows plant: an object literal's text, as its rows write it, and none (every other argv row with such
+ *    a second argument); every other options form, and every other launcher shape - exec and execSync, whose options argument is
+ *    their second; spawn, spawnSync, execFile, execFileSync or fork with no args array as its second argument (an options object
+ *    there among them), whose options argument is then its second; spawn with a let or a call as its second argument; and a launch
+ *    under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument,
+ *    in another declaration or beside another launch in its module - is NOT CLAIMED by this census.
  *  C1-DECLARATION-REFERENCES: C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration
  *    by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an
  *    import or an export. It claims that reading exactly at the forms its rows plant: the parameters of the declaration, exactly as
@@ -372,15 +414,33 @@
  *  C1-RUNTIME-ARGV: C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv
  *    lists no --no-commit. It claims that reading exactly at the forms its rows plant: --no-commit as an arm's last, an inner and
  *    its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census.
- *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, the call being that
- *    declaration's initializer itself, and every reference to that binding by name inside the launching declaration: a member read
- *    or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or
- *    arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a
- *    hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding, a launch
- *    bound through a wrapper around its call (parentheses, as, satisfies, !, a type assertion or await) and optional chaining (?.)
- *    on a reference are NOT CLAIMED by this census.
- *  G2-STDIO: G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is
- *    bound to no declared name. A stdio property named otherwise than by an identifier is NOT CLAIMED by this census.
+ *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds under spawn in the module its rows plant, exactly as they write it,
+ *    byte for byte (two launches, each a call by spawn's own name, its callee bare, with the string rf as its first argument, the
+ *    one the initializer of a const in a module-level function declaration with export alone and the other of a let in another),
+ *    and for Pi's own launch as src writes it (the G2 witness), whether it is bound to a const or a let, the call being that
+ *    declaration's initializer itself, and every reference to that binding by name inside that function declaration: a member read
+ *    or call; a stdout or stderr member with its method, and for a stderr data listener added by on its chunk parameter's uses
+ *    (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind, as a call's argument and as the
+ *    initializer of a destructuring declaration; so a destructuring, child.stdio, an element access, a hand-off to a helper, a
+ *    second listener and another stream member each read as a new use. A var or using binding, a launch bound through a wrapper
+ *    around its call (parentheses, as, satisfies, !, a type assertion or await), optional chaining (?.) on a reference, a data
+ *    listener added by once, addListener, prependListener or prependOnceListener, a bare use of any other syntax kind, and every
+ *    other launch (one under spawnSync, execFile, execFileSync, exec, execSync, fork or process.execve, by another route or callee
+ *    form, with another first argument, or in another declaration, a method or a module-level const bound to an arrow or function
+ *    expression among them) are NOT CLAIMED by this census.
+ *  G2-STDIO: G2 (static) reads, for each rf launch C1 finds under spawn with an args array as its second argument in the modules
+ *    its rows and G2-BINDING-USES's rows plant, exactly as they write them, byte for byte (each a call by spawn's own name, its
+ *    callee bare, with the string rf as its first argument and an inline array as its second: the initializer of a const or a let
+ *    in a module-level function declaration with export alone, its third argument an object literal assigning stdio, or bound to no
+ *    declared name, with no third argument, under a property access in a module-level const with export bound to an arrow with a
+ *    block body), and for Pi's own launch as src writes it (the G2 witness), the stdio option text its third argument, the options
+ *    argument of that launcher shape, assigns, or <unread> when it has no third argument, together with the unbound call when the
+ *    launch is bound to no declared name. Every other launcher shape - exec and execSync, whose options argument is their second;
+ *    spawn, spawnSync, execFile, execFileSync or fork with no args array as its second argument (an options object there among
+ *    them), whose options argument is then its second; and a launch under spawnSync, execFile, execFileSync, fork or
+ *    process.execve, by another route or callee form, with another first or second argument, bound otherwise or in another
+ *    declaration - every other options form, and a stdio property named otherwise than by an identifier are NOT CLAIMED by this
+ *    census.
  *  G2-CHANNEL-SITES: G2 (static) reads every place src spells or resolves diagnostics_channel or node:diagnostics_channel, by the
  *    roles C1-MODULE-SITES reads for child_process (gate members LG1, LG1b, LG1x and LG2: an import of it; LG1g: a
  *    getBuiltinModule call naming it).
@@ -3064,7 +3124,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-ARGV-BINDING",
     pin: "C1",
-    words: "C1 (c) reads each rf launch's argv argument: an inline array; or an identifier that TypeScript's checker (a no-lib program over the launching file alone) binds by scope to one const declaration, read through its initializer, with its use count (every identifier the checker resolves to it); anything else reads unresolved, and a launch with no second argument reads none. It claims that reading exactly at the forms its rows plant: an inline array, bare and as const; a const in the launching declaration, mutated, and one shadowing a module-level const; unresolved, a let and a call; and no second argument; every other argv form is NOT CLAIMED by this census.",
+    words: "C1 (c) reads the argv argument of each rf launch under spawn in the modules its rows plant, exactly as they write them, byte for byte (each module one launch, a call by spawn's own name, its callee bare, with the string rf as its first argument, at module level or in a module-level function declaration with export alone), and of Pi's own launch as src writes it (the C1 witness): an inline array; or an identifier that TypeScript's checker (a no-lib program over the launching file alone) binds by scope to one const declaration, read through its initializer, with its use count (every identifier the checker resolves to it); anything else reads unresolved, and a launch with no second argument reads none. It claims that reading exactly at the forms its rows plant: an inline array, bare and as const; a const in the launching declaration, mutated, and one shadowing a module-level const; unresolved, a let and a call; and no second argument; every other argv form, and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED by this census.",
     falsifier: async () => ({
       inline: argvOf(['spawn("rf", ["context", "render", "--no-commit"]);']),
       mutated: argvOf(["export function launch(): void {", '  const argv = ["context", "render", "--no-commit"];', "  argv.pop();", '  spawn("rf", argv, { stdio: "ignore" });', "}"]),
@@ -3087,7 +3147,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-ARGV-BUILDER",
     pin: "C1",
-    words: "C1 (c) reads, when that const's initializer calls an identifier, the builder the checker binds it to by scope - a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function declaration nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an undeclared one; every other builder binding, and an optional call (?.()) of the builder, is NOT CLAIMED by this census.",
+    words: "C1 (c) reads, for each rf launch under spawn in the modules its rows plant and those C1-ARGV-RETURNS's rows plant under spawn, exactly as they write them, byte for byte (each such module one launch, a call by spawn's own name, its callee bare, with the string rf as its first argument, in a module-level function declaration with export alone), and for Pi's own launch as src writes it (the C1 witness), when that const's initializer calls an identifier, the builder the checker binds it to by scope - a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function declaration nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an undeclared one; every other builder binding, an optional call (?.()) of the builder, and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED by this census.",
     falsifier: async () => ({
       nested: argvOf(LC2_PLANT),
       nestedLines: argvBuilders(planted(LC2_PLANT)),
@@ -3135,7 +3195,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-ARGV-RETURNS",
     pin: "C1",
-    words: "C1 (c) reads every return of the resolved builder (an arrow's expression body included; nested functions excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved when a return is no array literal; otherwise unconditional when every return lists it as an element, conditional when a return's source text holds it double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for exec and execSync it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant: one return listing it as a string and as a no-substitution template, holding it double-quoted in a spread, holding it double-quoted in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's listing it; every other return shape, --no-commit held otherwise in single quotes or as a template among them, is NOT CLAIMED by this census.",
+    words: "C1 (c) reads, for each rf launch under spawn in the modules its rows plant under spawn and those C1-ARGV-BUILDER's rows plant, exactly as they write them, byte for byte (each such module one launch, a call by spawn's own name, its callee bare, with the string rf as its first argument, in a module-level function declaration with export alone), and for Pi's own launch as src writes it (the C1 witness), every return of the resolved builder (an arrow's expression body included; nested functions excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved when a return is no array literal; otherwise unconditional when every return lists it as an element, conditional when a return's source text holds it double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for exec and execSync, in the modules its rows plant under them, exactly as they write them, byte for byte (each such module one launch, a call by its launcher's own name, its callee bare, at module level), it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant: one return listing it as a string and as a no-substitution template, holding it double-quoted in a spread, holding it double-quoted in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's listing it; every other return shape, --no-commit held otherwise in single quotes or as a template among them, and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED by this census.",
     falsifier: async () => ({
       unconditional: argvOf(builder('["context", "render", "--no-commit"]')),
       conditional: argvOf(builder('["context", "render", ...(commit ? [] : ["--no-commit"])]')),
@@ -3198,7 +3258,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-BUILDER-DECLARATIONS",
     pin: "C1",
-    words: "C1 (c) reads every declaration in the launching file that binds the builder's name - a function, a class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var, an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function expression, a named class expression, an enum and a namespace; every other binding form, a using declaration and a declaration of the name carrying export itself among them, is NOT CLAIMED by this census.",
+    words: "C1 (c) reads, for each rf launch under spawn in the modules its rows plant, exactly as they write them, byte for byte (each module one launch, a call by spawn's own name, its callee bare, with the string rf as its first argument, in a module-level function declaration with export alone), and for Pi's own launch as src writes it (the C1 witness), every declaration in the launching file that binds the builder's name - a function, a class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var, an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function expression, a named class expression, an enum and a namespace; every other binding form, a using declaration and a declaration of the name carrying export itself among them, and every other launch (one under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration or beside another launch in its module among them), is NOT CLAIMED by this census.",
     falsifier: async () => {
       const beside = (declaration: string): string[] =>
         builderDeclarations(planted([declaration, "export function launch(): void {", "  const argv = renderArgv();", '  spawn("rf", argv);', "}"]));
@@ -3243,7 +3303,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-OPTIONS",
     pin: "C1",
-    words: "C1 (c) reads each rf launch's options argument as its source text, or none. It claims that reading exactly at the forms its rows plant: an object literal's text, and none (every other argv row); every other options form is NOT CLAIMED by this census.",
+    words: "C1 (c) reads, for each rf launch under spawn with an args array as its second argument among the launches the argv rows plant (C1-ARGV-BINDING's, C1-ARGV-BUILDER's, C1-ARGV-RETURNS's and its own), exactly as they write them, byte for byte (each a call by spawn's own name, its callee bare, with the string rf as its first argument and an inline array, bare or as const, or a const in the launching declaration as its second, at module level or in a module-level function declaration with export alone, one launch to a module), and for Pi's own launch as src writes it (the C1 witness), its third argument, the options argument of that launcher shape, as its source text, or none when it has no third argument. It claims that reading exactly at the forms its rows plant: an object literal's text, as its rows write it, and none (every other argv row with such a second argument); every other options form, and every other launcher shape - exec and execSync, whose options argument is their second; spawn, spawnSync, execFile, execFileSync or fork with no args array as its second argument (an options object there among them), whose options argument is then its second; spawn with a let or a call as its second argument; and a launch under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration or beside another launch in its module - is NOT CLAIMED by this census.",
     falsifier: async () => argvOf(['spawn("rf", ["--no-commit"], { stdio: "inherit", shell: true });']),
     caught: ['plant.ts:<module>:spawn argv=<inline> --no-commit=unconditional options={ stdio: "inherit", shell: true }'],
   },
@@ -3437,7 +3497,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-BINDING-USES",
     pin: "G2",
-    words: "G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, the call being that declaration's initializer itself, and every reference to that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding, a launch bound through a wrapper around its call (parentheses, as, satisfies, !, a type assertion or await) and optional chaining (?.) on a reference are NOT CLAIMED by this census.",
+    words: "G2 (static) reads, per rf launch C1 finds under spawn in the module its rows plant, exactly as they write it, byte for byte (two launches, each a call by spawn's own name, its callee bare, with the string rf as its first argument, the one the initializer of a const in a module-level function declaration with export alone and the other of a let in another), and for Pi's own launch as src writes it (the G2 witness), whether it is bound to a const or a let, the call being that declaration's initializer itself, and every reference to that binding by name inside that function declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener added by on its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind, as a call's argument and as the initializer of a destructuring declaration; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding, a launch bound through a wrapper around its call (parentheses, as, satisfies, !, a type assertion or await), optional chaining (?.) on a reference, a data listener added by once, addListener, prependListener or prependOnceListener, a bare use of any other syntax kind, and every other launch (one under spawnSync, execFile, execFileSync, exec, execSync, fork or process.execve, by another route or callee form, with another first argument, or in another declaration, a method or a module-level const bound to an arrow or function expression among them) are NOT CLAIMED by this census.",
     falsifier: async () =>
       childUses(
         planted([
@@ -3475,7 +3535,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-STDIO",
     pin: "G2",
-    words: "G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is bound to no declared name. A stdio property named otherwise than by an identifier is NOT CLAIMED by this census.",
+    words: "G2 (static) reads, for each rf launch C1 finds under spawn with an args array as its second argument in the modules its rows and G2-BINDING-USES's rows plant, exactly as they write them, byte for byte (each a call by spawn's own name, its callee bare, with the string rf as its first argument and an inline array as its second: the initializer of a const or a let in a module-level function declaration with export alone, its third argument an object literal assigning stdio, or bound to no declared name, with no third argument, under a property access in a module-level const with export bound to an arrow with a block body), and for Pi's own launch as src writes it (the G2 witness), the stdio option text its third argument, the options argument of that launcher shape, assigns, or <unread> when it has no third argument, together with the unbound call when the launch is bound to no declared name. Every other launcher shape - exec and execSync, whose options argument is their second; spawn, spawnSync, execFile, execFileSync or fork with no args array as its second argument (an options object there among them), whose options argument is then its second; and a launch under spawnSync, execFile, execFileSync, fork or process.execve, by another route or callee form, with another first or second argument, bound otherwise or in another declaration - every other options form, and a stdio property named otherwise than by an identifier are NOT CLAIMED by this census.",
     falsifier: async () => ({
       unbound: childUses(planted(['export const render = (): void => { spawn("rf", []).stderr?.on("data", parse); };'])),
       inherit: childUses(planted(["export function preview(): void {", '  const child = spawn("rf", [], { stdio: "inherit" });', "}"])),
