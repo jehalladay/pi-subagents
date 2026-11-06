@@ -15,12 +15,28 @@
  *   pins both emptyings as unseen by every outside reading; its cut #4 (seat ws-04, run g10-work-s182; authored at trunk
  *   04c8bbb0, base of record f5cb9129) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of
  *   the gate's TV3 and TV5) under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED
- *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219, base of record 108a2025), cut once
- *   the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier wb-gnj9 had landed (landing
- *   952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels were named twins of the
- *   gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and
- *   GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no channel's twin identity is claimed
- *   (R-HIDDEN below).
+ *   (R-HIDDEN below); and its post-inversion restatement (seat ws-04, run g10-work-s219; authored at trunk 108a2025, base of
+ *   record 95fb8156), cut once the dependency inversion R-B313 had parked this bead behind wb-byfw and wb-byfw's carrier
+ *   wb-gnj9 had landed (landing 952), answers wb-ulnv refusal #4 (its U1: the own, getter, non-enumerable and symbol channels
+ *   were named twins of the gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD,
+ *   GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no
+ *   channel's twin identity is claimed (R-HIDDEN below).
+ * wb-33z6 (the R694 follow-up of wb-ulnv's landing 990): its cut #1 (seat ws-03, run g10-work-s226; authored at trunk
+ *   b45f46ad, base of record d7b5e894) answers that landing's F1 by pinning the plant's root namespace in R-HIDDEN as the
+ *   namespace its binding roster, DOCUMENT WITNESS and wrapped-kind literal read (the gate's one-site GP2-SPLIT-* and two-site
+ *   GP2-SPLIT2-* split hollows, whose release ships a copy with one binding's documents emptied, red there) and that landing's
+ *   F3 by the history clause above (108a2025 is the trunk the restatement was authored at, 95fb8156 its base of record); its
+ *   cut #2 (seat ws-03, run g10-work-s226; authored at trunk 1b707ef0, base of record 1b707ef0) answers wb-33z6 refusal #1
+ *   (its U1: cut #1's pin read the root namespace once, so the gate's GP22-ACC-FAITHFUL, GP22-ACCG-FAITHFUL, GP22-ACC-SDKROOT
+ *   and GP22-ACCG-SPLIT2-* members, whose release serves the planted namespace to that one read through an accessor and a
+ *   copy of it, or the SDK's own root namespace, to every later read, kept the census green) by pinning how the release
+ *   holds that namespace (R-HIDDEN's IDENTITY PIN below); and its cut #3 (seat ws-01, run g10-work-s228; authored at trunk
+ *   c4e8f826, base of record c4e8f826) answers wb-33z6 refusal #2 (its U1-U3: the gate's GP31-GOPD-* members, whose plant
+ *   code replaced the realm's descriptor reader so that the pin read a read-only data property holding the planted namespace
+ *   while the walk read another value, and GP31-ENTRIES-FAITHFUL, whose plant code replaced Object.entries so that the
+ *   walk's root read answered a copy, kept the census green) under orchestrator ruling R-B629, in the
+ *   enumerate-the-resolvable form: the IDENTITY PIN reads through the load-time built-ins, reads the walk's root read, and
+ *   claims exactly what those readings pin.
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -177,13 +193,18 @@
  *   documents whose representation is not a string but a value whose string value includes it: a String wrapper object (new
  *   String(SDK_REPRESENTATION), the gate's G-STRING-OBJECT, whose index characters the walk reads one at a time), an object
  *   whose toString or Symbol.toPrimitive returns it, a symbol whose description holds it, or a function whose source
- *   spells it; documents the walk would read through a built-in that the release's import-time code replaced (Map.prototype.entries);
+ *   spells it; documents the walk would read through a built-in that the release's import-time code replaced (any built-in
+ *   the walk calls; the quiet row plants Map.prototype.entries, its Map reader, and Object.entries, its root read, replaced
+ *   for the walk alone, past the IDENTITY PIN's read (d));
  *   documents in a neutral-named module that no export subpath re-exports and whose bytes never spell hyperunix.result/1 byte
  *   for byte (the representation imported from the codec, or escape-spelled); and documents declared only in types. Shipped
  *   in the vendored release, each still changes T1 identity's tarballs facet (the strict reader reads the new content or
- *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (it replaces
- *   Map.prototype.entries for one walk and restores it), and every classification pin reads today's set. Literals pin the
- *   plant itself (hiddenPlant): the planted namespace's bindings beside the SDK's own, by name and property kind
+ *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (of the
+ *   built-ins the walk calls, it replaces Map.prototype.entries and Object.entries, each for one walk, and restores each),
+ *   and every classification pin reads today's set. Literals pin the plant itself (hiddenPlant, as the quiet row builds it):
+ *   how its release holds its root namespace, and what the walk's root read answers there, at the IDENTITY PIN's read
+ *   (below), so the literals below read the root namespace that read answers; the planted
+ *   namespace's bindings beside the SDK's own, by name and property kind
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
  *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, census-side channels, none of which
@@ -210,6 +231,50 @@
  *   (refusal #4's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD, whose documents stand
  *   only while a loadCases call's effect stands). The twin coverage cut #4 deferred to wb-byfw is the DOCUMENT WITNESS twin
  *   census that wb-byfw's carrier wb-gnj9 landed (landing 952): test/workbench-hyperunix-document-witness-census.test.ts.
+ *   IDENTITY PIN (wb-33z6; read in the quiet row before any classification pin runs; cut #3's enumerate-the-resolvable form:
+ *   its pinned reader set is (a)-(d) below, and it claims those four readings). The load-time built-ins are loadedDescriptor,
+ *   loadedHasOwn and loadedIsProxy (the realm's Object.getOwnPropertyDescriptor and Object.hasOwn and node:util's
+ *   types.isProxy) and loadedSet, loadedDefine and loadedDelete (Reflect's set, defineProperty and deleteProperty), each as the
+ *   realm held it when this file's body began to run, after its imports and before any plant is built. rootHolding calls the
+ *   first three and no other built-in (no array method, iterator or spread): it reads each holder as a Proxy or not before
+ *   anything else is read from it, so no trap runs, and each property by its own descriptor alone, so no getter is invoked,
+ *   reading a descriptor's fields only where loadedHasOwn finds them on the descriptor itself. (a) rootHolding's shape: neither
+ *   the quiet row's planted release nor its modules nor its root namespace is a Proxy, and the release holds its modules and
+ *   the modules hold "." as own data properties that are read-only, fixed (non-configurable) and enumerable. (b) rootHolding's
+ *   root: the value there is the planted namespace itself, one object. (c) loadedSet, loadedDefine and loadedDelete answer
+ *   false for a set, a define and a delete of either property. (d) The walk's root read (exportedRoots, the read
+ *   exportedCarriers makes, through Object.entries as the realm holds it at this read; the pin reads its answer by index alone)
+ *   answers the planted release's export subpaths ".", "./protocol" and "./raw", once each and in that order, and at "." the
+ *   planted namespace itself. By ECMAScript's invariants of the essential internal methods, which bind every object, the
+ *   engine's own later reads of either property (property accesses) answer the values (a) and (b) observed. FALSIFIERS (each
+ *   reds the case R-HIDDEN reads quiet, and RECORDS beside it): at (a), a release or modules that holds the namespace, or a
+ *   copy of it, in an accessor or a Proxy, or as a writable or configurable property (the gate's GP2-SPLIT-*, GP2-SPLIT2-*,
+ *   GP22-ACC-*, GP22-ACCG-*, GP22-DATA-FAITHFUL and GP22-PROXY-ROOT members, alone and with their walk twins, and the seat's
+ *   S33-SPLIT-FAITHFUL rows and S33B rows), also where the plant's code replaced the realm's descriptor reader or Proxy check
+ *   to report a read-only data property holding the planted namespace, or no Proxy (the gate's GP31-GOPD-ACC-FAITHFUL,
+ *   GP31-GOPD-ACC-SDKROOT, GP31-GOPD-RELACC-FAITHFUL and GP31-ISPROXY-PROXY-MODULES, and the two-site GP31-GOPD-SPLIT2-OWN,
+ *   -GETTER, -NONENUM, -SYMBOL, -PROTO, -BYTES, -CALL and -PROMISE, alone and with walk twins TV4, TV6, TV2, TV1, TV3, TV5, TVC
+ *   and TVR); at (b), a release whose frozen modules hold a frozen copy of the namespace (the seat's S33B-DATA-COPY-FROZEN); at
+ *   (c), one expected write answer inverted (the gate's GP31-PIN-FLIP-C); and at (d), a plant whose code replaced
+ *   Object.entries so that the walk's root read answers a copy, the SDK's own root namespace or a second root namespace at "."
+ *   (the gate's GP31-ENTRIES-FAITHFUL; the seat's S34-ENTRIES-SDKROOT and S34-ENTRIES-DUP). The S33B rows at (a) are all but
+ *   S33B-BASELINE, S33B-DATA-COPY-FROZEN and two plants the engine refuses while they are built (S33B-INHERITED-ROOT and
+ *   S33B-LATE-WRITE-FROZEN: their write into the frozen modules throws, so the quiet row reds before any pin).
+ *   RESIDUAL (R-HIDDEN's replaced-built-in member above, documents the walk would read through a built-in that the release's
+ *   import-time code replaced; its pinned quiet row is the quiet row's Object.entries plant, which the walk reads as the
+ *   replacement serves it): which root namespace the walk reads when it runs, past (d)'s one read. The walk reads it through
+ *   Object.entries as the realm holds it then, so a plant whose code replaces Object.entries for the walk's own read alone (one
+ *   answering (d)'s read with the planted namespace and the walk's with another: the seat's S34-ENTRIES-STATEFUL-FAITHFUL and
+ *   S34-ENTRIES-STATEFUL-SDKROOT, which answer every later read of the planted modules with a copy or with the SDK's own root
+ *   namespace, read quiet), or replaces another built-in the walk calls, is that member.
+ *   NOT CLAIMED (scope sentences): what a literal of this file, or an assertion of the test framework, reads of a plant whose
+ *   code replaces a built-in that the literal's reader or the assertion calls (one neither load-time nor the walk's) is NOT
+ *   CLAIMED by this census: every case, (a)-(d) included, is judged by the framework's assertions as the realm holds their
+ *   built-ins when they run. Which namespaces the walk's root read answers at "./protocol" and "./raw" (the plant ships the
+ *   SDK's own there) is NOT CLAIMED by this census. What the one planted namespace holds between one read and another (bindings
+ *   or documents changing, the one object answering a later read differently) is NOT CLAIMED by this census beyond what each
+ *   literal reads at its own read, and neither is how the plant of any other hiddenPlant call (R-SELF-HOLLOW's, and the
+ *   replaced-member plant beside the quiet) holds its root namespace.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
@@ -278,6 +343,17 @@ import * as sdkProtocol from "@hyperunix/sdk/protocol";
 import * as sdkRaw from "@hyperunix/sdk/raw";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+
+/** The load-time built-ins (wb-33z6 cut #3): R-HIDDEN's identity pin reads its pins (a)-(c) through these alone (rootHolding
+ * and its write probes). Each is the realm's own-property descriptor reader, own-property test or Proxy check, or one of
+ * Reflect's set, defineProperty and deleteProperty, as the realm held it when this file's body began to run (after its imports,
+ * before any plant is built), so a plant whose code later replaces the realm's copy changes nothing these read. */
+const loadedDescriptor = Object.getOwnPropertyDescriptor;
+const loadedHasOwn = Object.hasOwn;
+const loadedIsProxy = types.isProxy;
+const loadedSet = Reflect.set;
+const loadedDefine = Reflect.defineProperty;
+const loadedDelete = Reflect.deleteProperty;
 
 const SELF = fileURLToPath(import.meta.url);
 const REPO = join(dirname(SELF), "..");
@@ -609,9 +685,12 @@ function carriers(value: unknown, path: string, seen: Set<object>): string[] {
   for (const key of Object.keys(value)) for (const member of dataValue(value, key)) members.push([key, member]);
   return members.flatMap(([key, member]) => carriers(member, `${path}.${key}`, seen));
 }
+/** The walk's root read: each export subpath with its namespace, through Object.entries as the realm holds it when the read
+ * runs (exportedCarriers reads it; R-HIDDEN's identity pin reads it too, at its own read). */
+const exportedRoots = (modules: Readonly<Record<string, object>>): [string, object][] => Object.entries(modules);
 /** Every exported binding path (subpath:name, then .key per step) that reaches a string spelling the representation. */
 function exportedCarriers(modules: Readonly<Record<string, object>>): string[] {
-  return Object.entries(modules)
+  return exportedRoots(modules)
     .flatMap(([subpath, namespace]) => Object.keys(namespace).flatMap((name) => dataValue(namespace, name).flatMap((value) => carriers(value, `${subpath}:${name}`, new Set()))))
     .sort();
 }
@@ -1596,7 +1675,45 @@ function hiddenPlant(wrapped: readonly unknown[] = WRAPPED, emptied = ""): { rea
   };
   Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => held("CASES<getter>") });
   Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: held("HIDDEN_CASES<non-enumerable>") });
-  return { release: { ...today, entries, modules: { ...today.modules, ".": namespace } }, namespace };
+  // Frozen, so the release holds its modules, and they hold this namespace, as read-only, fixed data properties (R-HIDDEN's
+  // identity pin, wb-33z6 cut #2): the engine's own later reads of either property (property accesses) answer this namespace.
+  const modules = Object.freeze({ ...today.modules, ".": namespace });
+  return { release: Object.freeze({ ...today, entries, modules }), namespace };
+}
+/** A value rootHolding reads into: an object (a function or a primitive is not one). */
+const isObject = (value: unknown): value is object => typeof value === "object" && value !== null;
+/** One holder's reading for rootHolding: not an object, a Proxy (loadedIsProxy), or neither. */
+const holderReading = (holder: unknown, name: string): string =>
+  !isObject(holder) ? `${name}:not an object` : loadedIsProxy(holder) ? `${name}:proxy` : `${name}:not a proxy`;
+/** One property's reading for rootHolding, by its own descriptor (loadedDescriptor) alone, so no getter is invoked: absent, or
+ * data or accessor, read-only or writable (data), fixed or configurable, enumerable or not, each field of the descriptor read
+ * only where loadedHasOwn finds it on the descriptor itself (so no inherited member answers for one), with its value when it
+ * is data. */
+function propertyReading(holder: object, key: string, path: string): { readonly reading: string; readonly data: boolean; readonly value: unknown } {
+  const property = loadedDescriptor(holder, key);
+  if (property === undefined) return { reading: `${path}:absent`, data: false, value: undefined };
+  const field = (name: "configurable" | "enumerable" | "writable"): boolean => loadedHasOwn(property, name) && property[name] === true;
+  const kinds = `${field("configurable") ? "configurable" : "fixed"}:${field("enumerable") ? "enumerable" : "non-enumerable"}`;
+  if (!loadedHasOwn(property, "value")) return { reading: `${path}:accessor:${kinds}`, data: false, value: undefined };
+  return { reading: `${path}:data:${field("writable") ? "writable" : "read-only"}:${kinds}`, data: true, value: property.value };
+}
+/** How a release holds its root namespace (R-HIDDEN's identity pin, wb-33z6), step by step from the release, through the
+ * load-time built-ins loadedDescriptor, loadedHasOwn and loadedIsProxy and no other built-in (no array method, iterator or
+ * spread): each holder (the release, then its modules) read as a Proxy or not before anything else is read from it, so no
+ * trap runs, and each property on the way (the release's modules, then the modules' ".") read by its own descriptor
+ * (propertyReading); then whether the root namespace is a Proxy. The reading stops at a Proxy, at a value that is not an
+ * object, and at a step that holds no data value. */
+function rootHolding(release: Release): { readonly shape: readonly string[]; readonly root: unknown } {
+  const first = holderReading(release, "release");
+  if (first !== "release:not a proxy") return { shape: [first], root: undefined };
+  const modules = propertyReading(release, "modules", "release.modules");
+  if (!modules.data) return { shape: [first, modules.reading], root: undefined };
+  const held = modules.value;
+  const second = holderReading(held, "modules");
+  if (second !== "modules:not a proxy" || !isObject(held)) return { shape: [first, modules.reading, second], root: undefined };
+  const root = propertyReading(held, ".", 'modules["."]');
+  if (!root.data) return { shape: [first, modules.reading, second, root.reading], root: undefined };
+  return { shape: [first, modules.reading, second, root.reading, `root namespace:${loadedIsProxy(root.value) ? "proxy" : "not a proxy"}`], root: root.value };
 }
 /** A namespace's bindings beside the SDK's own, by name and property kind (R-HIDDEN's binding roster). */
 function bindingRoster(namespace: object): string[] {
@@ -1675,6 +1792,40 @@ const QUIET: Readonly<Record<string, () => void>> = {
   "R-HIDDEN": () => {
     const today = vendoredRelease();
     const { release: hidden, namespace } = hiddenPlant();
+    // The identity pin (wb-33z6), read before any classification pin runs: how the planted release holds its root namespace,
+    // through the load-time built-ins alone (rootHolding and the write probes), and what the walk's root read answers there.
+    const holding = rootHolding(hidden);
+    expect(
+      holding.shape,
+      "R-HIDDEN (a): read through the load-time built-ins, neither the planted release nor its modules nor its root namespace is a Proxy, and the release holds its modules, and they hold that namespace, as own data properties that are read-only, fixed and enumerable",
+    ).toStrictEqual([
+      "release:not a proxy",
+      "release.modules:data:read-only:fixed:enumerable",
+      "modules:not a proxy",
+      'modules["."]:data:read-only:fixed:enumerable',
+      "root namespace:not a proxy",
+    ]);
+    expect(
+      holding.root,
+      "R-HIDDEN (b): read through the load-time built-ins, the value the modules hold at \".\" is the planted namespace itself (one object)",
+    ).toBe(namespace);
+    expect(
+      [
+        loadedSet(hidden, "modules", {}),
+        loadedDefine(hidden, "modules", { value: {} }),
+        loadedDelete(hidden, "modules"),
+        loadedSet(hidden.modules, ".", {}),
+        loadedDefine(hidden.modules, ".", { value: {} }),
+        loadedDelete(hidden.modules, "."),
+      ],
+      "R-HIDDEN (c): the load-time write probes (Reflect's set, defineProperty and deleteProperty as this file loaded them) answer false for a set, a define and a delete of either property",
+    ).toStrictEqual([false, false, false, false, false, false]);
+    const roots = exportedRoots(hidden.modules);
+    expect(
+      [roots.length, roots[0]?.[0], roots[1]?.[0], roots[2]?.[0]],
+      "R-HIDDEN (d): the walk's root read (exportedRoots, through Object.entries as the realm holds it at this read, its answer read by index alone) answers the planted release's export subpaths once each, in order",
+    ).toStrictEqual([3, ".", "./protocol", "./raw"]);
+    expect(roots[0]?.[1], 'R-HIDDEN (d): and the namespace it answers at "." is the planted namespace itself (one object)').toBe(namespace);
     expect(
       PINS.filter((pin) => !same(READINGS[pin.reading](hidden), pin.today)).map(pinId),
       "R-HIDDEN: every classification pin reads today's set",
@@ -1750,6 +1901,21 @@ const QUIET: Readonly<Record<string, () => void>> = {
     }
     expect(replaced, "R-HIDDEN: a Map read through a replaced Map.prototype.entries reads none").toStrictEqual([]);
     expect(READINGS["exported-representations"](indexed), "beside the quiet, the same Map read through the built-in is read").toStrictEqual([".:INDEX.find-incomplete.document.representation"]);
+    // The walk's root read, replaced by import-time code for the walk alone: Object.entries, for one walk of a release whose root
+    // namespace exports documents as a plain value, serving the SDK's own root namespace in its place, then restored.
+    const exported: Release = { ...today, modules: { ".": { RESULT_CASES: [PLANTED_DOCUMENT] } } };
+    const listed = Object.entries;
+    let served: string[];
+    try {
+      Object.entries = ((holder: object) => (holder === exported.modules ? listed({ ".": sdkRoot }) : listed(holder))) as typeof Object.entries;
+      served = READINGS["exported-representations"](exported);
+    } finally {
+      Object.entries = listed;
+    }
+    expect(served, "R-HIDDEN: a root namespace read through a replaced Object.entries reads what the replacement serves (here the SDK's own root namespace: today's set)").toStrictEqual([
+      ".:SDK_REPRESENTATION",
+    ]);
+    expect(READINGS["exported-representations"](exported), "beside the quiet, the same release read through the built-in is read").toStrictEqual([".:RESULT_CASES.0.document.representation"]);
     expect(
       READINGS["exported-representations"]({ ...hidden, modules: { ".": { RESULT_CASES: [PLANTED_DOCUMENT] } } }),
       "beside the quiet, the same documents exported as a plain value are read",
