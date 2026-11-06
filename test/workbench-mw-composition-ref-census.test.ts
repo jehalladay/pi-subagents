@@ -19,7 +19,8 @@
  * that read. A form this header does not list is not claimed. A known unread form is a named RESIDUAL with a pinned quiet row;
  * beside every reading, the FAIL CLOSED readers refuse every planted src file, manifest or lock that holds the package scope in
  * any form (FC-SCOPE) and every planted src module that names a composition field in any of the forms FC-FIELD reads, and find
- * no scope in today's src files, package.json or locks and no composition field in today's src modules (each live check the
+ * no scope in today's src files (a bound file's one bound literal set aside: MW_SCOPE_MODULES), package.json or locks and no
+ * composition field in today's src modules (each live check the
  * real part of a ROUTED CALL that reads the plants after the real files, held on today's tree only: PLANTS below); a form found
  * later is a residual-list addition (rule 14), not a claim.
  *
@@ -293,7 +294,10 @@
  *     scope is refused: R-LOAD-FORM's rows but require-template-substitution (its scope is assembled from a substitution),
  *     R-SPEC-FORM's jsr:, overrides and npm:-infix rows, R-LOCK-NESTING's, R-MODULE-KIND's .ts.md file and R-JSDOC-TYPE's module;
  *     live, no src file's text (T1's failClosed) and no text of package.json or either lock (each held under its path) holds the
- *     scope today.
+ *     scope today. A file bound in MW_SCOPE_MODULES is read without its one bound literal, and one that holds that literal other
+ *     than exactly once reads as holding the scope, so a binding can neither go stale nor cover a second occurrence: today it
+ *     binds src/workbench/mechanical-descriptor.ts (wb-ocie, the mechanical-workflows-interop B-descriptor boundary, EAT-R010),
+ *     whose fixed allowlist names the reviewed package in one string literal and which loads nothing (T1's import reading).
  *   FC-FIELD (B1's witness): fieldNames reads, with B's own field tests, each identifier or #private name, each string literal
  *     or template without substitution wherever it sits, and each id member of every planted src module (closedHits, through
  *     liveFieldNames over that one module, in its pin's failClosed after the src files), so every unread construction form over a
@@ -1559,9 +1563,27 @@ function fieldNames(module: Module): string[] {
   visit(source);
   return out;
 }
-/** A module's fail-closed hits, src paths only: "scope" when its text holds the scope (any src file), and "field <line> <name>" per field it names (a src module). */
+/**
+ * The src files bound to hold the package scope, each in exactly one literal: the B-descriptor boundary's fixed allowlist names
+ * its reviewed package (wb-ocie, EAT-R010) and the file loads nothing. A file that starts holding the scope is refused (FC-SCOPE)
+ * until its own cut binds it here.
+ */
+const MW_SCOPE_MODULES: readonly { readonly module: string; readonly literal: string }[] = [
+  { module: "src/workbench/mechanical-descriptor.ts", literal: '"@mechanical/workflows-development"' },
+];
+/**
+ * FC-SCOPE's reading of one src file: its text holds the scope. A bound file is read without its one bound literal, and one
+ * holding that literal other than exactly once reads as holding the scope (the binding is neither stale nor widened).
+ */
+const holdsScopeIn = (module: Module): boolean => {
+  const bound = MW_SCOPE_MODULES.find(entry => entry.module === module.path);
+  if (bound === undefined) return holdsScope(module.text);
+  const parts = module.text.split(bound.literal);
+  return parts.length !== 2 || holdsScope(parts.join(""));
+};
+/** A module's fail-closed hits, src paths only: "scope" when its text holds the scope (any src file; holdsScopeIn), and "field <line> <name>" per field it names (a src module). */
 const closedHits = (module: Module): string[] =>
-  inSrc(module.path) ? [...(holdsScope(module.text) ? ["scope"] : []), ...liveFieldNames([module]).map(site => `field ${site.slice(module.path.length + 1)}`)] : [];
+  inSrc(module.path) ? [...(holdsScopeIn(module) ? ["scope"] : []), ...liveFieldNames([module]).map(site => `field ${site.slice(module.path.length + 1)}`)] : [];
 /** A text's FC-SCOPE hit: "scope" when it holds the scope (a manifest's or lock's text as written, or a planted one's JSON text). */
 const closedText = (text: string): string[] => (holdsScope(text) ? ["scope"] : []);
 /** A planted module (or a planted path outside src) under the id its pin's witness reads it by. */
@@ -2123,10 +2145,17 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     for (const plant of plants) controls[plant.id] = sites.filter(site => plantOf(site) === plant.id && isMwName(specOf(site))).map(specOf);
     // FAIL CLOSED (FC-SCOPE), two ROUTED CALLS (wb-h6th): every listed src file's text, then the planted modules' (failClosed),
     // and package.json's and both locks' texts, then the planted manifests' and locks' (failClosedJson); no real file holds the
-    // scope today, whatever form holds it, and each plant's hits come from the same call as the real files'.
+    // scope today, whatever form holds it (a MW_SCOPE_MODULES file read without its one bound literal), and each plant's hits
+    // come from the same call as the real files'.
     const closedSrc = failClosed(plants);
     const closedManifests = failClosedJson(["package.json", ...locks.map(lock => lock.path)]);
     expect(closedSrc.scope, "FC-SCOPE: no src file holds the scope").toEqual([]);
+    // The binding is neither stale nor widened (wb-ocie): a bound path holding its literal once and nothing else reads as clear,
+    // and the same path with the literal absent, twice, or beside another scope occurrence reads as holding the scope.
+    for (const { module, literal } of MW_SCOPE_MODULES) {
+      const read = (text: string): boolean => holdsScopeIn({ path: module, text });
+      expect([read(literal), read(""), read(`${literal}${literal}`), read(`${literal} ${CONSTANTS.mwScope}`)], `FC-SCOPE binding of ${module}`).toEqual([false, true, true, true]);
+    }
     expect(
       Object.entries(closedManifests.manifests).flatMap(([path, hits]) => (hits.length > 0 ? [path] : [])),
       "FC-SCOPE: no manifest or lock holds the scope",
