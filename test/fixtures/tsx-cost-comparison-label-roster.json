@@ -1156,7 +1156,8 @@
       "installed": {
        ".pi/skills": null,
        ".agents/skills": [
-        "beads"
+        "beads",
+        "pi-mechanical-interop"
        ],
        ".claude/skills": null
       },
