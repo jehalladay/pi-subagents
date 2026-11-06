@@ -1,0 +1,176 @@
+{
+  "id": "C03111",
+  "proposition": "MechanicalWorkflows defines exactly four domain outcome variants for `develop`.",
+  "verbatim_artifact_wording": {
+    "text": "Four Mechanical domain outcome variants",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "59",
+      "quote": "Four Mechanical domain outcome variants"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows contracts.ts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c DevelopmentOutcome has exactly four kinds: verified_candidate, verification_failed, needs_evidence and indeterminate.",
+    "overclaims": false,
+    "rationale": "Full union lines 54-58 read; exactly four members."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "54-55",
+        "quote": "export type DevelopmentOutcome =\n  | { readonly kind: \"verified_candidate\"; readonly candidate: Candidate; readonly verification: VerificationResult }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full union lines 54-58 read; exactly four members.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "56",
+        "quote": "  | { readonly kind: \"verification_failed\"; readonly candidate: Candidate; readonly verification: VerificationResult }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full union lines 54-58 read; exactly four members.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "57-58",
+        "quote": "| { readonly kind: \"needs_evidence\"; readonly scope: ScopeResult; readonly reason: \"SCOPE_INCOMPLETE\" }\n  | { readonly kind: \"indeterminate\"; readonly reason: string; readonly evidence?: EvidenceRef };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full union lines 54-58 read; exactly four members.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Four outcomes are not four service callbacks; C0312 mistakenly depends on this outcome count."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0312",
+      "C0319",
+      "C0369",
+      "C03112",
+      "C0449"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows defines exactly four domain outcome variants for `develop`. Evidence path: M_CT_54, M_CT_56, M_CT_57, M_DEV_DIFF."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Four outcomes are not four service callbacks; C0312 mistakenly depends on this outcome count."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c DevelopmentOutcome has exactly four kinds: verified_candidate, verification_failed, needs_evidence and indeterminate."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Full union lines 54-58 read; exactly four members."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Four outcomes are not four service callbacks; C0312 mistakenly depends on this outcome count."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Four outcomes are not four service callbacks; C0312 mistakenly depends on this outcome count."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "develop(services, request) is exported with that signature (develop.ts:21-24); it returns needs_evidence/SCOPE_INCOMPLETE when coverage!=='complete' (36-37); DevelopmentOutcome has exactly four variants (contracts.ts:54-58) and DevelopmentServices exactly discover/compileContext/implement/verify (47-52).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Definition consistency check PASS: the four domainOutcome variants named in 02 (verified_candidate, verification_failed, needs_evidence, indeterminate) match contracts.ts exactly; 'four' is correct at the pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "contracts.ts defines exactly four DevelopmentOutcome variants (verified_candidate, verification_failed, needs_evidence, indeterminate); unchanged since baseline.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none (git diff 0c78e253 HEAD -- packages/development/src empty)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "Every MechanicalWorkflows-side finding in Pi 01 (descriptor/loader, HX default scope, RF render_id contract, developLive AbortSignal, four outcomes, installed host) is restated in MW 01 by the same author the same evening; agreement between the two documents is one lineage and the only independent witness is the MW source at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the MW pin: contracts.ts 55-58 defines exactly four DevelopmentOutcome kinds (verified_candidate, verification_failed, needs_evidence, indeterminate).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'exactly four' quantifiers hold at the mw pin: DevelopmentOutcome is a union of exactly four variants (verified_candidate, verification_failed, needs_evidence, indeterminate), the descriptor binds exactly the four callbacks discover/compileContext/implement/verify under id mechanical.development.develop.v1, develop(services,request) exists, and incomplete coverage returns needs_evidence/SCOPE_INCOMPLETE before implement.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A changed type union would alter the exact count.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "M_DEV_DIFF",
+      "summary": "(empty: packages/development/src unchanged between the MW baseline and the pin)",
+      "method": "git diff --stat 0c78e253 HEAD -- packages/development/src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

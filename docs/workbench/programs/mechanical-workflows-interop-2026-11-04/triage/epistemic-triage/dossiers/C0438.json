@@ -1,0 +1,162 @@
+{
+  "id": "C0438",
+  "proposition": "Test the checked-in descriptor file, not a constructed approximation.",
+  "verbatim_artifact_wording": {
+    "text": "Test the checked-in file, not a constructed approximation",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "14",
+      "quote": "Test the checked-in file, not a constructed approximation"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "Mechanical descriptor tests",
+    "temporal_context": "doc@7c80c34346c2",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: Test the checked-in descriptor file, not a constructed approximation.",
+    "overclaims": false,
+    "rationale": "Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+        "lines": "14",
+        "quote": "Test the checked-in file, not a constructed approximation"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/entrypoint-descriptor-file.test.ts",
+        "lines": "14-15",
+        "quote": "/** PIWB-MW0-R001: the committed descriptor of record is consumed from disk, never from a handwritten copy. */\nconst descriptorUrl = new URL(\"../../../contracts/entrypoints/development.v1.json\", import.meta.url);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/entrypoint-descriptor-file.test.ts",
+        "lines": "52",
+        "quote": "test(\"invokeInstalledDevelopment accepts the committed descriptor over the real npm-packed tarball\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0437"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0437",
+        "status": "REFUTED",
+        "wording": "At mw@f7c0a9431d6c the committed descriptor's schema filenames match entrypoint-host.ts; the baseline mismatch was repaired by 1f29daa7."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0338"
+    ],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0437=REFUTED. Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run. A failed present-tense premise does not refute this independent safety/representation obligation."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, Test the checked-in descriptor file, not a constructed approximation. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: Test the checked-in descriptor file, not a constructed approximation."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Baseline mismatch C0437 is REFUTED currently; file-driven testing norm remains and source is present, not run."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "REFUTED at the pin: three development-rig test files read contracts/entrypoints/development.v1.json from disk, so 'tests construct descriptors by hand' no longer holds; C0196's conditional stays valid but its antecedent is gone, and the norms (C0337/C0438/C03142) are already satisfied for the descriptor part.",
+      "effect_not_adopted_as_verdict": "CONTRADICTS",
+      "drift": "tests hand-built (baseline) -> tests load the committed file (pin)"
+    },
+    {
+      "lens": "negative",
+      "finding": "At the baseline the rig tests hand-built the descriptor (entrypoint-host.test.ts:12 literal with bare names); at the pin entrypoint-host.test.ts:12 and installed-host.test.ts:29 read contracts/entrypoints/development.v1.json from disk and a dedicated file-driven test exists, so 'tests construct descriptors by hand' is true only at the baseline.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "baseline: hand-built; pin: file-driven (1f29daa7)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "The P1 descriptor/loader mismatch was true at MW baseline 0c78e253 and is FIXED at the pin: commit 1f29daa7 (2026-11-05T08:14Z, same author, bead MechanicalWorkflows-14zrz) rewrote development.v1.json to bare filenames and added entrypoint-descriptor-file.test.ts that reads the committed file, so these observations are time-scoped to the baseline and false at the pin.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "baseline 0c78e253 ../schemas/ prefix -> pin f7c0a943 bare filename; tests entrypoint-host.test.ts/installed-host.test.ts edited and entrypoint-descriptor-file.test.ts added in 1f29daa7"
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

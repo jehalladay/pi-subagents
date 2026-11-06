@@ -1,0 +1,154 @@
+{
+  "id": "C0388",
+  "proposition": "MechanicalWorkflows has an `apps/development-rig/test/` directory.",
+  "verbatim_artifact_wording": {
+    "text": "`apps/development-rig/test/`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "47",
+      "quote": "`apps/development-rig/test/`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c apps/development-rig/test contains host and installed-host tests.",
+    "overclaims": false,
+    "rationale": "Concrete files establish test directory existence."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/entrypoint-host.test.ts",
+        "lines": "12",
+        "quote": "const descriptor = JSON.parse(readFileSync(new URL(\"../../../contracts/entrypoints/development.v1.json\", import.meta.url), \"utf8\")) as EntrypointDescriptor;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Concrete files establish test directory existence.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/installed-host.test.ts",
+        "lines": "29",
+        "quote": "const descriptor = JSON.parse(readFileSync(new URL(\"../../../contracts/entrypoints/development.v1.json\", import.meta.url), \"utf8\")) as EntrypointDescriptor;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Concrete files establish test directory existence.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/entrypoint-descriptor-file.test.ts",
+        "lines": "14-15",
+        "quote": "/** PIWB-MW0-R001: the committed descriptor of record is consumed from disk, never from a handwritten copy. */\nconst descriptorUrl = new URL(\"../../../contracts/entrypoints/development.v1.json\", import.meta.url);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Concrete files establish test directory existence.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Tests not run."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0387"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has an `apps/development-rig/test/` directory. Evidence path: M_T_EH_12, M_T_IH_29, M_T_EDF_14."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Tests not run."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c apps/development-rig/test contains host and installed-host tests."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Concrete files establish test directory existence."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Tests not run."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Tests not run."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) Empirical claims not re-located by this lens: their sources are the same single-author program files (one lineage with every other program claim); code-level verification is left to the entailment lens.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "File removal would alter inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

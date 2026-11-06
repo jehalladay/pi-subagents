@@ -1,0 +1,156 @@
+{
+  "id": "C03114",
+  "proposition": "The installed HX may not support live native task-scope evidence.",
+  "verbatim_artifact_wording": {
+    "text": "Live native task-scope evidence, if unsupported by installed HX",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "60",
+      "quote": "Live native task-scope evidence, if unsupported by installed HX"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "HYPOTHESIS",
+    "scope": "installed HX at baseline",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "PLAUSIBLE",
+    "permitted_wording": "The installed HX may not supply pinned native task-scope evidence; MW default query returns filesystem scope with revision:null.",
+    "overclaims": false,
+    "rationale": "Affirmative code/header support for the hypothesis; installed HX product is not pinned or invoked."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "3-5",
+        "quote": " * The installed `find` command returns incomplete coverage on live workspaces\n * and cannot bind a pinned Git view. It must not authorize a write; use a\n * separately verified task query before returning complete coverage."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Affirmative code/header support for the hypothesis; installed HX product is not pinned or invoked.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "33",
+        "quote": "queryDigest:answer.queryDigest,revision:null,scopeKind:\"filesystem\"};"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Affirmative code/header support for the hypothesis; installed HX product is not pinned or invoked.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "45",
+        "quote": "observed.scopeKind===\"task\"&&observed.revision===request.baseRevision&&"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Affirmative code/header support for the hypothesis; installed HX product is not pinned or invoked.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Custom/native task query could be available even if this default adapter cannot supply it."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0444"
+    ],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03113"
+    ],
+    "propagation": "Necessary premises remain C0444=ESTABLISHED. Established structural premises do not establish realized runtime harm; inference is capped at modal wording."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The installed HX may not support live native task-scope evidence. Evidence path: M_HX_3, M_HX_33, M_HX_45."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Custom/native task query could be available even if this default adapter cannot supply it."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The installed HX may not supply pinned native task-scope evidence; MW default query returns filesystem scope with revision:null."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Affirmative code/header support for the hypothesis; installed HX product is not pinned or invoked."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Custom/native task query could be available even if this default adapter cannot supply it."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Custom/native task query could be available even if this default adapter cannot supply it."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Hypothesis is consistent with MW's own hx-scope.ts header (installed find returns incomplete coverage, cannot bind a pinned Git view) and correctly kept as HYPOTHESIS; it is the same lineage as the MW code comment, not independent.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the MW pin: hx-scope.ts default native query returns revision:null, scopeKind:'filesystem' (33) and completeness requires scopeKind==='task' with revision===request.baseRevision (45); unchanged since baseline.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Pinned HX contract and live task query returning complete licensed coverage, query digest and exact source revision settle the capability.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

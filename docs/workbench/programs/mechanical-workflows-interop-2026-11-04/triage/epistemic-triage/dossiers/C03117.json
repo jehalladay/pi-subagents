@@ -1,0 +1,156 @@
+{
+  "id": "C03117",
+  "proposition": "MechanicalWorkflows has a skill matching the Pi `pi-mechanical-interop` skill.",
+  "verbatim_artifact_wording": {
+    "text": "the matching Mechanical repo skill",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "3",
+      "quote": "the matching Mechanical repo skill"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows skills",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c the matching project skill is .agents/skills/mechanical-pi-host/SKILL.md.",
+    "overclaims": false,
+    "rationale": "File exists and addresses the paired seam; created with MW program after its baseline."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": ".agents/skills/mechanical-pi-host/SKILL.md",
+        "lines": "14",
+        "quote": "- The checked-in `contracts/entrypoints/development.v1.json` and `entrypoint-host.ts` agree on one canonical schema-ref grammar (bare filename in `contracts/schemas/`, no `..`);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "File exists and addresses the paired seam; created with MW program after its baseline.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/01-audit-and-status.md",
+        "lines": "62",
+        "quote": "Mechanical had no existing `.agents/skills/` task skill at this pinned head. The new dedicated skill accompanies this program. Pi's W11 feature-matrix remains planned;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "File exists and addresses the paired seam; created with MW program after its baseline.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Matching does not mean identical skill name or independent corroboration."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03116",
+      "C0425"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has a skill matching the Pi `pi-mechanical-interop` skill. Evidence path: M_SKILL_14, M_PR_01_62, M_SKILLS_LS."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Matching does not mean identical skill name or independent corroboration."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c the matching project skill is .agents/skills/mechanical-pi-host/SKILL.md."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "File exists and addresses the paired seam; created with MW program after its baseline."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Matching does not mean identical skill name or independent corroboration."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Matching does not mean identical skill name or independent corroboration."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "Repo facts check out: docs/workbench/TRACEABILITY.md exists (not at root); MW ships skills/mechanical-pi-host (a different name from pi-mechanical-interop); qa/workbench/ exists; both repos have forge.toml with [build.commands]; pi package.json has a check script and vitest; new-feedback/ has 6 files dated 2026-11-01..03.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "Contradiction set at the pins: Pi SKILL:14 and Pi 03:18 say the MW descriptor and host disagree (present tense); the MW skill at the same MW pin says they 'agree on one canonical schema-ref grammar' and names the repair PIWB-MW0-R001; the MW 01-audit still describes MW-P0 as open but self-scopes to the baseline 0c78e253. Normalizing by version dissolves the conflict: true at 0c78e253, false at f7c0a943.",
+      "effect_not_adopted_as_verdict": "CONTRADICTS",
+      "drift": "Pi docs at 7c80c343 predate the MW repair by ~2h; the Pi SKILL 'Actual current state' was not updated in the pin's program commit"
+    },
+    {
+      "lens": "provenance",
+      "finding": "The MW matching skill (.agents/skills/mechanical-pi-host/SKILL.md) and the MW program directory exist at the pin but were created in bf8fbb93 AFTER the MW baseline 0c78e253 (MW 01 line 62: 'Mechanical had no existing .agents/skills/ task skill at this pinned head'); docs/04, docs/05, development.v1.json, entrypoint-host.ts, installed-host.ts, develop.ts, contracts.ts all exist at the pin; docs/05 line 69 was rewritten by 1f29daa7 to past tense and is a doc-cites-program-cites-code chain.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "skill and program absent at 0c78e253, present at pin; docs/05 wording changed by 1f29daa7"
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Skill removal would change inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "M_SKILLS_LS",
+      "summary": "mechanical-pi-host (only skill directory; absent at 0c78e253 per MW 01-audit-and-status.md:62)",
+      "method": ".agents/skills/"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,168 @@
+{
+  "id": "C0460",
+  "proposition": "Pi's `node()` primitive has a default 30-second limit.",
+  "verbatim_artifact_wording": {
+    "text": "default 30-second `node()`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "32",
+      "quote": "default 30-second `node()`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents node() primitive",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 node capability calls inherit the configurable registry default deadline of 30,000 ms.",
+    "overclaims": false,
+    "rationale": "Registry default applies through callNode capability invoke; default is configurable."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/capability-registry.ts",
+        "lines": "62",
+        "quote": "export const CAPABILITY_DEADLINE_MS = 30_000;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Registry default applies through callNode capability invoke; default is configurable.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/capability-registry.ts",
+        "lines": "271",
+        "quote": "this.deadlineMs = limits.deadlineMs ?? CAPABILITY_DEADLINE_MS;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Registry default applies through callNode capability invoke; default is configurable.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "363-364",
+        "quote": "        await config.beforeDispatch?.();\n        return config.capabilities!.invoke(request.capabilityId, request.input, {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Registry default applies through callNode capability invoke; default is configurable.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Thirty seconds is not a hard invariant nor measured develop duration."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0341",
+      "C03143",
+      "C0459"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi's `node()` primitive has a default 30-second limit. Evidence path: CR_62, CR_271, NODE_ROUTE."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Thirty seconds is not a hard invariant nor measured develop duration."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 node capability calls inherit the configurable registry default deadline of 30,000 ms."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Registry default applies through callNode capability invoke; default is configurable."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Thirty seconds is not a hard invariant nor measured develop duration."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Thirty seconds is not a hard invariant nor measured develop duration."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "The 30-second figure is CAPABILITY_DEADLINE_MS in capability-registry.ts, the registry-wide default applied to every capability invoke (hence to node()); the constant lives in the registry, not in runtime.ts. C0231's premise is thereby supported; the inference itself is not a code citation.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Confirmed: CAPABILITY_DEADLINE_MS = 30_000 is the registry default; it is configurable per registry (limits.deadlineMs, validated >= 1), which the doc's word 'default' correctly allows.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "CAPABILITY_DEADLINE_MS = 30_000 is the registry default deadline at the pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The 30-second node() figure traces one hop: CAPABILITY_DEADLINE_MS = 30_000 is the registry default (capability-registry.ts 62, applied at 271 when limits.deadlineMs is unset); the program names the constant correctly but the node()->registry path is inferred, not quoted.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The 30-second figure is warranted at the pin: CAPABILITY_DEADLINE_MS = 30_000 is the registry default governing node() capability invocations (C0231's unsuitability inference inherits a true premise).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Changed node route/default would refute this; exact runtime override must travel with future claims.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

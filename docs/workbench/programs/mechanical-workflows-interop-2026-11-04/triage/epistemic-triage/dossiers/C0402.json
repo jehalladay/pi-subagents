@@ -1,0 +1,166 @@
+{
+  "id": "C0402",
+  "proposition": "On 2026-11-04 the pi-subagents `master` audit baseline was commit f67b6665a132dbb0e86aea48cf36cf6ae0412521.",
+  "verbatim_artifact_wording": {
+    "text": "pi-subagents `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+      "lines": "4",
+      "quote": "pi-subagents `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents master on 2026-11-04",
+    "temporal_context": "2026-11-04",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "The document names f67b6665 as its Pi audit baseline on local date 2026-11-04 (-0800); its commit timestamp is 2026-11-05 05:57:48 UTC.",
+    "overclaims": true,
+    "rationale": "Local-date reconciliation fits timestamps; exact remote default-branch state at audit time is not retained."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+        "lines": "4",
+        "quote": "**Audit baseline (2026-11-04):** pi-subagents `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521`; MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Local-date reconciliation fits timestamps; exact remote default-branch state at audit time is not retained.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "git log -1 --format=%h %ci %s f67b6665",
+        "lines": "-",
+        "quote": "f67b6665 2026-11-05 05:57:48 +0000 ledger: close wb-tz2.24 (landing 969, merge 4b1f5282)"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Local-date reconciliation fits timestamps; exact remote default-branch state at audit time is not retained.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "git log -1 --format=%h %p %ci %s 7c80c34346c2",
+        "lines": "-",
+        "quote": "7c80c343 f67b6665 2026-11-04 22:25:31 -0800 docs(workbench): audit and design Pi-MechanicalWorkflows function interoperability"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Local-date reconciliation fits timestamps; exact remote default-branch state at audit time is not retained.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Date without timezone invites UTC misreading; commit metadata alone is not a remote ref snapshot."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0427"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is On 2026-11-04 the pi-subagents `master` audit baseline was commit f67b6665a132dbb0e86aea48cf36cf6ae0412521. Evidence path: DRM_4, G_PI_F67B, G_PI_7C80."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Date without timezone invites UTC misreading; commit metadata alone is not a remote ref snapshot."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The document names f67b6665 as its Pi audit baseline on local date 2026-11-04 (-0800); its commit timestamp is 2026-11-05 05:57:48 UTC."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Local-date reconciliation fits timestamps; exact remote default-branch state at audit time is not retained."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Date without timezone invites UTC misreading; commit metadata alone is not a remote ref snapshot."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Date without timezone invites UTC misreading; commit metadata alone is not a remote ref snapshot."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "f67b6665 is dated 2026-11-05 05:57:48 +0000 and the Pi program commit 2026-11-04 22:25:31 -0800 (= 2026-11-05 06:25Z), so 'baseline (2026-11-04)' is true only in the author's local (US Pacific) date; in UTC both Pi baseline and program commit are 2026-11-05. MW baseline 0c78e253 (2026-11-02 21:17Z) was main at the time; the MW program commit bf8fbb93 landed on top at 2026-11-05 06:30Z.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The Pi program (pi 7c80c34, 2026-11-04T22:25:31-08:00) and the MW counterpart program (mw bf8fbb93, 2026-11-04T22:30:58-08:00) were written by the same author five minutes apart from the same audit baselines; they are one evidentiary lineage, not two witnesses.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "MW program commit bf8fbb93 postdates the MW baseline 0c78e253; the program is on the pin but not at its own stated baseline"
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'on 2026-11-04' baseline dating survives only in the author's -0800 timezone: f67b6665 was committed 2026-11-05 05:57:48 +0000 (= 2026-11-04 21:57 -0800), and MW main stood at 0c78e253 (2026-11-02 21:17Z) until bf8fbb93 landed 2026-11-04 22:30 -0800; readers using UTC will find no f67b6665 on 2026-11-04.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Timestamped remote default-branch readback or audit transcript settles the historical ref claim.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

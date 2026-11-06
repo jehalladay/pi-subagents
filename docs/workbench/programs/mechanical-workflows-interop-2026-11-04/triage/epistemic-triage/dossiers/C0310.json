@@ -1,0 +1,171 @@
+{
+  "id": "C0310",
+  "proposition": "Pi `workflow_execute` currently has no `function` branch.",
+  "verbatim_artifact_wording": {
+    "text": "`function` branch in `workflow_execute`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "8",
+      "quote": "`function` branch in `workflow_execute`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents src/workbench/execute-tool.ts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 workflow_execute has no function-launch branch; non-script admission reaches an unsupported-definition-kind refusal.",
+    "overclaims": false,
+    "rationale": "Full launch branch refuses all non-script definitions."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "217-218",
+        "quote": "} else if (admission.definition.kind !== \"script\") {\n        refuse(\"unsupported-definition-kind\", \"only script definitions launch in this host\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full launch branch refuses all non-script definitions.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "182",
+        "quote": "kind: Type.Union([Type.Literal(\"script\"), Type.Literal(\"function\"), Type.Literal(\"furnace-formula\")]),"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full launch branch refuses all non-script definitions.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-execute-tool.test.ts",
+        "lines": "173",
+        "quote": "it(\"refuses function and furnace-formula definitions in this host without resolving or launching\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Full launch branch refuses all non-script definitions.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "A typed function kind exists, but modelling is not dispatch."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0430",
+      "C0432"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: adding a branch presupposes absence"
+    ],
+    "downstream_claims": [
+      "C0306"
+    ],
+    "propagation": "Necessary premises remain C0430=ESTABLISHED, C0432=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi `workflow_execute` currently has no `function` branch. Evidence path: EXEC_217, EXEC_182, T_EXECTOOL_173."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "A typed function kind exists, but modelling is not dispatch."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 workflow_execute has no function-launch branch; non-script admission reaches an unsupported-definition-kind refusal."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Full launch branch refuses all non-script definitions."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "A typed function kind exists, but modelling is not dispatch."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "A typed function kind exists, but modelling is not dispatch."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "At the pin execute-tool.ts refuses every non-script kind at lines 217-218 (cited 215-219; 2-line offset), after a detach-grant check that fires first for detached hostMode; the model/tool disagreement is real.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Consistent across 01, 03 and SKILL: kinds modelled = script|function|furnace-formula, launched = script only; C0339's 'even when authorized' is correct because the kind check follows the grant check and is unconditional.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "execute-tool.ts refuses every non-script kind at lines 217-218 (cited 215-219) and a fixture test asserts the refusal code for 'function' and 'furnace-formula'; the refusal fires regardless of grants, so 'even when authorized' (C0339) is accurate.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: execute-tool.ts refuses every non-script kind at lines 217-218 (cited 215-219).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'refuses every definition kind except script' quantifier is structurally warranted at the pi pin: a single else-if refuses whenever kind !== 'script', so function and furnace-formula are both refused; cited lines 215-219 now sit at 217-218 (benign drift).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "baseline f67b6665 has the identical refusal (git show f67b6665:src/workbench/execute-tool.ts, same text ~215-218); no behavioral drift."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A new registered function launch path would refute the absence.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

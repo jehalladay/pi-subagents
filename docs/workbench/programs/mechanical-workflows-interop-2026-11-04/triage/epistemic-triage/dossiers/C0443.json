@@ -1,0 +1,185 @@
+{
+  "id": "C0443",
+  "proposition": "The live Mechanical Git-census mode is real (exists and operates).",
+  "verbatim_artifact_wording": {
+    "text": "The live Mechanical Git-census mode is real",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "16",
+      "quote": "The live Mechanical Git-census mode is real"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows source-scope services",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "Historical standalone receipts and source indicate developLive implements real Git tracked-file census; no named git-census profile selector ships at mw@f7c0a9431d6c.",
+    "overclaims": true,
+    "rationale": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "20",
+        "quote": "readonly discovery: \"git-tracked-files\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "78-81",
+        "quote": "// Complete only for Git's tracked-file census, not task-specific semantic relevance.\n        coverage: \"complete\",\n        files,\n        evidence: { system: \"git\", kind: \"tracked-file-census\", id: revision },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/14-live-single-writer-development.md",
+        "lines": "10",
+        "quote": "3. `git ls-files -z` enumerates tracked files. The `coverage: complete` statement is **only** complete for the Git tracked-file census; it is not a claim of task-relevant scope completeness."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "qa/integration/2026-10-15-combined-live-composition.md",
+        "lines": "3-4",
+        "quote": "`developWithNativeEvidence()` ran once on the clean scratch package at\n`ce0657cb7437…` with real product callbacks wired for every stage: a real"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Git-census is proposed label; separate HX root exists; historical receipt is not current runtime proof."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0320",
+      "C0356",
+      "C0444"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The live Mechanical Git-census mode is real (exists and operates). Evidence path: M_LD_20, M_LD_78, M_D14_10, MW_QA_RECEIPT, DET_MW_GC."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Git-census is proposed label; separate HX root exists; historical receipt is not current runtime proof."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Historical standalone receipts and source indicate developLive implements real Git tracked-file census; no named git-census profile selector ships at mw@f7c0a9431d6c."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Implemented mechanism and historical reports support real mode; current operate at pin is unexercised."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Git-census is proposed label; separate HX root exists; historical receipt is not current runtime proof."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Git-census is proposed label; separate HX root exists; historical receipt is not current runtime proof."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "developLive's source-scope mode is the Git tracked-file census (not HX); however a separate live-composition.ts root wires discoverTaskScope (HX) with fail-closed coverage, so 'Mechanical's current mode is git-census' holds for developLive, not for every rig entrypoint.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Semantic drift proposal->observation: 'git-census' is a profile/mode name that exists only in the two program documents; no code at either pin names it. The mechanism it labels (git ls-files census in developLive, discovery:'git-tracked-files') exists, but it is a separate entry root from the HX/RF composition root (live-composition.ts), not an 'explicitly selectable profile'. C0443's 'real' is true of the mechanism, false of the profile.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "proposed label (02) -> 'explicit profile' / 'current mode is git-census' (03, SKILL)"
+    },
+    {
+      "lens": "negative",
+      "finding": "No identifier 'git-census' or any selectable 'profile' exists in MW rig source; the existing mode is developLive's fixed `discovery: \"git-tracked-files\"` (receipt code GIT_TRACKED_FILE_CENSUS_NOT_HX_TASK_SCOPE), so 'explicitly selectable git-census profile' (C0320, kind OBSERVATION) imports the program's PROPOSED label (C0255) into an observation; the mode is real, the profile name and selectability are not.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The token 'git-census' names a PROPOSED profile in Pi 02 (and the MW program README) and appears in no MechanicalWorkflows .ts file at the pin; the existing behaviour is developLive's tracked-file census (evidence kind 'tracked-file-census', docs/14 line 10), so 'explicitly selectable git-census profile' (C0320) is the program's own vocabulary read back as an observation.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "NARROWS on 'explicitly selectable profile': the Git tracked-file census journey is real and labeled honestly in comments and evidence ids, but 'git-census' is not a shipped selectable identifier at the pin - LiveDevelopmentResult hardcodes discovery:'git-tracked-files' and the only selectable axis is contextMode 'plain'|'rf'; the profile names git-census/native-task-scope exist only as the program's proposals.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A current developLive producer receipt with discovery field establishes operation at this pin.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_MW_GC",
+      "summary": "hits only in prose: .agents/skills/mechanical-pi-host/SKILL.md:26, README.md:47, AGENTS.md:20, docs/programs/pi-workbench-interop-2026-11-04/{02:25,02:41,03:11,04:53,README:19}; 0 hits in any .ts or .json",
+      "method": "grep -rniE 'git-census|git_census|gitCensus' . --exclude-dir=node_modules --exclude-dir=dist"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

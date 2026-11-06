@@ -1,0 +1,160 @@
+{
+  "id": "C03105",
+  "proposition": "Working Pi script workflows must not regress when the Workbench/Mechanical feature is disabled.",
+  "verbatim_artifact_wording": {
+    "text": "Working Pi *script* workflows do not regress when Workbench/Mechanical feature disabled",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "55",
+      "quote": "Working Pi *script* workflows do not regress when Workbench/Mechanical feature disabled"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "Pi script workflows",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: Working Pi script workflows must not regress when the Workbench/Mechanical feature is disabled.",
+    "overclaims": false,
+    "rationale": "Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "55",
+        "quote": "Working Pi *script* workflows do not regress when Workbench/Mechanical feature disabled"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "217-218",
+        "quote": "} else if (admission.definition.kind !== \"script\") {\n        refuse(\"unsupported-definition-kind\", \"only script definitions launch in this host\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-execute.test.ts",
+        "lines": "178",
+        "quote": "for (const kind of [\"script\", \"function\", \"furnace-formula\"]) expect(decideExecute(request({ definitionRef: { ...DEFINITION, kind } }), host()).decision).toBe(\"admitted\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C03106"
+    ],
+    "presuppositions": [
+      {
+        "id": "C03106",
+        "status": "SUPPORTED",
+        "wording": "The source implements script workflows and committed tests/recorded evidence support their operation; current runtime success at pi@b27829e6dfa7 was not run."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C03106=SUPPORTED. Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, Working Pi script workflows must not regress when the Workbench/Mechanical feature is disabled. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: Working Pi script workflows must not regress when the Workbench/Mechanical feature is disabled."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Working-script premise is SUPPORTED, current runtime not run; regression obligation remains independent of unverified current success."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "NON-EPISTEMIC norms/definitions: no logical defect found; each is checked only for consistency with the mechanisms verified above (grant names, outcome variants, kinds) and none contradicts them. Caveat: C0323's 'any unauthorized late SDK start' inherits C0353's over-broad 'cancel' scope.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Drift documented/tested->works: 'Working Pi script workflows' is asserted from source and recorded tests; the artifact itself says nothing was run for this audit, so 'currently work' is at most 'source implemented with recorded tests'. The norm C03105 is unaffected.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "'Source implemented; tests recorded' (01) -> 'currently work' (03)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

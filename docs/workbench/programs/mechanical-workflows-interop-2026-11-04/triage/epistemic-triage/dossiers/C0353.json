@@ -1,0 +1,261 @@
+{
+  "id": "C0353",
+  "proposition": "At baseline, a cancel/skip/retry issued while startup is parked can result in a late, unauthorized SDK start.",
+  "verbatim_artifact_wording": {
+    "text": "Register an abort token before the async Claude `beforeDispatch` seam, and test skip/retry and workflow cancel while startup is parked",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "22",
+      "quote": "Register an abort token before the async Claude `beforeDispatch` seam, and test skip/retry and workflow cancel while startup is parked"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "INFERENCE",
+    "scope": "pi-subagents Claude agent launch",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "PLAUSIBLE",
+    "permitted_wording": "Per-agent skip/retry during parked beforeDispatch may permit an unauthorized late SDK start at pi@b27829e6dfa7; workflow-wide cancel is re-checked before query.",
+    "overclaims": true,
+    "rationale": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "207",
+        "quote": "try { await config.beforeDispatch?.(); } catch (error) {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "215",
+        "quote": "if (config.signal?.aborted) return { ok: false, skipped: true, error: \"Workflow aborted.\" };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "216-220",
+        "quote": "controllers.set(agentId, controller);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "341-344",
+        "quote": "abortAgent(agentId) {\n      controllers.get(agentId)?.abort();\n      if (sessions.has(agentId) && !controllers.has(agentId)) pendingLookupAborts.add(agentId);\n    },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "879",
+        "quote": "if (live.started) host.abortAgent(live.agentId);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "886-887",
+        "quote": "live.intent = \"retry\";\n      host.abortAgent(live.agentId);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "1215-1216",
+        "quote": "live.started = true;\n          inflight.add(agentId);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "1278-1282",
+        "quote": "if (intent() === \"retry\" && !aborted) {\n            live.intent = undefined;\n            attempt++;\n            emit([{ ...base, queuedAt, attempt, lastAttemptReason: \"user-retry\" }]);\n            continue;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-claude-cancel-faults.test.ts",
+        "lines": "535",
+        "quote": "it(\"F10 a run abort during beforeDispatch stops the agent before query(): no SDK call, settled as workflow aborted\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "F10 and post-await signal check protect workflow cancel; resume lookup has a different pending-abort mechanism."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0350",
+      "C0351"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "no other mechanism prevents the start after the seam"
+    ],
+    "downstream_claims": [
+      "C0323"
+    ],
+    "propagation": "Necessary premises remain C0350=ESTABLISHED, C0351=ESTABLISHED. Established structural premises do not establish realized runtime harm; inference is capped at modal wording."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is At baseline, a cancel/skip/retry issued while startup is parked can result in a late, unauthorized SDK start. Evidence path: CH_207, CH_215, CH_216, CH_341, RT_879, RT_886, RT_1215, RT_1278, F10_535, DET_PI_BD."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "F10 and post-await signal check protect workflow cancel; resume lookup has a different pending-abort mechanism."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Per-agent skip/retry during parked beforeDispatch may permit an unauthorized late SDK start at pi@b27829e6dfa7; workflow-wide cancel is re-checked before query."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Structural race support exists but is unreproduced; inclusion of run-level cancel is contradicted. Retry can cause another attempt after the first settles."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "F10 and post-await signal check protect workflow cancel; resume lookup has a different pending-abort mechanism."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "F10 and post-await signal check protect workflow cancel; resume lookup has a different pending-abort mechanism."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "Structural support only (not run): runtime sets live.started=true (1215) before awaiting host.spawnAgent, so a skip/retry during the beforeDispatch await calls abortAgent while controllers has no entry and sessions has none for a fresh agent - a no-op; the hypothesis remains unreproduced.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Over-broad quantifier in 03: C0353 includes workflow 'cancel' among the operations that 'can result in a late, unauthorized SDK start', but 01 (C0214) and the pinned code+test F10 show the run-level abort IS re-checked after the await; only per-agent skip/retry lacks the token. The norm C0352 (test both) is fine; the inference C0353 should drop 'cancel'.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "01 'skip ... can miss (workflow abort re-checked)' -> 03 'cancel/skip/retry ... late unauthorized start'"
+    },
+    {
+      "lens": "negative",
+      "finding": "The race is a code-reading derivation at the pin for a FRESH spawn: abortAgent during the beforeDispatch await is a no-op (no controller, sessions.has(agentId) false so no pendingLookupAbort), the SDK query then starts, and the runtime takes the skipped flag from the result not the intent, so the skip is silently lost and the agent settles as a normal completion; no test or live receipt at the pin exercises this sequence, so it stays HYPOTHESIS-grade (unreproduced), not an observed defect.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "negative",
+      "finding": "The same gap exists on the RESUME path: pendingLookupAborts is consumed only after getSession (line 350); an abortAgent landing during invoke()'s beforeDispatch await adds the id at line 343 but nothing reads it before the query starts, and the next resumeAgent clears it at line 348, so the per-agent abort is lost there too.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "negative",
+      "finding": "C0353's quantifier 'cancel/skip/retry' is too wide: for workflow CANCEL the pin re-checks the run signal after beforeDispatch and F10 proves no late SDK start; only per-agent skip/retry is uncovered, so the late-start risk narrows to skip/retry.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "The MW program's 'External Pi defects' section is a QUOTED_FROM descendant of the Pi 01 audit ('Detailed code-level evidence is in the paired Pi audit'), so the MW document adds no independent warrant to the P0 worktree, P1 detached-grant, cancellation-race or replay-basis findings; their warrant rests solely on the Pi source at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: claude-host.ts awaits beforeDispatch at 207 and sets the controller at 217; runtime.ts skip/retry call host.abortAgent at 879/887; a post-await signal re-check exists at 212 for workflow-wide abort only, matching the program's text; the race remains a hypothesis with no in-repo reproduction found by this lens.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The per-agent seam holds at the pin with the cited scope split intact: controllers.set runs only after the awaited beforeDispatch (await at 207, set at 221), per-agent skip/retry reaches the agent solely through host.abortAgent over that map (runtime.ts 873-889 as cited), and the post-await re-check at line 215 reads only the workflow-wide signal, confirming C0214's exemption for whole-run abort.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "identical at baseline f67b6665 (git show compared); the wb-a2g.5 workflow-signal re-check predates the baseline."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Fault test parks hook, skips/retries, releases, counts query starts and settlements; repeat run-level cancel control. Runtime not run.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_PI_BD",
+      "summary": "7 test files + 3 qa scripts mention beforeDispatch; 0 tests pair a skip/retry/abortAgent with a parked beforeDispatch; the only parked-dispatch fault test is F10 (run-signal abort)",
+      "method": "grep -rln beforeDispatch test qa; grep -rnE 'skip.*beforeDispatch|beforeDispatch.*skip|retry.*beforeDispatch|abortAgent.*beforeDispatch' test"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

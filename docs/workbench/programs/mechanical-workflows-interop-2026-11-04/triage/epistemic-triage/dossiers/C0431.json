@@ -1,0 +1,160 @@
+{
+  "id": "C0431",
+  "proposition": "Function and furnace-formula definitions are modelled (typed) in Pi.",
+  "verbatim_artifact_wording": {
+    "text": "function and furnace-formula are modelled",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "12",
+      "quote": "function and furnace-formula are modelled"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents workflow definition types",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 Pi models script, function and furnace-formula definition kinds.",
+    "overclaims": false,
+    "rationale": "Code enumerates exactly those kinds; tests assert pure admission."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute.ts",
+        "lines": "78",
+        "quote": "const DEFINITION_KINDS: readonly string[] = [\"script\", \"function\", \"furnace-formula\"];"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code enumerates exactly those kinds; tests assert pure admission.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "182",
+        "quote": "kind: Type.Union([Type.Literal(\"script\"), Type.Literal(\"function\"), Type.Literal(\"furnace-formula\")]),"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code enumerates exactly those kinds; tests assert pure admission.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-execute.test.ts",
+        "lines": "178",
+        "quote": "for (const kind of [\"script\", \"function\", \"furnace-formula\"]) expect(decideExecute(request({ definitionRef: { ...DEFINITION, kind } }), host()).decision).toBe(\"admitted\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code enumerates exactly those kinds; tests assert pure admission.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Model acceptance is not tool executable support."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0432"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Function and furnace-formula definitions are modelled (typed) in Pi. Evidence path: EXECUTE_78, EXEC_182, T_EXECUTE_178."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Model acceptance is not tool executable support."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 Pi models script, function and furnace-formula definition kinds."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Code enumerates exactly those kinds; tests assert pure admission."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Model acceptance is not tool executable support."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Model acceptance is not tool executable support."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "execute.ts models three definition kinds including function and furnace-formula (line 78), as claimed.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Consistent across 01, 03 and SKILL: kinds modelled = script|function|furnace-formula, launched = script only; C0339's 'even when authorized' is correct because the kind check follows the grant check and is unconditional.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "execute.ts admits kinds script|function|furnace-formula and execute.test.ts asserts all three are 'admitted' while execute-tool.test.ts asserts the tool refuses two of them 'in this host': the split is deliberate and tested on both sides, so 'disagree' overstates a design-intentional model/host layering rather than an inconsistency.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The model/tool disagreement scope holds at the pin: execute.ts models exactly three kinds (script, function, furnace-formula) and execute-tool's schema admits them, while the launch branch refuses all but script.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A revised definition-kind enumeration would change this inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

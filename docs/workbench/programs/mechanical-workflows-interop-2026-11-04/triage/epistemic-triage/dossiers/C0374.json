@@ -1,0 +1,171 @@
+{
+  "id": "C0374",
+  "proposition": "Pi detached Claude hosting identifies hosts by PID and a socket with ownership checks.",
+  "verbatim_artifact_wording": {
+    "text": "PID reuse, socket ownership mismatch",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "37",
+      "quote": "PID reuse, socket ownership mismatch"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents detached hosting",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 local detached hosts record PID/start identity, uid ownership and socket path, and validate private paths.",
+    "overclaims": false,
+    "rationale": "Receipt fields and filesystem checks bear directly on stated identity mechanics."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "55",
+        "quote": "export interface LocalOperator { issuer: \"local-os-dac\"; uid: number; id: string }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Receipt fields and filesystem checks bear directly on stated identity mechanics.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "88-93",
+        "quote": "pid: number;\n  sessionId: number;\n  processStartTicks: string;\n  owner: LocalOperator;\n  invocationDirectory: string;\n  socketPath: string;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Receipt fields and filesystem checks bear directly on stated identity mechanics.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "178",
+        "quote": "function privatePath(path: string, kind: \"directory\" | \"file\" | \"socket\", uid = localOperator().uid): void {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Receipt fields and filesystem checks bear directly on stated identity mechanics.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "495",
+        "quote": "if (sessionId !== process.pid || !/^\\d+$/.test(processStartTicks)) throw new Error(\"Host is not the actual detached OS session leader.\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Receipt fields and filesystem checks bear directly on stated identity mechanics.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Linux /proc and same-machine OS-DAC scope; not remote authentication or proven prevention of all PID races."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0373"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi detached Claude hosting identifies hosts by PID and a socket with ownership checks. Evidence path: LD_55, LD_88, LD_178, LD_495."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Linux /proc and same-machine OS-DAC scope; not remote authentication or proven prevention of all PID races."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 local detached hosts record PID/start identity, uid ownership and socket path, and validate private paths."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Receipt fields and filesystem checks bear directly on stated identity mechanics."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Linux /proc and same-machine OS-DAC scope; not remote authentication or proven prevention of all PID races."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Linux /proc and same-machine OS-DAC scope; not remote authentication or proven prevention of all PID races."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "local-detached.ts identifies the operator by uid (local-os-dac), records pid/owner/socketPath on the host record, and places sockets under a per-uid runtime base - matching 'PID and a socket with ownership checks'.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Existence premises for the detached and worktree chains hold at the pin: the grant validator (local-detached.ts 430) and cleanupWorktree (worktree.ts 125) exist; C0374 (PID + socket ownership) is consistent with the receipt fields the pi-detached test reads (receipt.pid, security 'same-machine-os-dac-only').",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: furnace-hosted.ts line 4 states one callback per Furnace Run; DETACH_GRANT 'workbench:detach' is defined at execute-tool.ts 57; local-detached.ts checks /proc/<pid>/stat session leadership (492-495) and per-uid socket directories (12-18).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The detached-host identity mechanics hold at the pin: local-detached places sockets under uid-scoped runtime dirs and enforces private ownership (privatePath with localOperator().uid).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A changed identity/ownership check or concrete bypass would downgrade the implementation claim.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

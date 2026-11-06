@@ -1,0 +1,180 @@
+{
+  "id": "C0312",
+  "proposition": "PI-2 may not close until the binding supplies the correct four callbacks.",
+  "verbatim_artifact_wording": {
+    "text": "Correct four callbacks",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "9",
+      "quote": "Correct four callbacks"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "PI-2 closure",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: PI-2 may not close until the binding supplies the correct four callbacks.",
+    "overclaims": true,
+    "rationale": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "9",
+        "quote": "Correct four callbacks"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "contracts/entrypoints/development.v1.json",
+        "lines": "10-15",
+        "quote": "\"bindings\": [\n    \"discover\",\n    \"compileContext\",\n    \"implement\",\n    \"verify\"\n  ],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "47-48",
+        "quote": "export interface DevelopmentServices {\n  readonly discover: (request: DevelopmentRequest) => Promise<ScopeResult>;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "49-50",
+        "quote": "  readonly compileContext: (scope: ScopeResult, request: DevelopmentRequest) => Promise<CompiledContext>;\n  readonly implement: (context: CompiledContext, scope: ScopeResult, request: DevelopmentRequest) => Promise<Candidate>;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/contracts.ts",
+        "lines": "51-52",
+        "quote": "readonly verify: (candidate: Candidate, request: DevelopmentRequest) => Promise<VerificationResult>;\n}"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C03111"
+    ],
+    "presuppositions": [
+      {
+        "id": "C03111",
+        "status": "ESTABLISHED",
+        "wording": "At mw@f7c0a9431d6c DevelopmentOutcome has exactly four kinds: verified_candidate, verification_failed, needs_evidence and indeterminate."
+      }
+    ],
+    "assumptions": [
+      "Mechanical `develop` takes exactly four callback services"
+    ],
+    "downstream_claims": [
+      "C0362"
+    ],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C03111=ESTABLISHED. Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, PI-2 may not close until the binding supplies the correct four callbacks. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: PI-2 may not close until the binding supplies the correct four callbacks."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Callback count is ESTABLISHED directly from descriptor/services; depends_on C03111 counts outcomes, not callbacks, so that warrant edge does not entail the four-callback premise."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "NON-EPISTEMIC norms/definitions: no logical defect found; each is checked only for consistency with the mechanisms verified above (grant names, outcome variants, kinds) and none contradicts them. Caveat: C0323's 'any unauthorized late SDK start' inherits C0353's over-broad 'cancel' scope.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

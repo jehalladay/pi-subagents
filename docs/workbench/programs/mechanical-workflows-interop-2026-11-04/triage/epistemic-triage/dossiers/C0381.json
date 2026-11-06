@@ -1,0 +1,150 @@
+{
+  "id": "C0381",
+  "proposition": "A previous standalone Mechanical rig receipt exists.",
+  "verbatim_artifact_wording": {
+    "text": "a previous standalone Mechanical rig receipt",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "42",
+      "quote": "a previous standalone Mechanical rig receipt"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows recorded evidence",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c a dated standalone composition receipt exists for the 2026-10-15 fail-closed rig journey.",
+    "overclaims": false,
+    "rationale": "Direct receipt file records partial HX and no downstream RF/agent/Forge calls."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "qa/integration/2026-10-15-combined-live-composition.md",
+        "lines": "3-4",
+        "quote": "`developWithNativeEvidence()` ran once on the clean scratch package at\n`ce0657cb7437…` with real product callbacks wired for every stage: a real"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct receipt file records partial HX and no downstream RF/agent/Forge calls.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Historical receipt is not current live acceptance, nor a Pi-to-Mechanical receipt."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: the definite reference presupposes existence"
+    ],
+    "downstream_claims": [],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is A previous standalone Mechanical rig receipt exists. Evidence path: MW_QA_RECEIPT, M_QA_LS."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Historical receipt is not current live acceptance, nor a Pi-to-Mechanical receipt."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c a dated standalone composition receipt exists for the 2026-10-15 fail-closed rig journey."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Direct receipt file records partial HX and no downstream RF/agent/Forge calls."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Historical receipt is not current live acceptance, nor a Pi-to-Mechanical receipt."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Historical receipt is not current live acceptance, nor a Pi-to-Mechanical receipt."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "The 'no live run / no e2e acceptance witnessed' absences have a weak detector at the pins (no Pi test, qa script or receipt names a Mechanical develop launch), consistent with the claims, but a positive witness could live outside both repos (ledger, S3 receipts) which this lens did not search, so the absence is supported within the repo scope only.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The 'live producer receipts recorded in the repository' are MW qa/integration/2026-10-15-*.md files by the same author at a 2026-10-15 revision; the MW program's own method line scopes them ('Historical qa/integration/ receipts support only the operations they actually tested'), so they witness the rig at 2026-10-15, not at baseline or pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "receipt revision 2026-10-15 predates baseline 0c78e253 and pin"
+    },
+    {
+      "lens": "scope",
+      "finding": "The live-rig scope claims hold at the pin: claude-implement/rf-context/beads-host/furnace-process-executor modules exist under apps/development-rig/src, and dated live evidence receipts exist in-repo (qa/integration/evidence 2026-10-15 journey files; docs/13 and docs/14 live verification docs), supporting the 'previous standalone rig receipt exists' premise.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "File removal changes existence; raw producer evidence is needed to strengthen historical runtime truth.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "M_QA_LS",
+      "summary": "2026-10-15-combined-live-composition.md 2026-10-15-live-forge-gate.md 2026-10-15-furnace-and-agent.md 2026-10-15-furnace-executor-app-host.md ... (git log -1: 9e4f5f2b 2026-10-15 05:35:52 +0000)",
+      "method": "qa/integration/"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,811 @@
+{
+ "dossier_dangling": [
+  [
+   "C0101",
+   "dossiers/C0101.md",
+   false
+  ],
+  [
+   "C0102",
+   "dossiers/C0102.md",
+   false
+  ],
+  [
+   "C0104",
+   "dossiers/C0104.md",
+   false
+  ],
+  [
+   "C0105",
+   "dossiers/C0105.md",
+   false
+  ],
+  [
+   "C0106",
+   "dossiers/C0106.md",
+   false
+  ],
+  [
+   "C0159",
+   "dossiers/C0159.md",
+   false
+  ],
+  [
+   "C0172",
+   "dossiers/C0172.md",
+   false
+  ],
+  [
+   "C0173",
+   "dossiers/C0173.md",
+   false
+  ],
+  [
+   "C0174",
+   "dossiers/C0174.md",
+   false
+  ],
+  [
+   "C0176",
+   "dossiers/C0176.md",
+   false
+  ],
+  [
+   "C0177",
+   "dossiers/C0177.md",
+   false
+  ],
+  [
+   "C0185",
+   "dossiers/C0185.md",
+   false
+  ],
+  [
+   "C0186",
+   "dossiers/C0186.md",
+   false
+  ],
+  [
+   "C0187",
+   "dossiers/C0187.md",
+   false
+  ],
+  [
+   "C0197",
+   "dossiers/C0197.md",
+   false
+  ],
+  [
+   "C0198",
+   "dossiers/C0198.md",
+   false
+  ],
+  [
+   "C0199",
+   "dossiers/C0199.md",
+   false
+  ],
+  [
+   "C0206",
+   "dossiers/C0206.md",
+   false
+  ],
+  [
+   "C0207",
+   "dossiers/C0207.md",
+   false
+  ],
+  [
+   "C0208",
+   "dossiers/C0208.md",
+   false
+  ],
+  [
+   "C0215",
+   "dossiers/C0215.md",
+   false
+  ],
+  [
+   "C0216",
+   "dossiers/C0216.md",
+   false
+  ],
+  [
+   "C0217",
+   "dossiers/C0217.md",
+   false
+  ],
+  [
+   "C0225",
+   "dossiers/C0225.md",
+   false
+  ],
+  [
+   "C0226",
+   "dossiers/C0226.md",
+   false
+  ],
+  [
+   "C0227",
+   "dossiers/C0227.md",
+   false
+  ],
+  [
+   "C0233",
+   "dossiers/C0233.md",
+   false
+  ],
+  [
+   "C0234",
+   "dossiers/C0234.md",
+   false
+  ],
+  [
+   "C0235",
+   "dossiers/C0235.md",
+   false
+  ],
+  [
+   "C0236",
+   "dossiers/C0236.md",
+   false
+  ],
+  [
+   "C0237",
+   "dossiers/C0237.md",
+   false
+  ],
+  [
+   "C0245",
+   "dossiers/C0245.md",
+   false
+  ],
+  [
+   "C0246",
+   "dossiers/C0246.md",
+   false
+  ],
+  [
+   "C0254",
+   "dossiers/C0254.md",
+   false
+  ],
+  [
+   "C0255",
+   "dossiers/C0255.md",
+   false
+  ],
+  [
+   "C0260",
+   "dossiers/C0260.md",
+   false
+  ],
+  [
+   "C0262",
+   "dossiers/C0262.md",
+   false
+  ],
+  [
+   "C0267",
+   "dossiers/C0267.md",
+   false
+  ],
+  [
+   "C0268",
+   "dossiers/C0268.md",
+   false
+  ],
+  [
+   "C0269",
+   "dossiers/C0269.md",
+   false
+  ],
+  [
+   "C0270",
+   "dossiers/C0270.md",
+   false
+  ],
+  [
+   "C0271",
+   "dossiers/C0271.md",
+   false
+  ],
+  [
+   "C0272",
+   "dossiers/C0272.md",
+   false
+  ],
+  [
+   "C0273",
+   "dossiers/C0273.md",
+   false
+  ],
+  [
+   "C0276",
+   "dossiers/C0276.md",
+   false
+  ],
+  [
+   "C0278",
+   "dossiers/C0278.md",
+   false
+  ],
+  [
+   "C0279",
+   "dossiers/C0279.md",
+   false
+  ],
+  [
+   "C0301",
+   "dossiers/C0301.json",
+   false
+  ],
+  [
+   "C0302",
+   "dossiers/C0302.json",
+   false
+  ],
+  [
+   "C0306",
+   "dossiers/C0306.json",
+   false
+  ],
+  [
+   "C0307",
+   "dossiers/C0307.json",
+   false
+  ],
+  [
+   "C0311",
+   "dossiers/C0311.json",
+   false
+  ],
+  [
+   "C0316",
+   "dossiers/C0316.json",
+   false
+  ],
+  [
+   "C0322",
+   "dossiers/C0322.json",
+   false
+  ],
+  [
+   "C0326",
+   "dossiers/C0326.json",
+   false
+  ],
+  [
+   "C0329",
+   "dossiers/C0329.json",
+   false
+  ],
+  [
+   "C0331",
+   "dossiers/C0331.json",
+   false
+  ],
+  [
+   "C0348",
+   "dossiers/C0348.json",
+   false
+  ],
+  [
+   "C0382",
+   "dossiers/C0382.json",
+   false
+  ],
+  [
+   "C0383",
+   "dossiers/C0383.json",
+   false
+  ],
+  [
+   "C0385",
+   "dossiers/C0385.json",
+   false
+  ],
+  [
+   "C0387",
+   "dossiers/C0387.json",
+   false
+  ],
+  [
+   "C0389",
+   "dossiers/C0389.json",
+   false
+  ],
+  [
+   "C0390",
+   "dossiers/C0390.json",
+   false
+  ],
+  [
+   "C0391",
+   "dossiers/C0391.json",
+   false
+  ],
+  [
+   "C0395",
+   "dossiers/C0395.json",
+   false
+  ],
+  [
+   "C0404",
+   "dossiers/C0404.json",
+   false
+  ],
+  [
+   "C0406",
+   "dossiers/C0406.json",
+   false
+  ],
+  [
+   "C0411",
+   "dossiers/C0411.json",
+   false
+  ],
+  [
+   "C0424",
+   "dossiers/C0424.json",
+   false
+  ],
+  [
+   "C0425",
+   "dossiers/C0425.json",
+   false
+  ],
+  [
+   "C0427",
+   "dossiers/C0427.json",
+   false
+  ],
+  [
+   "C0447",
+   "dossiers/C0447.json",
+   false
+  ],
+  [
+   "C0457",
+   "dossiers/C0457.json",
+   false
+  ],
+  [
+   "C0502",
+   "dossiers/C0202.g02.md",
+   false
+  ],
+  [
+   "C0503",
+   "dossiers/C0203.g02.md",
+   false
+  ],
+  [
+   "C0504",
+   "dossiers/C0204.g02.md",
+   false
+  ],
+  [
+   "C0506",
+   "dossiers/C0206.g02.md",
+   false
+  ],
+  [
+   "C0507",
+   "dossiers/C0207.g02.md",
+   false
+  ],
+  [
+   "C0508",
+   "dossiers/C0208.g02.md",
+   false
+  ],
+  [
+   "C0509",
+   "dossiers/C0209.g02.md",
+   false
+  ],
+  [
+   "C0510",
+   "dossiers/C0210.g02.md",
+   false
+  ],
+  [
+   "C0512",
+   "dossiers/C0212.g02.md",
+   false
+  ],
+  [
+   "C0513",
+   "dossiers/C0213.g02.md",
+   false
+  ],
+  [
+   "C0514",
+   "dossiers/C0214.g02.md",
+   false
+  ],
+  [
+   "C0583",
+   "dossiers/C0283.g02.md",
+   false
+  ],
+  [
+   "C0593",
+   "dossiers/C0293.g02.md",
+   false
+  ],
+  [
+   "C03100",
+   "dossiers/C03100.json",
+   false
+  ],
+  [
+   "C03104",
+   "dossiers/C03104.json",
+   false
+  ],
+  [
+   "C03116",
+   "dossiers/C03116.json",
+   false
+  ],
+  [
+   "C03119",
+   "dossiers/C03119.json",
+   false
+  ],
+  [
+   "C03120",
+   "dossiers/C03120.json",
+   false
+  ],
+  [
+   "C03121",
+   "dossiers/C03121.json",
+   false
+  ],
+  [
+   "C03123",
+   "dossiers/C03123.json",
+   false
+  ],
+  [
+   "C03127",
+   "dossiers/C03127.json",
+   false
+  ],
+  [
+   "C03131",
+   "dossiers/C03131.json",
+   false
+  ],
+  [
+   "C03133",
+   "dossiers/C03133.json",
+   false
+  ],
+  [
+   "C03136",
+   "dossiers/C03136.json",
+   false
+  ]
+ ],
+ "rel_locator_mismatch": [
+  [
+   "R00002",
+   "pi@b27829e6dfa7:docs/workbench/feature-matrix.md:112",
+   "pi@b27829e6dfa7:docs/workbench/feature-matrix.md:L112"
+  ],
+  [
+   "R00004",
+   "pi@b27829e6dfa7:new-feedback/2026-11-03-CORROBORATION-n-3-sibling-census-cuts-co",
+   "pi@b27829e6dfa7:new-feedback/2026-11-03-CORROBORATION-n-3-sibling-census-cuts-co"
+  ],
+  [
+   "R00005",
+   "pi@b27829e6dfa7:new-feedback/2026-11-03-CORROBORATION-n-3-sibling-census-cuts-co",
+   "pi@b27829e6dfa7:new-feedback/2026-11-03-CORROBORATION-n-3-sibling-census-cuts-co"
+  ],
+  [
+   "R00006",
+   "pi@b27829e6dfa7:src/workbench/claude-host.ts:4-10",
+   "pi@b27829e6dfa7:src/workbench/claude-host.ts:L4-10"
+  ],
+  [
+   "R00007",
+   "pi@b27829e6dfa7:src/workbench/claude-host.ts:150-151",
+   "pi@b27829e6dfa7:src/workbench/claude-host.ts:L150-151"
+  ]
+ ],
+ "rel_locator_mismatch_total": 823,
+ "resolution_census": {
+  "file": 784,
+  "probe": 62,
+  "dir": 12,
+  "baseline-file": 6,
+  "missing": 4
+ },
+ "d_bare_directory": [
+  [
+   "E0022",
+   "OTHER",
+   "docs/workbench/receipts/"
+  ],
+  [
+   "E0084",
+   "HISTORICAL_RECEIPT",
+   "qa/integration/"
+  ],
+  [
+   "E0693",
+   "FEEDBACK_REPORT",
+   "new-feedback/"
+  ],
+  [
+   "E0694",
+   "FEEDBACK_REPORT",
+   "new-feedback/"
+  ],
+  [
+   "E0695",
+   "FEEDBACK_REPORT",
+   "new-feedback/"
+  ],
+  [
+   "E0705",
+   "OTHER",
+   "apps/development-rig/src/"
+  ],
+  [
+   "E0706",
+   "HISTORICAL_RECEIPT",
+   "qa/integration/evidence/"
+  ],
+  [
+   "E0715",
+   "COUNTERPART_PROGRAM_DOC",
+   ".agents/skills/"
+  ],
+  [
+   "E0716",
+   "OTHER",
+   "src/workbench/hosts/"
+  ],
+  [
+   "E0795",
+   "FEEDBACK_REPORT",
+   "new-feedback/"
+  ],
+  [
+   "E0796",
+   "FEEDBACK_REPORT",
+   "new-feedback/"
+  ],
+  [
+   "E0797",
+   "HISTORICAL_RECEIPT",
+   "qa/integration/"
+  ]
+ ],
+ "path_missing": [
+  [
+   "E0354",
+   "mw@0c78e253",
+   "0c78e253:contracts/entrypoints/development.v1.json"
+  ],
+  [
+   "E0628",
+   "mw@0c78e253",
+   "0c78e253:apps/development-rig/test/entrypoint-host.test.ts"
+  ],
+  [
+   "E0760",
+   "doc@7c80c34346c2",
+   "out/epistemic-triage/claims-part-01.jsonl"
+  ],
+  [
+   "E0761",
+   "doc@7c80c34346c2",
+   "out/epistemic-triage/claims-part-02.jsonl"
+  ]
+ ],
+ "special_location": [
+  [
+   "E0729",
+   "contracts/entrypoints/development.v1.json",
+   "L(git show 0c78e253: lines 8-9)"
+  ],
+  [
+   "E0747",
+   "packages/development/src/contracts.ts",
+   "L(CompiledContext)"
+  ]
+ ],
+ "empty_quote": [
+  "E0781"
+ ],
+ "a_unresolvable": [
+  [
+   "C0305",
+   "E0354",
+   "0c78e253:contracts/entrypoints/development.v1.json"
+  ],
+  [
+   "C0336",
+   "E0354",
+   "0c78e253:contracts/entrypoints/development.v1.json"
+  ],
+  [
+   "C0338",
+   "E0628",
+   "0c78e253:apps/development-rig/test/entrypoint-host.test.ts"
+  ],
+  [
+   "C0437",
+   "E0354",
+   "0c78e253:contracts/entrypoints/development.v1.json"
+  ]
+ ],
+ "inverse_gap": [
+  "C03141"
+ ],
+ "rem_rows": 50,
+ "rem_claims": 50,
+ "overclaims_total": 48,
+ "overclaims_without_rem_row": [
+  "C03106",
+  "C03141"
+ ],
+ "contradiction_sets": [
+  "KU01",
+  "KU02",
+  "KU03",
+  "KU04",
+  "KU05",
+  "KU06",
+  "KU07",
+  "KU08",
+  "KU09",
+  "KU10",
+  "KU11",
+  "KU12",
+  "KU13",
+  "KU14",
+  "KU15",
+  "KU16",
+  "KU17",
+  "KU18"
+ ],
+ "contested_not_in_contradictions": [],
+ "contradictions_unknown_claim": [
+  "C0286"
+ ],
+ "regraded_rows": [
+  "C0399"
+ ],
+ "quote_mismatch": [
+  [
+   "E0010",
+   "pi@b27829e6dfa7",
+   "src/workbench/claude-host.ts",
+   "L259-262",
+   "for await (const message of live) {\n        config.onMessage?.(message, request ?? previou",
+   "for await (const message of live) { config.onMessage?.(message, request ?? previous!.call); if (message.type === \"system"
+  ],
+  [
+   "E0014",
+   "pi@b27829e6dfa7",
+   "src/workbench/claude-host.ts",
+   "L345-349",
+   "async resumeAgent(agentId, prompt, onResolved) {\n      const previous = sessions.get(agent",
+   "async resumeAgent(agentId, prompt, onResolved) { const previous = sessions.get(agentId); if (!previous) return { ok: fal"
+  ]
+ ],
+ "quote_sample": [
+  {
+   "id": "E0724",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/worktree.ts",
+   "loc": "L179-180",
+   "ok": true,
+   "quote": "try { await removeWorktree(pi, cwd, worktree.path); } catch { /* ignor"
+  },
+  {
+   "id": "E0057",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/workbench/providers/reactivefiber.ts",
+   "loc": "L139",
+   "ok": true,
+   "quote": "const child=spawn(\"rf\",argv,{stdio:[\"ignore\",\"pipe\",\"pipe\"],env:scrubb"
+  },
+  {
+   "id": "E0109",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/worktree.ts",
+   "loc": "L55-61",
+   "ok": true,
+   "quote": "export interface WorktreeCleanupResult {\n  /** Whether changes were fo"
+  },
+  {
+   "id": "E0161",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/workflow/runtime.ts",
+   "loc": "L1220-1223",
+   "ok": true,
+   "quote": "result =\n              resumed !== undefined && resumeAgent !== undefi"
+  },
+  {
+   "id": "E0280",
+   "pin": "doc@7c80c34346c2",
+   "artifact": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/02-host-architecture-and-protocol.md",
+   "loc": "L56",
+   "ok": true,
+   "quote": "Bind them in an application host adapter, never inside the untrusted w"
+  },
+  {
+   "id": "E0010",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/workbench/claude-host.ts",
+   "loc": "L259-262",
+   "ok": false,
+   "quote": "for await (const message of live) {\n        config.onMessage?.(message"
+  },
+  {
+   "id": "E0681",
+   "pin": "mw@f7c0a9431d6c",
+   "artifact": "apps/development-rig/src/live-composition.ts",
+   "loc": "L4-6",
+   "ok": true,
+   "quote": "The bounded Claude/Git/Forge slice discovers scope by Git tracked-file"
+  },
+  {
+   "id": "E0374",
+   "pin": "mw@f7c0a9431d6c",
+   "artifact": "apps/development-rig/src/live-development.ts",
+   "loc": "L20",
+   "ok": true,
+   "quote": "readonly discovery: \"git-tracked-files\";"
+  },
+  {
+   "id": "E0457",
+   "pin": "doc@7c80c34346c2",
+   "artifact": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+   "loc": "L47",
+   "ok": true,
+   "quote": "core development tests stay provider-neutral"
+  },
+  {
+   "id": "E0325",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/workbench/hosts/local-detached.ts",
+   "loc": "L12-13",
+   "ok": true,
+   "quote": "<base>/pw-<uid>/<digest>.sock under a private per-user runtime base\n *"
+  },
+  {
+   "id": "E0748",
+   "pin": "mw@f7c0a9431d6c",
+   "artifact": "packages/development/src/develop.ts",
+   "loc": "L40-43",
+   "ok": true,
+   "quote": "const context = await services.compileContext(scope, request);\n  if (!"
+  },
+  {
+   "id": "E0014",
+   "pin": "pi@b27829e6dfa7",
+   "artifact": "src/workbench/claude-host.ts",
+   "loc": "L345-349",
+   "ok": false,
+   "quote": "async resumeAgent(agentId, prompt, onResolved) {\n      const previous "
+  }
+ ],
+ "claims_by_doc": {
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/01-audit-and-evidence.md": 179,
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md": 114,
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md": 34,
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md": 23,
+  ".agents/skills/pi-mechanical-interop/SKILL.md": 41,
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/02-host-architecture-and-protocol.md": 99
+ }
+}

@@ -1,0 +1,181 @@
+{
+  "id": "C0409",
+  "proposition": "The audit inventoried installed code and recorded evidence only; no new test, live integration, Forge gate or benchmark ran in preparation for these docs.",
+  "verbatim_artifact_wording": {
+    "text": "no new test, live integration, Forge gate or benchmark ran in preparation for these docs",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+      "lines": "7",
+      "quote": "no new test, live integration, Forge gate or benchmark ran in preparation for these docs"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "the program's own method",
+    "temporal_context": "doc@7c80c34346c2",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "The paired programs report a static-only audit with no new test, live integration, Forge gate or benchmark run while drafting; the program commit changes documentation only.",
+    "overclaims": true,
+    "rationale": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+        "lines": "7",
+        "quote": "It does **not** relabel W11 as completed. The audit inventories installed code and recorded evidence only; no new test, live integration, Forge gate or benchmark ran in preparation for these docs."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/01-audit-and-evidence.md",
+        "lines": "63",
+        "quote": "- No working tree or installed SDKs were executed; no Forge/Node/Vitest runs, no real Claude/Furnace/HX/RF calls were issued for this audit."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/01-audit-and-status.md",
+        "lines": "70",
+        "quote": "Read existing Mechanical source and documented prior live evidence, but **did not** execute the tests, Git mutations, Forge gate, npm packaging or live SDKs during this audit."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "git show --stat --format= 7c80c34346c2",
+        "lines": "-",
+        "quote": " 10 files changed, 325 insertions(+), 2 deletions(-)"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Unrecorded runs cannot be excluded from file diff; both audit reports are one author lineage."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The audit inventoried installed code and recorded evidence only; no new test, live integration, Forge gate or benchmark ran in preparation for these docs. Evidence path: DRM_7, D01_63, M_PR_01_70, G_PI_7C80_STAT."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Unrecorded runs cannot be excluded from file diff; both audit reports are one author lineage."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The paired programs report a static-only audit with no new test, live integration, Forge gate or benchmark run while drafting; the program commit changes documentation only."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Self-reports and docs-only commit support but cannot prove every unrecorded action absent. Lens six-file census was wrong: commit touches ten markdown files."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Unrecorded runs cannot be excluded from file diff; both audit reports are one author lineage."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Unrecorded runs cannot be excluded from file diff; both audit reports are one author lineage."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Internal consistency PASS: the artifact's own epistemic frame (static audit, nothing run, no live acceptance) is stated in 01 line 3, README and SKILL alike; no claim in 01 is phrased as a run result. The 'tested->correct' drift is absent.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "The 'no live run / no e2e acceptance witnessed' absences have a weak detector at the pins (no Pi test, qa script or receipt names a Mechanical develop launch), consistent with the claims, but a positive witness could live outside both repos (ledger, S3 receipts) which this lens did not search, so the absence is supported within the repo scope only.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "C0409 ('no new test, live integration, Forge gate or benchmark ran') is consistent with the MW counterpart's own disclaimer and with the absence of any receipt file in the program commit (7c80c343 touches only 5 docs + SKILL); this lens also ran nothing (not run).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The Pi program (pi 7c80c34, 2026-11-04T22:25:31-08:00) and the MW counterpart program (mw bf8fbb93, 2026-11-04T22:30:58-08:00) were written by the same author five minutes apart from the same audit baselines; they are one evidentiary lineage, not two witnesses.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "MW program commit bf8fbb93 postdates the MW baseline 0c78e253; the program is on the pin but not at its own stated baseline"
+    },
+    {
+      "lens": "provenance",
+      "finding": "Both programs disclaim implementation and live acceptance in their own status lines; the 'no Pi->Mechanical run has occurred / not witnessed' propositions are absence claims whose only detectors are the two same-author documents plus the Pi grep (no Mechanical module in src/), and no receipt directory in either repo names a Pi-hosted Mechanical run.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Original audit session transcripts/command journal would settle no-runs history.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

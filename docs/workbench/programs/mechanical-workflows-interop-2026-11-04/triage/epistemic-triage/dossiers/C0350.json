@@ -1,0 +1,181 @@
+{
+  "id": "C0350",
+  "proposition": "Pi registers no abort token before the async Claude `beforeDispatch` seam.",
+  "verbatim_artifact_wording": {
+    "text": "Register an abort token before the async Claude `beforeDispatch` seam",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "22",
+      "quote": "Register an abort token before the async Claude `beforeDispatch` seam"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents Claude agent launch",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 a fresh Claude spawn registers its per-agent AbortController only after awaited beforeDispatch.",
+    "overclaims": false,
+    "rationale": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "207",
+        "quote": "try { await config.beforeDispatch?.(); } catch (error) {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "216-220",
+        "quote": "controllers.set(agentId, controller);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "341-344",
+        "quote": "abortAgent(agentId) {\n      controllers.get(agentId)?.abort();\n      if (sessions.has(agentId) && !controllers.has(agentId)) pendingLookupAborts.add(agentId);\n    },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "215",
+        "quote": "if (config.signal?.aborted) return { ok: false, skipped: true, error: \"Workflow aborted.\" };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Workflow-wide signal exists before/after the await; no-token must mean per-agent map entry."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0351"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: the instruction presupposes absence"
+    ],
+    "downstream_claims": [
+      "C0353"
+    ],
+    "propagation": "Necessary premises remain C0351=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi registers no abort token before the async Claude `beforeDispatch` seam. Evidence path: CH_207, CH_216, CH_341, CH_215."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Workflow-wide signal exists before/after the await; no-token must mean per-agent map entry."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 a fresh Claude spawn registers its per-agent AbortController only after awaited beforeDispatch."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Controller set is line 220 after await 207; run signal re-check exists but is not a per-agent token."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Workflow-wide signal exists before/after the await; no-token must mean per-agent map entry."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Workflow-wide signal exists before/after the await; no-token must mean per-agent map entry."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "claude-host.ts awaits config.beforeDispatch at 207 and only then creates the AbortController and runs controllers.set(agentId, controller) at 215-220; abortAgent (341-343) resolves via controllers.get and its pendingLookupAborts fallback applies only when sessions.has(agentId) (resume path), so a first spawn has no abort token during the await.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Premises re-located at the pin unchanged: beforeDispatch is awaited at 207, the workflow signal is re-checked at 213, the controller is registered at 218 (after the await); runtime skip/retry call host.abortAgent at 879/887 and abortAgent is controllers.get(agentId)?.abort(), a no-op for an id not yet in the map (pendingLookupAborts covers only resumes).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "At the pin, invoke() awaits config.beforeDispatch at line 207 and only registers the agent's AbortController in the controllers map at line 220, so during the await abortAgent(agentId) finds no controller.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: claude-host.ts awaits beforeDispatch at 207 and sets the controller at 217; runtime.ts skip/retry call host.abortAgent at 879/887; a post-await signal re-check exists at 212 for workflow-wide abort only, matching the program's text; the race remains a hypothesis with no in-repo reproduction found by this lens.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The per-agent seam holds at the pin with the cited scope split intact: controllers.set runs only after the awaited beforeDispatch (await at 207, set at 221), per-agent skip/retry reaches the agent solely through host.abortAgent over that map (runtime.ts 873-889 as cited), and the post-await re-check at line 215 reads only the workflow-wide signal, confirming C0214's exemption for whole-run abort.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "identical at baseline f67b6665 (git show compared); the wb-a2g.5 workflow-signal re-check predates the baseline."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Controller registration before await or pending spawn-abort storage would refute the gap.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

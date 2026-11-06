@@ -1,0 +1,138 @@
+{
+  "id": "C0456",
+  "proposition": "When claiming native acceptance, run exact focused tests, an adversarial mutant, the Forge gate and a live scratch journey; record commands, source SHA, provider versions and references; say 'not run' when not run.",
+  "verbatim_artifact_wording": {
+    "text": "Run exact focused tests, adversarial mutant, Forge gate, and live scratch journey when claiming native acceptance ... If not run, say not run",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "26",
+      "quote": "7. Run exact focused tests, adversarial mutant, Forge gate, and live scratch journey when claiming native acceptance. Record commands, source SHA, provider versions and references. If not run, say not run."
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "acceptance claims",
+    "temporal_context": "doc@7c80c34346c2",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: When claiming native acceptance, run exact focused tests, an adversarial mutant, the Forge gate and a live scratch journey; record commands, source SHA, provider versions and references; say 'not run' when not run.",
+    "overclaims": false,
+    "rationale": "Definition, norm or proposed design; source establishes what the program chooses, not implementation or successful acceptance."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+        "lines": "26",
+        "quote": "7. Run exact focused tests, adversarial mutant, Forge gate, and live scratch journey when claiming native acceptance. Record commands, source SHA, provider versions and references. If not run, say not run."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Definition, norm or proposed design; source establishes what the program chooses, not implementation or successful acceptance.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0378",
+      "C0398"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0378",
+        "status": "NON-EPISTEMIC",
+        "wording": "Design obligation, not empirical warrant."
+      },
+      {
+        "id": "C0398",
+        "status": "NON-EPISTEMIC",
+        "wording": "Design obligation, not empirical warrant."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0378=NON-EPISTEMIC; C0398=NON-EPISTEMIC. Definition, norm or proposed design; source establishes what the program chooses, not implementation or successful acceptance."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, When claiming native acceptance, run exact focused tests, an adversarial mutant, the Forge gate and a live scratch journey; record commands, source SHA, provider versions and references; say 'not run' when not run. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: When claiming native acceptance, run exact focused tests, an adversarial mutant, the Forge gate and a live scratch journey; record commands, source SHA, provider versions and references; say 'not run' when not run."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Definition, norm or proposed design; source establishes what the program chooses, not implementation or successful acceptance."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Internal consistency PASS: the artifact's own epistemic frame (static audit, nothing run, no live acceptance) is stated in 01 line 3, README and SKILL alike; no claim in 01 is phrased as a run result. The 'tested->correct' drift is absent.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

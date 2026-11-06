@@ -1,0 +1,156 @@
+{
+  "id": "C03141",
+  "proposition": "An existing README in one of the repos presents a not-yet-runnable invocation as runnable or omits its missing grant/host implementation.",
+  "verbatim_artifact_wording": {
+    "text": "A README that calls a future invocation runnable",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "38",
+      "quote": "A README that calls a future invocation runnable"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents / MechanicalWorkflows README(s)",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "UNSUPPORTED",
+    "permitted_wording": "The handoff prohibits a README presenting future invocation as runnable; it does not establish that such a README exists.",
+    "overclaims": true,
+    "rationale": "An unacceptable-pattern norm was converted into an existence observation with no named instance."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+        "lines": "38",
+        "quote": "- A README that calls a future invocation runnable or hides its missing grant/host implementation."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "An unacceptable-pattern norm was converted into an existence observation with no named instance.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "README.md",
+        "lines": "3",
+        "quote": "Pi Workbench currently launches script definitions, not Mechanical `develop()` function definitions."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "An unacceptable-pattern norm was converted into an existence observation with no named instance.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "README.md",
+        "lines": "47",
+        "quote": "This is not yet a runnable Pi function-invocation example. The checked-in entrypoint descriptor does not currently match the local loader's schema-ref check; Pi currently refuses non-script `workflow_execute` definitions."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "An unacceptable-pattern norm was converted into an existence observation with no named instance.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Surveyed Pi/MW READMEs explicitly disclaim runnable Pi integration, though MW README has a separate stale descriptor sentence."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: the prohibition is drawn from an observed instance (01 audit)"
+    ],
+    "downstream_claims": [
+      "C03140"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is An existing README in one of the repos presents a not-yet-runnable invocation as runnable or omits its missing grant/host implementation. Evidence path: D04_38, PIREADME_3, M_README_47."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Surveyed Pi/MW READMEs explicitly disclaim runnable Pi integration, though MW README has a separate stale descriptor sentence."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The handoff prohibits a README presenting future invocation as runnable; it does not establish that such a README exists."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "An unacceptable-pattern norm was converted into an existence observation with no named instance."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Surveyed Pi/MW READMEs explicitly disclaim runnable Pi integration, though MW README has a separate stale descriptor sentence."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Surveyed Pi/MW READMEs explicitly disclaim runnable Pi integration, though MW README has a separate stale descriptor sentence."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Norm->existence presupposition: 04 line 38 lists an unacceptable pattern; it does not assert that such a README exists, and 01 names no README defect. The claim's implicit premise ('drawn from an observed instance') is unsupported by the artifact.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "prohibited pattern (norm) -> 'an existing README ... presents' (observation)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Name a specific README line presenting a concrete unimplemented invocation as runnable; otherwise retain prohibition only.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

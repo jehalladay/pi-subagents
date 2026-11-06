@@ -1,0 +1,181 @@
+{
+  "id": "C0334",
+  "proposition": "MechanicalWorkflows has a `packages/coordination` package exposing pure policy functions.",
+  "verbatim_artifact_wording": {
+    "text": "Coordination package pure function execution",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "14",
+      "quote": "Coordination package pure function execution"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows packages/coordination",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c packages/coordination exposes pure policy composition, reconcile and replay functions.",
+    "overclaims": false,
+    "rationale": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/coordination/package.json",
+        "lines": "2",
+        "quote": "\"name\": \"@mechanical/workflows-coordination\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/coordination/src/index.ts",
+        "lines": "1",
+        "quote": "export type { Basis, Budget, ResourceClaim, PolicyAuthority, IntentAuthority, PolicyContext, Target, Intent, TraceEvent, Proposal, Policy } from \"./contracts.js\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/coordination/src/index.ts",
+        "lines": "4",
+        "quote": "export { reconcile } from \"./resolver.js\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/coordination/src/index.ts",
+        "lines": "6",
+        "quote": "export { sequential, sequentialAccepted, parallel, guarded, guardedWithWitness, alternative, inhibit, repeated, initialRepeatedMemory } from \"./combinators.js\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/coordination/src/contracts.ts",
+        "lines": "4",
+        "quote": " * A policy is a synchronous transducer from an immutable observation, a local memory and a context to a proposal."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "A type/header is not a sandbox proof; host execution still needs separate authority."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit in naming the package and in `packages/coordination/test/` (line 47)"
+    ],
+    "downstream_claims": [
+      "C0331",
+      "C0376",
+      "C0390",
+      "C0458"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has a `packages/coordination` package exposing pure policy functions. Evidence path: M_COORD_NAME, M_COORD_1, M_COORD_4, M_COORD_6, COORD_PURE."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "A type/header is not a sandbox proof; host execution still needs separate authority."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c packages/coordination exposes pure policy composition, reconcile and replay functions."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Package and export inventory plus pure policy contract establish existence, not universal purity of arbitrary host callbacks."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "A type/header is not a sandbox proof; host execution still needs separate authority."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "A type/header is not a sandbox proof; host execution still needs separate authority."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "All cited MW paths exist at the pin: packages/development/src/{develop,contracts}.ts, apps/development-rig/src/{entrypoint-host,installed-host,hx-scope,rf-context,live-development}.ts, packages/coordination/src/index.ts (159 export lines incl. reconcile, episode, replayTape, training exports), docs/04 and docs/05, contracts/entrypoints/development.v1.json.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) Empirical claims not re-located by this lens: their sources are the same single-author program files (one lineage with every other program claim); code-level verification is left to the entailment lens.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The coordination export inventory holds at the pin: @mechanical/workflows-coordination exports combinators (sequential/parallel/guarded/...), reconcile, episode exports, replayTape, and training export/import, all from packages/coordination/src/index.ts.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "An effectful exported policy implementation would defeat the scoped pure-policy claim.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

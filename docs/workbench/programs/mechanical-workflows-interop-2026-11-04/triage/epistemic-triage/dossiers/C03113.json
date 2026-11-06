@@ -1,0 +1,171 @@
+{
+  "id": "C03113",
+  "proposition": "If installed HX cannot supply live native task-scope evidence, that blocks only the certified native-scope profile, not honestly labeled Git-census mode.",
+  "verbatim_artifact_wording": {
+    "text": "remains a blocker **only** to the certified native-scope profile, not to honestly labeled Git-census mode",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "60",
+      "quote": "remains a blocker **only** to the certified native-scope profile, not to honestly labeled Git-census mode"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "release criterion",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: If installed HX cannot supply live native task-scope evidence, that blocks only the certified native-scope profile, not honestly labeled Git-census mode.",
+    "overclaims": false,
+    "rationale": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "60",
+        "quote": "remains a blocker **only** to the certified native-scope profile, not to honestly labeled Git-census mode"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "33",
+        "quote": "queryDigest:answer.queryDigest,revision:null,scopeKind:\"filesystem\"};"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "45",
+        "quote": "observed.scopeKind===\"task\"&&observed.revision===request.baseRevision&&"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "20",
+        "quote": "readonly discovery: \"git-tracked-files\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C03114",
+      "C0355"
+    ],
+    "presuppositions": [
+      {
+        "id": "C03114",
+        "status": "PLAUSIBLE",
+        "wording": "The installed HX may not supply pinned native task-scope evidence; MW default query returns filesystem scope with revision:null."
+      },
+      {
+        "id": "C0355",
+        "status": "NON-EPISTEMIC",
+        "wording": "Design obligation, not empirical warrant."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C03114=PLAUSIBLE; C0355=NON-EPISTEMIC. HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, If installed HX cannot supply live native task-scope evidence, that blocks only the certified native-scope profile, not honestly labeled Git-census mode. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: If installed HX cannot supply live native task-scope evidence, that blocks only the certified native-scope profile, not honestly labeled Git-census mode."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "HX capability uncertainty remains PLAUSIBLE; narrower Git census mechanism ESTABLISHED. Blocker partition is normative, not certified implementation."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Semantic drift proposal->observation: 'git-census' is a profile/mode name that exists only in the two program documents; no code at either pin names it. The mechanism it labels (git ls-files census in developLive, discovery:'git-tracked-files') exists, but it is a separate entry root from the HX/RF composition root (live-composition.ts), not an 'explicitly selectable profile'. C0443's 'real' is true of the mechanism, false of the profile.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "proposed label (02) -> 'explicit profile' / 'current mode is git-census' (03, SKILL)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

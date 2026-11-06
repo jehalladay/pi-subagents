@@ -1,0 +1,159 @@
+{
+  "id": "C03130",
+  "proposition": "pi-subagents has `src/workbench/execute-tool.ts`, `execute.ts`, `native-modules.ts` and `src/index.ts`.",
+  "verbatim_artifact_wording": {
+    "text": "Pi owns `src/workbench/execute-tool.ts`, `execute.ts`, `native-modules.ts`, `src/index.ts`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "14",
+      "quote": "Pi owns `src/workbench/execute-tool.ts`, `execute.ts`, `native-modules.ts`, `src/index.ts`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents src/",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 execute-tool.ts, execute.ts, native-modules.ts and src/index.ts exist.",
+    "overclaims": false,
+    "rationale": "Read files and inventory check establish paths."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "176",
+        "quote": "name: \"workflow_execute\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read files and inventory check establish paths.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute.ts",
+        "lines": "78",
+        "quote": "const DEFINITION_KINDS: readonly string[] = [\"script\", \"function\", \"furnace-formula\"];"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read files and inventory check establish paths.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2627-2628",
+        "quote": "cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? \"claude\" : \"deterministic\",\n      providers: [], grants: [], permissions: [\"inspect\", \"execute\"], sourceFiles: [launch.source.sourceRef],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read files and inventory check establish paths.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/native-modules.ts",
+        "lines": "2",
+        "quote": " * native-modules.ts — the one dynamic-import seam for the native SDKs (wb-cax.10)."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read files and inventory check establish paths.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "No execution implied."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03131"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is pi-subagents has `src/workbench/execute-tool.ts`, `execute.ts`, `native-modules.ts` and `src/index.ts`. Evidence path: EXEC_176, EXECUTE_78, IDX_2627, NATIVE_MODULES."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "No execution implied."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 execute-tool.ts, execute.ts, native-modules.ts and src/index.ts exist."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Read files and inventory check establish paths."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "No execution implied."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No execution implied."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "File removal changes inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

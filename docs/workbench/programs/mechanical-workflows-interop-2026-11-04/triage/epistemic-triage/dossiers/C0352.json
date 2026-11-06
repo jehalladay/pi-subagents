@@ -1,0 +1,171 @@
+{
+  "id": "C0352",
+  "proposition": "Skip/retry and workflow cancel must be tested while startup is parked at `beforeDispatch`.",
+  "verbatim_artifact_wording": {
+    "text": "test skip/retry and workflow cancel while startup is parked",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "22",
+      "quote": "test skip/retry and workflow cancel while startup is parked"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "Pi cancellation tests",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: Skip/retry and workflow cancel must be tested while startup is parked at `beforeDispatch`.",
+    "overclaims": false,
+    "rationale": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "22",
+        "quote": "test skip/retry and workflow cancel while startup is parked"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "207",
+        "quote": "try { await config.beforeDispatch?.(); } catch (error) {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "215",
+        "quote": "if (config.signal?.aborted) return { ok: false, skipped: true, error: \"Workflow aborted.\" };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-claude-cancel-faults.test.ts",
+        "lines": "535",
+        "quote": "it(\"F10 a run abort during beforeDispatch stops the agent before query(): no SDK call, settled as workflow aborted\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0351"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0351",
+        "status": "ESTABLISHED",
+        "wording": "At pi@b27829e6dfa7 Claude invocation awaits asynchronous beforeDispatch before SDK query startup."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0351=ESTABLISHED. Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, Skip/retry and workflow cancel must be tested while startup is parked at `beforeDispatch`. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: Skip/retry and workflow cancel must be tested while startup is parked at `beforeDispatch`."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Seam ESTABLISHED; run-level cancel test source exists; skip/retry parked test not identified, runtime not run."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Over-broad quantifier in 03: C0353 includes workflow 'cancel' among the operations that 'can result in a late, unauthorized SDK start', but 01 (C0214) and the pinned code+test F10 show the run-level abort IS re-checked after the await; only per-agent skip/retry lacks the token. The norm C0352 (test both) is fine; the inference C0353 should drop 'cancel'.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "01 'skip ... can miss (workflow abort re-checked)' -> 03 'cancel/skip/retry ... late unauthorized start'"
+    },
+    {
+      "lens": "negative",
+      "finding": "C0353's quantifier 'cancel/skip/retry' is too wide: for workflow CANCEL the pin re-checks the run signal after beforeDispatch and F10 proves no late SDK start; only per-agent skip/retry is uncovered, so the late-start risk narrows to skip/retry.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

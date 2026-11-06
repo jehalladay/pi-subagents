@@ -1,0 +1,138 @@
+{
+  "id": "C0342",
+  "proposition": "MechanicalWorkflows has `apps/development-rig` and `packages/development`.",
+  "verbatim_artifact_wording": {
+    "text": "`apps/development-rig` application binding ... `packages/development` policies",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "15",
+      "quote": "- Mechanical owns the canonical descriptor and schema, packaged `develop` export, `apps/development-rig` application binding and source-scope services, `packages/development` policies. Do not introduce a Pi import into its provider-neutral "
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c apps/development-rig and packages/development are present.",
+    "overclaims": false,
+    "rationale": "Read concrete package and source files."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/package.json",
+        "lines": "10-12",
+        "quote": "\"bin\": {\n    \"mechanical-development-rig\": \"./dist/cli.js\"\n  },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read concrete package and source files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/develop.ts",
+        "lines": "21-24",
+        "quote": "export async function develop(\n  services: DevelopmentServices,\n  request: DevelopmentRequest,\n): Promise<DevelopmentOutcome> {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Read concrete package and source files.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03133"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has `apps/development-rig` and `packages/development`. Evidence path: M_PKG_RIG_10, M_DEV_21."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": ""
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c apps/development-rig and packages/development are present."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Read concrete package and source files."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Scope restricted to the named environment pin; no all-platform, all-history or runtime-success upgrade inferred."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No contradictory primary code identified for the narrowly scoped inventory; failed wider readings are retained."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "All cited MW paths exist at the pin: packages/development/src/{develop,contracts}.ts, apps/development-rig/src/{entrypoint-host,installed-host,hx-scope,rf-context,live-development}.ts, packages/coordination/src/index.ts (159 export lines incl. reconcile, episode, replayTape, training exports), docs/04 and docs/05, contracts/entrypoints/development.v1.json.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) Empirical claims not re-located by this lens: their sources are the same single-author program files (one lineage with every other program claim); code-level verification is left to the entailment lens.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Directory/file removal would change inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

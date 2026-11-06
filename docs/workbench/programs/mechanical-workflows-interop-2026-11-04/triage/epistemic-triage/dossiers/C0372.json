@@ -1,0 +1,182 @@
+{
+  "id": "C0372",
+  "proposition": "QA requires per-agent control negatives (skip during beforeDispatch, SDK terminal after abort, unawaited launch, cancel during gate) with no late unauthorized query or fabricated cancellation.",
+  "verbatim_artifact_wording": {
+    "text": "no late unauthorized query or fabricated cancellation",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "36",
+      "quote": "no late unauthorized query or fabricated cancellation"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "per-agent control",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: QA requires per-agent control negatives (skip during beforeDispatch, SDK terminal after abort, unawaited launch, cancel during gate) with no late unauthorized query or fabricated cancellation.",
+    "overclaims": false,
+    "rationale": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "36",
+        "quote": "no late unauthorized query or fabricated cancellation"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "207",
+        "quote": "try { await config.beforeDispatch?.(); } catch (error) {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "215",
+        "quote": "if (config.signal?.aborted) return { ok: false, skipped: true, error: \"Workflow aborted.\" };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "341-344",
+        "quote": "abortAgent(agentId) {\n      controllers.get(agentId)?.abort();\n      if (sessions.has(agentId) && !controllers.has(agentId)) pendingLookupAborts.add(agentId);\n    },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-claude-cancel-faults.test.ts",
+        "lines": "535",
+        "quote": "it(\"F10 a run abort during beforeDispatch stops the agent before query(): no SDK call, settled as workflow aborted\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0351"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0351",
+        "status": "ESTABLISHED",
+        "wording": "At pi@b27829e6dfa7 Claude invocation awaits asynchronous beforeDispatch before SDK query startup."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0351=ESTABLISHED. QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, QA requires per-agent control negatives (skip during beforeDispatch, SDK terminal after abort, unawaited launch, cancel during gate) with no late unauthorized query or fabricated cancellation. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: QA requires per-agent control negatives (skip during beforeDispatch, SDK terminal after abort, unawaited launch, cancel during gate) with no late unauthorized query or fabricated cancellation."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "QA table demands per-agent parked-start negative; test source survey found run-cancel F10, not a skip/retry reproducer. No current compliance claim."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "NON-EPISTEMIC norms/definitions: no logical defect found; each is checked only for consistency with the mechanisms verified above (grant names, outcome variants, kinds) and none contradicts them. Caveat: C0323's 'any unauthorized late SDK start' inherits C0353's over-broad 'cancel' scope.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "The QA negative 'skip during beforeDispatch' named in 03 is absent from the pin's test tree; the only beforeDispatch fault test is run-signal abort (F10), so the requirement is unmet at the pin (requirement force does not upgrade warrant).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

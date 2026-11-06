@@ -1,0 +1,194 @@
+{
+  "id": "C0441",
+  "proposition": "The registered detached Claude request is refused by local detached admission because it sends empty grants while admission demands `claude:invoke`.",
+  "verbatim_artifact_wording": {
+    "text": "sends `grants:[]`, but local detached admission demands `claude:invoke`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "15",
+      "quote": "sends `grants:[]`, but local detached admission demands `claude:invoke`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "INFERENCE",
+    "scope": "pi-subagents detached path",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 the registered Claude detached path submits empty grants and is refused by local validateRequest for missing claude:invoke.",
+    "overclaims": false,
+    "rationale": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2623",
+        "quote": "const claude = settings?.workflowAgentBackend === \"claude\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2627-2628",
+        "quote": "cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? \"claude\" : \"deterministic\",\n      providers: [], grants: [], permissions: [\"inspect\", \"execute\"], sourceFiles: [launch.source.sourceRef],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2640",
+        "quote": "if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "430",
+        "quote": "if (request.backend === \"claude\" && !grants.includes(\"claude:invoke\")) throw new Error(\"Claude requires explicit claude:invoke grant (auth is SDK-owned and separate).\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "531-532",
+        "quote": "export async function launchDetachedWorkflow(raw: DetachedLaunchRequest, placement: DetachedSocketPlacement = {}): Promise<DetachedReceipt> {\n  const owner = localOperator(); const request = validateRequest(raw);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Deterministic backend can accept empty grants; this conclusion is Claude-specific. Runtime not run."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0439",
+      "C0440"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "the registered request actually reaches local detached admission unchanged",
+      "no intermediate step injects grants"
+    ],
+    "downstream_claims": [
+      "C0343"
+    ],
+    "propagation": "Necessary premises remain C0439=ESTABLISHED, C0440=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The registered detached Claude request is refused by local detached admission because it sends empty grants while admission demands `claude:invoke`. Evidence path: IDX_2623, IDX_2627, IDX_2640, LD_430, LD_532."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Deterministic backend can accept empty grants; this conclusion is Claude-specific. Runtime not run."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 the registered Claude detached path submits empty grants and is refused by local validateRequest for missing claude:invoke."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Exact literal and first-step validation yield a static deductive refusal; no grant injection intervenes."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Deterministic backend can accept empty grants; this conclusion is Claude-specific. Runtime not run."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Deterministic backend can accept empty grants; this conclusion is Claude-specific. Runtime not run."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "Static derivation holds at the pin: the registered path hard-codes grants:[] and no code in src/ ever supplies claude:invoke, so a claude-backend launch deterministically reaches the line-430 throw; not executed here (not run).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Missing premise named in C0204 ('the launch reaches the preflight, no grant injection between') is confirmed: launchDetachedWorkflow calls validateRequest(raw) as its first statement; the derivation is deductive and sound when settings.workflowAgentBackend === 'claude'. Scope narrowing: when the backend setting is not claude the same code path launches 'deterministic' with grants:[] and passes, so the contradiction is conditional on the Claude backend.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "index.ts launchDetachedWorkflow sends grants: [] with backend 'claude' whenever workflowAgentBackend is claude (lines 2623-2628) and local-detached.ts line 430 throws on a claude backend without 'claude:invoke'; the cited ranges 2621-2630 / 430-442 re-locate exactly at the pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: index.ts 2627-2628 sends backend claude with grants: [] and local-detached.ts 430/442 demands claude:invoke and exact claude:tool grants; the P1 detached-admission contradiction is established by primary source, independent of any document.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The empty-grants-vs-claude:invoke contradiction is current at the pin, not merely at the program baseline: both sides (index.ts grants:[] and local-detached.ts line 430) are present and unchanged, so the P1 defect is temporally valid as of pi@b27829e6.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "present at baseline and pin; not fixed in the 375 commits f67b6665..b27829e6."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A granted producer request or changed validation path would refute the deduction.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,155 @@
+{
+  "id": "C03145",
+  "proposition": "Pi maintains a Pi-only execution index from which identifiers could be constructed.",
+  "verbatim_artifact_wording": {
+    "text": "a Pi-only execution index",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "41",
+      "quote": "a Pi-only execution index"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents workflow execution state",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 runtime/journal agent calls have a run-local numeric index distinct from producer-native IDs.",
+    "overclaims": false,
+    "rationale": "Numeric map and journal entry index directly establish local index; exact executionIndex phrase absent."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "832",
+        "quote": "const liveAgents = new Map<number, LiveAgent>();"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Numeric map and journal entry index directly establish local index; exact executionIndex phrase absent.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workflow/runtime.ts",
+        "lines": "899",
+        "quote": "if (entry === undefined || entry.index !== index || entry.key !== key || !entry.ok || entry.basis !== hostBasis) {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Numeric map and journal entry index directly establish local index; exact executionIndex phrase absent.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Native ID construction is prohibited as a pattern, not observed misconduct."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03144"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi maintains a Pi-only execution index from which identifiers could be constructed. Evidence path: RT_832, RT_899, DET_PI_IDX."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Native ID construction is prohibited as a pattern, not observed misconduct."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 runtime/journal agent calls have a run-local numeric index distinct from producer-native IDs."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Numeric map and journal entry index directly establish local index; exact executionIndex phrase absent."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Native ID construction is prohibited as a pattern, not observed misconduct."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Native ID construction is prohibited as a pattern, not observed misconduct."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Presupposition is true: the runtime assigns each agent/node a run-local index (journal entries keyed by index); the norm correctly forbids minting native IDs from it. No defect.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A changed runtime identity model would alter this premise.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_PI_IDX",
+      "summary": "0 hits for the phrase; the run-local index is `liveAgents = new Map<number, LiveAgent>()` (runtime.ts:832) and journal `entry.index` (runtime.ts:899)",
+      "method": "grep -rniE 'executionIndex|execution index|execution-index' src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,180 @@
+{
+  "id": "C0429",
+  "proposition": "Pi registers the tools `workflow_execute`, `workflow_observe`, `workflow_control` and `workflow_reconcile`.",
+  "verbatim_artifact_wording": {
+    "text": "tools `workflow_execute`, `workflow_observe`, `workflow_control` and `workflow_reconcile`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "12",
+      "quote": "tools `workflow_execute`, `workflow_observe`, `workflow_control` and `workflow_reconcile`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents tool registration",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 Pi registers workflow_execute, workflow_observe, workflow_control and workflow_reconcile under Workbench/Claude activation.",
+    "overclaims": false,
+    "rationale": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools)."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "176",
+        "quote": "name: \"workflow_execute\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools).",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2889",
+        "quote": "name: \"workflow_observe\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools).",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/control-tool.ts",
+        "lines": "138",
+        "quote": "name: \"workflow_control\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools).",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/reconcile-tool.ts",
+        "lines": "62",
+        "quote": "name: \"workflow_reconcile\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools).",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2640",
+        "quote": "if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools).",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Tools are not registered when activation setting is off."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi registers the tools `workflow_execute`, `workflow_observe`, `workflow_control` and `workflow_reconcile`. Evidence path: EXEC_176, IDX_2889, CTL_138, REC_62, IDX_2640, DET_PI_TOOLS."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Tools are not registered when activation setting is off."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 Pi registers workflow_execute, workflow_observe, workflow_control and workflow_reconcile under Workbench/Claude activation."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Tool definitions and index registration are present, conditional on setting. List is not exhaustive (nine workflow tools)."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Tools are not registered when activation setting is off."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Tools are not registered when activation setting is off."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "All four tool names are registered: workflow_execute (execute-tool.ts:176), workflow_control (control-tool.ts:138), workflow_reconcile (reconcile-tool.ts:62), workflow_observe (index.ts:2889).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "All four named tools are registered at the pin (workflow_execute in execute-tool.ts:176, workflow_observe in index.ts:2889, workflow_control in control-tool.ts:138, workflow_reconcile in reconcile-tool.ts:62); note the list is non-exhaustive - the pin also registers workflow_inspect, workflow_validate, workflow_catalog, workflow_compare and workflow_detached.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A real activated tool-list receipt would settle runtime availability separately.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_PI_TOOLS",
+      "summary": "9 tools: workflow_execute, workflow_control, workflow_reconcile, workflow_observe, workflow_inspect, workflow_validate, workflow_catalog, workflow_compare, workflow_detached",
+      "method": "grep -rn 'name: *\"workflow_' src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,154 @@
+{
+  "id": "C0344",
+  "proposition": "The empty-grants defect must be fixed independently and the validator must not be disabled.",
+  "verbatim_artifact_wording": {
+    "text": "Fix ... independently; do not disable validator",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "20",
+      "quote": "3. Fix Pi registered detached Claude empty-grants path independently; do not disable validator."
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "pi-subagents detached admission",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: The empty-grants defect must be fixed independently and the validator must not be disabled.",
+    "overclaims": false,
+    "rationale": "Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "20",
+        "quote": "3. Fix Pi registered detached Claude empty-grants path independently; do not disable validator."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2627-2628",
+        "quote": "cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? \"claude\" : \"deterministic\",\n      providers: [], grants: [], permissions: [\"inspect\", \"execute\"], sourceFiles: [launch.source.sourceRef],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/local-detached.ts",
+        "lines": "430",
+        "quote": "if (request.backend === \"claude\" && !grants.includes(\"claude:invoke\")) throw new Error(\"Claude requires explicit claude:invoke grant (auth is SDK-owned and separate).\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0345"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0345",
+        "status": "ESTABLISHED",
+        "wording": "At pi@b27829e6dfa7 local detached Claude admission requires claude:invoke and exact grants for configured tools."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0345=ESTABLISHED. Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, The empty-grants defect must be fixed independently and the validator must not be disabled. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: The empty-grants defect must be fixed independently and the validator must not be disabled."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Detached grant defect ESTABLISHED static deduction; keeping validator is an explicit safety choice."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Norm consistent with the verified mechanism; no logical defect. Note the two possible cures (add grants at index.ts vs relax the validator) are distinguished correctly: the artifact forbids the second.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

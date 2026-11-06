@@ -1,0 +1,149 @@
+{
+  "id": "C03132",
+  "proposition": "`hosts/mechanical-functions.ts` does not yet exist in pi-subagents; it is proposed.",
+  "verbatim_artifact_wording": {
+    "text": "`hosts/mechanical-functions.ts` (proposed)",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "14",
+      "quote": "`hosts/mechanical-functions.ts` (proposed)"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents src/workbench/hosts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 src/workbench/hosts/mechanical-functions.ts is absent and doc 04 marks that host file proposed.",
+    "overclaims": false,
+    "rationale": "Named path absence checked directly; host directory has two non-Mechanical adapters."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+        "lines": "14",
+        "quote": "- Pi owns `src/workbench/execute-tool.ts`, `execute.ts`, `native-modules.ts`, `src/index.ts`, `hosts/mechanical-functions.ts` (proposed), observation projection, live control and UI."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Named path absence checked directly; host directory has two non-Mechanical adapters.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Other external uncommitted code is outside pin scope."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0436"
+    ],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Necessary premises remain C0436=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is `hosts/mechanical-functions.ts` does not yet exist in pi-subagents; it is proposed. Evidence path: HOSTS_LS, D04_14, DET_PI_MECH."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Other external uncommitted code is outside pin scope."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 src/workbench/hosts/mechanical-functions.ts is absent and doc 04 marks that host file proposed."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Named path absence checked directly; host directory has two non-Mechanical adapters."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Other external uncommitted code is outside pin scope."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Other external uncommitted code is outside pin scope."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No Mechanical function host, SDK dependency or hosts/mechanical-functions.ts exists in pi src/ (package.json has no @mechanical dep; hosts/ holds only furnace-hosted.ts and local-detached.ts); the one MW-named module, collective-event.ts, is a read-only collective.event.v1 envelope boundary, not an invocation binding - so 'no Mechanical binding at all' should read 'no function/host binding'. MW development-rig depends on no Pi package.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'does not yet exist' claims hold at the pin: src/workbench/hosts/ contains only furnace-hosted.ts and local-detached.ts - no mechanical-functions.ts and no installed-host loader for Mechanical functions anywhere in src/.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Adding this tracked file would refute its absence.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "HOSTS_LS",
+      "summary": "furnace-hosted.ts local-detached.ts (no mechanical-functions.ts)",
+      "method": "src/workbench/hosts/"
+    },
+    {
+      "record": "DET_PI_MECH",
+      "summary": "src hits: src/workbench/collective-event.ts, src/workflow/tool-description.ts (prose word); package.json: none; loader/descriptor identifiers in src: 0 files",
+      "method": "grep -rli mechanical src; grep -n mechanical package.json; grep -rlnE 'installed-host|workflows-development|mechanical\\.development\\.develop|EntrypointDescriptor|invokePinnedDevelopment|invokeInstalledDevelopment' src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,173 @@
+{
+  "id": "C0445",
+  "proposition": "The Pi RF preview is not a committed RF render.",
+  "verbatim_artifact_wording": {
+    "text": "Pi RF preview is not a committed RF render",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "16",
+      "quote": "Pi RF preview is not a committed RF render"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents RF preview path",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 RF preview invokes --no-commit and refuses a non-null render_id; it is not a committed render.",
+    "overclaims": false,
+    "rationale": "Argument and envelope guard directly establish distinction; MW committed contract requires ID."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/providers/reactivefiber.ts",
+        "lines": "17",
+        "quote": "export const REACTIVE_FIBER_CONTRACT_SOURCE = \"rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Argument and envelope guard directly establish distinction; MW committed contract requires ID.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/providers/reactivefiber.ts",
+        "lines": "70",
+        "quote": "if (!record(result) || result.ephemeral!==true || result.render_id!==null ||"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Argument and envelope guard directly establish distinction; MW committed contract requires ID.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/providers/reactivefiber.ts",
+        "lines": "115",
+        "quote": "return [\"--workspace\",workspaceRoot,\"context\",\"render\",...select,\"--no-commit\",\"--no-input\",\"--json\"];"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Argument and envelope guard directly establish distinction; MW committed contract requires ID.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/rf-context.ts",
+        "lines": "84",
+        "quote": "typeof renderId !== \"string\" || !renderId.trim() ||"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Argument and envelope guard directly establish distinction; MW committed contract requires ID.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "No RF CLI call was made here."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0326",
+      "C0370",
+      "C0419"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The Pi RF preview is not a committed RF render. Evidence path: RF_17, RF_70, RF_115, M_RF_84."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "No RF CLI call was made here."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 RF preview invokes --no-commit and refuses a non-null render_id; it is not a committed render."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Argument and envelope guard directly establish distinction; MW committed contract requires ID."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "No RF CLI call was made here."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No RF CLI call was made here."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "reactivefiber.render.preview's spawned argv ends with --no-commit --no-input --json and its contract source names --no-commit; the preview is a non-committed render as claimed.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Supported and stronger than stated: the Pi preview provider not only passes --no-commit, it REJECTS any envelope whose render_id is not null, so a preview result can never carry a committed render id.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "Pi's RF preview argv ends with --no-commit at the pin and MW renderTaskContext still refuses an empty render_id; rf-context.ts changed since baseline (1872a6f1 binary resolution) but the render_id requirement is intact.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "rf-context.ts modified by 1872a6f1 (MECHANICAL_RF_BINARY resolution); render_id check unchanged"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The RF scope split holds at both pins: Pi's preview is pinned to 'context render ... --no-commit' (a read), while MW's renderTaskContext demands a nonempty committed render_id with graph/provenance fields, so the two cannot be conflated; C0252's prediction inherits true premises.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "note: MW rf-context.ts was touched since baseline (1872a6f1, MECHANICAL_RF_BINARY resolution + RF_UNAVAILABLE) - the render_id requirement itself is unchanged."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Changed provider argv/guard would change the distinction.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

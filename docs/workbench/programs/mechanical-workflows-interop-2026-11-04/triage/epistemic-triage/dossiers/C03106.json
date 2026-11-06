@@ -1,0 +1,169 @@
+{
+  "id": "C03106",
+  "proposition": "Pi script workflows currently work.",
+  "verbatim_artifact_wording": {
+    "text": "Working Pi *script* workflows",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "55",
+      "quote": "Working Pi *script* workflows"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents workflow_execute script branch",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "The source implements script workflows and committed tests/recorded evidence support their operation; current runtime success at pi@b27829e6dfa7 was not run.",
+    "overclaims": true,
+    "rationale": "Static script branch and test evidence support but do not entail currently work."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "217-218",
+        "quote": "} else if (admission.definition.kind !== \"script\") {\n        refuse(\"unsupported-definition-kind\", \"only script definitions launch in this host\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Static script branch and test evidence support but do not entail currently work.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-execute.test.ts",
+        "lines": "178",
+        "quote": "for (const kind of [\"script\", \"function\", \"furnace-formula\"]) expect(decideExecute(request({ definitionRef: { ...DEFINITION, kind } }), host()).decision).toBe(\"admitted\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Static script branch and test evidence support but do not entail currently work.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "package.json",
+        "lines": "48",
+        "quote": "\"test\": \"vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Static script branch and test evidence support but do not entail currently work.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/01-audit-and-evidence.md",
+        "lines": "63",
+        "quote": "- No working tree or installed SDKs were executed; no Forge/Node/Vitest runs, no real Claude/Furnace/HX/RF calls were issued for this audit."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Static script branch and test evidence support but do not entail currently work.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Installed dependency/version state and provider behavior can differ from source."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0430"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit in 'Working'"
+    ],
+    "downstream_claims": [
+      "C03105"
+    ],
+    "propagation": "Necessary premises remain C0430=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi script workflows currently work. Evidence path: EXEC_217, T_EXECUTE_178, PKG_48, D01_63."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Installed dependency/version state and provider behavior can differ from source."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The source implements script workflows and committed tests/recorded evidence support their operation; current runtime success at pi@b27829e6dfa7 was not run."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Static script branch and test evidence support but do not entail currently work."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Installed dependency/version state and provider behavior can differ from source."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Installed dependency/version state and provider behavior can differ from source."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Drift documented/tested->works: 'Working Pi script workflows' is asserted from source and recorded tests; the artifact itself says nothing was run for this audit, so 'currently work' is at most 'source implemented with recorded tests'. The norm C03105 is unaffected.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "'Source implemented; tests recorded' (01) -> 'currently work' (03)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Actual registered script journey at this pin with SDK/session receipt and feature-disabled regression would establish current operation.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

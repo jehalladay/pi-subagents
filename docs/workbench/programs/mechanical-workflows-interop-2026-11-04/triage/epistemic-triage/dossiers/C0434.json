@@ -1,0 +1,183 @@
+{
+  "id": "C0434",
+  "proposition": "MechanicalWorkflows has a pinned installed tarball host.",
+  "verbatim_artifact_wording": {
+    "text": "has a pinned installed tarball host",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "13",
+      "quote": "has a pinned installed tarball host"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows installed-host.ts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c installed-host.ts implements a SHA-256-pinned offline tarball installer and host, with real-pack test source.",
+    "overclaims": false,
+    "rationale": "Code implements loader/pinning; committed tests pack tarball."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/installed-host.ts",
+        "lines": "1",
+        "quote": "/** Transient local installer/loader for an exact SHA-256-pinned npm tarball. */"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code implements loader/pinning; committed tests pack tarball.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/installed-host.ts",
+        "lines": "26",
+        "quote": "await exec(\"npm\",[\"install\",\"--ignore-scripts\",\"--offline\",\"--no-audit\",\"--no-fund\",\"--no-save\",artifact],{"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code implements loader/pinning; committed tests pack tarball.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/installed-host.ts",
+        "lines": "37",
+        "quote": "const copyDigest = \"sha256:\" + createHash(\"sha256\").update(await readFile(artifact)).digest(\"hex\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code implements loader/pinning; committed tests pack tarball.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/installed-host.test.ts",
+        "lines": "17",
+        "quote": "const packed=spawnSync(\"npm\",[\"pack\",\"--ignore-scripts\",\"--json\",\"--pack-destination\",destination],{cwd:library,encoding:\"utf8\"});"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code implements loader/pinning; committed tests pack tarball.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/test/installed-host.test.ts",
+        "lines": "44",
+        "quote": "test(\"installed pinned host runs develop from a real local tarball, no source import\",()=>fixture(async root=>{"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Code implements loader/pinning; committed tests pack tarball.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "No npm pack/install or host test run occurred here; deep rig binding remains distinct from public API."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0315",
+      "C0435"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has a pinned installed tarball host. Evidence path: M_IH_1, M_IH_26, M_IH_37, M_T_IH_17, M_T_IH_44."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "No npm pack/install or host test run occurred here; deep rig binding remains distinct from public API."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c installed-host.ts implements a SHA-256-pinned offline tarball installer and host, with real-pack test source."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Code implements loader/pinning; committed tests pack tarball."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "No npm pack/install or host test run occurred here; deep rig binding remains distinct from public API."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No npm pack/install or host test run occurred here; deep rig binding remains distinct from public API."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "installed-host.ts is a SHA-256-pinned transient installer running npm install --ignore-scripts --offline; entrypoint-host.ts checks bindings are functions (92-94) and validates the outcome (105); installed-host.test.ts and entrypoint-descriptor-file.test.ts npm-pack the library at test time.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Supported: installed-host.test.ts packs the real library with npm pack and runs develop from the tarball.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the MW pin: installed-host.test.ts packs packages/development with npm pack --ignore-scripts (14-20) and feeds the tarball to the installed host.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The installed-host facts hold at the pin: installed-host.ts hashes the tarball with sha256 and installs with npm --offline --ignore-scripts, tests exercise it with a packed tarball and (post-drift) the committed descriptor; the binding lives inside apps/development-rig rather than an independently importable package, supporting C0315.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A real installed-consumer receipt would establish successful exercise, not merely implementation.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,158 @@
+{
+  "id": "C0428",
+  "proposition": "Pi has a real Claude SDK workflow host.",
+  "verbatim_artifact_wording": {
+    "text": "Pi has a real Claude SDK workflow host",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "12",
+      "quote": "Pi has a real Claude SDK workflow host"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents src/workbench",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 the workflow host imports the real Claude Agent SDK and invokes its query API.",
+    "overclaims": false,
+    "rationale": "Direct SDK import and query call establish implementation; tests can inject query so not every caller is live."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "4-10",
+        "quote": "import {\n  type EffortLevel,\n  getSessionInfo,\n  type Options,\n  type SDKMessage,\n  query as sdkQuery,\n} from \"@anthropic-ai/claude-agent-sdk\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct SDK import and query call establish implementation; tests can inject query so not every caller is live.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/claude-host.ts",
+        "lines": "253",
+        "quote": "const live = query({ prompt, options });"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct SDK import and query call establish implementation; tests can inject query so not every caller is live.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2640",
+        "quote": "if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct SDK import and query call establish implementation; tests can inject query so not every caller is live.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Real host implemented is not successful native session observed during this audit (not run)."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi has a real Claude SDK workflow host. Evidence path: CH_10, CH_253, IDX_2640."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Real host implemented is not successful native session observed during this audit (not run)."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 the workflow host imports the real Claude Agent SDK and invokes its query API."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Direct SDK import and query call establish implementation; tests can inject query so not every caller is live."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Real host implemented is not successful native session observed during this audit (not run)."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Real host implemented is not successful native session observed during this audit (not run)."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "claude-host.ts imports query/getSessionInfo from @anthropic-ai/claude-agent-sdk and calls query() (253); it implements abortAgent, resumeAgent (session lookup), role and model resolution; index.ts wires the host. Tests/receipts (C0113/C0114) not assessed by this lens.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: claude-host.ts imports from @anthropic-ai/claude-agent-sdk (line 10); whether the query is 'real' versus stubbed is a code-reading claim this lens does not grade.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "Location and reality of the Claude executor hold at the pin (real @anthropic-ai/claude-agent-sdk import in claude-host.ts, per-agent AbortControllers, roles/model handling in the invoke path); the individual feature enumerations (session observation, resume, receipts) were not each re-located by this lens.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Source stub substitution would refute implementation; native session receipt settles live operation separately.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

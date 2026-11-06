@@ -1,0 +1,134 @@
+{
+ "fixed": [
+  [
+   "E0022",
+   "dir->probe",
+   "docs/workbench/receipts/",
+   "ls docs/workbench/receipts/"
+  ],
+  [
+   "E0084",
+   "dir->probe",
+   "qa/integration/",
+   "ls qa/integration/"
+  ],
+  [
+   "E0354",
+   "strip-rev-prefix",
+   "0c78e253:contracts/entrypoints/development.v1.json",
+   "contracts/entrypoints/development.v1.json"
+  ],
+  [
+   "E0628",
+   "strip-rev-prefix",
+   "0c78e253:apps/development-rig/test/entrypoint-host.test.ts",
+   "apps/development-rig/test/entrypoint-host.test.ts"
+  ],
+  [
+   "E0693",
+   "dir->probe",
+   "new-feedback/",
+   "ls new-feedback/"
+  ],
+  [
+   "E0694",
+   "dir->probe",
+   "new-feedback/",
+   "ls new-feedback/"
+  ],
+  [
+   "E0695",
+   "dir->probe",
+   "new-feedback/",
+   "ls new-feedback/"
+  ],
+  [
+   "E0705",
+   "dir->probe",
+   "apps/development-rig/src/",
+   "ls apps/development-rig/src/"
+  ],
+  [
+   "E0706",
+   "dir->probe",
+   "qa/integration/evidence/",
+   "ls qa/integration/evidence/"
+  ],
+  [
+   "E0715",
+   "dir->probe",
+   ".agents/skills/",
+   "ls .agents/skills/"
+  ],
+  [
+   "E0716",
+   "dir->probe",
+   "src/workbench/hosts/",
+   "ls src/workbench/hosts/"
+  ],
+  [
+   "E0729",
+   "repin-to-baseline",
+   "mw@f7c0a9431d6c|L(git show 0c78e253: lines 8-9)",
+   "mw@0c78e253|L8-9"
+  ],
+  [
+   "E0747",
+   "symbol-loc->lines",
+   "L(CompiledContext)",
+   "L27-31"
+  ],
+  [
+   "E0760",
+   "repin-to-triage-self",
+   "out/epistemic-triage/claims-part-01.jsonl",
+   "claims-part-01.jsonl"
+  ],
+  [
+   "E0761",
+   "repin-to-triage-self",
+   "out/epistemic-triage/claims-part-02.jsonl",
+   "claims-part-02.jsonl"
+  ],
+  [
+   "E0781",
+   "fill-empty-probe-quote",
+   "''",
+   "(empty: no output — src is byte-identical between the progra"
+  ],
+  [
+   "E0795",
+   "dir->probe",
+   "new-feedback/",
+   "ls new-feedback/"
+  ],
+  [
+   "E0796",
+   "dir->probe",
+   "new-feedback/",
+   "ls new-feedback/"
+  ],
+  [
+   "E0797",
+   "dir->probe",
+   "qa/integration/",
+   "ls qa/integration/"
+  ]
+ ],
+ "locmap": {
+  "pi@b27829e6dfa7:docs/workbench/receipts/:-": "pi@b27829e6dfa7:ls docs/workbench/receipts/:-",
+  "mw@f7c0a9431d6c:qa/integration/:-": "mw@f7c0a9431d6c:ls qa/integration/:-",
+  "mw@0c78e253:0c78e253:contracts/entrypoints/development.v1.json:8-9": "mw@0c78e253:contracts/entrypoints/development.v1.json:8-9",
+  "mw@0c78e253:0c78e253:apps/development-rig/test/entrypoint-host.test.ts:12": "mw@0c78e253:apps/development-rig/test/entrypoint-host.test.ts:12",
+  "pi@b27829e6dfa7:new-feedback/:-": "pi@b27829e6dfa7:ls new-feedback/:-",
+  "mw@f7c0a9431d6c:apps/development-rig/src/:-": "mw@f7c0a9431d6c:ls apps/development-rig/src/:-",
+  "mw@f7c0a9431d6c:qa/integration/evidence/:-": "mw@f7c0a9431d6c:ls qa/integration/evidence/:-",
+  "mw@f7c0a9431d6c:.agents/skills/:-": "mw@f7c0a9431d6c:ls .agents/skills/:-",
+  "pi@b27829e6dfa7:src/workbench/hosts/:-": "pi@b27829e6dfa7:ls src/workbench/hosts/:-",
+  "mw@f7c0a9431d6c:contracts/entrypoints/development.v1.json:L(git show 0c78e253: lines 8-9)": "mw@0c78e253:contracts/entrypoints/development.v1.json:8-9",
+  "mw@f7c0a9431d6c:packages/development/src/contracts.ts:L(CompiledContext)": "mw@f7c0a9431d6c:packages/development/src/contracts.ts:27-31",
+  "doc@7c80c34346c2:out/epistemic-triage/claims-part-01.jsonl:1": "triage@self:claims-part-01.jsonl:1",
+  "doc@7c80c34346c2:out/epistemic-triage/claims-part-02.jsonl:1": "triage@self:claims-part-02.jsonl:1"
+ },
+ "dossiers_nulled": 98
+}

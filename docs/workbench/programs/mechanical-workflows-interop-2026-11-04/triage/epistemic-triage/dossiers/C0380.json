@@ -1,0 +1,148 @@
+{
+  "id": "C0380",
+  "proposition": "A fixture PASS, source grep, unit mock, or a previous standalone Mechanical rig receipt does not constitute end-to-end Pi acceptance.",
+  "verbatim_artifact_wording": {
+    "text": "Fixture PASS, source grep, unit mock or a previous standalone Mechanical rig receipt is not an end-to-end Pi acceptance",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "42",
+      "quote": "Fixture PASS, source grep, unit mock or a previous standalone Mechanical rig receipt is not an end-to-end Pi acceptance"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "DEFINITION",
+    "scope": "acceptance definition",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "For this program, the definition is: A fixture PASS, source grep, unit mock, or a previous standalone Mechanical rig receipt does not constitute end-to-end Pi acceptance.",
+    "overclaims": false,
+    "rationale": "Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "42",
+        "quote": "Fixture PASS, source grep, unit mock or a previous standalone Mechanical rig receipt is not an end-to-end Pi acceptance"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "qa/integration/2026-10-15-combined-live-composition.md",
+        "lines": "3-4",
+        "quote": "`developWithNativeEvidence()` ran once on the clean scratch package at\n`ce0657cb7437…` with real product callbacks wired for every stage: a real"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/01-audit-and-status.md",
+        "lines": "3",
+        "quote": "**Static source audit, not execution:** pinned `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`, Pi implementation at `f67b6665a132dbb0e86aea48cf36cf6ae0412521`, shipped documentation and existing tests."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03148"
+    ],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. No empirical premise named.. Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, A fixture PASS, source grep, unit mock, or a previous standalone Mechanical rig receipt does not constitute end-to-end Pi acceptance. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "For this program, the definition is: A fixture PASS, source grep, unit mock, or a previous standalone Mechanical rig receipt does not constitute end-to-end Pi acceptance."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Acceptance definition distinguishes prior standalone witness from actual registered Pi journey; no historical receipt magically upgrades to end-to-end."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Internal consistency PASS: the artifact's own epistemic frame (static audit, nothing run, no live acceptance) is stated in 01 line 3, README and SKILL alike; no claim in 01 is phrased as a run result. The 'tested->correct' drift is absent.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The 'live producer receipts recorded in the repository' are MW qa/integration/2026-10-15-*.md files by the same author at a 2026-10-15 revision; the MW program's own method line scopes them ('Historical qa/integration/ receipts support only the operations they actually tested'), so they witness the rig at 2026-10-15, not at baseline or pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "receipt revision 2026-10-15 predates baseline 0c78e253 and pin"
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

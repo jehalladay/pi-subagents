@@ -1,0 +1,144 @@
+{
+  "id": "C03122",
+  "proposition": "pi-subagents `master` now contains the former implementation (Workbench) branch.",
+  "verbatim_artifact_wording": {
+    "text": "`master` now contains the former implementation branch",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "7",
+      "quote": "`master` now contains the former implementation branch"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents master",
+    "temporal_context": "as of doc@7c80c34346c2 (2026-11-05); check at pi@b27829e6dfa7",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 the former Workbench implementation branch has been merged into the default branch.",
+    "overclaims": false,
+    "rationale": "Pin is the recorded branch merge, 375 commits beyond f67b6665."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "git log -1 --format=%h %ci %s b27829e6",
+        "lines": "-",
+        "quote": "b27829e6 2026-11-06 00:35:07 +0000 Merge workbench/implementation-program (landings through 996, trunk d7b5e894) into master - the flywheel machine's landed work to date; first master merge under the user's 2026-11-06 standing order"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Pin is the recorded branch merge, 375 commits beyond f67b6665.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Doc@7c80c343 was authored before this merge; its now wording must be qualified to the environment pin."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C03121"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is pi-subagents `master` now contains the former implementation (Workbench) branch. Evidence path: G_PI_B278, G_PI_DIFF."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Doc@7c80c343 was authored before this merge; its now wording must be qualified to the environment pin."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 the former Workbench implementation branch has been merged into the default branch."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Pin is the recorded branch merge, 375 commits beyond f67b6665."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Doc@7c80c343 was authored before this merge; its now wording must be qualified to the environment pin."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Doc@7c80c343 was authored before this merge; its now wording must be qualified to the environment pin."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "The temporal claim holds at the pin: b27829e6 is itself the merge of the workbench implementation branch (landings through 996, trunk d7b5e894) into master, 375 commits ahead of the program's f67b6665 baseline.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Default-branch ancestry at another pin must be rechecked; cannot generalize to every checkout.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "G_PI_DIFF",
+      "summary": "(empty: src/ byte-identical between the program baseline f67b6665 and the pin; git rev-list --count f67b6665..b27829e6 = 375)",
+      "method": "git diff --stat f67b6665 b27829e6 -- src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

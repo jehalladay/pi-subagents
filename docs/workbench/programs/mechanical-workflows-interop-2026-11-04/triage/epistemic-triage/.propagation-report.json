@@ -1,0 +1,1637 @@
+{
+ "edges": [
+  {
+   "relation": "X001",
+   "family": "A",
+   "tail": "C0305",
+   "head": "C0194",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X002",
+   "family": "A",
+   "tail": "C0336",
+   "head": "C0194",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X003",
+   "family": "A",
+   "tail": "C0437",
+   "head": "C0195",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X004",
+   "family": "A",
+   "tail": "C0338",
+   "head": "C0193",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X005",
+   "family": "A",
+   "tail": "C0530",
+   "head": "C0189",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X006",
+   "family": "A",
+   "tail": "C0529",
+   "head": "C0191",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X007",
+   "family": "A",
+   "tail": "C0534",
+   "head": "C0193",
+   "type": "DEPENDS_ON",
+   "tail_status": "REFUTED",
+   "head_status": "REFUTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X008",
+   "family": "A",
+   "tail": "C0302",
+   "head": "C0194",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "REFUTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X009",
+   "family": "A",
+   "tail": "C0337",
+   "head": "C0193",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "REFUTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X010",
+   "family": "A",
+   "tail": "C0438",
+   "head": "C0193",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "REFUTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X011",
+   "family": "A",
+   "tail": "C03142",
+   "head": "C0193",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "REFUTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X012",
+   "family": "A",
+   "tail": "C0277",
+   "head": "C0194",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "REFUTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X013",
+   "family": "B",
+   "tail": "C0346",
+   "head": "C0170",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X014",
+   "family": "B",
+   "tail": "C0349",
+   "head": "C0165",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X015",
+   "family": "B",
+   "tail": "C0347",
+   "head": "C0170",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X016",
+   "family": "B",
+   "tail": "C0452",
+   "head": "C0170",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X017",
+   "family": "B",
+   "tail": "C0366",
+   "head": "C0168",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X018",
+   "family": "B",
+   "tail": "C03146",
+   "head": "C0168",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X019",
+   "family": "C",
+   "tail": "C0310",
+   "head": "C0179",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X020",
+   "family": "C",
+   "tail": "C0339",
+   "head": "C0162",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X021",
+   "family": "C",
+   "tail": "C0430",
+   "head": "C0162",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X022",
+   "family": "C",
+   "tail": "C0431",
+   "head": "C0178",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X023",
+   "family": "C",
+   "tail": "C0432",
+   "head": "C0179",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X024",
+   "family": "C",
+   "tail": "C0340",
+   "head": "C0161",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X025",
+   "family": "C",
+   "tail": "C0436",
+   "head": "C0161",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X026",
+   "family": "C",
+   "tail": "C0435",
+   "head": "C0160",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X027",
+   "family": "C",
+   "tail": "C03132",
+   "head": "C0160",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X028",
+   "family": "D",
+   "tail": "C0343",
+   "head": "C0204",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X029",
+   "family": "D",
+   "tail": "C0439",
+   "head": "C0201",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X030",
+   "family": "D",
+   "tail": "C0440",
+   "head": "C0202",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X031",
+   "family": "D",
+   "tail": "C0441",
+   "head": "C0205",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X032",
+   "family": "D",
+   "tail": "C0345",
+   "head": "C0202",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X033",
+   "family": "D",
+   "tail": "C0586",
+   "head": "C0205",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X034",
+   "family": "D",
+   "tail": "C0587",
+   "head": "C0204",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X035",
+   "family": "D",
+   "tail": "C0344",
+   "head": "C0204",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X036",
+   "family": "D",
+   "tail": "C0442",
+   "head": "C0202",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X037",
+   "family": "E",
+   "tail": "C0350",
+   "head": "C0210",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X038",
+   "family": "E",
+   "tail": "C0351",
+   "head": "C0210",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X039",
+   "family": "E",
+   "tail": "C0353",
+   "head": "C0213",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "PLAUSIBLE",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X040",
+   "family": "E",
+   "tail": "C0352",
+   "head": "C0213",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X041",
+   "family": "E",
+   "tail": "C0323",
+   "head": "C0353",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "PLAUSIBLE",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X042",
+   "family": "E",
+   "tail": "C0372",
+   "head": "C0213",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X043",
+   "family": "E",
+   "tail": "C0453",
+   "head": "C0214",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X044",
+   "family": "G",
+   "tail": "C0320",
+   "head": "C0522",
+   "type": "DEPENDS_ON",
+   "tail_status": "REFUTED",
+   "head_status": "NON-EPISTEMIC",
+   "verdict": "n/a (head NON-EPISTEMIC proposal: cannot warrant an observation; tail graded on its own detector)"
+  },
+  {
+   "relation": "X045",
+   "family": "G",
+   "tail": "C0320",
+   "head": "C0555",
+   "type": "DEPENDS_ON",
+   "tail_status": "REFUTED",
+   "head_status": "NON-EPISTEMIC",
+   "verdict": "n/a (head NON-EPISTEMIC proposal: cannot warrant an observation; tail graded on its own detector)"
+  },
+  {
+   "relation": "X046",
+   "family": "G",
+   "tail": "C0356",
+   "head": "C0554",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X047",
+   "family": "G",
+   "tail": "C0443",
+   "head": "C0554",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X048",
+   "family": "G",
+   "tail": "C0444",
+   "head": "C0242",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X049",
+   "family": "G",
+   "tail": "C0355",
+   "head": "C0245",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "NON-EPISTEMIC",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X050",
+   "family": "G",
+   "tail": "C03113",
+   "head": "C0245",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "NON-EPISTEMIC",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X051",
+   "family": "G",
+   "tail": "C0316",
+   "head": "C0522",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "NON-EPISTEMIC",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X052",
+   "family": "H",
+   "tail": "C0407",
+   "head": "C0163",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X053",
+   "family": "H",
+   "tail": "C03124",
+   "head": "C0163",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X054",
+   "family": "H",
+   "tail": "C0406",
+   "head": "C0182",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X055",
+   "family": "H",
+   "tail": "C0408",
+   "head": "C0163",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X056",
+   "family": "I",
+   "tail": "C0445",
+   "head": "C0247",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X057",
+   "family": "I",
+   "tail": "C0419",
+   "head": "C0253",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X058",
+   "family": "I",
+   "tail": "C0559",
+   "head": "C0253",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X059",
+   "family": "I",
+   "tail": "C0370",
+   "head": "C0253",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X060",
+   "family": "J",
+   "tail": "C03114",
+   "head": "C0242",
+   "type": "DEPENDS_ON",
+   "tail_status": "PLAUSIBLE",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X061",
+   "family": "J",
+   "tail": "C0326",
+   "head": "C0244",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X062",
+   "family": "K",
+   "tail": "C0460",
+   "head": "C0230",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X063",
+   "family": "K",
+   "tail": "C0341",
+   "head": "C0231",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X064",
+   "family": "K",
+   "tail": "C03143",
+   "head": "C0231",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X065",
+   "family": "K",
+   "tail": "C0459",
+   "head": "C0231",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X066",
+   "family": "L",
+   "tail": "C0455",
+   "head": "C0224",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X067",
+   "family": "L",
+   "tail": "C03147",
+   "head": "C0224",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X068",
+   "family": "L",
+   "tail": "C0324",
+   "head": "C0224",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X069",
+   "family": "L",
+   "tail": "C0550",
+   "head": "C0224",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X070",
+   "family": "M",
+   "tail": "C0409",
+   "head": "C0271",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X071",
+   "family": "M",
+   "tail": "C0402",
+   "head": "C0101",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X072",
+   "family": "M",
+   "tail": "C0403",
+   "head": "C0101",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X073",
+   "family": "M",
+   "tail": "C0427",
+   "head": "C0101",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X074",
+   "family": "N",
+   "tail": "C0399",
+   "head": "C0263",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X075",
+   "family": "N",
+   "tail": "C0399",
+   "head": "C0264",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X076",
+   "family": "N",
+   "tail": "C0399",
+   "head": "C0266",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X077",
+   "family": "N",
+   "tail": "C03126",
+   "head": "C0103",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X078",
+   "family": "O",
+   "tail": "C0321",
+   "head": "C0160",
+   "type": "DEPENDS_ON",
+   "tail_status": "UNDETERMINED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X079",
+   "family": "O",
+   "tail": "C0446",
+   "head": "C0164",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X080",
+   "family": "P",
+   "tail": "C03106",
+   "head": "C0127",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X081",
+   "family": "P",
+   "tail": "C03106",
+   "head": "C0114",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "SUPPORTED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X082",
+   "family": "Q",
+   "tail": "C03111",
+   "head": "C0238",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X083",
+   "family": "Q",
+   "tail": "C0369",
+   "head": "C0238",
+   "type": "DEPENDS_ON",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X084",
+   "family": "Q",
+   "tail": "C0562",
+   "head": "C0238",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "ESTABLISHED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X085",
+   "family": "R",
+   "tail": "C0434",
+   "head": "C0141",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X086",
+   "family": "R",
+   "tail": "C0521",
+   "head": "C0146",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X087",
+   "family": "S",
+   "tail": "C0381",
+   "head": "C0152",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "SUPPORTED",
+   "verdict": "ASYMMETRY (same origin, different wording; see note)"
+  },
+  {
+   "relation": "X088",
+   "family": "S",
+   "tail": "C0380",
+   "head": "C0152",
+   "type": "DEPENDS_ON",
+   "tail_status": "NON-EPISTEMIC",
+   "head_status": "SUPPORTED",
+   "verdict": "n/a (tail NON-EPISTEMIC: requirement force, no warrant to cap)"
+  },
+  {
+   "relation": "X089",
+   "family": "U",
+   "tail": "C0433",
+   "head": "C0137",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X090",
+   "family": "U",
+   "tail": "C0511",
+   "head": "C0137",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X091",
+   "family": "U",
+   "tail": "C0334",
+   "head": "C0154",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X092",
+   "family": "U",
+   "tail": "C0592",
+   "head": "C0154",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X093",
+   "family": "U",
+   "tail": "C0516",
+   "head": "C0153",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X094",
+   "family": "U",
+   "tail": "C0428",
+   "head": "C0107",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X095",
+   "family": "U",
+   "tail": "C0429",
+   "head": "C0122",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X096",
+   "family": "U",
+   "tail": "C0588",
+   "head": "C0134",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X097",
+   "family": "U",
+   "tail": "C0463",
+   "head": "C0134",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X098",
+   "family": "U",
+   "tail": "C0554",
+   "head": "C0147",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X099",
+   "family": "U",
+   "tail": "C0567",
+   "head": "C0228",
+   "type": "DEPENDS_ON",
+   "tail_status": "SUPPORTED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  },
+  {
+   "relation": "X100",
+   "family": "U",
+   "tail": "C0547",
+   "head": "C0139",
+   "type": "SAME_ORIGIN_AS",
+   "tail_status": "ESTABLISHED",
+   "head_status": "ESTABLISHED",
+   "verdict": "CONSISTENT"
+  }
+ ],
+ "violations": [],
+ "asymmetries": [
+  {
+   "relation": "X012",
+   "tail": "C0277",
+   "tail_status": "ESTABLISHED",
+   "head": "C0194",
+   "head_status": "REFUTED",
+   "note": "01:65 meta-claim presupposes a current discrepancy; the check now yields MATCH"
+  },
+  {
+   "relation": "X024",
+   "tail": "C0340",
+   "tail_status": "ESTABLISHED",
+   "head": "C0161",
+   "head_status": "SUPPORTED",
+   "note": "03:19 \"no installed-host loader\" is the narrower (invocation) reading of 01:17; ESTABLISHED vs SUPPORTED-with-scope on the wider table cell"
+  },
+  {
+   "relation": "X025",
+   "tail": "C0436",
+   "tail_status": "ESTABLISHED",
+   "head": "C0161",
+   "head_status": "SUPPORTED",
+   "note": "SKILL:13 \"no registered Mechanical binding\" is the narrower wording of 01:17 \"no Mechanical SDK/host adapter\"; grade difference is wording-driven (registered binding vs any Mechanical code), both permitted wordings carry the collective-event.ts qualifier"
+  },
+  {
+   "relation": "X052",
+   "tail": "C0407",
+   "tail_status": "ESTABLISHED",
+   "head": "C0163",
+   "head_status": "SUPPORTED",
+   "note": "README:7 W11 row exists (ESTABLISHED); 01:17 source report of the row SUPPORTED because the row embedded detection sentence is stale"
+  },
+  {
+   "relation": "X053",
+   "tail": "C03124",
+   "tail_status": "ESTABLISHED",
+   "head": "C0163",
+   "head_status": "SUPPORTED",
+   "note": "04:8 W11 row exists; ESTABLISHED"
+  },
+  {
+   "relation": "X054",
+   "tail": "C0406",
+   "tail_status": "ESTABLISHED",
+   "head": "C0182",
+   "head_status": "SUPPORTED",
+   "note": "README:7 continues W11/VC-3; ESTABLISHED vs SUPPORTED on the planned-status report"
+  },
+  {
+   "relation": "X087",
+   "tail": "C0381",
+   "tail_status": "ESTABLISHED",
+   "head": "C0152",
+   "head_status": "SUPPORTED",
+   "note": "03:42 \"a previous standalone Mechanical rig receipt\" exists (ESTABLISHED by ls) vs 01:15 \"Recorded live producer receipts\" as a current-state grade (SUPPORTED; receipts dated 2026-10-15)"
+  }
+ ],
+ "regrades": [
+  {
+   "id": "C0399",
+   "status_before": "ESTABLISHED",
+   "status": "SUPPORTED",
+   "verdict_history_entry": "correction-20261106:SUPPORTED@b27829e6dfa7",
+   "evidence": [
+    "E0005",
+    "E0215",
+    "E0216",
+    "E0455",
+    "E0473",
+    "E0694",
+    "E0695",
+    "E0795"
+   ],
+   "note": "Cross-group cap (Phase 6): 03:50 conjoins three feedback topics that 01:59 reports separately. The \"tester timeout modes\" topic is the same lineage as C0264 (SUPPORTED: October-dated files located by filename, bodies not read, \"tester\" appears in 0 of 44 new-feedback bodies and \"deadline\" in 0 of the 6 November bodies), so the conjunction cannot exceed its weakest member. Topics \"long preps\" (C0266) and \"census edit conflicts\" (C0263) stay ESTABLISHED. No downstream row depends on C0399.",
+   "permitted_wording": "Evidence indicates that Pi new-feedback/ files (one flywheel-seat lineage, dated 2026-10-20 through 2026-11-03) report long preps, Vitest timeout reds and shared census edit conflicts; the timeout topic is located by filename in October files whose bodies were not read, and \"tester timeout modes\" is the program's paraphrase.",
+   "overclaims": false
+  }
+ ],
+ "intra_group_tail_exceeds_premise": [
+  {
+   "claim": "C0164",
+   "status": "ESTABLISHED",
+   "premise": "C0161",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises C0160 ESTABLISHED, C0161 SUPPORTED (narrowed), C0162 ESTABLISHED, C0163 SUPPORTED; conclusion independently warranted by C0160+C0162"
+  },
+  {
+   "claim": "C0164",
+   "status": "ESTABLISHED",
+   "premise": "C0163",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises C0160 ESTABLISHED, C0161 SUPPORTED (narrowed), C0162 ESTABLISHED, C0163 SUPPORTED; conclusion independently warranted by C0160+C0162"
+  },
+  {
+   "claim": "C0183",
+   "status": "ESTABLISHED",
+   "premise": "C0182",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises C0178-C0182 all ESTABLISHED/SUPPORTED; conclusion entailed by C0179 alone"
+  },
+  {
+   "claim": "C0232",
+   "status": "ESTABLISHED",
+   "premise": "C0229",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises C0228 ESTABLISHED, C0229 narrowed, C0230 ESTABLISHED, C0231 SUPPORTED, C0160 ESTABLISHED; conclusion entailed by C0160"
+  },
+  {
+   "claim": "C0232",
+   "status": "ESTABLISHED",
+   "premise": "C0231",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises C0228 ESTABLISHED, C0229 narrowed, C0230 ESTABLISHED, C0231 SUPPORTED, C0160 ESTABLISHED; conclusion entailed by C0160"
+  },
+  {
+   "claim": "C0252",
+   "status": "SUPPORTED",
+   "premise": "C0251",
+   "premise_status": "UNSUPPORTED",
+   "propagation_note": "premises C0247-C0250 ESTABLISHED, C0251 UNSUPPORTED -> prediction SUPPORTED only under reading A"
+  },
+  {
+   "claim": "C0263",
+   "status": "ESTABLISHED",
+   "premise": "C0103",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "inherits C0103 SUPPORTED"
+  },
+  {
+   "claim": "C0266",
+   "status": "ESTABLISHED",
+   "premise": "C0103",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "premises: C0103=SUPPORTED"
+  },
+  {
+   "claim": "C0277",
+   "status": "ESTABLISHED",
+   "premise": "C0189",
+   "premise_status": "REFUTED",
+   "propagation_note": "inherits C0189-C0192: C0191/C0192 ESTABLISHED, C0189/C0190 REFUTED at pin"
+  },
+  {
+   "claim": "C0277",
+   "status": "ESTABLISHED",
+   "premise": "C0190",
+   "premise_status": "REFUTED",
+   "propagation_note": "inherits C0189-C0192: C0191/C0192 ESTABLISHED, C0189/C0190 REFUTED at pin"
+  },
+  {
+   "claim": "C0444",
+   "status": "ESTABLISHED",
+   "premise": "C0443",
+   "premise_status": "SUPPORTED",
+   "propagation_note": "Necessary premises remain C0443=SUPPORTED. Independent direct evidence is retained; document repetition gives no upgrade."
+  }
+ ],
+ "claims_total": 490,
+ "status_counts": {
+  "SUPPORTED": 45,
+  "NON-EPISTEMIC": 263,
+  "ESTABLISHED": 162,
+  "REFUTED": 14,
+  "UNSUPPORTED": 2,
+  "UNDETERMINED": 2,
+  "PLAUSIBLE": 2
+ },
+ "kind_counts": {
+  "OBSERVATION": 186,
+  "DEFINITION": 15,
+  "NORMATIVE": 192,
+  "INFERENCE": 26,
+  "PROPOSAL": 56,
+  "SOURCE_REPORT": 9,
+  "FORMAL_DERIVATION": 3,
+  "HYPOTHESIS": 2,
+  "PREDICTION": 1
+ },
+ "by_group": {
+  "g01": {
+   "SUPPORTED": 25,
+   "NON-EPISTEMIC": 42,
+   "ESTABLISHED": 104,
+   "REFUTED": 7,
+   "UNSUPPORTED": 1
+  },
+  "g02": {
+   "ESTABLISHED": 11,
+   "NON-EPISTEMIC": 79,
+   "SUPPORTED": 7,
+   "REFUTED": 2
+  },
+  "g03": {
+   "NON-EPISTEMIC": 142,
+   "REFUTED": 5,
+   "ESTABLISHED": 47,
+   "SUPPORTED": 13,
+   "UNDETERMINED": 2,
+   "PLAUSIBLE": 2,
+   "UNSUPPORTED": 1
+  }
+ },
+ "by_doc": {
+  "01-audit-and-evidence.md|SUPPORTED": 25,
+  "01-audit-and-evidence.md|NON-EPISTEMIC": 42,
+  "01-audit-and-evidence.md|ESTABLISHED": 104,
+  "01-audit-and-evidence.md|REFUTED": 7,
+  "01-audit-and-evidence.md|UNSUPPORTED": 1,
+  "03-implementation-and-qa.md|NON-EPISTEMIC": 80,
+  "03-implementation-and-qa.md|REFUTED": 4,
+  "03-implementation-and-qa.md|ESTABLISHED": 20,
+  "03-implementation-and-qa.md|SUPPORTED": 6,
+  "03-implementation-and-qa.md|UNDETERMINED": 2,
+  "04-agent-handoff.md|ESTABLISHED": 8,
+  "03-implementation-and-qa.md|PLAUSIBLE": 2,
+  "README.md|NON-EPISTEMIC": 16,
+  "README.md|SUPPORTED": 3,
+  "README.md|ESTABLISHED": 4,
+  "SKILL.md|NON-EPISTEMIC": 22,
+  "SKILL.md|ESTABLISHED": 15,
+  "SKILL.md|REFUTED": 1,
+  "SKILL.md|SUPPORTED": 3,
+  "02-host-architecture-and-protocol.md|ESTABLISHED": 11,
+  "02-host-architecture-and-protocol.md|NON-EPISTEMIC": 79,
+  "02-host-architecture-and-protocol.md|SUPPORTED": 7,
+  "02-host-architecture-and-protocol.md|REFUTED": 2,
+  "04-agent-handoff.md|NON-EPISTEMIC": 24,
+  "04-agent-handoff.md|SUPPORTED": 1,
+  "04-agent-handoff.md|UNSUPPORTED": 1
+ },
+ "material": 392,
+ "overclaims": [
+  "C0114",
+  "C0119",
+  "C0139",
+  "C0152",
+  "C0161",
+  "C0163",
+  "C0167",
+  "C0169",
+  "C0182",
+  "C0184",
+  "C0189",
+  "C0190",
+  "C0193",
+  "C0194",
+  "C0195",
+  "C0196",
+  "C0218",
+  "C0229",
+  "C0231",
+  "C0248",
+  "C0251",
+  "C0252",
+  "C0261",
+  "C0264",
+  "C0265",
+  "C0277",
+  "C0305",
+  "C0312",
+  "C0315",
+  "C0320",
+  "C0321",
+  "C0336",
+  "C0338",
+  "C0346",
+  "C0353",
+  "C0356",
+  "C0368",
+  "C0402",
+  "C0409",
+  "C0422",
+  "C0437",
+  "C0443",
+  "C0446",
+  "C0521",
+  "C0530",
+  "C0534",
+  "C03106",
+  "C03141"
+ ],
+ "required_remediation_ids": [
+  "C0188",
+  "C0189",
+  "C0190",
+  "C0193",
+  "C0194",
+  "C0195",
+  "C0196",
+  "C0251",
+  "C0305",
+  "C0320",
+  "C0336",
+  "C0338",
+  "C0437",
+  "C0530",
+  "C0534",
+  "C03141"
+ ],
+ "remediation_candidate_ids": [
+  "C0114",
+  "C0119",
+  "C0139",
+  "C0152",
+  "C0161",
+  "C0163",
+  "C0167",
+  "C0169",
+  "C0182",
+  "C0184",
+  "C0188",
+  "C0189",
+  "C0190",
+  "C0193",
+  "C0194",
+  "C0195",
+  "C0196",
+  "C0218",
+  "C0229",
+  "C0231",
+  "C0248",
+  "C0251",
+  "C0252",
+  "C0261",
+  "C0264",
+  "C0265",
+  "C0277",
+  "C0305",
+  "C0312",
+  "C0315",
+  "C0320",
+  "C0321",
+  "C0336",
+  "C0338",
+  "C0346",
+  "C0353",
+  "C0356",
+  "C0368",
+  "C0402",
+  "C0409",
+  "C0422",
+  "C0437",
+  "C0443",
+  "C0446",
+  "C0521",
+  "C0530",
+  "C0534",
+  "C03106",
+  "C03141"
+ ],
+ "evidence_total": 868,
+ "evidence_by_type": {
+  "AUDITED_PROGRAM_DOC": 309,
+  "PROBE_OUTPUT": 58,
+  "REPO_DOC": 34,
+  "FEEDBACK_REPORT": 12,
+  "PRIMARY_CODE": 355,
+  "TEST_SOURCE": 55,
+  "OTHER": 4,
+  "HISTORICAL_RECEIPT": 5,
+  "COUNTERPART_PROGRAM_DOC": 28,
+  "PRIMARY_SOURCE_AT_BASELINE": 8
+ },
+ "evidence_by_pin": {
+  "doc@7c80c34346c2": 309,
+  "pi@b27829e6dfa7": 328,
+  "mw@f7c0a9431d6c": 222,
+  "mw@0c78e253": 9
+ },
+ "relations_total": 1494,
+ "relation_types": {
+  "SUPPORTS": 857,
+  "DERIVED_FROM": 66,
+  "DEPENDS_ON": 235,
+  "ASSUMES": 34,
+  "CONTRADICTS": 50,
+  "SAME_ORIGIN_AS": 86,
+  "QUOTED_FROM": 18,
+  "CONFLICTS_WITH": 140,
+  "SPECIALIZES": 4,
+  "GENERALIZES": 2,
+  "ENTAILS": 2
+ },
+ "lens_rows": 246,
+ "lens_ambiguous": [],
+ "missing_dossiers": [
+  "C0101",
+  "C0102",
+  "C0104",
+  "C0105",
+  "C0106",
+  "C0159",
+  "C0172",
+  "C0173",
+  "C0174",
+  "C0176",
+  "C0177",
+  "C0185",
+  "C0186",
+  "C0187",
+  "C0197",
+  "C0198",
+  "C0199",
+  "C0206",
+  "C0207",
+  "C0208",
+  "C0215",
+  "C0216",
+  "C0217",
+  "C0225",
+  "C0226",
+  "C0227",
+  "C0233",
+  "C0234",
+  "C0235",
+  "C0236",
+  "C0237",
+  "C0245",
+  "C0246",
+  "C0254",
+  "C0255",
+  "C0260",
+  "C0262",
+  "C0267",
+  "C0268",
+  "C0269",
+  "C0270",
+  "C0271",
+  "C0272",
+  "C0273",
+  "C0276",
+  "C0278",
+  "C0279",
+  "C0502",
+  "C0503",
+  "C0504",
+  "C0506",
+  "C0507",
+  "C0508",
+  "C0509",
+  "C0510",
+  "C0512",
+  "C0513",
+  "C0514",
+  "C0583",
+  "C0593",
+  "C0301",
+  "C0302",
+  "C0306",
+  "C0307",
+  "C0311",
+  "C0316",
+  "C0322",
+  "C0326",
+  "C0329",
+  "C0331",
+  "C0348",
+  "C0382",
+  "C0383",
+  "C0385",
+  "C0387",
+  "C0389",
+  "C0390",
+  "C0391",
+  "C0395",
+  "C03100",
+  "C03104",
+  "C03116",
+  "C03119",
+  "C03120",
+  "C03121",
+  "C03123",
+  "C03127",
+  "C03131",
+  "C03133",
+  "C03136",
+  "C0404",
+  "C0406",
+  "C0411",
+  "C0424",
+  "C0425",
+  "C0427",
+  "C0447",
+  "C0457"
+ ],
+ "missing_dossiers_material": [],
+ "lens_soft": [
+  [
+   "L-fidelity-021",
+   [
+    [
+     "C0219",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-fidelity-030",
+   [
+    [
+     "C0256",
+     "g01"
+    ],
+    [
+     "C0257",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-scope-010",
+   [
+    [
+     "C0275",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-scope-043",
+   [
+    [
+     "C0227",
+     "g02"
+    ]
+   ]
+  ],
+  [
+   "L-logic-015",
+   [
+    [
+     "C0229",
+     "g02"
+    ]
+   ]
+  ],
+  [
+   "L-logic-020",
+   [
+    [
+     "C0204",
+     "g01"
+    ],
+    [
+     "C0205",
+     "g01"
+    ],
+    [
+     "C0275",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-provenance-012",
+   [
+    [
+     "C0203",
+     "g01"
+    ],
+    [
+     "C0205",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-provenance-013",
+   [
+    [
+     "C0274",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-provenance-017",
+   [
+    [
+     "C0231",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-provenance-019",
+   [
+    [
+     "C0240",
+     "g02"
+    ]
+   ]
+  ],
+  [
+   "L-provenance-025",
+   [
+    [
+     "C0264",
+     "g01"
+    ],
+    [
+     "C0265",
+     "g01"
+    ],
+    [
+     "C0266",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-negative-015",
+   [
+    [
+     "C0205",
+     "g01"
+    ]
+   ]
+  ],
+  [
+   "L-negative-038",
+   [
+    [
+     "C0247",
+     "g01"
+    ]
+   ]
+  ]
+ ],
+ "rows_with_empty_support_epistemic": [],
+ "self_anchor_in_support": []
+}

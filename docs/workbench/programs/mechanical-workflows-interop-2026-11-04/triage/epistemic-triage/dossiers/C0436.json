@@ -1,0 +1,187 @@
+{
+  "id": "C0436",
+  "proposition": "The Pi source tree contains no registered Mechanical binding.",
+  "verbatim_artifact_wording": {
+    "text": "The source tree contains no registered Mechanical binding",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "13",
+      "quote": "The source tree contains no registered Mechanical binding"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents source tree",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 no Mechanical function-invocation binding is registered; a collective.event.v1 envelope boundary is present.",
+    "overclaims": false,
+    "rationale": "The claim says registered binding: envelope reader exists but no src module imports/registers it."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/collective-event.ts",
+        "lines": "2",
+        "quote": " * collective-event.ts — the one Pi boundary for MechanicalWorkflows' collective.event.v1 interchange envelope (wb-4ap.15,"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "The claim says registered binding: envelope reader exists but no src module imports/registers it.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/collective-event.ts",
+        "lines": "39",
+        "quote": "export const COLLECTIVE_EVENT_PROVIDER = \"mechanical-workflows\";"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "The claim says registered binding: envelope reader exists but no src module imports/registers it.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/execute-tool.ts",
+        "lines": "217-218",
+        "quote": "} else if (admission.definition.kind !== \"script\") {\n        refuse(\"unsupported-definition-kind\", \"only script definitions launch in this host\");"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "The claim says registered binding: envelope reader exists but no src module imports/registers it.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Interpreting binding as any Mechanical-specific source would be too broad; the envelope reader is counterevidence to that wider wording."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [
+      "absence claim: detector = grep for Mechanical registration in src/"
+    ],
+    "downstream_claims": [
+      "C0307",
+      "C0340",
+      "C03132"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Direct registration detector independently establishes registered-invocation absence; wider no-Mechanical-source interpretation is rejected."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The Pi source tree contains no registered Mechanical binding. Evidence path: DET_PI_MECH, DET_PI_CE, CE_2, CE_39, EXEC_217."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Interpreting binding as any Mechanical-specific source would be too broad; the envelope reader is counterevidence to that wider wording."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 no Mechanical function-invocation binding is registered; a collective.event.v1 envelope boundary is present."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "The claim says registered binding: envelope reader exists but no src module imports/registers it."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Interpreting binding as any Mechanical-specific source would be too broad; the envelope reader is counterevidence to that wider wording."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Interpreting binding as any Mechanical-specific source would be too broad; the envelope reader is counterevidence to that wider wording."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No Mechanical function host, SDK dependency or hosts/mechanical-functions.ts exists in pi src/ (package.json has no @mechanical dep; hosts/ holds only furnace-hosted.ts and local-detached.ts); the one MW-named module, collective-event.ts, is a read-only collective.event.v1 envelope boundary, not an invocation binding - so 'no Mechanical binding at all' should read 'no function/host binding'. MW development-rig depends on no Pi package.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Conclusion 'no first-class function dispatch / no Pi->Mechanical invocation' is over-determined: it follows from C0162/C0179 alone. Scope note: Pi DOES ship a Mechanical boundary (collective-event.ts, provider 'mechanical-workflows', present at baseline f67b6665) that admits MW collective.event.v1 envelopes; 'no Mechanical binding' is true only with the qualifier 'no invocation/host binding'.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "No Mechanical function-invocation binding, loader or host adapter is registered or imported at the pin; the absence is detected by grep over src/ for the MW package names, descriptor id and 'mechanical' (the only src hits are collective-event.ts, an unwired envelope reader, and a prose word in tool-description.ts).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "negative",
+      "finding": "'No Mechanical SDK or host adapter' / 'no registered Mechanical binding' hold for INVOCATION, but a Mechanical-specific typed boundary does exist in src (collective-event.ts, provider id 'mechanical-workflows', schema vendored from MW packages/coordination) with its own test file; the claims should be scoped to function invocation, not to any Mechanical code in the tree.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Both programs disclaim implementation and live acceptance in their own status lines; the 'no Pi->Mechanical run has occurred / not witnessed' propositions are absence claims whose only detectors are the two same-author documents plus the Pi grep (no Mechanical module in src/), and no receipt directory in either repo names a Pi-hosted Mechanical run.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The absence quantifier needs narrowing at the pin: Pi has no @mechanical dependency, no installed-host loader and no function binding, but src/workbench/collective-event.ts is a dedicated MechanicalWorkflows collective.event.v1 boundary (present since before baseline f67b6665) with an MW schema vendored into test fixtures, so an unqualified 'no Mechanical binding in the Pi source tree' overstates.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "collective-event.ts exists at baseline f67b6665 too (git cat-file -e), so this is a scope error in the claims' wording, not baseline-to-pin drift."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A registered Mechanical invocation provider would refute this statement.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_PI_MECH",
+      "summary": "src hits: src/workbench/collective-event.ts, src/workflow/tool-description.ts (prose word); package.json: none; loader/descriptor identifiers in src: 0 files",
+      "method": "grep -rli mechanical src; grep -n mechanical package.json; grep -rlnE 'installed-host|workflows-development|mechanical\\.development\\.develop|EntrypointDescriptor|invokePinnedDevelopment|invokeInstalledDevelopment' src"
+    },
+    {
+      "record": "DET_PI_CE",
+      "summary": "src: only src/workbench/collective-event.ts itself (not imported by src/index.ts, native-modules.ts or any host); test: workbench-collective-event.test.ts + census helpers",
+      "method": "grep -rln 'collective-event' src test"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

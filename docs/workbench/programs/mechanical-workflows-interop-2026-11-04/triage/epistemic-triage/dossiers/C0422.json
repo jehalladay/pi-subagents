@@ -1,0 +1,148 @@
+{
+  "id": "C0422",
+  "proposition": "No GitHub CI; Forge is the primary gate, with test evidence, negative controls and per-cut receipts.",
+  "verbatim_artifact_wording": {
+    "text": "No GitHub CI; use Forge for the primary gate, with test evidence, negative controls and per-cut receipts",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+      "lines": "24",
+      "quote": "No GitHub CI; use Forge for the primary gate, with test evidence, negative controls and per-cut receipts"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "both repos",
+    "temporal_context": "doc@7c80c34346c2",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: No GitHub CI; Forge is the primary gate, with test evidence, negative controls and per-cut receipts.",
+    "overclaims": true,
+    "rationale": "README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+        "lines": "24",
+        "quote": "No GitHub CI; use Forge for the primary gate, with test evidence, negative controls and per-cut receipts"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "AGENTS.md",
+        "lines": "167",
+        "quote": "- Use Forge for project build/test/package integration, do not add GitHub CI, and do not introduce Library as a dependency."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": ".github/workflows/ci.yml",
+        "lines": "1-6",
+        "quote": "name: CI\n\non:\n  push:\n    branches: [master]\n  pull_request:"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0394"
+    ],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. No empirical premise named.. README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, No GitHub CI; Forge is the primary gate, with test evidence, negative controls and per-cut receipts. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: No GitHub CI; Forge is the primary gate, with test evidence, negative controls and per-cut receipts."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "README no GitHub CI can mean do not add/use it for this program; literal repository-wide absence conflicts with existing Pi ci.yml. Preserve this semantic rival."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "NON-EPISTEMIC norms/definitions: no logical defect found; each is checked only for consistency with the mechanisms verified above (grant names, outcome variants, kinds) and none contradicts them. Caveat: C0323's 'any unauthorized late SDK start' inherits C0353's over-broad 'cancel' scope.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

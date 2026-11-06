@@ -1,0 +1,179 @@
+{
+  "id": "C0320",
+  "proposition": "MechanicalWorkflows has an explicitly selectable `git-census` source-scope profile.",
+  "verbatim_artifact_wording": {
+    "text": "explicit `git-census` profile",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "10",
+      "quote": "explicit `git-census` profile"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows source-scope services",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "REFUTED",
+    "permitted_wording": "The pin implements developLive tracked-file census, not a shipped selectable git-census profile identifier.",
+    "overclaims": true,
+    "rationale": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "20",
+        "quote": "readonly discovery: \"git-tracked-files\";"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "30",
+        "quote": "readonly contextMode?: \"plain\" | \"rf\";"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "78-81",
+        "quote": "// Complete only for Git's tracked-file census, not task-specific semantic relevance.\n        coverage: \"complete\",\n        files,\n        evidence: { system: \"git\", kind: \"tracked-file-census\", id: revision },"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/02-binding-and-packaging-contract.md",
+        "lines": "25",
+        "quote": "  mode: \"git-census\" | \"native-task-scope\";"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "A caller can select a different composition root, but not the asserted named profile."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0443"
+    ],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0316"
+    ],
+    "propagation": "Necessary premises remain C0443=SUPPORTED. Current primary counterevidence refutes this proposition, not merely its derivation; historical baseline truth is preserved."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is MechanicalWorkflows has an explicitly selectable `git-census` source-scope profile. Evidence path: M_LD_20, M_LD_30, M_LD_78, DET_MW_GC, M_PR_02_25."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "A caller can select a different composition root, but not the asserted named profile."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The pin implements developLive tracked-file census, not a shipped selectable git-census profile identifier."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "No source selector or identifier exists; proposed profile vocabulary was promoted to observation."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "A caller can select a different composition root, but not the asserted named profile."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "A caller can select a different composition root, but not the asserted named profile."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No 'git-census' profile identifier or selector exists in MW source or tests; developLive's discover unconditionally uses a git ls-files tracked-file census (evidence kind 'tracked-file-census'), so it is the fixed mode, not an 'explicitly selectable profile'. The name appears only in program docs.",
+      "effect_not_adopted_as_verdict": "CONTRADICTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Semantic drift proposal->observation: 'git-census' is a profile/mode name that exists only in the two program documents; no code at either pin names it. The mechanism it labels (git ls-files census in developLive, discovery:'git-tracked-files') exists, but it is a separate entry root from the HX/RF composition root (live-composition.ts), not an 'explicitly selectable profile'. C0443's 'real' is true of the mechanism, false of the profile.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "proposed label (02) -> 'explicit profile' / 'current mode is git-census' (03, SKILL)"
+    },
+    {
+      "lens": "negative",
+      "finding": "No identifier 'git-census' or any selectable 'profile' exists in MW rig source; the existing mode is developLive's fixed `discovery: \"git-tracked-files\"` (receipt code GIT_TRACKED_FILE_CENSUS_NOT_HX_TASK_SCOPE), so 'explicitly selectable git-census profile' (C0320, kind OBSERVATION) imports the program's PROPOSED label (C0255) into an observation; the mode is real, the profile name and selectability are not.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The token 'git-census' names a PROPOSED profile in Pi 02 (and the MW program README) and appears in no MechanicalWorkflows .ts file at the pin; the existing behaviour is developLive's tracked-file census (evidence kind 'tracked-file-census', docs/14 line 10), so 'explicitly selectable git-census profile' (C0320) is the program's own vocabulary read back as an observation.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "NARROWS on 'explicitly selectable profile': the Git tracked-file census journey is real and labeled honestly in comments and evidence ids, but 'git-census' is not a shipped selectable identifier at the pin - LiveDevelopmentResult hardcodes discovery:'git-tracked-files' and the only selectable axis is contextMode 'plain'|'rf'; the profile names git-census/native-task-scope exist only as the program's proposals.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A profile selector implementation plus an external invocation would refute this negative result.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_MW_GC",
+      "summary": "hits only in prose: .agents/skills/mechanical-pi-host/SKILL.md:26, README.md:47, AGENTS.md:20, docs/programs/pi-workbench-interop-2026-11-04/{02:25,02:41,03:11,04:53,README:19}; 0 hits in any .ts or .json",
+      "method": "grep -rniE 'git-census|git_census|gitCensus' . --exclude-dir=node_modules --exclude-dir=dist"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

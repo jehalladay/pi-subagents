@@ -1,0 +1,154 @@
+{
+  "id": "C0364",
+  "proposition": "Mechanical `develop` has a discovery phase whose scope completeness gates a subsequent implement phase.",
+  "verbatim_artifact_wording": {
+    "text": "no implement on incomplete scope",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "31",
+      "quote": "no implement on incomplete scope"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows develop.ts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c develop returns needs_evidence before compileContext/implement whenever discovered coverage is not complete.",
+    "overclaims": false,
+    "rationale": "Early return dominates later context/implementation stages."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/develop.ts",
+        "lines": "32",
+        "quote": "const scope = await services.discover(request);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Early return dominates later context/implementation stages.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/develop.ts",
+        "lines": "36-37",
+        "quote": "if (scope.coverage !== \"complete\") {\n    return { kind: \"needs_evidence\", scope, reason: \"SCOPE_INCOMPLETE\" };"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Early return dominates later context/implementation stages.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "packages/development/src/develop.ts",
+        "lines": "40",
+        "quote": "const context = await services.compileContext(scope, request);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Early return dominates later context/implementation stages.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Discovery basis mismatch also returns indeterminate; this is not a runtime proof of every provider."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0363"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Mechanical `develop` has a discovery phase whose scope completeness gates a subsequent implement phase. Evidence path: M_DEV_32, M_DEV_36, M_DEV_40."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Discovery basis mismatch also returns indeterminate; this is not a runtime proof of every provider."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c develop returns needs_evidence before compileContext/implement whenever discovered coverage is not complete."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Early return dominates later context/implementation stages."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Discovery basis mismatch also returns indeterminate; this is not a runtime proof of every provider."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Discovery basis mismatch also returns indeterminate; this is not a runtime proof of every provider."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "develop(services, request) is exported with that signature (develop.ts:21-24); it returns needs_evidence/SCOPE_INCOMPLETE when coverage!=='complete' (36-37); DevelopmentOutcome has exactly four variants (contracts.ts:54-58) and DevelopmentServices exactly discover/compileContext/implement/verify (47-52).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'exactly four' quantifiers hold at the mw pin: DevelopmentOutcome is a union of exactly four variants (verified_candidate, verification_failed, needs_evidence, indeterminate), the descriptor binds exactly the four callbacks discover/compileContext/implement/verify under id mechanical.development.develop.v1, develop(services,request) exists, and incomplete coverage returns needs_evidence/SCOPE_INCOMPLETE before implement.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A changed control-flow path that implements on incomplete coverage would refute the guard.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

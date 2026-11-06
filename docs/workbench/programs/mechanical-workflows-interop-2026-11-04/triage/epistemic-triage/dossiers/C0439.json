@@ -1,0 +1,166 @@
+{
+  "id": "C0439",
+  "proposition": "Pi's registered detached Claude request sends `grants:[]`.",
+  "verbatim_artifact_wording": {
+    "text": "Pi's registered detached Claude request sends `grants:[]`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "15",
+      "quote": "Pi's registered detached Claude request sends `grants:[]`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents detached Claude registration",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 the registered detached Claude request literal contains grants: [].",
+    "overclaims": false,
+    "rationale": "Both registered detached request sites carry the empty literal."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2627-2628",
+        "quote": "cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? \"claude\" : \"deterministic\",\n      providers: [], grants: [], permissions: [\"inspect\", \"execute\"], sourceFiles: [launch.source.sourceRef],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Both registered detached request sites carry the empty literal.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2881",
+        "quote": "backend:params.backend ?? \"deterministic\",providers:[],grants:[],permissions:[\"inspect\",\"execute\"],sourceFiles:[source.sourceRef],"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Both registered detached request sites carry the empty literal.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/index.ts",
+        "lines": "2640",
+        "quote": "if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Both registered detached request sites carry the empty literal.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "This does not describe arbitrary external callers of the local host."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0441"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi's registered detached Claude request sends `grants:[]`. Evidence path: IDX_2627, IDX_2881, IDX_2640."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "This does not describe arbitrary external callers of the local host."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 the registered detached Claude request literal contains grants: []."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Both registered detached request sites carry the empty literal."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "This does not describe arbitrary external callers of the local host."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "This does not describe arbitrary external callers of the local host."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "launchDetachedWorkflow in index.ts spans 2621-2636; backend:\"claude\" (when workflowAgentBackend===\"claude\", the only condition under which the workbench tools register) is at 2627 and grants: [] at 2628 - inside the cited 2621-2630. A second site, the workflow_detached tool at 2880-2881, also sends grants:[] with an optional claude backend.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "All premises re-located at the pin unchanged: index.ts 2621-2630 sends backend 'claude' with grants:[]; local-detached.ts 430 requires claude:invoke and 442 requires exact claude:tool:<name> grants.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "lines unchanged baseline->pin"
+    },
+    {
+      "lens": "negative",
+      "finding": "index.ts launchDetachedWorkflow sends grants: [] with backend 'claude' whenever workflowAgentBackend is claude (lines 2623-2628) and local-detached.ts line 430 throws on a claude backend without 'claude:invoke'; the cited ranges 2621-2630 / 430-442 re-locate exactly at the pin.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: index.ts 2627-2628 sends backend claude with grants: [] and local-detached.ts 430/442 demands claude:invoke and exact claude:tool grants; the P1 detached-admission contradiction is established by primary source, independent of any document.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The registered detached launch still sends backend 'claude' with grants:[] at the pin, at the cited location (function starts line 2621, grants literal line 2628), unchanged from baseline.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "identical text at baseline f67b6665 lines 2621-2631; no drift."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A changed request producer would refute the literal observation.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

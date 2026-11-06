@@ -1,0 +1,154 @@
+{
+  "id": "C0386",
+  "proposition": "pi-subagents tests contain a shared census header and a giant assertion table.",
+  "verbatim_artifact_wording": {
+    "text": "a shared census header or giant assertion table",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "46",
+      "quote": "a shared census header or giant assertion table"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents test/",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "Evidence indicates Pi has shared census infrastructure and large frozen assertion/pin tables at pi@b27829e6dfa7.",
+    "overclaims": false,
+    "rationale": "Shared helper and frozen table sources support the qualitative description; giant/shared-header wording is not a precise file identity."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/helpers/census.ts",
+        "lines": "2",
+        "quote": " * wb-u62: the shared title-census FLOOR helper (owner program ruling 2026-10-16 12:22Z; one helper,"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Shared helper and frozen table sources support the qualitative description; giant/shared-header wording is not a precise file identity.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/workbench-fault-injection-census.census.ts",
+        "lines": "13",
+        "quote": " * binding: a frozen table that ties each location to its truth label, to the cases that prove it, or to an OPEN row"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Shared helper and frozen table sources support the qualitative description; giant/shared-header wording is not a precise file identity.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "new-feedback/2026-11-03-CORROBORATION-n-3-sibling-census-cuts-conflicted-at-3-of-48-landings-in-24-h-the-census-file-region-a-header-comment-in-3-of-3-3-known-dirty-refusals-3-landing-loop-stops.md",
+        "lines": "7",
+        "quote": "**Scope:** feedback about pi-subagents' census test-infra shape — one `test/workbench-FAMILY-census.test.ts` per family whose `/** ... */` header comment narrates each cut's claims"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Shared helper and frozen table sources support the qualitative description; giant/shared-header wording is not a precise file identity.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "No exact unique giant assertion table is named; family headers are many, not necessarily one universal header."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0385"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is pi-subagents tests contain a shared census header and a giant assertion table. Evidence path: CENSUS_SHARED, CENSUS_TABLE, NF_1103_7."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "No exact unique giant assertion table is named; family headers are many, not necessarily one universal header."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Evidence indicates Pi has shared census infrastructure and large frozen assertion/pin tables at pi@b27829e6dfa7."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Shared helper and frozen table sources support the qualitative description; giant/shared-header wording is not a precise file identity."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "No exact unique giant assertion table is named; family headers are many, not necessarily one universal header."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No exact unique giant assertion table is named; family headers are many, not necessarily one universal header."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Name exact target table/header and measured edit-contact map to establish precise scope.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

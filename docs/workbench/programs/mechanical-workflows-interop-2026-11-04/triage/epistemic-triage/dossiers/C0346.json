@@ -1,0 +1,228 @@
+{
+  "id": "C0346",
+  "proposition": "Pi `cleanupWorktree` loses (deletes) worktrees that contain modifications.",
+  "verbatim_artifact_wording": {
+    "text": "Fix loss of modified worktrees in `cleanupWorktree`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "21",
+      "quote": "Fix loss of modified worktrees in `cleanupWorktree`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents cleanupWorktree",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "Evidence indicates cleanupWorktree can force-remove modified worktrees after a preservation error and report hasChanges:false at pi@b27829e6dfa7.",
+    "overclaims": true,
+    "rationale": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "137",
+        "quote": "const status = await git(pi, worktree.path, [\"status\", \"--porcelain\"], 10000);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "145",
+        "quote": "await git(pi, worktree.path, [\"commit\", \"--no-verify\", \"-m\", commitMsg], 10000);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "177-181",
+        "quote": "} catch {\n    // Best effort cleanup on error\n    try { await removeWorktree(pi, cwd, worktree.path); } catch { /* ignore */ }\n    return { hasChanges: false };\n  }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "189",
+        "quote": "await git(pi, cwd, [\"worktree\", \"remove\", \"--force\", worktreePath], 10000);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/worktree.test.ts",
+        "lines": "432",
+        "quote": "it(\"reports no changes when the preservation commit fails\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/worktree.test.ts",
+        "lines": "222",
+        "quote": "it(\"commits changes and creates branch when changes exist\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/worktree.test.ts",
+        "lines": "449",
+        "quote": "it(\"creates the branch BEFORE removing the worktree, so a removal failure cannot lose commits\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "Normal modified-worktree cleanup preserves commits; unconditional loss is false."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0349"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: 'Fix loss' presupposes the loss occurs"
+    ],
+    "downstream_claims": [
+      "C0347",
+      "C0366",
+      "C0452"
+    ],
+    "propagation": "Necessary premises remain C0349=ESTABLISHED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi `cleanupWorktree` loses (deletes) worktrees that contain modifications. Evidence path: WT_137, WT_145, WT_177, WT_189, WTT_432, WTT_222, WTT_449."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Normal modified-worktree cleanup preserves commits; unconditional loss is false."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Evidence indicates cleanupWorktree can force-remove modified worktrees after a preservation error and report hasChanges:false at pi@b27829e6dfa7."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Catch path supports conditional loss; normal path commits and branches before removal. No actual loss reproduced here."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Normal modified-worktree cleanup preserves commits; unconditional loss is false."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Normal modified-worktree cleanup preserves commits; unconditional loss is false."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "cleanupWorktree spans exactly lines 125-181; it stages+commits (139-145), removes the worktree (170), and the outer catch (177-181) calls removeWorktree (git worktree remove --force, line 188) then returns {hasChanges:false}.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Drift may->does: 01 says preservation 'may discard uncommitted changes ... on preservation errors'; 03 unblocker 4 and the SKILL restate it as unconditional 'loss of modified worktrees in cleanupWorktree'. At the pin the happy path preserves (commit + branch before removal, asserted by the ordering test), so the unconditional reading is false; only the failure branch loses.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "01 'may discard ... on preservation errors' -> 03/SKILL 'loss of modified worktrees' (conditional dropped)"
+    },
+    {
+      "lens": "negative",
+      "finding": "The test file itself documents the defect as known and locked in ('The agent's work is lost either way'; the catch 'can DESTROY user work while reporting success-shaped output'), which supports the inference but also shows the current tests are characterization tests of the lossy behaviour, not regression guards for preservation.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "negative",
+      "finding": "'cleanupWorktree loses worktrees that contain modifications' holds only on the failure path (commit/branch/git error); on the normal path modified worktrees are committed and preserved on a branch (tests 'commits changes and creates branch when changes exist', 'creates the branch BEFORE removing the worktree'), so the quantifier must be scoped to preservation failure.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "The MW program's 'External Pi defects' section is a QUOTED_FROM descendant of the Pi 01 audit ('Detailed code-level evidence is in the paired Pi audit'), so the MW document adds no independent warrant to the P0 worktree, P1 detached-grant, cancellation-race or replay-basis findings; their warrant rests solely on the Pi source at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: worktree.ts outer catch (178-181) force-removes and returns hasChanges:false, and test/worktree.test.ts 413-447 asserts exactly that outcome with the comment 'The agent's work is lost either way' - a pre-existing (2026-10-17) in-repo witness to the P0 reading that predates the program.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "src/worktree.ts last changed 2026-08-25 (221df023); unchanged since"
+    },
+    {
+      "lens": "scope",
+      "finding": "The worktree P0 is temporally valid at the pin: cleanupWorktree (lines 125-181, exactly as cited) commits then removes, and its outer catch force-removes the worktree and returns hasChanges:false, so the preservation-failure path still discards work and reports clean.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "unchanged between baseline and pin; cited line range 125-181 exact at the pin."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A parked real Git commit-failure reproducer with before/after file custody would establish realized loss; a non-destructive catch repair would defeat the risk.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

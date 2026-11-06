@@ -1,0 +1,158 @@
+{
+  "id": "C0405",
+  "proposition": "The MechanicalWorkflows half of the program is at `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`.",
+  "verbatim_artifact_wording": {
+    "text": "The MechanicalWorkflows half is under `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+      "lines": "5",
+      "quote": "The MechanicalWorkflows half is under `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows docs",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c the paired program is docs/programs/pi-workbench-interop-2026-11-04.",
+    "overclaims": false,
+    "rationale": "Counterpart file and commit directly establish location; absent at old baseline."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/README.md",
+        "lines": "3",
+        "quote": "**Status:** DESIGN/AUDIT PROGRAM ONLY; no implementation or new live cross-repository test in this commit."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Counterpart file and commit directly establish location; absent at old baseline.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "git log -1 --format=%h %ci %s bf8fbb93",
+        "lines": "-",
+        "quote": "bf8fbb93 2026-11-04 22:30:58 -0800 docs(interop): audit MechanicalWorkflows and plan Pi function-host integration"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Counterpart file and commit directly establish location; absent at old baseline.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+        "lines": "5",
+        "quote": "**Scope:** the Pi host half of one coordinated cross-repository program. The MechanicalWorkflows half is under `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Counterpart file and commit directly establish location; absent at old baseline.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Paired document is same-author lineage, not independent validation."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The MechanicalWorkflows half of the program is at `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`. Evidence path: M_PR_README_3, M_GIT_BF8F, DRM_5."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Paired document is same-author lineage, not independent validation."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c the paired program is docs/programs/pi-workbench-interop-2026-11-04."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Counterpart file and commit directly establish location; absent at old baseline."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Paired document is same-author lineage, not independent validation."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Paired document is same-author lineage, not independent validation."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The Pi program (pi 7c80c34, 2026-11-04T22:25:31-08:00) and the MW counterpart program (mw bf8fbb93, 2026-11-04T22:30:58-08:00) were written by the same author five minutes apart from the same audit baselines; they are one evidentiary lineage, not two witnesses.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "MW program commit bf8fbb93 postdates the MW baseline 0c78e253; the program is on the pin but not at its own stated baseline"
+    },
+    {
+      "lens": "provenance",
+      "finding": "The MW matching skill (.agents/skills/mechanical-pi-host/SKILL.md) and the MW program directory exist at the pin but were created in bf8fbb93 AFTER the MW baseline 0c78e253 (MW 01 line 62: 'Mechanical had no existing .agents/skills/ task skill at this pinned head'); docs/04, docs/05, development.v1.json, entrypoint-host.ts, installed-host.ts, develop.ts, contracts.ts all exist at the pin; docs/05 line 69 was rewritten by 1f29daa7 to past tense and is a doc-cites-program-cites-code chain.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "skill and program absent at 0c78e253, present at pin; docs/05 wording changed by 1f29daa7"
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "File removal changes inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

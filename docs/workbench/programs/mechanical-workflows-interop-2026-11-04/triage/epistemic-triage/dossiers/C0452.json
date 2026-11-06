@@ -1,0 +1,160 @@
+{
+  "id": "C0452",
+  "proposition": "Failure to preserve a dirty worktree is a P0 defect.",
+  "verbatim_artifact_wording": {
+    "text": "Failure to preserve a dirty worktree is P0",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "24",
+      "quote": "Failure to preserve a dirty worktree is P0"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "severity assignment",
+    "temporal_context": "doc@7c80c34346c2",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: Failure to preserve a dirty worktree is a P0 defect.",
+    "overclaims": false,
+    "rationale": "P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+        "lines": "24",
+        "quote": "Failure to preserve a dirty worktree is P0"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "177-181",
+        "quote": "} catch {\n    // Best effort cleanup on error\n    try { await removeWorktree(pi, cwd, worktree.path); } catch { /* ignore */ }\n    return { hasChanges: false };\n  }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/worktree.test.ts",
+        "lines": "432",
+        "quote": "it(\"reports no changes when the preservation commit fails\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0346"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0346",
+        "status": "SUPPORTED",
+        "wording": "Evidence indicates cleanupWorktree can force-remove modified worktrees after a preservation error and report hasChanges:false at pi@b27829e6dfa7."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0346=SUPPORTED. P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, Failure to preserve a dirty worktree is a P0 defect. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: Failure to preserve a dirty worktree is a P0 defect."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "P0 is a normative severity decision justified by conditional preservation-loss risk, not an observed universal loss."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Drift may->does: 01 says preservation 'may discard uncommitted changes ... on preservation errors'; 03 unblocker 4 and the SKILL restate it as unconditional 'loss of modified worktrees in cleanupWorktree'. At the pin the happy path preserves (commit + branch before removal, asserted by the ordering test), so the unconditional reading is false; only the failure branch loses.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "01 'may discard ... on preservation errors' -> 03/SKILL 'loss of modified worktrees' (conditional dropped)"
+    },
+    {
+      "lens": "negative",
+      "finding": "'cleanupWorktree loses worktrees that contain modifications' holds only on the failure path (commit/branch/git error); on the normal path modified worktrees are committed and preserved on a branch (tests 'commits changes and creates branch when changes exist', 'creates the branch BEFORE removing the worktree'), so the quantifier must be scoped to preservation failure.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: worktree.ts outer catch (178-181) force-removes and returns hasChanges:false, and test/worktree.test.ts 413-447 asserts exactly that outcome with the comment 'The agent's work is lost either way' - a pre-existing (2026-10-17) in-repo witness to the P0 reading that predates the program.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "src/worktree.ts last changed 2026-08-25 (221df023); unchanged since"
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

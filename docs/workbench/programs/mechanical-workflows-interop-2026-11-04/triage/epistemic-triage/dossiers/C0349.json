@@ -1,0 +1,155 @@
+{
+  "id": "C0349",
+  "proposition": "Pi has a worktree-isolation facility with a `cleanupWorktree` function.",
+  "verbatim_artifact_wording": {
+    "text": "Pi worktree isolation",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "21",
+      "quote": "Pi worktree isolation"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents source",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At pi@b27829e6dfa7 src/worktree.ts implements worktree isolation cleanupWorktree.",
+    "overclaims": false,
+    "rationale": "Direct named function and cleanup code exist."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "125-130",
+        "quote": "export async function cleanupWorktree(\n  pi: ExtensionAPI,\n  cwd: string,\n  worktree: WorktreeInfo,\n  agentDescription: string,\n): Promise<WorktreeCleanupResult> {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct named function and cleanup code exist.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "169-170",
+        "quote": "// Remove the worktree (branch persists in main repo)\n    await removeWorktree(pi, cwd, worktree.path);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Direct named function and cleanup code exist.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Existence says nothing about safe preservation on errors."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0346"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Pi has a worktree-isolation facility with a `cleanupWorktree` function. Evidence path: WT_125, WT_170."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Existence says nothing about safe preservation on errors."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At pi@b27829e6dfa7 src/worktree.ts implements worktree isolation cleanupWorktree."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Direct named function and cleanup code exist."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Existence says nothing about safe preservation on errors."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Existence says nothing about safe preservation on errors."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "cleanupWorktree spans exactly lines 125-181; it stages+commits (139-145), removes the worktree (170), and the outer catch (177-181) calls removeWorktree (git worktree remove --force, line 188) then returns {hasChanges:false}.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "pi src/ unchanged f67b6665->b27829e6 (git diff --stat f67b6665 b27829e6 -- src/ is empty; the 375 intervening commits touch tests/docs/ledger/feedback only)"
+    },
+    {
+      "lens": "logic",
+      "finding": "Existence premises for the detached and worktree chains hold at the pin: the grant validator (local-detached.ts 430) and cleanupWorktree (worktree.ts 125) exist; C0374 (PID + socket ownership) is consistent with the receipt fields the pi-detached test reads (receipt.pid, security 'same-machine-os-dac-only').",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "cleanupWorktree spans lines 125-181 at the pin; the outer catch force-removes (git worktree remove --force, prune fallback) and returns { hasChanges: false } with no other field and no log, exactly as cited.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none: git rev-parse f67b6665:<path> == b27829e6:<path> for claude-host.ts, runtime.ts, worktree.ts, index.ts, local-detached.ts, execute-tool.ts, execute.ts, native-modules.ts, furnace-hosted.ts, feature-matrix.md, worktree.test.ts, cancel-faults test (git diff f67b6665..b27829e6 -- src = empty; 375 commits touch only test/, docs/, .beads, new-feedback)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: worktree.ts outer catch (178-181) force-removes and returns hasChanges:false, and test/worktree.test.ts 413-447 asserts exactly that outcome with the comment 'The agent's work is lost either way' - a pre-existing (2026-10-17) in-repo witness to the P0 reading that predates the program.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "src/worktree.ts last changed 2026-08-25 (221df023); unchanged since"
+    },
+    {
+      "lens": "scope",
+      "finding": "The worktree P0 is temporally valid at the pin: cleanupWorktree (lines 125-181, exactly as cited) commits then removes, and its outer catch force-removes the worktree and returns hasChanges:false, so the preservation-failure path still discards work and reports clean.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "unchanged between baseline and pin; cited line range 125-181 exact at the pin."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Removing the function/facility would refute the inventory.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,156 @@
+{
+  "id": "C03126",
+  "proposition": "pi-subagents has a `new-feedback/` directory and an authoritative Beads workspace with ready/blocked status.",
+  "verbatim_artifact_wording": {
+    "text": "Inspect Pi `new-feedback/`, outstanding owner/flywheel branches, Beads ready/blocked status from its authoritative workspace",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md",
+      "lines": "9",
+      "quote": "Inspect Pi `new-feedback/`, outstanding owner/flywheel branches, Beads ready/blocked status from its authoritative workspace"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "pi-subagents",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "Evidence indicates Pi uses an authoritative local Beads workspace for ready/blocked status and ships new-feedback; the pin contains only a passive Beads export.",
+    "overclaims": false,
+    "rationale": "AGENTS describes authoritative Dolt; pin/export existence cannot establish current live ready/blocked state."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "AGENTS.md",
+        "lines": "191",
+        "quote": "**Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "AGENTS describes authoritative Dolt; pin/export existence cannot establish current live ready/blocked state.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "new-feedback/2026-11-01-CORROBORATION-n-3-74-of-77-refusals-in-24-h-name-r514-r515-r668-at-192-198-prep-seconds-19-exits-and-28-caps-froze-the-class-and-0-of-5-contributor-doc-paths-name-it.md",
+        "lines": "3",
+        "quote": "**From:** flywheel seat (Pi-Subagents Orchestration Engineer, a8ddce77) — the same seat as the corroborated file, a later cycle:"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "AGENTS describes authoritative Dolt; pin/export existence cannot establish current live ready/blocked state.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "No authoritative workspace queried under read-only restrictions; .beads/issues.jsonl is explicitly passive."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0399",
+      "C03127"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is pi-subagents has a `new-feedback/` directory and an authoritative Beads workspace with ready/blocked status. Evidence path: BD_AUTH, BEADS_04S, NF_1101_3."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "No authoritative workspace queried under read-only restrictions; .beads/issues.jsonl is explicitly passive."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Evidence indicates Pi uses an authoritative local Beads workspace for ready/blocked status and ships new-feedback; the pin contains only a passive Beads export."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "AGENTS describes authoritative Dolt; pin/export existence cannot establish current live ready/blocked state."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "No authoritative workspace queried under read-only restrictions; .beads/issues.jsonl is explicitly passive."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "No authoritative workspace queried under read-only restrictions; .beads/issues.jsonl is explicitly passive."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "No drift on any Pi code citation: src/ is byte-identical across the program baseline f67b6665, the program commit 7c80c34 (whose parent is f67b6665) and the pin b27829e6 (git diff f67b6665..b27829e6 -- src is empty; the 375 intervening commits touch docs, ledger, .beads and test fixtures only), so every Pi file:line cited by the program re-locates unchanged.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": "none for Pi src; the program's Pi baseline equals the program commit's parent"
+    },
+    {
+      "lens": "provenance",
+      "finding": "All 44 new-feedback/ files at the pin come from one flywheel seat lineage (Pi-Subagents Orchestration Engineer, job a8ddce77); the six files dated 2026-11-01..03 each declare themselves 'the same seat as the corroborated file, a later cycle' and one says 'no independent hit is claimed', so their n=3/n=4 corroboration counts are one lineage and not independent witnesses.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "The repo-inventory scope claims all re-locate at the pins: pi qa/workbench/ and forge.toml and the npm 'check' script with Vitest; pi docs/workbench/TRACEABILITY.md; pi new-feedback/ and .beads/issues.jsonl; pi src/workbench/{execute-tool,execute,native-modules}.ts and src/index.ts; MW apps/development-rig(+test), packages/development, docs/04+05, root forge.toml, docs/programs/pi-workbench-interop-2026-11-04, and the .agents/skills/mechanical-pi-host skill.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Read-only authoritative workspace snapshot with timestamp and ready/blocked readback settles live state.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [
+    {
+      "record": "BEADS_04S",
+      "summary": "\"id\":\"wb-04s\",\"title\":\"W11: MechanicalWorkflows binding host\"",
+      "method": ".beads/issues.jsonl"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

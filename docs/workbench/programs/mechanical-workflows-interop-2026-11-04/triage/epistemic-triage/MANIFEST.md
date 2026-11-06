@@ -1,0 +1,21 @@
+# MANIFEST — epistemic adversarial triage of the Pi ↔ MechanicalWorkflows interop design program
+
+- Audit started: 2026-11-06T00:38:37Z (owner session, Pi Workflow Workbench program)
+- Artifact under audit (DOCUMENT PIN): pi-subagents `docs/workbench/programs/mechanical-workflows-interop-2026-11-04/{README,01-audit-and-evidence,02-host-architecture-and-protocol,03-implementation-and-qa,04-agent-handoff}.md` + `.agents/skills/pi-mechanical-interop/SKILL.md` at commit `7c80c34346c2e46b0f0201c3bf916274159c7cf7` (deposited 2026-11-05T06:25:31Z on origin/master; author James Halladay). Total 31,728 bytes (5 docs).
+- Counterpart program (read as a SOURCE, not audited here): MechanicalWorkflows `docs/programs/pi-workbench-interop-2026-11-04/` at MW main `f7c0a9431d6c`.
+- ENVIRONMENT PIN (what the claims describe): pi-subagents `b27829e6dfa7d2c39e493095d963117d2d078d61` (origin/master = merge of the workbench trunk d7b5e894, landings through 996, + the program commit); MechanicalWorkflows origin/main `f7c0a9431d6c` (the program's own audit baseline 0c78e253 is an ancestor). The program's stated Pi baseline f67b6665 is 370 trunk commits behind the environment pin: every code citation is checked at the PIN and drift is recorded, never assumed.
+- Read-only pin worktrees: `/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/OrchestrationEngineer/scratch/mw-interop-triage/pins/pi-b27829e6`, `/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/OrchestrationEngineer/scratch/mw-interop-triage/pins/mw-main` (detached; nothing is written there).
+- Question the artifact purports to answer: what exists today in both systems for Pi-hosted invocation of MechanicalWorkflows functions, which defects block it (P0/P1/P2), and what architecture/protocol/implementation slices (PI-0..PI-7) with which QA gates should implement it.
+- Available evidence: both repos at the pins (source, tests, docs, feature-matrix, new-feedback/), the bead store (.beads/issues.jsonl at the pin), the flywheel ledger (read-only; NOT a source of synthetic live evidence per the program's own rule).
+- Known unavailable evidence: no live Claude/Forge/Furnace/HX/RF calls run for this audit; no Forge gate run; installed SDK versions read from lockfiles only.
+- Durable location of this audit's outputs: committed to pi-subagents origin/master under `docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/` (epistemic-triage/ + requirements/); mirror `~/s3/artifacts/pi/owner/2026-11-06-mw-interop-triage/`. Working copy: `/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/OrchestrationEngineer/scratch/mw-interop-triage/out/` (scratch, purged by the host cleaner).
+- Requested terminal phase: Phase 10 (atomic requirements for wb- beads under agentic-tdd) + beads filed in the ledger-in-repo store (prefix wb-).
+
+## Phase 9 gate (audit-the-audit), run 2026-11-06
+
+- Exit status: 0 — PASS after mechanical repairs (fix log: `PHASE9-GATE.md`; machine receipts `.work-phase9/fixlog.json`, `.work-phase9/gate2-report.json`).
+- Census: anchored REFUTED/ESTABLISHED rows 176/176 (every cited evidence path resolves at its declared pin; probe rows re-runnable with non-empty output); self-referential support/counterevidence 0; string-shaped `support[]`/`counterevidence[]` entries 0; undeclared duplicate permitted wordings 0; absent deliverables 0.
+- Ledger parse (`python3 -I`, json per line): CLAIMS.jsonl 490/490, EVIDENCE.jsonl 868/868, RELATIONS.jsonl 1494/1494, LENSES.jsonl 246/246; all ids unique; claim/evidence/relation/lens cross-references all resolve; every material row's dossier exists (392/392); non-material rows carry `dossier: null` by design.
+- Quote inspection: 12 randomly sampled cited pin locations (seed 20261106) opened and confirmed verbatim, 12/12; the 6 repaired evidence rows re-verified at their pins.
+- Remediation coverage: forward — all 50 rows name existing ledger claims; inverse — REFUTED(14) + UNSUPPORTED(2) + CONTESTED(0) minus the `Claim` column = empty; all 48 `overclaims=true` rows covered.
+- Statuses unchanged by the gate: ESTABLISHED 162, SUPPORTED 45, PLAUSIBLE 2, UNDETERMINED 2 (both name the settling artifact), UNSUPPORTED 2, REFUTED 14, NON-EPISTEMIC 263; material 392/490.

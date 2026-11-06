@@ -1,0 +1,181 @@
+{
+  "id": "C0444",
+  "proposition": "The Mechanical Git-census mode is not certified task-scoped HX.",
+  "verbatim_artifact_wording": {
+    "text": "real but not certified task-scoped HX",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "16",
+      "quote": "real but not certified task-scoped HX"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows source-scope services",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "ESTABLISHED",
+    "permitted_wording": "At mw@f7c0a9431d6c developLive Git tracked-file census is not certified task-scoped HX evidence.",
+    "overclaims": false,
+    "rationale": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/live-development.ts",
+        "lines": "78-81",
+        "quote": "// Complete only for Git's tracked-file census, not task-specific semantic relevance.\n        coverage: \"complete\",\n        files,\n        evidence: { system: \"git\", kind: \"tracked-file-census\", id: revision },"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/receipt.ts",
+        "lines": "59-60",
+        "quote": "discovery: workflow.kind === \"needs_evidence\" ? stage(\"unknown\", discoveryRef, \"SCOPE_INCOMPLETE\")\n        : stage(\"observed\", undefined, \"GIT_TRACKED_FILE_CENSUS_NOT_HX_TASK_SCOPE\"),"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "33",
+        "quote": "queryDigest:answer.queryDigest,revision:null,scopeKind:\"filesystem\"};"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/hx-scope.ts",
+        "lines": "45",
+        "quote": "observed.scopeKind===\"task\"&&observed.revision===request.baseRevision&&"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Separate HX composition root does not transform Git census into certified task scope."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0443"
+    ],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0326",
+      "C0356",
+      "C03114"
+    ],
+    "propagation": "Necessary premises remain C0443=SUPPORTED. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is The Mechanical Git-census mode is not certified task-scoped HX. Evidence path: M_LD_78, M_RC_59, M_HX_33, M_HX_45."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Separate HX composition root does not transform Git census into certified task scope."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c developLive Git tracked-file census is not certified task-scoped HX evidence."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Native evidence identifies git, not HX; receipt explicitly marks not HX task scope."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Separate HX composition root does not transform Git census into certified task scope."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Separate HX composition root does not transform Git census into certified task scope."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "developLive's source-scope mode is the Git tracked-file census (not HX); however a separate live-composition.ts root wires discoverTaskScope (HX) with fail-closed coverage, so 'Mechanical's current mode is git-census' holds for developLive, not for every rig entrypoint.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Semantic drift proposal->observation: 'git-census' is a profile/mode name that exists only in the two program documents; no code at either pin names it. The mechanism it labels (git ls-files census in developLive, discovery:'git-tracked-files') exists, but it is a separate entry root from the HX/RF composition root (live-composition.ts), not an 'explicitly selectable profile'. C0443's 'real' is true of the mechanism, false of the profile.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "proposed label (02) -> 'explicit profile' / 'current mode is git-census' (03, SKILL)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the MW pin: hx-scope.ts default native query returns revision:null, scopeKind:'filesystem' (33) and completeness requires scopeKind==='task' with revision===request.baseRevision (45); unchanged since baseline.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The token 'git-census' names a PROPOSED profile in Pi 02 (and the MW program README) and appears in no MechanicalWorkflows .ts file at the pin; the existing behaviour is developLive's tracked-file census (evidence kind 'tracked-file-census', docs/14 line 10), so 'explicitly selectable git-census profile' (C0320) is the program's own vocabulary read back as an observation.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "NARROWS on 'explicitly selectable profile': the Git tracked-file census journey is real and labeled honestly in comments and evidence ids, but 'git-census' is not a shipped selectable identifier at the pin - LiveDevelopmentResult hardcodes discovery:'git-tracked-files' and the only selectable axis is contextMode 'plain'|'rf'; the profile names git-census/native-task-scope exist only as the program's proposals.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Only a different producer-backed profile can establish certified HX, not relabelling this census.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

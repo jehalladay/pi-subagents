@@ -1,0 +1,198 @@
+{
+  "id": "C0305",
+  "proposition": "Mechanical descriptor canonicalization and the host ABI are currently not reconciled (they disagree).",
+  "verbatim_artifact_wording": {
+    "text": "reconcile descriptor canonicalization and host ABI",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "7",
+      "quote": "reconcile descriptor canonicalization and host ABI"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows descriptor vs entrypoint host",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "REFUTED",
+    "permitted_wording": "At mw@f7c0a9431d6c the committed descriptor's schema filenames match entrypoint-host.ts; the baseline mismatch was repaired by 1f29daa7.",
+    "overclaims": true,
+    "rationale": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "contracts/entrypoints/development.v1.json",
+        "lines": "8-9",
+        "quote": "\"inputSchema\": \"development-request.v1.schema.json\",\n  \"outputSchema\": \"development-outcome.v1.schema.json\","
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/entrypoint-host.ts",
+        "lines": "89-90",
+        "quote": "d.inputSchema !== \"development-request.v1.schema.json\" || d.outputSchema !== \"development-outcome.v1.schema.json\") {\n    throw new Error(\"ENTRYPOINT_CONTRACT_INVALID: unsupported descriptor, schema or entrypoint\");"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "git log -1 --format=%h %ci %s 1f29daa7",
+        "lines": "-",
+        "quote": "1f29daa7 2026-11-05 08:49:21 +0000 fix(contracts): repair development entrypoint descriptor schema refs and consume the committed file in host tests (MechanicalWorkflows-14zrz)"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": ".agents/skills/mechanical-pi-host/SKILL.md",
+        "lines": "14",
+        "quote": "- The checked-in `contracts/entrypoints/development.v1.json` and `entrypoint-host.ts` agree on one canonical schema-ref grammar (bare filename in `contracts/schemas/`, no `..`);"
+      },
+      "relation": "CONTRADICTS",
+      "establishes": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "0c78e253:contracts/entrypoints/development.v1.json",
+        "lines": "8-9",
+        "quote": "\"inputSchema\": \"../schemas/development-request.v1.schema.json\",\n  \"outputSchema\": \"../schemas/development-outcome.v1.schema.json\","
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "temporal",
+      "text": "Pi SKILL:14 and MW README:47 still say mismatch; MW skill:14 and contracts/README:13 say repaired."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0437"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit: 'reconcile' presupposes a present mismatch"
+    ],
+    "downstream_claims": [
+      "C0302"
+    ],
+    "propagation": "Necessary premises remain C0437=REFUTED. Current primary counterevidence refutes this proposition, not merely its derivation; historical baseline truth is preserved."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Mechanical descriptor canonicalization and the host ABI are currently not reconciled (they disagree). Evidence path: M_DESC_8, M_EH_89, M_GIT_1F29, M_SKILL_14, M_DESC_BASE."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Pi SKILL:14 and MW README:47 still say mismatch; MW skill:14 and contracts/README:13 say repaired."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "At mw@f7c0a9431d6c the committed descriptor's schema filenames match entrypoint-host.ts; the baseline mismatch was repaired by 1f29daa7."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Present-tense mismatch is contradicted by matching strings at the pin; historical baseline defect remains valid."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Pi SKILL:14 and MW README:47 still say mismatch; MW skill:14 and contracts/README:13 say repaired."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Pi SKILL:14 and MW README:47 still say mismatch; MW skill:14 and contracts/README:13 say repaired."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "The derivation (as-committed descriptor fails the host's exact-string check) was valid at baseline, but every present-tense wording ('currently broken', 'disagree', 'not reconciled') is false at the pin: the committed JSON now matches the host's accepted strings byte-for-byte.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "repaired by 1f29daa7 (2026-11-05), one day after the program doc (2026-11-04); the Pi doc at 7c80c343 was not updated"
+    },
+    {
+      "lens": "logic",
+      "finding": "The derivation (relative refs + exact bare-filename compare -> check fails) was valid at the baseline, but one premise is false at the pin, so the conclusion 'the committed descriptor fails / conflicts with its loader' is false at the pin; present-tense restatements in 03 ('currently not reconciled', 'Fix ... comparison') and SKILL ('disagree') are historical->current drift.",
+      "effect_not_adopted_as_verdict": "CONTRADICTS",
+      "drift": "historical (baseline) defect -> stated as current; fixed at MW 1f29daa7"
+    },
+    {
+      "lens": "negative",
+      "finding": "The derivation 'committed descriptor fails the host check' was valid at the baseline and is FALSE at the MW pin: the committed file now passes, and a file-driven test asserts invokeInstalledDevelopment and invokePinnedDevelopment accept it over a real npm-packed tarball; the Pi program and SKILL line 14 state the disagreement in present tense without a version qualifier, so they are stale against the environment pin.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "fixed since baseline by 1f29daa7; cherry-picked from db320491"
+    },
+    {
+      "lens": "negative",
+      "finding": "Contradiction set at the pins: Pi SKILL:14 and Pi 03:18 say the MW descriptor and host disagree (present tense); the MW skill at the same MW pin says they 'agree on one canonical schema-ref grammar' and names the repair PIWB-MW0-R001; the MW 01-audit still describes MW-P0 as open but self-scopes to the baseline 0c78e253. Normalizing by version dissolves the conflict: true at 0c78e253, false at f7c0a943.",
+      "effect_not_adopted_as_verdict": "CONTRADICTS",
+      "drift": "Pi docs at 7c80c343 predate the MW repair by ~2h; the Pi SKILL 'Actual current state' was not updated in the pin's program commit"
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The P1 descriptor/loader mismatch was true at MW baseline 0c78e253 and is FIXED at the pin: commit 1f29daa7 (2026-11-05T08:14Z, same author, bead MechanicalWorkflows-14zrz) rewrote development.v1.json to bare filenames and added entrypoint-descriptor-file.test.ts that reads the committed file, so these observations are time-scoped to the baseline and false at the pin.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "baseline 0c78e253 ../schemas/ prefix -> pin f7c0a943 bare filename; tests entrypoint-host.test.ts/installed-host.test.ts edited and entrypoint-descriptor-file.test.ts added in 1f29daa7"
+    },
+    {
+      "lens": "scope",
+      "finding": "Baseline-to-pin DRIFT overturns this family: MW commit 1f29daa7 (2026-11-05 08:49Z, after the program's 0c78e253 baseline and before the pin) changed the committed descriptor's schema refs from '../schemas/...' to the bare filenames the host demands, so at mw@f7c0a943 the descriptor passes its own loader and the 'conflicts with its own loader' finding, PI-0's 'currently not reconciled' premise, and the relative-paths claim are no longer true of the pin.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "true at baseline 0c78e253, fixed at pin by 1f29daa7; claims were accurate when written and are stale at the pin."
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "A new descriptor/host diff would downgrade the match; a real installed-host run would settle execution, not string equality.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

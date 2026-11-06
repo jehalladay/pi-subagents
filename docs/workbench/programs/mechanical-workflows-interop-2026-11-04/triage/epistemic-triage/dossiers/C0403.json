@@ -1,0 +1,171 @@
+{
+  "id": "C0403",
+  "proposition": "On 2026-11-04 the MechanicalWorkflows `main` audit baseline was commit 0c78e2530cbf5737a8bbb763475385a2f0f760cc.",
+  "verbatim_artifact_wording": {
+    "text": "MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+      "lines": "4",
+      "quote": "MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "MechanicalWorkflows main on 2026-11-04",
+    "temporal_context": "2026-11-04",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "The document names 0c78e253 as Mechanical main audit baseline on local date 2026-11-04; it precedes the paired program commit bf8fbb93.",
+    "overclaims": false,
+    "rationale": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md",
+        "lines": "4",
+        "quote": "**Audit baseline (2026-11-04):** pi-subagents `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521`; MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "git log -1 --format=%h %ci %s 0c78e253",
+        "lines": "-",
+        "quote": "0c78e253 2026-11-02 21:17:57 +0000 fix(development-rig): resolve rf through MECHANICAL_RF_BINARY and declare the native-rf tests skipped as RF_UNAVAILABLE_UNDER_HERMETIC when no rf exists (MechanicalWorkflows-glda4)"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "git log -1 --format=%h %ci %s bf8fbb93",
+        "lines": "-",
+        "quote": "bf8fbb93 2026-11-04 22:30:58 -0800 docs(interop): audit MechanicalWorkflows and plan Pi function-host integration"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "docs/programs/pi-workbench-interop-2026-11-04/README.md",
+        "lines": "4",
+        "quote": "**Source audit (2026-11-04):** MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`; Pi `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521` (prior to the corresponding Pi design commit"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Baseline commit was authored/committed November 2; baseline date describes audit, not commit date."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0427"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is On 2026-11-04 the MechanicalWorkflows `main` audit baseline was commit 0c78e2530cbf5737a8bbb763475385a2f0f760cc. Evidence path: DRM_4, M_GIT_0C78, M_GIT_BF8F, M_PR_README_4."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Baseline commit was authored/committed November 2; baseline date describes audit, not commit date."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The document names 0c78e253 as Mechanical main audit baseline on local date 2026-11-04; it precedes the paired program commit bf8fbb93."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Commit ancestry and same audit baseline support reported historic main head, not a retained remote ref observation."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Baseline commit was authored/committed November 2; baseline date describes audit, not commit date."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Baseline commit was authored/committed November 2; baseline date describes audit, not commit date."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "f67b6665 is dated 2026-11-05 05:57:48 +0000 and the Pi program commit 2026-11-04 22:25:31 -0800 (= 2026-11-05 06:25Z), so 'baseline (2026-11-04)' is true only in the author's local (US Pacific) date; in UTC both Pi baseline and program commit are 2026-11-05. MW baseline 0c78e253 (2026-11-02 21:17Z) was main at the time; the MW program commit bf8fbb93 landed on top at 2026-11-05 06:30Z.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "The Pi program (pi 7c80c34, 2026-11-04T22:25:31-08:00) and the MW counterpart program (mw bf8fbb93, 2026-11-04T22:30:58-08:00) were written by the same author five minutes apart from the same audit baselines; they are one evidentiary lineage, not two witnesses.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": "MW program commit bf8fbb93 postdates the MW baseline 0c78e253; the program is on the pin but not at its own stated baseline"
+    },
+    {
+      "lens": "scope",
+      "finding": "The 'on 2026-11-04' baseline dating survives only in the author's -0800 timezone: f67b6665 was committed 2026-11-05 05:57:48 +0000 (= 2026-11-04 21:57 -0800), and MW main stood at 0c78e253 (2026-11-02 21:17Z) until bf8fbb93 landed 2026-11-04 22:30 -0800; readers using UTC will find no f67b6665 on 2026-11-04.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Timestamped main ref readback or original audit transcript settles historical branch-tip identity.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

@@ -1,0 +1,163 @@
+{
+  "id": "C0321",
+  "proposition": "No Pi -> Mechanical `develop` run has yet occurred.",
+  "verbatim_artifact_wording": {
+    "text": "First actual Pi → Mechanical `develop`",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "10",
+      "quote": "First actual Pi → Mechanical `develop`"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "both repos + recorded receipts",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "UNDETERMINED",
+    "permitted_wording": "Whether any Pi-to-Mechanical develop run ever occurred is unknown; the pinned repositories contain no identified end-to-end witness.",
+    "overclaims": true,
+    "rationale": "Repository detectors do not cover uncommitted local runs, external journals or S3 receipts."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "docs/workbench/feature-matrix.md",
+        "lines": "217",
+        "quote": "- W11: Hosted develop() with real scope-limited service bindings (planned; bead status is blocked). Beads wb-04s and VC-3 epic wb-w12 blocked; no binding-host code or tests exist, only read-only discovery receipts."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Repository detectors do not cover uncommitted local runs, external journals or S3 receipts.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "scope",
+      "text": "An external or historical bespoke run could exist without the registered host."
+    },
+    {
+      "type": "missing-evidence",
+      "text": "Producer-side Pi invocation/session journal joined to Mechanical outcome and Forge operation at an identified source pin, plus a bounded historical receipt census."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0446"
+    ],
+    "presuppositions": [],
+    "assumptions": [
+      "implicit in 'First actual'"
+    ],
+    "downstream_claims": [
+      "C0316"
+    ],
+    "propagation": "Necessary premises remain C0446=SUPPORTED. Repository evidence cannot discharge the broader historical/product quantifier; missing artifact remains required."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is No Pi -> Mechanical `develop` run has yet occurred. Evidence path: DET_PI_RECEIPTS, DET_PI_MECH, FM_217."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "An external or historical bespoke run could exist without the registered host."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Whether any Pi-to-Mechanical develop run ever occurred is unknown; the pinned repositories contain no identified end-to-end witness."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "A historical source report or future requirement was compressed into current implementation wording."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Repository detectors do not cover uncommitted local runs, external journals or S3 receipts."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "An external or historical bespoke run could exist without the registered host."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "Source/receipt detectors cover only named committed trees; external S3 receipts, original session journals, installed packages and unpublished code excluded."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "An external or historical bespoke run could exist without the registered host."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "No bearing from the fidelity lens: these claims cite no code construct re-locatable at the pins (test/receipt inventories, feedback prose, history, process facts, or generic systems statements); left to provenance/temporal/negative-evidence lenses.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "Absence claims with a stated detector are coherent with the pin: the W11 row remains 'planned' and no receipt or qa file names a Pi-hosted develop run. Detector is file-based (grep); the flywheel ledger was not consulted by this lens, so the claim is supported at file level only.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "negative",
+      "finding": "The 'no live run / no e2e acceptance witnessed' absences have a weak detector at the pins (no Pi test, qa script or receipt names a Mechanical develop launch), consistent with the claims, but a positive witness could live outside both repos (ledger, S3 receipts) which this lens did not search, so the absence is supported within the repo scope only.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Both programs disclaim implementation and live acceptance in their own status lines; the 'no Pi->Mechanical run has occurred / not witnessed' propositions are absence claims whose only detectors are the two same-author documents plus the Pi grep (no Mechanical module in src/), and no receipt directory in either repo names a Pi-hosted Mechanical run.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "As repo-scoped absences these hold at the pins (no binding code, no Pi-side Mechanical invocation path, W11 'planned', no interop receipt found), but the propositions quantify over all history anywhere, which the pins cannot establish - the detector covers only committed evidence.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "Producer-side Pi invocation/session journal joined to Mechanical outcome and Forge operation at an identified source pin, plus a bounded historical receipt census.",
+  "upgrade_downgrade_settlement": "A joined producer receipt establishes occurrence; exhaustive historical custody would be needed for never occurred.",
+  "remediation": "Add the narrower permitted wording in a future owner-controlled document revision; do not edit this pin.",
+  "detection_and_drift_models": [
+    {
+      "record": "DET_PI_RECEIPTS",
+      "summary": "receipts: wb-nl8.1.md only (a harness-variant sentence unrelated to develop()); develop( : 0 files",
+      "method": "grep -rli mechanical docs/workbench/receipts; grep -rliE 'develop\\(' docs/workbench/receipts qa/workbench"
+    },
+    {
+      "record": "DET_PI_MECH",
+      "summary": "src hits: src/workbench/collective-event.ts, src/workflow/tool-description.ts (prose word); package.json: none; loader/descriptor identifiers in src: 0 files",
+      "method": "grep -rli mechanical src; grep -n mechanical package.json; grep -rlnE 'installed-host|workflows-development|mechanical\\.development\\.develop|EntrypointDescriptor|invokePinnedDevelopment|invokeInstalledDevelopment' src"
+    }
+  ],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

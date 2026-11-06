@@ -1,0 +1,173 @@
+{
+  "id": "C0463",
+  "proposition": "Furnace provides an ExecutorApp hosting model with Run/Attempt identifiers.",
+  "verbatim_artifact_wording": {
+    "text": "Furnace ExecutorApp and actual Run/Attempt IDs",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+      "lines": "34",
+      "quote": "Furnace ExecutorApp and actual Run/Attempt IDs"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "OBSERVATION",
+    "scope": "Furnace (installed SDK)",
+    "temporal_context": "program baseline f67b6665/0c78e253 (stated 2026-11-04); re-locate at pi@b27829e6dfa7 / mw@f7c0a9431d6c",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "SUPPORTED",
+    "permitted_wording": "Pi and MW adapters reference Furnace ExecutorApp/EmbeddedHost and producer Run/Attempt identities; Furnace product implementation is not pinned in this audit.",
+    "overclaims": false,
+    "rationale": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/furnace-hosted.ts",
+        "lines": "4-6",
+        "quote": " * A Pi process registers ONE deterministic workflow callback as a Furnace\n * ExecutorApp executor, opens an EmbeddedHost for ONE Run, writes the Run's\n * extension-driver config, and starts the Run with the public Furnace client."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/furnace-hosted.ts",
+        "lines": "9",
+        "quote": " * admission receipt. This module adds no scheduler, no retry and no checkpoint."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/workbench/hosts/furnace-hosted.ts",
+        "lines": "11",
+        "quote": " * Verified protocol only (@furnace/sdk 0.1.0, furnace.executor.v1):"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "mw@f7c0a9431d6c",
+        "path": "apps/development-rig/src/furnace-process-executor.ts",
+        "lines": "10",
+        "quote": " * Furnace keeps Run/Work/Attempt, supervision, retries and reconciliation; this file owns none of them."
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "Comments/consumer implementation may target an older SDK; installed Furnace is not inspected or run."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [],
+    "presuppositions": [],
+    "assumptions": [],
+    "downstream_claims": [
+      "C0330",
+      "C0375",
+      "C0462"
+    ],
+    "propagation": "No claim premise is necessary; direct pin evidence is the warrant. Independent direct evidence is retained; document repetition gives no upgrade."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "The strongest reading is Furnace provides an ExecutorApp hosting model with Run/Attempt identifiers. Evidence path: FH_4, FH_9, FH_11, M_FPE_10."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "Comments/consumer implementation may target an older SDK; installed Furnace is not inspected or run."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "Pi and MW adapters reference Furnace ExecutorApp/EmbeddedHost and producer Run/Attempt identities; Furnace product implementation is not pinned in this audit."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Consumer adapter and historical documentation support Furnace model, not direct current SDK/product verification."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "Comments/consumer implementation may target an older SDK; installed Furnace is not inspected or run."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "Comments/consumer implementation may target an older SDK; installed Furnace is not inspected or run."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "fidelity",
+      "finding": "hosts/furnace-hosted.ts exists and its header states one deterministic callback per Run with Furnace owning retry and Attempt identity; forge-control.ts and forge-operation-observer.ts are the separate Forge operation/control adapter.",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "logic",
+      "finding": "No bearing for the logic lens: existence/inventory observations with no argument chain (existence and provenance lenses apply). C0364 is confirmed incidentally by develop.ts 36-38 (coverage gates implement).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "SKILL.md, 03-implementation-and-qa.md and 04-agent-handoff.md restate 01's observations without new citations; all five files landed in one commit (7c80c34) by one author, so a proposition appearing in three program files has one origin and its warrant is whatever 01's code citation establishes at the pin.",
+      "effect_not_adopted_as_verdict": "NARROWS",
+      "drift": ""
+    },
+    {
+      "lens": "provenance",
+      "finding": "Re-located at the pin: furnace-hosted.ts line 4 states one callback per Furnace Run; DETACH_GRANT 'workbench:detach' is defined at execute-tool.ts 57; local-detached.ts checks /proc/<pid>/stat session leadership (492-495) and per-uid socket directories (12-18).",
+      "effect_not_adopted_as_verdict": "SUPPORTS",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No scope verdict from the pins for these: C03141 names no specific README (not located); C03145's 'Pi-only execution index' did not grep-match in src/workbench; C03106 (script workflows work) and C03114 (HX live capability) are runtime claims - not run; C0409 is the audit's self-report (missing artifact: audit session logs); C0463 concerns the Furnace product, not pinned here; C0386's 'giant assertion table' and C0188's 'shell-backed node()' were not re-located; C0227/C0228 are platform semantics, not version-bound.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Pinned Furnace SDK source/contract or producer Run/Attempt hosting transcript would establish the external capability.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}

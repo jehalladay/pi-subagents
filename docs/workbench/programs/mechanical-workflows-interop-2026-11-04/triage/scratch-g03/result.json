@@ -1,0 +1,17 @@
+{
+  "status_file": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/OrchestrationEngineer/scratch/mw-interop-triage/out/epistemic-triage/status-part-g03.jsonl",
+  "relations_file": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/OrchestrationEngineer/scratch/mw-interop-triage/out/epistemic-triage/relations-part-g03.jsonl",
+  "dossiers": 174,
+  "counts": {
+    "NON-EPISTEMIC": 142,
+    "REFUTED": 5,
+    "ESTABLISHED": 48,
+    "SUPPORTED": 12,
+    "UNDETERMINED": 2,
+    "PLAUSIBLE": 2,
+    "UNSUPPORTED": 1,
+    "CONTESTED": 0
+  },
+  "contradictions": 10,
+  "notes": "All 212 rows graded; 174 material dossiers written as JSON due higher-priority no-Markdown-report instruction. Contradictions in contradictions-part-g03.jsonl (10 sets, including reconciled scope/version and normative tensions). Pins read-only; Forge/vitest/npm/live providers not run. Docs byte-identical at program/pin verified. No merge attempted by this audit subagent; environment pin already contains requested default-branch merge. Outputs are local scratch, not published or copied to S3 under read-only/output-only constraint."
+}

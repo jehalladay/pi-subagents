@@ -1,0 +1,165 @@
+{
+  "id": "C0347",
+  "proposition": "`cleanupWorktree` must be fixed before Pi worktree isolation is reused for this program.",
+  "verbatim_artifact_wording": {
+    "text": "before reusing Pi worktree isolation",
+    "anchor": {
+      "pin": "doc@7c80c34346c2",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+      "lines": "21",
+      "quote": "before reusing Pi worktree isolation"
+    }
+  },
+  "claim_type_and_scope": {
+    "kind": "NORMATIVE",
+    "scope": "Pi worktree isolation",
+    "temporal_context": "proposed",
+    "environment_pins": [
+      "pi@b27829e6dfa7",
+      "mw@f7c0a9431d6c"
+    ],
+    "document_pin": "doc@7c80c34346c2"
+  },
+  "warrant_verdict": {
+    "status": "NON-EPISTEMIC",
+    "permitted_wording": "The program requires: `cleanupWorktree` must be fixed before Pi worktree isolation is reused for this program.",
+    "overclaims": false,
+    "rationale": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed."
+  },
+  "support": [
+    {
+      "evidence": {
+        "pin": "doc@7c80c34346c2",
+        "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md",
+        "lines": "21",
+        "quote": "before reusing Pi worktree isolation"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "177-181",
+        "quote": "} catch {\n    // Best effort cleanup on error\n    try { await removeWorktree(pi, cwd, worktree.path); } catch { /* ignore */ }\n    return { hasChanges: false };\n  }"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "src/worktree.ts",
+        "lines": "189",
+        "quote": "await git(pi, cwd, [\"worktree\", \"remove\", \"--force\", worktreePath], 10000);"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed.",
+      "limits": "Static pin inspection; not a runtime pass."
+    },
+    {
+      "evidence": {
+        "pin": "pi@b27829e6dfa7",
+        "path": "test/worktree.test.ts",
+        "lines": "222",
+        "quote": "it(\"commits changes and creates branch when changes exist\", async () => {"
+      },
+      "relation": "SUPPORTS",
+      "establishes": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed.",
+      "limits": "Static pin inspection; not a runtime pass."
+    }
+  ],
+  "counterevidence_and_defeaters": [
+    {
+      "type": "undercutting",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "C0346"
+    ],
+    "presuppositions": [
+      {
+        "id": "C0346",
+        "status": "SUPPORTED",
+        "wording": "Evidence indicates cleanupWorktree can force-remove modified worktrees after a preservation error and report hasChanges:false at pi@b27829e6dfa7."
+      }
+    ],
+    "assumptions": [],
+    "downstream_claims": [],
+    "propagation": "Requirement/definition/proposal force never upgrades empirical warrant. C0346=SUPPORTED. Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed."
+  },
+  "rival_readings_tested": [
+    {
+      "reading": "strongest_case_as_worded",
+      "text": "As a design obligation, `cleanupWorktree` must be fixed before Pi worktree isolation is reused for this program. The quoted requirement has force only inside this proposed program."
+    },
+    {
+      "reading": "strongest_counter",
+      "text": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "reading": "narrower_supported",
+      "text": "The program requires: `cleanupWorktree` must be fixed before Pi worktree isolation is reused for this program."
+    },
+    {
+      "reading": "alternative_explanation",
+      "text": "The design statement may intentionally specify a future safe state rather than describe current compliance."
+    }
+  ],
+  "adversarial_attacks": [
+    {
+      "attack": "citation-entailment",
+      "outcome": "Preservation-failure risk is SUPPORTED; blanket loss not established. Requirement is conditional on using Pi isolation; materialized workspace bypass is separately proposed."
+    },
+    {
+      "attack": "lineage-multiplicity",
+      "outcome": "Pi 01/03/04/README/SKILL and the paired MW program are one same-author audit lineage. Repeated statements are not independent witnesses; primary code and dated receipts are kept distinct."
+    },
+    {
+      "attack": "scope-quantifier-version",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    },
+    {
+      "attack": "documented-to-implemented-to-exercised",
+      "outcome": "Source facts are static observations; test source asserts behavior, it does not prove tests passed. Forge/vitest/npm/live providers: not run."
+    },
+    {
+      "attack": "absence-detector",
+      "outcome": "No absent-result claim is inferred merely from no runtime evidence. Norms do not imply violation."
+    },
+    {
+      "attack": "omitted-counterevidence",
+      "outcome": "The strongest rival is a reader treating desired closure/routing behavior as implemented or measured today; the design-only status rejects that reading."
+    }
+  ],
+  "lens_findings_considered": [
+    {
+      "lens": "logic",
+      "finding": "Drift may->does: 01 says preservation 'may discard uncommitted changes ... on preservation errors'; 03 unblocker 4 and the SKILL restate it as unconditional 'loss of modified worktrees in cleanupWorktree'. At the pin the happy path preserves (commit + branch before removal, asserted by the ordering test), so the unconditional reading is false; only the failure branch loses.",
+      "effect_not_adopted_as_verdict": "DRIFT",
+      "drift": "01 'may discard ... on preservation errors' -> 03/SKILL 'loss of modified worktrees' (conditional dropped)"
+    },
+    {
+      "lens": "provenance",
+      "finding": "(part-03) No bearing: these normative/proposal/definition claims originate in the single-author program commit 7c80c34 and have no external source to de-duplicate; provenance adds nothing to their NON-EPISTEMIC status, and the MW program's parallel norms are the same author's restatement, not an independent authority.",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    },
+    {
+      "lens": "scope",
+      "finding": "No bearing beyond framing: these are normative/proposal/definition claims correctly time-stamped 'proposed' or doc-scoped, consistent with doc 02 line 3's design-only banner; the scope lens found no shipped artifact misdescribed as one of them (see the mw.pi.* detector row), with the caveat that several 'currently'-phrased factual premises embedded in them are graded in the observation rows above (notably the descriptor-reconciliation premise, now DRIFT).",
+      "effect_not_adopted_as_verdict": "UNDETERMINED",
+      "drift": ""
+    }
+  ],
+  "missing_evidence": "none for static proposition; runtime verification not run",
+  "upgrade_downgrade_settlement": "Compliance requires a pin-matched producer/test receipt at the actual consumer seam; no tests, builds, npm packaging or live providers were run in this audit.",
+  "remediation": "none; retain pin/runtime qualifiers.",
+  "detection_and_drift_models": [],
+  "execution": "not run: Forge, Vitest, npm, SDK/live providers; only reads, grep, git history/diffs and output validation."
+}
