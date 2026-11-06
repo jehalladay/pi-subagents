@@ -1359,7 +1359,22 @@ export function importReading(host: ModuleHost, suite: string, options: ReadOpti
 export type GuardOf = (root: string, tier: string) => { readonly ok: boolean; readonly config?: string; readonly why: string };
 /** How setupFiles reads the config the guard names: from the disk unless a reader is injected (a planted config, refusal #2 U3). */
 export type ConfigText = (file: string) => string;
-/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read. */
+/** The key of the property assignment whose value an object literal is (through parentheses and assertions), with that
+ * assignment, when the key is a name or a string literal. */
+function holderOf(literal: ts.ObjectLiteralExpression): { readonly key: string; readonly holder: ts.PropertyAssignment } | undefined {
+  const value = climb(literal);
+  const holder = value.parent;
+  if (holder === undefined || !ts.isPropertyAssignment(holder) || holder.initializer !== value) return undefined;
+  return ts.isIdentifier(holder.name) || isStringKey(holder.name) ? { key: holder.name.text, holder } : undefined;
+}
+/** test.sequence.setupFiles is the order vitest runs the setup files in (the census guard requires "list" of two or more), never
+ * a file (wb-euc6, F1 of wb-tz2.3's landing 988: read as one, its "list" named no file, a fail-closed false red). */
+function isSetupOrder(property: ts.PropertyAssignment): boolean {
+  const sequence = holderOf(property.parent);
+  return sequence?.key === "sequence" && holderOf(sequence.holder.parent)?.key === "test";
+}
+/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read: the string
+ * values of every property assignment keyed setupFiles (a name or a string key) but test.sequence's (isSetupOrder). */
 export function setupFiles(root: string, guardOf: GuardOf = censusGuard, readText: ConfigText = file => readFileSync(file, "utf8")): { readonly files: readonly string[] } | { readonly why: string } {
   const guard = guardOf(root, "test");
   if (!guard.ok || guard.config === undefined) return { why: guard.why };
@@ -1368,7 +1383,7 @@ export function setupFiles(root: string, guardOf: GuardOf = censusGuard, readTex
   const source = ts.createSourceFile(config, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const files: string[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isPropertyAssignment(node) && (ts.isIdentifier(node.name) || isStringKey(node.name)) && node.name.text === "setupFiles") {
+    if (ts.isPropertyAssignment(node) && (ts.isIdentifier(node.name) || isStringKey(node.name)) && node.name.text === "setupFiles" && !isSetupOrder(node)) {
       const value = unwrap(node.initializer);
       if (isStringKey(value)) files.push(value.text);
       else if (ts.isArrayLiteralExpression(value)) for (const element of value.elements) if (isStringKey(element)) files.push(element.text);

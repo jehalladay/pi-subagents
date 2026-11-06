@@ -172,6 +172,24 @@
  * equal this census's FORMS rows, word for word; and every piece of every claim the helper's header makes is the quote of one
  * MEMBERS row whose pins read what the piece says (refusal #1 on this bead, U1: the header claimed more than the rows pinned).
  *
+ * wb-euc6 (the R694 follow-up of wb-tz2.3's landing-988 PASS-WITH-FINDING, F1, gate cmd_9066aafa0c49; CONFIRMED there by PREP's
+ * gate twin GP5-CH1c) found setupFiles reading every property named setupFiles in the vouched config, test.sequence.setupFiles
+ * among them: the census guard requires sequence: { setupFiles: "list" } of two or more setup files, so that "list" read as a
+ * setup file naming no file, a fail-closed false red of any second setup file. Read here as: setupFiles passes over the
+ * setupFiles key of the object that a test object's sequence key holds (isSetupOrder: the order vitest runs the setup files in,
+ * never a file). "MEMBERS CHANNEL:setup file, piece 1" gains eight pins over setupFiles' injected reader (nothing is written),
+ * pins 5-12: two setup files beside sequence: { setupFiles: "list" } read as the two (ORDERED_SETUP); their setup-file findings
+ * read none with the second file planted neutral (the F1 consequence: the cut's base reads "setup file test/list: a load does not
+ * resolve: test/list names no file") and read the second file's carrier finding alone with it planted as a carrier; the order
+ * "parallel" beside one file; the order written with string keys under an as const assertion; and three loud controls beside
+ * those quiet pins - a test.setupFiles string "list" still names the file test/list (the line is drawn by the key's place, never
+ * by its value), and the setupFiles key of the object another test key holds (test.lgO) and of a sequence object that another key
+ * of the config object holds (lgO.sequence, no test key) are still read as setup files, the readers' fail-closed over-read kept.
+ * FROZEN SHAPE's pin count for that piece grows 4 -> 12; no other row, pin, plant or reading changes, and the helper header is
+ * unchanged (the piece's words already name test.setupFiles). NOT CLAIMED by this census (scope sentences, no residual): a
+ * setupFiles key in any other place than the plants above, a sequence or test value written other than as an object literal
+ * (through parentheses and assertions), and an order value other than the two planted strings.
+ *
  * ROWS:
  *  BASE: the unplanted subject. The cited suite test/workbench-hyperunix-observer.test.ts reads IMPORT sound (its one load reaching
  *   vitest is its vitest import declaration; its loads equal the ones TypeScript's own preprocessor lists) and CHANNEL quiet; the
@@ -332,6 +350,9 @@
  *    below a local setup file and by a package's own module one, two and three loads below a package setup file; target: the
  *    IMPORT section and the setup-file findings. Falsifiers: GP12-IMP-PARENT-REL, GP12-IMP-PARENT-REL-SUITE, GP12-IMP-PKG-OWN,
  *    L17, GP14-IMP-DOT-DEPTH2, GP14-SETUP-DOTDOT-DEPTH2.
+ *  - "MEMBERS CHANNEL:setup file, piece 1" (wb-euc6): its pins 5-12, each over setupFiles' injected reader; target: setupFiles'
+ *    file list and channelReading's setup-file findings. Falsifiers: the cut's base reader (pins 5-9 red: every setupFiles key
+ *    read) and the seat's EUC-M- one-edit hollowings of isSetupOrder and holderOf (each red on at least one of pins 5-12).
  *  - "MEMBERS RUN:statements, pieces 1-3": each of the 22 CONFIG_NAMES imported by a second declaration right after the
  *    defineConfig import and as a second element before and after defineConfig; an import declaration naming no element before
  *    and after it; four other specifiers; six other statements; a declaration after the default export; four sound repeats and
@@ -1224,6 +1245,13 @@ const WRITE_CHANNEL: readonly (readonly [extra: string, found: string, offset: n
 const PLANTED_CONFIG = join(ROOT, "test/lg-setup.config.ts");
 const plantedSetup = (text: string): ReturnType<typeof setupFiles> =>
   setupFiles(ROOT, () => ({ ok: true, config: PLANTED_CONFIG, why: "" }), file => (file === PLANTED_CONFIG ? text : readFileSync(file, "utf8")));
+/** wb-euc6 (F1 of wb-tz2.3's landing 988): two setup files beside the order the census guard requires of two or more. */
+const ORDERED_SETUP = 'export default { test: { setupFiles: ["./helpers/census-guard.ts", "./helpers/lg-a.ts"], sequence: { setupFiles: "list" } } };\n';
+/** The setup-file findings of ORDERED_SETUP's reading with its second file planted as `second` (read as a file, the order named none). */
+const orderedChannel = (second: string): string[] | string => {
+  const read = plantedSetup(ORDERED_SETUP);
+  return "why" in read ? read.why : setupChannel(read.files, files(["test/helpers/lg-a.ts", second]));
+};
 /** Every node kind C reads and the two it never reads, in one module of each code extension (the C:code line names the crossing). */
 const kindsSite = (extension: string): Pin => {
   const file = `src/workbench/lg-kinds${extension}`;
@@ -2449,7 +2477,15 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => setupFiles(ROOT), { files: ["test/helpers/census-guard.ts"] }),
     pin(() => setupChannel(["test/helpers/census-guard.ts"]), []),
     pin(() => plantedSetup('export default { test: { "setupFiles": ["./helpers/lg-a.ts"] } };\n'), { files: ["test/helpers/lg-a.ts"] }),
-    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] as string[] } };\n'), { files: ["test/helpers/lg-a.ts"] })),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] as string[] } };\n'), { files: ["test/helpers/lg-a.ts"] }),
+    pin(() => plantedSetup(ORDERED_SETUP), { files: ["test/helpers/census-guard.ts", "test/helpers/lg-a.ts"] }),
+    pin(() => orderedChannel("export const lgA = 1;\n"), []),
+    pin(() => orderedChannel('import { it } from "vitest";\nexport const lgIt = it;\n'), ["setup file test/helpers/lg-a.ts: carrier (test/helpers/lg-a.ts:1 loads 'vitest' (vitest vitest))"]),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/census-guard.ts"], sequence: { setupFiles: "parallel" } } };\n'), { files: ["test/helpers/census-guard.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"], "sequence": { "setupFiles": "list" } as const } };\n'), { files: ["test/helpers/lg-a.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: "list" } };\n'), { files: ["test/list"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"], lgO: { setupFiles: ["./helpers/lg-b.ts"] } } };\n'), { files: ["test/helpers/lg-a.ts", "test/helpers/lg-b.ts"] }),
+    pin(() => plantedSetup('export default { test: { setupFiles: ["./helpers/lg-a.ts"] }, lgO: { sequence: { setupFiles: ["./helpers/lg-b.ts"] } } };\n'), { files: ["test/helpers/lg-a.ts", "test/helpers/lg-b.ts"] })),
   member("CHANNEL:setup file", "it names one file as a string literal",
     pin(() => plantedSetup('export default { test: { setupFiles: "./helpers/census-guard.ts" } };\n'), { files: ["test/helpers/census-guard.ts"] }),
     pin(() => plantedSetup("export default { test: { setupFiles: `./helpers/lg-b.ts` } };\n"), { files: ["test/helpers/lg-b.ts"] })),
@@ -3546,7 +3582,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:WRITES:spy or mock member:1:109", "MEMBERS:WRITES:spy or mock member:2:50", "MEMBERS:WRITES:spy or mock member:3:46", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:1792",
   "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1", "MEMBERS:WRITES:computed member:6:5",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
-  "MEMBERS:CHANNEL:setup file:1:4", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
+  "MEMBERS:CHANNEL:setup file:1:12", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
   "MEMBERS:CHANNEL:cited suite:1:9", "MEMBERS:CHANNEL:cited suite:2:5", "MEMBERS:CHANNEL:cited suite:3:18", "MEMBERS:CHANNEL:cited suite:4:1",
   "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:2", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:32", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
   "MEMBERS:RUN:argv:1:4",
