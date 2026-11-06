@@ -1,0 +1,37 @@
+{
+  "bead": "wb-f3wd",
+  "note": "Vendored verbatim with read-only git show by the cutting seat (ws-02, g10-work-s228, 2026-11-06); the block runs from its requirement heading through its Adversarial mutant line, and sha256 is the SHA-256 of the block's lines joined by LF.",
+  "source": {
+    "branch": "master",
+    "commit": "0b25e14e084a5b1d612e780bc12a927b3a80dd62",
+    "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "e1282572e755a83939c89ec632b6bf9351e01508",
+    "fileSha256": "a3b30db58ba5ce5299a9ab273cbd72fa3169724fd510a6f07c5e593a1784ae83"
+  },
+  "group": {
+    "lines": "1208-1210",
+    "text": [
+      "## hx-evidence — Measure installed HX task-scope capability before certifying it",
+      "",
+      "(slice PI-5; owner Pi; external: HX-PRODUCER; gate: HX-TASK-SCOPE-PROBE)"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "EAT-R057",
+      "lines": "1212-1220",
+      "sha256": "effb772fc73a89af72945f08443c6a24cf964ff71c155d32aace1e22e334a2bc",
+      "text": [
+        "### EAT-R057 — The HX probe MUST record whether installed producer can supply task-scope proof",
+        "",
+        "- Statement: The HX probe MUST record whether installed producer can supply task-scope proof.",
+        "- Authority: EVIDENCE_ACQUISITION | Type: evidence-acquisition | Owner: Pi | Slice: PI-5 | Bead: hx-evidence",
+        "- Claims: C03114 (PLAUSIBLE), C0242 (ESTABLISHED), C0243 (ESTABLISHED)",
+        "- Relations: R00399, R00400, R00401, R00402, R00403, R00404, R00405, R00406, R00407, R00409, R00410, R00528",
+        "- Conditions: C03114 PLAUSIBLE installed capability risk. Missing artifact: installed producer probe transcript with exact version and query. No HX product pin is available in this audit.",
+        "- Acceptance: Pin installed HX version, query actual task/revision, capture terminal response and task/query digest plus coverage. Record unsupported/missing witness as blocker scoped only to native-task-scope, not Git census.",
+        "- Adversarial mutant: Treat a complete filesystem response as capable task proof."
+      ]
+    }
+  ]
+}
