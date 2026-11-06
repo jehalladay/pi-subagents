@@ -1362,8 +1362,9 @@ export function importReading(host: ModuleHost, suite: string, options: ReadOpti
 export type GuardOf = (root: string, tier: string) => { readonly ok: boolean; readonly config?: string; readonly why: string };
 /** How setupFiles reads the config the guard names: from the disk unless a reader is injected (a planted config, refusal #2 U3). */
 export type ConfigText = (file: string) => string;
-/** The key of the property assignment whose value an object literal is (through parentheses and assertions), with that
- * assignment, when the key is a name or a string literal. */
+/** The property assignment whose value an object literal is, past the parentheses and assertions climb climbs, with its key when
+ * that key is a name or a string literal (wb-euc6: the census claims it only over the config texts its CHANNEL:setup file piece 1
+ * plants). */
 function holderOf(literal: ts.ObjectLiteralExpression): { readonly key: string; readonly holder: ts.PropertyAssignment } | undefined {
   const value = climb(literal);
   const holder = value.parent;
@@ -1376,8 +1377,7 @@ function isSetupOrder(property: ts.PropertyAssignment): boolean {
   const sequence = holderOf(property.parent);
   return sequence?.key === "sequence" && holderOf(sequence.holder.parent)?.key === "test";
 }
-/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read: the string
- * values of every property assignment keyed setupFiles (a name or a string key) but test.sequence's (isSetupOrder). */
+/** The setup files the default tier's vouched config names (censusGuard by default), or why they cannot be read. */
 export function setupFiles(root: string, guardOf: GuardOf = censusGuard, readText: ConfigText = file => readFileSync(file, "utf8")): { readonly files: readonly string[] } | { readonly why: string } {
   const guard = guardOf(root, "test");
   if (!guard.ok || guard.config === undefined) return { why: guard.why };
