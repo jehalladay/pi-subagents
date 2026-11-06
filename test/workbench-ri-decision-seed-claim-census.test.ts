@@ -129,7 +129,7 @@
  * text, so a receipt quoting a measurement it never ran passes; R-SCOPE a code-root mention outside the three needles (a
  * work-package id in a test, the module's words spaced) is judged by no row; R-SIBLING-QUOTE a sibling owner filing's landed
  * census or roster that quotes its own bead text verbatim spells <DI> inside the quote - wb-tz4r.5's census at :3 (its quoted
- * title), :9 (its quoted acceptance (b)) and :614 (row B's label) and its roster at :222 (the same label) - and C1 admits exactly
+ * title), :9 (its quoted acceptance (b)) and :616 (row B's label; :614 until wb-cbt4's two lines above it) and its roster at :222 (the same label) - and C1 admits exactly
  * those four sites (path, line and needle, one occurrence each) only while each line is its quote and a frame (a comment marker
  * or a label key, nothing else) and the quote is verbatim in that bead's title or notes in the tracked export, so any other,
  * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed. R-RENDERED rows A and B read a
@@ -159,6 +159,7 @@
  *
  * Display paths added: none. Test-only: the docs, src, qa, the receipts, the export and the registrations are only read; no
  * scratch is made.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
@@ -173,6 +174,7 @@ import { registerFurnaceRunInspect } from "../src/workbench/providers/furnace.js
 import { registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
 import { registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import type { Json } from "./helpers/rf-render-fixture.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -317,7 +319,7 @@ const QUOTED_SITES: readonly QuotedSite[] = [
   },
   {
     path: "test/workbench-ri-observation-authority-census.test.ts",
-    line: 614,
+    line: 616,
     placeholder: "<DI>",
     quote: "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
     filed: "notes",
@@ -488,8 +490,9 @@ function walk(directory: string, files: string[], symlinks: string[], from: File
   for (const entry of entries) {
     const path = join(directory, entry.name);
     if (entry.isSymbolicLink()) symlinks.push(posix(relative(from.root, path)));
-    else if (entry.isDirectory()) walk(path, files, symlinks, from);
-    else if (entry.isFile()) files.push(posix(relative(from.root, path)));
+    else if (entry.isDirectory()) {
+      if (!isTriageArchivePath(posix(relative(from.root, path)))) walk(path, files, symlinks, from);
+    } else if (entry.isFile()) files.push(posix(relative(from.root, path)));
   }
 }
 
