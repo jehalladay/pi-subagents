@@ -62,7 +62,19 @@
  * arguments and an element access by string key, the conditional --no-commit reading to its double-quoted text and a reference
  * value to a const's initializer; and it names NOT CLAIMED optional chaining, a declaration whose name is no identifier, a
  * module-level let or var arrow, a using binding, an alias element with a default value, an export carried by a builder-name
- * declaration itself, and every other key, callee and argument form the narrowed entries leave out. Where a
+ * declaration itself, and every other key, callee and argument form the narrowed entries leave out. Gate refusal #9 measured list
+ * nouns that still named forms no row plants - C1-LAUNCH-ROUTES's 'the nearest function or method declaration around it' and (7)'s
+ * declaration kinds and markers (no row plants a launch inside two such declarations, a class or object literal off module level, a
+ * class expression or object literal that initializes no module-level const, a static, async or generator method, a generator
+ * function declaration, or a module-level const bound to an async arrow or an async or generator function expression),
+ * C1-DECLARATION-REFERENCES's parameters of a function declaration without export (no such row takes a parameter) and
+ * C1-OPAQUE-LOADS's loader 'as a member' (every member row's receiver an identifier) - so its hollows G4-N1 to G4-N5, G4-F1 to
+ * G4-F6, G4-DR1 and G4-OL1 (and, riding them, G4-DT1 on C1-DECLARATION-TEXT's edit and G4-G2W on G2-BINDING-USES's binding) kept
+ * the census green while its plants realized them - and orchestrator ruling R-B630 bound the next cut to move only those nouns.
+ * Cut #10 changes no reader and no row: it writes the declaration as the one function or method declaration around a launch,
+ * enumerates (7) exactly as its rows write it, byte for byte, claims parameters only of the declarations its rows plant them in, a
+ * loader member only under an identifier receiver, an edit only inside the exported function declaration its row edits and a
+ * binding only as its declaration's initializer itself, and names every other such form NOT CLAIMED. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -72,9 +84,10 @@
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
  * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; cut #6 by seat ws-04, run g10-work-s219 at
  * trunk 108a202, landing 987; cut #7 by seat ws-04, run g10-work-s219 at trunk fd8f71c, landing 991; cut #8 by seat ws-04, run
- * g10-work-s226 at trunk b45f46a, landing 993; cut #9 by seat ws-04, run g10-work-s226 at trunk 1b707ef, landing 1002;
- * providers/reactivefiber.ts is byte-identical at all nine and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6
- * to #9 move no reader, so every witness reads as at cut #5; every C1 and G2 witness
+ * g10-work-s226 at trunk b45f46a, landing 993; cut #9 by seat ws-04, run g10-work-s226 at trunk 1b707ef, landing 1002; cut #10
+ * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; providers/reactivefiber.ts is byte-identical at all ten and
+ * at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #10 move no reader, so every witness reads as at
+ * cut #5; every C1 and G2 witness
  * below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
@@ -162,21 +175,24 @@
  *    exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound
  *    to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key (a string or a
  *    no-substitution template); and an execve member call on the identifier process. It is an rf launch when its command words
- *    (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the nearest function or method
- *    declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It
- *    claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)),
- *    its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by
- *    name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's
- *    object destructuring element renaming one by name off require("node:child_process") and off an identifier, and by a string key
- *    off require("node:child_process"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name
- *    and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace,
- *    another identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an
- *    identifier by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve
- *    member call on process by name and by literal key, and none under another identifier; (7) the declaration as a function
- *    declaration with and without export, a method declaration in a class declaration with and without export, a class expression
- *    and an object literal, a module-level const bound to an arrow and to a function expression, each with and without export, an
- *    arrow const nested in a function declaration (read as the function) and <module>; (8) the gate members' plants, byte for byte:
- *    P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring
+ *    (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the one function or method declaration
+ *    around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It claims that
+ *    reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee
+ *    bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from
+ *    node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's object
+ *    destructuring element renaming one by name off require("node:child_process") and off an identifier, and by a string key off
+ *    require("node:child_process"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by
+ *    literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace, another
+ *    identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an identifier
+ *    by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve member call
+ *    on process by name and by literal key, and none under another identifier; (7) the declaration exactly as its rows write it,
+ *    byte for byte: a module-level function declaration with no modifier, with export alone and with export and async, none a
+ *    generator; a method with no modifier and no generator marker in a module-level class declaration with and without export, in a
+ *    class expression that initializes an exported module-level const and in an object literal that initializes a module-level
+ *    const with and without export; a module-level const, with and without export, bound to an arrow with a block body that is not
+ *    async and to a function expression with no name that is neither async nor a generator; an arrow const nested in a module-level
+ *    function declaration with export alone (read as the function); and <module>; (8) the gate members' plants, byte for byte: P8
+ *    to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring
  *    element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and
  *    as); and (9) the gate members' plants, byte for byte: P14 to P20 of refusal #8 (a launcher member by a no-substitution
  *    template key, an optional member call, a member call reached through optional chaining, a member call under a call of a
@@ -185,8 +201,12 @@
  *    using, by a parameter, a nested pattern or an element with a default value, or read through a wrapper; a member call under any
  *    other receiver, a call of another callee or with arguments and an element access by another key among them, other than as P17
  *    and P18 write it; optional chaining (?.) on a call or a member access other than as P15 and P16 write it; every other
- *    declaration form, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow
- *    or function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.
+ *    declaration form, a launch with more than one function or method declaration around it, a function declaration off module
+ *    level or with a generator marker, a method with a modifier (static or async among them) or a generator marker, a method of a
+ *    class or object literal off module level, or of a class expression or object literal that initializes no module-level const
+ *    (one passed as an argument among them), a module-level const bound to an async arrow or to an async or generator function
+ *    expression, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow or
+ *    function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.
  *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its
  *    second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array
  *    literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each
@@ -261,12 +281,13 @@
  *    same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one
  *    included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2
  *    holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and
- *    getBuiltinModule each by name and as a member by name and by literal key, a string and a no-substitution template each;
- *    createRequire(...)(...); and a call through a name that a module-level const, with and without export, a let, var, using or
- *    await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a
- *    same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a
- *    member among them), declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is
- *    NOT CLAIMED by this census.
+ *    getBuiltinModule each by name and as a member of an identifier receiver by name and by literal key, a string and a
+ *    no-substitution template each; createRequire(...)(...); and a call through a name that a module-level const, with and without
+ *    export, a let, var, using or await using in a function body, or a module-level declare const binds to createRequire(...), and
+ *    through a parameter beside a same-named module-level const so bound, createRequire called by name in each; every other loader
+ *    (createRequire reached as a member, and require or getBuiltinModule as a member of any other receiver, among them),
+ *    declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is NOT CLAIMED by this
+ *    census.
  *  C1-NAME-RESOLUTION: C1 (b2) resolves an identifier for C1-COMMAND-WORDS, C1-INVENTORY, C1-SPECIFIER-TEXT and C1-REGISTRATIONS as
  *    the landed reader's resolve() does (bindingTextReader, test/helpers/rf-binding-text-reader.ts, whose claim of record is
  *    wb-jwc.10's census), by its binding: the declaration TypeScript's checker binds it to by scope in a program over its own
@@ -319,18 +340,22 @@
  *    this census.
  *  C1-DECLARATION-REFERENCES: C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration
  *    by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an
- *    import or an export. It claims that reading exactly at the forms its rows plant: the parameters of a function declaration with
- *    and without export, of a method declaration in an exported class declaration, class expression and object literal, and of a
- *    module-level const bound to an arrow and to a function expression, each with and without export; in another file a named
- *    import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a
- *    string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export
- *    specifier, renaming it and not; every other parameter or reference form, the parameters of a method in a container without
- *    export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.
+ *    import or an export. It claims that reading exactly at the forms its rows plant: the parameters of the declaration, exactly as
+ *    its rows write it (byte for byte), of a module-level function declaration with export alone and with export default, of a
+ *    method with no modifier in a module-level class declaration with export and in a class expression and an object literal that
+ *    each initialize an exported module-level const, and of a module-level const, with and without export, bound to an arrow with a
+ *    block body and to a function expression with no name; in another file a named import, renaming it and not, a default import, a
+ *    call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and
+ *    a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or
+ *    reference form, the parameters of a function declaration that carries no export modifier (one an export specifier exports
+ *    among them) and of a method in a container without export, an optional call or member access (?.) and a value in any other
+ *    position among them, is NOT CLAIMED by this census.
  *  C1-DECLARATION-TEXT: C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at
- *    module level, the whole file), so any edit inside the launching declaration moves it. It claims that reading exactly at the
- *    forms its rows plant: a function declaration's line count, with and without export, and an edit inside it moving it, a
- *    module-level launch's whole file, and a module-level const statement, with and without export, whose arrow starts on its
- *    second line (the whole statement); every other declaration form is NOT CLAIMED by this census.
+ *    module level, the whole file). It claims that reading exactly at the forms its rows plant, each exactly as its rows write it
+ *    (byte for byte): a module-level function declaration's line count, with export alone and with no modifier, and an edit inside
+ *    the one with export moving it, a module-level launch's whole file, and a module-level const statement, with and without
+ *    export, whose arrow starts on its second line (the whole statement); every other declaration form, and an edit inside any
+ *    other launching declaration (a function declaration without export among them), is NOT CLAIMED by this census.
  *  C1-REGISTRATIONS: C1 (e) reads every registration entry the landed reader's registrations() reads in src, as
  *    path:id:effectClass: an object literal whose id field has a text alternative that is a reactivefiber.* name, one entry per
  *    such text and per opaque alternative of that id (gate members R-ALT1, R-ALT2 and R-ALT4 of refusal #4: the reactivefiber side
@@ -347,11 +372,13 @@
  *  C1-RUNTIME-ARGV: C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv
  *    lists no --no-commit. It claims that reading exactly at the forms its rows plant: --no-commit as an arm's last, an inner and
  *    its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census.
- *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to that
- *    binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a
- *    stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax
- *    kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member
- *    each read as a new use. A var or using binding and optional chaining (?.) on a reference are NOT CLAIMED by this census.
+ *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, the call being that
+ *    declaration's initializer itself, and every reference to that binding by name inside the launching declaration: a member read
+ *    or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or
+ *    arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a
+ *    hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding, a launch
+ *    bound through a wrapper around its call (parentheses, as, satisfies, !, a type assertion or await) and optional chaining (?.)
+ *    on a reference are NOT CLAIMED by this census.
  *  G2-STDIO: G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is
  *    bound to no declared name. A stdio property named otherwise than by an identifier is NOT CLAIMED by this census.
  *  G2-CHANNEL-SITES: G2 (static) reads every place src spells or resolves diagnostics_channel or node:diagnostics_channel, by the
@@ -2430,7 +2457,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-LAUNCH-ROUTES",
     pin: "C1",
-    words: "C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync, exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key (a string or a no-substitution template); and an execve member call on the identifier process. It is an rf launch when its command words (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the nearest function or method declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's object destructuring element renaming one by name off require(\"node:child_process\") and off an identifier, and by a string key off require(\"node:child_process\"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace, another identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an identifier by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve member call on process by name and by literal key, and none under another identifier; (7) the declaration as a function declaration with and without export, a method declaration in a class declaration with and without export, a class expression and an object literal, a module-level const bound to an arrow and to a function expression, each with and without export, an arrow const nested in a function declaration (read as the function) and <module>; (8) the gate members' plants, byte for byte: P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and as); and (9) the gate members' plants, byte for byte: P14 to P20 of refusal #8 (a launcher member by a no-substitution template key, an optional member call, a member call reached through optional chaining, a member call under a call of a member, a member call under an element access keyed by a name, and a launch in an object literal's method and in a module-level const arrow that is not exported). Every other route is NOT CLAIMED by this census: an alias bound by let, var or using, by a parameter, a nested pattern or an element with a default value, or read through a wrapper; a member call under any other receiver, a call of another callee or with arguments and an element access by another key among them, other than as P17 and P18 write it; optional chaining (?.) on a call or a member access other than as P15 and P16 write it; every other declaration form, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow or function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.",
+    words: "C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync, exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key (a string or a no-substitution template); and an execve member call on the identifier process. It is an rf launch when its command words (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the one function or method declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's object destructuring element renaming one by name off require(\"node:child_process\") and off an identifier, and by a string key off require(\"node:child_process\"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace, another identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an identifier by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve member call on process by name and by literal key, and none under another identifier; (7) the declaration exactly as its rows write it, byte for byte: a module-level function declaration with no modifier, with export alone and with export and async, none a generator; a method with no modifier and no generator marker in a module-level class declaration with and without export, in a class expression that initializes an exported module-level const and in an object literal that initializes a module-level const with and without export; a module-level const, with and without export, bound to an arrow with a block body that is not async and to a function expression with no name that is neither async nor a generator; an arrow const nested in a module-level function declaration with export alone (read as the function); and <module>; (8) the gate members' plants, byte for byte: P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and as); and (9) the gate members' plants, byte for byte: P14 to P20 of refusal #8 (a launcher member by a no-substitution template key, an optional member call, a member call reached through optional chaining, a member call under a call of a member, a member call under an element access keyed by a name, and a launch in an object literal's method and in a module-level const arrow that is not exported). Every other route is NOT CLAIMED by this census: an alias bound by let, var or using, by a parameter, a nested pattern or an element with a default value, or read through a wrapper; a member call under any other receiver, a call of another callee or with arguments and an element access by another key among them, other than as P17 and P18 write it; optional chaining (?.) on a call or a member access other than as P15 and P16 write it; every other declaration form, a launch with more than one function or method declaration around it, a function declaration off module level or with a generator marker, a method with a modifier (static or async among them) or a generator marker, a method of a class or object literal off module level, or of a class expression or object literal that initializes no module-level const (one passed as an argument among them), a module-level const bound to an async arrow or to an async or generator function expression, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow or function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.",
     falsifier: async () => ({
       name: sites(['spawn("rf", ["context", "render"]);']),
       importAlias: sites(['import { spawn as launch } from "node:child_process";', 'launch("rf", []);']),
@@ -2886,7 +2913,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-OPAQUE-LOADS",
     pin: "C1",
-    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and getBuiltinModule each by name and as a member by name and by literal key, a string and a no-substitution template each; createRequire(...)(...); and a call through a name that a module-level const, with and without export, a let, var, using or await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a member among them), declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is NOT CLAIMED by this census.",
+    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and getBuiltinModule each by name and as a member of an identifier receiver by name and by literal key, a string and a no-substitution template each; createRequire(...)(...); and a call through a name that a module-level const, with and without export, a let, var, using or await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a member, and require or getBuiltinModule as a member of any other receiver, among them), declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is NOT CLAIMED by this census.",
     falsifier: async () =>
       opaqueLoads(
         planted([
@@ -3223,7 +3250,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-DECLARATION-REFERENCES",
     pin: "C1",
-    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of a function declaration with and without export, of a method declaration in an exported class declaration, class expression and object literal, and of a module-level const bound to an arrow and to a function expression, each with and without export; in another file a named import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the parameters of a method in a container without export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.",
+    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of the declaration, exactly as its rows write it (byte for byte), of a module-level function declaration with export alone and with export default, of a method with no modifier in a module-level class declaration with export and in a class expression and an object literal that each initialize an exported module-level const, and of a module-level const, with and without export, bound to an arrow with a block body and to a function expression with no name; in another file a named import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the parameters of a function declaration that carries no export modifier (one an export specifier exports among them) and of a method in a container without export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       calls: launchingDeclarations([
         plant("control.ts", ["export function render(root: string, commit = false): void {", '  spawn("rf", ["--workspace", root, ...(commit ? [] : ["--no-commit"])]);', "}"]),
@@ -3294,7 +3321,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-DECLARATION-TEXT",
     pin: "C1",
-    words: "C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at module level, the whole file), so any edit inside the launching declaration moves it. It claims that reading exactly at the forms its rows plant: a function declaration's line count, with and without export, and an edit inside it moving it, a module-level launch's whole file, and a module-level const statement, with and without export, whose arrow starts on its second line (the whole statement); every other declaration form is NOT CLAIMED by this census.",
+    words: "C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at module level, the whole file). It claims that reading exactly at the forms its rows plant, each exactly as its rows write it (byte for byte): a module-level function declaration's line count, with export alone and with no modifier, and an edit inside the one with export moving it, a module-level launch's whole file, and a module-level const statement, with and without export, whose arrow starts on its second line (the whole statement); every other declaration form, and an edit inside any other launching declaration (a function declaration without export among them), is NOT CLAIMED by this census.",
     falsifier: async () => {
       const launcher = (padding: string): SourceText[] => planted(["export function launch(): void {", `  spawn("rf", ["context", "render", "--no-commit"]);${padding}`, "}"]);
       const before = declarationTexts(launcher(""));
@@ -3410,7 +3437,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-BINDING-USES",
     pin: "G2",
-    words: "G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding and optional chaining (?.) on a reference are NOT CLAIMED by this census.",
+    words: "G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, the call being that declaration's initializer itself, and every reference to that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding, a launch bound through a wrapper around its call (parentheses, as, satisfies, !, a type assertion or await) and optional chaining (?.) on a reference are NOT CLAIMED by this census.",
     falsifier: async () =>
       childUses(
         planted([
