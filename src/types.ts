@@ -5,6 +5,7 @@
 import type { ThinkingLevel } from "@earendil-works/pi-ai";
 import type { AgentSession } from "@earendil-works/pi-coding-agent";
 import type { LifetimeUsage } from "./usage.js";
+import type { WorktreeCleanupResult } from "./worktree.js";
 
 export type { ThinkingLevel };
 
@@ -204,8 +205,11 @@ export interface AgentRecord {
   pendingSteers?: string[];
   /** Worktree info if the agent is running in an isolated worktree. */
   worktree?: { path: string; branch: string; baseSha: string; workPath: string };
-  /** Worktree cleanup result after agent completion. */
-  worktreeResult?: { hasChanges: boolean; branch?: string };
+  /**
+   * Worktree cleanup result after agent completion, every variant kept as cleanup returned it: a failed preservation
+   * carries the kept worktree's path and git's diagnostic, never the clean result (EAT-R003).
+   */
+  worktreeResult?: WorktreeCleanupResult;
   /** The tool_use_id from the original Agent tool call. */
   toolCallId?: string;
   /** Path to the streaming output transcript file. */

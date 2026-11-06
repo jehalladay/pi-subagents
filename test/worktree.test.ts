@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -380,11 +381,13 @@ describe("worktree", () => {
   });
 });
 
-// cleanupWorktree's outer catch is the only place in the repo where a caught
-// error can DESTROY user work while reporting success-shaped output: it removes
-// the worktree and returns `{ hasChanges: false }`, which the manager renders as
-// "the agent changed nothing". If the commit or branch step fails, the agent's
-// commits go with the worktree and nobody is told.
+// cleanupWorktree's outer catch is where a failed preservation step lands. It
+// used to remove the worktree and return `{ hasChanges: false }`, which the
+// manager rendered as "the agent changed nothing": a failed commit, status or
+// branch step destroyed the agent's work and nobody was told. The corrected
+// contract (EAT-R001/EAT-R002; wb-5ik5, owner specification ruling M:61188)
+// keeps the worktree and answers with the typed preservation-failed result:
+// its path is the recovery path and its diagnostic carries git's failure text.
 describe("cleanupWorktree — failure path", () => {
   let repoDir: string;
   let pi: ExtensionAPI;
@@ -410,12 +413,13 @@ describe("cleanupWorktree — failure path", () => {
     expect(result.branch).toBeUndefined();
   });
 
-  it("swallows a git failure inside a still-present worktree and reports no changes", async () => {
+  it("answers a git failure inside a still-present worktree with the typed preservation-failed result and keeps the worktree", async () => {
     // The outer catch. The directory exists — so the existsSync guard above
     // does not fire — but git cannot operate in it, which is what a corrupted
-    // or externally-detached worktree looks like. The agent's work is lost
-    // either way; what matters is that cleanup does not reject out of the
-    // manager's settle path and take the whole record down with it.
+    // or externally-detached worktree looks like. Cleanup keeps the worktree,
+    // so the agent's work stays at the recovery path, and it still resolves
+    // rather than rejecting out of the manager's settle path and taking the
+    // whole record down with it.
     const wt = (await createWorktree(pi, repoDir, "corrupt"))!;
     // git can no longer remove this worktree once its link is broken, so the directory is ours to remove.
     trackScratch(wt.path);
@@ -425,14 +429,20 @@ describe("cleanupWorktree — failure path", () => {
 
     const result = await cleanupWorktree(pi, repoDir, wt, "corrupted agent");
 
-    expect(result.hasChanges).toBe(false);
+    expect(result.hasChanges).toBe(true);
+    expect(result.preservationFailed).toBe(true);
+    expect(result.path).toBe(wt.path);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe("agent output");
+    expect(result.diagnostic).toContain("not a git repository");
     expect(result.branch).toBeUndefined();
   });
 
-  it("reports no changes when the preservation commit fails", async () => {
+  it("answers a failed preservation commit with the typed preservation-failed result and keeps the worktree", async () => {
     // `git commit` failing resolves with a non-zero code rather than throwing,
     // so the outer catch is only reached if the result is inspected.
     const wt = (await createWorktree(pi, repoDir, "commit-fails"))!;
+    trackScratch(wt.path); // the worktree is kept now, so the directory is the test's to remove
     writeFileSync(join(wt.path, "work.txt"), "agent output");
 
     const result = await cleanupWorktree(
@@ -442,7 +452,12 @@ describe("cleanupWorktree — failure path", () => {
       "commit fails",
     );
 
-    expect(result.hasChanges).toBe(false);
+    expect(result.hasChanges).toBe(true);
+    expect(result.preservationFailed).toBe(true);
+    expect(result.path).toBe(wt.path);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe("agent output");
+    expect(result.diagnostic).toContain("boom");
     expect(result.branch).toBeUndefined();
   });
 
@@ -469,6 +484,100 @@ describe("cleanupWorktree — failure path", () => {
       cwd: repoDir, stdio: "pipe",
     }).toString();
     expect(files).toContain("work.txt");
+  });
+});
+
+// EAT-R001 / EAT-R002 (wb-5ik5; program mechanical-workflows-interop-2026-11-04,
+// ATOMIC-REQUIREMENTS.md@0b25e14e): when preservation fails, cleanup must keep the
+// agent's edited bytes reachable, and must not answer with the clean result.
+describe("cleanupWorktree — preservation failure keeps the edited bytes", () => {
+  let repoDir: string;
+  let pi: ExtensionAPI;
+
+  beforeEach(() => { repoDir = initGitRepo(); pi = mockPi(); });
+  afterEach(async () => {
+    try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
+  });
+
+  const TRACKED_BYTES = "# Test repo\nedited by the agent\n";
+  const UNTRACKED_BYTES = "agent output\n";
+
+  /** Edit the tracked README and add an untracked file, the two kinds of edit EAT-R001 names. */
+  function editTrackedAndUntracked(path: string): void {
+    writeFileSync(join(path, "README.md"), TRACKED_BYTES);
+    writeFileSync(join(path, "work.txt"), UNTRACKED_BYTES);
+  }
+
+  /** The preservation refs cleanup could have made for `agentId`, as `git branch --list` prints them. */
+  function preservationRefs(agentId: string): string {
+    return execFileSync("git", ["branch", "--list", `pi-agent-${agentId}*`], { cwd: repoDir, encoding: "utf-8", stdio: "pipe" }).trim();
+  }
+
+  it("keeps the worktree and its exact bytes when the preservation commit fails", async () => {
+    // EAT-R001: "inject commit failure ... cleanup leaves exact bytes reachable at the recovery
+    // path or a verified retained ref. Assert the original worktree remains when no preservation
+    // ref exists."
+    const wt = (await createWorktree(pi, repoDir, "keep-commit"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+
+    await cleanupWorktree(failingPi(args => args[0] === "commit", { code: 1, killed: false }), repoDir, wt, "commit fails");
+
+    expect(preservationRefs("keep-commit")).toBe("");
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
+  });
+
+  it("keeps the worktree and its committed bytes when every branch name is refused", async () => {
+    // EAT-R001: "inject ... exhaustion of branch-name retries separately". The commit lands in
+    // the detached worktree first, so its HEAD is the only thing that still reaches it.
+    const wt = (await createWorktree(pi, repoDir, "keep-branch"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    const refused: string[][] = [];
+    const failing = failingPi(args => args[0] === "branch" && refused.push(args) > 0, { code: 1, killed: false });
+
+    await cleanupWorktree(failing, repoDir, wt, "branch fails");
+
+    // Both names were tried: the agent's own branch, then the suffixed retry.
+    expect(refused.map(args => args[1])).toEqual(["pi-agent-keep-branch", expect.stringMatching(/^pi-agent-keep-branch-\d+$/)]);
+    expect(preservationRefs("keep-branch")).toBe("");
+    expect(existsSync(wt.path)).toBe(true);
+    const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
+    expect(show("README.md")).toBe(TRACKED_BYTES);
+    expect(show("work.txt")).toBe(UNTRACKED_BYTES);
+  });
+
+  it.each([
+    ["commit", (args: string[]) => args[0] === "commit"],
+    ["status", (args: string[]) => args[0] === "status"],
+    ["branch", (args: string[]) => args[0] === "branch"],
+  ])("a failed %s step is not answered with the clean result", async (step, match) => {
+    // EAT-R002: "For commit, status and branch failures, assert a typed preservation-failed
+    // result with recovery path ..., never a clean/no-change outcome". Its named mutant is
+    // "Return hasChanges:false from the failure branch".
+    const wt = (await createWorktree(pi, repoDir, `typed-${step}`))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+
+    const result = await cleanupWorktree(failingPi(match, { code: 1, killed: false }), repoDir, wt, `${step} fails`);
+
+    expect(result.hasChanges).not.toBe(false);
+    expect(result.path).toBe(wt.path);
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(existsSync(wt.path)).toBe(true);
+    // The kept tree still holds the agent's bytes: on disk for a failed commit or status step, and in the
+    // worktree's own HEAD commit after a failed branch step (the commit landed before the branch was refused).
+    const shown = async (file: string) => step === "branch"
+      ? execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" })
+      : await readFile(join(wt.path, file), "utf-8");
+    expect(await shown("README.md")).toBe(TRACKED_BYTES);
+    expect(await shown("work.txt")).toBe(UNTRACKED_BYTES);
+    // "serialization preserves that variant": the result is plain data, and a JSON round trip keeps every field.
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
   });
 });
 

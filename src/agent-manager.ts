@@ -24,8 +24,9 @@ import { assignHandle, handleBase } from "./mention.js";
 import { describeModel } from "./model-resolver.js";
 import type { AgentInvocation, AgentRecord, AgentTombstone, IsolationMode, MentionResolution, SubagentType, ThinkingLevel } from "./types.js";
 import { addUsage, type LifetimeUsage } from "./usage.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import type { CompiledSchema } from "./workflow/json-schema.js";
-import { cleanupWorktree, createWorktree, isWorktreeIsolationEnabled, pruneWorktrees, } from "./worktree.js";
+import { cleanupWorktree, createWorktree, isWorktreeIsolationEnabled, pruneWorktrees, type WorktreePreservationFailedResult, } from "./worktree.js";
 
 export type OnAgentComplete = (record: AgentRecord) => void;
 export type OnAgentStart = (record: AgentRecord) => void;
@@ -358,6 +359,19 @@ async function shutdownChildSession(session: AgentSession | undefined): Promise<
   } catch { /* a partial session must degrade, not take the teardown down with it */ }
   // Always, even on timeout: disposal is what this function ultimately exists to do.
   try { session?.dispose?.(); } catch { /* ignore */ }
+}
+
+/**
+ * The note a settled agent's result carries when its worktree could not be preserved (EAT-R003): git's failure and the
+ * path the worktree was kept at, so the reader learns where the work is instead of reading silence as "changed nothing".
+ * Each value is producer text, so each goes through the shared sanitizer with the single-line "label" layout.
+ * `repo` names the repository the worktree belongs to when it is not the parent session's own (a caller-supplied cwd).
+ */
+export function preservationFailureNote(result: WorktreePreservationFailedResult, repo: string | undefined): string {
+  const label = (value: string) => sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "label");
+  const repoNote = repo !== undefined ? ` (a worktree of \`${label(repo)}\`)` : "";
+  return `\n\n---\nWorktree preservation failed: ${label(result.diagnostic)}\n` +
+    `Nothing was saved to a branch. The agent's work is kept in its worktree at \`${label(result.path)}\`${repoNote}; recover it from there.`;
 }
 
 export class AgentManager {
@@ -899,6 +913,10 @@ export class AgentManager {
             // what a human reads, so the note still belongs on it.
             record.result = (record.result ?? "") +
               `\n\n---\nChanges saved to branch \`${wtResult.branch}\`${repoNote}. Merge with: \`git merge ${wtResult.branch}\`${customCwd !== undefined ? ` (run in \`${baseCwd}\`)` : ""}`;
+          } else if (wtResult.preservationFailed) {
+            // The kept worktree is the only copy of the agent's work; without
+            // this note the reader sees exactly what the clean result showed.
+            record.result = (record.result ?? "") + preservationFailureNote(wtResult, customCwd !== undefined ? baseCwd : undefined);
           }
         }
 
