@@ -55,10 +55,11 @@ export interface ClaudeWorkflowHostOptions {
   /** Fired in the query's own finally, pairing every onQueryLive so a wiring registry never leaks an ended query. */
   onQueryDone?: (call: ClaudeCallIdentity) => void;
   /**
-   * wb-413a (EAT-R017..EAT-R020): the host-measured readings of what an answer depends on beyond its payload and the
-   * policy above: the workspace source, the instruction files the sources load and the provider identity
-   * (replay-dependencies.ts). They join the replay basis as read, so a changed reading declines the journal, and while
-   * any reading is unknown the host permits no settled-agent replay at all. Absent, the basis is the policy-only basis.
+   * wb-413a (EAT-R017..EAT-R020): readings of three dependencies an answer has beyond its payload and the policy above:
+   * the workspace source, the instruction files of the enabled setting sources and the provider identity
+   * (replay-dependencies.ts). They join the replay basis as its ninth element, so a changed reading declines the
+   * journal, and while any reading is not measured with a well-formed digest the host permits no settled replay at all,
+   * neither of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
    */
   replayDependencies?: ClaudeReplayDependencies;
 }
@@ -164,13 +165,15 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   const tools = config.tools ?? [];
   const permissionMode = config.permissionMode ?? "dontAsk";
   /**
-   * Everything an agent answer depends on beyond its own call payload. Journal
-   * entries record it, and the runtime replays only under an equal basis, so a
-   * changed model pin, permission mode, tool list, role set, grant set or
-   * workspace declines the cache (the L4 contract in
+   * The basis an agent answer is replayed under, beyond its own call payload.
+   * Journal entries record it, and the runtime replays only under an equal
+   * basis, so a changed model pin, permission mode, tool list, role set, grant
+   * set or workspace declines the cache (the L4 contract in
    * workbench-host-contract.test.ts). Per-run identity — invocationId, signal,
-   * observers — is deliberately not part of it. The measured readings, when the
-   * embedding host supplies them, follow as one ninth element (wb-413a).
+   * observers — is deliberately not part of it. Readings the embedding host
+   * supplies (replayDependencies) follow the eight policy elements as one ninth
+   * element, {source, instructions, provider} in that order, each reading as
+   * supplied (wb-413a).
    */
   const dependencies = config.replayDependencies;
   const replayBasis = JSON.stringify([
@@ -341,8 +344,9 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   return {
     // Settled-agent prefix replay is safe here because every entry carries
     // this host's policy basis, and SDK node effects are admitted per journaled
-    // effect class rather than replayed the way agents are. An unknown reading
-    // declines replay outright: an absence can never be matched (wb-413a).
+    // effect class rather than replayed the way agents are. A reading that is
+    // not measured with a well-formed digest declines replay outright, agent
+    // answers and node reads alike: an absence can never be matched (wb-413a).
     replaySafe: dependencies === undefined || replayDependenciesMeasured(dependencies),
     replayBasis,
     async spawnAgent(request) {

@@ -10,7 +10,9 @@
  * settles to null, and a recorded answer can only come back through the journal. The recorded answer is PLANTED: the
  * first run's own journal row - its real key and the basis its real host recorded - is rewritten as a settled answer
  * (the planted-row shape of test/workbench-pi-reconcile.test.ts). Each resume then reads "replayed" (the planted answer
- * returns, one call replayed) or "live" (null, nothing replayed), with the prompt held constant throughout.
+ * returns, one call replayed) or "live" (null, nothing replayed), with the prompt held constant throughout. A resumed run
+ * journals its own row under its own host's basis, so resumedWith also reads that row's readings and a row can say which
+ * reading moved and which stayed equal.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
@@ -110,14 +112,27 @@ function readingsOf(entry: WorkflowJournalEntry): Record<string, { state: string
   return basis[8] as Record<string, { state: string; digest?: string; reason?: string }>;
 }
 
-/** Resume the recording run with the same script and prompt, and read what came back. */
-async function resumed(booted: Booted, from: string): Promise<"replayed" | "live"> {
-  const { notice } = await launch(booted, { script: SCRIPT, resumeFromRunId: from });
+/** What a resume's completion notice reads as: the planted answer with one call replayed, or null with nothing replayed. */
+function outcomeOf(notice: string, from: string): "replayed" | "live" {
   const result = /<result>([\s\S]*?)<\/result>/.exec(notice)?.[1];
   const summary = /<summary>([\s\S]*?)<\/summary>/.exec(notice)?.[1] ?? "";
   if (result === PLANTED && summary.includes(`1 replayed from ${from}`)) return "replayed";
   if (result === "null" && !summary.includes("replayed")) return "live";
   throw new Error(`resume read neither replayed nor live: result ${JSON.stringify(result)}, summary ${JSON.stringify(summary)}`);
+}
+
+/** Resume the recording run with the same script and prompt, and read what came back. */
+async function resumed(booted: Booted, from: string): Promise<"replayed" | "live"> {
+  const { notice } = await launch(booted, { script: SCRIPT, resumeFromRunId: from });
+  return outcomeOf(notice, from);
+}
+
+/** Resume as `resumed` does, and also read the readings the resumed run's own journal row was recorded under. */
+async function resumedWith(booted: Booted, from: string): Promise<{ outcome: "replayed" | "live"; readings: ReturnType<typeof readingsOf> }> {
+  const { taskId, notice } = await launch(booted, { script: SCRIPT, resumeFromRunId: from });
+  const rows = readJournal(join(sessionTaskDir(booted.dir, "s1"), `${taskId}.workflow.jsonl`));
+  expect(rows).toHaveLength(1);
+  return { outcome: outcomeOf(notice, from), readings: readingsOf(rows[0]!) };
 }
 
 const MEASURED = { state: "measured", digest: expect.stringMatching(/^sha256:[0-9a-f]{64}$/) };
@@ -228,5 +243,116 @@ describe("wb-413a wiring: the embedded host's replay basis carries the measured 
 
     expect(await resumed(booted, recording.taskId)).toBe("live");
     expect(readingsOf(planted).source).toEqual({ state: "unknown", reason: expect.any(String) });
+  }, 60_000);
+
+  it("W-R017-INDEX: a staged change whose working-tree bytes equal HEAD moves the source reading alone (the index), and unstaging it replays again", async () => {
+    const booted = await boot({});
+    const candidate = initRepo(booted.dir);
+    const recording = await launch(booted, { script: SCRIPT });
+    const recorded = readingsOf(plant(booted, recording.taskId));
+
+    writeFileSync(candidate, "export const candidate = 2;\n");
+    git(booted.dir, "add", "candidate.ts");
+    writeFileSync(candidate, "export const candidate = 1;\n");
+    const staged = await resumedWith(booted, recording.taskId);
+    expect(staged.outcome).toBe("live");
+    expect(staged.readings.source).toEqual(MEASURED);
+    expect(staged.readings.source).not.toEqual(recorded.source);
+    expect(staged.readings.instructions).toEqual(recorded.instructions);
+    expect(staged.readings.provider).toEqual(recorded.provider);
+
+    git(booted.dir, "reset", "-q", "--", "candidate.ts");
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+  }, 60_000);
+
+  it("W-R018-LOCAL-SOURCE: the Git-ignored CLAUDE.local.md moves the instruction reading, while the source reading, which cannot see it, stays equal", async () => {
+    claudeConfig();
+    const booted = await boot({ settingSources: ["local"] });
+    initRepo(booted.dir, ["CLAUDE.local.md", ".claude/settings.local.json"]);
+    const memory = join(booted.dir, "CLAUDE.local.md");
+    write(memory, "local memory v1\n");
+    const recording = await launch(booted, { script: SCRIPT });
+    const recorded = readingsOf(plant(booted, recording.taskId));
+
+    write(memory, "local memory v2\n");
+    const moved = await resumedWith(booted, recording.taskId);
+    expect(moved.outcome).toBe("live");
+    expect(moved.readings.instructions).not.toEqual(recorded.instructions);
+    expect(moved.readings.source).toEqual(recorded.source);
+    expect(moved.readings.provider).toEqual(recorded.provider);
+  }, 60_000);
+
+  it("W-R018-PROJECT: under the project source, a Git-ignored skill below the cwd moves the instruction reading alone", async () => {
+    const booted = await boot({ settingSources: ["project"] });
+    initRepo(booted.dir, [".claude/skills/"]);
+    const skill = join(booted.dir, ".claude", "skills", "review", "SKILL.md");
+    write(skill, "project skill v1\n");
+    const recording = await launch(booted, { script: SCRIPT });
+    const recorded = readingsOf(plant(booted, recording.taskId));
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    write(skill, "project skill v2\n");
+    const moved = await resumedWith(booted, recording.taskId);
+    expect(moved.outcome).toBe("live");
+    expect(moved.readings.instructions).not.toEqual(recorded.instructions);
+    expect(moved.readings.source).toEqual(recorded.source);
+    expect(moved.readings.provider).toEqual(recorded.provider);
+  }, 60_000);
+
+  it("W-R018-HOME: with CLAUDE_CONFIG_DIR unset the user source reads <home>/.claude, so a memory file there moves the instruction reading", async () => {
+    delete process.env[CONFIG_ENV];
+    const booted = await boot({ settingSources: ["user"] });
+    const home = process.env.HOME;
+    if (home === undefined) throw new Error("the hermetic sandbox sets HOME");
+    initRepo(booted.dir);
+    const memory = join(home, ".claude", "CLAUDE.md");
+    write(memory, "home memory v1\n");
+    const recording = await launch(booted, { script: SCRIPT });
+    const recorded = readingsOf(plant(booted, recording.taskId));
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    write(memory, "home memory v2\n");
+    const moved = await resumedWith(booted, recording.taskId);
+    expect(moved.outcome).toBe("live");
+    expect(moved.readings.instructions).not.toEqual(recorded.instructions);
+    expect(moved.readings.source).toEqual(recorded.source);
+    expect(moved.readings.provider).toEqual(recorded.provider);
+    // The provider reading reads its user setting file under the same directory.
+    write(memory, "home memory v1\n");
+    write(join(home, ".claude", "settings.json"), '{"model":"claude-haiku-5-5"}\n');
+    const settings = await resumedWith(booted, recording.taskId);
+    expect(settings.outcome).toBe("live");
+    expect(settings.readings.provider).not.toEqual(recorded.provider);
+    expect(settings.readings.instructions).toEqual(recorded.instructions);
+  }, 60_000);
+
+  it("W-R018-RELATIVE-CONFIG: a relative CLAUDE_CONFIG_DIR is resolved against the run's cwd, so a memory file there moves the instruction reading", async () => {
+    process.env[CONFIG_ENV] = "profile";
+    const booted = await boot({ settingSources: ["user"] });
+    initRepo(booted.dir, ["profile/"]);
+    const memory = join(booted.dir, "profile", "CLAUDE.md");
+    write(memory, "profile memory v1\n");
+    const recording = await launch(booted, { script: SCRIPT });
+    const recorded = readingsOf(plant(booted, recording.taskId));
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    write(memory, "profile memory v2\n");
+    const moved = await resumedWith(booted, recording.taskId);
+    expect(moved.outcome).toBe("live");
+    expect(moved.readings.instructions).not.toEqual(recorded.instructions);
+    expect(moved.readings.source).toEqual(recorded.source);
+  }, 60_000);
+
+  it("W-R020-INSTRUCTIONS: under the user source a FIFO among the skills makes the instruction reading unknown, so the same prompt over unchanged files replays nothing", async () => {
+    const config = claudeConfig();
+    mkdirSync(join(config, "skills"), { recursive: true });
+    execFileSync("mkfifo", [join(config, "skills", "pipe")]);
+    const booted = await boot({ settingSources: ["user"] });
+    initRepo(booted.dir);
+    const recording = await launch(booted, { script: SCRIPT });
+    const planted = plant(booted, recording.taskId);
+
+    expect(await resumed(booted, recording.taskId)).toBe("live");
+    expect(readingsOf(planted)).toEqual({ source: MEASURED, instructions: { state: "unknown", reason: "dependency-not-a-file" }, provider: MEASURED });
   }, 60_000);
 });

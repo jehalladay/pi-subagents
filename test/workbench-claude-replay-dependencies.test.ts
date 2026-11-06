@@ -19,7 +19,8 @@
  *    unchanged."
  *
  * Here the readings are INJECTED (ClaudeWorkflowHostOptions.replayDependencies), so each row judges the host's use of a
- * reading: a changed reading declines the journal, an equal one replays it, and an unknown one replays nothing. How the
+ * reading: a changed reading declines the journal, an equal one replays it, and an unknown one replays nothing (no agent
+ * answer, and no journaled node read either: H-R020-NODE-READ). How the
  * embedded Pi host MEASURES each reading is judged by test/workbench-replay-dependency-readers.test.ts (the readers) and
  * test/workbench-replay-dependencies-wiring.test.ts (the registered SubagentWorkflow path over a real Git repository).
  */
@@ -134,6 +135,20 @@ describe("wb-413a host seam: a changed measured dependency declines the journal 
 
   it("H-R019: a changed provider reading (effective provider version or settings) is not reused", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE, provider: measured("provider: sdk 0.3.301, contracts p1, settings s1") }));
+  });
+
+  it("H-SHAPE-BYTES: the recorded basis is the eight policy elements and then {source, instructions, provider}, in that order, each reading as supplied", async () => {
+    const outcome = await recordThenResume(BASELINE, { ...BASELINE });
+    expect(outcome.journal[0]?.basis).toBe(
+      JSON.stringify(["/tmp", "claude-opus-5-5", "dontAsk", [], [], null, null, null, { source: BASELINE.source, instructions: BASELINE.instructions, provider: BASELINE.provider }]),
+    );
+  });
+
+  it("H-SHAPE-LEGACY: a host built without readings records the eight policy elements alone, byte for byte, and replays under them", async () => {
+    const outcome = await recordThenResume(undefined, undefined);
+    expect(outcome.journal).toHaveLength(1);
+    expect(outcome.journal[0]?.basis).toBe('["/tmp","claude-opus-5-5","dontAsk",[],[],null,null,null]');
+    expectReplayed(outcome);
   });
 
   it("H-LEGACY: the policy dimensions still decline the journal beside the readings (a model pin change)", async () => {
@@ -279,5 +294,24 @@ describe("wb-413a host seam: the uncertain non-read denial is retained (EAT-R021
     expect(live.replayedNodeCount).toBe(0);
     expect(nodeRows(live).at(-1)).toMatchObject({ state: "done", freshness: "unknown" });
     expect(world.reads).toBe(2);
+  });
+});
+
+describe("wb-413a host seam: an unknown reading replays no journaled node read either (EAT-R020)", () => {
+  const READ_NODE = `${HEAD}return await node("record.read", { value: "x" });`;
+
+  it("H-R020-NODE-READ: with a reading unknown in both runs, a journaled read runs live again and nothing is replayed", async () => {
+    for (const dimension of ["source", "instructions", "provider"] as const) {
+      const world: World = { effects: 0, reads: 0 };
+      const blind: ClaudeReplayDependencies = { ...BASELINE, [dimension]: unknown(`${dimension}-unmeasurable`) };
+      const journal: WorkflowJournalEntry[] = [];
+      const first = await runWorkflow({ script: READ_NODE, host: nodeHost(world, blind), journal: { entries: [], append: entry => journal.push(entry) } });
+      expect(first.value).toEqual({ observed: "read 1" });
+      expect(journal).toEqual([expect.objectContaining({ kind: "node", effectClass: "read" })]);
+      const resumed = await runWorkflow({ script: READ_NODE, host: nodeHost(world, { ...blind }), journal: { entries: journal } });
+      expect(resumed.value, dimension).toEqual({ observed: "read 2" });
+      expect(resumed.replayedNodeCount).toBe(0);
+      expect(world.reads).toBe(2);
+    }
   });
 });

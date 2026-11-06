@@ -1,24 +1,21 @@
 /**
- * The measured dependencies of a recorded Claude agent answer (wb-413a; program mechanical-workflows-interop-2026-11-04,
- * slice PI-4, EAT-R017..EAT-R020). The Claude host's replay basis names the policy a call ran under: cwd, model pin,
- * permission mode, setting-source names, tools, roles, grants and principal (claude-host.ts). An answer also depends on
- * what that policy READS while the session runs, and this module holds the host's readings of three such dependencies:
+ * Readings of three dependencies of a recorded Claude agent answer (wb-413a; program mechanical-workflows-interop-2026-11-04,
+ * slice PI-4, EAT-R017..EAT-R020), beyond the policy the Claude host's replay basis already names: cwd, model pin,
+ * permission mode, setting-source names, tools, roles, grants and principal (claude-host.ts).
  *
- *  - source: the workspace's Git HEAD commit and tree and the candidate digest over the index and every Git-visible
- *    file's bytes (tracked and untracked, ignored files excepted), so a dirty edit moves the reading as a commit does;
- *  - instructions: the bytes at every instruction location each enabled setting source loads
- *    (CLAUDE_INSTRUCTION_LOCATIONS, and the memory files of every ancestor directory, CLAUDE_ANCESTOR_MEMORY); the
- *    default settingSources [] loads none, so it reads none;
- *  - provider: the installed runtime artifact digest and the provider contract digest of the run's invocation identity
- *    (identity.ts), and the bytes of each enabled source's setting file (CLAUDE_SETTINGS_LOCATIONS).
+ *  - source (sourceDependency): HEAD's commit and tree with the candidate digest the host hands in; src/index.ts hands
+ *    in the identity capture's Git candidate, which covers the HEAD tree, the index, and the bytes of every tracked file
+ *    and every untracked file Git does not ignore;
+ *  - instructions (instructionDependency): the bytes at the paths instructionPaths names for each enabled setting
+ *    source, its CLAUDE_INSTRUCTION_LOCATIONS and its CLAUDE_ANCESTOR_MEMORY files; with no source enabled it reads no file;
+ *  - provider (providerDependency): the runtime artifact digest and the provider contract digest of the identity it is
+ *    handed, and the bytes of each enabled source's setting file (CLAUDE_SETTINGS_LOCATIONS).
  *
- * A reading is MEASURED, a domain-separated digest of what was read, or UNKNOWN, a fixed reason and no digest. An
- * unknown reading is never turned into a digest: two runs that could not measure a dependency would otherwise compare
- * equal on that absence and hand back a stale coding or verification answer. The host permits no settled-agent replay
- * while any reading is unknown (replayDependenciesMeasured), so "cannot measure" declines replay instead of matching.
- *
- * The readers read files only. The source reading takes the host's own Git readings as input (src/index.ts measures the
- * candidate and the HEAD), so no reader here starts a process.
+ * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest. An unknown reading is
+ * never turned into a digest: two runs that could not measure a dependency would otherwise compare equal on that absence
+ * and hand back a stale coding or verification answer. replayDependenciesMeasured is true only for three measured
+ * readings with well-formed digests, and the Claude host permits settled replay only then, so "cannot measure" declines
+ * replay instead of matching.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, realpathSync, type Stats, statSync } from "node:fs";
@@ -32,22 +29,23 @@ export type ReplayDependency =
 
 /** The three readings an agent answer is replayed under (ClaudeWorkflowHostOptions.replayDependencies). */
 export interface ClaudeReplayDependencies {
-  /** Git HEAD commit and tree plus the candidate digest of the index and every Git-visible file's bytes. */
+  /** HEAD's commit and tree with the candidate digest (sourceDependency). */
   readonly source: ReplayDependency;
-  /** The skill and system instruction files the enabled setting sources load. */
+  /** The bytes at the instruction paths of the enabled setting sources (instructionDependency). */
   readonly instructions: ReplayDependency;
-  /** The installed runtime artifacts, the provider contracts and the enabled sources' setting files. */
+  /** The handed identity's runtime artifact and provider contract digests and the setting files (providerDependency). */
   readonly provider: ReplayDependency;
 }
 
-/** The setting sources the Claude Agent SDK loads from the filesystem (Options.settingSources). */
+/** A setting-source name, the same three names as the Claude Agent SDK's Options.settingSources (SettingSource). */
 export type ClaudeSettingSource = "user" | "project" | "local";
 
 type SourceTable = Readonly<Record<ClaudeSettingSource, readonly string[]>>;
 
 /**
- * Where each source's instruction files live, relative to the SDK's user config directory for "user"
- * (claudeUserConfigDir) and to the run's cwd for "project" and "local". A directory entry is read whole, recursively.
+ * The instruction locations the instruction reading reads for each source, relative to the source's base: the user
+ * config directory (claudeUserConfigDir) for "user", the cwd for "project" and "local". A location that is a directory
+ * is read with every file below it, down to the depth a walk reads (MAX_DEPTH).
  */
 export const CLAUDE_INSTRUCTION_LOCATIONS: SourceTable = Object.freeze({
   user: Object.freeze(["CLAUDE.md", "skills", "agents", "commands", "output-styles", "rules"]),
@@ -63,43 +61,50 @@ export const CLAUDE_INSTRUCTION_LOCATIONS: SourceTable = Object.freeze({
   local: Object.freeze(["CLAUDE.local.md"]),
 });
 
-/** The memory files a source also loads from every ancestor directory of the cwd, up to the filesystem root. */
+/** The memory files the instruction reading also reads for each source in every proper ancestor directory of the cwd. */
 export const CLAUDE_ANCESTOR_MEMORY: SourceTable = Object.freeze({
   user: Object.freeze([]),
   project: Object.freeze(["CLAUDE.md", ".claude/CLAUDE.md"]),
   local: Object.freeze(["CLAUDE.local.md"]),
 });
 
-/** The setting file each source reads (model, environment, hooks, output style): the provider's settings. */
+/** The setting file the provider reading reads for each source, relative to the same base as its instruction locations. */
 export const CLAUDE_SETTINGS_LOCATIONS: SourceTable = Object.freeze({
   user: Object.freeze(["settings.json"]),
   project: Object.freeze([".claude/settings.json"]),
   local: Object.freeze([".claude/settings.local.json"]),
 });
 
-/** The file readers' budget: a reading past it is unknown, never a digest of part of the files. */
+/** A file reader's budget: a walk past it, in files or in bytes, is an unknown reading, never a digest of part of the files. */
 export interface DependencyReadLimits {
   readonly files: number;
   readonly bytes: number;
 }
+/** The default budget of both file readers: 2000 files and 32 MiB. */
 export const DEPENDENCY_READ_LIMITS: DependencyReadLimits = Object.freeze({ files: 2_000, bytes: 32 * 1024 * 1024 });
 
 const SOURCES: readonly ClaudeSettingSource[] = Object.freeze(["user", "project", "local"]);
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
-/** Directory depth below one location past which a walk stops being a reading. */
+/**
+ * How deep a walk reads below one location: a file 32 directory levels below it is read, and a directory 32 levels below
+ * it makes the reading unknown (over budget).
+ */
 const MAX_DEPTH = 32;
 
-/** A reading of what the host read: the canonical JSON digest of `value` under its own domain. */
+/** A reading of what the host read: identityDigest of `value` under `domain`. */
 export function measuredDependency(domain: string, value: unknown): ReplayDependency {
   return Object.freeze({ state: "measured", digest: identityDigest(domain, value) });
 }
 
-/** A dependency the host could not read, by a fixed reason. */
+/** A dependency the host could not read: its fixed reason and no digest. */
 export function unknownDependency(reason: string): ReplayDependency {
   return Object.freeze({ state: "unknown", reason });
 }
 
-/** Every reading measured, each with a well-formed digest: the only shape under which replay is permitted. */
+/**
+ * True only when all three readings are measured and each digest is well formed (sha256: and 64 lowercase hex digits):
+ * the only shape under which the Claude host permits settled replay.
+ */
 export function replayDependenciesMeasured(dependencies: ClaudeReplayDependencies): boolean {
   return [dependencies.source, dependencies.instructions, dependencies.provider].every(
     reading => reading.state === "measured" && typeof reading.digest === "string" && DIGEST.test(reading.digest),
@@ -107,9 +112,8 @@ export function replayDependenciesMeasured(dependencies: ClaudeReplayDependencie
 }
 
 /**
- * The source reading from the host's Git readings: HEAD's commit and tree (observedPackageHead) and the candidate
- * survey (workspaceCandidateBasis: the HEAD tree, the index and the bytes of every Git-visible file). Unknown when the
- * survey could not account for the workspace or HEAD could not be read.
+ * The source reading: HEAD's commit and tree with the candidate digest the host hands in, the reading moving with each
+ * one alone. Unknown when the candidate is not measured or is empty, or when HEAD is missing or lacks its commit or tree.
  */
 export function sourceDependency(
   head: { readonly commit: string; readonly tree: string } | undefined,
@@ -121,8 +125,27 @@ export function sourceDependency(
 }
 
 /**
- * The instruction reading: the bytes at every instruction location of each enabled source, in source order
- * (user, project, local), whatever order or repetition the run named them in.
+ * The paths the instruction reading reads, in order: for each enabled source in source order (user, project, local),
+ * its CLAUDE_INSTRUCTION_LOCATIONS under its base (configDir for "user", the cwd for "project" and "local"), then its
+ * CLAUDE_ANCESTOR_MEMORY files in every proper ancestor directory of the cwd, nearest first, ending at the filesystem
+ * root. The order and repetition of `sources` do not change the paths.
+ */
+export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSource[], configDir: string): string[] {
+  const paths: string[] = [];
+  for (const source of SOURCES.filter(known => sources.includes(known))) {
+    const base = source === "user" ? configDir : cwd;
+    for (const location of CLAUDE_INSTRUCTION_LOCATIONS[source]) paths.push(join(base, location));
+    for (const ancestor of ancestorsOf(cwd)) {
+      for (const memory of CLAUDE_ANCESTOR_MEMORY[source]) paths.push(join(ancestor, memory));
+    }
+  }
+  return paths;
+}
+
+/**
+ * The instruction reading: the bytes at every path instructionPaths names for the enabled sources, whatever order or
+ * repetition the run named them in. Unknown when a source is not user, project or local, when the cwd or the config
+ * directory is not absolute, or when a walk cannot read every path whole within the budget.
  */
 export function instructionDependency(
   cwd: string,
@@ -133,20 +156,15 @@ export function instructionDependency(
   const enabled = enabledSources(sources);
   if (enabled === undefined) return unknownDependency("setting-source-unrecognized");
   if (!isAbsolute(cwd) || !isAbsolute(configDir)) return unknownDependency("instruction-base-not-absolute");
-  const paths: string[] = [];
-  for (const source of enabled) {
-    const base = source === "user" ? configDir : cwd;
-    for (const location of CLAUDE_INSTRUCTION_LOCATIONS[source]) paths.push(join(base, location));
-    for (const ancestor of ancestorsOf(cwd)) {
-      for (const memory of CLAUDE_ANCESTOR_MEMORY[source]) paths.push(join(ancestor, memory));
-    }
-  }
+  const paths = instructionPaths(cwd, enabled, configDir);
   return readingOf(() => measuredDependency("claude-replay-instructions", { sources: [...enabled], files: readFiles(paths, limits) }));
 }
 
 /**
- * The provider reading: the run's installed runtime artifact digest and provider contract digest (an
- * InvocationSnapshot's), and the bytes of each enabled source's setting file.
+ * The provider reading: the runtime artifact digest and the provider contract digest of the identity it is handed, and
+ * the bytes of each enabled source's setting file under the source's base. Unknown when no identity is handed or either
+ * digest is not well formed, when a source is not user, project or local, when the cwd or the config directory is not
+ * absolute, or when a walk cannot read every setting path whole within the budget.
  */
 export function providerDependency(
   identity: { readonly runtimeArtifactDigest: string; readonly providerContractDigest: string } | undefined,
@@ -173,15 +191,15 @@ export function providerDependency(
 }
 
 /**
- * The directory the SDK child reads its user configuration from: CLAUDE_CONFIG_DIR when set (the child inherits the
- * environment and resolves a relative value against its cwd), else <home>/.claude.
+ * The user config directory both readers read under the "user" source: CLAUDE_CONFIG_DIR when it is set and not empty,
+ * resolved against the cwd when relative, else <home>/.claude.
  */
 export function claudeUserConfigDir(env: Readonly<Record<string, string | undefined>>, home: string, cwd: string): string {
   const configured = env.CLAUDE_CONFIG_DIR;
   return configured ? resolve(cwd, configured) : join(home, ".claude");
 }
 
-/** The enabled sources in canonical order, or undefined when one is not a source the SDK knows. */
+/** The enabled sources in source order (user, project, local), or undefined when one is not among those three. */
 function enabledSources(sources: readonly string[]): ClaudeSettingSource[] | undefined {
   if (!sources.every(source => (SOURCES as readonly string[]).includes(source))) return undefined;
   return SOURCES.filter(source => sources.includes(source));
@@ -198,7 +216,7 @@ function ancestorsOf(directory: string): string[] {
   return ancestors;
 }
 
-/** A dependency the walk could not read, by its fixed reason. */
+/** A dependency a walk could not read, by its fixed reason. */
 class UnmeasurableDependency extends Error {
   constructor(readonly reason: string) {
     super(reason);
@@ -214,16 +232,16 @@ function readingOf(read: () => ReplayDependency): ReplayDependency {
   }
 }
 
+/** One path a walk read, and what it found there. */
 interface FileReading {
   readonly path: string;
-  /** sha256:<hex> of a regular file's bytes, "directory" for a directory, "absent" where nothing is. */
   readonly digest: string;
 }
 
 /**
- * Read every location, following symbolic links to what they name: a regular file by its bytes, a directory by every
- * entry below it in name order, a missing path as absent. Anything else, an unreadable entry, a directory cycle or a
- * walk past the budget makes the whole reading unmeasurable.
+ * Read every path, following symbolic links to what they name: a regular file by its bytes, a directory by every entry
+ * below it, a missing path as absent. Anything else (a FIFO, say), an entry that cannot be read, a directory cycle, a
+ * walk past the budget or past MAX_DEPTH makes the whole reading unknown.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];

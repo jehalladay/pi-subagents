@@ -2590,10 +2590,10 @@ Terse command-style prompts produce shallow, generic work.
   }
 
   /**
-   * wb-413a: what a recorded Claude answer depends on beyond its policy, read once as the run's host is built: the
-   * identity capture's own Git candidate survey with HEAD's commit and tree, the instruction files the run's setting
-   * sources load, and the provider identity (the snapshot's runtime artifacts and provider contracts, and the sources'
-   * setting files). An unreadable dependency is an unknown reading, which declines replay rather than matching.
+   * wb-413a: the readings the run's Claude host replays under (replay-dependencies.ts): the source reading of the cwd's
+   * HEAD with the identity capture's Git candidate, and the instruction and provider readings of the run's setting
+   * sources under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else ~/.claude). Which identity the provider reading is handed
+   * here is NOT CLAIMED by a wiring row: one test process cannot vary its installed SDK or its registered contracts.
    */
   function claudeReplayDependencies(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
     input: IdentityCaptureInput): ClaudeReplayDependencies {
