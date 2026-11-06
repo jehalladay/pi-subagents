@@ -555,10 +555,12 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     ["commit", (args: string[]) => args[0] === "commit"],
     ["status", (args: string[]) => args[0] === "status"],
     ["branch", (args: string[]) => args[0] === "branch"],
+    ["add", (args: string[]) => args[0] === "add"],
   ])("a failed %s step is not answered with the clean result", async (step, match) => {
     // EAT-R002: "For commit, status and branch failures, assert a typed preservation-failed
     // result with recovery path ..., never a clean/no-change outcome". Its named mutant is
-    // "Return hasChanges:false from the failure branch".
+    // "Return hasChanges:false from the failure branch". The add row covers the add step the
+    // variant's words name (wb-5ik5 refusal #1, U3).
     const wt = (await createWorktree(pi, repoDir, `typed-${step}`))!;
     trackScratch(wt.path);
     editTrackedAndUntracked(wt.path);
@@ -569,7 +571,8 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     expect(result.path).toBe(wt.path);
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
     expect(existsSync(wt.path)).toBe(true);
-    // The kept tree still holds the agent's bytes: on disk for a failed commit or status step, and in the
+    expect(preservationRefs(`typed-${step}`)).toBe("");
+    // The kept tree still holds the agent's bytes: on disk for a failed commit, status or add step, and in the
     // worktree's own HEAD commit after a failed branch step (the commit landed before the branch was refused).
     const shown = async (file: string) => step === "branch"
       ? execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" })
@@ -578,6 +581,48 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     expect(await shown("work.txt")).toBe(UNTRACKED_BYTES);
     // "serialization preserves that variant": the result is plain data, and a JSON round trip keeps every field.
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+  });
+
+  it("a failed `rev-parse HEAD` after the agent committed its own work is answered with the failed variant and keeps that commit", async () => {
+    // The `rev-parse HEAD` step the variant's words name: the read of HEAD that runs when `git status` is empty.
+    const wt = (await createWorktree(pi, repoDir, "head-read"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    execFileSync("git", ["add", "-A"], { cwd: wt.path, stdio: "pipe" });
+    execFileSync("git", ["commit", "-m", "agent commit"], { cwd: wt.path, stdio: "pipe" });
+
+    const result = await cleanupWorktree(failingPi(args => args[0] === "rev-parse", { code: 1, killed: false }), repoDir, wt, "head read fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(existsSync(wt.path)).toBe(true);
+    expect(preservationRefs("head-read")).toBe("");
+    const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
+    expect(show("README.md")).toBe(TRACKED_BYTES);
+    expect(show("work.txt")).toBe(UNTRACKED_BYTES);
+  });
+
+  /** A pi whose exec answers the calls `match` picks with `failure` and runs every other call for real. */
+  function failingWith(match: (args: string[]) => boolean, failure: { stderr: string; code: number; killed: boolean }): ExtensionAPI {
+    const real = mockPi();
+    return {
+      exec: async (command: string, args: string[], options?: { cwd?: string; timeout?: number }) =>
+        match(args) ? { stdout: "", ...failure } : real.exec(command, args, options),
+    } as unknown as ExtensionAPI;
+  }
+
+  it.each([
+    ["stderr spanning lines, kept whole and trimmed", { stderr: "  fatal: first line\nhint: second line\n", code: 128, killed: false }, "fatal: first line\nhint: second line"],
+    ["no stderr and a non-zero exit, the git helper's exit-code message", { stderr: "", code: 1, killed: false }, "git commit --no-verify -m pi-agent: commit fails failed (exit 1)"],
+    ["stderr of only whitespace, the git helper's exit-code message", { stderr: " \n\t ", code: 1, killed: false }, "git commit --no-verify -m pi-agent: commit fails failed (exit 1)"],
+    ["no stderr from a killed call, the git helper's exit-code message", { stderr: "", code: 0, killed: true }, "git commit --no-verify -m pi-agent: commit fails failed (exit 0)"],
+  ])("the diagnostic of a failed commit with %s", async (_shape, failure, diagnostic) => {
+    const wt = (await createWorktree(pi, repoDir, "diagnostic"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+
+    const result = await cleanupWorktree(failingWith(args => args[0] === "commit", failure), repoDir, wt, "commit fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic });
   });
 });
 

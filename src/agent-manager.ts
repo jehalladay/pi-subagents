@@ -362,10 +362,12 @@ async function shutdownChildSession(session: AgentSession | undefined): Promise<
 }
 
 /**
- * The note a settled agent's result carries when its worktree could not be preserved (EAT-R003): git's failure and the
- * path the worktree was kept at, so the reader learns where the work is instead of reading silence as "changed nothing".
- * Each value is producer text, so each goes through the shared sanitizer with the single-line "label" layout.
- * `repo` names the repository the worktree belongs to when it is not the parent session's own (a caller-supplied cwd).
+ * The note the settlement of a resolved run appends to the record's result when cleanup returned
+ * WorktreePreservationFailedResult, whatever status the run settled with (EAT-R003); the settlement of a rejected run
+ * appends none. The note names the variant's diagnostic and kept path, and `repo` when one is given: the settlement
+ * passes the caller-supplied cwd the worktree was created from, and undefined for the parent session's own cwd, which
+ * the note then leaves out. Each of the three values goes through sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT,
+ * "label").
  */
 export function preservationFailureNote(result: WorktreePreservationFailedResult, repo: string | undefined): string {
   const label = (value: string) => sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "label");
@@ -914,8 +916,8 @@ export class AgentManager {
             record.result = (record.result ?? "") +
               `\n\n---\nChanges saved to branch \`${wtResult.branch}\`${repoNote}. Merge with: \`git merge ${wtResult.branch}\`${customCwd !== undefined ? ` (run in \`${baseCwd}\`)` : ""}`;
           } else if (wtResult.preservationFailed) {
-            // The kept worktree is the only copy of the agent's work; without
-            // this note the reader sees exactly what the clean result showed.
+            // A failed preservation keeps the worktree: the note names it, the
+            // diagnostic and, for a caller-supplied cwd, its repo (EAT-R003).
             record.result = (record.result ?? "") + preservationFailureNote(wtResult, customCwd !== undefined ? baseCwd : undefined);
           }
         }

@@ -206,8 +206,9 @@ export interface AgentRecord {
   /** Worktree info if the agent is running in an isolated worktree. */
   worktree?: { path: string; branch: string; baseSha: string; workPath: string };
   /**
-   * Worktree cleanup result after agent completion, every variant kept as cleanup returned it: a failed preservation
-   * carries the kept worktree's path and git's diagnostic, never the clean result (EAT-R003).
+   * Worktree cleanup result. A failed preservation is stored exactly as cleanupWorktree returned it, the
+   * WorktreePreservationFailedResult variant, by each path that cleans up: the settlement of a resolved run, the
+   * settlement of a rejected run, and a stop that lands while the worktree is being created (EAT-R003).
    */
   worktreeResult?: WorktreeCleanupResult;
   /** The tool_use_id from the original Agent tool call. */

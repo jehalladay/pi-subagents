@@ -76,9 +76,11 @@ Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` an
 
 | path | recorded at | note |
 | --- | --- | --- |
+| `src/agent-manager.ts` | e76448e | +21 -1 lines against the baseline |
 | `src/index.ts` | b44f1ce | +482 -18 lines against the baseline |
 | `src/memory.ts` | cc63071 | +1 -1 lines against the baseline |
 | `src/settings.ts` | b44f1ce | +79 -1 lines against the baseline |
+| `src/types.ts` | e76448e | +7 -2 lines against the baseline |
 | `src/ui/fleet-list.ts` | cc63071 | +12 -1 lines against the baseline |
 | `src/ui/workflow-card.ts` | b44f1ce | +55 -12 lines against the baseline |
 | `src/ui/workflow-dialog.ts` | b44f1ce | +303 -62 lines against the baseline |
@@ -92,6 +94,7 @@ Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` an
 | `src/workflow/task.ts` | b44f1ce | +111 -25 lines against the baseline |
 | `src/workflow/tool-description.ts` | b44f1ce | +4 -1 lines against the baseline |
 | `src/workflow/worker-source.ts` | b44f1ce | +151 -48 lines against the baseline |
+| `src/worktree.ts` | e76448e | +49 -11 lines against the baseline |
 | `test/agent-color-surfaces.test.ts` | cc63071 | +5 -1 lines against the baseline |
 | `test/agent-manager.test.ts` | cc63071 | +2 -2 lines against the baseline |
 | `test/agent-runner.test.ts` | cc63071 | +3 -1 lines against the baseline |

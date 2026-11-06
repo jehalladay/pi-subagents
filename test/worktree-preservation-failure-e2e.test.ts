@@ -4,14 +4,15 @@
  * record/observation identifies retained path and failure rather than displaying that the agent changed nothing." Its
  * named mutant: "Drop the typed recovery variant at the caller projection."
  *
- * The real stack, as in worktree-isolation-e2e.test.ts: a real git repo, a real pi-mono session, the real extension and
- * the real createWorktree/cleanupWorktree, on a faux model pinned `live: false`. Nothing injects the failure. The child's
- * own bash command edits a tracked file, adds an untracked one and leaves a stale index.lock in its worktree's git
- * directory, which is what a git process that crashed mid-write leaves behind: `git status` still reads the tree, and the
- * preservation's `git add` cannot take the index lock and fails with git's own message.
+ * The first block drives the real stack, as in worktree-isolation-e2e.test.ts: a real git repo, a real pi-mono session,
+ * the real extension and the real createWorktree/cleanupWorktree, on a faux model pinned `live: false`. Nothing injects
+ * the failure. The child's own bash command edits a tracked file, adds an untracked one and leaves a stale index.lock in
+ * its worktree's git directory, so the preservation fails with git's own message, which names index.lock.
+ *
+ * The second block calls preservationFailureNote directly and pins the exact note text for planted values.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Context } from "@earendil-works/pi-ai";
 import { fauxToolCall } from "@earendil-works/pi-ai";
@@ -51,6 +52,19 @@ function initGitRepo(): string {
   git(dir, "add", "README.md");
   git(dir, "commit", "-m", "initial");
   return dir;
+}
+
+/**
+ * What `git add -A` writes to stderr, trimmed, in `worktreePath` while the stale index.lock is still there: the failure
+ * the preservation's own `git add -A` met.
+ */
+function addFailure(worktreePath: string): string {
+  try {
+    execFileSync("git", ["add", "-A"], { cwd: worktreePath, encoding: "utf-8", stdio: "pipe" });
+  } catch (err) {
+    return String((err as { stderr?: string }).stderr ?? "").trim();
+  }
+  throw new Error(`git add -A succeeded in ${worktreePath}: the index.lock is gone`);
 }
 
 /** The id the foreground Agent tool result's details carry, which the manager handle resolves to the settled record. */
@@ -95,7 +109,7 @@ describe("worktree preservation failure through the real agent settlement path (
     removeAllScratch();
   });
 
-  it("keeps the edited worktree, and the record and the Agent result name the kept path and git's failure", async () => {
+  it("keeps the edited worktree; the record and the Agent result name the kept path and git's failure, and the note names no repo", async () => {
     const repo = initGitRepo();
     repos.push(repo);
 
@@ -109,34 +123,35 @@ describe("worktree preservation failure through the real agent settlement path (
     const child = run.manager?.getRecord(id!) as AgentRecord | undefined;
     expect(child?.worktree).toBeDefined();
     const kept = trackScratch(child!.worktree!.path);
+    expect(existsSync(kept)).toBe(true);
 
-    // The record carries the typed variant: the kept path is the recovery path, and the diagnostic is git's own text.
-    expect(child!.worktreeResult).toEqual({
-      hasChanges: true,
-      preservationFailed: true,
-      path: kept,
-      diagnostic: expect.stringContaining("index.lock"),
-    });
+    // The record carries the typed variant: the kept path is the recovery path, and the diagnostic is git's own text,
+    // the stderr `git add -A` gives in the kept worktree, which names index.lock.
+    const diagnostic = addFailure(kept);
+    expect(diagnostic).toContain("index.lock");
+    expect(child!.worktreeResult).toEqual({ hasChanges: true, preservationFailed: true, path: kept, diagnostic });
 
     // The agent's exact bytes are still at that path, and no preservation branch claims them.
     expect(readFileSync(join(kept, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
     expect(readFileSync(join(kept, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
     expect(git(repo, "branch", "--list", "pi-agent-*")).toBe("");
 
-    // What the parent was shown: the failure and the kept path, never a saved branch and never silence.
+    // What the parent was shown: the failure and the kept path, never a saved branch and never silence. The
+    // worktree came from the parent session's own cwd, so the note names no repo after the kept path.
     expect(result).toContain("Worktree preservation failed");
     expect(result).toContain(kept);
     expect(result).toContain("index.lock");
     expect(result).not.toContain("Changes saved to branch");
+    expect(result).toContain(`kept in its worktree at \`${kept}\`; recover it from there.`);
+    expect(result).not.toContain("(a worktree of");
   });
 });
 
-describe("the preservation-failure note is a sanitized display path (EAT-R003 caller projection)", () => {
-  it("routes the diagnostic, the kept path and the repo through the single-line label layout", () => {
-    // git's stderr and a path are producer text: an escape sequence or a control in either must never reach the
-    // reader, and the reader still gets the words around it.
-    const ESC = String.fromCodePoint(0x1b);
-    const BEL = String.fromCodePoint(0x07);
+describe("preservationFailureNote renders the diagnostic, the kept path and the repo with sanitizeWorkbenchText's label layout", () => {
+  const ESC = String.fromCodePoint(0x1b);
+  const BEL = String.fromCodePoint(0x07);
+
+  it("renders this case's escape sequences, BEL and line break as the label layout does", () => {
     const note = preservationFailureNote(
       { hasChanges: true, preservationFailed: true, path: `/tmp/kept${ESC}[2Jtree`, diagnostic: `fatal: ${ESC}[31mboom${ESC}[0m\nsecond${BEL} line` },
       `/repo${ESC}]0;title${BEL}`,
@@ -148,12 +163,55 @@ describe("the preservation-failure note is a sanitized display path (EAT-R003 ca
     );
   });
 
-  it("names no repo when the worktree belongs to the parent session's own", () => {
+  it("names the repo whenever one is passed, an empty one included", () => {
+    const note = preservationFailureNote({ hasChanges: true, preservationFailed: true, path: "/tmp/kept", diagnostic: "fatal: boom" }, "");
+
+    expect(note).toBe(
+      "\n\n---\nWorktree preservation failed: fatal: boom\n" +
+        "Nothing was saved to a branch. The agent's work is kept in its worktree at `/tmp/kept` (a worktree of ``); recover it from there.",
+    );
+  });
+
+  it("leaves the repo out when called without one", () => {
     const note = preservationFailureNote({ hasChanges: true, preservationFailed: true, path: "/tmp/kept", diagnostic: "fatal: boom" }, undefined);
 
     expect(note).toBe(
       "\n\n---\nWorktree preservation failed: fatal: boom\n" +
         "Nothing was saved to a branch. The agent's work is kept in its worktree at `/tmp/kept`; recover it from there.",
     );
+  });
+
+  /** The note's exact text for a diagnostic, a kept path and an optional repo, each already rendered. */
+  const noteText = (diagnostic: string, path: string, repo: string | undefined) =>
+    `\n\n---\nWorktree preservation failed: ${diagnostic}\n` +
+    `Nothing was saved to a branch. The agent's work is kept in its worktree at \`${path}\`${repo === undefined ? "" : ` (a worktree of \`${repo}\`)`}; recover it from there.`;
+
+  // Each witness is planted in one value at a time; the other two stay plain. The expected renderings are the label
+  // layout's for these inputs: an escape sequence, a BEL or a line break between two words becomes one space, a
+  // zero-width space vanishes, padding and a run of spaces collapse to one space and the ends are trimmed, an obviously
+  // fake bearer credential becomes [REDACTED] (also when an escape sequence glues it to the word before), and 2100
+  // characters keep their first 1980 and the truncation marker (WORKBENCH_TEXT_LIMIT is 2000).
+  const WITNESSES: ReadonlyArray<readonly [string, string, string]> = [
+    ["an escape sequence between two words", `a${ESC}[0mb`, "a b"],
+    ["a line break", "a\nb", "a b"],
+    ["a BEL between two words", `a${BEL}b`, "a b"],
+    ["a zero-width space", `a${String.fromCodePoint(0x200b)}b`, "ab"],
+    ["padding and a run of spaces", "  a   b  ", "a b"],
+    ["an obviously fake bearer credential", "x Bearer FAKE-TOKEN-FOR-TESTS", "x [REDACTED]"],
+    ["a fake bearer credential glued on by an escape sequence", `x${ESC}[0mBearer FAKE-TOKEN-FOR-TESTS`, "x [REDACTED]"],
+    ["2100 characters", "x".repeat(2100), `${"x".repeat(1980)} [truncated]`],
+  ];
+  const PLAIN = { diagnostic: "fatal: boom", path: "/tmp/kept", repo: "/repo" } as const;
+  const CASES = (["diagnostic", "path", "repo"] as const).flatMap((slot) =>
+    WITNESSES.map(([witness, planted, rendered]) => [slot, witness, planted, rendered] as const),
+  );
+
+  it.each(CASES)("the %s with %s", (slot, _witness, planted, rendered) => {
+    const value = (name: keyof typeof PLAIN) => (name === slot ? planted : PLAIN[name]);
+    const shown = (name: keyof typeof PLAIN) => (name === slot ? rendered : PLAIN[name]);
+
+    const note = preservationFailureNote({ hasChanges: true, preservationFailed: true, path: value("path"), diagnostic: value("diagnostic") }, value("repo"));
+
+    expect(note).toBe(noteText(shown("diagnostic"), shown("path"), shown("repo")));
   });
 });

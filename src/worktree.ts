@@ -4,7 +4,7 @@
  * Creates a temporary git worktree so the agent works on an isolated copy of the repo.
  * On completion, if no changes were made, the worktree is cleaned up.
  * If changes exist, a branch is created and returned in the result.
- * If preserving them fails, the worktree is kept and the result says so.
+ * If a preservation step fails, the worktree is kept instead (see WorktreePreservationFailedResult).
  *
  * Every git call goes through `pi.exec` (async) rather than `execFileSync`: a
  * worktree copy can take seconds, and a session that spawns several isolated
@@ -53,7 +53,7 @@ export function isWorktreeIsolationEnabled(): boolean {
   return worktreeIsolationEnabled;
 }
 
-/** Nothing needed preserving: the worktree was removed, or was already gone. */
+/** Cleanup found nothing to preserve: the worktree directory was already gone, or `git status` was empty and HEAD was still the base commit. */
 export interface WorktreeCleanResult {
   hasChanges: false;
   branch?: undefined;
@@ -62,7 +62,7 @@ export interface WorktreeCleanResult {
   diagnostic?: undefined;
 }
 
-/** The agent's changes were committed to `branch` in the main repo, and the worktree at `path` was removed. */
+/** The agent's work is on `branch` in the main repo. */
 export interface WorktreePreservedResult {
   hasChanges: true;
   branch: string;
@@ -72,10 +72,12 @@ export interface WorktreePreservedResult {
 }
 
 /**
- * A preservation step (status, add, commit or branch) failed, so no branch holds the agent's changes. The worktree is
- * KEPT: `path` is the recovery path and still holds the edited bytes (EAT-R001), and the result is never the clean one
- * (EAT-R002). `hasChanges` is true because cleanup could not show there was nothing to keep; `diagnostic` carries git's
- * own failure text.
+ * Cleanup's result when a preservation step failed: `git status --porcelain`, `git add -A`, `git commit`,
+ * `git rev-parse HEAD` (run when the status is empty) or `git branch` (when the agent's branch name and the suffixed
+ * retry are both refused). Cleanup keeps the worktree: `path` is its path, and it still holds the agent's edits, on
+ * disk or in its HEAD commit (EAT-R001). The result is never the clean one (EAT-R002) and names no branch.
+ * `diagnostic` is the failing call's error text: git's stderr, trimmed, or, when that is empty, the git helper's
+ * `git <args> failed (exit <code>)`.
  */
 export interface WorktreePreservationFailedResult {
   hasChanges: true;
@@ -147,8 +149,8 @@ export async function createWorktree(
  * Clean up a worktree after agent completion.
  * - If no changes: remove worktree entirely.
  * - If changes exist: create a branch, commit changes, return branch info.
- * - If a preservation step fails: keep the worktree and return the typed
- *   preservation-failed result naming it. It is the only copy of the work.
+ * - If a preservation step fails (WorktreePreservationFailedResult lists
+ *   them): keep the worktree and return that variant.
  */
 export async function cleanupWorktree(
   pi: ExtensionAPI,
@@ -203,15 +205,15 @@ export async function cleanupWorktree(
       path: worktree.path,
     };
   } catch (err) {
-    // No branch holds the agent's work, so the worktree is the only copy of it:
-    // keep it, and answer with the typed variant rather than the clean result.
-    // Removing it here and returning `{ hasChanges: false }` destroyed the work
-    // while the caller was told the agent changed nothing (EAT-R001/EAT-R002).
+    // A preservation step failed: keep the worktree, which still holds the
+    // agent's edits, and return the failed variant (EAT-R001/EAT-R002). Before
+    // wb-5ik5 this catch force-removed the worktree and returned
+    // `{ hasChanges: false }`.
     return { hasChanges: true, preservationFailed: true, path: worktree.path, diagnostic: diagnosticOf(err) };
   }
 }
 
-/** The failure text a preservation step's error carries: git's own stderr, or the git helper's exit-code fallback. */
+/** The failing call's error text: git's stderr, trimmed, or, when that is empty, the git helper's `git <args> failed (exit <code>)`. */
 function diagnosticOf(err: unknown): string {
   const text = err instanceof Error ? err.message : String(err);
   return text.trim() || "git failed without a message";
