@@ -9,9 +9,13 @@
  * Pure node: no src/ or dist/ import. The judges are pure functions of their inputs; only readCutFromGit and the CLI read Git or
  * the file system.
  *
- * THE RELEASE BLOCK. A release receipt is a per-bead receipt, docs/workbench/receipts/<bead-id>.md, holding one TOP-LEVEL fenced
- * block per entry whose info string is exactly `mwi-release`, one `label: value` line per field (the label ends at the first
- * colon; a block nested in a list or a quote is not read). Its fields:
+ * THE RELEASE BLOCK. A release receipt is a per-bead receipt, docs/workbench/receipts/<bead-id>.md. Its release blocks are the
+ * fenced code blocks (a backtick or a tilde fence) at the TOP LEVEL of its markdown whose info string, as marked reads it
+ * (trimmed), is exactly `mwi-release`: a longer info string (`mwi-releases`, `mwi-release v2`) or another case (`MWI-RELEASE`)
+ * is no release block, and a fenced block inside a list item or a blockquote is not read. Every release block is read; the
+ * validator does not count blocks per receipt entry. Each non-blank line of a block is one `label: value` field whose label ends
+ * at the first colon; blank lines are skipped, and a non-blank line without a label and a repeated label are kept as the block's
+ * malformed entries. Its fields:
  *  - the claim: contract (workbench.mwi-release/v1), program, bead, slice (PI-0..PI-7), slice status (design-only, partial, live,
  *    closed), requirements (the EAT ids the cut serves) and real infrastructure gate (a gate name such as PI-DETACHED-GRANTS, or
  *    `none`); a named gate adds gate tier, gate result, gate commit and gate receipt;
@@ -20,25 +24,42 @@
  *  - the red-first legs: red command, red result, first failing assertion, positive rerun, and one `mutant <EAT id>` line per
  *    listed requirement.
  *
+ * THE RENDERED VIEW. Every docs rule reads markdown as marked's lexer renders it (renderedText): inline markup (code spans,
+ * emphasis, links) reads as its text, the character references &#NN; &#xNN; &amp; &lt; &gt; &quot; &apos; &nbsp; read as the
+ * characters they render, a whitespace run reads as one space, and raw HTML (an HTML comment included) reads as nothing. A section
+ * is found by its heading's rendered text (markdownSection): an ATX heading with a closing sequence, an indented ATX heading and a
+ * setext heading are the same heading, while a heading inside an HTML comment, a fenced block or an indented code block is none.
+ *
  * CLI:
  *   node qa/workbench/mwi-release.mjs --base <rev> [--head <rev>] [--commit <rev>] [--gate-envelope <path>]
- * judges the cut <base>..<head> of the repository at the current directory (head defaults to the working tree, untracked files
- * included) and prints one workbench.mwi-release/v1 verdict as JSON on stdout. --gate-envelope names the `forge build --json`
- * envelope of the complete gate run on the candidate commit and needs --commit (EAT-R084).
+ * judges the cut <base>..<head> of the Git repository holding the current directory (any directory of its work tree) and prints
+ * one workbench.mwi-release/v1 verdict as JSON on stdout. Without --head the head is the working tree, with the untracked files
+ * that the repository's ignore rules do not exclude. --commit names the candidate commit, which is the cut's head commit: it needs
+ * --head resolving to the same commit. --gate-envelope names the `forge build --json` envelope of the complete gate run on the
+ * candidate and needs --commit (EAT-R084). Each flag is given at most once, each with a value.
  *   exit 0: no finding (closure may still be open; the verdict says why)
  *   exit 1: findings
- *   exit 2: a usage error or an unreadable input
+ *   exit 2: a usage error (an unknown, repeated or valueless flag; no --base; --gate-envelope without --commit; --commit without
+ *           --head or naming another commit; an unknown revision) or an unreadable input (the gate envelope, the bead export
+ *           .beads/issues.jsonl, forge.toml's [build] gate when an envelope is judged)
+ *
+ * NOT CLAIMED: a live slice or any Mechanical invocation (the validator calls no Mechanical code); a count of release blocks per
+ * receipt entry; rendering by any markdown engine other than marked; what a symlink under src/workbench/hosts/ points at (a host
+ * file is read as the text Git or the file system gives); a gate envelope's selection accounting, replay or warm-memo state
+ * (EAT-R084 reads the invocation's only, skip and path and each required leg's step; its keep_going and verb are not read); a
+ * forge run tier declared other than as a [build] gate leg or a [build.commands.<tier>] table of forge.toml; a W11 absence
+ * statement written in other words than "no binding host" or "no binding-host" (singular or plural).
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Lexer } from "marked";
 import { BEAD_ID, RECEIPT_FILE } from "./receipts-index.mjs";
 
 /** @typedef {{ readonly requirement: string, readonly rule: string, readonly detail: string, readonly receipt?: string }} Finding */
-/** @typedef {{ readonly fields: ReadonlyMap<string, string>, readonly malformed: ReadonlyArray<{ readonly kind: string, readonly line: string }> }} ReleaseBlock */
-/** @typedef {{ readonly receiptBead?: string, readonly beadIds: ReadonlySet<string>, readonly fileExists: (path: string) => boolean, readonly candidate?: string }} BlockContext */
+/** @typedef {{ readonly text: string, readonly fields: ReadonlyMap<string, string>, readonly malformed: ReadonlyArray<{ readonly kind: string, readonly line: string }> }} ReleaseBlock */
+/** @typedef {{ readonly receiptBead?: string, readonly beadIds: ReadonlySet<string>, readonly fileExists: (path: string) => boolean, readonly forgeTiers: ReadonlySet<string>, readonly candidate?: string }} BlockContext */
 /** @typedef {{ readonly path: string, readonly status: string }} Change */
 /**
  * @typedef {{
@@ -47,6 +68,7 @@ import { BEAD_ID, RECEIPT_FILE } from "./receipts-index.mjs";
  *   readonly text: { readonly base: (path: string) => string | undefined, readonly head: (path: string) => string | undefined },
  *   readonly beadIds: ReadonlySet<string>,
  *   readonly hostModules: ReadonlyArray<string>,
+ *   readonly forgeTiers: ReadonlySet<string>,
  *   readonly requiredLegs: ReadonlyArray<string>,
  *   readonly candidate?: string,
  *   readonly envelope?: unknown,
@@ -54,6 +76,7 @@ import { BEAD_ID, RECEIPT_FILE } from "./receipts-index.mjs";
  */
 /** @typedef {{ readonly state: "closable" | "open", readonly reasons: ReadonlyArray<string> }} Closure */
 /** @typedef {{ readonly receipts: ReadonlyArray<string>, readonly findings: ReadonlyArray<Finding>, readonly closure: Closure }} CutVerdict */
+/** @typedef {{ readonly feature: string, readonly status: string }} W11Row */
 
 export const CONTRACT = "workbench.mwi-release/v1";
 export const PROGRAM = "mechanical-workflows-interop-2026-11-04";
@@ -82,24 +105,36 @@ export const HANDOFF_FIELDS = Object.freeze([
   "docs, skill, source map, feature matrix and receipt updates",
   "remaining blockers and next safe independent cut",
 ]);
-/** EAT-R086's ten receipt items, each read from the handoff line that carries it. @type {ReadonlyArray<readonly [string, string]>} */
+/**
+ * @param {string} item
+ * @param {string} field
+ * @returns {readonly [string, string]}
+ */
+function receiptItem(item, field) {
+  return Object.freeze(/** @type {[string, string]} */ ([item, field]));
+}
+/** EAT-R086's ten receipt items, each read from the handoff line that carries it. */
 export const RECEIPT_ITEMS = Object.freeze([
-  Object.freeze(["baseline/source", HANDOFF_FIELDS[0]]),
-  Object.freeze(["owner", HANDOFF_FIELDS[2]]),
-  Object.freeze(["supported installed API", HANDOFF_FIELDS[3]]),
-  Object.freeze(["positive/negative", HANDOFF_FIELDS[4]]),
-  Object.freeze(["effects/cancel/retention", HANDOFF_FIELDS[6]]),
-  Object.freeze(["native IDs", HANDOFF_FIELDS[7]]),
-  Object.freeze(["timings", HANDOFF_FIELDS[8]]),
-  Object.freeze(["Forge outcomes", HANDOFF_FIELDS[9]]),
-  Object.freeze(["docs", HANDOFF_FIELDS[10]]),
-  Object.freeze(["blockers", HANDOFF_FIELDS[11]]),
+  receiptItem("baseline/source", HANDOFF_FIELDS[0]),
+  receiptItem("owner", HANDOFF_FIELDS[2]),
+  receiptItem("supported installed API", HANDOFF_FIELDS[3]),
+  receiptItem("positive/negative", HANDOFF_FIELDS[4]),
+  receiptItem("effects/cancel/retention", HANDOFF_FIELDS[6]),
+  receiptItem("native IDs", HANDOFF_FIELDS[7]),
+  receiptItem("timings", HANDOFF_FIELDS[8]),
+  receiptItem("Forge outcomes", HANDOFF_FIELDS[9]),
+  receiptItem("docs", HANDOFF_FIELDS[10]),
+  receiptItem("blockers", HANDOFF_FIELDS[11]),
 ]);
 /** EAT-R083's red-first legs; the mutant legs are one `mutant <EAT id>` line per listed requirement. */
 export const TDD_FIELDS = Object.freeze(["red command", "red result", "first failing assertion", "positive rerun"]);
 export const SKILL_PATH = ".agents/skills/pi-mechanical-interop/SKILL.md";
 export const FEATURE_MATRIX_PATH = "docs/workbench/feature-matrix.md";
-export const W11_HEADING = "## W11: MechanicalWorkflows binding host";
+/** The rendered text of the W11 section's heading. */
+export const W11_TITLE = "W11: MechanicalWorkflows binding host";
+export const W11_HEADING = `## ${W11_TITLE}`;
+/** The feature matrix's status vocabulary (its "Status legend": exactly one per row). */
+export const MATRIX_STATUSES = Object.freeze(["landed-gated", "partial", "in-progress", "planned", "not-started"]);
 export const PROGRAM_DOCS_DIR = `docs/workbench/programs/${PROGRAM}/`;
 export const TRACEABILITY_PATH = "docs/workbench/TRACEABILITY.md";
 /** EAT-R087's immutable paths: their bytes at the head equal their bytes at the cut base. */
@@ -121,6 +156,7 @@ const POINTERS = Object.freeze([
 ]);
 const GATE_DETAIL_FIELDS = Object.freeze(["gate tier", "gate result", "gate commit", "gate receipt"]);
 const MUTANT_PREFIX = "mutant ";
+const FORGE_RUN = "forge run ";
 const BEAD = new RegExp(`^${BEAD_ID}$`);
 const SHA = /^[0-9a-f]{40}$/;
 const SHA_IN_TEXT = /(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])/;
@@ -133,6 +169,12 @@ const PASSED = /(?<![0-9])[1-9][0-9]* passed\b/;
 const SEAM_PATH = /(?<![A-Za-z0-9_./-])(?:\.\/)?(test\/[A-Za-z0-9_./-]+\.(?:test|census)\.ts)(?![A-Za-z0-9_./-])/g;
 const FORGE_TIER = /\bforge run ([a-z0-9][a-z0-9-]*)/g;
 const ABSENCE = /\bno binding[- ]host\b/i;
+/** The plural spelling of the same absence statement. */
+const ABSENCE_PLURAL = /\bno binding[- ]hosts\b/i;
+/** A W11 heading: a heading whose rendered text begins with the word W11. */
+const W11_LIKE = /^W11(?![A-Za-z0-9])/;
+const NAMED_REFERENCES = Object.freeze({ amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " });
+const CHARACTER_REFERENCE = /&(?:#([0-9]{1,7})|#[xX]([0-9a-fA-F]{1,6})|(amp|lt|gt|quot|apos|nbsp));/g;
 
 /**
  * @param {unknown} value
@@ -143,8 +185,8 @@ function isRecord(value) {
 }
 
 /**
- * Every top-level fenced block of `markdown` whose info string is exactly BLOCK_INFO, read into its fields. A line without a
- * label and a repeated label are kept as the block's malformed entries, never silently dropped.
+ * Every top-level fenced block of `markdown` whose info string is exactly BLOCK_INFO, read into its fields. A non-blank line
+ * without a label and a repeated label are kept as the block's malformed entries, never silently dropped; blank lines are skipped.
  * @param {string} markdown
  * @returns {ReleaseBlock[]}
  */
@@ -166,13 +208,15 @@ export function parseReleaseBlocks(markdown) {
       else if (fields.has(label)) malformed.push(Object.freeze({ kind: "duplicate", line: label }));
       else fields.set(label, line.slice(at + 1).trim());
     }
-    blocks.push(Object.freeze({ fields, malformed: Object.freeze(malformed) }));
+    blocks.push(Object.freeze({ text: String(token.text), fields, malformed: Object.freeze(malformed) }));
   }
   return blocks;
 }
 
 /**
- * The seams a command names: each test file path and each `forge run <tier>`.
+ * The seams a command names: each test file path under test/ that ends in .test.ts or .census.ts (an optional ./ prefix is
+ * dropped) and each `forge run <tier>` with a lower-case tier name. A seam is real when the head tree holds its file, or when
+ * forge.toml declares its tier (declaredForgeTiers).
  * @param {string} command
  * @returns {string[]}
  */
@@ -183,7 +227,8 @@ function seamsOf(command) {
 }
 
 /**
- * Judges one release block (EAT-R083, EAT-R085, EAT-R086). The bead export is required: the real-bead check is never skipped.
+ * Judges one release block (EAT-R083, EAT-R085, EAT-R086). The bead export and the declared forge run tiers are required: the
+ * real-bead and the real-seam checks are never skipped.
  * @param {ReleaseBlock} block
  * @param {BlockContext} ctx
  * @returns {Finding[]}
@@ -191,6 +236,7 @@ function seamsOf(command) {
 export function receiptBlockFindings(block, ctx) {
   if (!(ctx?.beadIds instanceof Set)) throw new TypeError("receiptBlockFindings needs the bead export as a Set of real bead ids");
   if (typeof ctx.fileExists !== "function") throw new TypeError("receiptBlockFindings needs a fileExists reader for the seam paths");
+  if (!(ctx.forgeTiers instanceof Set)) throw new TypeError("receiptBlockFindings needs the declared forge run tiers as a Set (declaredForgeTiers)");
   if (ctx.candidate !== undefined && !SHA.test(ctx.candidate)) throw new TypeError("the candidate must be a full 40-hex commit sha");
   /** @type {Finding[]} */
   const findings = [];
@@ -239,7 +285,10 @@ export function receiptBlockFindings(block, ctx) {
   if (red !== undefined) {
     const seams = seamsOf(red);
     if (seams.length === 0) add("EAT-R083", "red-not-seam", `red command '${red}' names no seam test file and no forge run tier`);
-    for (const seam of seams) if (seam.startsWith("test/") && !ctx.fileExists(seam)) add("EAT-R083", "seam-missing", seam);
+    for (const seam of seams) {
+      const real = seam.startsWith(FORGE_RUN) ? ctx.forgeTiers.has(seam.slice(FORGE_RUN.length)) : ctx.fileExists(seam);
+      if (!real) add("EAT-R083", "seam-missing", seam);
+    }
     if (rerun !== undefined) {
       const rerunSeams = new Set(seamsOf(rerun));
       const missing = seams.filter((seam) => !rerunSeams.has(seam));
@@ -314,11 +363,12 @@ export function readBeadIds(jsonl) {
 }
 
 /**
- * The legs of forge.toml's [build] gate (one-line array), the complete gate of record. Fails closed when none is declared.
+ * The legs of forge.toml's [build] gate: the one-line `gate = [...]` array of the [build] table itself (never of a [build.<x>]
+ * table); [] when the table declares none.
  * @param {string} toml
  * @returns {string[]}
  */
-export function requiredGateLegs(toml) {
+function gateLegsOf(toml) {
   let inBuild = false;
   for (const raw of toml.split("\n")) {
     const line = raw.trim();
@@ -329,17 +379,44 @@ export function requiredGateLegs(toml) {
     if (!inBuild) continue;
     const match = /^gate\s*=\s*\[(.*)\]\s*(?:#.*)?$/.exec(line);
     if (match === null) continue;
-    const legs = [...match[1].matchAll(/"([^"]+)"/g)].map((leg) => leg[1]);
-    if (legs.length > 0) return legs;
-    break;
+    return [...match[1].matchAll(/"([^"]+)"/g)].map((leg) => leg[1]);
   }
-  throw new Error("forge.toml declares no [build] gate legs");
+  return [];
+}
+
+/**
+ * The legs of forge.toml's [build] gate (gateLegsOf), the complete gate of record. Fails closed when none is declared.
+ * @param {string} toml
+ * @returns {string[]}
+ */
+export function requiredGateLegs(toml) {
+  const legs = gateLegsOf(toml);
+  if (legs.length === 0) throw new Error("forge.toml declares no [build] gate legs");
+  return legs;
+}
+
+/**
+ * The forge run tiers forge.toml declares: each leg of its [build] gate and each [build.commands.<tier>] table.
+ * @param {string} toml
+ * @returns {Set<string>}
+ */
+export function declaredForgeTiers(toml) {
+  const tiers = new Set(gateLegsOf(toml));
+  for (const raw of toml.split("\n")) {
+    const match = /^\[build\.commands\.([A-Za-z0-9_-]+)\]\s*(?:#.*)?$/.exec(raw.trim());
+    if (match !== null) tiers.add(match[1]);
+  }
+  return tiers;
 }
 
 /**
  * EAT-R084: "Read machine receipt keyed to exact candidate commit with required Forge build legs; failed/not-run gate or receipt
  * for another commit refuses close. No CI substitution." Mutant: "Accept exit echo or an old commit gate as this cut PASS."
- * `envelope` is the parsed `forge build --json` result envelope of the complete gate.
+ * `envelope` is the parsed `forge build --json` result envelope of the complete gate. It passes only when it is a forge build
+ * result-envelope/v1 envelope with a data record, its data.gated_commit is the candidate, its status is success, its
+ * data.gate_verdict is PASS and data.gate_passed is true, each required leg has exactly one step and its status is passed, its
+ * data.invocation is present with only and skip as empty lists and path . (the package root), and ids.command_id is a cmd_ id
+ * (cmd_ and twelve lower-case hex digits).
  * @param {unknown} envelope
  * @param {{ readonly candidate: string, readonly requiredLegs: ReadonlyArray<string> }} options
  * @returns {Finding[]}
@@ -354,7 +431,7 @@ export function gateEnvelopeFindings(envelope, options) {
     findings.push(Object.freeze({ requirement: "EAT-R084", rule, detail }));
   };
   if (!isRecord(envelope) || envelope.contract_version !== FORGE_CONTRACT || envelope.command !== "build" || !isRecord(envelope.data)) {
-    add("gate-not-forge-build", `not a forge build ${FORGE_CONTRACT} envelope: an exit echo or a CI record is no machine gate receipt`);
+    add("gate-not-forge-build", `not a forge build ${FORGE_CONTRACT} envelope with a data record: an exit echo or a CI record is no machine gate receipt`);
     return findings;
   }
   const data = envelope.data;
@@ -367,53 +444,218 @@ export function gateEnvelopeFindings(envelope, options) {
     const step = steps.find((each) => each.name === leg);
     if (step === undefined) add("gate-leg-missing", `the required leg ${leg} is not in the envelope`);
     else if (step.status !== "passed") add("gate-leg-not-passed", `the required leg ${leg} is ${String(step.status)}`);
+    else if (steps.filter((each) => each.name === leg).length > 1) add("gate-leg-duplicated", `the required leg ${leg} has more than one step`);
   }
   const invocation = isRecord(data.invocation) ? data.invocation : undefined;
   const narrowed = (/** @type {string} */ key) => !Array.isArray(invocation?.[key]) || invocation[key].length > 0;
-  if (invocation === undefined || narrowed("only") || narrowed("skip")) add("gate-narrowed", "the gate ran narrowed (--only or --skip), not complete");
+  if (invocation === undefined || narrowed("only") || narrowed("skip")) add("gate-narrowed", "the envelope shows no complete gate: data.invocation must be present with empty only and skip lists (no --only, no --skip)");
+  else if (invocation.path !== ".") add("gate-narrowed", `the gate ran at path ${String(invocation.path)}, not at the package root .`);
   const commandId = isRecord(envelope.ids) ? envelope.ids.command_id : undefined;
-  if (typeof commandId !== "string" || !COMMAND_ID.test(commandId)) add("gate-no-command-id", "the envelope carries no cmd_ command id");
+  if (typeof commandId !== "string" || !COMMAND_ID.test(commandId)) add("gate-no-command-id", "the envelope carries no cmd_ command id (cmd_ and twelve lower-case hex digits)");
   return findings;
 }
 
 /**
- * The W11 section of the feature matrix: its heading line up to the next level-1 or level-2 heading.
+ * @param {unknown} value
+ * @returns {Record<string, unknown>[]}
+ */
+function tokenList(value) {
+  return Array.isArray(value) ? value.filter(isRecord) : [];
+}
+
+/**
+ * Every token under `tokens`, depth first: nested block and inline tokens, list items and table cells included.
+ * @param {unknown} tokens
+ * @returns {Generator<Record<string, unknown>, void, undefined>}
+ */
+function* walkTokens(tokens) {
+  for (const token of tokenList(tokens)) {
+    yield token;
+    yield* walkTokens(token.tokens);
+    yield* walkTokens(token.items);
+    if (token.type === "table") {
+      for (const cell of tokenList(token.header)) yield* walkTokens(cell.tokens);
+      for (const row of Array.isArray(token.rows) ? token.rows : []) for (const cell of tokenList(row)) yield* walkTokens(cell.tokens);
+    }
+  }
+}
+
+/**
+ * Text with its character references read as the characters they render (an out-of-range number is kept as written).
+ * @param {string} text
+ * @returns {string}
+ */
+function decodeReferences(text) {
+  return text.replace(CHARACTER_REFERENCE, (whole, decimal, hex, name) => {
+    if (name !== undefined) return NAMED_REFERENCES[/** @type {keyof typeof NAMED_REFERENCES} */ (name)];
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : Number.parseInt(hex, 16);
+    return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : whole;
+  });
+}
+
+/** @param {string} text */
+const oneLine = (text) => text.replace(/\s+/g, " ").trim();
+
+/**
+ * The rendered text of inline tokens: markup reads as its text, raw HTML as nothing, a line break as a space; character references
+ * are decoded in text, never in a code span.
+ * @param {unknown} tokens
+ * @returns {string}
+ */
+function inlineText(tokens) {
+  let text = "";
+  for (const token of tokenList(tokens)) {
+    if (token.type === "html") continue;
+    if (token.type === "br") text += " ";
+    else if (token.type === "codespan" || token.type === "escape") text += String(token.text ?? "");
+    else if (Array.isArray(token.tokens)) text += inlineText(token.tokens);
+    else text += decodeReferences(String(token.text ?? ""));
+  }
+  return text;
+}
+
+/**
+ * The rendered cells of a table token, one array per row: its header row first, then every body row.
+ * @param {Record<string, unknown>} table
+ * @returns {string[][]}
+ */
+function tableCells(table) {
+  const cells = (/** @type {unknown} */ row) => tokenList(row).map((cell) => oneLine(inlineText(cell.tokens)));
+  return [cells(table.header), ...(Array.isArray(table.rows) ? table.rows : []).map(cells)];
+}
+
+/**
+ * The rendered lines of block tokens: one line per heading, paragraph, code block, table row (its cells joined by " | ") and
+ * list item; a blockquote's lines are its blocks' lines; raw HTML gives none.
+ * @param {unknown} tokens
+ * @returns {string[]}
+ */
+function blockLines(tokens) {
+  /** @type {string[]} */
+  const lines = [];
+  for (const token of tokenList(tokens)) {
+    if (token.type === "table") lines.push(...tableCells(token).map((row) => row.join(" | ")));
+    else if (token.type === "list") lines.push(...tokenList(token.items).map((item) => blockLines(item.tokens).join(" ")));
+    else if (token.type === "blockquote") lines.push(...blockLines(token.tokens));
+    else if (token.type === "code") lines.push(String(token.text ?? ""));
+    else if (token.type === "heading" || token.type === "paragraph" || token.type === "text") lines.push(Array.isArray(token.tokens) ? inlineText(token.tokens) : decodeReferences(String(token.text ?? "")));
+  }
+  return lines.map(oneLine).filter((line) => line !== "");
+}
+
+/**
+ * The rendered view of markdown as text (THE RENDERED VIEW above): one line per block, table row and list item.
+ * @param {string} markdown
+ * @returns {string}
+ */
+export function renderedText(markdown) {
+  return blockLines(Lexer.lex(markdown)).join("\n");
+}
+
+/**
+ * The rendered text of every heading of markdown, at any depth and at any nesting (a heading in a blockquote or a list item too).
+ * @param {string} markdown
+ * @returns {string[]}
+ */
+export function headingTexts(markdown) {
+  /** @type {string[]} */
+  const texts = [];
+  for (const token of walkTokens(Lexer.lex(markdown))) if (token.type === "heading") texts.push(oneLine(inlineText(token.tokens)));
+  return texts;
+}
+
+/**
+ * The section of markdown under the one heading whose rendered text is `title`: that heading's markdown and every top-level
+ * token after it up to the next top-level level-1 or level-2 heading (a level-3 or deeper heading belongs to the section). It is
+ * undefined unless exactly one heading of markdown (headingTexts) reads `title` and that heading is a top-level level-2 heading.
+ * @param {string} markdown
+ * @param {string} title
+ * @returns {string | undefined}
+ */
+export function markdownSection(markdown, title) {
+  if (headingTexts(markdown).filter((text) => text === title).length !== 1) return undefined;
+  const tokens = tokenList(Lexer.lex(markdown));
+  /** @param {Record<string, unknown> | undefined} token */
+  const depthOf = (token) => (token?.type === "heading" && typeof token.depth === "number" ? token.depth : Number.POSITIVE_INFINITY);
+  const start = tokens.findIndex((token) => depthOf(token) === 2 && oneLine(inlineText(token.tokens)) === title);
+  if (start < 0) return undefined;
+  let end = start + 1;
+  while (end < tokens.length && depthOf(tokens[end]) > 2) end += 1;
+  return tokens
+    .slice(start, end)
+    .map((token) => String(token.raw ?? ""))
+    .join("");
+}
+
+/**
+ * The rendered text of every W11 heading of the feature matrix: each heading (any depth, any nesting) whose rendered text begins
+ * with the word W11.
+ * @param {string} matrix
+ * @returns {string[]}
+ */
+export function w11Headings(matrix) {
+  return headingTexts(matrix).filter((text) => W11_LIKE.test(text));
+}
+
+/**
+ * The W11 section of the feature matrix: markdownSection(matrix, W11_TITLE) when the matrix holds exactly one W11 heading
+ * (w11Headings), undefined otherwise.
  * @param {string} matrix
  * @returns {string | undefined}
  */
 export function w11Section(matrix) {
-  const lines = matrix.split("\n");
-  const start = lines.findIndex((line) => line.trimEnd() === W11_HEADING);
-  if (start < 0) return undefined;
-  let end = start + 1;
-  while (end < lines.length && !/^#{1,2} /.test(lines[end])) end += 1;
-  return lines.slice(start, end).join("\n");
+  return w11Headings(matrix).length === 1 ? markdownSection(matrix, W11_TITLE) : undefined;
 }
 
 /**
- * The Status cell of every feature row of a W11 section's table.
+ * Every body row of every table of a W11 section (a table nested in a blockquote or a list item too), in the rendered view: the
+ * cells under its header cells reading Feature and Status ("" when the table has no such header cell).
+ * @param {string} section
+ * @returns {W11Row[]}
+ */
+export function w11Rows(section) {
+  /** @type {W11Row[]} */
+  const rows = [];
+  for (const token of walkTokens(Lexer.lex(section))) {
+    if (token.type !== "table") continue;
+    const [header = [], ...body] = tableCells(token);
+    const feature = header.indexOf("Feature");
+    const status = header.indexOf("Status");
+    for (const cells of body) rows.push(Object.freeze({ feature: feature < 0 ? "" : (cells[feature] ?? ""), status: status < 0 ? "" : (cells[status] ?? "") }));
+  }
+  return rows;
+}
+
+/**
+ * The Status cell of every row of a W11 section's tables (w11Rows).
  * @param {string} section
  * @returns {string[]}
  */
 export function w11Statuses(section) {
-  /** @type {string[]} */
-  const statuses = [];
-  for (const raw of section.split("\n")) {
-    const line = raw.trim();
-    if (!line.startsWith("|") || /^\|[\s:|-]+\|?$/.test(line)) continue;
-    const cells = line
-      .slice(1, line.endsWith("|") ? -1 : undefined)
-      .split("|")
-      .map((cell) => cell.trim());
-    if (cells[0] === "Feature" || cells[1] === undefined) continue;
-    statuses.push(cells[1]);
-  }
-  return statuses;
+  return w11Rows(section).map((row) => row.status);
 }
 
 /**
- * EAT-R082's W11 rules. `witnessed` is true when the cut holds a live or closed slice claim whose named producer gate passed at the
- * candidate commit.
+ * The raw HTML a W11 section holds: block HTML, HTML comments and inline HTML alike.
+ * @param {string} section
+ * @returns {string[]}
+ */
+export function w11Html(section) {
+  /** @type {string[]} */
+  const html = [];
+  for (const token of walkTokens(Lexer.lex(section))) if (token.type === "html") html.push(String(token.raw ?? ""));
+  return html;
+}
+
+/**
+ * EAT-R082's W11 rules over the base and head W11 sections (w11Section), each read in the rendered view. `witnessed` is true when
+ * the cut holds a live or closed slice claim judged against a candidate commit whose named producer gate passed at that candidate
+ * (the claim has no EAT-R085 finding).
+ *  - w11-landed-gated-unwitnessed: a head row reads landed-gated while no base row with the same Feature cell does, unwitnessed;
+ *  - w11-status-unknown: a head row's Status cell is none of MATRIX_STATUSES ("" when its table has no Status column);
+ *  - w11-html: the head section holds raw HTML (its rendered view would not be its whole text);
+ *  - w11-absence-stale: the head section states that no binding host exists (the words "no binding host" or "no binding-host",
+ *    singular or plural, in any case) while a host module names MechanicalWorkflows.
  * @param {{ readonly baseSection?: string, readonly headSection?: string, readonly hostModules: ReadonlyArray<string>, readonly witnessed: boolean }} input
  * @returns {Finding[]}
  */
@@ -421,19 +663,29 @@ export function w11Findings(input) {
   /** @type {Finding[]} */
   const findings = [];
   const head = input.headSection ?? "";
-  const turnedLanded = w11Statuses(head).includes("landed-gated") && !w11Statuses(input.baseSection ?? "").includes("landed-gated");
+  const baseRows = w11Rows(input.baseSection ?? "");
+  const headRows = w11Rows(head);
+  const turnedLanded = headRows.some((row) => row.status === "landed-gated" && !baseRows.some((was) => was.feature === row.feature && was.status === "landed-gated"));
   if (turnedLanded && !input.witnessed) {
     findings.push(Object.freeze({ requirement: "EAT-R082", rule: "w11-landed-gated-unwitnessed", detail: "W11 turned landed-gated without a live or closed slice claim whose producer gate passed at the candidate: source existence or one fixture alone never lands W11" }));
   }
-  if (input.hostModules.length > 0 && ABSENCE.test(head)) {
+  for (const row of headRows) {
+    if (!MATRIX_STATUSES.includes(row.status)) findings.push(Object.freeze({ requirement: "EAT-R082", rule: "w11-status-unknown", detail: `W11 row '${row.feature}' reads status '${row.status}', none of ${MATRIX_STATUSES.join(", ")}` }));
+  }
+  const html = w11Html(head);
+  if (html.length > 0) findings.push(Object.freeze({ requirement: "EAT-R082", rule: "w11-html", detail: `the W11 section holds raw HTML (${html.length} token(s)), so its rendered view is not its whole text` }));
+  const headText = renderedText(head);
+  if (input.hostModules.length > 0 && (ABSENCE.test(headText) || ABSENCE_PLURAL.test(headText))) {
     findings.push(Object.freeze({ requirement: "EAT-R082", rule: "w11-absence-stale", detail: `W11 states that no binding host exists while ${input.hostModules.join(", ")} names MechanicalWorkflows` }));
   }
   return findings;
 }
 
 /**
- * Judges a cut base..head: EAT-R087 over its added and immutable paths, EAT-R082/R083/R085/R086 over the release blocks it adds
- * to per-bead receipts, the W11 rules, and EAT-R084 over the machine gate envelope when one is supplied.
+ * Judges a cut base..head: EAT-R087 over its added and immutable paths; EAT-R082/R083/R085/R086 over each release block of a
+ * changed per-bead receipt that the receipt did not already hold at the cut base, text for text (an appended, an inserted and an
+ * edited block alike; a block the base already holds is not judged again); the W11 rules and the W11 heading's uniqueness; and
+ * EAT-R084 over the machine gate envelope when one is supplied.
  * @param {Cut} cut
  * @returns {CutVerdict}
  */
@@ -472,19 +724,29 @@ export function judgeCut(cut) {
   // EAT-R082: "qa/workbench status validator compares each changed slice to same-cut docs/skill/W11 evidence pointers. Missing
   // live gate leaves slice non-live; stale no-Mechanical-code assertion is removed without claiming invocation shipped."
   // Mutant: "Set W11 landed-gated from source existence or one fixture alone."
-  const w11 = { base: w11Section(cut.text.base(FEATURE_MATRIX_PATH) ?? ""), head: w11Section(cut.text.head(FEATURE_MATRIX_PATH) ?? "") };
+  // Each pointer of each judged block: a pointer present at base or head must change in the cut (W11: its rendered section, so an
+  // edit that changes no rendered text is no update; the skill: its file; the program docs: any path under the directory) and be
+  // named on the block's docs line; a pointer absent at base and head refuses a live or closed claim and must be named on the
+  // blockers line of any other claim.
+  const headMatrix = cut.text.head(FEATURE_MATRIX_PATH);
+  const sections = { base: w11Section(cut.text.base(FEATURE_MATRIX_PATH) ?? ""), head: w11Section(headMatrix ?? "") };
+  const w11 = { base: sections.base === undefined ? undefined : renderedText(sections.base), head: sections.head === undefined ? undefined : renderedText(sections.head) };
   let witnessed = false;
   let unkeyed = false;
   for (const change of cut.changes) {
     if (change.status === "D" || !change.path.startsWith(RECEIPTS_DIR)) continue;
     const match = RECEIPT_FILE.exec(change.path.slice(RECEIPTS_DIR.length));
     if (match === null) continue;
-    const before = change.status === "A" ? [] : parseReleaseBlocks(cut.text.base(change.path) ?? "");
-    const added = parseReleaseBlocks(cut.text.head(change.path) ?? "").slice(before.length);
+    const before = change.status === "A" ? [] : parseReleaseBlocks(cut.text.base(change.path) ?? "").map((block) => block.text);
+    const added = parseReleaseBlocks(cut.text.head(change.path) ?? "").filter((block) => {
+      const at = before.indexOf(block.text);
+      if (at >= 0) before.splice(at, 1);
+      return at < 0;
+    });
     if (added.length === 0) continue;
     receipts.push(change.path);
     for (const block of added) {
-      const blockFindings = receiptBlockFindings(block, { receiptBead: match[1], beadIds: cut.beadIds, fileExists: (path) => cut.exists.head(path), candidate: cut.candidate });
+      const blockFindings = receiptBlockFindings(block, { receiptBead: match[1], beadIds: cut.beadIds, fileExists: (path) => cut.exists.head(path), forgeTiers: cut.forgeTiers, candidate: cut.candidate });
       for (const finding of blockFindings) keep(finding, change.path);
       const status = block.fields.get("slice status") ?? "";
       const closing = CLOSING_STATUSES.includes(status);
@@ -507,7 +769,10 @@ export function judgeCut(cut) {
       }
     }
   }
-  for (const finding of w11Findings({ baseSection: w11.base, headSection: w11.head, hostModules: cut.hostModules, witnessed })) keep(finding, undefined);
+  for (const finding of w11Findings({ baseSection: sections.base, headSection: sections.head, hostModules: cut.hostModules, witnessed })) keep(finding, undefined);
+  if (headMatrix !== undefined && sections.head === undefined) {
+    keep({ requirement: "EAT-R082", rule: "w11-heading-not-unique", detail: `${FEATURE_MATRIX_PATH} must hold exactly one W11 heading, the level-2 heading '${W11_TITLE}'; it holds ${JSON.stringify(w11Headings(headMatrix))}` }, undefined);
+  }
 
   if (receipts.length === 0) reasons.push(OPEN_REASONS.noReceipt);
   if (cut.envelope === undefined) reasons.push(OPEN_REASONS.noEnvelope);
@@ -544,7 +809,10 @@ function gitOut(cwd, args, what) {
 }
 
 /**
- * Reads the cut <base>..<head> (head undefined: the working tree, untracked files included) of the repository holding `repo`.
+ * Reads the cut <base>..<head> (head undefined: the working tree, untracked files included unless ignored) of the repository
+ * holding `repo`. The host modules are the files under src/workbench/hosts/, at any depth (the working tree: every tracked and
+ * every untracked, not ignored file; a committed head: every blob git ls-tree -r lists), whose text holds the word mechanical in
+ * any case: a host module that names MechanicalWorkflows (MechanicalWorkflows, @mechanical/workflows-development).
  * @param {{ readonly repo: string, readonly base: string, readonly head?: string, readonly candidate?: string, readonly envelopePath?: string }} options
  * @returns {Cut & { readonly base: string, readonly head?: string }}
  */
@@ -555,6 +823,7 @@ export function readCutFromGit(options) {
   const base = commit(options.base);
   const head = options.head === undefined ? undefined : commit(options.head);
   const candidate = options.candidate === undefined ? undefined : commit(options.candidate);
+  if (candidate !== undefined && candidate !== head) throw new UsageError(`--commit ${options.candidate} is not the cut's head commit (${options.head === undefined ? "no --head names one" : `--head ${options.head}`}): the candidate is the head of the cut`);
   /** @type {Map<string, Change>} */
   const changes = new Map();
   const diff = gitOut(top, ["diff", "--name-status", "--no-renames", "-z", base, ...(head === undefined ? [] : [head]), "--"], "git diff").split("\0");
@@ -583,16 +852,10 @@ export function readCutFromGit(options) {
   const existsHead = head === undefined ? (/** @type {string} */ path) => existsSync(join(top, path)) : existsAt(head);
   const beadExport = textHead(".beads/issues.jsonl");
   if (beadExport === undefined) throw new UsageError("no bead export at .beads/issues.jsonl: the real-bead check needs it");
-  const hostNames =
-    head === undefined
-      ? existsSync(join(top, HOSTS_DIR))
-        ? readdirSync(join(top, HOSTS_DIR), { withFileTypes: true })
-            .filter((entry) => entry.isFile())
-            .map((entry) => `${HOSTS_DIR}${entry.name}`)
-        : []
-      : gitOut(top, ["ls-tree", "-r", "--name-only", head, "--", HOSTS_DIR], "git ls-tree")
-          .split("\n")
-          .filter((path) => path !== "" && !path.slice(HOSTS_DIR.length).includes("/"));
+  const hostListing = head === undefined ? ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", HOSTS_DIR] : ["ls-tree", "-r", "-z", "--name-only", head, "--", HOSTS_DIR];
+  const hostNames = gitOut(top, hostListing, "git host listing")
+    .split("\0")
+    .filter((path) => path !== "");
   const hostModules = hostNames.filter((path) => /mechanical/i.test(textHead(path) ?? "")).sort();
   /** @type {unknown} */
   let envelope;
@@ -613,6 +876,7 @@ export function readCutFromGit(options) {
     text: { base: blobAt(base), head: textHead },
     beadIds: readBeadIds(beadExport),
     hostModules,
+    forgeTiers: declaredForgeTiers(forgeToml ?? ""),
     requiredLegs,
     candidate,
     envelope,

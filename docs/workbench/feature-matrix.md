@@ -214,7 +214,7 @@ A status is never inferred from a source commit alone: landed-gated requires a t
 Features whose status is planned or not-started, plus the one in-progress defect fix with nothing landed. None of these are claimed for this release.
 
 - W02: Operator terminal-journey acceptance for VC-1 (planned). Bead wb-a2g.3 open, dispatch held for a credentialed claude-live seat; the one manual tmux journey is not reproducible from the repo and exercised no cancellation.
-- W11: Hosted develop() with real scope-limited service bindings (planned; bead status is blocked). Beads wb-04s and VC-3 epic wb-w12 blocked; no binding-host code or tests exist, only read-only discovery receipts.
+- W11: Hosted develop() with real scope-limited service bindings (planned; bead status is blocked). Beads wb-04s and VC-3 epic wb-w12 blocked. No binding host exists (re-measured 2026-11-06 at trunk 600a253 by wb-j5y5; see the W11 row above, which records the measurement): no module under src/workbench/hosts/ names MechanicalWorkflows, and test/workbench-mwi-release.test.ts holds this line to that directory.
 - W12: Fail-closed resume for journaled nodes with ABSENT effectClass (in-progress, not planned: bug bead wb-tu1 is claimed and nothing has landed on trunk (a machine-branch delivery at 0fd665b awaits the gate lane); trunk is currently fail-open at src/workflow/runtime.ts:1326).
 - W21: Remaining profiling receipts, W21-E Pi tool reply-size, W21-G terminal bytes-per-update line-diff, W21-H graph-view build, and the overall 10k+ acceptance (planned). Open beads wb-9x5.5, wb-9x5.8, wb-9x5.10 and parent wb-9x5; no code or tests exist for these.
 
