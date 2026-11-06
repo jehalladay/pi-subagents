@@ -208,6 +208,14 @@
  * case's title and the cut #2 paragraph above now refer to; the wb-v3a9 cut #3 paragraph of the NOT CLAIMED section scopes
  * out every spelling that entry does not name for that place; a fourth NARROWED WORDS case holds that entry to those
  * words, verbatim; and the third also reads the replaced words with both texts upper-cased.
+ * wb-v3a9 cut #4 answers this bead's refusal #3 (gate-prep-11 / g10-gate-s229, U1 and U2): rowsEntries, through which the
+ * fourth NARROWED WORDS case and the first CASE WORDS case read this header's ROWS entries, took a ROWS line only when it
+ * began with " *  " or " *   " and skipped every other one, so one-line header edits in other mark spellings, inside the
+ * NARROWED WORDS entry and inside the FAIL-CLOSED CORE and CARRY entries, kept the census green while those entries, as a
+ * reader of this header reads them, held wider words or their rows' replaced words again. Cut #4 takes the first branch of
+ * the refusal's cure: rowsEntries reads ROWS fail-closed, as the ROWS LINES ROWS entry spells it, so such a line reds every
+ * case that reads entries through it; a ROWS LINES case holds that reading on the ROWS_LINES rows; and the first CASE WORDS
+ * case reads the replaced words with white space folded and both texts lower-cased, and both upper-cased.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -404,6 +412,15 @@
  *   list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of
  *   its own (no map or flatMap call and no object literal) - declares none of the names that application reads, and expects
  *   that list empty.
+ *  ROWS LINES (wb-v3a9 cut #4): rowsEntries reads this header's ROWS fail-closed: ROWS runs from the only line that
+ *   equals " * ROWS:" up to the next line that equals " *", and the line after that one begins with " * NOT CLAIMED (";
+ *   in ROWS, a line that /^ \* {2}[A-Z][A-Z-]*(?:,? (?:[A-Z][A-Z-]*|#\d+|\d+|and))*(?::| \()/ matches opens an entry,
+ *   and a line that begins with " *   " continues the entry open before it; any other line in ROWS (a line beginning
+ *   with " *   " before the first entry opens is one), a second line that equals " * ROWS:" and a close not followed so
+ *   make rowsEntries throw, so that every case reading entries through it reds. Each ROWS_LINES row's lines, inserted in
+ *   memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one
+ *   of them - or read into the entry whose head, its words through its first " (" or ":", the row names, as the row
+ *   states; and this entry's lines are exactly those the ROWS LINES case holds them to, their quotes spelled from ROWS_READ.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -517,6 +534,9 @@
  * after its mark, a semicolon with no space after it, and a heading or opening line with two spaces after its mark; and a
  * copy of the sentence's opening words in another letter case, or one read otherwise than censusHeader reads this header,
  * is NOT CLAIMED by that case's count of them.
+ * wb-v3a9 cut #4: that a ROWS_LINES row stays is NOT CLAIMED by an anchor outside this census (they are its own literals,
+ * like the GP22S plants); and a spelling of a FAIL_CLOSED_CASES row's replaced words other than theirs, letter case aside
+ * and each /\s+/ run read as one space, is NOT CLAIMED by the first CASE WORDS case (it reads their spelling).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text, the
  * tracker export and (wb-v3a9) its own source, and parses planted text in memory.
@@ -1244,17 +1264,26 @@ function censusHeader(): string {
     .replace(/\s+/g, " ")
     .trim();
 }
-/** wb-v3a9: this header's ROWS entries, in order, each read as censusHeader reads its lines: an entry opens on a line with two spaces after its " *" mark and runs on over the lines with three or more, up to the blank line that closes ROWS. */
-function rowsEntries(): string[] {
-  const text = read(CENSUS);
+/**
+ * wb-v3a9 (cut #4, refusal #3 U1 and U2: read fail-closed): this header's ROWS entries, in order, each read as censusHeader
+ * reads its lines, by the ROWS_READ lines and pattern. ROWS runs from the only line that equals ROWS_READ.heading up to the
+ * next line that equals ROWS_READ.close, and the line after that one begins with ROWS_READ.next; in it, a line
+ * ROWS_READ.opener matches opens an entry, and a line beginning with ROWS_READ.continuation continues the entry open before
+ * it; any other line in it, a second heading line and a close not followed so throw. With no text given it reads this file.
+ */
+function rowsEntries(text: string = read(CENSUS)): string[] {
   const lines = text.slice(0, text.indexOf("*/")).split("\n");
-  const from = lines.indexOf(" * ROWS:");
-  const to = from < 0 ? -1 : lines.indexOf(" *", from);
+  const from = lines.indexOf(ROWS_READ.heading);
+  if (from < 0 || lines.indexOf(ROWS_READ.heading, from + 1) >= 0) throw new Error(`rowsEntries reads no single ROWS heading ${JSON.stringify(ROWS_READ.heading)}`);
+  const to = lines.indexOf(ROWS_READ.close, from);
+  const after = to < 0 ? undefined : lines[to + 1];
+  if (after === undefined || !after.startsWith(ROWS_READ.next)) throw new Error(`rowsEntries reads no ROWS close before ${JSON.stringify(after ?? "")}`);
   const entries: string[] = [];
-  for (const line of to < 0 ? [] : lines.slice(from + 1, to)) {
+  for (const line of lines.slice(from + 1, to)) {
     const last = entries.length - 1;
-    if (line.startsWith(" *   ") && last >= 0) entries[last] = `${entries[last]} ${line.slice(5)}`;
-    else if (line.startsWith(" *  ")) entries.push(line.slice(4));
+    if (line.startsWith(ROWS_READ.continuation) && last >= 0) entries[last] = `${entries[last]} ${line.slice(ROWS_READ.continuation.length)}`;
+    else if (ROWS_READ.opener.test(line)) entries.push(line.slice(4));
+    else throw new Error(`rowsEntries reads no ROWS line ${JSON.stringify(line)}`);
   }
   return entries.map(entry => entry.replace(/\s+/g, " ").trim());
 }
@@ -1778,6 +1807,13 @@ interface FailClosedCase {
   readonly receiver: string;
   readonly argument: string;
   readonly replaced: readonly string[];
+}
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): a ROWS line spelling the ROWS LINES case reads: the lines it inserts, in memory, into this file's text after the line that equals its anchor (lines), and how rowsEntries then reads that text (reads): "refused", rowsEntries throwing naming one of those lines, or the head - its words through its first " (" or ":" - of the entry whose words then end with the last of them, its mark removed. */
+interface RowsLine {
+  readonly id: string;
+  readonly anchor: string;
+  readonly lines: readonly string[];
+  readonly reads: string;
 }
 /** wb-v3a9: how a FAIL-CLOSED case, as this file spells it, applies narrowsToPinnedPages: the words its title opens with (head); whether its callback's first statement binds lines to helperClaimLines(), and nothing else in it binds lines (bindsLines); the list the filter of its expect subject's unnarrowed list reads (receiver), and whether that list is a const of the callback whose initializer reads lines, directly or through another such const (receiverReadsLines); the argument it hands narrowsToPinnedPages, negated as the whole body of that filter's callback (argument); whether that argument reads lines itself, or the list and the consts it reads build no entry of their own - no map or flatMap call and no object literal - so the argument reads a header line either way (readsHeaderLines); whether the expected object's unnarrowed is [] (expectsEmpty); and the names it declares that this application reads (shadowed). */
 interface CaseApplication {
@@ -3946,6 +3982,63 @@ const NARROWING_REQUIREMENTS: readonly Requirement[] = [
 const FOLLOW_UP_3_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-v3a9 F1 cure", source: "notes", text: "Cure for the carry: the finding's SECOND alternative, the one its lineage note says ends the loop. Narrow the FAIL-CLOSED case words and the census :380 parenthetical ('they read the phrase's place and those words', base :348) to 'the cases apply narrowsToPinnedPages to the header's lines'." },
   { key: "wb-v3a9 F1 cure scope", source: "notes", text: "A further row-per-spelling cure, the first alternative again, leaves the open spelling family open, as the cut's own NOT CLAIMED sentence states." },
+];
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): the lines and the pattern rowsEntries reads this header's ROWS by, as the ROWS LINES ROWS entry quotes them: the line that opens ROWS (heading), the line that closes it (close), the words the line after the close begins with (next), the pattern a line opening an entry matches (opener) and the words a line continuing an entry begins with (continuation). */
+const ROWS_READ = {
+  heading: " * ROWS:",
+  close: " *",
+  next: " * NOT CLAIMED (",
+  opener: /^ \* {2}[A-Z][A-Z-]*(?:,? (?:[A-Z][A-Z-]*|#\d+|\d+|and))*(?::| \()/,
+  continuation: " *   ",
+} as const;
+/** wb-v3a9 cut #4: the lines of this header's ROWS LINES entry, as the ROWS LINES case holds them, each quote in them spelled from ROWS_READ. */
+const ROWS_LINES_ENTRY: readonly string[] = [
+  ` *  ROWS LINES (wb-v3a9 cut #4): rowsEntries reads this header's ROWS fail-closed: ROWS runs from the only line that`,
+  ` *   equals ${JSON.stringify(ROWS_READ.heading)} up to the next line that equals ${JSON.stringify(ROWS_READ.close)}, and the line after that one begins with ${JSON.stringify(ROWS_READ.next)};`,
+  ` *   in ROWS, a line that /${ROWS_READ.opener.source}/ matches opens an entry,`,
+  ` *   and a line that begins with ${JSON.stringify(ROWS_READ.continuation)} continues the entry open before it; any other line in ROWS (a line beginning`,
+  ` *   with ${JSON.stringify(ROWS_READ.continuation)} before the first entry opens is one), a second line that equals ${JSON.stringify(ROWS_READ.heading)} and a close not followed so`,
+  ` *   make rowsEntries throw, so that every case reading entries through it reds. Each ROWS_LINES row's lines, inserted in`,
+  ` *   memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one`,
+  ` *   of them - or read into the entry whose head, its words through its first " (" or ":", the row names, as the row`,
+  ` *   states; and this entry's lines are exactly those the ROWS LINES case holds them to, their quotes spelled from ROWS_READ.`,
+];
+/** wb-v3a9 cut #4: the lines of this header the ROWS_LINES rows insert after: the NARROWED WORDS entry's last line and one of its lines, the last lines of the FAIL-CLOSED CORE and CARRY entries, the line that opens ROWS and the line that opens the NOT CLAIMED section. */
+const ROWS_ANCHORS = {
+  narrowedEnd: " *   fourth case holds it to, as rowsEntries reads it (cut #3).",
+  narrowedSplit: " *   matches, or to the section's end; that paragraph, its lines read the way censusHeader reads this header's and split at",
+  coreEnd: " *   frozen classes, those the guard derives a sub-form from among them.",
+  carryEnd: " *   a variable's initializer or a plain text pid; the FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).",
+  heading: " * ROWS:",
+  notClaimed: " * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the",
+} as const;
+/** wb-v3a9 cut #4: words the ROWS_LINES rows insert. */
+const WIDE_END = "That section also ends at a line that holds no words after its mark, and a paragraph in it also opens at a line whose words open with a bead id and a colon.";
+const CARRY_WORDS = "Each such line narrows to its pinned pages as a clause of its own.";
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): ROWS line spellings, each with the reading rowsEntries gives this file's text once the row's lines are inserted. */
+const ROWS_LINES: readonly RowsLine[] = [
+  { id: "GP11-NW4-TAB-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *\t ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-TAB-MID", anchor: ROWS_ANCHORS.narrowedSplit, lines: [' *\t   every ";" and at'], reads: "refused" },
+  { id: "GP11-NW4-2SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [`  *   ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-1SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` * ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-0SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *${WIDE_END}`], reads: "refused" },
+  { id: "GP11-CW1-TAB-CORE", anchor: ROWS_ANCHORS.coreEnd, lines: [' *\t  Each of those lines carries the narrowing "on its pinned pages" as a clause of its own.'], reads: "refused" },
+  { id: "GP11-CW1-TAB-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` *\t  ${CARRY_WORDS}`], reads: "refused" },
+  { id: "GP11-CW1-2SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [`  *   ${CARRY_WORDS}`], reads: "refused" },
+  { id: "GP11-CW1-1SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` * ${CARRY_WORDS}`], reads: "refused" },
+  { id: "S4-EMPTY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [""], reads: "refused" },
+  { id: "S4-MARK-SPACE", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" * "], reads: "refused" },
+  { id: "S4-2SP-EMPTY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" *  "], reads: "refused" },
+  { id: "S4-2SP-TAB", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  \t${WIDE_END}`], reads: "refused" },
+  { id: "S4-2SP-HEADLESS", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  ${WIDE_END}`], reads: "refused" },
+  { id: "S4-3SP-FIRST", anchor: ROWS_ANCHORS.heading, lines: [` *   ${WIDE_END}`], reads: "refused" },
+  { id: "S4-CLOSE-EARLY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" *", ` *   ${WIDE_END}`], reads: "refused" },
+  { id: "S4-HEADING-TWICE", anchor: ROWS_ANCHORS.notClaimed, lines: [" * ROWS:", " *  NARROWED WORDS (a second entry): nothing more."], reads: "refused" },
+  { id: "GP11-NW4-CTRL-3SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *   ${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "GP11-CW1-CTRL-3SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` *   ${CARRY_WORDS}`], reads: "FAIL-CLOSED CARRY (" },
+  { id: "S4-CTRL-4SP", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *    ${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "S4-CTRL-3SP-TAB", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *   \t${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "S4-CTRL-HEAD", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  ALSO (a control): ${WIDE_END}`], reads: "ALSO (" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -6477,6 +6570,28 @@ const FROZEN: readonly string[] = [
   "NARROWING_REQUIREMENTS:wb-o3f8 F1 lineage note:0de04caad67a",
   "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure:06017409314f",
   "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure scope:bd4879e2d117",
+  "ROWS_LINES:GP11-NW4-TAB-END:eec1367623cd",
+  "ROWS_LINES:GP11-NW4-TAB-MID:38ae96aec603",
+  "ROWS_LINES:GP11-NW4-2SP-END:6461bf539f0c",
+  "ROWS_LINES:GP11-NW4-1SP-END:17759d2a8097",
+  "ROWS_LINES:GP11-NW4-0SP-END:bd347ce1e925",
+  "ROWS_LINES:GP11-CW1-TAB-CORE:e67ca227c7dd",
+  "ROWS_LINES:GP11-CW1-TAB-CARRY:8e115e4880ef",
+  "ROWS_LINES:GP11-CW1-2SP-CARRY:9b2840e2cb7d",
+  "ROWS_LINES:GP11-CW1-1SP-CARRY:574f613d48d6",
+  "ROWS_LINES:S4-EMPTY:5c242cbb3ed2",
+  "ROWS_LINES:S4-MARK-SPACE:2a2c2dbe6e1f",
+  "ROWS_LINES:S4-2SP-EMPTY:448344c03136",
+  "ROWS_LINES:S4-2SP-TAB:c2f8109df54b",
+  "ROWS_LINES:S4-2SP-HEADLESS:e192c00627c9",
+  "ROWS_LINES:S4-3SP-FIRST:170aafffa923",
+  "ROWS_LINES:S4-CLOSE-EARLY:7437f35d8393",
+  "ROWS_LINES:S4-HEADING-TWICE:13d4c5cf49bb",
+  "ROWS_LINES:GP11-NW4-CTRL-3SP-END:b721ea840c36",
+  "ROWS_LINES:GP11-CW1-CTRL-3SP-CARRY:af6d1f108236",
+  "ROWS_LINES:S4-CTRL-4SP:8096b70d2859",
+  "ROWS_LINES:S4-CTRL-3SP-TAB:14ad1a9d8002",
+  "ROWS_LINES:S4-CTRL-HEAD:3e3bcd6eb971",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -7555,8 +7670,9 @@ describe(SUITE, () => {
       const entries = rowsEntries().filter(entry => entry.startsWith("FAIL-CLOSED "));
       const { narrowing } = narrowingCure();
       const headOf = (text: string): string => text.slice(0, text.indexOf(" (") + 2);
+      const folded = (text: string): string => text.replace(/\s+/g, " ");
       const narrowed = (text: string, row: FailClosedCase): boolean =>
-        narrowing !== "" && text.includes(`wb-v3a9: ${narrowing})`) && text.includes("narrowsToPinnedPages reads narrowed every ") && !row.replaced.some(words => text.includes(words));
+        narrowing !== "" && text.includes(`wb-v3a9: ${narrowing})`) && text.includes("narrowsToPinnedPages reads narrowed every ") && !row.replaced.some(words => folded(text).toLowerCase().includes(folded(words).toLowerCase()) || folded(text).toUpperCase().includes(folded(words).toUpperCase()));
       expect({
         registered: registered.map(headOf),
         entries: entries.map(headOf),
@@ -7567,6 +7683,34 @@ describe(SUITE, () => {
       expect(failClosedApplications()).toStrictEqual(
         FAIL_CLOSED_CASES.map(row => ({ head: row.head, bindsLines: true, receiver: row.receiver, receiverReadsLines: true, argument: row.argument, readsHeaderLines: true, expectsEmpty: true, shadowed: [] })),
       );
+    });
+  });
+
+  describe("ROWS LINES (wb-v3a9 cut #4, refusal #3 U1 and U2): rowsEntries reads this header's ROWS fail-closed", () => {
+    it("each ROWS_LINES row's lines, inserted in memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one of them - or read into the entry whose head, its words through its first ' (' or ':', the row names, as the row states; and this header's only ROWS LINES entry is, line by line, ROWS_LINES_ENTRY, its quotes spelled from the ROWS_READ spellings and pattern rowsEntries reads by", () => {
+      const text = read(CENSUS);
+      const readingOf = (row: RowsLine): string => {
+        const lines = text.split("\n");
+        const at = lines.indexOf(row.anchor);
+        if (at < 0 || lines.indexOf(row.anchor, at + 1) >= 0) return "no single anchor line";
+        lines.splice(at + 1, 0, ...row.lines);
+        const last = (row.lines[row.lines.length - 1] ?? "").replace(/^ \* ?/, "").replace(/\s+/g, " ").trim();
+        try {
+          const entry = rowsEntries(lines.join("\n")).find(candidate => candidate.endsWith(last));
+          return entry === undefined ? "read into no entry" : (/^[^(:]*(?: \(|:)/.exec(entry)?.[0] ?? entry);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          return row.lines.some(line => message.endsWith(JSON.stringify(line))) ? "refused" : message;
+        }
+      };
+      const header = text.slice(0, text.indexOf("*/")).split("\n");
+      const open = header.findIndex(line => line.startsWith(" *  ROWS LINES ("));
+      const after = open < 0 ? -1 : header.findIndex((line, at) => at > open && !line.startsWith(ROWS_READ.continuation));
+      expect({
+        readings: ROWS_LINES.map(row => ({ id: row.id, reads: readingOf(row) })),
+        entry: after < 0 ? [] : header.slice(open, after),
+        entries: rowsEntries().filter(candidate => candidate.startsWith("ROWS LINES (")).length,
+      }).toStrictEqual({ readings: ROWS_LINES.map(row => ({ id: row.id, reads: row.reads })), entry: ROWS_LINES_ENTRY, entries: 1 });
     });
   });
 
@@ -7627,6 +7771,7 @@ describe(SUITE, () => {
         ...rows("FAIL_CLOSED_CASES", FAIL_CLOSED_CASES),
         ...rows("NARROWING_REQUIREMENTS", NARROWING_REQUIREMENTS),
         ...rows("FOLLOW_UP_3_REQUIREMENTS", FOLLOW_UP_3_REQUIREMENTS),
+        ...rows("ROWS_LINES", ROWS_LINES),
       ]).toStrictEqual(FROZEN);
     });
   });
