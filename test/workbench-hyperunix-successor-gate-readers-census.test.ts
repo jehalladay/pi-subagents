@@ -209,30 +209,53 @@
  * parentheses and assertions and a test key written as a string, where piece 1 planted a bare object, one as const and a name-keyed
  * test: U1 the sequence value (P1-PAREN-BLIND, P2-AS-ONLY-ONE-LEVEL, P3-SATISFIES-BLIND, P4-NONNULL-BLIND, P5-ANGLE-BLIND), U2 the
  * test value (P6-TEST-LEVEL-UNWRAPPED-ONLY) and U3 the string-keyed test (P7-TEST-NAME-KEY-ONLY), each keeping this census green.
- * Read here, in cut #2, as claims equal to pins, with no reader code changed: setupFiles passes over the order in each config text
- * piece 1 plants with one. Pins 5-9: two setup files beside sequence: { setupFiles: "list" } read as the two (ORDERED_SETUP); their
- * setup-file findings with the second file planted neutral read none, and with it planted as a carrier its carrier finding alone;
- * the order "parallel" beside one file; "sequence" and "setupFiles" written as double-quoted strings under an as const assertion.
- * Pins 13-33, each reading its own one setup file alone (orderPlant, then DEFINED_ORDER): the sequence value written through each of
- * the seven ORDER_WRAPPERS - parentheses, an as assertion, an as const assertion, a satisfies expression, a non-null assertion, a
- * <T> assertion, and parentheses under an as const assertion - with the test value bare (pins 13-19); the test value written
- * through each of them with the sequence value bare (pins 20-26); each of the test, sequence and setupFiles keys written as a
- * double-quoted and as a single-quoted string, the other two as names (pins 27-32); and the order as pin 33's defineConfig argument
- * holds it, the sequence key before the setupFiles key and shuffle before the order. Three loud controls are still read as setup
- * files: a test.setupFiles string "list" names test/list (pin 10: the key's place draws the line, the value "list" does not), and
- * the setupFiles key of an object another key of the test object holds (test.lgO, pin 11) and of a sequence object another key of
- * the config object holds (lgO.sequence, no test key, pin 12). The words that describe what holderOf, isSetupOrder and setupFiles
- * read (this paragraph, the PINNED READER SET entry below, the helper's comments on them and the catalog comments) describe the
- * code and claim no config text beyond those plants. FROZEN SHAPE's pin count for that piece grows 12 -> 33; no other row, pin,
- * plant or reading changes, and the helper header is unchanged (the piece's words name test.setupFiles only). NOT CLAIMED by this
- * census (scope sentences; no residual, no follow-up bead): any config text piece 1 does not plant - among them a setupFiles key in
- * any other place; a config object written other than as export default { ... } or as pin 33's defineConfig argument; a test key
- * that is not a key of that object; the sequence and test values wrapped at once; any other wrapper or stack of wrappers; a value
- * written other than as an object literal in place (a name bound elsewhere, a shorthand property, a spread, a call); a key written
- * other than as a name or one of the two quoted strings (a computed key among them); an order value other than "list" and
- * "parallel"; and keys other than the planted ones beside them. NOT CLAIMED either: a MEMBERS pin deleted with its FROZEN SHAPE
- * count lowered to match, replaced by a copy of another pin, or rewritten to a plant that reads the same (a catalog entry among
- * them) - FROZEN SHAPE binds each MEMBERS row's pin count, as landed.
+ * Cut #2 (ff98f8df) planted those forms (pins 13-33). Refusal #2 on wb-euc6 (gate-prep-30, O:2191; member level, the class guard
+ * R-B628 bound on these wrapper words) found entries of cut #2's lists naming wider forms than their plants: U1 'an as assertion',
+ * 'a satisfies expression' and 'a <T> assertion' named every asserted type where each plant asserts Record<string, unknown>
+ * (GP30-AS-TYPEREF-ONLY, GP30-SAT-TYPEREF-ONLY, GP30-ANGLE-TYPEREF-ONLY, GP30-ASSERT-TYPEREF-ONLY); U2 the loud controls' 'another
+ * key' where the plants key lgO by its name (GP30-CHILD-STRINGKEY-AS-ORDER, GP30-CONFIG-CHILD-STRINGKEY); U3 the key and value
+ * spellings where the plants write escape-free keys and double-quoted values (GP30-KEY-RAW-TEXT, GP30-ORDER-VALUE-DQ-ONLY,
+ * GP30-LIST-VALUE-SQ-SKIP); each keeping this census green. Read here, in cut #3, as claims equal to pins, with no reader code
+ * changed since cut #1: each entry below names the exact text its plant writes, V standing for the value's own object literal,
+ * and setupFiles passes over the order in each config text piece 1 plants with one. Pins 5-9: two setup files, then
+ * sequence: { setupFiles: "list" }, read as the two (ORDERED_SETUP); their setup-file findings with the second file planted as
+ * the line export const lgA = 1; read none, and with it planted as the two lines import { it } from "vitest"; and
+ * export const lgIt = it; read that file's one carrier finding alone; one file, then the order "parallel"; and one file, then
+ * "sequence": { "setupFiles": "list" } as const. Pins 13-32, 34-49 and 56-64 are orderPlant's text, which writes
+ * the test key, the sequence key and the order's own setupFiles key as their names, the test and sequence values as bare object
+ * literals and the order as the double-quoted "list", with exactly one of those places written otherwise; each reads its own one
+ * setup file alone. The sequence value written as each of the seven ORDER_WRAPPERS texts - (V), V as Record<string, unknown>,
+ * V as const, V satisfies Record<string, unknown>, V!, <Record<string, unknown>>V and (V) as const (pins 13-19); the test value
+ * written as each of them (pins 20-26); each of the three keys written as "<key>" and as '<key>' (ORDER_KEY_STRINGS, pins 27-32);
+ * the sequence value written as each of the six ORDER_TYPED_WRAPPERS texts - V as { [key: string]: unknown }, V as object,
+ * V satisfies { [key: string]: unknown }, V satisfies object, <{ [key: string]: unknown }>V and <object>V (pins 34-39); the test
+ * value written as each of them (pins 40-45); the order written as each ORDER_SPELLINGS text - 'list', `list`, 'parallel' and
+ * `parallel` (pins 46-49); and each of the three keys written with its first letter as a \u escape of four hex digits -
+ * \u0074est, \u0073equence and \u0073etupFiles - as a name, as a double-quoted and as a single-quoted string (ORDER_KEY_ESCAPES,
+ * pins 56-64). Pin 33 (DEFINED_ORDER): the order as defineConfig's argument holds it, the sequence key before the setupFiles key
+ * and shuffle before the order. Three loud controls are still read as setup files: a test.setupFiles "list" names test/list,
+ * written "list" (pin 10), 'list' and `list` (LIST_SPELLINGS, pins 54-55) - the key's place draws the line, the value "list"
+ * does not; test.lgO.setupFiles after test.setupFiles, the key lgO written as the name lgO (pin 11), as "lgO" and as 'lgO'
+ * (pins 50-51); and lgO.sequence.setupFiles, lgO a key of the config object after test, written the same three ways (pins 12,
+ * 52-53). The words that describe what holderOf, isSetupOrder and setupFiles read (this paragraph, the PINNED READER SET entry
+ * below, the helper's comments on them and the catalog comments) describe the code and claim no config text beyond those plants;
+ * a catalog's slugs name its plants' setup files, never a form. FROZEN SHAPE's pin count for that piece grows 33 -> 64; no other
+ * row, pin, plant or reading changes, and the helper is byte-unchanged since cut #2 (the piece's words name test.setupFiles
+ * only). NOT CLAIMED by this census (scope sentences; no residual, no follow-up bead): any config text piece 1 does not plant -
+ * among them a setupFiles key in any other place; a config object written other than as export default { ... } or as pin 33's
+ * defineConfig argument; a test key that is not a key of that object; orderPlant's text with two or more of its places written
+ * otherwise at once (the sequence and test values wrapped at once among them); any other wrapper or stack of wrappers, and an as,
+ * satisfies or <T> wrapper asserting any type but the ones its entries write (Record<string, unknown>,
+ * { [key: string]: unknown }, object, and const for as); a value written other than as an object literal in place (a name bound
+ * elsewhere, a shorthand property, a spread, a call); the test key, the sequence key or the order's setupFiles key written other
+ * than as its name, "<key>", '<key>' or the three spellings of its first letter's \u escape above (a computed key, any other
+ * escape and an escape of another letter among them); an order other than "list" and "parallel", or either written other than
+ * as the double-quoted string or an ORDER_SPELLINGS text (an array, a wrapped string and an escape among them); a test.setupFiles
+ * "list" written other than as "list", 'list' or `list`; a loud control's key other than lgO, or lgO written other than as lgO,
+ * "lgO" or 'lgO'; any text a plant writes spelled with other white space or comments; and keys other than the planted ones
+ * beside them. NOT CLAIMED either: a MEMBERS pin deleted with its FROZEN SHAPE count lowered to match, replaced by a copy of
+ * another pin, or rewritten to a plant that reads the same (a catalog entry among them) - FROZEN SHAPE binds each MEMBERS row's
+ * pin count, as landed.
  *
  * ROWS:
  *  BASE: the unplanted subject. The cited suite test/workbench-hyperunix-observer.test.ts reads IMPORT sound (its one load reaching
@@ -400,15 +423,23 @@
  *    below a local setup file and by a package's own module one, two and three loads below a package setup file; target: the
  *    IMPORT section and the setup-file findings. Falsifiers: GP12-IMP-PARENT-REL, GP12-IMP-PARENT-REL-SUITE, GP12-IMP-PKG-OWN,
  *    L17, GP14-IMP-DOT-DEPTH2, GP14-SETUP-DOTDOT-DEPTH2.
- *  - "MEMBERS CHANNEL:setup file, piece 1" (wb-euc6): its pins 5-12 (cut #1) and 13-33 (cut #2), each over setupFiles' injected
- *    reader; target: setupFiles' file list and channelReading's setup-file findings. Pins 13-19 plant the sequence value through
- *    each ORDER_WRAPPERS wrapper, pins 20-26 the test value through each, pins 27-32 each ORDER_KEYS key as each ORDER_KEY_STRINGS
- *    string, pin 33 DEFINED_ORDER. Falsifiers: the cut's base reader (pins 5-9 and 13-33 red: every setupFiles key read); refusal
- *    #1's gate members P1-P7 (P1 pins 13, 19, 20 and 26; P2 13, 16-20 and 23-26; P3 16 and 23; P4 17 and 24; P5 18 and 25; P6
- *    20-26; P7 27 and 28) and its N-series (N1 8 and 10, N2 12, N3 11, N6 9, 31 and 32, N7 9 and 27-30, N8 9 and 13-26, N10 as the
- *    base reader; N4 reads every piece 1 plant as the delivered reader does and differs on an array order value, NOT CLAIMED);
- *    and the seat's EUC2-M- one-edit hollowings of holderOf, isSetupOrder and setupFiles' visit, each red on at least one of pins
- *    13-33.
+ *  - "MEMBERS CHANNEL:setup file, piece 1" (wb-euc6): its pins 5-12 (cut #1), 13-33 (cut #2) and 34-64 (cut #3), each over
+ *    setupFiles' injected reader; target: setupFiles' file list and channelReading's setup-file findings. Pins 13-19 plant the
+ *    sequence value as each ORDER_WRAPPERS text, pins 20-26 the test value as each, pins 27-32 each ORDER_KEYS key as each
+ *    ORDER_KEY_STRINGS string, pin 33 DEFINED_ORDER, pins 34-39 the sequence value as each ORDER_TYPED_WRAPPERS text, pins 40-45
+ *    the test value as each, pins 46-49 the order as each ORDER_SPELLINGS text, pins 50-53 the loud controls' key lgO (pins 11
+ *    and 12) as each ORDER_KEY_STRINGS string, pins 54-55 pin 10's "list" as each LIST_SPELLINGS text, and pins 56-64 each
+ *    ORDER_KEYS key as each ORDER_KEY_ESCAPES spelling. Falsifiers: the cut's base reader (pins 5-9, 13-49 and 56-64 red: every
+ *    setupFiles key read); refusal #1's gate members P1-P7 (P1 pins 13, 19, 20 and 26; P2 13, 16-20, 23-26, 36-39 and 42-45; P3
+ *    16, 23, 36, 37, 42 and 43; P4 17 and 24; P5 18, 25, 38, 39, 44 and 45; P6 20-26 and 40-45; P7 27, 28, 57 and 58) and its
+ *    N-series (N1 8, 10, 48, 49, 54 and 55; N2 12, 52 and 53; N3 11, 50 and 51; N6 9, 31, 32, 63 and 64; N7 9, 27-30, 57, 58, 60
+ *    and 61; N8 9, 13-26 and 34-45; N10 as the base reader; N4 reads every piece 1 plant as the delivered reader does and differs
+ *    on an array order value, NOT CLAIMED); refusal #2's gate members GP30-AS-TYPEREF-ONLY (34, 35, 40 and 41),
+ *    GP30-SAT-TYPEREF-ONLY (36, 37, 42 and 43), GP30-ANGLE-TYPEREF-ONLY (38, 39, 44 and 45), GP30-ASSERT-TYPEREF-ONLY (34-45),
+ *    GP30-ORDER-VALUE-DQ-ONLY (46-49), GP30-CHILD-STRINGKEY-AS-ORDER (50 and 51), GP30-CONFIG-CHILD-STRINGKEY (52 and 53),
+ *    GP30-LIST-VALUE-SQ-SKIP (54) and GP30-KEY-RAW-TEXT (56-61), its four NOT CLAIMED calibration members reading every piece 1
+ *    plant as the delivered reader does; and the seat's EUC2-M- and EUC3-M- one-edit hollowings of holderOf, isSetupOrder and
+ *    setupFiles' visit, each red on at least one of pins 13-64.
  *  - "MEMBERS RUN:statements, pieces 1-3": each of the 22 CONFIG_NAMES imported by a second declaration right after the
  *    defineConfig import and as a second element before and after defineConfig; an import declaration naming no element before
  *    and after it; four other specifiers; six other statements; a declaration after the default export; four sound repeats and
@@ -1360,26 +1391,65 @@ const ORDER_WRAPPERS: readonly (readonly [slug: string, wrap: (literal: string) 
   ["angle", literal => `<Record<string, unknown>>${literal}`],
   ["paren-as-const", literal => `(${literal}) as const`],
 ];
+/** wb-euc6 cut #3 (refusal #2 U1): the as, satisfies and <T> wrappers piece 1 also plants asserting the type literal
+ * { [key: string]: unknown } and the keyword type object (ORDER_WRAPPERS asserts Record<string, unknown> and const); each slug
+ * names its plant's one setup file, never a form. */
+const ORDER_TYPED_WRAPPERS: readonly (readonly [slug: string, wrap: (literal: string) => string])[] = [
+  ["as-type-literal", literal => `${literal} as { [key: string]: unknown }`],
+  ["as-object", literal => `${literal} as object`],
+  ["satisfies-type-literal", literal => `${literal} satisfies { [key: string]: unknown }`],
+  ["satisfies-object", literal => `${literal} satisfies object`],
+  ["angle-type-literal", literal => `<{ [key: string]: unknown }>${literal}`],
+  ["angle-object", literal => `<object>${literal}`],
+];
 /** wb-euc6 cut #2 (refusal #1 U3): the three keys of the order's place; "setupFiles" is the sequence object's key, the order's. */
 type OrderKey = "test" | "sequence" | "setupFiles";
 const ORDER_KEYS: readonly OrderKey[] = ["test", "sequence", "setupFiles"];
-/** The two string spellings piece 1 plants for each of ORDER_KEYS, one key at a time (the other two written as names). */
+/** The two string spellings piece 1 plants for each of ORDER_KEYS, one key at a time (the other two written as names); pins 50-53
+ * write the loud controls' key lgO with them too (wb-euc6 cut #3). */
 const ORDER_KEY_STRINGS: readonly (readonly [slug: string, spell: (key: string) => string])[] = [
   ["double", key => `"${key}"`],
   ["single", key => `'${key}'`],
+];
+/** A key with its first letter written as a \u escape of four hex digits (test -> \u0074est), which TypeScript reads as the key. */
+const escapeFirst = (key: string): string => `\\u${key.charCodeAt(0).toString(16).padStart(4, "0")}${key.slice(1)}`;
+/** wb-euc6 cut #3 (refusal #2 U3): the escaped spellings piece 1 plants for each of ORDER_KEYS, one key at a time (the other two
+ * written as names): the escaped key as a name, as a double-quoted and as a single-quoted string (pins 56-64). */
+const ORDER_KEY_ESCAPES: readonly (readonly [slug: string, spell: (key: string) => string])[] = [
+  ["escaped-name", key => escapeFirst(key)],
+  ["escaped-double", key => `"${escapeFirst(key)}"`],
+  ["escaped-single", key => `'${escapeFirst(key)}'`],
 ];
 interface OrderText {
   readonly keys?: Partial<Record<OrderKey, string>>;
   readonly testValue?: (literal: string) => string;
   readonly sequenceValue?: (literal: string) => string;
+  readonly order?: string;
 }
 const asWritten = (literal: string): string => literal;
 /** A config text whose test object names test/helpers/<file> as its one setup file and holds the order "list" under its sequence
- * key: each key a name and each value a bare object literal unless handed a spelling or a wrapper (wb-euc6 cut #2). */
-const orderPlant = (file: string, { keys = {}, testValue = asWritten, sequenceValue = asWritten }: OrderText): string =>
-  `export default { ${keys.test ?? "test"}: ${testValue(`{ setupFiles: ["./helpers/${file}"], ${keys.sequence ?? "sequence"}: ${sequenceValue(`{ ${keys.setupFiles ?? "setupFiles"}: "list" }`)} }`)} };\n`;
-/** A piece 1 pin over orderPlant (pins 13-32): the plant reads test/helpers/<file> alone, its order "list" read as no file. */
+ * key: each key a name, each value a bare object literal and the order the double-quoted "list" unless handed a spelling, a
+ * wrapper or an order text (wb-euc6 cuts #2 and #3). */
+const orderPlant = (file: string, { keys = {}, testValue = asWritten, sequenceValue = asWritten, order = '"list"' }: OrderText): string =>
+  `export default { ${keys.test ?? "test"}: ${testValue(`{ setupFiles: ["./helpers/${file}"], ${keys.sequence ?? "sequence"}: ${sequenceValue(`{ ${keys.setupFiles ?? "setupFiles"}: ${order} }`)} }`)} };\n`;
+/** A piece 1 pin over orderPlant (pins 13-32, 34-49 and 56-64): the plant reads test/helpers/<file> alone, its order read as no file. */
 const orderPin = (file: string, text: OrderText): Pin => pin(() => plantedSetup(orderPlant(file, text)), { files: [`test/helpers/${file}`] });
+/** wb-euc6 cut #3 (refusal #2 U3): the order texts piece 1 plants beside the double-quoted "list" every other orderPlant plant
+ * writes (pins 46-49), each slug naming its plant's one setup file. */
+const ORDER_SPELLINGS: readonly (readonly [slug: string, order: string])[] = [
+  ["list-single", "'list'"],
+  ["list-template", "`list`"],
+  ["parallel-single", "'parallel'"],
+  ["parallel-template", "`parallel`"],
+];
+/** wb-euc6 cut #3 (refusal #2 U2): pin 11's loud control, test.lgO.setupFiles, with the key lgO written as `key` (pins 50-51). */
+const childPlant = (key: string, file: string): string =>
+  `export default { test: { setupFiles: ["./helpers/lg-a.ts"], ${key}: { setupFiles: ["./helpers/${file}"] } } };\n`;
+/** wb-euc6 cut #3 (refusal #2 U2): pin 12's loud control, lgO.sequence.setupFiles beside test, with lgO written as `key` (pins 52-53). */
+const configChildPlant = (key: string, file: string): string =>
+  `export default { test: { setupFiles: ["./helpers/lg-a.ts"] }, ${key}: { sequence: { setupFiles: ["./helpers/${file}"] } } };\n`;
+/** wb-euc6 cut #3 (refusal #2 U3): pin 10's loud control, a test.setupFiles "list", with the value written as these (pins 54-55). */
+const LIST_SPELLINGS: readonly string[] = ["'list'", "`list`"];
 /** The order as a config written with defineConfig holds it (wb-euc6 cut #2, pin 33): defineConfig's argument holding the
  * sequence key before the setupFiles key, and shuffle before the order. */
 const DEFINED_ORDER = 'import { defineConfig } from "vitest/config";\nexport default defineConfig({ test: { sequence: { shuffle: false, setupFiles: "list" }, setupFiles: ["./helpers/lg-defined-order.ts"] } });\n';
@@ -2620,7 +2690,14 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     ...ORDER_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-sequence-${slug}.ts`, { sequenceValue: wrap })),
     ...ORDER_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-test-${slug}.ts`, { testValue: wrap })),
     ...ORDER_KEYS.flatMap(key => ORDER_KEY_STRINGS.map(([slug, spell]) => orderPin(`lg-${key}-${slug}.ts`, { keys: { [key]: spell(key) } }))),
-    pin(() => plantedSetup(DEFINED_ORDER), { files: ["test/helpers/lg-defined-order.ts"] })),
+    pin(() => plantedSetup(DEFINED_ORDER), { files: ["test/helpers/lg-defined-order.ts"] }),
+    ...ORDER_TYPED_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-sequence-${slug}.ts`, { sequenceValue: wrap })),
+    ...ORDER_TYPED_WRAPPERS.map(([slug, wrap]) => orderPin(`lg-test-${slug}.ts`, { testValue: wrap })),
+    ...ORDER_SPELLINGS.map(([slug, order]) => orderPin(`lg-order-${slug}.ts`, { order })),
+    ...ORDER_KEY_STRINGS.map(([slug, spell]) => pin(() => plantedSetup(childPlant(spell("lgO"), `lg-child-${slug}.ts`)), { files: ["test/helpers/lg-a.ts", `test/helpers/lg-child-${slug}.ts`] })),
+    ...ORDER_KEY_STRINGS.map(([slug, spell]) => pin(() => plantedSetup(configChildPlant(spell("lgO"), `lg-config-child-${slug}.ts`)), { files: ["test/helpers/lg-a.ts", `test/helpers/lg-config-child-${slug}.ts`] })),
+    ...LIST_SPELLINGS.map(list => pin(() => plantedSetup(`export default { test: { setupFiles: ${list} } };\n`), { files: ["test/list"] })),
+    ...ORDER_KEYS.flatMap(key => ORDER_KEY_ESCAPES.map(([slug, spell]) => orderPin(`lg-${key}-${slug}.ts`, { keys: { [key]: spell(key) } })))),
   member("CHANNEL:setup file", "it names one file as a string literal",
     pin(() => plantedSetup('export default { test: { setupFiles: "./helpers/census-guard.ts" } };\n'), { files: ["test/helpers/census-guard.ts"] }),
     pin(() => plantedSetup("export default { test: { setupFiles: `./helpers/lg-b.ts` } };\n"), { files: ["test/helpers/lg-b.ts"] })),
@@ -3771,7 +3848,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:WRITES:spy or mock member:1:109", "MEMBERS:WRITES:spy or mock member:2:50", "MEMBERS:WRITES:spy or mock member:3:46", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:1792",
   "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1", "MEMBERS:WRITES:computed member:6:5",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
-  "MEMBERS:CHANNEL:setup file:1:33", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
+  "MEMBERS:CHANNEL:setup file:1:64", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
   "MEMBERS:CHANNEL:cited suite:1:9", "MEMBERS:CHANNEL:cited suite:2:5", "MEMBERS:CHANNEL:cited suite:3:18", "MEMBERS:CHANNEL:cited suite:4:1",
   "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:2", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:32", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
   "MEMBERS:RUN:argv:1:4",
