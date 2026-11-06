@@ -116,7 +116,8 @@
  *      depth; and each judgement fired makes, made while neither Object.prototype nor Array.prototype holds an own toJSON and
  *      Array.prototype's prototype is Object.prototype, each of the three read after fired takes its copy and before the first list
  *      it serializes after it (valuesOf's list of the copy's K3 values) (P15: fired refuses a call while one is set, removing what
- *      it can of the three, recording nothing and throwing; P15's controls, five calls on Q's cell reading before the positive
+ *      it can of the three, recording nothing (the record's length the same after the call as before it, and the record at Q's
+ *      end the judgements' own entries, as below) and throwing; P15's controls, five calls on Q's cell reading before the positive
  *      control, set each of the three before the call, a toJSON on Object.prototype through a getter of the handed reading while
  *      fired copies it, and one that removes itself at its second top-level call, and read each such call refused, unrecorded and
  *      its member removed; and P15's guards: just before each judgement fired makes in Q after them (the field-less control's,
@@ -125,7 +126,11 @@
  *      the handed reading's source while fired copies it, each a toJSON that removes what is set at its first top-level call on a
  *      list), each guard call read refused, naming the member it set, with that member removed and nothing recorded (the record's
  *      length the same after the call as before it), and the guards' count equal to those judgements; and the record, at Q's end,
- *      one entry per judgement fired makes after its controls, so no call fired refuses in Q is recorded)),
+ *      those judgements' own entries: as many as the judgements fired makes after its controls, and at each index, in call order,
+ *      the very [reading, verdict] pair the record ended with just after that judgement's call, holding the very list fired
+ *      returned there and a reading whose serialization is that of the reading the call site handed fired (the three kept at the
+ *      call by note, outside guard and fired), so no entry a call fired refuses in Q writes is in it beside those entries or in
+ *      place of one of them, save as a later judgement's own pair as just read (NOT CLAIMED below))),
  *      and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted status
  *      fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced reading
  *      while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone refuses it
@@ -250,6 +255,35 @@
  * controls, a count kept outside guard and fired (the field-less control's judgements, the positive control's and k3Legs'). Each
  * of guard's reads copies the record (record() returns a fresh frozen copy), and after P15's settings have swapped
  * Array.prototype's prototype the engine copies arrays on its slow path, so Q's timeout is K1's, 180 s.
+ * wb-x4ph (the R694 follow-up of landing 999, its gate's F1): Q read the record's entries only at P5, the positive control's slice
+ * at each joint's end, and the rest of the record by count (guard's growth, the count pin and the whole-record pin), so a fired
+ * that wrote a refused call's entry in place of an earlier one, which keeps every count, read green: the gate's GXSWAPFL (at the
+ * field-less control's guard calls 1128, 2250 and 3372, each over the previous joint's last entry), GXSWAPUNPL (data-keyed: each
+ * refused call after the fifth whose copy holds no planted member) and GXSHIFTOLDFL (at the same three calls the oldest entry
+ * dropped and the refused call's appended). Measured by this cut on the base beside them: the same swap at the first
+ * positive-control guard call over the field-less judgement's entry (GXSWAPPC1), at k3Legs' second guard call over its first
+ * judgement's (GXSWAPLEGS2) and at each of k3Legs' guard calls after its first (GXSWAPLEGSALL), and at the field-less guard
+ * calls with the replaced entry's own list kept (GXSWAPKEEP) or with a new pair of the replaced entry's reading and list
+ * (GXSWAPSAME), each read green; so did a fired that returned, at k3Legs' judgements, a fresh equal list in place of the one it
+ * recorded (GXRETCOPYLEGS), or that recorded there the record's first reading in place of its copy (GXSTALELEGS). Now, at each
+ * judgement fired makes after P15's controls, its call site hands note the serialization of the reading it hands fired, taken
+ * just before the call, and the list fired returned; note keeps both beside the pair the record ends with just after the call
+ * (read through record()), in a list only its closure holds, which noted() returns as a fresh frozen copy; and at Q's end Q reads
+ * the record whole against them: as many entries as judgements noted, and at each index the noted pair itself (by identity),
+ * holding the noted list (by identity) and a reading that serializes as the noted text; noted() is read as P5 reads record(), the
+ * copy frozen and not the copy a second read returns. A pair, or a copy, that a call fired refused made, standing at Q's end as a
+ * later judgement's own pair as read here (the pair the record ended with just after that judgement's call, holding the list it
+ * returned and a reading that serializes as the one its call site handed fired; each guard call hands fired a reading that
+ * serializes as the one of the judgement after it), is NOT CLAIMED by this census: Q reads which call made a judgement's own pair,
+ * and which copy it holds, by those three readings alone (P14 reads, at the positive control's turns, that the copy is not the
+ * handed reading and is frozen at every depth). Among them: this seat's GXREUSE (each judgement's pair holding the copy fired took
+ * at the guard call before it), which reads green, and wb-qzqd's GPRECSHIFT5 beside its GQR (guard's record reads removed), whose
+ * guard-call pairs stand as the judgements' own, so guard's growth read stays its sole reader. Q reads the entries whole at its end
+ * only, so a write to the record that a later call undoes before then (other than one P5 reads at a joint's end) is NOT CLAIMED
+ * by this census, and neither is an edit of record() itself, the one reader every read of the record goes through (guard's, P5's,
+ * the count pins', note's and the end's), that changes what it returns (such as one that hides some entries). An edit at a
+ * judgement's call site that changes what it hands note there (the text or the list), beside a fired that records otherwise, is
+ * NOT CLAIMED by this census.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. The only
  * global state written is P15's: its controls and guards set a toJSON on Object.prototype or Array.prototype, or a prototype for
@@ -1478,8 +1512,9 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     // call (its length after the call less its length before it, each read through record()), and each judgement's guard must read
     // refused, naming that member, with that member removed and nothing recorded (wb-qzqd: the growth is 0 at every guard call;
     // beside it the positive control reads one judgement per variant at its turns, P5, the record's growth across k3Legs equals its
-    // judgements, and the record at Q's end holds one entry per judgement after the controls), and every judgement is guarded (the
-    // guards' count equals the field-less, positive-control and k3Legs judgements).
+    // judgements, and the record at Q's end holds as many entries as the judgements after the controls, each that judgement's own
+    // pair, wb-x4ph, read against note below), and every judgement is guarded (the guards' count equals the field-less,
+    // positive-control and k3Legs judgements).
     const transient = {configurable: true, writable: true, value(this: unknown, key: string): unknown {
       if (key === '' && Array.isArray(this)) unhook();
       return this;
@@ -1513,6 +1548,22 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       }
     };
     const refusing = ([name, form]: Guarded): Guarded => [name, form, `fired refused a call: P15 read ${name}; left set: none`, 0];
+    // note (wb-x4ph): at each judgement fired makes in Q after P15's controls (the field-less control's, the positive control's at
+    // each variant's turn and k3Legs'), its call site hands note the serialization of the reading it hands fired, taken just before
+    // the call, and the list fired returned; note keeps both beside the pair the record ends with just after the call (read through
+    // record()), in a list only its closure holds, which noted() returns as a fresh frozen copy. Q reads the record whole against
+    // them at its end.
+    type Noted = readonly [string, readonly string[], (readonly [JsonValue, readonly string[]]) | undefined];
+    const {note, noted} = (() => {
+      const list: Noted[] = [];
+      return {
+        note: (text: string, verdict: readonly string[]): readonly string[] => {
+          list.push(Object.freeze([text, verdict, record().at(-1)] as const));
+          return verdict;
+        },
+        noted: (): readonly Noted[] => Object.freeze([...list]),
+      };
+    })();
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
     // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
@@ -1531,7 +1582,9 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         const twin = `${label} (registration twin)`;
         const unjoined = guard(k3Reading(cell.reading, joint));
         expect(unjoined, `${label} (field-less control, P15's guard)`).toStrictEqual(refusing(unjoined));
-        expect(fired(k3Reading(cell.reading, joint)), `${label} (field-less control)`).toStrictEqual([twin]);
+        const fieldless = k3Reading(cell.reading, joint);
+        const fieldlessText = JSON.stringify(fieldless);
+        expect(note(fieldlessText, fired(fieldless)), `${label} (field-less control)`).toStrictEqual([twin]);
         const readings = variants.map(variant => k3Reading(variant.reading, joint));
         expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
         const first = record().length;
@@ -1539,8 +1592,10 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         for (const [index, reading] of readings.entries()) {
           const turn = guard(reading);
           expect(turn, `${label} (positive control, P15's guard, ${variants[index].label})`).toStrictEqual(refusing(turn));
+          const turnText = JSON.stringify(reading);
           const verdict = fired(reading);
           returned.push(verdict);
+          note(turnText, verdict);
           expect(verdict, `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
           controlled++;
         }
@@ -1576,7 +1631,8 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     const legs = await k3Legs(cell, (reading: JsonValue): readonly string[] => {
       const turn = guard(reading);
       expect(turn, '(k3Legs, P15\'s guard)').toStrictEqual(refusing(turn));
-      return fired(reading);
+      const legText = JSON.stringify(reading);
+      return note(legText, fired(reading));
     }, (actual, expected, label) => {
       for (const id of [...actual.filter(one => !expected.includes(one)), ...expected.filter(one => !actual.includes(one))]) {
         moved.get(id)?.push(label);
@@ -1590,10 +1646,24 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     expect([record().length - legsFrom[0], guarded - legsFrom[1], guarded],
       '(P15\'s guards: a judgement k3Legs made not recorded once or not guarded, or a judgement in Q not guarded)')
       .toStrictEqual([judgements, judgements, unjoinedCount + controlled + judgements]);
-    // The record whole (wb-qzqd): one entry per judgement fired made after its controls, the field-less control's, the positive
-    // control's and k3Legs', counted outside guard and fired, so no call fired refused in Q, a control's or a guard's, is in it.
+    // The record's length whole (wb-qzqd): as many entries as the judgements fired made after its controls, the field-less
+    // control's, the positive control's and k3Legs', counted outside guard and fired.
     expect(record().length, '(P15: a refused call in Q recorded: the record not one entry per judgement fired made after its controls)')
       .toBe(unjoinedCount + controlled + judgements);
+    // The record's entries whole (wb-x4ph): the judgements' own, read against what note kept at each judgement's call: as many as
+    // the judgements noted, and at each index, in call order, the very pair the record ended with just after that judgement's call,
+    // holding the very list fired returned there and a reading whose serialization is the text its call site handed note. So no
+    // entry a call fired refused in Q wrote (a control's or a guard's) is in the record at Q's end beside the judgements' entries or
+    // in place of one of them (the gate's GXSWAPFL, GXSWAPUNPL and GXSHIFTOLDFL), save as a later judgement's own pair as read here
+    // (NOT CLAIMED: the header's wb-x4ph paragraph). noted() is read as P5 reads record(): the copy is frozen and is not the copy a
+    // second read returns.
+    const entries = record();
+    const notes = noted();
+    const astray = notes.flatMap(([text, verdict, pair], index) =>
+      pair !== undefined && entries[index] === pair && pair[1] === verdict && JSON.stringify(pair[0]) === text ? [] : [index]);
+    expect([notes.length, entries.length, astray.length, astray.slice(0, 4), Object.isFrozen(notes), notes !== noted()],
+      '(P15: the record at Q\'s end not the judgements\' own entries: an entry a refused call wrote, a judgement not noted, or noted() not a frozen copy fresh on each read)')
+      .toStrictEqual([unjoinedCount + controlled + judgements, unjoinedCount + controlled + judgements, 0, [], true, true]);
     expect(variants).toHaveLength(variantCount(cell.kind, cell.shape, VALUES.length));
     for (const probe of probes) expect(moved.get(probe.id), probe.id).toStrictEqual(probe.expected);
   });
