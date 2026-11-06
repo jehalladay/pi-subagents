@@ -21,12 +21,16 @@
  *   were named twins of the gate's TV4, TV6, TV2 and TV1, while the gate's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD,
  *   GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD hid those twins and kept the census green) in the same form: no
  *   channel's twin identity is claimed (R-HIDDEN below).
- * wb-33z6 (the R694 follow-up of wb-ulnv's landing 990; seat ws-03, run g10-work-s226, authored at trunk b45f46ad) answers
- *   that landing's F1 by pinning the plant's identity in R-HIDDEN: the release its classification pins read ships, as its
- *   root namespace, the very namespace its binding roster, DOCUMENT WITNESS and wrapped-kind literal read, so a plant whose
- *   release ships a copy of that namespace (the gate's one-site GP2-SPLIT-* and two-site GP2-SPLIT2-* split hollows, which
- *   empty one binding's documents in the copy alone) reds there; and that landing's F3 by the history clause above (108a2025
- *   is the trunk the restatement was authored at, 95fb8156 its base of record).
+ * wb-33z6 (the R694 follow-up of wb-ulnv's landing 990): its cut #1 (seat ws-03, run g10-work-s226; authored at trunk
+ *   b45f46ad, base of record d7b5e894) answers that landing's F1 by pinning the plant's root namespace in R-HIDDEN as the
+ *   namespace its binding roster, DOCUMENT WITNESS and wrapped-kind literal read (the gate's one-site GP2-SPLIT-* and two-site
+ *   GP2-SPLIT2-* split hollows, whose release ships a copy with one binding's documents emptied, red there) and that landing's
+ *   F3 by the history clause above (108a2025 is the trunk the restatement was authored at, 95fb8156 its base of record); its
+ *   cut #2 (seat ws-03, run g10-work-s226; authored at trunk 1b707ef0, base of record 1b707ef0) answers wb-33z6 refusal #1
+ *   (its U1: cut #1's pin read the root namespace once, so the gate's GP22-ACC-FAITHFUL, GP22-ACCG-FAITHFUL, GP22-ACC-SDKROOT
+ *   and GP22-ACCG-SPLIT2-* members, whose release serves the planted namespace to that one read through an accessor and a
+ *   copy of it, or the SDK's own root namespace, to every later read, kept the census green) by pinning how the release
+ *   holds that namespace (R-HIDDEN's IDENTITY PIN below).
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -189,9 +193,8 @@
  *   in the vendored release, each still changes T1 identity's tarballs facet (the strict reader reads the new content or
  *   refuses the archive) and its installed facet. The quiet row plants every known member in today's release (it replaces
  *   Map.prototype.entries for one walk and restores it), and every classification pin reads today's set. Literals pin the
- *   plant itself (hiddenPlant, as the quiet row builds it): its release's root namespace is the planted namespace itself,
- *   one object (an identity pin, wb-33z6: a plant whose release ships a copy of that namespace reds there, whatever the copy
- *   holds), so the literals below read the root namespace of the release every classification pin reads; the planted
+ *   plant itself (hiddenPlant, as the quiet row builds it): how its release holds its root namespace (the IDENTITY PIN
+ *   below), so the literals below read the root namespace of the release every classification pin reads; the planted
  *   namespace's bindings beside the SDK's own, by name and property kind
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
@@ -219,6 +222,20 @@
  *   (refusal #4's GP21-OWN-LAZY, GP21-CASES-AFTER-LOAD, GP21-HIDDEN-AFTER-LOAD and GP21-SYMBOL-AFTER-LOAD, whose documents stand
  *   only while a loadCases call's effect stands). The twin coverage cut #4 deferred to wb-byfw is the DOCUMENT WITNESS twin
  *   census that wb-byfw's carrier wb-gnj9 landed (landing 952): test/workbench-hyperunix-document-witness-census.test.ts.
+ *   IDENTITY PIN (wb-33z6; rootHolding, read in the quiet row before any classification pin runs; each holder is read as a
+ *   Proxy or not before anything else is read from it, and each property by its descriptor alone, so no trap runs and no
+ *   getter is invoked): neither the quiet row's planted release nor its modules nor its root namespace is a Proxy, the
+ *   release holds its modules and the modules hold "." as data properties that are read-only, fixed (non-configurable) and
+ *   enumerable, and the value there is the planted namespace itself, one object, while the engine refuses a set, a define
+ *   and a delete of either property. A property observed as a read-only, fixed own data property answers every later read
+ *   with the value observed (ECMAScript's invariants of the essential internal methods, which bind every object, a Proxy
+ *   included), so every read of the root namespace through that release, each classification pin's included, reads the
+ *   planted namespace, and a plant whose release ships a copy of it, or serves one to any read through an accessor, a Proxy
+ *   or a property a later write could replace, reds there, whatever the copy holds. The pin reads how that namespace is
+ *   held, not what it holds: a planted namespace whose own bindings or documents change between one read and another (the
+ *   one object answering a later read differently) is NOT CLAIMED by this census beyond what each literal reads at its own
+ *   read, and neither is how the plant of any other hiddenPlant call (R-SELF-HOLLOW's, and the replaced-member plant beside
+ *   the quiet) holds its root namespace.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
@@ -1605,7 +1622,35 @@ function hiddenPlant(wrapped: readonly unknown[] = WRAPPED, emptied = ""): { rea
   };
   Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => held("CASES<getter>") });
   Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: held("HIDDEN_CASES<non-enumerable>") });
-  return { release: { ...today, entries, modules: { ...today.modules, ".": namespace } }, namespace };
+  // Frozen, so the release holds its modules, and they hold this namespace, as read-only, fixed data properties (R-HIDDEN's
+  // identity pin, wb-33z6 cut #2): every later read of the root namespace through the release reads this namespace.
+  const modules = Object.freeze({ ...today.modules, ".": namespace });
+  return { release: Object.freeze({ ...today, entries, modules }), namespace };
+}
+/** How a release holds its root namespace (R-HIDDEN's identity pin, wb-33z6), step by step from the release: each holder (the
+ * release, then its modules) read as a Proxy or not before anything else is read from it, so no trap runs, and each property
+ * on the way (the release's modules, then the modules' ".") read by its descriptor alone, so no getter is invoked: data or
+ * accessor, read-only or writable (data), fixed or configurable, enumerable or not; then whether the root namespace is a Proxy.
+ * The reading stops at a Proxy, at a value that is not an object, and at a step that holds no data value. */
+function rootHolding(release: Release): { readonly shape: readonly string[]; readonly root: unknown } {
+  const shape: string[] = [];
+  const steps = [
+    ["release", "modules", "release.modules"],
+    ["modules", ".", 'modules["."]'],
+  ] as const;
+  let holder: unknown = release;
+  for (const [name, key, path] of steps) {
+    if (typeof holder !== "object" || holder === null) return { shape: [...shape, `${name}:not an object`], root: undefined };
+    if (types.isProxy(holder)) return { shape: [...shape, `${name}:proxy`], root: undefined };
+    shape.push(`${name}:not a proxy`);
+    const property = Object.getOwnPropertyDescriptor(holder, key);
+    if (property === undefined) return { shape: [...shape, `${path}:absent`], root: undefined };
+    const kinds = `${property.configurable === true ? "configurable" : "fixed"}:${property.enumerable === true ? "enumerable" : "non-enumerable"}`;
+    if (!("value" in property)) return { shape: [...shape, `${path}:accessor:${kinds}`], root: undefined };
+    shape.push(`${path}:data:${property.writable === true ? "writable" : "read-only"}:${kinds}`);
+    holder = property.value;
+  }
+  return { shape: [...shape, `root namespace:${types.isProxy(holder) ? "proxy" : "not a proxy"}`], root: holder };
 }
 /** A namespace's bindings beside the SDK's own, by name and property kind (R-HIDDEN's binding roster). */
 function bindingRoster(namespace: object): string[] {
@@ -1684,10 +1729,33 @@ const QUIET: Readonly<Record<string, () => void>> = {
   "R-HIDDEN": () => {
     const today = vendoredRelease();
     const { release: hidden, namespace } = hiddenPlant();
+    // The identity pin (wb-33z6), read before any classification pin runs: how the planted release holds its root namespace.
+    const holding = rootHolding(hidden);
     expect(
-      hidden.modules["."],
-      "R-HIDDEN: the planted release's root namespace is the planted namespace itself (one object), so the literals below read the root namespace every classification pin reads",
+      holding.shape,
+      "R-HIDDEN: neither the planted release nor its modules nor its root namespace is a Proxy, and the release holds its modules, and they hold that namespace, as read-only, fixed, enumerable data properties, so every later read of either property answers the value its descriptor holds",
+    ).toStrictEqual([
+      "release:not a proxy",
+      "release.modules:data:read-only:fixed:enumerable",
+      "modules:not a proxy",
+      'modules["."]:data:read-only:fixed:enumerable',
+      "root namespace:not a proxy",
+    ]);
+    expect(
+      holding.root,
+      "R-HIDDEN: the planted release's root namespace is the planted namespace itself (one object), so every read of it through the release, each classification pin's included, reads the namespace the literals below read",
     ).toBe(namespace);
+    expect(
+      [
+        Reflect.set(hidden, "modules", {}),
+        Reflect.defineProperty(hidden, "modules", { value: {} }),
+        Reflect.deleteProperty(hidden, "modules"),
+        Reflect.set(hidden.modules, ".", {}),
+        Reflect.defineProperty(hidden.modules, ".", { value: {} }),
+        Reflect.deleteProperty(hidden.modules, "."),
+      ],
+      "R-HIDDEN: the engine refuses a set, a define and a delete of either property, so no write replaces the root namespace",
+    ).toStrictEqual([false, false, false, false, false, false]);
     expect(
       PINS.filter((pin) => !same(READINGS[pin.reading](hidden), pin.today)).map(pinId),
       "R-HIDDEN: every classification pin reads today's set",
