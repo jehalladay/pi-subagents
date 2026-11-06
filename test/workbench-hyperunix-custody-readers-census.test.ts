@@ -180,6 +180,22 @@
  * reader code changes and no header words change: the helper is unchanged, and the landed words of this census, the
  * FAIL-CLOSED cases and the NOT CLAIMED parenthetical the finding's second cure alternative names among them, stand as
  * landed.
+ * wb-v3a9 (the R694 follow-up bead of wb-o3f8's landing 997) answers that landing's F1 finding (LOW RIDES) with the cure it
+ * carries, the second cure alternative of wb-o3f8's own F1 finding, the one whose lineage note says it ends the loop: the
+ * finding's realized one-edit members of narrowsToPinnedPages, each witnessed on the helper header's L077, outran the landed
+ * FAIL-CLOSED case words, which said that each line a case selects narrows to its pinned pages, and the landed NOT CLAIMED
+ * parenthetical on the widening words of those cases. Those words narrow, in place, to 'the cases apply narrowsToPinnedPages
+ * to the header's lines': each FAIL-CLOSED case's title and ROWS entry say so after 'wb-v3a9: ' and say that
+ * narrowsToPinnedPages reads narrowed every line the case selects, and the parenthetical says that the cases apply
+ * narrowsToPinnedPages to the header's lines, not the line's meaning. Which spellings the predicate reads stays claimed by the
+ * NARROWING_CONTROLS and MEMBER_WITNESSES rows alone, one spelling each, and no row is added for a further spelling. The new
+ * NARROWED WORDS cases read wb-v3a9's own cure sentences from its F1 finding, and the alternative and its lineage note,
+ * verbatim, with the words it replaces and narrows to, from wb-o3f8's F1 finding, both in the tracker export, and hold this
+ * header to them; the new CASE WORDS cases hold each FAIL-CLOSED case - as vitest registers it, as this header's ROWS entry
+ * names it and as this file spells it - to the narrowing: its title and entry hold the words and none of its row's replaced
+ * words, and its body applies narrowsToPinnedPages to a list it reads from the helper header. No reader code changes and the
+ * helper is unchanged; the FAIL-CLOSED case bodies stand as landed, and the CARRIER REFUSAL #1 to #5 ANCHOR cases, which also
+ * apply narrowsToPinnedPages to a line, keep their landed words.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -250,8 +266,9 @@
  *   start or after ", ", " and ", ", and ", " - " or ", among them ", and before ", ", " and ", ", and ", " - ", the
  *   predicate or, after "among them", the clause's end - with none of the exception words except, but, unlike, save, while,
  *   whereas, other than or claimed between the words and the predicate or the clause's end).
- *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every claim line
- *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
+ *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four
+ *   frozen classes, those the guard derives a sub-form from among them.
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
  *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence,
  *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 to #5) the UNMET slugs of its own refusal #1,
@@ -291,20 +308,21 @@
  *   member's witnesses, as the verdict states each one's kind, its text (each \n a line break, white space folded) and its
  *   delivered reading, in order, are its row's GP2W SUB-READINGS rows and pins of its line's CLAIM_LINES row; and each row's
  *   line narrows to its pinned pages as a clause of its own.
- *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
- *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
- *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
- *   FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
- *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
- *   entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078, narrows to its pinned pages
- *   as a clause of its own.
- *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
- *   entry line of the claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS,
- *   C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own.
- *  FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, in the CLASS GUARD, outside this census: the helper header's own words): every
- *   paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a "- " entry,
- *   the 30 lines L001 to L004, L008 to L016, L025, L026, L028, L042 to L045, L047, L063, L079 to L083, L094, L095 and L103 -
- *   narrows to its pinned pages as a clause of its own.
+ *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the cases
+ *   apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line whose words name an
+ *   argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default value, or (cut #3)
+ *   a variable's initializer or a plain text pid; the FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
+ *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every "- " entry line between
+ *   the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078.
+ *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every "- " entry line of the
+ *   claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS,
+ *   C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS.
+ *  FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9:
+ *   the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every paragraph claim line
+ *   of the claim block before the RESIDUALS heading - each line that is neither blank nor a "- " entry, the 30 lines L001 to
+ *   L004, L008 to L016, L025, L026, L028, L042 to L045, L047, L063, L079 to L083, L094, L095 and L103.
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -346,6 +364,21 @@
  *   narrowed line none; and the control classes the finding's cheap cure names are, in order, the rows' items, each row's
  *   item the class its spelling falls in (the phrase's for a quoted replacement of the phrase by text without it, the
  *   follower's for the word that class quotes, else the place class).
+ *  NARROWED WORDS (wb-v3a9, outside this census): every wb-v3a9 requirement line this census answers occurs verbatim in
+ *   that bead's notes in the export, and the requirement lines are exactly its F1 finding's cure sentence and the scope
+ *   sentence beside it; the words its cure narrows, and the words it narrows them to, are those the second cure alternative
+ *   of wb-o3f8's F1 finding quotes; that alternative and its lineage note, the sentences the cure names, occur verbatim in
+ *   wb-o3f8's notes, and the NARROWING_REQUIREMENTS rows are exactly those two sentences of that finding; and the
+ *   parenthetical words the alternative quotes stand nowhere in this header, while the words it narrows them to stand in
+ *   their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases.
+ *  CASE WORDS (wb-v3a9): the FAIL-CLOSED cases vitest registers for this file, this header's FAIL-CLOSED ROWS entries and the
+ *   FAIL_CLOSED_CASES rows are, by head and in order, the same five; each case's title and ROWS entry hold, after
+ *   'wb-v3a9: ', the words the alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its
+ *   row's replaced words; and each case's body, as this file spells it, binds lines to helperClaimLines() first and hands
+ *   narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's
+ *   list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of
+ *   its own (no map or flatMap call and no object literal) - declares none of the names that application reads, and expects
+ *   that list empty.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -377,8 +410,8 @@
  * (the line's own words say so), among them each place past the one a G1W witness plants, named so on its line; that a
  * CHILD_SURVIVORS_4 row's words name the first place past its witness is NOT CLAIMED by an anchor outside this census (the
  * CHILD REFUSAL #4 ANCHOR holds each member, its line and its witness; the words are this census's own); and a widening word
- * other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (they read the phrase's place and those words,
- * not the line's meaning); and that a G1S plant stays is NOT CLAIMED by an anchor outside this census (they are its own
+ * other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (the cases apply narrowsToPinnedPages to the
+ * header's lines, not the line's meaning); and that a G1S plant stays is NOT CLAIMED by an anchor outside this census (they are its own
  * literals, like the Z plants).
  * wb-tz2.24 cut #2: on L021, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own words say
  * so), among them the default of a third or later parameter, named so on the line; and that a CARRIER_SURVIVORS_1 row's past
@@ -438,13 +471,19 @@
  * members reds which row is NOT CLAIMED by this census (the seat measures it on scratch copies); and that a one-edit member
  * of narrowsToPinnedPages other than the nine the finding names reds this census is NOT CLAIMED by this census (a finite
  * set of spelling rows cannot pin an open spelling family, as the finding's lineage note states).
+ * wb-v3a9: wherever this census says what a FAIL-CLOSED case reads - its title, its ROWS entry or a paragraph of this
+ * header - the case applies narrowsToPinnedPages to the header's lines, so that a line it selects narrows in meaning, or holds no
+ * widening word in a spelling the predicate does not read, is NOT CLAIMED by that case (which spellings the predicate reads
+ * is claimed by the NARROWING_CONTROLS and MEMBER_WITNESSES rows alone, one spelling each); that a FAIL-CLOSED case body
+ * applies the census's predicate in meaning is NOT CLAIMED by the CASE WORDS cases beyond the syntax and the declared names
+ * they read (they read each body's syntax, not its meaning).
  *
- * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
- * tracker export, and parses planted text in memory.
+ * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text, the
+ * tracker export and (wb-v3a9) its own source, and parses planted text in memory.
  */
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
@@ -518,12 +557,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const HELPER = "test/helpers/hyperunix-custody-readers.ts";
 const LIFECYCLE = "test/workbench-provider-lifecycle.test.ts";
 const EXPORT = ".beads/issues.jsonl";
+/** wb-v3a9: this census's own path from the repository root: it reads its own header and its FAIL-CLOSED case bodies. */
+const CENSUS = relative(ROOT, fileURLToPath(import.meta.url));
 const BEAD = "wb-tz2.16";
 const PARENT = "wb-tz2.11";
 const CHILD = "wb-tz2.20";
 const CARRIER = "wb-tz2.24";
 const FOLLOW_UP = "wb-zchj";
 const FOLLOW_UP_2 = "wb-o3f8";
+const FOLLOW_UP_3 = "wb-v3a9";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -1145,6 +1187,151 @@ function spelledAsFound(row: MemberWitness): boolean {
   while (tail < row.narrowed.length - head && row.narrowed[row.narrowed.length - 1 - tail] === row.line[row.line.length - 1 - tail]) tail += 1;
   return row.line.includes(spelled) && !row.narrowed.includes(spelled) && row.line.length > row.narrowed.length && head + tail === row.narrowed.length;
 }
+/** wb-v3a9: this census's own header, its leading doc comment, each line's " * " mark dropped, the lines joined and each run of white space read as one space. */
+function censusHeader(): string {
+  const text = read(CENSUS);
+  return text
+    .slice(text.indexOf("/**") + 3, text.indexOf("*/"))
+    .split("\n")
+    .map(line => line.replace(/^ \* ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+/** wb-v3a9: this header's ROWS entries, in order, each read as censusHeader reads its lines: an entry opens on a line with two spaces after its " *" mark and runs on over the lines with three or more, up to the blank line that closes ROWS. */
+function rowsEntries(): string[] {
+  const text = read(CENSUS);
+  const lines = text.slice(0, text.indexOf("*/")).split("\n");
+  const from = lines.indexOf(" * ROWS:");
+  const to = from < 0 ? -1 : lines.indexOf(" *", from);
+  const entries: string[] = [];
+  for (const line of to < 0 ? [] : lines.slice(from + 1, to)) {
+    const last = entries.length - 1;
+    if (line.startsWith(" *   ") && last >= 0) entries[last] = `${entries[last]} ${line.slice(5)}`;
+    else if (line.startsWith(" *  ")) entries.push(line.slice(4));
+  }
+  return entries.map(entry => entry.replace(/\s+/g, " ").trim());
+}
+/** wb-v3a9: the narrowing wb-o3f8's F1 finding offers as its second cure alternative, as filed in the export: the parenthetical words it quotes (replaced) and the words it narrows them to (narrowing). */
+function narrowingCure(): { readonly replaced: string; readonly narrowing: string } {
+  const found = /narrow the FAIL-CLOSED words and the :348 parenthetical \('(.+?)'\) to '(.+?)'\. Lineage noted as data: /.exec(ridesFinding(FOLLOW_UP_2));
+  return { replaced: found?.[1] ?? "", narrowing: found?.[2] ?? "" };
+}
+/** wb-v3a9: the identifiers a node reads, a property name after a dot aside. */
+function namesRead(node: ts.Node): string[] {
+  if (ts.isIdentifier(node)) return [node.text];
+  if (ts.isPropertyAccessExpression(node)) return namesRead(node.expression);
+  const names: string[] = [];
+  ts.forEachChild(node, child => {
+    names.push(...namesRead(child));
+  });
+  return names;
+}
+/** wb-v3a9: an object literal's property by name: its initializer, or the name a shorthand property reads. */
+function propertyOf(object: ts.Expression | undefined, name: string): ts.Expression | undefined {
+  if (object === undefined || !ts.isObjectLiteralExpression(object)) return undefined;
+  for (const property of object.properties) {
+    if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === name) return property.initializer;
+    if (ts.isShorthandPropertyAssignment(property) && property.name.text === name) return property.name;
+  }
+  return undefined;
+}
+/** wb-v3a9: the call, when an expression calls the named method on a receiver (receiver.method(...)). */
+function methodCall(node: ts.Expression | undefined, method: string): ts.CallExpression | undefined {
+  return node !== undefined && ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === method ? node : undefined;
+}
+/** wb-v3a9: the receiver a method call reads, when it is a bare name. */
+function receiverOf(call: ts.CallExpression | undefined): string {
+  const callee = call?.expression;
+  return callee !== undefined && ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) ? callee.expression.text : "";
+}
+/** wb-v3a9: an expression with every trailing .map(...) call it ends in taken off. */
+function unmapped(node: ts.Expression | undefined): ts.Expression | undefined {
+  const callee = methodCall(node, "map")?.expression;
+  return callee !== undefined && ts.isPropertyAccessExpression(callee) ? unmapped(callee.expression) : node;
+}
+/** wb-v3a9: how one FAIL-CLOSED case's callback, read from its syntax, applies narrowsToPinnedPages (CaseApplication). */
+function caseApplication(title: string, body: readonly ts.Statement[], source: ts.SourceFile): CaseApplication {
+  const consts = new Map<string, ts.Expression>();
+  const declared: string[] = [];
+  const collect = (node: ts.Node): void => {
+    if ((ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node)) && node.name !== undefined && ts.isIdentifier(node.name)) declared.push(node.name.text);
+    ts.forEachChild(node, collect);
+  };
+  for (const statement of body) {
+    collect(statement);
+    if (!ts.isVariableStatement(statement) || (statement.declarationList.flags & ts.NodeFlags.Const) === 0) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (ts.isIdentifier(declaration.name) && declaration.initializer !== undefined) consts.set(declaration.name.text, declaration.initializer);
+    }
+  }
+  const first = body[0];
+  const bound = first !== undefined && ts.isVariableStatement(first) && (first.declarationList.flags & ts.NodeFlags.Const) !== 0 && first.declarationList.declarations.length === 1 ? first.declarationList.declarations[0] : undefined;
+  const binding = bound?.initializer;
+  const bindsLines =
+    bound !== undefined &&
+    ts.isIdentifier(bound.name) &&
+    bound.name.text === "lines" &&
+    binding !== undefined &&
+    ts.isCallExpression(binding) &&
+    ts.isIdentifier(binding.expression) &&
+    binding.expression.text === "helperClaimLines" &&
+    binding.arguments.length === 0 &&
+    declared.filter(name => name === "lines").length === 1;
+  const last = body[body.length - 1];
+  const matcher = last !== undefined && ts.isExpressionStatement(last) ? methodCall(last.expression, "toStrictEqual") : undefined;
+  const asserted = matcher?.expression;
+  const subjectCall = asserted !== undefined && ts.isPropertyAccessExpression(asserted) ? asserted.expression : undefined;
+  const subject = subjectCall !== undefined && ts.isCallExpression(subjectCall) && ts.isIdentifier(subjectCall.expression) && subjectCall.expression.text === "expect" ? subjectCall.arguments[0] : undefined;
+  const filter = methodCall(unmapped(propertyOf(subject, "unnarrowed")), "filter");
+  const receiver = receiverOf(filter);
+  const callback = filter?.arguments[0];
+  const negated = callback !== undefined && ts.isArrowFunction(callback) && ts.isPrefixUnaryExpression(callback.body) && callback.body.operator === ts.SyntaxKind.ExclamationToken ? callback.body.operand : undefined;
+  const applied = negated !== undefined && ts.isCallExpression(negated) && ts.isIdentifier(negated.expression) && negated.expression.text === "narrowsToPinnedPages" && negated.arguments.length === 1 ? negated.arguments[0] : undefined;
+  const readsLines = (name: string, seen: readonly string[]): boolean => {
+    const initializer = consts.get(name);
+    if (initializer === undefined || seen.includes(name)) return false;
+    const names = namesRead(initializer);
+    return names.includes("lines") || names.some(other => other !== "lines" && readsLines(other, [...seen, name]));
+  };
+  const builds = (node: ts.Node): boolean => {
+    if (ts.isObjectLiteralExpression(node)) return true;
+    if (ts.isCallExpression(node) && (methodCall(node, "map") !== undefined || methodCall(node, "flatMap") !== undefined)) return true;
+    return ts.forEachChild(node, builds) ?? false;
+  };
+  const buildsEntries = (name: string, seen: readonly string[]): boolean => {
+    const initializer = consts.get(name);
+    if (initializer === undefined || name === "lines" || seen.includes(name)) return false;
+    return builds(initializer) || namesRead(initializer).some(other => buildsEntries(other, [...seen, name]));
+  };
+  const empty = propertyOf(matcher?.arguments[0], "unnarrowed");
+  return {
+    head: title.slice(0, title.indexOf(" (") + 2),
+    bindsLines,
+    receiver,
+    receiverReadsLines: receiver !== "lines" && readsLines(receiver, []),
+    argument: applied?.getText(source) ?? "",
+    readsHeaderLines: applied !== undefined && (namesRead(applied).includes("lines") || (receiver !== "" && !buildsEntries(receiver, []))),
+    expectsEmpty: empty !== undefined && ts.isArrayLiteralExpression(empty) && empty.elements.length === 0,
+    shadowed: declared.filter(name => name === "narrowsToPinnedPages" || name === "helperClaimLines" || name === "expect"),
+  };
+}
+/** wb-v3a9: the FAIL-CLOSED cases as this file spells them, in its order: each it() call whose title opens "FAIL-CLOSED ", read from the TypeScript syntax of this census's own source. */
+function failClosedApplications(): CaseApplication[] {
+  const source = ts.createSourceFile(CENSUS, read(CENSUS), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: CaseApplication[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title, callback] = node.arguments;
+      if (title !== undefined && ts.isStringLiteral(title) && title.text.startsWith("FAIL-CLOSED ") && callback !== undefined && ts.isArrowFunction(callback) && ts.isBlock(callback.body)) {
+        found.push(caseApplication(title.text, callback.body.statements, source));
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
   const marker = "ROOT KINDS is not: ";
@@ -1489,6 +1676,25 @@ interface MemberWitness {
   readonly word: string;
   readonly narrowed: string;
   readonly line: string;
+}
+/** wb-v3a9: a FAIL-CLOSED case, in this census's order: the words its title and its ROWS entry open with (head), the list the filter of its unnarrowed list reads (receiver) and the argument it hands narrowsToPinnedPages (argument), as this file spells them, and the landed words of its title and its ROWS entry that this cut narrows, as base b561689b held them (replaced). */
+interface FailClosedCase {
+  readonly id: string;
+  readonly head: string;
+  readonly receiver: string;
+  readonly argument: string;
+  readonly replaced: readonly string[];
+}
+/** wb-v3a9: how a FAIL-CLOSED case, as this file spells it, applies narrowsToPinnedPages: the words its title opens with (head); whether its callback's first statement binds lines to helperClaimLines(), and nothing else in it binds lines (bindsLines); the list the filter of its expect subject's unnarrowed list reads (receiver), and whether that list is a const of the callback whose initializer reads lines, directly or through another such const (receiverReadsLines); the argument it hands narrowsToPinnedPages, negated as the whole body of that filter's callback (argument); whether that argument reads lines itself, or the list and the consts it reads build no entry of their own - no map or flatMap call and no object literal - so the argument reads a header line either way (readsHeaderLines); whether the expected object's unnarrowed is [] (expectsEmpty); and the names it declares that this application reads (shadowed). */
+interface CaseApplication {
+  readonly head: string;
+  readonly bindsLines: boolean;
+  readonly receiver: string;
+  readonly receiverReadsLines: boolean;
+  readonly argument: string;
+  readonly readsHeaderLines: boolean;
+  readonly expectsEmpty: boolean;
+  readonly shadowed: readonly string[];
 }
 /** The lifecycle file's K2 client line: every calibration and residual line is planted right after it. */
 const K2_CLIENT = "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };";
@@ -3628,6 +3834,24 @@ const MEMBER_WITNESSES: readonly MemberWitness[] = [
 const FOLLOW_UP_2_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-o3f8 F1 members", source: "notes", text: "nine gate-authored members of the predicate at census :991-995 keep the delivered census at 0 failed | 2743 passed on the probe: G-RET-EQ ('  return clause && !widened;' -> '  return clause === !widened;'), G-RET-XOR (-> '  return clause !== widened;'), G-W-EVERY-PERIOD (widening alternative 'every (?:other )?page' -> 'every (?:other )?page\\.'), G-W-BEYOND-PERIOD ('beyond (?:them|its pinned pages)' -> 'beyond (?:them|its pinned pages)\\.'), G-W-NOTONLY-PERIOD ('not only on its pinned pages' -> 'not only on its pinned pages\\.'), G-W-RECEIVER-PERIOD ('on any receiver' -> 'on any receiver\\.'), G-W-EVERY-ON ('every (?:other )?page' -> 'on every (?:other )?page'), G-W-PAGESAND-ON ('on its pinned pages and ' -> 'on its pinned pages and on '), and G-W-AFTERPHRASE (the widened test reads line.slice(line.indexOf(\"on its pinned pages\") + 1))." },
   { key: "wb-o3f8 F1 cure", source: "notes", text: "Optional cheap cure (R694 follow-up): plant red-first controls for the realized spellings, each read by narrowsToPinnedPages with expected false: the phrase replaced by a named word; a named word mid-line, before the phrase and after 'for'; and 'on its pinned pages and' with another follower." },
+];
+/** wb-v3a9: the FAIL-CLOSED cases, in this census's order, each with the list and argument its body hands narrowsToPinnedPages and the landed words of its title and ROWS entry that this cut narrows. */
+const FAIL_CLOSED_CASES: readonly FailClosedCase[] = [
+  { id: "FC-CORE", head: "FAIL-CLOSED CORE (", receiver: "frozen", argument: "lines.find(entry => entry.id === id)?.line ?? \"\"", replaced: ["carries, in its own words, the narrowing 'on its pinned pages' as a clause of its own", "no word on the line widening it again", "carries the narrowing \"on its pinned pages\""] },
+  { id: "FC-CARRY", head: "FAIL-CLOSED CARRY (", receiver: "placed", argument: "lines.find(entry => entry.id === id)?.line ?? \"\"", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-SHAPES", head: "FAIL-CLOSED SHAPES (", receiver: "shaped", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-ENTRIES", head: "FAIL-CLOSED ENTRIES (", receiver: "entries", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-PARAGRAPHS", head: "FAIL-CLOSED PARAGRAPHS (", receiver: "paragraphs", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own", "every claim line before that heading narrows"] },
+];
+/** wb-v3a9's requirement lines, as the export holds them at this cut's base: the second cure alternative of wb-o3f8's own F1 finding and its lineage note, the sentences the bead's cure names (the finding's second alternative, the one its lineage note says ends the loop). */
+const NARROWING_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-o3f8 F1 second cure alternative", source: "notes", text: "Or take F1's second cure alternative and narrow the FAIL-CLOSED words and the :348 parenthetical ('they read the phrase's place and those words') to 'the cases apply narrowsToPinnedPages to the header's lines'." },
+  { key: "wb-o3f8 F1 lineage note", source: "notes", text: "Lineage noted as data: a finite set of spelling rows cannot pin an open spelling family, and only the second alternative ends the loop." },
+];
+/** wb-v3a9's own requirement lines: its F1 finding's cure sentence and the scope sentence beside it. */
+const FOLLOW_UP_3_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-v3a9 F1 cure", source: "notes", text: "Cure for the carry: the finding's SECOND alternative, the one its lineage note says ends the loop. Narrow the FAIL-CLOSED case words and the census :380 parenthetical ('they read the phrase's place and those words', base :348) to 'the cases apply narrowsToPinnedPages to the header's lines'." },
+  { key: "wb-v3a9 F1 cure scope", source: "notes", text: "A further row-per-spelling cure, the first alternative again, leaves the open spelling family open, as the cut's own NOT CLAIMED sentence states." },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -6150,6 +6374,15 @@ const FROZEN: readonly string[] = [
   "MEMBER_WITNESSES:W-WORD-BEFORE-PHRASE:e589013afa2d",
   "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 members:efeb312a4f4b",
   "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 cure:513986d9f226",
+  "FAIL_CLOSED_CASES:FC-CORE:9c217be24bff",
+  "FAIL_CLOSED_CASES:FC-CARRY:6b7dac06a531",
+  "FAIL_CLOSED_CASES:FC-SHAPES:383bb8ef28b7",
+  "FAIL_CLOSED_CASES:FC-ENTRIES:27daedba09f0",
+  "FAIL_CLOSED_CASES:FC-PARAGRAPHS:6e9fbcd2045e",
+  "NARROWING_REQUIREMENTS:wb-o3f8 F1 second cure alternative:e846929271b1",
+  "NARROWING_REQUIREMENTS:wb-o3f8 F1 lineage note:0de04caad67a",
+  "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure:06017409314f",
+  "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure scope:bd4879e2d117",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -6938,7 +7171,7 @@ describe(SUITE, () => {
         missing: [],
       });
     });
-    it("FAIL-CLOSED CORE (cut #4, R-B392): every claim line of the four frozen classes - the lines the guard derives a sub-form from (first-argument, POSITIONS and for-of and for-in target lines) and the ROOTS, spy, assignment, compound operator and rebind lines - carries, in its own words, the narrowing 'on its pinned pages' as a clause of its own, no word on the line widening it again (wb-tz2.24, refusal #4 F2)", () => {
+    it("FAIL-CLOSED CORE (cut #4, R-B392; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four frozen classes - the lines the guard derives a sub-form from (first-argument, POSITIONS and for-of and for-in target lines) and the ROOTS, spy, assignment, compound operator and rebind lines (wb-tz2.24, refusal #4 F2)", () => {
       const lines = helperClaimLines();
       const derived = (pattern: RegExp): string[] => lines.filter(entry => pattern.test(entry.line)).map(entry => entry.id);
       const frozen = [
@@ -6952,7 +7185,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cuts #2 and #3): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value, a variable's initializer or a plain text pid narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cuts #2 and #3; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value, a variable's initializer or a plain text pid", () => {
       const lines = helperClaimLines();
       const placed = lines.filter(entry => /a parameter's position|a parameter's default value|a variable's initializer|a plain text pid|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
       expect({ placed, unnarrowed: placed.filter(id => !narrowsToPinnedPages(lines.find(entry => entry.id === id)?.line ?? "")) }).toStrictEqual({
@@ -6960,7 +7193,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, refusal #3): every '- ' entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, refusal #3; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every '- ' entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading", () => {
       const lines = helperClaimLines();
       const from = lines.findIndex(entry => entry.line.startsWith("C7 SHAPE FORMS ("));
       const to = lines.findIndex(entry => entry.line.startsWith("F3 COMMAND HEADS ("));
@@ -6970,7 +7203,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, refusal #4): every '- ' entry line of the claim block before the RESIDUALS heading - each entry of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own (the RESIDUALS families after that heading are no claim)", () => {
+    it("FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, refusal #4; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every '- ' entry line of the claim block before the RESIDUALS heading - each entry of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS (the RESIDUALS families after that heading are no claim)", () => {
       const lines = helperClaimLines();
       const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
       const entries = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line.startsWith("- "));
@@ -6979,7 +7212,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, refusal #5): every paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a '- ' entry, the section headings and the lines a sentence runs on over among them - narrows to its pinned pages as a clause of its own, so that with the FAIL-CLOSED ENTRIES case every claim line before that heading narrows", () => {
+    it("FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, refusal #5; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a '- ' entry, the section headings and the lines a sentence runs on over among them - so that with the FAIL-CLOSED ENTRIES case it reads narrowed every claim line before that heading", () => {
       const lines = helperClaimLines();
       const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
       const paragraphs = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line !== "" && !entry.line.startsWith("- "));
@@ -7154,6 +7387,76 @@ describe(SUITE, () => {
     });
   });
 
+  describe("NARROWED WORDS (wb-v3a9, F1 of wb-o3f8's landing 997; outside this census): wb-v3a9's own cure and the second cure alternative of wb-o3f8's F1 finding it names, in the tracker export, and this header narrowed to them", () => {
+    it("every wb-v3a9 requirement line this census answers occurs verbatim in its own notes, and the requirement lines are exactly its F1 finding's cure sentence and the scope sentence beside it, in both directions; and the words its cure narrows, and the words it narrows them to, are those wb-o3f8's second cure alternative quotes", () => {
+      const notes = exportRecord(FOLLOW_UP_3).notes;
+      const finding = ridesFinding(FOLLOW_UP_3);
+      const cure = finding.indexOf("Cure for the carry: ");
+      const scope = finding.indexOf(" A further row-per-spelling cure, ");
+      const quoted = /parenthetical \('(.+?)', base :348\) to '(.+?)'\. A further row-per-spelling cure, /.exec(finding);
+      const { replaced, narrowing } = narrowingCure();
+      expect({
+        missing: FOLLOW_UP_3_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: FOLLOW_UP_3_REQUIREMENTS.map(requirement => requirement.text),
+        words: [quoted?.[1] ?? "no quoted words", quoted?.[2] ?? "no quoted words"],
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(cure < 0 || scope < cure ? [] : [finding.slice(cure, scope)]), ...(scope < 0 ? [] : [finding.slice(scope + 1)])],
+        words: [replaced, narrowing],
+      });
+    });
+    it("the second cure alternative and the lineage note of wb-o3f8's F1 finding, the sentences wb-v3a9's cure names, occur verbatim in wb-o3f8's notes, and the NARROWING_REQUIREMENTS rows are exactly those two sentences of that finding, in both directions", () => {
+      const notes = exportRecord(FOLLOW_UP_2).notes;
+      const finding = ridesFinding(FOLLOW_UP_2);
+      const alternative = finding.indexOf("Or take F1's second cure alternative ");
+      const lineage = finding.indexOf(" Lineage noted as data: ");
+      expect({
+        missing: NARROWING_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: NARROWING_REQUIREMENTS.map(requirement => requirement.text),
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(alternative < 0 || lineage < alternative ? [] : [finding.slice(alternative, lineage)]), ...(lineage < 0 ? [] : [finding.slice(lineage + 1)])],
+      });
+    });
+    it("the parenthetical words that alternative quotes stand nowhere in this header, and the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases", () => {
+      const { replaced, narrowing } = narrowingCure();
+      const header = censusHeader();
+      expect({
+        words: [replaced, narrowing],
+        replaced: header.includes(replaced),
+        narrowed: header.includes(`a widening word other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (${narrowing}, not the line's meaning)`),
+      }).toStrictEqual({ words: ["they read the phrase's place and those words", "the cases apply narrowsToPinnedPages to the header's lines"], replaced: false, narrowed: true });
+    });
+  });
+
+  describe("CASE WORDS (wb-v3a9): each FAIL-CLOSED case's title, ROWS entry and body, narrowed to the cases applying narrowsToPinnedPages to the header's lines", () => {
+    it("the FAIL-CLOSED cases vitest registers for this file, this header's FAIL-CLOSED ROWS entries and the FAIL_CLOSED_CASES rows are, by head and in order, the same five; and each case's title and ROWS entry hold, after 'wb-v3a9: ', the words that alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced words", ({ task }) => {
+      const registered: string[] = [];
+      const walk = (tasks: typeof task.file.tasks): void => {
+        for (const child of tasks) {
+          if (child.type === "test" && child.name.startsWith("FAIL-CLOSED ")) registered.push(child.name);
+          else if (child.type === "suite") walk(child.tasks);
+        }
+      };
+      walk(task.file.tasks);
+      const entries = rowsEntries().filter(entry => entry.startsWith("FAIL-CLOSED "));
+      const { narrowing } = narrowingCure();
+      const headOf = (text: string): string => text.slice(0, text.indexOf(" (") + 2);
+      const narrowed = (text: string, row: FailClosedCase): boolean =>
+        narrowing !== "" && text.includes(`wb-v3a9: ${narrowing})`) && text.includes("narrowsToPinnedPages reads narrowed every ") && !row.replaced.some(words => text.includes(words));
+      expect({
+        registered: registered.map(headOf),
+        entries: entries.map(headOf),
+        unnarrowed: FAIL_CLOSED_CASES.filter((row, at) => !narrowed(registered[at] ?? "", row) || !narrowed(entries[at] ?? "", row)).map(row => row.id),
+      }).toStrictEqual({ registered: FAIL_CLOSED_CASES.map(row => row.head), entries: FAIL_CLOSED_CASES.map(row => row.head), unnarrowed: [] });
+    });
+    it("each FAIL-CLOSED case's body, as this file spells it, binds lines to helperClaimLines() first and hands narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of its own; it declares none of the names that application reads, and it expects that list empty", () => {
+      expect(failClosedApplications()).toStrictEqual(
+        FAIL_CLOSED_CASES.map(row => ({ head: row.head, bindsLines: true, receiver: row.receiver, receiverReadsLines: true, argument: row.argument, readsHeaderLines: true, expectsEmpty: true, shadowed: [] })),
+      );
+    });
+  });
+
   describe("FROZEN SHAPE (standing rule 16)", () => {
     it("every table row is pinned as table:id:digest of its own JSON", () => {
       const rows = (table: string, entries: readonly { readonly id?: string; readonly word?: string; readonly key?: string }[]): string[] =>
@@ -7208,6 +7511,9 @@ describe(SUITE, () => {
         ...rows("PREDICATE_MEMBERS", PREDICATE_MEMBERS),
         ...rows("MEMBER_WITNESSES", MEMBER_WITNESSES),
         ...rows("FOLLOW_UP_2_REQUIREMENTS", FOLLOW_UP_2_REQUIREMENTS),
+        ...rows("FAIL_CLOSED_CASES", FAIL_CLOSED_CASES),
+        ...rows("NARROWING_REQUIREMENTS", NARROWING_REQUIREMENTS),
+        ...rows("FOLLOW_UP_3_REQUIREMENTS", FOLLOW_UP_3_REQUIREMENTS),
       ]).toStrictEqual(FROZEN);
     });
   });
