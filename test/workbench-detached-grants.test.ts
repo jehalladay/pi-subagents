@@ -15,9 +15,9 @@
  *     unchanged validator denial before launch." Mutant: "Remove the local-detached claude:invoke check."
  *
  * The operator authorizes each right in workbench.capabilityGrants: workbench:execute, workbench:detach, claude:invoke
- * and one claude:tool:<name> per Claude tool the settings or a role names (the exact spelling the preflight checks; the
- * grant form itself is pinned by test/workbench-claude-tool-grants.test.ts). workbench:observe, held where a row reads
- * a host's terminal state, is the observation right and never a launch right.
+ * and one claude:tool:<name> per distinct tool name the settings tools or a role's tools name (the exact spelling the
+ * preflight checks; the grant form itself is pinned by test/workbench-claude-tool-grants.test.ts). workbench:observe,
+ * held where a row reads a host's terminal state, is the observation right and never a launch right.
  *
  * Every launch here is real and goes through the registered Pi tools only: the tool reaches the real preflight through
  * workbenchNative().launchDetachedWorkflow, and an admitted launch spawns the compiled child host (dist/, which the
@@ -33,6 +33,24 @@
  * wait is pollFor, a reply that carries one of the product's two fixed-bound lapse sentences fails re-labelled with the
  * strict marker (markTimingLapse), and the hook that stops hosts waits for their exit under HOST_HOOK_TIMEOUT_MS and
  * reports a lapse only after its cleanup (reportAfterCleanup).
+ *
+ * Cut #2 (refusal #1 of cut #1 1c3cc1a4, guard R-B644: the cut's own claim words were wider than its pins) pins the
+ * facets those words name through BOTH producers (the PRODUCERS rows at the end of this file), and reads the admitted
+ * Claude config and grants with toEqual, never as a subset:
+ *   U1 settings members: the model, tools and roles members each reach the admitted config only when the settings hold
+ *     them (the CONFIG_ROWS hold different subsets, the empty one included), each role as the settings hold it (a role's
+ *     own model and effort included), and a role that declares capabilities, a member the detached host does not carry,
+ *     is refused by the unchanged preflight before any child.
+ *   U2 exact rights: claude:invoke, then one claude:tool:<name> per distinct tool name in the settings tools and then in
+ *     each role's tools, in that order, also when the operator holds them in the reverse order; two settings tools, two
+ *     roles and one role with two tools each forward every right, a tool named more than once forwards one, a Claude
+ *     right the operator holds that the config does not name is never forwarded, and each right of the five-tool SEVERAL
+ *     config removed in turn refuses.
+ *   U3 sources: rights carried in workflow_execute's input, or declared by the reviewed script itself (its meta and its
+ *     body), never stand in for a missing host right; the JSON policy and workflow_detached's params rows are EAT-R014's.
+ *   U4 deterministic facet: once the operator switches the settings to the pi backend (settings are read on every call),
+ *     workflow_execute's detached launch is deterministic and carries no Claude config and no grant, also with every
+ *     Claude right forged in its policy and input; workflow_detached's deterministic default is EAT-R013's control.
  */
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -130,21 +148,28 @@ function jsonReply<T>(site: string, reply: string): T {
   }
 }
 
-/** Boots the real extension under Claude settings with one settings tool and one role tool, holding exactly `rights`. */
-async function boot(rights: readonly string[]) {
-  sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", tools: [SETTINGS_TOOL], roles: ROLES, capabilityGrants: [...rights] } } });
+/** The Claude settings members of the default boot: one settings tool and one role with one tool. */
+const DEFAULT_CLAUDE: Readonly<Record<string, unknown>> = { tools: [SETTINGS_TOOL], roles: ROLES };
+
+/**
+ * Boots the real extension under Claude settings holding exactly `rights`: by default one settings tool and one role
+ * tool (`claude` replaces those members), with the reviewed `script` saved as pure.js.
+ */
+async function boot(rights: readonly string[], claude: Readonly<Record<string, unknown>> = DEFAULT_CLAUDE, script: string = PURE_SCRIPT) {
+  const settings = { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", ...claude, capabilityGrants: [...rights] } };
+  sandbox = hermeticDir({ settings });
   const pi = makePi();
   subagentsExtension(pi.pi);
   const context = ctx({ cwd: sandbox.dir });
   await pi.lifecycle.get("session_start")?.({}, context);
   const scriptPath = join(sandbox.dir, "pure.js");
-  writeFileSync(scriptPath, PURE_SCRIPT);
+  writeFileSync(scriptPath, script);
   const tool = (name: string): RegisteredTool => {
     const registered: RegisteredTool | undefined = pi.tools.get(name);
     if (!registered) throw new Error(`${name} is not registered`);
     return registered;
   };
-  return { context, scriptPath, dir: sandbox.dir, tool };
+  return { context, scriptPath, dir: sandbox.dir, tool, settings };
 }
 type Booted = Awaited<ReturnType<typeof boot>>;
 
@@ -253,4 +278,158 @@ describe("EAT-R014: forged grants never stand in for a missing host right", () =
     expect(text).toContain(denial);
     expect(reservedInvocations()).toEqual([]);
   }, 30_000);
+});
+
+// Cut #2: the facets refusal #1 named (U1-U4), each pinned through both registered producers.
+
+/** The two registered producers of a detached Claude launch, each reaching the real preflight through its own tool. */
+const PRODUCERS = ["workflow_execute", "workflow_detached"] as const;
+type Producer = (typeof PRODUCERS)[number];
+/** The rights each producer's own tool checks before it builds a launch; neither is a Claude right, and neither is forwarded. */
+const TOOL_RIGHTS: Readonly<Record<Producer, readonly string[]>> = {
+  workflow_execute: ["workbench:execute", "workbench:detach"],
+  workflow_detached: ["workbench:detach"],
+};
+const toolRight = (name: string): string => `claude:tool:${name}`;
+const MODEL = "claude-wupg-probe-model";
+const REVIEW = "Review the reviewed change.";
+const WRITE = "Write the reviewed change.";
+/** Two settings tools and two roles, the second naming two tools: five tool rights beside claude:invoke. */
+const SEVERAL = {
+  tools: ["Read", "Glob"],
+  roles: { reviewer: { prompt: REVIEW, tools: ["Grep"] }, writer: { prompt: WRITE, tools: ["LS", "WebSearch"] } },
+};
+/** The rights the preflight demands of SEVERAL, in the order the producers forward them. */
+const SEVERAL_RIGHTS: readonly string[] = [INVOKE, ...["Read", "Glob", "Grep", "LS", "WebSearch"].map(toolRight)];
+const ROLE_MEMBERS = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL], model: MODEL, effort: "low" } };
+const TWO_ROLES = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL] }, writer: { prompt: WRITE, tools: ["LS"] } };
+const TWO_TOOL_ROLE = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL, "LS"] } };
+const NAMED_TWICE = { reviewer: { prompt: REVIEW, tools: [SETTINGS_TOOL, ROLE_TOOL] }, writer: { prompt: WRITE, tools: [ROLE_TOOL] } };
+/** A reviewed source that declares every Claude right itself, in its meta and in its body, and still computes 42. */
+const DECLARING_SCRIPT = `export const meta={name:"detached-grants",description:"reviewed pure computation",grants:${JSON.stringify(CLAUDE_RIGHTS)},backend:"claude"}; const grants=${JSON.stringify(CLAUDE_RIGHTS)}; return grants.length === 3 ? 42 : 0;`;
+
+interface ConfigRow {
+  /** The refusal #1 item the row cures, and what its configuration varies. */
+  readonly row: string;
+  /** The Claude settings members the operator configures beside workflowAgentBackend claude. */
+  readonly settings: Readonly<Record<string, unknown>>;
+  /** The Claude rights the operator holds, in the operator's order, beside the producer's tool rights and workbench:observe. */
+  readonly held: readonly string[];
+  /** The Claude config the host admitted, exactly. */
+  readonly claude: Readonly<Record<string, unknown>>;
+  /** The grants the host admitted, exactly and in order. */
+  readonly grants: readonly string[];
+}
+const CONFIG_ROWS: readonly ConfigRow[] = [
+  { row: "U1 one settings tool and one role (the default)", settings: DEFAULT_CLAUDE, held: CLAUDE_RIGHTS, claude: DEFAULT_CLAUDE, grants: CLAUDE_RIGHTS },
+  { row: "U1 no roles member", settings: { tools: [SETTINGS_TOOL] }, held: [INVOKE, SETTINGS_TOOL_GRANT], claude: { tools: [SETTINGS_TOOL] }, grants: [INVOKE, SETTINGS_TOOL_GRANT] },
+  { row: "U1 no tools member", settings: { roles: ROLES }, held: [INVOKE, ROLE_TOOL_GRANT], claude: { roles: ROLES }, grants: [INVOKE, ROLE_TOOL_GRANT] },
+  { row: "U1 no Claude member at all", settings: {}, held: [INVOKE], claude: {}, grants: [INVOKE] },
+  { row: "U1 a model member", settings: { model: MODEL, ...DEFAULT_CLAUDE }, held: CLAUDE_RIGHTS, claude: { model: MODEL, ...DEFAULT_CLAUDE }, grants: CLAUDE_RIGHTS },
+  { row: "U1 a role with its own model and effort", settings: { tools: [SETTINGS_TOOL], roles: ROLE_MEMBERS }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: ROLE_MEMBERS }, grants: CLAUDE_RIGHTS },
+  { row: "U2 a Claude right held that the config does not name", settings: DEFAULT_CLAUDE, held: [...CLAUDE_RIGHTS, toolRight("Bash")], claude: DEFAULT_CLAUDE, grants: CLAUDE_RIGHTS },
+  {
+    row: "U2 two settings tools", settings: { tools: [SETTINGS_TOOL, "Glob"], roles: ROLES }, held: [INVOKE, SETTINGS_TOOL_GRANT, toolRight("Glob"), ROLE_TOOL_GRANT],
+    claude: { tools: [SETTINGS_TOOL, "Glob"], roles: ROLES }, grants: [INVOKE, SETTINGS_TOOL_GRANT, toolRight("Glob"), ROLE_TOOL_GRANT],
+  },
+  { row: "U2 two roles", settings: { tools: [SETTINGS_TOOL], roles: TWO_ROLES }, held: [...CLAUDE_RIGHTS, toolRight("LS")], claude: { tools: [SETTINGS_TOOL], roles: TWO_ROLES }, grants: [...CLAUDE_RIGHTS, toolRight("LS")] },
+  { row: "U2 one role with two tools", settings: { tools: [SETTINGS_TOOL], roles: TWO_TOOL_ROLE }, held: [...CLAUDE_RIGHTS, toolRight("LS")], claude: { tools: [SETTINGS_TOOL], roles: TWO_TOOL_ROLE }, grants: [...CLAUDE_RIGHTS, toolRight("LS")] },
+  { row: "U2 a tool named by the settings and by two roles", settings: { tools: [SETTINGS_TOOL], roles: NAMED_TWICE }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: NAMED_TWICE }, grants: CLAUDE_RIGHTS },
+  { row: "U2 the SEVERAL config, its rights held in the reverse order", settings: SEVERAL, held: [...SEVERAL_RIGHTS].reverse(), claude: SEVERAL, grants: SEVERAL_RIGHTS },
+];
+
+/**
+ * A Claude launch of the reviewed source through `producer` (workflow_execute: the Claude settings select the backend;
+ * workflow_detached: backend claude), resolving to the reply's text: a refusal carries the preflight's own words.
+ */
+async function launchClaude(booted: Booted, producer: Producer, extra: Record<string, unknown> = {}): Promise<string> {
+  if (producer === "workflow_detached") return launchDetached(booted, "wb-wupg-claude", { backend: "claude", ...extra });
+  const reply = await executeDetached(booted, extra);
+  return reply.error ? reply.error.message : JSON.stringify(reply);
+}
+/** The request the row's one reserved invocation pinned, once its child host has run the reviewed source to completion. */
+async function admittedLaunch(booted: Booted, reply: string): Promise<DetachedLaunchRequest> {
+  const [invocationId, ...more] = reservedInvocations();
+  if (invocationId === undefined || more.length > 0) throw new Error(`expected exactly one reserved invocation; the reply was: ${reply}`);
+  expect(await terminalSnapshot(booted, invocationId), reply).toMatchObject({ terminal: "completed", result: 42 });
+  return admittedRequest(invocationId);
+}
+/** Rewrites the row's settings with another backend; the extension reads its settings on every call. */
+function switchBackend({ dir, settings }: Booted, workflowAgentBackend: "pi" | "claude"): void {
+  writeFileSync(join(dir, ".pi", "subagents.json"), JSON.stringify({ ...settings, workbench: { ...settings.workbench, workflowAgentBackend } }));
+}
+
+describe("cut #2 U1/U2: both producers forward the settings members the detached host accepts and exactly the rights its preflight demands", () => {
+  it.each(PRODUCERS.flatMap(producer => CONFIG_ROWS.map(row => [producer, row.row, row] as const)))(
+    "%s, %s: the real preflight admits exactly that Claude config and those grants, and the child host runs the reviewed source",
+    async (producer, _row, { settings, held, claude, grants }) => {
+      const booted = await boot([...TOOL_RIGHTS[producer], ...held, OBSERVE], settings);
+      const request = await admittedLaunch(booted, await launchClaude(booted, producer));
+      expect(request.backend).toBe("claude");
+      expect(request.claude).toEqual(claude);
+      expect(request.grants).toEqual(grants);
+    },
+    60_000,
+  );
+
+  it.each(PRODUCERS)("%s, U1 a role that declares capabilities: the unchanged preflight refuses that member, which the detached host does not carry, and no child host launches", async producer => {
+    const roles = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL], capabilities: ["forge.gate.status"] } };
+    const booted = await boot([...TOOL_RIGHTS[producer], ...CLAUDE_RIGHTS], { tools: [SETTINGS_TOOL], roles });
+    expect(await launchClaude(booted, producer)).toContain("Unsupported field: capabilities.");
+    expect(reservedInvocations()).toEqual([]);
+  }, 30_000);
+
+  it.each(PRODUCERS.flatMap(producer => SEVERAL_RIGHTS.map(removed => [producer, removed] as const)))(
+    "%s, U2 the SEVERAL config without %s: the real preflight refuses and no child host launches",
+    async (producer, removed) => {
+      const booted = await boot([...TOOL_RIGHTS[producer], ...SEVERAL_RIGHTS.filter(right => right !== removed)], SEVERAL);
+      expect(await launchClaude(booted, producer)).toContain(removed === INVOKE ? INVOKE_DENIAL : TOOL_DENIAL);
+      expect(reservedInvocations()).toEqual([]);
+    },
+    30_000,
+  );
+});
+
+describe("cut #2 U3: rights the input or the reviewed script carry never stand in for a missing host right", () => {
+  it.each([
+    [INVOKE, INVOKE_DENIAL],
+    [SETTINGS_TOOL_GRANT, TOOL_DENIAL],
+  ])("workflow_execute with every Claude right carried in its input, the host missing %s, is denied by the unchanged preflight before any child launches", async (removed, denial) => {
+    const reply = await executeDetached(await boot(EXECUTE_RIGHTS.filter(right => right !== removed)), { input: { ...FORGED } });
+    expect(reply).toMatchObject({ ok: false, status: "refused", nativeRefs: [] });
+    expect(reply.error?.code).toBe("launch-failed");
+    expect(reply.error?.message).toContain(denial);
+    expect(reservedInvocations()).toEqual([]);
+  }, 30_000);
+
+  it.each(PRODUCERS.flatMap(producer => [[producer, INVOKE, INVOKE_DENIAL], [producer, ROLE_TOOL_GRANT, TOOL_DENIAL]] as const))(
+    "%s with a reviewed script that declares every Claude right in its meta and its body, the host missing %s, is denied by the unchanged preflight before any child launches",
+    async (producer, removed, denial) => {
+      const booted = await boot([...TOOL_RIGHTS[producer], ...CLAUDE_RIGHTS.filter(right => right !== removed)], DEFAULT_CLAUDE, DECLARING_SCRIPT);
+      expect(await launchClaude(booted, producer)).toContain(denial);
+      expect(reservedInvocations()).toEqual([]);
+    },
+    30_000,
+  );
+
+  it.each(PRODUCERS)("%s with that script, the host holding every right (the control): it launches with exactly the rights the config demands", async producer => {
+    const booted = await boot([...TOOL_RIGHTS[producer], ...CLAUDE_RIGHTS, OBSERVE], DEFAULT_CLAUDE, DECLARING_SCRIPT);
+    const request = await admittedLaunch(booted, await launchClaude(booted, producer));
+    expect(request.grants).toEqual(CLAUDE_RIGHTS);
+  }, 60_000);
+});
+
+describe("cut #2 U4: workflow_execute's deterministic facet", () => {
+  it.each<[string, Record<string, unknown>]>([
+    ["no forged right", {}],
+    ["every Claude right forged in its policy and its input", { policy: FORGED, input: { ...FORGED } }],
+  ])("once the operator switches the settings to the pi backend, a detached launch with %s is deterministic and carries no Claude config and no grant", async (_case, extra) => {
+    const booted = await boot([...EXECUTE_RIGHTS, OBSERVE]);
+    switchBackend(booted, "pi");
+    const reply = await executeDetached(booted, extra);
+    expect(reply).toMatchObject({ ok: true, status: "launched" });
+    const request = await admittedLaunch(booted, JSON.stringify(reply));
+    expect(request).toMatchObject({ backend: "deterministic", grants: [] });
+    expect(request).not.toHaveProperty("claude");
+  }, 60_000);
 });

@@ -5,12 +5,19 @@
  * Claude launch needs (test/workbench-detached-grants.test.ts drives those launches through the registered tools).
  *
  * The form is exact: `claude:tool:` and one tool name, a letter and then up to 63 letters, digits, `_` or `-` (built-in
- * names such as Read, MCP names such as mcp__docs__search). No wildcard, rule pattern, extra segment, space, control
- * character or other case of the prefix reads as one. Every module that parses the capabilityGrants grammar reads the
- * form the same way, so holding a tool right never turns a reader's whole grant list into unknown permission data, and a
- * malformed tool right still does in every one of them. READERS lists those modules; the src scan holds the list to the
- * modules that actually carry the grammar, so a reader added without a row, or a row whose module no longer parses the
- * grammar, reds here.
+ * names such as Read, MCP names such as mcp__docs__search or mcp__docs-v2__search). No right MALFORMED_TOOL_GRANTS lists
+ * reads as one: a wildcard, a rule pattern, an extra segment, a leading digit, `_` or `-`, a leading or trailing space or
+ * tab, a leading or inner NUL, a leading or trailing newline, a prefix in another case, or a name past 64 characters.
+ * Each of the six modules READERS lists reads the form the same way through the entry point its row calls, so holding a
+ * tool right never turns that module's whole grant list into unknown permission data, and a malformed tool right still
+ * does in every one of them.
+ *
+ * The src scan holds READERS to the src modules whose source carries the grammar's exact spellings, BASE_FORM and
+ * TOOL_FORM below: a module that adds those spellings without a row, or a row whose module no longer carries them, reds
+ * here. A module that parses the capabilityGrants grammar under any other spelling (an escaped hyphen, a reordered
+ * character class, a pattern built at run time) is NOT CLAIMED by this scan, and neither is a second grammar reader
+ * inside a module READERS already lists: the rows judge each listed module only through the entry point they call
+ * (refusal #1 of cut #1 1c3cc1a4, item U5, narrowed here).
  */
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -26,11 +33,15 @@ import { decideReconcile } from "../src/workbench/reconcile-decision.js";
 import { buildWorkflowValidateReply } from "../src/workbench/validate-reply.js";
 import { hermeticDir } from "./helpers/boot-extension.js";
 
-const TOOL_GRANTS: readonly string[] = ["claude:tool:Read", "claude:tool:mcp__docs__search", `claude:tool:${"T".repeat(64)}`];
+const TOOL_GRANTS: readonly string[] = ["claude:tool:Read", "claude:tool:mcp__docs__search", "claude:tool:mcp__docs-v2__search", `claude:tool:${"T".repeat(64)}`];
+const TAB = String.fromCodePoint(9);
+const NUL = String.fromCodePoint(0);
+const LF = String.fromCodePoint(10);
 const MALFORMED_TOOL_GRANTS: readonly string[] = [
   "claude:tool:*", "claude:tool:", "claude:tool:Read:write", "claude:tool:Bash(git:*)", "claude:tool:Read*", "claude:tool: Read",
   "claude:tool:Read ", "claude:tool:9lives", "claude:tool:_Read", "CLAUDE:tool:Read", "claude:Tool:Read", "claude:tool:Read\n",
-  `claude:tool:${"T".repeat(65)}`,
+  `claude:tool:${"T".repeat(65)}`, "claude:tool:-Read", "Claude:tool:Read", `claude:tool:${TAB}Read`, `claude:tool:Read${TAB}`,
+  `claude:tool:${NUL}Read`, `claude:tool:Re${NUL}ad`, `claude:tool:${LF}Read`,
 ];
 const NOW = "2026-11-06T00:00:00Z";
 const DIGEST = `sha256:${"ab".repeat(32)}`;
@@ -86,7 +97,7 @@ function curatedToolsOutcome(grants: readonly string[]): string {
   }
 }
 
-/** Every module that parses the capabilityGrants grammar: a grant list it reads, and what it answers for unknown permission data. */
+/** A src module whose source carries the grammar's exact spellings: a grant list it reads, and what it answers for unknown permission data. */
 interface Reader {
   readonly module: string;
   readonly base: readonly string[];
@@ -120,8 +131,8 @@ function sourcesCarrying(form: string): string[] {
   return carrying.sort();
 }
 
-describe("the exact claude:tool:<name> grant form, read the same way by every capabilityGrants reader", () => {
-  it("READERS is exactly the src modules that carry the grammar, and every one of them carries the exact tool form", () => {
+describe("the exact claude:tool:<name> grant form, read the same way by each READERS module", () => {
+  it("READERS is exactly the src modules whose source carries the grammar's exact spelling, and every one of them carries the exact tool form", () => {
     expect(READERS.map(reader => reader.module)).toEqual([
       "src/settings.ts", "src/workbench/claude-capability-tools.ts", "src/workbench/control.ts", "src/workbench/execute.ts",
       "src/workbench/reconcile-decision.ts", "src/workbench/validate-reply.ts",
