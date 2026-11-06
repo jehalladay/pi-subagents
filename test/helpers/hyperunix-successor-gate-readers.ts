@@ -143,13 +143,16 @@
  * gate-prep-16, O:2156; the fail-closed core R-B601 orders) claims each check, and the census's QUOTES PLANTS reading of
  * the fixture named next, only for this header, the three catalogs and that fixture as written, where they find nothing,
  * and for the one plant of each control, where they find exactly its findings (the census header's ENUMERATION names each
- * plant by its content); every other form is NOT CLAIMED (the census header's NOT CLAIMED), a quote-run line holding
- * nothing or only white space after its indent, an empty line or an entry holding no line in that fixture and an id renamed
- * by its letters' case alone among them. The census's QUOTES PLANTS fixture (cut #3, after refusal #2,
+ * plant by its content); every other form is NOT CLAIMED (the census header's NOT CLAIMED). wb-0fq9 (the R-B601 exit child,
+ * after refusal #5) adds controls that plant refusal #5's four forms - a quote-run line holding nothing after its indent or
+ * one white space character, an empty line, a line of one white space character and an entry holding no line in that
+ * fixture, and an id renamed by its letters' case alone - each at the lines and positions the census header's ENUMERATION
+ * names; each of those forms anywhere else stays NOT CLAIMED. The census's QUOTES PLANTS fixture (cut #3, after refusal #2,
  * gate-prep-16, O:2091) names each control with every line its plant removes from and writes into this comment and every
  * entry it plants; a sweep plants once per tag. Each control runs the same reading over one planted mismatch: QC-PLANT,
  * QC-LABEL, QC-ORDER, QC-CATALOG, QC-CASE, QC-SPACE-ENTRY, QC-SPACE-QUOTE, QC-RUN-AFTER, QC-RUN-BEFORE, QC-RUN-NOSEMI,
- * QC-RUN-WHITE, QC-ENTRY-WHITE, QC-CATORDER, QC-UNPARSED, QC-MISSING, QC-EXTRA, QC-RUN-INDENT-TWO, QC-PROSE-BREAK, QC-VOCAB-DROP,
+ * QC-RUN-WHITE, QC-ENTRY-WHITE, QC-CATORDER, QC-UNPARSED, QC-MISSING, QC-EXTRA, QC-RUN-INDENT-TWO, QC-PROSE-BREAK, QC-RUN-EMPTY,
+ * QC-RUN-BLANK, QC-RUN-EMPTIED-FIRST, QC-RUN-EMPTIED-LAST, QC-VOCAB-DROP,
  * QC-VOCAB-ABOVE, QC-VOCAB-BELOW, QC-VOCAB-SECOND, QC-VOCAB-HEAD, QC-VOCAB-AFTER, QC-VOCAB-BEFORE, QC-VOCAB-FIRST, QC-VOCAB-LAST, QC-VOCAB-EVERY, QC-HARDCODE,
  * QC-HARDCODE-JSX, QC-HARDCODE-CW, QC-HARDCODE-EVERY, QC-HEADING-TWICE, QC-HEADING-NONE, QC-OPENING-TWICE, QC-OPENING-NONE, QC-NAMES,
  * QC-NAMES-ORDER, QC-NAMES-ABOVE and QC-NAMES-BELOW. No entry of another catalog is quoted here.
