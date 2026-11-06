@@ -56,8 +56,25 @@
  *    the first, second, third and last asked, carries that call's own serial in its invocationId, and of two such calls
  *    in a row over one fixture, in each ordered pair of the three orders, neither issues an invocationId the other
  *    issued, as the serial reading reads them, claimed only in the invocationId forms A3's segment and serial plants
- *    pin, at each position of either call (A3's serial and serial plants sentences name them; every other form is NOT
- *    CLAIMED, among them the forms of the gate's drive pages D03-D06, wb-vuoz's); the check
+ *    pin, each at the serials its plants spell (the segment plants at two digits and at three, the serial plants at one
+ *    and at three, the three-digit plants wb-vuoz cut #2's) and under the names and with the candidates they spell
+ *    (every segment plant under each fixture name the drives spell, F1 to F5, and with each of the snapshot's four
+ *    can_execute candidates, every serial plant under each of those names, its calls holding the four candidates in
+ *    the snapshot's order: wb-vuoz cut #3's), at each position of either call and in the contexts the plants spell
+ *    (A3's serial, serial plants and context plants sentences name them, the forms of the gate's drive pages D01-D06
+ *    on the drives over every fixture among them, D03-D06 wb-vuoz's, and, at 187 then 188 under each of those names,
+ *    every assignment of the four kinds' forms to the eight requests of the two calls, each handed to the serial
+ *    reading once, so each request beside every kind of request before and after it in its call and at each position
+ *    of the other call: wb-vuoz cut #4's context plants, their counts and check pinned by wb-vuoz cut #5's counts and
+ *    context controls, which wb-vuoz cut #6's extend and read under each of those names, the check claimed in the
+ *    deviations they spell, as they spell them, as it reads the misreaders they hand it in serialOf's place and as
+ *    it reads serialOf itself under the dashed names (wb-vuoz cut #7; wb-0hr6 cut #1 adds the third rows other than
+ *    the second call's again, the carried fifth values and the serialOf context controls; the NOT CLAIMED list below
+ *    names the rest), serialOf's reading of each of those assignments compared whole outside contextReading by
+ *    serialOf's whole readings (wb-0hr6 cut #1); every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
+ *    under a name or with a candidate no drive spells, a serial reading keyed on which candidate a call holds at a
+ *    position where no plant holds that candidate in that form, and a serial reading keyed on a request's context,
+ *    the other requests of its call or of the other call, in a context no plant spells are NOT CLAIMED); the check
  *    reads every handed decision, the first, middle and last of three, against every recorded request, at each
  *    position of one to four (in the decision records: each handed
  *    decision in turn minted for each candidate's request the record does not hold, or for its fellows' request with
@@ -93,15 +110,33 @@
  *    object or array member still holds the object it held, and its records name the fixture driven);
  *    the serial (the same four requests asked by a planted point driven over each fixture twice in a row: every request of
  *    each call carries that call's serial, driveSerial as its drive left it, and not the other call's, as the serial
- *    reading reads them, claimed in the forms the planted invocationIds pin and no other: carriesSerial reads the
- *    eight segment plants (serial 87) as planted, the serial as the whole first, third or last segment of a six-segment
- *    id or as the whole fourth of seven beside 86 carried, and 870, 8, x87 and 087 as the third of six not carried, and
- *    the serial reading reads the serial plants' forms as planted (below); a serial at a segment no plant holds it at,
- *    by position and count (among them the second, the fourth of six, the fifth, the sixth of seven or more, past the
- *    sixth, the first of seven or more), a segment holding the serial beside other characters in a form no plant
- *    spells (87x among them), and a separator other than a dash, or a space beside a segment, are NOT CLAIMED; the
- *    two calls issue no invocationId in common, and their requests name the fixture driven, as their second
- *    dash-separated segment);
+ *    reading reads them, claimed in the forms the planted invocationIds pin, at the serials they spell, under the
+ *    names and with the candidates they spell and in the contexts they spell, and no other:
+ *    carriesSerial reads the twelve segment plants (serial 87) as planted, the serial as the whole first, third or last
+ *    segment of a six-segment id, as the whole fourth of seven beside 86, as the whole last or the whole first of seven,
+ *    or as the whole fifth of eight carried (the last three wb-vuoz's, where the gate's drive pages D03, D04 and D05
+ *    spell the other call's serial), and 870, 8, x87, 087 and 87x as the third of six not carried (87x wb-vuoz's, D06's
+ *    form), and reads their twelve three-digit twins (serial 187, wb-vuoz cut #2's) as it reads each twin at two digits:
+ *    187 as the whole first, third or last segment of six, the whole fourth of seven beside 186, the whole last or first
+ *    of seven or the whole fifth of eight carried, and 1870, 18, x187, 0187 and 187x as the third of six not carried;
+ *    and reads each of the twenty-four respelled under each fixture name the drives spell, F1 to F5, in place of F1
+ *    and with each of the snapshot's four can_execute candidates in place of exec-a1-t1 (wb-vuoz cut #3's) as it
+ *    reads the plant itself; and the serial reading reads the serial plants' forms as planted, at serials 7 then 8 and
+ *    at 187 then 188, under F1 and again under each of F2 to F5, in the contexts their calls hold, and the context
+ *    plants' four kinds at 187 then 188 under each of F1 to F5 in every context, each request beside every
+ *    assignment of the kinds to the other seven requests of the two calls, each assignment's reading compared whole
+ *    by serialOf's whole readings (below; wb-0hr6 cut #1);
+ *    a serial at a segment no plant holds it at, by
+ *    position and count (among them the second, the fourth of six, the fifth of six or seven, the sixth of seven or
+ *    more, the seventh of eight or more, past the seventh and the first of eight or more), a segment holding the serial
+ *    beside other characters in a form no plant spells (x87x, 87xx, x187x and 187xx among them), a form at a serial
+ *    width no plant of it spells (four or more digits among them), a planted form at a serial no plant spells where the
+ *    reading keys on the serial's value rather than its width and place, a form under a name or with a candidate no
+ *    drive spells, a serial reading keyed on which candidate a call holds at a position where no plant holds that
+ *    candidate in that form, a serial reading keyed on a request's context in a context no plant spells (below), and
+ *    a separator other than a dash,
+ *    or a space beside a segment, are NOT CLAIMED; the two calls issue no invocationId in common, and their requests
+ *    name the fixture driven, as their second dash-separated segment);
  *    the replay (for each position of the four, a planted point
  *    driven over F1 twice in a row issues the four requests, one per can_execute candidate in the snapshot's order; the
  *    first call executes the core's permit for the request at that position, which answers that request, and meets every
@@ -174,22 +209,106 @@
  *    handed decision, the index of the recorded request its receipt answers (-1: none), how many distinct decisions it
  *    handed, and the checks the call fails, current-unexecuted beside them when a driven call hands two or three; the
  *    records by hand and every stranger read back from its receipt, by its invocationId or by the member its form
- *    alters) and the serial plants (the serial reading shown planted calls, serials 7 then 8, each returned four
+ *    alters) and the serial plants (the serial reading shown planted calls, serials 7 then 8, and each of the same
+ *    plants again at three digits, serials 187 then 188 (wb-vuoz cut #2's three-digit serial plants), and every one of
+ *    them again at both under each of the other fixture names the drives spell, F2 to F5, in place of F1 (wb-vuoz cut
+ *    #3's serial plants by name), each returned four
  *    requests over the snapshot's candidates in its order, every invocationId in plantedId's form
- *    inv-<name>-<serial segments>-<candidate>, of six or seven segments: in four
- *    rotations each position of each call holds each kind of request in turn, its invocationId carrying as its third
+ *    inv-<name>-<serial segments>-<candidate>, of six or seven segments, or in one of the forms of the gate's drive
+ *    pages D03-D06: in four
+ *    rotations each position of each call holds each kind of request in turn (in the rotations' cyclic order, own,
+ *    other, both, neither, the second call's kinds one on from the first's), its invocationId carrying as its third
  *    segment that call's serial alone, which reads carried, or the other call's alone, both (that call's third, the
  *    other's fourth: D01's page form) or neither (D02's page form, the serial plus 1000), each of which reads not
  *    carried, and the id the first call carries as its own, which the second carries as the other's, reads shared;
  *    D01's and D02's pages themselves, every request of both calls respelled as each respells it (the first call's
- *    carried at no position, the second call's at every one on D01's, its serial third and 9 fourth, and at none on
- *    D02's); four ids
- *    both calls were returned (7 third, 8 fourth), in reverse order in the second, read shared in the first call's
+ *    carried at no position, the second call's at every one on D01's, its serial third and 9 fourth (189 at three
+ *    digits), and at none on
+ *    D02's); wb-vuoz's D03's to D06's pages, every request of both calls respelled as the gate's drive pages D03-D06
+ *    respell it, its serial third and the next serial as the last of seven segments (D03's,
+ *    inv-<name>-<serial>-<candidate>-<serial plus 1>), as the first of seven (D04's,
+ *    <serial plus 1>-<name>-<serial>-x-<candidate>) or as the fifth of eight (D05's,
+ *    inv-<name>-<serial>-x-<serial plus 1>-<candidate>), or its serial only as the third segment's leading part (D06's,
+ *    inv-<name>-<serial>x-<candidate>): the first call's carried at no position on each, the second call's at every one on
+ *    D03's, D04's and D05's and at none on D06's; four ids
+ *    both calls were returned (7 third, 8 fourth; at three digits 187 third, 188 fourth), in reverse order in the
+ *    second, read shared in the first call's
  *    order and carried in neither call; an id one call was returned twice and the other never reads not shared; and a
  *    name at each position of each call reads named once, in the order first named; each plant's invocationIds read
- *    back; the serial reading is claimed in these forms only: that call's serial at a segment other than the third,
- *    the other call's at a segment other than the third or the fourth beside it, and an invocationId both calls were
- *    returned in a form or a length no plant holds are NOT CLAIMED, wb-vuoz's). A4 a hand-built
+ *    back) and the context plants (wb-vuoz cut #4's: at serials 187 then 188, the width the drives' own serials run in,
+ *    under each of F1 to F5, two calls of four requests over the snapshot's candidates in its order, every
+ *    invocationId in plantedId's form of one of the four kinds as the rotations spell it, in every one of the 65536
+ *    assignments of the kinds to the eight requests, each handed once to the reading contextReading reads them by
+ *    (65536 handed, 65536 distinct lists of the eight invocationIds: wb-vuoz cut #5's counts; the plants hand
+ *    contextReading no reading, so it reads by its default, and which reading that is the plants do not tell: a
+ *    reading substituted for serialOf there, as contextReading's default or at the plants' call, is NOT CLAIMED for
+ *    the plants, wb-0hr6 cut #1, whose whole readings pin serialOf's own reading of every one of these assignments,
+ *    below): each request reads carried exactly when it is
+ *    of the own kind, whatever kinds the other seven hold before and after it in its call and at each position of the
+ *    other call; the first call's id at a position reads shared exactly when the two calls hold an own and an other
+ *    there, in either order, those ids alone and in the first call's order as the controls read an order (not reversed,
+ *    none more and none fewer); the name reads named once, as the controls read a name (not twice, not missing and in
+ *    none of their seven other spellings); those two as the check reads the plants' reading, the tallies counting only how many
+ *    assignments read the first call's id at each position shared (below: wb-vuoz cut #7); per call,
+ *    position and kind the requests read carried in 16384 assignments for the own kind and in none for the other
+ *    three, the first call's ids read shared in 8192 per position, and no assignment reads otherwise in a deviation
+ *    the context controls spell, as the check reads the plants' reading: contextReading checks each assignment's reading against
+ *    the reading constructed from its kinds alone and counts the assignments read otherwise, claimed only in the
+ *    deviations its context controls spell, as they spell them, as it reads the misreaders they hand it in
+ *    serialOf's place (wb-vuoz cut #7) and as it reads serialOf itself under the dashed names (wb-0hr6 cut #1),
+ *    under each of F1 to F5 (wb-vuoz cut #5's and cut #6's controls and wb-0hr6 cut #1's: thirty-seven misreaders, each the
+ *    reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's
+ *    witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it;
+ *    the shared ids reversed wherever two or more are shared, the id at each index misspelled (an x after it)
+ *    wherever that index is shared, the last dropped wherever one or more are; a third row, the second call's again,
+ *    each call's row one value longer, a fifth value not carried, the name twice and the name misspelled (an x after
+ *    it), in every assignment; cut #6's: each call's
+ *    row one value shorter, the second call's row missing, the second call's first invocationId after the shared ids,
+ *    no name, the name in each of the five string forms (a final ~, a leading ~, another case, without its last
+ *    character, without its first) and another drive's name, in every assignment, every request of the other, the
+ *    both or the neither kind read carried and every own request read not carried, wherever one is held; and
+ *    wb-0hr6 cut #1's: a third row other than the second call's again (the first call's row again, four carried
+ *    values, four values not carried) and each call's row one value longer with a fifth value carried, in every
+ *    assignment; each read
+ *    by contextReading in serialOf's place under each of F1 to F5 at 187 then 188 and read otherwise in exactly the
+ *    assignments its context holds, counted arithmetically, the first four of them the four constructed for it; and
+ *    wb-0hr6 cut #1's serialOf context controls: serialOf itself, handed to contextReading under each of F1 to F5
+ *    with a dash and an x after it, read otherwise in every assignment, the first four the first four in
+ *    contextReading's order, as serialOf names the invocationIds' second dash-separated segment, the drive name
+ *    alone); the
+ *    tallies hold every request's carried by call, position and kind, and how many assignments read the first call's
+ *    id at each position shared, whatever the deviation; a deviation in a form no control spells is NOT CLAIMED for
+ *    the check, and so is a check keyed on the reader otherwise than the controls read it (they pin the check as it
+ *    reads their misreaders and as it reads serialOf itself under the dashed names; a check reading serialOf
+ *    otherwise under another name, or any other reader otherwise, is NOT CLAIMED); serialOf's reading itself is
+ *    claimed by serialOf's whole readings (wb-0hr6 cut #1: under each of F1 to F5 at 187 then 188, outside
+ *    contextReading, every one of the 65536 assignments, 65536 distinct, handed to serialOf once and its reading
+ *    compared whole with the reading constructed from the kinds alone, built there and not through contextReading,
+ *    misreading or serialOf: two rows of four values, a request carried exactly when it is of the own kind; the first
+ *    call's invocationId at each position holding an own and an other, in either order, shared, in the first call's
+ *    order, and no other; the name, once; 0 read otherwise; the comparison itself shown reading serialOf under each
+ *    dashed name otherwise in every assignment and each of the thirty-seven context controls, handed in serialOf's
+ *    place under F1, otherwise in exactly the assignments its context holds, the first four the four constructed for
+ *    it), in every form of serialOf's reading (the rows' count and each row's length, each value, the shared ids'
+ *    count, order and spelling, the name's count and spelling), in these assignments under these names at these
+ *    serials only; the NOT CLAIMED list names the forms); the serial reading is claimed in these forms only, at these serials, under these
+ *    names and in these contexts: that call's
+ *    serial at a segment other
+ *    than the third, the other call's at a segment no plant holds it at (the plants hold it as the third, as the fourth
+ *    beside that call's third, as the last or the first of seven segments and as the fifth of eight), a serial beside
+ *    other characters in a form no plant spells, a serial at a width the serial plants do not spell (two digits, and
+ *    four or more), an invocationId both calls were returned in a form or a length no plant
+ *    holds, a form under a name no plant spells in it (N1 to N8 are planted in the own kind alone), and a serial
+ *    reading keyed on which candidate a call holds at a position where no plant holds that candidate in that form
+ *    (the plants hold each candidate at its own position in the snapshot's order, but in the reverse in the second
+ *    call of the ids both calls were returned and one position on in the first call of the id returned twice), and a
+ *    serial reading keyed on a request's context, the other requests of its call or of the other call, in a context
+ *    no plant spells (at 7 then 8 the serial plants hold their own calls' contexts only: the rotations' cyclic order,
+ *    the pages' calls each in one form throughout, and the shared, twice and named plants' calls; in or beside a
+ *    request of another form than the four kinds', D01's second call, D03's to D06's pages, the ids both calls were
+ *    returned, the id one call was returned twice and the names N1 to N8 among them, each read in its own plant's
+ *    calls only; and in calls asking the candidates in another order than the snapshot's) are
+ *    NOT CLAIMED). A4 a hand-built
  *    look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
@@ -205,7 +324,8 @@
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the vocabulary, the checks, the echoed request fields, the positions, the mutants, the
  * lead plants, the string forms, the mixes, the orders, the order pairs, the record forms, the handed counts, the serial
- * kinds, the planted serials, the serial plants, the segment plants, the derived strangers, the fixtures, the bound
+ * kinds, the planted serials, the drive names (held to FIXTURES), the serial plants, the segment plants, the derived
+ * strangers, the fixtures, the bound
  * points, the floor, the pin and the derived path; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
@@ -257,7 +377,38 @@
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
  * outside this cut names the residual families before its delivery note lands); a pin's case, or one reading inside it,
- * replaced by one that echoes its roster witness. wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
+ * replaced by one that echoes its roster witness; and contextReading's distinct count taken from anything but the lists of
+ * invocationIds it hands the reading (its counter's kinds, or the pass count), a hollow of the count alone that leaves every
+ * reading the census judges in place, the context controls' counts reading each assignment beside it (wb-vuoz cut #5);
+ * and, for contextReading's check under any of F1 to F5 (wb-vuoz cut #6), a deviation of a reading in a form no context
+ * control spells: a row two or more values longer or shorter than the call's requests (one value longer the controls
+ * spell with a fifth value not carried and, wb-0hr6 cut #1, carried; one value shorter with its last value dropped:
+ * a row one value shorter with another of its values dropped among the forms NOT CLAIMED),
+ * a third row other than the four the third-row controls append (the second call's row again; wb-0hr6 cut #1's the
+ * first call's row again, four carried values and four values not carried: a third row of any other values, or of
+ * another length, among them), four rows or more or none, two or
+ * more ids more or fewer than the shared ids, the shared ids in an order other than the reverse, a shared id spelled
+ * otherwise than with an x after it, a name in a form other than the nine the controls spell (seven spellings: an x or a
+ * ~ after it, a ~ before it, another case, without its last or its first character, another drive's name; twice; none), a carried
+ * value other than true or false, and a deviation keyed on a request's context or on a name in a context or under a
+ * name where no control spells it (the context plants' tallies still hold every request's carried, by call, position
+ * and kind, and how many assignments read the first call's id at each position shared, in every context under every
+ * name); a check keyed on the reader otherwise than the controls read it: the check is claimed as it reads the
+ * thirty-seven misreaders the context controls hand contextReading in serialOf's place and as it reads serialOf
+ * itself under each dashed name (wb-0hr6 cut #1), so a check reading serialOf otherwise under a name no serialOf
+ * context control spells, or any other reader otherwise than those, is NOT CLAIMED; and which reading the context
+ * plants hand contextReading (its default: a reading substituted for serialOf there, as the default or at the plants'
+ * call, reads the plants as serialOf does wherever both read them as constructed, so the plants do not tell it from
+ * serialOf; wb-0hr6 cut #1): serialOf's own reading of every assignment the plants spell is claimed instead by
+ * serialOf's whole readings, outside contextReading, in every form of the reading, and the whole readings are
+ * claimed only in the assignments, names and serials they read and in the deviations their controls spell (every
+ * assignment read otherwise for serialOf under each dashed name; each context control's own context). The three
+ * forms wb-vuoz's refusal #6 routed to wb-0hr6 (the gate's G8-T1, G8-R2 and G8-ID, realized by its serialOf
+ * witnesses W8-T1, W8-R2, W8-ID, W6-R1 and W6-N1; ruling R-B591) and the reader its refusal #7 found unpinned at the
+ * context plants (the gate's G15-RD and G15-RD2, realized by W15-OWN, W15-OTH and W6-S1; ruling R-B600, which makes
+ * wb-0hr6 the carrier) are pinned by wb-0hr6 cut #1: its five context controls, its serialOf context controls and
+ * serialOf's whole readings.
+ * wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
  * #4 left unplanted) pins them in
  * A3's forms, split, mix and order controls; every effect-unrequested form A3 does not plant stays NOT CLAIMED, among
  * them: a receipt whose read fields a record splits across three or more requests, a split beside a second handed
@@ -278,18 +429,43 @@
  * recorded requests, a stranger that is no core-minted permit, a stranger matching its fellows' recorded request in
  * its target, invocationId, principal and requestedAt (each planted stranger differs from it in one of those), and a
  * record other than the six the decision records plant beside the position, check and decision controls' own; and
- * the serial reading over planted calls other than plantedSerial and the serial plants (two calls of two or of four
- * requests, serials 7 then 8) and the drives' own. wb-vuoz (filed by the rule-19 structural exit R-B398 to pin the
- * serial segment forms cut #4 left unplanted) carries every invocationId form the segment and serial plants do not
- * plant, on planted calls and on the drives' own alike, each NOT CLAIMED here, among them: a serial, that call's or
- * the other call's, at a segment no plant holds it at, by position and count (among them the second, the fourth of
- * six, the fifth, the sixth of seven or more, past the sixth and the first of seven or more; the fifth, past the sixth
- * and the first of seven or more are the forms the gate's GP6-K13, K10 and K12 leave unread and its drive pages D05,
- * D03 and D04 spell); a segment holding the serial beside other characters in a form no plant spells (87x, which
- * GP6-K14 reads carried and D06 spells, among them); a separator other than a dash, or a space, beside a segment; that
- * call's serial read by the serial reading at a segment other than the third, and the other call's at a segment
- * other than the third or the fourth beside that call's; and an invocationId both calls were returned in a form or a
- * length no plant holds.
+ * the serial reading over planted calls other than plantedSerial, the serial plants and the context plants (two calls
+ * of two or of four requests, serials 7 then 8, and of four at 187 then 188, under F1 and under each of F2 to F5) and
+ * the drives' own.
+ * wb-vuoz (filed by the rule-19
+ * structural exit R-B398 to pin the
+ * serial segment forms cut #4 left unplanted) plants the forms the gate's GP6-K10, K12, K13 and K14 misread and its
+ * drive pages D03-D06 spell (the serial as the last and as the first of seven segments, as the fifth of eight, and as
+ * a segment's leading part, 87x), in A3's segment plants and as D03's to D06's pages among its serial plants; every
+ * invocationId form the segment and serial plants do not plant, on planted calls and on the drives' own alike, stays
+ * NOT CLAIMED, among them: a serial, that call's or the other call's, at a segment no plant holds it at, by position
+ * and count (among them the second, the fourth of six, the fifth of six or seven, the sixth of seven or more, the
+ * seventh of eight or more, past the seventh and the first of eight or more); a segment holding the serial beside
+ * other characters in a form no plant spells (x87x and 87xx among them); a separator other than a dash, or a space,
+ * beside a segment; that call's serial read by the serial reading at a segment other than the third, and the other
+ * call's at a segment no serial plant holds it at; and an invocationId both calls were returned in a form or a length
+ * no plant holds. Its cut #2 (claims equal to pins, ruling R-B478) plants the same forms at three digits, the width
+ * the drives' own serials run in at A3's serial reading (the twelve segment plants' three-digit twins, serial 187
+ * beside 186, and every serial plant again at serials 187 then 188), so the gate's GP7-K01 to K06 and GP7-C01 red; a
+ * form at a serial width no plant of it spells stays NOT CLAIMED, among them a call's serial of four or more digits
+ * (the serial plus 1000 is planted only as the neither kind, and 1870 only as a longer number, not carried), the
+ * segment plants' forms at one digit where no serial plant spells them, and the serial plants' forms at two digits;
+ * and so is a planted form at a serial no plant spells where the reading keys on the serial's value rather than its
+ * width and place. Its cut #3 (claims equal to pins, ruling R-B502) plants every segment plant again under each
+ * fixture name the drives spell and with each of the snapshot's four can_execute candidates, and every serial plant
+ * again under each of F2 to F5, so the gate's GP24-N01, N02, N03 and N05 red; a form under a name or with a candidate
+ * no drive spells stays NOT CLAIMED (N1 to N8 are planted in the own kind alone), and so is a serial reading keyed
+ * on which candidate a call holds at a position where no plant holds that candidate in that form (the serial plants
+ * hold each candidate at its own position in the snapshot's order, but in the reverse in the second call of the ids
+ * both calls were returned and one position on in the first call of the id returned twice), among them the
+ * pairings the drives' calls in the reverse and in the interleaving hold. Its cut #4 (claims equal to pins, ruling
+ * R-B526) reads every assignment of the four kinds to the two calls' eight requests at 187 then 188 under each of F1
+ * to F5 (A3's context plants), so the gate's G18-S1, G18-S2 and G18-S3 red; a serial reading keyed on a request's
+ * context, the other requests of its call or of the other call, in a context no plant spells stays NOT CLAIMED,
+ * among them every context at 7 then 8 but the serial plants' own, a context in or beside a request of another form
+ * than the four kinds' (D01's second call, D03's to D06's pages, the ids both calls were returned, the id one call
+ * was returned twice and the names N1 to N8, each read in its own plant's calls only), and a context in calls asking
+ * the candidates in another order than the snapshot's, as the drives' calls in the reverse and in the interleaving do.
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -393,6 +569,178 @@
  * fixture's request. Beside that table, its assertion, the none entries' assertion message and form pin, A3's
  * sentence on the decisions over a record, those two clauses and this history, no claim, reading, mutant, control,
  * pin or test title changes; the A3 witness gains unrecordedOverRecords. Display paths added: none.
+ *
+ * wb-vuoz (filed by the rule-19 structural exit R-B398 at wb-kbh1's refusal #3, gate-prep-6 / g10-gate-s195: the
+ * R-B361-frozen serial claim set re-failed through the gate's GP6-K10 (the segments past the sixth unread), K12 (only
+ * the last six read), K13 (the fifth unread) and K14 (a segment read by its leading digits), realized FAIL-OPEN by its
+ * drive pages D03-D06 and named NOT CLAIMED by wb-kbh1's cut #4). Cut #1 pins those forms red-first: four segment
+ * plants (the serial 87 as the last and as the first of seven segments and as the fifth of eight, carried, and 87x as
+ * the third of six, not carried) and four serial plants (D03's to D06's pages, every request of both planted calls
+ * respelled as each drive page respells it), so each of the four members reds A3 at its segment expect, alone and
+ * composed with its page. The CHECKS parenthetical's serial clause, A3's serial and serial plants sentences, the NOT
+ * CLAIMED list, the docs of SEGMENT_PLANTS, carriesSerial, SerialReading, serialOf and serialPlants, and A3's segment
+ * and serial plants messages name the planted forms; every other form stays NOT CLAIMED. No reader changes:
+ * violations(), answers(), serialOf() and carriesSerial() are byte-unchanged; the frozen literal gains the four
+ * segment plants and the four pages, and the roster's A3 witness gains their measured readings. Display paths added:
+ * none. Cut #2 (refusal #1 of cut #1, gate-prep-7 / g10-gate-s203: unmet U1 and U2, claims wider than pins at the
+ * drives' serial width; ruling R-B478, rung 1: a restatement with claims equal to pins): every plant spelled its
+ * serial in one or two digits (87; 7, 8 and 9), while the drives' own serials at A3's serial reading run in three
+ * (151 to 271 over its 50 serial pairs, measured on a throwaway copy), so the gate's GP7-K01 to K06 (carriesSerial
+ * reading only the first 24
+ * characters, a last, first or fifth segment or any segment but the third only when it has at most two characters,
+ * or a segment by its first three) and GP7-C01 (serialOf reading the other call's serial only as the third segment
+ * or in a segment of at most two characters) kept the census green and were realized FAIL-OPEN by the drive pages D01
+ * and D03-D06. U1: the twelve segment plants gain their three-digit twins (THREE_DIGIT_SEGMENT_PLANTS, serial 187
+ * beside 186), each read as its twin reads, so GP7-K01 to K06 red A3 at its three-digit segment expect; U2: every
+ * serial plant runs again at three digits (THREE_DIGIT_SERIALS, 187 then 188), so GP7-C01, and GP7-K01 to K06 with
+ * it, red A3 at its three-digit serial plants expect, each alone and composed with its page. The CHECKS
+ * parenthetical's serial clause, A3's serial and serial plants sentences, the NOT CLAIMED list, the docs of
+ * SEGMENT_PLANTS, THREE_DIGIT_SEGMENT_PLANTS, carriesSerial, SerialReading, serialOf, THREE_DIGIT_SERIALS and
+ * serialPlants, and A3's two three-digit messages name the serials planted; a form at a serial width no plant of it
+ * spells is NOT CLAIMED. No reader changes: violations(), answers(), serialOf() and carriesSerial() are
+ * byte-unchanged; serialPlants takes its two serials as a parameter, PLANTED_SERIALS by default; the frozen literal
+ * gains the three-digit segment plants and serials, and the roster's A3 witness gains their measured readings.
+ * Display paths added: none. Cut #3 (refusal #2 of cut #2, gate-prep-24 / g10-gate-s202: unmet U1 and U2, claims wider
+ * than pins at the invocationId's name segment; ruling R-B502, rung 1 of the name-segment claim set: a restatement
+ * with claims equal to pins): every planted id the serial reading must read not carried spelled the name F1, while the
+ * drives' own requests name F1 to F5, so the gate's GP24-N01, N02 and N05 (carriesSerial, in an id holding no F1
+ * segment, reading its third segment alone, reading a segment that opens with the serial as carrying it, or an
+ * all-digit segment that ends with it) and GP24-N03 (serialOf reading the other call's serial only in an id holding an
+ * F1 segment) kept the census green and were realized FAIL-OPEN by the gate's drive pages D01-D06 issued on the drives
+ * over F2 to F5. U1: every segment plant, at two digits and at three, is read again respelled under each fixture name
+ * the drives spell (DRIVE_NAMES, held to FIXTURES) in place of F1 and with each of the snapshot's four can_execute
+ * candidates in place of exec-a1-t1 (respelledPlant, segmentPlantsByName), each as the plant itself reads, so
+ * GP24-N01, N02 and N05 red A3 at its segment plants by name expect (and at its serial plants by name expect with
+ * those hollowed); U2: every serial plant runs again under each of F2 to F5, at 7 then 8 and at 187 then 188
+ * (serialPlantsByName: each plant's invocationIds with their F1 segment respelled as that name, its shared ids so
+ * respelled and F1 named as that name), so GP24-N03 reds A3 at its serial plants by name expect; each member reds
+ * alone and composed with its page. The CHECKS parenthetical's serial clause, A3's serial and serial plants sentences,
+ * the NOT CLAIMED list, the docs of SEGMENT_PLANTS, THREE_DIGIT_SEGMENT_PLANTS, carriesSerial, SerialReading and
+ * serialOf, and A3's four by-name messages name the names and candidates planted; a form under a name or with a
+ * candidate no drive spells, and a serial reading keyed on which candidate a call holds at a position where no plant
+ * holds that candidate in that form, are NOT CLAIMED. No reader changes: violations(), answers(), serialOf() and
+ * carriesSerial() are byte-unchanged, and so are serialPlants() and every existing plant, call and witness entry; the
+ * frozen literal gains the drive names, held to FIXTURES, and the roster's A3 witness gains the six by-name tables'
+ * measured readings. Display paths added: none. Cut #4 (refusal #3 of cut #3, gate-prep-18 / g10-gate-s206: unmet U1
+ * and U2, claims wider than pins at a request's context; ruling R-B526, rung 1 of the two request-context claim sets:
+ * kill or pin): every serial plant held the both kind only in the rotations' contexts (after an other or a both
+ * request or first, before a neither or a both request or last, and in the second call beside a first-call other or
+ * both request), while the per-request words claimed each request's reading at each position of either call, so the
+ * gate's G18-S1 and G18-S3 (serialOf reading the other call's serial only where the request opens its call or the
+ * request before carries it, or only where it closes its call or the request after is not of the own kind) and G18-S2
+ * (in the second call, only where the first call's request at the same position carries the second call's serial)
+ * kept the census green and were realized FAIL-OPEN by its drive pages W-S1a, W-S1b and W-S2. U1 and U2: A3's context
+ * plants read every one of the 65536 assignments of the four kinds to the two calls' eight requests, at 187 then 188
+ * (the drives' own serial width) under each of DRIVE_NAMES, against the reading constructed from the kinds alone
+ * (contextReading: per call, position and kind the carried tallies, per position the shared tallies, and the first
+ * assignments read otherwise), so G18-S1, G18-S2 and G18-S3 red A3 at its context plants expect, alone and composed
+ * with their pages. The CHECKS parenthetical's serial clause, A3's serial and serial plants sentences, the NOT CLAIMED
+ * list, the docs of SerialReading and serialOf, and A3's serial, serial orders and serial plants messages name the
+ * contexts planted; a serial reading keyed on a request's context in a context no plant spells (every context at 7
+ * then 8 but the serial plants' own, in or beside a request of another form, and in calls asking the candidates in
+ * another order) is NOT CLAIMED. No reader changes: violations(), answers(), serialOf(), carriesSerial() and
+ * serialPlants() are byte-unchanged, and so are every existing plant, call and witness entry; the frozen literal
+ * gains CALLS, and the roster's A3 witness gains the context plants' measured readings. Display paths added: none.
+ * Cut #5 (refusal #4 of cut #4, gate-prep-10 / g10-gate-s210: unmet U1 and U2, claims wider than pins in cut #4's own
+ * contextReading; ruling R-B550 binds the class guard on both request-context claim sets and names the cure, negative
+ * controls with claims equal to pins): the context plants' expect held per-slot and same-position tallies, the
+ * assignment count and the first mismatches, and no anchor counted the assignments handed or ran a misreader through
+ * contextReading, so the gate's H01 to H04 (kindAt reading another slot's kind, so only 1024, 4096, 16384 or 256
+ * distinct assignments were handed under each name), H05 (the shared ids compared as a set) and H06 (no mismatch
+ * recorded) kept the census green while their witnesses X01 to X05 (serialOf misreading a request by the kinds of the
+ * requests around it, or the shared ids in reverse) red it alone, and H01 to H03 were realized FAIL-OPEN on the
+ * drives' own calls by its pages P01 to P03. U1: contextReading counts the distinct lists of the eight invocationIds
+ * it hands the reading (distinct), and the context plants' expect holds them, as it holds the assignments, to
+ * SERIAL_KINDS.length to the eighth, constructed (65536), so each of H01 to H04 reds A3 there; U1 and U2: A3's context
+ * controls (CONTEXT_MISREADERS, each the reading constructed from the planted requests' kinds with one deviation, which
+ * reads no request through serialOf: the gate's X01 to X05 forms, an own request read not carried, and eleven misreaders
+ * altering what no tally holds wherever the alteration can occur: the shared ids' order, the id at each index and their
+ * count, the rows (a third, the second call's again), each row's length (one value longer, a fifth value not carried),
+ * and the name's count and spelling; wb-vuoz cut #7 names those forms) are read by contextReading in serialOf's place, each read otherwise
+ * in exactly the assignments its context holds (misread, counted arithmetically) and recording first the four
+ * constructed for it, so H01 to H04 (contexts unread), H05 (the reversed orders unseen) and H06 (nothing recorded) red
+ * A3 at the context controls' expect, alone and composed with their witnesses and pages.
+ * contextReading takes the reading as a fourth parameter, serialOf by default, and counts the assignments read
+ * otherwise (misread, 0 in the context plants' expect). The CHECKS parenthetical's serial clause, A3's context plants
+ * sentence, the docs of ContextReading and contextReading, and A3's context plants and context controls messages name
+ * the counts and the controls. No reader changes: violations(), answers(), serialOf(), carriesSerial() and
+ * serialPlants() are byte-unchanged, and so are every existing plant, call and witness entry but the context plants',
+ * which gain the two counts; the frozen literal gains the context controls' table (each label, constructed count and
+ * first four), and the roster's A3 witness gains the context controls' measured readings. Display paths added: none.
+ * Cut #6 (refusal #5 of cut #5, gate-prep-6 / g10-gate-s214: unmet U1 to U3, claims wider than pins in cut #5's
+ * contextReading check; ruling R-B570 fires the second-stage cap, freezes the class and orders this cut in the
+ * enumerate-the-resolvable form): the check compared each row's length, the name, and the rows, shared and name
+ * counts in directions and under names no context control read, so the gate's G6-R1 (a row read right at four values
+ * or fewer), G6-N1 (the name compared by its leading part) and G6-F1 (the rows count, the shared count and the name
+ * read only under F1) kept the census green while their witnesses W6-R1, W6-N1 and W6-F1 (serialOf dropping the
+ * second call's last value, reading the name as its first character, or reading it twice under every name but F1,
+ * each in X03's context) red it alone. U1 to U3: CONTEXT_MISREADERS gains fifteen controls, each read otherwise in
+ * every assignment or wherever its kind is held, counted arithmetically: each call's row one value shorter (U1), the
+ * second call's row missing, one shared id more, no name, the name in each of STRING_FORMS' five forms and another
+ * drive's name (U2), and every request of the other, the both or the neither kind read carried and every own request
+ * read not carried; and A3 reads the whole table, thirty-two controls (thirty-seven since wb-0hr6 cut #1), under each
+ * of F2 to F5 as under F1 (U3), so
+ * G6-R1, G6-N1 and G6-F1 red A3 at the context controls' expects, alone and composed with their witnesses. The check
+ * is claimed in exactly the deviations the controls spell, under each name (as they spell them, and only as it reads
+ * the misreaders they hand it in serialOf's place: wb-vuoz cut #7 below); every other deviation is NOT CLAIMED (the
+ * list above names the forms). misreading reads each request's kind through plantedKind once per pass of
+ * contextReading (requestKind) and hands its alteration the invocationIds each call was returned; the live budget is
+ * 300 s. The CHECKS parenthetical's serial clause, A3's context plants sentence, the NOT CLAIMED list, the docs of
+ * contextReading, ContextReading, misreading, ContextMisreader and CONTEXT_MISREADERS, and A3's context controls
+ * messages name the controls and the names. No reader changes: violations(), answers(), serialOf(), carriesSerial(),
+ * serialPlants() and contextReading() are byte-unchanged, and so are every existing plant, call, control and witness
+ * entry; the frozen literal gains the fifteen controls' rows, and the roster's A3 witness gains the fifteen controls'
+ * readings under F1 and the thirty-two controls' counts and first four mismatches under each of F2 to F5
+ * (contextControlsByName). Display paths added: none.
+ * Cut #7 (refusal #6 of cut #6, gate-prep-8 / g10-gate-s218: unmet U1 to U3, claims wider than pins in cut #6's
+ * contextReading check; ruling R-B591 executes the rule-19 structural exit R-B570 pre-bound, files wb-0hr6 for the
+ * coverage and binds this cut to the fail-closed core): the check's words named a third row, a row one value longer
+ * and the check of each assignment serialOf reads wider than the controls pin them, so the gate's G8-T1 (a third row
+ * read right unless it is the second call's row again), G8-R2 (a row one value longer read right when its fifth value
+ * is carried) and G8-ID (the check keyed on the reader, so an assignment serialOf reads otherwise is never counted)
+ * kept the census green while their witnesses W8-T1 (serialOf reading a third row of four carried values), W8-R2 (a
+ * carried fifth value in the second call's row) and W8-ID (the name twice), beside W6-R1 and W6-N1 for G8-ID, each in
+ * X03's context, red it alone. The check's claims are narrowed to the forms the controls pin: of a third row, the
+ * second call's again; of a row one value longer, a fifth value not carried; and of the readers, the thirty-two
+ * misreaders the controls hand contextReading in serialOf's place, so serialOf's reading in a form the tallies do not
+ * hold (the rows' count and each row's length; the shared ids' order and count, and which assignments read the first
+ * call's id at a position shared, of which the tallies count only how many per position; and the name) is claimed
+ * only as that check reads it; a third row other than the second call's again, a row one value longer whose fifth
+ * value is carried and a check keyed on the reader are NOT CLAIMED, their pins wb-0hr6's (wb-0hr6 cut #1 below pins
+ * them, and claims serialOf's reading by its whole readings). The CHECKS parenthetical's
+ * serial clause, A3's context plants sentence, the NOT CLAIMED list, the cut #5 and cut #6 notes above, the docs of
+ * ContextReading, contextReading, misreading and CONTEXT_MISREADERS, and A3's context controls and context plants
+ * messages name those forms. No reading, control, pin, witness, roster entry or test title changes, only comments
+ * and assertion messages do. Display paths added: none.
+ * wb-0hr6 cut #1 (the rule-19 structural-exit child of wb-vuoz that ruling R-B591 filed at wb-vuoz's refusal #6, made
+ * the carrier of wb-vuoz's request-context claims by ruling R-B600's dependency inversion at its refusal #7,
+ * gate-prep-15 / g10-gate-s218; this cut carries wb-vuoz's final cut #7, which never landed, and adds to it): refusal
+ * #6's routed members G8-T1 (a third row read right unless it is the second call's row again), G8-R2 (a row one value
+ * longer read right when its fifth value is carried) and G8-ID (the check keyed on the reader, so what serialOf reads
+ * otherwise is never counted), and refusal #7's G15-RD and G15-RD2 (contextReading's default reader, or the reader
+ * the context plants hand it, replaced by the reading constructed from the kinds, so the plants never hand serialOf
+ * an assignment), kept the census green beside their serialOf witnesses (W8-T1, W8-R2, W8-ID, W6-R1, W6-N1, W15-OWN,
+ * W15-OTH and W6-S1, each in X03's context), which red it alone. CONTEXT_MISREADERS gains five controls, each read
+ * otherwise in every assignment: a third row, the first call's again, of four carried values and of four values not
+ * carried (so G8-T1 reds A3 at the context controls' expect), and each call's row one value longer with a fifth value
+ * carried (so G8-R2 reds it there). The serialOf context controls hand contextReading serialOf itself under each of
+ * F1 to F5 with a dash and an x after it, where serialOf names the drive name alone, and read every assignment
+ * otherwise (so G8-ID reds A3 there). serialOf's whole readings (wholeReadings) read serialOf outside contextReading
+ * over every one of the context plants' 65536 assignments under each of F1 to F5, each reading compared whole with
+ * the reading constructed from the kinds alone (0 read otherwise), the comparison itself shown reading serialOf
+ * under each dashed name otherwise in every assignment and each of the thirty-seven context controls otherwise in
+ * exactly the assignments its context holds; so each serialOf witness above reds A3 there composed with G15-RD or
+ * G15-RD2, and with G8-ID, G8-T1 or G8-R2 where their own controls do not red it first. Which reading the context
+ * plants hand contextReading is NOT CLAIMED (a substituted reading that reads them as constructed reads them as
+ * serialOf does): serialOf's reading is claimed by the whole readings. The CHECKS parenthetical's serial clause, A3's
+ * serial and context plants sentences, the NOT CLAIMED list, the cut #6 and cut #7 notes, the docs of SerialReader,
+ * ContextReading, contextReading, misreading, ContextMisreader and CONTEXT_MISREADERS, and A3's context controls,
+ * context controls by name and context plants messages name the new pins and the narrowed plants; the live budget is
+ * 600 s (with this cut A3 measured 96 s at load1 44 and 133 s at load1 181). No existing reader changes: violations(), answers(),
+ * serialOf(), carriesSerial(), serialPlants(), contextReading(), misreading(), plantedKind() and requestKind() are
+ * byte-unchanged, and so are every existing plant, call, control and witness entry; the frozen literal gains the
+ * five controls' rows and the dashed names, and the roster's A3 witness gains the five controls' readings under each
+ * name, the serialOf context controls' readings and the whole readings. Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -434,8 +782,8 @@ const PATH_ROOT = "execute";
 const PI_PIN = "758ec18187a5d66ba40b766caad38754b5313558";
 /** src holds well over this many files; fewer means the listing read nothing. */
 const SRC_FLOOR = 100;
-/** The live cases list and read every src module; they carry this explicit budget. */
-const LIVE_BUDGET_MS = 120_000;
+/** The live cases list and read every src module, and A3 reads its context controls under each of five names (wb-vuoz cut #6; thirty-seven, wb-0hr6 cut #1) and the whole readings beside them (wb-0hr6 cut #1: A3 measured 96 s at load1 44 and 133 s at load1 181); they carry this explicit budget. */
+const LIVE_BUDGET_MS = 600_000;
 
 type Json = null | boolean | number | string | readonly Json[] | { readonly [key: string]: Json };
 
@@ -716,6 +1064,10 @@ const SERIAL_KINDS = ["own", "other", "both", "neither"] as const;
 type SerialKind = (typeof SERIAL_KINDS)[number];
 /** The serials A3's serial plants give their two calls, the first's then the second's (wb-kbh1 cut #3). */
 const PLANTED_SERIALS = [7, 8] as const;
+/** The serials A3's three-digit serial plants give their two calls, the first's then the second's: every serial plant again at the width the drives' own serials run in at A3's serial reading (wb-vuoz cut #2). */
+const THREE_DIGIT_SERIALS = [187, 188] as const;
+/** The names the drives' invocationIds carry as their second dash-separated segment, one per fixture, in FIXTURES order (the frozen-shape case holds them to FIXTURES): A3's segment and serial plants spell F1, and A3 plants every segment plant again under each of these names with each of the snapshot's can_execute candidates, and every serial plant again under each name but F1 (wb-vuoz cut #3). */
+const DRIVE_NAMES = ["F1", "F2", "F3", "F4", "F5"] as const;
 /** The strangers A3's decision records derive from the fellows' own recorded request, each a request the record does not hold that the core still permits and mints, by the member its form alters (wb-kbh1 cut #3). */
 const DERIVED_STRANGERS: Readonly<Record<string, { readonly member: string; readonly derive: (request: NativeControlRequest) => NativeControlRequest }>> = {
   "the principal's role dropped": { member: "principal", derive: request => ({ ...request, principal: { id: request.principal.id } }) },
@@ -776,7 +1128,7 @@ function recordReading(entry: Fixture, size: number, order: readonly number[] = 
 }
 /** The positions of a call's four requests, one per can_execute relation of the snapshot (the outside anchors hold the count). */
 const POSITIONS = ["first", "second", "third", "last"] as const;
-/** The invocationIds A3 reads carriesSerial on, with serial 87, by what each holds (wb-5omz cut #3's four, then wb-kbh1 cut #3's four). */
+/** The invocationIds A3 reads carriesSerial on, with serial 87, by what each holds (wb-5omz cut #3's four, then wb-kbh1 cut #3's four, then wb-vuoz's four: the serial where the gate's drive pages D03, D04 and D05 spell the other call's, the last and the first of seven segments and the fifth of eight, and as a segment's leading part, D06's form); THREE_DIGIT_SEGMENT_PLANTS spells the same twelve at three digits (wb-vuoz cut #2), and A3 reads every one again respelled under each of DRIVE_NAMES and with each can_execute candidate (respelledPlant, wb-vuoz cut #3). */
 const SEGMENT_PLANTS: Readonly<Record<string, string>> = {
   "its own segment": "inv-F1-87-exec-a1-t1",
   "a longer number": "inv-F1-870-exec-a1-t1",
@@ -786,19 +1138,52 @@ const SEGMENT_PLANTS: Readonly<Record<string, string>> = {
   "the last segment": "inv-F1-exec-a1-t1-87",
   "beside another serial": "inv-F1-86-87-exec-a1-t1",
   "with a leading zero": "inv-F1-087-exec-a1-t1",
+  "the last of seven segments": "inv-F1-86-exec-a1-t1-87",
+  "the first of seven segments": "87-F1-86-x-exec-a1-t1",
+  "the fifth of eight segments": "inv-F1-86-x-87-exec-a1-t1",
+  "a segment's leading part": "inv-F1-87x-exec-a1-t1",
 };
-/** Whether an invocationId carries a serial as one whole dash-separated segment: claimed only in the forms A3's eight segment plants and its serial plants spell (the drives' own requestFor form among them; the header's NOT CLAIMED names the rest, wb-vuoz's). */
+/** A3's segment plants at three digits, the width the drives' own serials run in at A3's serial reading (wb-vuoz cut #2): the twelve forms of SEGMENT_PLANTS, label by label, each spelling 187 where its twin spells 87 and 186 where it spells 86 (a longer number 1870, a shorter 18, a leading zero 0187), which A3 reads with serial 187 and holds to its twin's reading, under each of DRIVE_NAMES and with each can_execute candidate too (wb-vuoz cut #3). */
+const THREE_DIGIT_SEGMENT_PLANTS: Readonly<Record<string, string>> = {
+  "its own segment": "inv-F1-187-exec-a1-t1",
+  "a longer number": "inv-F1-1870-exec-a1-t1",
+  "a shorter number": "inv-F1-18-exec-a1-t1",
+  "inside another segment": "inv-F1-x187-exec-a1-t1",
+  "the first segment": "187-inv-F1-exec-a1-t1",
+  "the last segment": "inv-F1-exec-a1-t1-187",
+  "beside another serial": "inv-F1-186-187-exec-a1-t1",
+  "with a leading zero": "inv-F1-0187-exec-a1-t1",
+  "the last of seven segments": "inv-F1-186-exec-a1-t1-187",
+  "the first of seven segments": "187-F1-186-x-exec-a1-t1",
+  "the fifth of eight segments": "inv-F1-186-x-187-exec-a1-t1",
+  "a segment's leading part": "inv-F1-187x-exec-a1-t1",
+};
+/** A planted invocationId under one of DRIVE_NAMES: its F1 segment spelled as that name, every other segment as planted, so the serial keeps its segment, its place and its neighbours (wb-vuoz cut #3). */
+const underName = (invocationId: string, name: string): string =>
+  invocationId
+    .split("-")
+    .map(segment => (segment === "F1" ? name : segment))
+    .join("-");
+/** A segment plant respelled under one of DRIVE_NAMES and with one of the snapshot's can_execute candidates: its exec-a1-t1 spelled as that candidate, then its F1 segment as that name (wb-vuoz cut #3). */
+const respelledPlant = (invocationId: string, name: string, candidate: string): string => underName(invocationId.replace("exec-a1-t1", candidate), name);
+/** A3's segment plants by name (wb-vuoz cut #3): every plant of a segment plant table respelled under each of DRIVE_NAMES and with each can_execute candidate, by name, then candidate, then the plant's label (F1 with exec-a1-t1 is the table itself). */
+function segmentPlantsByName(plants: Readonly<Record<string, string>>, candidates: readonly string[]): Record<string, Record<string, Record<string, string>>> {
+  return Object.fromEntries(
+    DRIVE_NAMES.map(name => [name, Object.fromEntries(candidates.map(candidate => [candidate, Object.fromEntries(Object.entries(plants).map(([label, invocationId]) => [label, respelledPlant(invocationId, name, candidate)]))]))]),
+  );
+}
+/** Whether an invocationId carries a serial as one whole dash-separated segment: claimed only in the forms A3's twelve segment plants and its serial plants spell, at the serials they spell (the segment plants at 87 and at 187, the serial plants at 7 then 8 and at 187 then 188, the three digits wb-vuoz cut #2's) and under the names and with the candidates they spell (the segment plants under each of DRIVE_NAMES and with each can_execute candidate, the serial plants under each of DRIVE_NAMES with the four candidates in the snapshot's order, wb-vuoz cut #3's; the drives' own requestFor form and the forms of the gate's drive pages D01-D06 on the drives over every fixture among them, D03-D06 wb-vuoz's; the header's NOT CLAIMED names the rest). */
 const carriesSerial = (invocationId: string, serial: number): boolean => invocationId.split("-").includes(String(serial));
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type SerialReading = {
-  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's (A3's serial plants hold each kind of request at each position of either call, wb-kbh1 cut #3; claimed in the planted forms only, the header's NOT CLAIMED names the rest). */
+  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's (A3's serial plants hold each kind of request at each position of either call, wb-kbh1 cut #3, and the gate's drive pages D03-D06 at every position, wb-vuoz, at serials 7 then 8 and at 187 then 188, wb-vuoz cut #2, under each of DRIVE_NAMES, wb-vuoz cut #3, and A3's context plants each kind of request at each position of either call beside every assignment of the kinds to the other seven requests, at 187 then 188 under each of DRIVE_NAMES, wb-vuoz cut #4; claimed in the planted forms at the planted serials under the planted names and in the planted contexts only, the header's NOT CLAIMED names the rest). */
   readonly carried: readonly (readonly boolean[])[];
   /** The invocationIds both calls issued, in the first call's order (A3's serial plants hold one at each position, wb-kbh1 cut #3; claimed in the planted forms only). */
   readonly shared: readonly string[];
   /** The names the two calls' invocationIds carry as their second dash-separated segment (a drive's fixture id), once each, in the order first named (A3's serial plants hold one at each position of either call, wb-kbh1 cut #3). */
   readonly named: readonly string[];
 };
-/** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2, in the forms its serial plants pin, cut #3; the header's NOT CLAIMED names the rest). */
+/** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2, in the forms its serial plants pin, cut #3, D03's to D06's pages among them, wb-vuoz, at serials 7 then 8 and at 187 then 188, wb-vuoz cut #2, under each of DRIVE_NAMES, wb-vuoz cut #3, and in every context of the four kinds at 187 then 188 under each of DRIVE_NAMES, its context plants, wb-vuoz cut #4; the header's NOT CLAIMED names the rest). */
 function serialOf(returned: readonly (readonly { readonly invocationId: string }[])[], serials: readonly number[]): SerialReading {
   const carried = returned.map((requests, index) =>
     requests.map(request => carriesSerial(request.invocationId, serials[index] ?? 0) && !carriesSerial(request.invocationId, serials[1 - index] ?? 0)),
@@ -883,9 +1268,9 @@ function kindSerials(kind: SerialKind, serial: number, otherSerial: number): num
   if (kind === "both") return [serial, otherSerial];
   return [serial + 1000];
 }
-/** A3's planted call pairs beside plantedSerial (wb-kbh1 cut #3): two calls of four requests each over the snapshot's candidates in its order, serials PLANTED_SERIALS, each with the reading the serial reading must give it. */
-function serialPlants(candidates: readonly string[]): Record<string, { readonly returned: string[][]; readonly reading: SerialReading }> {
-  const [first, second] = PLANTED_SERIALS;
+/** A3's planted call pairs beside plantedSerial (wb-kbh1 cut #3): two calls of four requests each over the snapshot's candidates in its order, serials PLANTED_SERIALS, each with the reading the serial reading must give it; wb-vuoz adds the gate's drive pages D03-D06, every request respelled as each respells it (its serial third and the next serial as the seventh and last of seven segments, as the first of seven or as the fifth of eight; the serial only as the third segment's leading part, before an x); serials PLANTED_SERIALS unless given, and A3 plants every one again at THREE_DIGIT_SERIALS (wb-vuoz cut #2). */
+function serialPlants(candidates: readonly string[], serials: readonly [number, number] = PLANTED_SERIALS): Record<string, { readonly returned: string[][]; readonly reading: SerialReading }> {
+  const [first, second] = serials;
   const serialsOf = (call: number): readonly [number, number] => (call === 0 ? [first, second] : [second, first]);
   const kindsFrom = (shift: number): SerialKind[] => SERIAL_KINDS.map((_, at) => SERIAL_KINDS[(at + shift) % SERIAL_KINDS.length] ?? "own");
   const everyPosition = (value: boolean): boolean[] => candidates.map(() => value);
@@ -899,7 +1284,7 @@ function serialPlants(candidates: readonly string[]): Record<string, { readonly 
     const reading: SerialReading = { carried: kinds.map(row => row.map(entry => entry === "own")), shared: (returned[0] ?? []).filter((_, at) => ownAt[at] === true), named: ["F1"] };
     return [`the kinds from ${kind}`, { returned, reading }] as const;
   });
-  const page = (respell: (serial: number, candidate: string) => string): string[][] => PLANTED_SERIALS.map(serial => candidates.map(candidate => respell(serial, candidate)));
+  const page = (respell: (serial: number, candidate: string) => string): string[][] => serials.map(serial => candidates.map(candidate => respell(serial, candidate)));
   const both = candidates.map(candidate => plantedId("F1", [first, second], candidate));
   const [twice = "", ...rest] = callOf(0, owned);
   const names = [
@@ -910,10 +1295,474 @@ function serialPlants(candidates: readonly string[]): Record<string, { readonly 
     ...Object.fromEntries(rotations),
     "D01's page": { returned: page((serial, candidate) => plantedId("F1", [serial, serial + 1], candidate)), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
     "D02's page": { returned: page((serial, candidate) => plantedId("F1", [serial + 1000], candidate)), reading: { carried: [everyPosition(false), everyPosition(false)], shared: [], named: ["F1"] } },
+    "D03's page": { returned: page((serial, candidate) => `inv-F1-${serial}-${candidate}-${serial + 1}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D04's page": { returned: page((serial, candidate) => `${serial + 1}-F1-${serial}-x-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D05's page": { returned: page((serial, candidate) => `inv-F1-${serial}-x-${serial + 1}-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D06's page": { returned: page((serial, candidate) => `inv-F1-${serial}x-${candidate}`), reading: { carried: [everyPosition(false), everyPosition(false)], shared: [], named: ["F1"] } },
     "four ids both calls were returned": { returned: [both, [...both].reverse()], reading: { carried: [everyPosition(false), everyPosition(false)], shared: both, named: ["F1"] } },
     "an id one call was returned twice": { returned: [[twice, twice, ...rest.slice(0, 2)], callOf(1, owned)], reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: ["F1"] } },
     "a name at each position": { returned: names.map((row, call) => callOf(call, owned, row)), reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: names.flat() } },
   };
+}
+/** A table of A3's serial plants: per plant label, the invocationIds its two calls were returned and the reading the serial reading must give them. */
+type SerialPlants = ReturnType<typeof serialPlants>;
+/** A3's serial plants by name (wb-vuoz cut #3): every serial plant at the given serials again under each of DRIVE_NAMES but F1, by name: each invocationId with its F1 segment spelled as that name (N1 to N8 as planted), each reading's shared ids so respelled, and F1 named as that name. */
+function serialPlantsByName(candidates: readonly string[], serials: readonly [number, number]): Record<string, SerialPlants> {
+  const planted = serialPlants(candidates, serials);
+  return Object.fromEntries(
+    DRIVE_NAMES.filter(name => name !== "F1").map(name => [
+      name,
+      Object.fromEntries(
+        Object.entries(planted).map(([label, { returned, reading }]) => [
+          label,
+          {
+            returned: returned.map(ids => ids.map(invocationId => underName(invocationId, name))),
+            reading: { ...reading, shared: reading.shared.map(invocationId => underName(invocationId, name)), named: reading.named.map(entry => (entry === "F1" ? name : entry)) },
+          },
+        ]),
+      ),
+    ]),
+  );
+}
+/** The two calls of A3's context plants, in the order asked: the labels its reading keys each call's tallies by (wb-vuoz cut #4). */
+const CALLS = ["first call", "second call"] as const;
+/** A serial reading of two calls in a row, from the invocationIds each was returned and each call's serial: serialOf, or one of A3's context misreaders, which contextReading reads in serialOf's place (wb-vuoz cut #5), and wholeReadings likewise (wb-0hr6 cut #1). */
+type SerialReader = (returned: readonly (readonly { readonly invocationId: string }[])[], serials: readonly number[]) => SerialReading;
+/** A type alias, not an interface, so the reading is a Json witness as it stands: A3's context plants read under one name, by the reading contextReading is given or by its default (the plants give none), by one of A3's context misreaders or by serialOf itself under a dashed name (wb-vuoz cut #4; distinct and misread wb-vuoz cut #5's; wb-0hr6 cut #1). */
+type ContextReading = {
+  /** How many assignments of SERIAL_KINDS to the two calls' eight requests contextReading handed the reading: one per pass of its counter. */
+  readonly assignments: number;
+  /** How many of those assignments were distinct, counted by the list of the eight invocationIds handed to the reading, in the order handed (wb-vuoz cut #5). */
+  readonly distinct: number;
+  /** Per call, per position and per kind of the request there: in how many of the assignments the reading reads that request carried. */
+  readonly carried: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, number>>>>>>;
+  /** Per position: in how many of the assignments the reading reads the first call's invocationId there shared. */
+  readonly shared: Readonly<Record<string, number>>;
+  /** In how many of the assignments the reading differs from the reading constructed from their kinds alone, as the check reads a difference (wb-vuoz cut #5; claimed in the deviations A3's context controls spell, wb-vuoz cut #6, as they spell them, as the check reads the misreaders they hand it in serialOf's place, wb-vuoz cut #7, and as it reads serialOf itself under the dashed names, wb-0hr6 cut #1: a check keyed on the reader otherwise is NOT CLAIMED). */
+  readonly misread: number;
+  /** The first of those assignments, at most four, in the order handed, each spelled by its kinds and with what was read. */
+  readonly mismatched: readonly string[];
+};
+/**
+ * A3's context plants under one name (wb-vuoz cut #4): two calls of four requests over the snapshot's candidates in its
+ * order, at the given serials, every invocationId in plantedId's form of one of SERIAL_KINDS (that call's serial alone,
+ * the other call's alone, both as D01's page spells them in the first call, or neither as D02's page spells it), handed
+ * to the reading it is given, or to its default where none is (wb-vuoz cut #5's context controls give their
+ * misreaders, wb-0hr6 cut #1's serialOf context controls give serialOf, and A3's context plants give none; which
+ * reading the default is the plants do not tell, so it is NOT CLAIMED for them, wb-0hr6 cut #1, whose whole readings
+ * read serialOf itself) once per
+ * pass of a counter over the eight requests' kinds, SERIAL_KINDS.length to the eighth passes (the assignments each
+ * context control flags first are the ones spelledAssignment spells for it); the distinct lists of the eight
+ * invocationIds handed are counted. Each assignment's reading is checked against the reading constructed from its kinds
+ * alone: two rows, one per call, of one value per request; a request carried exactly when it is of the own kind; the
+ * first call's invocationId at a position shared exactly when the two calls hold an own and an other there, in either
+ * order (the one id both calls were returned), those ids in the first call's order and no other; and the one name. The
+ * check is claimed only in the deviations A3's thirty-seven context controls spell, under each of DRIVE_NAMES (wb-vuoz
+ * cut #6; wb-0hr6 cut #1's five; the header's NOT CLAIMED list names the rest, another order of the shared ids than
+ * the reverse and a name in another form than the controls' nine among them). It is claimed only as the controls
+ * spell those deviations, as it reads the misreaders they hand it in serialOf's place (wb-vuoz cut #7, ruling
+ * R-B591) and as it reads serialOf itself under each of DRIVE_NAMES with a dash and an x after it (wb-0hr6 cut #1,
+ * ruling R-B600): of a third row, the second call's again, the first call's again, four carried values or four
+ * values not carried; of a row one value longer, a fifth value not carried or carried; a third row of other values
+ * and a check keyed on the reader otherwise than the controls read it are NOT CLAIMED, and serialOf's reading itself
+ * is claimed by wholeReadings. The tallies count what the reading read; misread counts the
+ * assignments read otherwise, and mismatched records the first four of them.
+ */
+function contextReading(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader = serialOf): ContextReading {
+  const [first, second] = serials;
+  const serialsOf = (call: number): readonly [number, number] => (call === 0 ? [first, second] : [second, first]);
+  const requestsOf = CALLS.map((_, call) => candidates.map(candidate => SERIAL_KINDS.map(kind => ({ invocationId: plantedId(name, kindSerials(kind, ...serialsOf(call)), candidate) }))));
+  const slots = CALLS.length * candidates.length;
+  const ownKind = SERIAL_KINDS.indexOf("own");
+  const otherKind = SERIAL_KINDS.indexOf("other");
+  const tally = CALLS.map(() => candidates.map(() => SERIAL_KINDS.map(() => 0)));
+  const sharedAt = candidates.map(() => 0);
+  const mismatched: string[] = [];
+  const distinctLists = new Set<string>();
+  const kinds = Array.from({ length: slots }, () => 0);
+  let assignments = 0;
+  let misread = 0;
+  for (let remaining = SERIAL_KINDS.length ** slots; remaining > 0; remaining -= 1) {
+    const kindAt = (call: number, at: number): number => kinds[call * candidates.length + at] ?? 0;
+    const returned = CALLS.map((_, call) => candidates.map((_, at) => requestsOf[call]?.[at]?.[kindAt(call, at)] ?? { invocationId: "" }));
+    const { carried, shared, named } = read(returned, serials);
+    assignments += 1;
+    distinctLists.add(returned.flat().map(request => request.invocationId).join(" "));
+    const constructedShared = candidates.flatMap((_, at) => {
+      const [held, heldAcross] = [kindAt(0, at), kindAt(1, at)];
+      return (held === ownKind && heldAcross === otherKind) || (held === otherKind && heldAcross === ownKind) ? [returned[0]?.[at]?.invocationId ?? ""] : [];
+    });
+    let readRight = carried.length === CALLS.length && shared.length === constructedShared.length && named.length === 1 && named[0] === name;
+    CALLS.forEach((_, call) => {
+      readRight &&= carried[call]?.length === candidates.length;
+      candidates.forEach((_, at) => {
+        const read = carried[call]?.[at] === true;
+        readRight &&= read === (kindAt(call, at) === ownKind);
+        const counts = tally[call]?.[at];
+        if (read && counts !== undefined) counts[kindAt(call, at)] = (counts[kindAt(call, at)] ?? 0) + 1;
+      });
+    });
+    shared.forEach((id, index) => {
+      readRight &&= id === constructedShared[index];
+    });
+    candidates.forEach((_, at) => {
+      if (shared.includes(returned[0]?.[at]?.invocationId ?? "")) sharedAt[at] = (sharedAt[at] ?? 0) + 1;
+    });
+    if (!readRight) misread += 1;
+    if (!readRight && mismatched.length < 4) {
+      const spelled = CALLS.map((label, call) => `${label} ${candidates.map((_, at) => SERIAL_KINDS[kindAt(call, at)] ?? "").join(", ")}`).join("; ");
+      mismatched.push(`${spelled}: carried ${JSON.stringify(carried)}, shared ${JSON.stringify(shared)}, named ${JSON.stringify(named)}`);
+    }
+    const carry = kinds.findIndex(kind => kind < SERIAL_KINDS.length - 1);
+    kinds.forEach((kind, slot) => {
+      kinds[slot] = slot < carry ? 0 : slot === carry ? kind + 1 : kind;
+    });
+  }
+  return {
+    assignments,
+    distinct: distinctLists.size,
+    carried: Object.fromEntries(CALLS.map((label, call) => [label, Object.fromEntries(POSITIONS.map((position, at) => [position, Object.fromEntries(SERIAL_KINDS.map((kind, index) => [kind, tally[call]?.[at]?.[index] ?? 0]))]))])),
+    shared: Object.fromEntries(POSITIONS.map((position, at) => [position, sharedAt[at] ?? 0])),
+    misread,
+    mismatched,
+  };
+}
+/** The kinds plantedKind has read, by the two serials and the invocationId (wb-vuoz cut #5). */
+const PLANTED_KINDS = new Map<string, SerialKind>();
+/** The kind of a planted request in the call holding `serial`, read from its invocationId as carriesSerial reads it, once per invocationId and pair of serials: that serial alone (own), the other call's alone (other), both, or neither (wb-vuoz cut #5: A3's context misreaders read their contexts and their readings from it). */
+function plantedKind(invocationId: string, serial: number, otherSerial: number): SerialKind {
+  const key = `${serial} ${otherSerial} ${invocationId}`;
+  const known = PLANTED_KINDS.get(key);
+  if (known !== undefined) return known;
+  const ownSerial = carriesSerial(invocationId, serial);
+  const otherCallSerial = carriesSerial(invocationId, otherSerial);
+  const kind: SerialKind = ownSerial ? (otherCallSerial ? "both" : "own") : otherCallSerial ? "other" : "neither";
+  PLANTED_KINDS.set(key, kind);
+  return kind;
+}
+/** The kind misreading last read for each request it was handed, with the invocationId and the two serials it read it under (wb-vuoz cut #6). */
+const READ_KINDS = new WeakMap<object, { readonly invocationId: string; readonly serial: number; readonly otherSerial: number; readonly kind: SerialKind }>();
+/**
+ * A request's kind for misreading (wb-vuoz cut #6): plantedKind's, read again whenever the request's invocationId or
+ * either serial differs from the last read, so a pass of contextReading reads each of its requests through plantedKind
+ * once rather than once per assignment (A3 reads every context control under each of DRIVE_NAMES).
+ */
+function requestKind(request: { readonly invocationId: string }, serial: number, otherSerial: number): SerialKind {
+  const known = READ_KINDS.get(request);
+  if (known !== undefined && known.invocationId === request.invocationId && known.serial === serial && known.otherSerial === otherSerial) return known.kind;
+  const kind = plantedKind(request.invocationId, serial, otherSerial);
+  READ_KINDS.set(request, { invocationId: request.invocationId, serial, otherSerial, kind });
+  return kind;
+}
+/**
+ * A context misreader (wb-vuoz cut #5): the reading constructed from the planted requests' kinds alone (plantedKind, read
+ * once per request by requestKind, wb-vuoz cut #6), as contextReading constructs the reading each assignment must give (a
+ * request carried exactly when it is of the own kind; the first call's invocationId at a position shared exactly when the
+ * two calls hold an own and an other there; the first invocationId's second segment named), altered by `alter`, given
+ * each request's kind by call and position (undefined past a call's last request) and the invocationIds each call was
+ * returned (wb-vuoz cut #6). It reads no request through serialOf, so a plant in serialOf leaves it as it is, and the
+ * context controls pin the check as it reads these misreaders; the serialOf context controls pin it as it reads
+ * serialOf itself under the dashed names, and wholeReadings reads serialOf outside contextReading (wb-0hr6 cut #1).
+ */
+function misreading(
+  alter: (reading: SerialReading, kindOf: (call: number, at: number) => SerialKind | undefined, returned: readonly (readonly { readonly invocationId: string }[])[]) => SerialReading,
+): SerialReader {
+  return (returned, serials) => {
+    const kinds = returned.map((requests, call) => requests.map(request => requestKind(request, serials[call] ?? 0, serials[1 - call] ?? 0)));
+    const kindOf = (call: number, at: number): SerialKind | undefined => kinds[call]?.[at];
+    const [first = [], second = []] = kinds;
+    const sharesAt = (at: number): boolean => (first[at] === "own" && second[at] === "other") || (first[at] === "other" && second[at] === "own");
+    const constructed: SerialReading = {
+      carried: kinds.map(row => row.map(kind => kind === "own")),
+      shared: (returned[0] ?? []).filter((_, at) => sharesAt(at)).map(request => request.invocationId),
+      named: [returned[0]?.[0]?.invocationId.split("-")[1] ?? ""],
+    };
+    return alter(constructed, kindOf, returned);
+  };
+}
+/** How many assignments of SERIAL_KINDS to the two calls' eight requests there are, constructed: SERIAL_KINDS.length to the eighth (wb-vuoz cut #5). */
+const ASSIGNMENTS = SERIAL_KINDS.length ** (CALLS.length * POSITIONS.length);
+/** How many pairs of kinds two requests can hold (wb-vuoz cut #5). */
+const KIND_PAIRS = SERIAL_KINDS.length ** 2;
+/**
+ * Of the assignments whose four position pairs (the first call's request and the second's at one position) each hold one
+ * of `pairs` kind pairs, `sharing` of which share that position's id, those sharing `least` positions or more,
+ * constructed: per count of positions sharing, the ways to choose them, times the kind pairs they and the rest can hold
+ * (wb-vuoz cut #5).
+ */
+const sharingAtLeast = (least: number, pairs: number, sharing: number): number => {
+  let count = 0;
+  let ways = 1;
+  for (let shares = 0; shares <= POSITIONS.length; shares += 1) {
+    if (shares >= least) count += ways * sharing ** shares * (pairs - sharing) ** (POSITIONS.length - shares);
+    ways = (ways * (POSITIONS.length - shares)) / (shares + 1);
+  }
+  return count;
+};
+/** An assignment by its index n (from 0), spelled as contextReading's mismatched entries spell one: per call, its four requests' kinds, the request at slot call * 4 + position holding the kind whose index is that slot's base-4 digit of n (wb-vuoz cut #5: the context controls name the assignments they flag first by index). */
+const spelledAssignment = (index: number): string =>
+  CALLS.map((label, call) => `${label} ${POSITIONS.map((_, at) => SERIAL_KINDS[Math.floor(index / SERIAL_KINDS.length ** (call * POSITIONS.length + at)) % SERIAL_KINDS.length] ?? "").join(", ")}`).join("; ");
+/** A context misreader reading the shared id at `index` with an x after it, wherever that many ids are shared (wb-vuoz cut #5). */
+const sharedMisspelledAt = (index: number): SerialReader =>
+  misreading(reading => (reading.shared.length > index ? { ...reading, shared: reading.shared.map((id, at) => (at === index ? `${id}x` : id)) } : reading));
+/** A context misreader reading the name in one of STRING_FORMS, in every assignment (wb-vuoz cut #6). */
+const nameInForm = (form: string): SerialReader => misreading(reading => ({ ...reading, named: reading.named.map(entry => STRING_FORMS[form]?.(entry) ?? entry) }));
+/** A context misreader reading every request of `kind` carried, wherever one is held (wb-vuoz cut #6). */
+const kindReadCarried = (kind: SerialKind): SerialReader =>
+  misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || kindOf(call, at) === kind)) }));
+/** Each of DRIVE_NAMES with the next one, the last with the first: another drive's name, as one of A3's context controls reads it (wb-vuoz cut #6). */
+const NEXT_DRIVE_NAME: Readonly<Record<string, string>> = Object.fromEntries(DRIVE_NAMES.map((name, at) => [name, DRIVE_NAMES[(at + 1) % DRIVE_NAMES.length] ?? name]));
+/** How many assignments hold at least one request of a given kind, constructed: every assignment but those whose eight requests are each of the other three kinds (wb-vuoz cut #6). */
+const HOLDING_A_KIND = ASSIGNMENTS - (SERIAL_KINDS.length - 1) ** (CALLS.length * POSITIONS.length);
+/** One of A3's context controls (wb-vuoz cut #5; cut #6 adds fifteen, and A3 reads each under each of DRIVE_NAMES; wb-0hr6 cut #1 adds five). */
+type ContextMisreader = {
+  /** The misreader contextReading reads in serialOf's place. */
+  readonly read: SerialReader;
+  /** In how many assignments it reads otherwise than the reading constructed from the kinds alone: the assignments its context holds, counted arithmetically. */
+  readonly misread: number;
+  /** The first four of those assignments in contextReading's order, by index (spelledAssignment spells each). */
+  readonly flagged: readonly number[];
+};
+/**
+ * A3's context controls (wb-vuoz cut #5; ruling R-B550's negative controls; wb-vuoz cut #6, ruling R-B570, adds fifteen;
+ * wb-0hr6 cut #1, ruling R-B600, adds five): thirty-seven misreaders, each the reading constructed from the planted
+ * requests' kinds (misreading) with one deviation
+ * where its context holds, which A3 has contextReading read in serialOf's place under each of DRIVE_NAMES at 187 then
+ * 188 (under F1 since cut #5, under F2 to F5 since cut #6); each must be read otherwise in exactly the assignments its
+ * context holds (misread, counted arithmetically), the first four of them in contextReading's order (flagged, by index),
+ * under each name alike. The gate's witness forms X01 to X05 (refusal #4: each misreads
+ * by the kinds of the requests around it) open the table, then an own request read not carried beside a neither request
+ * (the carried tallies hold every request's reading by kind besides); the next eleven alter what no tally holds, wherever
+ * the alteration can occur: the shared ids' order (reversed where two or more are shared), the id at each index (with an
+ * x after it where that index is shared: the shared tallies count membership per position, which a reading keyed on its
+ * context can keep while it changes an id) and their count (the last dropped where one or more are), and, in every
+ * assignment, the two calls' rows (a third, the second call's again), each call's row length (one value longer, a fifth
+ * value not carried), and the name's count (twice) and
+ * spelling (an x after it). Cut #6's fifteen (refusal #5's U1 to U3: each a direction or a form of the check no control
+ * read) follow, in every assignment: each call's row one value shorter (its last value dropped), the second call's row
+ * missing, one shared id more (the second call's first invocationId after the shared ids), no name, the name in each of
+ * STRING_FORMS and another drive's name; then, wherever one is held, every request of the other, the both or the neither
+ * kind read carried and every own request read not carried (the carried tallies hold these as well). wb-0hr6 cut #1's
+ * five (wb-vuoz's refusal #6 U1 and U2, routed to wb-0hr6 by ruling R-B591) follow, in every assignment: a third row,
+ * the first call's again, of four carried values and of four values not carried, and each call's row one value
+ * longer, a fifth value carried. The check is pinned as it reads these misreaders in serialOf's place, each deviation
+ * in the form spelled here (a third row of any other values is NOT CLAIMED); the serialOf context controls pin it as
+ * it reads serialOf itself (wb-0hr6 cut #1).
+ */
+const CONTEXT_MISREADERS: Readonly<Record<string, ContextMisreader>> = {
+  // In the second call, a both request reads carried where the first call's request one position on is of the own kind: three request pairs, each flagged by one kind pair.
+  "X01's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && kindOf(1, at) === "both" && kindOf(0, at + 1) === "own"))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 3) * (KIND_PAIRS - 1) ** 3,
+    flagged: [512, 513, 514, 515],
+  },
+  // The same where the first call's request two positions on is of the own kind: two request pairs.
+  "X02's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && kindOf(1, at) === "both" && kindOf(0, at + 2) === "own"))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 2) * (KIND_PAIRS - 1) ** 2,
+    flagged: [512, 513, 514, 515],
+  },
+  // The second call's last request, of the both kind, reads carried where the first call's first is of the own kind: one request pair.
+  "X03's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (call === 1 && at === row.length - 1 && kindOf(1, at) === "both" && kindOf(0, 0) === "own"))) })),
+    misread: ASSIGNMENTS / KIND_PAIRS,
+    flagged: [32768, 32772, 32776, 32780],
+  },
+  // In either call, from the third position on, a both request reads carried where the request two before is of the other or the neither kind: four request pairs, each flagged by two kind pairs.
+  "X04's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value || (at >= 2 && kindOf(call, at) === "both" && (kindOf(call, at - 2) === "other" || kindOf(call, at - 2) === "neither")))) })),
+    misread: ASSIGNMENTS - (ASSIGNMENTS / KIND_PAIRS ** 4) * (KIND_PAIRS - 2) ** 4,
+    flagged: [33, 35, 37, 39],
+  },
+  // The shared ids read in reverse where two or more are shared and the first call holds a request of the own kind: those sharing two or more, less those among them whose first call holds no own request (one kind pair of the twelve left shares).
+  "X05's form": {
+    read: misreading((reading, kindOf) => ({ ...reading, shared: reading.shared.length > 1 && POSITIONS.some((_, at) => kindOf(0, at) === "own") ? [...reading.shared].reverse() : reading.shared })),
+    misread: sharingAtLeast(2, KIND_PAIRS, 2) - sharingAtLeast(2, KIND_PAIRS - SERIAL_KINDS.length, 1),
+    flagged: [5, 17, 20, 21],
+  },
+  // An own request at the first call's first or second position reads not carried where the second call's first request is of the neither kind: those assignments, less those whose first call's first two requests are both of another kind.
+  "an own request unread": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value && !(call === 0 && at < 2 && kindOf(1, 0) === "neither"))) })),
+    misread: ASSIGNMENTS / SERIAL_KINDS.length - (ASSIGNMENTS / SERIAL_KINDS.length ** 3) * (SERIAL_KINDS.length - 1) ** 2,
+    flagged: [768, 769, 770, 771],
+  },
+  // The shared ids read in reverse wherever two or more are shared.
+  "the shared ids reversed": {
+    read: misreading(reading => (reading.shared.length > 1 ? { ...reading, shared: [...reading.shared].reverse() } : reading)),
+    misread: sharingAtLeast(2, KIND_PAIRS, 2),
+    flagged: [5, 17, 20, 21],
+  },
+  // The id at each index of the shared ids misspelled wherever that index is shared: every assignment sharing at least one, two, three or four positions.
+  "the first shared id misspelled": { read: sharedMisspelledAt(0), misread: sharingAtLeast(1, KIND_PAIRS, 2), flagged: [1, 4, 5, 6] },
+  "the second shared id misspelled": { read: sharedMisspelledAt(1), misread: sharingAtLeast(2, KIND_PAIRS, 2), flagged: [5, 17, 20, 21] },
+  "the third shared id misspelled": { read: sharedMisspelledAt(2), misread: sharingAtLeast(3, KIND_PAIRS, 2), flagged: [21, 69, 81, 84] },
+  "the fourth shared id misspelled": { read: sharedMisspelledAt(3), misread: sharingAtLeast(4, KIND_PAIRS, 2), flagged: [85, 340, 1105, 1360] },
+  // The last shared id dropped wherever one or more are shared: every assignment but those sharing none.
+  "the last shared id dropped": {
+    read: misreading(reading => (reading.shared.length > 0 ? { ...reading, shared: reading.shared.slice(0, -1) } : reading)),
+    misread: sharingAtLeast(1, KIND_PAIRS, 2),
+    flagged: [1, 4, 5, 6],
+  },
+  // A third row of carried, the second call's again, in every assignment.
+  "an extra carried row": {
+    read: misreading(reading => ({ ...reading, carried: [...reading.carried, reading.carried[1] ?? []] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The first call's row one value longer, a fifth value not carried, in every assignment.
+  "the first call's row one value longer": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 0 ? [...row, false] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The second call's row one value longer, a fifth value not carried, in every assignment.
+  "the second call's row one value longer": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 1 ? [...row, false] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The name named twice, in every assignment.
+  "the name twice": {
+    read: misreading(reading => ({ ...reading, named: [...reading.named, ...reading.named] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The name read with an x after it, in every assignment.
+  "the name misspelled": {
+    read: misreading(reading => ({ ...reading, named: reading.named.map(entry => `${entry}x`) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // wb-vuoz cut #6 (ruling R-B570): the first call's row one value shorter, its last value dropped, in every assignment.
+  "the first call's row one value shorter": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 0 ? row.slice(0, -1) : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The second call's row one value shorter, its last value dropped, in every assignment.
+  "the second call's row one value shorter": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 1 ? row.slice(0, -1) : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // One row of carried, the second call's missing, in every assignment.
+  "a carried row missing": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.slice(0, 1) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // One shared id more, the second call's first invocationId after the shared ids (twice over where it is shared), in every assignment.
+  "a shared id more": {
+    read: misreading((reading, _kindOf, returned) => ({ ...reading, shared: [...reading.shared, returned[1]?.[0]?.invocationId ?? ""] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // No name, in every assignment.
+  "no name": {
+    read: misreading(reading => ({ ...reading, named: [] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // The name in each of STRING_FORMS, in every assignment.
+  "the name gaining a final ~": { read: nameInForm("gaining a final ~"), misread: ASSIGNMENTS, flagged: [0, 1, 2, 3] },
+  "the name gaining a leading ~": { read: nameInForm("gaining a leading ~"), misread: ASSIGNMENTS, flagged: [0, 1, 2, 3] },
+  "the name in another case": { read: nameInForm("in another case"), misread: ASSIGNMENTS, flagged: [0, 1, 2, 3] },
+  "the name without its last character": { read: nameInForm("without its last character"), misread: ASSIGNMENTS, flagged: [0, 1, 2, 3] },
+  "the name without its first character": { read: nameInForm("without its first character"), misread: ASSIGNMENTS, flagged: [0, 1, 2, 3] },
+  // Another drive's name, the next of DRIVE_NAMES (the last's the first), in every assignment.
+  "another drive's name": {
+    read: misreading(reading => ({ ...reading, named: reading.named.map(entry => NEXT_DRIVE_NAME[entry] ?? entry) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // Every request of the other, the both or the neither kind read carried, wherever one is held.
+  "every other request read carried": { read: kindReadCarried("other"), misread: HOLDING_A_KIND, flagged: [1, 4, 5, 6] },
+  "every both request read carried": { read: kindReadCarried("both"), misread: HOLDING_A_KIND, flagged: [2, 6, 8, 9] },
+  "every neither request read carried": { read: kindReadCarried("neither"), misread: HOLDING_A_KIND, flagged: [3, 7, 11, 12] },
+  // Every own request read not carried, wherever one is held.
+  "every own request read not carried": {
+    read: misreading((reading, kindOf) => ({ ...reading, carried: reading.carried.map((row, call) => row.map((value, at) => value && kindOf(call, at) !== "own")) })),
+    misread: HOLDING_A_KIND,
+    flagged: [0, 1, 2, 3],
+  },
+  // wb-0hr6 cut #1 (ruling R-B600's carrier of the forms R-B591 routed): a third row other than the second call's again, in every assignment: the first call's row again, four carried values, four values not carried.
+  "a third row, the first call's again": {
+    read: misreading(reading => ({ ...reading, carried: [...reading.carried, reading.carried[0] ?? []] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  "a third row of four carried values": {
+    read: misreading(reading => ({ ...reading, carried: [...reading.carried, POSITIONS.map(() => true)] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  "a third row of four values not carried": {
+    read: misreading(reading => ({ ...reading, carried: [...reading.carried, POSITIONS.map(() => false)] })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  // Each call's row one value longer, a fifth value carried, in every assignment.
+  "the first call's row one value longer, a fifth value carried": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 0 ? [...row, true] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+  "the second call's row one value longer, a fifth value carried": {
+    read: misreading(reading => ({ ...reading, carried: reading.carried.map((row, call) => (call === 1 ? [...row, true] : row)) })),
+    misread: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+  },
+};
+/** Each of DRIVE_NAMES with a dash and an x after it (wb-0hr6 cut #1): serialOf names the invocationIds' second dash-separated segment, so under such a name it names the drive name alone. */
+const dashedName = (name: string): string => `${name}-x`;
+/** A type alias, not an interface, so the reading is a Json witness as it stands: wholeReadings under one name (wb-0hr6 cut #1). */
+type WholeReadings = {
+  /** How many assignments of SERIAL_KINDS to the two calls' eight requests were handed to the reading: one per index. */
+  readonly assignments: number;
+  /** How many of them were distinct, counted by the list of the eight invocationIds handed, in the order handed. */
+  readonly distinct: number;
+  /** In how many of them the reading, compared whole (isDeepStrictEqual), differs from the reading constructed from the assignment's kinds alone. */
+  readonly misread: number;
+  /** The first of those assignments, at most four, in index order, each spelled by its kinds and with what was read. */
+  readonly mismatched: readonly string[];
+};
+/**
+ * The whole readings (wb-0hr6 cut #1): under one name, at the given serials, every assignment of SERIAL_KINDS to the
+ * two calls' eight requests over the snapshot's candidates in its order, by index from 0 (the request at slot
+ * call * 4 + position holding the kind whose index is that slot's base-4 digit, as spelledAssignment spells it),
+ * every invocationId in plantedId's form of its request's kind, handed to the reading once, and the reading compared
+ * whole (isDeepStrictEqual) with the reading constructed here from the assignment's kinds alone: two rows, one per
+ * call, of one value per request, each true exactly when its request is of the own kind; the first call's
+ * invocationId at each position whose two requests are an own and an other, in either order, in the first call's
+ * order, and no other; and the name, once. It reads outside contextReading, and builds neither its requests nor its
+ * constructed reading through contextReading, misreading or serialOf.
+ */
+function wholeReadings(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader): WholeReadings {
+  const [first, second] = serials;
+  const width = SERIAL_KINDS.length;
+  const requests = CALLS.map((_, call) => candidates.map(candidate => SERIAL_KINDS.map(kind => ({ invocationId: plantedId(name, call === 0 ? kindSerials(kind, first, second) : kindSerials(kind, second, first), candidate) }))));
+  const lists = new Set<string>();
+  const mismatched: string[] = [];
+  let assignments = 0;
+  let misread = 0;
+  for (let index = 0; index < width ** (CALLS.length * candidates.length); index += 1) {
+    const kindAt = (call: number, at: number): number => Math.floor(index / width ** (call * candidates.length + at)) % width;
+    const kindIs = (call: number, at: number, kind: SerialKind): boolean => SERIAL_KINDS[kindAt(call, at)] === kind;
+    const returned = CALLS.map((_, call) => candidates.map((_, at) => requests[call]?.[at]?.[kindAt(call, at)] ?? { invocationId: "" }));
+    const constructed: SerialReading = {
+      carried: CALLS.map((_, call) => candidates.map((_, at) => kindIs(call, at, "own"))),
+      shared: candidates.flatMap((_, at) => ((kindIs(0, at, "own") && kindIs(1, at, "other")) || (kindIs(0, at, "other") && kindIs(1, at, "own")) ? [returned[0]?.[at]?.invocationId ?? ""] : [])),
+      named: [name],
+    };
+    const reading = read(returned, serials);
+    assignments += 1;
+    lists.add(returned.flat().map(request => request.invocationId).join(" "));
+    if (!isDeepStrictEqual(reading, constructed)) {
+      misread += 1;
+      if (mismatched.length < 4) mismatched.push(`${spelledAssignment(index)}: carried ${JSON.stringify(reading.carried)}, shared ${JSON.stringify(reading.shared)}, named ${JSON.stringify(reading.named)}`);
+    }
+  }
+  return { assignments, distinct: lists.size, misread, mismatched };
 }
 /** One case of A3's decision records over a record (wb-kbh1 cut #3): one handed decision per entry of `fellows`, each a permit of its own minted for the recorded request at that position, but the one at `foreignAt`, when set, minted for `stranger`'s request the record does not hold (a candidate's, or the request at `base` in a derived form). */
 type DecisionCase = { readonly key: string; readonly fellows: readonly number[]; readonly base: number; readonly foreignAt?: number; readonly stranger?: string };
@@ -1512,11 +2361,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     );
     const serial = Object.fromEntries(FIXTURES.map(entry => [entry.id, serialReading(entry)]));
     const everyPosition = [true, true, true, true];
-    expect(serial, "on every fixture, each request of each of two calls in a row, first, second, third and last, carries that call's serial and not the other call's, as the serial reading reads them in the planted forms; the two calls share no invocationId").toEqual(
+    expect(serial, "on every fixture, each request of each of two calls in a row, first, second, third and last, carries that call's serial and not the other call's, as the serial reading reads them in the planted forms and contexts; the two calls share no invocationId").toEqual(
       Object.fromEntries(FIXTURES.map(entry => [entry.id, { carried: [everyPosition, everyPosition], shared: [], named: [entry.id] }])),
     );
     const segments = Object.fromEntries(Object.entries(SEGMENT_PLANTS).map(([label, invocationId]) => [label, carriesSerial(invocationId, 87)]));
-    expect(segments, "on the eight planted invocationIds (serial 87), the serial as the whole first, third or last segment of a six-segment id, or as the whole fourth of seven beside 86, reads carried; 870, 8, x87 and 087 as the third of six read not carried (every other form is NOT CLAIMED)").toEqual({
+    expect(segments, "on the twelve planted invocationIds (serial 87), the serial as the whole first, third or last segment of a six-segment id, as the whole fourth of seven beside 86, as the whole last or the whole first of seven, or as the whole fifth of eight, reads carried; 870, 8, x87, 087 and 87x as the third of six read not carried (every other form is NOT CLAIMED)").toEqual({
       "its own segment": true,
       "a longer number": false,
       "a shorter number": false,
@@ -1525,7 +2374,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "the last segment": true,
       "beside another serial": true,
       "with a leading zero": false,
+      "the last of seven segments": true,
+      "the first of seven segments": true,
+      "the fifth of eight segments": true,
+      "a segment's leading part": false,
     });
+    const threeDigitSegments = Object.fromEntries(Object.entries(THREE_DIGIT_SEGMENT_PLANTS).map(([label, invocationId]) => [label, carriesSerial(invocationId, 187)]));
+    expect(threeDigitSegments, "wb-vuoz cut #2: on the twelve planted invocationIds at three digits (serial 187, beside 186), each form reads as its two-digit twin reads: 187 as the whole first, third or last segment of a six-segment id, as the whole fourth of seven beside 186, as the whole last or the whole first of seven, or as the whole fifth of eight, reads carried; 1870, 18, x187, 0187 and 187x as the third of six read not carried (a form at a serial width no plant of it spells is NOT CLAIMED)").toEqual(segments);
     const replays = replayReading();
     expect(replays, "a permit minted for the request at any of the four positions of one call answers that request and meets every check there, and handed to the seam on the next call answers none and fails effect-unrequested alone").toEqual({
       first: { minting: [], replaying: ["effect-unrequested"], answered: [0, -1] },
@@ -2026,7 +2881,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     });
     const askedIn = (order: readonly number[]): string[] => order.flatMap(index => candidates.slice(index, index + 1)).map(candidate => runRef(candidate).id);
     const serialOrders = Object.fromEntries(FIXTURES.map(entry => [entry.id, Object.fromEntries(ORDER_PAIRS.map(({ label, orders }) => [label, orderedSerialReading(entry, orders)]))]));
-    expect(serialOrders, "wb-kbh1 cut #2 serial orders: on every fixture, of two calls in a row each asking requestOf for all four candidates in its own order, in each ordered pair of the three orders (the snapshot's, its reverse, the interleaving), each request of each call, first, second, third and last asked, carries that call's serial and not the other call's, as the serial reading reads them in the planted forms, the two calls share no invocationId, and each call's targets read back in the order it asked").toEqual(
+    expect(serialOrders, "wb-kbh1 cut #2 serial orders: on every fixture, of two calls in a row each asking requestOf for all four candidates in its own order, in each ordered pair of the three orders (the snapshot's, its reverse, the interleaving), each request of each call, first, second, third and last asked, carries that call's serial and not the other call's, as the serial reading reads them in the planted forms and contexts, the two calls share no invocationId, and each call's targets read back in the order it asked").toEqual(
       Object.fromEntries(
         FIXTURES.map(entry => [
           entry.id,
@@ -2047,8 +2902,61 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const serialPlanted = Object.fromEntries(
       Object.entries(plants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), PLANTED_SERIALS) }]),
     );
-    expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests in plantedId's form (serials 7 then 8), a request at any position of either call reads carried when its third segment is that call's serial, alone or before 9 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000 (neither, D02's page), or its third and fourth segments are the two calls' serials, in either order (both, D01's page, the ids both calls were returned); each planted id both calls were returned, at any positions, reads shared, in the first call's order, and an id only one call was returned, twice, does not; each name the planted ids carry as their second segment, at any position of either call, reads named once, in the order first named").toEqual(
+    expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests in plantedId's form or in a drive page's (serials 7 then 8), a request at any position of either call, in the contexts these plants hold it in (the rotations' cyclic order of the kinds, each page's calls in one form throughout), reads carried when its third segment is that call's serial, alone or before 9 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000 (neither, D02's page), or its third and fourth segments are the two calls' serials, in either order (both, D01's page, the ids both calls were returned); on D03's to D06's pages (wb-vuoz), a request carrying its call's serial third reads carried when the next serial it carries as the last of seven segments (D03's), the first of seven (D04's) or the fifth of eight (D05's) is not the other call's (the second call) and not carried when it is (the first call), and a request carrying its serial only as the third segment's leading part reads not carried in either call (D06's); each planted id both calls were returned, at any positions, reads shared, in the first call's order, and an id only one call was returned, twice, does not; each name the planted ids carry as their second segment, at any position of either call, reads named once, in the order first named (a serial reading keyed on a request's context in a context no plant spells is NOT CLAIMED; at 187 then 188 the context plants read every context of the four kinds)").toEqual(
       Object.fromEntries(Object.entries(plants).map(([label, { returned, reading }]) => [label, { returned, ...reading }])),
+    );
+    const controls = Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, contextReading(candidates, THREE_DIGIT_SERIALS, "F1", control.read)]));
+    expect(
+      Object.fromEntries(Object.entries(controls).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }])),
+      "wb-vuoz cut #5 context controls (and wb-vuoz cut #6's fifteen and wb-0hr6 cut #1's five): under F1 at serials 187 then 188, contextReading, reading each of the thirty-seven context misreaders in serialOf's place (each the reading constructed from the planted requests' kinds with one deviation where its context holds: the gate's witness forms X01 to X05 and an own request read not carried, each keyed on the kinds of the requests around it; the shared ids reversed wherever two or more are shared, the id at each index misspelled wherever that index is shared, the last dropped wherever one or more are; a third row, the second call's again, each call's row one value longer with a fifth value not carried, the name twice, the name misspelled, in every assignment; cut #6's: each call's row one value shorter, the second call's row missing, one shared id more, no name, the name in each of the five string forms and another drive's name, in every assignment, and every request of the other, the both or the neither kind read carried and every own request read not carried, wherever one is held; wb-0hr6 cut #1's: a third row, the first call's again, of four carried values and of four values not carried, and each call's row one value longer with a fifth value carried, in every assignment), hands it 65536 assignments, 65536 distinct, reads each misreader otherwise in exactly the assignments its context holds, counted arithmetically, and records first the four constructed for it, in contextReading's order (the check pinned as it reads these misreaders in serialOf's place, each deviation as spelled here: a third row of any other values is NOT CLAIMED; the serialOf context controls pin the check as it reads serialOf itself, wb-0hr6 cut #1)",
+    ).toEqual(Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }])));
+    const controlsByName = Object.fromEntries(
+      DRIVE_NAMES.filter(name => name !== "F1").map(name => [name, Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, contextReading(candidates, THREE_DIGIT_SERIALS, name, control.read)]))]),
+    );
+    expect(
+      Object.fromEntries(
+        Object.entries(controlsByName).map(([name, readings]) => [
+          name,
+          Object.fromEntries(Object.entries(readings).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }])),
+        ]),
+      ),
+      "wb-vuoz cut #6 context controls by name: under each of F2 to F5 at serials 187 then 188, as under F1, contextReading, reading each of the thirty-seven context misreaders in serialOf's place (wb-0hr6 cut #1's five among them), hands it 65536 assignments, 65536 distinct, reads each misreader otherwise in exactly the assignments its context holds, counted arithmetically as under F1, and records first the four constructed for it, in contextReading's order (so a check keyed on a name, in a deviation a control spells, reds A3 under that name)",
+    ).toEqual(Object.fromEntries(DRIVE_NAMES.filter(name => name !== "F1").map(name => [name, Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }]))])));
+    const serialOfControls = Object.fromEntries(DRIVE_NAMES.map(name => [name, contextReading(candidates, THREE_DIGIT_SERIALS, dashedName(name), serialOf)]));
+    expect(
+      Object.fromEntries(Object.entries(serialOfControls).map(([name, { assignments, distinct, misread, mismatched }]) => [name, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }])),
+      "wb-0hr6 cut #1 serialOf context controls: under each of F1 to F5 with a dash and an x after it (F1-x to F5-x) at serials 187 then 188, contextReading, handed serialOf itself, hands it 65536 assignments, 65536 distinct, and reads every one of them otherwise, recording first the first four in contextReading's order: serialOf names the invocationIds' second dash-separated segment, the drive name alone, where the check reads for the dashed name, so a check keyed on the reader (one never counting what serialOf reads otherwise) reds A3 here",
+    ).toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: ASSIGNMENTS, flagged: [0, 1, 2, 3].map(spelledAssignment) }])));
+    const contexts = Object.fromEntries(DRIVE_NAMES.map(name => [name, contextReading(candidates, THREE_DIGIT_SERIALS, name)]));
+    const everyAssignment = SERIAL_KINDS.length ** (CALLS.length * candidates.length);
+    const constructedContexts = {
+      assignments: everyAssignment,
+      distinct: everyAssignment,
+      carried: Object.fromEntries(CALLS.map(label => [label, Object.fromEntries(POSITIONS.map(position => [position, Object.fromEntries(SERIAL_KINDS.map(kind => [kind, kind === "own" ? everyAssignment / SERIAL_KINDS.length : 0]))]))])),
+      shared: Object.fromEntries(POSITIONS.map(position => [position, (2 * everyAssignment) / SERIAL_KINDS.length ** 2])),
+      misread: 0,
+      mismatched: [],
+    };
+    expect(contexts, "wb-vuoz cut #4 context plants (the distinct and misread counts wb-vuoz cut #5's): at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are handed to contextReading's default reading (the plants hand it none, and which reading that is is NOT CLAIMED here, wb-0hr6 cut #1: serialOf's whole readings pin serialOf's own reading of each of these assignments) in 65536 assignments, 65536 distinct lists of the eight invocationIds, so in every one of the 65536 assignments of the four kinds to the eight requests, each once: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), those ids alone and in the first call's order as the context controls read an order (not reversed, none more, none fewer); the name reads named once, as the controls read a name (not twice, not missing, in none of their seven other spellings), those two as the check reads that reading (the tallies count only how many assignments read the first call's id at each position shared); and no assignment reads otherwise as the check reads that reading (misread 0: each assignment's reading checked against the reading constructed from its kinds alone, the check claimed in the deviations the context controls spell under each name, as they spell them, as it reads the misreaders they hand it in serialOf's place and as it reads serialOf itself under the dashed names, wb-0hr6 cut #1: a check keyed on the reader otherwise, and a third row of any other values than the four the controls spell, are NOT CLAIMED; a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
+    const whole = Object.fromEntries(DRIVE_NAMES.map(name => [name, wholeReadings(candidates, THREE_DIGIT_SERIALS, name, serialOf)]));
+    expect(whole, "wb-0hr6 cut #1 serialOf's whole readings: under each of F1 to F5 at serials 187 then 188, outside contextReading, every one of the 65536 assignments of the four kinds to the two calls' eight requests (65536 distinct lists of the eight invocationIds), each handed to serialOf once, reads exactly the reading constructed from its kinds alone, compared whole: two rows of four values, a request carried exactly when it is of the own kind, whatever kinds the seven others hold; the first call's invocationId at each position holding an own and an other, in either order, shared, in the first call's order, and no other; the name once (0 read otherwise)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: 0, mismatched: [] }])));
+    const wholeByDashedName = Object.fromEntries(DRIVE_NAMES.map(name => [name, wholeReadings(candidates, THREE_DIGIT_SERIALS, dashedName(name), serialOf)]));
+    const wholeControls = Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, wholeReadings(candidates, THREE_DIGIT_SERIALS, "F1", control.read)]));
+    const wholeFlagged = (readings: Readonly<Record<string, WholeReadings>>): Record<string, { readonly assignments: number; readonly distinct: number; readonly misread: number; readonly flagged: readonly string[] }> =>
+      Object.fromEntries(Object.entries(readings).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }]));
+    expect(
+      { byDashedName: wholeFlagged(wholeByDashedName), controls: wholeFlagged(wholeControls) },
+      "wb-0hr6 cut #1 whole readings' controls: the whole comparison, handed serialOf itself under each of F1-x to F5-x, reads every one of the 65536 assignments otherwise (serialOf names the drive name alone), and, handed each of the thirty-seven context misreaders in serialOf's place under F1, reads each otherwise in exactly the assignments its context holds, counted arithmetically, recording first the four constructed for it, in index order",
+    ).toEqual({
+      byDashedName: Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: ASSIGNMENTS, flagged: [0, 1, 2, 3].map(spelledAssignment) }])),
+      controls: Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }])),
+    });
+    const threeDigitPlants = serialPlants(candidates, THREE_DIGIT_SERIALS);
+    const threeDigitSerialPlanted = Object.fromEntries(
+      Object.entries(threeDigitPlants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), THREE_DIGIT_SERIALS) }]),
+    );
+    expect(threeDigitSerialPlanted, "wb-vuoz cut #2 serial plants at three digits: every serial plant again at serials 187 then 188 (the second call's next serial 189, the serial plus 1000 1187 and 1188) reads as at 7 then 8: a request at any position of either call, in the contexts these plants hold it in, reads carried when its third segment is that call's serial, alone or before 189 (D01's page, second call), and not carried when its third segment is the other's alone or the serial plus 1000, or its third and fourth segments are the two calls' serials, in either order; on D03's to D06's pages a request carrying its call's serial third reads carried when the next serial it carries as the last of seven segments, the first of seven or the fifth of eight is not the other call's (the second call) and not carried when it is (the first call), and a request carrying its serial only as the third segment's leading part, 187x or 188x, reads not carried in either call; each planted id both calls were returned reads shared, in the first call's order, an id only one call was returned, twice, does not, and each name reads named once, in the order first named (a serial at a width no serial plant spells is NOT CLAIMED; beside these plants' contexts, the context plants read every context of the four kinds at 187 then 188)").toEqual(
+      Object.fromEntries(Object.entries(threeDigitPlants).map(([label, { returned, reading }]) => [label, { returned, ...reading }])),
     );
     const formCandidates = (order: readonly number[]): string[] => order.flatMap(index => candidates.slice(index, index + 1));
     const expectedLine = ({ fellows, foreignAt }: DecisionCase, driven: boolean): string =>
@@ -2088,6 +2996,35 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         ]),
       ),
     );
+    const readSegmentPlants = (byName: Record<string, Record<string, Record<string, string>>>, serial: number): Record<string, Record<string, Record<string, boolean>>> =>
+      Object.fromEntries(
+        Object.entries(byName).map(([name, byCandidate]) => [
+          name,
+          Object.fromEntries(Object.entries(byCandidate).map(([candidate, plants]) => [candidate, Object.fromEntries(Object.entries(plants).map(([label, invocationId]) => [label, carriesSerial(invocationId, serial)]))])),
+        ]),
+      );
+    const asPlanted = Object.fromEntries(DRIVE_NAMES.map(name => [name, Object.fromEntries(candidates.map(candidate => [candidate, segments]))]));
+    const segmentPlantsUnderNames = segmentPlantsByName(SEGMENT_PLANTS, candidates);
+    const segmentsByName = readSegmentPlants(segmentPlantsUnderNames, 87);
+    expect(segmentsByName, "wb-vuoz cut #3 segment plants by name: each of the twelve segment plants (serial 87) respelled under each fixture name the drives spell, F1 to F5, in place of F1 and with each of the snapshot's four can_execute candidates in place of exec-a1-t1 reads as the plant itself reads: the serial as the whole first, third or last segment of six, the whole fourth of seven beside 86, the whole last or first of seven or the whole fifth of eight carried, and 870, 8, x87, 087 and 87x as the third of six not carried (a name or a candidate no drive spells is NOT CLAIMED)").toEqual(asPlanted);
+    const threeDigitSegmentPlantsUnderNames = segmentPlantsByName(THREE_DIGIT_SEGMENT_PLANTS, candidates);
+    const threeDigitSegmentsByName = readSegmentPlants(threeDigitSegmentPlantsUnderNames, 187);
+    expect(threeDigitSegmentsByName, "wb-vuoz cut #3 segment plants by name at three digits: each of the twelve three-digit segment plants (serial 187, beside 186) respelled under each fixture name F1 to F5 in place of F1 and with each of the four candidates in place of exec-a1-t1 reads as its two-digit twin reads: 187 as the whole first, third or last segment of six, the whole fourth of seven beside 186, the whole last or first of seven or the whole fifth of eight carried, and 1870, 18, x187, 0187 and 187x as the third of six not carried (a name or a candidate no drive spells is NOT CLAIMED)").toEqual(asPlanted);
+    const readSerialPlants = (byName: Record<string, SerialPlants>, serials: readonly [number, number]): Record<string, Record<string, Json>> =>
+      Object.fromEntries(
+        Object.entries(byName).map(([name, planted]) => [
+          name,
+          Object.fromEntries(Object.entries(planted).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), serials) }])),
+        ]),
+      );
+    const constructedReadings = (byName: Record<string, SerialPlants>): Record<string, Record<string, Json>> =>
+      Object.fromEntries(Object.entries(byName).map(([name, planted]) => [name, Object.fromEntries(Object.entries(planted).map(([label, { returned, reading }]) => [label, { returned, ...reading }]))]));
+    const plantsUnderNames = serialPlantsByName(candidates, PLANTED_SERIALS);
+    const serialPlantsUnderNames = readSerialPlants(plantsUnderNames, PLANTED_SERIALS);
+    expect(serialPlantsUnderNames, "wb-vuoz cut #3 serial plants by name: every serial plant again under each fixture name but F1, F2 to F5 in place of F1 (serials 7 then 8), reads as under F1: a request at any position of either call, in the contexts these plants hold it in, reads carried when its third segment is that call's serial, alone or before 9, and not carried when its third segment is the other's alone or the serial plus 1000, or its third and fourth segments are the two calls' serials; on D03's to D06's pages a request reads carried in the second call and not in the first on D03's, D04's and D05's, and in neither on D06's; the ids both calls were returned read shared, an id one call was returned twice does not, and each name the planted ids carry as their second segment, that fixture's or N1 to N8 at each position, reads named once, in the order first named (a name no drive spells is NOT CLAIMED, beside N1 to N8 in the own kind, and so is a serial reading keyed on a request's context in a context no plant spells)").toEqual(constructedReadings(plantsUnderNames));
+    const threeDigitPlantsUnderNames = serialPlantsByName(candidates, THREE_DIGIT_SERIALS);
+    const threeDigitSerialPlantsUnderNames = readSerialPlants(threeDigitPlantsUnderNames, THREE_DIGIT_SERIALS);
+    expect(threeDigitSerialPlantsUnderNames, "wb-vuoz cut #3 serial plants by name at three digits: every serial plant again under each of F2 to F5 in place of F1, at serials 187 then 188 (the second call's next serial 189, the serial plus 1000 1187 and 1188), reads as at 7 then 8 under that name, each request at any position of either call, in the contexts these plants hold it in, carried or not as there, the ids both calls were returned shared and each name named once (a serial at a width no serial plant spells, and a name no drive spells, are NOT CLAIMED; beside these plants' contexts, the context plants read every context of the four kinds at 187 then 188 under each name)").toEqual(constructedReadings(threeDigitPlantsUnderNames));
     return {
       providers,
       denial,
@@ -2105,6 +3042,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       recorded,
       serial,
       segments,
+      threeDigitSegments,
       replays,
       positions,
       answered,
@@ -2122,9 +3060,26 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       replayOrders,
       plantedSerial,
       segmentPlants: SEGMENT_PLANTS,
+      threeDigitSegmentPlants: THREE_DIGIT_SEGMENT_PLANTS,
       serialPlants: serialPlanted,
+      threeDigitSerialPlants: threeDigitSerialPlanted,
       decisionRecords,
       decisionRecordsOnF1,
+      segmentPlantsByName: segmentPlantsUnderNames,
+      segmentsByName,
+      threeDigitSegmentPlantsByName: threeDigitSegmentPlantsUnderNames,
+      threeDigitSegmentsByName,
+      serialPlantsByName: serialPlantsUnderNames,
+      threeDigitSerialPlantsByName: threeDigitSerialPlantsUnderNames,
+      contextPlants: contexts,
+      contextControls: controls,
+      contextControlsByName: Object.fromEntries(
+        Object.entries(controlsByName).map(([name, readings]) => [name, Object.fromEntries(Object.entries(readings).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, mismatched }]))]),
+      ),
+      serialOfContextControls: serialOfControls,
+      wholeReadings: whole,
+      wholeReadingsByDashedName: wholeByDashedName,
+      wholeReadingsOfContextControls: wholeControls,
     };
   },
   A4: () => {
@@ -2345,6 +3300,47 @@ describe(SUITE, () => {
     expect(CHECKS).toEqual(["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"]);
     expect(ECHOED).toEqual(["scope", "principal", "target", "action", "invocationId", "requestedAt"]);
     expect(POSITIONS).toEqual(["first", "second", "third", "last"]);
+    expect(CALLS).toEqual(["first call", "second call"]);
+    expect(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => `${label}:${misread}:${flagged.join(",")}`)).toEqual([
+      "X01's form:11536:512,513,514,515",
+      "X02's form:7936:512,513,514,515",
+      "X03's form:4096:32768,32772,32776,32780",
+      "X04's form:27120:33,35,37,39",
+      "X05's form:4397:5,17,20,21",
+      "an own request unread:7168:768,769,770,771",
+      "the shared ids reversed:5168:5,17,20,21",
+      "the first shared id misspelled:27120:1,4,5,6",
+      "the second shared id misspelled:5168:5,17,20,21",
+      "the third shared id misspelled:464:21,69,81,84",
+      "the fourth shared id misspelled:16:85,340,1105,1360",
+      "the last shared id dropped:27120:1,4,5,6",
+      "an extra carried row:65536:0,1,2,3",
+      "the first call's row one value longer:65536:0,1,2,3",
+      "the second call's row one value longer:65536:0,1,2,3",
+      "the name twice:65536:0,1,2,3",
+      "the name misspelled:65536:0,1,2,3",
+      "the first call's row one value shorter:65536:0,1,2,3",
+      "the second call's row one value shorter:65536:0,1,2,3",
+      "a carried row missing:65536:0,1,2,3",
+      "a shared id more:65536:0,1,2,3",
+      "no name:65536:0,1,2,3",
+      "the name gaining a final ~:65536:0,1,2,3",
+      "the name gaining a leading ~:65536:0,1,2,3",
+      "the name in another case:65536:0,1,2,3",
+      "the name without its last character:65536:0,1,2,3",
+      "the name without its first character:65536:0,1,2,3",
+      "another drive's name:65536:0,1,2,3",
+      "every other request read carried:58975:1,4,5,6",
+      "every both request read carried:58975:2,6,8,9",
+      "every neither request read carried:58975:3,7,11,12",
+      "every own request read not carried:58975:0,1,2,3",
+      "a third row, the first call's again:65536:0,1,2,3",
+      "a third row of four carried values:65536:0,1,2,3",
+      "a third row of four values not carried:65536:0,1,2,3",
+      "the first call's row one value longer, a fifth value carried:65536:0,1,2,3",
+      "the second call's row one value longer, a fifth value carried:65536:0,1,2,3",
+    ]);
+    expect(DRIVE_NAMES.map(dashedName)).toEqual(["F1-x", "F2-x", "F3-x", "F4-x", "F5-x"]);
     expect(Object.keys(STRING_FORMS)).toEqual(["gaining a final ~", "gaining a leading ~", "in another case", "without its last character", "without its first character"]);
     expect(Object.keys(MIXES)).toEqual(["the other request's invocationId", "the other request's target", "the principal's role dropped"]);
     expect(ORDERS).toEqual({ snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] });
@@ -2370,6 +3366,9 @@ describe(SUITE, () => {
     expect(HANDED).toEqual([1, 2, 3]);
     expect(SERIAL_KINDS).toEqual(["own", "other", "both", "neither"]);
     expect(PLANTED_SERIALS).toEqual([7, 8]);
+    expect(THREE_DIGIT_SERIALS).toEqual([187, 188]);
+    expect(DRIVE_NAMES).toEqual(["F1", "F2", "F3", "F4", "F5"]);
+    expect([...DRIVE_NAMES], "one drive name per fixture, in FIXTURES order: the names the drives' invocationIds carry").toEqual(FIXTURES.map(entry => entry.id));
     expect(Object.keys(serialPlants(executable(SNAPSHOT_BYTES)))).toEqual([
       "the kinds from own",
       "the kinds from other",
@@ -2377,6 +3376,10 @@ describe(SUITE, () => {
       "the kinds from neither",
       "D01's page",
       "D02's page",
+      "D03's page",
+      "D04's page",
+      "D05's page",
+      "D06's page",
       "four ids both calls were returned",
       "an id one call was returned twice",
       "a name at each position",
@@ -2390,6 +3393,24 @@ describe(SUITE, () => {
       "the last segment:inv-F1-exec-a1-t1-87",
       "beside another serial:inv-F1-86-87-exec-a1-t1",
       "with a leading zero:inv-F1-087-exec-a1-t1",
+      "the last of seven segments:inv-F1-86-exec-a1-t1-87",
+      "the first of seven segments:87-F1-86-x-exec-a1-t1",
+      "the fifth of eight segments:inv-F1-86-x-87-exec-a1-t1",
+      "a segment's leading part:inv-F1-87x-exec-a1-t1",
+    ]);
+    expect(Object.entries(THREE_DIGIT_SEGMENT_PLANTS).map(([label, invocationId]) => `${label}:${invocationId}`)).toEqual([
+      "its own segment:inv-F1-187-exec-a1-t1",
+      "a longer number:inv-F1-1870-exec-a1-t1",
+      "a shorter number:inv-F1-18-exec-a1-t1",
+      "inside another segment:inv-F1-x187-exec-a1-t1",
+      "the first segment:187-inv-F1-exec-a1-t1",
+      "the last segment:inv-F1-exec-a1-t1-187",
+      "beside another serial:inv-F1-186-187-exec-a1-t1",
+      "with a leading zero:inv-F1-0187-exec-a1-t1",
+      "the last of seven segments:inv-F1-186-exec-a1-t1-187",
+      "the first of seven segments:187-F1-186-x-exec-a1-t1",
+      "the fifth of eight segments:inv-F1-186-x-187-exec-a1-t1",
+      "a segment's leading part:inv-F1-187x-exec-a1-t1",
     ]);
     expect(Object.entries(DERIVED_STRANGERS).map(([label, { member }]) => `${label}:${member}`)).toEqual(["the principal's role dropped:principal", "requested later:requestedAt"]);
     expect(Object.keys(MUTANTS)).toEqual([
