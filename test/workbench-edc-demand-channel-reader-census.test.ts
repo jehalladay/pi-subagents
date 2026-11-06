@@ -90,6 +90,21 @@
  * makes per control, refusal #1's four paired witnesses among them (RIDS-TWODIGIT, RIDS-DIGITPART, RIDS-TWOPART and
  * RIDS-OTHERDIGIT), each control's payload in the controls' frozen literal; the check's words are narrowed to exactly those
  * controls (JUDGED CHECKS (e)).
+ * Cut #13 (wb-i4m6: the R694 carry of landing 995's F1, a PASS-WITH-FINDING - five gate one-edit members of RESIDUAL_WITNESS,
+ * GP6-RW-D12 (at most two digits), GP6-RW-NOZERO (no leading zero), GP6-RW-PARTLEN10 (parts of at most ten characters),
+ * GP6-RW-LEADWS (white space before an id) and GP6-RW-TRAILWS (white space or a comma after one), kept cut #12's census green,
+ * realized by export witnesses that append one id at the end of wb-u6ho's F2 line) pins controls in those witness shapes, the
+ * helper, every top-level table, the claims, the kills, the residual's row, its frozen literal, its two direct anchors and the
+ * test titles unchanged: six F2 line controls each append one id more at the line's end - three digits (RIDS-3DIGIT-END,
+ * GW-3DIGIT-END's W123-GLUEDCODE), the digit zero (RIDS-ZERO-END, GW-ZERO-END's W0-GLUEDCODE), a part of eleven characters
+ * (RIDS-LONGPART-END, GW-LONGPART-END's W2-ABCDEFGHIJK), the id in parentheses (RIDS-PAREN-END), before a full stop
+ * (RIDS-DOT-END) and with nothing after it (RIDS-END-PLAIN), the last three in the shapes of GW-PAREN-END, GW-DOT-END and
+ * GW-END-PLAIN under an id of their own (W2-PARENCODE, W2-POINTCODE, W2-TRAILCODE) so that every control's payload is its
+ * own -, and a twin of the first four where the line's second W1-GLUEDCODE mention stands (RIDS-3DIGIT, RIDS-ZERO,
+ * RIDS-LONGPART and RIDS-PAREN, each under an id of its own), each payload in the controls' frozen literal, so that each of the
+ * five members reds the census and none rests on one control alone; and the F2 line words are narrowed to the id forms, places
+ * and characters around an id those controls write (JUDGED CHECKS (e), NOT CLAIMED (the judged checks)). The ten are further
+ * controls in the sense NOT CLAIMED uses: no outside anchor names them (this census reads no wb-c8nb or wb-i4m6 row).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -213,9 +228,10 @@
  * and digits joined by '-' - are exactly the controls whose names start with 'X-' (X-TOKENCOLON, refusal #3's U3 witness: a line
  * whose first ':' precedes its first ': ').
  * wb-u6ho's F2 line (its first '- F2 LOW LEADS: W1 for the residual list' notes line, landing 973's verdict) anchors R-GLUED-CODE's
- * row: the paired witnesses it names - each 'W', one or more digits, then '-' parts of capitals and digits - are exactly the
- * residual's rows, and the edit it pairs GP2-N2 as is W1-GLUEDCODE's (residualLineContradictions, held to its controls: JUDGED
- * CHECKS (e)).
+ * row: the paired witnesses it names - the ids RESIDUAL_WITNESS reads in it - are exactly the residual's rows, and the edit it
+ * pairs GP2-N2 as is W1-GLUEDCODE's (residualLineContradictions, held to its controls: JUDGED CHECKS (e)); that exactness is
+ * claimed at the real line and at the edits those controls make - the id forms, places and characters around an id they write -
+ * and at no other edit of the line (NOT CLAIMED, the judged checks).
  * The controls' frozen literal holds every control, table by table, by its name and the exact contradictions its check reads
  * (firstLine's: the line it reads). R-GLUED-CODE's row is no control: a frozen literal of its own holds its witness id and payload.
  * JUDGED CHECKS (the R-B574 enumeration; the claims equal the controls): each judged check is claimed at its real input (no
@@ -244,10 +260,12 @@
  * IDS-EXTRA-TWICE, IDS-MULTIPART, IDS-UNNAMED, IDS-NO-LINE, IDS-OWN-PARTIAL, IDS-OWN-INSIDE, IDS2-MULTIPART, IDS2-BODY-START,
  * IDS2-DIGITS, IDS-GLUED, IDS-TRAILING, IDS2-GLUED, IDS2-TRAILING, X-TOKENCOLON, BODY-COLON-TAB, IDS3-EXTRA, IDS3-MULTIPART,
  * IDS3-BODY-START, IDS3-DIGITS, IDS3-NO-LINE, IDS3-GLUED, IDS3-TRAILING (witnessContradictions); (e) R-GLUED-CODE's export anchor
- * (wb-c8nb refusal #1's U1 and U2: wb-u6ho's F2 line - the form of the ids it names, those ids both ways against the residual's
- * rows, and its GP2-N2 pairing): RIDS-TWODIGIT, RIDS-DIGITPART, RIDS-TWOPART, RIDS-OTHERDIGIT, RIDS-DIGITLEAD, RIDS-EXTRA-TWICE,
- * RIDS-UNNAMED, RIDS-RENAMED, RIDS-NO-LINE, RIDS-GLUED, RIDS-TRAILING, RIDS-LOWER, RIDS-EMPTYPART, RIDS-NOPART, RIDS-OTHERLETTER,
- * RIDS-LETTERID, RIDS-PAIR-SPACED, RIDS-PAIR-QUOTE, RIDS-PAIR-EARLYCLOSE, RIDS-PAIR-NONE, RIDS-BOTH (residualLineContradictions). A
+ * (wb-c8nb refusal #1's U1 and U2, and landing 995's F1 (wb-i4m6): wb-u6ho's F2 line - the form of the ids it names, those ids
+ * both ways against the residual's rows, and its GP2-N2 pairing): RIDS-TWODIGIT, RIDS-DIGITPART, RIDS-TWOPART, RIDS-OTHERDIGIT,
+ * RIDS-DIGITLEAD, RIDS-EXTRA-TWICE, RIDS-UNNAMED, RIDS-RENAMED, RIDS-NO-LINE, RIDS-GLUED, RIDS-TRAILING, RIDS-LOWER,
+ * RIDS-EMPTYPART, RIDS-NOPART, RIDS-OTHERLETTER, RIDS-LETTERID, RIDS-PAIR-SPACED, RIDS-PAIR-QUOTE, RIDS-PAIR-EARLYCLOSE,
+ * RIDS-PAIR-NONE, RIDS-BOTH, RIDS-3DIGIT-END, RIDS-ZERO-END, RIDS-LONGPART-END, RIDS-PAREN-END, RIDS-DOT-END, RIDS-END-PLAIN,
+ * RIDS-3DIGIT, RIDS-ZERO, RIDS-LONGPART, RIDS-PAREN (residualLineContradictions). A
  * key form's witness beside the index's claim probe receiver is no edit a control can make: the compiler reads
  * 'Opts<Context.Inner>[key]' as two comparisons, no element access.
  * The TypeScript compiler anchors T-TOKENS,
@@ -310,7 +328,10 @@
  * controls write (another Unicode white space, a carriage return, a vertical tab or a form feed among them); in wb-u6ho's F1 line
  * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls write
  * (R-GLUED-CODE's one pinned row aside, RESIDUALS); in its notes another line shape before the F1 line; in wb-u6ho's F2 line
- * another id form or pairing text than its controls write, or another place of that line in its notes; and in a refusal line
+ * another id form, place or character around an id, or another pairing text, than its controls write (among them an id of four
+ * or more digits, a zero before another digit, a part of twelve or more characters, three or more parts, an id at another place
+ * than the two W1-GLUEDCODE mentions' and the line's end, and an id right after or right before a character no control writes
+ * there), or another place of that line in its notes; and in a refusal line
  * another place of its first ': ' or another id form - and a further control removed from its table and from the controls' frozen
  * literal together (no outside anchor names it).
  * The judged checks name one residual, R-GLUED-CODE (the wb-u6ho line check's, RESIDUALS): every edit of their inputs is one a
@@ -380,9 +401,10 @@ const REFUSAL1_WITNESS = /\bW-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
 const REFUSAL2_WITNESS = /\bW[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b/g;
 /** A paired witness id as wb-u6ho's refusal #3 lines spell it: "X-", then parts of capitals and digits joined by "-". */
 const REFUSAL3_WITNESS = /\bX-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
-/** A paired witness id as wb-u6ho's F2 line (landing 973's PASS-WITH-FINDING, the residual R-GLUED-CODE) spells it: "W", one or
- * more digits, then "-" parts of capitals and digits; the F2 line check holds that form to its controls (residualLineContradictions,
- * JUDGED CHECKS (e)). */
+/** A paired witness id as wb-u6ho's F2 line (landing 973's PASS-WITH-FINDING, the residual R-GLUED-CODE) spells it: the pattern
+ * reads "W", digits, then "-" parts of capitals and digits, between word boundaries; the F2 line check holds what it reads to
+ * its controls alone - the id forms, places and characters around an id they write (residualLineContradictions, JUDGED CHECKS
+ * (e)) -, and another id form, place or character around an id is NOT CLAIMED. */
 const RESIDUAL_WITNESS = /\bW\d+(?:-[A-Z0-9]+)+\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
@@ -1495,8 +1517,8 @@ function lineTwoContradictions(notes: string, prefix: string): string[] {
  * the edit the line pairs GP2-N2 as - the text between its first "GP2-N2 is paired as '" and the first "', a second bracket" after
  * it - against the row's edit. Returns the contradictions: no line (an empty line), alone; else each id the line names that no row
  * has, then each row the line does not name, then a pairing other than the row's edit. Claimed at the real line, rows and edit and
- * at the edits the F2 line controls make, each with exactly its payload (JUDGED CHECKS (e)); another id form or pairing text in the
- * line is NOT CLAIMED. */
+ * at the edits the F2 line controls make, each with exactly its payload (JUDGED CHECKS (e)); another id form, place or character
+ * around an id, or another pairing text, in the line is NOT CLAIMED. */
 function residualLineContradictions(line: string, witnesses: readonly string[], edit: string): string[] {
   if (line === "") return ["wb-u6ho's notes hold no line that starts with the F2 prefix"];
   const named = idsIn(line, RESIDUAL_WITNESS);
@@ -2333,6 +2355,8 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       edited(edited(residualLine, "with witness W1-GLUEDCODE, a second bracket", `with witness ${id}, a second bracket`), "The paired real-tree witness W1-GLUEDCODE edits", `The paired real-tree witness ${id} edits`);
     /** A line with its GP2-N2 pairing written with a space between the brackets. */
     const pairSpaced = (line: string): string => edited(line, "paired as '): [1e-3][0], text only.'", "paired as '): [1e-3] [0], text only.'");
+    /** wb-u6ho's F2 line with one more text at its end (the edit each export witness wb-i4m6's F1 line names makes). */
+    const residualEnd = (text: string): string => `${residualLine}${text}`;
     const residualControls: readonly (readonly [control: string, line: string, contradictions: readonly string[]])[] = [
       ["RIDS-TWODIGIT", residualWitness("W12-GLUEDCODE"), ["wb-u6ho's F2 line names W12-GLUEDCODE, which is no R-GLUED-CODE row"]],
       ["RIDS-DIGITPART", residualWitness("W1-GLUEDCODE2"), ["wb-u6ho's F2 line names W1-GLUEDCODE2, which is no R-GLUED-CODE row"]],
@@ -2361,6 +2385,26 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["RIDS-PAIR-EARLYCLOSE", edited(residualLine, "text only.', a second bracket", "text only.', a code', a second bracket"), ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.', a code', not as the row's edit '): [1e-3][0], text only.'"]],
       ["RIDS-PAIR-NONE", edited(residualLine, "GP2-N2 is paired as '", "GP2-N2 is written as '"), ["wb-u6ho's F2 line pairs GP2-N2 as '', not as the row's edit '): [1e-3][0], text only.'"]],
       ["RIDS-BOTH", pairSpaced(residualRenamed("W3-GLUEDCODE")), ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line", "wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
+      // wb-i4m6 (the R694 carry of landing 995's F1): one id more at the line's end in the shape of each export witness F1
+      // names - three digits (GW-3DIGIT-END), the digit zero (GW-ZERO-END), a part of eleven characters (GW-LONGPART-END),
+      // the id in parentheses (GW-PAREN-END), before a full stop (GW-DOT-END) and with nothing after it (GW-END-PLAIN); the
+      // first three write their witness's id, the last three an id of their own in their witness's shape (one digit, one
+      // part of nine capitals), so that every control's payload is its own. They hold the dimensions F1's five members edit:
+      // the digit count (GP6-RW-D12), the digit zero (GP6-RW-NOZERO), a part's length (GP6-RW-PARTLEN10), the character
+      // before an id (GP6-RW-LEADWS) and the one after it (GP6-RW-TRAILWS)
+      ["RIDS-3DIGIT-END", residualEnd(" W123-GLUEDCODE"), ["wb-u6ho's F2 line names W123-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-ZERO-END", residualEnd(" W0-GLUEDCODE"), ["wb-u6ho's F2 line names W0-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LONGPART-END", residualEnd(" W2-ABCDEFGHIJK"), ["wb-u6ho's F2 line names W2-ABCDEFGHIJK, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAREN-END", residualEnd(" (W2-PARENCODE)"), ["wb-u6ho's F2 line names W2-PARENCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-DOT-END", residualEnd(" W2-POINTCODE."), ["wb-u6ho's F2 line names W2-POINTCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-END-PLAIN", residualEnd(" W2-TRAILCODE"), ["wb-u6ho's F2 line names W2-TRAILCODE, which is no R-GLUED-CODE row"]],
+      // and a twin of the four whose member no other control holds, where the line's second W1-GLUEDCODE mention stands, each under
+      // an id of its own: three digits, the digit zero, a part of eleven characters and the id in parentheses (so that no one
+      // control removed reopens GP6-RW-D12, GP6-RW-NOZERO, GP6-RW-PARTLEN10 or GP6-RW-LEADWS)
+      ["RIDS-3DIGIT", residualWitness("W124-GLUEDCODE"), ["wb-u6ho's F2 line names W124-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-ZERO", residualWitness("W0-ZEROCODE"), ["wb-u6ho's F2 line names W0-ZEROCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LONGPART", residualWitness("W2-LMNOPQRSTUV"), ["wb-u6ho's F2 line names W2-LMNOPQRSTUV, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAREN", residualWitness("(W2-MIDPAREN)"), ["wb-u6ho's F2 line names W2-MIDPAREN, which is no R-GLUED-CODE row"]],
     ];
     for (const [control, line, contradictions] of residualControls) expect(residualLineContradictions(line, residualIds, glued), `${control}: the F2 line check reports exactly this edit's contradictions`).toEqual(contradictions);
     // KILLS' order check (refusal #1's U3: KILLS held as a set): the lines name KILLS' own order, as the judged set holds
@@ -2692,6 +2736,16 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["RIDS-PAIR-EARLYCLOSE", ["wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3][0], text only.', a code', not as the row's edit '): [1e-3][0], text only.'"]],
       ["RIDS-PAIR-NONE", ["wb-u6ho's F2 line pairs GP2-N2 as '', not as the row's edit '): [1e-3][0], text only.'"]],
       ["RIDS-BOTH", ["wb-u6ho's F2 line names W3-GLUEDCODE, which is no R-GLUED-CODE row", "R-GLUED-CODE's row W1-GLUEDCODE is named by no id of wb-u6ho's F2 line", "wb-u6ho's F2 line pairs GP2-N2 as '): [1e-3] [0], text only.', not as the row's edit '): [1e-3][0], text only.'"]],
+      ["RIDS-3DIGIT-END", ["wb-u6ho's F2 line names W123-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-ZERO-END", ["wb-u6ho's F2 line names W0-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LONGPART-END", ["wb-u6ho's F2 line names W2-ABCDEFGHIJK, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAREN-END", ["wb-u6ho's F2 line names W2-PARENCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-DOT-END", ["wb-u6ho's F2 line names W2-POINTCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-END-PLAIN", ["wb-u6ho's F2 line names W2-TRAILCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-3DIGIT", ["wb-u6ho's F2 line names W124-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-ZERO", ["wb-u6ho's F2 line names W0-ZEROCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-LONGPART", ["wb-u6ho's F2 line names W2-LMNOPQRSTUV, which is no R-GLUED-CODE row"]],
+      ["RIDS-PAREN", ["wb-u6ho's F2 line names W2-MIDPAREN, which is no R-GLUED-CODE row"]],
     ]);
   });
 
