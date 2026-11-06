@@ -196,6 +196,14 @@
  * words, and its body applies narrowsToPinnedPages to a list it reads from the helper header. No reader code changes and the
  * helper is unchanged; the FAIL-CLOSED case bodies stand as landed, and the CARRIER REFUSAL #1 to #5 ANCHOR cases, which also
  * apply narrowsToPinnedPages to a line, keep their landed words.
+ * wb-v3a9 cut #2 answers this bead's refusal #1 (gate-prep-26 / g10-gate-s225, U1): the third NARROWED WORDS case read the
+ * NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases anywhere in this header, so a copy of that sentence
+ * placed elsewhere kept the census green while the sentence's parenthetical, in its place, was widened again. That case now
+ * reads the sentence in its place: this header's NOT CLAIMED heading line and its wb-tz2.24 paragraph's opening line each
+ * occur once; that paragraph, read from its opening line up to the next paragraph's and split at each semicolon outside
+ * parentheses, holds the whole sentence as its third clause, after an 'and', with the words the alternative narrows to as
+ * its parenthetical; and the sentence's opening words, up to its parenthesis, occur once in this header. It reads the
+ * replaced words in any letter case.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -369,8 +377,14 @@
  *   sentence beside it; the words its cure narrows, and the words it narrows them to, are those the second cure alternative
  *   of wb-o3f8's F1 finding quotes; that alternative and its lineage note, the sentences the cure names, occur verbatim in
  *   wb-o3f8's notes, and the NARROWING_REQUIREMENTS rows are exactly those two sentences of that finding; and the
- *   parenthetical words the alternative quotes stand nowhere in this header, while the words it narrows them to stand in
- *   their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases.
+ *   parenthetical words the alternative quotes stand nowhere in this header, in any letter case, while the words it narrows
+ *   them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases (cut #2): this
+ *   header's NOT CLAIMED heading line (its words open with 'NOT CLAIMED (') and its wb-tz2.24 paragraph's opening line
+ *   each occur once; that paragraph, read within the section (from that heading line up to the next blank line) from its
+ *   opening line up to the next paragraph's (a paragraph opens on a line whose words open with a bead id, an optional cut
+ *   number and a colon) and split at each semicolon outside parentheses, holds the whole sentence as its third clause,
+ *   after an 'and', with those words as its parenthetical; and the sentence's opening words, up to its parenthesis, occur
+ *   once in this header.
  *  CASE WORDS (wb-v3a9): the FAIL-CLOSED cases vitest registers for this file, this header's FAIL-CLOSED ROWS entries and the
  *   FAIL_CLOSED_CASES rows are, by head and in order, the same five; each case's title and ROWS entry hold, after
  *   'wb-v3a9: ', the words the alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its
@@ -477,6 +491,14 @@
  * is claimed by the NARROWING_CONTROLS and MEMBER_WITNESSES rows alone, one spelling each); that a FAIL-CLOSED case body
  * applies the census's predicate in meaning is NOT CLAIMED by the CASE WORDS cases beyond the syntax and the declared names
  * they read (they read each body's syntax, not its meaning).
+ * wb-v3a9 cut #2: a spelling of the parenthetical words the alternative quotes other than theirs, letter case and white
+ * space aside, is NOT CLAIMED by the third NARROWED WORDS case (it reads their spelling); the clauses of the wb-tz2.24
+ * paragraph other than its third, and the paragraphs of this header other than that one, are NOT CLAIMED by that case
+ * beyond the replaced words' absence and the count of the sentence's opening words (it reads that clause, the bounds of
+ * that paragraph and of its section, and the counts of their opening lines, not the header's meaning); and the words that
+ * case finds the sentence, its paragraph and its section by - the sentence's opening and closing words and the words its
+ * paragraph's opening line and the heading line open with - are NOT CLAIMED by an anchor outside this census (they are its
+ * own literals; the words between the sentence's opening and closing words are the alternative's, read from the export).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text, the
  * tracker export and (wb-v3a9) its own source, and parses planted text in memory.
@@ -566,6 +588,10 @@ const CARRIER = "wb-tz2.24";
 const FOLLOW_UP = "wb-zchj";
 const FOLLOW_UP_2 = "wb-o3f8";
 const FOLLOW_UP_3 = "wb-v3a9";
+/** wb-v3a9 cut #2 (refusal #1, U1): the opening words, up to its parenthesis, of the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases, the frame refusal #1's cure names. */
+const NARROWED_FRAME = "a widening word other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (";
+/** wb-v3a9 cut #2: the words, after its " * " mark, that open the line opening the NOT CLAIMED paragraph that holds that sentence. */
+const NARROWED_PARAGRAPH = "wb-tz2.24: ";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -1216,6 +1242,53 @@ function rowsEntries(): string[] {
 function narrowingCure(): { readonly replaced: string; readonly narrowing: string } {
   const found = /narrow the FAIL-CLOSED words and the :348 parenthetical \('(.+?)'\) to '(.+?)'\. Lineage noted as data: /.exec(ridesFinding(FOLLOW_UP_2));
   return { replaced: found?.[1] ?? "", narrowing: found?.[2] ?? "" };
+}
+/**
+ * wb-v3a9 cut #2 (refusal #1, U1): one paragraph of this header's NOT CLAIMED section, read section-bounded. The section runs from
+ * its heading line (" * NOT CLAIMED (") up to the next blank " *" line; the paragraph runs from the section line whose words, after
+ * the " * " mark, open with `opening`, up to the next line opening a paragraph (its words open with a bead id, an optional
+ * "cut #" and number, and a colon), read as censusHeader reads its lines. The counts are over the whole header: the lines opening
+ * with the heading, and the lines opening with `opening`.
+ */
+function notClaimedParagraph(opening: string): { readonly headings: number; readonly openings: number; readonly paragraph: string } {
+  const text = read(CENSUS);
+  const lines = text.slice(0, text.indexOf("*/")).split("\n");
+  const heading = " * NOT CLAIMED (";
+  const from = lines.findIndex(line => line.startsWith(heading));
+  const to = from < 0 ? -1 : lines.indexOf(" *", from);
+  const section = to < 0 ? [] : lines.slice(from, to);
+  const start = section.findIndex(line => line.startsWith(` * ${opening}`));
+  let end = start + 1;
+  while (start >= 0 && end < section.length && !/^ \* wb-[a-z0-9.]+(?: cut #\d+)?: /.test(section[end] ?? "")) end += 1;
+  return {
+    headings: lines.filter(line => line.startsWith(heading)).length,
+    openings: lines.filter(line => line.startsWith(` * ${opening}`)).length,
+    paragraph:
+      start < 0
+        ? ""
+        : section
+            .slice(start, end)
+            .map(line => line.replace(/^ \* ?/, ""))
+            .join(" ")
+            .replace(/\s+/g, " ")
+            .trim(),
+  };
+}
+/** wb-v3a9 cut #2: a paragraph's clauses, in order: the paragraph split at each "; " that stands outside parentheses. */
+function clausesOf(paragraph: string): string[] {
+  const clauses: string[] = [];
+  let depth = 0;
+  let from = 0;
+  for (let at = 0; at < paragraph.length; at += 1) {
+    const char = paragraph[at];
+    if (char === "(") depth += 1;
+    else if (char === ")") depth -= 1;
+    else if (depth === 0 && paragraph.startsWith("; ", at)) {
+      clauses.push(paragraph.slice(from, at));
+      from = at + 2;
+    }
+  }
+  return [...clauses, paragraph.slice(from)];
 }
 /** wb-v3a9: the identifiers a node reads, a property name after a dot aside. */
 function namesRead(node: ts.Node): string[] {
@@ -7418,14 +7491,25 @@ describe(SUITE, () => {
         lines: [...(alternative < 0 || lineage < alternative ? [] : [finding.slice(alternative, lineage)]), ...(lineage < 0 ? [] : [finding.slice(lineage + 1)])],
       });
     });
-    it("the parenthetical words that alternative quotes stand nowhere in this header, and the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases", () => {
+    it("the parenthetical words that alternative quotes stand nowhere in this header, in any letter case, and the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases: this header's NOT CLAIMED heading line and its wb-tz2.24 paragraph's opening line each occur once; that paragraph, read from its opening line up to the next paragraph's and split at each semicolon outside parentheses, holds the whole sentence as its third clause, after an 'and', with those words as its parenthetical; and the sentence's opening words, up to its parenthesis, occur once in this header (cut #2, refusal #1 U1)", () => {
       const { replaced, narrowing } = narrowingCure();
       const header = censusHeader();
+      const { headings, openings, paragraph } = notClaimedParagraph(NARROWED_PARAGRAPH);
       expect({
         words: [replaced, narrowing],
-        replaced: header.includes(replaced),
-        narrowed: header.includes(`a widening word other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (${narrowing}, not the line's meaning)`),
-      }).toStrictEqual({ words: ["they read the phrase's place and those words", "the cases apply narrowsToPinnedPages to the header's lines"], replaced: false, narrowed: true });
+        replaced: header.toLowerCase().includes(replaced.toLowerCase()),
+        headings,
+        openings,
+        placed: clausesOf(paragraph).flatMap((clause, at) => (clause.includes(NARROWED_FRAME) ? [{ at, clause }] : [])),
+        frames: header.split(NARROWED_FRAME).length - 1,
+      }).toStrictEqual({
+        words: ["they read the phrase's place and those words", "the cases apply narrowsToPinnedPages to the header's lines"],
+        replaced: false,
+        headings: 1,
+        openings: 1,
+        placed: [{ at: 2, clause: `and ${NARROWED_FRAME}${narrowing}, not the line's meaning)` }],
+        frames: 1,
+      });
     });
   });
 
