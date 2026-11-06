@@ -11,7 +11,10 @@
  * constant, and an id that stays literal is an asserted row - FOREIGN (another tool's id), EMBEDDED_PURITY (a guard forbids the
  * import) or OWNER_NAMED (the owner's carrier, named here and never composed). FOREIGN_NAMESPACED (wb-ocie) holds an id embedded
  * in another tool's namespaced id (<producer>/<name>/vN), which this grammar reads as no whole id and so as no carrier; its row
- * names that whole id (within) and excuses its embedded part only in a string that is exactly that id.
+ * names that whole id (within) and excuses its embedded part only in a whole string - a string literal in either quote form or
+ * a template without substitutions - whose cooked text (as the parser reads it) equals that id code point for code point: a
+ * superstring on either side, a case, padded or compatibility variant and one literal part of a template are offenders (the
+ * wb-ocie negative control).
  * Residuals, named and not pinned:
  * - M3: an id built at runtime or split over a concatenation is no string token, so neither leg sees it; src/workbench/
  *   native-evidence.ts matches `${capabilityId}/v1`, built from its argument.
@@ -117,7 +120,7 @@ interface Exclusion {
   readonly file: string;
   readonly reason: string;
   readonly embedded?: true;
-  /** A namespaced FOREIGN row's producer id (wb-ocie): the row excuses its embedded literal only in a string that is exactly this id. */
+  /** A namespaced FOREIGN row's producer id (wb-ocie): the row excuses its embedded literal only in a whole string whose cooked text equals this id. */
   readonly within?: string;
 }
 type ExclusionTable = Readonly<Record<string, Exclusion>>;
@@ -178,9 +181,11 @@ const OWNER_NAMED: ExclusionTable = {
 /**
  * Embedded ids inside another tool's namespaced contract id (wb-ocie). WHOLE_ID reads one name segment, so a producer id
  * <producer>/<name>/vN is never a whole id here: its <name>/vN part reads as embedded and has no carrier to quote, unlike a
- * FOREIGN_CONTRACTS row. Each row names its file and the producer's whole id (within), and excuses the part only in a string
- * that is exactly that id, so a second string holding the part, or the part under another producer, is still an offender.
- * Delete the row in the same commit that drops the id.
+ * FOREIGN_CONTRACTS row. Each row names its file and the producer's whole id (within), and excuses the part only in a whole
+ * string (a string literal or a template without substitutions) whose cooked text equals that id, so a second string holding
+ * the part, the part under another producer, a superstring, a case, padded or compatibility variant, one literal part of a
+ * template, or the id in another file is still an offender, and a row whose file holds no such string is stale. Delete the row
+ * in the same commit that drops the id.
  */
 const FOREIGN_NAMESPACED: ExclusionTable = {
   "entrypoint/v1": {
@@ -206,10 +211,14 @@ function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap(name => { const path = join(dir, name); return statSync(path).isDirectory() ? sourceFiles(path) : path.endsWith(".ts") ? [path] : []; });
 }
 interface Occurrence { readonly literal: string; readonly where: string; readonly file: string }
-/** A contract id in string text: the whole text of a string token, or one id embedded inside a larger string (text: that string's whole text). */
+/**
+ * A contract id in string text: the whole text of a string token, or one id embedded inside a larger string. text is the whole
+ * string's cooked text (a string literal or a template without substitutions), or undefined for one literal part of a template
+ * with substitutions, which is never a whole string.
+ */
 interface Token extends Occurrence {
   readonly whole: boolean;
-  readonly text: string;
+  readonly text: string | undefined;
 }
 type StringText = ts.StringLiteral | ts.NoSubstitutionTemplateLiteral | ts.TemplateHead | ts.TemplateMiddle | ts.TemplateTail;
 
@@ -227,8 +236,9 @@ function fileTokens(file: string, text: string): readonly Token[] {
   const visit = (node: ts.Node): void => {
     if (isStringText(node)) {
       const where = `src/${file}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
-      if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && WHOLE_ID.test(node.text)) tokens.push({ literal: node.text, where, file, whole: true, text: node.text });
-      else for (const match of node.text.matchAll(EMBEDDED_ID)) tokens.push({ literal: match[0], where, file, whole: false, text: node.text });
+      const wholeString = ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node);
+      if (wholeString && WHOLE_ID.test(node.text)) tokens.push({ literal: node.text, where, file, whole: true, text: node.text });
+      else for (const match of node.text.matchAll(EMBEDDED_ID)) tokens.push({ literal: match[0], where, file, whole: false, text: wholeString ? node.text : undefined });
     }
     ts.forEachChild(node, visit);
   };
@@ -262,7 +272,7 @@ function offenders(files: ReadonlyMap<string, string>, exclusions: ExclusionTabl
     .filter(([, list]) => list.length !== 1)
     .map(([literal, list]) => `${literal}: ${list.map(item => item.where).join(", ")}`);
 }
-/** Whether a token sits where its row allows: anywhere in the row's file, or (a namespaced FOREIGN row) only in a string that is exactly its within id. */
+/** Whether a token sits where its row allows: anywhere in the row's file, or (a namespaced FOREIGN row) only in a whole string whose cooked text equals its within id. */
 const withinRow = (row: Exclusion, token: Token): boolean => row.within === undefined || token.text === row.within;
 /**
  * Stale exclusions: rows whose file no longer spells the literal as string text in the form the row excuses (a whole literal,
@@ -291,7 +301,7 @@ function carrierTable(files: ReadonlyMap<string, string>, exclusions: ExclusionT
   for (const item of census(files)) if (!wholeExcused(exclusions[item.literal], item.file)) actual[item.literal] ??= item.file;
   return actual;
 }
-/** Embedded ids no embedded row excuses (a row excuses its literal inside string text of exactly its file, and of exactly its within id when it names one), as `literal: path:line, ...`. */
+/** Embedded ids no embedded row excuses (a row excuses its literal inside string text of exactly its file, and only in a whole string whose cooked text equals its within id when it names one), as `literal: path:line, ...`. */
 function embeddedOffenders(files: ReadonlyMap<string, string>, tables: readonly ExclusionTable[]): string[] {
   const excused = (token: Token): boolean =>
     tables.some(table => {
@@ -487,7 +497,7 @@ describe("contract literals have one carrier each", () => {
     expect(EMBEDDED_TABLES.flatMap(table => staleExclusions(realTree(), table))).toEqual([]);
   });
 
-  it("UD2 negative control (wb-ocie): a namespaced FOREIGN row excuses its embedded id only in a string that is exactly its producer's whole id, in its own file", () => {
+  it("UD2 negative control (wb-ocie): a namespaced FOREIGN row excuses its embedded id only in a whole string whose cooked text equals its producer's whole id, in its own file", () => {
     const file = "workbench/mechanical-descriptor.ts";
     const exact = new Map([[file, 'export const SCHEMA = "mechanical-workflows/entrypoint/v1";\n']]);
     expect(embeddedOffenders(exact, EMBEDDED_TABLES)).toEqual([]);
@@ -500,6 +510,40 @@ describe("contract literals have one carrier each", () => {
     const elsewhere = new Map([["workbench/other.ts", 'export const SCHEMA = "mechanical-workflows/entrypoint/v1";\n']]);
     expect(embeddedOffenders(elsewhere, EMBEDDED_TABLES)).toEqual(["entrypoint/v1: src/workbench/other.ts:1"]);
     expect(staleExclusions(new Map([[file, 'export const SCHEMA = "entrypoint/v1";\n']]), FOREIGN_NAMESPACED)).toEqual(["entrypoint/v1 in workbench/mechanical-descriptor.ts"]);
+  });
+
+  it("UD2 negative control (wb-ocie cut #2): the namespaced id is no whole id and no carrier, a whole string of its exact cooked text is excused in either quote form, as a template without substitutions and escaped, and each listed inexact string (a superstring, a case, padded or compatibility variant, a template part) is an offender that leaves the row stale", () => {
+    const file = "workbench/mechanical-descriptor.ts";
+    const within = "mechanical-workflows/entrypoint/v1";
+    const declare = (initializer: string): string => `export const SCHEMA = ${initializer};\n`;
+    const exact = new Map([[file, declare(JSON.stringify(within))]]);
+    // The grammar reads the namespaced id as no whole id and as one embedded token, and neither spelling is a CARRIERS key.
+    expect(census(exact)).toEqual([]);
+    expect(stringTokens(exact).map(token => [token.literal, token.whole, token.text])).toEqual([["entrypoint/v1", false, within]]);
+    expect([CARRIERS["entrypoint/v1"], CARRIERS[within]]).toEqual([undefined, undefined]);
+    // A whole string whose cooked text is the id is excused in either quote form, as a template without substitutions, or escaped.
+    const whole = [`'${within}'`, `${TICK}${within}${TICK}`, JSON.stringify(within).replace("/", "\\u002f")];
+    expect(whole.map(initializer => embeddedOffenders(new Map([[file, declare(initializer)]]), EMBEDDED_TABLES))).toEqual([[], [], []]);
+    expect(whole.map(initializer => staleExclusions(new Map([[file, declare(initializer)]]), FOREIGN_NAMESPACED))).toEqual([[], [], []]);
+    // Inexact strings: a superstring before or after, case variants, padding, a compatibility variant of the producer separator,
+    // and the id as one literal part of a template (head, middle, tail) - each an offender at line 1 that excuses nothing.
+    const inexact = [
+      JSON.stringify(`see ${within}`),
+      JSON.stringify(`${within} here`),
+      JSON.stringify(within.replace("mechanical-workflows", "MECHANICAL-WORKFLOWS")),
+      JSON.stringify(within.replace("mechanical-workflows", "Mechanical-Workflows")),
+      JSON.stringify(` ${within}`),
+      JSON.stringify(`${within} `),
+      JSON.stringify(within.replace("/", String.fromCodePoint(0xff0f))),
+      `${TICK}${within}${slot("suffix")}${TICK}`,
+      `${TICK}${slot("prefix")}${within}${slot("suffix")}${TICK}`,
+      `${TICK}${slot("prefix")}${within}${TICK}`,
+    ];
+    const lineOne = `entrypoint/v1: src/${file}:1`;
+    expect(inexact.map(initializer => embeddedOffenders(new Map([[file, declare(initializer)]]), EMBEDDED_TABLES))).toEqual(inexact.map(() => [lineOne]));
+    expect(inexact.map(initializer => staleExclusions(new Map([[file, declare(initializer)]]), FOREIGN_NAMESPACED))).toEqual(inexact.map(() => [`entrypoint/v1 in ${file}`]));
+    // The exact id in another file with the same last segments is an offender there.
+    expect(embeddedOffenders(new Map([["other/workbench/mechanical-descriptor.ts", declare(JSON.stringify(within))]]), EMBEDDED_TABLES)).toEqual(["entrypoint/v1: src/other/workbench/mechanical-descriptor.ts:1"]);
   });
 
   it("UD2 + O2: an embedded purity row names a CARRIERS key carried by a different file, a FOREIGN row quotes a carried contract, and a bump that re-keys CARRIERS is reported", () => {

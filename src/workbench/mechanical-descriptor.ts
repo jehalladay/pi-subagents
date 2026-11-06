@@ -1,62 +1,77 @@
 /**
- * mechanical-descriptor.ts — the one Pi boundary for MechanicalWorkflows' published entrypoint descriptor and the packed
- * artifact it names (wb-ocie; mechanical-workflows-interop-2026-11-04 B-descriptor, requirements EAT-R007..EAT-R011, slice PI-0).
+ * mechanical-descriptor.ts — a Pi boundary for MechanicalWorkflows' published entrypoint descriptor and the packed artifact it
+ * names (wb-ocie; mechanical-workflows-interop-2026-11-04 B-descriptor, requirements EAT-R007..EAT-R011, slice PI-0). Each
+ * claim below names the cases of test/workbench-mechanical-descriptor.test.ts that pin it; a behaviour it does not state is
+ * NOT CLAIMED.
  *
- * MechanicalWorkflows' descriptor of record is contracts/entrypoints/development.v1.json (schema mechanical-workflows/entrypoint/v1,
- * status descriptor-only): metadata naming one deployable function, its package and export, its input and output schemas by bare
- * file name and its four application bindings. A descriptor is metadata, never executable authority. This boundary admits an
- * entrypoint in two phases, and every refusal is a closed-vocabulary diagnostic (code, field, reason) that never echoes a path, a
- * member value or file text:
+ * The descriptor of record is MechanicalWorkflows' contracts/entrypoints/development.v1.json at f7c0a943, metadata naming one
+ * deployable function, vendored byte-identical as the suite's fixture (R007-1). The boundary reads a descriptor as metadata only:
+ * its members are judged as steps 4 to 6 state, and the loader is handed the reviewed allowlist entry, never a member the
+ * descriptor spells (R007-2, R010-1).
  *
- * resolveMechanicalEntrypoint (validation), first refusal wins:
- *  - the release pin is two sha256:<64 lower-case hex> digests, the descriptor bytes' and the artifact bytes', checked before any
- *    file is read;
- *  - EAT-R007: the descriptor is read from its FILE as bytes, and their SHA-256 is compared with the pin before anything is
- *    parsed, so a byte-different file is refused even when its JSON content is equal; no entry point takes a descriptor object;
- *  - the bytes decode as UTF-8 and parse as one JSON object; the entrypoint schema version is judged first (only
- *    mechanical-workflows/entrypoint/v1); the member set is the producer file's own and closed (note is the one optional member,
- *    a string that is never read further), and implementation is the closed pair {package, export};
- *  - EAT-R010: the id, the package and the export are each compared with the FIXED allowlist MECHANICAL_REVIEWED_ENTRYPOINTS, so
- *    an accepted id resolves exactly one reviewed entry, and no string the descriptor spells is ever handed to a loader;
- *  - EAT-R009: each schema reference is a bare canonical file name (MECHANICAL_SCHEMA_REF_PATTERN: no directory or dot segment, no
- *    scheme, no separator of either kind) equal to the reviewed name; nothing is normalized, so a traversal never collapses into
- *    an accepted basename;
- *  - the bindings are the reviewed four, in order, and the status is descriptor-only;
- *  - EAT-R011 and EAT-R008: the approved root and the artifact are each resolved by realpath; the artifact must lie strictly inside
- *    the root by a separator-bounded relative path (realpath against realpath, so a root named through a link reads as its
- *    target, and a sibling sharing the root's name as a prefix is outside it), must be a regular file, opened without following
- *    a final link, and the SHA-256 of the bytes read must equal the pin.
+ * resolveMechanicalEntrypoint (validation) judges in this order and returns the first refusal (R007-13, R011-13). A refusal is
+ * returned, never thrown, as {code: "mechanical-entrypoint-refused", field, reason}, with field and reason from the closed lists
+ * below and no other member, so it carries no path, member value or file text (every refusal case; the vocabulary cases).
+ *  1. The pin: each of its two digests is a string sha256:<64 lower-case hex>; a pin that is null, a list or not an object, or a
+ *     digest of any other form, is pin-malformed before any file is read (R008-5, R008-6).
+ *  2. The descriptor FILE: its bytes are read from the path (unreadable when missing or a directory: R007-4), and their SHA-256
+ *     is compared with the pin before they are decoded or parsed (digest-mismatch: R007-3, R007-9).
+ *  3. The bytes decode as UTF-8 and parse as JSON (malformed: R007-5), and the value is an object (wrong-type: R007-5, R007-10).
+ *  4. The schema member is exactly mechanical-workflows/entrypoint/v1, else schema-unsupported whatever else the object holds,
+ *     a missing schema included (R007-6, R007-11, R007-12, R007-14).
+ *  5. The member set is the producer file's eight: any other member is member-unexpected, then each absent member but note is
+ *     member-missing under its own name; note may be absent (R007-7, R007-11).
+ *  6. Member by member, in the producer file's order (R007-13): id is a string (wrong-type) naming an entry of the fixed
+ *     allowlist MECHANICAL_REVIEWED_ENTRYPOINTS (not-allowlisted: R010-4, R007-12); implementation is an object (wrong-type)
+ *     holding exactly package and export (member-unexpected, then member-missing: R007-7, R007-11, R007-12), each equal to the
+ *     reviewed entry's (not-allowlisted: R010-2, R010-3); inputSchema and outputSchema are each a string (wrong-type: R007-12)
+ *     matching MECHANICAL_SCHEMA_REF_PATTERN with nothing normalized first (schema-ref-noncanonical: R009-2, R009-6) and equal
+ *     to the reviewed name (schema-ref-unknown: R009-3); bindings are the reviewed four in order (bindings-mismatch: R007-8,
+ *     R007-12); status is descriptor-only (status-unsupported: R007-8, R007-12); note, when present, is a string (wrong-type:
+ *     R007-8) whose text is not judged further (R007-11).
+ *  7. The approved root, then the artifact, each by realpath (unreadable, under root or artifact: R011-7, R011-13).
+ *  8. Containment, realpath against realpath: the artifact lies strictly inside the root, read as a relative path that is not
+ *     empty, not .. and does not start with ../ (outside-root: the root itself and its parent R011-10, a sibling sharing the
+ *     root's name as a prefix R011-2, a final, intermediate or chained link resolving outside R011-1, R011-8, R011-9); a link
+ *     resolving inside, and a root named through a link, are admitted (R011-3, R011-4).
+ *  9. The artifact is a regular file, judged by stat before it is opened (not-a-file: a directory R011-7, a FIFO R011-12).
+ * 10. The SHA-256 of the bytes read equals the pin (digest-mismatch: R008-2, R008-4).
  *
- * loadMechanicalEntrypoint (load): only a resolution this module minted is loadable. Immediately before the host loader runs, the
- * artifact is resolved and measured AGAIN: an artifact now outside the root is refused outside-root, a root or artifact whose
- * realpath changed since validation changed, and bytes that no longer hash to the pin digest-mismatch. The loader then runs once,
- * with the reviewed entry and the bytes just measured (a host that loads from those bytes never re-reads the path), and the
- * boundary reads the reviewed export name, never a descriptor string, from what it returns. A loader that throws propagates:
- * importing packed code executes trusted application code, so an unclear load is the host's to classify and is never retried
- * here. The boundary never calls the export, so it makes no provider call.
+ * loadMechanicalEntrypoint (load): a resolution this module did not mint is refused unresolved (R010-7), and a minted one is
+ * frozen (R010-10). Before the loader runs, steps 7 to 10 run again on the request as validated, and between steps 8 and 9 the
+ * root's and the artifact's realpaths are compared with the ones validation recorded (changed: the artifact re-pointed R011-5,
+ * the root re-pointed R011-11; the order R011-6, R011-14); each refusal there comes with no loader call (R008-3, R011-5,
+ * R011-6, R011-11, R011-14). The loader then runs once, with the reviewed entry and the bytes the load measured with their
+ * digest (R008-1, R010-1); a loader that throws or rejects propagates its own error and is not run again (R008-8). The export is
+ * read from the loader's result, an object or a function, by the reviewed name, as that value's own member, and only when the
+ * member is a function (export-missing: R010-6, R010-9); the boundary never calls it (R008-3, R008-7).
  *
  * NOT CLAIMED (explicitly partial; closure gate MW-INSTALLED-CONSUMER, external MW-CONTRACT and MW-PACKAGE): where the pin comes
  * from (MechanicalWorkflows publishes no release manifest at f7c0a943, so the host supplies the pin); that an installed package or
  * a published tarball was read; the invocation contract and its version (B-contract-choice, EAT-R005 and EAT-R006); dispatch,
- * grants, source admission and outcome validation; and the window between the load-phase measurement and a host that re-opens the
- * path instead of using the measured bytes.
+ * grants, source admission and outcome validation; a call without an options object of plain data members, or with a loader
+ * that is not a function; a descriptor path that is neither a readable file nor a directory (a FIFO, a device); the window
+ * between a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it and checks the opened
+ * handle as a regular file again, but no case plants a swap inside that window); hard links; a loader result whose member read
+ * runs code (an accessor or a proxy); and the window between the load-phase measurement and a host that re-opens the path
+ * instead of using the measured bytes.
  */
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
 import { type FileHandle, open, readFile, realpath, stat } from "node:fs/promises";
 import { isAbsolute, relative, sep } from "node:path";
 
-/** The one entrypoint descriptor schema version this boundary reads. */
+/** The entrypoint descriptor schema id this boundary admits, compared exactly (step 4). */
 export const MECHANICAL_ENTRYPOINT_SCHEMA = "mechanical-workflows/entrypoint/v1";
-/** The one descriptor status this boundary admits: the producer's own descriptor-only metadata status. */
+/** The descriptor status this boundary admits (step 6). */
 export const MECHANICAL_DESCRIPTOR_STATUS = "descriptor-only";
-/** The descriptor's closed member set, in the producer file's order; note is the one optional member. */
+/** The descriptor's member set in the producer file's order (pinned to the producer file's own keys); note may be absent (step 5). */
 export const MECHANICAL_DESCRIPTOR_MEMBERS = ["schema", "id", "implementation", "inputSchema", "outputSchema", "bindings", "status", "note"] as const;
 const OPTIONAL_MEMBERS: readonly string[] = ["note"];
 const IMPLEMENTATION_MEMBERS = ["package", "export"] as const;
-/** The canonical schema-reference grammar: one bare file name, lower-case, opening with a letter or digit, ending .schema.json. */
+/** The canonical schema-reference grammar (step 6): lower-case ASCII letters, digits, dots and hyphens only, opening with a letter or a digit, ending .schema.json. */
 export const MECHANICAL_SCHEMA_REF_PATTERN = /^[a-z0-9][a-z0-9.-]*\.schema\.json$/;
-/** A release-pin digest: the SHA-256 of exact bytes, lower-case hex. */
+/** A release-pin digest (step 1): sha256: then 64 lower-case hex digits. */
 export const MECHANICAL_DIGEST_PATTERN = /^sha256:[0-9a-f]{64}$/;
 
 /** One reviewed entrypoint: the only package, export, schema names and bindings an admitted descriptor may carry for its id. */
@@ -68,7 +83,7 @@ export interface MechanicalReviewedEntrypoint {
   readonly outputSchema: string;
   readonly bindings: readonly string[];
 }
-/** The FIXED allowlist: each id resolves exactly one reviewed entry, and that entry names exactly one host export. */
+/** The fixed allowlist, frozen with its entries and their bindings; each id names exactly one entry (R010-5). */
 export const MECHANICAL_REVIEWED_ENTRYPOINTS: readonly MechanicalReviewedEntrypoint[] = Object.freeze([
   Object.freeze({
     id: "mechanical.development.develop.v1",
@@ -118,7 +133,7 @@ export interface MechanicalArtifactMeasure {
   readonly realPath: string;
   readonly digest: string;
 }
-/** The artifact as the load phase hands it to the host loader: re-measured, with the very bytes that were hashed. */
+/** The artifact as the load phase hands it to the host loader: its realpath, the bytes the load read, and their digest (R008-1). */
 export interface MechanicalLoadableArtifact {
   readonly realPath: string;
   readonly digest: string;
@@ -156,10 +171,10 @@ const isDigest = (value: unknown): value is string => typeof value === "string" 
 const digestOf = (bytes: Uint8Array): string => `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
 const isExportFunction = (value: unknown): value is MechanicalExportFunction => typeof value === "function";
 const UTF8 = new TextDecoder("utf-8", { fatal: true });
-/** O_NOFOLLOW where the platform has it: a final link swapped in after realpath makes the open fail instead of being followed. */
+/** O_NOFOLLOW where the platform has it (the realpath-to-open window is NOT CLAIMED: see the header). */
 const READ_FLAGS = constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0);
 
-/** What load re-measures against: the request as validated, held privately so a resolution cannot be forged or retargeted. */
+/** What load re-measures against: the request as validated, held in a WeakMap keyed by the frozen resolution minted for it (R010-7, R010-10). */
 interface MintedResolution {
   readonly artifactPath: string;
   readonly approvedRoot: string;
@@ -167,7 +182,7 @@ interface MintedResolution {
 }
 const MINTED = new WeakMap<MechanicalResolvedEntrypoint, MintedResolution>();
 
-/** The one reviewed entry for an id, or undefined when the allowlist holds none (or, never by construction, more than one). */
+/** The reviewed entry for an id, or undefined unless the allowlist holds exactly one (R010-4, R010-5). */
 function reviewedEntry(id: string): MechanicalReviewedEntrypoint | undefined {
   const matches = MECHANICAL_REVIEWED_ENTRYPOINTS.filter(entry => entry.id === id);
   return matches.length === 1 ? matches[0] : undefined;
@@ -184,7 +199,7 @@ function schemaRefRefusal(field: "inputSchema" | "outputSchema", ref: unknown, r
 const sameBindings = (value: unknown, reviewed: readonly string[]): boolean =>
   Array.isArray(value) && value.length === reviewed.length && value.every((binding: unknown, index) => binding === reviewed[index]);
 
-/** Read one parsed descriptor against the allowlist, member by member in the producer file's order; the first refusal wins. */
+/** Steps 3 (the object test) to 6 of the header over one parsed value; the first refusal wins (R007-13). */
 function readDescriptor(value: unknown): { readonly ok: true; readonly entry: MechanicalReviewedEntrypoint } | Refusal {
   if (!plain(value)) return refused("descriptor", "wrong-type");
   if (!Object.hasOwn(value, "schema") || value.schema !== MECHANICAL_ENTRYPOINT_SCHEMA) return refused("schema", "schema-unsupported");
@@ -211,13 +226,13 @@ function readDescriptor(value: unknown): { readonly ok: true; readonly entry: Me
   return { ok: true, entry };
 }
 
-/** Strictly inside: a relative path from the root that is neither empty, nor the parent, nor under it, nor absolute. */
+/** Step 8: the relative path from the root is not empty, not .., does not start with ../ and is not absolute (on POSIX relative() returns no absolute path). */
 function insideRoot(root: string, path: string): boolean {
   const rel = relative(root, path);
   return rel !== "" && rel !== ".." && !rel.startsWith(`..${sep}`) && !isAbsolute(rel);
 }
 
-/** The bytes of a regular file at a realpath: checked as a file before it is opened, opened without following a final link. */
+/** Step 9 and step 10's read: stat says a regular file before any open (R011-12); the open asks O_NOFOLLOW and checks the handle again (that window is NOT CLAIMED). */
 async function readRegularFile(path: string): Promise<{ readonly ok: true; readonly bytes: Buffer } | Refusal> {
   try {
     if (!(await stat(path)).isFile()) return refused("artifact", "not-a-file");
@@ -241,8 +256,8 @@ interface ArtifactReading extends MechanicalArtifactMeasure {
   readonly bytes: Buffer;
 }
 /**
- * Resolve and measure the artifact: the root and the artifact by realpath, containment, then (at load) the realpaths validation
- * recorded, then a regular file whose bytes hash to the pin.
+ * Steps 7 to 10 of the header; with validated (the load phase) the realpaths validation recorded are compared between steps 8
+ * and 9 (R011-6, R011-14).
  */
 async function measureArtifact(artifactPath: string, approvedRoot: string, pinned: string, validated?: MechanicalArtifactMeasure): Promise<ArtifactReading | Refusal> {
   let root: string;
@@ -266,9 +281,11 @@ async function measureArtifact(artifactPath: string, approvedRoot: string, pinne
   return { ok: true, root, realPath, digest, bytes: read.bytes };
 }
 
-/** Validation: the pin, the exact descriptor bytes, the descriptor against the allowlist, then the artifact (see the header). */
+/** Validation: steps 1 to 10 of the header, the first refusal returned. */
 export async function resolveMechanicalEntrypoint(options: MechanicalEntrypointOptions): Promise<MechanicalEntrypointResolution> {
-  const { descriptorDigest, artifactDigest } = options.pin;
+  const pin: unknown = options.pin;
+  const descriptorDigest = plain(pin) ? pin.descriptorDigest : undefined;
+  const artifactDigest = plain(pin) ? pin.artifactDigest : undefined;
   if (!isDigest(descriptorDigest) || !isDigest(artifactDigest)) return refused("pin", "pin-malformed");
   let bytes: Buffer;
   try {
@@ -296,7 +313,7 @@ export async function resolveMechanicalEntrypoint(options: MechanicalEntrypointO
   return { ok: true, resolved };
 }
 
-/** The reviewed export read off what the loader returned, by the reviewed name only, when it is an own function member. */
+/** The reviewed export read off the loader's result (an object or a function) by the reviewed name, as its own member, when that member is a function (R010-6, R010-9). */
 function reviewedExport(namespace: unknown, name: string): MechanicalExportFunction | undefined {
   if ((typeof namespace !== "object" && typeof namespace !== "function") || namespace === null || !Object.hasOwn(namespace, name)) return undefined;
   const value: unknown = Reflect.get(namespace, name);
