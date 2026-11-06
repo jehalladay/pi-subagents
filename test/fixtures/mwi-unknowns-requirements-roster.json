@@ -1,0 +1,53 @@
+{
+  "bead": "wb-muip",
+  "note": "Vendored verbatim with read-only git show by the cutting seat (ws-01, g10-work-s228, 2026-11-06); each block runs from its requirement heading through its Adversarial mutant line, and sha256 is the SHA-256 of the block's lines joined by LF.",
+  "source": {
+    "branch": "master",
+    "commit": "0b25e14e084a5b1d612e780bc12a927b3a80dd62",
+    "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "e1282572e755a83939c89ec632b6bf9351e01508",
+    "fileSha256": "a3b30db58ba5ce5299a9ab273cbd72fa3169724fd510a6f07c5e593a1784ae83"
+  },
+  "group": {
+    "lines": "1472-1474",
+    "text": [
+      "## unknowns — Acquire missing producer evidence without upgrading audit claims",
+      "",
+      "(slice PI-0; owner Pi; gate: EVIDENCE-CENSUS)"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "EAT-R080",
+      "lines": "1476-1484",
+      "sha256": "7df06828082f8f6438260b78a86b937f2ee22f12c4e62143a4b742850df3a5f3",
+      "text": [
+        "### EAT-R080 — The prior-run census MUST distinguish repository absence from global absence",
+        "",
+        "- Statement: The prior-run census MUST distinguish repository absence from global absence.",
+        "- Authority: EVIDENCE_ACQUISITION | Type: evidence-acquisition | Owner: Pi | Slice: PI-0 | Bead: unknowns",
+        "- Claims: C0321 (UNDETERMINED), C0446 (SUPPORTED)",
+        "- Relations: R00695, R00706, R00707, R01180, R01181, R01245, X078, X079",
+        "- Conditions: C0321 UNDETERMINED. Missing artifact: producer-side joined receipt and authorized bounded external receipt census. External stores are not read in this phase; absence cannot block a new safe live journey.",
+        "- Acceptance: Read permitted producer receipt stores over an explicit bounded date/path range; join Pi invocation/session journal, Mechanical outcome and Forge operation at source pin. Report found witness or searched-scope absence, never universal never-ran.",
+        "- Adversarial mutant: Treat no in-repo filename hit as proof no external run occurred."
+      ]
+    },
+    {
+      "id": "EAT-R081",
+      "lines": "1486-1494",
+      "sha256": "72a463ffc49916f57a7489e24747df0a5ad32fd4b1183f69355e993c0c7b60e5",
+      "text": [
+        "### EAT-R081 — The Forge transport probe MUST settle the exit-zero failed-gate premise from producer evidence",
+        "",
+        "- Statement: The Forge transport probe MUST settle the exit-zero failed-gate premise from producer evidence.",
+        "- Authority: EVIDENCE_ACQUISITION | Type: evidence-acquisition | Owner: Pi | Slice: PI-0 | Bead: unknowns",
+        "- Claims: C0368 (UNDETERMINED)",
+        "- Relations: R00850, R00856, R00857, R00858, R00859",
+        "- Conditions: C0368 UNDETERMINED; named FORGE-TRANSPORT-CENSUS subgate. Guardrail remains mandatory regardless of whether pairing is realized.",
+        "- Acceptance: Pin Forge source/contract or collect native transcript pairing process exit, gate verdict and operation ID. Record explicit pairing if witnessed; otherwise scoped non-observation or UNDETERMINED, never infer it from adapter conditionals.",
+        "- Adversarial mutant: Use a synthetic exit-zero FAIL fixture as a producer receipt."
+      ]
+    }
+  ]
+}
