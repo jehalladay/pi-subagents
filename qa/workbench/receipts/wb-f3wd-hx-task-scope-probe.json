@@ -1,0 +1,214 @@
+{
+  "schema": "workbench.hx-task-scope-probe/v1",
+  "bead": "wb-f3wd",
+  "requirement": "EAT-R057",
+  "gate": "HX-TASK-SCOPE-PROBE",
+  "utc": "2026-11-06T12:11:25.033Z",
+  "probe": {
+    "script": "qa/workbench/hx-task-scope-probe.mjs",
+    "scriptSha256": "327985c673e75dc50c348613b916fef5dcbc413b3d302d38d8adf7b22243f1e7",
+    "judge": "qa/workbench/hx-task-scope-judge.mjs",
+    "judgeSha256": "d514d8470f618b4c87bd2028210b8520dba028f66934ccb23449a40dc3cd1436"
+  },
+  "producer": {
+    "name": "hx",
+    "version": "0.1.0",
+    "binarySha256": "e0efc5f18763678ba82707c869c886dbdea8317e4dcfd704522fd6157354c690",
+    "hxsVersion": "1.0",
+    "protocol": "hxs/1.0",
+    "binaryOrigin": "path",
+    "capabilities": {
+      "count": 84,
+      "taskNamed": []
+    },
+    "sdk": {
+      "name": "@hyperunix/sdk",
+      "version": "0.1.0",
+      "reported": "0.1.0"
+    }
+  },
+  "task": {
+    "id": "hx-task-scope-probe",
+    "kind": "hx.fs/regular-file",
+    "root": ".",
+    "baseRevision": "ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+    "digest": "sha256:40e694cc6de6e3bf7db7ca4d6d300a10a8d818cd94a1308c898539355939e908"
+  },
+  "observations": [
+    {
+      "id": "filesystem-live",
+      "query": {
+        "operation": "find",
+        "kind": "hx.fs/regular-file",
+        "root": ".",
+        "view": null,
+        "bestEffort": false
+      },
+      "argv": [
+        "find",
+        "--kind",
+        "hx.fs/regular-file",
+        "--workspace",
+        "<workspace>",
+        "--hxs",
+        "--",
+        "."
+      ],
+      "scope": "filesystem",
+      "outcome": "result",
+      "exitCode": 3,
+      "signal": null,
+      "terminal": "partial",
+      "statusKind": "incomplete",
+      "terminalReached": true,
+      "diagnostics": [
+        {
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "severity": "error",
+          "reason": null
+        }
+      ],
+      "completeness": "incomplete",
+      "licensesAbsence": false,
+      "coverageScopes": [
+        "fs:<workspace>",
+        "{\"path\":[],\"scope\":\"fs-subtree\"}"
+      ],
+      "view": "hx.view/workspace-head",
+      "revision": null,
+      "queryDigest": null,
+      "digestSource": "absent",
+      "answerCount": 14,
+      "frames": 166
+    },
+    {
+      "id": "filesystem-live-best-effort",
+      "query": {
+        "operation": "find",
+        "kind": "hx.fs/regular-file",
+        "root": ".",
+        "view": null,
+        "bestEffort": true
+      },
+      "argv": [
+        "find",
+        "--kind",
+        "hx.fs/regular-file",
+        "--best-effort",
+        "--workspace",
+        "<workspace>",
+        "--hxs",
+        "--",
+        "."
+      ],
+      "scope": "filesystem",
+      "outcome": "result",
+      "exitCode": 0,
+      "signal": null,
+      "terminal": "complete",
+      "statusKind": "incomplete",
+      "terminalReached": true,
+      "diagnostics": [
+        {
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "severity": "warning",
+          "reason": null
+        }
+      ],
+      "completeness": "incomplete",
+      "licensesAbsence": false,
+      "coverageScopes": [
+        "fs:<workspace>",
+        "{\"path\":[],\"scope\":\"fs-subtree\"}"
+      ],
+      "view": "hx.view/workspace-head",
+      "revision": null,
+      "queryDigest": null,
+      "digestSource": "absent",
+      "answerCount": 14,
+      "frames": 166
+    },
+    {
+      "id": "revision-pinned",
+      "query": {
+        "operation": "find",
+        "kind": "hx.fs/regular-file",
+        "root": ".",
+        "view": "git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+        "bestEffort": false
+      },
+      "argv": [
+        "find",
+        "--kind",
+        "hx.fs/regular-file",
+        "--view",
+        "git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+        "--workspace",
+        "<workspace>",
+        "--hxs",
+        "--",
+        "."
+      ],
+      "scope": "filesystem",
+      "outcome": "process-failure",
+      "exitCode": 4,
+      "signal": null,
+      "terminal": "provider_failed",
+      "statusKind": null,
+      "terminalReached": false,
+      "diagnostics": [
+        {
+          "code": "HX-RUNTIME-INTERNAL-FAILURE",
+          "severity": "fatal",
+          "reason": "view-binding-pending: hx find under --view git:ac25292057ece4fc0e361eb806c0abe26ccd60e6"
+        }
+      ],
+      "completeness": null,
+      "licensesAbsence": false,
+      "coverageScopes": [],
+      "view": null,
+      "revision": null,
+      "queryDigest": null,
+      "digestSource": "absent",
+      "answerCount": null,
+      "frames": 0
+    }
+  ],
+  "verdict": "task-scope-unsupported",
+  "capable": [],
+  "reasons": {
+    "filesystem-live": [
+      "exit-nonzero",
+      "coverage-not-complete",
+      "absence-unlicensed",
+      "scope-not-task",
+      "revision-unbound",
+      "query-digest-absent"
+    ],
+    "filesystem-live-best-effort": [
+      "coverage-not-complete",
+      "absence-unlicensed",
+      "scope-not-task",
+      "revision-unbound",
+      "query-digest-absent"
+    ],
+    "revision-pinned": [
+      "process-failed",
+      "exit-nonzero",
+      "terminal-unreached",
+      "coverage-not-complete",
+      "absence-unlicensed",
+      "scope-not-task",
+      "revision-unbound",
+      "query-digest-absent"
+    ]
+  },
+  "blocker": {
+    "gate": "HX-TASK-SCOPE-PROBE",
+    "scope": "native-task-scope",
+    "witness": "unsupported",
+    "notBlocked": [
+      "git-census"
+    ]
+  }
+}
