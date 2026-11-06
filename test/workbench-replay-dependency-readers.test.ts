@@ -4,17 +4,35 @@
  * slice PI-4, EAT-R017..EAT-R020 (ATOMIC-REQUIREMENTS.md@0b25e14e, pi-subagents master); the acceptance lines are quoted
  * in test/workbench-claude-replay-dependencies.test.ts, which judges the host's use of these readings.
  *
- * Each row here judges one reader over real files in scratch directories:
- *  - the source reading (EAT-R017) composes the Git HEAD commit, the HEAD tree and the candidate digest it is handed, and
- *    moves with each one alone; what the candidate covers (the index and the file bytes) is judged over a real
- *    repository by test/workbench-replay-dependencies-wiring.test.ts;
- *  - the instruction reading (EAT-R018) reads the bytes at the paths instructionPaths names for each enabled setting
- *    source (written out in R-INS-PATHS) and moves when the file at any of them changes; with no source enabled it reads
- *    no file;
- *  - the provider reading (EAT-R019) composes the runtime artifact digest and the provider contract digest it is handed
- *    with the bytes of each enabled source's setting file;
+ * Each row here judges one reader over real files in scratch directories, or a pure path list. This suite claims what
+ * its rows pin, and nothing wider (cut #3: the enumerate form of the R-B646 claim set):
+ *  - the source reading (EAT-R017) composes the HEAD commit, the HEAD tree and the candidate digest it is handed and
+ *    moves with each one alone (R-SRC-EQUAL, R-SRC-COMMIT/TREE/DIRTY); it is unknown by fixed reasons for a candidate
+ *    not measured or empty and a HEAD missing or lacking its commit or tree (R-SRC-UNKNOWN, R-SRC-UNKNOWN-REASONS);
+ *    which Git forms move the candidate is test/workbench-replay-dependencies-wiring.test.ts's claim;
+ *  - instructionPaths (EAT-R018) is written out for a three-level cwd, the filesystem root and no source (R-INS-PATHS),
+ *    and derived from the cwd's own segments for a 2047-level cwd and cwds below the home directory, a scratch in the
+ *    temp directory and the working directory (R-INS-PATHS-DEEP); the instruction reading moves with a file at each instruction location and at each memory file
+ *    of the parent and the grandparent (R-INS-<source>, R-INS-PATHS-READ), of the fourth and fifth proper ancestors
+ *    (R-INS-ANCESTOR-FAR) and at and above a Git work tree's root (R-INS-ANCESTOR-ABOVE-GIT); with no source enabled it
+ *    names no path (R-INS-ISOLATION, R-INS-ISOLATION-ALL); a disabled source's files leave it alone, in any source order
+ *    (R-INS-SCOPE, R-INS-SCOPE-ALL); a missing path reads as absent (R-INS-ABSENT); links are followed (R-INS-SYMLINK,
+ *    R-INS-SYMLINK-FILE); a .claude that is a regular file reads as absent below it (R-INS-BELOW-FILE);
+ *  - the provider reading (EAT-R019) moves with each handed digest alone (R-PRV-VERSION) and with each enabled source's
+ *    setting file and no other source's (R-PRV-SETTINGS-<source>); it refuses a missing or malformed identity
+ *    (R-PRV-UNKNOWN, R-PRV-IDENTITY); a .claude that is a regular file reads as absent below it (R-PRV-BELOW-FILE);
+ *  - both file readers walk a directory location as R-WALK-* pin: the exact readings of one planted tree each
+ *    (R-WALK-instructions-exact, R-WALK-provider-exact), dot-named entries, a directory reached a second time through a
+ *    link, a config directory that is a regular file, and two links naming each other (R-WALK-<reader>-*);
  *  - an unmeasurable dependency (EAT-R020) is an UNKNOWN reading with a fixed reason and no digest, never an empty or
- *    stable digest standing in for one (the requirement's adversarial mutant); R-UNK-* pin each case for both file readers.
+ *    stable digest standing in for one (the requirement's adversarial mutant), in the cases R-UNK-* pin for both file
+ *    readers, budgets counted within one location and across locations and sources among them;
+ *  - the helpers: the config directory (R-CONFIG-DIR, R-CONFIG-DIR-BLANK), the measured shape (R-MEASURED,
+ *    R-MEASURED-SHAPES, R-READING-SHAPE), the default budget (R-BUDGET-TABLE) and the source names (R-SOURCES).
+ * RESIDUALS (named, each with its pinned quiet row): R-UNLISTED-CONFIG-FILES R-Q-UNLISTED-CONFIG; R-IMPORTED-MEMORY
+ * R-Q-IMPORTED-MEMORY; R-NESTED-MEMORY R-Q-NESTED-MEMORY; R-MANAGED-POLICY R-Q-MANAGED-POLICY.
+ * NOT CLAIMED by this suite: entry names other than those its rows plant; a cwd string longer than Linux's
+ * 4096-byte PATH_MAX holds; a socket or a block device below a location.
  * The locations are written out literally below rather than read back from the module, so dropping one from the module's
  * table reds both the frozen table row and that location's own row; R-INS-PLANTS-SHAPE ties the plant rows back to the
  * module's tables, so dropping a plant row reds as well.
@@ -23,7 +41,8 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, rmSync, type Stats, statSync, symlinkSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { homedir } from "node:os";
+import { dirname, isAbsolute, join, resolve } from "node:path";
 import type { SettingSource } from "@anthropic-ai/claude-agent-sdk";
 import { afterEach, describe, expect, it } from "vitest";
 import { identityDigest } from "../src/workbench/identity.js";
@@ -122,7 +141,7 @@ function expectUnknownBecause(reading: ReplayDependency, reason: string): void {
   expect(reading).toEqual({ state: "unknown", reason });
 }
 
-describe("wb-413a source reading: Git commit, tree and dirty-file digest (EAT-R017)", () => {
+describe("wb-413a source reading: the HEAD commit, the HEAD tree and the handed candidate digest (EAT-R017)", () => {
   const head = { commit: "c".repeat(40), tree: "t".repeat(40) };
   const candidate = { sourceBasis: digestOf("index + every Git-visible file, v1"), state: "measured" as const };
 
@@ -153,7 +172,7 @@ describe("wb-413a source reading: Git commit, tree and dirty-file digest (EAT-R0
   });
 });
 
-describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R018)", () => {
+describe("wb-413a instruction reading: the bytes at the instruction paths (EAT-R018)", () => {
   it("R-INS-TABLE: the instruction locations, written out (frozen shape of CLAUDE_INSTRUCTION_LOCATIONS and CLAUDE_ANCESTOR_MEMORY)", () => {
     expect(CLAUDE_INSTRUCTION_LOCATIONS).toEqual({
       user: ["CLAUDE.md", "skills", "agents", "commands", "output-styles", "rules"],
@@ -163,7 +182,7 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(CLAUDE_ANCESTOR_MEMORY).toEqual({ user: [], project: ["CLAUDE.md", ".claude/CLAUDE.md"], local: ["CLAUDE.local.md"] });
   });
 
-  it("R-INS-ISOLATION: settingSources [] reads no file, so no instruction file moves the reading", () => {
+  it("R-INS-ISOLATION: settingSources [] names no path, so four planted instruction files leave the reading alone", () => {
     const at = layout();
     const before = digestFrom(instructionDependency(at.cwd, [], at.config));
     write(join(at.cwd, "CLAUDE.md"), "project memory");
@@ -228,7 +247,7 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(digestFrom(instructionDependency(at.cwd, ["user", "project"], at.config))).toBe(digestFrom(instructionDependency(at.cwd, ["project", "user", "project"], at.config)));
   });
 
-  it("R-INS-SYMLINK: a skill reached through a symbolic link is read as its target's bytes", () => {
+  it("R-INS-SYMLINK: a user skill directory reached through a symbolic link is read as its target's bytes", () => {
     const at = layout();
     const target = join(at.root, "shared-skill", "SKILL.md");
     write(target, "shared skill v1");
@@ -239,7 +258,7 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(digestFrom(instructionDependency(at.cwd, ["user"], at.config))).not.toBe(v1);
   });
 
-  it("R-INS-UNKNOWN: an entry the reader cannot read is an unknown reading, never a partial or empty digest", () => {
+  it("R-INS-UNKNOWN: a FIFO, a directory cycle, a walk past an explicit budget of files or of bytes and an unrecognized source each make the instruction reading unknown, never a partial or empty digest", () => {
     const fifo = layout();
     mkdirSync(join(fifo.cwd, ".claude", "skills"), { recursive: true });
     execFileSync("mkfifo", [join(fifo.cwd, ".claude", "skills", "pipe")]);
@@ -317,7 +336,7 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(PLANTS).toHaveLength(expected);
   });
 
-  it("R-INS-PATHS: instructionPaths names each enabled source's locations under its base, then its memory files in every proper ancestor of the cwd, nearest first, ending at the filesystem root", () => {
+  it("R-INS-PATHS: written out for a three-level cwd under every source, instructionPaths names each enabled source's locations under its base, then its memory files in each of the cwd's three proper ancestors and the filesystem root, nearest first; for the filesystem root as the cwd, and for no source, it is written out too", () => {
     expect(instructionPaths("/work/repo/pkg", ["local", "project", "user", "project"], "/home/operator/.claude")).toEqual([
       "/home/operator/.claude/CLAUDE.md",
       "/home/operator/.claude/skills",
@@ -356,7 +375,7 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(instructionPaths("/work/repo/pkg", [], "/home/operator/.claude")).toEqual([]);
   });
 
-  it("R-INS-PATHS-READ: a file at each path instructionPaths names inside the scratch moves that source's reading, so the reader reads every path it names", () => {
+  it("R-INS-PATHS-READ: a file at each path instructionPaths names inside the scratch moves that source's reading: 6 user, 11 project and 3 local paths", () => {
     const counts: Record<string, number> = {};
     for (const source of ["user", "project", "local"] as const) {
       const at = layout();
@@ -415,6 +434,74 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
     expect(digestFrom(instructionDependency(at.cwd, ["user"], at.config))).not.toBe(v1);
   });
 
+  it("R-INS-PATHS-DEEP: for a 2047-level cwd (the deepest one-letter path PATH_MAX holds) and for cwds below the home directory, a scratch in the temp directory and the working directory, the project and local memory paths follow the locations in each proper ancestor of the cwd, nearest first, ending at the filesystem root, as the cwd's own segments spell them", () => {
+    // The oracle spells each ancestor from the cwd's own segments, never through node:path.
+    const ancestors = (cwd: string): string[] => {
+      const segments = cwd.split("/").filter(Boolean);
+      return segments.map((_, k) => `/${segments.slice(0, segments.length - 1 - k).join("/")}`);
+    };
+    const under = (directory: string, name: string): string => (directory === "/" ? `/${name}` : `${directory}/${name}`);
+    const config = "/home/operator/.claude";
+    const deepest = `/${Array.from({ length: 2047 }, () => "a").join("/")}`;
+    expect(deepest).toHaveLength(4094);
+    // A scratch is a child of the temp directory, so a cwd below one has the temp directory among its ancestors.
+    for (const cwd of [deepest, resolve(homedir(), "work", "pkg"), join(layout().root, "work", "pkg"), process.cwd(), "/x"]) {
+      const label = cwd.slice(0, 80);
+      expect(ancestors(cwd).at(-1), label).toBe("/");
+      expect(instructionPaths(cwd, ["project"], config), label).toEqual([
+        ...["CLAUDE.md", ".claude/CLAUDE.md", ".claude/skills", ".claude/agents", ".claude/commands", ".claude/output-styles", ".claude/rules"].map(location => under(cwd, location)),
+        ...ancestors(cwd).flatMap(ancestor => [under(ancestor, "CLAUDE.md"), under(ancestor, ".claude/CLAUDE.md")]),
+      ]);
+      expect(instructionPaths(cwd, ["local"], config), label).toEqual([under(cwd, "CLAUDE.local.md"), ...ancestors(cwd).map(ancestor => under(ancestor, "CLAUDE.local.md"))]);
+      expect(instructionPaths(cwd, ["user"], config), label).toEqual(["CLAUDE.md", "skills", "agents", "commands", "output-styles", "rules"].map(location => under(config, location)));
+    }
+  });
+
+  it("R-INS-ANCESTOR-FAR: a project CLAUDE.md and a local CLAUDE.local.md at the cwd's fourth proper ancestor, and a project .claude/CLAUDE.md and a local CLAUDE.local.md at its fifth, each move that source's reading", () => {
+    const at = layout();
+    // cwd = <scratch>/a/b/c/d/e: its fourth proper ancestor is <scratch>/a and its fifth is <scratch>.
+    const cwd = join(at.root, "a", "b", "c", "d", "e");
+    mkdirSync(cwd, { recursive: true });
+    const plants: readonly (readonly [ClaudeSettingSource, string])[] = [
+      ["project", join(at.root, "a", "CLAUDE.md")],
+      ["local", join(at.root, "a", "CLAUDE.local.md")],
+      ["project", join(at.root, ".claude", "CLAUDE.md")],
+      ["local", join(at.root, "CLAUDE.local.md")],
+    ];
+    for (const [source, path] of plants) {
+      write(path, "far ancestor v1");
+      const v1 = digestFrom(instructionDependency(cwd, [source], at.config));
+      write(path, "far ancestor v2");
+      expect(digestFrom(instructionDependency(cwd, [source], at.config)), path).not.toBe(v1);
+      rmSync(path);
+    }
+  });
+
+  it("R-INS-ANCESTOR-ABOVE-GIT: for a cwd inside a Git work tree, a project CLAUDE.md at the work tree's root and one in the directory above it each move the reading", () => {
+    const at = layout();
+    const repo = join(at.root, "outer", "repo");
+    const cwd = join(repo, "pkg");
+    mkdirSync(cwd, { recursive: true });
+    execFileSync("git", ["init", "-q", repo]);
+    for (const memory of [join(repo, "CLAUDE.md"), join(at.root, "outer", "CLAUDE.md")]) {
+      write(memory, "memory above the cwd v1");
+      const v1 = digestFrom(instructionDependency(cwd, ["project"], at.config));
+      write(memory, "memory above the cwd v2");
+      expect(digestFrom(instructionDependency(cwd, ["project"], at.config)), memory).not.toBe(v1);
+      rmSync(memory);
+    }
+  });
+
+  it("R-INS-BELOW-FILE: a .claude that is a regular file, at the cwd or at its parent, leaves the project reading measured and equal to the reading with no .claude there (each path below it reads as absent)", () => {
+    const at = layout();
+    const absent = digestFrom(instructionDependency(at.cwd, ["project"], at.config));
+    for (const base of [at.cwd, at.parent]) {
+      writeFileSync(join(base, ".claude"), "a file, not a directory");
+      expect(digestFrom(instructionDependency(at.cwd, ["project"], at.config)), base).toBe(absent);
+      rmSync(join(base, ".claude"));
+    }
+  });
+
   it("R-SOURCES: the readers know exactly the SDK's setting-source names, user, project and local, and each table keys those alone", () => {
     const sdk: readonly SettingSource[] = ["user", "project", "local"];
     // Both assignments typecheck only while ClaudeSettingSource and the SDK's SettingSource are the same three names.
@@ -424,14 +511,14 @@ describe("wb-413a instruction reading: skill and system instruction bytes (EAT-R
   });
 });
 
-describe("wb-413a provider reading: effective provider version and settings (EAT-R019)", () => {
+describe("wb-413a provider reading: the handed identity's two digests and the setting files (EAT-R019)", () => {
   const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
 
   it("R-PRV-TABLE: the setting file of each source, written out (frozen shape of CLAUDE_SETTINGS_LOCATIONS)", () => {
     expect(CLAUDE_SETTINGS_LOCATIONS).toEqual({ user: ["settings.json"], project: [".claude/settings.json"], local: [".claude/settings.local.json"] });
   });
 
-  it("R-PRV-VERSION: the digest moves with the installed runtime artifacts alone and with the provider contracts alone", () => {
+  it("R-PRV-VERSION: the digest moves with the handed runtime artifact digest alone and with the handed provider contract digest alone", () => {
     const at = layout();
     const base = digestFrom(providerDependency(identity, at.cwd, [], at.config));
     expect(digestFrom(providerDependency({ ...identity }, at.cwd, [], at.config))).toBe(base);
@@ -459,7 +546,7 @@ describe("wb-413a provider reading: effective provider version and settings (EAT
     });
   }
 
-  it("R-PRV-UNKNOWN: no invocation identity, a malformed digest or an unreadable setting file is an unknown reading", () => {
+  it("R-PRV-UNKNOWN: no invocation identity, an empty or bare-prefix digest, or a FIFO at the user setting file is an unknown reading", () => {
     const at = layout();
     expectUnknown(providerDependency(undefined, at.cwd, [], at.config));
     expectUnknown(providerDependency({ ...identity, runtimeArtifactDigest: "" }, at.cwd, [], at.config));
@@ -479,6 +566,171 @@ describe("wb-413a provider reading: effective provider version and settings (EAT
       expectUnknownBecause(providerDependency({ ...identity, providerContractDigest: bad }, at.cwd, [], at.config), "provider-identity-unmeasured");
     }
   });
+
+  it("R-PRV-BELOW-FILE: a .claude that is a regular file at the cwd leaves the project and the local provider readings measured and equal to the readings with no .claude there (each setting path below it reads as absent)", () => {
+    const at = layout();
+    const absent = (["project", "local"] as const).map(source => digestFrom(providerDependency(identity, at.cwd, [source], at.config)));
+    writeFileSync(join(at.cwd, ".claude"), "a file, not a directory");
+    expect((["project", "local"] as const).map(source => digestFrom(providerDependency(identity, at.cwd, [source], at.config)))).toEqual(absent);
+  });
+});
+
+describe("wb-413a walks of both file readers below a directory location (EAT-R018, EAT-R019)", () => {
+  const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
+  type Read = (at: Layout, sources?: readonly string[]) => ReplayDependency;
+  /** [reader, the location it reads under the user source (below the config directory), a reading of it]. */
+  const WALKERS: readonly (readonly ["instructions" | "provider", string, Read])[] = [
+    ["instructions", "skills", (at, sources = ["user"]) => instructionDependency(at.cwd, sources, at.config)],
+    ["provider", "settings.json", (at, sources = ["user"]) => providerDependency(identity, at.cwd, sources, at.config)],
+  ];
+  /** One path written as v1, then as v2, then as v1 again: the reading moves and comes back. */
+  function expectMovesAndRestores(at: Layout, read: Read, path: string): void {
+    write(path, "walked bytes v1");
+    const v1 = digestFrom(read(at));
+    write(path, "walked bytes v2");
+    expect(digestFrom(read(at)), path).not.toBe(v1);
+    write(path, "walked bytes v1");
+    expect(digestFrom(read(at)), path).toBe(v1);
+  }
+
+  for (const [reader, location, read] of WALKERS) {
+    it(`R-WALK-${reader}-dotnames: below the ${location} location, a dot-named file one level down and two levels down, a file in a dot-named directory and a dot-named file in it each move the ${reader} reading, and restoring its bytes restores it`, () => {
+      const at = layout();
+      const dir = join(at.config, location);
+      for (const relative of [".index.md", "review/.notes.md", ".drafts/plan.md", ".drafts/.hidden.md"]) expectMovesAndRestores(at, read, join(dir, relative));
+    });
+
+    it(`R-WALK-${reader}-diamond: below the ${location} location, a directory reached a second time through a link that is not below it is read again: the ${reader} reading is measured, moves with that directory's bytes, and moves when the second link goes`, () => {
+      const at = layout();
+      const dir = join(at.config, location);
+      write(join(dir, "a", "entry.md"), "shared entry v1");
+      symlinkSync(join(dir, "a"), join(dir, "b"));
+      const both = digestFrom(read(at));
+      write(join(dir, "a", "entry.md"), "shared entry v2");
+      expect(digestFrom(read(at))).not.toBe(both);
+      write(join(dir, "a", "entry.md"), "shared entry v1");
+      expect(digestFrom(read(at))).toBe(both);
+      rmSync(join(dir, "b"));
+      expect(digestFrom(read(at))).not.toBe(both);
+    });
+
+    it(`R-WALK-${reader}-below-file: a config directory that is a regular file leaves the ${reader} reading measured and equal to the reading with no config directory (each path below it reads as absent)`, () => {
+      const at = layout();
+      rmSync(at.config, { recursive: true });
+      const absent = digestFrom(read(at));
+      writeFileSync(at.config, "a file, not a directory");
+      expect(digestFrom(read(at))).toBe(absent);
+    });
+
+    it(`R-WALK-${reader}-symlink-loop: below the ${location} location, two symbolic links naming each other make the ${reader} reading unknown (dependency-unreadable)`, () => {
+      const at = layout();
+      const dir = join(at.config, location);
+      mkdirSync(dir, { recursive: true });
+      digestFrom(read(at));
+      symlinkSync(join(dir, "loop-b"), join(dir, "loop-a"));
+      symlinkSync(join(dir, "loop-a"), join(dir, "loop-b"));
+      expectUnknownBecause(read(at), "dependency-unreadable");
+    });
+  }
+
+  /** A file reading as the module records it: the path and the sha256 of the bytes planted there. */
+  const file = (path: string, text: string): { path: string; digest: string } => ({ path, digest: digestOf(text) });
+  const mark = (path: string, digest: "directory" | "absent"): { path: string; digest: string } => ({ path, digest });
+
+  it("R-WALK-instructions-exact: the user instruction reading of a planted config directory is identityDigest of exactly the readings written out here: each named path in order; a directory as a mark, then its entries in UTF-16 code-unit name order, the eighteen planted names among them (dot-named files and directories, .git, node_modules, .DS_Store, a trailing tilde, a space, upper case, no extension, .json, a Latin-1 name, and a supplementary-plane and a fullwidth name that byte order would swap); a link to a directory inside or outside the location followed to its entries; a dangling link and a missing location as absent; and a location that is a regular file by its bytes", () => {
+    const at = layout();
+    const config = at.config;
+    const skills = join(config, "skills");
+    const resume = `r${String.fromCodePoint(0xe9)}sum${String.fromCodePoint(0xe9)}.md`;
+    // A supplementary-plane name and a fullwidth name: UTF-16 code-unit order puts the first (a surrogate pair, 0xD83D)
+    // before the second (0xFF21), while byte order (strcmp over UTF-8, the order the listing comes back in here) puts
+    // the second (0xEF) before the first (0xF0), so this pair tells the two orders apart.
+    const supplementary = `${String.fromCodePoint(0x1f600)}.md`;
+    const fullwidth = `${String.fromCodePoint(0xff21)}.md`;
+    // Planted out of name order, so a walk in listing order would not happen to match.
+    write(join(skills, "with space.md"), "space");
+    write(join(skills, "review", "SKILL.md"), "skill");
+    write(join(skills, "review", ".notes.md"), "notes");
+    write(join(skills, "a", "entry.md"), "entry");
+    symlinkSync(join(skills, "a"), join(skills, "b"));
+    write(join(skills, ".index.md"), "index");
+    write(join(skills, "UPPER.MD"), "upper");
+    write(join(skills, "noext"), "noext");
+    write(join(skills, "data.json"), "{}");
+    write(join(skills, ".drafts", "plan.md"), "plan");
+    write(join(skills, "notes~"), "backup");
+    write(join(skills, resume), "cv");
+    write(join(skills, "node_modules", "x.js"), "x");
+    write(join(skills, ".git", "HEAD"), "ref: main");
+    write(join(skills, ".DS_Store"), "ds");
+    write(join(skills, fullwidth), "fullwidth");
+    write(join(skills, supplementary), "supplementary");
+    symlinkSync(join(at.root, "nowhere"), join(skills, "dangling"));
+    write(join(at.root, "shared-skill", "SKILL.md"), "shared");
+    symlinkSync(join(at.root, "shared-skill"), join(skills, "shared"));
+    write(join(config, "CLAUDE.md"), "memory");
+    write(join(config, "commands"), "commands as a file");
+    mkdirSync(join(config, "rules"));
+    const files = [
+      file(join(config, "CLAUDE.md"), "memory"),
+      mark(skills, "directory"),
+      file(join(skills, ".DS_Store"), "ds"),
+      mark(join(skills, ".drafts"), "directory"),
+      file(join(skills, ".drafts", "plan.md"), "plan"),
+      mark(join(skills, ".git"), "directory"),
+      file(join(skills, ".git", "HEAD"), "ref: main"),
+      file(join(skills, ".index.md"), "index"),
+      file(join(skills, "UPPER.MD"), "upper"),
+      mark(join(skills, "a"), "directory"),
+      file(join(skills, "a", "entry.md"), "entry"),
+      mark(join(skills, "b"), "directory"),
+      file(join(skills, "b", "entry.md"), "entry"),
+      mark(join(skills, "dangling"), "absent"),
+      file(join(skills, "data.json"), "{}"),
+      mark(join(skills, "node_modules"), "directory"),
+      file(join(skills, "node_modules", "x.js"), "x"),
+      file(join(skills, "noext"), "noext"),
+      file(join(skills, "notes~"), "backup"),
+      mark(join(skills, "review"), "directory"),
+      file(join(skills, "review", ".notes.md"), "notes"),
+      file(join(skills, "review", "SKILL.md"), "skill"),
+      file(join(skills, resume), "cv"),
+      mark(join(skills, "shared"), "directory"),
+      file(join(skills, "shared", "SKILL.md"), "shared"),
+      file(join(skills, "with space.md"), "space"),
+      file(join(skills, supplementary), "supplementary"),
+      file(join(skills, fullwidth), "fullwidth"),
+      mark(join(config, "agents"), "absent"),
+      file(join(config, "commands"), "commands as a file"),
+      mark(join(config, "output-styles"), "absent"),
+      mark(join(config, "rules"), "directory"),
+    ];
+    expect(instructionDependency(at.cwd, ["user"], config)).toEqual({ state: "measured", digest: identityDigest("claude-replay-instructions", { sources: ["user"], files }) });
+  });
+
+  it("R-WALK-provider-exact: the provider reading under the local, user and project sources (named in that order) is identityDigest of the two handed digests, the sources in source order and exactly the setting readings written out here: the user file by its bytes, the missing project file as absent, and a local setting path that is a directory as a mark and then its entries in name order", () => {
+    const at = layout();
+    const local = join(at.cwd, ".claude", "settings.local.json");
+    write(join(at.config, "settings.json"), '{"model":"claude-opus-5-5"}');
+    write(join(local, "base.json"), "{}");
+    write(join(local, ".override.json"), '{"x":1}');
+    const settings = [
+      file(join(at.config, "settings.json"), '{"model":"claude-opus-5-5"}'),
+      mark(join(at.cwd, ".claude", "settings.json"), "absent"),
+      mark(local, "directory"),
+      file(join(local, ".override.json"), '{"x":1}'),
+      file(join(local, "base.json"), "{}"),
+    ];
+    expect(providerDependency(identity, at.cwd, ["local", "user", "project"], at.config)).toEqual({
+      state: "measured",
+      digest: identityDigest("claude-replay-provider", {
+        runtimeArtifacts: identity.runtimeArtifactDigest,
+        providerContracts: identity.providerContractDigest,
+        sources: ["user", "project", "local"],
+        settings,
+      }),
+    });
+  });
 });
 
 describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R020)", () => {
@@ -492,6 +744,7 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
   /** [case, what is planted below the location (a directory), the fixed reason]. */
   const CASES: readonly (readonly [string, (dir: string) => void, string])[] = [
     ["not-a-file", dir => { execFileSync("mkfifo", [join(dir, "pipe")]); }, "dependency-not-a-file"],
+    ["device", dir => { symlinkSync("/dev/null", join(dir, "null")); }, "dependency-not-a-file"],
     ["cycle", dir => { symlinkSync(dir, join(dir, "again")); }, "dependency-cycle"],
     ["unreadable-directory", dir => { write(join(dir, "locked", "entry.md"), "locked"); chmodSync(join(dir, "locked"), 0o000); }, "dependency-unreadable"],
     ["unreadable-file", dir => { write(join(dir, "locked.md"), "locked"); chmodSync(join(dir, "locked.md"), 0o000); }, "dependency-unreadable"],
@@ -528,7 +781,7 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
       expect(digestFrom(read(at))).not.toBe(v1);
     });
 
-    it(`R-UNK-${reader}-budget: past an explicit budget of files or of bytes the ${reader} reading is unknown (dependency-over-budget), and at the budget it is measured`, () => {
+    it(`R-UNK-${reader}-budget: within one location, two 4-byte files are measured under {files: 2, bytes: 8}, and the ${reader} reading is unknown (dependency-over-budget) under {files: 1} or {bytes: 7}`, () => {
       const at = layout();
       write(join(at.config, location, "a.md"), "1234");
       write(join(at.config, location, "b.md"), "5678");
@@ -537,7 +790,7 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
       expectUnknownBecause(read(at, ["user"], { files: 2, bytes: 7 }), "dependency-over-budget");
     });
 
-    it(`R-UNK-${reader}-default-budget: under the default budget 2000 files are measured and a 2001st makes the ${reader} reading unknown, and 32 MiB is measured and one byte more makes it unknown`, () => {
+    it(`R-UNK-${reader}-default-budget: in one location under the default budget, 2000 files are measured and a 2001st makes the ${reader} reading unknown, and a 32 MiB file is measured and one byte more makes it unknown`, () => {
       const many = layout();
       const dir = join(many.config, location);
       mkdirSync(dir, { recursive: true });
@@ -571,12 +824,43 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
   });
 });
 
+describe("wb-413a budgets counted over the whole reading (EAT-R020)", () => {
+  const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
+
+  it("R-UNK-instructions-budget-across: the budget counts every path of one instruction reading: a 4-byte file in each of two user locations, and a 4-byte file under each of the user and project sources, are unknown under {files: 1} or {bytes: 7} (dependency-over-budget) and measured under {files: 2, bytes: 8}", () => {
+    const locations = layout();
+    write(join(locations.config, "skills", "a.md"), "1234");
+    write(join(locations.config, "agents", "b.md"), "5678");
+    const sources = layout();
+    write(join(sources.config, "skills", "a.md"), "1234");
+    write(join(sources.cwd, "CLAUDE.md"), "5678");
+    for (const [at, enabled] of [[locations, ["user"]], [sources, ["user", "project"]]] as const) {
+      digestFrom(instructionDependency(at.cwd, enabled, at.config, { files: 2, bytes: 8 }));
+      expectUnknownBecause(instructionDependency(at.cwd, enabled, at.config, { files: 1, bytes: 8 }), "dependency-over-budget");
+      expectUnknownBecause(instructionDependency(at.cwd, enabled, at.config, { files: 2, bytes: 7 }), "dependency-over-budget");
+    }
+  });
+
+  it("R-UNK-provider-budget-across: the budget counts every setting path of one provider reading: the user and the project setting files of 4 bytes each are unknown under {files: 1} or {bytes: 7} (dependency-over-budget) and measured under {files: 2, bytes: 8}", () => {
+    const at = layout();
+    write(join(at.config, "settings.json"), "1234");
+    write(join(at.cwd, ".claude", "settings.json"), "5678");
+    digestFrom(providerDependency(identity, at.cwd, ["user", "project"], at.config, { files: 2, bytes: 8 }));
+    expectUnknownBecause(providerDependency(identity, at.cwd, ["user", "project"], at.config, { files: 1, bytes: 8 }), "dependency-over-budget");
+    expectUnknownBecause(providerDependency(identity, at.cwd, ["user", "project"], at.config, { files: 2, bytes: 7 }), "dependency-over-budget");
+  });
+});
+
 describe("wb-413a reading helpers", () => {
-  it("R-CONFIG-DIR: the SDK's user config directory is CLAUDE_CONFIG_DIR when set (resolved against the cwd), else <home>/.claude", () => {
+  it("R-CONFIG-DIR: an unset and an empty CLAUDE_CONFIG_DIR give <home>/.claude, an absolute one is itself, and a relative one is resolved against the cwd", () => {
     expect(claudeUserConfigDir({}, "/home/operator", "/work/repo")).toBe("/home/operator/.claude");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "" }, "/home/operator", "/work/repo")).toBe("/home/operator/.claude");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "/etc/claude-profile" }, "/home/operator", "/work/repo")).toBe("/etc/claude-profile");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "profile" }, "/home/operator", "/work/repo")).toBe("/work/repo/profile");
+  });
+
+  it("R-CONFIG-DIR-BLANK: a whitespace-only CLAUDE_CONFIG_DIR (a space, a tab, two spaces) is set and not the empty string, so it is resolved against the cwd as a relative path", () => {
+    for (const value of [" ", "\t", "  "]) expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: value }, "/home/operator", "/work/repo"), JSON.stringify(value)).toBe(`/work/repo/${value}`);
   });
 
   it("R-MEASURED: every reading measured with a well-formed digest is the only shape that permits replay", () => {
@@ -613,6 +897,60 @@ describe("wb-413a reading helpers", () => {
 
   it("R-BUDGET-TABLE: the default budget of both file readers, written out (frozen shape of DEPENDENCY_READ_LIMITS: 2000 files, 32 MiB)", () => {
     expect(DEPENDENCY_READ_LIMITS).toEqual({ files: 2000, bytes: 32 * 1024 * 1024 });
+  });
+});
+
+describe("wb-413a named residuals of the file readers: each quiet row reds when its escape stops being quiet", () => {
+  const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
+
+  it("R-Q-UNLISTED-CONFIG (R-UNLISTED-CONFIG-FILES): a plugin's skill under <config>/plugins, <config>/.claude.json and a transcript under <config>/projects lie outside every listed location, so changing them leaves the user instruction reading and the user provider reading equal", () => {
+    const at = layout();
+    const unlisted = [
+      join(at.config, "plugins", "marketplace", "demo", "skills", "review", "SKILL.md"),
+      join(at.config, ".claude.json"),
+      join(at.config, "projects", "repo", "session.jsonl"),
+    ];
+    for (const path of unlisted) write(path, "unlisted v1");
+    const instructions = digestFrom(instructionDependency(at.cwd, ["user"], at.config));
+    const provider = digestFrom(providerDependency(identity, at.cwd, ["user"], at.config));
+    for (const path of unlisted) write(path, "unlisted v2");
+    expect(digestFrom(instructionDependency(at.cwd, ["user"], at.config))).toBe(instructions);
+    expect(digestFrom(providerDependency(identity, at.cwd, ["user"], at.config))).toBe(provider);
+  });
+
+  it("R-Q-IMPORTED-MEMORY (R-IMPORTED-MEMORY): a file a memory file imports with @path, outside every listed location, is not read: changing it leaves the user and the project instruction readings equal", () => {
+    const at = layout();
+    write(join(at.config, "CLAUDE.md"), "@notes/style.md\n");
+    write(join(at.cwd, "CLAUDE.md"), "@docs/rules.md\n");
+    const imported: readonly (readonly [ClaudeSettingSource, string])[] = [
+      ["user", join(at.config, "notes", "style.md")],
+      ["project", join(at.cwd, "docs", "rules.md")],
+    ];
+    for (const [source, path] of imported) {
+      write(path, "imported v1");
+      const v1 = digestFrom(instructionDependency(at.cwd, [source], at.config));
+      write(path, "imported v2");
+      expect(digestFrom(instructionDependency(at.cwd, [source], at.config)), path).toBe(v1);
+    }
+  });
+
+  it("R-Q-NESTED-MEMORY (R-NESTED-MEMORY): memory files in a directory below the cwd (sub/CLAUDE.md, sub/.claude/CLAUDE.md, sub/CLAUDE.local.md) are not read: changing them leaves the project and the local instruction readings equal", () => {
+    const at = layout();
+    const nested = [join(at.cwd, "sub", "CLAUDE.md"), join(at.cwd, "sub", ".claude", "CLAUDE.md"), join(at.cwd, "sub", "CLAUDE.local.md")];
+    for (const path of nested) write(path, "nested v1");
+    const project = digestFrom(instructionDependency(at.cwd, ["project"], at.config));
+    const local = digestFrom(instructionDependency(at.cwd, ["local"], at.config));
+    for (const path of nested) write(path, "nested v2");
+    expect(digestFrom(instructionDependency(at.cwd, ["project"], at.config))).toBe(project);
+    expect(digestFrom(instructionDependency(at.cwd, ["local"], at.config))).toBe(local);
+  });
+
+  it("R-Q-MANAGED-POLICY (R-MANAGED-POLICY): neither reader names a managed policy path: instructionPaths under every source names no path below /etc or /Library, and every instruction and setting location is relative to its base", () => {
+    const paths = instructionPaths("/work/repo/pkg", ["user", "project", "local"], "/home/operator/.claude");
+    expect(paths.filter(path => path.startsWith("/etc/") || path.startsWith("/Library/"))).toEqual([]);
+    for (const table of [CLAUDE_INSTRUCTION_LOCATIONS, CLAUDE_ANCESTOR_MEMORY, CLAUDE_SETTINGS_LOCATIONS]) {
+      for (const locations of Object.values(table)) expect(locations.filter(location => isAbsolute(location))).toEqual([]);
+    }
   });
 });
 

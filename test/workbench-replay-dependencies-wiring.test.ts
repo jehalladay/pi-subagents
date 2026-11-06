@@ -13,6 +13,29 @@
  * returns, one call replayed) or "live" (null, nothing replayed), with the prompt held constant throughout. A resumed run
  * journals its own row under its own host's basis, so resumedWith also reads that row's readings and a row can say which
  * reading moved and which stayed equal.
+ *
+ * Claimed here, each by its rows, and nothing wider (cut #3: the enumerate form of the R-B646 claim set):
+ *  - EAT-R017, the Git candidate forms that move the source reading at the registered path: a tracked file's working
+ *    bytes at the top level (W-R017), one and two directories down (W-R017-NESTED), and dot-named at the top level, in a
+ *    dot-named directory and in a subdirectory (W-R017-DOT); a tracked file deleted from the working tree
+ *    (W-R017-NESTED); a staged change whose working bytes equal HEAD (W-R017-INDEX); a new untracked file Git does not
+ *    ignore at the top level (W-R017), in a subdirectory (W-R017-NESTED) and dot-named (W-R017-DOT); a new commit over
+ *    the same tree and a committed change (W-R017). A Git-ignored file leaves the source reading equal
+ *    (W-R018-LOCAL-SOURCE, W-R018-PROJECT). The source reading is unknown outside Git (W-R020) and for a committed
+ *    symlink (W-R020-CANDIDATE);
+ *  - EAT-R018, the instruction reading at the registered path: a user skill and a user CLAUDE.md under CLAUDE_CONFIG_DIR
+ *    (W-R018), a Git-ignored CLAUDE.local.md under the local source (W-R018-LOCAL, W-R018-LOCAL-SOURCE), a Git-ignored
+ *    project skill (W-R018-PROJECT), a user CLAUDE.md under <home>/.claude with CLAUDE_CONFIG_DIR unset (W-R018-HOME)
+ *    and under a relative CLAUDE_CONFIG_DIR resolved against the cwd (W-R018-RELATIVE-CONFIG);
+ *  - EAT-R019, the provider reading at the registered path: the user settings.json and the local settings.local.json
+ *    (W-R019), and the user settings.json under <home>/.claude (W-R018-HOME);
+ *  - EAT-R020 at the registered path: an unknown source reading (W-R020, W-R020-CANDIDATE) and an unknown instruction
+ *    reading (W-R020-INSTRUCTIONS) replay nothing.
+ * RESIDUALS (named, each with its pinned quiet row): R-ENV-SELECTED-PROVIDER W-Q-ENV-PROVIDER; R-NESTED-MEMORY
+ * W-Q-NESTED-MEMORY; R-IGNORED-SOURCE W-R018-LOCAL-SOURCE, W-R018-PROJECT.
+ * NOT CLAIMED by this suite: which identity the registered path hands the provider reader (one test process cannot vary
+ * its installed SDK artifacts or its registered provider contracts); Git candidate forms other than those listed above
+ * (more than 2000 paths or 32 MiB, a path the survey cannot read, other path spellings); a live SDK session.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
@@ -27,10 +50,13 @@ import { makeScratch, removeScratch } from "./helpers/scratch.js";
 const PLANTED = "recorded verification answer";
 const SCRIPT = 'export const meta={name:"replay-wiring",description:"measured replay basis"};\nreturn await agent("verify the candidate", { isolation: "worktree" });';
 const CONFIG_ENV = "CLAUDE_CONFIG_DIR";
+/** The provider-selection variables W-Q-ENV-PROVIDER sets (obviously fake values), restored after every row. */
+const PROVIDER_ENV = ["ANTHROPIC_BASE_URL", "ANTHROPIC_MODEL"] as const;
 
 let sandbox: ReturnType<typeof hermeticDir> | undefined;
 let configDir: string | undefined;
 const priorConfig = process.env[CONFIG_ENV];
+const priorProvider = PROVIDER_ENV.map(name => process.env[name]);
 afterEach(() => {
   sandbox?.restore();
   sandbox = undefined;
@@ -38,6 +64,11 @@ afterEach(() => {
   configDir = undefined;
   if (priorConfig === undefined) delete process.env[CONFIG_ENV];
   else process.env[CONFIG_ENV] = priorConfig;
+  PROVIDER_ENV.forEach((name, index) => {
+    const prior = priorProvider[index];
+    if (prior === undefined) delete process.env[name];
+    else process.env[name] = prior;
+  });
 });
 
 interface Booted {
@@ -138,7 +169,7 @@ async function resumedWith(booted: Booted, from: string): Promise<{ outcome: "re
 const MEASURED = { state: "measured", digest: expect.stringMatching(/^sha256:[0-9a-f]{64}$/) };
 
 describe("wb-413a wiring: the embedded host's replay basis carries the measured readings", () => {
-  it("W-R017: the source reading follows the commit, the tree and the dirty-file bytes; the unchanged repository replays", async () => {
+  it("W-R017: a top-level tracked file's bytes, a new top-level untracked file, a new commit over the same tree and a committed change each decline the recorded answer; the unchanged and the restored repository replay", async () => {
     const booted = await boot({});
     const candidate = initRepo(booted.dir);
     const recording = await launch(booted, { script: SCRIPT });
@@ -200,7 +231,7 @@ describe("wb-413a wiring: the embedded host's replay basis carries the measured 
     expect(await resumed(booted, recording.taskId)).toBe("live");
   }, 60_000);
 
-  it("W-R019: the setting file each enabled source reads is in the provider reading (user settings.json, local settings.local.json)", async () => {
+  it("W-R019: under the user and local sources, the user settings.json and the local settings.local.json each decline the recorded answer", async () => {
     const config = claudeConfig();
     const user = join(config, "settings.json");
     write(user, '{"model":"claude-opus-5-5"}\n');
@@ -232,7 +263,7 @@ describe("wb-413a wiring: the embedded host's replay basis carries the measured 
     expect(readingsOf(planted).source).not.toHaveProperty("digest");
   }, 60_000);
 
-  it("W-R020-CANDIDATE: a repository whose Git survey cannot account for a path (a committed symlink) is unknown although HEAD reads", async () => {
+  it("W-R020-CANDIDATE: a committed symlink makes the source reading unknown although HEAD reads, so the recorded answer is not replayed", async () => {
     const booted = await boot({});
     initRepo(booted.dir);
     symlinkSync("candidate.ts", join(booted.dir, "alias.ts"));
@@ -354,5 +385,85 @@ describe("wb-413a wiring: the embedded host's replay basis carries the measured 
 
     expect(await resumed(booted, recording.taskId)).toBe("live");
     expect(readingsOf(planted)).toEqual({ source: MEASURED, instructions: { state: "unknown", reason: "dependency-not-a-file" }, provider: MEASURED });
+  }, 60_000);
+
+  it("W-R017-NESTED: a tracked file one and two directories down, a tracked file deleted from the working tree and a new untracked file in a subdirectory each decline the recorded answer, and restoring each replays again", async () => {
+    const booted = await boot({});
+    initRepo(booted.dir);
+    const inner = join(booted.dir, "src", "inner.ts");
+    const core = join(booted.dir, "src", "deep", "core.ts");
+    write(inner, "export const inner = 1;\n");
+    write(core, "export const core = 1;\n");
+    git(booted.dir, "add", "src/inner.ts", "src/deep/core.ts");
+    git(booted.dir, "commit", "-qm", "nested files");
+    const recording = await launch(booted, { script: SCRIPT });
+    plant(booted, recording.taskId);
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    for (const [path, bytes] of [[inner, "export const inner = 1;\n"], [core, "export const core = 1;\n"]] as const) {
+      writeFileSync(path, `${bytes}// dirty\n`);
+      expect(await resumed(booted, recording.taskId), path).toBe("live");
+      writeFileSync(path, bytes);
+      expect(await resumed(booted, recording.taskId), path).toBe("replayed");
+    }
+    unlinkSync(core);
+    expect(await resumed(booted, recording.taskId)).toBe("live");
+    writeFileSync(core, "export const core = 1;\n");
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    write(join(booted.dir, "src", "deep", "extra.ts"), "export const extra = true;\n");
+    expect(await resumed(booted, recording.taskId)).toBe("live");
+    unlinkSync(join(booted.dir, "src", "deep", "extra.ts"));
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+  }, 120_000);
+
+  it("W-R017-DOT: a tracked dot-named file at the top level, a tracked file in a dot-named directory, a tracked dot-named file in a subdirectory and a new untracked dot-named file each decline the recorded answer, and restoring each replays again", async () => {
+    const booted = await boot({});
+    initRepo(booted.dir);
+    const dotted = [join(booted.dir, ".tool-config.json"), join(booted.dir, ".config", "tool.json"), join(booted.dir, "src", ".inner-config.json")];
+    for (const path of dotted) write(path, '{"level":1}\n');
+    git(booted.dir, "add", ".tool-config.json", ".config/tool.json", "src/.inner-config.json");
+    git(booted.dir, "commit", "-qm", "dot-named files");
+    const recording = await launch(booted, { script: SCRIPT });
+    plant(booted, recording.taskId);
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    for (const path of dotted) {
+      writeFileSync(path, '{"level":2}\n');
+      expect(await resumed(booted, recording.taskId), path).toBe("live");
+      writeFileSync(path, '{"level":1}\n');
+      expect(await resumed(booted, recording.taskId), path).toBe("replayed");
+    }
+    writeFileSync(join(booted.dir, ".scratch-notes.md"), "untracked\n");
+    expect(await resumed(booted, recording.taskId)).toBe("live");
+    unlinkSync(join(booted.dir, ".scratch-notes.md"));
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+  }, 120_000);
+});
+
+describe("wb-413a wiring: named residuals at the registered path, each quiet row reds when its escape stops being quiet", () => {
+  it("W-Q-ENV-PROVIDER (R-ENV-SELECTED-PROVIDER): no reading reads ANTHROPIC_BASE_URL or ANTHROPIC_MODEL, so changing both between the recording and the resume replays the recorded answer", async () => {
+    const booted = await boot({});
+    initRepo(booted.dir);
+    process.env.ANTHROPIC_BASE_URL = "https://provider-a.example.invalid";
+    process.env.ANTHROPIC_MODEL = "fake-model-a";
+    const recording = await launch(booted, { script: SCRIPT });
+    plant(booted, recording.taskId);
+
+    process.env.ANTHROPIC_BASE_URL = "https://provider-b.example.invalid";
+    process.env.ANTHROPIC_MODEL = "fake-model-b";
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+  }, 60_000);
+
+  it("W-Q-NESTED-MEMORY (R-NESTED-MEMORY): under the project source, a Git-ignored CLAUDE.md in a directory below the cwd is read by neither the source nor the instruction reading, so changing it replays the recorded answer", async () => {
+    const booted = await boot({ settingSources: ["project"] });
+    initRepo(booted.dir, ["sub/CLAUDE.md"]);
+    const memory = join(booted.dir, "sub", "CLAUDE.md");
+    write(memory, "nested memory v1\n");
+    const recording = await launch(booted, { script: SCRIPT });
+    plant(booted, recording.taskId);
+
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
+    write(memory, "nested memory v2\n");
+    expect(await resumed(booted, recording.taskId)).toBe("replayed");
   }, 60_000);
 });

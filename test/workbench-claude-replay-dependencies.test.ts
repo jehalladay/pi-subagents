@@ -23,12 +23,27 @@
  * answer, and no journaled node read either: H-R020-NODE-READ). How the
  * embedded Pi host MEASURES each reading is judged by test/workbench-replay-dependency-readers.test.ts (the readers) and
  * test/workbench-replay-dependencies-wiring.test.ts (the registered SubagentWorkflow path over a real Git repository).
+ *
+ * Claimed here, each by its rows, and nothing wider (cut #3: the enumerate form of the R-B646 claim set): the readings
+ * ride the basis as one ninth element after the eight policy elements (H-SHAPE, H-SHAPE-BYTES), and a host built
+ * without them records the eight alone (H-SHAPE-LEGACY); equal readings replay (H-CONTROL); a changed source,
+ * instruction or provider reading is not reused (H-R017, H-R018, H-R019); a model pin change still declines beside
+ * equal readings (H-LEGACY), and so does a changed cwd, permission mode, setting-source list, tool list, role set, grant
+ * set or principal (H-POLICY); an answer recorded without readings and a host that measures them, or the reverse, do
+ * not replay (H-UNSCOPED); a reading unknown in both runs (H-R020-<dimension>), recorded unknown (H-R020-RECORDED), unknown
+ * now (H-R020-RESUMED) or claiming measured with a malformed digest (H-R020-COERCED) replays nothing, the host's
+ * replaySafe is false while any reading is unknown (H-R020-HOST), and a journaled node read is not replayed either
+ * (H-R020-NODE-READ); the uncertain non-read denial holds under equal, changed and unknown readings (H-R021-SAME,
+ * H-R021-CHANGED, H-R021-SETTLED), and a journaled read replays stale under equal readings and runs live under a
+ * changed one (H-R021-STALE).
+ * RESIDUALS (named, each with its pinned quiet row): R-WITHIN-RUN H-Q-WITHIN-RUN.
+ * NOT CLAIMED by this suite: how a reading is measured (the two suites above); the detached host.
  */
 import { createHash } from "node:crypto";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
+import { type ClaudeQuery, type ClaudeWorkflowHostOptions, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import type { ClaudeReplayDependencies, ReplayDependency } from "../src/workbench/replay-dependencies.js";
 import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { runWorkflow, type WorkflowRunResult } from "../src/workflow/runtime.js";
@@ -125,15 +140,15 @@ describe("wb-413a host seam: a changed measured dependency declines the journal 
     ]);
   });
 
-  it("H-R017: a changed source reading (commit, tree or dirty-file digest) is not reused", async () => {
+  it("H-R017: a changed source reading is not reused", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE, source: measured("source: commit c2, tree t1, candidate k1") }));
   });
 
-  it("H-R018: a changed instruction reading (skill or system instruction bytes) is not reused", async () => {
+  it("H-R018: a changed instruction reading is not reused", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE, instructions: measured("instructions: SKILL.md bytes v2") }));
   });
 
-  it("H-R019: a changed provider reading (effective provider version or settings) is not reused", async () => {
+  it("H-R019: a changed provider reading is not reused", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE, provider: measured("provider: sdk 0.3.301, contracts p1, settings s1") }));
   });
 
@@ -151,13 +166,34 @@ describe("wb-413a host seam: a changed measured dependency declines the journal 
     expectReplayed(outcome);
   });
 
-  it("H-LEGACY: the policy dimensions still decline the journal beside the readings (a model pin change)", async () => {
+  it("H-LEGACY: a model pin change still declines the journal beside equal readings", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE }, { resumeModel: "claude-haiku-5-5" }));
   });
 
   it("H-UNSCOPED: an answer recorded with no readings is not reused by a host that measures them, nor the reverse", async () => {
     expectNotReused(await recordThenResume(undefined, BASELINE));
     expectNotReused(await recordThenResume(BASELINE, undefined));
+  });
+
+  it("H-POLICY: beside equal readings, a changed cwd, permission mode, setting-source list, tool list, role set, grant set or principal each declines the recorded answer", async () => {
+    const base = { cwd: "/tmp", model: "claude-opus-5-5", replayDependencies: BASELINE };
+    const changes: readonly (readonly [string, Partial<ClaudeWorkflowHostOptions>])[] = [
+      ["cwd", { cwd: "/var/tmp" }],
+      ["permission mode", { permissionMode: "acceptEdits" }],
+      ["setting sources", { settingSources: ["project"] }],
+      ["tools", { tools: ["Read"] }],
+      ["roles", { roles: { reviewer: { prompt: "Review only." } } }],
+      ["grants", { grants: ["fixture:grant"] }],
+      ["principal", { principal: { id: "operator-2", role: "local-operator" } }],
+    ];
+    for (const [dimension, change] of changes) {
+      const prompts: string[] = [];
+      const journal: WorkflowJournalEntry[] = [];
+      const first = await runWorkflow({ script: AGENT_SCRIPT, host: createClaudeWorkflowHost({ ...base, query: sdkQuery(prompts, RECORDED) }), journal: { entries: [], append: entry => journal.push(entry) } });
+      const resumed = await runWorkflow({ script: AGENT_SCRIPT, host: createClaudeWorkflowHost({ ...base, ...change, query: sdkQuery(prompts, CURRENT) }), journal: { entries: [...journal] } });
+      expect(resumed.replayedCount, dimension).toBe(0);
+      expectNotReused({ first, resumed, prompts, journal });
+    }
   });
 });
 
@@ -171,15 +207,15 @@ describe("wb-413a host seam: an unknown dependency replays nothing (EAT-R020)", 
     });
   }
 
-  it("H-R020-RECORDED: an answer recorded under an unknown reading is not replayed once the reading is measured", async () => {
+  it("H-R020-RECORDED: an answer recorded under an unknown source reading is not replayed once that reading is measured", async () => {
     expectNotReused(await recordThenResume({ ...BASELINE, source: unknown("source-unmeasurable") }, BASELINE));
   });
 
-  it("H-R020-RESUMED: a measured answer is not replayed while the current reading is unknown", async () => {
+  it("H-R020-RESUMED: a measured answer is not replayed while the current provider reading is unknown", async () => {
     expectNotReused(await recordThenResume(BASELINE, { ...BASELINE, provider: unknown("provider-unmeasurable") }));
   });
 
-  it("H-R020-COERCED: a reading that claims measured with an empty or malformed digest is refused as unknown", async () => {
+  it("H-R020-COERCED: an instruction reading claiming measured with the digest '', 'sha256:', 'empty' or 63 zero digits replays nothing", async () => {
     for (const digest of ["", "sha256:", "empty", `sha256:${"0".repeat(63)}`]) {
       const coerced: ClaudeReplayDependencies = { ...BASELINE, instructions: { state: "measured", digest } };
       expectNotReused(await recordThenResume(coerced, { ...coerced }));
@@ -234,7 +270,7 @@ describe("wb-413a host seam: the uncertain non-read denial is retained (EAT-R021
   const WRITE = `${HEAD}return await node("effect.write", { value: "x" });`;
   const READ = `${HEAD}return await node("record.read", { value: "x" });`;
 
-  it("H-R021-SAME: a lost settlement after a non-read dispatch resumes to a typed uncertain-effect and no second dispatch", async () => {
+  it("H-R021-SAME: under equal readings, a lost settlement after a non-read dispatch resumes to a typed uncertain-effect and no second dispatch", async () => {
     const world: World = { effects: 0, reads: 0 };
     const journal = losingSettlement();
     const first = await runWorkflow({ script: WRITE, host: nodeHost(world, BASELINE), journal });
@@ -248,7 +284,7 @@ describe("wb-413a host seam: the uncertain non-read denial is retained (EAT-R021
     expect(world.effects).toBe(1);
   });
 
-  it("H-R021-CHANGED: no changed or unknown reading licenses re-running the dispatched effect", async () => {
+  it("H-R021-CHANGED: a changed source reading and an unknown instruction reading each resume to uncertain-effect, never re-running the dispatched effect", async () => {
     const world: World = { effects: 0, reads: 0 };
     const journal = losingSettlement();
     await runWorkflow({ script: WRITE, host: nodeHost(world, BASELINE), journal });
@@ -263,7 +299,7 @@ describe("wb-413a host seam: the uncertain non-read denial is retained (EAT-R021
     expect(world.effects).toBe(1);
   });
 
-  it("H-R021-SETTLED: a settled write journaled under the readings is refused, never re-run, under changed readings too", async () => {
+  it("H-R021-SETTLED: a settled write journaled under the readings is refused, never re-run, under equal and changed source readings", async () => {
     const world: World = { effects: 0, reads: 0 };
     const journal: WorkflowJournalEntry[] = [];
     await runWorkflow({ script: WRITE, host: nodeHost(world, BASELINE), journal: { entries: [], append: entry => journal.push(entry) } });
@@ -276,7 +312,7 @@ describe("wb-413a host seam: the uncertain non-read denial is retained (EAT-R021
     expect(world.effects).toBe(1);
   });
 
-  it("H-R021-STALE: a journaled read replays under the same readings marked stale, and runs live under changed ones", async () => {
+  it("H-R021-STALE: a journaled read replays under equal readings marked stale, and runs live under a changed provider reading", async () => {
     const world: World = { effects: 0, reads: 0 };
     const journal: WorkflowJournalEntry[] = [];
     const first = await runWorkflow({ script: READ, host: nodeHost(world, BASELINE), journal: { entries: [], append: entry => journal.push(entry) } });
@@ -313,5 +349,20 @@ describe("wb-413a host seam: an unknown reading replays no journaled node read e
       expect(resumed.replayedNodeCount).toBe(0);
       expect(world.reads).toBe(2);
     }
+  });
+});
+
+describe("wb-413a host seam: named residual, its quiet row reds when its escape stops being quiet", () => {
+  it("H-Q-WITHIN-RUN (R-WITHIN-RUN): the host reads its readings once, when it is built: a readings object changed afterwards leaves its basis, its replaySafe and the basis a run journals as built", async () => {
+    const readings: { source: ReplayDependency; instructions: ReplayDependency; provider: ReplayDependency } = { ...BASELINE };
+    const host = createClaudeWorkflowHost({ cwd: "/tmp", model: "claude-opus-5-5", query: sdkQuery([], RECORDED), replayDependencies: readings });
+    const built = host.replayBasis;
+    readings.source = unknown("source-changed-after-build");
+    expect(host.replayBasis).toBe(built);
+    expect(host.replaySafe).toBe(true);
+    const journal: WorkflowJournalEntry[] = [];
+    const run = await runWorkflow({ script: AGENT_SCRIPT, host, journal: { entries: [], append: entry => journal.push(entry) } });
+    expect(run.status).toBe("completed");
+    expect(journal.map(entry => entry.basis)).toEqual([built]);
   });
 });

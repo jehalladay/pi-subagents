@@ -55,11 +55,11 @@ export interface ClaudeWorkflowHostOptions {
   /** Fired in the query's own finally, pairing every onQueryLive so a wiring registry never leaks an ended query. */
   onQueryDone?: (call: ClaudeCallIdentity) => void;
   /**
-   * wb-413a (EAT-R017..EAT-R020): readings of three dependencies an answer has beyond its payload and the policy above:
-   * the workspace source, the instruction files of the enabled setting sources and the provider identity
-   * (replay-dependencies.ts). They join the replay basis as its ninth element, so a changed reading declines the
-   * journal, and while any reading is not measured with a well-formed digest the host permits no settled replay at all,
-   * neither of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
+   * wb-413a (EAT-R017..EAT-R020): the source, instruction and provider readings of replay-dependencies.ts, three
+   * dependencies an answer has beyond its payload and the policy above. They join the replay basis as its ninth
+   * element, so a recorded agent answer is not reused under a changed reading and a journaled read runs live under one,
+   * and while any reading is not measured with a well-formed digest the host permits no settled replay at all, neither
+   * of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
    */
   replayDependencies?: ClaudeReplayDependencies;
 }

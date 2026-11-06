@@ -3,13 +3,18 @@
  * slice PI-4, EAT-R017..EAT-R020), beyond the policy the Claude host's replay basis already names: cwd, model pin,
  * permission mode, setting-source names, tools, roles, grants and principal (claude-host.ts).
  *
- *  - source (sourceDependency): HEAD's commit and tree with the candidate digest the host hands in; src/index.ts hands
- *    in the identity capture's Git candidate, which covers the HEAD tree, the index, and the bytes of every tracked file
- *    and every untracked file Git does not ignore;
- *  - instructions (instructionDependency): the bytes at the paths instructionPaths names for each enabled setting
- *    source, its CLAUDE_INSTRUCTION_LOCATIONS and its CLAUDE_ANCESTOR_MEMORY files; with no source enabled it reads no file;
+ *  - source (sourceDependency): HEAD's commit and tree with the candidate digest the host hands in. src/index.ts hands
+ *    in the identity capture's Git candidate (workspaceCandidateBasis). Of what that candidate covers, the claim is the
+ *    forms the wiring suite plants at the registered path: a tracked file's working bytes at the top level, one and two
+ *    directories down and dot-named, a tracked file deleted from the working tree, a staged change, a new untracked
+ *    file Git does not ignore at the top level, in a subdirectory and dot-named, a new commit over the same tree and a
+ *    committed change each move the reading; a Git-ignored file leaves it equal; it is unknown outside Git and for a
+ *    committed symlink;
+ *  - instructions (instructionDependency): what readFiles reads at the paths instructionPaths names for each enabled
+ *    setting source, its CLAUDE_INSTRUCTION_LOCATIONS and its CLAUDE_ANCESTOR_MEMORY files; with no source enabled it
+ *    names no path and reads no file;
  *  - provider (providerDependency): the runtime artifact digest and the provider contract digest of the identity it is
- *    handed, and the bytes of each enabled source's setting file (CLAUDE_SETTINGS_LOCATIONS).
+ *    handed, and what readFiles reads at each enabled source's setting file (CLAUDE_SETTINGS_LOCATIONS).
  *
  * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest. An unknown reading is
  * never turned into a digest: two runs that could not measure a dependency would otherwise compare equal on that absence
@@ -44,8 +49,8 @@ type SourceTable = Readonly<Record<ClaudeSettingSource, readonly string[]>>;
 
 /**
  * The instruction locations the instruction reading reads for each source, relative to the source's base: the user
- * config directory (claudeUserConfigDir) for "user", the cwd for "project" and "local". A location that is a directory
- * is read with every file below it, down to the depth a walk reads (MAX_DEPTH).
+ * config directory (claudeUserConfigDir) for "user", the cwd for "project" and "local". Each is read as readFiles
+ * reads a named path.
  */
 export const CLAUDE_INSTRUCTION_LOCATIONS: SourceTable = Object.freeze({
   user: Object.freeze(["CLAUDE.md", "skills", "agents", "commands", "output-styles", "rules"]),
@@ -61,7 +66,7 @@ export const CLAUDE_INSTRUCTION_LOCATIONS: SourceTable = Object.freeze({
   local: Object.freeze(["CLAUDE.local.md"]),
 });
 
-/** The memory files the instruction reading also reads for each source in every proper ancestor directory of the cwd. */
+/** The memory files the instruction reading also reads for each source in each proper ancestor of the cwd (instructionPaths). */
 export const CLAUDE_ANCESTOR_MEMORY: SourceTable = Object.freeze({
   user: Object.freeze([]),
   project: Object.freeze(["CLAUDE.md", ".claude/CLAUDE.md"]),
@@ -75,19 +80,23 @@ export const CLAUDE_SETTINGS_LOCATIONS: SourceTable = Object.freeze({
   local: Object.freeze([".claude/settings.local.json"]),
 });
 
-/** A file reader's budget: a walk past it, in files or in bytes, is an unknown reading, never a digest of part of the files. */
+/**
+ * A file reader's budget, counted over the whole reading: each regular file readFiles reads, at any path the reading
+ * names, counts one file and its size in bytes, and a reading with more files or more bytes than the budget is unknown
+ * (dependency-over-budget), never a digest of part of the files.
+ */
 export interface DependencyReadLimits {
   readonly files: number;
   readonly bytes: number;
 }
-/** The default budget of both file readers: 2000 files and 32 MiB. */
+/** The default budget of both file readers: 2000 files and 32 MiB (33554432 bytes). */
 export const DEPENDENCY_READ_LIMITS: DependencyReadLimits = Object.freeze({ files: 2_000, bytes: 32 * 1024 * 1024 });
 
 const SOURCES: readonly ClaudeSettingSource[] = Object.freeze(["user", "project", "local"]);
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
 /**
- * How deep a walk reads below one location: a file 32 directory levels below it is read, and a directory 32 levels below
- * it makes the reading unknown (over budget).
+ * How deep a walk reads below a named path: a file 32 levels below it is read, and a directory 32 levels below it makes
+ * the reading unknown (dependency-over-budget).
  */
 const MAX_DEPTH = 32;
 
@@ -127,8 +136,9 @@ export function sourceDependency(
 /**
  * The paths the instruction reading reads, in order: for each enabled source in source order (user, project, local),
  * its CLAUDE_INSTRUCTION_LOCATIONS under its base (configDir for "user", the cwd for "project" and "local"), then its
- * CLAUDE_ANCESTOR_MEMORY files in every proper ancestor directory of the cwd, nearest first, ending at the filesystem
- * root. The order and repetition of `sources` do not change the paths.
+ * CLAUDE_ANCESTOR_MEMORY files in each proper ancestor of the cwd, nearest first, ending at the filesystem root: the
+ * ancestors the cwd's own segments spell, at any depth a path within Linux's 4096-byte PATH_MAX can hold (2047
+ * one-letter levels at most). The order and repetition of `sources` do not change the paths.
  */
 export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSource[], configDir: string): string[] {
   const paths: string[] = [];
@@ -143,9 +153,10 @@ export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSou
 }
 
 /**
- * The instruction reading: the bytes at every path instructionPaths names for the enabled sources, whatever order or
- * repetition the run named them in. Unknown when a source is not user, project or local, when the cwd or the config
- * directory is not absolute, or when a walk cannot read every path whole within the budget.
+ * The instruction reading: what readFiles reads at the paths instructionPaths names for the enabled sources, whatever
+ * order or repetition the run named them in. Unknown, by a fixed reason, when a source is not user, project or local
+ * (setting-source-unrecognized), when the cwd or the config directory is not absolute (instruction-base-not-absolute),
+ * and in the cases readFiles names.
  */
 export function instructionDependency(
   cwd: string,
@@ -162,9 +173,10 @@ export function instructionDependency(
 
 /**
  * The provider reading: the runtime artifact digest and the provider contract digest of the identity it is handed, and
- * the bytes of each enabled source's setting file under the source's base. Unknown when no identity is handed or either
- * digest is not well formed, when a source is not user, project or local, when the cwd or the config directory is not
- * absolute, or when a walk cannot read every setting path whole within the budget.
+ * what readFiles reads at each enabled source's setting file under the source's base. Unknown, by a fixed reason, when
+ * no identity is handed or either digest is not sha256: and 64 lowercase hex digits (provider-identity-unmeasured), when a
+ * source is not user, project or local (setting-source-unrecognized), when the cwd or the config directory is not
+ * absolute (setting-base-not-absolute), and in the cases readFiles names.
  */
 export function providerDependency(
   identity: { readonly runtimeArtifactDigest: string; readonly providerContractDigest: string } | undefined,
@@ -191,8 +203,9 @@ export function providerDependency(
 }
 
 /**
- * The user config directory both readers read under the "user" source: CLAUDE_CONFIG_DIR when it is set and not empty,
- * resolved against the cwd when relative, else <home>/.claude.
+ * The user config directory both readers read under the "user" source: CLAUDE_CONFIG_DIR when it is set to anything but
+ * the empty string (a whitespace-only value is a relative path), resolved against the cwd when relative, else
+ * <home>/.claude.
  */
 export function claudeUserConfigDir(env: Readonly<Record<string, string | undefined>>, home: string, cwd: string): string {
   const configured = env.CLAUDE_CONFIG_DIR;
@@ -205,7 +218,7 @@ function enabledSources(sources: readonly string[]): ClaudeSettingSource[] | und
   return SOURCES.filter(source => sources.includes(source));
 }
 
-/** Every proper ancestor of an absolute directory, nearest first, ending at the filesystem root. */
+/** Each proper ancestor of an absolute directory, nearest first, ending at the filesystem root. */
 function ancestorsOf(directory: string): string[] {
   const ancestors: string[] = [];
   let current = directory;
@@ -239,9 +252,15 @@ interface FileReading {
 }
 
 /**
- * Read every path, following symbolic links to what they name: a regular file by its bytes, a directory by every entry
- * below it, a missing path as absent. Anything else (a FIFO, say), an entry that cannot be read, a directory cycle, a
- * walk past the budget or past MAX_DEPTH makes the whole reading unknown.
+ * Read each named path in order, following symbolic links: a regular file by its bytes; a directory as a "directory"
+ * mark and then the entries its listing names in UTF-16 code-unit name order, each subdirectory the same way (the names
+ * claimed are those the readers suite plants, dot-named files and directories among them; other names are NOT
+ * CLAIMED); a missing path, a dangling link and a path below a regular file as absent. A directory reached a second
+ * time through a link that is not below it is read again. The whole reading is unknown, by a fixed reason, for: a FIFO or
+ * a link to a character device, entries that are neither a regular file nor a directory (dependency-not-a-file); an
+ * entry the process cannot read, list or search, and two links naming each other (dependency-unreadable); a directory
+ * reached again below itself (dependency-cycle); a reading past its budget (dependency-over-budget,
+ * DependencyReadLimits); and a directory MAX_DEPTH levels below a named path (dependency-over-budget).
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];
