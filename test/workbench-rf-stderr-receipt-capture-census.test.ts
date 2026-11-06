@@ -47,7 +47,22 @@
  * declaration kind; an unbound first argument; an element under a program that gives no env or sh word; inventory members by alias,
  * by literal key and by execve, and no member under other receivers; binding, specifier, site and loader forms; argv, builder,
  * return, declaration-kind, reference and declaration-text forms; run-time argv shapes), carries refusal #7's plants P8 to P13 as
- * rows, byte for byte, and closes each C1 item's words with the forms its rows plant, every other form NOT CLAIMED. Where a
+ * rows, byte for byte, and closes each C1 item's words with the forms its rows plant, every other form NOT CLAIMED. Gate refusal #8
+ * measured entries inside those closing lists wider than their rows - 'by literal key' where every keyed row planted a string while
+ * the readers read a string or a no-substitution template, a call receiver planted only as a call of an identifier, an
+ * element-access receiver planted only by a string key, and a method declaration planted only in a class - so its hollows GP20-LK1
+ * to GP20-LK3, GP20-RC1, GP20-RE1 and GP20-MD1 (and, graded plausible, GP20-OC1, GP20-OC2, GP20-EX1, GP20-DR1 and GP20-LO1;
+ * G2-BINDING-USES's 'or a let' beside them) kept the census green while its plants P14 to P20 realized them - and orchestrator
+ * ruling R-B620 bound the next cut to move the list nouns to the planted sub-forms or plant each wider one. Cut #9 changes no
+ * reader: it adds a row with a no-substitution template key beside each string-key row a 'by literal key' entry names, a template
+ * --no-commit element, a method in a class expression and in an object literal, a launch in a class declaration, a module-level
+ * function declaration and a module-level const arrow and function expression without export, an exported builder of each kind,
+ * renamed import and export specifiers, the parameters of each method and module-level const kind, a let-bound launch for
+ * G2-BINDING-USES and refusal #8's plants P14 to P20, byte for byte; it narrows the receivers to a call of an identifier with no
+ * arguments and an element access by string key, the conditional --no-commit reading to its double-quoted text and a reference
+ * value to a const's initializer; and it names NOT CLAIMED optional chaining, a declaration whose name is no identifier, a
+ * module-level let or var arrow, a using binding, an alias element with a default value, an export carried by a builder-name
+ * declaration itself, and every other key, callee and argument form the narrowed entries leave out. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -57,8 +72,9 @@
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
  * cut #5 by seat ws-05, run g10-work-s216 at trunk 2646305, landing 975, wb-jwc.10's; cut #6 by seat ws-04, run g10-work-s219 at
  * trunk 108a202, landing 987; cut #7 by seat ws-04, run g10-work-s219 at trunk fd8f71c, landing 991; cut #8 by seat ws-04, run
- * g10-work-s226 at trunk b45f46a, landing 993; providers/reactivefiber.ts is byte-identical at all eight and at 04123dc, sha256/16
- * d8b764b855600103 over its 203 lines; cuts #6 to #8 move no reader, so every witness reads as at cut #5; every C1 and G2 witness
+ * g10-work-s226 at trunk b45f46a, landing 993; cut #9 by seat ws-04, run g10-work-s226 at trunk 1b707ef, landing 1002;
+ * providers/reactivefiber.ts is byte-identical at all nine and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6
+ * to #9 move no reader, so every witness reads as at cut #5; every C1 and G2 witness
  * below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
@@ -144,25 +160,33 @@
  * below to its table row word for word, and FROZEN SHAPE pins the rows):
  *  C1-LAUNCH-ROUTES: C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync,
  *    exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound
- *    to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key; and an execve
- *    member call on the identifier process. It is an rf launch when its command words (C1-COMMAND-WORDS) include rf, read as
- *    path:declaration:launcher, the declaration being the nearest function or method declaration around it, else the module-level
- *    const bound to an arrow or function expression it sits in, else <module>. It claims that reading exactly at the forms its rows
- *    plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee bare and behind parentheses, as,
- *    satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from node:child_process and from
- *    another module, and by a string name from node:child_process; (3) a const declaration's object destructuring element renaming
- *    one by name off require("node:child_process") and off an identifier, and by a string key off require("node:child_process");
- *    (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by literal key, and to another
- *    identifier's member by name; (5) a member call by name under a child_process namespace, another identifier, a property access
- *    of an identifier, a call, an element access of an identifier and this, and by literal key under a child_process namespace and
- *    another identifier; (6) an execve member call on process by name and by literal key, and none under another identifier; (7)
- *    the declaration as a function declaration, a method declaration, a module-level const bound to an arrow and to a function
- *    expression, an arrow const nested in a function declaration (read as the function) and <module>; and (8) the gate members'
- *    plants, byte for byte: P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested
- *    receiver, a destructuring element off a helper object, an import alias from a launcher module of its own, and a launcher's
- *    name behind parentheses and as). Every other route is NOT CLAIMED by this census: an alias bound by let or var, by a parameter
- *    or a nested pattern, or read through a wrapper, a member call under any other receiver, every other declaration form, and a
- *    route that combines two of (1) to (7) other than as a row of this census plants it.
+ *    to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key (a string or a
+ *    no-substitution template); and an execve member call on the identifier process. It is an rf launch when its command words
+ *    (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the nearest function or method
+ *    declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It
+ *    claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)),
+ *    its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by
+ *    name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's
+ *    object destructuring element renaming one by name off require("node:child_process") and off an identifier, and by a string key
+ *    off require("node:child_process"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name
+ *    and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace,
+ *    another identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an
+ *    identifier by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve
+ *    member call on process by name and by literal key, and none under another identifier; (7) the declaration as a function
+ *    declaration with and without export, a method declaration in a class declaration with and without export, a class expression
+ *    and an object literal, a module-level const bound to an arrow and to a function expression, each with and without export, an
+ *    arrow const nested in a function declaration (read as the function) and <module>; (8) the gate members' plants, byte for byte:
+ *    P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring
+ *    element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and
+ *    as); and (9) the gate members' plants, byte for byte: P14 to P20 of refusal #8 (a launcher member by a no-substitution
+ *    template key, an optional member call, a member call reached through optional chaining, a member call under a call of a
+ *    member, a member call under an element access keyed by a name, and a launch in an object literal's method and in a
+ *    module-level const arrow that is not exported). Every other route is NOT CLAIMED by this census: an alias bound by let, var or
+ *    using, by a parameter, a nested pattern or an element with a default value, or read through a wrapper; a member call under any
+ *    other receiver, a call of another callee or with arguments and an element access by another key among them, other than as P17
+ *    and P18 write it; optional chaining (?.) on a call or a member access other than as P15 and P16 write it; every other
+ *    declaration form, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow
+ *    or function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.
  *  C1-COMMAND-WORDS: C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its
  *    second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array
  *    literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each
@@ -177,17 +201,18 @@
  *    before, between and after spreads, and a spread holding the word giving none; (4) under each launcher C1-LAUNCH-ROUTES names
  *    (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork and process.execve), the first argument and a string element
  *    of an env launch's array, and a string element of an env launch's array through an import alias from node:child_process, a
- *    destructuring alias off require("node:child_process"), a const alias of a child_process namespace member, a member call by
- *    name and by literal key under an identifier, and a child_process namespace member by name and by literal key; (5) a string
- *    element of an env launch's array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around
- *    as const; (6) a string element of the array of a launch whose first argument gives no env or sh word: a nice program and a
- *    parameter it does not resolve; and (7) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route
- *    env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??), P4 to P7 of
- *    refusal #6 (rf after a spread, under execFileSync, behind as const and at index 2) and P12 of refusal #7 (rf an element of a
- *    member-route nice launch). Every other launch form is NOT CLAIMED by this census: an element past index 3, another wrapper or
- *    a deeper nesting, an element through any other route C1-LAUNCH-ROUTES reads, a launch that combines two of (1) to (6) other
- *    than as a row of this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is
- *    that reader's claim of record).
+ *    destructuring alias off require("node:child_process"), a const alias of a child_process namespace member by name, a member
+ *    call by name and by literal key, a string and a no-substitution template each, under an identifier, and a child_process
+ *    namespace member by name and by literal key, a string and a no-substitution template each; (5) a string element of an env
+ *    launch's array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around as const; (6) a
+ *    string element of the array of a launch whose first argument gives no env or sh word: a nice program and a parameter it does
+ *    not resolve; and (7) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route env launch whose rf
+ *    word is only an argv element - a const, the second side of ?: and the right side of ??), P4 to P7 of refusal #6 (rf after a
+ *    spread, under execFileSync, behind as const and at index 2) and P12 of refusal #7 (rf an element of a member-route nice
+ *    launch). Every other launch form is NOT CLAIMED by this census: an element past index 3, another wrapper or a deeper nesting,
+ *    an element through any other route C1-LAUNCH-ROUTES reads, a launch that combines two of (1) to (6) other than as a row of
+ *    this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is that reader's claim
+ *    of record).
  *  C1-INVENTORY: C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding
  *    (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the
  *    program being the landed reader's program() of its first argument: when every alternative is a text with a first command word
@@ -197,10 +222,13 @@
  *    const); a member call under a receiver that is no child_process binding is no member. It claims that reading exactly at the
  *    forms its rows plant: a launch by a launcher's own name; by a local name renaming one off child_process (an import specifier
  *    from node:child_process, a destructuring element off require("node:child_process") and a const bound to a child_process
- *    namespace member); through a child_process namespace's member by name and by literal key, and through each binding
- *    C1-MODULE-BINDINGS's rows plant; and as an execve member call on process; and no member for a member call under an identifier,
- *    a property access of an identifier, a call, an element access of an identifier and this, none a child_process binding. A local
- *    name off another module or object, and every other receiver, is NOT CLAIMED by this census.
+ *    namespace member by name); through a child_process namespace's member by name and by literal key, a string and a
+ *    no-substitution template each, and through each binding C1-MODULE-BINDINGS's rows plant; and as an execve member call on
+ *    process by name; and no member for a member call under an identifier, a property access of an identifier, a call of an
+ *    identifier with no arguments, an element access of an identifier by string key and this, none a child_process binding. A local
+ *    name off another module or object, a const bound to a namespace member by key, an execve member call on process by key, every
+ *    other receiver (a call of another callee or with arguments, and an element access by another key, among them) and optional
+ *    chaining (?.) on a call or a member access are NOT CLAIMED by this census.
  *  C1-MODULE-BINDINGS: C1 (b) reads as a child_process module binding: a namespace import, a default import, an import specifier
  *    naming its default, an import-equals require, and a const bound to, or destructured for the default of, a call whose first
  *    argument resolves to child_process (C1-SPECIFIER-TEXT) - require, import(), getBuiltinModule or another callee - or to such a
@@ -208,9 +236,11 @@
  *    exactly at the forms its rows plant: a namespace import of node:child_process and of child_process; a default import and an
  *    import specifier naming its default, of node:child_process; an import-equals require of node:child_process and of
  *    child_process; a const bound to require(...), await import(...), process.getBuiltinModule(...) and loadModule(...), and to
- *    await import(...)'s default member by name and by literal key; a const destructured for the default of await import(...) by
- *    name and by string key; and a member call on process.getBuiltinModule(...) and on await import(...)'s default member. Every
- *    other binding form, specifier spelling and callee is NOT CLAIMED by this census.
+ *    await import(...)'s default member by name and by literal key, a string and a no-substitution template each; a const
+ *    destructured for the default of await import(...) by name and by string key; and a member call on
+ *    process.getBuiltinModule(...) and on await import(...)'s default member by name. Every other binding form (a let, var or using
+ *    binding among them), specifier spelling and callee, and optional chaining (?.) on a load, its default member or a call on
+ *    them, is NOT CLAIMED by this census.
  *  C1-SPECIFIER-TEXT: C1 (b) resolves a module specifier as exact text, as the landed reader's exact() reads it: a string, a
  *    no-substitution template, an identifier C1-NAME-RESOLUTION resolves, a template whose every substitution resolves, a + join,
  *    or a ?: / ?? / || / && whose sides both resolve (either side counts); a specifier with an alternative that does not resolve
@@ -225,17 +255,18 @@
  *    (C1-NAME-RESOLUTION's rows); a string literal as a const initializer, a parameter default, an array element and a side of a +
  *    join, and a no-substitution template literal as an object property's value and a call's second argument; and a + join
  *    (parenthesized, and inside a parenthesized join, read at its outermost through the parentheses) and a template; every other
- *    callee, literal kind and position is NOT CLAIMED by this census.
+ *    callee, literal kind and position, and an optional call (?.()), is NOT CLAIMED by this census.
  *  C1-OPAQUE-LOADS: C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or
  *    getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a
  *    same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one
  *    included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2
  *    holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and
- *    getBuiltinModule each by name and as a member by name and by literal key; createRequire(...)(...); and a call through a name
- *    that a module-level const, a let, var, using or await using in a function body, or a module-level declare const binds to
- *    createRequire(...), and through a parameter beside a same-named module-level const so bound, createRequire called by name in
- *    each; every other loader (createRequire reached as a member among them), declaration kind, scope and context is NOT CLAIMED by
- *    this census.
+ *    getBuiltinModule each by name and as a member by name and by literal key, a string and a no-substitution template each;
+ *    createRequire(...)(...); and a call through a name that a module-level const, with and without export, a let, var, using or
+ *    await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a
+ *    same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a
+ *    member among them), declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is
+ *    NOT CLAIMED by this census.
  *  C1-NAME-RESOLUTION: C1 (b2) resolves an identifier for C1-COMMAND-WORDS, C1-INVENTORY, C1-SPECIFIER-TEXT and C1-REGISTRATIONS as
  *    the landed reader's resolve() does (bindingTextReader, test/helpers/rf-binding-text-reader.ts, whose claim of record is
  *    wb-jwc.10's census), by its binding: the declaration TypeScript's checker binds it to by scope in a program over its own
@@ -261,39 +292,45 @@
  *    a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching
  *    declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads
  *    unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its
- *    rows plant: a module-level function declaration (C1-ARGV-RETURNS's rows), a function declaration nested in the launching
- *    declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function expression, and,
- *    unresolved, an imported callee, a callee declared twice and an undeclared one; every other builder binding is NOT CLAIMED by
- *    this census.
+ *    rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function declaration
+ *    nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function
+ *    expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an undeclared
+ *    one; every other builder binding, and an optional call (?.()) of the builder, is NOT CLAIMED by this census.
  *  C1-ARGV-RETURNS: C1 (c) reads every return of the resolved builder (an arrow's expression body included; nested functions
- *    excluded) for --no-commit as a literal element: unresolved when a return is no array literal; otherwise unconditional when
- *    every return lists it as an element, conditional when a return's text holds it otherwise (inside a spread or a conditional
- *    element, or in some returns only), and absent when none does; for exec and execSync it reads whether the command's words list
- *    it. It claims that reading exactly at the forms its rows plant: one return listing it, holding it in a spread, holding it in a
- *    conditional element, not holding it, and a call; two returns, one listing it beside one that does not and beside a call; a
- *    nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's
- *    command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's listing it;
- *    every other return shape is NOT CLAIMED by this census.
+ *    excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved when a return is no array
+ *    literal; otherwise unconditional when every return lists it as an element, conditional when a return's source text holds it
+ *    double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for
+ *    exec and execSync it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant:
+ *    one return listing it as a string and as a no-substitution template, holding it double-quoted in a spread, holding it
+ *    double-quoted in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and
+ *    beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows);
+ *    and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's
+ *    listing it; every other return shape, --no-commit held otherwise in single quotes or as a template among them, is NOT CLAIMED
+ *    by this census.
  *  C1-BUILDER-DECLARATIONS: C1 (c) reads every declaration in the launching file that binds the builder's name - a function, a
  *    class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or
  *    a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a
  *    nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var,
  *    an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function
- *    expression, a named class expression, an enum and a namespace; every other binding form is NOT CLAIMED by this census.
+ *    expression, a named class expression, an enum and a namespace; every other binding form, a using declaration and a declaration
+ *    of the name carrying export itself among them, is NOT CLAIMED by this census.
  *  C1-OPTIONS: C1 (c) reads each rf launch's options argument as its source text, or none. It claims that reading exactly at the
  *    forms its rows plant: an object literal's text, and none (every other argv row); every other options form is NOT CLAIMED by
  *    this census.
  *  C1-DECLARATION-REFERENCES: C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration
- *    by its name - an identifier or a literal key - as a call with its arity, a value, an import or an export. It claims that
- *    reading exactly at the forms its rows plant: the parameters of a function declaration, a method declaration and a module-level
- *    const bound to an arrow and to a function expression; in another file a named import, a default import, a call by name, a call
- *    through a namespace member by name and by literal key, and a value; and in the launching file an export specifier; every other
- *    reference form is NOT CLAIMED by this census.
+ *    by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an
+ *    import or an export. It claims that reading exactly at the forms its rows plant: the parameters of a function declaration with
+ *    and without export, of a method declaration in an exported class declaration, class expression and object literal, and of a
+ *    module-level const bound to an arrow and to a function expression, each with and without export; in another file a named
+ *    import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a
+ *    string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export
+ *    specifier, renaming it and not; every other parameter or reference form, the parameters of a method in a container without
+ *    export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.
  *  C1-DECLARATION-TEXT: C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at
  *    module level, the whole file), so any edit inside the launching declaration moves it. It claims that reading exactly at the
- *    forms its rows plant: a function declaration's line count and an edit inside it moving it, a module-level launch's whole file,
- *    and a module-level const statement whose arrow starts on its second line (the whole statement); every other declaration form
- *    is NOT CLAIMED by this census.
+ *    forms its rows plant: a function declaration's line count, with and without export, and an edit inside it moving it, a
+ *    module-level launch's whole file, and a module-level const statement, with and without export, whose arrow starts on its
+ *    second line (the whole statement); every other declaration form is NOT CLAIMED by this census.
  *  C1-REGISTRATIONS: C1 (e) reads every registration entry the landed reader's registrations() reads in src, as
  *    path:id:effectClass: an object literal whose id field has a text alternative that is a reactivefiber.* name, one entry per
  *    such text and per opaque alternative of that id (gate members R-ALT1, R-ALT2 and R-ALT4 of refusal #4: the reactivefiber side
@@ -310,13 +347,13 @@
  *  C1-RUNTIME-ARGV: C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv
  *    lists no --no-commit. It claims that reading exactly at the forms its rows plant: --no-commit as an arm's last, an inner and
  *    its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census.
- *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to
- *    that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and
- *    for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its
- *    syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another
- *    stream member each read as a new use.
+ *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to that
+ *    binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a
+ *    stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax
+ *    kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member
+ *    each read as a new use. A var or using binding and optional chaining (?.) on a reference are NOT CLAIMED by this census.
  *  G2-STDIO: G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is
- *    bound to no declared name.
+ *    bound to no declared name. A stdio property named otherwise than by an identifier is NOT CLAIMED by this census.
  *  G2-CHANNEL-SITES: G2 (static) reads every place src spells or resolves diagnostics_channel or node:diagnostics_channel, by the
  *    roles C1-MODULE-SITES reads for child_process (gate members LG1, LG1b, LG1x and LG2: an import of it; LG1g: a
  *    getBuiltinModule call naming it).
@@ -2286,6 +2323,81 @@ const P13_PLANT: readonly string[] = [
   "}",
   "",
 ];
+/** Refusal #8's P14 to P20 (gate-prep-20, run g10-gate-s225, outbox row O:2181): a committing rf render launched by a launcher member
+ * under a no-substitution template key, by an optional member call and by a member call reached through optional chaining, under a
+ * call receiver whose callee is a member and under an element access keyed by a name, inside an object literal's method and inside a
+ * module-level const bound to an arrow that is not exported, at the gate's paths, byte for byte. */
+const P14_PATH = "src/workbench/providers/zz-gp20-templatekey.ts";
+const P14_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched by a launcher member under a no-substitution template literal key. */",
+  "export function viaTemplateKey(helpers: { spawn(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers[`spawn`]("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P15_PATH = "src/workbench/providers/zz-gp20-optionalcall.ts";
+const P15_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched by an optional member call by name under an identifier. */",
+  "export function viaOptionalCall(helpers: { spawn?(program: string, argv: readonly string[]): unknown }, root: string): unknown {",
+  '  return helpers.spawn?.("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P16_PATH = "src/workbench/providers/zz-gp20-optionalmember.ts";
+const P16_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched by a member call by name reached through optional chaining. */",
+  "export function viaOptionalMember(helpers: { spawn(program: string, argv: readonly string[]): unknown } | undefined, root: string): unknown {",
+  '  return helpers?.spawn("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P17_PATH = "src/workbench/providers/zz-gp20-callreceiver.ts";
+const P17_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched by a member call under a call receiver whose callee is a member. */",
+  "type Helpers = { spawn(program: string, argv: readonly string[]): unknown };",
+  "export function viaMemberCallReceiver(helpers: Helpers, root: string): unknown {",
+  "  const context = { helpers: (): Helpers => helpers };",
+  '  return context.helpers().spawn("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P18_PATH = "src/workbench/providers/zz-gp20-keyedreceiver.ts";
+const P18_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched by a member call under an element access of an identifier keyed by a name. */",
+  "type Helpers = { spawn(program: string, argv: readonly string[]): unknown };",
+  "export function viaKeyedReceiver(helpers: Helpers, root: string): unknown {",
+  "  const registry: { primary: Helpers } = { primary: helpers };",
+  '  const key: keyof typeof registry = "primary";',
+  '  return registry[key].spawn("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "}",
+  "",
+];
+const P19_PATH = "src/workbench/providers/zz-gp20-objectmethod.ts";
+const P19_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched inside an object literal's method declaration. */",
+  "type Helpers = { spawn(program: string, argv: readonly string[]): unknown };",
+  "const host = {",
+  "  launch(helpers: Helpers, root: string): unknown {",
+  '    return helpers.spawn("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "  },",
+  "};",
+  "export function viaObjectMethod(helpers: Helpers, root: string): unknown {",
+  "  return host.launch(helpers, root);",
+  "}",
+  "",
+];
+const P20_PATH = "src/workbench/providers/zz-gp20-modulearrow.ts";
+const P20_PLANT: readonly string[] = [
+  "/** gate-prep-20 LEG 2 plant (throwaway, never committed): a committing rf render launched inside a module-level const bound to an arrow, not exported. */",
+  "type Helpers = { spawn(program: string, argv: readonly string[]): unknown };",
+  "const render = (helpers: Helpers, root: string): unknown => {",
+  '  return helpers.spawn("rf", ["--workspace", root, "context", "render", "--json"]);',
+  "};",
+  "export function viaModuleArrow(helpers: Helpers, root: string): unknown {",
+  "  return render(helpers, root);",
+  "}",
+  "",
+];
 /** A module specifier that is a template with a resolving substitution, spelled the same way. */
 const TEMPLATE_SPECIFIER = ["const cp = require(`", "$", "{NODE}:child_process`);"].join("");
 /** A module specifier spelled as a template with a resolving substitution outside any call, spelled the same way. */
@@ -2318,7 +2430,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-LAUNCH-ROUTES",
     pin: "C1",
-    words: "C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync, exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key; and an execve member call on the identifier process. It is an rf launch when its command words (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the nearest function or method declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's object destructuring element renaming one by name off require(\"node:child_process\") and off an identifier, and by a string key off require(\"node:child_process\"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace, another identifier, a property access of an identifier, a call, an element access of an identifier and this, and by literal key under a child_process namespace and another identifier; (6) an execve member call on process by name and by literal key, and none under another identifier; (7) the declaration as a function declaration, a method declaration, a module-level const bound to an arrow and to a function expression, an arrow const nested in a function declaration (read as the function) and <module>; and (8) the gate members' plants, byte for byte: P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and as). Every other route is NOT CLAIMED by this census: an alias bound by let or var, by a parameter or a nested pattern, or read through a wrapper, a member call under any other receiver, every other declaration form, and a route that combines two of (1) to (7) other than as a row of this census plants it.",
+    words: "C1 (a) reads as a launch call: a call by a launcher's own name (spawn, spawnSync, execFile, execFileSync, exec, execSync or fork); a call through an import specifier or a destructuring element renaming one, or through a const bound to a launcher's name or to a member naming one; a member call naming a launcher, by name or by literal key (a string or a no-substitution template); and an execve member call on the identifier process. It is an rf launch when its command words (C1-COMMAND-WORDS) include rf, read as path:declaration:launcher, the declaration being the nearest function or method declaration around it, else the module-level const bound to an arrow or function expression it sits in, else <module>. It claims that reading exactly at the forms its rows plant: (1) a call by each launcher's own name (with C1-COMMAND-WORDS (4)), its callee bare and behind parentheses, as, satisfies, !, a type assertion and await; (2) an import specifier renaming one by name from node:child_process and from another module, and by a string name from node:child_process; (3) a const declaration's object destructuring element renaming one by name off require(\"node:child_process\") and off an identifier, and by a string key off require(\"node:child_process\"); (4) a const bound to a launcher's bare name, to a child_process namespace member by name and by literal key, and to another identifier's member by name; (5) a member call by name under a child_process namespace, another identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an identifier by string key and this, and by literal key under a child_process namespace and another identifier; (6) an execve member call on process by name and by literal key, and none under another identifier; (7) the declaration as a function declaration with and without export, a method declaration in a class declaration with and without export, a class expression and an object literal, a module-level const bound to an arrow and to a function expression, each with and without export, an arrow const nested in a function declaration (read as the function) and <module>; (8) the gate members' plants, byte for byte: P8 to P11 and P13 of refusal #7 (a const bound to a launcher's name, a member call under a nested receiver, a destructuring element off a helper object, an import alias from a launcher module of its own, and a launcher's name behind parentheses and as); and (9) the gate members' plants, byte for byte: P14 to P20 of refusal #8 (a launcher member by a no-substitution template key, an optional member call, a member call reached through optional chaining, a member call under a call of a member, a member call under an element access keyed by a name, and a launch in an object literal's method and in a module-level const arrow that is not exported). Every other route is NOT CLAIMED by this census: an alias bound by let, var or using, by a parameter, a nested pattern or an element with a default value, or read through a wrapper; a member call under any other receiver, a call of another callee or with arguments and an element access by another key among them, other than as P17 and P18 write it; optional chaining (?.) on a call or a member access other than as P15 and P16 write it; every other declaration form, a function or method declaration whose name is no identifier and a module-level let or var bound to an arrow or function expression among them; and a route that combines two of (1) to (7) other than as a row of this census plants it.",
     falsifier: async () => ({
       name: sites(['spawn("rf", ["context", "render"]);']),
       importAlias: sites(['import { spawn as launch } from "node:child_process";', 'launch("rf", []);']),
@@ -2358,6 +2470,23 @@ const ENUMERATION: readonly Item[] = [
       p10Destructured: launchSites([plant(P10_PATH, P10_PLANT)]),
       p11ImportAlias: launchSites([plant(P11_PATH, P11_PLANT)]),
       p13WrappedCallee: launchSites([plant(P13_PATH, P13_PLANT)]),
+      keyedTemplate: sites(['import * as cp from "node:child_process";', 'cp[`execFileSync`]("rf", []);']),
+      keyedOtherTemplate: sites(['helpers[`spawnSync`]("rf", []);']),
+      constKeyedTemplate: sites(['import * as cp from "node:child_process";', "const run = cp[`execFile`];", 'run("rf", []);']),
+      execveKeyedTemplate: sites(['process[`execve`]("/usr/bin/rf", ["rf"]);']),
+      declFunctionLocal: sites(["function launch(): void {", '  spawn("rf", []);', "}"]),
+      declMethodLocal: sites(["class Host {", "  launch(): void {", '    spawn("rf", []);', "  }", "}"]),
+      declClassExpressionMethod: sites(["export const Host = class {", "  launch(): void {", '    spawn("rf", []);', "  }", "};"]),
+      declObjectMethod: sites(["export const host = {", "  launch(): void {", '    spawn("rf", []);', "  },", "};"]),
+      declArrowLocal: sites(["const launch = (): void => {", '  spawn("rf", []);', "};"]),
+      declFunctionExpressionLocal: sites(["const launch = function (): void {", '  spawn("rf", []);', "};"]),
+      p14TemplateKey: launchSites([plant(P14_PATH, P14_PLANT)]),
+      p15OptionalCall: launchSites([plant(P15_PATH, P15_PLANT)]),
+      p16OptionalMember: launchSites([plant(P16_PATH, P16_PLANT)]),
+      p17CallReceiver: launchSites([plant(P17_PATH, P17_PLANT)]),
+      p18KeyedReceiver: launchSites([plant(P18_PATH, P18_PLANT)]),
+      p19ObjectMethod: launchSites([plant(P19_PATH, P19_PLANT)]),
+      p20ModuleArrow: launchSites([plant(P20_PATH, P20_PLANT)]),
     }),
     caught: {
       name: ["plant.ts:<module>:spawn"],
@@ -2398,12 +2527,29 @@ const ENUMERATION: readonly Item[] = [
       p10Destructured: [`${P10_PATH}:viaDestructured:spawn`],
       p11ImportAlias: [`${P11_PATH}:viaImportAlias:spawn`],
       p13WrappedCallee: [`${P13_PATH}:viaWrappedCallee:spawn`],
+      keyedTemplate: ["plant.ts:<module>:execFileSync"],
+      keyedOtherTemplate: ["plant.ts:<module>:spawnSync"],
+      constKeyedTemplate: ["plant.ts:<module>:execFile"],
+      execveKeyedTemplate: ["plant.ts:<module>:execve"],
+      declFunctionLocal: ["plant.ts:launch:spawn"],
+      declMethodLocal: ["plant.ts:launch:spawn"],
+      declClassExpressionMethod: ["plant.ts:launch:spawn"],
+      declObjectMethod: ["plant.ts:launch:spawn"],
+      declArrowLocal: ["plant.ts:launch:spawn"],
+      declFunctionExpressionLocal: ["plant.ts:launch:spawn"],
+      p14TemplateKey: [`${P14_PATH}:viaTemplateKey:spawn`],
+      p15OptionalCall: [`${P15_PATH}:viaOptionalCall:spawn`],
+      p16OptionalMember: [`${P16_PATH}:viaOptionalMember:spawn`],
+      p17CallReceiver: [`${P17_PATH}:viaMemberCallReceiver:spawn`],
+      p18KeyedReceiver: [`${P18_PATH}:viaKeyedReceiver:spawn`],
+      p19ObjectMethod: [`${P19_PATH}:launch:spawn`],
+      p20ModuleArrow: [`${P20_PATH}:render:spawn`],
     },
   },
   {
     id: "C1-COMMAND-WORDS",
     pin: "C1",
-    words: "C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each split by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word. It claims that reading exactly at the launch forms its rows plant: (1) a first argument that is a string, a no-substitution template, a const it resolves (a shadowing const; a shadowed one gives no word), a let or an unbound name it does not resolve, a template or + join whose every part resolves or one with a part that does not, either side of ?: / ?? / ||, a shell line (whitespace, &&, a directory path and a .exe suffix) or a program with no rf word, under the launcher each row names, and the element at index 0 of an env launch's array as each of those forms but an unbound name and a shell line, with a shell line at index 1 of a sh launch's array (whitespace alone; whitespace, &&, a directory path and a .exe suffix); (2) a string element at index 0, 1, 2 and 3 of an env launch's array; (3) a string element of an env launch's array before, between and after spreads, and a spread holding the word giving none; (4) under each launcher C1-LAUNCH-ROUTES names (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork and process.execve), the first argument and a string element of an env launch's array, and a string element of an env launch's array through an import alias from node:child_process, a destructuring alias off require(\"node:child_process\"), a const alias of a child_process namespace member, a member call by name and by literal key under an identifier, and a child_process namespace member by name and by literal key; (5) a string element of an env launch's array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around as const; (6) a string element of the array of a launch whose first argument gives no env or sh word: a nice program and a parameter it does not resolve; and (7) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??), P4 to P7 of refusal #6 (rf after a spread, under execFileSync, behind as const and at index 2) and P12 of refusal #7 (rf an element of a member-route nice launch). Every other launch form is NOT CLAIMED by this census: an element past index 3, another wrapper or a deeper nesting, an element through any other route C1-LAUNCH-ROUTES reads, a launch that combines two of (1) to (6) other than as a row of this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is that reader's claim of record).",
+    words: "C1 (a) reads a launch's command words from its first argument and from each element that is no spread of its second argument when that argument, read through parentheses, as, satisfies, !, a type assertion and await, is an array literal: the words of every text alternative the landed reader reads there (its alternatives(), C1-NAME-RESOLUTION), each split by its commandWords(); an opaque alternative (a name that does not resolve, a template or + join with a part that does not resolve) gives no word. It claims that reading exactly at the launch forms its rows plant: (1) a first argument that is a string, a no-substitution template, a const it resolves (a shadowing const; a shadowed one gives no word), a let or an unbound name it does not resolve, a template or + join whose every part resolves or one with a part that does not, either side of ?: / ?? / ||, a shell line (whitespace, &&, a directory path and a .exe suffix) or a program with no rf word, under the launcher each row names, and the element at index 0 of an env launch's array as each of those forms but an unbound name and a shell line, with a shell line at index 1 of a sh launch's array (whitespace alone; whitespace, &&, a directory path and a .exe suffix); (2) a string element at index 0, 1, 2 and 3 of an env launch's array; (3) a string element of an env launch's array before, between and after spreads, and a spread holding the word giving none; (4) under each launcher C1-LAUNCH-ROUTES names (spawn, spawnSync, execFile, execFileSync, exec, execSync, fork and process.execve), the first argument and a string element of an env launch's array, and a string element of an env launch's array through an import alias from node:child_process, a destructuring alias off require(\"node:child_process\"), a const alias of a child_process namespace member by name, a member call by name and by literal key, a string and a no-substitution template each, under an identifier, and a child_process namespace member by name and by literal key, a string and a no-substitution template each; (5) a string element of an env launch's array behind parentheses, as const, satisfies, !, a type assertion, await, and parentheses around as const; (6) a string element of the array of a launch whose first argument gives no env or sh word: a nice program and a parameter it does not resolve; and (7) the gate members' plants, byte for byte: P1, P2 and P2b of refusal #5 (a member-route env launch whose rf word is only an argv element - a const, the second side of ?: and the right side of ??), P4 to P7 of refusal #6 (rf after a spread, under execFileSync, behind as const and at index 2) and P12 of refusal #7 (rf an element of a member-route nice launch). Every other launch form is NOT CLAIMED by this census: an element past index 3, another wrapper or a deeper nesting, an element through any other route C1-LAUNCH-ROUTES reads, a launch that combines two of (1) to (6) other than as a row of this census plants it, and every split or drop of commandWords() that no row plants (wb-jwc.10's census is that reader's claim of record).",
     falsifier: async () => {
       const count = (lines: readonly string[]): number => sites(lines).length;
       return {
@@ -2491,6 +2637,8 @@ const ENUMERATION: readonly Item[] = [
         elementNiceProgram: count(['spawn("nice", ["rf", "--json"]);']),
         elementParameterProgram: count(["export function launch(program: string): void {", '  spawn(program, ["rf", "--json"]);', "}"]),
         p12NiceElement: launchSites([plant(P12_PATH, P12_PLANT)]),
+        elementKeyedTemplate: count(['helpers[`spawn`]("env", ["rf", "--json"]);']),
+        elementModuleKeyedTemplate: count(['import * as cp from "node:child_process";', 'cp[`spawn`]("env", ["rf", "--json"]);']),
       };
     },
     caught: {
@@ -2578,12 +2726,14 @@ const ENUMERATION: readonly Item[] = [
       elementNiceProgram: 1,
       elementParameterProgram: 1,
       p12NiceElement: [`${P12_PATH}:viaNice:spawn`],
+      elementKeyedTemplate: 1,
+      elementModuleKeyedTemplate: 1,
     },
   },
   {
     id: "C1-INVENTORY",
     pin: "C1",
-    words: "C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the program being the landed reader's program() of its first argument: when every alternative is a text with a first command word (C1-COMMAND-WORDS), those first words, sorted, each once, joined by |; otherwise <opaque text>, so a program with an alternative that does not resolve reads <opaque text> (gate members E1 and E2 of refusal #4: observedPackageHead's git program read through process.env.PI_VCS ?? \"git\", and through a const whose initializer does not resolve shadowing a same-named const); a member call under a receiver that is no child_process binding is no member. It claims that reading exactly at the forms its rows plant: a launch by a launcher's own name; by a local name renaming one off child_process (an import specifier from node:child_process, a destructuring element off require(\"node:child_process\") and a const bound to a child_process namespace member); through a child_process namespace's member by name and by literal key, and through each binding C1-MODULE-BINDINGS's rows plant; and as an execve member call on process; and no member for a member call under an identifier, a property access of an identifier, a call, an element access of an identifier and this, none a child_process binding. A local name off another module or object, and every other receiver, is NOT CLAIMED by this census.",
+    words: "C1 (b) reads every launch reached by a launcher's own or local name, through a child_process module binding (C1-MODULE-BINDINGS), or as an execve member call on the identifier process as an inventory member launcher:program, the program being the landed reader's program() of its first argument: when every alternative is a text with a first command word (C1-COMMAND-WORDS), those first words, sorted, each once, joined by |; otherwise <opaque text>, so a program with an alternative that does not resolve reads <opaque text> (gate members E1 and E2 of refusal #4: observedPackageHead's git program read through process.env.PI_VCS ?? \"git\", and through a const whose initializer does not resolve shadowing a same-named const); a member call under a receiver that is no child_process binding is no member. It claims that reading exactly at the forms its rows plant: a launch by a launcher's own name; by a local name renaming one off child_process (an import specifier from node:child_process, a destructuring element off require(\"node:child_process\") and a const bound to a child_process namespace member by name); through a child_process namespace's member by name and by literal key, a string and a no-substitution template each, and through each binding C1-MODULE-BINDINGS's rows plant; and as an execve member call on process by name; and no member for a member call under an identifier, a property access of an identifier, a call of an identifier with no arguments, an element access of an identifier by string key and this, none a child_process binding. A local name off another module or object, a const bound to a namespace member by key, an execve member call on process by key, every other receiver (a call of another callee or with arguments, and an element access by another key, among them) and optional chaining (?.) on a call or a member access are NOT CLAIMED by this census.",
     falsifier: async () => ({
       opaqueProgram: inventory(['import { RF_PROGRAM } from "./bin.js";', "spawn(RF_PROGRAM, []);"]),
       envProgram: inventory(['import { spawn } from "node:child_process";', "spawn(process.env.RF_BIN as string, []);"]),
@@ -2602,6 +2752,7 @@ const ENUMERATION: readonly Item[] = [
       aliasConst: inventory(['import * as cp from "node:child_process";', "const run = cp.spawnSync;", 'run("git", []);']),
       moduleKeyed: inventory(['import * as cp from "node:child_process";', 'cp["execFile"]("git", []);']),
       execveProgram: inventory(['process.execve("/usr/bin/git", ["git", "status"]);']),
+      moduleKeyedTemplate: inventory(['import * as cp from "node:child_process";', 'cp[`execFile`]("git", []);']),
       otherReceivers: inventory([
         'context.helpers.spawn("git", []);',
         'helpers().spawn("git", []);',
@@ -2630,12 +2781,13 @@ const ENUMERATION: readonly Item[] = [
       moduleKeyed: ["execFile:git"],
       execveProgram: ["execve:git"],
       otherReceivers: [],
+      moduleKeyedTemplate: ["execFile:git"],
     },
   },
   {
     id: "C1-MODULE-BINDINGS",
     pin: "C1",
-    words: "C1 (b) reads as a child_process module binding: a namespace import, a default import, an import specifier naming its default, an import-equals require, and a const bound to, or destructured for the default of, a call whose first argument resolves to child_process (C1-SPECIFIER-TEXT) - require, import(), getBuiltinModule or another callee - or to such a call's default member; a member call on such a call, or on its default member, is read as one too. It claims that reading exactly at the forms its rows plant: a namespace import of node:child_process and of child_process; a default import and an import specifier naming its default, of node:child_process; an import-equals require of node:child_process and of child_process; a const bound to require(...), await import(...), process.getBuiltinModule(...) and loadModule(...), and to await import(...)'s default member by name and by literal key; a const destructured for the default of await import(...) by name and by string key; and a member call on process.getBuiltinModule(...) and on await import(...)'s default member. Every other binding form, specifier spelling and callee is NOT CLAIMED by this census.",
+    words: "C1 (b) reads as a child_process module binding: a namespace import, a default import, an import specifier naming its default, an import-equals require, and a const bound to, or destructured for the default of, a call whose first argument resolves to child_process (C1-SPECIFIER-TEXT) - require, import(), getBuiltinModule or another callee - or to such a call's default member; a member call on such a call, or on its default member, is read as one too. It claims that reading exactly at the forms its rows plant: a namespace import of node:child_process and of child_process; a default import and an import specifier naming its default, of node:child_process; an import-equals require of node:child_process and of child_process; a const bound to require(...), await import(...), process.getBuiltinModule(...) and loadModule(...), and to await import(...)'s default member by name and by literal key, a string and a no-substitution template each; a const destructured for the default of await import(...) by name and by string key; and a member call on process.getBuiltinModule(...) and on await import(...)'s default member by name. Every other binding form (a let, var or using binding among them), specifier spelling and callee, and optional chaining (?.) on a load, its default member or a call on them, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       namespace: inventory(['import * as cp from "node:child_process";', "cp.fork(entry);"]),
       defaultImport: inventory(['import cp from "node:child_process";', "cp.spawn(bin, []);"]),
@@ -2653,6 +2805,7 @@ const ENUMERATION: readonly Item[] = [
       defaultMemberKeyed: inventory(['const cp = (await import("node:child_process"))["default"];', "cp.exec(command);"]),
       defaultDestructureString: inventory(['const { "default": cp } = await import("node:child_process");', "cp.execSync(command);"]),
       onTheDefault: inventory(['(await import("node:child_process")).default.execFile(bin, []);']),
+      defaultMemberKeyedTemplate: inventory(['const cp = (await import("node:child_process"))[`default`];', "cp.exec(command);"]),
     }),
     caught: {
       namespace: ["fork:<opaque entry>"],
@@ -2671,6 +2824,7 @@ const ENUMERATION: readonly Item[] = [
       defaultMemberKeyed: ["exec:<opaque command>"],
       defaultDestructureString: ["execSync:<opaque command>"],
       onTheDefault: ["execFile:<opaque bin>"],
+      defaultMemberKeyedTemplate: ["exec:<opaque command>"],
     },
   },
   {
@@ -2707,7 +2861,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-MODULE-SITES",
     pin: "C1",
-    words: "C1 (b2) reads every place src spells or resolves child_process or node:child_process: each import, export-from and import-equals declaration (type-only ones included), each call whose first argument resolves to one (C1-SPECIFIER-TEXT), each other string or no-substitution template literal whose text is one, and each other template or + join, at its outermost, whose texts resolve to one; read as path:declaration:role:specifier. It claims that reading exactly at the forms its rows plant: an export-from, an import and an import-equals declaration, each also type-only; a call of loadModule and of require (C1-NAME-RESOLUTION's rows); a string literal as a const initializer, a parameter default, an array element and a side of a + join, and a no-substitution template literal as an object property's value and a call's second argument; and a + join (parenthesized, and inside a parenthesized join, read at its outermost through the parentheses) and a template; every other callee, literal kind and position is NOT CLAIMED by this census.",
+    words: "C1 (b2) reads every place src spells or resolves child_process or node:child_process: each import, export-from and import-equals declaration (type-only ones included), each call whose first argument resolves to one (C1-SPECIFIER-TEXT), each other string or no-substitution template literal whose text is one, and each other template or + join, at its outermost, whose texts resolve to one; read as path:declaration:role:specifier. It claims that reading exactly at the forms its rows plant: an export-from, an import and an import-equals declaration, each also type-only; a call of loadModule and of require (C1-NAME-RESOLUTION's rows); a string literal as a const initializer, a parameter default, an array element and a side of a + join, and a no-substitution template literal as an object property's value and a call's second argument; and a + join (parenthesized, and inside a parenthesized join, read at its outermost through the parentheses) and a template; every other callee, literal kind and position, and an optional call (?.()), is NOT CLAIMED by this census.",
     falsifier: async () => ({
       declarations: moduleSites(planted(['export { spawn as start } from "node:child_process";', 'import type { ChildProcess } from "node:child_process";', 'import cp = require("child_process");']), CHILD_PROCESS),
       call: moduleSites(planted(['loadModule("node:" + "child" + "_process");']), CHILD_PROCESS),
@@ -2732,7 +2886,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-OPAQUE-LOADS",
     pin: "C1",
-    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and getBuiltinModule each by name and as a member by name and by literal key; createRequire(...)(...); and a call through a name that a module-level const, a let, var, using or await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a member among them), declaration kind, scope and context is NOT CLAIMED by this census.",
+    words: "C1 (b2) reads every load call whose specifier does not resolve (C1-SPECIFIER-TEXT) - import(), require or getBuiltinModule called by name or as a member, createRequire(...)(...), or a call through an identifier whose name a same-file variable declaration binds to createRequire(...) (a const, let, var, using or await using declaration, a declare one included), whatever binding the identifier has - whatever it would load, read as path:declaration:loader:<opaque text>; G2 holds the same list. It claims that reading exactly at the forms its rows plant: import() of a parameter; require and getBuiltinModule each by name and as a member by name and by literal key, a string and a no-substitution template each; createRequire(...)(...); and a call through a name that a module-level const, with and without export, a let, var, using or await using in a function body, or a module-level declare const binds to createRequire(...), and through a parameter beside a same-named module-level const so bound, createRequire called by name in each; every other loader (createRequire reached as a member among them), declaration kind, scope and context, and an optional call (?.()) or optional member access of a loader, is NOT CLAIMED by this census.",
     falsifier: async () =>
       opaqueLoads(
         planted([
@@ -2753,18 +2907,25 @@ const ENUMERATION: readonly Item[] = [
           "getBuiltinModule(builtinName);",
           'module["require"](keyedName);',
           'process["getBuiltinModule"](keyedBuiltin);',
+          'module[`require`](templateName);',
+          'process[`getBuiltinModule`](templateBuiltin);',
+          "export const exportedRequire = createRequire(import.meta.url);",
+          "exportedRequire(exportedName);",
         ]),
       ),
     caught: [
       "plant.ts:<module>:createRequire():<opaque ambientName>",
+      "plant.ts:<module>:createRequire():<opaque exportedName>",
       "plant.ts:<module>:createRequire():<opaque modulePath>",
       "plant.ts:<module>:createRequire():<opaque name>",
       "plant.ts:<module>:getBuiltinModule:<opaque builtinName>",
       "plant.ts:<module>:getBuiltinModule:<opaque keyedBuiltin>",
       "plant.ts:<module>:getBuiltinModule:<opaque name>",
+      "plant.ts:<module>:getBuiltinModule:<opaque templateBuiltin>",
       "plant.ts:<module>:require:<opaque byName>",
       "plant.ts:<module>:require:<opaque keyedName>",
       "plant.ts:<module>:require:<opaque name>",
+      "plant.ts:<module>:require:<opaque templateName>",
       "plant.ts:load:import():<opaque name>",
       "plant.ts:viaAwaitUsing:createRequire():<opaque awaitName>",
       "plant.ts:viaLet:createRequire():<opaque letName>",
@@ -2899,7 +3060,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-ARGV-BUILDER",
     pin: "C1",
-    words: "C1 (c) reads, when that const's initializer calls an identifier, the builder the checker binds it to by scope - a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its rows plant: a module-level function declaration (C1-ARGV-RETURNS's rows), a function declaration nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function expression, and, unresolved, an imported callee, a callee declared twice and an undeclared one; every other builder binding is NOT CLAIMED by this census.",
+    words: "C1 (c) reads, when that const's initializer calls an identifier, the builder the checker binds it to by scope - a function declaration, or a const bound to an arrow or function expression - a same-named declaration nested in the launching declaration included, with that declaration's whole source lines; an imported, ambiguous or otherwise unbound callee reads unresolved (gate member LC2: a nested builder shadowing the module-level one). It claims that reading exactly at the forms its rows plant: a module-level function declaration without export (C1-ARGV-RETURNS's rows) and with it, a function declaration nested in the launching declaration shadowing it, with its lines, a module-level const bound to an arrow and to a function expression, each without export and with it, and, unresolved, an imported callee, a callee declared twice and an undeclared one; every other builder binding, and an optional call (?.()) of the builder, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       nested: argvOf(LC2_PLANT),
       nestedLines: argvBuilders(planted(LC2_PLANT)),
@@ -2921,6 +3082,15 @@ const ENUMERATION: readonly Item[] = [
         "}",
       ]),
       undeclared: argvOf(["export function launch(): void {", "  const argv = makeArgv();", '  spawn("rf", argv);', "}"]),
+      exportedFunction: argvOf(['export function argvOf(): string[] { return ["context", "render", "--no-commit"]; }', "export function launch(): void {", "  const argv = argvOf();", '  spawn("rf", argv);', "}"]),
+      exportedArrow: argvOf(['export const argvOf = (): string[] => ["context", "render", "--no-commit"];', "export function launch(): void {", "  const argv = argvOf();", '  spawn("rf", argv);', "}"]),
+      exportedFunctionExpression: argvOf([
+        'export const argvOf = function (): string[] { return ["context", "render", "--no-commit"]; };',
+        "export function launch(): void {",
+        "  const argv = argvOf();",
+        '  spawn("rf", argv);',
+        "}",
+      ]),
     }),
     caught: {
       nested: ["plant.ts:launch:spawn argv=renderArgv() uses=1 builder=renderArgv@launch returns=1 --no-commit=conditional options=none"],
@@ -2930,12 +3100,15 @@ const ENUMERATION: readonly Item[] = [
       functionExpression: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
       twiceDeclared: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@unresolved returns=0 --no-commit=unresolved options=none"],
       undeclared: ["plant.ts:launch:spawn argv=makeArgv() uses=1 builder=makeArgv@unresolved returns=0 --no-commit=unresolved options=none"],
+      exportedFunction: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
+      exportedArrow: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
+      exportedFunctionExpression: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
     },
   },
   {
     id: "C1-ARGV-RETURNS",
     pin: "C1",
-    words: "C1 (c) reads every return of the resolved builder (an arrow's expression body included; nested functions excluded) for --no-commit as a literal element: unresolved when a return is no array literal; otherwise unconditional when every return lists it as an element, conditional when a return's text holds it otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for exec and execSync it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant: one return listing it, holding it in a spread, holding it in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's listing it; every other return shape is NOT CLAIMED by this census.",
+    words: "C1 (c) reads every return of the resolved builder (an arrow's expression body included; nested functions excluded) for --no-commit as a literal element (a string or a no-substitution template): unresolved when a return is no array literal; otherwise unconditional when every return lists it as an element, conditional when a return's source text holds it double-quoted otherwise (inside a spread or a conditional element, or in some returns only), and absent when none does; for exec and execSync it reads whether the command's words list it. It claims that reading exactly at the forms its rows plant: one return listing it as a string and as a no-substitution template, holding it double-quoted in a spread, holding it double-quoted in a conditional element, not holding it, and a call; two returns, one listing it beside one that does not and beside a call; a nested function's array return beside the builder's own; an arrow's expression body (C1-ARGV-BUILDER's rows); and exec's command words listing it, not listing it, and with a part that does not resolve (no rf launch), and execSync's listing it; every other return shape, --no-commit held otherwise in single quotes or as a template among them, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       unconditional: argvOf(builder('["context", "render", "--no-commit"]')),
       conditional: argvOf(builder('["context", "render", ...(commit ? [] : ["--no-commit"])]')),
@@ -2977,6 +3150,7 @@ const ENUMERATION: readonly Item[] = [
         "}",
       ]),
       shellSync: argvOf(['execSync("rf context render --no-commit --json");']),
+      unconditionalTemplate: argvOf(builder('["context", "render", `--no-commit`]')),
     }),
     caught: {
       unconditional: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
@@ -2991,12 +3165,13 @@ const ENUMERATION: readonly Item[] = [
       oneUnresolved: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=2 --no-commit=unresolved options=none"],
       nestedFunction: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
       shellSync: ["plant.ts:<module>:execSync command --no-commit=unconditional options=none"],
+      unconditionalTemplate: ["plant.ts:launch:spawn argv=argvOf() uses=1 builder=argvOf@<module> returns=1 --no-commit=unconditional options=none"],
     },
   },
   {
     id: "C1-BUILDER-DECLARATIONS",
     pin: "C1",
-    words: "C1 (c) reads every declaration in the launching file that binds the builder's name - a function, a class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var, an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function expression, a named class expression, an enum and a namespace; every other binding form is NOT CLAIMED by this census.",
+    words: "C1 (c) reads every declaration in the launching file that binds the builder's name - a function, a class, a const, let or var, a destructuring element, a parameter, an import, a named function or class expression, an enum or a namespace - as path:name:kind@declaration. It claims that reading exactly at the forms its rows plant: a module-level and a nested function declaration and a parameter of the launching declaration, and at module level a class, a const, a let, a var, an object destructuring element, an import specifier, a default import, a namespace import, an import-equals, a named function expression, a named class expression, an enum and a namespace; every other binding form, a using declaration and a declaration of the name carrying export itself among them, is NOT CLAIMED by this census.",
     falsifier: async () => {
       const beside = (declaration: string): string[] =>
         builderDeclarations(planted([declaration, "export function launch(): void {", "  const argv = renderArgv();", '  spawn("rf", argv);', "}"]));
@@ -3048,7 +3223,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-DECLARATION-REFERENCES",
     pin: "C1",
-    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of a function declaration, a method declaration and a module-level const bound to an arrow and to a function expression; in another file a named import, a default import, a call by name, a call through a namespace member by name and by literal key, and a value; and in the launching file an export specifier; every other reference form is NOT CLAIMED by this census.",
+    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of a function declaration with and without export, of a method declaration in an exported class declaration, class expression and object literal, and of a module-level const bound to an arrow and to a function expression, each with and without export; in another file a named import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the parameters of a method in a container without export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       calls: launchingDeclarations([
         plant("control.ts", ["export function render(root: string, commit = false): void {", '  spawn("rf", ["--workspace", root, ...(commit ? [] : ["--no-commit"])]);', "}"]),
@@ -3076,6 +3251,27 @@ const ENUMERATION: readonly Item[] = [
       functionExpressionParameters: launchingDeclarations([
         plant("control.ts", ["export const render = function (root: string): void {", '  spawn("rf", ["--workspace", root]);', "};"]),
       ]),
+      keyedTemplate: launchingDeclarations([
+        plant("control.ts", ["export function render(root: string): void {", '  spawn("rf", ["--workspace", root, "--no-commit"]);', "}"]),
+        plant("keyed.ts", ['import * as provider from "./control.js";', 'export function commit(): void { provider[`render`]("/w", true); }']),
+      ]),
+      renamedImport: launchingDeclarations([
+        plant("control.ts", ["export function render(root: string): void {", '  spawn("rf", ["--workspace", root]);', "}"]),
+        plant("caller.ts", ['import { render as start } from "./control.js";', 'export function commit(): void { start("/w"); }']),
+      ]),
+      renamedExport: launchingDeclarations([plant("control.ts", ["function render(): void {", '  spawn("rf", ["--no-commit"]);', "}", "export { render as start };"])]),
+      objectMethodParameters: launchingDeclarations([
+        plant("control.ts", ["export const host = {", "  render(root: string, view: string): void {", '    spawn("rf", ["--workspace", root, "--view", view]);', "  },", "};"]),
+      ]),
+      classExpressionMethodParameters: launchingDeclarations([
+        plant("control.ts", ["export const Host = class {", "  render(root: string, view: string): void {", '    spawn("rf", ["--workspace", root, "--view", view]);', "  }", "};"]),
+      ]),
+      localArrowParameters: launchingDeclarations([
+        plant("control.ts", ["const render = (root: string, view: string): void => {", '  spawn("rf", ["--workspace", root, "--view", view]);', "};"]),
+      ]),
+      localFunctionExpressionParameters: launchingDeclarations([
+        plant("control.ts", ["const render = function (root: string): void {", '  spawn("rf", ["--workspace", root]);', "};"]),
+      ]),
     }),
     caught: {
       calls: [{ declaration: "control.ts:render(root,commit)", references: ["caller.ts:<module>:value", "caller.ts:commit:call(2)", "caller.ts:import"] }],
@@ -3086,12 +3282,19 @@ const ENUMERATION: readonly Item[] = [
       methodParameters: [{ declaration: "control.ts:render(root,view)", references: [] }],
       arrowParameters: [{ declaration: "control.ts:render(root,view)", references: [] }],
       functionExpressionParameters: [{ declaration: "control.ts:render(root)", references: [] }],
+      keyedTemplate: [{ declaration: "control.ts:render(root)", references: ["keyed.ts:commit:call(2)"] }],
+      renamedImport: [{ declaration: "control.ts:render(root)", references: ["caller.ts:import"] }],
+      renamedExport: [{ declaration: "control.ts:render()", references: ["control.ts:export"] }],
+      objectMethodParameters: [{ declaration: "control.ts:render(root,view)", references: [] }],
+      classExpressionMethodParameters: [{ declaration: "control.ts:render(root,view)", references: [] }],
+      localArrowParameters: [{ declaration: "control.ts:render(root,view)", references: [] }],
+      localFunctionExpressionParameters: [{ declaration: "control.ts:render(root)", references: [] }],
     },
   },
   {
     id: "C1-DECLARATION-TEXT",
     pin: "C1",
-    words: "C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at module level, the whole file), so any edit inside the launching declaration moves it. It claims that reading exactly at the forms its rows plant: a function declaration's line count and an edit inside it moving it, a module-level launch's whole file, and a module-level const statement whose arrow starts on its second line (the whole statement); every other declaration form is NOT CLAIMED by this census.",
+    words: "C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at module level, the whole file), so any edit inside the launching declaration moves it. It claims that reading exactly at the forms its rows plant: a function declaration's line count, with and without export, and an edit inside it moving it, a module-level launch's whole file, and a module-level const statement, with and without export, whose arrow starts on its second line (the whole statement); every other declaration form is NOT CLAIMED by this census.",
     falsifier: async () => {
       const launcher = (padding: string): SourceText[] => planted(["export function launch(): void {", `  spawn("rf", ["context", "render", "--no-commit"]);${padding}`, "}"]);
       const before = declarationTexts(launcher(""));
@@ -3101,9 +3304,11 @@ const ENUMERATION: readonly Item[] = [
         moved: before.join() !== declarationTexts(launcher(" ")).join(),
         moduleLines: linesIn(['import { spawn } from "node:child_process";', "", 'spawn("rf", ["context", "render", "--no-commit"]);']),
         arrowStatementLines: linesIn(["export const launch =", "  (): void => {", '    spawn("rf", ["context", "render", "--no-commit"]);', "  };"]),
+        localLines: linesIn(['import { spawn } from "node:child_process";', "function launch(): void {", '  spawn("rf", ["context", "render", "--no-commit"]);', "}"]),
+        localArrowStatementLines: linesIn(['import { spawn } from "node:child_process";', "const launch =", "  (): void => {", '    spawn("rf", ["context", "render", "--no-commit"]);', "  };"]),
       };
     },
-    caught: { lines: ["3"], moved: true, moduleLines: ["3"], arrowStatementLines: ["4"] },
+    caught: { lines: ["3"], moved: true, moduleLines: ["3"], arrowStatementLines: ["4"], localLines: ["3"], localArrowStatementLines: ["4"] },
   },
   {
     id: "C1-REGISTRATIONS",
@@ -3205,7 +3410,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-BINDING-USES",
     pin: "G2",
-    words: "G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use.",
+    words: "G2 (static) reads, per rf launch C1 finds, whether it is bound to a const or a let, and every reference to that binding by name inside the launching declaration: a member read or call; a stdout or stderr member with its method, and for a stderr data listener its chunk parameter's uses (plus this or arguments in a non-arrow listener); or a bare use by its syntax kind; so a destructuring, child.stdio, an element access, a hand-off to a helper, a second listener and another stream member each read as a new use. A var or using binding and optional chaining (?.) on a reference are NOT CLAIMED by this census.",
     falsifier: async () =>
       childUses(
         planted([
@@ -3220,6 +3425,10 @@ const ENUMERATION: readonly Item[] = [
           '  child.stderr.setEncoding("utf8");',
           '  child.stderr.on("readable", () => {});',
           "}",
+          "export function letBound(): void {",
+          '  let child = spawn("rf", ["context", "render"], { stdio: ["ignore", "pipe", "pipe"] });',
+          "  void child.stdio;",
+          "}",
         ]),
       ),
     caught: [
@@ -3232,13 +3441,14 @@ const ENUMERATION: readonly Item[] = [
       "child.stdio",
       'child["stderr"]',
       "const child = spawn(...)",
+      "let child = spawn(...)",
       'stdio ["ignore", "pipe", "pipe"]',
     ],
   },
   {
     id: "G2-STDIO",
     pin: "G2",
-    words: "G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is bound to no declared name.",
+    words: "G2 (static) reads each rf launch's stdio option text, or <unread> together with the unbound call when the launch is bound to no declared name. A stdio property named otherwise than by an identifier is NOT CLAIMED by this census.",
     falsifier: async () => ({
       unbound: childUses(planted(['export const render = (): void => { spawn("rf", []).stderr?.on("data", parse); };'])),
       inherit: childUses(planted(["export function preview(): void {", '  const child = spawn("rf", [], { stdio: "inherit" });', "}"])),
@@ -3955,24 +4165,24 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       "G2-SINKS:G2",
     ]);
     expect(ENUMERATION.map((item) => `${item.id}:${rowShapeOf(item.caught)}`)).toStrictEqual([
-      "C1-LAUNCH-ROUTES:name,importAlias,destructure,constAlias,member,keyed,execve,calleeParenthesized,calleeAs,calleeSatisfies,calleeNonNull,calleeTypeAssertion,calleeAwait,importAliasModule,importAliasString,destructureObject,destructureString,constName,constKeyed,constMemberOther,memberModule,receiverProperty,receiverCall,receiverElement,receiverThis,keyedOther,execveKeyed,execveOther,declFunction,declMethod,declArrow,declFunctionExpression,declNestedArrow,p8ConstName,p9NestedReceiver,p10Destructured,p11ImportAlias,p13WrappedCallee",
-      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec,conditionalFirst,alternativeLeft,orAlternativeLeft,elementNoSubstitution,elementConstBound,elementShadowingConst,elementShadowedConst,elementUnresolvedName,elementTemplate,elementTemplateUnresolved,elementConditional,elementConditionalFirst,elementAlternative,elementAlternativeLeft,elementOrAlternative,elementOrAlternativeLeft,elementJoin,elementJoinUnresolved,elementShellLine,elementOtherProgram,p1EnvConst,p2EnvConditional,p2bEnvNullish,elementLiteral,elementSecond,elementThird,elementFourth,elementBeforeSpread,elementBetweenSpreads,elementAfterSpread,programSpawnSync,programExecFile,programExecFileSync,programExec,programExecSync,programFork,programExecve,elementSpawnSync,elementExecFile,elementExecFileSync,elementExec,elementExecSync,elementFork,elementExecve,elementImportAlias,elementDestructure,elementConstAlias,elementMember,elementKeyed,elementModule,elementModuleKeyed,argvParenthesized,argvAsConst,argvSatisfies,argvNonNull,argvTypeAssertion,argvAwait,argvNested,p4EnvAfterSpread,p5ExecFileEnv,p6EnvAsConst,p7EnvThird,unboundName,elementNiceProgram,elementParameterProgram,p12NiceElement",
-      "C1-INVENTORY:opaqueProgram,envProgram,shellProgram,otherReceiver,conditionalProgram,sameFirstWord,templateProgram,joinProgram,observedHead,e1EnvProgram,e2ShadowingConst,e3NewLaunch,aliasImport,aliasDestructure,aliasConst,moduleKeyed,execveProgram,otherReceivers",
-      "C1-MODULE-BINDINGS:namespace,defaultImport,defaultSpecifier,importEquals,loadBinding,defaultMember,defaultDestructure,onTheCall,namespaceBare,importEqualsBare,requireBinding,builtinBinding,otherCallee,defaultMemberKeyed,defaultDestructureString,onTheDefault",
+      "C1-LAUNCH-ROUTES:name,importAlias,destructure,constAlias,member,keyed,execve,calleeParenthesized,calleeAs,calleeSatisfies,calleeNonNull,calleeTypeAssertion,calleeAwait,importAliasModule,importAliasString,destructureObject,destructureString,constName,constKeyed,constMemberOther,memberModule,receiverProperty,receiverCall,receiverElement,receiverThis,keyedOther,execveKeyed,execveOther,declFunction,declMethod,declArrow,declFunctionExpression,declNestedArrow,p8ConstName,p9NestedReceiver,p10Destructured,p11ImportAlias,p13WrappedCallee,keyedTemplate,keyedOtherTemplate,constKeyedTemplate,execveKeyedTemplate,declFunctionLocal,declMethodLocal,declClassExpressionMethod,declObjectMethod,declArrowLocal,declFunctionExpressionLocal,p14TemplateKey,p15OptionalCall,p16OptionalMember,p17CallReceiver,p18KeyedReceiver,p19ObjectMethod,p20ModuleArrow",
+      "C1-COMMAND-WORDS:literal,noSubstitution,constBound,shadowingConst,shadowedConst,unresolvedName,template,templateUnresolved,conditional,alternative,orAlternative,join,joinUnresolved,shellLine,argvElement,spreadElement,otherProgram,regexExec,conditionalFirst,alternativeLeft,orAlternativeLeft,elementNoSubstitution,elementConstBound,elementShadowingConst,elementShadowedConst,elementUnresolvedName,elementTemplate,elementTemplateUnresolved,elementConditional,elementConditionalFirst,elementAlternative,elementAlternativeLeft,elementOrAlternative,elementOrAlternativeLeft,elementJoin,elementJoinUnresolved,elementShellLine,elementOtherProgram,p1EnvConst,p2EnvConditional,p2bEnvNullish,elementLiteral,elementSecond,elementThird,elementFourth,elementBeforeSpread,elementBetweenSpreads,elementAfterSpread,programSpawnSync,programExecFile,programExecFileSync,programExec,programExecSync,programFork,programExecve,elementSpawnSync,elementExecFile,elementExecFileSync,elementExec,elementExecSync,elementFork,elementExecve,elementImportAlias,elementDestructure,elementConstAlias,elementMember,elementKeyed,elementModule,elementModuleKeyed,argvParenthesized,argvAsConst,argvSatisfies,argvNonNull,argvTypeAssertion,argvAwait,argvNested,p4EnvAfterSpread,p5ExecFileEnv,p6EnvAsConst,p7EnvThird,unboundName,elementNiceProgram,elementParameterProgram,p12NiceElement,elementKeyedTemplate,elementModuleKeyedTemplate",
+      "C1-INVENTORY:opaqueProgram,envProgram,shellProgram,otherReceiver,conditionalProgram,sameFirstWord,templateProgram,joinProgram,observedHead,e1EnvProgram,e2ShadowingConst,e3NewLaunch,aliasImport,aliasDestructure,aliasConst,moduleKeyed,execveProgram,otherReceivers,moduleKeyedTemplate",
+      "C1-MODULE-BINDINGS:namespace,defaultImport,defaultSpecifier,importEquals,loadBinding,defaultMember,defaultDestructure,onTheCall,namespaceBare,importEqualsBare,requireBinding,builtinBinding,otherCallee,defaultMemberKeyed,defaultDestructureString,onTheDefault,defaultMemberKeyedTemplate",
       "C1-SPECIFIER-TEXT:constSpecifier,noSubstitutionSpecifier,joinSpecifier,templateSpecifier,alternativeSpecifier,nullishSpecifier,orSpecifier,andSpecifier,unresolved,stringSpecifier,eitherSide",
       "C1-MODULE-SITES:declarations,call,literal,text,plainImport,typeOnly,parenNested,positions",
-      "C1-OPAQUE-LOADS:[15]",
+      "C1-OPAQUE-LOADS:[18]",
       "C1-NAME-RESOLUTION:s1Let,s2Parameter,s3Let,varDeclaration,usingDeclaration,awaitUsingDeclaration,catchClause,destructuringElement,functionDeclaration,classDeclaration,importBinding,enumDeclaration,namespaceDeclaration,constWithoutInitializer,ambientConst,ambientNamespaceConst,directEval,outsideItsBlock,outsideItsSwitch,outsideItsFor,withBody,namespaceBody,enumBody,s4bChannel,program,inScope,constShadowingConst,shadowInside,a10ShadowingConst,unboundProgram",
       "C1-ARGV-BINDING:inline,mutated,shadowed,letBound,inlineAsConst,callArgv,noArgv",
-      "C1-ARGV-BUILDER:nested,nestedLines,arrow,imported,functionExpression,twiceDeclared,undeclared",
-      "C1-ARGV-RETURNS:unconditional,conditional,absent,unresolved,shellCommand,shellListed,shellUnresolved,conditionalElement,someReturns,oneUnresolved,nestedFunction,shellSync",
+      "C1-ARGV-BUILDER:nested,nestedLines,arrow,imported,functionExpression,twiceDeclared,undeclared,exportedFunction,exportedArrow,exportedFunctionExpression",
+      "C1-ARGV-RETURNS:unconditional,conditional,absent,unresolved,shellCommand,shellListed,shellUnresolved,conditionalElement,someReturns,oneUnresolved,nestedFunction,shellSync,unconditionalTemplate",
       "C1-BUILDER-DECLARATIONS:nested,parameter,classKind,constKind,letKind,varKind,bindingKind,importKind,defaultImportKind,namespaceImportKind,importEqualsKind,functionExpressionKind,classExpressionKind,enumKind,namespaceKind",
       "C1-OPTIONS:[1]",
-      "C1-DECLARATION-REFERENCES:calls,keyed,exported,defaultImport,memberCall,methodParameters,arrowParameters,functionExpressionParameters",
-      "C1-DECLARATION-TEXT:lines,moved,moduleLines,arrowStatementLines",
+      "C1-DECLARATION-REFERENCES:calls,keyed,exported,defaultImport,memberCall,methodParameters,arrowParameters,functionExpressionParameters,keyedTemplate,renamedImport,renamedExport,objectMethodParameters,classExpressionMethodParameters,localArrowParameters,localFunctionExpressionParameters",
+      "C1-DECLARATION-TEXT:lines,moved,moduleLines,arrowStatementLines,localLines,localArrowStatementLines",
       "C1-REGISTRATIONS:literal,keyed,resolved,shorthand,spreadOverride,trailingSpread,spreadBetween,leadingSpread,inPlace,laterRoute,computedKey,accessors,severalConsts,nonLiteralConst,innerOpaque,shadowedSpread,effectAlternatives,effectNullish,noEffect,rAlt1,rAlt2,rAlt3,rAlt4",
       "C1-RUNTIME-ARGV:lastElement,innerElements,bothCommitting",
-      "G2-BINDING-USES:[10]",
+      "G2-BINDING-USES:[11]",
       "G2-STDIO:unbound,inherit",
       "G2-CHANNEL-SITES:importDeclaration,builtin,constSpecifier",
       "G2-OPAQUE-LOADS:[1]",
