@@ -343,8 +343,10 @@ export interface RunWorkflowOptions {
   onProgress?(entries: readonly WorkflowEntry[]): void;
   /**
    * Agents this run may have in flight at once. Like the three caps, a positive
-   * integer: anything else is refused before the run starts, typed, rather than
-   * parking every agent behind a semaphore with no permits (wb-ny54, EAT-R073).
+   * safe integer (Number.isSafeInteger, at least 1): anything else is refused at
+   * the call with a WorkflowRuntimeError, before anything is dispatched, rather
+   * than parking every agent behind a semaphore with no permits (wb-ny54,
+   * EAT-R073).
    */
   concurrency?: number;
   agentCap?: number;
@@ -353,8 +355,9 @@ export interface RunWorkflowOptions {
    * The host's admission budget, shared by every run the host starts at once
    * (wb-ny54, EAT-R074..EAT-R076). Each agent dispatch and each live node
    * dispatch waits for the pools it is charged to (admission.ts dispatchPools)
-   * after this run's own permit and immediately before the dispatch; a wait
-   * refused at the queue deadline dispatches nothing and fails the run, typed,
+   * last, after this run's own permit and before the dispatch; a wait
+   * refused at the queue deadline dispatches nothing and fails the run (an
+   * agent's refusal is a fatal error, a node's an `unavailable` CapabilityError),
    * and a skip or the run's end takes a queued wait out of the line. Absent, a
    * run is bounded by its own semaphores only, as before.
    */
@@ -753,7 +756,7 @@ export function validateScript(script: string): { meta: WorkflowMeta; body: stri
   return extractMeta(script);
 }
 
-/** A run limit the caller set must be a positive integer; one left unset takes its default (wb-ny54, EAT-R073). */
+/** A run limit the caller set must be a positive safe integer; one left unset takes its default (wb-ny54, EAT-R073). */
 function positiveRunLimit(name: "concurrency" | "agentCap" | "itemCap" | "nestedCap", value: number | undefined, fallback: number): number {
   if (value === undefined) return fallback;
   if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
@@ -768,9 +771,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   assertBoundarySafe(options.args, "args");
 
   const { meta, body } = validateScript(script);
-  // Refused here, before a worker exists (wb-ny54, EAT-R073): a zero, negative
-  // or NaN permit count parks every agent forever, a fraction rounds up to the
-  // next whole permit, and NaN or Infinity as a cap switches the cap off.
+  // Refused here, at the call and before anything is dispatched (wb-ny54,
+  // EAT-R073), so the semaphores and caps below only ever see positive safe
+  // integers. Unchecked, a zero, negative or NaN concurrency would park every
+  // agent and hang the run, and a fraction or Infinity would be taken as a
+  // permit count.
   const agentCap = positiveRunLimit("agentCap", options.agentCap, WORKFLOW_AGENT_CAP);
   const itemCap = positiveRunLimit("itemCap", options.itemCap, WORKFLOW_ITEM_CAP);
   const nestedCap = positiveRunLimit("nestedCap", options.nestedCap, WORKFLOW_NESTED_CAP);
@@ -984,8 +989,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       if (settled) return;
       settled = true;
       options.signal?.removeEventListener("abort", onAbort);
-      // Out of the host's shared line first, so no release elsewhere can hand a
-      // slot to a dispatch this run will never make.
+      // Out of the host's shared line as the run settles: every wait of this
+      // run still queued leaves it now, so a later release goes to the next
+      // waiter rather than to a dispatch this run will never make.
       admissionAbort.abort();
       // Symmetric with `semaphore.drain()` below: everything parked is woken so
       // it observes the settle and unwinds. Nothing depends on it — the run's
@@ -1220,13 +1226,12 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             return settleSkipped({});
           }
 
-          // The host's shared pools come last, immediately before the dispatch
-          // (wb-ny54, EAT-R074..EAT-R076): after this run's own permit, so a run
-          // never queues on the host for more agents than its own limit starts,
-          // and nothing is awaited between this admission and the spawn below.
+          // The host's shared pools come last, after this run's own permit and
+          // before the dispatch (wb-ny54, EAT-R074..EAT-R076), so a run never
+          // queues on the host for more agents than its own limit starts.
           // A skip or the run's end takes the wait out of the host's line at
           // once; a wait refused at the queue deadline dispatches nothing and
-          // fails the run, as the agent cap does.
+          // fails the run with a fatal error, as the agent cap does.
           let lease: HostAdmissionLease | undefined;
           if (hostAdmission !== undefined) {
             const leaveLine = new AbortController();
@@ -1679,9 +1684,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         openNodes.delete(callId);
         return;
       }
-      // The host's shared pools, last and immediately before the dispatch, as
-      // for an agent (wb-ny54): a refused wait dispatches nothing and writes no
-      // dispatched marker, and the run's end takes a queued wait out of the line.
+      // The host's shared pools, last, after the run's node permit and before
+      // the dispatch, as for an agent (wb-ny54): a refused wait dispatches
+      // nothing and writes no dispatched marker, and the run's end takes a
+      // queued wait out of the line.
       let lease: HostAdmissionLease | undefined;
       if (hostAdmission !== undefined) {
         try {

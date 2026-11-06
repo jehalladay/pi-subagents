@@ -7,7 +7,8 @@
  * at once each get their whole limit. A HostAdmission is built once by the host and handed to every run it starts, so its
  * pools are the one place the host's totals are counted. It is a counter and a first-in-first-out line per pool, not a
  * second scheduler: it never orders runs against each other, never prioritises, retries or starts work. A run asks for the
- * pools a dispatch is charged to immediately before that dispatch, and dispatches only once every pool has admitted it.
+ * pools a dispatch is charged to last, after the run's own permit and before that dispatch, and dispatches only once every
+ * pool has admitted it.
  *
  * Three pools, each with its own limit (see {@link dispatchPools} for the charge of each dispatch):
  *  - sdk-queries: owned agent queries, one per agent() dispatch;
@@ -31,7 +32,7 @@ export type HostAdmissionPool = (typeof HOST_ADMISSION_POOLS)[number];
 /** setTimeout's own ceiling: a longer deadline would fire at once instead of late. */
 export const HOST_ADMISSION_MAX_DEADLINE_MS = 2_147_483_647;
 
-/** The separately configured limits; every one is a positive integer. */
+/** The separately configured limits: each a positive safe integer (Number.isSafeInteger, at least 1), the queue deadline at most HOST_ADMISSION_MAX_DEADLINE_MS. */
 export interface HostAdmissionLimits {
   /** Owned agent queries in flight across every run sharing the budget. */
   readonly sdkQueries: number;
