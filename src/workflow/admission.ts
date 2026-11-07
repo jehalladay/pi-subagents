@@ -14,7 +14,9 @@
  *  - child-processes: host children, one per agent dispatch and one per live node dispatch. The Claude Agent SDK runs a query
  *    in a child process and every native provider runs its CLI in one; a Pi-backend child runs in-process and is charged all
  *    the same, so the pool bounds what the host may start, not what an operating system counted;
- *  - forge-operations: native Forge operations, one per live node dispatch in the `forge.` capability namespace.
+ *  - forge-operations: native Forge operations, one per live node dispatch dispatchPools charges to it. The suite pins that
+ *    charge for a forge.gate.status node and its absence for a hyperunix.find or forgery.gate.status node; which other
+ *    capability ids carry it is not claimed here.
  *
  * One queue deadline runs from a request's call across every pool it names. A request still waiting when its deadline's
  * timer fires is refused, typed (admission-deadline, naming the pool it waits on), hands back every pool it had taken and
@@ -36,13 +38,17 @@ export type HostAdmissionPool = (typeof HOST_ADMISSION_POOLS)[number];
 /** The longest queue deadline a budget accepts: setTimeout's ceiling, past which Node sets a timer's delay to 1 ms. */
 export const HOST_ADMISSION_MAX_DEADLINE_MS = 2_147_483_647;
 
-/** The separately configured limits: each a positive safe integer (Number.isSafeInteger, at least 1), the queue deadline at most HOST_ADMISSION_MAX_DEADLINE_MS. */
+/**
+ * The separately configured limits. The suite pins that 0, -1, 0.5, NaN, Infinity and 2^53 are refused as each of them and 1
+ * is accepted, that a pool limit accepts 2^31 and Number.MAX_SAFE_INTEGER, and that the queue deadline accepts
+ * HOST_ADMISSION_MAX_DEADLINE_MS and refuses one more; which other values are refused is not claimed here.
+ */
 export interface HostAdmissionLimits {
   /** Owned agent queries in flight across every run sharing the budget. */
   readonly sdkQueries: number;
   /** Host children in flight: agent dispatches and live node dispatches alike. */
   readonly childProcesses: number;
-  /** Native Forge operations in flight: live node dispatches in the `forge.` namespace. */
+  /** Native Forge operations in flight: the live node dispatches dispatchPools charges to forge-operations. */
   readonly forgeOperations: number;
   /** The queue deadline, in milliseconds from a request's call (see the module comment for how closely its refusal is pinned). */
   readonly queueDeadlineMs: number;
@@ -111,8 +117,9 @@ const FORGE_NODE_POOLS: readonly HostAdmissionPool[] = Object.freeze(["child-pro
 const NODE_POOLS: readonly HostAdmissionPool[] = Object.freeze(["child-processes"]);
 
 /**
- * The pools a dispatch is charged to: an agent is an owned SDK query and a host child; a node is a host child, and a node in
- * the `forge.` capability namespace is a native Forge operation as well.
+ * The pools a dispatch is charged to: an agent is an owned SDK query and a host child; a node is a host child, and a
+ * forge.gate.status node is a native Forge operation as well, while a hyperunix.find or forgery.gate.status node is not.
+ * Which other capability ids are charged to forge-operations is not claimed here.
  */
 export function dispatchPools(dispatch: AdmittedDispatch): readonly HostAdmissionPool[] {
   if (dispatch.kind === "agent") return AGENT_POOLS;

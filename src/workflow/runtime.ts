@@ -342,11 +342,13 @@ export interface RunWorkflowOptions {
   /** Fired per batch, not per entry — see the worker's progress batching. */
   onProgress?(entries: readonly WorkflowEntry[]): void;
   /**
-   * Agents this run may have in flight at once. Like the three caps, a positive
-   * safe integer (Number.isSafeInteger, at least 1): anything else makes
+   * Agents this run may have in flight at once. Like the three caps, it is
+   * checked at the call (wb-ny54, EAT-R073): 0, -1, 0.5, NaN and Infinity make
    * runWorkflow reject with a WorkflowRuntimeError before a 0 ms timer set just
    * before the call fires, and before anything is dispatched, rather than
-   * parking every agent behind a semaphore with no permits (wb-ny54, EAT-R073).
+   * parking every agent behind a semaphore with no permits; 2^53 is refused
+   * with a WorkflowRuntimeError as well, and Number.MAX_SAFE_INTEGER is
+   * accepted. Which other values are refused is not claimed here.
    */
   concurrency?: number;
   agentCap?: number;
@@ -759,7 +761,7 @@ export function validateScript(script: string): { meta: WorkflowMeta; body: stri
   return extractMeta(script);
 }
 
-/** A run limit the caller set must be a positive safe integer; one left unset takes its default (wb-ny54, EAT-R073). */
+/** Checks a run limit the caller set, as the concurrency option's doc states; one left unset takes its default (wb-ny54, EAT-R073). */
 function positiveRunLimit(name: "concurrency" | "agentCap" | "itemCap" | "nestedCap", value: number | undefined, fallback: number): number {
   if (value === undefined) return fallback;
   if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
@@ -774,11 +776,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   assertBoundarySafe(options.args, "args");
 
   const { meta, body } = validateScript(script);
-  // Refused here, at the call and before anything is dispatched (wb-ny54,
-  // EAT-R073), so the semaphores and caps below only ever see positive safe
-  // integers. Unchecked, a zero, negative or NaN concurrency would park every
-  // agent and hang the run, and a fraction or Infinity would be taken as a
-  // permit count.
+  // Checked here, at the call and before anything is dispatched (wb-ny54,
+  // EAT-R073), before the semaphores and caps below are built: the values the
+  // concurrency option's doc lists are refused. Unchecked, a zero, negative or
+  // NaN concurrency would park every agent and hang the run, and a fraction or
+  // Infinity would be taken as a permit count.
   const agentCap = positiveRunLimit("agentCap", options.agentCap, WORKFLOW_AGENT_CAP);
   const itemCap = positiveRunLimit("itemCap", options.itemCap, WORKFLOW_ITEM_CAP);
   const nestedCap = positiveRunLimit("nestedCap", options.nestedCap, WORKFLOW_NESTED_CAP);

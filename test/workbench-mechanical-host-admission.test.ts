@@ -20,14 +20,22 @@
  *   cancelled waiter in runnable queue."
  *
  * "Measured" here is the test host's own count of what it was handed: every agent dispatch is an owned SDK query and a host
- * child, every node dispatch a host child, and a forge.* node dispatch also a native Forge operation (src/workflow/admission.ts,
- * dispatchPools). Real operating-system process counts and a live multi-workflow load journey are the B-telemetry bead's
- * PI-MULTIWORKFLOW-LOAD gate and are not read here.
+ * child, every node dispatch a host child, and a forge.gate.status node dispatch also a native Forge operation
+ * (src/workflow/admission.ts, dispatchPools). A forge.* node in a title below is a node of capability id forge.gate.status,
+ * the only forge. capability id the cases dispatch. Real operating-system process counts and a live multi-workflow load
+ * journey are the B-telemetry bead's PI-MULTIWORKFLOW-LOAD gate and are not read here.
  *
  * Cut #2 added cases for the claims of the cut's own words that the first gate's refusal found unpinned. Cut #3, the
  * enumerate-the-resolvable form under the R-B660 cap, adds cases for refusal #2's unmet items and riding findings and narrows
  * titles to the bounds their cases assert; docs/workbench/receipts/wb-ny54.md maps every case to the claim it pins and lists
  * the named residuals and what is NOT CLAIMED.
+ *
+ * Cut #5, under the R-B648 set's structural exit (R-B660), narrows titles to what their cases assert and changes no
+ * assertion. NOT CLAIMED by this suite, and routed to the R-B660 structural-exit child: that a fraction above 1 is refused
+ * as a run limit or a host limit; which capability ids other than forge.gate.status, hyperunix.find and
+ * forgery.gate.status are charged to forge-operations; the full text of a node's queue-deadline refusal on its error row,
+ * its CapabilityError and the error a script catches; and the full text of a run limit's refusal beyond
+ * "<name> must be a positive integer".
  */
 import { performance } from "node:perf_hooks";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -357,7 +365,7 @@ const NONPOSITIVE_OR_NONINTEGER: ReadonlyArray<readonly [string, number]> = [
   ["Infinity", Number.POSITIVE_INFINITY],
 ];
 
-describe("EAT-R073 nonpositive or noninteger run and host limits are refused, typed, and never hung on", () => {
+describe("EAT-R073 run and host limits of 0, -1, 0.5, NaN, Infinity and 2^53 are refused, typed, and never hung on", () => {
   it.each(NONPOSITIVE_OR_NONINTEGER)("R073-CONCURRENCY-%s: runWorkflow rejects concurrency %s with a WorkflowRuntimeError naming it, without hanging, and dispatches nothing", async (_name, value) => {
     const { host, meter, open } = meteredHost();
     // Open: a dispatched agent finishes, so only a zero-permit semaphore can hang the run.
@@ -370,7 +378,7 @@ describe("EAT-R073 nonpositive or noninteger run and host limits are refused, ty
     expect(meter.spawned).toEqual([]);
   }, RUNS_TIMEOUT_MS);
 
-  it.each(["agentCap", "itemCap", "nestedCap"] as const satisfies readonly RunCap[])("R073-CAPS-%s: every nonpositive or noninteger value is refused with a WorkflowRuntimeError naming the cap, and nothing is dispatched", async cap => {
+  it.each(["agentCap", "itemCap", "nestedCap"] as const satisfies readonly RunCap[])("R073-CAPS-%s: each of 0, -1, 0.5, NaN and Infinity is refused with a WorkflowRuntimeError naming the cap, and nothing is dispatched", async cap => {
     const { host, meter, open } = meteredHost();
     open();
     const outcomes: string[] = [];
@@ -402,7 +410,7 @@ describe("EAT-R073 nonpositive or noninteger run and host limits are refused, ty
     expect(meter.spawned.sort()).toEqual(["default-0", "default-1", "default-2"]);
   }, RUNS_TIMEOUT_MS);
 
-  it.each([...HOST_ADMISSION_POOLS.map(pool => [pool] as const), ["queue-deadline"] as const])("R073-LIMITS-%s: a host admission limit refuses every nonpositive or noninteger value, typed", which => {
+  it.each([...HOST_ADMISSION_POOLS.map(pool => [pool] as const), ["queue-deadline"] as const])("R073-LIMITS-%s: a host admission limit refuses each of 0, -1, 0.5, NaN and Infinity, typed, and accepts 1", which => {
     const field: keyof HostAdmissionLimits =
       which === "sdk-queries" ? "sdkQueries" : which === "child-processes" ? "childProcesses" : which === "forge-operations" ? "forgeOperations" : "queueDeadlineMs";
     const refusals = NONPOSITIVE_OR_NONINTEGER.map(([, value]) => {
@@ -527,7 +535,7 @@ describe("EAT-R073 nonpositive or noninteger run and host limits are refused, ty
     expect(inFlightOf(budget)).toEqual([0, 0, 0]);
   });
 
-  it("R073-IMMEDIATE: a nonpositive or noninteger concurrency, agentCap, itemCap or nestedCap makes runWorkflow's promise reject before a 0 ms timer set just before the call fires", async () => {
+  it("R073-IMMEDIATE: a concurrency, agentCap, itemCap or nestedCap of 0, -1, 0.5, NaN or Infinity makes runWorkflow's promise reject before a 0 ms timer set just before the call fires", async () => {
     const { host, meter, open } = meteredHost();
     open();
     const outcomes: string[] = [];
@@ -555,7 +563,7 @@ describe("EAT-R073 nonpositive or noninteger run and host limits are refused, ty
 });
 
 describe("EAT-R074 one host budget bounds simultaneous invocations, pool by pool", () => {
-  it("R074-CHARGES: an agent dispatch is an owned SDK query and a host child; a node dispatch a host child, and a forge.* node a Forge operation too", () => {
+  it("R074-CHARGES: an agent dispatch is an owned SDK query and a host child; a node dispatch a host child, and a forge.gate.status node a Forge operation too, a forgery.gate.status node not", () => {
     expect(HOST_ADMISSION_POOLS).toEqual(["sdk-queries", "child-processes", "forge-operations"]);
     expect(dispatchPools({ kind: "agent" })).toEqual(["sdk-queries", "child-processes"]);
     expect(dispatchPools({ kind: "node", capabilityId: "forge.gate.status" })).toEqual(["child-processes", "forge-operations"]);
@@ -595,7 +603,7 @@ describe("EAT-R074 one host budget bounds simultaneous invocations, pool by pool
     expect(budget.snapshot().pools["child-processes"]).toMatchObject({ inFlight: 0, peakInFlight: 3, queued: 0, admitted: 9 });
   }, RUNS_TIMEOUT_MS);
 
-  it("R074-FORGE: forge.* nodes of three runs share 1 Forge operation slot while other nodes are not charged to it", async () => {
+  it("R074-FORGE: forge.* nodes of three runs share 1 Forge operation slot while their hyperunix.find nodes are not charged to it", async () => {
     const budget = budgetOf({ forgeOperations: 1 });
     const { host, meter, open } = meteredHost();
     const progress: WorkflowEntry[] = [];
@@ -1166,7 +1174,7 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(budget.snapshot().pools["sdk-queries"]).toMatchObject({ inFlight: 0, queued: 0, refused: 2 });
   }, RUNS_TIMEOUT_MS);
 
-  it("R075-NODE-REFUSAL-FATAL: a forge.* node refused at the queue deadline inside parallel() or pipeline() fails the run with an unavailable diagnostic carrying the refusal's text: neither folds the refusal into null, and no node is dispatched", async () => {
+  it("R075-NODE-REFUSAL-FATAL: a forge.* node refused at the queue deadline inside parallel() or pipeline() fails the run with an unavailable diagnostic whose message contains 'Host admission refused': neither folds the refusal into null, and no node is dispatched", async () => {
     const budget = budgetOf({ forgeOperations: 1, queueDeadlineMs: 80 });
     const held = await budget.acquire(["forge-operations"]);
     const { host, meter, open } = meteredHost();
@@ -1189,7 +1197,7 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect([pools["forge-operations"].refused, ...inFlightOf(budget)]).toEqual([2, 0, 0, 0]);
   }, RUNS_TIMEOUT_MS);
 
-  it("R075-REFUSAL-CAUGHT: a script's own try/catch catches an agent's and a node's queue-deadline refusal, each carrying the refusal's text, and the run then completes with neither dispatched", async () => {
+  it("R075-REFUSAL-CAUGHT: a script's own try/catch catches an agent's and a node's queue-deadline refusal, each caught error's text containing 'Host admission refused', and the run then completes with neither dispatched", async () => {
     const budget = budgetOf({ sdkQueries: 1, forgeOperations: 1, queueDeadlineMs: 80 });
     const held = await budget.acquire(["sdk-queries", "forge-operations"]);
     const { host, meter, open } = meteredHost();
