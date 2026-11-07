@@ -22,8 +22,8 @@ export const VALIDATE_REPLY_TRUNCATION_MARKER = "[truncated: reply byte cap reac
 
 /** The `mode` values workflow_validate understands. The designer core has one: compile syntax, never execute. */
 const SUPPORTED_MODES: readonly string[] = Object.freeze(["static"]);
-/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, no wildcard. */
-const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, or one exact claude:tool:<name> Claude tool right (wb-wupg), no wildcard. */
+const GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
 /** Core warnings that say "this could not be established", which the reply reports as uncertain, never as a warning. */
 const UNCERTAIN_DIAGNOSTIC_CODES: readonly string[] = Object.freeze(["NODE_UNAVAILABLE", "BINDINGS_UNCHECKED"]);

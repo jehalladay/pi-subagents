@@ -55,7 +55,7 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
   const maxInputBytes = options.maxInputBytes ?? 32 * 1024;
   const maxCalls = options.maxCalls ?? 200;
   if (!Array.isArray(options.allowedCapabilities) || options.allowedCapabilities.length > 32 || options.allowedCapabilities.some(id => typeof id !== "string" || id.length > 200 || !ID.test(id)) || new Set(options.allowedCapabilities).size !== options.allowedCapabilities.length ||
-    !Array.isArray(options.grants) || options.grants.length > 256 || options.grants.some(grant => typeof grant !== "string" || grant.length > 256 || !/^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/.test(grant)) ||
+    !Array.isArray(options.grants) || options.grants.length > 256 || options.grants.some(grant => typeof grant !== "string" || grant.length > 256 || !/^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/.test(grant)) ||
     !options.principal || typeof options.principal.id !== "string" || !options.principal.id.trim() || typeof options.principal.role !== "string" || !options.principal.role.trim() ||
     typeof options.workspace !== "string" || !isAbsolute(options.workspace) || typeof options.invocationId !== "string" || !options.invocationId.trim() || !(signal instanceof AbortSignal) ||
     [maxOutputBytes, maxInputBytes, maxCalls].some(limit => !Number.isSafeInteger(limit) || limit < 1) || maxOutputBytes < 256 || maxOutputBytes > 256 * 1024 || maxInputBytes > 256 * 1024 || maxCalls > 10_000) {
