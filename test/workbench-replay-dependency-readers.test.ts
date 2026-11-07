@@ -5,7 +5,8 @@
  * in test/workbench-claude-replay-dependencies.test.ts, which judges the host's use of these readings.
  *
  * Each row here judges one reader over real files in scratch directories, or a pure path list. This suite claims what
- * its rows pin, and nothing wider (cut #4: the R-B646 claim set after its structural exit, R-B664):
+ * its rows pin, and nothing wider (cut #5: the R-B646 claim set after its structural exit, R-B664, and the
+ * setting-source-unrecognized claim set R-B673 binds):
  *  - the source reading (EAT-R017) composes the HEAD commit, the HEAD tree and the candidate digest it is handed and
  *    moves with each one alone (R-SRC-EQUAL, R-SRC-COMMIT/TREE/DIRTY); it is unknown by fixed reasons for a candidate
  *    not measured or empty and a HEAD missing or lacking its commit or tree (R-SRC-UNKNOWN, R-SRC-UNKNOWN-REASONS);
@@ -28,9 +29,13 @@
  *    naming each other (R-WALK-<reader>-*);
  *  - an unmeasurable dependency (EAT-R020) is an UNKNOWN reading with a fixed reason and no digest, never an empty or
  *    stable digest standing in for one (the requirement's adversarial mutant), in the cases R-UNK-* pin for both file
- *    readers, budgets counted within one location and across locations and sources among them;
+ *    readers, budgets counted within one location and across locations and sources among them, each one-level case's
+ *    plant read back from the filesystem as the form its row names (R-UNK-<reader>-<case>), and the unrecognized
+ *    setting-source names managed, User, 'user ' and the empty name, each handed alone or before or after one known
+ *    source (R-UNK-<reader>-source, R-UNK-<reader>-source-beside);
  *  - the table shapes, each tied to an anchor outside its own literals (R-INS-PLANTS-SHAPE, R-PRV-SETTINGS-SHAPE,
- *    R-WALK-SHAPE, R-UNK-CASES-SHAPE, R-UNK-READERS-SHAPE);
+ *    R-WALK-SHAPE, R-UNK-CASES-SHAPE, R-UNK-READERS-SHAPE), R-UNK-CASES-SHAPE to every line of this bead's receipt
+ *    that carries its label;
  *  - the helpers: the config directory (R-CONFIG-DIR, R-CONFIG-DIR-BLANK), the measured shape (R-MEASURED,
  *    R-MEASURED-SHAPES, R-READING-SHAPE), the default budget (R-BUDGET-TABLE) and the source names (R-SOURCES).
  * RESIDUALS (named, each with its pinned quiet row): R-UNLISTED-CONFIG-FILES R-Q-UNLISTED-CONFIG; R-IMPORTED-MEMORY
@@ -38,11 +43,13 @@
  * NOT CLAIMED by this suite: entry names other than those its rows plant; a cwd string longer than Linux's 4096-byte
  * PATH_MAX holds, a relative cwd and one not in normal form; a socket or a block device below a location; the reason
  * of an unknown form at another depth than its row plants; an absolute CLAUDE_CONFIG_DIR not in normal form; which
- * reason a reading meeting two unknown conditions gives. NOT CLAIMED and routed to wb-6b3z (R-B664, the structural exit
- * of the R-B646 claim set; the child owns the fail-closed basis core): a named path the process may not stat, and any
- * read error no row plants; a link below a location naming a path below a regular file; which reason a link back to a
- * directory inside a location gives; whether a directory first reached through a link, or through two links, is read
- * again; a relative cwd or config directory handed without the user source; a relative home.
+ * reason a reading meeting two unknown conditions gives; an unrecognized setting-source name other than the four its
+ * rows plant, and one handed beside two or more sources or beside another unrecognized name. NOT CLAIMED and routed to
+ * wb-6b3z (R-B664, the structural exit of the R-B646 claim set; the child owns the fail-closed basis core): a named path
+ * the process may not stat, and any read error no row plants; a link below a location naming a path below a regular
+ * file; which reason a link back to a directory inside a location gives; whether a directory first reached through a
+ * link, or through two links, is read again; a relative cwd or config directory handed with any sources but the user
+ * source alone; a relative home.
  * The locations are written out literally below rather than read back from the module, so dropping one from the module's
  * table reds both the frozen table row and that location's own row; R-INS-PLANTS-SHAPE ties the plant rows back to the
  * module's tables, so dropping a plant row reds as well.
@@ -50,7 +57,7 @@
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, rmSync, type Stats, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, type Stats, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import type { SettingSource } from "@anthropic-ai/claude-agent-sdk";
@@ -162,15 +169,20 @@ function moduleFileReaders(): string[] {
   return [...source.matchAll(/^export function (\w+)\([\s\S]*?^}$/gm)].filter(match => match[0].includes("readFiles(")).map(match => match[1] ?? "");
 }
 /**
- * The names a list of this bead's receipt gives: the last receipt line carrying `label`, read after the label up to the
- * full stop and split at its commas (the anchor of the unknown-case table, outside this suite's literals).
+ * The names each list of this bead's receipt gives, one list per receipt line carrying `label`, in receipt order: each
+ * line read after the label up to the full stop and split at its commas (the anchor of the unknown-case table, outside
+ * this suite's literals). Every such line is read, not only the last, so a line appended later cannot stand in for an
+ * earlier one: the receipt is append-only, and a row tied to these lists reds when they disagree (refusal #4 F1, GT-05).
  */
-function receiptList(label: string): string[] {
+function receiptLists(label: string): string[][] {
   const receipt = readFileSync(new URL("../docs/workbench/receipts/wb-413a.md", import.meta.url), "utf8");
-  const line = receipt.split("\n").filter(text => text.includes(label)).at(-1);
-  if (line === undefined) return [];
-  const after = line.slice(line.indexOf(label) + label.length);
-  return after.slice(0, after.indexOf(".")).split(",").map(name => name.trim()).filter(name => name !== "");
+  return receipt
+    .split("\n")
+    .filter(text => text.includes(label))
+    .map(line => {
+      const after = line.slice(line.indexOf(label) + label.length);
+      return after.slice(0, after.indexOf(".")).split(",").map(name => name.trim()).filter(name => name !== "");
+    });
 }
 
 describe("wb-413a source reading: the HEAD commit, the HEAD tree and the handed candidate digest (EAT-R017)", () => {
@@ -290,7 +302,7 @@ describe("wb-413a instruction reading: the bytes at the instruction paths (EAT-R
     expect(digestFrom(instructionDependency(at.cwd, ["user"], at.config))).not.toBe(v1);
   });
 
-  it("R-INS-UNKNOWN: a FIFO below the project skills location, a link two levels below the user skills location back to that location, a walk past an explicit budget of files or of bytes and an unrecognized source each make the instruction reading unknown, never a partial or empty digest", () => {
+  it("R-INS-UNKNOWN: a FIFO below the project skills location, a link two levels below the user skills location back to that location, a walk past an explicit budget of files or of bytes and the unrecognized source name managed, handed alone, each make the instruction reading unknown, never a partial or empty digest", () => {
     const fifo = layout();
     mkdirSync(join(fifo.cwd, ".claude", "skills"), { recursive: true });
     execFileSync("mkfifo", [join(fifo.cwd, ".claude", "skills", "pipe")]);
@@ -487,7 +499,9 @@ describe("wb-413a instruction reading: the bytes at the instruction paths (EAT-R
       expect(instructionPaths(cwd, ["local"], config), label).toEqual([under(cwd, "CLAUDE.local.md"), ...ancestors(cwd).map(ancestor => under(ancestor, "CLAUDE.local.md"))]);
       expect(instructionPaths(cwd, ["user"], config), label).toEqual(["CLAUDE.md", "skills", "agents", "commands", "output-styles", "rules"].map(location => under(config, location)));
     }
-  });
+    // An explicit timeout, never a change to what the row asserts: the 2047-level cwd's oracle outran vitest's 5000 ms
+    // default in 36 of 78 gate member runs at load1 121-235 (refusal #4 finding F2).
+  }, 60_000);
 
   it("R-INS-ANCESTOR-FAR: a project CLAUDE.md and a local CLAUDE.local.md at the cwd's fourth proper ancestor, and a project .claude/CLAUDE.md and a local CLAUDE.local.md at its fifth, each move that source's reading", () => {
     const at = layout();
@@ -815,6 +829,29 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
     write(join(dir, "dark", "entry.md"), "dark");
     chmodSync(join(dir, "dark"), 0o400);
   }
+  /**
+   * What a plant left one level below the location `dir`, read back from the filesystem in the words of the CASES table
+   * (refusal #4 F1: the frozen shape holds each plant's name, and this holds what its body plants): the one entry `dir`
+   * holds, by lstat; a link by what it names; a file or a directory by its permission bits.
+   */
+  function plantedForm(dir: string): string {
+    const entries = readdirSync(dir);
+    if (entries.length !== 1) return `${entries.length} entries`;
+    const path = join(dir, entries[0] as string);
+    const entry = lstatSync(path);
+    const mode = entry.mode & 0o777;
+    if (entry.isFIFO()) return "a FIFO";
+    if (entry.isSymbolicLink()) {
+      const target = statSync(path);
+      if (target.isCharacterDevice()) return "a link to a character device";
+      if (target.isDirectory() && realpathSync(path) === realpathSync(dir)) return "a link back to the location's own directory";
+      return "a link to another entry";
+    }
+    if (entry.isFile()) return mode === 0 ? "a file the process may not read" : `a file of mode ${mode.toString(8)}`;
+    if (entry.isDirectory() && mode === 0) return "a directory the process may not read";
+    if (entry.isDirectory() && mode === 0o400 && readdirSync(path).length > 0) return "a directory the process may list but not search, holding an entry";
+    return `another entry of mode ${mode.toString(8)}`;
+  }
   /** [case, what is planted one level below the location (a directory), its plant, the fixed reason]. */
   const CASES: readonly (readonly [string, string, (dir: string) => void, string])[] = [
     ["not-a-file", "a FIFO", plantFifo, "dependency-not-a-file"],
@@ -835,6 +872,8 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
         mkdirSync(dir, { recursive: true });
         digestFrom(read(at));
         plant(dir);
+        // The plant's body, read back: what it left one level below the location is the form this row's title names.
+        expect(plantedForm(dir), name).toBe(what);
         // Root reads through any mode, so there an unreadable plant leaves the reading measured.
         if (reason === "dependency-unreadable" && process.getuid?.() === 0) digestFrom(read(at));
         else expectUnknownBecause(read(at), reason);
@@ -881,7 +920,7 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
       expectUnknownBecause(read(big), "dependency-over-budget");
     }, 60_000);
 
-    it(`R-UNK-${reader}-source: an unrecognized setting source, alone or beside a known one, is an unknown ${reader} reading (setting-source-unrecognized)`, () => {
+    it(`R-UNK-${reader}-source: the unrecognized setting-source names managed, User, 'user ' and the empty name, each handed alone or after the user source, are an unknown ${reader} reading (setting-source-unrecognized)`, () => {
       const at = layout();
       expectUnknownBecause(read(at, ["managed"]), "setting-source-unrecognized");
       expectUnknownBecause(read(at, ["user", "managed"]), "setting-source-unrecognized");
@@ -891,9 +930,21 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
         expectUnknownBecause(read(at, ["user", unrecognized]), "setting-source-unrecognized");
       }
     });
+
+    it(`R-UNK-${reader}-source-beside: each of those four names handed before or after one known source (user, project and local, the keys of the module's own tables) is an unknown ${reader} reading (setting-source-unrecognized)`, () => {
+      const at = layout();
+      // The known sources come from the module's table, outside this row's literals (R-SOURCES pins its keys to the SDK's three names).
+      for (const known of Object.keys(CLAUDE_SETTINGS_LOCATIONS)) {
+        for (const unrecognized of ["managed", "User", "user ", ""]) {
+          for (const sources of [[known, unrecognized], [unrecognized, known]]) {
+            expect(read(at, sources), JSON.stringify(sources)).toEqual({ state: "unknown", reason: "setting-source-unrecognized" });
+          }
+        }
+      }
+    });
   }
 
-  it("R-UNK-relative: with the user source handed, a relative cwd and a relative config directory are each an unknown reading for both file readers", () => {
+  it("R-UNK-relative: with the user source handed alone, a relative cwd and a relative config directory are each an unknown reading for both file readers", () => {
     const at = layout();
     expectUnknownBecause(instructionDependency("repo/pkg", ["user"], at.config), "instruction-base-not-absolute");
     expectUnknownBecause(instructionDependency(at.cwd, ["user"], "config"), "instruction-base-not-absolute");
@@ -901,7 +952,7 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
     expectUnknownBecause(providerDependency(identity, at.cwd, ["user"], "config"), "setting-base-not-absolute");
   });
 
-  it("R-UNK-CASES-SHAPE: the unknown cases each file reader plants one level below its location, written out (frozen shape) with their plants and reasons, are the cases this bead's receipt lists, one row each", () => {
+  it("R-UNK-CASES-SHAPE: the unknown cases each file reader plants one level below its location, written out (frozen shape) with their plants and reasons, are the cases every line of this bead's receipt carrying the CASES label lists, one row each", () => {
     expect(CASES.map(([name, what, plant, reason]) => `${name}|${reason}|${plant.name}|${what}`)).toEqual([
       "not-a-file|dependency-not-a-file|plantFifo|a FIFO",
       "device|dependency-not-a-file|plantDeviceLink|a link to a character device",
@@ -910,8 +961,11 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
       "unreadable-file|dependency-unreadable|plantLockedFile|a file the process may not read",
       "unsearchable-directory|dependency-unreadable|plantListableDirectory|a directory the process may list but not search, holding an entry",
     ]);
-    // Anchored outside the literal above: the receipt lists the one-level cases this suite claims.
-    expect(CASES.map(([name]) => name)).toEqual(receiptList("(CASES, R-UNK-CASES-SHAPE):"));
+    // Anchored outside the literal above: every receipt line carrying the label lists the one-level cases this suite
+    // claims, so a line appended later restating another list reds against the earlier one (refusal #4 F1, GT-05).
+    const lists = receiptLists("(CASES, R-UNK-CASES-SHAPE):");
+    expect(lists.length).toBeGreaterThan(0);
+    for (const list of lists) expect(CASES.map(([name]) => name)).toEqual(list);
   });
 
   it("R-UNK-READERS-SHAPE: the unknown rows' readers, written out (frozen shape), are the module's file readers as its source text names them (each exported function that calls readFiles), one row each", () => {

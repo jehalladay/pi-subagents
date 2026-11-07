@@ -194,7 +194,9 @@ describe("wb-413a host seam: a changed measured dependency declines the journal 
       expect(resumed.replayedCount, dimension).toBe(0);
       expectNotReused({ first, resumed, prompts, journal });
     }
-  });
+    // An explicit timeout, never a change to what the row asserts: its fourteen runs outran vitest's 5000 ms default in
+    // 3 of 42 gate member runs at load1 121-235 (refusal #4 finding F2).
+  }, 30_000);
 });
 
 describe("wb-413a host seam: an unknown dependency replays nothing (EAT-R020)", () => {

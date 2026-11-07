@@ -25,8 +25,8 @@
  * that every condition the process cannot measure reads unknown, among them a named path the process may not stat, a
  * link below a location naming a path below a regular file and any read error no row plants; which reason a link back
  * to a directory inside a location gives; whether a directory first reached through a link, or through two links, is
- * read again; a relative cwd or config directory handed without the user source; which sources src/index.ts hands the
- * readers when the run names none; and the default config directory for a relative home.
+ * read again; a relative cwd or config directory handed with any sources but the user source alone; which sources
+ * src/index.ts hands the readers when the run names none; and the default config directory for a relative home.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, realpathSync, type Stats, statSync } from "node:fs";
@@ -162,11 +162,13 @@ export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSou
 
 /**
  * The instruction reading: what readFiles reads at the paths instructionPaths names for the sources it is handed,
- * whatever order or repetition they come in. Unknown, by a fixed reason, when a source is not user, project or local,
- * alone or beside a known one (setting-source-unrecognized); with the user source handed, when the cwd or the config
- * directory is not absolute (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading
- * meeting two of these conditions gives is NOT CLAIMED; so is a relative cwd or config directory handed without the
- * user source (R-B664, routed to wb-6b3z).
+ * whatever order or repetition they come in. Unknown, by a fixed reason, when a source is managed, User, "user " or the
+ * empty name (none of them user, project or local), handed alone or beside one known source, before or after it
+ * (setting-source-unrecognized); with the user source handed alone, when the cwd or the config directory is not
+ * absolute (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of
+ * these conditions gives is NOT CLAIMED; so are any other unrecognized name, an unrecognized name beside two or more
+ * sources or beside another unrecognized name, and a relative cwd or config directory handed with any sources but the
+ * user source alone (the last: R-B664, routed to wb-6b3z).
  */
 export function instructionDependency(
   cwd: string,
@@ -185,10 +187,12 @@ export function instructionDependency(
  * The provider reading: the runtime artifact digest and the provider contract digest of the identity it is handed, and
  * what readFiles reads at the setting file of each source it is handed, under the source's base. Unknown, by a fixed
  * reason, when no identity is handed or either digest is not sha256: and 64 lowercase hex digits
- * (provider-identity-unmeasured); when a source is not user, project or local, alone or beside a known one
- * (setting-source-unrecognized); with the user source handed, when the cwd or the config directory is not absolute
- * (setting-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of these conditions
- * gives is NOT CLAIMED; so is a relative cwd or config directory handed without the user source (R-B664, routed to
+ * (provider-identity-unmeasured); when a source is managed, User, "user " or the empty name (none of them user, project
+ * or local), handed alone or beside one known source, before or after it (setting-source-unrecognized); with the user
+ * source handed alone, when the cwd or the config directory is not absolute (setting-base-not-absolute); and in the
+ * forms readFiles names. Which reason a reading meeting two of these conditions gives is NOT CLAIMED; so are any other
+ * unrecognized name, an unrecognized name beside two or more sources or beside another unrecognized name, and a
+ * relative cwd or config directory handed with any sources but the user source alone (the last: R-B664, routed to
  * wb-6b3z).
  */
 export function providerDependency(
@@ -226,7 +230,11 @@ export function claudeUserConfigDir(env: Readonly<Record<string, string | undefi
   return configured ? resolve(cwd, configured) : join(home, ".claude");
 }
 
-/** The enabled sources in source order (user, project, local), or undefined when one is not among those three. */
+/**
+ * The enabled sources in source order (user, project, local), or undefined for a handed source outside those three:
+ * claimed at the unrecognized names and places instructionDependency's and providerDependency's docs name, other names
+ * and places NOT CLAIMED.
+ */
 function enabledSources(sources: readonly string[]): ClaudeSettingSource[] | undefined {
   if (!sources.every(source => (SOURCES as readonly string[]).includes(source))) return undefined;
   return SOURCES.filter(source => sources.includes(source));
