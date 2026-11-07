@@ -120,7 +120,21 @@
  * census green while its plants realized them. Cut #15 changes no reader and no row: it writes each of those items' launches and
  * forms as those of its row's reading alone - exactly the one module its row plants and no other, at its row's path and byte for
  * byte - gives G2-CHANNEL-SITES and G2-OPAQUE-LOADS a claim sentence at the forms their rows plant, and names each such launch and
- * form in every other reading NOT CLAIMED. Where a
+ * form in every other reading NOT CLAIMED. Gate refusal #15 measured the readings of seven run-time items, G2-TRAP,
+ * G2-LISTENER-LOG, G2-DATA-LISTENERS, G2-LISTENER-COUNTS, G2-OWN-PROPERTIES, G2-PROTOTYPES and G2-SINKS, still claimed at every
+ * object, kind, key type, difference side, order, encoding, count and warning field while their rows planted one form of each - so
+ * its hollows GP3R-PROTO-HANDLE, GP3R-PROTO-CHILD, GP3R-OWN-STREAM-FN, GP3R-OWN-STREAM-SYM, GP3R-OWN-HANDLE-ACC,
+ * GP3R-OWN-HANDLE-FN, GP3R-OWN-CHILD-ACC, GP3R-OWN-MINUS, GP3R-COUNT-MINUS, GP3R-LOG-SORTED, GP3R-ENC-UTF8, GP3R-LAUNCHED-CAP and
+ * GP3R-WARN-MSG kept the census green while its plants realized them - and the src tripwire claimed by OWED, the CASES UNTIL-THEN
+ * sentences and Pin.kind's doc still unbounded while cut #15's NOT CLAIMED sentences disclaim every reading but the rows', src's
+ * included, so its hollow GP3S-RF-SECOND (a module of more than 100 lines read for its first rf launch only) kept the census green
+ * while its plant realized it. Cut #16 changes no reader: it adds to each of those seven items' rows a planted child (a warning,
+ * for G2-SINKS) for each form those hollows drop - a handle and a ChildProcess prototype swap; a stream function override, a stream
+ * symbol key, a handle accessor and a handle function override, a child accessor override and a removed own property; a removed
+ * listener; a listener log out of sorted order, with a once listener attached on the next tick; the latin1 encoding; two published
+ * children; an rf id in a warning's name - closes each of the seven items' words with the forms its rows plant, every other form
+ * NOT CLAIMED, and bounds OWED, the CASES UNTIL-THEN sentences and Pin.kind's doc to today's witness, with whether a src that gains
+ * a committing rf invocation moves C1 NOT CLAIMED by this census. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -134,9 +148,9 @@
  * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; cut #11 by seat ws-03, run g10-work-s230 at trunk 600a253,
  * landing 1011; cut #12 by seat ws-07, run g10-work-s233 at trunk fd90f9d, landing 1014; cut #13 by seat ws-10, run g10-work-s233
  * at trunk fd90f9d, landing 1014; cut #14 by seat ws-05, run g10-work-s237 at trunk 7f54a59, landing 1020; cut #15 by seat ws-01,
- * run g10-work-s237 at trunk ea21fb1, landing 1024; providers/reactivefiber.ts is byte-identical at all fifteen and at 04123dc,
- * sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #15 move no reader, so every witness reads as at cut #5; every C1 and
- * G2 witness below reads
+ * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028;
+ * providers/reactivefiber.ts is byte-identical at all sixteen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts
+ * #6 to #16 move no reader, so every witness reads as at cut #5; every C1 and G2 witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
  * restates).
@@ -168,8 +182,10 @@
  *
  * CASES. One test per pin, titled by the clause it answers, by the scenario its reading drives (C2, C3, R1, R2) and by the
  * residuals that bound it; each pin measures a witness held to WITNESS, and the closing case holds the reached record to ROWS.
- * A pin is UNTIL-THEN (its witness moves when src gains a committing rf invocation through a surface its items name, and its
- * failure names the acceptance as owed) or STANDING (it holds today and must keep holding).
+ * A pin is UNTIL-THEN (it holds today's reading as its witness and reds when that reading moves - C1's of src and of both arms'
+ * recorded argv; C2's, C3's and R1's of the scenario they drive through Pi's rf provider - its failure naming the acceptance as
+ * owed; whether a src that gains a committing rf invocation moves C1's reading is NOT CLAIMED by this census, each C1 item claiming
+ * its reading in its row's reading alone) or STANDING (it holds today and must keep holding).
  *  capture (ACCEPTANCE[0]). C1 UNTIL-THEN, read from src and at run time: exactly the C1-* items of ENUMERATION. The src
  *    readers parse (TypeScript AST) every script file under src (.ts, .mts, .cts, .js, .mjs, .cjs; declaration files excluded)
  *    and, as a module of its own, the text of every src string or template that calls require( or getBuiltinModule( (today
@@ -178,7 +194,10 @@
  *    the landed reader as C1-NAME-RESOLUTION states. C1's witness holds (a) the rf launch sites, (b) the launch inventory, (b2)
  *    the child_process module sites and the opaque loads, (c) each rf launch's argv reading, its builder's lines and the
  *    declarations of the builder's name, (d) the launching declaration and its
- *    references, (g) the launching declaration's text, (e) the reactivefiber registrations and (f) both arms' recorded argv.
+ *    references, (g) the launching declaration's text, (e) the reactivefiber registrations and (f) both arms' recorded argv. Its
+ *    witness is today's reading; each C1 item claims its reading in its row's reading alone, so whether a src that gains a
+ *    committing rf invocation - beside the provider's launch in its module, in another module of src or anywhere else - moves it is
+ *    NOT CLAIMED by this census.
  *    C2 UNTIL-THEN: the acceptance's own scenario run through Pi's one rf launch, journaled as a committing (write-class) node by a
  *    test host: a stand-in rf writes the receipt line on stderr (the acceptance's JSON form and the two measured rf 0.1.845 forms)
  *    before any stdout byte, then exceeds the deadline; the run fails transport and neither of its two journal rows carries a
@@ -200,9 +219,9 @@
  *    ENUMERATION, read two ways: a static leg over the same src read (the launch binding's uses and its stdio, the
  *    diagnostics_channel module sites, the opaque loads) and a run-time leg over both input arms (the legacy one through the
  *    preview leaf), each read while the stand-in hangs after its receipt lines reached the pipe, against the reference child
- *    G2-TRAP describes; after the abort the error is the typed cancel and no process warning names an rf id. Sinks: the preview
- *    reading under all three receipt forms on stderr (their bytes read) is exactly {contract, source, workspaceRoot} carrying
- *    the stdout ids alone, and neither kill's error names an rf id.
+ *    G2-TRAP describes; after the abort the error is the typed cancel and no process warning names an rf id in its name or message.
+ *    Sinks: the preview reading under all three receipt forms on stderr (their bytes read) is exactly {contract, source,
+ *    workspaceRoot} carrying the stdout ids alone, and neither kill's error names an rf id.
  * T0: the readings are live (the stand-in is the only PATH entry, src holds the surfaces, the worker's embedded source is in the
  * read set, the stimulus is every receipt line). ENUMERATION: one case per item, its falsifier caught by its pin's own reader,
  * so a hollowed reader reds the item that names its route. T2 and T3: the instruments read their controls (the read set,
@@ -599,25 +618,60 @@
  *    the reference child and the bytes the stderr pipe had delivered at the reading. Each arm is read against a reference child
  *    this census spawns itself - this process's node writing the same receipt lines on stderr and hanging, stdio
  *    ["ignore","pipe","pipe"], one listener counting chunk.length - trapped and read the same way once its bytes arrived and 250
- *    ms passed.
+ *    ms passed. It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares (this
+ *    process's node writing the receipt lines on stderr and hanging, read the same way against the reference child): a stderr an
+ *    earlier channel subscriber gave the first published ChildProcess as its own property (preset, and reassigned since the trap
+ *    never saw a stream), child.stderr redefined as an own data property holding another stream (reassigned), one ChildProcess
+ *    and two published before the reference child (the second a node child with its stdio ignored, spawned while the planted
+ *    child is prepared), and the receipt bytes its stderr pipe delivered; every other stderr owner, reassignment, count and byte
+ *    form - a stderr reassigned by plain assignment or behind an accessor, three or more ChildProcess objects published, and
+ *    other bytes delivered among them - is NOT CLAIMED by this census.
  *  G2-LISTENER-LOG: G2 (run time) reads every listener added to or removed from the assigned stream after Node assigned it,
  *    through the reading - by on, once, addListener, prependListener, prependOnceListener or the stream's own internals -
  *    recorded by its newListener and removeListener events while this census's two recorders stay attached to it (a once listener
  *    as the function it wraps), as +event or -event with the listener's chunk uses, in order; so a listener that fired and
  *    detached before the reading is still read (gate members LG1, LG1b, LG1x and LG1g: a once data listener attached on the next
- *    tick).
+ *    tick). It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: a data listener
+ *    added by on (chunk => chunk.length), a once data listener attached as the row prepares the child and one attached on the
+ *    next tick (chunk => chunk.toString), each read as +data and, once it fired and detached before the reading, as -data, and an
+ *    end listener added by prependListener after the data listeners and one added by on before them, so one log reads in sorted
+ *    order and the other does not; a listener added by addListener or prependOnceListener, one the stream's own internals add or
+ *    remove, a removal by removeListener, off or removeAllListeners, every other event and every other chunk-use form are NOT
+ *    CLAIMED by this census.
  *  G2-DATA-LISTENERS: G2 (run time) reads, at the reading, each data listener's chunk uses (parsed from the listener's own
- *    running source) and the stream's encoding.
+ *    running source) and the stream's encoding. It claims that reading exactly at the forms its rows plant, each on a planted
+ *    child its row prepares: two data listeners added by on (chunk => chunk.length and chunk => chunk.toString), and the
+ *    encodings setEncoding sets, utf8 and latin1 (the reference child's stream reads null); a data listener added otherwise than
+ *    by on, every other chunk-use form, an encoding set otherwise than by setEncoding and every other encoding are NOT CLAIMED by
+ *    this census.
  *  G2-LISTENER-COUNTS: G2 (run time) reads, at the reading, the listener count of every event the stream has listeners for, as a
- *    difference from the reference child's.
+ *    difference from the reference child's. It claims that reading exactly at the forms its rows plant, each on a planted child its
+ *    row prepares: a readable listener added by on, read +readable:1, and the stream's end listener removed, read -end:1; every
+ *    other event, count and difference form - a second listener of an event the reference child's stream listens for among them -
+ *    is NOT CLAIMED by this census.
  *  G2-OWN-PROPERTIES: G2 (run time) reads every own property of the stream, of its handle and of the ChildProcess - string and
  *    symbol keys - as object.key:kind (accessor, function or value), as a difference from the reference child's, so an own
- *    accessor or function override on any of the three reads (gate member LG2: an own accessor push).
+ *    accessor or function override on any of the three reads (gate member LG2: an own accessor push). It claims that reading
+ *    exactly at the forms its rows plant, each on a planted child its row prepares: on the stream an own accessor and an own
+ *    function overriding push and an own value under a symbol key; on its handle an own value under a symbol key, an own accessor
+ *    overriding readStart and an own function overriding readStop; on the ChildProcess an own function and an own accessor
+ *    overriding emit, and its own spawnfile value removed; every other key, kind and difference form - an own property added under
+ *    another key, a symbol-keyed accessor or function, a removed accessor or function, a property of the stream or its handle
+ *    removed, and a property whose key and kind stay while its value changes among them - is NOT CLAIMED by this census.
  *  G2-PROTOTYPES: G2 (run time) reads whether the stream's, the handle's and the ChildProcess's prototypes are the reference
- *    child's, and whether the handle's onread, read through its prototype accessor, is the reference handle's.
+ *    child's, and whether the handle's onread, read through its prototype accessor, is the reference handle's. It claims that
+ *    reading exactly at the forms its rows plant, each on a planted child its row prepares: the stream's prototype swapped for an
+ *    object created from it, the handle's and the ChildProcess's prototypes swapped the same way together, and the handle's onread
+ *    replaced, through its prototype accessor, by a function forwarding to it; every other prototype form - a swap to an unrelated
+ *    object or to null, and a change made to a shared prototype itself among them - and every other onread form are NOT CLAIMED by
+ *    this census.
  *  G2-SINKS: G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch;
  *    and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error
- *    spells.
+ *    spells. It claims that reading exactly at the forms its rows plant: an rf id as a process warning's message (emitted under
+ *    the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the reader records,
+ *    and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code, detail or
+ *    stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview reading and
+ *    kill error other than those G2's witness reads today are NOT CLAIMED by this census.
  * RESIDUALS (named, each with a pinned quiet row; ANCHOR holds every entry below to its table row word for word; a newly
  * found escape that contradicts no enumerated item is a residual-list addition):
  *  R-OPAQUE-LAUNCHER (C1): a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a
@@ -691,10 +745,14 @@
  * handler) are read only through the two kill sequences and C1 (g)'s declaration text.
  * OWED (by the cut that builds the committing render, once wb-x32 resolves to one): the acceptance itself. The measured rf
  * 0.1.845 shape bears on it: the default-verbosity receipt line carries render_id and transaction_id, not operation_id, so a
- * capture either reads the -v `[rfo_...]` prefix or reconciles the rfr_ id through rf context show. Such a cut reds C1 when its
- * launch moves a surface a C1 item names (a new rf launch, inventory member, child_process module site or opaque load, a
- * changed argv, builder, builder declaration, options, launching declaration text, reference or registration), C2 or C3 when
- * it journals a captured reference, and R1 when the resume names an id or the reconcile reads gain an operation-id read; a
+ * capture either reads the -v `[rfo_...]` prefix or reconciles the rfr_ id through rf context show. Such a cut reds an UNTIL-THEN
+ * pin only when it moves that pin's reading off today's witness: C1 when the reading of src or of both arms' recorded argv moves,
+ * C2 or C3 when the scenario they drive through Pi's rf provider journals a captured reference, and R1 when that scenario's resume
+ * names an id or the reconcile reads gain an operation-id read. Each C1 item claims its reading in its row's reading alone (exactly
+ * the one module its row plants and no other, at its row's path and exactly as its row writes it, byte for byte), so whether such a
+ * cut's launch in src - beside the provider's launch in its module, in another module of src or anywhere else - moves a surface a
+ * C1 item names (a new rf launch, inventory member, child_process module site or opaque load, a changed argv, builder, builder
+ * declaration, options, launching declaration text, reference or registration), and so reds C1, is NOT CLAIMED by this census; a
  * committing path built only through a named residual route moves none of them.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch as the only PATH entry, and the reference
  * and planted children run this process's node directly; src and the tracker export are only read.
@@ -2121,7 +2179,7 @@ interface Pin {
   readonly id: PinId;
   /** The acceptance clause the pin answers (A1 holds each row's clauses to its export item). */
   readonly clause: string;
-  /** UNTIL-THEN pins move when src gains a committing rf invocation its readers name; STANDING pins hold today and must keep holding. */
+  /** UNTIL-THEN pins hold today's reading and red when it moves (whether a src that gains a committing rf invocation moves C1's reading is NOT CLAIMED by this census); STANDING pins hold today and must keep holding. */
   readonly kind: "until-then" | "standing";
   readonly reading: ReadingId;
 }
@@ -3717,7 +3775,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-TRAP",
     pin: "G2",
-    words: "G2 (run time) reads, for each input arm, the ChildProcess the \"child_process\" diagnostics channel publishes for the launch, with child.stderr trapped by this census's subscriber (an accessor that records the stream Node assigns and turns back into a data property): preset when the ChildProcess already owned a stderr when published, reassigned when child.stderr is no longer the stream Node assigned or the trap never saw one; plus how many ChildProcess objects were published before the reference child and the bytes the stderr pipe had delivered at the reading. Each arm is read against a reference child this census spawns itself - this process's node writing the same receipt lines on stderr and hanging, stdio [\"ignore\",\"pipe\",\"pipe\"], one listener counting chunk.length - trapped and read the same way once its bytes arrived and 250 ms passed.",
+    words: "G2 (run time) reads, for each input arm, the ChildProcess the \"child_process\" diagnostics channel publishes for the launch, with child.stderr trapped by this census's subscriber (an accessor that records the stream Node assigns and turns back into a data property): preset when the ChildProcess already owned a stderr when published, reassigned when child.stderr is no longer the stream Node assigned or the trap never saw one; plus how many ChildProcess objects were published before the reference child and the bytes the stderr pipe had delivered at the reading. Each arm is read against a reference child this census spawns itself - this process's node writing the same receipt lines on stderr and hanging, stdio [\"ignore\",\"pipe\",\"pipe\"], one listener counting chunk.length - trapped and read the same way once its bytes arrived and 250 ms passed. It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares (this process's node writing the receipt lines on stderr and hanging, read the same way against the reference child): a stderr an earlier channel subscriber gave the first published ChildProcess as its own property (preset, and reassigned since the trap never saw a stream), child.stderr redefined as an own data property holding another stream (reassigned), one ChildProcess and two published before the reference child (the second a node child with its stdio ignored, spawned while the planted child is prepared), and the receipt bytes its stderr pipe delivered; every other stderr owner, reassignment, count and byte form - a stderr reassigned by plain assignment or behind an accessor, three or more ChildProcess objects published, and other bytes delivered among them - is NOT CLAIMED by this census.",
     falsifier: async () => {
       const preset = await plantedReading(RECEIPT_TEXT, (_child, stderr) => counting(stderr), presetStderr);
       const reassigned = await plantedReading(RECEIPT_TEXT, (child, stderr) => {
@@ -3725,19 +3783,25 @@ const ENUMERATION: readonly Item[] = [
         Object.defineProperty(child, "stderr", { configurable: true, enumerable: true, writable: true, value: new PassThrough() });
         return seen;
       });
+      const two = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
+        const seen = counting(stderr);
+        spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
+        return seen;
+      });
       return {
         preset: { preset: preset.stream.preset, reassigned: preset.stream.reassigned },
         reassigned: { preset: reassigned.stream.preset, reassigned: reassigned.stream.reassigned },
         launched: reassigned.stream.launched,
         bytes: reassigned.stream.stderrBytesRead,
+        launchedTwo: two.stream.launched,
       };
     },
-    caught: { preset: { preset: true, reassigned: true }, reassigned: { preset: false, reassigned: true }, launched: 1, bytes: RECEIPT_BYTES },
+    caught: { preset: { preset: true, reassigned: true }, reassigned: { preset: false, reassigned: true }, launched: 1, bytes: RECEIPT_BYTES, launchedTwo: 2 },
   },
   {
     id: "G2-LISTENER-LOG",
     pin: "G2",
-    words: "G2 (run time) reads every listener added to or removed from the assigned stream after Node assigned it, through the reading - by on, once, addListener, prependListener, prependOnceListener or the stream's own internals - recorded by its newListener and removeListener events while this census's two recorders stay attached to it (a once listener as the function it wraps), as +event or -event with the listener's chunk uses, in order; so a listener that fired and detached before the reading is still read (gate members LG1, LG1b, LG1x and LG1g: a once data listener attached on the next tick).",
+    words: "G2 (run time) reads every listener added to or removed from the assigned stream after Node assigned it, through the reading - by on, once, addListener, prependListener, prependOnceListener or the stream's own internals - recorded by its newListener and removeListener events while this census's two recorders stay attached to it (a once listener as the function it wraps), as +event or -event with the listener's chunk uses, in order; so a listener that fired and detached before the reading is still read (gate members LG1, LG1b, LG1x and LG1g: a once data listener attached on the next tick). It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: a data listener added by on (chunk => chunk.length), a once data listener attached as the row prepares the child and one attached on the next tick (chunk => chunk.toString), each read as +data and, once it fired and detached before the reading, as -data, and an end listener added by prependListener after the data listeners and one added by on before them, so one log reads in sorted order and the other does not; a listener added by addListener or prependOnceListener, one the stream's own internals add or remove, a removal by removeListener, off or removeAllListeners, every other event and every other chunk-use form are NOT CLAIMED by this census.",
     falsifier: async () => {
       const planted = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
         const seen = counting(stderr);
@@ -3748,18 +3812,30 @@ const ENUMERATION: readonly Item[] = [
         stderr.prependListener("end", () => undefined);
         return () => ({ bytes: seen(), parsed: parsed.id });
       });
-      return { added: planted.stream.added, dataListeners: planted.stream.dataListeners, seen: planted.seen };
+      const laterTick = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
+        stderr.on("end", () => undefined);
+        const seen = counting(stderr);
+        const parsed: { id?: string } = {};
+        process.nextTick(() => {
+          stderr.once("data", (chunk: Buffer) => {
+            parsed.id = /rfo_[0-9a-z]{22,32}/.exec(chunk.toString("utf8"))?.[0];
+          });
+        });
+        return () => ({ bytes: seen(), parsed: parsed.id });
+      });
+      return { added: planted.stream.added, dataListeners: planted.stream.dataListeners, seen: planted.seen, laterTick: laterTick.stream.added };
     },
     caught: {
       added: ["+data: chunk => chunk.length", "+data: chunk => chunk.toString", "+end: <no named chunk>", "-data: chunk => chunk.toString"],
       dataListeners: ["chunk => chunk.length"],
       seen: { bytes: RECEIPT_BYTES, parsed: STDERR_OPERATION },
+      laterTick: ["+end: <no named chunk>", "+data: chunk => chunk.length", "+data: chunk => chunk.toString", "-data: chunk => chunk.toString"],
     },
   },
   {
     id: "G2-DATA-LISTENERS",
     pin: "G2",
-    words: "G2 (run time) reads, at the reading, each data listener's chunk uses (parsed from the listener's own running source) and the stream's encoding.",
+    words: "G2 (run time) reads, at the reading, each data listener's chunk uses (parsed from the listener's own running source) and the stream's encoding. It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: two data listeners added by on (chunk => chunk.length and chunk => chunk.toString), and the encodings setEncoding sets, utf8 and latin1 (the reference child's stream reads null); a data listener added otherwise than by on, every other chunk-use form, an encoding set otherwise than by setEncoding and every other encoding are NOT CLAIMED by this census.",
     falsifier: async () => {
       const planted = await plantedReading(`${RECEIPT_TEXT}${RECEIPT_TEXT}`, (_child, stderr) => {
         const text = { value: "" };
@@ -3770,32 +3846,46 @@ const ENUMERATION: readonly Item[] = [
         });
         return () => ({ bytes: seen(), ids: rfIdsIn(text.value) });
       });
-      return { dataListeners: planted.stream.dataListeners, encoding: planted.stream.encoding, seen: planted.seen };
+      const latin1 = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
+        stderr.setEncoding("latin1");
+        return counting(stderr);
+      });
+      return { dataListeners: planted.stream.dataListeners, encoding: planted.stream.encoding, seen: planted.seen, latin1: latin1.stream.encoding };
     },
     caught: {
       dataListeners: ["chunk => chunk.length", "chunk => chunk.toString"],
       encoding: "utf8",
       seen: { bytes: 2 * RECEIPT_BYTES, ids: [STDERR_OPERATION, STDERR_RENDER, STDERR_TRANSACTION] },
+      latin1: "latin1",
     },
   },
   {
     id: "G2-LISTENER-COUNTS",
     pin: "G2",
-    words: "G2 (run time) reads, at the reading, the listener count of every event the stream has listeners for, as a difference from the reference child's.",
+    words: "G2 (run time) reads, at the reading, the listener count of every event the stream has listeners for, as a difference from the reference child's. It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: a readable listener added by on, read +readable:1, and the stream's end listener removed, read -end:1; every other event, count and difference form - a second listener of an event the reference child's stream listens for among them - is NOT CLAIMED by this census.",
     falsifier: async () => {
       const planted = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
         const seen = counting(stderr);
         stderr.on("readable", () => undefined);
         return seen;
       });
-      return planted.stream.listenerCounts;
+      const removed = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
+        const seen = counting(stderr);
+        const ends = stderr.listeners("end");
+        stderr.removeAllListeners("end");
+        return () => {
+          for (const listener of ends) Reflect.apply(stderr.on, stderr, ["end", listener]);
+          return seen();
+        };
+      });
+      return [...planted.stream.listenerCounts, ...removed.stream.listenerCounts];
     },
-    caught: ["+readable:1"],
+    caught: ["+readable:1", "-end:1"],
   },
   {
     id: "G2-OWN-PROPERTIES",
     pin: "G2",
-    words: "G2 (run time) reads every own property of the stream, of its handle and of the ChildProcess - string and symbol keys - as object.key:kind (accessor, function or value), as a difference from the reference child's, so an own accessor or function override on any of the three reads (gate member LG2: an own accessor push).",
+    words: "G2 (run time) reads every own property of the stream, of its handle and of the ChildProcess - string and symbol keys - as object.key:kind (accessor, function or value), as a difference from the reference child's, so an own accessor or function override on any of the three reads (gate member LG2: an own accessor push). It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: on the stream an own accessor and an own function overriding push and an own value under a symbol key; on its handle an own value under a symbol key, an own accessor overriding readStart and an own function overriding readStop; on the ChildProcess an own function and an own accessor overriding emit, and its own spawnfile value removed; every other key, kind and difference form - an own property added under another key, a symbol-keyed accessor or function, a removed accessor or function, a property of the stream or its handle removed, and a property whose key and kind stay while its value changes among them - is NOT CLAIMED by this census.",
     falsifier: async () => {
       const planted = await plantedReading(RECEIPT_TEXT, (child, stderr) => {
         const seen = counting(stderr);
@@ -3814,17 +3904,48 @@ const ENUMERATION: readonly Item[] = [
         if (handle !== null) Reflect.set(handle, Symbol.for("rf-receipt-capture"), true);
         return () => ({ bytes: seen(), ids: rfIdsIn(captured.text) });
       });
-      return { ownProperties: planted.stream.ownProperties, seen: planted.seen };
+      const overrides = await plantedReading(RECEIPT_TEXT, (child, stderr) => {
+        const seen = counting(stderr);
+        const push = stderr.push;
+        Object.defineProperty(stderr, "push", {
+          configurable: true,
+          writable: true,
+          value: function (this: Readable, chunk: unknown, encoding?: BufferEncoding): boolean {
+            return push.call(this, chunk, encoding);
+          },
+        });
+        Reflect.set(stderr, Symbol.for("rf-receipt-capture"), true);
+        const handle = handleOf(stderr);
+        if (handle !== null) {
+          const readStart: unknown = Reflect.get(handle, "readStart");
+          const readStop: unknown = Reflect.get(handle, "readStop");
+          Object.defineProperty(handle, "readStart", { configurable: true, get: () => readStart });
+          if (typeof readStop === "function") Object.defineProperty(handle, "readStop", { configurable: true, writable: true, value: (...args: unknown[]): unknown => Reflect.apply(readStop, handle, args) });
+        }
+        const emit = child.emit.bind(child);
+        Object.defineProperty(child, "emit", { configurable: true, get: () => emit });
+        Reflect.deleteProperty(child, "spawnfile");
+        return seen;
+      });
+      return { ownProperties: planted.stream.ownProperties, seen: planted.seen, overrides: overrides.stream.ownProperties };
     },
     caught: {
       ownProperties: ["+child.emit:function", "+handle.Symbol(rf-receipt-capture):value", "+stream.push:accessor"],
       seen: { bytes: RECEIPT_BYTES, ids: [STDERR_OPERATION, STDERR_RENDER, STDERR_TRANSACTION] },
+      overrides: [
+        "+child.emit:accessor",
+        "+handle.readStart:accessor",
+        "+handle.readStop:function",
+        "+stream.Symbol(rf-receipt-capture):value",
+        "+stream.push:function",
+        "-child.spawnfile:value",
+      ],
     },
   },
   {
     id: "G2-PROTOTYPES",
     pin: "G2",
-    words: "G2 (run time) reads whether the stream's, the handle's and the ChildProcess's prototypes are the reference child's, and whether the handle's onread, read through its prototype accessor, is the reference handle's.",
+    words: "G2 (run time) reads whether the stream's, the handle's and the ChildProcess's prototypes are the reference child's, and whether the handle's onread, read through its prototype accessor, is the reference handle's. It claims that reading exactly at the forms its rows plant, each on a planted child its row prepares: the stream's prototype swapped for an object created from it, the handle's and the ChildProcess's prototypes swapped the same way together, and the handle's onread replaced, through its prototype accessor, by a function forwarding to it; every other prototype form - a swap to an unrelated object or to null, and a change made to a shared prototype itself among them - and every other onread form are NOT CLAIMED by this census.",
     falsifier: async () => {
       const swapped = await plantedReading(RECEIPT_TEXT, (_child, stderr) => {
         const seen = counting(stderr);
@@ -3841,22 +3962,42 @@ const ENUMERATION: readonly Item[] = [
         }
         return seen;
       });
-      return { swapped: swapped.stream.prototypes, onreadShared: wrapped.stream.onreadShared, wrappedOwn: wrapped.stream.ownProperties };
+      const otherSwapped = await plantedReading(RECEIPT_TEXT, (child, stderr) => {
+        const seen = counting(stderr);
+        const handle = handleOf(stderr);
+        if (handle !== null) Object.setPrototypeOf(handle, Object.create(Object.getPrototypeOf(handle)));
+        Object.setPrototypeOf(child, Object.create(Object.getPrototypeOf(child)));
+        return seen;
+      });
+      return {
+        swapped: swapped.stream.prototypes,
+        onreadShared: wrapped.stream.onreadShared,
+        wrappedOwn: wrapped.stream.ownProperties,
+        otherSwapped: otherSwapped.stream.prototypes,
+      };
     },
-    caught: { swapped: ["stream"], onreadShared: false, wrappedOwn: [] },
+    caught: { swapped: ["stream"], onreadShared: false, wrappedOwn: [], otherSwapped: ["handle", "child"] },
   },
   {
     id: "G2-SINKS",
     pin: "G2",
-    words: "G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch; and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error spells.",
+    words: "G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch; and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error spells. It claims that reading exactly at the forms its rows plant: an rf id as a process warning's message (emitted under the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the reader records, and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code, detail or stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview reading and kill error other than those G2's witness reads today are NOT CLAIMED by this census.",
     falsifier: async () => ({
       warning: await warningIdsDuring(async () => {
         process.emitWarning(STDERR_OPERATION, "Receipt");
         return "emitted";
       }),
       errorText: rfIdsIn(`exceeded the deadline (${STDERR_RENDER})`),
+      warningName: await warningIdsDuring(async () => {
+        process.emitWarning("Receipt", STDERR_RENDER);
+        return "emitted";
+      }),
     }),
-    caught: { warning: { value: "emitted", warningIds: [STDERR_OPERATION] }, errorText: [STDERR_RENDER] },
+    caught: {
+      warning: { value: "emitted", warningIds: [STDERR_OPERATION] },
+      errorText: [STDERR_RENDER],
+      warningName: { value: "emitted", warningIds: [STDERR_RENDER] },
+    },
   },
 ];
 
@@ -4420,13 +4561,13 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       "G2-STDIO:unbound,inherit",
       "G2-CHANNEL-SITES:importDeclaration,builtin,constSpecifier",
       "G2-OPAQUE-LOADS:[1]",
-      "G2-TRAP:preset,reassigned,launched,bytes",
-      "G2-LISTENER-LOG:added,dataListeners,seen",
-      "G2-DATA-LISTENERS:dataListeners,encoding,seen",
-      "G2-LISTENER-COUNTS:[1]",
-      "G2-OWN-PROPERTIES:ownProperties,seen",
-      "G2-PROTOTYPES:swapped,onreadShared,wrappedOwn",
-      "G2-SINKS:warning,errorText",
+      "G2-TRAP:preset,reassigned,launched,bytes,launchedTwo",
+      "G2-LISTENER-LOG:added,dataListeners,seen,laterTick",
+      "G2-DATA-LISTENERS:dataListeners,encoding,seen,latin1",
+      "G2-LISTENER-COUNTS:[2]",
+      "G2-OWN-PROPERTIES:ownProperties,seen,overrides",
+      "G2-PROTOTYPES:swapped,onreadShared,wrappedOwn,otherSwapped",
+      "G2-SINKS:warning,errorText,warningName",
     ]);
     expect(RESIDUALS.map((residual) => `${residual.id}:${residual.pins.join("+")}`)).toStrictEqual([
       "R-OPAQUE-LAUNCHER:C1",
