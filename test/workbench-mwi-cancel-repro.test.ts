@@ -44,11 +44,19 @@
  *   applied to every reading of that product (a profile replaces, together, the fields that builder names as its
  *   noise). Every reading built either way must get the verdict ruledVerdict gives, and the number of readings is
  *   pinned. ruledVerdict restates the rules of the helper's header, one rule per line, in the order the verdict lists
- *   them. GRID-AXES pins each axis list by value (COUNTS, CONTROLS, STARTUPS, ROUTES, BARRIERS, SETUP_AGENTS,
- *   ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES, CALL_LOG_OFFSETS and
- *   ONE_START_SPLITS), NOISE by each profile's position in every list it draws from, that each NOISE field takes every
- *   value of its list, and that the four plan facet lists, ENTRY_STATES and RUN_STATUSES equal the unions their source
- *   files declare.
+ *   them. GRID-AXES pins each of the 16 lists of the axis-list block by value (COUNTS, CONTROLS, STARTUPS, ROUTES,
+ *   BARRIERS, SETUP_AGENTS, ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES,
+ *   CALL_LOG_OFFSETS, ONE_START_SPLITS, RUN_SIGNALS and PARKED_AT_CONTROL), NOISE by each profile's position in every
+ *   list it draws from, that each NOISE field takes every value of its list, and that the four plan facet lists,
+ *   ENTRY_STATES and RUN_STATUSES equal the unions their source files declare. GRID-PRODUCTS pins that each grid's
+ *   builder iterates the lists of its axes table (SEAM_AXES, SKIP_ORACLE_AXES and RETRY_ORACLE_AXES): every reading
+ *   the grid visits, read on those axes (each value as its position in that axis's list), is the next tuple of the
+ *   product of those lists, outermost axis first, each tuple due 1 + 17 times in a row and none past the last.
+ *   seamGrid's builder spells its run signal and parkedAtControl lists inline; GRID-PRODUCTS reads them against
+ *   RUN_SIGNALS and PARKED_AT_CONTROL. The same reader flags four planted grids: a run signal list spelled
+ *   [false, false], two loops in each other's place, each reading visited once, and the product run through twice.
+ *   GRID-PRODUCTS reads no comment: that a builder's comment names the lists of its axes table, or names them in that
+ *   order, is NOT CLAIMED by it.
  * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
  * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
  * value, settlement list or run status that no list holds) and a reading outside those products. Production
@@ -163,7 +171,9 @@ const SKIP_ORACLE: ParkedObservation = {
 /** R016-ORACLE's oracle reading, shared: a valid retry reading that meets the retry oracle. */
 const RETRY_ORACLE: ParkedObservation = { ...PARKED_RETRY_SPAWN, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 1 };
 
-// The axis lists of the grids and of PLAN-DOMAIN. GRID-AXES pins each one; a value that no list holds is NOT CLAIMED.
+// The axis-list block: the 16 lists below. GRID-AXES holds each one by value, and GRID-PRODUCTS holds that each grid's
+// readings run through the product of the lists of its axes table (SEAM_AXES, SKIP_ORACLE_AXES, RETRY_ORACLE_AXES;
+// seamGrid's builder spells RUN_SIGNALS and PARKED_AT_CONTROL inline). A value that no list holds is NOT CLAIMED.
 /** Every count axis of the grids. */
 const COUNTS: readonly number[] = [0, 1, 2, 3];
 const CONTROLS = ["skip", "retry", "none"] as const satisfies readonly ParkedControl[];
@@ -213,6 +223,10 @@ const ONE_START_SPLITS: readonly { readonly original: number; readonly replaceme
   { original: 0, replacement: 1, extra: 0 },
   { original: 0, replacement: 0, extra: 1 },
 ];
+/** seamGrid's run signal axis: the run's own abort signal not set, then set (its builder spells this list inline). */
+const RUN_SIGNALS: readonly boolean[] = [false, true];
+/** seamGrid's parkedAtControl axis: the target parked when the control is issued, then not (its builder spells this list inline). */
+const PARKED_AT_CONTROL: readonly boolean[] = [true, false];
 
 /** Compile-time: true only when the list holds every member of its union (typecheck:test fails otherwise). */
 type Covers<Union, Listed> = [Exclude<Union, Listed>] extends [never] ? true : false;
@@ -464,6 +478,140 @@ function retryOracleGrid(visit: (reading: ParkedObservation) => void): void {
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+/** One axis of a grid: the list its builder iterates for it, and where a reading of that grid holds its value. */
+interface GridAxis {
+  readonly name: string;
+  readonly list: readonly unknown[];
+  readonly read: (reading: ParkedObservation) => unknown;
+}
+
+/** A reading's per-attempt start counts summed, the setup agents' included. */
+function summedStarts(reading: ParkedObservation): number {
+  return reading.sdkStarts.setup + reading.sdkStarts.original + reading.sdkStarts.replacement + reading.sdkStarts.extra;
+}
+
+/** seamGrid's axes, outermost loop first. */
+const SEAM_AXES: readonly GridAxis[] = [
+  { name: "route", list: ROUTES, read: reading => reading.plan.route },
+  { name: "run signal", list: RUN_SIGNALS, read: reading => reading.runAborted },
+  { name: "parkedAtControl", list: PARKED_AT_CONTROL, read: reading => reading.parkedAtControl },
+  { name: "control", list: CONTROLS, read: reading => reading.plan.control },
+  { name: "control value", list: CONTROL_VALUES, read: reading => reading.controlAccepted },
+  { name: "parked aborts", list: COUNTS, read: reading => reading.hostAbortsWhileParked },
+  { name: "startup", list: STARTUPS, read: reading => reading.plan.startup },
+  { name: "starts at the control", list: COUNTS, read: reading => reading.queriesBeforeControl },
+  { name: "setup SDK starts", list: COUNTS, read: reading => reading.sdkStarts.setup },
+  { name: "setup beforeDispatch entries", list: COUNTS, read: reading => reading.authorizations.setup },
+  { name: "call log offset", list: CALL_LOG_OFFSETS, read: reading => reading.sdkCallsRecorded - summedStarts(reading) },
+];
+
+/** skipOracleGrid's axes, outermost loop first. */
+const SKIP_ORACLE_AXES: readonly GridAxis[] = [
+  { name: "startup", list: STARTUPS, read: reading => reading.plan.startup },
+  { name: "original starts", list: COUNTS, read: reading => reading.sdkStarts.original },
+  { name: "replacement starts", list: COUNTS, read: reading => reading.sdkStarts.replacement },
+  { name: "later starts", list: COUNTS, read: reading => reading.sdkStarts.extra },
+  { name: "final row", list: FINAL_ROWS, read: reading => reading.finalRow },
+  { name: "script value", list: SCRIPT_VALUES, read: reading => reading.scriptValue },
+];
+
+/** retryOracleGrid's axes, outermost loop first. */
+const RETRY_ORACLE_AXES: readonly GridAxis[] = [
+  { name: "startup", list: STARTUPS, read: reading => reading.plan.startup },
+  { name: "original starts", list: COUNTS, read: reading => reading.sdkStarts.original },
+  { name: "replacement starts", list: COUNTS, read: reading => reading.sdkStarts.replacement },
+  { name: "later starts", list: COUNTS, read: reading => reading.sdkStarts.extra },
+  { name: "original entries", list: COUNTS, read: reading => reading.authorizations.original },
+  { name: "replacement entries", list: COUNTS, read: reading => reading.authorizations.replacement },
+  { name: "later entries", list: COUNTS, read: reading => reading.authorizations.extra },
+];
+
+/** How a grid's visits read on its axes: the visits, how many are not the product's next tuple, and the first three of those. */
+interface ProductTally {
+  readonly visits: number;
+  readonly offProduct: number;
+  readonly first: readonly string[];
+}
+
+/**
+ * Reads every reading a grid visits on its axes, each value as its position in that axis's list (-1 for a value the list
+ * does not hold), and compares the positions with the product of the lists in the order given, the last axis varying
+ * fastest and each tuple due 1 + NOISE.length times in a row. A visit past the product's last tuple is off the product
+ * too. It reads the axes only: which NOISE profile, if any, a visit of a tuple carries is NOT CLAIMED by it.
+ */
+function productTally(grid: (visit: (reading: ParkedObservation) => void) => void, axes: readonly GridAxis[]): ProductTally {
+  const lengths = axes.map(axis => axis.list.length);
+  const due = 1 + NOISE.length;
+  let visits = 0;
+  let offProduct = 0;
+  const first: string[] = [];
+  grid(reading => {
+    const product = lengths.map(() => 0);
+    let rest = Math.floor(visits / due);
+    for (let axis = lengths.length - 1; axis >= 0; axis -= 1) {
+      product[axis] = rest % lengths[axis];
+      rest = Math.floor(rest / lengths[axis]);
+    }
+    const read = axes.map(axis => axis.list.indexOf(axis.read(reading)));
+    const visit = visits;
+    visits += 1;
+    if (rest === 0 && read.every((position, axis) => position === product[axis])) return;
+    offProduct += 1;
+    if (first.length < 3) first.push(`visit ${visit}: read ${read.join("/")}, product ${rest === 0 ? product.join("/") : "past its last tuple"}`);
+  });
+  return { visits, offProduct, first };
+}
+
+/** The first three axes of seamGrid (route, run signal, parkedAtControl), which GRID-PRODUCTS's planted grids iterate. */
+const PLANTED_AXES: readonly GridAxis[] = SEAM_AXES.slice(0, 3);
+
+/** A planted grid, never run as a grid case: PLANTED_AXES with the run signal list spelled [false, false], each reading visited 1 + NOISE.length times. */
+function plantedOneSignalGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const route of ROUTES) {
+    for (const runAborted of [false, false]) {
+      for (const parkedAtControl of PARKED_AT_CONTROL) {
+        const reading: ParkedObservation = { ...PARKED_SKIP_SPAWN, plan: { ...PARKED_SKIP_SPAWN.plan, route }, runAborted, parkedAtControl };
+        for (let repeat = 0; repeat <= NOISE.length; repeat += 1) visit(reading);
+      }
+    }
+  }
+}
+
+/** A planted grid, never run as a grid case: PLANTED_AXES with the route and run signal loops in each other's place. */
+function plantedSwappedGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const runAborted of RUN_SIGNALS) {
+    for (const route of ROUTES) {
+      for (const parkedAtControl of PARKED_AT_CONTROL) {
+        const reading: ParkedObservation = { ...PARKED_SKIP_SPAWN, plan: { ...PARKED_SKIP_SPAWN.plan, route }, runAborted, parkedAtControl };
+        for (let repeat = 0; repeat <= NOISE.length; repeat += 1) visit(reading);
+      }
+    }
+  }
+}
+
+/** A planted grid, never run as a grid case: PLANTED_AXES with each reading visited once, under no NOISE profile. */
+function plantedBareGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const route of ROUTES) {
+    for (const runAborted of RUN_SIGNALS) {
+      for (const parkedAtControl of PARKED_AT_CONTROL) visit({ ...PARKED_SKIP_SPAWN, plan: { ...PARKED_SKIP_SPAWN.plan, route }, runAborted, parkedAtControl });
+    }
+  }
+}
+
+/** A planted grid, never run as a grid case: PLANTED_AXES's product, each reading visited 1 + NOISE.length times, run through twice. */
+function plantedTwiceGrid(visit: (reading: ParkedObservation) => void): void {
+  for (let pass = 0; pass < 2; pass += 1) {
+    for (const route of ROUTES) {
+      for (const runAborted of RUN_SIGNALS) {
+        for (const parkedAtControl of PARKED_AT_CONTROL) {
+          const reading: ParkedObservation = { ...PARKED_SKIP_SPAWN, plan: { ...PARKED_SKIP_SPAWN.plan, route }, runAborted, parkedAtControl };
+          for (let repeat = 0; repeat <= NOISE.length; repeat += 1) visit(reading);
         }
       }
     }
@@ -1155,7 +1303,7 @@ const PLAN_ROWS: readonly PlanRow[] = [
 ];
 
 describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", () => {
-  it("GRID-AXES each axis list by value and the 17 NOISE profiles by each one's position in every list it draws from, frozen; the four plan facet lists, ENTRY_STATES and RUN_STATUSES each equal the union their source file declares (read with the TypeScript parser); each NOISE field takes every value of its list", () => {
+  it("GRID-AXES each of the 16 lists of the axis-list block by value (RUN_SIGNALS and PARKED_AT_CONTROL among them) and the 17 NOISE profiles by each one's position in every list it draws from, frozen; the four plan facet lists, ENTRY_STATES and RUN_STATUSES each equal the union their source file declares (read with the TypeScript parser); each NOISE field takes every value of its list", () => {
     expect({
       counts: COUNTS,
       controls: CONTROLS,
@@ -1170,6 +1318,8 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
       runStatuses: RUN_STATUSES,
       controlValues: CONTROL_VALUES,
       callLogOffsets: CALL_LOG_OFFSETS,
+      runSignals: RUN_SIGNALS,
+      parkedAtControl: PARKED_AT_CONTROL,
       noise: NOISE.length,
       listsCoverTheirUnions: LISTS_COVER_THEIR_UNIONS,
     }).toEqual({
@@ -1186,6 +1336,8 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
       runStatuses: ["completed", "failed", "killed"],
       controlValues: [true, false, undefined],
       callLogOffsets: [-1, 0, 1],
+      runSignals: [false, true],
+      parkedAtControl: [true, false],
       noise: 17,
       listsCoverTheirUnions: [true, true, true, true, true, true],
     });
@@ -1298,6 +1450,34 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     ]);
     // Each NOISE field takes every value of its list: every position of each source list appears in that field's column.
     expect(NOISE_SOURCES.map((list, field) => list.every((_, position) => positions.some(row => row[field] === position)))).toEqual([true, true, true, true, true, true, true, true, true]);
+  });
+
+  it("GRID-PRODUCTS every reading each grid visits, read on the axes of its table (SEAM_AXES, SKIP_ORACLE_AXES, RETRY_ORACLE_AXES; each value as its position in that axis's list, seamGrid's inline run signal and parkedAtControl lists read against RUN_SIGNALS and PARKED_AT_CONTROL), is the next tuple of the product of those lists, outermost axis first, each tuple due 1 + 17 times in a row and none past the last; the same reader flags four planted grids", { timeout: GRID_TIMEOUT }, () => {
+    expect({
+      seam: productTally(seamGrid, SEAM_AXES),
+      skipOracle: productTally(skipOracleGrid, SKIP_ORACLE_AXES),
+      retryOracle: productTally(retryOracleGrid, RETRY_ORACLE_AXES),
+    }).toEqual({
+      seam: { visits: 110_592 * (1 + NOISE.length), offProduct: 0, first: [] },
+      skipOracle: { visits: 19_584 * (1 + NOISE.length), offProduct: 0, first: [] },
+      retryOracle: { visits: 8_192 * (1 + NOISE.length), offProduct: 0, first: [] },
+    });
+    // Liveness: the same reader, over four planted grids on seamGrid's first three axes, names each one's first visits off the product.
+    expect({
+      oneSignal: productTally(plantedOneSignalGrid, PLANTED_AXES),
+      swapped: productTally(plantedSwappedGrid, PLANTED_AXES),
+      bare: productTally(plantedBareGrid, PLANTED_AXES),
+      twice: productTally(plantedTwiceGrid, PLANTED_AXES),
+    }).toEqual({
+      oneSignal: { visits: 144, offProduct: 72, first: ["visit 36: read 0/0/0, product 0/1/0", "visit 37: read 0/0/0, product 0/1/0", "visit 38: read 0/0/0, product 0/1/0"] },
+      swapped: { visits: 144, offProduct: 72, first: ["visit 36: read 1/0/0, product 0/1/0", "visit 37: read 1/0/0, product 0/1/0", "visit 38: read 1/0/0, product 0/1/0"] },
+      bare: { visits: 8, offProduct: 7, first: ["visit 1: read 0/0/1, product 0/0/0", "visit 2: read 0/1/0, product 0/0/0", "visit 3: read 0/1/1, product 0/0/0"] },
+      twice: {
+        visits: 288,
+        offProduct: 144,
+        first: ["visit 144: read 0/0/0, product past its last tuple", "visit 145: read 0/0/0, product past its last tuple", "visit 146: read 0/0/0, product past its last tuple"],
+      },
+    });
   });
 
   it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
