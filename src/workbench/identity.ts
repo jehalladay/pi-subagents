@@ -152,6 +152,59 @@ export function identityDigest(domain: string, value: unknown): string {
   required(domain, "digest domain");
   return `sha256:${createHash("sha256").update(`workbench.identity/v1\u0000${domain}\u0000${canonicalJson(value)}`, "utf8").digest("hex")}`;
 }
+
+/** The free-form note field of a Beads export row (EAT-R154, wb-201v). */
+const BEADS_NOTE_FIELD = "notes";
+const PROTOTYPE_KEYS: readonly string[] = ["__proto__", "constructor", "prototype"];
+/**
+ * EAT-R154 (wb-201v; the mechanical-interoperability-audit-2026-11-06 triage, ATOMIC-REQUIREMENTS-DELTA.md compiled at the
+ * Nov-6 pins pi d7666a76 and mw 97e18068): "No Pi function admission, identity or replay-basis computation MAY read
+ * free-form note text from a Beads export; only typed evidence fields and snapshot pins MAY be consumed". decideExecute
+ * (execute.ts) judges a function definition's caller policy and input by the copy withoutBeadsNotes returns. Claimed only at
+ * the EAT-R154 rows of test/workbench-function-authority.test.ts: at the 7 note positions they list (a note member of the
+ * caller policy, of the caller input beside the task fields, of an export row held under a member of either, of each
+ * export row an array of the input holds, of an export row three objects deep in the policy, and of an object in an array
+ * within an array of the policy) the request is admitted as it is without the note member, read whole; the typed fields
+ * they list beside a note (an export row's status, a snapshot pin) still change the admission; the 3 bound-crossing notes
+ * they list leave the decision as it is with a plain note; and a request whose note member holds a getter, which is never
+ * invoked, or NaN is decided as it is without the note member. Other values and positions are NOT CLAIMED.
+ */
+export function withoutBeadsNotes(value: unknown): unknown {
+  const ancestors = new Set<object>();
+  function copy(item: unknown, depth: number): unknown {
+    if (typeof item !== "object" || item === null || depth > 64 || ancestors.has(item)) return item;
+    ancestors.add(item);
+    try {
+      return Array.isArray(item) ? copyArray(item, depth) : copyRecord(item, depth);
+    } finally {
+      ancestors.delete(item);
+    }
+  }
+  function copyArray(item: unknown[], depth: number): unknown {
+    if (Reflect.ownKeys(item).filter(key => key !== "length").length !== item.length) return item;
+    const values: unknown[] = [];
+    for (let index = 0; index < item.length; index++) {
+      const descriptor = Object.getOwnPropertyDescriptor(item, String(index));
+      if (!descriptor || !Object.hasOwn(descriptor, "value") || !descriptor.enumerable) return item;
+      values.push(copy(descriptor.value, depth + 1));
+    }
+    return values;
+  }
+  function copyRecord(item: object, depth: number): unknown {
+    const prototype = Object.getPrototypeOf(item);
+    if (prototype !== Object.prototype && prototype !== null) return item;
+    const record: Record<string, unknown> = {};
+    for (const key of Reflect.ownKeys(item)) {
+      if (key === BEADS_NOTE_FIELD) continue;
+      if (typeof key !== "string" || PROTOTYPE_KEYS.includes(key)) return item;
+      const descriptor = Object.getOwnPropertyDescriptor(item, key);
+      if (!descriptor || !Object.hasOwn(descriptor, "value") || !descriptor.enumerable) return item;
+      record[key] = copy(descriptor.value, depth + 1);
+    }
+    return record;
+  }
+  return copy(value, 0);
+}
 function fileDigest(path: string): string {
   return `sha256:${createHash("sha256").update(readFileSync(path)).digest("hex")}`;
 }

@@ -68,6 +68,16 @@
  * settings.ts holds, the exact Claude tool right claude:tool:<name> included as known permission data (adoption keeps
  * the namespace:permission grammar), and the module joins that census's READERS, where its rows are pinned; the two
  * landing-1019 contact rows at the end of this file pin the four listed rights at the decision and at adoption.
+ * Cut #7 (the respin of refusal #6, whose U1 is EAT-R154's byte-identical admission floor, at rung 1 of its own ladder)
+ * has decideExecute take a function definition's request through withoutBeadsNotes in identity.ts, which omits the Beads
+ * note member at the positions these rows list. The EAT-R154 admission row now reads the two admissions of each listed
+ * fixture pair byte-identical, read whole, and equal to the admission of the listed request carrying no note,
+ * red-first. Six further EAT-R154 rows pin, each red-first or against its named falsifier: the listed typed fields
+ * beside a note still change the admission; the listed nested positions; the listed notes long enough to cross a byte
+ * bound; the listed getter and NaN note members; an admission handed to the boundary with a note in its policy; and the
+ * script and furnace-formula scope. A census row pins that identity.ts holds the note field's name as a quoted literal
+ * exactly once. Cut #7 keeps the frozen sets (R-B669's host-authority words, GUARD A and GUARD B) byte-stable and does
+ * not restate the R-B642 set.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -1600,7 +1610,7 @@ describe("host authority: in each host mode, the listed caller policies leave th
   }, 120_000);
 });
 
-describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary result, dispatched authority or decision, and an admission only in its echo of the carrying request field; the listed static census finds none of the listed Beads note reader forms (wb-201v)", () => {
+describe("EAT-R154: at the listed fixture pairs a Beads note changes no admission, boundary result, dispatched authority or decision, read whole, and the listed typed fields beside a note still change the admission; the listed static census finds none of the listed Beads note reader forms in the judged files, and the note field's name once in identity.ts (wb-201v)", () => {
   const OTHER: FunctionIdentity = Object.freeze({ principal: "local-operator:0:s9", sessionId: "s9" });
   const BOTH: readonly string[] = [EXECUTE_GRANT, ACTION];
   const PLAIN_TASK: Record<string, JsonValue> = { task: "t", workspaceId: "w", baseRevision: "r" };
@@ -1642,6 +1652,26 @@ describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary
     if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
     return decision.admission;
   }
+  /** decideExecute's decision for the request of the given definition kind carrying the fixture. */
+  function decideCarrying(hostMode: (typeof MODES)[number], carried: Carried, kind: DefinitionRef["kind"]): ReturnType<typeof decideExecute> {
+    const definitionRef: DefinitionRef = { kind, id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST };
+    return decideExecute({ definitionRef, input: carried.input, hostMode, ...(carried.policy !== undefined ? { policy: carried.policy } : {}) }, { grants: [EXECUTE_GRANT], invocationId: INVOCATION });
+  }
+  /** This bead's export row without its note: its typed fields only. */
+  const ROW_WITHOUT_NOTE: Record<string, JsonValue> = { id: "wb-201v", title: "[MWI-authority] Enforce exact function authority at the final dispatch boundary", status: "in_progress", assignee: "flywheel" };
+  /** For each of the 5 listed fixture forms, the listed request carrying no note: the form's carrier without its note member. */
+  const NOTELESS: readonly (readonly [string, Carried])[] = [
+    ["the caller policy {bead: the export row}", { policy: { bead: ROW_WITHOUT_NOTE }, input: PLAIN_TASK }],
+    ["the caller policy {notes: the note}", { policy: {}, input: PLAIN_TASK }],
+    ["the caller input {the task fields, bead: the export row}", { input: { ...PLAIN_TASK, bead: ROW_WITHOUT_NOTE } }],
+    ["the caller input {the task fields, notes: the note}", { input: PLAIN_TASK }],
+    ["the host's identity read carrying a notes field beside principal and sessionId, the request unchanged", { input: PLAIN_TASK }],
+  ];
+  function notelessOf(form: string): Carried {
+    const listed = NOTELESS.find(([label]) => label === form);
+    if (listed === undefined) throw new Error(`no request carrying no note is listed for ${form}`);
+    return listed[1];
+  }
   interface HostReads {
     readonly grants: readonly string[];
     readonly identity: FunctionIdentity;
@@ -1679,15 +1709,16 @@ describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary
     return `${wholeOf(result)}; the dispatch callback received [${received.map(wholeOf).join(", ")}]; park ${calls.park}, dispatch ${calls.dispatch}`;
   }
 
-  it("in each host mode, decideExecute admits the request for mechanical.development.develop.v1 of each of the 5 listed fixture forms with the plain note and with the seat note, and the two admissions, read whole, differ in exactly the one own key that echoes the carrying request field (policy for the policy forms, inputDigest for the input forms) and in none for the host-identity form", () => {
+  it("in each host mode, decideExecute admits the request for mechanical.development.develop.v1 of each of the 5 listed fixture forms with the plain note and with the seat note, and the two admissions are byte-identical, read whole, to each other and to the admission of the listed request carrying no note (the form's carrier without its note member)", () => {
     expect(FORMS).toHaveLength(5);
+    expect(NOTELESS.map(([form]) => form)).toEqual(FORMS.map(([form]) => form));
+    expect({ ...ROW_WITHOUT_NOTE, notes: PLAIN_NOTE }).toStrictEqual(exportRow(PLAIN_NOTE));
     for (const hostMode of MODES) {
-      for (const [form, echo, carry] of FORMS) {
-        const plain = admitCarrying(hostMode, carry(PLAIN_NOTE).carried) as unknown as Record<string, unknown>;
-        const seat = admitCarrying(hostMode, carry(SEAT_NOTE).carried) as unknown as Record<string, unknown>;
-        const keys = Reflect.ownKeys(plain).map(String);
-        expect({ hostMode, form, keys: Reflect.ownKeys(seat).map(String) }).toEqual({ hostMode, form, keys });
-        expect({ hostMode, form, differing: keys.filter(key => wholeOf(plain[key]) !== wholeOf(seat[key])) }).toEqual({ hostMode, form, differing: echo === "none" ? [] : [echo] });
+      for (const [form, , carry] of FORMS) {
+        const control = wholeOf(admitCarrying(hostMode, notelessOf(form)));
+        const plain = wholeOf(admitCarrying(hostMode, carry(PLAIN_NOTE).carried));
+        const seat = wholeOf(admitCarrying(hostMode, carry(SEAT_NOTE).carried));
+        expect({ hostMode, form, plain, seat }).toEqual({ hostMode, form, plain: control, seat: control });
       }
     }
   });
@@ -1738,6 +1769,136 @@ describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary
     expect(endings.map((ending, index) => markers[index]?.filter(marker => !ending.includes(marker)))).toEqual([[], [], [], []]);
   });
 
+  const PIN_A = `sha256:${"ab".repeat(32)}`;
+  const PIN_B = `sha256:${"cd".repeat(32)}`;
+  /**
+   * The 4 listed typed forms: a request carrying a note (or none) beside a typed field, the export row's status or a snapshot
+   * pin, the field's 2 listed values, and the one own key of the admission that echoes the carrying request field.
+   */
+  const TYPED: readonly (readonly [string, "policy" | "inputDigest", readonly [string, string], (notes: string | undefined, typed: string) => Carried])[] = [
+    ["the caller policy {bead: the export row}, its status in_progress or closed", "policy", ["in_progress", "closed"], (notes, typed) => ({ policy: { bead: { ...ROW_WITHOUT_NOTE, status: typed, ...(notes !== undefined ? { notes } : {}) } }, input: PLAIN_TASK })],
+    ["the caller policy {notes: the note, pin: a snapshot pin}, the pin sha256:ab... or sha256:cd...", "policy", [PIN_A, PIN_B], (notes, typed) => ({ policy: { ...(notes !== undefined ? { notes } : {}), pin: typed }, input: PLAIN_TASK })],
+    ["the caller input {the task fields, bead: the export row}, its status in_progress or closed", "inputDigest", ["in_progress", "closed"], (notes, typed) => ({ input: { ...PLAIN_TASK, bead: { ...ROW_WITHOUT_NOTE, status: typed, ...(notes !== undefined ? { notes } : {}) } } })],
+    ["the caller input {the task fields, notes: the note, pin: a snapshot pin}, the pin sha256:ab... or sha256:cd...", "inputDigest", [PIN_A, PIN_B], (notes, typed) => ({ input: { ...PLAIN_TASK, ...(notes !== undefined ? { notes } : {}), pin: typed } })],
+  ];
+
+  it("in each host mode, at each of the 4 listed typed forms, the request for mechanical.development.develop.v1 carrying the seat note admits, at each of the typed field's 2 listed values, as that request carrying no note does, read whole, and the admissions at the 2 values differ in exactly the one own key that echoes the carrying request field", () => {
+    expect(TYPED).toHaveLength(4);
+    for (const hostMode of MODES) {
+      for (const [form, echo, [first, second], build] of TYPED) {
+        const noted = (typed: string) => admitCarrying(hostMode, build(SEAT_NOTE, typed)) as unknown as Record<string, unknown>;
+        const atFirst = noted(first);
+        const atSecond = noted(second);
+        expect({ hostMode, form, atFirst: wholeOf(atFirst), atSecond: wholeOf(atSecond) }).toEqual({ hostMode, form, atFirst: wholeOf(admitCarrying(hostMode, build(undefined, first))), atSecond: wholeOf(admitCarrying(hostMode, build(undefined, second))) });
+        expect({ hostMode, form, differing: Reflect.ownKeys(atFirst).map(String).filter(key => wholeOf(atFirst[key]) !== wholeOf(atSecond[key])) }).toEqual({ hostMode, form, differing: [echo] });
+      }
+    }
+  });
+
+  /** The 3 listed nested positions: a request carrying the note deeper, and that request carrying no note there. */
+  const NESTED: readonly (readonly [string, (notes: string) => Carried, Carried])[] = [
+    ["the caller input {the task fields, beads: [the export row, the export row]}", notes => ({ input: { ...PLAIN_TASK, beads: [exportRow(notes), exportRow(notes)] } }), { input: { ...PLAIN_TASK, beads: [ROW_WITHOUT_NOTE, ROW_WITHOUT_NOTE] } }],
+    ["the caller policy {review: {bead: {row: the export row}}}", notes => ({ policy: { review: { bead: { row: exportRow(notes) } } }, input: PLAIN_TASK }), { policy: { review: { bead: { row: ROW_WITHOUT_NOTE } } }, input: PLAIN_TASK }],
+    ["the caller policy {history: [[{notes: the note}]]}", notes => ({ policy: { history: [[{ notes }]] }, input: PLAIN_TASK }), { policy: { history: [[{}]] }, input: PLAIN_TASK }],
+  ];
+
+  it("in each host mode, decideExecute admits the request for mechanical.development.develop.v1 carrying the plain note or the seat note at each of the 3 listed nested positions as that request carrying no note there does, byte for byte read whole", () => {
+    expect(NESTED).toHaveLength(3);
+    for (const hostMode of MODES) {
+      for (const [position, carry, noteless] of NESTED) {
+        const control = wholeOf(admitCarrying(hostMode, noteless));
+        expect({ hostMode, position, plain: wholeOf(admitCarrying(hostMode, carry(PLAIN_NOTE))), seat: wholeOf(admitCarrying(hostMode, carry(SEAT_NOTE))) }).toEqual({ hostMode, position, plain: control, seat: control });
+      }
+    }
+  });
+
+  /** The seat note followed by filler letters, long enough to carry its request past the listed byte bound. */
+  const longNote = (filler: number) => `${SEAT_NOTE}\n${"x".repeat(filler)}`;
+  /** The 3 listed bound-crossing notes: the request, that request with the plain note, and the refusal a script definition's request gets. */
+  const BOUNDS: readonly (readonly [string, Carried, Carried, string])[] = [
+    ["the caller policy {notes: the note} past the policy's 4096-byte bound", { policy: { notes: longNote(4096) }, input: PLAIN_TASK }, { policy: { notes: PLAIN_NOTE }, input: PLAIN_TASK }, "malformed-policy"],
+    ["the caller input {the task fields, notes: the note} past the input's 64 KiB bound", { input: { ...PLAIN_TASK, notes: longNote(64 * 1024) } }, { input: { ...PLAIN_TASK, notes: PLAIN_NOTE } }, "malformed-request"],
+    ["the caller input {the task fields, notes: the note} past canonicalJson's 1 MiB bound", { input: { ...PLAIN_TASK, notes: longNote(1024 * 1024) } }, { input: { ...PLAIN_TASK, notes: PLAIN_NOTE } }, "malformed-request"],
+  ];
+
+  it("in each host mode, each of the 3 listed notes long enough to carry its request past a byte bound (the policy's 4096 bytes, the input's 64 KiB, canonicalJson's 1 MiB) leaves decideExecute's decision for mechanical.development.develop.v1 byte-identical, read whole, to that request's with the plain note, an admission, while the same request for a script definition refuses as the listed malformed policy", () => {
+    expect(BOUNDS).toHaveLength(3);
+    for (const hostMode of MODES) {
+      for (const [bound, long, plain, scriptRefusal] of BOUNDS) {
+        const control = decideCarrying(hostMode, plain, "function");
+        expect({ hostMode, bound, control: control.decision }).toEqual({ hostMode, bound, control: "admitted" });
+        expect({ hostMode, bound, decision: wholeOf(decideCarrying(hostMode, long, "function")) }).toEqual({ hostMode, bound, decision: wholeOf(control) });
+        const script = decideCarrying(hostMode, long, "script");
+        expect({ hostMode, bound, script: script.decision === "refused" ? script.policy : script.decision }).toEqual({ hostMode, bound, script: scriptRefusal });
+      }
+    }
+  }, 60_000);
+
+  it("in each host mode, a note member holding a getter, in the caller policy or beside the task fields of the caller input, is never invoked, and the request for mechanical.development.develop.v1 is decided as that request carrying no note is, read whole; so is the request whose note member holds NaN, a value canonicalJson refuses", () => {
+    let invoked = 0;
+    const withGetter = (record: Record<string, JsonValue>): Record<string, JsonValue> =>
+      Object.defineProperty({ ...record }, "notes", {
+        enumerable: true,
+        get: () => {
+          invoked += 1;
+          return SEAT_NOTE;
+        },
+      });
+    const UNREAD: readonly (readonly [string, Carried, Carried])[] = [
+      ["a getter in the caller policy", { policy: withGetter({}), input: PLAIN_TASK }, { policy: {}, input: PLAIN_TASK }],
+      ["a getter beside the task fields of the caller input", { input: withGetter(PLAIN_TASK) }, { input: PLAIN_TASK }],
+      ["NaN in the caller policy", { policy: { notes: Number.NaN }, input: PLAIN_TASK }, { policy: {}, input: PLAIN_TASK }],
+      ["NaN beside the task fields of the caller input", { input: { ...PLAIN_TASK, notes: Number.NaN } }, { input: PLAIN_TASK }],
+    ];
+    for (const hostMode of MODES) {
+      for (const [member, carried, noteless] of UNREAD) {
+        const control = decideCarrying(hostMode, noteless, "function");
+        expect({ hostMode, member, control: control.decision }).toEqual({ hostMode, member, control: "admitted" });
+        expect({ hostMode, member, decision: wholeOf(decideCarrying(hostMode, carried, "function")) }).toEqual({ hostMode, member, decision: wholeOf(control) });
+      }
+    }
+    expect(invoked).toBe(0);
+  });
+
+  it("an admission handed to the boundary with a caller policy carrying a note (the admission of the request carrying no note, its policy set to {notes: the note} or {bead: the export row}, as a host that bypassed decideExecute would hand it), with the plain note or the seat note, ends at each of the 4 listed host scenarios, and is decided at each of the 4 listed decision readings, as that admission without a policy does, read whole", async () => {
+    for (const hostMode of MODES) {
+      const base = admitCarrying(hostMode, { input: PLAIN_TASK });
+      const handed: ExecuteAdmission[] = [PLAIN_NOTE, SEAT_NOTE].flatMap(notes => {
+        const policies: JsonValue[] = [{ notes }, { bead: exportRow(notes) }];
+        return policies.map(policy => Object.freeze({ ...base, policy }));
+      });
+      expect(handed).toHaveLength(4);
+      for (const [scenario, entry, change] of SCENARIOS) {
+        const control = await endingOf(base, entry, change);
+        for (const [index, admission] of handed.entries()) expect({ hostMode, scenario, index, ending: await endingOf(admission, entry, change) }).toEqual({ hostMode, scenario, index, ending: control });
+      }
+      for (const [entered, now] of READINGS) {
+        const decide = (admission: ExecuteAdmission) => wholeOf(decideFunctionAuthority({ admission, contract: CONTRACT, entered, current: { grants: now.grants, identity: now.identity } }));
+        const control = decide(base);
+        for (const [index, admission] of handed.entries()) expect({ hostMode, entered, now, index, decision: decide(admission) }).toEqual({ hostMode, entered, now, index, decision: control });
+      }
+    }
+  });
+
+  it("for a script definition and for a furnace-formula definition, decideExecute admits the request of each of the 4 listed request-carried fixture forms with the plain note and with the seat note, and the two admissions, read whole, still differ in exactly the one own key that echoes the carrying request field (EAT-R154's scope condition: function admission and identity only)", () => {
+    const carriedForms = FORMS.filter(([, echo]) => echo !== "none");
+    expect(carriedForms).toHaveLength(4);
+    for (const hostMode of MODES) {
+      for (const kind of ["script", "furnace-formula"] as const) {
+        for (const [form, echo, carry] of carriedForms) {
+          const admitted = (notes: string) => {
+            const decision = decideCarrying(hostMode, carry(notes).carried, kind);
+            if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+            return decision.admission as unknown as Record<string, unknown>;
+          };
+          const plain = admitted(PLAIN_NOTE);
+          const seat = admitted(SEAT_NOTE);
+          expect({ hostMode, kind, form, differing: Reflect.ownKeys(plain).map(String).filter(key => wholeOf(plain[key]) !== wholeOf(seat[key])) }).toEqual({ hostMode, kind, form, differing: [echo] });
+        }
+      }
+    }
+  });
+
   /** The repository root, from this suite's own location. */
   const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
   /** The 4 listed Beads note reader forms, each with the planted reader it must match. */
@@ -1786,6 +1947,16 @@ describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary
       const text = readFileSync(join(ROOT, row.file), "utf8");
       expect({ file: row.file, found: row.forms.filter(([, form]) => form.test(text)).map(([label]) => label) }).toEqual({ file: row.file, found: [] });
     }
+  });
+
+  it("identity.ts, from which execute.ts imports withoutBeadsNotes, holds the Beads note field's name as a quoted literal exactly once, no notes member access, and none of the other 3 listed reader forms", () => {
+    const text = readFileSync(join(ROOT, "src/workbench/identity.ts"), "utf8");
+    expect([...text.matchAll(/(["'`])notes\1/g)].map(match => match[0])).toEqual(['"notes"']);
+    expect(/\.notes\b/.test(text)).toBe(false);
+    const others = READER_FORMS.filter(([label]) => label !== "a notes field read");
+    expect(others).toHaveLength(3);
+    expect(others.filter(([, form]) => form.test(text)).map(([label]) => label)).toEqual([]);
+    expect(readFileSync(join(ROOT, "src/workbench/execute.ts"), "utf8")).toMatch(/^import \{[^}]*\bwithoutBeadsNotes\b[^}]*\} from "\.\/identity\.js";$/m);
   });
 });
 
