@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -528,9 +528,42 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     writeFileSync(join(path, "work.txt"), UNTRACKED_BYTES);
   }
 
-  /** The preservation refs cleanup could have made for `agentId`, as `git branch --list` prints them. */
-  function preservationRefs(agentId: string): string {
-    return execFileSync("git", ["branch", "--list", `pi-agent-${agentId}*`], { cwd: repoDir, encoding: "utf-8", stdio: "pipe" }).trim();
+  /** git's stdout for `args`, run in the repo, trimmed. */
+  function repoGit(args: string[]): string {
+    return execFileSync("git", args, { cwd: repoDir, encoding: "utf-8", stdio: "pipe" }).trim();
+  }
+
+  /**
+   * The ref names and git-directory file paths of the repo that contain `pi-agent-<agentId>` in any letter case, each
+   * once, sorted, one per line ("" when there is none). It reads each refname `git for-each-ref` lists from the repo
+   * (every refs/ namespace, packed or loose: branches, tags, refs/pi and the rest) and the path of every file in the
+   * repo's git directory (a symbolic link included), relative to that directory, with each worktree's admin directory
+   * (a directory under worktrees/ that holds a gitdir file) read from its own root. So a loose ref of any worktree
+   * (its refs/worktree/* and refs/bisect/* included) and a name outside refs/ are read too, and the admin directory's
+   * own name (pi-agent-<id>-<suffix>, from the worktree's path) is not. It first asserts the files ref backend, under
+   * which each loose ref and each name outside refs/ is a file of that directory.
+   */
+  async function preservationRefs(agentId: string): Promise<string> {
+    expect(repoGit(["rev-parse", "--show-ref-format"])).toBe("files");
+    const gitDir = repoGit(["rev-parse", "--path-format=absolute", "--git-common-dir"]);
+    const isAdminDir = (name: string) => existsSync(join(gitDir, "worktrees", name, "gitdir"));
+    const files = (await readdir(gitDir, { recursive: true, withFileTypes: true }))
+      .filter(entry => entry.isFile() || entry.isSymbolicLink())
+      .map(entry => join(entry.parentPath, entry.name).slice(gitDir.length + 1).split(/[\\/]/))
+      .map(segments => (segments[0] === "worktrees" && segments.length > 2 && isAdminDir(segments[1]) ? segments.slice(2) : segments).join("/"));
+    const needle = `pi-agent-${agentId}`.toLowerCase();
+    const names = [...repoGit(["for-each-ref", "--format=%(refname)"]).split("\n"), ...files];
+    return [...new Set(names.filter(name => name.toLowerCase().includes(needle)))].sort().join("\n");
+  }
+
+  /**
+   * Every ref `git for-each-ref` lists from the repo and from the worktree at `worktreePath` (every refs/ namespace,
+   * packed or loose, and each side's own refs/worktree/* and refs/bisect/*), with the object it names: the repo's
+   * listing, a `--` line, then the worktree's listing, one `<objectname> <refname>` line per ref in each.
+   */
+  function refsSnapshot(worktreePath: string): string {
+    const listed = (cwd: string) => execFileSync("git", ["for-each-ref", "--format=%(objectname) %(refname)"], { cwd, encoding: "utf-8", stdio: "pipe" });
+    return `${listed(repoDir)}--\n${listed(worktreePath)}`;
   }
 
   it("PF-R001-COMMIT: keeps the worktree and its exact bytes when the preservation commit fails", async () => {
@@ -540,12 +573,14 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     const wt = (await createWorktree(pi, repoDir, "keep-commit"))!;
     trackScratch(wt.path);
     editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(failingPi(args => args[0] === "commit", { code: 1, killed: false }), repoDir, wt, "commit fails");
 
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
-    expect(preservationRefs("keep-commit")).toBe("");
+    expect(await preservationRefs("keep-commit")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     expect(existsSync(wt.path)).toBe(true);
     expect(await readFile(join(wt.path, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
     expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
@@ -559,6 +594,7 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     editTrackedAndUntracked(wt.path);
     const refused: string[][] = [];
     const failing = failingPi(args => args[0] === "branch" && refused.push(args) > 0, { code: 1, killed: false });
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(failing, repoDir, wt, "branch fails");
 
@@ -566,7 +602,8 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
     // Both names were tried: the agent's own branch, then the suffixed retry.
     expect(refused.map(args => args[1])).toEqual(["pi-agent-keep-branch", expect.stringMatching(/^pi-agent-keep-branch-\d+$/)]);
-    expect(preservationRefs("keep-branch")).toBe("");
+    expect(await preservationRefs("keep-branch")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     expect(existsSync(wt.path)).toBe(true);
     const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
     expect(show("README.md")).toBe(TRACKED_BYTES);
@@ -586,6 +623,7 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     const wt = (await createWorktree(pi, repoDir, `typed-${step}`))!;
     trackScratch(wt.path);
     editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(failingPi(match, { code: 1, killed: false }), repoDir, wt, `${step} fails`);
 
@@ -593,7 +631,8 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     expect(result.path).toBe(wt.path);
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
     expect(existsSync(wt.path)).toBe(true);
-    expect(preservationRefs(`typed-${step}`)).toBe("");
+    expect(await preservationRefs(`typed-${step}`)).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     // The kept tree still holds the agent's bytes: on disk for a failed commit, status or add step, and in the
     // worktree's own HEAD commit after a failed branch step (the commit landed before the branch was refused).
     const shown = async (file: string) => step === "branch"
@@ -612,13 +651,15 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     editTrackedAndUntracked(wt.path);
     execFileSync("git", ["add", "-A"], { cwd: wt.path, stdio: "pipe" });
     execFileSync("git", ["commit", "-m", "agent commit"], { cwd: wt.path, stdio: "pipe" });
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(failingPi(args => args[0] === "rev-parse", { code: 1, killed: false }), repoDir, wt, "head read fails");
 
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
     expect(existsSync(wt.path)).toBe(true);
-    expect(preservationRefs("head-read")).toBe("");
+    expect(await preservationRefs("head-read")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
     expect(show("README.md")).toBe(TRACKED_BYTES);
     expect(show("work.txt")).toBe(UNTRACKED_BYTES);
@@ -642,13 +683,15 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     const wt = (await createWorktree(pi, repoDir, "diagnostic"))!;
     trackScratch(wt.path);
     editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(failingWith(args => args[0] === "commit", failure), repoDir, wt, "commit fails");
 
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic });
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
     expect(existsSync(wt.path)).toBe(true);
-    expect(preservationRefs("diagnostic")).toBe("");
+    expect(await preservationRefs("diagnostic")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     expect(await readFile(join(wt.path, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
     expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
   });
@@ -725,6 +768,7 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
       execFileSync("git", ["commit", "-m", "agent commit"], { cwd: wt.path, stdio: "pipe" });
     }
     const calls: string[][] = [];
+    const refsBefore = refsSnapshot(wt.path);
 
     const result = await cleanupWorktree(plantedPi(step, shape, calls), join(repoDir, "pkg"), wt, DESCRIPTION);
 
@@ -734,7 +778,8 @@ describe("cleanupWorktree — preservation failure keeps the edited bytes", () =
     expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: shape.diagnostic(calls[calls.length - 1]) });
     expect(JSON.parse(JSON.stringify(result))).toEqual(result);
     expect(existsSync(wt.path)).toBe(true);
-    expect(preservationRefs(agentId)).toBe("");
+    expect(await preservationRefs(agentId)).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
     const kept = async (file: string) => step.inHead
       ? execFileSync("git", ["show", `HEAD:pkg/${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" })
       : await readFile(join(wt.workPath, file), "utf-8");
