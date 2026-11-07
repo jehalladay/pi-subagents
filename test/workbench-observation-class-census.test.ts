@@ -1017,7 +1017,7 @@ const READ_KINDS: readonly string[] = HYPERUNIX_EXECUTION_KINDS.filter(kind => !
 let exportRows: readonly JsonObject[] | undefined;
 /** A row of the tracked bead export by id, the export read once: the owner filing F1 reads and the review filing the pin anchor reads. */
 function exportRow(id: string): JsonObject | undefined {
-  exportRows ??= readFileSync(BEAD_EXPORT, "utf8")
+  exportRows ??= trackerExportText(BEAD_EXPORT)
     .split("\n")
     .filter(line => line.trim() !== "")
     .map(line => JSON.parse(line) as JsonObject);
@@ -1718,3 +1718,5 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

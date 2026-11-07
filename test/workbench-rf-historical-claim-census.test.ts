@@ -597,7 +597,7 @@ function isObject(value: unknown): value is { [key: string]: unknown } {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 function exportRow(id: string): { [key: string]: unknown } {
-  for (const line of linesOf(read(EXPORT))) {
+  for (const line of linesOf(rehydrateTrackerExport(read(EXPORT), join(REPO, EXPORT)))) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id) return row;
@@ -1235,3 +1235,5 @@ describe("wb-pfxo.1 rf historical claim census (RF-COMPOSITIONAL-ASSEMBLY-R1)", 
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

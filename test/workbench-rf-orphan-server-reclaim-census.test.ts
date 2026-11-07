@@ -920,7 +920,7 @@ function shapeProblems(run: Run): string[] {
 /** The notes of a bead's row in the tracked bead export: wb-pfxo.8's carry the owner filing, its delivery record and its review;
  * wb-gue9's carry the follow-up's findings and owner ruling R709. */
 function filingNotes(bead: string): string {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     let parsed: unknown;
     try {
@@ -1401,3 +1401,5 @@ describe("wb-pfxo.8 orphan-server reclaim census (RF-COMPOSITIONAL-ASSEMBLY-R9, 
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

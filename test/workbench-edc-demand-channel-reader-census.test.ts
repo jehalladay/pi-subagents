@@ -1400,7 +1400,7 @@ interface ExportRow {
 /** A bead's row in the tracker export (each line prefiltered by its id, then parsed and matched exactly). */
 function exportRow(id: string): ExportRow {
   const needle = `"id":${JSON.stringify(id)}`;
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(needle)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id) return { title: typeof row.title === "string" ? row.title : "", description: typeof row.description === "string" ? row.description : "", notes: typeof row.notes === "string" ? row.notes : "" };
@@ -2901,3 +2901,5 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

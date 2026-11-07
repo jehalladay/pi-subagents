@@ -2135,7 +2135,7 @@ function sdkBinaryNamesIn(text: string): string[] {
 // ---- the bead's own text ----
 
 function exportRow(): { title: string; notes: string } {
-  for (const line of textOf(".beads/issues.jsonl").split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(".beads/issues.jsonl"), join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -2932,3 +2932,5 @@ describe("wb-ts6.2 HX mutation Verified census (HXFS-PI-R6, until-then leg) over
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -362,7 +362,7 @@ function rosterWitness(pin: string): JsonValue {
 let acceptanceRead: string | undefined;
 /** The Acceptance line of wb-pfxo.2's notes in the tracked bead export, its closing period dropped; read once. */
 function exportedAcceptance(): string {
-  acceptanceRead ??= acceptanceOf(readFileSync(BEADS_EXPORT, "utf8"));
+  acceptanceRead ??= acceptanceOf(trackerExportText(BEADS_EXPORT));
   return acceptanceRead;
 }
 function acceptanceOf(exported: string): string {
@@ -380,7 +380,7 @@ let findingRead: string[] | undefined;
 /** The raw HTML forms the finding's leads line quotes - each quoted span whose markup splits "sou" from "rce" - in line order; read
  * once from the tracked bead export. */
 function findingForms(): string[] {
-  findingRead ??= findingFormsOf(readFileSync(BEADS_EXPORT, "utf8"));
+  findingRead ??= findingFormsOf(trackerExportText(BEADS_EXPORT));
   return findingRead;
 }
 function findingFormsOf(exported: string): string[] {
@@ -1248,3 +1248,5 @@ describe("wb-pfxo.2 rf source-change block-claim census (RF-COMPOSITIONAL-ASSEMB
     expect(missing, "a cell the bead export and src require that no pin of its row judged").toStrictEqual(Object.fromEntries(ROWS.slice(1).map(row => [row.id, []])));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

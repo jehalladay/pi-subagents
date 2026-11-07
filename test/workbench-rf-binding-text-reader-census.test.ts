@@ -2635,7 +2635,7 @@ function headerClaim(): string {
 }
 /** The tracker export's row for this bead. */
 function exportRow(): { readonly title: string; readonly description: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; description?: unknown };
     if (row.id === BEAD && typeof row.title === "string" && typeof row.description === "string") return { title: row.title, description: row.description };
@@ -2893,3 +2893,5 @@ describe("wb-jwc.10 binding text reader census (test/helpers/rf-binding-text-rea
     expect(programs(read("src/workbench/hosts/local-detached.ts"))).toEqual(["spawn:<opaque process.execPath>"]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

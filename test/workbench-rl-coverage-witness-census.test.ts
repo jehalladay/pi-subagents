@@ -631,6 +631,7 @@ import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { type NativeRef, type NativeSnapshot, type ObservationEvent, ObservationProjection, type ObservationScope, type ObservationTrace, type Presentation } from "../src/workbench/observation.js";
@@ -722,7 +723,7 @@ const ROWS: readonly Row[] = [
 // ------------------------------------------------------------------------------------------------------------- the bead row
 interface BeadRow { readonly title: string; readonly notes: string }
 function beadRow(): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (value === null || typeof value !== "object" || !("id" in value) || value.id !== BEAD) continue;

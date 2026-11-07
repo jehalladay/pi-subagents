@@ -843,7 +843,7 @@ function parseExport(text: string): ExportRow[] {
 let exportCache: readonly ExportRow[] | undefined;
 function exportRows(): readonly ExportRow[] {
   note("export");
-  exportCache ??= parseExport(textOf(EXPORT));
+  exportCache ??= parseExport(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)));
   return exportCache;
 }
 function decisionPage(): string {
@@ -3724,7 +3724,7 @@ describe(SUITE, () => {
   });
 
   it("the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe; and the child wb-doja's own filing binds the seam half's own-message member-depth mutant at each call kind its acceptance line names", { timeout: 60_000 }, () => {
-    const rows = parseExport(textOf(EXPORT));
+    const rows = parseExport(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)));
     const own = rows.find(entry => entry.id === BEAD);
     expect(own, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = stringField(own, "title");
@@ -4000,3 +4000,5 @@ describe(SUITE, () => {
     expect(REACHED.filter(entry => !entry.same).map(entry => entry.pin), "and each compare held").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

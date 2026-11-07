@@ -1668,7 +1668,8 @@
       "vitest",
       "../src/workbench/beads-observer.js",
       "../src/workbench/beads-program-readiness.js",
-      "../src/workbench/capability-registry.js"
+      "../src/workbench/capability-registry.js",
+      "../qa/workbench/tracker-export.mjs"
      ]
     },
     {

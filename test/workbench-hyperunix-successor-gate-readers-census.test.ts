@@ -1159,7 +1159,7 @@ interface ExportRecord {
 }
 /** A bead's record in the tracker export: every row is parsed, so an id matches by value. */
 function exportRecord(id: string): ExportRecord {
-  for (const line of read(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(read(EXPORT), join(ROOT, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
     if (typeof row === "object" && row !== null && "id" in row && row.id === id) {
@@ -4178,3 +4178,5 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
     expect(rowIds()).toEqual(FROZEN_SHAPE);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -979,7 +979,7 @@ const rowOf = (pin: string): string => ROWS.find(row => row.pins.includes(pin))?
 /** Every row of the tracked bead export (the store's rows at the last ledger hop), unparsable lines dropped. */
 function exportRows(): JsonObject[] {
   const rows: JsonObject[] = [];
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     try {
       const parsed: unknown = JSON.parse(line);
@@ -2504,3 +2504,5 @@ describe(SUITE, () => {
     ENDED.push(CLOSING);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

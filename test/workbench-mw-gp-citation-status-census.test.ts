@@ -1375,7 +1375,7 @@ function constants(): JsonValue {
 
 /** The bead's own row in the tracker export. */
 function beadRow(): { title: string; notes: string } {
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1557,3 +1557,5 @@ describe("wb-e66.6 MW x GP coordination citation-status census (MW-GRAPH-POLICY-
     ).toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

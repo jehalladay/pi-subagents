@@ -644,7 +644,7 @@ const GIT_PLANTS: Readonly<Record<string, string>> = {
 
 // ------------------------------------------------------------------------------------------------------------- the bead row
 function beadNotes(): string {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string") return value.notes;
@@ -929,3 +929,5 @@ describe("wb-kku9.4 receipt composition census (MW-CAC-WORKFLOW-COMPOSITION-R4, 
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -639,7 +639,7 @@ const claim = (id: string): string => sha256(ROWS.flatMap(row => row.pins).find(
  * store); trimming keeps the hashed text identical before and after every append. Two filings are read: wb-zzb4's (the base) and
  * wb-rdlh.2's (the extension). */
 function filing(bead: string, paragraphs: number): string {
-  const rows = readFileSync(join(REPO, EXPORT_FILE), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT_FILE))
     .split("\n")
     .filter(line => line.includes(`"${bead}"`))
     .map(line => JSON.parse(line) as { readonly id?: unknown; readonly notes?: unknown })
@@ -2327,3 +2327,5 @@ describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-A
     expect(ANCHORED, "the residual anchor ran to its end").toBe(true);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

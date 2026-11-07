@@ -1219,7 +1219,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   Q5: async () => {
     const receipt = readFileSync(RECEIPT_PATH, "utf8");
-    const exported = readFileSync(EXPORT_PATH, "utf8");
+    const exported = trackerExportText(EXPORT_PATH);
     const clauses = exportClauses(exported);
     const followUp = followUpClauses(exported);
     const terminal = terminalClauses(exported);
@@ -1567,7 +1567,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   X5: async () => {
     const receipt = readFileSync(RECEIPT_PATH, "utf8");
-    const exported = readFileSync(EXPORT_PATH, "utf8");
+    const exported = trackerExportText(EXPORT_PATH);
     const clauses = exportClauses(exported);
     const followUp = followUpClauses(exported);
     const terminal = terminalClauses(exported);
@@ -1985,7 +1985,7 @@ describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", (
       "graph.history:reads",
       "graph.rollback:mutates",
     ]);
-    const exported = readFileSync(EXPORT_PATH, "utf8");
+    const exported = trackerExportText(EXPORT_PATH);
     expect(anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, readFileSync(RECEIPT_PATH, "utf8"), exportClauses(exported), followUpClauses(exported), terminalClauses(exported))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins).sort();
     expect(Object.keys(IMPL).sort()).toEqual(pins);
@@ -2006,3 +2006,5 @@ describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", (
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

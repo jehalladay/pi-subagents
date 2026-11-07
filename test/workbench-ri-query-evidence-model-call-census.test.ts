@@ -610,7 +610,7 @@ interface BeadRow {
   readonly citation: string;
 }
 function beadRow(): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; notes?: unknown };
     if (row.id !== BEAD) continue;
@@ -2501,3 +2501,5 @@ describe("wb-km7q.8 query evidence and model calls: the adoption-time falsifier 
     expect(RECORDED.get("A2")).toMatchObject({ closure: { modules: [...closureOf(PROJECTION_MODULE, readTree).modules] }, modelCallModules: modelCallModules(srcModules, readTree) });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -322,7 +322,7 @@ let beadRow: BeadRow | undefined;
 /** The owner filing's row in the tracked bead export: exactly one row carries the bead's id. */
 function readBeadRow(): BeadRow {
   if (beadRow !== undefined) return beadRow;
-  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.includes(`"${BEAD}"`))
     .map(line => objectOf(JSON.parse(line), "bead export row"))
@@ -1044,3 +1044,5 @@ describe("wb-z3ft.1 HX planner-fallback reason census (HX-CERTIFIED-STRUCTURAL-O
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -1187,7 +1187,7 @@ let ownerRead: OwnerRow | undefined;
 /** The owner filing's row of the tracked bead export: the title, its Citation line, the acceptance clause and the citation pins. */
 function ownerRow(): OwnerRow {
   if (ownerRead !== undefined) return ownerRead;
-  for (const line of readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (!isObject(row) || row.id !== BEAD) continue;
@@ -2265,3 +2265,5 @@ describe("records", () => {
     expect(claimsRan).toBe(true);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

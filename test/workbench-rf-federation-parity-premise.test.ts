@@ -753,7 +753,7 @@ function liveReceipts(): ReadonlyMap<string, string> {
   );
 }
 
-const exportLines = (): string[] => readFileSync(join(ROOT, BEAD_EXPORT), "utf8").split("\n");
+const exportLines = (): string[] => trackerExportText(join(ROOT, BEAD_EXPORT)).split("\n");
 /**
  * The live bead export scan's budget (wb-coyr: F4 of the wb-021.9 landing-912 gate, cmd_5da3b69d9465). live bead export (c)
  * reads the whole bead export and judges every row of it (scanBeadExport), so its wall follows the export's size and the host's
@@ -2394,3 +2394,5 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     ).toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

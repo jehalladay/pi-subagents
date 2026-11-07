@@ -707,7 +707,7 @@ function rejudged(witness: JsonValue): string[] {
 /** The bead's own row in the tracker export. */
 function beadRow(bead: string): { title: string; notes: string } {
   READS.calls += 1;
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1968,3 +1968,5 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

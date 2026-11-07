@@ -818,7 +818,7 @@ interface ExportRow {
 }
 /** The tracked bead export's row for `id`. */
 function exportRow(id: string): ExportRow {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.notes === "string") return { id, notes: row.notes };
@@ -1702,3 +1702,5 @@ describe("wb-kjg9.1 HX GraphPolicy answer-invariance census (HX-GRAPH-POLICY-OPT
     expect([...REACHED].sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

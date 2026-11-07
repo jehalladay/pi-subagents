@@ -424,7 +424,7 @@ function rosterWitness(pin: string): JsonValue {
 
 /** The wb-o4h0.5 row of the tracked bead export: its title and notes. */
 function exportRow(): { title: string; notes: string } {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1503,3 +1503,5 @@ describe("wb-o4h0.5 rf federation stamps census (RF-FEDERATED-WORKSPACES-R7, abs
     });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

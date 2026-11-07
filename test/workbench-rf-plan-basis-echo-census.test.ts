@@ -422,7 +422,7 @@ function judgeAssertions(title: string): number {
 }
 /** The owner filing's acceptance clauses, read from the BEAD row of the tracked bead export: "(a) ...", "(b) ...", "(c) ...", "(d) ...". */
 function ownerClauses(): string[] {
-  const rows: unknown[] = textOf(EXPORT_PATH).split("\n").filter(entry => entry.includes(`"id":"${BEAD}"`)).map(entry => JSON.parse(entry) as unknown);
+  const rows: unknown[] = rehydrateTrackerExport(textOf(EXPORT_PATH), EXPORT_PATH).split("\n").filter(entry => entry.includes(`"id":"${BEAD}"`)).map(entry => JSON.parse(entry) as unknown);
   const row = rows.find(entry => isObject(entry) && entry.id === BEAD);
   if (!isObject(row)) throw new Error(`the bead export holds no ${BEAD} row`);
   const notes = typeof row.notes === "string" ? row.notes : "";
@@ -1451,3 +1451,5 @@ describe("wb-pfxo.10 rf plan basis echo census (RF-COMPOSITIONAL-ASSEMBLY-R11, g
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

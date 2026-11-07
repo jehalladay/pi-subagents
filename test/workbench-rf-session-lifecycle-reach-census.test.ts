@@ -241,7 +241,7 @@
  * Display paths added: none (test-only). Each disk probe lives in makeScratch scratch, removed after its reading; the tracker
  * export is only read; no src, docs or receipt is edited.
  */
-import { chmodSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, lstatSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual, types } from "node:util";
@@ -863,7 +863,7 @@ function keyChanges(key: Key, probe: Probe): boolean {
 
 /** A bead's description and notes, read from its row in the tracked tracker export. */
 function exportRow(bead: string): { readonly description: string; readonly notes: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (typeof value !== "object" || value === null || !("id" in value) || value.id !== bead) continue;
@@ -1230,3 +1230,5 @@ describe("wb-4zgj reach census (test/helpers/rf-session-lifecycle-readers.ts): n
   // describe, the cases it registers and the suites around it fails the file at collection.
   refuseUnrunRegistrations(TestRunner.getCurrentSuite());
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

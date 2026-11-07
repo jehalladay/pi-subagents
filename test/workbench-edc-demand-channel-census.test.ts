@@ -1989,7 +1989,7 @@ function beadRowIn(text: string, where: string): BeadRow {
 let beadCache: BeadRow | undefined;
 /** The bead's row in the tracked export. */
 function beadRecord(): BeadRow {
-  beadCache ??= beadRowIn(readFileSync(join(REPO, BEAD_EXPORT), "utf8"), BEAD_EXPORT);
+  beadCache ??= beadRowIn(trackerExportText(join(REPO, BEAD_EXPORT)), BEAD_EXPORT);
   return beadCache;
 }
 /** The bead's row in the export at CONSTANTS.frozenAt, read from git objects: its notes then were the owner filing alone. */
@@ -2197,3 +2197,5 @@ describe("wb-pyel.2 EDC demand-channel census over the landed B1 reader: the jud
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

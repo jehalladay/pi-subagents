@@ -1171,7 +1171,7 @@ function replaced(text: string, anchor: string, next: string): string {
 const EXPORT_FILE = ".beads/issues.jsonl";
 /** The export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
 function exportRow(id: string): { [key: string]: unknown } {
-  const rows = readFileSync(join(REPO, EXPORT_FILE), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT_FILE))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line, index): unknown => {
@@ -2221,3 +2221,5 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

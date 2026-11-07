@@ -1250,7 +1250,7 @@ const IMPL: Readonly<Record<string, (context: TestContext) => Json>> = {
     return { findings, testFloor: test.length >= FLOORS.test, own, listing: true, plants: planted, scratch: listing };
   },
   Q7: () => {
-    const row = beadRow(textOf(EXPORT), BEAD);
+    const row = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const filing = row ?? { title: "", notes: "" };
     const judged = judgedSet();
@@ -1334,7 +1334,7 @@ describe(SUITE, () => {
   });
 
   it("the outside anchors: the bead's own row binds the rows, the pin quotes, the vocabulary, the scopes, the pin, the terms and the phrases; the producer block carries the terms", { timeout: 60_000 }, () => {
-    const row = beadRow(textOf(EXPORT), BEAD);
+    const row = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
     const notes = row?.notes ?? "";
@@ -1373,3 +1373,5 @@ describe(SUITE, () => {
     expect(REACHED.filter(entry => !entry.same).map(entry => entry.pin), "and each compare held").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

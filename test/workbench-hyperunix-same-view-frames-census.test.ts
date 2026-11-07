@@ -342,7 +342,7 @@ async function witnessOf(id: string, route: 3 | 4): Promise<{readonly diverges: 
 /** The rows of the tracker export for the given beads, each read once (an export holding two rows for one bead reads none for it). */
 function exportRows(ids: readonly string[]): Record<string, Record<string, unknown>> {
   const found: Record<string, Record<string, unknown>[]> = Object.fromEntries(ids.map(id => [id, []]));
-  for (const line of readFileSync(EXPORT, 'utf8').split('\n')) {
+  for (const line of trackerExportText(EXPORT).split('\n')) {
     if (!ids.some(id => line.includes(`"id":"${id}"`))) continue;
     const row: unknown = JSON.parse(line);
     if (isRecord(row) && typeof row.id === 'string' && found[row.id] !== undefined) found[row.id]?.push(row);
@@ -605,3 +605,5 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
     });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

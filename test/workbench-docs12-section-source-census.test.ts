@@ -177,7 +177,7 @@ interface ExportRow {
 /** The export's row for each bead given (exactly one each), read once. */
 function exportRows(beads: readonly string[]): ReadonlyMap<string, ExportRow> {
   const rows = new Map<string, ExportRow>();
-  for (const line of readFileSync(join(REPO, EXPORT_FILE), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT_FILE)).split("\n")) {
     if (!beads.some(bead => line.includes(`"${bead}"`))) continue;
     const row = JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown; readonly notes?: unknown };
     if (typeof row.id !== "string" || !beads.includes(row.id)) continue;
@@ -711,3 +711,5 @@ describe("wb-rdlh.3 docs12 'Authorization design' raw-source reader census (LIBR
     expect([...REACHED].sort()).toEqual([...ROWS.flatMap(row => row.pins.map(pin => `${row.id}/${pin}`)), ...CONTRACT.map(id => `contract/${id}`), ...RESIDUAL.map(id => `residual/${id}`)].sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
