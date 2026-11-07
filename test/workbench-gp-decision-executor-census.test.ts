@@ -71,7 +71,8 @@
  *    it reads serialOf itself under the dashed names (wb-vuoz cut #7; wb-0hr6 cut #1 adds the third rows other than
  *    the second call's again, the carried fifth values and the serialOf context controls; the NOT CLAIMED list below
  *    names the rest), serialOf's reading of each of those assignments compared whole outside contextReading by
- *    serialOf's whole readings (wb-0hr6 cut #1); every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
+ *    serialOf's whole readings (wb-0hr6 cut #1), the comparison shown reading serialOf itself in the forms its serialOf
+ *    whole controls spell under each of those names (wb-27md cut #1); every other form, a form at a serial width no plant of it spells, four or more digits among them, a form
  *    under a name or with a candidate no drive spells, a serial reading keyed on which candidate a call holds at a
  *    position where no plant holds that candidate in that form, and a serial reading keyed on a request's context,
  *    the other requests of its call or of the other call, in a context no plant spells are NOT CLAIMED); the check
@@ -286,12 +287,25 @@
  *    compared whole with the reading constructed from the kinds alone, built there and not through contextReading,
  *    misreading or serialOf: two rows of four values, a request carried exactly when it is of the own kind; the first
  *    call's invocationId at each position holding an own and an other, in either order, shared, in the first call's
- *    order, and no other; the name, once; 0 read otherwise; the comparison itself shown reading serialOf under each
- *    dashed name otherwise in every assignment and each of the thirty-seven context controls, handed in serialOf's
- *    place under F1, otherwise in exactly the assignments its context holds, the first four the four constructed for
- *    it), in every form of serialOf's reading (the rows' count and each row's length, each value, the shared ids'
- *    count, order and spelling, the name's count and spelling), in these assignments under these names at these
- *    serials only; the NOT CLAIMED list names the forms); the serial reading is claimed in these forms only, at these serials, under these
+ *    order, and no other; the name, once; 0 read otherwise, and over each name's assignments serialOf names that name
+ *    alone (wb-27md cut #1); the comparison itself shown reading serialOf under each dashed name otherwise in every
+ *    assignment, each of the thirty-seven context controls, handed in serialOf's place under F1, otherwise in exactly
+ *    the assignments its context holds, the first four the four constructed for it, and, wb-27md cut #1's serialOf
+ *    whole controls, serialOf ITSELF under each of F1 to F5, handed each of ten forms of the calls and serials,
+ *    otherwise in exactly the assignments its form's context holds, the first four the four constructed for it, beside
+ *    the distinct lists each form hands and the names serialOf names: a third call, the second call's again (three
+ *    rows, the third read against no serial, so not carried), the second call missing (one row, no id shared, 256
+ *    distinct lists), each call without its last request (its row one value shorter, 16384 distinct lists) or with its
+ *    first request again after its last (one value longer), the two serials swapped (each request read carried
+ *    exactly when it is of the other kind), the second call's invocationIds each with an x after it (no id shared),
+ *    every invocationId with an x after it (each shared id read with the x) and the second call's invocationIds under
+ *    the next drive's name (two names read, no id shared)), in the forms of serialOf's reading those controls spell
+ *    (the rows' count, more and fewer, and each row's length, shorter and longer; each value, either way at each
+ *    position of either call; the shared ids' count, none read shared where some are, and their spelling, an x after
+ *    each; the name's count, two read, and its spelling, the dashed names'), in these assignments under these names at
+ *    these serials only; the shared ids' order as the comparison reads serialOf itself is NOT CLAIMED (serialOf orders the ids it shares as its
+ *    first call holds them, the order it reads that call's row in, so no handed form deviates the order alone), and the
+ *    NOT CLAIMED list names the other forms); the serial reading is claimed in these forms only, at these serials, under these
  *    names and in these contexts: that call's
  *    serial at a segment other
  *    than the third, the other call's at a segment no plant holds it at (the plants hold it as the third, as the fourth
@@ -400,9 +414,19 @@
  * plants hand contextReading (its default: a reading substituted for serialOf there, as the default or at the plants'
  * call, reads the plants as serialOf does wherever both read them as constructed, so the plants do not tell it from
  * serialOf; wb-0hr6 cut #1): serialOf's own reading of every assignment the plants spell is claimed instead by
- * serialOf's whole readings, outside contextReading, in every form of the reading, and the whole readings are
- * claimed only in the assignments, names and serials they read and in the deviations their controls spell (every
- * assignment read otherwise for serialOf under each dashed name; each context control's own context). The three
+ * serialOf's whole readings, outside contextReading, in the forms of the reading their controls spell, and the whole
+ * readings are claimed only in the assignments, names and serials they read and in the deviations their controls
+ * spell (every assignment read otherwise for serialOf under each dashed name; each context control's own context,
+ * under F1; each serialOf whole control's own context, for serialOf itself under each of F1 to F5, wb-27md cut #1):
+ * a whole comparison keyed on the reader or on the name otherwise than those controls read it is NOT CLAIMED, among
+ * them the comparison reading serialOf itself otherwise in the shared ids' order alone (no handed form deviates it:
+ * serialOf orders the ids it shares as its first call holds them) or in a form no serialOf whole control spells (more
+ * ids read shared than constructed among them, which no form hands alone), and
+ * the comparison reading a reader other than serialOf under F2 to F5 (the whole readings read the thirty-seven context
+ * controls under F1 only); the whole readings' distinct count is claimed as counted by the lists of invocationIds
+ * handed to the reading, which the three serialOf whole controls handing fewer requests repeat (256 and 16384
+ * distinct, wb-27md cut #1), and the names each context control names over its whole readings are held to the
+ * roster's A3 witness. The three
  * forms wb-vuoz's refusal #6 routed to wb-0hr6 (the gate's G8-T1, G8-R2 and G8-ID, realized by its serialOf
  * witnesses W8-T1, W8-R2, W8-ID, W6-R1 and W6-N1; ruling R-B591) and the reader its refusal #7 found unpinned at the
  * context plants (the gate's G15-RD and G15-RD2, realized by W15-OWN, W15-OTH and W6-S1; ruling R-B600, which makes
@@ -741,6 +765,25 @@
  * byte-unchanged, and so are every existing plant, call, control and witness entry; the frozen literal gains the
  * five controls' rows and the dashed names, and the roster's A3 witness gains the five controls' readings under each
  * name, the serialOf context controls' readings and the whole readings. Display paths added: none.
+ * wb-27md cut #1 (the R694 follow-up of wb-0hr6's landing-1001 PASS-WITH-FINDING, gate cmd_af759cca5140: its F1 lead
+ * and its F3 ride): gate-prep-18's one-edit members G18-WK (the whole comparison keyed on the reader: serialOf compared
+ * on its name alone), G18-WN (keyed on the name: under every name but F1 the name alone compared), G18-WF (A3's whole
+ * readings reading F1's assignments under every name key) and G18-WD (the whole readings' distinct count taken from the
+ * index) kept the census green, alone and composed with G15-RD, against the whole readings' words, the comparison
+ * being shown reading serialOf itself only in the name form (the dashed names) and other readers only under F1.
+ * serialOf's whole controls (SERIAL_OF_FORMS) hand serialOf ITSELF ten forms of the calls and serials under each of F1
+ * to F5, each read otherwise in exactly the assignments its form's context holds (so G18-WK and G18-WN red A3 there);
+ * wholeReadings gains the form it hands (as planted by default, the constructed reading built from the planted calls)
+ * and the names the reading names over the assignments, so the whole readings under each name read that name alone (so
+ * G18-WF reds A3 at the whole readings), and three of the forms hand fewer requests, their lists repeating (256 and
+ * 16384 distinct, so G18-WD reds A3 at the serialOf whole controls). The CHECKS parenthetical's serial clause, the
+ * header's whole readings sentence, the NOT CLAIMED list, the docs of WholeReadings and wholeReadings and A3's whole
+ * readings messages name the new pins and narrow the comparison's forms to those its controls spell (the shared ids'
+ * order as serialOf itself reads it, and a reader other than serialOf under F2 to F5, are NOT CLAIMED). No existing
+ * reader changes: violations(), answers(), serialOf(), carriesSerial(), serialPlants(), contextReading(),
+ * misreading(), plantedKind() and requestKind() are byte-unchanged, and so are every plant, call, control and witness
+ * entry; the frozen literal gains the ten forms' rows, and the roster's A3 witness gains the forms' readings under each
+ * name and the names each whole reading names. Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1715,55 +1758,175 @@ const CONTEXT_MISREADERS: Readonly<Record<string, ContextMisreader>> = {
 };
 /** Each of DRIVE_NAMES with a dash and an x after it (wb-0hr6 cut #1): serialOf names the invocationIds' second dash-separated segment, so under such a name it names the drive name alone. */
 const dashedName = (name: string): string => `${name}-x`;
+/** The calls and the two serials the whole readings hand their reading for one assignment, from the planted calls and the serials they were planted at: as planted, or in one of the serialOf whole controls' forms (wb-27md cut #1). */
+type HandedForm = (
+  returned: readonly (readonly { readonly invocationId: string }[])[],
+  serials: readonly number[],
+) => { readonly returned: readonly (readonly { readonly invocationId: string }[])[]; readonly serials: readonly number[] };
+/** The whole readings' default form: the planted calls and their serials, handed as they are (wb-27md cut #1). */
+const handedAsPlanted: HandedForm = (returned, serials) => ({ returned, serials });
 /** A type alias, not an interface, so the reading is a Json witness as it stands: wholeReadings under one name (wb-0hr6 cut #1). */
 type WholeReadings = {
   /** How many assignments of SERIAL_KINDS to the two calls' eight requests were handed to the reading: one per index. */
   readonly assignments: number;
-  /** How many of them were distinct, counted by the list of the eight invocationIds handed, in the order handed. */
+  /** How many of them were distinct, counted by the list of the invocationIds handed to the reading, in the order handed: the eight planted, or those a serialOf whole control's form hands (wb-27md cut #1: three of its forms hand fewer, so their lists repeat). */
   readonly distinct: number;
   /** In how many of them the reading, compared whole (isDeepStrictEqual), differs from the reading constructed from the assignment's kinds alone. */
   readonly misread: number;
   /** The first of those assignments, at most four, in index order, each spelled by its kinds and with what was read. */
   readonly mismatched: readonly string[];
+  /** The names the reading named, once each, in the order first named, over every assignment handed (wb-27md cut #1: under each drive name, the readings of that name's own assignments). */
+  readonly named: readonly string[];
 };
 /**
  * The whole readings (wb-0hr6 cut #1): under one name, at the given serials, every assignment of SERIAL_KINDS to the
  * two calls' eight requests over the snapshot's candidates in its order, by index from 0 (the request at slot
  * call * 4 + position holding the kind whose index is that slot's base-4 digit, as spelledAssignment spells it),
- * every invocationId in plantedId's form of its request's kind, handed to the reading once, and the reading compared
- * whole (isDeepStrictEqual) with the reading constructed here from the assignment's kinds alone: two rows, one per
- * call, of one value per request, each true exactly when its request is of the own kind; the first call's
- * invocationId at each position whose two requests are an own and an other, in either order, in the first call's
- * order, and no other; and the name, once. It reads outside contextReading, and builds neither its requests nor its
- * constructed reading through contextReading, misreading or serialOf.
+ * every invocationId in plantedId's form of its request's kind, handed to the reading once, as planted or in the form
+ * `hand` gives (wb-27md cut #1: one of the serialOf whole controls' forms, the calls and the two serials it hands in
+ * place of the planted ones), and the reading compared whole (isDeepStrictEqual) with the reading constructed here
+ * from the assignment's kinds and its planted calls alone: two rows, one per call, of one value per request, each
+ * true exactly when its request is of the own kind; the first call's planted invocationId at each position whose two
+ * requests are an own and an other, in either order, in the first call's order, and no other; and the name, once.
+ * The distinct lists it counts are the lists handed, and the names it records are those the reading names (wb-27md
+ * cut #1). It reads outside contextReading, and builds neither its requests nor its constructed reading through
+ * contextReading, misreading or serialOf, nor its constructed reading from what it hands.
  */
-function wholeReadings(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader): WholeReadings {
+function wholeReadings(candidates: readonly string[], serials: readonly [number, number], name: string, read: SerialReader, hand: HandedForm = handedAsPlanted): WholeReadings {
   const [first, second] = serials;
   const width = SERIAL_KINDS.length;
   const requests = CALLS.map((_, call) => candidates.map(candidate => SERIAL_KINDS.map(kind => ({ invocationId: plantedId(name, call === 0 ? kindSerials(kind, first, second) : kindSerials(kind, second, first), candidate) }))));
   const lists = new Set<string>();
   const mismatched: string[] = [];
+  const named = new Set<string>();
   let assignments = 0;
   let misread = 0;
   for (let index = 0; index < width ** (CALLS.length * candidates.length); index += 1) {
     const kindAt = (call: number, at: number): number => Math.floor(index / width ** (call * candidates.length + at)) % width;
     const kindIs = (call: number, at: number, kind: SerialKind): boolean => SERIAL_KINDS[kindAt(call, at)] === kind;
-    const returned = CALLS.map((_, call) => candidates.map((_, at) => requests[call]?.[at]?.[kindAt(call, at)] ?? { invocationId: "" }));
+    const planted = CALLS.map((_, call) => candidates.map((_, at) => requests[call]?.[at]?.[kindAt(call, at)] ?? { invocationId: "" }));
     const constructed: SerialReading = {
       carried: CALLS.map((_, call) => candidates.map((_, at) => kindIs(call, at, "own"))),
-      shared: candidates.flatMap((_, at) => ((kindIs(0, at, "own") && kindIs(1, at, "other")) || (kindIs(0, at, "other") && kindIs(1, at, "own")) ? [returned[0]?.[at]?.invocationId ?? ""] : [])),
+      shared: candidates.flatMap((_, at) => ((kindIs(0, at, "own") && kindIs(1, at, "other")) || (kindIs(0, at, "other") && kindIs(1, at, "own")) ? [planted[0]?.[at]?.invocationId ?? ""] : [])),
       named: [name],
     };
-    const reading = read(returned, serials);
+    const handed = hand(planted, serials);
+    const returned = handed.returned;
+    const reading = read(returned, handed.serials);
     assignments += 1;
     lists.add(returned.flat().map(request => request.invocationId).join(" "));
+    for (const entry of reading.named) named.add(entry);
     if (!isDeepStrictEqual(reading, constructed)) {
       misread += 1;
       if (mismatched.length < 4) mismatched.push(`${spelledAssignment(index)}: carried ${JSON.stringify(reading.carried)}, shared ${JSON.stringify(reading.shared)}, named ${JSON.stringify(reading.named)}`);
     }
   }
-  return { assignments, distinct: lists.size, misread, mismatched };
+  return { assignments, distinct: lists.size, misread, mismatched, named: [...named] };
 }
+/** One of serialOf's whole controls (wb-27md cut #1): a form of the calls and serials handed to serialOf itself in the whole readings, with what serialOf, so handed, reads under each drive name. */
+type SerialOfForm = {
+  /** The calls and the two serials handed to serialOf in place of the planted ones. */
+  readonly hand: HandedForm;
+  /** In how many assignments serialOf, handed this form, reads otherwise than the reading constructed from the kinds alone: the assignments its form's context holds, counted arithmetically. */
+  readonly misread: number;
+  /** How many distinct lists of the invocationIds the form hands there are, counted arithmetically. */
+  readonly distinct: number;
+  /** The first four of those assignments in index order, by index (spelledAssignment spells each). */
+  readonly flagged: readonly number[];
+  /** The names serialOf, handed this form under a drive name, names over the assignments, in the order first named. */
+  readonly named: (name: string) => readonly string[];
+};
+/** A request handed with an x after its invocationId: its last segment gains the x, so every serial segment it carries stays whole (wb-27md cut #1). */
+const withX = (request: { readonly invocationId: string }): { readonly invocationId: string } => ({ invocationId: `${request.invocationId}x` });
+/** A request handed under the next of DRIVE_NAMES, its second dash-separated segment the next drive's name (the last's the first) (wb-27md cut #1). */
+const underNextName = (request: { readonly invocationId: string }): { readonly invocationId: string } => ({
+  invocationId: request.invocationId
+    .split("-")
+    .map((segment, at) => (at === 1 ? (NEXT_DRIVE_NAME[segment] ?? segment) : segment))
+    .join("-"),
+});
+/** The one name a drive's own assignments carry. */
+const theName = (name: string): readonly string[] => [name];
+/**
+ * serialOf's whole controls (wb-27md cut #1, the R694 carry of wb-0hr6's landing-1001 PASS, its F1 and F3): ten forms of
+ * the calls and serials the whole readings hand serialOf ITSELF, each read by A3 under each of DRIVE_NAMES at 187 then
+ * 188 over every assignment of the context plants, so the whole comparison is shown reading serialOf itself otherwise,
+ * and not only its name: the rows' count (a third call, the second call's again; the second call missing), each
+ * row's length (each call without its last request, or with its first request again after its last), each value (the
+ * two serials handed swapped, so a request reads carried exactly when it is of the other kind), the shared ids' count
+ * (the second call's invocationIds each with an x after it, so none is shared) and spelling (every invocationId with an
+ * x after it, so each shared id reads with the x), and the name's count (the second call's invocationIds under another
+ * drive's name, so two names read). Each form must read otherwise in exactly the assignments its context holds, counted
+ * arithmetically, the first four of them in index order, with the distinct lists it hands counted arithmetically (the
+ * three forms handing fewer requests hand repeated lists) and the names serialOf names. The shared ids' order is no form
+ * of these: serialOf orders the ids it shares as its first call holds them, the order it reads that call's row in, so no
+ * handed form deviates the order alone (the context control "the shared ids reversed" deviates it, under F1).
+ */
+const SERIAL_OF_FORMS: Readonly<Record<string, SerialOfForm>> = {
+  // The rows' count: a third call, the second call's again, every assignment read with three rows; the second call missing, every assignment read with one (and no id shared).
+  "a third call, the second call's again": { hand: (returned, serials) => ({ returned: [...returned, returned[1] ?? []], serials }), misread: ASSIGNMENTS, distinct: ASSIGNMENTS, flagged: [0, 1, 2, 3], named: theName },
+  "the second call missing": { hand: (returned, serials) => ({ returned: returned.slice(0, 1), serials }), misread: ASSIGNMENTS, distinct: SERIAL_KINDS.length ** POSITIONS.length, flagged: [0, 1, 2, 3], named: theName },
+  // Each row's length: each call without its last request (its row one value shorter, its lists repeating across that request's four kinds), or with its first request again after its last (one value longer), in every assignment.
+  "the first call without its last request": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 0 ? requests.slice(0, -1) : requests)), serials }),
+    misread: ASSIGNMENTS,
+    distinct: ASSIGNMENTS / SERIAL_KINDS.length,
+    flagged: [0, 1, 2, 3],
+    named: theName,
+  },
+  "the second call without its last request": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 1 ? requests.slice(0, -1) : requests)), serials }),
+    misread: ASSIGNMENTS,
+    distinct: ASSIGNMENTS / SERIAL_KINDS.length,
+    flagged: [0, 1, 2, 3],
+    named: theName,
+  },
+  "the first call with its first request again after its last": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 0 ? [...requests, ...requests.slice(0, 1)] : requests)), serials }),
+    misread: ASSIGNMENTS,
+    distinct: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+    named: theName,
+  },
+  "the second call with its first request again after its last": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 1 ? [...requests, ...requests.slice(0, 1)] : requests)), serials }),
+    misread: ASSIGNMENTS,
+    distinct: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+    named: theName,
+  },
+  // Each value: the two serials handed swapped, so each request reads carried exactly when it is of the other kind: every assignment but those whose eight requests are each of the both or the neither kind.
+  "the two serials swapped": {
+    hand: (returned, serials) => ({ returned, serials: [...serials].reverse() }),
+    misread: ASSIGNMENTS - (SERIAL_KINDS.length - 2) ** (CALLS.length * POSITIONS.length),
+    distinct: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+    named: theName,
+  },
+  // The shared ids' count and spelling: the second call's invocationIds each with an x after it (none shared), or every invocationId (each shared id read with the x): every assignment sharing at least one position.
+  "the second call's invocationIds each with an x after it": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 1 ? requests.map(withX) : requests)), serials }),
+    misread: sharingAtLeast(1, KIND_PAIRS, 2),
+    distinct: ASSIGNMENTS,
+    flagged: [1, 4, 5, 6],
+    named: theName,
+  },
+  "every invocationId with an x after it": {
+    hand: (returned, serials) => ({ returned: returned.map(requests => requests.map(withX)), serials }),
+    misread: sharingAtLeast(1, KIND_PAIRS, 2),
+    distinct: ASSIGNMENTS,
+    flagged: [1, 4, 5, 6],
+    named: theName,
+  },
+  // The name's count: the second call's invocationIds under the next drive's name, two names read (and no id shared), in every assignment.
+  "the second call's invocationIds under another drive's name": {
+    hand: (returned, serials) => ({ returned: returned.map((requests, call) => (call === 1 ? requests.map(underNextName) : requests)), serials }),
+    misread: ASSIGNMENTS,
+    distinct: ASSIGNMENTS,
+    flagged: [0, 1, 2, 3],
+    named: name => [name, NEXT_DRIVE_NAME[name] ?? name],
+  },
+};
 /** One case of A3's decision records over a record (wb-kbh1 cut #3): one handed decision per entry of `fellows`, each a permit of its own minted for the recorded request at that position, but the one at `foreignAt`, when set, minted for `stranger`'s request the record does not hold (a candidate's, or the request at `base` in a derived form). */
 type DecisionCase = { readonly key: string; readonly fellows: readonly number[]; readonly base: number; readonly foreignAt?: number; readonly stranger?: string };
 /**
@@ -2939,18 +3102,35 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
     expect(contexts, "wb-vuoz cut #4 context plants (the distinct and misread counts wb-vuoz cut #5's): at serials 187 then 188, under each fixture name the drives spell, F1 to F5, two planted calls of four requests over the snapshot's candidates in its order, every invocationId in plantedId's form of one of the four kinds (that call's serial third alone, the other call's alone, both: that call's third and the other's fourth, D01's page form, or neither: the serial plus 1000, D02's), are handed to contextReading's default reading (the plants hand it none, and which reading that is is NOT CLAIMED here, wb-0hr6 cut #1: serialOf's whole readings pin serialOf's own reading of each of these assignments) in 65536 assignments, 65536 distinct lists of the eight invocationIds, so in every one of the 65536 assignments of the four kinds to the eight requests, each once: a request at any position of either call reads carried exactly when it is of the own kind, whatever kinds the seven other requests hold before and after it in its call and at any position of the other call (per call, position and kind, carried in 16384 assignments for the own kind and in none for the other three); the first call's id at a position reads shared exactly when the two calls hold an own and an other there, in either order (8192 assignments per position), those ids alone and in the first call's order as the context controls read an order (not reversed, none more, none fewer); the name reads named once, as the controls read a name (not twice, not missing, in none of their seven other spellings), those two as the check reads that reading (the tallies count only how many assignments read the first call's id at each position shared); and no assignment reads otherwise as the check reads that reading (misread 0: each assignment's reading checked against the reading constructed from its kinds alone, the check claimed in the deviations the context controls spell under each name, as they spell them, as it reads the misreaders they hand it in serialOf's place and as it reads serialOf itself under the dashed names, wb-0hr6 cut #1: a check keyed on the reader otherwise, and a third row of any other values than the four the controls spell, are NOT CLAIMED; a serial reading keyed on a request's context at 7 then 8, in or beside a request of another form, or with a call's candidates in another order, is NOT CLAIMED)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, constructedContexts])));
     const whole = Object.fromEntries(DRIVE_NAMES.map(name => [name, wholeReadings(candidates, THREE_DIGIT_SERIALS, name, serialOf)]));
-    expect(whole, "wb-0hr6 cut #1 serialOf's whole readings: under each of F1 to F5 at serials 187 then 188, outside contextReading, every one of the 65536 assignments of the four kinds to the two calls' eight requests (65536 distinct lists of the eight invocationIds), each handed to serialOf once, reads exactly the reading constructed from its kinds alone, compared whole: two rows of four values, a request carried exactly when it is of the own kind, whatever kinds the seven others hold; the first call's invocationId at each position holding an own and an other, in either order, shared, in the first call's order, and no other; the name once (0 read otherwise)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: 0, mismatched: [] }])));
+    expect(whole, "wb-0hr6 cut #1 serialOf's whole readings: under each of F1 to F5 at serials 187 then 188, outside contextReading, every one of the 65536 assignments of the four kinds to the two calls' eight requests (65536 distinct lists of the eight invocationIds), each handed to serialOf once, reads exactly the reading constructed from its kinds alone, compared whole: two rows of four values, a request carried exactly when it is of the own kind, whatever kinds the seven others hold; the first call's invocationId at each position holding an own and an other, in either order, shared, in the first call's order, and no other; the name once (0 read otherwise); and, wb-27md cut #1, over each name's assignments serialOf names that name alone, so whole readings of one name's assignments under every name's key red here (the serialOf whole controls below show the comparison reading serialOf itself otherwise)").toEqual(Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: 0, mismatched: [], named: [name] }])));
     const wholeByDashedName = Object.fromEntries(DRIVE_NAMES.map(name => [name, wholeReadings(candidates, THREE_DIGIT_SERIALS, dashedName(name), serialOf)]));
     const wholeControls = Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, control]) => [label, wholeReadings(candidates, THREE_DIGIT_SERIALS, "F1", control.read)]));
     const wholeFlagged = (readings: Readonly<Record<string, WholeReadings>>): Record<string, { readonly assignments: number; readonly distinct: number; readonly misread: number; readonly flagged: readonly string[] }> =>
       Object.fromEntries(Object.entries(readings).map(([label, { assignments, distinct, misread, mismatched }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))) }]));
     expect(
       { byDashedName: wholeFlagged(wholeByDashedName), controls: wholeFlagged(wholeControls) },
-      "wb-0hr6 cut #1 whole readings' controls: the whole comparison, handed serialOf itself under each of F1-x to F5-x, reads every one of the 65536 assignments otherwise (serialOf names the drive name alone), and, handed each of the thirty-seven context misreaders in serialOf's place under F1, reads each otherwise in exactly the assignments its context holds, counted arithmetically, recording first the four constructed for it, in index order",
+      "wb-0hr6 cut #1 whole readings' controls: the whole comparison, handed serialOf itself under each of F1-x to F5-x, reads every one of the 65536 assignments otherwise (serialOf names the drive name alone), and, handed each of the thirty-seven context misreaders in serialOf's place under F1, reads each otherwise in exactly the assignments its context holds, counted arithmetically, recording first the four constructed for it, in index order (the serialOf whole controls below, wb-27md cut #1, show it reading serialOf itself otherwise in ten forms under each of F1 to F5)",
     ).toEqual({
       byDashedName: Object.fromEntries(DRIVE_NAMES.map(name => [name, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread: ASSIGNMENTS, flagged: [0, 1, 2, 3].map(spelledAssignment) }])),
       controls: Object.fromEntries(Object.entries(CONTEXT_MISREADERS).map(([label, { misread, flagged }]) => [label, { assignments: ASSIGNMENTS, distinct: ASSIGNMENTS, misread, flagged: flagged.map(spelledAssignment) }])),
     });
+    const wholeForms = Object.fromEntries(DRIVE_NAMES.map(name => [name, Object.fromEntries(Object.entries(SERIAL_OF_FORMS).map(([label, form]) => [label, wholeReadings(candidates, THREE_DIGIT_SERIALS, name, serialOf, form.hand)]))]));
+    expect(
+      Object.fromEntries(
+        Object.entries(wholeForms).map(([name, readings]) => [
+          name,
+          Object.fromEntries(Object.entries(readings).map(([label, { assignments, distinct, misread, mismatched, named }]) => [label, { assignments, distinct, misread, flagged: mismatched.map(entry => entry.slice(0, entry.indexOf(":"))), named }])),
+        ]),
+      ),
+      "wb-27md cut #1 serialOf's whole controls: under each of F1 to F5 at serials 187 then 188, the whole comparison, handed serialOf ITSELF (not a reader in its place) over every one of the 65536 assignments in each of the ten forms of the calls and serials handed (a third call, the second call's again; the second call missing; each call without its last request, or with its first request again after its last; the two serials swapped; the second call's invocationIds, or every invocationId, each with an x after it; the second call's invocationIds under another drive's name), reads each form otherwise in exactly the assignments its context holds, counted arithmetically, recording first the four constructed for it, in index order, beside the distinct lists the form hands (256 where the second call is missing, 16384 where a call lacks its last request, 65536 otherwise) and the names serialOf names (that drive's, and the next drive's after it where the second call's ids carry it): so a comparison keyed on the reader (serialOf compared on its name alone) or on the name (each name but F1 compared on the name alone) reds A3 here, and so does a distinct count taken otherwise than from the lists handed (the shared ids' order is no form here: serialOf orders the ids it shares as its first call holds them, so a comparison keyed on the reader in that order alone is NOT CLAIMED)",
+    ).toEqual(
+      Object.fromEntries(
+        DRIVE_NAMES.map(name => [
+          name,
+          Object.fromEntries(Object.entries(SERIAL_OF_FORMS).map(([label, { misread, distinct, flagged, named }]) => [label, { assignments: ASSIGNMENTS, distinct, misread, flagged: flagged.map(spelledAssignment), named: named(name) }])),
+        ]),
+      ),
+    );
     const threeDigitPlants = serialPlants(candidates, THREE_DIGIT_SERIALS);
     const threeDigitSerialPlanted = Object.fromEntries(
       Object.entries(threeDigitPlants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), THREE_DIGIT_SERIALS) }]),
@@ -3080,6 +3260,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       wholeReadings: whole,
       wholeReadingsByDashedName: wholeByDashedName,
       wholeReadingsOfContextControls: wholeControls,
+      wholeReadingsOfSerialOfForms: wholeForms,
     };
   },
   A4: () => {
@@ -3341,6 +3522,18 @@ describe(SUITE, () => {
       "the second call's row one value longer, a fifth value carried:65536:0,1,2,3",
     ]);
     expect(DRIVE_NAMES.map(dashedName)).toEqual(["F1-x", "F2-x", "F3-x", "F4-x", "F5-x"]);
+    expect(Object.entries(SERIAL_OF_FORMS).map(([label, { misread, distinct, flagged, named }]) => `${label}:${misread}:${distinct}:${flagged.join(",")}:${named("F1").join("+")}`)).toEqual([
+      "a third call, the second call's again:65536:65536:0,1,2,3:F1",
+      "the second call missing:65536:256:0,1,2,3:F1",
+      "the first call without its last request:65536:16384:0,1,2,3:F1",
+      "the second call without its last request:65536:16384:0,1,2,3:F1",
+      "the first call with its first request again after its last:65536:65536:0,1,2,3:F1",
+      "the second call with its first request again after its last:65536:65536:0,1,2,3:F1",
+      "the two serials swapped:65280:65536:0,1,2,3:F1",
+      "the second call's invocationIds each with an x after it:27120:65536:1,4,5,6:F1",
+      "every invocationId with an x after it:27120:65536:1,4,5,6:F1",
+      "the second call's invocationIds under another drive's name:65536:65536:0,1,2,3:F1+F2",
+    ]);
     expect(Object.keys(STRING_FORMS)).toEqual(["gaining a final ~", "gaining a leading ~", "in another case", "without its last character", "without its first character"]);
     expect(Object.keys(MIXES)).toEqual(["the other request's invocationId", "the other request's target", "the principal's role dropped"]);
     expect(ORDERS).toEqual({ snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] });
