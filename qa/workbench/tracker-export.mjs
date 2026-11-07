@@ -5,8 +5,8 @@
  * WHY. The tracker's export writes every bead, closed ones with their whole bodies, into the tracked .beads/issues.jsonl. At trunk
  * fd90f9d3 that blob was 95,821,804 bytes (1,304 rows; the 1,179 closed rows 93,125,889 bytes of it, nearly all notes) and it grew
  * about 6 MB a day, so the landing hop push was days from a refusal no retry cures. Owner shape ruling (bound on wb-294d): closed beads become STUB rows
- * in the pushed export, their bodies move to append-only shards beside it, a round trip proves nothing is lost, and a 95 MiB soft
- * ceiling guards the export and every shard before any push. The tracker's store stays the source of truth: this module spawns only
+ * in the pushed export, their bodies move to append-only monthly shards beside it, a round trip proves nothing is lost, and a 95 MiB
+ * soft ceiling guards the export and every shard before any push. The tracker's store stays the source of truth: this module spawns only
  * git, opens no store, and wiring the ritual into the machine's hop and push paths (under its commit lock) is the machine's, outside
  * this repository.
  *
@@ -14,39 +14,46 @@
  *   issues.jsonl                              the MAIN export: the full export's own line, unchanged, for every non-closed row, in the
  *                                             export's row order; for every closed row a STUB line - the STUB_FIELDS it has, in its
  *                                             own key order, and nothing else (no description, notes, acceptance criteria or comments).
- *   archive/issues-closed-YYYY-MM-DD.jsonl    append-only SHARDS holding closed rows' full export lines, unchanged, one shard
- *                                             per UTC day. A row goes to the shard of its UTC close day when that day is today or
- *                                             newer than every existing shard; otherwise (its day is past and sealed) to today's.
- *                                             A closed row is appended again, to the shard the same rule picks, whenever its full line
- *                                             differs from its latest archived line (a note written after the close). The latest line
- *                                             of an id - the last one, shards in name order - is its body. No run changes a shard of a
- *                                             day before its own UTC day, so a past shard is byte-unchanged at every later export.
- * The period is a DAY, not the ruling's default month (the ruling leaves the period to measurement): at fd90f9d3 the 276 beads closed
- * 2026-11-01..06 already held 46,291,604 bytes, so one November shard would reach the soft ceiling mid-month; the largest close day held
- * 13,084,831 bytes. Two stub fields beyond the ruling's list (id, title, status, closed stamp, close reason, dep edges), each measured:
+ *   archive/issues-closed-YYYY-MM.jsonl       append-only SHARDS holding closed rows' full export lines, unchanged, one shard
+ *                                             per UTC month. A row goes to the shard of its UTC close month when that month is the
+ *                                             run's or newer than every existing shard; otherwise (its month is past and sealed) to
+ *                                             the run month's. A closed row is appended again, to the shard the same rule picks,
+ *                                             whenever its full line differs from its latest archived line (a note written after the
+ *                                             close); a shard only ever grows by whole lines at its end. The latest line of an id -
+ *                                             the last one, shards in name order - is its body. No run changes a shard of a month
+ *                                             before its own UTC month, so a past month's shard is byte-unchanged at every later export.
+ * The period is the UTC close MONTH, as the owner shape orders (ruling R-B670 on wb-294d: the first cut's day period is outside the
+ * shape). Measured at fd90f9d3: the beads closed in 2026-10 hold 46,834,285 bytes, those closed 2026-11-01..06 46,291,604, so the
+ * running month's shard is the one that grows toward the soft ceiling, and a run that would take any shard to it refuses (exit 2,
+ * nothing written). Two stub fields beyond the ruling's list (id, title, status, closed stamp, close reason, dep edges), each measured:
  * `_type` is the export's row discriminator, and `updated_at` keeps an import of the main export inert against a store that already
  * holds the full rows (the tracker's importer rewrites an issue only when a row's updated_at is strictly newer and stamps an absent one
  * with the import time; measured with a scratch store - test/workbench-tracker-export-compaction.test.ts states the measurement).
  *
- * READERS. trackerExportText(path) is the one read of a main export: beside no archive directory it returns the file's bytes
- * unchanged; beside one it returns the full export, each closed stub line replaced by its latest archived line - the same bytes the
- * full export held (compaction refuses any run whose own round trip is not byte-equal). rehydrateTrackerExport(text, path) is the same
- * for a text a reader already read.
+ * READERS. trackerExportText(path) is the one read of a main export: beside no archive directory holding a shard file it returns the
+ * file's bytes unchanged; beside one it replaces each closed STUB line (a closed row holding no field but STUB_FIELDS) that has an
+ * archived line by its id's latest archived line and keeps every other line as it is, so a main export the compaction wrote reads as
+ * the same bytes as the full export it was cut from (compaction refuses any run whose own round trip is not byte-equal), and a full
+ * row beside an archive reads as itself. Only the archive's shard files (issues-closed-YYYY-MM.jsonl) are read; a file of any other name
+ * beside them is not. rehydrateTrackerExport(text, path) is the same for a text a reader already read.
  *
  * GUARD. The tracker export family is .beads/issues.jsonl plus every blob under .beads/archive/. A push of <tip> refuses when any family
  * blob among the objects it would send (`git rev-list --objects <tip> --not <excluded...>`) is at or over the soft ceiling: one typed
- * line per such blob on stderr, naming its path, blob and bytes. FW_EXPORT_SOFT_CEILING (bytes, a positive whole number) replaces the
+ * line per such blob on stderr, naming its path, blob and bytes - one line per blob for the whole judgement, however many of the
+ * judged pushes would send it. FW_EXPORT_SOFT_CEILING (bytes, a positive whole number) replaces the
  * default 95 MiB = 99,614,720. A large blob outside the family is not judged.
  *
  * CLI (exit 0 done; 2 refused at the soft ceiling; 3 could not run - usage, malformed input, git failure, a bad ceiling):
  *   node qa/workbench/tracker-export.mjs compact --full <full export file> --beads <.beads dir> [--now <UTC stamp>]
  *       compacts the full export into <dir>/issues.jsonl and <dir>/archive/, then prints one JSON receipt line on stdout. It writes
- *       nothing at all when it refuses. --now defaults to the current time; it names the run's UTC day.
+ *       nothing at all when it refuses. --now defaults to the current time; it names the run's UTC month, and a value that is not a
+ *       UTC timestamp refuses (exit 3).
  *   node qa/workbench/tracker-export.mjs rehydrate --beads <.beads dir>        prints the full export on stdout
  *   node qa/workbench/tracker-export.mjs guard <tip> [--not <rev>]...          judges a push of <tip> before `git push` runs
  *   node qa/workbench/tracker-export.mjs pre-push <remote> [<url>]             the git pre-push hook: reads git's
- *       `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges each push, excluding the remote's sha (when this
- *       repository has it) and its remote-tracking refs; a deleted-ref line pushes nothing and is skipped. Install once per clone:
+ *       `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges each push, excluding the line's remote sha (when
+ *       this repository has that commit) and every remote-tracking ref of <remote> (--remotes=<remote>); a deleted-ref line pushes
+ *       nothing and is skipped. Install once per clone:
  *         printf '#!/bin/sh\nexec node %s pre-push "$@"\n' "$PWD/qa/workbench/tracker-export.mjs" > "$(git rev-parse --git-path hooks)/pre-push"
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  */
@@ -66,7 +73,7 @@ export const ARCHIVE_DIR = ".beads/archive";
 /** The fields a closed row keeps in the main export, in the export's own key order. */
 export const STUB_FIELDS = Object.freeze(["_type", "id", "title", "status", "updated_at", "closed_at", "close_reason", "dependencies"]);
 
-const SHARD_FILE = /^issues-closed-(\d{4}-\d{2}-\d{2})\.jsonl$/;
+const SHARD_FILE = /^issues-closed-(\d{4}-\d{2})\.jsonl$/;
 const SHA = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
 const ZERO_SHA = /^0+$/;
 const WHOLE = /^[1-9][0-9]*$/;
@@ -76,19 +83,26 @@ const EXPORT_PREFIX = /^\{"_type":"(?:[^"\\]|\\.)*","id":"((?:[^"\\]|\\.)*)"/;
 /** @param {string} value @returns {string} printable ASCII only; everything else becomes ? */
 const ascii = value => value.replace(/[^\x20-\x7e]/g, "?");
 
-/** @param {string} day @returns {string} */
-export const shardName = day => `issues-closed-${day}.jsonl`;
+/** @param {string} month a UTC month, YYYY-MM @returns {string} */
+export const shardName = month => `issues-closed-${month}.jsonl`;
 
 /**
- * The UTC day of an ISO-8601 timestamp, or undefined when the value is not one.
+ * The UTC month (YYYY-MM) of an ISO-8601 timestamp, or undefined when the value is not one.
  * @param {unknown} stamp
  * @returns {string | undefined}
  */
-function utcDay(stamp) {
+function utcMonth(stamp) {
   if (typeof stamp !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(stamp)) return undefined;
   const at = Date.parse(stamp);
-  return Number.isNaN(at) ? undefined : new Date(at).toISOString().slice(0, 10);
+  return Number.isNaN(at) ? undefined : new Date(at).toISOString().slice(0, 7);
 }
+
+/**
+ * A closed row in stub shape: every field it holds is a STUB_FIELDS field.
+ * @param {Record<string, unknown>} value
+ * @returns {boolean}
+ */
+const isStub = value => Object.keys(value).every(key => STUB_FIELDS.includes(key));
 
 /**
  * The soft ceiling an environment names.
@@ -196,7 +210,8 @@ function latestArchived(shards) {
 }
 
 /**
- * A main export with each closed stub line replaced by its latest archived line.
+ * A main export with each closed stub line that has an archived line replaced by its latest archived line; every other line, a full
+ * closed row included, is kept as it is.
  * @param {string} main
  * @param {ReadonlyMap<string, string>} latest
  * @returns {string}
@@ -216,7 +231,7 @@ function substitute(main, latest) {
     }
     if (value === null || typeof value !== "object" || Array.isArray(value)) continue;
     const record = /** @type {Record<string, unknown>} */ (value);
-    if (record.status !== "closed" || typeof record.id !== "string") continue;
+    if (record.status !== "closed" || typeof record.id !== "string" || !isStub(record)) continue;
     const archived = latest.get(record.id);
     if (archived !== undefined) lines[index] = archived;
   }
@@ -237,7 +252,8 @@ export function rehydrateTrackerText(main, shards) {
 const fsPath = path => (path instanceof URL ? fileURLToPath(path) : path);
 
 /**
- * The shard files of an archive directory with their sizes and mtimes, or undefined when it holds none.
+ * The shard files of an archive directory (issues-closed-YYYY-MM.jsonl only) with their sizes and mtimes, or undefined when it holds
+ * none.
  * @param {string} dir
  * @returns {{ key: string, names: string[] } | undefined}
  */
@@ -298,17 +314,19 @@ export function trackerExportText(mainPath) {
 
 /**
  * Compacts a full export against the existing shards: the main export, every shard after the run, and what was appended where.
- * Refuses (and the CLI then writes nothing) on a malformed export or shard, a stub-shaped closed row in the input (a main export
- * passed where the full export belongs), an output at or over the ceiling, a changed past shard, or a round trip that is not byte-equal.
+ * Refuses (and the CLI then writes nothing) on a run stamp that is not a UTC timestamp, a shard name that is not a month shard's, a
+ * malformed export or shard, a stub-shaped closed row in the input (a main export passed where the full export belongs), an output at
+ * or over the ceiling, or a round trip that is not byte-equal. A change to a past month's shard refuses as well: a backstop the
+ * routing rule never reaches, since no run appends to a shard of a month before its own.
  * @param {{ full: string, shards: ReadonlyMap<string, string>, now: string, ceiling?: number, root?: string }} input
  * @returns {CompactResult}
  */
 export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT_CEILING, root = ".beads" }) {
   const refuse = (/** @type {"malformed" | "oversize" | "sealed" | "round-trip"} */ code, /** @type {string[]} */ lines) => /** @type {CompactResult} */ ({ ok: false, code, lines });
-  const today = utcDay(now);
-  if (today === undefined) return refuse("malformed", [`tracker-export: REFUSED the run stamp "${ascii(String(now))}" is not a UTC timestamp; nothing is written`]);
+  const month = utcMonth(now);
+  if (month === undefined) return refuse("malformed", [`tracker-export: REFUSED the run stamp "${ascii(String(now))}" is not a UTC timestamp; nothing is written`]);
   for (const name of shards.keys()) {
-    if (!SHARD_FILE.test(name)) return refuse("malformed", [`tracker-export: REFUSED ${ascii(name)} is not a day shard name; nothing is written`]);
+    if (!SHARD_FILE.test(name)) return refuse("malformed", [`tracker-export: REFUSED ${ascii(name)} is not a month shard name (issues-closed-YYYY-MM.jsonl); nothing is written`]);
   }
   /** @type {Map<string, string>} */
   let latest;
@@ -338,15 +356,15 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
       mainLines.push(line.raw);
       continue;
     }
-    if (Object.keys(line.value).every(key => STUB_FIELDS.includes(key))) {
+    if (isStub(line.value)) {
       return refuse("malformed", [`tracker-export: REFUSED the full export carries a stub row (${ascii(line.id)}): pass the tracker's full export, never a compacted main export; nothing is written`]);
     }
     stubs += 1;
     mainLines.push(JSON.stringify(stubOf(line.value)));
     if (latest.get(line.id) === line.raw) continue;
-    const closed = utcDay(line.value.closed_at) ?? today;
-    const day = closed < today ? closed : today;
-    const name = shardName(day === today || day > newest ? day : today);
+    const closed = utcMonth(line.value.closed_at) ?? month;
+    const period = closed < month ? closed : month;
+    const name = shardName(period === month || period > newest ? period : month);
     appended.set(name, [...(appended.get(name) ?? []), line.id]);
     appendLines.set(name, [...(appendLines.get(name) ?? []), line.raw]);
   }
@@ -355,9 +373,9 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
   const out = new Map([...shards]);
   for (const [name, lines] of appendLines) out.set(name, `${shards.get(name) ?? ""}${lines.map(line => `${line}\n`).join("")}`);
   const sorted = new Map([...out].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
-  const sealed = [...shards.keys()].filter(name => (SHARD_FILE.exec(name)?.[1] ?? "") < today).sort();
+  const sealed = [...shards.keys()].filter(name => (SHARD_FILE.exec(name)?.[1] ?? "") < month).sort();
   const changed = sealed.filter(name => sorted.get(name) !== shards.get(name));
-  if (changed.length > 0) return refuse("sealed", changed.map(name => `tracker-export: REFUSED ${root}/archive/${name} is a past day's shard and would change; nothing is written`));
+  if (changed.length > 0) return refuse("sealed", changed.map(name => `tracker-export: REFUSED ${root}/archive/${name} is a past month's shard and would change; nothing is written`));
   /** @type {string[]} */
   const over = [];
   const mainBytes = Buffer.byteLength(main);
@@ -480,6 +498,7 @@ function compactCli(args, err, out) {
   const shards = new Map();
   try {
     fullText = readFileSync(fullPath, "utf8");
+    // Only month shard files are inputs, as only they are read back (archiveState); a file of any other name beside them is neither.
     if (existsSync(archive)) {
       for (const entry of readdirSync(archive, { withFileTypes: true })) {
         if (entry.isFile() && SHARD_FILE.test(entry.name)) shards.set(entry.name, readFileSync(join(archive, entry.name), "utf8"));

@@ -5,9 +5,11 @@
  * typed line naming the blob path and byte size; selftest leg plants a scratch repo with an oversized tracked blob and asserts the typed
  * refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is exactly .beads/issues.jsonl
  * and every blob under .beads/archive/; the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip>
- * --not <excluded...>` (the hook excludes the remote's sha and its remote-tracking refs, so a blob the remote already holds is not
- * judged again). A large blob outside the family is NOT CLAIMED by this guard (G6 pins that boundary). Wiring the guard into the
- * machine's collect and land-chain push paths lives outside this repository; here the push path is git itself, through the hook (G7).
+ * --not <excluded...>`. The hook excludes each line's remote sha when this repository has that commit (G10) and every
+ * remote-tracking ref of the remote it is called for (G11), so a blob the remote already holds is not judged again, and it prints one
+ * typed line per oversized blob however many of its lines would push that blob (G12). A large blob outside the family is NOT
+ * CLAIMED by this guard (G6 pins that boundary). Wiring the guard into the machine's collect and land-chain push paths lives outside
+ * this repository; here the push path is git itself, through the hook (G7).
  * Every case runs in a throwaway repository from the scratch helper with an explicit child environment, with the ceiling lowered
  * through FW_EXPORT_SOFT_CEILING so no case writes a 95 MiB file.
  */
@@ -22,7 +24,7 @@ installScratchLeakGuard();
 
 const TOOL = join(process.cwd(), "qa", "workbench", "tracker-export.mjs");
 const MAIN = ".beads/issues.jsonl";
-const SHARD = ".beads/archive/issues-closed-2026-11-07.jsonl";
+const SHARD = ".beads/archive/issues-closed-2026-11.jsonl";
 
 const scratches: string[] = [];
 afterEach(() => {
@@ -211,5 +213,44 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(hook("refs/heads/main not-a-sha refs/heads/main\n").status).toBe(3);
     const unknownRemote = hook(`refs/heads/main ${tip} refs/heads/main ${"f".repeat(40)}\n`);
     expect(unknownRemote.status).toBe(2);
+  });
+
+  const hookIn = (repo: Repo, remote: string, stdin: string): SpawnSyncReturns<string> =>
+    spawnSync(process.execPath, [TOOL, "pre-push", remote, repo.remote], { cwd: repo.dir, env: childEnv(repo.home, { [CEILING_ENV]: "600" }), input: stdin, encoding: "utf8" });
+
+  it("G10 the hook excludes a line's remote sha that this repository has: an oversized export only that commit holds is not judged again, and the same push from a new ref is", () => {
+    const repo = makeRepo();
+    const old = repo.commit({ [MAIN]: 900 }, "an oversized export the remote already holds");
+    const tip = repo.commit({ "src/b.ts": 5 }, "a later commit that does not touch the export");
+    const known = hookIn(repo, "origin", `refs/heads/main ${tip} refs/heads/main ${old}\n`);
+    expect(known.status).toBe(0);
+    expect(known.stderr).toBe("");
+    const fresh = hookIn(repo, "origin", `refs/heads/main ${tip} refs/heads/main ${"0".repeat(40)}\n`);
+    expect(fresh.status).toBe(2);
+    expect(stderrLines(fresh)).toEqual([refusal(MAIN, repo.blobOf(old, MAIN), 900, 600)]);
+  });
+
+  it("G11 the hook excludes every remote-tracking ref of the remote it is called for: a new branch over a commit origin already tracks passes, the same line for another remote does not", () => {
+    const repo = makeRepo();
+    const old = repo.commit({ [MAIN]: 900 }, "an oversized export origin already holds");
+    const tip = repo.commit({ "src/b.ts": 5 }, "a later commit that does not touch the export");
+    repo.git("update-ref", "refs/remotes/origin/main", old);
+    const line = `refs/heads/feature ${tip} refs/heads/feature ${"0".repeat(40)}\n`;
+    const tracked = hookIn(repo, "origin", line);
+    expect(tracked.status).toBe(0);
+    expect(tracked.stderr).toBe("");
+    const other = hookIn(repo, "upstream", line);
+    expect(other.status).toBe(2);
+    expect(stderrLines(other)).toEqual([refusal(MAIN, repo.blobOf(old, MAIN), 900, 600)]);
+  });
+
+  it("G12 one typed line per oversized blob for the whole push: two ref lines that would both send one oversized shard print it once", () => {
+    const repo = makeRepo();
+    repo.commit({ [MAIN]: 10 }, "base");
+    const tip = repo.commit({ [SHARD]: 900 }, "large shard");
+    const zeros = "0".repeat(40);
+    const r = hookIn(repo, "origin", `refs/heads/a ${tip} refs/heads/a ${zeros}\nrefs/heads/b ${tip} refs/heads/b ${zeros}\n`);
+    expect(r.status).toBe(2);
+    expect(stderrLines(r)).toEqual([refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600)]);
   });
 });

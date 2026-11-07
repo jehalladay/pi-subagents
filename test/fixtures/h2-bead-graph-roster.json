@@ -148,7 +148,8 @@
     "anchorToken": "AI-Native Issue Tracking",
     "omit": [
      "issues.jsonl",
-     "interactions.jsonl"
+     "interactions.jsonl",
+     "archive"
     ],
     "own": true,
     "tracked": true
@@ -339,6 +340,7 @@
    ".beads/issues.jsonl",
    ".beads/interactions.jsonl"
   ],
+  "exportArchive": ".beads/archive",
   "scriptlessRoots": [
    ".agents",
    ".pi",
@@ -1620,7 +1622,23 @@
      "witness": {
       "trackerDataWalked": false,
       "exportNamesProgram": true,
-      "floorMet": true
+      "floorMet": true,
+      "hopData": {
+       "paths": [
+        ".beads/archive/issues-closed-2026-10.jsonl",
+        ".beads/archive/issues-closed-2026-11.jsonl",
+        ".beads/interactions.jsonl",
+        ".beads/issues.jsonl"
+       ],
+       "heldByRoot": false,
+       "unclassified": [],
+       "notWalked": {
+        "R4": [
+         ".beads/interactions.jsonl",
+         ".beads/issues.jsonl"
+        ]
+       }
+      }
      }
     },
     {

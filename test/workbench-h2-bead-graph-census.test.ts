@@ -43,8 +43,9 @@
  * seams; its respin (owner ruling R727) brought it under rows A-D as the SCOPE note below requires (A4, B6, C5, D3) and re-pinned T
  * (its label, T4). The census pins the remaining absence, binds that reader and arms the acceptance for the next Pi surface:
  *  T, the trigger. T1 no walked root (PROGRAM_SCANS: src, qa, examples, .agents, .pi, .github, .codex,
- *    .beads/hooks, the tracker's own files (.beads/README.md, config.yaml, metadata.json, .gitignore; its export and interactions
- *    log omitted, R4) and the root's own files - every surface that acts or instructs an agent) names the program, a work package
+ *    .beads/hooks, the tracker's own files (.beads/README.md, config.yaml, metadata.json, .gitignore; its export, the export's
+ *    archive and the interactions log omitted, R4) and the root's own files - every surface that acts or instructs an agent)
+ *    names the program, a work package
  *    or an H2 bead (H2, any case, a key or the program name separated by hyphens, underscores or whitespace), and every path the
  *    git index tracks is held by a T1 root, by a named not-walked residual (NOT_WALKED: R3, R4, R12) or is binary (media/: a NUL
  *    byte, no text to judge);
@@ -91,7 +92,9 @@
  *    (the composed verdict word is T4's escape, wb-k888); R2 R-GENERIC-RUNNER
  *    a launch whose command and argv come from data; R3 R-TEST-TREE test/ is not walked (it quotes bd writes and names the program
  *    in censuses, this file included); R4 R-TRACKER-DATA the export and the interactions log are data, not surfaces (the export's
- *    wb-4nut rows name the program); R5 R-CASE-VARIANT a ruling in another letter case reads no-verdict (verbatim); R6
+ *    wb-4nut rows name the program), and so is the export's archive (wb-294d: the closed rows' bodies in month shards under
+ *    .beads/archive/; every tracked path below it is held by R4 under the export and by no root - the quiet row plants a
+ *    compacting hop's tracker data); R5 R-CASE-VARIANT a ruling in another letter case reads no-verdict (verbatim); R6
  *    R-ALTERNATIVE-UNLISTED an alternative joined by a word MARKER does not list reads as a marker (a known false-ADOPT form; R13
  *    is the other); R7 R-DEFER-UNREAD (F-2); R8 R-OTHER-FIELD a marker only in design, acceptance_criteria or close_reason is not read; R9
  *    R-SNAPSHOT the census reads the export and the vendored map, never a live store (a bead filed after the last export is
@@ -488,6 +491,10 @@ interface ScanRoot {
 }
 /** The tracker's data (R4): the export and the interactions log, never a surface. */
 const TRACKER_DATA: readonly string[] = [".beads/issues.jsonl", ".beads/interactions.jsonl"];
+/** The export's archive (wb-294d): the month shards its compaction moves the closed rows' bodies into, which every export reader reads
+ * back through the rehydrating reader. A tracked path below it is the export's data: R4 holds it under the export (TRACKER_DATA[0])
+ * and no root walks it, so a checkout whose hop committed the shards classifies as one whose export is whole. */
+const EXPORT_ARCHIVE = ".beads/archive";
 /** T1's roots: every surface that acts or tells an agent what to do. Each floor sits below the count measured at base 7718651
  * (src 115, qa 67, examples 7, .agents 2, .pi 1, .github 2, .codex 2, .beads/hooks 5, the root's own files 27; the tracker's own
  * files 4 at 9f6b726), so an emptied walk reds and an additive change does not; "." and an own root read their own regular files
@@ -503,7 +510,7 @@ const PROGRAM_SCANS: readonly ScanRoot[] = [
   { pin: "T1", root: ".github", floor: 2, anchorFile: "workflows/ci.yml", anchorToken: "runs-on", omit: [] },
   { pin: "T1", root: ".codex", floor: 2, anchorFile: "hooks.json", anchorToken: `${BD} codex-hook`, omit: [] },
   { pin: "T1", root: ".beads/hooks", floor: 5, anchorFile: "pre-commit", anchorToken: `${BD} hooks run`, omit: [] },
-  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl"], own: true, tracked: true },
+  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl", "archive"], own: true, tracked: true },
   { pin: "T1", root: ".", floor: 20, anchorFile: "package.json", anchorToken: '"extensions"', omit: [] },
 ];
 /** T2's script roots, Markdown never read (instruction text, residual R3's sibling); its own literal, so no row borrows T1's. */
@@ -744,6 +751,7 @@ const constants = (): Json =>
     pairedInputs: PAIRED_INPUTS,
     families: { h2: H2.source, prerequisites: GATE_PREREQUISITES.source, marker: MARKER.source, verdictWords: VERDICT_WORDS.source },
     trackerData: TRACKER_DATA,
+    exportArchive: EXPORT_ARCHIVE,
     scriptlessRoots: SCRIPTLESS_ROOTS,
     claimlessRoots: CLAIMLESS_ROOTS,
     claimRoots: CLAIM_ROOTS,
@@ -872,19 +880,21 @@ interface Surface {
   readonly notWalked: Record<string, string[]>;
 }
 /** A family's surface against the git index: every tracked path is held by one of its roots, by a NOT_WALKED residual (recorded by
- * its member) or is binary (recorded by its top-level directory); any other tracked path is unclassified. */
+ * its member; a path below the export's archive by the export, wb-294d) or is binary (recorded by its top-level directory); any other
+ * tracked path is unclassified. Each record lists its members in name order, so a path the index sorts first records nothing new. */
 function surfaceOf(scans: readonly ScanRoot[], tracked: readonly string[]): Surface {
   const unclassified: string[] = [];
   const notWalked: Record<string, string[]> = {};
   const note = (key: string, member: string): void => {
     const members = notWalked[key] ?? [];
     if (!members.includes(member)) members.push(member);
-    notWalked[key] = members;
+    notWalked[key] = members.sort();
   };
   for (const path of tracked) {
     if (scans.some(scan => holds(scan, path))) continue;
+    const subject = path.startsWith(`${EXPORT_ARCHIVE}/`) ? (TRACKER_DATA[0] ?? path) : path;
     const named = Object.entries(NOT_WALKED).flatMap(([residual, members]) =>
-      members.filter(member => path === member || path.startsWith(`${member}/`)).map(member => ({ residual, member })),
+      members.filter(member => subject === member || subject.startsWith(`${member}/`)).map(member => ({ residual, member })),
     )[0];
     if (named !== undefined) note(named.residual, named.member);
     else if (isBinary(join(REPO, path))) note("binary", path.split("/")[0] ?? path);
@@ -2273,14 +2283,31 @@ const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
     const rows = exportRows();
     const data = TRACKER_DATA.map(path => join(REPO, path));
     const tracked = trackedPaths();
-    const walkedFiles = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS].flatMap(scan => filesOf(scan, tracked));
+    const scans = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS];
+    const walkedFiles = scans.flatMap(scan => filesOf(scan, tracked));
+    // The tracker data a compacting hop commits (wb-294d), planted in the git index's order so the quiet row reads it before any hop
+    // commits a shard: two month shards below the export's archive, then the interactions log and the export.
+    const hopData = [`${EXPORT_ARCHIVE}/issues-closed-2026-10.jsonl`, `${EXPORT_ARCHIVE}/issues-closed-2026-11.jsonl`, ".beads/interactions.jsonl", ".beads/issues.jsonl"];
+    const planted = surfaceOf(PROGRAM_SCANS, hopData);
     const witness = {
       // The tracker's own files are walked by T1 (wb-ze6u E06, E07); its data never is: no walk reads the export or the log.
       trackerDataWalked: walkedFiles.some(file => data.includes(file)),
       exportNamesProgram: rows.some(row => idOf(row).startsWith("wb-4nut") && H2.test(JSON.stringify(row))),
       floorMet: rows.length >= EXPORT_FLOOR,
+      // No root holds the hop's data; R4 holds it all, the shards under the export, so it records what a whole export records.
+      hopData: { paths: hopData, heldByRoot: hopData.some(path => scans.some(scan => holds(scan, path))), unclassified: planted.unclassified, notWalked: planted.notWalked },
     };
-    expect(witness).toStrictEqual({ trackerDataWalked: false, exportNamesProgram: true, floorMet: true });
+    expect(witness).toStrictEqual({
+      trackerDataWalked: false,
+      exportNamesProgram: true,
+      floorMet: true,
+      hopData: {
+        paths: [".beads/archive/issues-closed-2026-10.jsonl", ".beads/archive/issues-closed-2026-11.jsonl", ".beads/interactions.jsonl", ".beads/issues.jsonl"],
+        heldByRoot: false,
+        unclassified: [],
+        notWalked: { R4: [".beads/interactions.jsonl", ".beads/issues.jsonl"] },
+      },
+    });
     return witness;
   },
   R5: async () => {
