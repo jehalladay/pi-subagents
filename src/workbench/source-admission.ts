@@ -384,13 +384,19 @@ export class WriteBoundaryAuthority {
 }
 
 /**
- * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root; while
- * inv-a's lease holds a root, it answers undefined to the suite's inv-b and inv-c, and what it answers any other invocation id
- * while a lease holds the root (the holder's own id, or one that differs from it only in letter case, among them) is NOT
- * CLAIMED. Leases of different roots are independent, so taking or releasing one root's lease leaves every other root's as it
- * was. release frees a root only for the very object acquire returned while it still holds that root, so a released lease, or a
- * copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease by the canonical root it measured,
- * never by the caller's spelling of the workspace.
+ * EAT-R024: the host's writer leases, keyed by canonical root, in the forms the suite pins. acquire grants a root's lease while
+ * no lease holds that root, for the roots the suite's cases acquire; while inv-a's lease holds a root, it answers undefined to
+ * the suite's inv-b and inv-c, and what it answers any other invocation id while a lease holds the root (the holder's own id,
+ * or one that differs from it only in letter case, among them) is NOT CLAIMED. The leases of the root pairs the suite plants
+ * are independent: ws and its sibling ws2, ws and each root the suite plants inside it, sub and ignored/inner (at admission,
+ * ws's committed submodule and a repository under its ignored directory), and ws and WS, whose paths differ only in letter case
+ * (at admission, two directories on this file system). For each such pair, in either order: while inv-a's lease holds one root,
+ * no lease holds the other and inv-b acquires it, holder answers inv-a and inv-b, and releasing inv-b's lease leaves inv-a's
+ * held; and while inv-a writes on one root, inv-b's admission on the other dispatches, and when inv-b's write ends inv-a's
+ * lease still holds the first. Of the three roots r1, r2 and r3, leased at once by inv-a, releasing r2's lease frees r2 only.
+ * Whether the leases of any other pair of roots are independent is NOT CLAIMED. release frees a root only for the very object
+ * acquire returned while it still holds that root, so a released lease, or a copy naming the same root and invocation, frees
+ * nothing. admitSourceWrite keys the lease by the canonical root it measured, never by the caller's spelling of the workspace.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
@@ -411,7 +417,7 @@ export class WriterLeases {
     return true;
   }
 
-  /** The invocation id of the lease that holds canonicalRoot, or undefined. */
+  /** The invocation id of the lease that holds canonicalRoot, or undefined when no lease holds it, for the roots the suite asks about. */
   holder(canonicalRoot: string): string | undefined {
     return this.#held.get(canonicalRoot)?.invocationId;
   }

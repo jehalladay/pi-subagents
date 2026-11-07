@@ -68,19 +68,33 @@
  * - EAT-R024 "Pi MUST bind a single writer to each materialized workspace." Acceptance: "Admit two invocation IDs for the same
  *   canonical workspace; at most one writer lease is granted; cancellation releases only the lease it owns." Mutant: "Allocate
  *   lease by caller alias instead of canonical root." Pinned reading: while inv-a's lease holds a canonical root, the acquire of
- *   that root by inv-b or inv-c answers undefined and their admissions there that pass rules 1-6 refuse writer-held, and leases
- *   of different roots are independent. R024-ALIAS: while inv-a writes, inv-b's admission through a
- *   symlink alias and inv-c's through a dot spelling of the same workspace refuse writer-held. R024-CANCEL-OWN: a refused
- *   invocation's cancellation leaves the holder's lease; the holder's cancellation
+ *   that root by inv-b or inv-c answers undefined and their admissions there that pass rules 1-6 refuse writer-held, and the
+ *   leases of the root pairs the entries below plant are independent in the forms each entry names: ws and its sibling ws2, ws
+ *   and each of the two roots the suite plants inside it (sub and inner), ws and WS, and the three roots r1, r2 and r3; whether
+ *   the leases of any other pair of roots are independent is NOT CLAIMED (see below). R024-ALIAS: while inv-a writes, inv-b's
+ *   admission through a symlink alias and inv-c's through a dot spelling of the same workspace refuse writer-held.
+ *   R024-CANCEL-OWN: a refused invocation's cancellation leaves the holder's lease; the holder's cancellation
  *   releases it. R024-STALE: a released lease never releases the next holder's lease. R024-FOREIGN: a copy naming the held root
  *   and invocation, and a released lease of the same invocation id after it acquired the root again, release nothing.
  *   R024-VALIDATION: acquire throws a validation CapabilityError with its exact message, and takes no lease, for a relative
  *   root, an absolute root holding U+000A or of 4097 UTF-8 bytes, and a root or invocation that is "", " ", holds U+000A or is
- *   4097 UTF-8 bytes long. R024-TWO-ROOTS: while inv-a writes on ws, inv-b's admission on a second
- *   workspace under the root dispatches, and inv-c's admission on ws refuses writer-held. R024-RELEASE-OTHER-ROOT: three roots
- *   leased at once by one invocation id each hold their own lease; releasing one frees that root only, and the other two still
- *   answer undefined to acquire; at admission level, a write on a second workspace that completes leaves the first workspace's
- *   lease held, so another admission there refuses writer-held.
+ *   4097 UTF-8 bytes long. R024-TWO-ROOTS: while inv-a writes on ws, inv-b's admission on the sibling worktree ws2
+ *   dispatches, and inv-c's admission on ws refuses writer-held. R024-RELEASE-OTHER-ROOT: the three roots r1, r2 and r3, leased
+ *   at once by inv-a, each hold their own lease; releasing r2's frees r2 only, so r1 and r3 still answer undefined to inv-c's
+ *   acquire and inv-d acquires r2; at admission level, inv-b's write on ws2 that completes while inv-a writes on ws leaves ws's
+ *   lease held, so inv-c's admission there refuses writer-held. The pair entries below build each pair's roots the same way:
+ *   ws2 is join(root, "ws2"), a sibling whose path starts with ws's; sub is join(ws, "sub") and inner is
+ *   join(ws, "ignored", "inner"), two roots inside ws; and WS is join(root, "WS"), whose path differs from ws's only in letter
+ *   case. R024-SIBLING-LEASES (ws and ws2), R024-NESTED-LEASES (ws and sub, ws and inner) and R024-CASE-LEASES (ws and WS),
+ *   each pair in either order on a fresh registry (the registry reads no file system, so these cases name the roots as path
+ *   strings): while inv-a holds the first root, holder answers undefined for the second and inv-b acquires it; holder then
+ *   answers inv-a and inv-b, and inv-c's acquire of the first answers undefined; releasing inv-b's lease frees the second only,
+ *   so holder answers inv-a and undefined, and inv-c's acquire of the first still answers undefined. R024-SIBLING-ADMISSION
+ *   (the worktrees ws and ws2), R024-NESTED-ADMISSION (ws and its committed submodule sub, and ws and the repository inner under
+ *   its ignored directory, each its own worktree root while git status lists nothing in ws) and R024-CASE-ADMISSION (the
+ *   worktrees ws and WS, two directories on this file system), each pair in either order: while inv-a writes on the first
+ *   root, inv-b's admission on the second dispatches against it; when inv-b's write ends, holder answers inv-a and undefined,
+ *   and inv-c's admission on the first refuses writer-held; and when inv-a's write ends, no lease holds the first.
  * - EAT-R025 "Pi MUST recheck the source basis after asynchronous admission." Acceptance: "Park admission, change commit/tree,
  *   gate manifest or tracked bytes, release; assert refusal before SDK dispatch." Mutant: "Check source only before await."
  *   R025-COMMIT (commit and tree), R025-AMEND (commit, same tree), R025-GATE (gate manifest bytes), R025-TRACKED (tracked bytes):
@@ -153,8 +167,9 @@
  * - An edit made outside Pi after the final measurement is NOT CLAIMED by this suite.
  * - A change made between two of the module's own reads (a file swapped, grown or replaced between a check and the read after it)
  *   is NOT CLAIMED by this suite.
- * - Ignored paths are NOT CLAIMED by this suite beyond R022-IGNORED (an ignored build file is no edit) and the ignored gate
- *   manifests the R026 cases measure.
+ * - Ignored paths are NOT CLAIMED by this suite beyond R022-IGNORED (an ignored build file is no edit), the repository inner
+ *   that R024-NESTED-ADMISSION places under ws's ignored directory (git status lists nothing in ws, and ws's admissions
+ *   dispatch) and the ignored gate manifests the R026 cases measure.
  * - Where a worktree's Git directory lives (inside or outside the authorized root) is NOT CLAIMED by this suite.
  * - What core.untrackedCache=false changes in a measurement is NOT CLAIMED by this suite: R022-READER-ARGV pins that every call
  *   carries it, and no untracked-cache state that hides a new file was realized on this host.
@@ -166,6 +181,8 @@
  *   holder's own id, a second acquire or admission by it and what another id meets after such a re-entry, and an id that
  *   differs from the holder's only in letter case, among them) is NOT CLAIMED by this suite: every case that asks for a held
  *   root asks with inv-b or inv-c while inv-a holds it.
+ * - Whether the leases of a pair of roots other than ws and ws2, ws and sub, ws and inner, ws and WS, and r1, r2 and r3 are
+ *   independent is NOT CLAIMED by this suite.
  * - Which code answers when a request fails two rules at a pair of clauses no rule-order case fails (rule 1's plain-object and
  *   dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED by this suite.
  * - Which refusal confineWorkspace answers a call that fails two of its clauses no entry names together (a reader that is not a
@@ -445,6 +462,58 @@ function hostFor(attestation: WriteBoundaryAttestation | undefined, overrides: P
 
 function requestFor(workspace: string, invocationId = "inv-a", policy: SourceWriteRequest["policy"] = { allowWrites: true }): SourceWriteRequest {
   return { invocationId, workspace, ...(policy !== undefined ? { policy } : {}) };
+}
+
+/**
+ * The lease-level form of the R024 pair cases, for one order of a pair on a fresh registry: while inv-a holds first, no lease
+ * holds second and inv-b acquires it; holder answers inv-a for first and inv-b for second; inv-c's acquire of first answers
+ * undefined; and releasing inv-b's lease frees second only, so holder answers inv-a for first and undefined for second, and
+ * inv-c's acquire of first still answers undefined.
+ */
+function expectIndependentLeases(first: string, second: string): void {
+  const registry = new WriterLeases();
+  expect(registry.acquire(first, "inv-a"), first).toMatchObject({ canonicalRoot: first, invocationId: "inv-a" });
+  expect(registry.holder(second), second).toBeUndefined();
+  const other = registry.acquire(second, "inv-b");
+  expect(other, second).toMatchObject({ canonicalRoot: second, invocationId: "inv-b" });
+  expect([registry.holder(first), registry.holder(second)], second).toEqual(["inv-a", "inv-b"]);
+  expect(registry.acquire(first, "inv-c"), first).toBeUndefined();
+  if (other === undefined) return;
+  expect(registry.release(other), second).toBe(true);
+  expect([registry.holder(first), registry.holder(second)], second).toEqual(["inv-a", undefined]);
+  expect(registry.acquire(first, "inv-c"), first).toBeUndefined();
+}
+
+/**
+ * The admission-level form of the R024 pair cases, for one order of a pair: while inv-a writes on first, inv-b's admission on
+ * second dispatches against second; when inv-b's write ends inv-a still holds first and no lease holds second, so inv-c's
+ * admission on first refuses writer-held; and when inv-a's write ends no lease holds first.
+ */
+async function expectIndependentWrites(first: string, second: string): Promise<void> {
+  const writing = deferred();
+  const pending = admitSourceWrite(requestFor(first, "inv-a"), hostFor(authority.attest(OPERATOR, identityOf(first))), async () => {
+    await writing.promise;
+    return "a";
+  });
+  expect(leases.holder(first), first).toBe("inv-a");
+  const other = recorder();
+  await expect(admitSourceWrite(requestFor(second, "inv-b"), hostFor(authority.attest(OPERATOR, identityOf(second))), other.dispatch), second).resolves.toMatchObject({ decision: "dispatched" });
+  expect(other.grants.map(grant => [grant.identity.canonicalRoot, grant.invocationId]), second).toEqual([[second, "inv-b"]]);
+  expect([leases.holder(first), leases.holder(second)], second).toEqual(["inv-a", undefined]);
+  const third = recorder();
+  expectRefused(await admitSourceWrite(requestFor(first, "inv-c"), hostFor(authority.attest(OPERATOR, identityOf(first))), third.dispatch), "writer-held", undefined, first);
+  expect(third.grants, first).toHaveLength(0);
+  writing.resolve();
+  await expect(pending, first).resolves.toMatchObject({ decision: "dispatched", value: "a" });
+  expect(leases.holder(first), first).toBeUndefined();
+}
+
+/** ws's committed submodule sub (its own worktree root, inside ws), committed so that ws stays clean; its canonical path. */
+function committedSubmodule(): string {
+  const source = fixtureRepo(join(base, "submodule-source"));
+  git(ws, "-c", "protocol.file.allow=always", "submodule", "add", "-q", source, "sub");
+  git(ws, "commit", "-q", "--no-verify", "-m", "a submodule");
+  return realpathSync(join(ws, "sub"));
 }
 
 beforeEach(() => {
@@ -930,7 +999,7 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
   });
 });
 
-describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b and inv-c are refused it, and leases of different roots are independent", { timeout: CASE_MS }, () => {
+describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b and inv-c are refused it, and the leases of ws and ws2, ws and sub, ws and inner, ws and WS, and r1, r2 and r3 are independent in the forms the header names", { timeout: CASE_MS }, () => {
   it("R024-ALIAS: while inv-a writes, inv-b through a symlink alias and inv-c through a dot spelling of the same workspace refuse writer-held", async () => {
     const alias = join(root, "alias");
     symlinkSync(ws, alias);
@@ -1015,7 +1084,7 @@ describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b 
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("R024-TWO-ROOTS: while one invocation writes on a workspace, another workspace under the root dispatches, and the first stays held", async () => {
+  it("R024-TWO-ROOTS: while inv-a writes on ws, inv-b's admission on the sibling worktree ws2 dispatches, and inv-c's admission on ws refuses writer-held", async () => {
     const ws2 = fixtureRepo(join(root, "ws2"));
     const writing = deferred();
     const held: string[] = [];
@@ -1037,7 +1106,7 @@ describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b 
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("R024-RELEASE-OTHER-ROOT: releasing one root's lease frees that root only, and leaves the other roots' leases held", async () => {
+  it("R024-RELEASE-OTHER-ROOT: releasing r2's lease of the three roots r1, r2 and r3 frees r2 only, and inv-b's completed write on ws2 leaves inv-a's lease of ws held", async () => {
     const r1 = join(root, "r1");
     const r2 = join(root, "r2");
     const r3 = join(root, "r3");
@@ -1065,6 +1134,55 @@ describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b 
     expect(third.grants).toHaveLength(0);
     writing.resolve();
     await expect(first).resolves.toMatchObject({ decision: "dispatched", value: "a" });
+  });
+
+  it("R024-SIBLING-LEASES: for ws and its sibling ws2 in either order, while inv-a holds one no lease holds the other and inv-b acquires it, and releasing inv-b's lease leaves inv-a's held and inv-c refused it", () => {
+    const ws2 = join(root, "ws2");
+    expect(ws2.startsWith(ws)).toBe(true);
+    expectIndependentLeases(ws, ws2);
+    expectIndependentLeases(ws2, ws);
+  });
+
+  it("R024-NESTED-LEASES: for ws and each root inside it, sub and ignored/inner, in either order, while inv-a holds one no lease holds the other and inv-b acquires it, and releasing inv-b's lease leaves inv-a's held and inv-c refused it", () => {
+    const sub = join(ws, "sub");
+    const inner = join(ws, "ignored", "inner");
+    for (const nested of [sub, inner]) {
+      expectIndependentLeases(ws, nested);
+      expectIndependentLeases(nested, ws);
+    }
+  });
+
+  it("R024-CASE-LEASES: for ws and WS, whose paths differ only in letter case, in either order, while inv-a holds one no lease holds the other and inv-b acquires it, and releasing inv-b's lease leaves inv-a's held and inv-c refused it", () => {
+    const upper = join(root, "WS");
+    expect(upper.toLowerCase()).toBe(ws.toLowerCase());
+    expectIndependentLeases(ws, upper);
+    expectIndependentLeases(upper, ws);
+  });
+
+  it("R024-SIBLING-ADMISSION: for the worktrees ws and ws2 in either order, while inv-a writes on one, inv-b's admission on the other dispatches, and when inv-b's write ends inv-c is still refused the first", async () => {
+    const ws2 = fixtureRepo(join(root, "ws2"));
+    await expectIndependentWrites(ws, ws2);
+    await expectIndependentWrites(ws2, ws);
+  });
+
+  it("R024-NESTED-ADMISSION: for ws and its committed submodule sub, and for ws and the repository ignored/inner, in either order, while inv-a writes on one, inv-b's admission on the other dispatches, and when inv-b's write ends inv-c is still refused the first", async () => {
+    const sub = committedSubmodule();
+    const inner = fixtureRepo(join(ws, "ignored", "inner"));
+    expect(porcelain(ws)).toEqual([]);
+    expect([sub, inner]).toEqual([join(ws, "sub"), join(ws, "ignored", "inner")]);
+    expect([sub, inner].map(path => gitReader(path, ["rev-parse", "--show-toplevel"])?.toString("utf8").trim())).toEqual([sub, inner]);
+    for (const nested of [sub, inner]) {
+      await expectIndependentWrites(ws, nested);
+      await expectIndependentWrites(nested, ws);
+    }
+  });
+
+  it("R024-CASE-ADMISSION: for the worktrees ws and WS, two directories on this file system, in either order, while inv-a writes on one, inv-b's admission on the other dispatches, and when inv-b's write ends inv-c is still refused the first", async () => {
+    const upper = fixtureRepo(join(root, "WS"));
+    expect(upper).toBe(join(root, "WS"));
+    expect(lstatSync(upper).ino).not.toBe(lstatSync(ws).ino);
+    await expectIndependentWrites(ws, upper);
+    await expectIndependentWrites(upper, ws);
   });
 });
 
