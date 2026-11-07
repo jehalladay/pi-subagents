@@ -93,6 +93,22 @@
  * other request forms are NOT CLAIMED. No residual is named: each form refusal #7's U1 recorded (a caller input that is
  * itself an array, a null-prototype caller policy and caller input) is pinned by the first row. Cut #8 keeps the frozen
  * sets (R-B669's host-authority words, GUARD A and GUARD B) byte-stable and does not restate the R-B642 set.
+ * Cut #9 (the respin of refusal #8, whose U1 and U2 are two sentences of the cut #8 receipt entry wider than their
+ * pins, each at rung 1 of its own ladder) appends two describes to the end of this file. The first hands the boundary
+ * the listed admission (the admission of the request for mechanical.development.develop.v1 with the plain task fields
+ * and no policy) changed in one of its 6 listed other fields, at each of that field's listed values: contractVersion,
+ * inputDigest, hostMode, policy, grant and admissionPolicy, which its frozen-shape row reads as the own keys, beside
+ * invocationId and definition, of the admission of that request carrying the caller policy {}. In each host mode it
+ * reads the changed admission's endings at the 4 listed host scenarios and its decisions at the 4 listed decision
+ * readings as those of the listed admission, read whole; red-first, it fails under refusal #8's
+ * GP13-BOUNDARY-READS-GRANT and GP13-BOUNDARY-READS-HOSTMODE. The second reads, in each host mode, the listed request
+ * (the plain task fields, under workbench:execute) of each of the 3 definition kinds execute.ts lists, carrying each of
+ * the 6 listed array caller policies, refusing as malformed-policy, read whole; red-first, it fails under
+ * GP13-ARRAYPOLICY-FUNCTION and GP13-ARRAYPOLICY-FORMULA. At the boundary, other values, other fields, other admission
+ * shapes, host scenarios and decision readings are NOT CLAIMED, and at decideExecute, other array caller policies and
+ * request shapes are NOT CLAIMED. No residual is named: each of the four members refusal #8 recorded against the two
+ * receipt sentences (U1's two and U2's two) fails one of these rows. Cut #9 keeps the frozen sets (R-B669's
+ * host-authority words, GUARD A and GUARD B) and refusal #7's cure byte-stable, and does not restate the R-B642 set.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -2062,5 +2078,192 @@ describe("the landing-1019 contact (wb-wupg): the host grant read takes the 4 li
 
   it("adoption refuses each of the 4 listed Claude tool rights as an action grant: not representable", () => {
     for (const right of TOOL_RIGHTS) expect({ right, adoptable: adoptable(right) }).toEqual({ right, adoptable: false });
+  });
+});
+
+describe("the boundary at the listed rows: an admission handed to it that differs from the listed admission in one of the admission's 6 listed other fields, at each of that field's listed values, ends at each of the 4 listed host scenarios and is decided at each of the 4 listed decision readings as the listed admission does, in each host mode, read whole (wb-201v)", () => {
+  const HOST_MODES = ["embedded", "detached"] as const;
+  type HostMode = (typeof HOST_MODES)[number];
+  const SWAPPED_IDENTITY: FunctionIdentity = Object.freeze({ principal: "local-operator:0:s9", sessionId: "s9" });
+  const EXECUTE_AND_ACTION: readonly string[] = [EXECUTE_GRANT, ACTION];
+  /** A listed value that removes the field from the admission, and one that sets hostMode to the other listed host mode. */
+  const REMOVED = Symbol("removed");
+  const OTHER_HOST_MODE = Symbol("the other host mode");
+  type ListedValue = JsonValue | typeof REMOVED | typeof OTHER_HOST_MODE;
+  /**
+   * The 6 listed other fields of the admission (its own keys beside invocationId and definition, in order, as the
+   * admission of a request carrying a policy holds them), each with its listed values.
+   */
+  const OTHER_FIELDS: readonly (readonly [string, readonly ListedValue[]])[] = [
+    ["contractVersion", ["workbench.execute/v2", "", REMOVED]],
+    ["inputDigest", [`sha256:${"cd".repeat(32)}`, "not-a-digest", REMOVED]],
+    ["hostMode", [OTHER_HOST_MODE, "remote", REMOVED]],
+    ["policy", [{}, { grants: [EXECUTE_GRANT, ACTION], actionGrant: ACTION, reviewed: true }, [1]]],
+    ["grant", ["workbench:other", "workbench:detach", "", REMOVED]],
+    ["admissionPolicy", ["digest-pinned", "", REMOVED]],
+  ];
+  const labelOf = (value: ListedValue): string => (value === REMOVED ? "removed" : value === OTHER_HOST_MODE ? "the other host mode" : JSON.stringify(value));
+  /** The listed admission: the admission of the request for mechanical.development.develop.v1 with the plain task fields, with no policy unless one is given. */
+  function listedAdmission(hostMode: HostMode, policy?: JsonValue): ExecuteAdmission {
+    const definitionRef: DefinitionRef = { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST };
+    const decision = decideExecute({ definitionRef, input: TASK, hostMode, ...(policy !== undefined ? { policy } : {}) }, { grants: [EXECUTE_GRANT], invocationId: INVOCATION });
+    if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+    return decision.admission;
+  }
+  /** The listed admission with one field at one listed value (or removed), frozen, as a host that bypassed decideExecute would hand it. */
+  function handedWith(listed: ExecuteAdmission, field: string, value: ListedValue, hostMode: HostMode): ExecuteAdmission {
+    if (value === REMOVED) return Object.freeze(Object.fromEntries(Object.entries(listed).filter(([key]) => key !== field))) as unknown as ExecuteAdmission;
+    const replacement: JsonValue = value === OTHER_HOST_MODE ? (hostMode === "embedded" ? "detached" : "embedded") : value;
+    return Object.freeze({ ...listed, [field]: replacement }) as unknown as ExecuteAdmission;
+  }
+  /** The own keys whose whole reading (or presence) differs between two admissions. */
+  function keysDiffering(first: ExecuteAdmission, second: ExecuteAdmission): string[] {
+    const left = first as unknown as Record<string, unknown>;
+    const right = second as unknown as Record<string, unknown>;
+    const keys = [...new Set([...Object.keys(left), ...Object.keys(right)])];
+    return keys.filter(key => Object.hasOwn(left, key) !== Object.hasOwn(right, key) || wholeOf(left[key]) !== wholeOf(right[key]));
+  }
+  interface ReadPair {
+    readonly grants: readonly string[];
+    readonly identity: FunctionIdentity;
+  }
+  /** The 4 listed host scenarios (the EAT-R154 rows' four): the host's reads at entry, and what the park changes. */
+  const BOUNDARY_SCENARIOS: readonly (readonly [string, ReadPair, ReadPair | undefined])[] = [
+    ["both grants under local-operator:1000:s1 / s1 throughout", { grants: EXECUTE_AND_ACTION, identity: HOST }, undefined],
+    ["the action alone", { grants: [ACTION], identity: HOST }, undefined],
+    ["workbench:execute alone", { grants: [EXECUTE_GRANT], identity: HOST }, undefined],
+    ["the identity changed to local-operator:0:s9 / s9 during the park", { grants: EXECUTE_AND_ACTION, identity: HOST }, { grants: EXECUTE_AND_ACTION, identity: SWAPPED_IDENTITY }],
+  ];
+  /** The 4 listed decision readings: the identity read at entry and the host's reads now. */
+  const BOUNDARY_READINGS: readonly (readonly [FunctionIdentity, ReadPair])[] = [
+    [HOST, { grants: EXECUTE_AND_ACTION, identity: HOST }],
+    [HOST, { grants: [ACTION], identity: HOST }],
+    [HOST, { grants: [EXECUTE_GRANT], identity: HOST }],
+    [HOST, { grants: EXECUTE_AND_ACTION, identity: SWAPPED_IDENTITY }],
+  ];
+  /** How an admission ends at the boundary: the whole result, the whole authority each dispatch call receives, and the park and dispatch counts. */
+  async function endsAs(admission: ExecuteAdmission, entry: ReadPair, change: ReadPair | undefined): Promise<string> {
+    let now = entry;
+    let parks = 0;
+    const received: FunctionDispatchAuthority[] = [];
+    const host: FunctionAuthorityHost = { grants: () => now.grants, identity: () => ({ ...now.identity }) };
+    const park = async () => {
+      parks += 1;
+      if (change !== undefined) now = change;
+    };
+    const dispatch = async (authority: FunctionDispatchAuthority) => {
+      received.push(authority);
+      return authority.invocationId;
+    };
+    const result = await dispatchFunctionWithAuthority({ admission, contract: CONTRACT, host, park, dispatch });
+    return `${wholeOf(result)}; dispatched with [${received.map(wholeOf).join(", ")}]; parks ${parks}, dispatches ${received.length}`;
+  }
+  const decidedAs = (admission: ExecuteAdmission, entered: FunctionIdentity, now: ReadPair): string => wholeOf(decideFunctionAuthority({ admission, contract: CONTRACT, entered, current: { grants: now.grants, identity: now.identity } }));
+
+  it("the table's frozen shape: the 6 listed other fields, each with its listed values, are the own keys, in order, beside invocationId and definition, of the admission of the listed request carrying the caller policy {}, in each host mode", () => {
+    expect(OTHER_FIELDS.map(([field, values]) => `${field}: ${values.map(labelOf).join(" | ")}`)).toEqual([
+      'contractVersion: "workbench.execute/v2" | "" | removed',
+      `inputDigest: "sha256:${"cd".repeat(32)}" | "not-a-digest" | removed`,
+      'hostMode: the other host mode | "remote" | removed',
+      'policy: {} | {"grants":["workbench:execute","fixture-fn:develop-write"],"actionGrant":"fixture-fn:develop-write","reviewed":true} | [1]',
+      'grant: "workbench:other" | "workbench:detach" | "" | removed',
+      'admissionPolicy: "digest-pinned" | "" | removed',
+    ]);
+    for (const hostMode of HOST_MODES) {
+      const keys = Reflect.ownKeys(listedAdmission(hostMode, {})).map(String);
+      expect({ hostMode, others: keys.filter(key => key !== "invocationId" && key !== "definition") }).toEqual({ hostMode, others: OTHER_FIELDS.map(([field]) => field) });
+    }
+  });
+
+  it("in each host mode, each listed value changes the listed admission in exactly its own field, and the 4 listed host scenarios end the listed admission differently (one dispatch resting on local-operator:1000:s1 / s1, a refusal at entry as missing-execute-grant, one at entry as missing-function-action-grant and one at dispatch as changed-effective-identity), and the 4 listed decision readings decide it as authorized, missing-execute-grant, missing-function-action-grant and changed-effective-identity", async () => {
+    for (const hostMode of HOST_MODES) {
+      const listed = listedAdmission(hostMode);
+      for (const [field, values] of OTHER_FIELDS) {
+        for (const value of values) expect({ hostMode, field, value: labelOf(value), differing: keysDiffering(listed, handedWith(listed, field, value, hostMode)) }).toEqual({ hostMode, field, value: labelOf(value), differing: [field] });
+      }
+      const endings = await Promise.all(BOUNDARY_SCENARIOS.map(([, entry, change]) => endsAs(listed, entry, change)));
+      const markers = [
+        ['status: "dispatched"', 'principal: "local-operator:1000:s1"', 'sessionId: "s1"', "dispatches 1"],
+        ['stage: "entry"', 'policy: "missing-execute-grant"', "dispatches 0"],
+        ['stage: "entry"', 'policy: "missing-function-action-grant"', "dispatches 0"],
+        ['stage: "dispatch"', 'policy: "changed-effective-identity"', "dispatches 0"],
+      ];
+      expect({ hostMode, distinct: new Set(endings).size, missing: endings.map((ending, index) => markers[index]?.filter(marker => !ending.includes(marker))) }).toEqual({ hostMode, distinct: 4, missing: [[], [], [], []] });
+      const decisions = BOUNDARY_READINGS.map(([entered, now]) => decideFunctionAuthority({ admission: listed, contract: CONTRACT, entered, current: { grants: now.grants, identity: now.identity } }));
+      expect({ hostMode, decided: decisions.map(decision => (decision.decision === "refused" ? decision.policy : decision.decision)) }).toEqual({ hostMode, decided: ["authorized", "missing-execute-grant", "missing-function-action-grant", "changed-effective-identity"] });
+    }
+  });
+
+  it("in each host mode, an admission handed to the boundary that differs from the listed admission (the admission of the request for mechanical.development.develop.v1 with the plain task fields and no policy) in exactly one of the 6 listed fields, at each of that field's listed values, ends at each of the 4 listed host scenarios as the listed admission does, byte for byte in the whole readings of the boundary result and of each authority the dispatch callback receives, with the same park and dispatch counts, and is decided at each of the 4 listed decision readings as the listed admission is, in the decision's whole reading", async () => {
+    expect(OTHER_FIELDS).toHaveLength(6);
+    for (const hostMode of HOST_MODES) {
+      const listed = listedAdmission(hostMode);
+      for (const [scenario, entry, change] of BOUNDARY_SCENARIOS) {
+        const control = await endsAs(listed, entry, change);
+        for (const [field, values] of OTHER_FIELDS) {
+          for (const value of values) {
+            const ending = await endsAs(handedWith(listed, field, value, hostMode), entry, change);
+            expect({ hostMode, scenario, field, value: labelOf(value), ending }).toEqual({ hostMode, scenario, field, value: labelOf(value), ending: control });
+          }
+        }
+      }
+      for (const [entered, now] of BOUNDARY_READINGS) {
+        const control = decidedAs(listed, entered, now);
+        for (const [field, values] of OTHER_FIELDS) {
+          for (const value of values) {
+            const decision = decidedAs(handedWith(listed, field, value, hostMode), entered, now);
+            expect({ hostMode, entered, now, field, value: labelOf(value), decision }).toEqual({ hostMode, entered, now, field, value: labelOf(value), decision: control });
+          }
+        }
+      }
+    }
+  });
+});
+
+describe("decideExecute's policy rule at the listed rows: in each host mode, the listed request (the plain task fields, under workbench:execute) of each of the 3 definition kinds execute.ts lists, carrying each of the 6 listed array caller policies, refuses as malformed-policy, read whole, while that request carrying the caller policy {} is admitted (wb-201v)", () => {
+  const POLICY_HOST_MODES = ["embedded", "detached"] as const;
+  /** The definition kinds, in execute.ts's DEFINITION_KINDS order (the frozen-shape row reads that list from the source). */
+  const LISTED_KINDS: readonly DefinitionRef["kind"][] = ["script", "function", "furnace-formula"];
+  /** The 6 listed array caller policies. */
+  const ARRAY_POLICIES: readonly JsonValue[] = [[], [1], [{}], [EXECUTE_GRANT, ACTION], [{ notes: "A plain note naming no seat token." }], [[{ grants: [EXECUTE_GRANT, ACTION] }]]];
+  const SOURCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  /** decideExecute's decision for the listed request: the given kind, the listed definition id, the plain task fields and the given caller policy, under workbench:execute. */
+  function decidedWithPolicy(hostMode: (typeof POLICY_HOST_MODES)[number], kind: DefinitionRef["kind"], policy: JsonValue): ReturnType<typeof decideExecute> {
+    const definitionRef: DefinitionRef = { kind, id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST };
+    return decideExecute({ definitionRef, input: TASK, hostMode, policy }, { grants: [EXECUTE_GRANT], invocationId: INVOCATION });
+  }
+  /** The malformed-policy refusal, read whole: a frozen record holding decision, category, reason, policy and the invocation, in that order. */
+  const MALFORMED_POLICY = wholeOf(Object.freeze({ decision: "refused", category: "validation", reason: "malformed execute policy", policy: "malformed-policy", invocationId: INVOCATION }));
+
+  it("the table's frozen shape: the 6 listed array caller policies, each an array, and the 3 listed definition kinds, which are the kinds execute.ts lists in DEFINITION_KINDS", () => {
+    expect(ARRAY_POLICIES.map(policy => `${Array.isArray(policy) ? "an array" : "not an array"} ${JSON.stringify(policy)}`)).toEqual([
+      "an array []",
+      "an array [1]",
+      "an array [{}]",
+      'an array ["workbench:execute","fixture-fn:develop-write"]',
+      'an array [{"notes":"A plain note naming no seat token."}]',
+      'an array [[{"grants":["workbench:execute","fixture-fn:develop-write"]}]]',
+    ]);
+    const source = readFileSync(join(SOURCE_ROOT, "src/workbench/execute.ts"), "utf8");
+    const listed = /^const DEFINITION_KINDS: readonly string\[\] = \[([^\]]*)\];$/m.exec(source);
+    expect([...(listed?.[1] ?? "").matchAll(/"([^"]*)"/g)].map(match => match[1])).toEqual([...LISTED_KINDS]);
+  });
+
+  it("control: in each host mode, the listed request of each of the 3 listed definition kinds carrying the caller policy {} is admitted, with the policy {} echoed", () => {
+    for (const hostMode of POLICY_HOST_MODES) {
+      for (const kind of LISTED_KINDS) {
+        const decision = decidedWithPolicy(hostMode, kind, {});
+        expect({ hostMode, kind, decision: decision.decision, policy: decision.decision === "admitted" ? wholeOf(decision.admission.policy) : undefined }).toEqual({ hostMode, kind, decision: "admitted", policy: "frozen object {  }" });
+      }
+    }
+  });
+
+  it("in each host mode, the listed request of each of the 3 listed definition kinds carrying each of the 6 listed array caller policies refuses as malformed-policy, read whole: a frozen refusal holding decision refused, category validation, reason malformed execute policy, policy malformed-policy and the invocation, in that order", () => {
+    expect(ARRAY_POLICIES).toHaveLength(6);
+    for (const hostMode of POLICY_HOST_MODES) {
+      for (const kind of LISTED_KINDS) {
+        for (const policy of ARRAY_POLICIES) expect({ hostMode, kind, policy: JSON.stringify(policy), decision: wholeOf(decidedWithPolicy(hostMode, kind, policy)) }).toEqual({ hostMode, kind, policy: JSON.stringify(policy), decision: MALFORMED_POLICY });
+      }
+    }
   });
 });
