@@ -17,27 +17,62 @@
  *
  * The experiment is test/helpers/parked-dispatch-experiment.ts: the real runWorkflow over the real
  * createClaudeWorkflowHost, with the host's own beforeDispatch option as the barrier and the fixture query seam as the
- * SDK. Each cell that runs the experiment pins the whole reading measured at this tree and then its verdict; a verdict
- * other than invalid-experiment is a reading the experiment's validation accepted. In the judge cells (R015-SEAM,
- * R015-ORACLE, R016-ORACLE) each refused or breaching row varies one facet of a reading the judge otherwise accepts,
- * adjusting only the counts that keep its other checks quiet, so each validation reason and each oracle breach is pinned
- * alone. The cells' other rows are controls: R015-SEAM's two base readings, which the validation accepts, and the oracle
- * cells' readings that meet the oracle (the oracle reading itself, at resume startup, with the host settlements replaced,
- * and in R016-ORACLE with no replacement start).
- * The requirement's "skipped result" is read as the target row's final progress entry marked skipped and a null script
- * value; the host settlement is retained in the reading and is not judged. EAT-R015's "Keep existing run-signal F10
- * and no-abort one-call controls" is pinned outside this file, by test/workbench-mwi-cancel-repro.census.ts over the
- * gate's own test report.
+ * SDK. The requirement's "skipped result" is read as the target row's final progress entry marked skipped and a null
+ * script value. EAT-R015's "Keep existing run-signal F10 and no-abort one-call controls" is pinned outside this file, by
+ * test/workbench-mwi-cancel-repro.census.ts over the gate's own test report.
  *
- * NOT CLAIMED: production reachability. Both beforeDispatch producers registered at this tree are synchronous
- * (src/index.ts, the workflow tool's identity re-check, and src/workbench/hosts/local-detached.ts, the detached basis
- * check), so in those wirings the parked window exists only as the one microtask turn of
+ * PINNED READER SET (cut #3, the enumerate form). This file claims what its cases pin, each by its own rows, and nothing
+ * wider. A reading that no case below holds is NOT CLAIMED.
+ * - Live cells. Each runs one plan, pins the whole reading as measured at this tree, then pins its verdict: R015-SPAWN,
+ *   R015-RESUME, R015-NO-BARRIER, R015-RUN-ABORT, R015-NO-CONTROL, R016-SPAWN, R016-RESUME and R016-HIDDEN-ORIGINAL (which
+ *   also pins that the live retry reading with its original start count set to 0 is refused as uncounted-sdk-start).
+ *   PLAN-DOMAIN does the same for each of the 24 ParkedPlan values (3 controls x 2 startups x 2 routes x 2 barriers), run
+ *   with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again with
+ *   those fields omitted; PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24 plans, each once, in the order
+ *   of the product of the four plan unions as the helper declares them (read with the TypeScript parser).
+ *   INSTRUMENT-NO-TIMER pins, by the same parser, that the helper names no timer global and imports no timers module,
+ *   and that neither the helper nor this suite names vi's mock or doMock.
+ * - Named judge rows. Each row is a reading written out beside the verdict it must get: R015-SEAM, R015-SEAM-ROWS,
+ *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS.
+ * - Judge grids: R015-SEAM-GRID, R015-ORACLE-GRID and R016-ORACLE-GRID. Each grid is the product of the axis lists that
+ *   its builder's comment names (seamGrid, skipOracleGrid, retryOracleGrid), and each of the 17 NOISE profiles is also
+ *   applied to every reading of that product (a profile replaces, together, the fields that builder names as its
+ *   noise). Every reading built either way must get the verdict ruledVerdict gives, and the number of readings is
+ *   pinned. ruledVerdict restates the rules of the helper's header, one rule per line, in the order the verdict lists
+ *   them. GRID-AXES pins the axis lists and NOISE, that each NOISE field takes every value of its list, and that the
+ *   four plan facet lists, ENTRY_STATES and RUN_STATUSES equal the unions their source files declare.
+ * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
+ * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
+ * value, settlement list or run status that no list holds) and a reading outside those products. Production
+ * reachability is NOT CLAIMED either. Both beforeDispatch producers registered at this tree are
+ * synchronous (src/index.ts, the workflow tool's identity re-check, and src/workbench/hosts/local-detached.ts, the
+ * detached basis check), so in those wirings the parked window exists only as the one microtask turn of
  * `await config.beforeDispatch?.()`. This suite measures the host contract, whose option type admits an asynchronous
  * beforeDispatch. Native SDK teardown, a control issued at any other seam, and workflow-wide cancel beyond the F10
- * shape are NOT CLAIMED either.
+ * shape are NOT CLAIMED.
+ * RESIDUAL: none claimed.
  */
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { judgeParkedObservation, type ParkedObservation, runParkedDispatchExperiment } from "./helpers/parked-dispatch-experiment.js";
+import type { WorkflowEntryState } from "../src/workflow/progress.js";
+import {
+  type Breach,
+  type FinalRow,
+  type HostSettlement,
+  type InvalidReason,
+  judgeParkedObservation,
+  type ParkedBarrier,
+  type ParkedControl,
+  type ParkedObservation,
+  type ParkedPlan,
+  type ParkedRoute,
+  type ParkedStartup,
+  type ParkedVerdict,
+  runParkedDispatchExperiment,
+} from "./helpers/parked-dispatch-experiment.js";
 
 /** claude-host.ts: the post-await refusal a run abort produces. */
 const WORKFLOW_ABORTED = "Workflow aborted.";
@@ -106,6 +141,380 @@ function breachesOf(observation: ParkedObservation): readonly string[] {
   const verdict = judgeParkedObservation(observation);
   return verdict.kind === "observed-violation" ? verdict.breaches : [verdict.kind];
 }
+
+/** R015-ORACLE's oracle reading, shared: a valid skip reading that meets the skip oracle. */
+const SKIP_ORACLE: ParkedObservation = {
+  ...PARKED_SKIP_SPAWN,
+  sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 },
+  sdkCallsRecorded: 0,
+  hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }],
+  finalRow: { state: "error", skipped: true, attempt: 1, reason: null },
+  scriptValue: null,
+};
+
+/** R016-ORACLE's oracle reading, shared: a valid retry reading that meets the retry oracle. */
+const RETRY_ORACLE: ParkedObservation = { ...PARKED_RETRY_SPAWN, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 1 };
+
+// The axis lists of the grids and of PLAN-DOMAIN. GRID-AXES pins each one; a value that no list holds is NOT CLAIMED.
+/** Every count axis of the grids. */
+const COUNTS: readonly number[] = [0, 1, 2, 3];
+const CONTROLS = ["skip", "retry", "none"] as const satisfies readonly ParkedControl[];
+const STARTUPS = ["spawn", "resume"] as const satisfies readonly ParkedStartup[];
+const ROUTES = ["per-agent", "run-abort"] as const satisfies readonly ParkedRoute[];
+const BARRIERS = ["parked", "absent"] as const satisfies readonly ParkedBarrier[];
+/** The setup agents each startup's script runs before the target: none at spawn, the origin agent at resume. */
+const SETUP_AGENTS: Readonly<Record<ParkedStartup, number>> = { spawn: 0, resume: 1 };
+/** Every entry state a progress row can carry. */
+const ENTRY_STATES = ["start", "progress", "done", "error"] as const satisfies readonly WorkflowEntryState[];
+/** 17 final rows: none, then each entry state marked skipped and not, at attempt 1 with no reason and at attempt 2 with "user-retry". */
+const FINAL_ROWS: readonly (FinalRow | undefined)[] = [
+  undefined,
+  ...ENTRY_STATES.flatMap(state =>
+    [true, false].flatMap(skipped => [
+      { state, skipped, attempt: 1, reason: null },
+      { state, skipped, attempt: 2, reason: "user-retry" },
+    ]),
+  ),
+];
+/** 9 script values: null, undefined, false, 0, the empty string, an answer, the string "null", an empty object and an empty array. */
+const SCRIPT_VALUES: readonly unknown[] = [null, undefined, false, 0, "", "answer 0", "null", {}, []];
+/** 6 host settlement lists: none; one settled skipped with each host error; one ok; two ok; a cancelled one, then an ok one. */
+const SETTLEMENT_LISTS: readonly (readonly HostSettlement[])[] = [
+  [],
+  [{ ok: false, skipped: true, error: CANCELLED }],
+  [{ ok: false, skipped: true, error: WORKFLOW_ABORTED }],
+  [{ ok: true, skipped: false }],
+  [
+    { ok: true, skipped: false },
+    { ok: true, skipped: false },
+  ],
+  [
+    { ok: false, skipped: true, error: CANCELLED },
+    { ok: true, skipped: false },
+  ],
+];
+/** Every run status a workflow run can end with. */
+const RUN_STATUSES = ["completed", "failed", "killed"] as const satisfies readonly ParkedObservation["runStatus"][];
+/** The control's value: accepted, refused, and none (no per-agent control was called). */
+const CONTROL_VALUES: readonly (boolean | undefined)[] = [true, false, undefined];
+/** The call log's count minus the summed per-attempt start counts: one fewer, equal, one more. */
+const CALL_LOG_OFFSETS: readonly number[] = [-1, 0, 1];
+/** The three ways one target SDK start can fall: in the original, the replacement or a later attempt. */
+const ONE_START_SPLITS: readonly { readonly original: number; readonly replacement: number; readonly extra: number }[] = [
+  { original: 1, replacement: 0, extra: 0 },
+  { original: 0, replacement: 1, extra: 0 },
+  { original: 0, replacement: 0, extra: 1 },
+];
+
+/** Compile-time: true only when the list holds every member of its union (typecheck:test fails otherwise). */
+type Covers<Union, Listed> = [Exclude<Union, Listed>] extends [never] ? true : false;
+const LISTS_COVER_THEIR_UNIONS: readonly [
+  Covers<ParkedControl, (typeof CONTROLS)[number]>,
+  Covers<ParkedStartup, (typeof STARTUPS)[number]>,
+  Covers<ParkedRoute, (typeof ROUTES)[number]>,
+  Covers<ParkedBarrier, (typeof BARRIERS)[number]>,
+  Covers<WorkflowEntryState, (typeof ENTRY_STATES)[number]>,
+  Covers<ParkedObservation["runStatus"], (typeof RUN_STATUSES)[number]>,
+] = [true, true, true, true, true, true];
+
+/** One NOISE profile: values for the fields a grid names as its noise. */
+interface Noise {
+  readonly hostSettlements: readonly HostSettlement[];
+  readonly runStatus: ParkedObservation["runStatus"];
+  readonly barrier: ParkedBarrier;
+  readonly finalRow: FinalRow | undefined;
+  readonly scriptValue: unknown;
+  /** beforeDispatch entries of the original, replacement and later attempts (the setup agents' entries are never noise). */
+  readonly entries: { readonly original: number; readonly replacement: number; readonly extra: number };
+  /** Where R015-SEAM-GRID's one target start falls (its sum, and so the call log check, unchanged). */
+  readonly oneStart: { readonly original: number; readonly replacement: number; readonly extra: number };
+}
+
+/** The entry at position i of a list, wrapping around. */
+function cycle<T>(list: readonly T[], i: number): T {
+  return list[i % list.length];
+}
+
+/** NOISE, 17 profiles: profile i takes FINAL_ROWS[i] and cycles through each other list, so every listed value is used. */
+const NOISE: readonly Noise[] = FINAL_ROWS.map((finalRow, i) => ({
+  hostSettlements: cycle(SETTLEMENT_LISTS, i),
+  runStatus: cycle(RUN_STATUSES, i),
+  barrier: cycle(BARRIERS, i),
+  finalRow,
+  scriptValue: cycle(SCRIPT_VALUES, i),
+  entries: { original: cycle(COUNTS, i), replacement: cycle(COUNTS, i + 1), extra: cycle(COUNTS, i + 2) },
+  oneStart: cycle(ONE_START_SPLITS, i),
+}));
+
+/**
+ * The rules of the helper's header, one per line and in the order the verdict lists them: the verdict every grid
+ * reading must get.
+ */
+function ruledVerdict(reading: ParkedObservation): ParkedVerdict {
+  const setupAgents = SETUP_AGENTS[reading.plan.startup];
+  const targetStarts = reading.sdkStarts.original + reading.sdkStarts.replacement + reading.sdkStarts.extra;
+  const reasons: InvalidReason[] = [];
+  if (reading.plan.route === "run-abort" || reading.runAborted) reasons.push("whole-run-abort");
+  if (!reading.parkedAtControl) reasons.push("control-not-parked");
+  if (reading.queriesBeforeControl !== reading.sdkStarts.setup) reasons.push("dispatch-before-control");
+  if (reading.plan.control === "none" || reading.controlAccepted === undefined) reasons.push("control-not-issued");
+  else if (reading.controlAccepted === false) reasons.push("control-refused");
+  if (reading.hostAbortsWhileParked === 0) reasons.push("control-not-routed-to-host");
+  if (reading.authorizations.setup !== setupAgents || reading.sdkStarts.setup !== setupAgents) reasons.push("setup-drift");
+  if (reading.sdkStarts.setup + targetStarts !== reading.sdkCallsRecorded) reasons.push("uncounted-sdk-start");
+  if (reasons.length > 0) return { kind: "invalid-experiment", reasons };
+  const breaches: Breach[] = [];
+  if (reading.plan.control === "skip") {
+    if (targetStarts >= 1) breaches.push("sdk-started-after-skip");
+    if (reading.finalRow === undefined || !reading.finalRow.skipped) breaches.push("not-settled-skipped");
+    if (reading.scriptValue !== null) breaches.push("script-received-a-value");
+  } else {
+    if (reading.sdkStarts.original >= 1) breaches.push("original-started-after-retry");
+    if (reading.sdkStarts.replacement >= 2 || reading.sdkStarts.extra >= 1) breaches.push("more-than-one-replacement");
+    if (reading.sdkStarts.replacement > reading.authorizations.replacement) breaches.push("replacement-not-authorized");
+  }
+  return breaches.length > 0 ? { kind: "observed-violation", breaches } : { kind: "failed-reproduction" };
+}
+
+/** A grid's count of readings, how many the judge reads otherwise than ruledVerdict, and the first three of those. */
+interface GridTally {
+  readonly readings: number;
+  readonly differing: number;
+  readonly first: readonly string[];
+}
+
+/** The verdict's kind, then its reasons or breaches in order. */
+function verdictParts(verdict: ParkedVerdict): readonly string[] {
+  if (verdict.kind === "invalid-experiment") return [verdict.kind, ...verdict.reasons];
+  if (verdict.kind === "observed-violation") return [verdict.kind, ...verdict.breaches];
+  return [verdict.kind];
+}
+
+/** Equal kinds, equal lists in the same order, and the same keys. */
+function sameVerdict(left: ParkedVerdict, right: ParkedVerdict): boolean {
+  const a = verdictParts(left);
+  const b = verdictParts(right);
+  return Object.keys(left).join() === Object.keys(right).join() && a.length === b.length && a.every((part, i) => part === b[i]);
+}
+
+/** Judges every reading a grid hands to its visitor against ruledVerdict. */
+function tally(grid: (visit: (reading: ParkedObservation) => void) => void): GridTally {
+  let count = 0;
+  let differing = 0;
+  const first: string[] = [];
+  grid(reading => {
+    count += 1;
+    const judged = judgeParkedObservation(reading);
+    const ruled = ruledVerdict(reading);
+    if (sameVerdict(judged, ruled)) return;
+    differing += 1;
+    if (first.length < 3) first.push(`${JSON.stringify({ ...reading, scriptValue: String(reading.scriptValue) })} judged ${JSON.stringify(judged)}, ruled ${JSON.stringify(ruled)}`);
+  });
+  return { readings: count, differing, first };
+}
+
+/** R015-SEAM-GRID's noise, every NOISE field: settlements, run status, barrier, final row, script value, the target's entries and where its one start falls. */
+function seamNoise(reading: ParkedObservation, noise: Noise): ParkedObservation {
+  return {
+    ...reading,
+    plan: { ...reading.plan, barrier: noise.barrier },
+    authorizations: { setup: reading.authorizations.setup, ...noise.entries },
+    sdkStarts: { setup: reading.sdkStarts.setup, ...noise.oneStart },
+    hostSettlements: noise.hostSettlements,
+    finalRow: noise.finalRow,
+    runStatus: noise.runStatus,
+    scriptValue: noise.scriptValue,
+  };
+}
+
+/** R015-ORACLE-GRID's noise: the host settlements, the run status, the barrier and the target's beforeDispatch entries. */
+function skipNoise(reading: ParkedObservation, noise: Noise): ParkedObservation {
+  return {
+    ...reading,
+    plan: { ...reading.plan, barrier: noise.barrier },
+    authorizations: { setup: reading.authorizations.setup, ...noise.entries },
+    hostSettlements: noise.hostSettlements,
+    runStatus: noise.runStatus,
+  };
+}
+
+/** R016-ORACLE-GRID's noise: the host settlements, the run status, the barrier, the final row and the script value. */
+function retryNoise(reading: ParkedObservation, noise: Noise): ParkedObservation {
+  return {
+    ...reading,
+    plan: { ...reading.plan, barrier: noise.barrier },
+    hostSettlements: noise.hostSettlements,
+    finalRow: noise.finalRow,
+    runStatus: noise.runStatus,
+    scriptValue: noise.scriptValue,
+  };
+}
+
+/**
+ * R015-SEAM-GRID: ROUTES x run signal (false, true) x parkedAtControl (true, false) x CONTROLS x CONTROL_VALUES x COUNTS
+ * of parked aborts x STARTUPS x COUNTS of starts at the control x COUNTS of setup SDK starts x COUNTS of setup
+ * beforeDispatch entries x CALL_LOG_OFFSETS = 110592 readings, each built on PARKED_SKIP_SPAWN with one original start
+ * and one original entry, then each of them under every NOISE profile (seamNoise, which also moves that one start to
+ * the replacement or a later attempt, its sum unchanged).
+ */
+function seamGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const route of ROUTES) {
+    for (const runAborted of [false, true]) {
+      for (const parkedAtControl of [true, false]) {
+        for (const control of CONTROLS) {
+          for (const controlAccepted of CONTROL_VALUES) {
+            for (const hostAbortsWhileParked of COUNTS) {
+              for (const startup of STARTUPS) {
+                for (const queriesBeforeControl of COUNTS) {
+                  for (const setupStarts of COUNTS) {
+                    for (const setupEntries of COUNTS) {
+                      for (const offset of CALL_LOG_OFFSETS) {
+                        const reading: ParkedObservation = {
+                          ...PARKED_SKIP_SPAWN,
+                          plan: { control, startup, route, barrier: "parked" },
+                          parkedAtControl,
+                          queriesBeforeControl,
+                          controlAccepted,
+                          hostAbortsWhileParked,
+                          runAborted,
+                          authorizations: { setup: setupEntries, original: 1, replacement: 0, extra: 0 },
+                          sdkStarts: { setup: setupStarts, original: 1, replacement: 0, extra: 0 },
+                          sdkCallsRecorded: setupStarts + 1 + offset,
+                        };
+                        visit(reading);
+                        for (const noise of NOISE) visit(seamNoise(reading, noise));
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * R015-ORACLE-GRID: STARTUPS x COUNTS of original, replacement and later target starts x FINAL_ROWS x SCRIPT_VALUES =
+ * 19584 skip readings that pass the validation, each built on SKIP_ORACLE at its startup's setup counts, then each of
+ * them under every NOISE profile (skipNoise).
+ */
+function skipOracleGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const startup of STARTUPS) {
+    const setup = SETUP_AGENTS[startup];
+    for (const original of COUNTS) {
+      for (const replacement of COUNTS) {
+        for (const extra of COUNTS) {
+          for (const finalRow of FINAL_ROWS) {
+            for (const scriptValue of SCRIPT_VALUES) {
+              const reading: ParkedObservation = {
+                ...SKIP_ORACLE,
+                plan: { ...SKIP_ORACLE.plan, startup },
+                queriesBeforeControl: setup,
+                authorizations: { ...SKIP_ORACLE.authorizations, setup },
+                sdkStarts: { setup, original, replacement, extra },
+                sdkCallsRecorded: setup + original + replacement + extra,
+                finalRow,
+                scriptValue,
+              };
+              visit(reading);
+              for (const noise of NOISE) visit(skipNoise(reading, noise));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * R016-ORACLE-GRID: STARTUPS x COUNTS of original, replacement and later starts x COUNTS of original, replacement and
+ * later beforeDispatch entries = 8192 retry readings that pass the validation, each built on RETRY_ORACLE at its
+ * startup's setup counts, then each of them under every NOISE profile (retryNoise).
+ */
+function retryOracleGrid(visit: (reading: ParkedObservation) => void): void {
+  for (const startup of STARTUPS) {
+    const setup = SETUP_AGENTS[startup];
+    for (const original of COUNTS) {
+      for (const replacement of COUNTS) {
+        for (const extra of COUNTS) {
+          for (const entriesOriginal of COUNTS) {
+            for (const entriesReplacement of COUNTS) {
+              for (const entriesExtra of COUNTS) {
+                const reading: ParkedObservation = {
+                  ...RETRY_ORACLE,
+                  plan: { ...RETRY_ORACLE.plan, startup },
+                  queriesBeforeControl: setup,
+                  authorizations: { setup, original: entriesOriginal, replacement: entriesReplacement, extra: entriesExtra },
+                  sdkStarts: { setup, original, replacement, extra },
+                  sdkCallsRecorded: setup + original + replacement + extra,
+                };
+                visit(reading);
+                for (const noise of NOISE) visit(retryNoise(reading, noise));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/** A grid case's timeout: each grid judges hundreds of thousands of readings, and a loaded gate host is slow. */
+const GRID_TIMEOUT = 300_000;
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const HELPER = "test/helpers/parked-dispatch-experiment.ts";
+const SUITE = "test/workbench-mwi-cancel-repro.test.ts";
+
+function parse(file: string): ts.SourceFile {
+  return ts.createSourceFile(file, readFileSync(join(ROOT, file), "utf8"), ts.ScriptTarget.ES2022, true);
+}
+
+/**
+ * The string literals of a union type as its source file declares it, in declaration order (read with the TypeScript
+ * parser): a type alias named owner, or, given a property, that property of the interface named owner. Empty when the
+ * declaration is not found, so a failed read cannot match a list.
+ */
+function declaredUnion(file: string, owner: string, property?: string): readonly string[] {
+  let found: ts.TypeNode | undefined;
+  const visit = (node: ts.Node): void => {
+    if (property === undefined && ts.isTypeAliasDeclaration(node) && node.name.text === owner) found = node.type;
+    if (property !== undefined && ts.isInterfaceDeclaration(node) && node.name.text === owner) {
+      for (const member of node.members) {
+        if (ts.isPropertySignature(member) && ts.isIdentifier(member.name) && member.name.text === property) found = member.type;
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(parse(file));
+  const union = found;
+  if (union === undefined || !ts.isUnionTypeNode(union)) return [];
+  return union.types.flatMap(member => (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal) ? [member.literal.text] : []));
+}
+
+/** Every identifier a source file holds (read with the TypeScript parser; comments and string literals hold none). */
+function identifiersOf(file: string): ReadonlySet<string> {
+  const names = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) names.add(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(parse(file));
+  return names;
+}
+
+/** Every module a source file imports, by its specifier. */
+function importedModules(file: string): readonly string[] {
+  return parse(file).statements.flatMap(statement =>
+    ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) ? [statement.moduleSpecifier.text] : [],
+  );
+}
+
+/** The timer globals the helper's header says the experiment never arms. */
+const TIMER_GLOBALS: readonly string[] = ["setTimeout", "setInterval", "setImmediate"];
 
 describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)", () => {
   it("R015-SPAWN fresh spawn: the seam validates, and the skip is lost: one SDK start, settled done, the script got the answer", async () => {
@@ -190,7 +599,7 @@ describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is park
     expect(judgeParkedObservation(observation)).toEqual({ kind: "invalid-experiment", reasons: ["control-not-issued", "control-not-routed-to-host"] });
   });
 
-  it("R015-ORACLE a valid skip reading meets the oracle only with no target SDK start, a present final row marked skipped and a null script value, and each breach alone is named", () => {
+  it("R015-ORACLE named rows: the oracle reading, at both startups and with its host settlements replaced, meets the skip oracle, and each row that varies one part of it names that part's breach", () => {
     const oracle: ParkedObservation = {
       ...PARKED_SKIP_SPAWN,
       sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 },
@@ -212,11 +621,10 @@ describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is park
         sdkCallsRecorded: 1,
       }),
     ).toEqual(["failed-reproduction"]);
-    // The host settlements are retained, not judged: replacing them leaves the verdict as it was.
+    // The oracle reading with its host settlements replaced keeps its verdict (the -ROWS case and the grid replace them on more readings).
     expect(breachesOf({ ...oracle, hostSettlements: [] })).toEqual(["failed-reproduction"]);
     expect(breachesOf({ ...oracle, hostSettlements: PARKED_SKIP_SPAWN.hostSettlements })).toEqual(["failed-reproduction"]);
-    // One breach at a time, each read from its own field. An SDK start in each target attempt: the original, the
-    // replacement and a later one.
+    // One breach per row. An SDK start in each target attempt: the original, the replacement and a later one.
     expect(breachesOf({ ...oracle, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1 })).toEqual(["sdk-started-after-skip"]);
     expect(breachesOf({ ...oracle, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 1 })).toEqual(["sdk-started-after-skip"]);
     expect(breachesOf({ ...oracle, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 1 }, sdkCallsRecorded: 1 })).toEqual(["sdk-started-after-skip"]);
@@ -231,7 +639,7 @@ describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is park
     expect(breachesOf({ ...oracle, scriptValue: "" })).toEqual(["script-received-a-value"]);
   });
 
-  it("R015-SEAM the validation refuses each wrong-seam facet alone by its one reason, before any oracle comparison (the setup and dispatch counts at both startups)", () => {
+  it("R015-SEAM named rows: both base readings pass the validation, and each row that varies one wrong-seam facet of a base reading is refused by that facet's one reason, with no oracle breach reported", () => {
     // Controls: both base readings pass the validation (each is an observed violation), so each row below is refused
     // for the one facet it varies, and its oracle breaches are never reported.
     expect(reasonsOf(PARKED_SKIP_SPAWN)).toEqual(["observed-violation"]);
@@ -261,6 +669,57 @@ describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is park
     expect(reasonsOf({ ...PARKED_SKIP_RESUME, queriesBeforeControl: 0, sdkStarts: { ...PARKED_SKIP_RESUME.sdkStarts, setup: 0 }, sdkCallsRecorded: 1 })).toEqual(["setup-drift"]);
     // An SDK start the per-attempt counts leave out.
     expect(reasonsOf({ ...PARKED_SKIP_SPAWN, sdkCallsRecorded: 2 })).toEqual(["uncounted-sdk-start"]);
+  });
+
+  it("R015-SEAM-ROWS named rows at the counts and directions R015-SEAM leaves open: 2 or 3 parked aborts pass the validation, fewer starts at the control than the setup agents' own are dispatch-before-control as more are, and start counts summing to more than the call log are uncounted-sdk-start", () => {
+    // Refusal #2 U4 (W-M4): 2 and 3 abortAgent calls naming the target while it was parked, at both startups and for a retry.
+    expect(reasonsOf({ ...PARKED_SKIP_SPAWN, hostAbortsWhileParked: 2 })).toEqual(["observed-violation"]);
+    expect(reasonsOf({ ...PARKED_SKIP_SPAWN, hostAbortsWhileParked: 3 })).toEqual(["observed-violation"]);
+    expect(reasonsOf({ ...PARKED_SKIP_RESUME, hostAbortsWhileParked: 2 })).toEqual(["observed-violation"]);
+    expect(reasonsOf({ ...PARKED_RETRY_SPAWN, hostAbortsWhileParked: 2 })).toEqual(["observed-violation"]);
+    // Refusal #2 F5 (W-E1): at resume, 0 starts at the control against the origin agent's 1; then 2 and 3 at spawn.
+    expect(reasonsOf({ ...PARKED_SKIP_RESUME, queriesBeforeControl: 0 })).toEqual(["dispatch-before-control"]);
+    expect(reasonsOf({ ...PARKED_SKIP_SPAWN, queriesBeforeControl: 2 })).toEqual(["dispatch-before-control"]);
+    expect(reasonsOf({ ...PARKED_SKIP_SPAWN, queriesBeforeControl: 3 })).toEqual(["dispatch-before-control"]);
+    // Per-attempt start counts that sum to more starts than the fixture SDK's own call log holds, at both startups.
+    expect(reasonsOf({ ...PARKED_SKIP_SPAWN, sdkCallsRecorded: 0 })).toEqual(["uncounted-sdk-start"]);
+    expect(reasonsOf({ ...PARKED_SKIP_RESUME, sdkCallsRecorded: 1 })).toEqual(["uncounted-sdk-start"]);
+  });
+
+  it("R015-ORACLE-ROWS named rows of the skip oracle: the skipped mark alone decides the final-row part at each entry state, 2 or 3 target starts break it, and each breaking row keeps its verdict under each of the six settlement lists", () => {
+    // Refusal #2 U1 (W-M1A, W-M1B): the skipped mark varied alone at each of the four entry states, then at attempt 2.
+    for (const state of ENTRY_STATES) {
+      expect(breachesOf({ ...SKIP_ORACLE, finalRow: { state, skipped: true, attempt: 1, reason: null } })).toEqual(["failed-reproduction"]);
+      expect(breachesOf({ ...SKIP_ORACLE, finalRow: { state, skipped: false, attempt: 1, reason: null } })).toEqual(["not-settled-skipped"]);
+    }
+    expect(breachesOf({ ...SKIP_ORACLE, finalRow: { state: "done", skipped: true, attempt: 2, reason: "user-retry" } })).toEqual(["failed-reproduction"]);
+    expect(breachesOf({ ...SKIP_ORACLE, finalRow: { state: "error", skipped: false, attempt: 2, reason: "user-retry" } })).toEqual(["not-settled-skipped"]);
+    // Refusal #2 U4 (W-M5): two target SDK starts in each pairing, two in one attempt, and three.
+    expect(breachesOf({ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2 })).toEqual(["sdk-started-after-skip"]);
+    expect(breachesOf({ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 1 }, sdkCallsRecorded: 2 })).toEqual(["sdk-started-after-skip"]);
+    expect(breachesOf({ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 1 }, sdkCallsRecorded: 2 })).toEqual(["sdk-started-after-skip"]);
+    expect(breachesOf({ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 2, replacement: 0, extra: 0 }, sdkCallsRecorded: 2 })).toEqual(["sdk-started-after-skip"]);
+    expect(breachesOf({ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 1 }, sdkCallsRecorded: 3 })).toEqual(["sdk-started-after-skip"]);
+    // Refusal #2 U3 (W-M6): each single-breach row and the live three-breach reading, under each settlement list.
+    const breaking: ReadonlyArray<readonly [ParkedObservation, readonly string[]]> = [
+      [{ ...SKIP_ORACLE, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1 }, ["sdk-started-after-skip"]],
+      [{ ...SKIP_ORACLE, finalRow: PARKED_SKIP_SPAWN.finalRow }, ["not-settled-skipped"]],
+      [{ ...SKIP_ORACLE, finalRow: undefined }, ["not-settled-skipped"]],
+      [{ ...SKIP_ORACLE, scriptValue: "answer 0" }, ["script-received-a-value"]],
+      [PARKED_SKIP_SPAWN, ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"]],
+    ];
+    for (const [reading, breaches] of breaking) {
+      for (const hostSettlements of SETTLEMENT_LISTS) expect(breachesOf({ ...reading, hostSettlements })).toEqual(breaches);
+    }
+    for (const hostSettlements of SETTLEMENT_LISTS) expect(breachesOf({ ...SKIP_ORACLE, hostSettlements })).toEqual(["failed-reproduction"]);
+  });
+
+  it("R015-SEAM-GRID each of the 110592 readings of the seam grid, and each of them under every NOISE profile, gets the verdict ruledVerdict gives", { timeout: GRID_TIMEOUT }, () => {
+    expect(tally(seamGrid)).toEqual({ readings: 110_592 * (1 + NOISE.length), differing: 0, first: [] });
+  });
+
+  it("R015-ORACLE-GRID each of the 19584 readings of the skip oracle grid, and each of them under every NOISE profile, gets the verdict ruledVerdict gives", { timeout: GRID_TIMEOUT }, () => {
+    expect(tally(skipOracleGrid)).toEqual({ readings: 19_584 * (1 + NOISE.length), differing: 0, first: [] });
   });
 });
 
@@ -308,7 +767,7 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
     expect(judgeParkedObservation(finalSuccessOnly)).toEqual({ kind: "invalid-experiment", reasons: ["uncounted-sdk-start"] });
   });
 
-  it("R016-ORACLE a valid retry reading meets the oracle only with no original start, at most one replacement start and none later, each replacement start authorized, and each breach alone is named", () => {
+  it("R016-ORACLE named rows: the oracle reading, with no replacement start, at resume and with no host settlements, meets the retry oracle, and each row that varies it names its breaches", () => {
     const oracle: ParkedObservation = { ...PARKED_RETRY_SPAWN, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 1 };
 
     expect(breachesOf(oracle)).toEqual(["failed-reproduction"]);
@@ -327,9 +786,9 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
         sdkCallsRecorded: 2,
       }),
     ).toEqual(["failed-reproduction"]);
-    // The host settlements are retained, not judged: replacing them leaves the verdict as it was.
+    // The oracle reading with its host settlements replaced keeps its verdict (the -ROWS case and the grid replace them on more readings).
     expect(breachesOf({ ...oracle, hostSettlements: [] })).toEqual(["failed-reproduction"]);
-    // One breach at a time, each read from its own field.
+    // One breach per row.
     expect(breachesOf({ ...oracle, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2 })).toEqual(["original-started-after-retry"]);
     expect(
       breachesOf({ ...oracle, authorizations: { ...oracle.authorizations, replacement: 2 }, sdkStarts: { setup: 0, original: 0, replacement: 2, extra: 0 }, sdkCallsRecorded: 2 }),
@@ -341,5 +800,390 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
       "more-than-one-replacement",
       "replacement-not-authorized",
     ]);
+  });
+
+  it("R016-ORACLE-ROWS named rows of the retry oracle: beside later beforeDispatch entries a later start still breaks it and a replacement start without a replacement entry is still unauthorized, 2 or 3 starts break the parts that count them, and each breaking row keeps its verdict under each of the six settlement lists", () => {
+    // Refusal #2 U2 (W-M2): a start in a later attempt beside a later beforeDispatch entry, with and without the replacement start.
+    expect(
+      breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 1, extra: 1 }, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 1 }, sdkCallsRecorded: 2 }),
+    ).toEqual(["more-than-one-replacement"]);
+    expect(
+      breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 1, extra: 1 }, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 1 }, sdkCallsRecorded: 1 }),
+    ).toEqual(["more-than-one-replacement"]);
+    expect(breachesOf({ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 1 }, sdkCallsRecorded: 1 })).toEqual(["more-than-one-replacement"]);
+    // Refusal #2 U2 (W-M3): one replacement start and no replacement entry, beside a later entry, two original entries, and both.
+    expect(breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 0, extra: 1 } })).toEqual(["replacement-not-authorized"]);
+    expect(breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 2, replacement: 0, extra: 0 } })).toEqual(["replacement-not-authorized"]);
+    expect(breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 2, replacement: 0, extra: 2 } })).toEqual(["replacement-not-authorized"]);
+    // Two replacement starts under one replacement entry and one later entry break both parts; later entries alone break nothing.
+    expect(
+      breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 1, extra: 1 }, sdkStarts: { setup: 0, original: 0, replacement: 2, extra: 0 }, sdkCallsRecorded: 2 }),
+    ).toEqual(["more-than-one-replacement", "replacement-not-authorized"]);
+    expect(breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 1, extra: 2 } })).toEqual(["failed-reproduction"]);
+    // Refusal #2 U4: 2 and 3 original starts, 2 later starts, and 3 replacement starts under 3 replacement entries.
+    expect(breachesOf({ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 2, replacement: 1, extra: 0 }, sdkCallsRecorded: 3 })).toEqual(["original-started-after-retry"]);
+    expect(breachesOf({ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 3, replacement: 0, extra: 0 }, sdkCallsRecorded: 3 })).toEqual(["original-started-after-retry"]);
+    expect(breachesOf({ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 2 }, sdkCallsRecorded: 3 })).toEqual(["more-than-one-replacement"]);
+    expect(
+      breachesOf({ ...RETRY_ORACLE, authorizations: { setup: 0, original: 1, replacement: 3, extra: 0 }, sdkStarts: { setup: 0, original: 0, replacement: 3, extra: 0 }, sdkCallsRecorded: 3 }),
+    ).toEqual(["more-than-one-replacement"]);
+    // Refusal #2 U3 (W-M6B): each single-breach row and the live reading, under each settlement list.
+    const breaking: ReadonlyArray<readonly [ParkedObservation, readonly string[]]> = [
+      [{ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2 }, ["original-started-after-retry"]],
+      [{ ...RETRY_ORACLE, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 1 }, sdkCallsRecorded: 2 }, ["more-than-one-replacement"]],
+      [{ ...RETRY_ORACLE, authorizations: { ...RETRY_ORACLE.authorizations, replacement: 0 } }, ["replacement-not-authorized"]],
+      [PARKED_RETRY_SPAWN, ["original-started-after-retry"]],
+    ];
+    for (const [reading, breaches] of breaking) {
+      for (const hostSettlements of SETTLEMENT_LISTS) expect(breachesOf({ ...reading, hostSettlements })).toEqual(breaches);
+    }
+    for (const hostSettlements of SETTLEMENT_LISTS) expect(breachesOf({ ...RETRY_ORACLE, hostSettlements })).toEqual(["failed-reproduction"]);
+  });
+
+  it("R016-ORACLE-GRID each of the 8192 readings of the retry oracle grid, and each of them under every NOISE profile, gets the verdict ruledVerdict gives", { timeout: GRID_TIMEOUT }, () => {
+    expect(tally(retryOracleGrid)).toEqual({ readings: 8_192 * (1 + NOISE.length), differing: 0, first: [] });
+  });
+});
+
+/** One ParkedPlan value's reading and verdict, as measured at this tree. */
+interface PlanRow {
+  readonly reading: ParkedObservation;
+  readonly verdict: ParkedVerdict;
+}
+
+/** control/startup/route/barrier, the plan's id in PLAN-DOMAIN. */
+function planId(plan: ParkedObservation["plan"]): string {
+  return `${plan.control}/${plan.startup}/${plan.route}/${plan.barrier}`;
+}
+
+/** PLAN-DOMAIN's table: every ParkedPlan value in CONTROLS x STARTUPS x ROUTES x BARRIERS order, its whole reading as measured, then its verdict. */
+const PLAN_ROWS: readonly PlanRow[] = [
+  {
+    reading: {
+      plan: { control: "skip", startup: "spawn", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+    },
+    verdict: { kind: "observed-violation", breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "spawn", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "error", skipped: true, attempt: 1, reason: null }, runStatus: "completed", scriptValue: null,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "spawn", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: undefined, hostAbortsWhileParked: 1, runAborted: true,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 0,
+      hostSettlements: [{ ok: false, skipped: true, error: WORKFLOW_ABORTED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "spawn", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: true,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "resume", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "observed-violation", breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "resume", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: true, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "error", skipped: true, attempt: 1, reason: null }, runStatus: "completed", scriptValue: null,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "resume", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 1, runAborted: true,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: WORKFLOW_ABORTED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued"] },
+  },
+  {
+    reading: {
+      plan: { control: "skip", startup: "resume", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: true,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "spawn", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "observed-violation", breaches: ["original-started-after-retry"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "spawn", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "spawn", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: undefined, hostAbortsWhileParked: 1, runAborted: true,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 0,
+      hostSettlements: [{ ok: false, skipped: true, error: WORKFLOW_ABORTED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "spawn", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: true,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 3,
+      hostSettlements: [{ ok: true, skipped: false }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 2",
+    },
+    verdict: { kind: "observed-violation", breaches: ["original-started-after-retry"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: true, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 3,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 2",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "resume", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 1, runAborted: true,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: WORKFLOW_ABORTED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued"] },
+  },
+  {
+    reading: {
+      plan: { control: "retry", startup: "resume", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: true,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "start", skipped: false, attempt: 1, reason: null }, runStatus: "killed", scriptValue: undefined,
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "spawn", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "spawn", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "spawn", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "spawn", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "resume", route: "per-agent", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "resume", route: "per-agent", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "resume", route: "run-abort", barrier: "parked" },
+      parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-issued", "control-not-routed-to-host"] },
+  },
+  {
+    reading: {
+      plan: { control: "none", startup: "resume", route: "run-abort", barrier: "absent" },
+      parkedAtControl: false, queriesBeforeControl: 2, controlAccepted: undefined, hostAbortsWhileParked: 0, runAborted: false,
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+    },
+    verdict: { kind: "invalid-experiment", reasons: ["whole-run-abort", "control-not-parked", "dispatch-before-control", "control-not-issued", "control-not-routed-to-host"] },
+  },
+];
+
+describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", () => {
+  it("GRID-AXES the axis lists and the 17 NOISE profiles, frozen; the four plan facet lists, ENTRY_STATES and RUN_STATUSES each equal the union their source file declares (read with the TypeScript parser); each NOISE field takes every value of its list", () => {
+    expect({
+      counts: COUNTS,
+      controls: CONTROLS,
+      startups: STARTUPS,
+      routes: ROUTES,
+      barriers: BARRIERS,
+      setupAgents: SETUP_AGENTS,
+      entryStates: ENTRY_STATES,
+      finalRows: FINAL_ROWS.length,
+      scriptValues: SCRIPT_VALUES.length,
+      settlementLists: SETTLEMENT_LISTS.length,
+      runStatuses: RUN_STATUSES,
+      controlValues: CONTROL_VALUES,
+      callLogOffsets: CALL_LOG_OFFSETS,
+      noise: NOISE.length,
+      listsCoverTheirUnions: LISTS_COVER_THEIR_UNIONS,
+    }).toEqual({
+      counts: [0, 1, 2, 3],
+      controls: ["skip", "retry", "none"],
+      startups: ["spawn", "resume"],
+      routes: ["per-agent", "run-abort"],
+      barriers: ["parked", "absent"],
+      setupAgents: { spawn: 0, resume: 1 },
+      entryStates: ["start", "progress", "done", "error"],
+      finalRows: 17,
+      scriptValues: 9,
+      settlementLists: 6,
+      runStatuses: ["completed", "failed", "killed"],
+      controlValues: [true, false, undefined],
+      callLogOffsets: [-1, 0, 1],
+      noise: 17,
+      listsCoverTheirUnions: [true, true, true, true, true, true],
+    });
+    // The outside anchor: the unions as the helper, src/workflow/progress.ts and src/workflow/runtime.ts declare them.
+    expect({
+      controls: declaredUnion(HELPER, "ParkedControl"),
+      startups: declaredUnion(HELPER, "ParkedStartup"),
+      routes: declaredUnion(HELPER, "ParkedRoute"),
+      barriers: declaredUnion(HELPER, "ParkedBarrier"),
+      entryStates: declaredUnion("src/workflow/progress.ts", "WorkflowEntryState"),
+      runStatuses: declaredUnion("src/workflow/runtime.ts", "WorkflowRunResult", "status"),
+    }).toEqual({ controls: CONTROLS, startups: STARTUPS, routes: ROUTES, barriers: BARRIERS, entryStates: ENTRY_STATES, runStatuses: RUN_STATUSES });
+    const distinct = (values: readonly unknown[]): number => new Set(values.map(value => JSON.stringify(value) ?? "undefined")).size;
+    expect({
+      finalRows: distinct(FINAL_ROWS),
+      scriptValues: distinct(SCRIPT_VALUES),
+      settlementLists: distinct(SETTLEMENT_LISTS),
+      noiseFinalRows: distinct(NOISE.map(noise => noise.finalRow)),
+      noiseScriptValues: distinct(NOISE.map(noise => noise.scriptValue)),
+      noiseSettlementLists: distinct(NOISE.map(noise => noise.hostSettlements)),
+      noiseRunStatuses: distinct(NOISE.map(noise => noise.runStatus)),
+      noiseBarriers: distinct(NOISE.map(noise => noise.barrier)),
+      noiseOriginalEntries: distinct(NOISE.map(noise => noise.entries.original)),
+      noiseReplacementEntries: distinct(NOISE.map(noise => noise.entries.replacement)),
+      noiseLaterEntries: distinct(NOISE.map(noise => noise.entries.extra)),
+      noiseOneStartSplits: distinct(NOISE.map(noise => noise.oneStart)),
+    }).toEqual({
+      finalRows: 17,
+      scriptValues: 9,
+      settlementLists: 6,
+      noiseFinalRows: 17,
+      noiseScriptValues: 9,
+      noiseSettlementLists: 6,
+      noiseRunStatuses: 3,
+      noiseBarriers: 2,
+      noiseOriginalEntries: 4,
+      noiseReplacementEntries: 4,
+      noiseLaterEntries: 4,
+      noiseOneStartSplits: 3,
+    });
+  });
+
+  it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
+    const [controls, startups, routes, barriers] = ["ParkedControl", "ParkedStartup", "ParkedRoute", "ParkedBarrier"].map(name => declaredUnion(HELPER, name));
+    const product = controls.flatMap(control => startups.flatMap(startup => routes.flatMap(route => barriers.map(barrier => `${control}/${startup}/${route}/${barrier}`))));
+    expect(product).toHaveLength(24);
+    expect(PLAN_ROWS.map(row => planId(row.reading.plan))).toEqual(product);
+  });
+
+  it("INSTRUMENT-NO-TIMER the helper's source, read with the TypeScript parser, names no timer global and imports no timers module, and neither it nor this suite names vi's mock or doMock; the same read names runWorkflow, so it is not empty", () => {
+    const helper = identifiersOf(HELPER);
+    const suite = identifiersOf(SUITE);
+    expect({
+      timers: TIMER_GLOBALS.filter(name => helper.has(name)),
+      timerModules: importedModules(HELPER).filter(specifier => ["timers", "node:timers", "timers/promises", "node:timers/promises"].includes(specifier)),
+      mocks: ["mock", "doMock"].filter(name => helper.has(name) || suite.has(name)),
+      readsRunWorkflow: helper.has("runWorkflow"),
+    }).toEqual({ timers: [], timerModules: [], mocks: [], readsRunWorkflow: true });
+  });
+
+  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict", { timeout: GRID_TIMEOUT }, async () => {
+    for (const row of PLAN_ROWS) {
+      const { control, startup, route, barrier } = row.reading.plan;
+      const given: ParkedPlan = row.reading.plan;
+      // The defaults are route "per-agent" and barrier "parked": 18 of the 24 plans hold at least one of them.
+      const defaulted: ParkedPlan | undefined =
+        route === "per-agent" || barrier === "parked" ? { control, startup, ...(route === "per-agent" ? {} : { route }), ...(barrier === "parked" ? {} : { barrier }) } : undefined;
+      for (const [input, label] of [
+        [given, planId(row.reading.plan)],
+        [defaulted, `${planId(row.reading.plan)} (defaults omitted)`],
+      ] as const) {
+        if (input === undefined) continue;
+        const observation = await runParkedDispatchExperiment(input);
+        expect.soft(observation, label).toEqual(row.reading);
+        expect.soft(judgeParkedObservation(observation), label).toEqual(row.verdict);
+      }
+    }
   });
 });

@@ -4,12 +4,14 @@
  * 0b25e14e; the triage tree stays master-only). The cases are test/workbench-mwi-cancel-repro.test.ts.
  *
  * runParkedDispatchExperiment drives the REAL runWorkflow over the REAL createClaudeWorkflowHost through the host's
- * documented fixture query seam (FakeClaudeSdk). The SDK module is never mocked, and the experiment arms no timer: every
- * wait it makes is on an event the code under test emits. The barrier is the host's own beforeDispatch option: the
- * target attempt's call parks the host inside `await config.beforeDispatch?.()` until the experiment releases it. While
+ * documented fixture query seam (FakeClaudeSdk). The SDK module is never mocked, and the experiment arms no timer: the
+ * suite's INSTRUMENT-NO-TIMER reads this source for the timer globals and the timers modules, and this source and the
+ * suite's for vi's mock and doMock. The barrier is the host's own beforeDispatch option: the target attempt's call parks
+ * the host inside `await config.beforeDispatch?.()` until the experiment releases it. While
  * the host is parked the experiment issues the runtime's per-agent control (WorkflowControl's method named by the plan,
  * skip or retry, by row index), then releases the barrier and records what followed. Every fixture query's script
  * pushes a success and ends its stream at once (the F5 fixture shape of test/workbench-claude-cancel-faults.test.ts).
+ * The suite's PLAN-DOMAIN case pins the whole reading of each of the 24 ParkedPlan values.
  *
  * Recorded, never inferred: every beforeDispatch entry; every query() start, attributed to the attempt whose entry
  * preceded it; the fixture SDK's own call log, kept apart from that attribution; the abortAgent calls that reach the
@@ -17,30 +19,36 @@
  * the host's settlement of each target attempt; the target row's final progress entry; the run status; and the value
  * the script received.
  *
- * judgeParkedObservation is the experiment's validation, then its oracle. The validation refuses a reading taken at the
- * wrong seam, and names each reason it finds (a reading can carry several):
+ * judgeParkedObservation is the experiment's validation, then its oracle, by the rules below. Every rule is CLAIMED only
+ * over the readings test/workbench-mwi-cancel-repro.test.ts holds, and nothing wider: its named judge rows, its three
+ * judge grids (whose axis lists bound every count to 0, 1, 2 or 3 and every other field to the values they list) and
+ * its 24 plan readings; that file's header lists them. A reading none of those cases holds is NOT CLAIMED.
+ *
+ * The validation refuses a reading taken at the wrong seam, and names each reason it finds, in this order:
+ * - whole-run-abort: the plan routes the control as a run abort, or the run's own signal is aborted;
  * - control-not-parked: the target's beforeDispatch was not parked when the control was issued;
- * - dispatch-before-control: more query() starts had been made when the control was issued than the setup agents' own
- *   (a target SDK start before the control);
- * - whole-run-abort: a whole-run abort, in either of two facets - the plan routes the control as a run abort, or the
- *   run's own signal is aborted;
- * - control-not-issued: no per-agent control, in either of two facets - the plan's control is "none" (whatever the
- *   control's value reads, such a plan is this reason and never control-refused), or the reading holds no value from a
- *   per-agent control (none was called, as under a run-abort route);
- * - control-refused: the runtime's control returned false;
- * - control-not-routed-to-host: no abortAgent call naming the target reached the host while it was parked;
- * - setup-drift: the setup agents drifted, in either of two facets - their beforeDispatch entries, or their SDK starts,
- *   differ in number from the setup agents the startup's script runs (none at spawn, the one origin agent at resume);
- * - uncounted-sdk-start: the per-attempt start counts sum to fewer starts than the fixture SDK's own call log holds (an
- *   SDK start the per-attempt counts leave out).
- * Only a reading with no reason is compared with the safety oracle the requirements state, and the verdict names each
- * part a reading breaks. A skip meets the oracle with no SDK start in any target attempt (the original, the
- * replacement, or a later one; the setup agents' own starts are not target starts), the target row's final progress
- * entry present and marked skipped, and a script value that is null (undefined, false, 0 and the empty string are not).
- * A retry meets it with no start of the original attempt, at most one start of the replacement attempt and none in a
- * later one, and no more replacement starts than replacement beforeDispatch entries (each replacement start separately
- * authorized). The verdict is invalid-experiment with its reasons, or, for a reading with none, observed-violation with
- * its breaches or failed-reproduction. The host settlements are recorded, never judged. This module fixes nothing.
+ * - dispatch-before-control: the query() starts made when the control was issued differ in number from the setup
+ *   agents' own starts (more of them is a target SDK start before the control);
+ * - control-not-issued: the plan's control is "none" (whatever the control's value reads), or the reading holds no
+ *   value from a per-agent control (none was called, as under a run-abort route);
+ * - control-refused: the control was issued, and the runtime's control returned false;
+ * - control-not-routed-to-host: no abortAgent call naming the target reached the host while it was parked (a count of
+ *   0 is this reason; a count of 1, 2 or 3 is not);
+ * - setup-drift: the setup agents' beforeDispatch entries, or their SDK starts, differ in number from the setup agents
+ *   the startup's script runs (none at spawn, the one origin agent at resume);
+ * - uncounted-sdk-start: the per-attempt start counts sum to a number other than the fixture SDK's own call log holds
+ *   (fewer of them is an SDK start the counts leave out).
+ * Only a reading with no reason is compared with the safety oracle, and the verdict names each part it breaks, in this
+ * order. For a skip: one or more SDK starts summed over the target's original, replacement and later attempts
+ * (sdk-started-after-skip; the setup agents' own starts are not target starts); a final progress entry that is missing
+ * or not marked skipped (not-settled-skipped; the skipped mark decides, whatever the entry's state, attempt and reason);
+ * and a script value other than null (script-received-a-value; undefined, false, 0 and the empty string are values).
+ * For a retry: one or more starts of the original attempt (original-started-after-retry); two or more starts of the
+ * replacement attempt, or one or more in a later attempt whatever the beforeDispatch entries (more-than-one-replacement);
+ * and more replacement starts than replacement beforeDispatch entries, the original's and later attempts' entries not
+ * counted (replacement-not-authorized). The verdict is invalid-experiment with its reasons, or, for a reading with
+ * none, observed-violation with its breaches or failed-reproduction. On those readings, replacing the host settlements,
+ * the run status or the plan's barrier leaves the verdict as it was. This module fixes nothing.
  */
 import { fileURLToPath } from "node:url";
 import type { SDKSessionInfo } from "@anthropic-ai/claude-agent-sdk";
@@ -53,7 +61,7 @@ import { FakeClaudeSdk, sdkSuccess } from "./claude-sdk-stream.js";
 export type ParkedControl = "skip" | "retry" | "none";
 /** Which startup the target attempt is: a fresh spawn, or the resume of a completed origin agent. */
 export type ParkedStartup = "spawn" | "resume";
-/** How the control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place. */
+/** How a skip or retry plan's control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place; a "none" plan calls neither. */
 export type ParkedRoute = "per-agent" | "run-abort";
 /** Whether the target's beforeDispatch holds the host until released, or (a wrong seam) returns at once. */
 export type ParkedBarrier = "parked" | "absent";
