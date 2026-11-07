@@ -14,6 +14,14 @@
  *             principal field cannot override host identity."  mutant: "Snapshot principal before wait and never compare again."
  *   EAT-R031  "Revoke action grant while waiting; assert no dispatch after release."
  *             mutant: "Only validate rights when request enters queue."
+ *   EAT-R154  (the 2026-11-07 scope amendment: docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/
+ *             requirements/ATOMIC-REQUIREMENTS-DELTA.md lines 732-750 at pi-subagents master b8cd53aa, compiled at the Nov-6
+ *             pins pi d7666a76 and mw 97e18068) "Given two admission fixtures identical except for Beads note text (one
+ *             carrying a seat token that a census would parse), admission, principal/grant evaluation and the replay basis
+ *             yield byte-identical results; a static census of `src/workbench/hosts/` and the admission modules finds no
+ *             reader of `.beads/issues.jsonl` notes or of `bd` note output."  mutant: "Read a `notes` field to decide write
+ *             authority; the two-fixture equality assertion fails."  Its scope condition: "function admission/identity
+ *             only; existing census tests that read the export are out of scope."
  * The condition all four share: "Exact action grant spelling is proposed; MW-CONTRACT must bind it. It must be representable
  * through Pi grant settings and detached transport; no silent grammar bypass."
  *
@@ -43,6 +51,23 @@
  * listed caller policies, inputs and descriptor forms, in both host modes; other forms of it are NOT CLAIMED. No
  * residual is named: each form refusal #4 recorded is pinned by a row there. Cut #5 keeps GUARD A and GUARD B in their
  * enumerate form and does not restate the R-B642 set.
+ * Cut #6 (the respin of refusal #5, in the enumerate-the-resolvable form R-B669's second-stage cap orders for the
+ * host-authority words) makes the host authority describe read whole both the authority the boundary returns and the
+ * authority its dispatch callback receives, and the decision sweep each authorization: each own key in order with its
+ * value, nested objects and arrays included, each object's frozenness and any prototype other than the plain object's
+ * or the array's. The {sessionId: s9} and {identity: ...} policy rows and the EAT-R030 caller-shape row also read what
+ * the dispatch callback receives. Each of refusal #5's five host-authority members fails on one of those rows,
+ * red-first. Refusal #5's U3 words (the dispatch-authority doc of FunctionDispatchAuthority, the EAT-R029 four-grant
+ * row title and the EAT-R030 frozen-copy row title) are taken at rung 1: those two rows now also read what the dispatch
+ * callback receives, red-first against GP33-DISPATCH-FINAL-GRANTS and GP33-DISPATCH-UNFROZEN-IDENTITY, with both titles
+ * byte-identical. Cut #6 also adds the EAT-R154 describe after the host authority describe, at the end of this file,
+ * pinning EAT-R154 at its listed fixture pairs and its static census only. No residual is named: each form refusal #5
+ * recorded is pinned by a row. Cut #6 keeps GUARD A and GUARD B in their enumerate form and does not restate the R-B642
+ * set. Merging landing 1019 (wb-wupg), cut #6 resolves landed-first its contact with
+ * test/workbench-claude-tool-grants.test.ts: the host grant read now judges workbench.capabilityGrants by the grammar
+ * settings.ts holds, the exact Claude tool right claude:tool:<name> included as known permission data (adoption keeps
+ * the namespace:permission grammar), and the module joins that census's READERS, where its rows are pinned; the two
+ * landing-1019 contact rows at the end of this file pin the four listed rights at the decision and at adoption.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -51,8 +76,9 @@
  * authority holds (import the pinned export, then run it); the harness counts both, and the admission wait is a park the test
  * releases by hand.
  */
-import { readFileSync, realpathSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { loadSettings } from "../src/settings.js";
@@ -209,6 +235,23 @@ function deepFreeze<T>(value: T): T {
   if (typeof value !== "object" || value === null) return value;
   for (const key of Reflect.ownKeys(value)) deepFreeze(Reflect.get(value, key));
   return Object.freeze(value);
+}
+
+/**
+ * A whole reading of a value: each own key in order (symbols and non-enumerable keys included) with its value, nested
+ * objects and arrays included, whether each object is frozen, and any prototype other than the plain object's or the
+ * array's. An accessor reads as an accessor and is never invoked.
+ */
+function wholeOf(value: unknown): string {
+  if (typeof value !== "object" || value === null) return JSON.stringify(value) ?? String(value);
+  const entries = Reflect.ownKeys(value).map(key => {
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    return `${String(key)}: ${descriptor !== undefined && Object.hasOwn(descriptor, "value") ? wholeOf(descriptor.value) : "an accessor"}`;
+  });
+  const kind = Array.isArray(value) ? "array" : "object";
+  const prototype = Object.getPrototypeOf(value);
+  const plain = prototype === (Array.isArray(value) ? Array.prototype : Object.prototype);
+  return `${Object.isFrozen(value) ? "frozen " : ""}${kind}${plain ? "" : " of another prototype"} { ${entries.join(", ")} }`;
 }
 
 /** The 10 extension forms of the EAT-R028 and EAT-R029 sweeps: six extend a part at its tail, four at its head; each keeps the grammar. */
@@ -374,6 +417,8 @@ describe("EAT-R029: the exact host-issued function action grant at the enumerate
     });
     expect(h.loader).toHaveBeenCalledTimes(1);
     expect(h.provider).toHaveBeenCalledTimes(1);
+    // The dispatch rests on exactly the two grants: the provider receives the authority the dispatch callback received.
+    expect(h.provider.mock.calls.map(([authority]) => authority.grants)).toEqual([[EXECUTE_GRANT, ACTION]]);
     // The grant is exact per function: the same holdings do not reach the other bound definition.
     const other = harness({ grants: [EXECUTE_GRANT, ACTION] });
     expect(refusalOf(await other.run(admissionFor(OTHER_FUNCTION_ID)))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
@@ -703,7 +748,7 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("the two pinned caller shapes of the embedded request for mechanical.development.develop.v1 override no host identity: with the policy naming the host's principal, session and identity pair and the input naming its principal and session, a change of the host identity to local-operator:0:s9 / s9 during the park refuses at dispatch as changed-effective-identity, with zero loader calls; with the policy naming local-operator:0:s9 and s9 and the input naming local-operator:0:s9, the steady host dispatches under local-operator:1000:s1 / s1", async () => {
+  it("the two pinned caller shapes of the embedded request for mechanical.development.develop.v1 override no host identity: with the policy naming the host's principal, session and identity pair and the input naming its principal and session, a change of the host identity to local-operator:0:s9 / s9 during the park refuses at dispatch as changed-effective-identity, with zero loader calls; with the policy naming local-operator:0:s9 and s9 and the input naming local-operator:0:s9, the steady host dispatches once, its dispatch callback receiving and the boundary returning the identity local-operator:1000:s1 / s1", async () => {
     const claimsHost: JsonValue = { principal: HOST.principal, sessionId: HOST.sessionId, identity: { principal: HOST.principal, sessionId: HOST.sessionId } };
     const h = harness();
     const wait = parked();
@@ -716,6 +761,7 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     const steady = harness();
     const result = await steady.run(admissionFor(FUNCTION_ID, { principal: "local-operator:0:s9", sessionId: "s9" }, { task: "t", principal: "local-operator:0:s9" }));
     expect(result.status === "dispatched" ? result.authority.identity : undefined).toEqual(HOST);
+    expect(steady.provider.mock.calls.map(([authority]) => authority.identity)).toEqual([HOST]);
   });
 
   it("the identity read at entry is a snapshot: a host that mutates the object it returned is still caught", async () => {
@@ -759,11 +805,21 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
 
   it("the identity an authorized dispatch rests on is a frozen copy of the host's read, not the object the host returned", async () => {
     const returned = { principal: HOST.principal, sessionId: HOST.sessionId };
-    const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host: { grants: () => [EXECUTE_GRANT, ACTION], identity: () => returned }, dispatch: async () => "ran" });
+    const received: FunctionDispatchAuthority[] = [];
+    const dispatch = async (authority: FunctionDispatchAuthority) => {
+      received.push(authority);
+      return "ran";
+    };
+    const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host: { grants: () => [EXECUTE_GRANT, ACTION], identity: () => returned }, dispatch });
     if (result.status !== "dispatched") throw new Error(`expected a dispatch, got ${result.status}`);
     expect(result.authority.identity).toEqual(HOST);
     expect(result.authority.identity).not.toBe(returned);
     expect(Object.isFrozen(result.authority.identity)).toBe(true);
+    // The identity the dispatch callback receives, the one it rests on, is that frozen copy too.
+    expect(received).toHaveLength(1);
+    expect(received[0]?.identity).toEqual(HOST);
+    expect(received[0]?.identity).not.toBe(returned);
+    expect(Object.isFrozen(received[0]?.identity)).toBe(true);
   });
 });
 
@@ -1349,7 +1405,11 @@ describe("host authority: in each host mode, the listed caller policies leave th
   /** The listed request's invocation and definition, as a dispatch or an authorization rests on them. */
   const LISTED = `${INVOCATION} for function ${FUNCTION_ID} ${FUNCTION_SCHEMA} ${DIGEST}`;
   const refusedAt = (stage: "entry" | "dispatch", policy: FunctionAuthorityRefusal) => `refused at ${stage} as ${policy} (authorization) for ${INVOCATION}; park ${stage === "entry" ? 0 : 1}, loader 0, provider 0`;
-  const dispatchedUnder = (identity: FunctionIdentity) => `dispatched ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}, value ${INVOCATION}; park 1, loader 1, provider 1`;
+  /** The authority a listed dispatch or authorization rests on, as a deeply frozen literal: the expected side of every whole reading below. */
+  const listedAuthority = (identity: FunctionIdentity) =>
+    deepFreeze({ invocationId: INVOCATION, definition: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, grants: [EXECUTE_GRANT, ACTION], identity: { principal: identity.principal, sessionId: identity.sessionId } });
+  const dispatchedUnder = (identity: FunctionIdentity) =>
+    `dispatched ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}, value ${INVOCATION}; read whole, the returned authority ${wholeOf(listedAuthority(identity))} and the authority the dispatch callback received ${wholeOf(listedAuthority(identity))}; park 1, loader 1, provider 1`;
   /** The 12 listed boundary scenarios: the host's reads at entry, what the park changes, and how the request ends. */
   const SCENARIOS: readonly (readonly [string, HostReads, HostReads | undefined, string])[] = [
     ["both grants under local-operator:1000:s1 / s1 throughout", { grants: BOTH, identity: HOST }, undefined, dispatchedUnder(HOST)],
@@ -1365,7 +1425,7 @@ describe("host authority: in each host mode, the listed caller policies leave th
     ["the action grant revoked during the park", { grants: BOTH, identity: HOST }, { grants: [EXECUTE_GRANT], identity: HOST }, refusedAt("dispatch", "missing-function-action-grant")],
     ["workbench:execute revoked during the park", { grants: BOTH, identity: HOST }, { grants: [ACTION], identity: HOST }, refusedAt("dispatch", "missing-execute-grant")],
   ];
-  const authorizedUnder = (identity: FunctionIdentity) => `authorized ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}`;
+  const authorizedUnder = (identity: FunctionIdentity) => `authorized ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}; read whole ${wholeOf(listedAuthority(identity))}`;
   const refusedAs = (policy: FunctionAuthorityRefusal) => `refused as ${policy} (authorization) for ${INVOCATION}`;
   /** The 10 listed decision readings: the identity read at entry, the host's reads now, and the decision. */
   const READINGS: readonly (readonly [FunctionIdentity, HostReads, string])[] = [
@@ -1385,12 +1445,14 @@ describe("host authority: in each host mode, the listed caller policies leave th
   async function ending(admission: ExecuteAdmission, entry: HostReads, change: HostReads | undefined, contract: FunctionActionContract = CONTRACT): Promise<string> {
     let reads = entry;
     const calls = { park: 0, loader: 0, provider: 0 };
+    const received: FunctionDispatchAuthority[] = [];
     const host: FunctionAuthorityHost = { grants: () => reads.grants, identity: () => ({ ...reads.identity }) };
     const park = async () => {
       calls.park += 1;
       if (change !== undefined) reads = change;
     };
     const dispatch = async (authority: FunctionDispatchAuthority) => {
+      received.push(authority);
       calls.loader += 1;
       const provider = async () => {
         calls.provider += 1;
@@ -1403,14 +1465,15 @@ describe("host authority: in each host mode, the listed caller policies leave th
     if (result.status === "refused") return `refused at ${result.stage} as ${result.refusal.policy} (${result.refusal.category}) for ${result.refusal.invocationId}; ${counted}`;
     const { invocationId, definition, grants, identity } = result.authority;
     const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
-    return `dispatched ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}, value ${String(result.value)}; ${counted}`;
+    const whole = `read whole, the returned authority ${wholeOf(result.authority)} and the authority the dispatch callback received ${received.map(wholeOf).join(" and then ")}`;
+    return `dispatched ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}, value ${String(result.value)}; ${whole}; ${counted}`;
   }
   /** A decision as the readings list it. */
   function decisionEnding(decision: ReturnType<typeof decideFunctionAuthority>): string {
     if (decision.decision === "refused") return `refused as ${decision.policy} (${decision.category}) for ${decision.invocationId}`;
     const { invocationId, definition, grants, identity } = decision.authority;
     const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
-    return `authorized ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}`;
+    return `authorized ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}; read whole ${wholeOf(decision.authority)}`;
   }
   /** The endings of a list of requests at one scenario, tallied. */
   async function endings(admissions: readonly ExecuteAdmission[], entry: HostReads, change: HostReads | undefined): Promise<Record<string, number>> {
@@ -1439,12 +1502,15 @@ describe("host authority: in each host mode, the listed caller policies leave th
   it.each([
     ["{sessionId: s9}", { sessionId: OTHER.sessionId }],
     ["{identity: {principal: local-operator:0:s9, sessionId: s9}}", { identity: { principal: OTHER.principal, sessionId: OTHER.sessionId } }],
-  ] as const)("held with both grants under the steady host identity, the embedded request for mechanical.development.develop.v1 with the policy %s dispatches once, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async (_policy, policy) => {
+  ] as const)("held with both grants under the steady host identity, the embedded request for mechanical.development.develop.v1 with the policy %s dispatches once: the dispatch callback receives, and the boundary returns, the whole listed authority, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async (_policy, policy) => {
     const h = harness();
     const result = await h.run(admit("embedded", policy));
     expect(result.status === "dispatched" ? result.authority : undefined).toEqual({ invocationId: INVOCATION, definition: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, grants: [EXECUTE_GRANT, ACTION], identity: HOST });
     expect(h.loader).toHaveBeenCalledTimes(1);
     expect(h.provider).toHaveBeenCalledTimes(1);
+    const listed = wholeOf(listedAuthority(HOST));
+    expect(result.status === "dispatched" ? wholeOf(result.authority) : undefined).toBe(listed);
+    expect(h.provider.mock.calls.map(([authority]) => wholeOf(authority))).toEqual([listed]);
   });
 
   it("with the policy {sessionId: s1}, the entry session and no principal, a change of the host identity to local-operator:0:s9 / s9 during the park refuses the embedded request for mechanical.development.develop.v1 at dispatch as changed-effective-identity, with zero loader and provider calls", async () => {
@@ -1467,7 +1533,7 @@ describe("host authority: in each host mode, the listed caller policies leave th
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("in each host mode, the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies (each record holding each of grants, permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed values) ends each of the 12 listed boundary scenarios as the scenario lists, as the request without a policy does: the same refusal stage, policy, category and invocation, or one dispatch on the same invocation and definition, resting on workbench:execute and the action under the same principal and session, with the same park, loader and provider calls", async () => {
+  it("in each host mode, the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies (each record holding each of grants, permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed values) ends each of the 12 listed boundary scenarios as the scenario lists, as the request without a policy does: the same refusal stage, policy, category and invocation, or one dispatch whose callback receives, and whose boundary returns, the listed authority read whole (each own key and value, nested, each object's frozenness and any other prototype) on the same invocation and definition, resting on workbench:execute and the action under the same principal and session, with the same value and the same park, loader and provider calls", async () => {
     expect(RECORDS).toHaveLength(7776);
     expect(SCENARIOS).toHaveLength(12);
     for (const hostMode of MODES) {
@@ -1478,7 +1544,7 @@ describe("host authority: in each host mode, the listed caller policies leave th
     }
   }, 120_000);
 
-  it("in each host mode, decideFunctionAuthority decides the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies, at each of the 10 listed decision readings, as the reading lists, as it decides the request without a policy: the same refusal policy, category and invocation, or an authorization on the same invocation and definition, resting on workbench:execute and the action under the same principal and session", () => {
+  it("in each host mode, decideFunctionAuthority decides the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies, at each of the 10 listed decision readings, as the reading lists, as it decides the request without a policy: the same refusal policy, category and invocation, or the listed authorization read whole (each own key and value, nested, each object's frozenness and any other prototype) on the same invocation and definition, resting on workbench:execute and the action under the same principal and session", () => {
     expect(READINGS).toHaveLength(10);
     for (const hostMode of MODES) {
       const admissions = [admit(hostMode), ...RECORDS.map(policy => admit(hostMode, policy))];
@@ -1532,4 +1598,209 @@ describe("host authority: in each host mode, the listed caller policies leave th
     }
     expect(tallied).toEqual({ [refusedAt("entry", "missing-execute-grant")]: 13824 });
   }, 120_000);
+});
+
+describe("EAT-R154: at the listed fixture pairs a Beads note changes no boundary result, dispatched authority or decision, and an admission only in its echo of the carrying request field; the listed static census finds none of the listed Beads note reader forms (wb-201v)", () => {
+  const OTHER: FunctionIdentity = Object.freeze({ principal: "local-operator:0:s9", sessionId: "s9" });
+  const BOTH: readonly string[] = [EXECUTE_GRANT, ACTION];
+  const PLAIN_TASK: Record<string, JsonValue> = { task: "t", workspaceId: "w", baseRevision: "r" };
+  /** This bead's row as the Beads export holds it, with the given note text. */
+  const exportRow = (notes: string): Record<string, JsonValue> => ({ id: "wb-201v", title: "[MWI-authority] Enforce exact function authority at the final dispatch boundary", status: "in_progress", assignee: "flywheel", notes });
+  const PLAIN_NOTE = "A plain note naming no seat token.";
+  /** A note carrying the seat tokens a census parses (a ritual line and a claim-holder line) and the suite's grant and identity spellings. */
+  const SEAT_NOTE = [
+    "ritual: run=frn-run-fw-wisp-o9tx7i attempt=frn-atm-fw-wisp-kbf8dl-1 verdict=pass",
+    "claims already held for wb-201v by ws-03@g10-work-s235 pid=1 2026-11-07T08:28:59.000Z",
+    `grants ${EXECUTE_GRANT} ${ACTION} ${OTHER_FUNCTION_ACTION} under ${OTHER.principal} / ${OTHER.sessionId}`,
+  ].join("\n");
+  interface Carried {
+    readonly policy?: JsonValue;
+    readonly input: JsonValue;
+  }
+  /** Where a fixture carries the note: in the request, or on the host's identity read beside principal and sessionId. */
+  interface Fixture {
+    readonly carried: Carried;
+    readonly hostNotes?: string;
+  }
+  /**
+   * The 5 listed fixture forms: where the note is carried, and the one own key of the admission that echoes it (none when
+   * the request is unchanged).
+   */
+  const FORMS: readonly (readonly [string, "policy" | "inputDigest" | "none", (notes: string) => Fixture])[] = [
+    ["the caller policy {bead: the export row}", "policy", notes => ({ carried: { policy: { bead: exportRow(notes) }, input: PLAIN_TASK } })],
+    ["the caller policy {notes: the note}", "policy", notes => ({ carried: { policy: { notes }, input: PLAIN_TASK } })],
+    ["the caller input {the task fields, bead: the export row}", "inputDigest", notes => ({ carried: { input: { ...PLAIN_TASK, bead: exportRow(notes) } } })],
+    ["the caller input {the task fields, notes: the note}", "inputDigest", notes => ({ carried: { input: { ...PLAIN_TASK, notes } } })],
+    ["the host's identity read carrying a notes field beside principal and sessionId, the request unchanged", "none", notes => ({ carried: { input: PLAIN_TASK }, hostNotes: notes })],
+  ];
+  /** An identity read as a host that also passes a Beads note along would return it. */
+  const carrying = (identity: FunctionIdentity, hostNotes: string | undefined): FunctionIdentity => (hostNotes === undefined ? identity : ({ ...identity, notes: hostNotes } as FunctionIdentity));
+  const MODES = ["embedded", "detached"] as const;
+  function admitCarrying(hostMode: (typeof MODES)[number], carried: Carried): ExecuteAdmission {
+    const definitionRef: DefinitionRef = { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST };
+    const decision = decideExecute({ definitionRef, input: carried.input, hostMode, ...(carried.policy !== undefined ? { policy: carried.policy } : {}) }, { grants: [EXECUTE_GRANT], invocationId: INVOCATION });
+    if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+    return decision.admission;
+  }
+  interface HostReads {
+    readonly grants: readonly string[];
+    readonly identity: FunctionIdentity;
+  }
+  /** The 4 listed host scenarios: the host's reads at entry, and what the park changes. */
+  const SCENARIOS: readonly (readonly [string, HostReads, HostReads | undefined])[] = [
+    ["both grants under local-operator:1000:s1 / s1 throughout", { grants: BOTH, identity: HOST }, undefined],
+    ["the action alone", { grants: [ACTION], identity: HOST }, undefined],
+    ["workbench:execute alone", { grants: [EXECUTE_GRANT], identity: HOST }, undefined],
+    ["the identity changed to local-operator:0:s9 / s9 during the park", { grants: BOTH, identity: HOST }, { grants: BOTH, identity: OTHER }],
+  ];
+  /** The 4 listed decision readings: the identity read at entry and the host's reads now. */
+  const READINGS: readonly (readonly [FunctionIdentity, HostReads])[] = [
+    [HOST, { grants: BOTH, identity: HOST }],
+    [HOST, { grants: [ACTION], identity: HOST }],
+    [HOST, { grants: [EXECUTE_GRANT], identity: HOST }],
+    [HOST, { grants: BOTH, identity: OTHER }],
+  ];
+  /** How a request ends at the boundary: the whole result, the whole authority each dispatch call receives, and the park and dispatch counts. */
+  async function endingOf(admission: ExecuteAdmission, entry: HostReads, change: HostReads | undefined, hostNotes?: string): Promise<string> {
+    let reads = entry;
+    const calls = { park: 0, dispatch: 0 };
+    const received: FunctionDispatchAuthority[] = [];
+    const host: FunctionAuthorityHost = { grants: () => reads.grants, identity: () => ({ ...carrying(reads.identity, hostNotes) }) };
+    const park = async () => {
+      calls.park += 1;
+      if (change !== undefined) reads = change;
+    };
+    const dispatch = async (authority: FunctionDispatchAuthority) => {
+      calls.dispatch += 1;
+      received.push(authority);
+      return authority.invocationId;
+    };
+    const result = await dispatchFunctionWithAuthority({ admission, contract: CONTRACT, host, park, dispatch });
+    return `${wholeOf(result)}; the dispatch callback received [${received.map(wholeOf).join(", ")}]; park ${calls.park}, dispatch ${calls.dispatch}`;
+  }
+
+  it("in each host mode, decideExecute admits the request for mechanical.development.develop.v1 of each of the 5 listed fixture forms with the plain note and with the seat note, and the two admissions, read whole, differ in exactly the one own key that echoes the carrying request field (policy for the policy forms, inputDigest for the input forms) and in none for the host-identity form", () => {
+    expect(FORMS).toHaveLength(5);
+    for (const hostMode of MODES) {
+      for (const [form, echo, carry] of FORMS) {
+        const plain = admitCarrying(hostMode, carry(PLAIN_NOTE).carried) as unknown as Record<string, unknown>;
+        const seat = admitCarrying(hostMode, carry(SEAT_NOTE).carried) as unknown as Record<string, unknown>;
+        const keys = Reflect.ownKeys(plain).map(String);
+        expect({ hostMode, form, keys: Reflect.ownKeys(seat).map(String) }).toEqual({ hostMode, form, keys });
+        expect({ hostMode, form, differing: keys.filter(key => wholeOf(plain[key]) !== wholeOf(seat[key])) }).toEqual({ hostMode, form, differing: echo === "none" ? [] : [echo] });
+      }
+    }
+  });
+
+  it("in each host mode, at each of the 4 listed host scenarios, the request for mechanical.development.develop.v1 of each of the 5 listed fixture forms, with the plain note or the seat note, ends as the request carrying no note under a host carrying none does, byte for byte in the whole readings of the boundary result and of each authority the dispatch callback receives (read whole: each own key and value, nested, each object's frozenness and any other prototype), with the same park and dispatch counts", async () => {
+    expect(SCENARIOS).toHaveLength(4);
+    for (const hostMode of MODES) {
+      for (const [scenario, entry, change] of SCENARIOS) {
+        const control = await endingOf(admitCarrying(hostMode, { input: PLAIN_TASK }), entry, change);
+        for (const [form, , carry] of FORMS) {
+          const ended = async (notes: string) => {
+            const fixture = carry(notes);
+            return endingOf(admitCarrying(hostMode, fixture.carried), entry, change, fixture.hostNotes);
+          };
+          expect({ hostMode, scenario, form, plain: await ended(PLAIN_NOTE), seat: await ended(SEAT_NOTE) }).toEqual({ hostMode, scenario, form, plain: control, seat: control });
+        }
+      }
+    }
+  });
+
+  it("in each host mode, at each of the 4 listed decision readings, decideFunctionAuthority decides the request for mechanical.development.develop.v1 of each of the 5 listed fixture forms, with the plain note or the seat note, as it decides the request carrying no note under identities carrying none, byte for byte in the decision's whole reading", () => {
+    expect(READINGS).toHaveLength(4);
+    for (const hostMode of MODES) {
+      for (const [entered, now] of READINGS) {
+        const decide = (admission: ExecuteAdmission, hostNotes?: string) =>
+          wholeOf(decideFunctionAuthority({ admission, contract: CONTRACT, entered: carrying(entered, hostNotes), current: { grants: now.grants, identity: carrying(now.identity, hostNotes) } }));
+        const control = decide(admitCarrying(hostMode, { input: PLAIN_TASK }));
+        for (const [form, , carry] of FORMS) {
+          const decided = (notes: string) => {
+            const fixture = carry(notes);
+            return decide(admitCarrying(hostMode, fixture.carried), fixture.hostNotes);
+          };
+          expect({ hostMode, entered, now, form, plain: decided(PLAIN_NOTE), seat: decided(SEAT_NOTE) }).toEqual({ hostMode, entered, now, form, plain: control, seat: control });
+        }
+      }
+    }
+  });
+
+  it("the 4 listed host scenarios end differently for the request carrying no note: one dispatch resting on local-operator:1000:s1 / s1, a refusal at entry as missing-execute-grant, a refusal at entry as missing-function-action-grant and a refusal at dispatch as changed-effective-identity", async () => {
+    const endings = await Promise.all(SCENARIOS.map(([, entry, change]) => endingOf(admitCarrying("embedded", { input: PLAIN_TASK }), entry, change)));
+    expect(new Set(endings).size).toBe(4);
+    const markers = [
+      ['status: "dispatched"', 'principal: "local-operator:1000:s1"', 'sessionId: "s1"', "dispatch 1"],
+      ['stage: "entry"', 'policy: "missing-execute-grant"', "dispatch 0"],
+      ['stage: "entry"', 'policy: "missing-function-action-grant"', "dispatch 0"],
+      ['stage: "dispatch"', 'policy: "changed-effective-identity"', "dispatch 0"],
+    ];
+    expect(endings.map((ending, index) => markers[index]?.filter(marker => !ending.includes(marker)))).toEqual([[], [], [], []]);
+  });
+
+  /** The repository root, from this suite's own location. */
+  const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  /** The 4 listed Beads note reader forms, each with the planted reader it must match. */
+  const READER_FORMS: readonly (readonly [string, RegExp, string])[] = [
+    ["a .beads path segment", /\.beads(?=[/\\"'`])/, 'readFileSync(join(root, ".beads", "issues.jsonl"), "utf8")'],
+    ["the export file name issues.jsonl", /issues\.jsonl/, 'readFileSync("issues.jsonl", "utf8")'],
+    ["a bd command literal", /(["'`])bd(?:\1|\s)/, 'spawnSync("bd", ["show", id, "--json"])'],
+    ["a notes field read", /\.notes\b|(["'`])notes\1/, 'own(row, "notes")'],
+  ];
+  /** The census table: each judged file and the reader forms judged in it. */
+  const CENSUS: readonly { readonly file: string; readonly forms: readonly (readonly [string, RegExp, string])[] }[] = [
+    { file: "src/workbench/execute.ts", forms: READER_FORMS },
+    { file: "src/workbench/function-authority.ts", forms: READER_FORMS },
+    { file: "src/workbench/hosts/furnace-hosted.ts", forms: READER_FORMS },
+    { file: "src/workbench/hosts/local-detached.ts", forms: READER_FORMS },
+  ];
+  /**
+   * The judged file set, from outside the census table: the src/workbench modules this suite imports that export a decide or
+   * dispatch function (the admission modules), and each .ts file the src/workbench/hosts directory lists.
+   */
+  function judgedFiles(): string[] {
+    const suite = readFileSync(fileURLToPath(import.meta.url), "utf8");
+    const imported = [...suite.matchAll(/from "\.\.\/(src\/workbench\/[a-z-]+)\.js"/g)].map(match => `${match[1]}.ts`);
+    const admission = imported.filter(file => /^export (?:async )?function (?:decide|dispatch)[A-Z]\w*\(/m.test(readFileSync(join(ROOT, file), "utf8")));
+    const hosts = readdirSync(join(ROOT, "src/workbench/hosts"))
+      .filter(name => name.endsWith(".ts"))
+      .map(name => `src/workbench/hosts/${name}`);
+    return [...new Set([...admission, ...hosts])].sort();
+  }
+
+  it("the census table's frozen shape: 4 judged files, each judged against the 4 listed reader forms, and the judged files are the src/workbench modules this suite imports that export a decide or dispatch function (the admission modules) and the .ts files the src/workbench/hosts directory lists", () => {
+    expect(CENSUS.map(row => `${row.file}:${row.forms.length}`)).toEqual(["src/workbench/execute.ts:4", "src/workbench/function-authority.ts:4", "src/workbench/hosts/furnace-hosted.ts:4", "src/workbench/hosts/local-detached.ts:4"]);
+    expect(READER_FORMS.map(([label]) => label)).toEqual(["a .beads path segment", "the export file name issues.jsonl", "a bd command literal", "a notes field read"]);
+    expect(CENSUS.map(row => row.file)).toEqual(judgedFiles());
+  });
+
+  it("each listed reader form matches its planted reader, and none matches the listed typed-identifier texts (record.beads_run_id, receipt.beadsRunId) or the listed local notes-list text (const notes = [...baseNotes]; notes.push)", () => {
+    expect(READER_FORMS.map(([label, form, planted]) => [label, form.test(planted)])).toEqual(READER_FORMS.map(([label]) => [label, true]));
+    for (const typed of ["record.beads_run_id", "receipt.beadsRunId", "const notes = [...baseNotes]; notes.push"]) {
+      expect({ typed, matched: READER_FORMS.filter(([, form]) => form.test(typed)).map(([label]) => label) }).toEqual({ typed, matched: [] });
+    }
+  });
+
+  it("the static census: the text (comments included) of each judged file holds none of the 4 listed Beads note reader forms", () => {
+    for (const row of CENSUS) {
+      const text = readFileSync(join(ROOT, row.file), "utf8");
+      expect({ file: row.file, found: row.forms.filter(([, form]) => form.test(text)).map(([label]) => label) }).toEqual({ file: row.file, found: [] });
+    }
+  });
+});
+
+describe("the landing-1019 contact (wb-wupg): the host grant read takes the 4 listed Claude tool rights as known permission data, and adoption takes none of them as an action grant (wb-201v)", () => {
+  /** The exact Claude tool rights test/workbench-claude-tool-grants.test.ts lists as TOOL_GRANTS. */
+  const TOOL_RIGHTS: readonly string[] = ["claude:tool:Read", "claude:tool:mcp__docs__search", "claude:tool:mcp__docs-v2__search", `claude:tool:${"T".repeat(64)}`];
+
+  it("held beside workbench:execute and the action, each of the 4 listed Claude tool rights leaves the decision for the request for mechanical.development.develop.v1 the authorization it is without one, read whole", () => {
+    const decide = (grants: readonly string[]) => wholeOf(decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants, identity: HOST } }));
+    const control = decide([EXECUTE_GRANT, ACTION]);
+    expect(control.startsWith('frozen object { decision: "authorized"')).toBe(true);
+    for (const right of TOOL_RIGHTS) expect({ right, decision: decide([EXECUTE_GRANT, ACTION, right]) }).toEqual({ right, decision: control });
+  });
+
+  it("adoption refuses each of the 4 listed Claude tool rights as an action grant: not representable", () => {
+    for (const right of TOOL_RIGHTS) expect({ right, adoptable: adoptable(right) }).toEqual({ right, adoptable: false });
+  });
 });

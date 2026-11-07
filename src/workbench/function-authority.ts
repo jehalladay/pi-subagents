@@ -1,7 +1,9 @@
 /**
  * function-authority.ts — the authority seam at the FINAL dispatch boundary of a function launch (wb-201v, MWI
  * B-authority, slice PI-1: EAT-R028..EAT-R031 of the mechanical-workflows-interop-2026-11-04 triage,
- * requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e).
+ * requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e; and EAT-R154 of the
+ * mechanical-interoperability-audit-2026-11-06 triage, requirements/ATOMIC-REQUIREMENTS-DELTA.md, Nov-6 pins pi d7666a76
+ * and mw 97e18068).
  *
  * Once decideExecute (execute.ts) admits a function request, its launch may wait (an admission queue, backpressure, an
  * operator hold) before its loader imports the pinned export and its provider runs.
@@ -15,15 +17,18 @@
  * under the pinned contract, carrying any of the suite's 7776 listed caller policies (each record holding each of grants,
  * permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed
  * values), ends each of the 12 listed boundary scenarios as listed (the same refusal stage, policy, category and
- * invocation, or one dispatch on the same invocation and definition resting on workbench:execute and the action under
- * the same principal and session, with the same park, loader and provider calls) and is decided at each of the 10 listed
- * decision readings as listed (the same refusal policy, category and invocation, or the same authorization), as it is
+ * invocation, or one dispatch whose callback receives, and whose boundary returns, the listed authority read whole on the
+ * same invocation and definition, resting on workbench:execute and the action under the same principal and session,
+ * with the same value and the same park, loader and provider calls) and is decided at each of the 10 listed decision
+ * readings as listed (the same refusal policy, category and invocation, or the listed authorization read whole), as it is
  * without a policy; so does that request without a policy carrying any of the 7776 listed inputs (those records added to
- * the plain task fields) at the 12 boundary scenarios. At the 13824 listed descriptor forms (three definitions, three
- * contracts, two schema versions, two digests, three policies, two inputs and the 32 subsets of five grants without
- * workbench:execute, in each host mode, under the steady host identity), a request refuses at entry as
- * missing-execute-grant, with zero park, loader and provider calls. Other request shapes, host scenarios, readings,
- * descriptor forms and refusal reason texts are NOT CLAIMED.
+ * the plain task fields) at the 12 boundary scenarios. Read whole: each own key in order with its value, nested objects
+ * and arrays included, each object's frozenness and any prototype other than the plain object's or the array's. At the
+ * 13824 listed descriptor forms (three definitions, three contracts, two schema versions, two digests, three policies,
+ * two inputs and the 32 subsets of five grants without workbench:execute, in each host mode, under the steady host
+ * identity), a request refuses at entry as missing-execute-grant, with zero park, loader and provider calls. Other
+ * request shapes, host scenarios, readings, descriptor forms and refusal reason texts are NOT CLAIMED, and so are the
+ * boundary result's and the refusal's own keys beyond the fields named above.
  *   EAT-R028  pinned rows: the otherwise authorized request without workbench:execute refuses at entry, before any wait,
  *             as missing-execute-grant, with zero loader and provider calls, and so does that request holding each pinned
  *             stand-in in its place (workbench:detach, workbench:design, the shorter spelling workbench:exec,
@@ -44,6 +49,11 @@
  *             not. Other spellings and holdings are NOT CLAIMED.
  *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
  *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
+ *   EAT-R154  pinned at the suite's EAT-R154 rows only: its listed Beads-note fixture pairs (a plain note or one carrying
+ *             the listed seat tokens, in the caller policy, the caller input or the host's identity read) leave the
+ *             boundary's result, the authority its dispatch callback receives and the decision unchanged, read whole, and
+ *             its static census finds none of its four listed reader forms in this module, execute.ts or the hosts. Other
+ *             fixtures, reader forms and files, and any replay basis, are NOT CLAIMED.
  *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
  * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
@@ -148,6 +158,13 @@ export interface FunctionDispatchOptions<T> {
 
 /** The seam's namespace:permission grammar for an action grant, judged against settings.ts at the suite's enumerated samples. */
 const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+/**
+ * The workbench.capabilityGrants grammar a host grant read is judged by, as settings.ts spells it since landing 1019
+ * (wb-wupg): a namespace:permission grant, or an exact Claude tool right claude:tool:<name>. A Claude tool right is
+ * known permission data here and is never an action grant (adoption keeps GRANT). Pinned at the lists of
+ * test/workbench-claude-tool-grants.test.ts and the suite's two landing-1019 contact rows only.
+ */
+const HOST_GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 /** The seam's action-grant length bound, judged against local-detached.ts's launch-grant check at 256 and 257 characters. */
 const TRANSPORT_GRANT_CHARS = 256;
 /** Pi's own authorities (workbench:execute, workbench:detach and the rest) live here; none doubles as a function action. */
@@ -235,7 +252,7 @@ function identityOf(value: unknown): FunctionIdentity | undefined {
 function grantList(value: unknown): readonly string[] | undefined {
   if (!Array.isArray(value)) return undefined;
   const grants: unknown[] = Array.from(value);
-  return grants.every((grant): grant is string => typeof grant === "string" && GRANT.test(grant)) ? grants : undefined;
+  return grants.every((grant): grant is string => typeof grant === "string" && HOST_GRANT.test(grant)) ? grants : undefined;
 }
 /** The exact action grant an adopted contract binds to the definition, or undefined when none is adopted for it. */
 function boundAction(contract: FunctionActionContract, definitionId: string): string | undefined {
