@@ -180,6 +180,7 @@
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; docs/workbench is read, never edited). Scratch:
  *    A1's arm plants, D2 and D3 compose makeScratch/removeScratch with the leak guard installed; docs, .beads and the roster are
  *    otherwise only read, and the census reads no git history (the filing pin is the seat's measurement, held in the roster).
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -188,6 +189,7 @@ import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard();
 
@@ -769,17 +771,19 @@ function causesOf(path: string, text: string): string[] {
 // ---- THE WALK: what git would commit below SCOPE_ROOT, held to the filesystem and to the roster's tracked floor ----
 
 function gitList(root: string): string[] {
-  return execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", SCOPE_ROOT], { cwd: root, encoding: "utf8", maxBuffer: 1 << 26 })
-    .split("\0")
-    .filter(path => path.length > 0)
-    .sort();
+  return withoutTriageArchive(
+    execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", SCOPE_ROOT], { cwd: root, encoding: "utf8", maxBuffer: 1 << 26 })
+      .split("\0")
+      .filter(path => path.length > 0),
+  ).sort();
 }
 function walkList(root: string): string[] {
   if (!existsSync(join(root, SCOPE_ROOT))) return [];
-  return readdirSync(join(root, SCOPE_ROOT), { recursive: true, withFileTypes: true })
-    .filter(entry => entry.isFile())
-    .map(entry => relative(root, join(entry.parentPath, entry.name)))
-    .sort();
+  return withoutTriageArchive(
+    readdirSync(join(root, SCOPE_ROOT), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => relative(root, join(entry.parentPath, entry.name))),
+  ).sort();
 }
 /** The walked paths git ignores (git check-ignore reads them from stdin; exit 1 means none is ignored). */
 function ignoredOf(root: string, paths: readonly string[]): string[] {

@@ -154,6 +154,7 @@
  *
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch, the wb-4n55 plants in
  * memory; src, docs, qa, the bead export and the landed censuses are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -171,6 +172,7 @@ import {
 import { REGISTRATION_MEMBERS } from "./helpers/census.js";
 import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -890,7 +892,7 @@ interface DocReading {
  * ones as findings; the segments count the walked docs only. */
 function readDocs(root: string, plants: readonly Plant[] = []): DocReading {
   const walk = walkTree(root);
-  const docs = walk.files.filter(isDoc);
+  const docs = withoutTriageArchive(walk.files.filter(isDoc));
   const findings: string[] = [];
   const admitted: string[] = [];
   const anchorsRead: string[] = [];

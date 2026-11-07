@@ -140,12 +140,14 @@
  *
  * Display paths added: none. Test-only: the docs, src, qa, the receipt and the export are only read, and git's listing is
  * read with git ls-files; no scratch is made.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 
@@ -163,10 +165,11 @@ const linesOf = (text: string): string[] => text.split(/\r\n|\n|\r/);
 /** Repository-relative, "/"-separated paths of every regular file below dir, sorted so a reading is reproducible. */
 function filesBelow(dir: string): string[] {
   if (!existsSync(join(REPO, dir))) return [];
-  return readdirSync(join(REPO, dir), { recursive: true, withFileTypes: true })
-    .filter(entry => entry.isFile())
-    .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
-    .sort();
+  return withoutTriageArchive(
+    readdirSync(join(REPO, dir), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/")),
+  ).sort();
 }
 
 /** The roots the claim census reads, all inside this repository: five root pages (the walk adds any other doc page at the
@@ -246,7 +249,7 @@ const R_SCOPE_ROOTS = ["test/", "examples/", ".beads/"];
 /** What git would commit for the pathspecs: tracked or untracked, never ignored, present on disk, sorted. */
 function gitListed(...pathspecs: string[]): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspecs], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
-  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
+  return withoutTriageArchive([...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))]).sort();
 }
 const outsideScope = (path: string): boolean => !R_SCOPE_ROOTS.some(root => path.startsWith(root));
 /** The doc anchor (the coverage of A2, C2, C3 and D1): every doc page git lists outside the R-SCOPE roots and every file it

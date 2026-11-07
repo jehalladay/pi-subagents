@@ -44,3 +44,5 @@ coverage/
 .reactive-fiber/
 vitest.*.config.ts
 new-feedback/
+# The quoted-evidence triage archives below docs/workbench/programs (master only; wb-cbt4, owner specification ruling M:60615 point 4)
+docs/workbench/programs/*/triage/
