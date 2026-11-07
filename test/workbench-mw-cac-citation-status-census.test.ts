@@ -419,6 +419,7 @@
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: B3 composes makeScratch/removeScratch with the
  * leak guard installed; docs, src, .beads and git objects are otherwise only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -429,6 +430,7 @@ import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard();
 
@@ -886,18 +888,20 @@ function causesOf(path: string, text: string): string[] {
 /** git's tracked list of a scope under a root (the working tree's index, or a tree-ish at REPO). */
 function scopeList(root: string, scope: Scope, treeish?: string): string[] {
   const args = treeish === undefined ? ["ls-files", "--", scope.root] : ["ls-tree", "-r", "--name-only", treeish, "--", scope.root];
-  return execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
-    .split("\n")
-    .filter(path => path.length > 0 && (scope.exclude === "" || !path.startsWith(scope.exclude)))
-    .sort();
+  return withoutTriageArchive(
+    execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+      .split("\n")
+      .filter(path => path.length > 0 && (scope.exclude === "" || !path.startsWith(scope.exclude))),
+  ).sort();
 }
 /** The same scope read from the filesystem: the walk's outside anchor. */
 function scopeWalk(root: string, scope: Scope): string[] {
-  return readdirSync(join(root, scope.root), { recursive: true, withFileTypes: true })
-    .filter(entry => entry.isFile())
-    .map(entry => relative(root, join(entry.parentPath, entry.name)))
-    .filter(path => scope.exclude === "" || !path.startsWith(scope.exclude))
-    .sort();
+  return withoutTriageArchive(
+    readdirSync(join(root, scope.root), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => relative(root, join(entry.parentPath, entry.name)))
+      .filter(path => scope.exclude === "" || !path.startsWith(scope.exclude)),
+  ).sort();
 }
 /** Every blob of a tree-ish's paths through one git cat-file --batch call. */
 function treeTexts(treeish: string, paths: readonly string[]): FileText[] {
