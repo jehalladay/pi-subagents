@@ -1,20 +1,49 @@
 /**
  * worktree-preservation-settlement.test.ts — wb-5ik5 (EAT-R003; program mechanical-workflows-interop-2026-11-04,
- * ATOMIC-REQUIREMENTS.md@0b25e14e): the three AgentManager paths that store a worktree cleanup result, each driven to
- * a preservation failure, once with a caller-supplied cwd and once in the parent session's own cwd. The cases pin the
- * result each path stores on the record and the text it leaves in the record's result.
+ * ATOMIC-REQUIREMENTS.md@0b25e14e): the three AgentManager paths that store a worktree cleanup result, each driven to a
+ * failed preservation, in each of four cwd modes.
  *
- * Real git, the real AgentManager and the real createWorktree/cleanupWorktree, with no module mock. A resolved run
- * goes through the real runAgent and a real pi-mono child session on a faux model: the child's own bash command edits a
+ * Real git, the real AgentManager and the real createWorktree/cleanupWorktree, with no module mock. A resolved run goes
+ * through the real runAgent and a real pi-mono child session on a faux model: the child's own bash command edits a
  * tracked file, adds an untracked one and leaves a stale index.lock in its worktree's git directory, so the
- * preservation fails with git's own message, which names index.lock. The five resolved runs settle with each status the
- * resolved path can give a record: completed, steered, aborted, error and stopped. The rejected run makes the same
- * edits from the caller's onSessionCreated callback, which then throws, so runAgent rejects before the child's first
- * turn. The stop lands while the worktree is being created, and the pi given to the manager answers `git status` with
- * a failure.
+ * preservation's `git add -A` fails with git's own message, which spans lines. The rejected run makes the same edits
+ * from the caller's onSessionCreated callback, which then throws, so runAgent rejects before the child's first turn. The
+ * stop lands while the worktree is being created. The planted rows answer one cleanup git call with PLANTED_STDERR
+ * instead of running it.
+ *
+ * The cwd modes (MODES): a caller-supplied cwd at the repo root, a caller-supplied cwd in the repo's pkg subdirectory,
+ * the parent session's own cwd at the repo root and the parent session's own cwd in pkg. In both pkg modes the
+ * worktree's workPath is its pkg directory, not its root. The child works in workPath for a caller-supplied cwd and at
+ * the worktree's root for the parent session's own.
+ *
+ * Claimed here, each by its rows in each of the four modes, and nothing wider (cut #3, the enumerate form of the R-B650
+ * claim set):
+ *  - ST-RESOLVED-completed, -steered, -aborted, -error, -stopped: the run settles with that status (error carries
+ *    FATAL); the record holds exactly { hasChanges: true, preservationFailed: true, path: <the worktree's root>,
+ *    diagnostic: <what `git add -A` writes to stderr in the kept worktree, trimmed> }, and that diagnostic spans lines;
+ *    the kept directory holds the child's exact bytes; no pi-agent-* branch exists; and the record's result is exactly
+ *    the run's reply (CHILD_MARKER for completed and steered, empty for the other three) followed by expectedNote for
+ *    that diagnostic and the kept path, with the caller-supplied cwd as the repo, or no repo for the parent session's
+ *    own cwd.
+ *  - ST-RESOLVED-PLANTED: a completed run whose `git add -A` is answered with PLANTED_STDERR: the record holds exactly
+ *    the failed variant with PLANTED_STDERR trimmed as its diagnostic, and the result is CHILD_MARKER followed by
+ *    expectedNote for that diagnostic, the kept path and the same repo.
+ *  - ST-REJECTED (the stale index.lock) and ST-REJECTED-PLANTED (`git add -A` answered with PLANTED_STDERR): status
+ *    error with the thrown message as the error; the record holds exactly the failed variant, with the diagnostic as in
+ *    the matching resolved row; the kept directory holds the exact bytes; no pi-agent-* branch exists; the record's
+ *    result is undefined.
+ *  - ST-STOP: a stop that lands while the worktree is being created, with `git status --porcelain` answered with
+ *    PLANTED_STDERR: status stopped; the record holds exactly the failed variant with PLANTED_STDERR trimmed; the
+ *    directory is kept; no pi-agent-* branch exists; the record's result is undefined.
+ * expectedNote is built here from sanitizeWorkbenchText's label layout, never from preservationFailureNote.
+ * RESIDUALS (named, each with its pinned quiet row; each row reds once a note appears there): R-REJECTED-NOTE, a
+ * rejected run's result carries no note about the kept worktree: ST-REJECTED, ST-REJECTED-PLANTED. R-STOP-NOTE, a stop
+ * during worktree creation leaves no note: ST-STOP.
+ * NOT CLAIMED by this suite: other statuses, cwd modes, failed steps and failure texts; a clean or preserved result on
+ * these paths; what src/index.ts shows from the record.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
   type AssistantMessage,
@@ -31,6 +60,7 @@ import { AgentManager } from "../src/agent-manager.js";
 import { getGraceTurns, setGraceTurns } from "../src/agent-runner.js";
 import { registerAgents } from "../src/agent-types.js";
 import type { AgentRecord } from "../src/types.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { fauxModelBackend } from "./helpers/faux-model-backend.js";
 import { registerFauxProvider } from "./helpers/pi-ai.js";
 import { installScratchLeakGuard, makeScratch, removeAllScratch, trackScratch } from "./helpers/scratch.js";
@@ -46,7 +76,7 @@ vi.setConfig({ testTimeout: 30_000 });
 const CHILD_MARKER = "CHILD-EDITED-ITS-TREE";
 const TRACKED_BYTES = "# Test repo\nedited by the agent\n";
 const UNTRACKED_BYTES = "agent output\n";
-/** The child's one command, run by the REAL bash tool in the cwd the child was given (its worktree). */
+/** The child's one command, run by the REAL bash tool in the cwd the child was given. */
 const CHILD_COMMAND = [
   "printf '# Test repo\\nedited by the agent\\n' > README.md",
   "printf 'agent output\\n' > work.txt",
@@ -54,31 +84,36 @@ const CHILD_COMMAND = [
 ].join(" && ");
 /** A provider error pi does not retry: not one of its transient-error patterns. */
 const FATAL = "invalid request: provider rejected the prompt";
+const ESC = String.fromCodePoint(0x1b);
+/** Padded, two lines, mixed case, an escape sequence, a tab, a double space and a non-ASCII letter. */
+const PLANTED_STDERR = `  Fatal: Mixed Case ${ESC}[31mred${ESC}[0m\n\tHint:  second line ${String.fromCodePoint(0xe9)}\n`;
 
 function git(cwd: string, ...args: string[]): string {
   return execFileSync("git", args, { cwd, encoding: "utf-8", stdio: "pipe", timeout: 10_000 }).trim();
 }
 
-/** A real repo with one commit — `git worktree add` needs a HEAD to branch from. */
+/** A real repo with one commit holding README.md and pkg/README.md — `git worktree add` needs a HEAD to branch from. */
 function initGitRepo(): string {
   const dir = makeScratch("wt-settle-repo-");
   git(dir, "init");
   git(dir, "config", "user.email", "test@test.com");
   git(dir, "config", "user.name", "Test");
   writeFileSync(join(dir, "README.md"), "# Test repo");
-  git(dir, "add", "README.md");
+  mkdirSync(join(dir, "pkg"));
+  writeFileSync(join(dir, "pkg", "README.md"), "# pkg");
+  git(dir, "add", "-A");
   git(dir, "commit", "-m", "initial");
   return dir;
 }
 
 /**
  * A pi whose exec runs git for real and, like the host's, reports a failure in the result instead of rejecting.
- * `fails` picks the calls answered with a canned failure whose stderr is "boom" instead.
+ * `planted` picks the calls answered with a failure whose stderr is PLANTED_STDERR instead.
  */
-function realPi(fails: (args: string[]) => boolean = () => false): ExtensionAPI {
+function realPi(planted: (args: string[]) => boolean = () => false): ExtensionAPI {
   return {
     exec: async (command: string, args: string[], options?: { cwd?: string; timeout?: number }) => {
-      if (fails(args)) return { stdout: "", stderr: "boom", code: 1, killed: false };
+      if (planted(args)) return { stdout: "", stderr: PLANTED_STDERR, code: 1, killed: false };
       try {
         const stdout = execFileSync(command, args, {
           cwd: options?.cwd,
@@ -94,6 +129,8 @@ function realPi(fails: (args: string[]) => boolean = () => false): ExtensionAPI 
     },
   } as unknown as ExtensionAPI;
 }
+const addPlanted = (args: string[]) => args[0] === "add";
+const statusPlanted = (args: string[]) => args[0] === "status";
 
 /** The parent context runAgent reads: its cwd, its model, and a registry whose runtime streams the faux model. */
 function parentContext(cwd: string, model: Model<string>): ExtensionContext {
@@ -143,39 +180,56 @@ function addFailure(worktreePath: string): string {
   throw new Error(`git add -A succeeded in ${worktreePath}: the index.lock is gone`);
 }
 
-/** What the child's bash command does, done by the test inside `worktreePath`. */
-function editAndLock(worktreePath: string): void {
-  writeFileSync(join(worktreePath, "README.md"), TRACKED_BYTES);
-  writeFileSync(join(worktreePath, "work.txt"), UNTRACKED_BYTES);
-  writeFileSync(join(resolve(worktreePath, git(worktreePath, "rev-parse", "--git-dir")), "index.lock"), "");
+/** What the child's bash command does, done by the test in `cwd`. */
+function editAndLock(cwd: string): void {
+  writeFileSync(join(cwd, "README.md"), TRACKED_BYTES);
+  writeFileSync(join(cwd, "work.txt"), UNTRACKED_BYTES);
+  writeFileSync(join(resolve(cwd, git(cwd, "rev-parse", "--git-dir")), "index.lock"), "");
 }
 
-/** How each resolved run is driven to the status it settles with. */
+const label = (value: string) => sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "label");
+/** The exact note for a failed variant's diagnostic and kept path, and the repo when one is named. */
+function expectedNote(diagnostic: string, kept: string, repo: string | undefined): string {
+  const repoNote = repo === undefined ? "" : ` (a worktree of \`${label(repo)}\`)`;
+  return `\n\n---\nWorktree preservation failed: ${label(diagnostic)}\n` +
+    `Nothing was saved to a branch. The agent's work is kept in its worktree at \`${label(kept)}\`${repoNote}; recover it from there.`;
+}
+
+/** How each resolved run is driven to the status it settles with, and the reply it leaves before the note. */
 interface ResolvedRun {
   status: AgentRecord["status"];
   turn: FauxResponseStep;
   /** Spawn options for the run; `stop` aborts it through the manager. */
   options: (stop: () => void) => Partial<SpawnOptions>;
   graceTurns?: number;
+  reply: string;
 }
 const RESOLVED_RUNS: readonly ResolvedRun[] = [
-  { status: "completed", turn: bashThenMarker, options: () => ({}) },
+  { status: "completed", turn: bashThenMarker, options: () => ({}), reply: CHILD_MARKER },
   // The turn limit is reached after the bash turn: the child is steered to wrap up and answers.
-  { status: "steered", turn: bashThenMarker, options: () => ({ maxTurns: 1 }) },
+  { status: "steered", turn: bashThenMarker, options: () => ({ maxTurns: 1 }), reply: CHILD_MARKER },
   // One grace turn past the limit, and the child is still calling bash: the run aborts and resolves.
-  { status: "aborted", turn: bashForever, options: () => ({ maxTurns: 1 }), graceTurns: 1 },
-  { status: "error", turn: bashThenError, options: () => ({}) },
+  { status: "aborted", turn: bashForever, options: () => ({ maxTurns: 1 }), graceTurns: 1, reply: "" },
+  { status: "error", turn: bashThenError, options: () => ({}), reply: "" },
   // The caller stops the run once its bash call has ended; the run resolves with the stop kept.
   {
     status: "stopped",
     turn: bashThenMarker,
     options: (stop) => ({ onToolActivity: (activity) => { if (activity.type === "end" && activity.toolName === "bash") stop(); } }),
+    reply: "",
   },
 ];
 
-/** The two cwds a spawn can create its worktree from: a caller-supplied one, or the parent session's own. */
-const CWD_MODES = ["a caller-supplied cwd", "the parent session's own cwd"] as const;
-type CwdMode = (typeof CWD_MODES)[number];
+/** The four cwds a spawn can create its worktree from. */
+const MODES = [
+  "a caller-supplied cwd at the repo root",
+  "a caller-supplied cwd in the repo's pkg subdirectory",
+  "the parent session's own cwd at the repo root",
+  "the parent session's own cwd in the repo's pkg subdirectory",
+] as const;
+type Mode = (typeof MODES)[number];
+const callerSupplied = (mode: Mode) => mode.startsWith("a caller-supplied cwd");
+const inPkg = (mode: Mode) => mode.endsWith("pkg subdirectory");
 
 describe("AgentManager paths that store a cleanup result, each driven to a preservation failure (wb-5ik5, EAT-R003)", () => {
   let faux: ReturnType<typeof registerFauxProvider>;
@@ -210,13 +264,14 @@ describe("AgentManager paths that store a cleanup result, each driven to a prese
     removeAllScratch();
   });
 
-  /** A repo to create the worktree from, and the spawn's context and cwd option for `mode`. */
-  function setUp(mode: CwdMode): { repo: string; ctx: ExtensionContext; cwd: Partial<SpawnOptions> } {
+  /** A repo to create the worktree from, the spawn's context and cwd option for `mode`, and the repo the note names. */
+  function setUp(mode: Mode): { repo: string; ctx: ExtensionContext; cwd: Partial<SpawnOptions>; noteRepo: string | undefined } {
     const repo = initGitRepo();
     repos.push(repo);
-    return mode === "a caller-supplied cwd"
-      ? { repo, ctx: parentContext(makeScratch("wt-settle-parent-"), faux.getModel()), cwd: { cwd: repo } }
-      : { repo, ctx: parentContext(repo, faux.getModel()), cwd: {} };
+    const from = inPkg(mode) ? join(repo, "pkg") : repo;
+    return callerSupplied(mode)
+      ? { repo, ctx: parentContext(makeScratch("wt-settle-parent-"), faux.getModel()), cwd: { cwd: from }, noteRepo: from }
+      : { repo, ctx: parentContext(from, faux.getModel()), cwd: {}, noteRepo: undefined };
   }
 
   /** Spawn a background worktree agent; `options` sees the id, so a callback can reach the agent's record. */
@@ -241,30 +296,35 @@ describe("AgentManager paths that store a cleanup result, each driven to a prese
     return record;
   }
 
+  /** Where the child works inside the worktree: workPath for a caller-supplied cwd, the worktree's root otherwise. */
+  function childCwd(record: AgentRecord, mode: Mode): string {
+    return callerSupplied(mode) ? record.worktree!.workPath : record.worktree!.path;
+  }
+
   /**
-   * The record's failed variant, the kept directory and no pi-agent-* branch in `repo`. Returns the kept path.
-   * `diagnostic` gives the exact text expected from the kept path.
+   * The record's failed variant (exactly, with `diagnostic` from the kept path), the kept directory and no pi-agent-*
+   * branch in `repo`. Returns the kept path and the diagnostic.
    */
-  function expectKeptWorktree(record: AgentRecord, repo: string, diagnostic: (kept: string) => string): string {
+  function expectKeptWorktree(record: AgentRecord, mode: Mode, repo: string, diagnostic: (kept: string) => string): { kept: string; expected: string } {
     expect(record.worktree).toBeDefined();
     const kept = trackScratch(record.worktree!.path);
     expect(existsSync(kept)).toBe(true);
+    expect(record.worktree!.workPath).toBe(inPkg(mode) ? join(kept, "pkg") : kept);
     const expected = diagnostic(kept);
     expect(expected).not.toBe("");
     expect(record.worktreeResult).toEqual({ hasChanges: true, preservationFailed: true, path: kept, diagnostic: expected });
     expect(git(repo, "branch", "--list", "pi-agent-*")).toBe("");
-    return kept;
+    return { kept, expected };
   }
 
-  /** The note's last sentence: the kept path, then the repo for a caller-supplied cwd and nothing for the parent's own. */
-  function noteTail(kept: string, mode: CwdMode, repo: string): string {
-    const repoNote = mode === "a caller-supplied cwd" ? ` (a worktree of \`${repo}\`)` : "";
-    return `kept in its worktree at \`${kept}\`${repoNote}; recover it from there.`;
+  function expectChildBytes(record: AgentRecord, mode: Mode): void {
+    expect(readFileSync(join(childCwd(record, mode), "README.md"), "utf-8")).toBe(TRACKED_BYTES);
+    expect(readFileSync(join(childCwd(record, mode), "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
   }
 
-  describe.each(CWD_MODES)("with %s", (mode) => {
-    it.each(RESOLVED_RUNS)("a run that resolves as $status: the record holds the failed variant and the result ends with the note", async (run) => {
-      const { repo, ctx, cwd } = setUp(mode);
+  describe.each(MODES)("with %s", (mode) => {
+    it.each(RESOLVED_RUNS.map((run) => [run.status, run] as const))("ST-RESOLVED-%s: the record holds the failed variant and the result is the reply then the exact note", async (_status, run) => {
+      const { repo, ctx, cwd, noteRepo } = setUp(mode);
       if (run.graceTurns !== undefined) setGraceTurns(run.graceTurns);
       faux.setResponses(Array.from({ length: 12 }, () => run.turn));
       const id = spawn(realPi(), ctx, (current) => ({ ...cwd, ...run.options(() => manager!.abort(current())) }));
@@ -273,23 +333,34 @@ describe("AgentManager paths that store a cleanup result, each driven to a prese
 
       expect(record.status).toBe(run.status);
       if (run.status === "error") expect(record.error).toContain(FATAL);
-      const kept = expectKeptWorktree(record, repo, addFailure);
-      expect(readFileSync(join(kept, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
-      expect(readFileSync(join(kept, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
-      // Appended once, at the end of the result.
-      expect(record.result?.split("\n\n---\nWorktree preservation failed: ")).toHaveLength(2);
-      expect(record.result).toContain("index.lock");
-      const tail = noteTail(kept, mode, repo);
-      expect(record.result?.slice(-tail.length)).toBe(tail);
-      if (mode === "the parent session's own cwd") expect(record.result).not.toContain("(a worktree of");
+      const { kept, expected } = expectKeptWorktree(record, mode, repo, addFailure);
+      expect(expected).toContain("\n");
+      expectChildBytes(record, mode);
+      expect(record.result).toBe(run.reply + expectedNote(expected, kept, noteRepo));
     });
 
-    it("a rejected run: the record holds the failed variant as cleanup returned it, and no result text is set", async () => {
+    it("ST-RESOLVED-PLANTED: a completed run whose `git add -A` fails with PLANTED_STDERR stores it trimmed, and the result is the reply then its note", async () => {
+      const { repo, ctx, cwd, noteRepo } = setUp(mode);
+      faux.setResponses(Array.from({ length: 12 }, () => bashThenMarker));
+      const id = spawn(realPi(addPlanted), ctx, () => cwd);
+
+      const record = await settledRecord(id);
+
+      expect(record.status).toBe("completed");
+      const { kept } = expectKeptWorktree(record, mode, repo, () => PLANTED_STDERR.trim());
+      expectChildBytes(record, mode);
+      expect(record.result).toBe(CHILD_MARKER + expectedNote(PLANTED_STDERR.trim(), kept, noteRepo));
+    });
+
+    it.each([
+      ["ST-REJECTED", "the stale index.lock", () => realPi(), addFailure],
+      ["ST-REJECTED-PLANTED", "`git add -A` answered with PLANTED_STDERR", () => realPi(addPlanted), () => PLANTED_STDERR.trim()],
+    ] as const)("%s: a rejected run (%s): the record holds the failed variant as cleanup returned it, and no result text is set", async (_id, _failure, pi, diagnostic) => {
       const { repo, ctx, cwd } = setUp(mode);
-      const id = spawn(realPi(), ctx, (current) => ({
+      const id = spawn(pi(), ctx, (current) => ({
         ...cwd,
         onSessionCreated: () => {
-          editAndLock(manager!.getRecord(current())!.worktree!.workPath);
+          editAndLock(childCwd(manager!.getRecord(current())!, mode));
           throw new Error("the run rejected after editing its worktree");
         },
       }));
@@ -298,22 +369,21 @@ describe("AgentManager paths that store a cleanup result, each driven to a prese
 
       expect(record.status).toBe("error");
       expect(record.error).toBe("the run rejected after editing its worktree");
-      const kept = expectKeptWorktree(record, repo, addFailure);
-      expect(readFileSync(join(kept, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
-      expect(readFileSync(join(kept, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
+      expectKeptWorktree(record, mode, repo, diagnostic);
+      expectChildBytes(record, mode);
       expect(record.result).toBeUndefined();
     });
 
-    it("a stop that lands while the worktree is being created: the record holds the failed variant cleanup returned", async () => {
+    it("ST-STOP: a stop that lands while the worktree is being created, with `git status --porcelain` failing with PLANTED_STDERR: the record holds the failed variant, and no result text is set", async () => {
       const { repo, ctx, cwd } = setUp(mode);
-      const id = spawn(realPi((args) => args[0] === "status"), ctx, () => cwd);
+      const id = spawn(realPi(statusPlanted), ctx, () => cwd);
       expect(manager!.abort(id)).toBe(true);
 
       await manager!.awaitStartup(id);
       const record = manager!.getRecord(id)!;
 
       expect(record.status).toBe("stopped");
-      expectKeptWorktree(record, repo, () => "boom");
+      expectKeptWorktree(record, mode, repo, () => PLANTED_STDERR.trim());
       expect(record.result).toBeUndefined();
     });
   });

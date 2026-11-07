@@ -206,9 +206,11 @@ export interface AgentRecord {
   /** Worktree info if the agent is running in an isolated worktree. */
   worktree?: { path: string; branch: string; baseSha: string; workPath: string };
   /**
-   * Worktree cleanup result. A failed preservation is stored exactly as cleanupWorktree returned it, the
-   * WorktreePreservationFailedResult variant, by each path that cleans up: the settlement of a resolved run, the
-   * settlement of a rejected run, and a stop that lands while the worktree is being created (EAT-R003).
+   * Worktree cleanup result. For a failed preservation (wb-5ik5, EAT-R003), the settlement of a resolved run, the
+   * settlement of a rejected run and a stop that lands while the worktree is being created each store the
+   * WorktreePreservationFailedResult cleanupWorktree returned. The claim is the forms the ST rows of
+   * test/worktree-preservation-settlement.test.ts and the E2E-R003 row of test/worktree-preservation-failure-e2e.test.ts
+   * plant, where the stored value equals that variant exactly, and nothing wider.
    */
   worktreeResult?: WorktreeCleanupResult;
   /** The tool_use_id from the original Agent tool call. */
