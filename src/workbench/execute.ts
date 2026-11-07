@@ -77,8 +77,8 @@ const REQUEST_KEYS: readonly string[] = ["definitionRef", "input", "hostMode", "
 const DEFINITION_KEYS: readonly string[] = ["kind", "id", "schemaVersion", "artifactDigest"];
 const DEFINITION_KINDS: readonly string[] = ["script", "function", "furnace-formula"];
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
-/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, no wildcard. */
-const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, or one exact claude:tool:<name> Claude tool right (wb-wupg), no wildcard. */
+const GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 const LAUNCH_STATUSES: readonly string[] = ["accepted", "launched", "refused"];
 const INPUT_BYTES = 64 * 1024;
 const POLICY_BYTES = 4096;

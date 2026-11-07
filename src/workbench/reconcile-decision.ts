@@ -132,7 +132,7 @@ export const EVIDENCE_GUIDANCE: readonly string[] = Object.freeze([
 ]);
 
 const SCOPE_TEXT = "Workflow unavailable in this local operator/session/workspace scope.";
-const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+const GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 const TASK_ID = /^wf_[a-z0-9-]{6,}$/;
 const RECEIPT_ID = /^rcp_[0-9a-f]{32}$/;
 const ACK_ID = /^ack_[0-9a-f]{32}$/;
