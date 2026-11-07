@@ -54,14 +54,15 @@
  *             decideExecute's admission as it is for the form's listed request carrying no note, and the boundary's
  *             result, the authority its dispatch callback receives and the decision, at its 4 listed host scenarios and 4
  *             listed decision readings, as they are for the request carrying no note under a host carrying none, read
- *             whole: decideExecute takes a function request through withoutBeadsNotes (identity.ts), whose own doc lists
- *             what the suite pins of it. Its listed note-carrying policies, set on an admission handed to the boundary,
- *             leave the boundary's result and the decision at those scenarios and readings as they are for that admission
- *             without a policy, read whole. A script or furnace-formula definition's two admissions of each listed
+ *             whole: at the request forms the suite's EAT-R154 rows list, decideExecute takes a function request through
+ *             withoutBeadsNotes (identity.ts), whose own doc lists what the suite pins of it, and other request forms are
+ *             NOT CLAIMED. Its listed note-carrying policies, set on an admission handed to the boundary, leave the
+ *             boundary's result and the decision at those scenarios and readings as they are for that admission without
+ *             a policy, read whole. A script or furnace-formula definition's two admissions of each listed
  *             request-carried pair still differ in exactly the carrying field. Its static census finds none of its four
  *             listed reader forms in this module, execute.ts or the hosts, and in identity.ts the note field's name as a
- *             quoted literal exactly once and none of the other three forms. Other fixtures, positions, reader forms and
- *             files, and any replay basis, are NOT CLAIMED.
+ *             quoted literal exactly once and none of the other three forms. Other fixtures, request forms, positions,
+ *             reader forms and files, and any replay basis, are NOT CLAIMED.
  *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
  * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch

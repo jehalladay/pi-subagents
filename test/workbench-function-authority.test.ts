@@ -69,8 +69,9 @@
  * the namespace:permission grammar), and the module joins that census's READERS, where its rows are pinned; the two
  * landing-1019 contact rows at the end of this file pin the four listed rights at the decision and at adoption.
  * Cut #7 (the respin of refusal #6, whose U1 is EAT-R154's byte-identical admission floor, at rung 1 of its own ladder)
- * has decideExecute take a function definition's request through withoutBeadsNotes in identity.ts, which omits the Beads
- * note member at the positions these rows list. The EAT-R154 admission row now reads the two admissions of each listed
+ * has decideExecute take a function definition's request, at the request forms these rows list, through
+ * withoutBeadsNotes in identity.ts, which omits the Beads note member at the positions these rows list; other request
+ * forms are NOT CLAIMED. The EAT-R154 admission row now reads the two admissions of each listed
  * fixture pair byte-identical, read whole, and equal to the admission of the listed request carrying no note,
  * red-first. Six further EAT-R154 rows pin, each red-first or against its named falsifier: the listed typed fields
  * beside a note still change the admission; the listed nested positions; the listed notes long enough to cross a byte
@@ -78,6 +79,20 @@
  * script and furnace-formula scope. A census row pins that identity.ts holds the note field's name as a quoted literal
  * exactly once. Cut #7 keeps the frozen sets (R-B669's host-authority words, GUARD A and GUARD B) byte-stable and does
  * not restate the R-B642 set.
+ * Cut #8 (the respin of refusal #7, whose U1 is cut #7's EAT-R154 mechanism words, at rung 1 of their own ladder) adds
+ * three EAT-R154 rows at the 6 further listed request forms: a caller input that is itself an array of two export rows;
+ * the caller policy {bead: the export row} or {notes: the note}, and the caller input with either beside the task
+ * fields, each a null-prototype record; and an export row five objects deep in the caller input. In each host mode the
+ * first row reads the plain-note and seat-note admissions of each form byte-identical, read whole, to each other and to
+ * the admission of the form's listed request carrying no note, red-first: it fails under refusal #7's
+ * GP15-JUDGE-OBJECTS-ONLY and GP15-JUDGE-PLAIN-PROTO-ONLY, and under GP15-WITHOUT-SKIP-TOP-ARRAY and GP15-OMIT-DEPTH3.
+ * The second row reads each form's endings at the 4 listed host scenarios and its decisions at the 4 listed decision
+ * readings as those of the form's listed request carrying no note, read whole; the third reads a script or
+ * furnace-formula definition's two admissions of each form still differing in exactly the carrying key. Cut #8 narrows
+ * the mechanism words (here, in execute.ts, function-authority.ts and identity.ts) to the request forms these rows list;
+ * other request forms are NOT CLAIMED. No residual is named: each form refusal #7's U1 recorded (a caller input that is
+ * itself an array, a null-prototype caller policy and caller input) is pinned by the first row. Cut #8 keeps the frozen
+ * sets (R-B669's host-authority words, GUARD A and GUARD B) byte-stable and does not restate the R-B642 set.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -1808,6 +1823,80 @@ describe("EAT-R154: at the listed fixture pairs a Beads note changes no admissio
       for (const [position, carry, noteless] of NESTED) {
         const control = wholeOf(admitCarrying(hostMode, noteless));
         expect({ hostMode, position, plain: wholeOf(admitCarrying(hostMode, carry(PLAIN_NOTE))), seat: wholeOf(admitCarrying(hostMode, carry(SEAT_NOTE))) }).toEqual({ hostMode, position, plain: control, seat: control });
+      }
+    }
+  });
+
+  /** A null-prototype record holding the given members, as a parser that builds records without Object.prototype returns one. */
+  const nullPrototype = (members: Record<string, JsonValue>): Record<string, JsonValue> => Object.assign(Object.create(null) as Record<string, JsonValue>, members);
+  /** The value that carries a request's note: its caller policy when it has one, else its caller input. */
+  const carrierOf = (carried: Carried): JsonValue => carried.policy ?? carried.input;
+  const shapeOf = (value: JsonValue): "an array" | "a null-prototype record" | "a plain record" | "another value" => {
+    if (Array.isArray(value)) return "an array";
+    if (typeof value !== "object" || value === null) return "another value";
+    return Object.getPrototypeOf(value) === null ? "a null-prototype record" : "a plain record";
+  };
+  /**
+   * The 6 further listed request forms (cut #8, refusal #7's U1): a caller input that is itself an array of two export
+   * rows; the caller policy {bead: the export row} or {notes: the note}, and the caller input with either added to the task
+   * fields, each a null-prototype record; and an export row five objects deep in the caller input. Each names the shape of
+   * the value that carries its note, the one own key of the admission that echoes its carrying request field, the request
+   * carrying the given note, and the listed request carrying no note.
+   */
+  const FURTHER: readonly (readonly [string, ReturnType<typeof shapeOf>, "policy" | "inputDigest", (notes: string) => Carried, Carried])[] = [
+    ["the caller input [the export row, the export row], itself an array", "an array", "inputDigest", notes => ({ input: [exportRow(notes), exportRow(notes)] }), { input: [ROW_WITHOUT_NOTE, ROW_WITHOUT_NOTE] }],
+    ["the caller policy {bead: the export row}, a null-prototype record", "a null-prototype record", "policy", notes => ({ policy: nullPrototype({ bead: exportRow(notes) }), input: PLAIN_TASK }), { policy: nullPrototype({ bead: ROW_WITHOUT_NOTE }), input: PLAIN_TASK }],
+    ["the caller policy {notes: the note}, a null-prototype record", "a null-prototype record", "policy", notes => ({ policy: nullPrototype({ notes }), input: PLAIN_TASK }), { policy: nullPrototype({}), input: PLAIN_TASK }],
+    ["the caller input {the task fields, bead: the export row}, a null-prototype record", "a null-prototype record", "inputDigest", notes => ({ input: nullPrototype({ ...PLAIN_TASK, bead: exportRow(notes) }) }), { input: nullPrototype({ ...PLAIN_TASK, bead: ROW_WITHOUT_NOTE }) }],
+    ["the caller input {the task fields, notes: the note}, a null-prototype record", "a null-prototype record", "inputDigest", notes => ({ input: nullPrototype({ ...PLAIN_TASK, notes }) }), { input: nullPrototype(PLAIN_TASK) }],
+    ["the caller input {the task fields, deep: {a: {b: {c: {d: the export row}}}}}, the export row five objects deep", "a plain record", "inputDigest", notes => ({ input: { ...PLAIN_TASK, deep: { a: { b: { c: { d: exportRow(notes) } } } } } }), { input: { ...PLAIN_TASK, deep: { a: { b: { c: { d: ROW_WITHOUT_NOTE } } } } } }],
+  ];
+
+  it("in each host mode, decideExecute admits the request for mechanical.development.develop.v1 of each of the 6 further listed request forms (a caller input that is itself an array of two export rows; the caller policy {bead: the export row} or {notes: the note}, and the caller input with either beside the task fields, each a null-prototype record; an export row five objects deep in the caller input) with the plain note and with the seat note, and the two admissions are byte-identical, read whole, to each other and to the admission of the form's listed request carrying no note", () => {
+    expect(FURTHER).toHaveLength(6);
+    for (const [form, shape, , carry, noteless] of FURTHER) {
+      expect({ form, plain: shapeOf(carrierOf(carry(PLAIN_NOTE))), seat: shapeOf(carrierOf(carry(SEAT_NOTE))), noteless: shapeOf(carrierOf(noteless)) }).toEqual({ form, plain: shape, seat: shape, noteless: shape });
+    }
+    for (const hostMode of MODES) {
+      for (const [form, , , carry, noteless] of FURTHER) {
+        const control = wholeOf(admitCarrying(hostMode, noteless));
+        expect({ hostMode, form, plain: wholeOf(admitCarrying(hostMode, carry(PLAIN_NOTE))), seat: wholeOf(admitCarrying(hostMode, carry(SEAT_NOTE))) }).toEqual({ hostMode, form, plain: control, seat: control });
+      }
+    }
+  });
+
+  it("in each host mode, the request for mechanical.development.develop.v1 of each of the 6 further listed request forms, with the plain note or the seat note, ends at each of the 4 listed host scenarios as the form's listed request carrying no note does, byte for byte in the whole readings of the boundary result and of each authority the dispatch callback receives, with the same park and dispatch counts, and is decided at each of the 4 listed decision readings as that request is, in the decision's whole reading", async () => {
+    expect(FURTHER).toHaveLength(6);
+    for (const hostMode of MODES) {
+      for (const [form, , , carry, noteless] of FURTHER) {
+        for (const [scenario, entry, change] of SCENARIOS) {
+          const control = await endingOf(admitCarrying(hostMode, noteless), entry, change);
+          const ended = (notes: string) => endingOf(admitCarrying(hostMode, carry(notes)), entry, change);
+          expect({ hostMode, form, scenario, plain: await ended(PLAIN_NOTE), seat: await ended(SEAT_NOTE) }).toEqual({ hostMode, form, scenario, plain: control, seat: control });
+        }
+        for (const [entered, now] of READINGS) {
+          const decide = (carried: Carried) => wholeOf(decideFunctionAuthority({ admission: admitCarrying(hostMode, carried), contract: CONTRACT, entered, current: { grants: now.grants, identity: now.identity } }));
+          const control = decide(noteless);
+          expect({ hostMode, form, entered, now, plain: decide(carry(PLAIN_NOTE)), seat: decide(carry(SEAT_NOTE)) }).toEqual({ hostMode, form, entered, now, plain: control, seat: control });
+        }
+      }
+    }
+  });
+
+  it("for a script definition and for a furnace-formula definition, decideExecute admits the request of each of the 6 further listed request forms with the plain note and with the seat note, and the two admissions, read whole, still differ in exactly the one own key that echoes the carrying request field (EAT-R154's scope condition: function admission and identity only)", () => {
+    expect(FURTHER).toHaveLength(6);
+    for (const hostMode of MODES) {
+      for (const kind of ["script", "furnace-formula"] as const) {
+        for (const [form, , echo, carry] of FURTHER) {
+          const admitted = (notes: string) => {
+            const decision = decideCarrying(hostMode, carry(notes), kind);
+            if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+            return decision.admission as unknown as Record<string, unknown>;
+          };
+          const plain = admitted(PLAIN_NOTE);
+          const seat = admitted(SEAT_NOTE);
+          expect({ hostMode, kind, form, differing: Reflect.ownKeys(plain).map(String).filter(key => wholeOf(plain[key]) !== wholeOf(seat[key])) }).toEqual({ hostMode, kind, form, differing: [echo] });
+        }
       }
     }
   });

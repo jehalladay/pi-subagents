@@ -159,15 +159,19 @@ const PROTOTYPE_KEYS: readonly string[] = ["__proto__", "constructor", "prototyp
 /**
  * EAT-R154 (wb-201v; the mechanical-interoperability-audit-2026-11-06 triage, ATOMIC-REQUIREMENTS-DELTA.md compiled at the
  * Nov-6 pins pi d7666a76 and mw 97e18068): "No Pi function admission, identity or replay-basis computation MAY read
- * free-form note text from a Beads export; only typed evidence fields and snapshot pins MAY be consumed". decideExecute
- * (execute.ts) judges a function definition's caller policy and input by the copy withoutBeadsNotes returns. Claimed only at
- * the EAT-R154 rows of test/workbench-function-authority.test.ts: at the 7 note positions they list (a note member of the
- * caller policy, of the caller input beside the task fields, of an export row held under a member of either, of each
- * export row an array of the input holds, of an export row three objects deep in the policy, and of an object in an array
- * within an array of the policy) the request is admitted as it is without the note member, read whole; the typed fields
- * they list beside a note (an export row's status, a snapshot pin) still change the admission; the 3 bound-crossing notes
- * they list leave the decision as it is with a plain note; and a request whose note member holds a getter, which is never
- * invoked, or NaN is decided as it is without the note member. Other values and positions are NOT CLAIMED.
+ * free-form note text from a Beads export; only typed evidence fields and snapshot pins MAY be consumed". At the request
+ * forms the EAT-R154 rows of test/workbench-function-authority.test.ts list, decideExecute (execute.ts) judges a function
+ * definition's caller policy and input by the copy withoutBeadsNotes returns; other request forms are NOT CLAIMED.
+ * Claimed only at those rows: at the 9 note positions they list (a note member of the caller policy, of the caller input
+ * beside the task fields, of an export row held under a member of either, of each export row an array of the input
+ * holds, of each export row a caller input that is itself an array holds, of an export row three objects deep in the
+ * policy, of an export row five objects deep in the input, and of an object in an array within an array of the policy),
+ * and at the 4 they list with the caller policy or input a null-prototype record (a note member of either, or of an
+ * export row held under a member of either), the request is admitted as it is without the note member, read whole; the
+ * typed fields they list beside a note (an export row's status, a snapshot pin) still change the admission; the 3
+ * bound-crossing notes they list leave the decision as it is with a plain note; and a request whose note member holds a
+ * getter, which is never invoked, or NaN is decided as it is without the note member. Other values and positions are NOT
+ * CLAIMED.
  */
 export function withoutBeadsNotes(value: unknown): unknown {
   const ancestors = new Set<object>();

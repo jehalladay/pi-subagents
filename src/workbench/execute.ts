@@ -36,8 +36,9 @@ export type ExecuteRefusalPolicy = "malformed-request" | "non-digest-definition"
 
 /**
  * What was admitted. The input itself is never retained, only its digest; the policy is the caller's, copied and frozen.
- * For a function definition both are taken from the request through withoutBeadsNotes (identity.ts), the Beads note
- * omission EAT-R154 asks of a function admission, as the EAT-R154 rows of test/workbench-function-authority.test.ts pin it.
+ * For a function definition, at the request forms the EAT-R154 rows of test/workbench-function-authority.test.ts list,
+ * both are taken from the request through withoutBeadsNotes (identity.ts), the Beads note omission EAT-R154 asks of a
+ * function admission; other request forms are NOT CLAIMED.
  */
 export interface ExecuteAdmission {
   readonly contractVersion: typeof EXECUTE_CONTRACT_VERSION;
@@ -152,7 +153,9 @@ function grantList(value: unknown): string[] | undefined {
  * Synchronous and side-effect free. Rules apply in order and the first match wins: request shape, host invocation
  * reference, digest-pinned definition, hostMode allowlist, policy, input, then authority. The definition is checked
  * before any grant is consulted, so an unpinned reference is never authorized. Reasons never echo caller text. For a
- * function definition the policy and input rules judge the request's policy and input through withoutBeadsNotes.
+ * function definition, at the request forms the EAT-R154 rows of test/workbench-function-authority.test.ts list, the
+ * policy and input rules judge the request's policy and input through withoutBeadsNotes; other request forms are NOT
+ * CLAIMED.
  */
 export function decideExecute(request: WorkflowExecuteRequest, host: ExecuteHostContext): ExecuteDecision {
   const invocationId = plainObject(host) && cleanText(host.invocationId) ? host.invocationId : undefined;
