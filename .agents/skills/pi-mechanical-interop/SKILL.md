@@ -32,3 +32,8 @@ Read `docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/READM
 ## Ownership
 
 Pi hosts and observes functions, not a second scheduler or task authority. Mechanical provides ordinary functions and application callback bundles. Claude SDK owns agent sessions, Forge owns gate verdicts, HX owns coverage, RF owns committed render IDs, Beads owns readiness and Furnace owns Run/Work/Attempt and retries. Pure coordination outputs are advisory until independently authorized.
+
+
+## Machine field journeys (2026-11-07)
+
+Open [bead-machine-field-idioms.md](bead-machine-field-idioms.md) for source-pinned Flywheel and Camshaft resident-machine patterns, independent launch/landing custody, re-read after lost acknowledgment and the native Mechanical function-hosting acceptance boundary. These are field observations, not a new implemented Pi function-host capability.
