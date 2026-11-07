@@ -11,10 +11,19 @@
  * wait, lands after the one dispatch the final decision permits is invoked. Other scheduling forms are NOT CLAIMED. No
  * decision taken at entry is carried across the wait.
  *
- * At the pinned rows, authority comes from the host's two reads, the grants the operator configured and the effective
- * principal and session: the suite's JSON policies and inputs that name grants, permissions, authority, reviewed,
- * actionGrant, principal, sessionId or identity confer no grant and override no identity field, and the reviewed
- * definition's adopted binding confers no execute right. Other request shapes are NOT CLAIMED.
+ * Host authority, at the suite's listed forms only. In each host mode, the request for mechanical.development.develop.v1
+ * under the pinned contract, carrying any of the suite's 7776 listed caller policies (each record holding each of grants,
+ * permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed
+ * values), ends each of the 12 listed boundary scenarios as listed (the same refusal stage, policy, category and
+ * invocation, or one dispatch on the same invocation and definition resting on workbench:execute and the action under
+ * the same principal and session, with the same park, loader and provider calls) and is decided at each of the 10 listed
+ * decision readings as listed (the same refusal policy, category and invocation, or the same authorization), as it is
+ * without a policy; so does that request without a policy carrying any of the 7776 listed inputs (those records added to
+ * the plain task fields) at the 12 boundary scenarios. At the 13824 listed descriptor forms (three definitions, three
+ * contracts, two schema versions, two digests, three policies, two inputs and the 32 subsets of five grants without
+ * workbench:execute, in each host mode, under the steady host identity), a request refuses at entry as
+ * missing-execute-grant, with zero park, loader and provider calls. Other request shapes, host scenarios, readings,
+ * descriptor forms and refusal reason texts are NOT CLAIMED.
  *   EAT-R028  pinned rows: the otherwise authorized request without workbench:execute refuses at entry, before any wait,
  *             as missing-execute-grant, with zero loader and provider calls, and so does that request holding each pinned
  *             stand-in in its place (workbench:detach, workbench:design, the shorter spelling workbench:exec,

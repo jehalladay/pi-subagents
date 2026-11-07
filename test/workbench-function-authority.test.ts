@@ -36,6 +36,13 @@
  * pins the EAT-R028 stand-ins for workbench:execute with the same sweeps and narrows the EAT-R028 titles to their pinned
  * rows. Clean-text readings, and action-grant or workbench:execute spellings or holdings, beyond those rows are NOT
  * CLAIMED. R-B665 exits the R-B642 set to wb-m83p, which owns it; cut #4 does not restate it.
+ * Cut #5 (the respin of refusal #4 under the guard binding R-B669) takes the host-authority words: it adds the host
+ * authority describe at the end of this file red-first (each of its new cases fails on the gate's blind stub, and each of
+ * refusal #4's six members fails on one of its rows), and narrows the EAT-R028 binding title, the EAT-R029 JSON-policy
+ * title and the EAT-R030 caller-shape title to their pinned rows. EAT-R028's mutant above is pinned at that describe's
+ * listed caller policies, inputs and descriptor forms, in both host modes; other forms of it are NOT CLAIMED. No
+ * residual is named: each form refusal #4 recorded is pinned by a row there. Cut #5 keeps GUARD A and GUARD B in their
+ * enumerate form and does not restate the R-B642 set.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -272,7 +279,7 @@ describe("EAT-R028: workbench:execute at the enumerated rows and sweeps (wb-201v
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("a reviewed definition the adopted contract binds confers no execute right, and neither does the pinned JSON policy (naming it under grants, permissions and authority, with reviewed true) or the pinned input (naming it under grants)", async () => {
+  it("held with the action grant and not workbench:execute, the embedded request for mechanical.development.develop.v1, which the pinned contract binds to the action, refuses at entry as missing-execute-grant, with zero loader and provider calls, without a policy, with the pinned JSON policy (naming workbench:execute under grants, permissions and authority, with reviewed true) and with the pinned input (naming it under grants)", async () => {
     const h = harness({ grants: [ACTION] });
     const claims: JsonValue = { grants: [EXECUTE_GRANT, ACTION], permissions: [EXECUTE_GRANT], authority: EXECUTE_GRANT, reviewed: true };
     for (const admission of [admissionFor(), admissionFor(FUNCTION_ID, claims), admissionFor(FUNCTION_ID, undefined, { task: "t", grants: [EXECUTE_GRANT] })]) {
@@ -373,7 +380,7 @@ describe("EAT-R029: the exact host-issued function action grant at the enumerate
     expect(other.loader).not.toHaveBeenCalled();
   });
 
-  it("a JSON policy naming the action grant under grants and actionGrant, or an input naming it under actionGrant, confers nothing", async () => {
+  it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the pinned JSON policy {grants: [the action], actionGrant: the action} or with the pinned input {task, actionGrant: the action} refuses at entry as missing-function-action-grant, with zero loader calls", async () => {
     const h = harness({ grants: [EXECUTE_GRANT] });
     for (const admission of [admissionFor(FUNCTION_ID, { grants: [ACTION], actionGrant: ACTION }), admissionFor(FUNCTION_ID, undefined, { task: "t", actionGrant: ACTION })]) {
       expect(refusalOf(await h.run(admission))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
@@ -696,7 +703,7 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("a caller principal or session field cannot override host identity, in either direction", async () => {
+  it("the two pinned caller shapes of the embedded request for mechanical.development.develop.v1 override no host identity: with the policy naming the host's principal, session and identity pair and the input naming its principal and session, a change of the host identity to local-operator:0:s9 / s9 during the park refuses at dispatch as changed-effective-identity, with zero loader calls; with the policy naming local-operator:0:s9 and s9 and the input naming local-operator:0:s9, the steady host dispatches under local-operator:1000:s1 / s1", async () => {
     const claimsHost: JsonValue = { principal: HOST.principal, sessionId: HOST.sessionId, identity: { principal: HOST.principal, sessionId: HOST.sessionId } };
     const h = harness();
     const wait = parked();
@@ -1284,4 +1291,245 @@ describe("not wired: each enumerated workflow_execute request naming a function 
   ] as const)("with hostMode %s and %j held, a function definition refuses as %s, with zero resolve and launch calls", async (hostMode, rights, code) => {
     expect(await executeFunction(rights, hostMode)).toEqual({ code, calls: [0, 0, 0] });
   });
+});
+
+describe("host authority: in each host mode, the listed caller policies leave the listed ending of each listed boundary scenario and decision reading unchanged, the listed caller inputs that of each listed boundary scenario, and the listed descriptor forms confer no execute right (wb-201v)", () => {
+  /** Another principal and session: the identity refusal #4's witnesses name. */
+  const OTHER: FunctionIdentity = Object.freeze({ principal: "local-operator:0:s9", sessionId: "s9" });
+  const MODES = ["embedded", "detached"] as const;
+  const PLAIN_TASK: Record<string, JsonValue> = { task: "t", workspaceId: "w", baseRevision: "r" };
+  const BOTH: readonly string[] = [EXECUTE_GRANT, ACTION];
+
+  /** A real workflow_execute admission in either host mode; decideExecute admits both with workbench:execute held. */
+  function admit(hostMode: (typeof MODES)[number], policy?: JsonValue, input: JsonValue = PLAIN_TASK, ref: Partial<Pick<DefinitionRef, "id" | "schemaVersion" | "artifactDigest">> = {}): ExecuteAdmission {
+    const definitionRef: DefinitionRef = { kind: "function", id: ref.id ?? FUNCTION_ID, schemaVersion: ref.schemaVersion ?? FUNCTION_SCHEMA, artifactDigest: ref.artifactDigest ?? DIGEST };
+    const decision = decideExecute({ definitionRef, input, hostMode, ...(policy !== undefined ? { policy } : {}) }, { grants: [EXECUTE_GRANT], invocationId: INVOCATION });
+    if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+    return decision.admission;
+  }
+
+  /** The eight listed keys and their listed values. */
+  const CLAIMS: readonly (readonly [string, readonly JsonValue[]])[] = [
+    ["grants", [[EXECUTE_GRANT], [ACTION], [EXECUTE_GRANT, ACTION]]],
+    ["permissions", [[EXECUTE_GRANT], [ACTION], [EXECUTE_GRANT, ACTION]]],
+    ["authority", [EXECUTE_GRANT, ACTION]],
+    ["reviewed", [true]],
+    ["actionGrant", [ACTION, OTHER_FUNCTION_ACTION]],
+    ["principal", [HOST.principal, OTHER.principal]],
+    ["sessionId", [HOST.sessionId, OTHER.sessionId]],
+    [
+      "identity",
+      [
+        { principal: HOST.principal, sessionId: HOST.sessionId },
+        { principal: OTHER.principal, sessionId: OTHER.sessionId },
+      ],
+    ],
+  ];
+  /** Each record holding every listed key absent or with one of its values: 4 * 4 * 3 * 2 * 3 * 3 * 3 * 3 = 7776 records, the empty one included. */
+  const RECORDS: readonly Record<string, JsonValue>[] = CLAIMS.reduce<Record<string, JsonValue>[]>(
+    (records, [key, values]) => records.flatMap(record => [record, ...values.map(value => ({ ...record, [key]: value }))]),
+    [{}],
+  );
+  /** The listed claims record: every key, with workbench:execute and the action named wherever a grant is, and the host's identity. */
+  const CLAIMS_ALL: Record<string, JsonValue> = {
+    grants: [EXECUTE_GRANT, ACTION],
+    permissions: [EXECUTE_GRANT, ACTION],
+    authority: EXECUTE_GRANT,
+    reviewed: true,
+    actionGrant: ACTION,
+    principal: HOST.principal,
+    sessionId: HOST.sessionId,
+    identity: { principal: HOST.principal, sessionId: HOST.sessionId },
+  };
+
+  interface HostReads {
+    readonly grants: readonly string[];
+    readonly identity: FunctionIdentity;
+  }
+  /** The listed request's invocation and definition, as a dispatch or an authorization rests on them. */
+  const LISTED = `${INVOCATION} for function ${FUNCTION_ID} ${FUNCTION_SCHEMA} ${DIGEST}`;
+  const refusedAt = (stage: "entry" | "dispatch", policy: FunctionAuthorityRefusal) => `refused at ${stage} as ${policy} (authorization) for ${INVOCATION}; park ${stage === "entry" ? 0 : 1}, loader 0, provider 0`;
+  const dispatchedUnder = (identity: FunctionIdentity) => `dispatched ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}, value ${INVOCATION}; park 1, loader 1, provider 1`;
+  /** The 12 listed boundary scenarios: the host's reads at entry, what the park changes, and how the request ends. */
+  const SCENARIOS: readonly (readonly [string, HostReads, HostReads | undefined, string])[] = [
+    ["both grants under local-operator:1000:s1 / s1 throughout", { grants: BOTH, identity: HOST }, undefined, dispatchedUnder(HOST)],
+    ["both grants under local-operator:0:s9 / s9 throughout", { grants: BOTH, identity: OTHER }, undefined, dispatchedUnder(OTHER)],
+    ["workbench:execute alone", { grants: [EXECUTE_GRANT], identity: HOST }, undefined, refusedAt("entry", "missing-function-action-grant")],
+    ["the action alone", { grants: [ACTION], identity: HOST }, undefined, refusedAt("entry", "missing-execute-grant")],
+    ["no grant", { grants: [], identity: HOST }, undefined, refusedAt("entry", "missing-execute-grant")],
+    ["workbench:execute and the other bound function's action", { grants: [EXECUTE_GRANT, OTHER_FUNCTION_ACTION], identity: HOST }, undefined, refusedAt("entry", "missing-function-action-grant")],
+    ["the identity changed to local-operator:0:s9 / s9 during the park", { grants: BOTH, identity: HOST }, { grants: BOTH, identity: OTHER }, refusedAt("dispatch", "changed-effective-identity")],
+    ["only the principal changed, to local-operator:0:s9, during the park", { grants: BOTH, identity: HOST }, { grants: BOTH, identity: { principal: OTHER.principal, sessionId: HOST.sessionId } }, refusedAt("dispatch", "changed-effective-identity")],
+    ["only the session changed, to s9, during the park", { grants: BOTH, identity: HOST }, { grants: BOTH, identity: { principal: HOST.principal, sessionId: OTHER.sessionId } }, refusedAt("dispatch", "changed-effective-identity")],
+    ["the identity changed from local-operator:0:s9 / s9 to local-operator:1000:s1 / s1 during the park", { grants: BOTH, identity: OTHER }, { grants: BOTH, identity: HOST }, refusedAt("dispatch", "changed-effective-identity")],
+    ["the action grant revoked during the park", { grants: BOTH, identity: HOST }, { grants: [EXECUTE_GRANT], identity: HOST }, refusedAt("dispatch", "missing-function-action-grant")],
+    ["workbench:execute revoked during the park", { grants: BOTH, identity: HOST }, { grants: [ACTION], identity: HOST }, refusedAt("dispatch", "missing-execute-grant")],
+  ];
+  const authorizedUnder = (identity: FunctionIdentity) => `authorized ${LISTED} on ${EXECUTE_GRANT} and ${ACTION} under ${identity.principal} / ${identity.sessionId}`;
+  const refusedAs = (policy: FunctionAuthorityRefusal) => `refused as ${policy} (authorization) for ${INVOCATION}`;
+  /** The 10 listed decision readings: the identity read at entry, the host's reads now, and the decision. */
+  const READINGS: readonly (readonly [FunctionIdentity, HostReads, string])[] = [
+    [HOST, { grants: BOTH, identity: HOST }, authorizedUnder(HOST)],
+    [OTHER, { grants: BOTH, identity: OTHER }, authorizedUnder(OTHER)],
+    [HOST, { grants: [EXECUTE_GRANT], identity: HOST }, refusedAs("missing-function-action-grant")],
+    [HOST, { grants: [ACTION], identity: HOST }, refusedAs("missing-execute-grant")],
+    [HOST, { grants: [], identity: HOST }, refusedAs("missing-execute-grant")],
+    [HOST, { grants: [EXECUTE_GRANT, OTHER_FUNCTION_ACTION], identity: HOST }, refusedAs("missing-function-action-grant")],
+    [HOST, { grants: BOTH, identity: OTHER }, refusedAs("changed-effective-identity")],
+    [HOST, { grants: BOTH, identity: { principal: OTHER.principal, sessionId: HOST.sessionId } }, refusedAs("changed-effective-identity")],
+    [HOST, { grants: BOTH, identity: { principal: HOST.principal, sessionId: OTHER.sessionId } }, refusedAs("changed-effective-identity")],
+    [OTHER, { grants: BOTH, identity: HOST }, refusedAs("changed-effective-identity")],
+  ];
+
+  /** How one request ends at the boundary when the park applies the scenario's change; the park, loader and provider calls are counted. */
+  async function ending(admission: ExecuteAdmission, entry: HostReads, change: HostReads | undefined, contract: FunctionActionContract = CONTRACT): Promise<string> {
+    let reads = entry;
+    const calls = { park: 0, loader: 0, provider: 0 };
+    const host: FunctionAuthorityHost = { grants: () => reads.grants, identity: () => ({ ...reads.identity }) };
+    const park = async () => {
+      calls.park += 1;
+      if (change !== undefined) reads = change;
+    };
+    const dispatch = async (authority: FunctionDispatchAuthority) => {
+      calls.loader += 1;
+      const provider = async () => {
+        calls.provider += 1;
+        return authority.invocationId;
+      };
+      return provider();
+    };
+    const result = await dispatchFunctionWithAuthority({ admission, contract, host, park, dispatch });
+    const counted = `park ${calls.park}, loader ${calls.loader}, provider ${calls.provider}`;
+    if (result.status === "refused") return `refused at ${result.stage} as ${result.refusal.policy} (${result.refusal.category}) for ${result.refusal.invocationId}; ${counted}`;
+    const { invocationId, definition, grants, identity } = result.authority;
+    const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
+    return `dispatched ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}, value ${String(result.value)}; ${counted}`;
+  }
+  /** A decision as the readings list it. */
+  function decisionEnding(decision: ReturnType<typeof decideFunctionAuthority>): string {
+    if (decision.decision === "refused") return `refused as ${decision.policy} (${decision.category}) for ${decision.invocationId}`;
+    const { invocationId, definition, grants, identity } = decision.authority;
+    const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
+    return `authorized ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}`;
+  }
+  /** The endings of a list of requests at one scenario, tallied. */
+  async function endings(admissions: readonly ExecuteAdmission[], entry: HostReads, change: HostReads | undefined): Promise<Record<string, number>> {
+    const tallied: Record<string, number> = {};
+    for (const admission of admissions) {
+      const ended = await ending(admission, entry, change);
+      tallied[ended] = (tallied[ended] ?? 0) + 1;
+    }
+    return tallied;
+  }
+
+  it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the policy {grants: [the action], actionGrant: the action, reviewed: true} refuses at entry as missing-function-action-grant, with zero loader and provider calls", async () => {
+    const h = harness({ grants: [EXECUTE_GRANT] });
+    expect(refusalOf(await h.run(admit("embedded", { grants: [ACTION], actionGrant: ACTION, reviewed: true })))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the policy {grants: [workbench:execute, the action], actionGrant: the action} refuses at entry as missing-function-action-grant, with zero loader and provider calls", async () => {
+    const h = harness({ grants: [EXECUTE_GRANT] });
+    expect(refusalOf(await h.run(admit("embedded", { grants: [EXECUTE_GRANT, ACTION], actionGrant: ACTION })))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ["{sessionId: s9}", { sessionId: OTHER.sessionId }],
+    ["{identity: {principal: local-operator:0:s9, sessionId: s9}}", { identity: { principal: OTHER.principal, sessionId: OTHER.sessionId } }],
+  ] as const)("held with both grants under the steady host identity, the embedded request for mechanical.development.develop.v1 with the policy %s dispatches once, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async (_policy, policy) => {
+    const h = harness();
+    const result = await h.run(admit("embedded", policy));
+    expect(result.status === "dispatched" ? result.authority : undefined).toEqual({ invocationId: INVOCATION, definition: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+    expect(h.loader).toHaveBeenCalledTimes(1);
+    expect(h.provider).toHaveBeenCalledTimes(1);
+  });
+
+  it("with the policy {sessionId: s1}, the entry session and no principal, a change of the host identity to local-operator:0:s9 / s9 during the park refuses the embedded request for mechanical.development.develop.v1 at dispatch as changed-effective-identity, with zero loader and provider calls", async () => {
+    const h = harness();
+    const wait = parked();
+    const pending = h.run(admit("embedded", { sessionId: HOST.sessionId }), CONTRACT, wait.park);
+    h.state.identity = OTHER;
+    wait.release();
+    expect(refusalOf(await pending)).toEqual({ stage: "dispatch", policy: "changed-effective-identity", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("held with the action grant and not workbench:execute, the detached request for mechanical.development.develop.v1, which the pinned contract binds to the action, refuses at entry as missing-execute-grant, with zero park, loader and provider calls", async () => {
+    const h = harness({ grants: [ACTION] });
+    const wait = parked();
+    expect(refusalOf(await h.run(admit("detached"), CONTRACT, wait.park))).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+    expect(wait.park).not.toHaveBeenCalled();
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("in each host mode, the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies (each record holding each of grants, permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed values) ends each of the 12 listed boundary scenarios as the scenario lists, as the request without a policy does: the same refusal stage, policy, category and invocation, or one dispatch on the same invocation and definition, resting on workbench:execute and the action under the same principal and session, with the same park, loader and provider calls", async () => {
+    expect(RECORDS).toHaveLength(7776);
+    expect(SCENARIOS).toHaveLength(12);
+    for (const hostMode of MODES) {
+      const admissions = [admit(hostMode), ...RECORDS.map(policy => admit(hostMode, policy))];
+      for (const [scenario, entry, change, expected] of SCENARIOS) {
+        expect({ hostMode, scenario, endings: await endings(admissions, entry, change) }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+      }
+    }
+  }, 120_000);
+
+  it("in each host mode, decideFunctionAuthority decides the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies, at each of the 10 listed decision readings, as the reading lists, as it decides the request without a policy: the same refusal policy, category and invocation, or an authorization on the same invocation and definition, resting on workbench:execute and the action under the same principal and session", () => {
+    expect(READINGS).toHaveLength(10);
+    for (const hostMode of MODES) {
+      const admissions = [admit(hostMode), ...RECORDS.map(policy => admit(hostMode, policy))];
+      for (const [entered, now, expected] of READINGS) {
+        const decisions: Record<string, number> = {};
+        for (const admission of admissions) {
+          const decision = decideFunctionAuthority({ admission, contract: CONTRACT, entered, current: { grants: now.grants, identity: now.identity } });
+          const decided = decisionEnding(decision);
+          decisions[decided] = (decisions[decided] ?? 0) + 1;
+        }
+        expect({ hostMode, entered, now, decisions }).toEqual({ hostMode, entered, now, decisions: { [expected]: 7777 } });
+      }
+    }
+  }, 120_000);
+
+  it("in each host mode, the request for mechanical.development.develop.v1 without a policy, carrying each of the 7776 listed caller inputs (each record above added to the plain task fields), ends each of the 12 listed boundary scenarios as the scenario lists, as the request with the plain task input does", async () => {
+    for (const hostMode of MODES) {
+      const admissions = [admit(hostMode), ...RECORDS.map(fields => admit(hostMode, undefined, { ...PLAIN_TASK, ...fields }))];
+      for (const [scenario, entry, change, expected] of SCENARIOS) {
+        expect({ hostMode, scenario, endings: await endings(admissions, entry, change) }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+      }
+    }
+  }, 120_000);
+
+  it("in each host mode, without workbench:execute, the request for each of the three listed definitions under each of the three listed contracts, with each of the two listed schema versions and digests, each of the three listed policies and each of the two listed inputs, held under the steady host identity with each of the 32 subsets of the five listed grants, refuses at entry as missing-execute-grant, with zero park, loader and provider calls (13824 requests)", async () => {
+    const forged = Object.freeze({
+      state: "adopted",
+      bindings: Object.freeze([Object.freeze({ definitionId: FUNCTION_ID, actionGrant: ACTION }), Object.freeze({ definitionId: OTHER_FUNCTION_ID, actionGrant: OTHER_FUNCTION_ACTION })]),
+    }) as FunctionActionContract;
+    const pool = [ACTION, OTHER_FUNCTION_ACTION, DETACH_GRANT, "workbench:design", "forge:inspect"];
+    const subsets = Array.from({ length: 2 ** pool.length }, (_, mask) => pool.filter((_grant, bit) => (mask & (1 << bit)) !== 0));
+    const tallied: Record<string, number> = {};
+    for (const hostMode of MODES) {
+      for (const id of [FUNCTION_ID, OTHER_FUNCTION_ID, "fixture.unbound.v1"]) {
+        for (const schemaVersion of [FUNCTION_SCHEMA, "mechanical-workflows/entrypoint/v2"]) {
+          for (const artifactDigest of [DIGEST, `sha256:${"cd".repeat(32)}`]) {
+            for (const policy of [undefined, {}, CLAIMS_ALL]) {
+              for (const input of [PLAIN_TASK, { ...PLAIN_TASK, ...CLAIMS_ALL }]) {
+                const admission = admit(hostMode, policy, input, { id, schemaVersion, artifactDigest });
+                for (const contract of [CONTRACT, FUNCTION_ACTION_CONTRACT, forged]) {
+                  for (const grants of subsets) {
+                    const ended = await ending(admission, { grants, identity: HOST }, undefined, contract);
+                    tallied[ended] = (tallied[ended] ?? 0) + 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    expect(tallied).toEqual({ [refusedAt("entry", "missing-execute-grant")]: 13824 });
+  }, 120_000);
 });
