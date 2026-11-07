@@ -14,6 +14,25 @@
  * the append-only receipt docs/workbench/receipts/wb-f3wd.md (standing rule 15), so a pin or a residual removed from every
  * literal of this file still stands there: the anchors outside this file.
  *
+ * THE MEASUREMENT (follow-up wb-d6m1, the landing-1013 gate's F1: the committed record's binary SHA-256, its base revision moved
+ * with every field that names it, a live leg's answer count, its frame count and the capability count were each read by format
+ * or as a positive count, so an edit to any of them kept the census green): the receipt's follow-up entry carries the Measured
+ * record table - nine reproducible literals by field (the base revision, the task digest, the binary SHA-256 and origin, the
+ * capability count, and each live leg's answer and frame counts), and the SHA-256 of the record's measurement, which is the
+ * record's canonical JSON (keys in code-point order) without utc, the run's clock, and probe, the script tie S-RECORD-TIED
+ * computes, so an edit to any other field of the record moves that SHA-256. The
+ * cases that read a literal hold it to its row (A1-PRODUCER-PIN, A1-CAPABILITIES, A2-RECORDED-TASK, A3-RECORDED-RESPONSES), and
+ * ANCHOR-MEASUREMENT holds the table's fields, the measurement's SHA-256, and the table's binary SHA-256, capability count, base
+ * revision and task digest to what the cut-1 entry measured: its version pin, and the 12-digit abbreviations its EAT-R057 item
+ * names.
+ * THE RECORD OF ENDS (follow-up wb-d6m1, the gate's F3: a case returning early, hollowed to one assertion, skipped or dropped
+ * from the registration loop kept the census green): every row records its end in REACHED as `${id}:${count}` after its last
+ * assertion, count being vitest's own tally of the row's assertions (expect.getState().assertionCalls). The registration row,
+ * registered first, holds the collected task tree before any other row runs: exactly the registration row, the cases, the
+ * anchor rows and the liveness row, in order, each set to run and not inverted. The liveness row, registered last, holds the
+ * tree again, every other test run before it, and REACHED to the receipt's Reached ends table, which ANCHOR-RECEIPT-TABLES holds
+ * to every row id of this file; the file-end judge (afterAll) holds the liveness row's own end whenever it was selected.
+ *
  * PINNED READER SET (case id: assertion target -> observed result at this cut; every case is in CASES below):
  * STATEMENT (judgeTaskScope, reasonsOf; the committed record)
  * - S-TASK-CAPABLE: an observation meeting every condition (native result, exit 0, terminal reached, coverage complete,
@@ -26,18 +45,23 @@
  * - S-RECORD-TIED: the committed record names its schema, bead and requirement and is tied to the committed probe and judge
  *   scripts by their SHA-256.
  * A1 "Pin installed HX version" (the committed record)
- * - A1-PRODUCER-PIN: the record pins the runtime hx 0.1.0 by binary SHA-256, HXS 1.0 and protocol hxs/1.0.
+ * - A1-PRODUCER-PIN: the record pins the runtime hx 0.1.0 by the binary SHA-256 and the binary origin of the receipt's Measured
+ *   record, HXS 1.0 and protocol hxs/1.0.
  * - A1-SDK-PIN: the record's SDK version is the installed @hyperunix/sdk package version, the version the runtime reported
  *   and the version of the vendored tarball package.json depends on.
- * - A1-CAPABILITIES: the record carries the runtime's capability count and the capabilities naming a task: none.
+ * - A1-CAPABILITIES: the record carries the runtime's capability count, the receipt's Measured record count, and the
+ *   capabilities naming a task: none.
  * A2 "query actual task/revision" (LEGS; the committed record)
  * - A2-PROBE-LEGS: the legs are exactly filesystem-live (the MW rig default discovery query), filesystem-live-best-effort
  *   (Pi's hyperunix.find coverage policy) and revision-pinned (the SDK's one revision binding, GitView of the base), recorded
  *   in that order.
- * - A2-RECORDED-TASK: the record's task is PROBE_TASK at a 40-hex base revision; every leg queried that kind and root; the
- *   pinned leg's view and argv name git:<base>, the live legs carry no view; --best-effort appears exactly on best-effort legs.
+ * - A2-RECORDED-TASK: the record's task is PROBE_TASK at the receipt's Measured record base revision (40-hex); every leg queried
+ *   that kind and root; the pinned leg's view and argv name git:<base>, the live legs carry no view; --best-effort appears
+ *   exactly on best-effort legs.
  * A3 "capture terminal response and task/query digest plus coverage" (observationOf, taskDigest; the committed record)
- * - A3-OBSERVATION-OF-RESULT: an SDK result maps to every observation field, the workspace root scrubbed.
+ * - A3-OBSERVATION-OF-RESULT: an SDK result maps to every observation field, the workspace root scrubbed; completeness keeps
+ *   each of the SDK's three readings (complete, incomplete, unknown), an unknown one reading coverage-not-complete, and reads
+ *   null for each of the seven other readings fed (partial, Complete, the empty string, 1, true, null, undefined).
  * - A3-OBSERVATION-OF-FAILURE: an SDK process failure maps to a process-failure observation with its exit, terminal class,
  *   diagnostic code and reason (scrubbed), no coverage, no revision and no digest; a signal-killed child keeps a null exit and
  *   its signal, and misses every condition but revision-mismatch.
@@ -46,7 +70,7 @@
  *   with terminal complete and coverage still incomplete; both read the live workspace head with no revision and no runtime
  *   digest, coverage scopes fs:<workspace> and the certificate scope fs-subtree; revision-pinned is refused, exit 4
  *   provider_failed, HX-RUNTIME-INTERNAL-FAILURE with reason view-binding-pending, zero frames; the task digest is
- *   taskDigest of the task.
+ *   taskDigest of the task and the receipt's Measured record digest; each live leg's answer and frame counts are its rows.
  * - A3-NO-HOST-PATH: the record carries no host path; every --workspace argument reads <workspace>.
  * A4 "Record unsupported/missing witness as blocker scoped only to native-task-scope, not Git census" (judgeTaskScope; record)
  * - A4-MISSING-WITNESS: no observation -> task-scope-unsupported with a missing-witness blocker.
@@ -66,11 +90,18 @@
  * tree, git index, git diff: the Git-census mode's mechanisms) are NOT CLAIMED; hx builds other than the recorded binary
  * SHA-256 are NOT CLAIMED; Pi's registered hyperunix.find tool is NOT CLAIMED (the probe drives the SDK directly); the
  * hx-admit guardrails EAT-R058 and EAT-R059 are NOT CLAIMED; the closure of gate HX-TASK-SCOPE-PROBE is NOT CLAIMED (the
- * slice is not claimed live or closed, EAT-R085): the record measures a capability, it certifies nothing.
+ * slice is not claimed live or closed, EAT-R085): the record measures a capability, it certifies nothing. The record's utc
+ * beyond its format is NOT CLAIMED (two runs differ only in it, so the measurement leaves it out); a live re-measure is NOT
+ * CLAIMED by this census (it reads the committed record; the receipt's follow-up entry states the seat's re-run); a row whose
+ * assertions are replaced one for one, keeping its count, is NOT CLAIMED by the record of ends (it counts assertions, it does
+ * not read them); an edit that disables two of the record of ends' own guards together - the registration and liveness rows
+ * both skipped, or the liveness row cut short with the file-end judge deleted - is NOT CLAIMED (each guard holds the others
+ * one at a time; measured at this cut, a case returning early then stays green).
  *
  * RESIDUALS (rule 19(d): a named family plus a pinned quiet row, a case that reds when the quiet reading changes):
  * - R-DECLARED-SCOPE (QUIET-DECLARED-SCOPE): an observation's scope is read as declared, so a synthetic observation that
- *   declares task scope and meets every other condition is judged capable; the committed record's tie is the scripts' SHA-256.
+ *   declares task scope and meets every other condition is judged capable; the committed record is tied by the scripts'
+ *   SHA-256 and by the receipt's measurement SHA-256.
  * - R-REQUESTED-SPELLING (QUIET-REQUESTED-SPELLING): only the runtime's resolved commit is compared with the base, so a
  *   requested spelling other than the base (HEAD) that resolves to it is accepted.
  */
@@ -78,7 +109,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import {
   BLOCKER_SCOPE,
   GATE,
@@ -109,12 +140,39 @@ const ROSTER = "test/fixtures/mwi-hx-evidence-requirements-roster.json";
 const EXPORT = ".beads/issues.jsonl";
 const SDK_PACKAGE = "node_modules/@hyperunix/sdk/package.json";
 const RECEIPT = "docs/workbench/receipts/wb-f3wd.md";
-/** The receipt entry the census's two tables sit under (its first entry; the receipt sheds no line, standing rule 15). */
+/** The receipt entry the pin and residual tables sit under (its first entry; the receipt sheds no line, standing rule 15). */
 const RECEIPT_ENTRY = "2026-11-06 receipt: the installed-HX task-scope probe and its census, cut 1 (machine seat ws-02)";
+/** The follow-up entry the Measured record and Reached ends tables sit under (wb-d6m1, appended after the first entry). */
+const FOLLOW_UP_ENTRY =
+  "2026-11-07 receipt: the committed record's measurement and every row's end, held outside the census (follow-up wb-d6m1 of landing 1013; machine seat ws-11)";
 const RECEIPT_TABLES = {
-  pins: { heading: "Judged pins, wb-f3wd cut 1", header: ["Row", "Pin"] },
-  residuals: { heading: "Residuals, wb-f3wd cut 1", header: ["Residual", "Quiet row"] },
+  pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-f3wd cut 1", header: ["Row", "Pin"] },
+  residuals: { entry: RECEIPT_ENTRY, heading: "Residuals, wb-f3wd cut 1", header: ["Residual", "Quiet row"] },
+  measured: { entry: FOLLOW_UP_ENTRY, heading: "Measured record, wb-d6m1", header: ["Field", "Value"] },
+  reached: { entry: FOLLOW_UP_ENTRY, heading: "Reached ends, wb-d6m1", header: ["Row", "Assertions"] },
 } as const;
+/** The Measured record table's fields, in its order: the record's reproducible literals, then its measurement's SHA-256. */
+const MEASURED_FIELDS = [
+  "task.baseRevision",
+  "task.digest",
+  "producer.binarySha256",
+  "producer.binaryOrigin",
+  "producer.capabilities.count",
+  "filesystem-live.answerCount",
+  "filesystem-live.frames",
+  "filesystem-live-best-effort.answerCount",
+  "filesystem-live-best-effort.frames",
+  "measurement.sha256",
+] as const;
+type MeasuredField = (typeof MEASURED_FIELDS)[number];
+/** The registration row, registered first: it holds the collected task tree before any other row runs. */
+const REGISTRATION_ID = "REGISTRATION";
+const REGISTRATION_TITLE =
+  "the registration: this file's collected task tree holds exactly this row, the cases, the anchor rows and the liveness row, in order, each set to run and not inverted";
+/** The liveness row, registered last: it holds the collected task tree and the record of ends. */
+const LIVENESS_ID = "LIVENESS";
+const LIVENESS_TITLE =
+  "the record of ends: every test of this file is registered in order, set to run, not inverted and run, and every row reached its end with the receipt's assertion count";
 
 type RowId = "STATEMENT" | "A1" | "A2" | "A3" | "A4" | "MUTANT";
 type RosterField = "Statement" | "Acceptance" | "Adversarial mutant";
@@ -157,9 +215,9 @@ const field = (requirement: Requirement, name: RosterField): string => {
  * must render exactly one table and nothing else, carry no HTML and keep its header, so a line added to the append-only receipt
  * can neither hide a row nor split the table and restate it.
  */
-const receiptTable = (table: { readonly heading: string; readonly header: readonly string[] }): string[][] => {
+const receiptTable = (table: { readonly entry: string; readonly heading: string; readonly header: readonly string[] }): string[][] => {
   const markdown = repoText(RECEIPT);
-  const parents = [(markdown.split("\n")[0] ?? "").replace(/^# /, ""), RECEIPT_ENTRY];
+  const parents = [(markdown.split("\n")[0] ?? "").replace(/^# /, ""), table.entry];
   const where = `${RECEIPT} section "${table.heading}"`;
   const section = docsSection(markdown, table.heading, 3, parents);
   if (!section.ok) throw new Error(`${where}: ${section.why}`);
@@ -175,6 +233,53 @@ const leg = (source: ProbeRecord, id: string): Observation => {
   if (found === undefined) throw new Error(`the record has no observation ${id}`);
   return found;
 };
+/** Canonical JSON: every object's keys in code-point order, arrays in order, no whitespace. */
+const canonicalJson = (value: unknown): string =>
+  JSON.stringify(value, (_key, inner: unknown) => {
+    if (inner === null || typeof inner !== "object" || Array.isArray(inner)) return inner;
+    return Object.fromEntries(Object.entries(inner).sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0)));
+  });
+/** The record's measurement: its canonical JSON without utc (the run's clock) and probe (the script tie S-RECORD-TIED computes). */
+const measurementOf = (source: ProbeRecord): string => canonicalJson(Object.fromEntries(Object.entries(source).filter(([key]) => key !== "utc" && key !== "probe")));
+/** One row of the receipt's Measured record table (ANCHOR-MEASUREMENT holds its field column to MEASURED_FIELDS). */
+const measured = (field: MeasuredField): string => {
+  const value = receiptTable(RECEIPT_TABLES.measured).find(([name]) => name === field)?.[1];
+  if (value === undefined) throw new Error(`${RECEIPT} has no Measured record row ${field}`);
+  return value;
+};
+/** The rendered items of the first list under one receipt entry: that entry's bullets, as a reader sees them. */
+const entryItems = (entry: string): string[] => {
+  const markdown = repoText(RECEIPT);
+  const section = docsSection(markdown, entry, 2, [(markdown.split("\n")[0] ?? "").replace(/^# /, "")]);
+  if (!section.ok) throw new Error(`${RECEIPT} entry "${entry}": ${section.why}`);
+  if (section.hasHtml) throw new Error(`${RECEIPT} entry "${entry}" carries HTML, which can hide an item`);
+  const list = section.blocks.find((block) => block.kind === "list");
+  return list?.kind === "list" ? list.items.map((item) => item.text) : [];
+};
+
+/** THE RECORD OF ENDS: each row's end, in run order, as `${id}:${count}` (vitest's tally of the row's assertions at its end). */
+const REACHED: string[] = [];
+/** The titles selected to run, read once from the collected task tree before the first row runs. */
+const SELECTED: string[] = [];
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a collected task tree holds, in registration order; self marks the test doing the reading. */
+const registered = (tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] =>
+  tasks.flatMap((child): Registered[] => {
+    if (child.type === "test") return [{ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self }];
+    return child.type === "suite" ? registered(child.tasks, self) : [];
+  });
+/** Records the calling row's end: its id and vitest's count of its assertions so far. */
+const reach = (id: string): void => {
+  REACHED.push(`${id}:${expect.getState().assertionCalls}`);
+};
+/** The receipt's Reached ends table as `${id}:${count}`, in its order. */
+const reachedEnds = (): string[] => receiptTable(RECEIPT_TABLES.reached).map(([id, count]) => `${id}:${count}`);
 
 const BASE = "0123456789abcdef0123456789abcdef01234567";
 const OTHER = "89abcdef0123456789abcdef0123456789abcdef";
@@ -309,15 +414,17 @@ const CASES: readonly Case[] = [
     id: "A1-PRODUCER-PIN",
     row: "A1",
     kind: "claim",
-    title: "the record pins the installed runtime: hx 0.1.0 by its binary SHA-256, HXS 1.0, protocol hxs/1.0",
+    title: "the record pins the installed runtime: hx 0.1.0 by the receipt's measured binary SHA-256 and origin, HXS 1.0, protocol hxs/1.0",
     run: () => {
       const { producer } = record();
       expect(producer.name).toBe("hx");
       expect(producer.version).toBe("0.1.0");
       expect(producer.binarySha256).toMatch(/^[0-9a-f]{64}$/);
+      expect(producer.binarySha256).toBe(measured("producer.binarySha256"));
       expect(producer.hxsVersion).toBe("1.0");
       expect(producer.protocol).toBe("hxs/1.0");
       expect(["constructor", "config", "env", "path"]).toContain(producer.binaryOrigin);
+      expect(producer.binaryOrigin).toBe(measured("producer.binaryOrigin"));
     },
   },
   {
@@ -340,11 +447,12 @@ const CASES: readonly Case[] = [
     id: "A1-CAPABILITIES",
     row: "A1",
     kind: "claim",
-    title: "the record carries the runtime's capability count and its task-named capabilities: none",
+    title: "the record carries the runtime's capability count, the receipt's measured count, and its task-named capabilities: none",
     run: () => {
       const { producer } = record();
       expect(Number.isInteger(producer.capabilities.count)).toBe(true);
       expect(producer.capabilities.count).toBeGreaterThan(0);
+      expect(String(producer.capabilities.count)).toBe(measured("producer.capabilities.count"));
       expect(producer.capabilities.taskNamed).toEqual([]);
     },
   },
@@ -366,12 +474,13 @@ const CASES: readonly Case[] = [
     id: "A2-RECORDED-TASK",
     row: "A2",
     kind: "claim",
-    title: "every leg queried the record's task at its base revision; only the pinned leg names git:<base>",
+    title: "every leg queried the record's task at the receipt's measured base revision; only the pinned leg names git:<base>",
     run: () => {
       const recorded = record();
       const base = recorded.task.baseRevision;
       expect({ id: recorded.task.id, kind: recorded.task.kind, root: recorded.task.root }).toEqual({ ...PROBE_TASK });
       expect(base).toMatch(/^[0-9a-f]{40}$/);
+      expect(base).toBe(measured("task.baseRevision"));
       for (const item of LEGS) {
         const observation = leg(recorded, item.id);
         expect(observation.query.operation, item.id).toBe("find");
@@ -393,7 +502,7 @@ const CASES: readonly Case[] = [
     id: "A3-OBSERVATION-OF-RESULT",
     row: "A3",
     kind: "claim",
-    title: "an SDK result maps to every observation field, with the workspace root scrubbed",
+    title: "an SDK result maps to every observation field, with the workspace root scrubbed; completeness keeps complete, incomplete and unknown, and seven other readings read null",
     run: () => {
       const observation = observationOf(
         {
@@ -481,6 +590,38 @@ const CASES: readonly Case[] = [
         true,
         0,
       ]);
+      // The SDK's third completeness reading, unknown, is kept (never read as complete) and reads coverage-not-complete; each
+      // of the seven other readings fed below reads null. The complete control differs from the unknown one only there.
+      const readingOf = (completeness: unknown): Observation =>
+        observationOf(
+          {
+            id: "reading",
+            query: { operation: "find", kind: "hx.fs/regular-file", root: ".", view: `git:${BASE}`, bestEffort: false },
+            outcome: "result",
+            result: {
+              argv: ["find"],
+              exitCode: 0,
+              signal: null,
+              terminal: "complete",
+              status: { kind: "complete", terminalReached: true },
+              terminalReached: true,
+              frames: [],
+              diagnostics: [],
+              coverageSummary: { completeness, licensesAbsence: true, incompleteRegions: [], certificates: [], answerCount: 0 },
+              view: `git:${BASE}`,
+              revision: { requested: BASE, resolvedCommit: BASE },
+              queryDigest: DIGEST,
+              digestSource: "runtime",
+            },
+          },
+          WORKSPACE,
+        );
+      const unknown = readingOf("unknown");
+      expect(unknown.completeness).toBe("unknown");
+      expect(reasonsOf(unknown, BASE)).toEqual(["coverage-not-complete", "scope-not-task"]);
+      expect(reasonsOf({ ...unknown, scope: "task" }, BASE)).toEqual(["coverage-not-complete"]);
+      expect(reasonsOf(readingOf("complete"), BASE)).toEqual(["scope-not-task"]);
+      for (const other of ["partial", "Complete", "", 1, true, null, undefined]) expect(readingOf(other).completeness, String(other)).toBeNull();
     },
   },
   {
@@ -566,10 +707,11 @@ const CASES: readonly Case[] = [
     id: "A3-RECORDED-RESPONSES",
     row: "A3",
     kind: "claim",
-    title: "measured: live legs exit 3 partial and 0 complete, coverage incomplete on both; the pinned leg is refused, exit 4",
+    title: "measured: live legs exit 3 partial and 0 complete, coverage incomplete on both, at the receipt's counts; the pinned leg is refused, exit 4",
     run: () => {
       const recorded = record();
       expect(recorded.task.digest).toBe(taskDigest(recorded.task));
+      expect(recorded.task.digest).toBe(measured("task.digest"));
       const live = leg(recorded, "filesystem-live");
       const bestEffort = leg(recorded, "filesystem-live-best-effort");
       expect([live.outcome, live.exitCode, live.terminal, live.statusKind]).toEqual(["result", 3, "partial", "incomplete"]);
@@ -587,6 +729,11 @@ const CASES: readonly Case[] = [
         ]);
         expect(Number.isInteger(observation.answerCount) && Number(observation.answerCount) > 0, observation.id).toBe(true);
       }
+      expect([live.answerCount, live.frames].map(String)).toEqual([measured("filesystem-live.answerCount"), measured("filesystem-live.frames")]);
+      expect([bestEffort.answerCount, bestEffort.frames].map(String)).toEqual([
+        measured("filesystem-live-best-effort.answerCount"),
+        measured("filesystem-live-best-effort.frames"),
+      ]);
       const pinned = leg(recorded, "revision-pinned");
       expect([pinned.outcome, pinned.exitCode, pinned.terminal, pinned.terminalReached, pinned.frames]).toEqual(["process-failure", 4, "provider_failed", false, 0]);
       expect(pinned.diagnostics).toEqual([
@@ -779,70 +926,191 @@ const RESIDUALS: readonly { readonly id: string; readonly row: RowId; readonly q
   { id: "R-REQUESTED-SPELLING", row: "STATEMENT", quiet: "QUIET-REQUESTED-SPELLING" },
 ];
 
+/** The shape and anchor rows, registered after the cases; each records its end in REACHED as a case does. */
+const ANCHOR_ROWS: readonly { readonly id: string; readonly title: string; readonly run: () => void }[] = [
+  {
+    id: "FROZEN-SHAPE",
+    title: "frozen shape (rule 16): the rows, their pin counts, the residual families, the anchor rows and the measured fields are exactly the cut's",
+    run: () => {
+      expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["STATEMENT:5", "A1:3", "A2:2", "A3:5", "A4:4", "MUTANT:3"]);
+      expect(RESIDUALS.map((residual) => `${residual.id}:${residual.row}:${residual.quiet}`)).toEqual([
+        "R-DECLARED-SCOPE:MUTANT:QUIET-DECLARED-SCOPE",
+        "R-REQUESTED-SPELLING:STATEMENT:QUIET-REQUESTED-SPELLING",
+      ]);
+      expect(ANCHOR_ROWS.map((row) => row.id)).toEqual(["FROZEN-SHAPE", "TILING", "ANCHOR-ROSTER", "ANCHOR-EXPORT", "ANCHOR-RECEIPT-TABLES", "ANCHOR-MEASUREMENT"]);
+      expect([...MEASURED_FIELDS]).toEqual([
+        "task.baseRevision",
+        "task.digest",
+        "producer.binarySha256",
+        "producer.binaryOrigin",
+        "producer.capabilities.count",
+        "filesystem-live.answerCount",
+        "filesystem-live.frames",
+        "filesystem-live-best-effort.answerCount",
+        "filesystem-live-best-effort.frames",
+        "measurement.sha256",
+      ]);
+    },
+  },
+  {
+    id: "TILING",
+    title: "the rows and residuals tile the cases: each case is pinned once, by a row or residual of its own row and kind; every row id is distinct",
+    run: () => {
+      const ids = CASES.map((item) => item.id);
+      expect(new Set(ids).size).toBe(ids.length);
+      const placed = [...ROWS.flatMap((row) => row.pins.map((pin) => [pin, row.id, "claim"] as const)), ...RESIDUALS.map((residual) => [residual.quiet, residual.row, "quiet"] as const)];
+      expect(placed.map(([id]) => id).sort()).toEqual([...ids].sort());
+      for (const [id, row, kind] of placed) {
+        const pinned = CASES.find((item) => item.id === id);
+        expect(pinned?.row, id).toBe(row);
+        expect(pinned?.kind, id).toBe(kind);
+      }
+      const every = [REGISTRATION_ID, ...ids, ...ANCHOR_ROWS.map((row) => row.id), LIVENESS_ID];
+      expect(new Set(every).size).toBe(every.length);
+    },
+  },
+  {
+    id: "ANCHOR-ROSTER",
+    title: "outside anchor: the roster vendors EAT-R057 under its SHA-256, and the rows are its Statement, Acceptance and mutant",
+    run: () => {
+      const vendored = roster();
+      expect(vendored.bead).toBe(BEAD);
+      expect(vendored.source.commit).toMatch(/^[0-9a-f]{40}$/);
+      expect(vendored.source.path).toBe("docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md");
+      expect(vendored.requirements.map((requirement) => requirement.id)).toEqual(["EAT-R057"]);
+      const requirement = vendored.requirements[0];
+      if (requirement === undefined) throw new Error("the roster vendors no requirement");
+      expect(sha256(requirement.text.join("\n"))).toBe(requirement.sha256);
+      expect(requirement.text[0]?.startsWith("### EAT-R057 ")).toBe(true);
+      for (const row of ROWS.filter((candidate) => candidate.field !== "Acceptance")) expect(row.text, row.id).toBe(field(requirement, row.field));
+      const acceptance = field(requirement, "Acceptance");
+      let rest = acceptance;
+      let cursor = -1;
+      for (const row of ROWS.filter((candidate) => candidate.field === "Acceptance")) {
+        const at = acceptance.indexOf(row.text);
+        expect(at, row.id).toBeGreaterThan(cursor);
+        cursor = at;
+        rest = rest.replace(row.text, "");
+      }
+      expect(rest).toMatch(/^[\s,.]*$/);
+      expect(new Set(ROWS.map((row) => row.field))).toEqual(new Set<RosterField>(["Statement", "Acceptance", "Adversarial mutant"]));
+      const kills = CASES.filter((item) => item.kills !== undefined);
+      expect(kills.map((item) => [item.row, item.kind, item.kills])).toEqual([["MUTANT", "claim", field(requirement, "Adversarial mutant")]]);
+    },
+  },
+  {
+    id: "ANCHOR-EXPORT",
+    title: "outside anchor: this bead's row of the tracked export names exactly EAT-R057 and the gate the judge and record carry",
+    run: () => {
+      const rows = repoText(EXPORT)
+        .split("\n")
+        .filter((line) => line.includes(`"id":"${BEAD}"`))
+        .map((line) => JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown })
+        .filter((row) => row.id === BEAD);
+      expect(rows).toHaveLength(1);
+      const description = String(rows[0]?.description);
+      expect(description.match(/EAT-R\d{3}/g)).toEqual(roster().requirements.map((requirement) => requirement.id));
+      expect(description).toContain(`real-infra gate: ${GATE}`);
+      expect(roster().group.text).toContain(`(slice PI-5; owner Pi; external: HX-PRODUCER; gate: ${GATE})`);
+    },
+  },
+  {
+    id: "ANCHOR-RECEIPT-TABLES",
+    title: "outside anchor: the receipt's judged-pin and residual tables name exactly the rows' pins and the residual families, and its reached-ends table every row",
+    run: () => {
+      expect(ROWS.flatMap((row) => row.pins.map((pin) => [row.id, pin]))).toStrictEqual(receiptTable(RECEIPT_TABLES.pins));
+      expect(RESIDUALS.map((residual) => [residual.id, residual.quiet])).toStrictEqual(receiptTable(RECEIPT_TABLES.residuals));
+      const reached = receiptTable(RECEIPT_TABLES.reached);
+      expect(reached.map(([id]) => id)).toStrictEqual([REGISTRATION_ID, ...CASES.map((item) => item.id), ...ANCHOR_ROWS.map((row) => row.id), LIVENESS_ID]);
+      expect(reached.filter(([, count]) => !/^[1-9]\d*$/.test(count ?? "")).map(([id]) => id), "a row whose assertion count is not a positive integer").toEqual([]);
+    },
+  },
+  {
+    id: "ANCHOR-MEASUREMENT",
+    title: "outside anchor: the receipt's measured-record table holds nine record literals and the record's measurement SHA-256; its SHA-256 and count are the cut-1 version pin's, its base and digest the cut-1 abbreviations'",
+    run: () => {
+      expect(receiptTable(RECEIPT_TABLES.measured).map(([name]) => name)).toStrictEqual([...MEASURED_FIELDS]);
+      expect(sha256(measurementOf(record()))).toBe(measured("measurement.sha256"));
+      const items = entryItems(RECEIPT_ENTRY);
+      const pin = items.filter((text) => text.startsWith("Version pin, measured "));
+      expect(pin).toHaveLength(1);
+      expect(pin[0]).toContain(`binary SHA-256 ${measured("producer.binarySha256")},`);
+      expect(pin[0]).toContain(`lists ${measured("producer.capabilities.count")} capabilities`);
+      const task = items.filter((text) => text.startsWith("EAT-R057 "));
+      expect(task).toHaveLength(1);
+      expect(task[0]).toContain(`base revision ${measured("task.baseRevision").slice(0, 12)} is reproducible`);
+      expect(task[0]).toContain(`Task digest ${measured("task.digest").slice(0, "sha256:".length + 12)},`);
+    },
+  },
+];
+
+const caseTitle = (item: Case): string => `${item.id} [${item.row}] ${item.title}`;
+/** Every test this file registers, in registration order: the registration row, the cases, the anchor rows, the liveness row. */
+const registeredTitles = (): string[] => [REGISTRATION_TITLE, ...CASES.map(caseTitle), ...ANCHOR_ROWS.map((row) => row.title), LIVENESS_TITLE];
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected task tree before the first row runs (no row has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter((entry) => entry.mode === "run").map((entry) => entry.name));
+});
+// The file-end judge: a liveness row selected to run reached its own end, after every other row's, with the receipt's count.
+afterAll(() => {
+  if (!SELECTED.includes(LIVENESS_TITLE)) return;
+  expect(REACHED, "every row of this file reached its end, the liveness row last, each with the receipt's assertion count").toEqual(reachedEnds());
+});
+
 describe("wb-f3wd installed-HX task-scope census: EAT-R057 (MWI B-hx-evidence, gate HX-TASK-SCOPE-PROBE)", () => {
-  for (const item of CASES) it(`${item.id} [${item.row}] ${item.title}`, item.run);
-
-  it("frozen shape (rule 16): the rows, their pin counts and the residual families are exactly the cut's", () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["STATEMENT:5", "A1:3", "A2:2", "A3:5", "A4:4", "MUTANT:3"]);
-    expect(RESIDUALS.map((residual) => `${residual.id}:${residual.row}:${residual.quiet}`)).toEqual([
-      "R-DECLARED-SCOPE:MUTANT:QUIET-DECLARED-SCOPE",
-      "R-REQUESTED-SPELLING:STATEMENT:QUIET-REQUESTED-SPELLING",
-    ]);
+  it(REGISTRATION_TITLE, ({ task }) => {
+    // The collected tree, read before any other row runs: a row this file lists but the tree lacks, renamed, skipped or inverted
+    // reds here (a row dropped from the lists as well reds at the receipt's Reached ends table).
+    const collected = registered(task.file.tasks, task);
+    expect(
+      collected.map((entry) => entry.name),
+      "every registered test of this file (vitest task tree), exactly and in order",
+    ).toEqual(registeredTitles());
+    expect(
+      collected.findIndex((entry) => entry.self),
+      "this row finds itself by task identity, registered first",
+    ).toBe(0);
+    expect(
+      collected.filter((entry) => entry.mode !== "run" || entry.fails).map(modeLine),
+      "every registered test is set to run and not inverted",
+    ).toEqual([]);
+    reach(REGISTRATION_ID);
   });
 
-  it("the rows and residuals tile the cases: each case is pinned once, by a row or residual of its own row and kind", () => {
-    const ids = CASES.map((item) => item.id);
-    expect(new Set(ids).size).toBe(ids.length);
-    const placed = [...ROWS.flatMap((row) => row.pins.map((pin) => [pin, row.id, "claim"] as const)), ...RESIDUALS.map((residual) => [residual.quiet, residual.row, "quiet"] as const)];
-    expect(placed.map(([id]) => id).sort()).toEqual([...ids].sort());
-    for (const [id, row, kind] of placed) {
-      const pinned = CASES.find((item) => item.id === id);
-      expect(pinned?.row, id).toBe(row);
-      expect(pinned?.kind, id).toBe(kind);
-    }
-  });
+  for (const item of CASES) {
+    it(caseTitle(item), () => {
+      item.run();
+      reach(item.id);
+    });
+  }
 
-  it("outside anchor: the roster vendors EAT-R057 under its SHA-256, and the rows are its Statement, Acceptance and mutant", () => {
-    const vendored = roster();
-    expect(vendored.bead).toBe(BEAD);
-    expect(vendored.source.commit).toMatch(/^[0-9a-f]{40}$/);
-    expect(vendored.source.path).toBe("docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md");
-    expect(vendored.requirements.map((requirement) => requirement.id)).toEqual(["EAT-R057"]);
-    const requirement = vendored.requirements[0];
-    if (requirement === undefined) throw new Error("the roster vendors no requirement");
-    expect(sha256(requirement.text.join("\n"))).toBe(requirement.sha256);
-    expect(requirement.text[0]?.startsWith("### EAT-R057 ")).toBe(true);
-    for (const row of ROWS.filter((candidate) => candidate.field !== "Acceptance")) expect(row.text, row.id).toBe(field(requirement, row.field));
-    const acceptance = field(requirement, "Acceptance");
-    let rest = acceptance;
-    let cursor = -1;
-    for (const row of ROWS.filter((candidate) => candidate.field === "Acceptance")) {
-      const at = acceptance.indexOf(row.text);
-      expect(at, row.id).toBeGreaterThan(cursor);
-      cursor = at;
-      rest = rest.replace(row.text, "");
-    }
-    expect(rest).toMatch(/^[\s,.]*$/);
-    expect(new Set(ROWS.map((row) => row.field))).toEqual(new Set<RosterField>(["Statement", "Acceptance", "Adversarial mutant"]));
-    const kills = CASES.filter((item) => item.kills !== undefined);
-    expect(kills.map((item) => [item.row, item.kind, item.kills])).toEqual([["MUTANT", "claim", field(requirement, "Adversarial mutant")]]);
-  });
+  for (const row of ANCHOR_ROWS) {
+    it(row.title, () => {
+      row.run();
+      reach(row.id);
+    });
+  }
 
-  it("outside anchor: this bead's row of the tracked export names exactly EAT-R057 and the gate the judge and record carry", () => {
-    const rows = repoText(EXPORT)
-      .split("\n")
-      .filter((line) => line.includes(`"id":"${BEAD}"`))
-      .map((line) => JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown })
-      .filter((row) => row.id === BEAD);
-    expect(rows).toHaveLength(1);
-    const description = String(rows[0]?.description);
-    expect(description.match(/EAT-R\d{3}/g)).toEqual(roster().requirements.map((requirement) => requirement.id));
-    expect(description).toContain(`real-infra gate: ${GATE}`);
-    expect(roster().group.text).toContain(`(slice PI-5; owner Pi; external: HX-PRODUCER; gate: ${GATE})`);
-  });
-
-  it("outside anchor: the receipt's judged-pin and residual tables name exactly the rows' pins and the residual families", () => {
-    expect(ROWS.flatMap((row) => row.pins.map((pin) => [row.id, pin]))).toStrictEqual(receiptTable(RECEIPT_TABLES.pins));
-    expect(RESIDUALS.map((residual) => [residual.id, residual.quiet])).toStrictEqual(receiptTable(RECEIPT_TABLES.residuals));
+  it(LIVENESS_TITLE, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
+    expect(
+      walked.map((entry) => entry.name),
+      "every registered test of this file (vitest task tree), exactly and in order",
+    ).toEqual(registeredTitles());
+    expect(
+      walked.findIndex((entry) => entry.self),
+      "this row finds itself by task identity, registered last",
+    ).toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    const unrun = walked.filter((entry) => !entry.self && (entry.mode !== "run" || entry.fails || !ran(entry.state)));
+    expect(
+      unrun.map((entry) => `${modeLine(entry)} | ${entry.state ?? "no result"}`),
+      "every other test is set to run, not inverted, and ran before this row",
+    ).toEqual([]);
+    expect(REACHED, "every row before this one reached its end, in run order, with the receipt's assertion count").toEqual(reachedEnds().slice(0, -1));
+    reach(LIVENESS_ID);
   });
 });
