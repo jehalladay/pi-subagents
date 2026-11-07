@@ -576,20 +576,30 @@ describe("cut #3 C6: the R2- rows and the witnesses this file's leading comment 
  * comment and of the wb-wupg receipt counted refusal #1's U5 planted readers G13 and G13b as pinned; both now say they are
  * NOT CLAIMED, and the named-residuals sentences except them. Cut #2 (refusal #1 of cut #1 93de2a41, gate run
  * g10-gate-s236, items U1 to U4) replaces cut #1's one case with the three below, and each claims only what its title
- * names. The planted readers entry 2's falsification item names are PLANTED_READERS, so the set the other two cases hold
- * the leading comment's two sentences and the wb-ghki entry's two items to is anchored outside their own literals, in a
- * landed receipt line.
- * The receipt is read as it renders (marked 18): a heading counts wherever it renders, inside a list item or a block quote
- * too, by its text with markup and HTML dropped and letter case ignored; each entry is bound by docsSection (its full
- * heading exactly once in the rendered view, under the receipt's title, up to the next level-1 or level-2 heading or EOF),
- * and an entry that carries HTML is refused. An entry's texts are its top-level list items and its other blocks, as they
- * render. The member ids read are the forms the refusals name their members in: G and a number with an optional b, and CT
- * and a number (refusal #1), and GP, a number, a hyphen, a capital letter and a number (refusal #2).
- * NOT CLAIMED by these cases: a heading, label or member id spelled with a character reference or a look-alike code point;
- * a line nested inside another item of an entry, which renders as part of that item's text; a member id in any other form
- * (the seat battery ids, the witness ids, the unmet item ids such as U5); any entry of the receipt but entry 2 and the
- * wb-ghki entry, cut #2's own entry among them; and a coordinated edit of a pinned text together with its literal here
- * (the wb-ghki entry's digest among them) that keeps G13 and G13b the member ids named.
+ * names. Cut #3 (refusal #2 of cut #2 7110245e, gate run g10-gate-s237, item U1: a heading written as raw HTML, the
+ * gate's G2-H1, G2-H2, G2-H3 and G2-H7, escaped the heading-key count) has cases A and C refuse every HTML token of the
+ * receipt. The planted readers entry 2's falsification item names are PLANTED_READERS, so the set the other two cases
+ * hold the leading comment's two sentences and the wb-ghki entry's two items to is anchored outside their own literals,
+ * in a landed receipt line.
+ * The receipt is read as it renders (marked 18). Cases A and C first require it to carry no HTML anywhere, a comment
+ * included: no HTML token at any depth (an HTML block, or an inline tag or comment inside a paragraph, a list item, a
+ * block quote, a table cell, a heading or a link; htmlTokensIn), so marked passes nothing of it through verbatim and
+ * every heading the receipt renders is one of marked's heading tokens. Such a heading counts wherever it renders, inside
+ * a list item or a block quote too, by its text with markup dropped, white space collapsed and letter case ignored; each
+ * entry is bound by docsSection (its full heading exactly once in the rendered view, under the receipt's title, up to the
+ * next level-1 or level-2 heading or EOF), and an entry that carries HTML is refused. An entry's texts are its top-level
+ * list items and its other blocks, as they render. The member ids read are the forms the refusals name their members in:
+ * G and a number with an optional b, and CT and a number (refusal #1), and GP, a number, a hyphen, a capital letter and a
+ * number (refusal #2).
+ * NOT CLAIMED by these cases: a heading, label or member id spelled with a character reference, a look-alike code point or
+ * an invisible code point (U+200B before a key, for one); a line nested inside another item of an entry, which renders as
+ * part of that item's text; a member id in any other form (the seat battery ids, the witness ids, the unmet item ids such
+ * as U5); the texts of any entry of the receipt but entry 2 and the wb-ghki entry, cut #2's own entry among them (the
+ * cases read the other entries for HTML and headings only); a coordinated edit of a pinned text together with its literal
+ * here (the wb-ghki entry's digest among them) that keeps G13 and G13b the member ids named; a sentence of this file
+ * outside its leading block comment (the gate's G2-B1, a line comment after it, among them); and an opening in the leading
+ * comment spelled with other white space inside it (the gate's G2-B3, two spaces, among them). Named residuals of these
+ * cases: none.
  */
 const PLANTED_READERS: readonly string[] = ["G13", "G13b"];
 const RECEIPT = new URL("../docs/workbench/receipts/wb-wupg.md", import.meta.url);
@@ -625,6 +635,7 @@ function leadingCommentProse(): string {
 const isHeadingToken = (token: Token): token is Tokens.Heading => token.type === "heading";
 const isListToken = (token: Token): token is Tokens.List => token.type === "list";
 const isBlockquoteToken = (token: Token): token is Tokens.Blockquote => token.type === "blockquote";
+const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
 /** The text inline tokens render: an HTML token none, a line break a space, markup its children's text. */
 function inlineText(tokens: readonly Token[]): string {
   let out = "";
@@ -636,7 +647,11 @@ function inlineText(tokens: readonly Token[]): string {
   }
   return out;
 }
-/** Every heading a page renders, in document order and at any nesting depth (inside a list item or a block quote too): its level and its text, white space collapsed. */
+/**
+ * Every markdown heading of a page (one of marked's heading tokens), in document order and at any nesting depth (inside a list item
+ * or a block quote too): its level and its text, white space collapsed. A heading written as raw HTML is not one of them: cases A and
+ * C refuse every HTML token of the receipt (htmlTokensIn) before they read its headings.
+ */
 function renderedHeadings(tokens: readonly Token[]): { readonly depth: number; readonly text: string }[] {
   return tokens.flatMap(token => {
     if (isHeadingToken(token)) return [{ depth: token.depth, text: inlineText(token.tokens).replace(/\s+/g, " ").trim() }];
@@ -645,16 +660,31 @@ function renderedHeadings(tokens: readonly Token[]): { readonly depth: number; r
     return [];
   });
 }
-/** The headings of the receipt that open with key, letter case ignored. */
+/** The markdown headings of the receipt that open with key, letter case ignored. */
 const headingsOpening = (markdown: string, key: string) => renderedHeadings(marked.lexer(markdown)).filter(heading => opensWith(heading.text, key));
+/**
+ * Every HTML token of a page, in document order and at any depth: an HTML block, and an inline tag or comment inside a paragraph, a
+ * list item, a block quote, a table cell, a heading, a link or any other token's children.
+ */
+function htmlTokensIn(tokens: readonly Token[]): Token[] {
+  return tokens.flatMap(token => [
+    ...(token.type === "html" ? [token] : []),
+    ...(isListToken(token) ? token.items.flatMap(item => htmlTokensIn(item.tokens)) : []),
+    ...(isTableToken(token) ? [...token.header, ...token.rows.flat()].flatMap(cell => htmlTokensIn(cell.tokens)) : []),
+    ...("tokens" in token && Array.isArray(token.tokens) ? htmlTokensIn(token.tokens) : []),
+  ]);
+}
+/** The raw source of every HTML token of the receipt (a comment included); the cases require none. */
+const receiptHtml = (markdown: string): string[] => htmlTokensIn(marked.lexer(markdown)).map(token => token.raw);
 /** An entry's texts as they render, in order: each top-level list item's and every other block's (an HTML block renders none). */
 const entryTexts = (section: DocsSection): string[] =>
   section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [] : [block.text]));
 const sha256Of = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
 
 describe("wb-ghki: refusal #1's planted readers G13 and G13b in the residual accounting", () => {
-  it("entry 2 of the wb-wupg receipt, as it renders: exactly one heading opens with '2026-11-06 respin (cut #2):' (letter case ignored) and it is entry 2's own level-2 heading under the receipt's title; the entry carries no HTML, exactly one of its texts opens with 'Falsification on the cut #2 tree', and that item's sentence from 'The planted readers' on is the pinned sentence and names exactly the member ids G13 and G13b", () => {
+  it("entry 2 of the wb-wupg receipt, as it renders: the receipt carries no HTML anywhere, a comment included; exactly one heading opens with '2026-11-06 respin (cut #2):' (letter case ignored) and it is entry 2's own level-2 heading under the receipt's title; the entry carries no HTML, exactly one of its texts opens with 'Falsification on the cut #2 tree', and that item's sentence from 'The planted readers' on is the pinned sentence and names exactly the member ids G13 and G13b", () => {
     const markdown = readFileSync(RECEIPT, "utf8");
+    expect(receiptHtml(markdown), "the receipt's HTML").toEqual([]);
     expect(headingsOpening(markdown, ENTRY_2_KEY), "entry 2's heading key").toEqual([{ depth: 2, text: ENTRY_2_HEADING }]);
     const section = docsSection(markdown, ENTRY_2_HEADING, 2, [RECEIPT_TITLE]);
     expect({ why: section.why, hasHtml: section.hasHtml }, "entry 2's binding").toEqual({ why: "", hasHtml: false });
@@ -676,8 +706,9 @@ describe("wb-ghki: refusal #1's planted readers G13 and G13b in the residual acc
     expect([notClaimed, namedResiduals].map(membersNamed), "the comment's members").toEqual([PLANTED_READERS, PLANTED_READERS]);
   });
 
-  it("the wb-ghki entry of the wb-wupg receipt, as it renders: exactly one heading opens with '2026-11-07 receipt: wb-ghki,' (letter case ignored) and it is the entry's own level-2 heading under the receipt's title; the entry carries no HTML; exactly one of its texts opens with 'NOT CLAIMED:' and exactly one with 'Named residuals:' (letter case ignored), each the pinned item and each naming exactly the member ids G13 and G13b; and the entry's source has the pinned sha-256", () => {
+  it("the wb-ghki entry of the wb-wupg receipt, as it renders: the receipt carries no HTML anywhere, a comment included; exactly one heading opens with '2026-11-07 receipt: wb-ghki,' (letter case ignored) and it is the entry's own level-2 heading under the receipt's title; the entry carries no HTML; exactly one of its texts opens with 'NOT CLAIMED:' and exactly one with 'Named residuals:' (letter case ignored), each the pinned item and each naming exactly the member ids G13 and G13b; and the entry's source has the pinned sha-256", () => {
     const markdown = readFileSync(RECEIPT, "utf8");
+    expect(receiptHtml(markdown), "the receipt's HTML").toEqual([]);
     expect(headingsOpening(markdown, GHKI_ENTRY_KEY), "the wb-ghki entry's heading key").toEqual([{ depth: 2, text: GHKI_ENTRY_HEADING }]);
     const section = docsSection(markdown, GHKI_ENTRY_HEADING, 2, [RECEIPT_TITLE]);
     expect({ why: section.why, hasHtml: section.hasHtml }, "the wb-ghki entry's binding").toEqual({ why: "", hasHtml: false });
