@@ -216,6 +216,17 @@
  * the refusal's cure: rowsEntries reads ROWS fail-closed, as the ROWS LINES ROWS entry spells it, so such a line reds every
  * case that reads entries through it; a ROWS LINES case holds that reading on the ROWS_LINES rows; and the first CASE WORDS
  * case reads the replaced words with white space folded and both texts lower-cased, and both upper-cased.
+ * wb-v3a9 cut #5 answers this bead's refusal #4 (gate-prep-1 / g10-gate-s231, U1) in the enumerate-the-resolvable form
+ * orchestrator ruling R-B651 binds on the CASE WORDS claim set: the first CASE WORDS case read the cases vitest registers
+ * and this header's ROWS entries, and the second case the it() calls, only when they opened "FAIL-CLOSED " with its
+ * space, while the CASE WORDS words spelled no head, so a sixth case or entry opening "FAIL-CLOSED" and then a colon, a
+ * comma or a hyphen kept the census green while those words read false. Cut #5 takes the second branch of the
+ * refusal's cure, the head spelling pinned red-first: the three selections read FAIL_CLOSED_HEAD, "FAIL-CLOSED" with
+ * any character, or none, following it, through failClosedNames, failClosedEntries and failClosedApplications; the CASE
+ * WORDS ROWS entry and the two cases' titles spell that head, so their words name the head the selections read; and
+ * the new CASE HEADS case holds each CASE_HEADS row's in-memory plant to the reading its row states:
+ * refusal #4's nine members and its three controls, the seat's same-class spellings, and the quiet rows of R-CASE-HEAD,
+ * the named residual of the head spellings a reader may read as that head which the selections do not read.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -404,10 +415,14 @@
  *   the alternative narrows to and ", not the line's meaning)"; and those opening words occur once in this header as
  *   censusHeader reads it, in their own letter case; and this entry's words from 'stand nowhere' on are exactly those the
  *   fourth case holds it to, as rowsEntries reads it (cut #3).
- *  CASE WORDS (wb-v3a9): the FAIL-CLOSED cases vitest registers for this file, this header's FAIL-CLOSED ROWS entries and the
- *   FAIL_CLOSED_CASES rows are, by head and in order, the same five; each case's title and ROWS entry hold, after
- *   'wb-v3a9: ', the words the alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its
- *   row's replaced words; and each case's body, as this file spells it, binds lines to helperClaimLines() first and hands
+ *  CASE WORDS (wb-v3a9; cut #5 spells the heads, refusal #4 U1): the cases vitest registers for this file whose titles
+ *   open "FAIL-CLOSED", this header's ROWS entries whose words, as rowsEntries reads them, open "FAIL-CLOSED", the it()
+ *   calls of this file whose title, a string literal, opens "FAIL-CLOSED" and whose callback is an arrow function with a
+ *   block body, and the FAIL_CLOSED_CASES rows are, by head - the words through the first " (" - and in order, the same
+ *   five, any character, or none, following "FAIL-CLOSED" (cut #5: FAIL_CLOSED_HEAD, read by failClosedNames,
+ *   failClosedEntries and failClosedApplications); each such case's title and ROWS entry hold, after 'wb-v3a9: ', the
+ *   words the alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced
+ *   words; and each such call's body, as this file spells it, binds lines to helperClaimLines() first and hands
  *   narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's
  *   list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of
  *   its own (no map or flatMap call and no object literal) - declares none of the names that application reads, and expects
@@ -421,6 +436,20 @@
  *   memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one
  *   of them - or read into the entry whose head, its words through its first " (" or ":", the row names, as the row
  *   states; and this entry's lines are exactly those the ROWS LINES case holds them to, their quotes spelled from ROWS_READ.
+ *  CASE HEADS (wb-v3a9 cut #5, refusal #4 U1): each CASE_HEADS row plants one head spelling in memory into this file's
+ *   text - an entry row its ROWS line after the line that equals its anchor, a title row an it() call so titled before the
+ *   line that opens with its anchor and a case so named in a task list, a template row the same with the title written as
+ *   a template literal - and reads as the row states: refused (rowsEntries throws naming the line), selected (the CASE
+ *   WORDS selection holds one more than with no plant: one more entry failClosedEntries reads, or one more call
+ *   failClosedApplications reads and one more name failClosedNames reads), quiet (it holds as many) or, where the calls
+ *   and the names differ, how many more of each (the template row: calls 0, names 1).
+ *  R-CASE-HEAD (wb-v3a9 cut #5, a named RESIDUAL; its quiet rows are the CASE_HEADS rows that read quiet): a case title,
+ *   or a ROWS entry as rowsEntries reads it, that a reader may read as a FAIL-CLOSED case or entry by its head though it
+ *   does not open "FAIL-CLOSED" is read quiet by the CASE WORDS selection - among them, as the quiet rows plant them, a
+ *   title spelling FAIL-CLOSED in lower case or in mixed case, after a space or after another word, or with a space, no
+ *   character or a no-break hyphen between FAIL and CLOSED, and an entry spelling it after another word or with a space
+ *   or no character between FAIL and CLOSED, or headed "CORE (continued): " inside the FAIL-CLOSED CORE entry; each quiet
+ *   row stands beside selected rows of its kind.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -537,6 +566,15 @@
  * wb-v3a9 cut #4: that a ROWS_LINES row stays is NOT CLAIMED by an anchor outside this census (they are its own literals,
  * like the GP22S plants); and a spelling of a FAIL_CLOSED_CASES row's replaced words other than theirs, letter case aside
  * and each /\s+/ run read as one space, is NOT CLAIMED by the first CASE WORDS case (it reads their spelling).
+ * wb-v3a9 cut #5: a case title, or a ROWS entry as rowsEntries reads it, that does not open "FAIL-CLOSED" is NOT CLAIMED by
+ * the CASE WORDS cases, though a reader may read it as a FAIL-CLOSED case or entry by its head (R-CASE-HEAD names that
+ * family; its quiet rows are the CASE_HEADS rows that read quiet); a suite whose title opens "FAIL-CLOSED", and a line of
+ * this header outside ROWS that opens with it after its mark, are NOT CLAIMED by those cases (they read the cases vitest
+ * registers and the ROWS entries); a case declared otherwise than by an it() call with a string-literal title and an
+ * arrow-function callback with a block body is NOT CLAIMED by the second CASE WORDS case (the first one counts it among the
+ * names vitest registers when its title opens "FAIL-CLOSED"); and that a CASE_HEADS row stays, or that its id names the
+ * refusal #4 member or control whose spelling it plants, is NOT CLAIMED by an anchor outside this census (they are its own
+ * literals, like the ROWS_LINES rows).
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text, the
  * tracker export and (wb-v3a9) its own source, and parses planted text in memory.
@@ -632,6 +670,8 @@ const NARROWED_FRAME = "a widening word other than the ones the FAIL-CLOSED case
 const NARROWED_PARAGRAPH = "wb-tz2.24: ";
 /** wb-v3a9 cut #3 (refusal #2, U1): the words the NARROWED WORDS ROWS entry holds from 'stand nowhere' on, up to its closing sentence, as rowsEntries reads it - the replaced words' absence and the place of the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases, as the third NARROWED WORDS case reads them. */
 const PLACE_WORDS = String.raw`stand nowhere in this header as censusHeader reads it - this file's text between its first slash-star-star and its first star-slash, split at each line feed, each line with /^ \* ?/ removed, the lines joined with a space, each /\s+/ run read as one space and the ends trimmed - in any letter case (both texts compared lower-cased, and both upper-cased), while the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases (cut #2; cut #3 spells that place as the case reads it, refusal #2 U1): of this file's lines (its text up to its first star-slash, split at each line feed), exactly one begins with " * NOT CLAIMED (" and exactly one with " * wb-tz2.24: "; the section runs from the line beginning with " * NOT CLAIMED (" up to the next line that equals " *", and the paragraph from the line beginning with " * wb-tz2.24: ", which stands in that section, up to the section's next line that /^ \* wb-[a-z0-9.]+(?: cut #\d+)?: / matches, or to the section's end; that paragraph, its lines read the way censusHeader reads this header's and split at each "; " before which as many ")" as "(" stand in it, has a third clause that alone of its clauses holds the sentence's opening words, up to its parenthesis, and that is exactly "and " followed by those opening words, the words the alternative narrows to and ", not the line's meaning)"; and those opening words occur once in this header as censusHeader reads it, in their own letter case`;
+/** wb-v3a9 cut #5 (refusal #4, U1): the words the CASE WORDS cases select a FAIL-CLOSED case's title, an it() call's title and a ROWS entry by: the text opens with them, and any character, or none, may follow (cut #4 selected by "FAIL-CLOSED ", its space included). */
+const FAIL_CLOSED_HEAD = "FAIL-CLOSED";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -1439,14 +1479,14 @@ function caseApplication(title: string, body: readonly ts.Statement[], source: t
     shadowed: declared.filter(name => name === "narrowsToPinnedPages" || name === "helperClaimLines" || name === "expect"),
   };
 }
-/** wb-v3a9: the FAIL-CLOSED cases as this file spells them, in its order: each it() call whose title opens "FAIL-CLOSED ", read from the TypeScript syntax of this census's own source. */
-function failClosedApplications(): CaseApplication[] {
-  const source = ts.createSourceFile(CENSUS, read(CENSUS), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+/** wb-v3a9: the FAIL-CLOSED cases as this file spells them, in its order: each it() call whose title, a string literal, opens FAIL_CLOSED_HEAD (cut #5; "FAIL-CLOSED " at cut #4) and whose callback is an arrow function with a block body, read from the TypeScript syntax of this census's own source. With no text given it reads this file. */
+function failClosedApplications(text: string = read(CENSUS)): CaseApplication[] {
+  const source = ts.createSourceFile(CENSUS, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const found: CaseApplication[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
       const [title, callback] = node.arguments;
-      if (title !== undefined && ts.isStringLiteral(title) && title.text.startsWith("FAIL-CLOSED ") && callback !== undefined && ts.isArrowFunction(callback) && ts.isBlock(callback.body)) {
+      if (title !== undefined && ts.isStringLiteral(title) && title.text.startsWith(FAIL_CLOSED_HEAD) && callback !== undefined && ts.isArrowFunction(callback) && ts.isBlock(callback.body)) {
         found.push(caseApplication(title.text, callback.body.statements, source));
       }
     }
@@ -1454,6 +1494,42 @@ function failClosedApplications(): CaseApplication[] {
   };
   visit(source);
   return found;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): the names, in order, of the cases among these tasks that open FAIL_CLOSED_HEAD, each suite's tasks walked where the suite stands - the cases vitest registers for this file, as the first CASE WORDS case reads them. */
+function failClosedNames(tasks: readonly CaseTask[]): string[] {
+  return tasks.flatMap(child => {
+    if (child.type === "suite") return failClosedNames(child.tasks ?? []);
+    return child.type === "test" && child.name.startsWith(FAIL_CLOSED_HEAD) ? [child.name] : [];
+  });
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): this header's ROWS entries, in order and as rowsEntries reads them, that open FAIL_CLOSED_HEAD. With no text given it reads this file. */
+function failClosedEntries(text: string = read(CENSUS)): string[] {
+  return rowsEntries(text).filter(entry => entry.startsWith(FAIL_CLOSED_HEAD));
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): how the CASE WORDS selection reads one CASE_HEADS row's plant in this file's text (CaseHead), against the entries and calls it reads with no plant (base). */
+function caseHeadReading(row: CaseHead, text: string, base: { readonly entries: number; readonly calls: number }): string {
+  const lines = text.split("\n");
+  if (row.kind === "entry") {
+    const at = lines.indexOf(row.anchor);
+    if (at < 0 || lines.indexOf(row.anchor, at + 1) >= 0) return "no single anchor line";
+    lines.splice(at + 1, 0, row.text);
+    try {
+      const more = failClosedEntries(lines.join("\n")).length - base.entries;
+      if (more === 1) return "selected";
+      return more === 0 ? "quiet" : `${more} more entries`;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.endsWith(JSON.stringify(row.text)) ? "refused" : message;
+    }
+  }
+  const at = lines.findIndex(line => line.startsWith(row.anchor));
+  if (at < 0 || lines.findIndex((line, index) => index > at && line.startsWith(row.anchor)) >= 0) return "no single anchor line";
+  const title = row.kind === "template" ? `\`${row.text}\`` : JSON.stringify(row.text);
+  lines.splice(at, 0, `    it(${title}, () => {`, "      expect(FAIL_CLOSED_CASES.length).toBe(5);", "    });");
+  const calls = failClosedApplications(lines.join("\n")).length - base.calls;
+  const names = failClosedNames([{ type: "suite", name: SUITE, tasks: [{ type: "test", name: row.text }] }]).length;
+  if (calls === 1 && names === 1) return "selected";
+  return calls === 0 && names === 0 ? "quiet" : `calls ${calls}, names ${names}`;
 }
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
@@ -1814,6 +1890,20 @@ interface RowsLine {
   readonly anchor: string;
   readonly lines: readonly string[];
   readonly reads: string;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): a head spelling the CASE HEADS case plants in memory into this file's text - an entry row's ROWS line (text) after the line that equals its anchor, or a title row's title (text) as the title of an it() call before the line that opens with its anchor and as the name of a case in a task list, a template row's title written as a template literal - and how the CASE WORDS selection then reads it (reads): "refused", rowsEntries throwing naming the line; "selected", the selection holding one more than with no plant - one more entry failClosedEntries reads, or one more call failClosedApplications reads and one more name failClosedNames reads; "quiet", holding as many; or, when the calls and the names differ, "calls <n>, names <n>", how many more of each. */
+interface CaseHead {
+  readonly id: string;
+  readonly kind: "entry" | "title" | "template";
+  readonly anchor: string;
+  readonly text: string;
+  readonly reads: string;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): a vitest task as the first CASE WORDS case walks it - a case (type "test") by its name, a suite by its tasks. */
+interface CaseTask {
+  readonly type: string;
+  readonly name: string;
+  readonly tasks?: readonly CaseTask[];
 }
 /** wb-v3a9: how a FAIL-CLOSED case, as this file spells it, applies narrowsToPinnedPages: the words its title opens with (head); whether its callback's first statement binds lines to helperClaimLines(), and nothing else in it binds lines (bindsLines); the list the filter of its expect subject's unnarrowed list reads (receiver), and whether that list is a const of the callback whose initializer reads lines, directly or through another such const (receiverReadsLines); the argument it hands narrowsToPinnedPages, negated as the whole body of that filter's callback (argument); whether that argument reads lines itself, or the list and the consts it reads build no entry of their own - no map or flatMap call and no object literal - so the argument reads a header line either way (readsHeaderLines); whether the expected object's unnarrowed is [] (expectsEmpty); and the names it declares that this application reads (shadowed). */
 interface CaseApplication {
@@ -4039,6 +4129,54 @@ const ROWS_LINES: readonly RowsLine[] = [
   { id: "S4-CTRL-4SP", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *    ${WIDE_END}`], reads: "NARROWED WORDS (" },
   { id: "S4-CTRL-3SP-TAB", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *   \t${WIDE_END}`], reads: "NARROWED WORDS (" },
   { id: "S4-CTRL-HEAD", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  ALSO (a control): ${WIDE_END}`], reads: "ALSO (" },
+];
+/** wb-v3a9 cut #5 (refusal #4, U1): the lines the CASE_HEADS rows plant at - entry rows after the line that equals the anchor (the last lines of the FAIL-CLOSED CORE and CARRY entries, the line before the CORE entry opens and the CORE entry's second line), title rows before the line that opens with it (the FAIL-CLOSED SHAPES case's). */
+const CASE_ANCHORS = {
+  coreEnd: ROWS_ANCHORS.coreEnd,
+  carryEnd: ROWS_ANCHORS.carryEnd,
+  beforeCore: " *   whereas, other than or claimed between the words and the predicate or the clause's end).",
+  coreSplit: " *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four",
+  shapesCase: '    it("FAIL-CLOSED SHAPES (',
+} as const;
+/** wb-v3a9 cut #5: the words refusal #4's members plant after a FAIL-CLOSED head - FC-CORE's and FC-CARRY's replaced words, in a sentence of their own (CORE_WORDS, CARRY_WORDS) and in a case title (CASE_WORDS_TITLE) - and two code points the seat's spellings use. */
+const CORE_WORDS = 'Each of those lines carries the narrowing "on its pinned pages" as a clause of its own.';
+const CASE_WORDS_TITLE = "each such line narrows to its pinned pages as a clause of its own";
+const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
+const NO_BREAK_HYPHEN = String.fromCodePoint(0x2011);
+/** wb-v3a9 cut #5 (refusal #4, U1): head spellings planted in memory, each with the reading the CASE WORDS selection gives it: refusal #4's nine members and its three controls (selected), the seat's same-class spellings (selected, or refused by rowsEntries, and a template-literal title the second CASE WORDS case does not read: calls 0, names 1), and the quiet rows of the R-CASE-HEAD residual. */
+const CASE_HEADS: readonly CaseHead[] = [
+  { id: "GP1-G2-HEAD-COLON-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED: ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COMMA-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED, CARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-HYPHEN-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED-CARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COLON-CORE", kind: "entry", anchor: CASE_ANCHORS.coreEnd, text: ` *  FAIL-CLOSED: ${CORE_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COMMA-AGAIN", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED, AGAIN (cut #4): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COLON-FIRST", kind: "entry", anchor: CASE_ANCHORS.beforeCore, text: ` *  FAIL-CLOSED: ${CORE_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COLON", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED: ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COMMA", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED, CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COLON-TITLEONLY", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: "FAIL-CLOSED: the cases apply narrowsToPinnedPages to the header's lines", reads: "selected" },
+  { id: "GP1-G2-HEAD-SPACE-CTRL", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED CARRY AGAIN (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-PAREN-CTRL", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-CASE-SPACE-CTRL", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED CARRY AGAIN (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-ENTRY-JOINED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSEDCARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "S5-ENTRY-HYPHEN-COLON", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED-: ${CARRY_WORDS}`, reads: "selected" },
+  { id: "S5-ENTRY-PERIOD", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED. ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-ENTRY-LOWER", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  Fail-Closed CARRY (continued): ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-ENTRY-NO-BREAK-HYPHEN", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL${NO_BREAK_HYPHEN}CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-TITLE-PERIOD", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED. ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-TITLE-ALONE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: "FAIL-CLOSED", reads: "selected" },
+  { id: "S5-TITLE-NO-BREAK-SPACE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED${NO_BREAK_SPACE}CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-TITLE-TEMPLATE", kind: "template", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED: ${CASE_WORDS_TITLE}`, reads: "calls 0, names 1" },
+  { id: "R5-ENTRY-WORD-BEFORE", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  ALSO FAIL-CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-SPACED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-UNHYPHENATED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAILCLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-CONTINUED", kind: "entry", anchor: CASE_ANCHORS.coreSplit, text: ` *  CORE (continued): ${CORE_WORDS}`, reads: "quiet" },
+  { id: "R5-TITLE-LOWER", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `fail-closed: ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-MIXED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `Fail-Closed CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-LEADING-SPACE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: ` FAIL-CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-WORD-BEFORE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `ALSO FAIL-CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-SPACED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-UNHYPHENATED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAILCLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-NO-BREAK-HYPHEN", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL${NO_BREAK_HYPHEN}CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -6592,6 +6730,38 @@ const FROZEN: readonly string[] = [
   "ROWS_LINES:S4-CTRL-4SP:8096b70d2859",
   "ROWS_LINES:S4-CTRL-3SP-TAB:14ad1a9d8002",
   "ROWS_LINES:S4-CTRL-HEAD:3e3bcd6eb971",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-CARRY:13e9a1400b33",
+  "CASE_HEADS:GP1-G2-HEAD-COMMA-CARRY:6ebdf74ced5e",
+  "CASE_HEADS:GP1-G2-HEAD-HYPHEN-CARRY:148bcec4cfa0",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-CORE:51de98c77883",
+  "CASE_HEADS:GP1-G2-HEAD-COMMA-AGAIN:8c210299c0d8",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-FIRST:77ebb6c3a00d",
+  "CASE_HEADS:GP1-G2-CASE-COLON:5f6406435801",
+  "CASE_HEADS:GP1-G2-CASE-COMMA:5db8b2c33a91",
+  "CASE_HEADS:GP1-G2-CASE-COLON-TITLEONLY:135abf6825a4",
+  "CASE_HEADS:GP1-G2-HEAD-SPACE-CTRL:a240684f9e97",
+  "CASE_HEADS:GP1-G2-HEAD-PAREN-CTRL:0c89a4fbc711",
+  "CASE_HEADS:GP1-G2-CASE-SPACE-CTRL:ae1baa24f401",
+  "CASE_HEADS:S5-ENTRY-JOINED:20ec32ef072d",
+  "CASE_HEADS:S5-ENTRY-HYPHEN-COLON:4b2fe7c74985",
+  "CASE_HEADS:S5-ENTRY-PERIOD:57ce24b2a483",
+  "CASE_HEADS:S5-ENTRY-LOWER:254caada93d3",
+  "CASE_HEADS:S5-ENTRY-NO-BREAK-HYPHEN:7f10de3a1b05",
+  "CASE_HEADS:S5-TITLE-PERIOD:0197ca2e6c4e",
+  "CASE_HEADS:S5-TITLE-ALONE:836e0c3dfab2",
+  "CASE_HEADS:S5-TITLE-NO-BREAK-SPACE:d019dc059ba4",
+  "CASE_HEADS:S5-TITLE-TEMPLATE:8bac8f418f5a",
+  "CASE_HEADS:R5-ENTRY-WORD-BEFORE:54c4ac4a67e0",
+  "CASE_HEADS:R5-ENTRY-SPACED:93174eb71ba8",
+  "CASE_HEADS:R5-ENTRY-UNHYPHENATED:ea777333e6e7",
+  "CASE_HEADS:R5-ENTRY-CONTINUED:cb9669c3aa97",
+  "CASE_HEADS:R5-TITLE-LOWER:74e29da5f6ff",
+  "CASE_HEADS:R5-TITLE-MIXED:47fb89ebb1bb",
+  "CASE_HEADS:R5-TITLE-LEADING-SPACE:a51398e63afd",
+  "CASE_HEADS:R5-TITLE-WORD-BEFORE:03c99f23f62f",
+  "CASE_HEADS:R5-TITLE-SPACED:e8cf8bf1629f",
+  "CASE_HEADS:R5-TITLE-UNHYPHENATED:be2a8f7337e1",
+  "CASE_HEADS:R5-TITLE-NO-BREAK-HYPHEN:238183c3c84c",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -7657,17 +7827,10 @@ describe(SUITE, () => {
     });
   });
 
-  describe("CASE WORDS (wb-v3a9): each FAIL-CLOSED case's title, ROWS entry and body, narrowed to the cases applying narrowsToPinnedPages to the header's lines", () => {
-    it("the FAIL-CLOSED cases vitest registers for this file, this header's FAIL-CLOSED ROWS entries and the FAIL_CLOSED_CASES rows are, by head and in order, the same five; and each case's title and ROWS entry hold, after 'wb-v3a9: ', the words that alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced words", ({ task }) => {
-      const registered: string[] = [];
-      const walk = (tasks: typeof task.file.tasks): void => {
-        for (const child of tasks) {
-          if (child.type === "test" && child.name.startsWith("FAIL-CLOSED ")) registered.push(child.name);
-          else if (child.type === "suite") walk(child.tasks);
-        }
-      };
-      walk(task.file.tasks);
-      const entries = rowsEntries().filter(entry => entry.startsWith("FAIL-CLOSED "));
+  describe("CASE WORDS (wb-v3a9; cut #5 spells the heads): each FAIL-CLOSED case's title, ROWS entry and body - the cases, entries and it() calls opening \"FAIL-CLOSED\" - narrowed to the cases applying narrowsToPinnedPages to the header's lines", () => {
+    it("the cases vitest registers for this file whose titles open \"FAIL-CLOSED\", this header's ROWS entries whose words, as rowsEntries reads them, open \"FAIL-CLOSED\" and the FAIL_CLOSED_CASES rows are, by head and in order, the same five, any character, or none, following \"FAIL-CLOSED\" (cut #5); and each such case's title and ROWS entry hold, after 'wb-v3a9: ', the words that alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced words", ({ task }) => {
+      const registered = failClosedNames(task.file.tasks);
+      const entries = failClosedEntries();
       const { narrowing } = narrowingCure();
       const headOf = (text: string): string => text.slice(0, text.indexOf(" (") + 2);
       const folded = (text: string): string => text.replace(/\s+/g, " ");
@@ -7679,11 +7842,19 @@ describe(SUITE, () => {
         unnarrowed: FAIL_CLOSED_CASES.filter((row, at) => !narrowed(registered[at] ?? "", row) || !narrowed(entries[at] ?? "", row)).map(row => row.id),
       }).toStrictEqual({ registered: FAIL_CLOSED_CASES.map(row => row.head), entries: FAIL_CLOSED_CASES.map(row => row.head), unnarrowed: [] });
     });
-    it("each FAIL-CLOSED case's body, as this file spells it, binds lines to helperClaimLines() first and hands narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of its own; it declares none of the names that application reads, and it expects that list empty", () => {
+    it("the it() calls of this file whose title, a string literal, opens \"FAIL-CLOSED\" (cut #5: any character, or none, following it) and whose callback is an arrow function with a block body are, by head and in order, the FAIL_CLOSED_CASES rows' five; each one's body, as this file spells it, binds lines to helperClaimLines() first and hands narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of its own; it declares none of the names that application reads, and it expects that list empty", () => {
       expect(failClosedApplications()).toStrictEqual(
         FAIL_CLOSED_CASES.map(row => ({ head: row.head, bindsLines: true, receiver: row.receiver, receiverReadsLines: true, argument: row.argument, readsHeaderLines: true, expectsEmpty: true, shadowed: [] })),
       );
     });
+  });
+
+  describe("CASE HEADS (wb-v3a9 cut #5, refusal #4 U1): the selection the CASE WORDS cases read by, on head spellings planted in memory", () => {
+    it("each CASE_HEADS row's plant - an entry row's ROWS line after the line that equals its anchor, a title row's it() call before the line that opens with its anchor and its case in a task list - reads as the row states: refused (rowsEntries throws naming the line), selected (the selection holds one more than with no plant) or quiet (as many)", () => {
+      const text = read(CENSUS);
+      const base = { entries: failClosedEntries(text).length, calls: failClosedApplications(text).length };
+      expect(CASE_HEADS.map(row => ({ id: row.id, reads: caseHeadReading(row, text, base) }))).toStrictEqual(CASE_HEADS.map(row => ({ id: row.id, reads: row.reads })));
+    }, CENSUS_TIMEOUT);
   });
 
   describe("ROWS LINES (wb-v3a9 cut #4, refusal #3 U1 and U2): rowsEntries reads this header's ROWS fail-closed", () => {
@@ -7772,6 +7943,7 @@ describe(SUITE, () => {
         ...rows("NARROWING_REQUIREMENTS", NARROWING_REQUIREMENTS),
         ...rows("FOLLOW_UP_3_REQUIREMENTS", FOLLOW_UP_3_REQUIREMENTS),
         ...rows("ROWS_LINES", ROWS_LINES),
+        ...rows("CASE_HEADS", CASE_HEADS),
       ]).toStrictEqual(FROZEN);
     });
   });
