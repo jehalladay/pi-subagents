@@ -166,28 +166,60 @@ describe("the node() reconcile contract it documents (wb-g8f part B.5)", () => {
   });
 });
 
-// wb-5ik5 (landing 1017) made cleanupWorktree keep the worktree when Git
-// preservation fails: no branch is created and the agent's work stays in the
-// directory. wb-x6be (landing 1023) rewrote the Agent tool's isolation lines for
-// that case, and its gate finding F4 (follow-up wb-jvy7) found four more texts
-// that still said the worktree is always removed: this description's agent()
-// isolation clause, the header bullet of tool-description.ts for it, item 2 of
-// the gated-fix.js example's header, and the doc comment on
-// WorkflowSpawnResult.cwd in src/workflow/runtime.ts. Each case below holds one
-// of those texts' replacements word for word and its old words absent. The
-// cases pin the words only; the failed-preservation behaviour the words describe
-// is pinned by wb-5ik5's own rows (the PF rows of test/worktree.test.ts).
-describe("the worktree-removal texts for a failed Git preservation (wb-jvy7)", () => {
+// The four texts that the F4 carry of wb-x6be landing 1023 named (follow-up
+// wb-jvy7, R694) now say a failed Git preservation keeps the worktree: the
+// agent() isolation clause of this description, the `isolation` bullet in the
+// opening comment of src/workflow/tool-description.ts, item 2 in the opening
+// comment of examples/workflows/gated-fix.js, and the end of the doc comment on
+// WorkflowSpawnResult.cwd in src/workflow/runtime.ts. JV1 to JV4 pin these four
+// texts in this order, one case for each. A form that a case does not assert is
+// not claimed, and neither is the failed-preservation behaviour itself (the PF
+// rows of test/worktree.test.ts pin that).
+describe("wb-jvy7: the four F4 texts on a failed Git preservation", () => {
   const readRepoFile = (path: string): string =>
     readFileSync(fileURLToPath(new URL(`../${path}`, import.meta.url)), "utf8");
+  // openingComment(): the file's lines from line 1, asserted to be "/**",
+  // through the first line that is exactly " */", asserted to exist.
+  const openingComment = (lines: string[]): string[] => {
+    expect(lines[0]).toBe("/**");
+    const end = lines.indexOf(" */");
+    expect(end).toBeGreaterThan(0);
+    return lines.slice(0, end + 1);
+  };
+  // prose(): the text lower-cased (toLowerCase), each line stripped of its
+  // leading whitespace and then of the "*" and "/" characters that follow it,
+  // the lines joined with spaces, and every whitespace run collapsed to one
+  // space.
+  const prose = (text: string): string =>
+    text
+      .split("\n")
+      .map(line => line.replace(/^\s*[*/]*/, ""))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .toLowerCase();
+  /** `opts`, then an optional `?`, then `.`, then `isolation`, with any whitespace between them; ASCII letters in either case. */
+  const OPTS_ISOLATION = /opts\s*\??\s*\.\s*isolation/gi;
+  /** `isolation`, ASCII letters in either case. */
+  const ISOLATION = /isolation/i;
+  /** A line whose first text after its leading whitespace, a `*` and any whitespace is `2` or `(2`, with no ASCII digit (0-9) after the 2. */
+  const ITEM_2 = /^\s*\*\s*\(?2(?![0-9])/;
+  /**
+   * A line whose first text after its leading whitespace is `cwd` (optionally
+   * after `readonly` and whitespace, optionally in matching single or double
+   * quotes), then an optional `?` and a `:`, with any whitespace before each.
+   */
+  const CWD_LINE = /^\s*(?:readonly\s+)?(["']?)cwd\1\s*\??\s*:/;
+  /** JV1's expected text: from the one OPTS_ISOLATION match up to " opts.gate:". */
   const ISOLATION_CLAUSE =
     "opts.isolation: 'worktree' runs the agent in a fresh git worktree — EXPENSIVE (setup time + disk per agent), use ONLY when agents mutate files in parallel and would otherwise conflict; the worktree is removed when the agent settles, its changes preserved on a branch; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent's work in it.";
-  /** The header comment's deviation bullet for `isolation`, line by line. */
+  /** JV2's expected lines: the one line of the opening comment that ISOLATION matches, then the line after it. */
   const HEADER_ISOLATION_BULLET = [
     " *   - `isolation` removes the worktree on settle, changes kept on a branch;",
     " *     if Git preservation fails, no branch is created and the worktree is kept.",
   ];
-  /** Item 2 of gated-fix.js's header comment, line by line, through the blank comment line that ends it. */
+  /** The line JV2 expects right after HEADER_ISOLATION_BULLET's two lines. */
+  const ADDITIONS_LINE = ' * Additions with no upstream counterpart: `gate`, `resume`, `effort: "minimal"`,';
+  /** JV3's expected lines: the one line of the opening comment that ITEM_2 matches, then the six lines after it. */
   const GATED_FIX_ISOLATION_ITEM = [
     ' *   2. `isolation: "worktree"` is deliberately not used here. An isolated child\'s',
     " *      worktree is committed to a branch and removed when it settles (if Git",
@@ -197,7 +229,9 @@ describe("the worktree-removal texts for a failed Git preservation (wb-jvy7)", (
     " *      would collide; a serial fix-then-verify chain wants one shared tree.",
     " *",
   ];
-  /** The last lines of WorkflowSpawnResult.cwd's doc comment, through the field itself. */
+  /** The line JV3 expects right after GATED_FIX_ISOLATION_ITEM's seven lines. */
+  const ARGS_LINE = " * args: { task?: string, test?: string }";
+  /** JV4's expected lines: the four lines before the one line CWD_LINE matches, then that line. */
   const CWD_DOC_TAIL = [
     "   * Usually unset for a worktree child even so: the copy is removed during the",
     "   * child's own settle (a failed Git preservation keeps it instead), so it is",
@@ -206,40 +240,55 @@ describe("the worktree-removal texts for a failed Git preservation (wb-jvy7)", (
     "  cwd?: string;",
   ];
 
-  it('JV1 fullWorkflowToolDescription has one opts.isolation clause, ISOLATION_CLAUSE, and no "its changes preserved on a branch."', () => {
+  it("JV1 fullWorkflowToolDescription: OPTS_ISOLATION matches it once, where ISOLATION_CLAUSE starts, \" opts.gate:\" follows ISOLATION_CLAUSE, and prose() of the description holds no \"its changes preserved on a branch.\"", () => {
     expect(description.split("opts.isolation:")).toHaveLength(2);
     const start = description.indexOf("opts.isolation:");
     const end = description.indexOf(" opts.gate:", start);
     expect(end).toBeGreaterThan(start);
     expect(description.slice(start, end)).toBe(ISOLATION_CLAUSE);
+    expect([...description.matchAll(OPTS_ISOLATION)].map(match => match.index)).toEqual([start]);
     expect(description).not.toContain("its changes preserved on a branch.");
+    expect(prose(description)).not.toContain("its changes preserved on a branch.");
   });
 
-  it("JV2 src/workflow/tool-description.ts has one header bullet for `isolation`, HEADER_ISOLATION_BULLET, and not its old one-line form", () => {
-    const lines = readRepoFile("src/workflow/tool-description.ts").split("\n");
+  it("JV2 src/workflow/tool-description.ts: the one line of its opening comment that ISOLATION matches is HEADER_ISOLATION_BULLET's first line, ADDITIONS_LINE follows HEADER_ISOLATION_BULLET's two lines, and prose() of the file holds no \"`isolation` removes the worktree on settle, changes kept on a branch.\"", () => {
+    const source = readRepoFile("src/workflow/tool-description.ts");
+    const lines = source.split("\n");
+    expect(openingComment(lines).filter(line => ISOLATION.test(line))).toEqual([HEADER_ISOLATION_BULLET[0]]);
     const at = lines.findIndex(line => line.startsWith(" *   - `isolation`"));
     expect(lines.filter(line => line.startsWith(" *   - `isolation`"))).toHaveLength(1);
     expect(lines.slice(at, at + HEADER_ISOLATION_BULLET.length)).toEqual(HEADER_ISOLATION_BULLET);
+    expect(lines[at + HEADER_ISOLATION_BULLET.length]).toBe(ADDITIONS_LINE);
     expect(lines[at + HEADER_ISOLATION_BULLET.length]).not.toMatch(/^ \* {5}\S/);
     expect(lines).not.toContain(" *   - `isolation` removes the worktree on settle, changes kept on a branch.");
+    expect(prose(source)).not.toContain("`isolation` removes the worktree on settle, changes kept on a branch.");
   });
 
-  it('JV3 examples/workflows/gated-fix.js has one item 2, GATED_FIX_ISOLATION_ITEM, and no "removed when it settles, so"', () => {
+  it("JV3 examples/workflows/gated-fix.js: the one line of its opening comment that ITEM_2 matches is GATED_FIX_ISOLATION_ITEM's first line, ARGS_LINE follows GATED_FIX_ISOLATION_ITEM's seven lines, and prose() of the file holds no \"removed when it settles, so\"", () => {
     const source = readRepoFile("examples/workflows/gated-fix.js");
     const lines = source.split("\n");
+    expect(openingComment(lines).filter(line => ITEM_2.test(line))).toEqual([GATED_FIX_ISOLATION_ITEM[0]]);
     const at = lines.findIndex(line => line.startsWith(" *   2. "));
     expect(lines.filter(line => line.startsWith(" *   2. "))).toHaveLength(1);
     expect(lines.slice(at, at + GATED_FIX_ISOLATION_ITEM.length)).toEqual(GATED_FIX_ISOLATION_ITEM);
+    expect(lines[at + GATED_FIX_ISOLATION_ITEM.length]).toBe(ARGS_LINE);
     expect(source).not.toContain("removed when it settles, so");
+    expect(prose(source)).not.toContain("removed when it settles, so");
   });
 
-  it("JV4 src/workflow/runtime.ts has one cwd field, its doc comment ending in CWD_DOC_TAIL, and no \"child's own settle, so it no longer exists\"", () => {
+  it("JV4 src/workflow/runtime.ts: the one line CWD_LINE matches is \"  cwd?: string;\", inside the WorkflowSpawnResult interface and last of CWD_DOC_TAIL's five lines, and prose() of the file holds no \"child's own settle, so it no longer exists\"", () => {
     const source = readRepoFile("src/workflow/runtime.ts");
     const lines = source.split("\n");
+    expect(lines.filter(line => CWD_LINE.test(line))).toEqual(["  cwd?: string;"]);
     const field = lines.indexOf("  cwd?: string;");
     expect(lines.filter(line => line === "  cwd?: string;")).toHaveLength(1);
+    const open = lines.indexOf("export interface WorkflowSpawnResult {");
+    expect(open).toBeGreaterThanOrEqual(0);
+    expect(field).toBeGreaterThan(open);
+    expect(field).toBeLessThan(lines.indexOf("}", open));
     expect(field).toBeGreaterThanOrEqual(CWD_DOC_TAIL.length - 1);
     expect(lines.slice(field - CWD_DOC_TAIL.length + 1, field + 1)).toEqual(CWD_DOC_TAIL);
     expect(source).not.toContain("child's own settle, so it no longer exists");
+    expect(prose(source)).not.toContain("child's own settle, so it no longer exists");
   });
 });
