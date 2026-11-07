@@ -1,6 +1,6 @@
 # Pi Workbench ↔ MechanicalWorkflows: interoperable function hosting
 
-**Status:** NEW DESIGN PROGRAM — not an implementation or live acceptance receipt.
+**Status:** HISTORICAL DESIGN PROGRAM (2026-11-04), not an implementation or live acceptance receipt. For present-tense findings use the [2026-11-06 reconciled program](../mechanical-interoperability-audit-2026-11-06/README.md): Mechanical repaired its committed descriptor in `1f29daa7` and added a pre-dispatch-only AbortSignal in `f7c0a943`. Other source-bound claims below are dated; preserve this program for its original design, epistemic audit, requirements and TDD evidence.
 **Audit baseline (2026-11-04):** pi-subagents `master` `f67b6665a132dbb0e86aea48cf36cf6ae0412521`; MechanicalWorkflows `main` `0c78e2530cbf5737a8bbb763475385a2f0f760cc`.
 **Scope:** the Pi host half of one coordinated cross-repository program. The MechanicalWorkflows half is under `MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`.
 

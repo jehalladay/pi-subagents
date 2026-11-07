@@ -53,3 +53,7 @@ All references to node provider methods, SDK names, example operation names, hos
 ## Coordinated MechanicalWorkflows integration audit (2026-11-04)
 
 [New audit and implementation program](programs/mechanical-workflows-interop-2026-11-04/README.md) — source-based findings, native function-host protocol, staged QA and agent handoff. W11 is still **planned**: Pi cannot yet invoke the Mechanical `develop()` function via `workflow_execute`, notwithstanding implemented Claude SDK, provider, detached and Furnace infrastructure. The program is design-only and records no new live acceptance. Its matching Mechanical program is in `jehalladay/MechanicalWorkflows/docs/programs/pi-workbench-interop-2026-11-04/`.
+
+## Reconciled Mechanical function-host audit (2026-11-06)
+
+[Current source audit, agent feedback, executable-host contract, staged delivery and QA](programs/mechanical-interoperability-audit-2026-11-06/README.md) supersedes the November 4 program **for current-state findings**, without erasing its epistemic/TDD evidence. [Operator guide](mechanical-function-hosting.md) and `.agents/skills/pi-mechanical-interop/SKILL.md` provide current routing. Mechanical's descriptor mismatch is fixed; Pi still rejects registered `function` launches, and no new native joint run was performed for this documentation update.
