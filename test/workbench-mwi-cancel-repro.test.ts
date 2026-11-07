@@ -49,14 +49,25 @@
  *   CALL_LOG_OFFSETS, ONE_START_SPLITS, RUN_SIGNALS and PARKED_AT_CONTROL), NOISE by each profile's position in every
  *   list it draws from, that each NOISE field takes every value of its list, and that the four plan facet lists,
  *   ENTRY_STATES and RUN_STATUSES equal the unions their source files declare. GRID-PRODUCTS pins that each grid's
- *   builder iterates the lists of its axes table (SEAM_AXES, SKIP_ORACLE_AXES and RETRY_ORACLE_AXES): every reading
- *   the grid visits, read on those axes (each value as its position in that axis's list), is the next tuple of the
- *   product of those lists, outermost axis first, each tuple due 1 + 17 times in a row and none past the last.
- *   seamGrid's builder spells its run signal and parkedAtControl lists inline; GRID-PRODUCTS reads them against
- *   RUN_SIGNALS and PARKED_AT_CONTROL. The same reader flags four planted grids: a run signal list spelled
- *   [false, false], two loops in each other's place, each reading visited once, and the product run through twice.
- *   GRID-PRODUCTS reads no comment: that a builder's comment names the lists of its axes table, or names them in that
- *   order, is NOT CLAIMED by it.
+ *   builder iterates the lists of its axes table (SEAM_AXES, SKIP_ORACLE_AXES and RETRY_ORACLE_AXES): every reading the
+ *   grid visits, read on those axes (each value as its position in that axis's list, an object by identity), is the
+ *   next tuple of the product of those lists, outermost axis first, each tuple due 1 + 17 times in a row and none past
+ *   the last. seamGrid's builder spells its run signal and parkedAtControl lists inline; GRID-PRODUCTS reads them
+ *   against RUN_SIGNALS and PARKED_AT_CONTROL. Its reader, productTally, is pinned on each whole table by a planted
+ *   walk of the table's product (plantedWalk, which builds its readings with AXIS_SETTERS, not with the grid's
+ *   builder): at every tuple the walk visits the tuple's reading once, the reading with each axis alone moved off the
+ *   product once, and, on each of the tuple's other visits, the reading with a set of axes moved at once, the sets
+ *   covering every nonempty set of the table's axes; over the walk each moved axis, alone and inside a set, takes at
+ *   each of its values every other value of its list and a value the list does not hold (an object's copy for an
+ *   object); after the last tuple the walk visits once more. On each table the reader's count of visits off the product
+ *   is the walk's moved visits plus the one past the last tuple, and it names the first three. Every move reads, on its
+ *   table, off the product on exactly the axes it moved, at the positions the walk planted: read back against the
+ *   walk's record of each move, only one move per walk, which the walk records at other positions than it planted,
+ *   reads otherwise. The same reader flags four planted grids on SEAM_AXES's first three axes: a run signal list
+ *   spelled [false, false], two loops in each other's place, each reading visited once, and the product run through
+ *   twice. Which values the axes of a set moved at once take together is NOT CLAIMED by the walk. GRID-PRODUCTS reads
+ *   no comment: that a builder's comment names the lists of its axes table, or names them in that order, is NOT CLAIMED
+ *   by it.
  * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
  * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
  * value, settlement list or run status that no list holds) and a reading outside those products. Production
@@ -540,10 +551,12 @@ interface ProductTally {
 }
 
 /**
- * Reads every reading a grid visits on its axes, each value as its position in that axis's list (-1 for a value the list
- * does not hold), and compares the positions with the product of the lists in the order given, the last axis varying
- * fastest and each tuple due 1 + NOISE.length times in a row. A visit past the product's last tuple is off the product
- * too. It reads the axes only: which NOISE profile, if any, a visit of a tuple carries is NOT CLAIMED by it.
+ * Reads every reading a grid visits on its axes, each value as its position in that axis's list (an object by identity;
+ * -1 for a value the list does not hold), and compares the positions with the product of the lists in the order given,
+ * the last axis varying fastest and each tuple due 1 + NOISE.length times in a row. A visit past the product's last
+ * tuple is off the product too. It reads the axes only: which NOISE profile, if any, a visit of a tuple carries is NOT
+ * CLAIMED by it. GRID-PRODUCTS pins this reading on each whole axes table with plantedWalk; which values the axes of a
+ * set moved at once take together is NOT CLAIMED by that walk.
  */
 function productTally(grid: (visit: (reading: ParkedObservation) => void) => void, axes: readonly GridAxis[]): ProductTally {
   const lengths = axes.map(axis => axis.list.length);
@@ -616,6 +629,160 @@ function plantedTwiceGrid(visit: (reading: ParkedObservation) => void): void {
       }
     }
   }
+}
+
+/**
+ * How a planted walk sets one axis of a reading: set returns the reading with that axis reading value and every other
+ * axis of its table reading as before (setup SDK starts moves the call log with it, so the call log offset holds), and
+ * outside is the value the walk plants when the axis's current value is not an object and the move needs a value no
+ * list of that axis holds.
+ */
+interface AxisSetter {
+  readonly set: (reading: ParkedObservation, value: unknown) => ParkedObservation;
+  readonly outside: unknown;
+}
+
+/** A value no list of the axis holds, standing in for current: a copy of current when it is an object (equal by value, another object), outside otherwise. */
+function unlistedValue(current: unknown, outside: unknown): unknown {
+  if (Array.isArray(current)) return [...current];
+  if (typeof current === "object" && current !== null) return { ...current };
+  return outside;
+}
+
+/** The setters of every axis the three axes tables name, by axis name. */
+const AXIS_SETTERS: Readonly<Record<string, AxisSetter>> = {
+  route: { set: (reading, value) => ({ ...reading, plan: { ...reading.plan, route: value as ParkedRoute } }), outside: "unlisted route" },
+  "run signal": { set: (reading, value) => ({ ...reading, runAborted: value as boolean }), outside: "unlisted run signal" },
+  parkedAtControl: { set: (reading, value) => ({ ...reading, parkedAtControl: value as boolean }), outside: "unlisted parkedAtControl" },
+  control: { set: (reading, value) => ({ ...reading, plan: { ...reading.plan, control: value as ParkedControl } }), outside: "unlisted control" },
+  "control value": { set: (reading, value) => ({ ...reading, controlAccepted: value as boolean | undefined }), outside: null },
+  "parked aborts": { set: (reading, value) => ({ ...reading, hostAbortsWhileParked: value as number }), outside: 4 },
+  startup: { set: (reading, value) => ({ ...reading, plan: { ...reading.plan, startup: value as ParkedStartup } }), outside: "unlisted startup" },
+  "starts at the control": { set: (reading, value) => ({ ...reading, queriesBeforeControl: value as number }), outside: 4 },
+  "setup SDK starts": {
+    set: (reading, value) => ({ ...reading, sdkStarts: { ...reading.sdkStarts, setup: value as number }, sdkCallsRecorded: reading.sdkCallsRecorded - reading.sdkStarts.setup + (value as number) }),
+    outside: 4,
+  },
+  "setup beforeDispatch entries": { set: (reading, value) => ({ ...reading, authorizations: { ...reading.authorizations, setup: value as number } }), outside: 4 },
+  "call log offset": { set: (reading, value) => ({ ...reading, sdkCallsRecorded: summedStarts(reading) + (value as number) }), outside: 2 },
+  "original starts": { set: (reading, value) => ({ ...reading, sdkStarts: { ...reading.sdkStarts, original: value as number } }), outside: 4 },
+  "replacement starts": { set: (reading, value) => ({ ...reading, sdkStarts: { ...reading.sdkStarts, replacement: value as number } }), outside: 4 },
+  "later starts": { set: (reading, value) => ({ ...reading, sdkStarts: { ...reading.sdkStarts, extra: value as number } }), outside: 4 },
+  "final row": { set: (reading, value) => ({ ...reading, finalRow: value as FinalRow | undefined }), outside: { state: "start", skipped: true, attempt: 1, reason: null } },
+  "script value": { set: (reading, value) => ({ ...reading, scriptValue: value }), outside: "unlisted script value" },
+  "original entries": { set: (reading, value) => ({ ...reading, authorizations: { ...reading.authorizations, original: value as number } }), outside: 4 },
+  "replacement entries": { set: (reading, value) => ({ ...reading, authorizations: { ...reading.authorizations, replacement: value as number } }), outside: 4 },
+  "later entries": { set: (reading, value) => ({ ...reading, authorizations: { ...reading.authorizations, extra: value as number } }), outside: 4 },
+};
+
+/**
+ * What a planted walk moved: the moves; the moves that read, on the table, otherwise than the walk recorded them (the
+ * walk records one move per walk at other positions than it planted, so that move always does); the changes its
+ * one-axis moves made and the changes made to each axis of its set moves, one key per (axis, value of the tuple, value
+ * planted, -1 for a value no list holds); the axis sets it moved at once, one key per set; and the (axis, value) pairs
+ * whose unlisted value it planted as a copy of an object (equal by value, another object).
+ */
+interface WalkInventory {
+  moves: number;
+  misread: number;
+  readonly changes: Set<number>;
+  readonly setChanges: Set<number>;
+  readonly sets: Set<number>;
+  readonly copied: Set<number>;
+}
+
+function emptyInventory(): WalkInventory {
+  return { moves: 0, misread: 0, changes: new Set(), setChanges: new Set(), sets: new Set(), copied: new Set() };
+}
+
+/**
+ * A planted walk of a whole axes table, never run as a grid case. It walks the product of the table's lists, outermost
+ * axis first and the last varying fastest, building each tuple's reading with the axes' setters (not with the grid's
+ * builder), and visits each tuple 1 + NOISE.length times: the tuple's reading once, the reading with each axis alone
+ * moved off the product once, and, on each of the tuple's other visits, the reading with a set of axes moved at once.
+ * Over the walk the sets cover every nonempty set of the table's axes, and each axis, moved alone and moved inside a
+ * set, takes at each value of the tuple every other value of its list and a value its list does not hold
+ * (unlistedValue). After the last tuple it visits once more, past the product's last tuple. inventory gets each move
+ * read back on the table against the positions the walk records for it: the positions it planted, except one move per
+ * walk, recorded at other positions.
+ */
+function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, inventory: WalkInventory): (visit: (reading: ParkedObservation) => void) => void {
+  const setters = axes.map(axis => AXIS_SETTERS[axis.name]);
+  const setCount = 2 ** axes.length - 1;
+  const setVisits = NOISE.length - axes.length;
+  return visit => {
+    const tuple: number[] = axes.map(() => 0);
+    const oneAxisTurns = axes.map(axis => axis.list.map(() => 0));
+    const setTurns = axes.map(axis => axis.list.map(() => 0));
+    let tuples = 0;
+    let firstReading: ParkedObservation | undefined;
+    const change = (a: number, turns: number[][], changes: Set<number>): readonly [number, unknown] => {
+      const list = axes[a].list;
+      const from = tuple[a];
+      const turn = turns[a][from] % list.length;
+      turns[a][from] += 1;
+      const to = turn < list.length - 1 ? (from + 1 + turn) % list.length : -1;
+      changes.add((a * 64 + from) * 64 + to + 1);
+      if (to !== -1) return [to, list[to]];
+      const value = unlistedValue(list[from], setters[a].outside);
+      if (typeof value === "object" && value !== list[from] && JSON.stringify(value) === JSON.stringify(list[from])) inventory.copied.add(a * 64 + from);
+      return [to, value];
+    };
+    const moved = (reading: ParkedObservation, planted: readonly number[]): void => {
+      inventory.moves += 1;
+      if (axes.some((axis, a) => axis.list.indexOf(axis.read(reading)) !== planted[a])) inventory.misread += 1;
+      visit(reading);
+    };
+    const walk = (depth: number, reading: ParkedObservation): void => {
+      if (depth < axes.length) {
+        axes[depth].list.forEach((value, position) => {
+          tuple[depth] = position;
+          walk(depth + 1, setters[depth].set(reading, value));
+        });
+        return;
+      }
+      firstReading ??= reading;
+      visit(reading);
+      for (let a = 0; a < axes.length; a += 1) {
+        const [to, value] = change(a, oneAxisTurns, inventory.changes);
+        moved(setters[a].set(reading, value), tuples === 0 && a === 0 ? [...tuple] : tuple.map((position, i) => (i === a ? to : position)));
+      }
+      for (let k = 0; k < setVisits; k += 1) {
+        const mask = 1 + ((tuples * setVisits + k) % setCount);
+        inventory.sets.add(mask);
+        let shifted = reading;
+        const planted = [...tuple];
+        for (let a = 0; a < axes.length; a += 1) {
+          if ((mask & (1 << a)) === 0) continue;
+          const [to, value] = change(a, setTurns, inventory.setChanges);
+          planted[a] = to;
+          shifted = setters[a].set(shifted, value);
+        }
+        moved(shifted, planted);
+      }
+      tuples += 1;
+    };
+    walk(0, base);
+    if (firstReading !== undefined) visit(firstReading);
+  };
+}
+
+/** A walk's inventory read against its table: its counts, and each change it never made, alone or in a set, by axis name and positions. */
+function walkReading(inventory: WalkInventory, axes: readonly GridAxis[]) {
+  const missing = (changes: ReadonlySet<number>): readonly string[] =>
+    axes.flatMap((axis, a) =>
+      axis.list.flatMap((_, from) => [-1, ...axis.list.keys()].filter(to => to !== from && !changes.has((a * 64 + from) * 64 + to + 1)).map(to => `${axis.name} ${from}->${to}`)),
+    );
+  return {
+    moves: inventory.moves,
+    misread: inventory.misread,
+    changes: inventory.changes.size,
+    missing: missing(inventory.changes),
+    setChanges: inventory.setChanges.size,
+    setMissing: missing(inventory.setChanges),
+    sets: inventory.sets.size,
+    copied: inventory.copied.size,
+  };
 }
 
 /** A grid case's timeout: each grid judges hundreds of thousands of readings, and a loaded gate host is slow. */
@@ -1452,7 +1619,7 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     expect(NOISE_SOURCES.map((list, field) => list.every((_, position) => positions.some(row => row[field] === position)))).toEqual([true, true, true, true, true, true, true, true, true]);
   });
 
-  it("GRID-PRODUCTS every reading each grid visits, read on the axes of its table (SEAM_AXES, SKIP_ORACLE_AXES, RETRY_ORACLE_AXES; each value as its position in that axis's list, seamGrid's inline run signal and parkedAtControl lists read against RUN_SIGNALS and PARKED_AT_CONTROL), is the next tuple of the product of those lists, outermost axis first, each tuple due 1 + 17 times in a row and none past the last; the same reader flags four planted grids", { timeout: GRID_TIMEOUT }, () => {
+  it("GRID-PRODUCTS every reading each grid visits, read on its axes table (each value as its position in that axis's list, an object by identity; seamGrid's inline lists read against RUN_SIGNALS and PARKED_AT_CONTROL), is the next tuple of the product of those lists, outermost axis first, 1 + 17 times in a row and none past the last; on a planted walk of each whole table the same reader counts the walk's moved visits plus the one past its last tuple; it flags four planted grids", { timeout: GRID_TIMEOUT }, () => {
     expect({
       seam: productTally(seamGrid, SEAM_AXES),
       skipOracle: productTally(skipOracleGrid, SKIP_ORACLE_AXES),
@@ -1478,6 +1645,46 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
         first: ["visit 144: read 0/0/0, product past its last tuple", "visit 145: read 0/0/0, product past its last tuple", "visit 146: read 0/0/0, product past its last tuple"],
       },
     });
+    // The reader on each whole table: a planted walk of the table's product moves 17 of each tuple's 18 visits off the product, and visits once past its last tuple.
+    const walks = { seam: emptyInventory(), skipOracle: emptyInventory(), retryOracle: emptyInventory() };
+    expect({
+      seam: productTally(plantedWalk(SEAM_AXES, PARKED_SKIP_SPAWN, walks.seam), SEAM_AXES),
+      skipOracle: productTally(plantedWalk(SKIP_ORACLE_AXES, SKIP_ORACLE, walks.skipOracle), SKIP_ORACLE_AXES),
+      retryOracle: productTally(plantedWalk(RETRY_ORACLE_AXES, RETRY_ORACLE, walks.retryOracle), RETRY_ORACLE_AXES),
+    }).toEqual({
+      seam: {
+        visits: 110_592 * (1 + NOISE.length) + 1,
+        offProduct: 110_592 * NOISE.length + 1,
+        first: [
+          "visit 1: read 1/0/0/0/0/0/0/0/0/0/0, product 0/0/0/0/0/0/0/0/0/0/0",
+          "visit 2: read 0/1/0/0/0/0/0/0/0/0/0, product 0/0/0/0/0/0/0/0/0/0/0",
+          "visit 3: read 0/0/1/0/0/0/0/0/0/0/0, product 0/0/0/0/0/0/0/0/0/0/0",
+        ],
+      },
+      skipOracle: {
+        visits: 19_584 * (1 + NOISE.length) + 1,
+        offProduct: 19_584 * NOISE.length + 1,
+        first: ["visit 1: read 1/0/0/0/0/0, product 0/0/0/0/0/0", "visit 2: read 0/1/0/0/0/0, product 0/0/0/0/0/0", "visit 3: read 0/0/1/0/0/0, product 0/0/0/0/0/0"],
+      },
+      retryOracle: {
+        visits: 8_192 * (1 + NOISE.length) + 1,
+        offProduct: 8_192 * NOISE.length + 1,
+        first: ["visit 1: read 1/0/0/0/0/0/0, product 0/0/0/0/0/0/0", "visit 2: read 0/1/0/0/0/0/0, product 0/0/0/0/0/0/0", "visit 3: read 0/0/1/0/0/0/0, product 0/0/0/0/0/0/0"],
+      },
+    });
+    // The walks read back: every move reads off the product exactly as planted, one move per walk alone reading otherwise than its record (the walk records it at other positions); every change at every value of every axis was made alone and inside a set; every nonempty axis set was moved; and an object's unlisted value was planted as its copy (the final rows and the two object script values).
+    expect({
+      seam: walkReading(walks.seam, SEAM_AXES),
+      skipOracle: walkReading(walks.skipOracle, SKIP_ORACLE_AXES),
+      retryOracle: walkReading(walks.retryOracle, RETRY_ORACLE_AXES),
+    }).toEqual({
+      seam: { moves: 110_592 * NOISE.length, misread: 1, changes: 107, missing: [], setChanges: 107, setMissing: [], sets: 2047, copied: 0 },
+      skipOracle: { moves: 19_584 * NOISE.length, misread: 1, changes: 422, missing: [], setChanges: 422, setMissing: [], sets: 63, copied: 18 },
+      retryOracle: { moves: 8_192 * NOISE.length, misread: 1, changes: 100, missing: [], setChanges: 100, setMissing: [], sets: 127, copied: 0 },
+    });
+    // Liveness of that reading: an empty inventory, read on PLANTED_AXES, names every change of its three two-value axes as never made.
+    const unmade = ["route 0->-1", "route 0->1", "route 1->-1", "route 1->0", "run signal 0->-1", "run signal 0->1", "run signal 1->-1", "run signal 1->0", "parkedAtControl 0->-1", "parkedAtControl 0->1", "parkedAtControl 1->-1", "parkedAtControl 1->0"];
+    expect(walkReading(emptyInventory(), PLANTED_AXES)).toEqual({ moves: 0, misread: 0, changes: 0, missing: unmade, setChanges: 0, setMissing: unmade, sets: 0, copied: 0 });
   });
 
   it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
