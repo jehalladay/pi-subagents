@@ -43,22 +43,31 @@
  * wider than its pins: R007-9 to R007-15, R008-6 to R008-8, R009-5 and R009-6, R010-8 to R010-10, R011-10 to R011-14 and the
  * vocabulary lists.
  *
+ * Respin cut #3 (wb-ocie refusal #2; the R-B655 second-stage cap on GUARD 3, the module header's words, in the
+ * enumerate-the-resolvable form) adds the cases that plant the forms the header's steps newly enumerate, among them every
+ * witness of refusal #2 (WN01-WN07, WN09, WN12, WN16, WN23 and WN24): R007-16 to R007-20 (R007-20 is the quiet row of the named residual R-DUPLICATE-MEMBER), R008-9 to
+ * R008-12, R009-7 to R009-10, R010-11 to R010-13, R011-15 and R011-16. Each new table is frozen by name, and R008-12 and R009-10
+ * are COMPUTED SCANS (every BMP code point through each exported grammar, every ASCII code point through the boundary). A case
+ * title reads under the module header's FORM: it claims the forms its case plants.
+ *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and composes no label or reply text).
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { closeSync, constants, mkdirSync, openSync, readFileSync, realpathSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import {
   admitMechanicalEntrypoint,
   loadMechanicalEntrypoint,
   MECHANICAL_DESCRIPTOR_MEMBERS,
   MECHANICAL_DESCRIPTOR_STATUS,
+  MECHANICAL_DIGEST_PATTERN,
   MECHANICAL_ENTRYPOINT_FIELDS,
   MECHANICAL_ENTRYPOINT_REASONS,
   MECHANICAL_ENTRYPOINT_SCHEMA,
   MECHANICAL_REVIEWED_ENTRYPOINTS,
+  MECHANICAL_SCHEMA_REF_PATTERN,
   type MechanicalEntrypointDiagnostic,
   type MechanicalEntrypointLoad,
   type MechanicalEntrypointOptions,
@@ -194,11 +203,20 @@ async function expectRefused(options: MechanicalEntrypointOptions, field: string
   const outcome = await refusalOf(options);
   expect(outcome).toStrictEqual({ diagnostic: refused(field, reason), loads: 0 });
 }
-/** The admission's reading of one descriptor text: "admitted", or "<field> <reason>" of its refusal. */
+/**
+ * A refusal's reading: "<field> <reason>" when its diagnostic is closed (exactly code, field and reason in that order, the code
+ * mechanical-entrypoint-refused), else "unclosed <field> <reason>", so a diagnostic that grows a member reds every reading.
+ */
+const diagnosticReading = (diagnostic: MechanicalEntrypointDiagnostic): string => {
+  const closed = Object.keys(diagnostic).join(",") === "code,field,reason" && diagnostic.code === "mechanical-entrypoint-refused";
+  return `${closed ? "" : "unclosed "}${diagnostic.field} ${diagnostic.reason}`;
+};
+/** An outcome's reading: "admitted", or its refusal's diagnosticReading. */
+const readingOfOutcome = (outcome: MechanicalEntrypointLoad): string => (outcome.ok ? "admitted" : diagnosticReading(outcome.diagnostic));
+/** The admission's reading of one descriptor text: "admitted", or "<field> <reason>" of its refusal (readingOfOutcome). */
 async function readingOf(descriptorText: string): Promise<string> {
   const { loader } = recordingLoader();
-  const outcome = await admitMechanicalEntrypoint(plant(descriptorText).options, loader);
-  return outcome.ok ? "admitted" : `${outcome.diagnostic.field} ${outcome.diagnostic.reason}`;
+  return readingOfOutcome(await admitMechanicalEntrypoint(plant(descriptorText).options, loader));
 }
 /** One fault of a ladder: the edit that plants it and the refusal it reads as while every earlier fault is cured. */
 interface Fault {
@@ -230,6 +248,190 @@ const ran = (table: string, row: string): void => {
 
 /** The members whose absence step 5 refuses member-missing under their own name: the producer's own, but schema (step 4) and note. */
 const REQUIRED_MEMBERS: readonly string[] = MECHANICAL_DESCRIPTOR_MEMBERS.filter(name => name !== "schema" && name !== "note");
+
+/*
+ * Respin cut #3 (wb-ocie refusal #2; the R-B655 SECOND-STAGE CAP on GUARD 3, the enumerate-the-resolvable form). The tables
+ * below plant the forms the module header's steps enumerate, each table frozen by name (R007-19, R008-11, R009-9, R010-13),
+ * among them every witness of refusal #2: WN01, WN04 and WN05 (VALUE_FORMS), WN02 and WN03 (IMPLEMENTATION_VALUE_FORMS),
+ * WN06 and WN07 (R011-15), WN09 (MEMBER_NAME_FORMS), WN12 (R008-9), WN16 (R007-16), WN23 (DIGEST_FORMS) and WN24 (LINE_FORMS).
+ * A code point a form plants that is not printable ASCII is built from its number, never written raw.
+ */
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const LINE_SEPARATOR = String.fromCodePoint(0x2028);
+/** The fullwidth compatibility variant of one printable ASCII character (NFKC maps it back to that character). */
+const fullwidthOf = (character: string): string => String.fromCodePoint((character.codePointAt(0) ?? 0) + 0xfee0);
+/** The text with `inserted` placed before its code unit at `at`. */
+const insertAt = (text: string, at: number, inserted: string): string => `${text.slice(0, at)}${inserted}${text.slice(at)}`;
+const FIRST_BINDING = REVIEWED.bindings[0] ?? "";
+const LAST_BINDING_AT = REVIEWED.bindings.length - 1;
+const NOTE_TEXT = (JSON.parse(DESCRIPTOR_TEXT) as { readonly note: string }).note;
+
+/** One planted descriptor form: its name, the edit of the producer object that plants it, and the refusal it must read as. */
+interface DescriptorForm {
+  readonly form: string;
+  readonly edit: (object: DescriptorObject) => DescriptorObject;
+  readonly reading: string;
+}
+/** The producer object with one top-level member set to `value` (added last when the producer has no such member). */
+const memberValue =
+  (name: string, value: unknown) =>
+  (object: DescriptorObject): DescriptorObject => ({ ...object, [name]: value });
+/** The producer object with one implementation member set to `value` (added last when the producer has no such member). */
+const implementationValue =
+  (name: string, value: unknown) =>
+  (object: DescriptorObject): DescriptorObject => ({ ...object, implementation: { ...implementationOf(object), [name]: value } });
+/** The producer object with the binding at `index` replaced by `value`. */
+const bindingAt =
+  (index: number, value: unknown) =>
+  (object: DescriptorObject): DescriptorObject => ({ ...object, bindings: REVIEWED.bindings.map((name, at) => (at === index ? value : name)) });
+/** The admission's reading of one descriptor text with the loader calls it caused: "admitted loads=<n>", or "<field> <reason> loads=<n>". */
+async function loadedReadingOf(descriptorText: string): Promise<string> {
+  const { loader, calls } = recordingLoader();
+  const outcome = await admitMechanicalEntrypoint(plant(descriptorText).options, loader);
+  return `${readingOfOutcome(outcome)} loads=${calls.length}`;
+}
+/** Each form's reading by form name, so a form that reads otherwise is named in the diff. */
+async function readingsByForm(forms: readonly DescriptorForm[]): Promise<Record<string, string>> {
+  const readings = await Promise.all(forms.map(({ edit }) => loadedReadingOf(rendered(edit))));
+  return Object.fromEntries(forms.map(({ form }, index) => [form, readings[index] ?? "no reading"]));
+}
+/** The readings a table claims: each form refused as its row says, with zero loads. */
+const refusedReadings = (forms: readonly DescriptorForm[]): Record<string, string> => Object.fromEntries(forms.map(({ form, reading }) => [form, `${reading} loads=0`]));
+
+/** R007-17: value forms of the schema, id, bindings, status and note members (a list of the exact value is the GN01/GN04/GN05 reading). */
+const VALUE_FORMS: readonly DescriptorForm[] = [
+  { form: "schema a one-element list of the id", edit: memberValue("schema", [MECHANICAL_ENTRYPOINT_SCHEMA]), reading: "schema schema-unsupported" },
+  { form: "schema a nested list of the id", edit: memberValue("schema", [[MECHANICAL_ENTRYPOINT_SCHEMA]]), reading: "schema schema-unsupported" },
+  { form: "schema a soft hyphen inside", edit: memberValue("schema", insertAt(MECHANICAL_ENTRYPOINT_SCHEMA, 10, SOFT_HYPHEN)), reading: "schema schema-unsupported" },
+  { form: "schema a zero width space inside", edit: memberValue("schema", insertAt(MECHANICAL_ENTRYPOINT_SCHEMA, 20, ZERO_WIDTH_SPACE)), reading: "schema schema-unsupported" },
+  { form: "schema a fullwidth solidus", edit: memberValue("schema", MECHANICAL_ENTRYPOINT_SCHEMA.replace("/", fullwidthOf("/"))), reading: "schema schema-unsupported" },
+  { form: "schema a line break after", edit: memberValue("schema", `${MECHANICAL_ENTRYPOINT_SCHEMA}\n`), reading: "schema schema-unsupported" },
+  { form: "schema a line break before", edit: memberValue("schema", `\n${MECHANICAL_ENTRYPOINT_SCHEMA}`), reading: "schema schema-unsupported" },
+  { form: "schema empty", edit: memberValue("schema", ""), reading: "schema schema-unsupported" },
+  { form: "id a one-element list of the reviewed id", edit: memberValue("id", [REVIEWED.id]), reading: "id wrong-type" },
+  { form: "id padded before", edit: memberValue("id", ` ${REVIEWED.id}`), reading: "id not-allowlisted" },
+  { form: "id padded after", edit: memberValue("id", `${REVIEWED.id} `), reading: "id not-allowlisted" },
+  { form: "id upper-case", edit: memberValue("id", REVIEWED.id.toUpperCase()), reading: "id not-allowlisted" },
+  { form: "id a prefix of the reviewed id", edit: memberValue("id", REVIEWED.id.slice(0, REVIEWED.id.lastIndexOf("."))), reading: "id not-allowlisted" },
+  { form: "id the reviewed id extended by a segment", edit: memberValue("id", `${REVIEWED.id}.x`), reading: "id not-allowlisted" },
+  { form: "id the reviewed id extended by a digit", edit: memberValue("id", `${REVIEWED.id}0`), reading: "id not-allowlisted" },
+  { form: "id a soft hyphen inside", edit: memberValue("id", insertAt(REVIEWED.id, 10, SOFT_HYPHEN)), reading: "id not-allowlisted" },
+  { form: "id a fullwidth full stop", edit: memberValue("id", REVIEWED.id.replace(".", fullwidthOf("."))), reading: "id not-allowlisted" },
+  { form: "id a line break after", edit: memberValue("id", `${REVIEWED.id}\n`), reading: "id not-allowlisted" },
+  { form: "id empty", edit: memberValue("id", ""), reading: "id not-allowlisted" },
+  { form: "bindings the first a one-element list", edit: bindingAt(0, [FIRST_BINDING]), reading: "bindings bindings-mismatch" },
+  { form: "bindings the last a one-element list", edit: bindingAt(LAST_BINDING_AT, [REVIEWED.bindings[LAST_BINDING_AT]]), reading: "bindings bindings-mismatch" },
+  { form: "bindings each a one-element list", edit: memberValue("bindings", REVIEWED.bindings.map(name => [name])), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first capitalized", edit: bindingAt(0, `${FIRST_BINDING.charAt(0).toUpperCase()}${FIRST_BINDING.slice(1)}`), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first padded before", edit: bindingAt(0, ` ${FIRST_BINDING}`), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first padded after", edit: bindingAt(0, `${FIRST_BINDING} `), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first extended", edit: bindingAt(0, `${FIRST_BINDING}y`), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first cut short", edit: bindingAt(0, FIRST_BINDING.slice(0, 4)), reading: "bindings bindings-mismatch" },
+  { form: "bindings a soft hyphen in the first", edit: bindingAt(0, insertAt(FIRST_BINDING, 4, SOFT_HYPHEN)), reading: "bindings bindings-mismatch" },
+  { form: "bindings the first null", edit: bindingAt(0, null), reading: "bindings bindings-mismatch" },
+  { form: "status a one-element list of descriptor-only", edit: memberValue("status", [MECHANICAL_DESCRIPTOR_STATUS]), reading: "status status-unsupported" },
+  { form: "status a nested list of descriptor-only", edit: memberValue("status", [[MECHANICAL_DESCRIPTOR_STATUS]]), reading: "status status-unsupported" },
+  { form: "status capitalized", edit: memberValue("status", `${MECHANICAL_DESCRIPTOR_STATUS.charAt(0).toUpperCase()}${MECHANICAL_DESCRIPTOR_STATUS.slice(1)}`), reading: "status status-unsupported" },
+  { form: "status upper-case", edit: memberValue("status", MECHANICAL_DESCRIPTOR_STATUS.toUpperCase()), reading: "status status-unsupported" },
+  { form: "status padded before", edit: memberValue("status", ` ${MECHANICAL_DESCRIPTOR_STATUS}`), reading: "status status-unsupported" },
+  { form: "status padded after", edit: memberValue("status", `${MECHANICAL_DESCRIPTOR_STATUS} `), reading: "status status-unsupported" },
+  { form: "status extended", edit: memberValue("status", `${MECHANICAL_DESCRIPTOR_STATUS}-v2`), reading: "status status-unsupported" },
+  { form: "status cut short", edit: memberValue("status", MECHANICAL_DESCRIPTOR_STATUS.slice(0, MECHANICAL_DESCRIPTOR_STATUS.indexOf("-"))), reading: "status status-unsupported" },
+  { form: "status a soft hyphen inside", edit: memberValue("status", insertAt(MECHANICAL_DESCRIPTOR_STATUS, 10, SOFT_HYPHEN)), reading: "status status-unsupported" },
+  { form: "status a fullwidth hyphen-minus", edit: memberValue("status", MECHANICAL_DESCRIPTOR_STATUS.replace("-", fullwidthOf("-"))), reading: "status status-unsupported" },
+  { form: "status a line break after", edit: memberValue("status", `${MECHANICAL_DESCRIPTOR_STATUS}\n`), reading: "status status-unsupported" },
+  { form: "status empty", edit: memberValue("status", ""), reading: "status status-unsupported" },
+  { form: "note a one-element list of its text", edit: memberValue("note", [NOTE_TEXT]), reading: "note wrong-type" },
+  { form: "note an object", edit: memberValue("note", {}), reading: "note wrong-type" },
+  { form: "note a boolean", edit: memberValue("note", true), reading: "note wrong-type" },
+];
+/** R007-18: extra top-level member names beside the producer's (the case-folded reading of a name is GN09). */
+const MEMBER_NAME_FORMS: readonly DescriptorForm[] = [
+  { form: "Status beside status", edit: memberValue("Status", "planted"), reading: "descriptor member-unexpected" },
+  { form: "STATUS beside status", edit: memberValue("STATUS", "planted"), reading: "descriptor member-unexpected" },
+  { form: "Note beside note", edit: memberValue("Note", "planted"), reading: "descriptor member-unexpected" },
+  { form: "Note in place of note", edit: object => memberValue("Note", NOTE_TEXT)(without("note")(object)), reading: "descriptor member-unexpected" },
+  { form: "status padded before", edit: memberValue(" status", "planted"), reading: "descriptor member-unexpected" },
+  { form: "status padded after", edit: memberValue("status ", "planted"), reading: "descriptor member-unexpected" },
+  { form: "statuses, a name extended", edit: memberValue("statuses", "planted"), reading: "descriptor member-unexpected" },
+  { form: "stat, a name cut short", edit: memberValue("stat", "planted"), reading: "descriptor member-unexpected" },
+  { form: "one letter", edit: memberValue("s", "planted"), reading: "descriptor member-unexpected" },
+  { form: "the empty name", edit: memberValue("", "planted"), reading: "descriptor member-unexpected" },
+  { form: "status with a soft hyphen inside", edit: memberValue(insertAt("status", 3, SOFT_HYPHEN), "planted"), reading: "descriptor member-unexpected" },
+  { form: "status with a zero width space inside", edit: memberValue(insertAt("status", 3, ZERO_WIDTH_SPACE), "planted"), reading: "descriptor member-unexpected" },
+  { form: "status with a fullwidth first letter", edit: memberValue(`${fullwidthOf("s")}tatus`, "planted"), reading: "descriptor member-unexpected" },
+  { form: "constructor", edit: memberValue("constructor", "planted"), reading: "descriptor member-unexpected" },
+  { form: "toString", edit: memberValue("toString", "planted"), reading: "descriptor member-unexpected" },
+  { form: "hasOwnProperty", edit: memberValue("hasOwnProperty", "planted"), reading: "descriptor member-unexpected" },
+  { form: "__proto__", edit: memberValue("__proto__", "planted"), reading: "descriptor member-unexpected" },
+];
+/** R007-18: extra member names inside implementation beside package and export. */
+const IMPLEMENTATION_NAME_FORMS: readonly DescriptorForm[] = [
+  { form: "Package beside package", edit: implementationValue("Package", "planted"), reading: "implementation member-unexpected" },
+  { form: "EXPORT beside export", edit: implementationValue("EXPORT", "planted"), reading: "implementation member-unexpected" },
+  { form: "export padded before", edit: implementationValue(" export", "planted"), reading: "implementation member-unexpected" },
+  { form: "exports, a name extended", edit: implementationValue("exports", "planted"), reading: "implementation member-unexpected" },
+  { form: "exp, a name cut short", edit: implementationValue("exp", "planted"), reading: "implementation member-unexpected" },
+  { form: "the empty name", edit: implementationValue("", "planted"), reading: "implementation member-unexpected" },
+  { form: "package with a soft hyphen inside", edit: implementationValue(insertAt("package", 3, SOFT_HYPHEN), "planted"), reading: "implementation member-unexpected" },
+  { form: "package with a fullwidth first letter", edit: implementationValue(`${fullwidthOf("p")}ackage`, "planted"), reading: "implementation member-unexpected" },
+  { form: "constructor", edit: implementationValue("constructor", "planted"), reading: "implementation member-unexpected" },
+  { form: "toString", edit: implementationValue("toString", "planted"), reading: "implementation member-unexpected" },
+];
+/** R010-11: value forms of the implementation's package and export (a list of the reviewed value is the GN02/GN03 reading). */
+const IMPLEMENTATION_VALUE_FORMS: readonly DescriptorForm[] = [
+  { form: "package a one-element list", edit: implementationValue("package", [REVIEWED.package]), reading: "package not-allowlisted" },
+  { form: "package a nested list", edit: implementationValue("package", [[REVIEWED.package]]), reading: "package not-allowlisted" },
+  { form: "package upper-case", edit: implementationValue("package", REVIEWED.package.toUpperCase()), reading: "package not-allowlisted" },
+  { form: "package padded before", edit: implementationValue("package", ` ${REVIEWED.package}`), reading: "package not-allowlisted" },
+  { form: "package an npm: alias spelling", edit: implementationValue("package", `npm:${REVIEWED.package}`), reading: "package not-allowlisted" },
+  { form: "package a soft hyphen inside", edit: implementationValue("package", insertAt(REVIEWED.package, 1, SOFT_HYPHEN)), reading: "package not-allowlisted" },
+  { form: "package a fullwidth solidus", edit: implementationValue("package", REVIEWED.package.replace("/", fullwidthOf("/"))), reading: "package not-allowlisted" },
+  { form: "package a line break after", edit: implementationValue("package", `${REVIEWED.package}\n`), reading: "package not-allowlisted" },
+  { form: "package a number", edit: implementationValue("package", 7), reading: "package not-allowlisted" },
+  { form: "package null", edit: implementationValue("package", null), reading: "package not-allowlisted" },
+  { form: "export a one-element list", edit: implementationValue("export", [REVIEWED.export]), reading: "export not-allowlisted" },
+  { form: "export a nested list", edit: implementationValue("export", [[REVIEWED.export]]), reading: "export not-allowlisted" },
+  { form: "export capitalized", edit: implementationValue("export", `${REVIEWED.export.charAt(0).toUpperCase()}${REVIEWED.export.slice(1)}`), reading: "export not-allowlisted" },
+  { form: "export upper-case", edit: implementationValue("export", REVIEWED.export.toUpperCase()), reading: "export not-allowlisted" },
+  { form: "export padded before", edit: implementationValue("export", ` ${REVIEWED.export}`), reading: "export not-allowlisted" },
+  { form: "export a prefixed name", edit: implementationValue("export", `_${REVIEWED.export}`), reading: "export not-allowlisted" },
+  { form: "export a soft hyphen inside", edit: implementationValue("export", insertAt(REVIEWED.export, 3, SOFT_HYPHEN)), reading: "export not-allowlisted" },
+  { form: "export a fullwidth first letter", edit: implementationValue("export", `${fullwidthOf(REVIEWED.export.charAt(0))}${REVIEWED.export.slice(1)}`), reading: "export not-allowlisted" },
+  { form: "export a line break after", edit: implementationValue("export", `${REVIEWED.export}\n`), reading: "export not-allowlisted" },
+  { form: "export a number", edit: implementationValue("export", 7), reading: "export not-allowlisted" },
+  { form: "export null", edit: implementationValue("export", null), reading: "export not-allowlisted" },
+];
+/** R008-10: digest forms planted in either pin member (a line break after is the GN23 reading), each refused pin-malformed. */
+const DIGEST_FORMS: readonly { readonly form: string; readonly digest: (hex: string) => string }[] = [
+  { form: "a line break after", digest: hex => `sha256:${hex}\n` },
+  { form: "a line break before", digest: hex => `\nsha256:${hex}` },
+  { form: "a carriage return after", digest: hex => `sha256:${hex}\r` },
+  { form: "a line separator after", digest: hex => `sha256:${hex}${LINE_SEPARATOR}` },
+  { form: "sixty-five digits", digest: hex => `sha256:${hex}0` },
+  { form: "a lower-case letter that is no hex digit", digest: hex => `sha256:${hex.slice(0, -1)}g` },
+  { form: "no colon", digest: hex => `sha256${hex}` },
+  { form: "an upper-case algorithm", digest: hex => `SHA256:${hex}` },
+  { form: "a hyphenated algorithm", digest: hex => `sha-256:${hex}` },
+  { form: "empty", digest: () => "" },
+];
+/** R009-7: line-terminator forms of a schema reference (a line break after is the GN24 reading), each refused schema-ref-noncanonical. */
+const LINE_FORMS: readonly { readonly form: string; readonly ref: (name: string) => string }[] = [
+  { form: "a line break after", ref: name => `${name}\n` },
+  { form: "a line break before", ref: name => `\n${name}` },
+  { form: "a carriage return after", ref: name => `${name}\r` },
+  { form: "a line separator after", ref: name => `${name}${LINE_SEPARATOR}` },
+  { form: "a line break inside", ref: name => name.replace(".schema.json", "\n.schema.json") },
+];
+/** R009-8: names in the canonical grammar other than the reviewed name, each refused schema-ref-unknown. */
+const UNKNOWN_NAME_FORMS: readonly { readonly form: string; readonly ref: (name: string) => string }[] = [
+  { form: "a letter before the name", ref: name => `x${name}` },
+  { form: "the name after its first hyphen", ref: name => name.slice(name.indexOf("-") + 1) },
+  { form: "a part inserted before the ending", ref: name => name.replace(".schema.json", ".x.schema.json") },
+  { form: "the name extended by a second ending", ref: name => `${name}.schema.json` },
+  { form: "another version number", ref: name => name.replace(".v1.", ".v10.") },
+];
 
 describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => {
   it("R007-1 the vendored fixture is MechanicalWorkflows f7c0a943's contracts/entrypoints/development.v1.json byte for byte (SHA-256 and git blob pins)", () => {
@@ -278,7 +480,7 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
     await expectRefused(plant(unknownAndV2).options, "schema", "schema-unsupported");
   });
 
-  it("R007-7 the producer's member set is closed: an extra member is refused member-unexpected, a missing one member-missing", async () => {
+  it("R007-7 the producer's member set is closed: an extra member (loader at the top level, entry inside implementation; R007-18 plants the other names) is refused member-unexpected, a missing one (status) member-missing", async () => {
     await expectRefused(plant(mutated(`  "status": "descriptor-only",`, `  "status": "descriptor-only",\n  "loader": "./dist/index.js",`)).options, "descriptor", "member-unexpected");
     await expectRefused(plant(mutated(`  "status": "descriptor-only",\n`, "")).options, "status", "member-missing");
     await expectRefused(plant(mutated(`"export": "develop"`, `"export": "develop",\n    "entry": "dist/index.js"`)).options, "implementation", "member-unexpected");
@@ -345,6 +547,7 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
       { edit: object => ({ ...object, note: null }), reading: "note wrong-type" },
     ];
     expect(await Promise.all(cases.map(({ edit }) => readingOf(rendered(edit))))).toEqual(cases.map(({ reading }) => reading));
+    expect(cases).toHaveLength(14);
   });
 
   it("R007-13 the first refusal wins, in the header's order: the schema, the member set (an extra member, then an absent one), then member by member in the producer file's order", async () => {
@@ -367,6 +570,7 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
       { reading: "note wrong-type", edit: object => ({ ...object, note: 7 }) },
     ];
     expect(await ladderOf(memberLevel)).toEqual([...memberLevel.map(({ reading }) => reading), "admitted"]);
+    expect([setLevel.length, memberLevel.length]).toEqual([4, 9]);
   });
 
   it("R007-14 the schema id is compared exactly: upper-case, padded, another version, another producer and the bare entrypoint/v1 are refused schema-unsupported", async () => {
@@ -379,11 +583,52 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
       MECHANICAL_ENTRYPOINT_SCHEMA.replace("mechanical-workflows/", ""),
     ];
     expect(await Promise.all(spellings.map(schema => readingOf(rendered(object => ({ ...object, schema })))))).toEqual(spellings.map(() => "schema schema-unsupported"));
+    expect(spellings).toHaveLength(6);
   });
 
   it("R007-15 the suite's edits start from the producer bytes: the producer object's two-space rendering is those bytes, and the required members are the producer's own but schema and note", () => {
     expect(rendered(object => object)).toBe(DESCRIPTOR_TEXT);
     expect(REQUIRED_MEMBERS).toEqual(["id", "implementation", "inputSchema", "outputSchema", "bindings", "status"]);
+  });
+
+  it("R007-16 a UTF-8 byte order mark before the producer text is dropped by the decoder: those bytes are admitted under their own pin with one load and refused digest-mismatch under the producer digest; a second mark after the first and a UTF-16 mark are refused malformed under their own pins", async () => {
+    const { root, options } = plant();
+    const at = join(root, "contracts", "entrypoints", "marked.v1.json");
+    const utf8Mark = Buffer.from([0xef, 0xbb, 0xbf]);
+    const marked = Buffer.concat([utf8Mark, DESCRIPTOR_BYTES]);
+    write(at, marked);
+    const { loader, calls } = recordingLoader();
+    const outcome = await admitMechanicalEntrypoint({ ...options, descriptorPath: at, pin: { ...options.pin, descriptorDigest: digestOf(marked) } }, loader);
+    expect({ admitted: outcome.ok, loads: calls.length }).toEqual({ admitted: true, loads: 1 });
+    await expectRefused({ ...options, descriptorPath: at }, "descriptor", "digest-mismatch");
+    for (const bytes of [Buffer.concat([utf8Mark, utf8Mark, DESCRIPTOR_BYTES]), Buffer.concat([Buffer.from([0xff, 0xfe]), DESCRIPTOR_BYTES])]) {
+      write(at, bytes);
+      await expectRefused({ ...options, descriptorPath: at, pin: { ...options.pin, descriptorDigest: digestOf(bytes) } }, "descriptor", "malformed");
+    }
+  });
+
+  it("R007-17 the schema, id, bindings, status and note members are judged by strict equality and by type: each of the forty-four value forms VALUE_FORMS plants (lists of the exact value, case, padding, a longer or shorter text, ignorable, compatibility and line-break variants, empty, wrong types) is refused under its own name with zero loads", async () => {
+    expect(await readingsByForm(VALUE_FORMS)).toEqual(refusedReadings(VALUE_FORMS));
+  });
+
+  it("R007-18 the member sets are compared name for name: each of the seventeen extra names MEMBER_NAME_FORMS plants beside the producer's members is refused member-unexpected, and each of the ten IMPLEMENTATION_NAME_FORMS plants inside implementation is refused implementation member-unexpected, with zero loads", async () => {
+    expect(await readingsByForm(MEMBER_NAME_FORMS)).toEqual(refusedReadings(MEMBER_NAME_FORMS));
+    expect(await readingsByForm(IMPLEMENTATION_NAME_FORMS)).toEqual(refusedReadings(IMPLEMENTATION_NAME_FORMS));
+  });
+
+  it("R007-19 the cut #3 descriptor tables are frozen by name: forty-four value forms, seventeen member names and ten implementation member names", () => {
+    expect(VALUE_FORMS.map(({ form }) => form)).toEqual(["schema a one-element list of the id", "schema a nested list of the id", "schema a soft hyphen inside", "schema a zero width space inside", "schema a fullwidth solidus", "schema a line break after", "schema a line break before", "schema empty", "id a one-element list of the reviewed id", "id padded before", "id padded after", "id upper-case", "id a prefix of the reviewed id", "id the reviewed id extended by a segment", "id the reviewed id extended by a digit", "id a soft hyphen inside", "id a fullwidth full stop", "id a line break after", "id empty", "bindings the first a one-element list", "bindings the last a one-element list", "bindings each a one-element list", "bindings the first capitalized", "bindings the first padded before", "bindings the first padded after", "bindings the first extended", "bindings the first cut short", "bindings a soft hyphen in the first", "bindings the first null", "status a one-element list of descriptor-only", "status a nested list of descriptor-only", "status capitalized", "status upper-case", "status padded before", "status padded after", "status extended", "status cut short", "status a soft hyphen inside", "status a fullwidth hyphen-minus", "status a line break after", "status empty", "note a one-element list of its text", "note an object", "note a boolean"]);
+    expect(MEMBER_NAME_FORMS.map(({ form }) => form)).toEqual(["Status beside status", "STATUS beside status", "Note beside note", "Note in place of note", "status padded before", "status padded after", "statuses, a name extended", "stat, a name cut short", "one letter", "the empty name", "status with a soft hyphen inside", "status with a zero width space inside", "status with a fullwidth first letter", "constructor", "toString", "hasOwnProperty", "__proto__"]);
+    expect(IMPLEMENTATION_NAME_FORMS.map(({ form }) => form)).toEqual(["Package beside package", "EXPORT beside export", "export padded before", "exports, a name extended", "exp, a name cut short", "the empty name", "package with a soft hyphen inside", "package with a fullwidth first letter", "constructor", "toString"]);
+  });
+
+  it("R007-20 RESIDUAL R-DUPLICATE-MEMBER, its quiet row: a member written twice reads as one member, the last written (JSON.parse keeps the last), so no duplicate is refused: status written invocable then descriptor-only is admitted under its own pin, and descriptor-only then invocable is refused status-unsupported", async () => {
+    const twice = (first: string, last: string): string =>
+      mutated(`  "status": "descriptor-only",`, `  "status": ${JSON.stringify(first)},\n  "status": ${JSON.stringify(last)},`);
+    expect([await loadedReadingOf(twice("invocable", MECHANICAL_DESCRIPTOR_STATUS)), await loadedReadingOf(twice(MECHANICAL_DESCRIPTOR_STATUS, "invocable"))]).toEqual([
+      "admitted loads=1",
+      "status status-unsupported loads=0",
+    ]);
   });
 });
 
@@ -453,9 +698,11 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
         await expectRefused({ ...options, descriptorPath: absent, pin }, "pin", "pin-malformed");
       }
     }
-    for (const pin of [undefined, null, `sha256:${hex}`, [options.pin.descriptorDigest, options.pin.artifactDigest]]) {
+    const notPins: readonly unknown[] = [undefined, null, `sha256:${hex}`, [options.pin.descriptorDigest, options.pin.artifactDigest]];
+    for (const pin of notPins) {
       await expectRefused({ ...options, descriptorPath: absent, pin: pin as unknown as MechanicalReleasePin }, "pin", "pin-malformed");
     }
+    expect([forms.length, notPins.length]).toEqual([9, 4]);
   });
 
   it("R008-7 an admitted load never calls the export: the reviewed export comes back uncalled, as the loader returned it", async () => {
@@ -490,6 +737,70 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
       await expect(admitMechanicalEntrypoint(options, loader)).rejects.toBe(failure);
       expect(loads, mode).toBe(1);
     }
+  });
+
+  it("R008-9 a pin is read as an object holding the two digests: a list or a function carrying both digest members, an empty object and an object missing one digest are refused pin-malformed before any file is read; an object whose digests are inherited, a null-prototype object and a frozen object are each admitted with one load", async () => {
+    const { options } = plant();
+    const absent = join(options.approvedRoot, "absent.json");
+    const { descriptorDigest, artifactDigest } = options.pin;
+    const digests = { descriptorDigest, artifactDigest };
+    const notObjects: readonly unknown[] = [
+      Object.assign([descriptorDigest, artifactDigest], digests),
+      Object.assign(() => digests, digests),
+      {},
+      { descriptorDigest },
+      { artifactDigest },
+    ];
+    for (const pin of notObjects) {
+      await expectRefused({ ...options, descriptorPath: absent, pin: pin as MechanicalReleasePin }, "pin", "pin-malformed");
+    }
+    expect(notObjects).toHaveLength(5);
+    const objects: readonly unknown[] = [Object.create(digests), Object.assign(Object.create(null), digests), Object.freeze({ ...digests })];
+    const readings: string[] = [];
+    for (const pin of objects) {
+      const { loader, calls } = recordingLoader();
+      const outcome = await admitMechanicalEntrypoint({ ...options, pin: pin as MechanicalReleasePin }, loader);
+      readings.push(`${readingOfOutcome(outcome)} loads=${calls.length}`);
+    }
+    expect(readings).toEqual(["admitted loads=1", "admitted loads=1", "admitted loads=1"]);
+    expect(objects).toHaveLength(3);
+  });
+
+  it("R008-10 the digest grammar is anchored at the whole string: each of the ten DIGEST_FORMS (a line break, carriage return or line separator before or after, sixty-five digits, a letter that is no hex digit, no colon, an upper-case or hyphenated algorithm, empty) is refused pin-malformed in either digest before any file is read", async () => {
+    const { options } = plant();
+    const absent = join(options.approvedRoot, "absent.json");
+    const readings: Record<string, string> = {};
+    for (const name of ["descriptorDigest", "artifactDigest"] as const) {
+      const hex = options.pin[name].slice("sha256:".length);
+      for (const { form, digest } of DIGEST_FORMS) {
+        const outcome = await refusalOf({ ...options, descriptorPath: absent, pin: { ...options.pin, [name]: digest(hex) } });
+        readings[`${name} ${form}`] = `${diagnosticReading(outcome.diagnostic)} loads=${outcome.loads}`;
+      }
+    }
+    const names = ["descriptorDigest", "artifactDigest"];
+    expect(readings).toEqual(Object.fromEntries(names.flatMap(name => DIGEST_FORMS.map(({ form }) => [`${name} ${form}`, "pin pin-malformed loads=0"]))));
+  });
+
+  it("R008-11 the digest forms are frozen by name: ten", () => {
+    expect(DIGEST_FORMS.map(({ form }) => form)).toEqual(["a line break after", "a line break before", "a carriage return after", "a line separator after", "sixty-five digits", "a lower-case letter that is no hex digit", "no colon", "an upper-case algorithm", "a hyphenated algorithm", "empty"]);
+  });
+
+  it("R008-12 COMPUTED SCAN of the digest grammar: with one digit of a valid artifact digest replaced by each BMP code point (0000-ffff, each lone surrogate included), MECHANICAL_DIGEST_PATTERN admits exactly the sixteen lower-case hex digits; through the boundary, each of the 128 ASCII code points in that place is refused pin-malformed before any file is read unless it is a lower-case hex digit, which reaches the absent descriptor (unreadable)", async () => {
+    const { options } = plant();
+    const hex = options.pin.artifactDigest.slice("sha256:".length);
+    const at = (point: number): string => `sha256:${hex.slice(0, 31)}${String.fromCodePoint(point)}${hex.slice(32)}`;
+    const admitted: string[] = [];
+    for (let point = 0; point <= 0xffff; point += 1) if (MECHANICAL_DIGEST_PATTERN.test(at(point))) admitted.push(String.fromCodePoint(point));
+    expect(admitted.join("")).toBe("0123456789abcdef");
+    const absent = join(options.approvedRoot, "absent.json");
+    const readings = await Promise.all(
+      Array.from({ length: 128 }, async (_, point) => {
+        const outcome = await refusalOf({ ...options, descriptorPath: absent, pin: { ...options.pin, artifactDigest: at(point) } });
+        return diagnosticReading(outcome.diagnostic);
+      }),
+    );
+    const isHexDigit = (point: number): boolean => (point >= 0x30 && point <= 0x39) || (point >= 0x61 && point <= 0x66);
+    expect(readings).toEqual(Array.from({ length: 128 }, (_, point) => (isHexDigit(point) ? "descriptor unreadable" : "pin pin-malformed")));
   });
 });
 
@@ -561,6 +872,58 @@ describe("wb-ocie EAT-R009: Pi refuses noncanonical schema references", () => {
       await expectRefused(plant(withMember(member, name, other)).options, member, "schema-ref-unknown");
     });
   }
+
+  it("R009-7 the schema-reference grammar is anchored at the whole text: each of the five LINE_FORMS (a line break before, after or inside, a carriage return or line separator after) is refused schema-ref-noncanonical in either member with zero loads", async () => {
+    const readings: Record<string, string> = {};
+    for (const name of ["inputSchema", "outputSchema"] as const) {
+      for (const { form, ref } of LINE_FORMS) readings[`${name} ${form}`] = await loadedReadingOf(rendered(memberValue(name, ref(REVIEWED[name]))));
+    }
+    const names = ["inputSchema", "outputSchema"];
+    expect(readings).toEqual(Object.fromEntries(names.flatMap(name => LINE_FORMS.map(({ form }) => [`${name} ${form}`, `${name} schema-ref-noncanonical loads=0`]))));
+  });
+
+  it("R009-8 a canonical name is admitted only when it equals the reviewed name: each of the five UNKNOWN_NAME_FORMS (a letter before it, its part after the first hyphen, a part inserted before the ending, a second ending, another version number) is refused schema-ref-unknown in either member with zero loads", async () => {
+    const readings: Record<string, string> = {};
+    for (const name of ["inputSchema", "outputSchema"] as const) {
+      for (const { form, ref } of UNKNOWN_NAME_FORMS) readings[`${name} ${form}`] = await loadedReadingOf(rendered(memberValue(name, ref(REVIEWED[name]))));
+    }
+    const names = ["inputSchema", "outputSchema"];
+    expect(readings).toEqual(Object.fromEntries(names.flatMap(name => UNKNOWN_NAME_FORMS.map(({ form }) => [`${name} ${form}`, `${name} schema-ref-unknown loads=0`]))));
+  });
+
+  it("R009-9 the line and unknown-name forms are frozen by name: five each, and every unknown-name form of each reviewed name is in the canonical grammar", () => {
+    expect(LINE_FORMS.map(({ form }) => form)).toEqual(["a line break after", "a line break before", "a carriage return after", "a line separator after", "a line break inside"]);
+    expect(UNKNOWN_NAME_FORMS.map(({ form }) => form)).toEqual(["a letter before the name", "the name after its first hyphen", "a part inserted before the ending", "the name extended by a second ending", "another version number"]);
+    const canonical = /^[a-z0-9][a-z0-9.-]*\.schema\.json$/;
+    for (const name of [REVIEWED.inputSchema, REVIEWED.outputSchema]) {
+      expect(UNKNOWN_NAME_FORMS.map(({ ref }) => canonical.test(ref(name)) && ref(name) !== name)).toEqual(UNKNOWN_NAME_FORMS.map(() => true));
+    }
+  });
+
+  it("R009-10 COMPUTED SCAN of the schema-reference grammar: with each BMP code point (0000-ffff, each lone surrogate included) inserted at the start, after the first code point and before the ending of each reviewed name, MECHANICAL_SCHEMA_REF_PATTERN admits exactly the lower-case ASCII letters, digits, dots and hyphens (no dot or hyphen at the start); through the boundary, each of the 128 ASCII code points after the first code point of inputSchema is refused schema-ref-unknown when it is one of those and schema-ref-noncanonical otherwise, with zero loads", async () => {
+    const grammar = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const positions: readonly { readonly name: string; readonly at: (name: string) => number; readonly admits: string }[] = [
+      { name: "start", at: () => 0, admits: grammar },
+      { name: "after the first code point", at: () => 1, admits: `${grammar}.-` },
+      { name: "before the ending", at: name => name.length - ".schema.json".length, admits: `${grammar}.-` },
+    ];
+    expect(positions.map(({ name }) => name)).toEqual(["start", "after the first code point", "before the ending"]);
+    for (const name of [REVIEWED.inputSchema, REVIEWED.outputSchema]) {
+      for (const position of positions) {
+        const where = position.at(name);
+        const admitted: string[] = [];
+        for (let point = 0; point <= 0xffff; point += 1) {
+          if (MECHANICAL_SCHEMA_REF_PATTERN.test(insertAt(name, where, String.fromCodePoint(point)))) admitted.push(String.fromCodePoint(point));
+        }
+        expect([...admitted].sort().join(""), `${name} ${position.name}`).toBe([...position.admits].sort().join(""));
+      }
+    }
+    const readings = await Promise.all(
+      Array.from({ length: 128 }, (_, point) => loadedReadingOf(rendered(memberValue("inputSchema", insertAt(REVIEWED.inputSchema, 1, String.fromCodePoint(point)))))),
+    );
+    const inGrammar = (point: number): boolean => `${grammar}.-`.includes(String.fromCodePoint(point));
+    expect(readings).toEqual(Array.from({ length: 128 }, (_, point) => `inputSchema ${inGrammar(point) ? "schema-ref-unknown" : "schema-ref-noncanonical"} loads=0`));
+  });
 });
 
 /** The package mutations R010-2 judges, frozen by R010-8. */
@@ -659,6 +1022,27 @@ describe("wb-ocie EAT-R010: Pi refuses a package or export outside its fixed all
     };
     expect(retarget).toThrow(TypeError);
     expect(resolution.entry).toBe(REVIEWED);
+  });
+
+  it("R010-11 the package and the export are each judged by strict equality with the reviewed entry's: each of the twenty-one IMPLEMENTATION_VALUE_FORMS (lists of the reviewed value, case, padding, a prefixed or alias spelling, ignorable, compatibility and line-break variants, a number, null) is refused not-allowlisted under its own name with zero loads", async () => {
+    expect(await readingsByForm(IMPLEMENTATION_VALUE_FORMS)).toEqual(refusedReadings(IMPLEMENTATION_VALUE_FORMS));
+  });
+
+  it("R010-12 the loader's result is read as an object or a function: a list holding develop as its own member, a frozen object and a null-prototype object are each admitted with the reviewed export", async () => {
+    const develop = (): string => "own develop";
+    const results: readonly unknown[] = [Object.assign([], { develop }), Object.freeze({ develop }), Object.assign(Object.create(null), { develop })];
+    const readings: unknown[] = [];
+    for (const namespace of results) {
+      const { options } = plant();
+      const { loader } = fixedLoader(namespace);
+      const outcome = await admitMechanicalEntrypoint(options, loader);
+      readings.push(outcome.ok && outcome.exported === develop);
+    }
+    expect(readings).toEqual([true, true, true]);
+  });
+
+  it("R010-13 the implementation value forms are frozen by name: twenty-one", () => {
+    expect(IMPLEMENTATION_VALUE_FORMS.map(({ form }) => form)).toEqual(["package a one-element list", "package a nested list", "package upper-case", "package padded before", "package an npm: alias spelling", "package a soft hyphen inside", "package a fullwidth solidus", "package a line break after", "package a number", "package null", "export a one-element list", "export a nested list", "export capitalized", "export upper-case", "export padded before", "export a prefixed name", "export a soft hyphen inside", "export a fullwidth first letter", "export a line break after", "export a number", "export null"]);
   });
 });
 
@@ -867,6 +1251,49 @@ describe("wb-ocie EAT-R011: Pi refuses symlink escapes during artifact resolutio
     unlinkSync(rootLink);
     expect(loadRefusal(await loadMechanicalEntrypoint(linked, loader))).toEqual(refused("root", "unreadable"));
     expect(calls).toHaveLength(0);
+  });
+
+  it("R011-15 containment reads the relative path from the root by its segments: an artifact named ..planted.mjs, an artifact under a directory named ..d or x.., an artifact named through a dot-dot segment that returns inside, an approved root named with a trailing separator, and an approved root of / are each admitted with one load", async () => {
+    const { root, options, artifactBytes } = plant();
+    const admitted = async (overrides: Partial<MechanicalEntrypointOptions>): Promise<string> => {
+      const { loader, calls } = recordingLoader();
+      const outcome = await admitMechanicalEntrypoint({ ...options, ...overrides }, loader);
+      return `${readingOfOutcome(outcome)} loads=${calls.length}`;
+    };
+    const dotted = join(root, "..planted.mjs");
+    const underDotDirectory = join(root, "..d", "index.mjs");
+    const underTrailingDots = join(root, "x..", "index.mjs");
+    for (const path of [dotted, underDotDirectory, underTrailingDots]) write(path, artifactBytes);
+    expect({
+      "an artifact named ..planted.mjs": await admitted({ artifactPath: dotted }),
+      "an artifact under a directory named ..d": await admitted({ artifactPath: underDotDirectory }),
+      "an artifact under a directory named x..": await admitted({ artifactPath: underTrailingDots }),
+      "a dot-dot segment that returns inside": await admitted({ artifactPath: [root, "package", "..", "package", "index.mjs"].join(sep) }),
+      "an approved root with a trailing separator": await admitted({ approvedRoot: `${root}${sep}` }),
+      "an approved root of /": await admitted({ approvedRoot: sep }),
+    }).toEqual({
+      "an artifact named ..planted.mjs": "admitted loads=1",
+      "an artifact under a directory named ..d": "admitted loads=1",
+      "an artifact under a directory named x..": "admitted loads=1",
+      "a dot-dot segment that returns inside": "admitted loads=1",
+      "an approved root with a trailing separator": "admitted loads=1",
+      "an approved root of /": "admitted loads=1",
+    });
+  });
+
+  it("R011-16 containment compares realpaths code point for code point: a sibling of the root whose name differs from the root's only in case, and one whose name is the root's in the other Unicode normalization form, are refused outside-root with zero loads", async () => {
+    const base = scratch();
+    const { options, artifactBytes } = plant();
+    const lower = join(base, "root");
+    mkdirSync(lower, { recursive: true });
+    const upper = join(base, "ROOT", "index.mjs");
+    write(upper, artifactBytes);
+    const composed = join(base, `caf${String.fromCodePoint(0xe9)}`);
+    mkdirSync(composed, { recursive: true });
+    const decomposed = join(base, `cafe${String.fromCodePoint(0x301)}`, "index.mjs");
+    write(decomposed, artifactBytes);
+    await expectRefused({ ...options, approvedRoot: lower, artifactPath: upper }, "artifact", "outside-root");
+    await expectRefused({ ...options, approvedRoot: composed, artifactPath: decomposed }, "artifact", "outside-root");
   });
 });
 

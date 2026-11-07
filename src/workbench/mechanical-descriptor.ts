@@ -1,8 +1,15 @@
 /**
  * mechanical-descriptor.ts — a Pi boundary for MechanicalWorkflows' published entrypoint descriptor and the packed artifact it
  * names (wb-ocie; mechanical-workflows-interop-2026-11-04 B-descriptor, requirements EAT-R007..EAT-R011, slice PI-0). Each
- * claim below names the cases of test/workbench-mechanical-descriptor.test.ts that pin it; a behaviour it does not state is
- * NOT CLAIMED.
+ * claim below names the cases of test/workbench-mechanical-descriptor.test.ts that pin it.
+ *
+ * FORM (respin cut #3: the enumerate-the-resolvable form under the R-B655 second-stage cap on these words): ENUMERATED, NOT
+ * GENERAL. Each step below is claimed for exactly the forms the cases it cites plant (the suite's named tables are each frozen
+ * by name, and each COMPUTED SCAN plants every code point of its range): a planted form the cited case reads as admitted is
+ * claimed admitted, and a planted form it reads as refused is claimed refused with the field and reason the step names. A form
+ * no cited case plants is NOT CLAIMED, whatever a step's wording seems to cover. A known form within these steps that the
+ * boundary reads otherwise than its wording suggests is a named RESIDUAL with a pinned quiet row (RESIDUALS below); a form
+ * found later is a residual-list addition, not a claim.
  *
  * The descriptor of record is MechanicalWorkflows' contracts/entrypoints/development.v1.json at f7c0a943, metadata naming one
  * deployable function, vendored byte-identical as the suite's fixture (R007-1). The boundary reads a descriptor as metadata only:
@@ -12,28 +19,47 @@
  * resolveMechanicalEntrypoint (validation) judges in this order and returns the first refusal (R007-13, R011-13). A refusal is
  * returned, never thrown, as {code: "mechanical-entrypoint-refused", field, reason}, with field and reason from the closed lists
  * below and no other member, so it carries no path, member value or file text (every refusal case; the vocabulary cases).
- *  1. The pin: each of its two digests is a string sha256:<64 lower-case hex>; a pin that is null, a list or not an object, or a
- *     digest of any other form, is pin-malformed before any file is read (R008-5, R008-6).
+ *  1. The pin is an object (plain, frozen, null-prototype, or holding its digests by inheritance: each admitted, R008-9) whose two
+ *     digests are each a string sha256:<64 lower-case hex>. Refused pin-malformed before any file is read are the pins R008-6 and
+ *     R008-9 plant (undefined, null, a string, a list with or without the digest members, a function carrying them, an object
+ *     without one or both) and, in either member, the digests R008-5, R008-6 and R008-10 plant (the bare hex, 63 and 65 digits,
+ *     upper-case hex, a letter that is no hex digit, sha512:, no colon, an upper-case or hyphenated algorithm, a space or a line
+ *     break before or after, a carriage return or a line separator after, empty, a number, null, an object whose text is a
+ *     digest). The digest grammar is MECHANICAL_DIGEST_PATTERN: R008-12 scans one digit's place of the artifact digest over every
+ *     BMP code point through the pattern and over every ASCII code point through the boundary.
  *  2. The descriptor FILE: its bytes are read from the path (unreadable when missing or a directory: R007-4), and their SHA-256
- *     is compared with the pin before they are decoded or parsed (digest-mismatch: R007-3, R007-9).
- *  3. The bytes decode as UTF-8 and parse as JSON (malformed: R007-5), and the value is an object (wrong-type: R007-5, R007-10).
- *  4. The schema member is exactly mechanical-workflows/entrypoint/v1, else schema-unsupported whatever else the object holds,
- *     a missing schema included (R007-6, R007-11, R007-12, R007-14).
- *  5. The member set is the producer file's eight: any other member is member-unexpected, then each absent member but note is
- *     member-missing under its own name; note may be absent (R007-7, R007-11).
- *  6. Member by member, in the producer file's order (R007-13): id is a string (wrong-type) naming an entry of the fixed
- *     allowlist MECHANICAL_REVIEWED_ENTRYPOINTS (not-allowlisted: R010-4, R007-12); implementation is an object (wrong-type)
- *     holding exactly package and export (member-unexpected, then member-missing: R007-7, R007-11, R007-12), each equal to the
- *     reviewed entry's (not-allowlisted: R010-2, R010-3); inputSchema and outputSchema are each a string (wrong-type: R007-12)
- *     matching MECHANICAL_SCHEMA_REF_PATTERN with nothing normalized first (schema-ref-noncanonical: R009-2, R009-6) and equal
- *     to the reviewed name (schema-ref-unknown: R009-3); bindings are the reviewed four in order (bindings-mismatch: R007-8,
- *     R007-12); status is descriptor-only (status-unsupported: R007-8, R007-12); note, when present, is a string (wrong-type:
- *     R007-8) whose text is not judged further (R007-11).
+ *     is compared with the pin before they are decoded or parsed (digest-mismatch: R007-3, R007-9, R007-16).
+ *  3. The bytes decode as UTF-8, the decoder dropping one leading UTF-8 byte order mark (R007-16), and parse as JSON (malformed:
+ *     bytes that are not UTF-8, bytes that are not JSON, a second order mark, a UTF-16 order mark: R007-5, R007-16), and the
+ *     value is an object (wrong-type: a list, null, a string, a number, a boolean: R007-5, R007-10).
+ *  4. The schema member, compared by strict equality with mechanical-workflows/entrypoint/v1: refused schema-unsupported,
+ *     whatever else the object holds, are the forms R007-6, R007-11, R007-12, R007-14 and R007-17 plant (another version, a
+ *     missing schema, a number, case, padding, a longer or shorter id, another producer, lists of the id, ignorable,
+ *     compatibility and line-break variants, empty).
+ *  5. The member set, compared name for name with the producer file's eight: each extra name R007-7, R007-13 and R007-18 plant
+ *     (among them case, padding, longer, shorter, empty, ignorable and compatibility variants of a member's name, and inherited
+ *     object names) is member-unexpected; then each absent member but note is member-missing under its own name; note may be
+ *     absent (R007-11).
+ *  6. Member by member, in the producer file's order (R007-13): id is a string (wrong-type: R007-12, R007-17) naming an entry
+ *     of the fixed allowlist MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality (not-allowlisted: the ids R010-4 and R007-17
+ *     plant); implementation is an object (wrong-type: R007-12) whose member names are package and export, compared name for
+ *     name (member-unexpected, then member-missing: R007-7, R007-11, R007-13, R007-18), each value compared by strict equality
+ *     with the reviewed entry's (not-allowlisted: the values R010-2, R010-3 and R010-11 plant, lists of the reviewed value
+ *     among them); inputSchema and outputSchema are each a string (wrong-type: R007-12) matching MECHANICAL_SCHEMA_REF_PATTERN
+ *     over the whole text with nothing normalized first (schema-ref-noncanonical: the forms R009-2, R009-6 and R009-7 plant,
+ *     and the ASCII code points R009-10 scans in inputSchema) and equal to the reviewed name (schema-ref-unknown: the canonical
+ *     names R009-3, R009-8 and R009-10 plant); bindings are the reviewed four in order, each compared by strict equality
+ *     (bindings-mismatch: the forms R007-8, R007-12 and R007-17 plant); status is descriptor-only by strict equality
+ *     (status-unsupported: the forms R007-8, R007-12 and R007-17 plant); note, when present, is a string (wrong-type: R007-8,
+ *     R007-12, R007-17) whose text is not judged further (R007-11).
  *  7. The approved root, then the artifact, each by realpath (unreadable, under root or artifact: R011-7, R011-13).
  *  8. Containment, realpath against realpath: the artifact lies strictly inside the root, read as a relative path that is not
  *     empty, not .. and does not start with ../ (outside-root: the root itself and its parent R011-10, a sibling sharing the
- *     root's name as a prefix R011-2, a final, intermediate or chained link resolving outside R011-1, R011-8, R011-9); a link
- *     resolving inside, and a root named through a link, are admitted (R011-3, R011-4).
+ *     root's name as a prefix R011-2, a sibling whose name differs from the root's only in case or in normalization form
+ *     R011-16, a final, intermediate or chained link resolving outside R011-1, R011-8, R011-9). Admitted are a link resolving
+ *     inside and a root named through a link (R011-3, R011-4), and the R011-15 forms: an artifact named ..planted.mjs, an
+ *     artifact under a directory named ..d or x.., an artifact named through a dot-dot segment that returns inside, a root named
+ *     with a trailing separator, and the root /.
  *  9. The artifact is a regular file, judged by stat before it is opened (not-a-file: a directory R011-7, a FIFO R011-12).
  * 10. The SHA-256 of the bytes read equals the pin (digest-mismatch: R008-2, R008-4).
  *
@@ -43,25 +69,33 @@
  * the root re-pointed R011-11; the order R011-6, R011-14); each refusal there comes with no loader call (R008-3, R011-5,
  * R011-6, R011-11, R011-14). The loader then runs once, with the reviewed entry and the bytes the load measured with their
  * digest (R008-1, R010-1); a loader that throws or rejects propagates its own error and is not run again (R008-8). The export is
- * read from the loader's result, an object or a function, by the reviewed name, as that value's own member, and only when the
- * member is a function (export-missing: R010-6, R010-9); the boundary never calls it (R008-3, R008-7).
+ * read from the loader's result, an object or a function (a list, a frozen and a null-prototype object among them: R010-12), by
+ * the reviewed name, as that value's own member, and only when the member is a function (export-missing: R010-6, R010-9); the
+ * boundary never calls it (R008-3, R008-7).
+ *
+ * RESIDUALS (named; each with a pinned quiet row that reds when the boundary stops reading it as stated):
+ *   R-DUPLICATE-MEMBER (step 5): a member written twice in the descriptor bytes reads as one member, the last written (JSON.parse
+ *   keeps the last), so no duplicate is refused; quiet row R007-20: status written invocable then descriptor-only is admitted
+ *   under its own pin, and written in the other order refused status-unsupported.
  *
  * NOT CLAIMED (explicitly partial; closure gate MW-INSTALLED-CONSUMER, external MW-CONTRACT and MW-PACKAGE): where the pin comes
  * from (MechanicalWorkflows publishes no release manifest at f7c0a943, so the host supplies the pin); that an installed package or
  * a published tarball was read; the invocation contract and its version (B-contract-choice, EAT-R005 and EAT-R006); dispatch,
  * grants, source admission and outcome validation; a call without an options object of plain data members, or with a loader
- * that is not a function; a descriptor path that is neither a readable file nor a directory (a FIFO, a device); the window
- * between a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it and checks the opened
- * handle as a regular file again, but no case plants a swap inside that window); hard links; a loader result whose member read
- * runs code (an accessor or a proxy); and the window between the load-phase measurement and a host that re-opens the path
- * instead of using the measured bytes.
+ * that is not a function; where the descriptor file lies (no root bounds the descriptor path); a descriptor path that is neither
+ * a readable file nor a directory (a FIFO, a device); a code point outside ASCII read through the boundary in a digest or a
+ * schema reference other than the ones the cited cases plant (R008-12 and R009-10 scan the exported patterns, not the boundary,
+ * over the BMP); the window between a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it
+ * and checks the opened handle as a regular file again, but no case plants a swap inside that window); hard links; a loader
+ * result whose member read runs code (an accessor or a proxy); and the window between the load-phase measurement and a host
+ * that re-opens the path instead of using the measured bytes.
  */
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
 import { type FileHandle, open, readFile, realpath, stat } from "node:fs/promises";
 import { isAbsolute, relative, sep } from "node:path";
 
-/** The entrypoint descriptor schema id this boundary admits, compared exactly (step 4). */
+/** The entrypoint descriptor schema id this boundary admits, compared by strict equality (step 4 and the forms it cites). */
 export const MECHANICAL_ENTRYPOINT_SCHEMA = "mechanical-workflows/entrypoint/v1";
 /** The descriptor status this boundary admits (step 6). */
 export const MECHANICAL_DESCRIPTOR_STATUS = "descriptor-only";
@@ -69,9 +103,9 @@ export const MECHANICAL_DESCRIPTOR_STATUS = "descriptor-only";
 export const MECHANICAL_DESCRIPTOR_MEMBERS = ["schema", "id", "implementation", "inputSchema", "outputSchema", "bindings", "status", "note"] as const;
 const OPTIONAL_MEMBERS: readonly string[] = ["note"];
 const IMPLEMENTATION_MEMBERS = ["package", "export"] as const;
-/** The canonical schema-reference grammar (step 6): lower-case ASCII letters, digits, dots and hyphens only, opening with a letter or a digit, ending .schema.json. */
+/** The canonical schema-reference grammar (step 6): lower-case ASCII letters, digits, dots and hyphens only, opening with a letter or a digit, ending .schema.json, over the whole text (R009-7; R009-10 scans it over every BMP code point at three positions). */
 export const MECHANICAL_SCHEMA_REF_PATTERN = /^[a-z0-9][a-z0-9.-]*\.schema\.json$/;
-/** A release-pin digest (step 1): sha256: then 64 lower-case hex digits. */
+/** A release-pin digest (step 1): sha256: then 64 lower-case hex digits, over the whole string (R008-10; R008-12 scans one digit's place over every BMP code point). */
 export const MECHANICAL_DIGEST_PATTERN = /^sha256:[0-9a-f]{64}$/;
 
 /** One reviewed entrypoint: the only package, export, schema names and bindings an admitted descriptor may carry for its id. */
@@ -188,7 +222,7 @@ function reviewedEntry(id: string): MechanicalReviewedEntrypoint | undefined {
   return matches.length === 1 ? matches[0] : undefined;
 }
 
-/** A schema reference: a string in the canonical grammar, then exactly the reviewed name; nothing is normalized first. */
+/** A schema reference: a string in the canonical grammar, then the reviewed name by strict equality; nothing is normalized first (step 6 and the forms it cites). */
 function schemaRefRefusal(field: "inputSchema" | "outputSchema", ref: unknown, reviewed: string): Refusal | undefined {
   if (typeof ref !== "string") return refused(field, "wrong-type");
   if (!MECHANICAL_SCHEMA_REF_PATTERN.test(ref)) return refused(field, "schema-ref-noncanonical");
@@ -313,7 +347,7 @@ export async function resolveMechanicalEntrypoint(options: MechanicalEntrypointO
   return { ok: true, resolved };
 }
 
-/** The reviewed export read off the loader's result (an object or a function) by the reviewed name, as its own member, when that member is a function (R010-6, R010-9). */
+/** The reviewed export read off the loader's result (an object or a function) by the reviewed name, as its own member, when that member is a function (R010-6, R010-9, R010-12). */
 function reviewedExport(namespace: unknown, name: string): MechanicalExportFunction | undefined {
   if ((typeof namespace !== "object" && typeof namespace !== "function") || namespace === null || !Object.hasOwn(namespace, name)) return undefined;
   const value: unknown = Reflect.get(namespace, name);

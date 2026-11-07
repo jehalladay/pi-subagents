@@ -9,12 +9,19 @@
  * occurrence (M2) and a comment never is (M4). Its embedded-id leg pins every contract id inside a larger string, per the owner's
  * UD2 ruling ("OUR contract ids compose the const ...; FOREIGN ... EXCLUDED as asserted FOREIGN rows"): our ids compose their
  * constant, and an id that stays literal is an asserted row - FOREIGN (another tool's id), EMBEDDED_PURITY (a guard forbids the
- * import) or OWNER_NAMED (the owner's carrier, named here and never composed). FOREIGN_NAMESPACED (wb-ocie) holds an id embedded
- * in another tool's namespaced id (<producer>/<name>/vN), which this grammar reads as no whole id and so as no carrier; its row
- * names that whole id (within) and excuses its embedded part only in a whole string - a string literal in either quote form or
- * a template without substitutions - whose cooked text (as the parser reads it) equals that id code point for code point: a
- * superstring on either side, a case, padded or compatibility variant and one literal part of a template are offenders (the
- * wb-ocie negative control).
+ * import) or OWNER_NAMED (the owner's carrier, named here and never composed). FOREIGN_NAMESPACED (wb-ocie; ENUMERATED by its
+ * cut #3 under the R-B655 second-stage cap) holds an id embedded in another tool's namespaced id (<producer>/<name>/vN), which
+ * this grammar reads as no whole id and so as no carrier; its row names that whole id (within) and excuses its embedded part
+ * only in a whole string - a string literal in either quote form or a template without substitutions - of the row's file whose
+ * cooked text (as the parser reads it) is that id, the file and the text each compared by string equality. This is claimed for
+ * exactly the forms the wb-ocie negative controls hold, and no more. Excused, the row alive: the exact cooked text in both
+ * quote forms, as a template without substitutions and escaped. An offender at its line: a second string holding the part
+ * beside the exact string. An offender that leaves the row stale: the part under another producer, the ten inexact texts of
+ * cut #2 (a superstring on either side, case, padded and compatibility variants, three template parts) and the seven
+ * NAMESPACED_TEXT_FORMS (default-ignorable code points inside or before the id, a line break after it). Stale: the bare part
+ * as a whole string. An offender in the other file: the exact id under each of the two other file names of cut #1 and cut #2
+ * and of the thirteen NAMESPACED_FILE_FORMS, the thirteen also leaving the row stale. A text form or file form the controls
+ * do not hold is NOT CLAIMED.
  * Residuals, named and not pinned:
  * - M3: an id built at runtime or split over a concatenation is no string token, so neither leg sees it; src/workbench/
  *   native-evidence.ts matches `${capabilityId}/v1`, built from its argument.
@@ -182,10 +189,10 @@ const OWNER_NAMED: ExclusionTable = {
  * Embedded ids inside another tool's namespaced contract id (wb-ocie). WHOLE_ID reads one name segment, so a producer id
  * <producer>/<name>/vN is never a whole id here: its <name>/vN part reads as embedded and has no carrier to quote, unlike a
  * FOREIGN_CONTRACTS row. Each row names its file and the producer's whole id (within), and excuses the part only in a whole
- * string (a string literal or a template without substitutions) whose cooked text equals that id, so a second string holding
- * the part, the part under another producer, a superstring, a case, padded or compatibility variant, one literal part of a
- * template, or the id in another file is still an offender, and a row whose file holds no such string is stale. Delete the row
- * in the same commit that drops the id.
+ * string (a string literal or a template without substitutions) of that file whose cooked text is that id, both by string
+ * equality; the forms the wb-ocie negative controls hold are the claim (the header lists them): a second string holding the
+ * part, the part under another producer, each inexact text they plant and the id under each other file name they plant is an
+ * offender, and a row whose file holds no such string is stale. Delete the row in the same commit that drops the id.
  */
 const FOREIGN_NAMESPACED: ExclusionTable = {
   "entrypoint/v1": {
@@ -195,6 +202,47 @@ const FOREIGN_NAMESPACED: ExclusionTable = {
     embedded: true,
   },
 };
+/** Code points the cut #3 forms plant that are not printable ASCII, built from their numbers (never written raw). */
+const IGNORABLE = {
+  softHyphen: String.fromCodePoint(0xad),
+  combiningGraphemeJoiner: String.fromCodePoint(0x34f),
+  zeroWidthSpace: String.fromCodePoint(0x200b),
+  zeroWidthJoiner: String.fromCodePoint(0x200d),
+  wordJoiner: String.fromCodePoint(0x2060),
+  zeroWidthNoBreakSpace: String.fromCodePoint(0xfeff),
+} as const;
+/**
+ * The inexact cooked texts (wb-ocie cut #3; refusal #2's LN01 plants, a soft hyphen and a zero width space, first) a whole
+ * string of the row's file plants: each an offender that leaves the row stale.
+ */
+const NAMESPACED_TEXT_FORMS: readonly { readonly form: string; readonly text: (within: string) => string }[] = [
+  { form: "a soft hyphen in the producer part", text: within => within.replace("-", `${IGNORABLE.softHyphen}-`) },
+  { form: "a zero width space in the producer part", text: within => within.replace("-", `${IGNORABLE.zeroWidthSpace}-`) },
+  { form: "a zero width joiner in the producer part", text: within => within.replace("-", `${IGNORABLE.zeroWidthJoiner}-`) },
+  { form: "a word joiner before the name part", text: within => within.replace("/", `/${IGNORABLE.wordJoiner}`) },
+  { form: "a combining grapheme joiner in the producer part", text: within => within.replace("-", `${IGNORABLE.combiningGraphemeJoiner}-`) },
+  { form: "a zero width no-break space before the id", text: within => `${IGNORABLE.zeroWidthNoBreakSpace}${within}` },
+  { form: "a line break after the id", text: within => `${within}\n` },
+];
+/**
+ * The other file names (wb-ocie cut #3; refusal #2's LN02 plant, the src-root file, first) under which a whole string holding
+ * the exact id is planted: each an offender there, and the row stale when no other file holds the id.
+ */
+const NAMESPACED_FILE_FORMS: readonly { readonly form: string; readonly file: (rowFile: string) => string }[] = [
+  { form: "its last segment alone (a src-root file)", file: rowFile => rowFile.slice(rowFile.lastIndexOf("/") + 1) },
+  { form: "the end of its last segment", file: rowFile => rowFile.slice(rowFile.lastIndexOf("-") + 1) },
+  { form: "the src/ prefix before it", file: rowFile => `src/${rowFile}` },
+  { form: "a longer name", file: rowFile => `${rowFile}x` },
+  { form: "its directory capitalized", file: rowFile => `${rowFile.charAt(0).toUpperCase()}${rowFile.slice(1)}` },
+  { form: "a doubled separator", file: rowFile => rowFile.replace("/", "//") },
+  { form: "a leading ./", file: rowFile => `./${rowFile}` },
+  { form: "a dot segment", file: rowFile => rowFile.replace("/", "/./") },
+  { form: "a dot-dot segment that returns", file: rowFile => `x/../${rowFile}` },
+  { form: "padded before", file: rowFile => ` ${rowFile}` },
+  { form: "backslash separators", file: rowFile => rowFile.split("/").join("\\") },
+  { form: "a soft hyphen inside", file: rowFile => rowFile.replace("/", `/${IGNORABLE.softHyphen}`) },
+  { form: "the empty name", file: () => "" },
+];
 /** The tables the embedded-id leg consults; only their embedded rows excuse an embedded token. */
 const EMBEDDED_TABLES: readonly ExclusionTable[] = [FOREIGN_CONTRACTS, EMBEDDED_PURITY, OWNER_NAMED, FOREIGN_NAMESPACED];
 /**
@@ -272,7 +320,7 @@ function offenders(files: ReadonlyMap<string, string>, exclusions: ExclusionTabl
     .filter(([, list]) => list.length !== 1)
     .map(([literal, list]) => `${literal}: ${list.map(item => item.where).join(", ")}`);
 }
-/** Whether a token sits where its row allows: anywhere in the row's file, or (a namespaced FOREIGN row) only in a whole string whose cooked text equals its within id. */
+/** Whether a token sits where its row allows: anywhere in the row's file, or (a namespaced FOREIGN row) only in a whole string whose cooked text is its within id by string equality. */
 const withinRow = (row: Exclusion, token: Token): boolean => row.within === undefined || token.text === row.within;
 /**
  * Stale exclusions: rows whose file no longer spells the literal as string text in the form the row excuses (a whole literal,
@@ -497,7 +545,7 @@ describe("contract literals have one carrier each", () => {
     expect(EMBEDDED_TABLES.flatMap(table => staleExclusions(realTree(), table))).toEqual([]);
   });
 
-  it("UD2 negative control (wb-ocie): a namespaced FOREIGN row excuses its embedded id only in a whole string whose cooked text equals its producer's whole id, in its own file", () => {
+  it("UD2 negative control (wb-ocie): a namespaced FOREIGN row excuses its embedded id in a whole string of its own file whose cooked text is its producer's whole id, and not in the stray string, under the other producer or in the other file this case plants", () => {
     const file = "workbench/mechanical-descriptor.ts";
     const exact = new Map([[file, 'export const SCHEMA = "mechanical-workflows/entrypoint/v1";\n']]);
     expect(embeddedOffenders(exact, EMBEDDED_TABLES)).toEqual([]);
@@ -544,6 +592,30 @@ describe("contract literals have one carrier each", () => {
     expect(inexact.map(initializer => staleExclusions(new Map([[file, declare(initializer)]]), FOREIGN_NAMESPACED))).toEqual(inexact.map(() => [`entrypoint/v1 in ${file}`]));
     // The exact id in another file with the same last segments is an offender there.
     expect(embeddedOffenders(new Map([["other/workbench/mechanical-descriptor.ts", declare(JSON.stringify(within))]]), EMBEDDED_TABLES)).toEqual(["entrypoint/v1: src/other/workbench/mechanical-descriptor.ts:1"]);
+  });
+
+  it("UD2 negative control (wb-ocie cut #3, the enumerate form under the R-B655 cap): each of the seven NAMESPACED_TEXT_FORMS in a whole string of the row's file is an offender at line 1 that leaves the row stale, and the exact id under each of the thirteen NAMESPACED_FILE_FORMS is an offender there that leaves the row stale; both tables are frozen by name", () => {
+    const file = "workbench/mechanical-descriptor.ts";
+    const within = "mechanical-workflows/entrypoint/v1";
+    const declare = (initializer: string): string => `export const SCHEMA = ${initializer};\n`;
+    const texts = NAMESPACED_TEXT_FORMS.map(({ form, text }) => {
+      const tree = new Map([[file, declare(JSON.stringify(text(within)))]]);
+      return [form, { offenders: embeddedOffenders(tree, EMBEDDED_TABLES), stale: staleExclusions(tree, FOREIGN_NAMESPACED) }];
+    });
+    expect(Object.fromEntries(texts)).toEqual(
+      Object.fromEntries(NAMESPACED_TEXT_FORMS.map(({ form }) => [form, { offenders: [`entrypoint/v1: src/${file}:1`], stale: [`entrypoint/v1 in ${file}`] }])),
+    );
+    const files = NAMESPACED_FILE_FORMS.map(({ form, file: other }) => {
+      const tree = new Map([[other(file), declare(JSON.stringify(within))]]);
+      return [form, { other: other(file) !== file, offenders: embeddedOffenders(tree, EMBEDDED_TABLES), stale: staleExclusions(tree, FOREIGN_NAMESPACED) }];
+    });
+    expect(Object.fromEntries(files)).toEqual(
+      Object.fromEntries(
+        NAMESPACED_FILE_FORMS.map(({ form, file: other }) => [form, { other: true, offenders: [`entrypoint/v1: src/${other(file)}:1`], stale: [`entrypoint/v1 in ${file}`] }]),
+      ),
+    );
+    expect(NAMESPACED_TEXT_FORMS.map(({ form }) => form)).toEqual(["a soft hyphen in the producer part", "a zero width space in the producer part", "a zero width joiner in the producer part", "a word joiner before the name part", "a combining grapheme joiner in the producer part", "a zero width no-break space before the id", "a line break after the id"]);
+    expect(NAMESPACED_FILE_FORMS.map(({ form }) => form)).toEqual(["its last segment alone (a src-root file)", "the end of its last segment", "the src/ prefix before it", "a longer name", "its directory capitalized", "a doubled separator", "a leading ./", "a dot segment", "a dot-dot segment that returns", "padded before", "backslash separators", "a soft hyphen inside", "the empty name"]);
   });
 
   it("UD2 + O2: an embedded purity row names a CARRIERS key carried by a different file, a FOREIGN row quotes a carried contract, and a bump that re-keys CARRIERS is reported", () => {
