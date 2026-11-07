@@ -16,62 +16,109 @@
  *    lists grow together." (adversarial mutant: "Keep 'provider manifest' unqualified while the Claude host records no
  *    provider version (or drop `settings` from the comment); the census fails.")
  *
- * Claimed here, each by its rows, and nothing wider:
- *  - EAT-R161, the specification docs/workbench/replay-basis-dimensions.md, read line by line as written. The page holds
- *    no `<` (so no HTML comment, tag or autolink), no code fence (a line opening three backquotes or tildes), no line
- *    opening four spaces or a tab, no setext heading underline (a line of only `=` or only `-`) and no link reference
- *    definition (a line opening `[...]:`). Its one level-1 heading is its first line, and exactly one of its headings
- *    reads "Dimensions", at level 2; a section runs from its heading to the next level-1 or level-2 heading or EOF. Every
- *    page line holding a `|` is a line of the one table in the Dimensions section, with a blank line before the table and
- *    a blank line or EOF after it. Exactly one page line holds "Statement:" and one "Conditions:", each a quote line
- *    opening `- Statement: "` or `- Conditions: "` and closing with `"`, inside the level-1 heading's section
- *    (RB-SPEC-VIEW). The table is written out: its header line, its delimiter row and each of its fourteen rows, every
- *    cell as written, its surrounding spaces trimmed, and the effect references row's status cell by its SHA-256 (it
- *    quotes EAT-R176, and a literal here spelling its words would red the content-state derivation of
- *    test/workbench-tsx-streaming-block-census.test.ts) (RB-SPEC-SHAPE). The two quote lines read exactly as this suite writes them out. Each dimension the statement
- *    quote's parenthesized list names is the dimension of exactly one row, each name the conditions quote gives MW's
- *    half is the dimension or the measurement source of exactly one row, and every row's dimension is one of those names
- *    (RB-SPEC-QUOTE). The rows marked as in the Claude host's basis are, in table order, the option keys a Claude host
- *    built with a distinct value for each of its eight policy options and with replay dependencies holds in its basis,
- *    in basis order, and as a set the same keys, so a marked row the basis does not hold, or a held key no row marks,
- *    reds (RB-SPEC-KEYS); built without replay dependencies the host holds the first eight marked keys alone
- *    (RB-SPEC-KEYS-LEGACY). Each marked row names its option key in its measurement source, a reading's row the module's
- *    reader function too, and every row names Pi or MW as its owner (RB-SPEC-CELLS). The effect references row is not
- *    marked and is deferred with a past date and a reason (RB-SPEC-DEFERRED); the MW half's two names are rows owned by
- *    MW, not marked, owed on wb-1zn2 (RB-SPEC-MW-HALF). The eight policy options this suite reads a basis element by,
- *    written out, are the page's first eight marked keys and the keys of the options it builds that host with
- *    (RB-POLICY-OPTIONS-SHAPE); the three readings' readers, written out, are its last three marked keys, each with the
- *    reader its measurement source names, and the keys of the readings it hands that host (RB-READING-READERS-SHAPE).
- *  - EAT-R162, the WorkflowHost.replayBasis comment of src/workflow/runtime.ts and the WorkflowJournalEntry.basis comment
- *    of src/workflow/journal.ts, each the one comment before its member. The hosts are the bindings src's TypeScript
- *    modules (every .ts, .mts, .cts or .tsx file below src, declaration files included, a directory reached through a
- *    symbolic link not walked) export, in any export form (a re-export read as the binding it names), whose call or
- *    construct signature
- *    returns, directly, as one member of a union or once awaited, a type TypeScript's checker finds assignable to
- *    WorkflowHost (any, unknown and never left out): the legacy, the Claude and the detached host constructors
- *    (RB-HOSTS). The Claude host records the eleven dimensions its claude-host.ts literal holds, each element read as a
- *    property read or a name, the left of `?? null`, or the named keys of the object literals in a spread's array
- *    literals, through parentheses and both arms of a conditional, and any other element, an empty object literal
- *    included, read as unread (RB-RECORDED-claude); the detached host the eight named keys of its local-detached.ts identityDigest object
- *    (RB-RECORDED-detached). The one object createWorkflowHost returns holds replaySafe, no replayBasis and no spread or
- *    other unnamed member (RB-RECORDED-legacy), and the host it builds from inert dependencies carries replaySafe true and
- *    no replayBasis, own or inherited (RB-RECORDED-legacy-built). Each comment reads exactly as this suite writes it out
- *    (RB-DOC-TEXT-runtime, RB-DOC-TEXT-journal); names, host by host, exactly those dimensions in that order, and the
- *    legacy host as recording none (RB-DOC-runtime, RB-DOC-journal); holds no phrase of the dimension table outside the
- *    names of its host lists, the lists' parenthesized notes included, nor anywhere one of the three dimensions EAT-R161
- *    names that no host records here (RB-UNQUALIFIED-runtime, RB-UNQUALIFIED-journal); and the two comments name the
- *    same three lists (RB-DOC-MIRROR). The two comments this suite reads, written out by path, interface and member, are
- *    in the only src modules whose text names a host list ("the <host> host records:" or "the <host> host records none",
- *    in any case, a line break and the `*` or `//` opening a comment line read as a space), each comment holding every
- *    host list its module's text names (RB-COMMENTS-SHAPE). The three dimensions no host records, written out,
- *    are the page's rows not marked in the Claude host's basis (RB-UNRECORDED-SHAPE), and the dimension table, written
- *    out, is tied to the two hosts' source texts (RB-DIMENSIONS-SHAPE).
- * NOT CLAIMED by this suite: what the basis holds for a given option value (test/workbench-claude-replay-dependencies.test.ts
- * judges it); how a reading is measured (test/workbench-replay-dependency-readers.test.ts and
- * test/workbench-replay-dependencies-wiring.test.ts); the detached host's basis values; a WorkflowHost built anywhere but
- * those three functions, or one a method or a property of an exported object, class or namespace returns; the page's
- * prose outside its table and its two quote lines; that this suite's copies of the two quotes equal
- * ATOMIC-REQUIREMENTS-DELTA.md, which is on pi-subagents master and not on this branch; and a complete joint basis.
+ * Claimed here, each by its rows, and nothing wider (cut #8: the EAT-R162 comment-census words in the enumerate form
+ * refusal #7 binds, every known unpinned mode a named residual with its quiet row; the EAT-R161 words read the page's
+ * headings as a renderer reads them):
+ *  - EAT-R161, the specification docs/workbench/replay-basis-dimensions.md, read line by line as written. The page is
+ *    line feeds and printable ASCII (U+0020 to U+007E) alone. It holds no `<` (so no HTML comment, tag or autolink)
+ *    and no line opening four spaces or a tab; no code fence (a line opening three backquotes or tildes), setext heading
+ *    underline (a line of only `=` or only `-`) or link reference definition (a line opening `[...]:`), at a line's
+ *    start or after its block-quote (`>`) and list-item (`-`, `+`, `*`, `1.` or `1)`) markers; and no line whose text
+ *    after those markers opens with `#`. So its headings are its ATX lines, each opening with up to three spaces, and
+ *    no heading line holds `*`, `_`, a backquote, `[`, `]`, `!`, `~`, `\` or `&` (no emphasis, code span, link,
+ *    strikethrough, escape or character reference). Its one level-1 heading is its first line, and exactly one of its
+ *    headings reads "Dimensions", in any case, and at level 2; a section runs from its heading to the next level-1 or
+ *    level-2 heading or EOF. Every page line holding a `|` is a line of the one table in the Dimensions section, with a
+ *    blank line before the table and a blank line or EOF after it. Exactly one page line holds "Statement:" and one
+ *    "Conditions:", each a quote line opening `- Statement: "` or `- Conditions: "` and closing with `"`, inside the
+ *    level-1 heading's section (RB-SPEC-VIEW).
+ *    The table is written out: its header line, its delimiter row and each of its fourteen rows, every cell as written,
+ *    its surrounding spaces trimmed, and the effect references row's status cell by its SHA-256 (it quotes EAT-R176, and
+ *    a literal here spelling its words would red the content-state derivation of
+ *    test/workbench-tsx-streaming-block-census.test.ts) (RB-SPEC-SHAPE). The two quote lines read exactly as this suite
+ *    writes them out. Each dimension the statement quote's parenthesized list names is the dimension of exactly one row,
+ *    each name the conditions quote gives MW's half is the dimension or the measurement source of exactly one row, and
+ *    every row's dimension is one of those names (RB-SPEC-QUOTE). The rows marked as in the Claude host's basis are, in
+ *    table order, the option keys a Claude host built with a distinct value for each of its eight policy options and
+ *    with replay dependencies holds in its basis, in basis order, and as a set the same keys, so a marked row the basis
+ *    does not hold, or a held key no row marks, reds (RB-SPEC-KEYS); built without replay dependencies the host holds
+ *    the first eight marked keys alone (RB-SPEC-KEYS-LEGACY). Each marked row names its option key in its measurement
+ *    source, a reading's row the module's reader function too, and every row names Pi or MW as its owner
+ *    (RB-SPEC-CELLS). The effect references row is not marked and is deferred with a past date and a reason
+ *    (RB-SPEC-DEFERRED); the MW half's two names are rows owned by MW, not marked, owed on wb-1zn2 (RB-SPEC-MW-HALF).
+ *    The eight policy options this suite reads a basis element by, written out, are the page's first eight marked keys
+ *    and the keys of the options it builds that host with (RB-POLICY-OPTIONS-SHAPE); the three readings' readers,
+ *    written out, are its last three marked keys, each with the reader its measurement source names, and the keys of
+ *    the readings it hands that host (RB-READING-READERS-SHAPE).
+ *  - EAT-R162, the WorkflowHost.replayBasis comment of src/workflow/runtime.ts and the WorkflowJournalEntry.basis
+ *    comment of src/workflow/journal.ts. Each member has one declaration in the TypeScript program over every src
+ *    module (the modules RB-HOSTS reads, compiled as tsconfig.json says), the one in its interface in its module, and
+ *    the documentation TypeScript's checker reads for the member over its declarations, its white space collapsed, is
+ *    the comment's frozen text, as RB-DOC-TEXT-runtime and RB-DOC-TEXT-journal write it out
+ *    (RB-DOC-DECLARATION-runtime, RB-DOC-DECLARATION-journal); over planted programs the reader adds a second
+ *    declaration of the interface in the same module and an augmentation of it in another module, and reads the
+ *    documentation of each declaration it adds (RB-DOC-DECLARATION-READER). Each comment is the one comment before that
+ *    declaration, the one member of its name the module's top-level declarations of the interface hold. The hosts are
+ *    the bindings src's TypeScript modules (every .ts, .mts, .cts or .tsx file below src, declaration files included, a
+ *    directory reached through a symbolic link not walked) export, in any export form (a re-export read as the binding
+ *    it names, and an export assignment, `export =`), whose call or construct signature returns, directly, as one
+ *    member of a union or once awaited, a type TypeScript's checker finds assignable to WorkflowHost (any, unknown and
+ *    never left out): the legacy, the Claude and the detached host constructors (RB-HOSTS); over planted modules the
+ *    reader reads one host each through an export modifier, an export clause, a default export, an export assignment, a
+ *    union, an awaited return and a construct signature, a re-export as the binding it names, and none through a return
+ *    of never, unknown or any (RB-HOSTS-FORMS). The dimensions a host records are those this suite reads in its source
+ *    text, and nothing wider (the RESIDUALS below): the Claude host's are the eleven its claude-host.ts literal holds,
+ *    the array literal that is the one argument of the JSON.stringify call initializing the module's one variable,
+ *    destructured binding or parameter named replayBasis (all three counted), each element read as a property read or a
+ *    name, the left of `?? null`, or the named keys of the object literals in a spread's array literals, through
+ *    parentheses and both arms of a conditional, and any other element, an empty object literal included, read as
+ *    unread (RB-RECORDED-claude); the detached host's are the eight named keys of the object the identityDigest call
+ *    digests in local-detached.ts's one object-literal member named replayBasis (an identifier, a string or a numeric
+ *    literal name; a member of any kind counted), a property assignment (RB-RECORDED-detached); and the legacy host's
+ *    are none. createWorkflowHost's body (host.ts's one createWorkflowHost function with a body), read through every
+ *    nested block and statement and into no nested function or class, holds one return statement, and the object
+ *    literal it returns has members, each read by its name (an identifier, a string or a numeric literal; a computed
+ *    name, a spread, a `__proto__` member and any other member read as unread), that hold replaySafe, no replayBasis
+ *    and nothing unread (RB-RECORDED-legacy); over planted bodies the reader reads a return in a nested block, a return
+ *    of anything but an object literal as unread and no return of a nested function, and a member by its name, a
+ *    string-literal name included, with a computed name, a spread and a `__proto__` member unread (RB-LEGACY-READER).
+ *    The host createWorkflowHost builds from inert dependencies, as built and before any of its methods runs, carries
+ *    replaySafe true and no replayBasis, own or inherited (RB-RECORDED-legacy-built). Each comment reads exactly as
+ *    this suite writes it out (RB-DOC-TEXT-runtime, RB-DOC-TEXT-journal); names, host by host, exactly the dimensions
+ *    this suite reads each host as recording, in that order, and the legacy host as recording none (RB-DOC-runtime,
+ *    RB-DOC-journal); holds no phrase of the dimension table outside the names of its host lists, the lists'
+ *    parenthesized notes included, nor anywhere one of the three dimensions EAT-R161 names that no host records here
+ *    (RB-UNQUALIFIED-runtime, RB-UNQUALIFIED-journal); and the two comments name the same three lists (RB-DOC-MIRROR).
+ *    The two comments this suite reads, written out by path, interface and member, are in the only src modules whose
+ *    text names a host list, each comment holding every host list its module's text names (RB-COMMENTS-SHAPE). A host
+ *    list is "host records:" or "host records none", in any case and whatever text comes before "host" (a one-word, a
+ *    hyphenated or a two-word host name, or none), its words parted by white space as JavaScript's `\s` reads it, each
+ *    line break and the `*` or `//` opening a comment line read as one space; over planted texts the scan reads one
+ *    list in each of those spellings and none where another word parts or follows "host" and "records"
+ *    (RB-HOSTLIST-SCAN). The three dimensions no host records, written out, are the page's rows not marked in the
+ *    Claude host's basis (RB-UNRECORDED-SHAPE), and the dimension table, written out, is tied to the two hosts' source
+ *    texts (RB-DIMENSIONS-SHAPE).
+ * RESIDUALS (named, each with its pinned quiet row; the EAT-R162 words): R-LEGACY-LATE RB-Q-LEGACY-LATE, a replayBasis
+ * the legacy host gains once built (a method of its returned object assigning one when the method runs);
+ * R-CLAUDE-BEYOND-LITERAL RB-Q-CLAUDE-BEYOND-LITERAL, a replayBasis member of the Claude host holding more than its
+ * literal (under an option value no row builds the host with); R-DETACHED-BEYOND-ASSIGNMENT
+ * RB-Q-DETACHED-BEYOND-ASSIGNMENT, a replayBasis of the detached host that anything but that member sets (a member with
+ * a computed name, in a spread); R-HOSTLIST-SPELLING RB-Q-HOSTLIST-SPELLING, a host list whose words something other
+ * than white space, a line break and the `*` or `//` opening a comment line parts (a zero-width space, a soft hyphen, a
+ * character reference, a block comment or a third slash), or that a string or template literal spells through an escape
+ * sequence or an interpolation.
+ * NOT CLAIMED by this suite: what the basis holds for a given option value
+ * (test/workbench-claude-replay-dependencies.test.ts judges it); how a reading is measured
+ * (test/workbench-replay-dependency-readers.test.ts and test/workbench-replay-dependencies-wiring.test.ts); the
+ * detached host's basis values; a WorkflowHost built anywhere but those three functions, or one a method or a property
+ * of an exported object, class or namespace returns; a function a global declaration or an ambient module declaration
+ * (`declare module`) declares; a declaration of either member in a module outside src, and the comment of a member of
+ * any other interface or type, one extending WorkflowHost or WorkflowJournalEntry included; a phrase of the dimension
+ * table anywhere in either module but the member's comment; a change a module makes to a prototype the hosts inherit
+ * from; a host list in a file below src that is not a TypeScript module; the page's prose outside its table and its two
+ * quote lines, and the page as a renderer other than GitHub Flavored Markdown (CommonMark and its extensions) reads it;
+ * that this suite's copies of the two quotes equal ATOMIC-REQUIREMENTS-DELTA.md, which is on pi-subagents master and
+ * not on this branch; and a complete joint basis.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
@@ -237,16 +284,25 @@ function heldKeys(options: ClaudeWorkflowHostOptions): string[] {
 }
 
 describe("wb-413a EAT-R161: the Pi-side replay basis dimension list", () => {
-  it('RB-SPEC-VIEW: the page holds no `<`, code fence, line opening four spaces or a tab, setext underline or link reference definition; its one level-1 heading is its first line and one heading reads Dimensions, at level 2; every line holding a `|` is a line of the one table, set off by blank lines; one line holds "Statement:" and one "Conditions:", each a quote line under the level-1 heading', () => {
+  it('RB-SPEC-VIEW: the page is line feeds and printable ASCII; it holds no `<`, code fence, line opening four spaces or a tab, setext underline, link reference definition or `#` behind a block-quote or list-item marker, and no heading line holds inline markup, an escape or a character reference; its one level-1 heading is its first line and one heading reads Dimensions, in any case, at level 2; every line holding a `|` is a line of the one table, set off by blank lines; one line holds "Statement:" and one "Conditions:", each a quote line under the level-1 heading', () => {
     const lines = specLines();
     expect(specText()).not.toContain("<");
-    expect(lines.filter(line => /^ {0,3}(`{3,}|~{3,})/.test(line))).toEqual([]);
+    // Fences, setext underlines and link reference definitions are refused at a line's start and after its block-quote and
+    // list-item markers alike: inside a container each still renders (a setext heading there would be a heading unread).
+    expect(lines.filter(line => /^ {0,3}(?:(?:>|[-+*]|\d{1,9}[.)])[ \t]*)*(`{3,}|~{3,})/.test(line))).toEqual([]);
     expect(lines.filter(line => /^( {4}|\t)/.test(line))).toEqual([]);
-    expect(lines.filter(line => /^ {0,3}(=+|-+)[ \t]*$/.test(line))).toEqual([]);
-    expect(lines.filter(line => /^ {0,3}\[[^\]]*\]:/.test(line))).toEqual([]);
+    expect(lines.filter(line => /^ {0,3}(?:(?:>|[-+*]|\d{1,9}[.)])[ \t]*)*(=+|-+)[ \t]*$/.test(line))).toEqual([]);
+    expect(lines.filter(line => /^ {0,3}(?:(?:>|[-+*]|\d{1,9}[.)])[ \t]*)*\[[^\]]*\]:/.test(line))).toEqual([]);
+    // Line feeds and printable ASCII alone: no tab, invisible or look-alike character stands in a heading or a cell.
+    expect([...specText()].filter(character => character !== "\n" && (character < " " || character > "~"))).toEqual([]);
+    // No `#` after block-quote and list-item markers: a heading nested in a container is one specHeadings never reads.
+    expect(lines.filter(line => /^ {0,3}(?:(?:>|[-+*]|\d{1,9}[.)])[ \t]*)+#/.test(line))).toEqual([]);
     const headings = specHeadings(lines);
+    // A heading reads as written: no emphasis, code span, link, strikethrough, escape or character reference in its line.
+    expect(headings.map(heading => lines[heading.index] ?? "").filter(line => /[*_`[\]!~\\&]/.test(line))).toEqual([]);
     expect(headings.filter(heading => heading.level === 1).map(heading => `${heading.index}|${heading.text}`)).toEqual([`0|${SPEC_TITLE}`]);
     expect(headings.filter(heading => heading.text === "Dimensions").map(heading => heading.level)).toEqual([2]);
+    expect(headings.filter(heading => heading.text.toLowerCase() === "dimensions").map(heading => heading.level)).toEqual([2]);
     const table = specTable();
     expect(lines.flatMap((line, index) => (line.includes("|") ? [index] : []))).toEqual(lineRange(table.start, table.end));
     expect(lines[table.start - 1]).toBe("");
@@ -415,8 +471,22 @@ const UNRECORDED = ["effect references", "gate-manifest digest", "prompt/config 
 const recordedBy = (host: Host): string[] => DIMENSIONS.filter(([owner]) => owner === host).map(([, recorded]) => recorded);
 const phrasesOf = (host: Host): string[] => DIMENSIONS.filter(([owner]) => owner === host).map(([, , phrase]) => phrase);
 
-function sourceFile(path: string): ts.SourceFile {
-  return ts.createSourceFile(path, readFileSync(join(ROOT, path), "utf8"), ts.ScriptTarget.Latest, true);
+/** A module's source file, from disk or from a planted text standing for it. */
+function sourceFile(path: string, text = readFileSync(join(ROOT, path), "utf8")): ts.SourceFile {
+  return ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true);
+}
+/** The syntax errors TypeScript reads in a module's text, each by its message. */
+function syntaxErrors(text: string): string[] {
+  const output = ts.transpileModule(text, { reportDiagnostics: true, compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 } });
+  return (output.diagnostics ?? []).map(diagnostic => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+}
+/** A module's text from disk with its one `anchor` replaced by `replacement`: the anchor is found exactly once, and the planted text holds no syntax error, or the row reds. */
+function plantText(path: string, anchor: string, replacement: string): string {
+  const text = readFileSync(join(ROOT, path), "utf8");
+  expect(text.split(anchor), `${path}: the plant's anchor`).toHaveLength(2);
+  const planted = text.replace(anchor, () => replacement);
+  expect(syntaxErrors(planted), `${path}: the planted text's syntax`).toEqual([]);
+  return planted;
 }
 function nodesOf<T extends ts.Node>(root: ts.Node, test: (node: ts.Node) => node is T): T[] {
   const found: T[] = [];
@@ -450,34 +520,74 @@ function dimensionsOf(element: ts.Expression): string[] {
   if (ts.isIdentifier(element)) return [element.text];
   return [`unread ${element.getText()}`];
 }
-/** The dimensions the claude-host.ts literal records: the elements of the array its replayBasis JSON.stringify call writes. */
-function claudeRecorded(): string[] {
-  const declarations = nodesOf(sourceFile("src/workbench/claude-host.ts"), (node): node is ts.VariableDeclaration => ts.isVariableDeclaration(node) && node.name.getText() === "replayBasis");
+/**
+ * The dimensions the claude-host.ts literal records (or a planted text's): the elements of the array literal that is the
+ * one argument of the JSON.stringify call initializing the module's one variable, destructured binding or parameter
+ * named replayBasis (all three counted).
+ */
+function claudeRecorded(text?: string): string[] {
+  const declarations = nodesOf(
+    sourceFile("src/workbench/claude-host.ts", text),
+    (node): node is ts.VariableDeclaration | ts.BindingElement | ts.ParameterDeclaration =>
+      (ts.isVariableDeclaration(node) || ts.isBindingElement(node) || ts.isParameter(node)) && ts.isIdentifier(node.name) && node.name.text === "replayBasis",
+  );
   expect(declarations).toHaveLength(1);
-  const call = declarations[0]?.initializer;
-  if (call === undefined || !ts.isCallExpression(call) || call.expression.getText() !== "JSON.stringify") throw new Error("claude-host.ts: replayBasis is no JSON.stringify call");
+  const declaration = declarations[0];
+  const call = declaration !== undefined && ts.isVariableDeclaration(declaration) ? declaration.initializer : undefined;
+  if (call === undefined || !ts.isCallExpression(call) || call.expression.getText() !== "JSON.stringify" || call.arguments.length !== 1) throw new Error("claude-host.ts: replayBasis is no one-argument JSON.stringify call");
   const array = call.arguments[0];
   if (array === undefined || !ts.isArrayLiteralExpression(array)) throw new Error("claude-host.ts: replayBasis stringifies no array literal");
   return array.elements.flatMap(dimensionsOf);
 }
-/** The dimensions the detached host records: the named keys of the object its replayBasis identityDigest call digests. */
-function detachedRecorded(): string[] {
-  const assignments = nodesOf(sourceFile("src/workbench/hosts/local-detached.ts"), (node): node is ts.PropertyAssignment => ts.isPropertyAssignment(node) && node.name.getText() === "replayBasis");
-  expect(assignments).toHaveLength(1);
-  const call = assignments[0]?.initializer;
+/**
+ * The dimensions the detached host records (or a planted text's): the named keys of the object the identityDigest call
+ * digests in the module's one object-literal member named replayBasis (nameText: an identifier, a string or a numeric
+ * literal; any kind of member counted), a property assignment.
+ */
+function detachedRecorded(text?: string): string[] {
+  const members = nodesOf(
+    sourceFile("src/workbench/hosts/local-detached.ts", text),
+    (node): node is ts.ObjectLiteralElementLike => ts.isObjectLiteralElementLike(node) && ts.isObjectLiteralExpression(node.parent) && node.name !== undefined && nameText(node.name) === "replayBasis",
+  );
+  expect(members).toHaveLength(1);
+  const member = members[0];
+  const call = member !== undefined && ts.isPropertyAssignment(member) ? member.initializer : undefined;
   if (call === undefined || !ts.isCallExpression(call) || call.expression.getText() !== "identityDigest") throw new Error("local-detached.ts: replayBasis is no identityDigest call");
   const object = call.arguments[1];
   if (object === undefined || !ts.isObjectLiteralExpression(object)) throw new Error("local-detached.ts: replayBasis digests no object literal");
   return namedKeys(object);
 }
-/** The member names of each object literal createWorkflowHost's body returns directly, a spread or other unnamed member read as unread. */
-function legacyReturned(): string[][] {
-  const declaration = nodesOf(sourceFile("src/workflow/host.ts"), (node): node is ts.FunctionDeclaration => ts.isFunctionDeclaration(node) && node.name?.text === "createWorkflowHost")[0];
-  const statements: readonly ts.Statement[] = declaration?.body?.statements ?? [];
-  return statements
-    .filter((statement): statement is ts.ReturnStatement => ts.isReturnStatement(statement))
-    .flatMap(statement => (statement.expression !== undefined && ts.isObjectLiteralExpression(statement.expression) ? [statement.expression] : []))
-    .map(object => object.properties.map(property => property.name?.getText() ?? `unread ${property.getText()}`));
+/** The return statements below `node`, through every nested block and statement and into no nested function or class. */
+function returnStatementsBelow(node: ts.Node): ts.ReturnStatement[] {
+  const found: ts.ReturnStatement[] = [];
+  const visit = (child: ts.Node): void => {
+    if (ts.isFunctionLike(child) || ts.isClassLike(child)) return;
+    if (ts.isReturnStatement(child)) found.push(child);
+    ts.forEachChild(child, visit);
+  };
+  ts.forEachChild(node, visit);
+  return found;
+}
+/** A member's name as text: an identifier, a string or a numeric literal by its text; a computed or any other name has none. */
+function nameText(name: ts.PropertyName): string | undefined {
+  return ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name) ? name.text : undefined;
+}
+/** An object literal member by its name (nameText); a computed name, a spread, a `__proto__` member (it sets the prototype) and any other member read as unread. */
+function memberName(property: ts.ObjectLiteralElementLike): string {
+  const name = property.name === undefined ? undefined : nameText(property.name);
+  return name === undefined || name === "__proto__" ? `unread ${property.getText()}` : name;
+}
+/**
+ * The members of the object literal each return statement of createWorkflowHost's body returns (host.ts's one
+ * createWorkflowHost function with a body, or a planted text's), each read by memberName, the body read through every
+ * nested block and statement and into no nested function or class; a return of anything but an object literal is one
+ * unread entry.
+ */
+function legacyReturned(text?: string): string[][] {
+  const bodies = nodesOf(sourceFile("src/workflow/host.ts", text), (node): node is ts.FunctionDeclaration => ts.isFunctionDeclaration(node) && node.name?.text === "createWorkflowHost" && node.body !== undefined);
+  const body = bodies[0]?.body;
+  if (bodies.length !== 1 || body === undefined) throw new Error(`src/workflow/host.ts: ${bodies.length} createWorkflowHost bodies; exactly one is read`);
+  return returnStatementsBelow(body).map(statement => (statement.expression !== undefined && ts.isObjectLiteralExpression(statement.expression) ? statement.expression.properties.map(memberName) : [`unread ${statement.getText()}`]));
 }
 /** Every TypeScript module below `dir` (declaration files included), by path from the root; a directory reached through a symbolic link is not walked. */
 function srcModules(dir = "src"): string[] {
@@ -487,18 +597,45 @@ function srcModules(dir = "src"): string[] {
     return /\.[cm]?tsx?$/.test(entry.name) ? [path] : [];
   });
 }
-/**
- * Each binding a src module exports, in any export form (an export modifier, an export clause, a default export, a
- * re-export read as the binding it names), whose type has a call or construct signature returning, directly, as one
- * member of a union or once awaited, a type the checker finds assignable to WorkflowHost (any, unknown and never left
- * out), by the path#name of the binding's declaration. One program over every src module, compiled as tsconfig.json
- * says, so an alias, an inferred return type or an assertion is read as the type it is.
- */
-function hostConstructors(): string[] {
+/** tsconfig.json's compiler options, emitting nothing. */
+function compilerOptions(): ts.CompilerOptions {
   const config = ts.readConfigFile(join(ROOT, "tsconfig.json"), ts.sys.readFile);
-  const options = ts.parseJsonConfigFileContent(config.config, ts.sys, ROOT).options;
-  const modules = srcModules().map(path => join(ROOT, path));
-  const program = ts.createProgram(modules, { ...options, noEmit: true });
+  return { ...ts.parseJsonConfigFileContent(config.config, ts.sys, ROOT).options, noEmit: true };
+}
+let builtSrcProgram: ts.Program | undefined;
+/** One TypeScript program over every src module (srcModules), compiled as tsconfig.json says; built once, for every row that reads it. */
+function srcProgram(): ts.Program {
+  builtSrcProgram ??= ts.createProgram(
+    srcModules().map(path => join(ROOT, path)),
+    compilerOptions(),
+  );
+  return builtSrcProgram;
+}
+/** A program over planted module texts by path from the root, compiled as tsconfig.json says: each text stands for its path (a src module or a new one), and every module they import is read from disk. */
+function plantedProgram(planted: Readonly<Record<string, string>>): ts.Program {
+  const options = compilerOptions();
+  const host = ts.createCompilerHost(options, true);
+  const texts = new Map(Object.entries(planted).map(([path, text]) => [join(ROOT, path), text] as const));
+  const getSourceFile = host.getSourceFile.bind(host);
+  host.getSourceFile = (fileName, languageVersion, onError, shouldCreate) => {
+    const text = texts.get(fileName);
+    return text === undefined ? getSourceFile(fileName, languageVersion, onError, shouldCreate) : ts.createSourceFile(fileName, text, languageVersion, true);
+  };
+  const fileExists = host.fileExists.bind(host);
+  host.fileExists = fileName => texts.has(fileName) || fileExists(fileName);
+  const readFile = host.readFile.bind(host);
+  host.readFile = fileName => texts.get(fileName) ?? readFile(fileName);
+  return ts.createProgram([...texts.keys()], options, host);
+}
+/**
+ * Each binding a module of `modules` (src's, by default) exports, in any export form (an export modifier, an export
+ * clause, a default export, a re-export read as the binding it names, and an export assignment, `export =`), whose type
+ * has a call or construct signature returning, directly, as one member of a union or once awaited, a type the checker
+ * finds assignable to WorkflowHost (any, unknown and never left out), by the path#name of the binding's declaration. One
+ * program over every src module (srcProgram, by default), so an alias, an inferred return type or an assertion is read
+ * as the type it is.
+ */
+function hostConstructors(program: ts.Program = srcProgram(), modules: readonly string[] = srcModules()): string[] {
   const checker = program.getTypeChecker();
   const interfaceDeclaration = program
     .getSourceFile(join(ROOT, "src/workflow/runtime.ts"))
@@ -512,11 +649,12 @@ function hostConstructors(): string[] {
       .flatMap(member => members(checker.getAwaitedType(member) ?? member))
       .some(candidate => (candidate.flags & leftOut) === 0 && checker.isTypeAssignableTo(candidate, workflowHost));
   const found = new Set<string>();
-  for (const path of modules) {
+  for (const path of modules.map(module => join(ROOT, module))) {
     const file = program.getSourceFile(path);
     const moduleSymbol = file === undefined ? undefined : checker.getSymbolAtLocation(file);
     if (moduleSymbol === undefined) continue;
-    for (const exported of checker.getExportsOfModule(moduleSymbol)) {
+    const assignment = moduleSymbol.exports?.get(ts.InternalSymbolName.ExportEquals);
+    for (const exported of [...checker.getExportsOfModule(moduleSymbol), ...(assignment === undefined ? [] : [assignment])]) {
       const binding = (exported.flags & ts.SymbolFlags.Alias) !== 0 ? checker.getAliasedSymbol(exported) : exported;
       const declaration = binding.valueDeclaration ?? binding.declarations?.[0];
       if ((binding.flags & ts.SymbolFlags.Value) === 0 || declaration === undefined) continue;
@@ -528,12 +666,14 @@ function hostConstructors(): string[] {
   }
   return [...found].sort();
 }
-/** The one comment before an interface member, a doc comment, its lines joined: the leading `*` of each line and the delimiters dropped. */
+/** The one comment before an interface member, a doc comment, its lines joined: the leading `*` of each line and the delimiters dropped. The member is the one of that name (nameText) the module's top-level declarations of the interface hold; any other count throws. */
 function memberComment(path: string, interfaceName: string, member: string): string {
   const file = sourceFile(path);
-  const declaration = nodesOf(file, (node): node is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(node) && node.name.text === interfaceName)[0];
-  const property = declaration?.members.find(candidate => candidate.name?.getText() === member);
-  if (property === undefined) throw new Error(`${path}: no ${interfaceName}.${member}`);
+  const properties = file.statements
+    .filter((statement): statement is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(statement) && statement.name.text === interfaceName)
+    .flatMap(declaration => declaration.members.filter(candidate => candidate.name !== undefined && nameText(candidate.name) === member));
+  const property = properties[0];
+  if (properties.length !== 1 || property === undefined) throw new Error(`${path}: ${properties.length} declarations of ${interfaceName}.${member} at the module's top level; exactly one is read`);
   const ranges = ts.getLeadingCommentRanges(file.text, property.getFullStart()) ?? [];
   const range = ranges[0];
   if (ranges.length !== 1 || range === undefined) throw new Error(`${path}: ${interfaceName}.${member} has ${ranges.length} comments before it; exactly one is read`);
@@ -545,6 +685,27 @@ function memberComment(path: string, interfaceName: string, member: string): str
     .join(" ")
     .replace(/\s+/g, " ")
     .trim();
+}
+/**
+ * Through `program`'s checker: the declarations of interfaceName.member, each by the path of its module, the interface
+ * holding it and the member (any other holder read as unread), and the documentation the checker reads for the member
+ * over all of them, its white space collapsed to one space. The interface is the first the path's module declares at its
+ * top level, so a second declaration of it in that module, or an augmentation of it in another, adds its member's
+ * declaration here.
+ */
+function memberDeclarations(program: ts.Program, path: string, interfaceName: string, member: string): { readonly declarations: readonly string[]; readonly documentation: string } {
+  const checker = program.getTypeChecker();
+  const declaration = program
+    .getSourceFile(join(ROOT, path))
+    ?.statements.find((statement): statement is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(statement) && statement.name.text === interfaceName);
+  if (declaration === undefined) throw new Error(`${path}: no ${interfaceName} interface`);
+  const property = checker.getTypeAtLocation(declaration.name).getProperty(member);
+  if (property === undefined) throw new Error(`${path}: no ${interfaceName}.${member}`);
+  const declarations = (property.declarations ?? []).map(node => {
+    const holder = ts.isInterfaceDeclaration(node.parent) ? node.parent.name.text : `unread ${ts.SyntaxKind[node.parent.kind]}`;
+    return `${relative(ROOT, node.getSourceFile().fileName)}#${holder}.${member}`;
+  });
+  return { declarations, documentation: ts.displayPartsToString(property.getDocumentationComment(checker)).replace(/\s+/g, " ").trim() };
 }
 /** One host's list in a comment: the host's name, the dimensions it names (none for "records none") and its parenthesized notes. */
 interface HostList {
@@ -575,15 +736,18 @@ function hostLists(comment: string): { lists: HostList[]; outside: string } {
   return { lists, outside };
 }
 /**
- * How many host lists ("the <host> host records:" or "the <host> host records none", any case) each src module's text
- * names, its line breaks and the `*` or `//` opening a comment line read as one space, by path; a module naming none is
- * left out.
+ * How many host lists a text names: "host records:" or "host records none", in any case and whatever text comes before
+ * "host", its words parted by white space as JavaScript's `\s` reads it, each line break and the `*` or `//` opening a
+ * comment line read as one space.
  */
+function hostListCount(text: string): number {
+  return [...text.replace(/\r?\n[ \t]*(?:\*(?!\/)|\/\/)?[ \t]*/g, " ").matchAll(/host\s+records(?:\s*:|\s+none\b)/gi)].length;
+}
+/** How many host lists (hostListCount) each src module's text names, by path; a module naming none is left out. */
 function hostListPhrases(): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const path of srcModules()) {
-    const text = readFileSync(join(ROOT, path), "utf8").replace(/\r?\n[ \t]*(?:\*(?!\/)|\/\/)?[ \t]*/g, " ");
-    const count = [...text.matchAll(/\bthe\s+\w+\s+host\s+records(?:\s*:|\s+none\b)/gi)].length;
+    const count = hostListCount(readFileSync(join(ROOT, path), "utf8"));
     if (count > 0) counts[path] = count;
   }
   return counts;
@@ -606,24 +770,49 @@ const COMMENTS: readonly (readonly [string, string, string, string, string])[] =
   ],
 ];
 
-describe("wb-413a EAT-R162: the replayBasis comments name only what each host records, host by host", () => {
+describe("wb-413a EAT-R162: the replayBasis comments name, host by host, the dimensions this suite reads each host's source text as recording", () => {
   it(
-    "RB-HOSTS: every binding a src module exports, in any export form, whose call or construct signature returns a type assignable to WorkflowHost (directly, in a union or awaited) is the legacy, the Claude or the detached host constructor",
+    "RB-HOSTS: every binding a src module exports, in any export form (an export assignment included), whose call or construct signature returns a type assignable to WorkflowHost (directly, in a union or awaited) is the legacy, the Claude or the detached host constructor",
     () => {
       expect(hostConstructors()).toEqual(["src/workbench/claude-host.ts#createClaudeWorkflowHost", "src/workbench/hosts/local-detached.ts#createDetachedWorkflowHost", "src/workflow/host.ts#createWorkflowHost"]);
     },
     PROGRAM_BUDGET,
   );
 
-  it("RB-RECORDED-claude: the Claude host records the dimensions its claude-host.ts literal holds, the readings' three keys last", () => {
+  it(
+    "RB-HOSTS-FORMS: over planted modules, the host reader reads one host each through an export modifier, an export clause, a default export, an export assignment, a union, an awaited return and a construct signature, a re-export as the binding it names, and none through a return of never, unknown or any",
+    () => {
+      const imports = 'import type { WorkflowHost } from "./runtime.js";\n';
+      const plants: Readonly<Record<string, string>> = {
+        "src/workflow/rb-forms-modifier.ts": `${imports}export declare function rbFormsModifier(): WorkflowHost;\n`,
+        "src/workflow/rb-forms-clause.ts": `${imports}declare function rbFormsClause(): WorkflowHost;\nexport { rbFormsClause as rbFormsClauseAlias };\n`,
+        "src/workflow/rb-forms-default.ts": `${imports}export default function (): WorkflowHost {\n  throw new Error("planted");\n}\n`,
+        "src/workflow/rb-forms-assignment.d.cts": `${imports}declare function rbFormsAssignment(): WorkflowHost;\nexport = rbFormsAssignment;\n`,
+        "src/workflow/rb-forms-shapes.ts": `${imports}export declare function rbFormsUnion(): WorkflowHost | undefined;\nexport declare function rbFormsAwaited(): Promise<WorkflowHost>;\nexport declare const RbFormsConstruct: new () => WorkflowHost;\nexport declare function rbFormsNever(): never;\nexport declare function rbFormsUnknown(): unknown;\nexport declare function rbFormsLoose(): ReturnType<typeof JSON.parse>;\n`,
+        "src/workflow/rb-forms-reexport.ts": 'export { rbFormsModifier as rbFormsRenamed } from "./rb-forms-modifier.js";\nexport * from "./rb-forms-clause.js";\n',
+      };
+      expect(hostConstructors(plantedProgram(plants), Object.keys(plants))).toEqual([
+        "src/workflow/rb-forms-assignment.d.cts#rbFormsAssignment",
+        "src/workflow/rb-forms-clause.ts#rbFormsClause",
+        "src/workflow/rb-forms-default.ts#default",
+        "src/workflow/rb-forms-modifier.ts#rbFormsModifier",
+        "src/workflow/rb-forms-shapes.ts#RbFormsConstruct",
+        "src/workflow/rb-forms-shapes.ts#rbFormsAwaited",
+        "src/workflow/rb-forms-shapes.ts#rbFormsUnion",
+      ]);
+    },
+    PROGRAM_BUDGET,
+  );
+
+  it("RB-RECORDED-claude: the dimensions this suite reads the Claude host as recording are those its claude-host.ts literal holds, the readings' three keys last", () => {
     expect(claudeRecorded()).toEqual(recordedBy("Claude"));
   }, BUDGET);
 
-  it("RB-RECORDED-detached: the detached host records the keys of the object its local-detached.ts identityDigest call digests", () => {
+  it("RB-RECORDED-detached: the dimensions this suite reads the detached host as recording are the keys of the object the identityDigest call digests in local-detached.ts's one object-literal member named replayBasis", () => {
     expect(detachedRecorded()).toEqual(recordedBy("detached"));
   }, BUDGET);
 
-  it("RB-RECORDED-legacy: the one object createWorkflowHost returns holds replaySafe and no replayBasis", () => {
+  it("RB-RECORDED-legacy: createWorkflowHost's body, read into no nested function or class, holds one return statement, and the object literal it returns holds replaySafe, no replayBasis and no unread member", () => {
     const returned = legacyReturned();
     expect(returned).toHaveLength(1);
     expect(returned[0]).toContain("replaySafe");
@@ -632,11 +821,27 @@ describe("wb-413a EAT-R162: the replayBasis comments name only what each host re
     expect(returned[0]?.filter(name => name.startsWith("unread "))).toEqual([]);
   }, BUDGET);
 
-  it("RB-RECORDED-legacy-built: the host createWorkflowHost builds from inert dependencies carries replaySafe true and no replayBasis, own or inherited", () => {
+  it("RB-RECORDED-legacy-built: the host createWorkflowHost builds from inert dependencies, as built and before any of its methods runs, carries replaySafe true and no replayBasis, own or inherited", () => {
     const host = createWorkflowHost({ pi: {} as ExtensionAPI, ctx: {} as ExtensionContext, manager: {} as AgentManager });
     expect(host.replaySafe).toBe(true);
     expect(host.replayBasis).toBeUndefined();
     expect("replayBasis" in host).toBe(false);
+  }, BUDGET);
+
+  it("RB-LEGACY-READER: over planted createWorkflowHost bodies, the legacy reader reads a return in a nested block, a return of anything but an object literal as unread and no return of a nested function, and a member by its name, a string-literal name included, with a computed name, a spread and a __proto__ member unread", () => {
+    const path = "src/workflow/host.ts";
+    const head = "  const { pi, ctx, manager } = deps;\n";
+    const object = "  return {\n    replaySafe: true,\n";
+    const real = legacyReturned();
+    expect(real).toHaveLength(1);
+    expect(legacyReturned(plantText(path, head, `${head}  if (ctx.cwd === "/rb-legacy") {\n    return { replaySafe: true, replayBasis: "rb-legacy" };\n  }\n`))).toEqual([["replaySafe", "replayBasis"], ...real]);
+    expect(legacyReturned(plantText(path, head, `${head}  if (ctx.cwd === "/rb-legacy") return createWorkflowHost({ ...deps, ctx: { ...ctx, cwd: "/" } });\n`))).toEqual([['unread return createWorkflowHost({ ...deps, ctx: { ...ctx, cwd: "/" } });'], ...real]);
+    expect(legacyReturned(plantText(path, head, `${head}  const nested = (): { replayBasis: string } => {\n    return { replayBasis: "rb-legacy" };\n  };\n  void nested;\n`))).toEqual(real);
+    expect(legacyReturned(plantText(path, object, `${object}    "replayBasis": "rb-legacy",\n`))[0]).toContain("replayBasis");
+    const unread = (inserted: string): string[] => (legacyReturned(plantText(path, object, `${object}${inserted}`))[0] ?? []).filter(name => name.startsWith("unread "));
+    expect(unread('    ["replay" + "Basis"]: "rb-legacy",\n')).toEqual(['unread ["replay" + "Basis"]: "rb-legacy"']);
+    expect(unread('    ...{ replayBasis: "rb-legacy" },\n')).toEqual(['unread ...{ replayBasis: "rb-legacy" }']);
+    expect(unread('    __proto__: { replayBasis: "rb-legacy" },\n')).toEqual(['unread __proto__: { replayBasis: "rb-legacy" }']);
   }, BUDGET);
 
   for (const [name, path, interfaceName, member, text] of COMMENTS) {
@@ -644,7 +849,13 @@ describe("wb-413a EAT-R162: the replayBasis comments name only what each host re
       expect(memberComment(path, interfaceName, member)).toBe(text);
     }, BUDGET);
 
-    it(`RB-DOC-${name}: ${path}'s ${interfaceName}.${member} comment names, host by host, exactly the dimensions each host records, and the legacy host as recording none`, () => {
+    it(`RB-DOC-DECLARATION-${name}: ${interfaceName}.${member} has one declaration in the program over every src module, the one in ${path}'s ${interfaceName}, and the documentation TypeScript's checker reads for it is the frozen text`, () => {
+      const read = memberDeclarations(srcProgram(), path, interfaceName, member);
+      expect(read.declarations).toEqual([`${path}#${interfaceName}.${member}`]);
+      expect(read.documentation).toBe(text);
+    }, PROGRAM_BUDGET);
+
+    it(`RB-DOC-${name}: ${path}'s ${interfaceName}.${member} comment names, host by host, exactly the dimensions this suite reads each host as recording, and the legacy host as recording none`, () => {
       const { lists } = hostLists(memberComment(path, interfaceName, member));
       expect(lists.map(list => list.host)).toEqual(["Claude", "detached", "legacy"]);
       expect(lists[0]?.named).toEqual(phrasesOf("Claude"));
@@ -667,13 +878,45 @@ describe("wb-413a EAT-R162: the replayBasis comments name only what each host re
     expect(journal).toEqual(runtime);
   }, BUDGET);
 
-  it("RB-COMMENTS-SHAPE: the comments this suite reads, written out (frozen shape), are in the only src modules naming a host list, each comment holding every host list its module names", () => {
+  it("RB-DOC-DECLARATION-READER: over planted programs, the declaration reader reads the one declaration of WorkflowHost.replayBasis in runtime.ts, adds a second declaration of the interface in that module and an augmentation of it in another module, and reads the documentation of each declaration it adds", () => {
+    const path = "src/workflow/runtime.ts";
+    const text = readFileSync(join(ROOT, path), "utf8");
+    const plantedInterface = (exported: boolean, origin: string): string =>
+      `${exported ? "export " : ""}interface WorkflowHost {\n  /** Planted: ${origin} names provider manifest. */\n  readonly replayBasis?: string;\n}\n`;
+    const one = memberDeclarations(plantedProgram({ [path]: text }), path, "WorkflowHost", "replayBasis");
+    expect(one.declarations).toEqual([`${path}#WorkflowHost.replayBasis`]);
+    expect(one.documentation).toBe(COMMENTS[0][4]);
+    const merged = memberDeclarations(plantedProgram({ [path]: `${text}\n${plantedInterface(true, "a second declaration")}` }), path, "WorkflowHost", "replayBasis");
+    expect(merged.declarations).toEqual([`${path}#WorkflowHost.replayBasis`, `${path}#WorkflowHost.replayBasis`]);
+    expect(merged.documentation).toContain("Planted: a second declaration names provider manifest.");
+    const augmentation = `export {};\ndeclare module "./runtime.js" {\n${plantedInterface(false, "an augmentation")}}\n`;
+    const augmented = memberDeclarations(plantedProgram({ [path]: text, "src/workflow/rb-augment.ts": augmentation }), path, "WorkflowHost", "replayBasis");
+    expect([...augmented.declarations].sort()).toEqual(["src/workflow/rb-augment.ts#WorkflowHost.replayBasis", `${path}#WorkflowHost.replayBasis`]);
+    expect(augmented.documentation).toContain("Planted: an augmentation names provider manifest.");
+  }, PROGRAM_BUDGET);
+
+  it("RB-COMMENTS-SHAPE: the comments this suite reads, written out (frozen shape), are in the only src modules naming a host list (any host name before host records), each comment holding every host list its module names", () => {
     expect(COMMENTS.map(([name, path, interfaceName, member]) => `${name}|${path}|${interfaceName}|${member}`)).toEqual([
       "runtime|src/workflow/runtime.ts|WorkflowHost|replayBasis",
       "journal|src/workflow/journal.ts|WorkflowJournalEntry|basis",
     ]);
     // Anchored outside the literals above: the text of every src module.
     expect(hostListPhrases()).toEqual(Object.fromEntries(COMMENTS.map(([, path, interfaceName, member]) => [path, hostLists(memberComment(path, interfaceName, member)).lists.length])));
+  }, BUDGET);
+
+  it('RB-HOSTLIST-SCAN: over planted texts, the host-list scan reads one list whatever host name comes before "host" (one word, hyphenated, two words, none), in any case, across a tab, a line break and a `*` or `//` comment opener, and none where another word parts or follows "host" and "records"', () => {
+    expect(hostListCount("the Claude host records: cwd.")).toBe(1);
+    expect(hostListCount("the local-detached host records: contract.")).toBe(1);
+    expect(hostListCount("the local detached host records none.")).toBe(1);
+    expect(hostListCount("host records none.")).toBe(1);
+    expect(hostListCount("THE LEGACY HOST RECORDS NONE.")).toBe(1);
+    expect(hostListCount("the Claude host records : cwd.")).toBe(1);
+    expect(hostListCount("the Claude host\trecords: cwd.")).toBe(1);
+    expect(hostListCount("/**\n * the Claude host\n *   records: cwd.\n */")).toBe(1);
+    expect(hostListCount("// the detached host\n//   records: contract.")).toBe(1);
+    expect(hostListCount("a host that records none.")).toBe(0);
+    expect(hostListCount("the Claude host recorded: cwd.")).toBe(0);
+    expect(hostListCount("the Claude host records nothing.")).toBe(0);
   }, BUDGET);
 
   it("RB-UNRECORDED-SHAPE: the three dimensions no host records, written out (frozen shape), are the page's rows not marked in the Claude host's basis", () => {
@@ -707,5 +950,43 @@ describe("wb-413a EAT-R162: the replayBasis comments name only what each host re
     // Anchored outside the literal above: the two hosts' source texts.
     expect(recordedBy("Claude")).toEqual(claudeRecorded());
     expect(recordedBy("detached")).toEqual(detachedRecorded());
+  }, BUDGET);
+});
+
+describe("wb-413a EAT-R162 named residuals: each quiet row reds when its escape stops being quiet", () => {
+  it("RB-Q-LEGACY-LATE (R-LEGACY-LATE): a replayBasis that a method of the legacy host's returned object assigns when the method runs is not read: the legacy reader reads the planted body as the real one", () => {
+    const anchor = "    async spawnAgent(request) {\n";
+    expect(legacyReturned(plantText("src/workflow/host.ts", anchor, `${anchor}      Object.assign(this, { replayBasis: "rb-q-late" });\n`))).toEqual(legacyReturned());
+  }, BUDGET);
+
+  it("RB-Q-CLAUDE-BEYOND-LITERAL (R-CLAUDE-BEYOND-LITERAL): a replayBasis member of the Claude host holding more than its literal, under an option value no row builds the host with, is not read: the literal reader reads the planted module as the real one", () => {
+    const planted = plantText("src/workbench/claude-host.ts", "    replayBasis,\n", '    replayBasis: config.cwd === "/rb-q-claude" ? replayBasis + "|rb-q" : replayBasis,\n');
+    expect(claudeRecorded(planted)).toEqual(claudeRecorded());
+  }, BUDGET);
+
+  it("RB-Q-DETACHED-BEYOND-ASSIGNMENT (R-DETACHED-BEYOND-ASSIGNMENT): a replayBasis of the detached host that a member with a computed name sets, in a spread, is not read: the digest-object reader reads the planted module as the real one", () => {
+    const anchor = "      host: commonHost.replayBasis ?? null,\n    }),\n";
+    const planted = plantText("src/workbench/hosts/local-detached.ts", anchor, `${anchor}    ...(request.cwd === "/rb-q-detached" ? { ["replay" + "Basis"]: "rb-q" } : {}),\n`);
+    expect(detachedRecorded(planted)).toEqual(detachedRecorded());
+  }, BUDGET);
+
+  it("RB-Q-HOSTLIST-SPELLING (R-HOSTLIST-SPELLING): a host list whose words a zero-width space, a soft hyphen, a character reference, a block comment or a third slash parts, or that a string or template literal spells through an escape sequence or an interpolation, is not read, while the same list spelled plainly is", () => {
+    const zeroWidthSpace = String.fromCodePoint(0x200b);
+    const softHyphen = String.fromCodePoint(0xad);
+    expect(hostListCount(`// the local host${zeroWidthSpace}records: contract.`)).toBe(0);
+    expect(hostListCount(`// the local host${softHyphen}records none.`)).toBe(0);
+    expect(hostListCount("// the local host&nbsp;records: contract.")).toBe(0);
+    expect(hostListCount("/* the local host */ /* records: contract. */")).toBe(0);
+    expect(hostListCount("// the local host\n/// records none.")).toBe(0);
+    expect(hostListCount('const note = "the local host\\u0020records: contract.";')).toBe(0);
+    // A template literal whose interpolation parts the words (assembled here so no string literal of this suite holds one).
+    expect(hostListCount(["const note = `the local host ", "$", '{""}records: contract.`;'].join(""))).toBe(0);
+    // Spelled plainly, each is one host list: the escape lies in the spelling alone.
+    expect(hostListCount("// the local host records: contract.")).toBe(1);
+    expect(hostListCount("// the local host records none.")).toBe(1);
+    expect(hostListCount("/* the local host records: contract. */")).toBe(1);
+    expect(hostListCount("// the local host\n// records none.")).toBe(1);
+    expect(hostListCount('const note = "the local host records: contract.";')).toBe(1);
+    expect(hostListCount("const note = `the local host records: contract.`;")).toBe(1);
   }, BUDGET);
 });
