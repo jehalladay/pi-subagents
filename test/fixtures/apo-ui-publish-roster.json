@@ -162,6 +162,10 @@
         {
           "id": "A-pi-collapse",
           "digest": "7dff7dcb535d42236d35426ca159e65686a3fb647c8bb9a8e8fb59b446f9c53b"
+        },
+        {
+          "id": "A-pi-escaped",
+          "digest": "e418cfa35657c3aa99eab8e44b56f8e44173c283ae4a581fbb47ba1c66bfb774"
         }
       ]
     },
@@ -538,6 +542,7 @@
     "A A-stored-alias",
     "A A-escaped-names",
     "A A-pi-collapse",
+    "A A-pi-escaped",
     "F F-static",
     "F F-reexport-star",
     "F F-reexport-named",

@@ -37,7 +37,8 @@
  * (A-handler-kinds); every handle form and every receiver and callee wrapper (A-handle-forms); the src/ui/agent-widget.ts
  * stored-handle shape (A-stored-alias); every name an affordance reader matches, spelled in the scanner shape
  * (A-escaped-names); the pi receiver read by its nameOf name where TypeScript's node.text collapses another name to pi
- * (A-pi-collapse); and the classification's planted entries (A-unclassified). F: planted APO view handlers reaching a
+ * (A-pi-collapse) and where pi is spelled with unicode escapes, a four-digit or a braced escape of either letter or of
+ * both (A-pi-escaped); and the classification's planted entries (A-unclassified). F: planted APO view handlers reaching a
  * path through every edge kind and form (a template specifier, a wrapped require one store per wrapper, an escaped require
  * callee); the title's vocabulary words, in a literal only or in a name only (a declaration only, a reference only); the
  * folded (parenthesized too), template head, middle and tail, no-substitution template, regular-expression, private-name,
@@ -65,7 +66,7 @@
  * line, parsed and held to the residual families; and the runtime's own decoding of the escape shapes the escape pins hold
  * (F-escapes-runtime, F-escapes-runtime-padded and F-escapes-runtime-astral: every spelling compiled in a fresh node:vm
  * context, one per batch). Anchored in this file and the roster only: the inflections the word lists add beyond the title's
- * words, the import-equals edge kind, the other F plants, the A plants (A-readers through A-pi-collapse), the named escape
+ * words, the import-equals edge kind, the other F plants, the A plants (A-readers through A-pi-escaped), the named escape
  * shapes of the escape pins (spellingsOf generates the exhaustive spellings, and the runtime anchors what each reads), the
  * classified members src does not call, and the residual quiet rows' contents.
  * LIVE IN SRC (each shown from the src AST by the outside-anchor case): R-UNNAMED-PATH (the entry closure writes files under
@@ -86,6 +87,12 @@
  * the write-call count's escaped spellings (a live statistic); callbacks the host passes in and any code outside src/.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-COMPUTED-TEXT, R-LOOKALIKE, R-UNNAMED-PATH, R-PACKAGE,
  * R-HELPER-KEY, R-RUNTIME-LOAD, R-HOST-ALIAS, R-PI-ALIAS, R-HANDLER-FORM, R-HANDLER-SETTER, R-FOLD-WRAPPED, R-REGEX-ESCAPE.
+ *
+ * wb-9s21 (R694 follow-up of landing 596, gate cmd_8b2d72281b45): F1's pi receiver site gains A-pi-escaped, receivers
+ * spelled pi with unicode escapes (a four-digit and a braced escape of its p and of its i, and both letters escaped
+ * four-digit then braced, by register*; a four-digit and a braced escape of its p, by on), each with its own finding, so
+ * a reader at that site that decodes no escape, or only the four-digit or only the braced form, reds (the
+ * GM6-pi-raw-text, GM6-pi-4digit-only-site and GM6-pi-braced-only-site survivors).
  *
  * Display paths added: none. Test-only: no src change.
  */
@@ -461,7 +468,7 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:13", "G:3", "A:16", "F:69", "Q:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:13", "G:3", "A:17", "F:69", "Q:12"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED-TEXT:Q R-COMPUTED-TEXT",
       "R-LOOKALIKE:Q R-LOOKALIKE",

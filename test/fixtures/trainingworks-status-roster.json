@@ -624,6 +624,22 @@
        {
         "id": "mention-inside-an-attribute-value-of-an-inline-tag",
         "findings": []
+       },
+       {
+        "id": "mention-inside-an-inline-comment-holding-a-bracket",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-an-inline-comment-holding-a-dash-and-a-bracket",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-a-complete-inline-cdata-section",
+        "findings": []
+       },
+       {
+        "id": "mention-inside-an-inline-declaration",
+        "findings": []
        }
       ],
       "findingLine": [

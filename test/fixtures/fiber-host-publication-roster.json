@@ -1,0 +1,2946 @@
+{
+ "bead": "wb-pyel.1",
+ "producer": {
+  "repository": "FiberOpticsSDK",
+  "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+  "line": 17,
+  "pin": "dcc5b57c4aed",
+  "pinFull": "dcc5b57c4aed5fa2daa5333ec0b39c0916a508d7",
+  "blob": "afb2326eb90760cc8d210a89c75208d38c071ab9",
+  "text": "7. Preserve render/prepare/commit/dispatch. Host-originated publication remains explicitly flushed; no automatic effect or inference when query changes.",
+  "sha256": "9db7b51647058378bd0ac02e6adb907650f36f83bdc284cdbca402e5373b01c8",
+  "status": {
+   "line": 3,
+   "text": "**Date:** 2026-10-18. **Status:** DESIGN, not shipped. **Owner:** FiberOpticsSDK. [Cross-program](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/evidence-directed-computation-2026-10-18).",
+   "sha256": "6cd0a39418904b112aa259ad03bc977f5ed7fdf3d7d3ceade8bcffa1b250486f"
+  },
+  "unchangedAt": {
+   "rev": "2099f193cccff7e35d0e618f4aab805b481e1983",
+   "blob": "afb2326eb90760cc8d210a89c75208d38c071ab9"
+  },
+  "hostContract": {
+   "runtime": {
+    "path": "src/fiber_optics/runtime.py",
+    "blob": "d7acf3c8947998ba9faa11728b836d52f32a61d5",
+    "FiberRuntime": 668,
+    "request_rerender": 838,
+    "flush_requested_renders": 922,
+    "queue_value_publication": 1233,
+    "flush_value_publications": 1355
+   },
+   "packageRoot": {
+    "path": "src/fiber_optics/__init__.py",
+    "blob": "6c6985fede2df8766faeeca11b9294d0a85f8078",
+    "FiberGraph": 67,
+    "FiberRuntime": 118,
+    "FiberScheduler": 119
+   },
+   "distributions": {
+    "pyproject.toml": {
+     "blob": "61127515aa7f9d19e5a4a2e8a3a1e690cfa8d0bd",
+     "name": "FiberOpticsSDK",
+     "packages": [
+      "src/FiberOpticsSDK",
+      "src/fiber_optics",
+      "src/fiber_optics_research"
+     ]
+    },
+    "rust/replay_observer/Cargo.toml": {
+     "blob": "9303180552d72ffbbdbaacd5563817ac724856d8",
+     "name": "fiber-optics-replay-observer"
+    }
+   }
+  }
+ },
+ "constants": {
+  "stem": "fiberoptics",
+  "distributions": [
+   "FiberOpticsSDK",
+   "fiber_optics",
+   "fiber_optics_research",
+   "fiber-optics-replay-observer"
+  ],
+  "hostedClasses": [
+   "FiberRuntime",
+   "FiberGraph",
+   "FiberScheduler"
+  ],
+  "publicationEntries": [
+   "queue_value_publication",
+   "flush_value_publications",
+   "request_rerender",
+   "flush_requested_renders"
+  ],
+  "noCommit": "--no-commit",
+  "artifact": "a registered Pi Fiber-hosting or Fiber-publishing capability (none exists)",
+  "reactiveWords": [
+   "subscribe",
+   "observe",
+   "watch",
+   "listen",
+   "notify",
+   "emit",
+   "react",
+   "stream",
+   "poll",
+   "schedule"
+  ],
+  "launchers": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync",
+   "exec",
+   "execSync",
+   "fork"
+  ],
+  "rfWord": "(?<![\\w.-])rf(?![\\w-])",
+  "manifestNames": [
+   "package.json",
+   "package-lock.json",
+   "npm-shrinkwrap.json",
+   "yarn.lock",
+   "pnpm-lock.yaml",
+   "pyproject.toml",
+   "setup.py",
+   "setup.cfg",
+   "Pipfile",
+   "Pipfile.lock",
+   "poetry.lock",
+   "uv.lock",
+   "pdm.lock",
+   "environment.yml",
+   "environment.yaml",
+   "Cargo.toml",
+   "Cargo.lock"
+  ],
+  "pipFamilyWords": [
+   "requirements",
+   "constraints",
+   "pylock"
+  ],
+  "registrationWords": [
+   "register",
+   "registerNativeProviders"
+  ],
+  "registerName": "^register(?![a-z])",
+  "declarationKinds": [
+   "FunctionDeclaration",
+   "FunctionExpression",
+   "ClassDeclaration",
+   "ClassExpression",
+   "MethodDeclaration",
+   "PropertyDeclaration",
+   "GetAccessor",
+   "SetAccessor",
+   "VariableDeclaration",
+   "Parameter",
+   "BindingElement",
+   "PropertyAssignment",
+   "ShorthandPropertyAssignment",
+   "MethodSignature",
+   "PropertySignature",
+   "InterfaceDeclaration",
+   "TypeAliasDeclaration",
+   "EnumDeclaration",
+   "EnumMember",
+   "ModuleDeclaration",
+   "ImportClause",
+   "NamespaceImport",
+   "ImportSpecifier",
+   "ExportSpecifier",
+   "NamespaceExport",
+   "ImportEqualsDeclaration",
+   "TypeParameter"
+  ],
+  "familyWord": "fiber",
+  "rfContract": "rf@",
+  "rootNpm": [
+   "package.json",
+   "package-lock.json"
+  ],
+  "testRoot": "test/",
+  "settleMs": 3000,
+  "lateMs": 600000,
+  "floors": {
+   "modules": 100,
+   "texts": 60000,
+   "manifestTexts": 80,
+   "lockPackages": 300
+  },
+  "scriptKinds": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "requiredDescriptors": [
+   "forge.gate.status",
+   "furnace.run.inspect",
+   "hyperunix.find",
+   "reactivefiber.render.preview"
+  ],
+  "nearMissIds": {
+   "forge.gate.status": [
+    "forge.gate.status.typed",
+    "typed.forge.gate.status",
+    "forge.gate.statu",
+    "orge.gate.status"
+   ],
+   "furnace.run.inspect": [
+    "furnace.run.inspect.typed",
+    "typed.furnace.run.inspect",
+    "furnace.run.inspec",
+    "urnace.run.inspect"
+   ],
+   "hyperunix.find": [
+    "hyperunix.find.typed",
+    "typed.hyperunix.find",
+    "hyperunix.fin",
+    "yperunix.find"
+   ],
+   "reactivefiber.render.preview": [
+    "reactivefiber.render.preview.typed",
+    "typed.reactivefiber.render.preview",
+    "reactivefiber.render.previe",
+    "eactivefiber.render.preview"
+   ]
+  },
+  "sourceAnchors": [
+   "rf",
+   "--no-commit",
+   "nativeReactiveFiberRender",
+   "fiber_signal_count"
+  ],
+  "anchorNearMisses": {
+   "rf": [
+    "r",
+    "f",
+    "rfx",
+    "xrf",
+    "RF",
+    " rf "
+   ],
+   "--no-commit": [
+    "--no",
+    "commit",
+    "--no-commitx",
+    "x--no-commit",
+    "--NO-COMMIT",
+    " --no-commit "
+   ],
+   "nativeReactiveFiberRender": [
+    "nativeReactive",
+    "FiberRender",
+    "nativeReactiveFiberRenderx",
+    "xnativeReactiveFiberRender",
+    "NATIVEREACTIVEFIBERRENDER",
+    " nativeReactiveFiberRender "
+   ],
+   "fiber_signal_count": [
+    "fiber_",
+    "signal_count",
+    "fiber_signal_countx",
+    "xfiber_signal_count",
+    "FIBER_SIGNAL_COUNT",
+    " fiber_signal_count "
+   ]
+  },
+  "recordLines": [
+   "FINDINGS (each a named residual with a pinned quiet row",
+   "OTHER RESIDUALS (quiet rows pinned)"
+  ],
+  "manifestControls": {
+   "dependencies": {
+    "dependencies": {
+     "fiber-optics": "^0.1.0"
+    }
+   },
+   "devDependencies": {
+    "devDependencies": {
+     "@fiber-optics/sdk": "0.1.0"
+    }
+   },
+   "peerDependencies": {
+    "peerDependencies": {
+     "FiberOpticsSDK": "*"
+    }
+   },
+   "optionalDependencies": {
+    "optionalDependencies": {
+     "fiber_optics_research": "*"
+    }
+   },
+   "bundleDependencies": {
+    "bundleDependencies": [
+     "fiber-optics-replay-observer"
+    ]
+   },
+   "nestedValue": {
+    "overrides": {
+     "reactive-fiber-cli": {
+      "engine": "npm:fiber-optics@0.1.0"
+     }
+    }
+   },
+   "nearMissRf": {
+    "dependencies": {
+     "reactive-fiber-cli": "1.0.0"
+    }
+   },
+   "nearMissSplit": {
+    "keywords": [
+     "fiber",
+     "optics"
+    ]
+   }
+  },
+  "lockControls": {
+   "lockPath": {
+    "packages": {
+     "node_modules/fiber-optics": {
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockName": {
+    "packages": {
+     "node_modules/alias": {
+      "name": "FiberOpticsSDK",
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockQuiet": {
+    "packages": {
+     "node_modules/reactive-fiber": {
+      "version": "1.0.0"
+     }
+    }
+   }
+  },
+  "npmignoreControls": {
+   "spaced": "  test/  \n src/ \n",
+   "tabbedCrlf": "\ttest/\r\n\tsrc/\r\n",
+   "longer": "test/fixtures/\nsrc/workbench/\n",
+   "commented": "# test/\n# src/\n"
+  },
+  "shadowedManifest": "{ \"dependencies\": { \"fiber-optics\": \"1.0.0\" }, \"dependencies\": {} }",
+  "manifestTree": {
+   "package.json": "{ \"name\": \"host\" }\n",
+   "requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "requirements/base.txt": "fiber-optics==0.1.0\n",
+   "environment.yml": "dependencies:\n  - pip:\n    - FiberOpticsSDK==0.1.0\n",
+   "sidecar/requirements-dev.txt": "pytest>=8\nfiber_optics_research>=0.1\n",
+   "dev-requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "test-requirements.txt": "fiber_optics==0.1.0\n",
+   "requirements.lock": "fiber_optics==0.1.0\n",
+   "pylock.toml": "[[packages]]\nname = \"fiber_optics\"\n",
+   "test/fixtures/host/requirements.txt": "FiberOpticsSDK==0.1.0\n",
+   "test/fixtures/host/requirements.pip": "FiberOpticsSDK==0.1.0\n",
+   "tools/value-host/pyproject.toml": "[project]\nname = \"value-host\"\ndependencies = [\"fiber-optics>=0.1\"]\n",
+   "rust/observer/Cargo.toml": "[dependencies]\nfiber-optics-replay-observer = \"0.1\"\n",
+   "examples/host/package.json": "{ \"dependencies\": { \"@fiber-optics/sdk\": \"0.1.0\" } }\n",
+   "constraints.txt": "reactive-fiber-cli==1.0.0\nfiber\noptics\n",
+   "Dockerfile": "RUN pip install FiberOpticsSDK\n",
+   "examples/host/package-lock.json": "{ \"packages\": { \"node_modules/fiber-optics\": { \"version\": \"0.1.0\" } } }\n",
+   "examples/host/npm-shrinkwrap.json": "{ \"packages\": { \"node_modules/@fiber-optics/sdk\": { \"version\": \"0.1.0\" } } }\n",
+   "examples/host/yarn.lock": "\"fiber-optics@^0.1.0\":\n  version \"0.1.0\"\n",
+   "examples/host/pnpm-lock.yaml": "packages:\n  fiber-optics@0.1.0: {}\n",
+   "py/host/setup.py": "setup(install_requires=[\"fiber_optics>=0.1\"])\n",
+   "py/host/setup.cfg": "[options]\ninstall_requires = FiberOpticsSDK\n",
+   "py/host/Pipfile": "[packages]\nfiber-optics = \"*\"\n",
+   "py/host/Pipfile.lock": "{ \"default\": { \"fiber-optics\": { \"version\": \"==0.1.0\" } } }\n",
+   "py/host/poetry.lock": "[[package]]\nname = \"fiber-optics\"\n",
+   "py/host/uv.lock": "[[package]]\nname = \"fiber-optics\"\n",
+   "py/host/pdm.lock": "[[package]]\nname = \"fiber-optics\"\n",
+   "py/host/environment.yaml": "dependencies:\n  - fiber_optics\n",
+   "rust/observer/Cargo.lock": "[[package]]\nname = \"fiber-optics-replay-observer\"\n",
+   "requirements.in": "fiber-optics\n",
+   "constraints.in": "fiber_optics<1\n",
+   "build.constraints.lock": "fiber_optics==0.1.0\n",
+   "Requirements_Docs.TXT": "FiberOpticsSDK\n",
+   "requirements/dev.in": "fiber-optics\n",
+   "py/requirements/test.txt": "fiber_optics\n",
+   "requirements.pip": "FiberOpticsSDK==0.1.0\n",
+   "sidecar/requirements": "FiberOpticsSDK==0.1.0\n",
+   "requirements/base.pip": "FiberOpticsSDK==0.1.0\n",
+   "requirements/env/dev.txt": "FiberOpticsSDK==0.1.0\n",
+   "py/Requirements/base.txt": "FiberOpticsSDK==0.1.0\n",
+   "pylock.dev.toml": "[[packages]]\nname = \"fiber_optics\"\n",
+   "constraints.pip": "fiber_optics<1\n",
+   "constraints/base.txt": "fiber_optics<1\n",
+   "requirements copy.txt": "FiberOpticsSDK==0.1.0\n",
+   "docs/requirements.md": "# requirements\n",
+   "web/Package.json": "{ \"dependencies\": { \"fiber-optics\": \"0.1.0\" } }\n"
+  },
+  "sourceControls": {
+   "importFrom": {
+    "module": "import-from.ts",
+    "source": "import { open } from \"fiber_optics\";\nopen();\n"
+   },
+   "dynamicImport": {
+    "module": "dynamic-import.ts",
+    "source": "export const sdk = await import(\"@fiber-optics/sdk\");\n"
+   },
+   "requireCall": {
+    "module": "require-call.cjs",
+    "source": "const sdk = require(\"fiber-optics\");\nmodule.exports = sdk;\n"
+   },
+   "sidecarArgv": {
+    "module": "sidecar.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"python3\", [\"-c\", \"import fiber_optics\"]);\n"
+   },
+   "runtimeClass": {
+    "module": "runtime-class.ts",
+    "source": "declare const config: unknown;\nexport const runtime = new FiberRuntime(config);\n"
+   },
+   "graphType": {
+    "module": "graph-type.ts",
+    "source": "export let graph: FiberGraph | undefined;\n"
+   },
+   "schedulerTemplate": {
+    "module": "scheduler-template.ts",
+    "source": "declare const prefix: string;\nexport const name = `${prefix}FiberScheduler`;\n"
+   },
+   "regexPattern": {
+    "module": "regex-pattern.ts",
+    "source": "export const sdk = /fiber[-_]?optics/i;\n"
+   },
+   "privateName": {
+    "module": "private-name.ts",
+    "source": "export class Host {\n  #fiberOptics = 1;\n  read(): number {\n    return this.#fiberOptics;\n  }\n}\n"
+   },
+   "jsxText": {
+    "module": "jsx-text.tsx",
+    "source": "export const view = <p>FiberOptics</p>;\n"
+   },
+   "classInPath": {
+    "module": "class-in-path.ts",
+    "source": "export const host = \"vendor/fiber_optics/FiberGraph.py\";\n"
+   },
+   "nearMiss": {
+    "module": "near-miss.ts",
+    "source": "export const reactivefiber = 1;\nexport const fiber_signal_count = 0;\nexport const optics = \"fiber\";\n"
+   },
+   "rfLayout": {
+    "module": "rf-layout.ts",
+    "source": "export const RF_GRAPHS_DIR = \".reactive-fiber/graphs\";\n"
+   },
+   "templateParts": {
+    "module": "template-parts.ts",
+    "source": "declare const a: string;\ndeclare const b: string;\nexport const path = `fiber_optics/${a}/FiberGraph/${b}`;\nexport const name = `FiberRuntime`;\n"
+   },
+   "exportFrom": {
+    "module": "export-from.ts",
+    "source": "export { open } from \"fiber_optics\";\nexport * from \"@fiber-optics/sdk\";\n"
+   }
+  },
+  "entryControls": {
+   "snakeCall": {
+    "module": "snake-call.ts",
+    "source": "declare const runtime: { queue_value_publication(port: string, value: number): void };\nruntime.queue_value_publication(\"port\", 1);\n"
+   },
+   "camelCall": {
+    "module": "camel-call.ts",
+    "source": "declare const runtime: { flushValuePublications(): Promise<void> };\nawait runtime.flushValuePublications();\n"
+   },
+   "stringKey": {
+    "module": "string-key.ts",
+    "source": "declare const host: Record<string, (node: string) => void>;\nhost[\"request_rerender\"](\"node\");\n"
+   },
+   "destructured": {
+    "module": "destructured.ts",
+    "source": "declare const runtime: Record<string, () => void>;\nconst { flush_requested_renders: drain } = runtime;\ndrain();\n"
+   },
+   "nearMiss": {
+    "module": "entry-near-miss.ts",
+    "source": "declare const queue: { flush(): void };\ndeclare function publish(value: number): void;\ndeclare function render(): void;\ndeclare function requestRender(): void;\nqueue.flush();\npublish(1);\nrender();\nrequestRender();\n"
+   }
+  },
+  "launchControls": {
+   "spawnRf": {
+    "module": "spawn-rf.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rf\", [\"graph\", \"show\"]);\n"
+   },
+   "execFileSyncRf": {
+    "module": "exec-rf.ts",
+    "source": "import { execFileSync } from \"node:child_process\";\nexecFileSync(\"rf\", [\"--version\"]);\n"
+   },
+   "memberSpawnRf": {
+    "module": "member-spawn-rf.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "launcherNames": {
+    "module": "launcher-names.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawnSync(\"rf\", [\"graph\", \"show\"]);\ncp.execFile(\"rf\", [\"graph\", \"show\"]);\ncp.exec(\"rf\");\ncp.execSync(\"rf\");\ncp.fork(\"rf\");\n"
+   },
+   "identifierLaunchers": {
+    "module": "identifier-launchers.ts",
+    "source": "import { exec, execFile, execSync, fork, spawnSync } from \"node:child_process\";\nspawnSync(\"rf\", [\"graph\", \"show\"]);\nexecFile(\"rf\", [\"graph\", \"show\"]);\nexec(\"rf\");\nexecSync(\"rf\");\nfork(\"rf\");\n"
+   },
+   "memberExecFileSync": {
+    "module": "member-exec-file-sync.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.execFileSync(\"rf\", [\"--version\"]);\n"
+   },
+   "optionalCall": {
+    "module": "optional-call.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn?.(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "optionalChain": {
+    "module": "optional-chain.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp?.spawn(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "typeArguments": {
+    "module": "type-arguments.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn<void>(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "propertyReceiver": {
+    "module": "property-receiver.ts",
+    "source": "import * as cp from \"node:child_process\";\nconst holder = { cp };\nholder.cp.spawn(\"rf\", [\"context\", \"render\", \"--json\"]);\n"
+   },
+   "otherBinary": {
+    "module": "spawn-rg.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rg\", [\"-n\", \"rf\"]);\n"
+   },
+   "pythonLaunch": {
+    "module": "render-sidecar.py",
+    "source": "import subprocess\nsubprocess.run([\"rf\", \"context\", \"render\", \"--json\"], check=True)\n"
+   },
+   "shellLaunch": {
+    "module": "render.sh",
+    "source": "#!/bin/sh\nexec rf context render --json\n"
+   },
+   "rawNearMiss": {
+    "module": "notes.txt",
+    "source": "rfc 2119 terms; perf counters; surf-board; rf-cli; config.rf\n"
+   }
+  },
+  "pipelineTree": {
+   "src/hosts/value-sidecar.ts": "import { spawn } from \"node:child_process\";\nspawn(\"python3\", [\"value-sidecar.py\"]);\n",
+   "src/hosts/value-sidecar.py": "from fiber_optics import FiberRuntime\nFiberRuntime().flush_value_publications()\nsubprocess.run([\"rf\", \"context\", \"render\"])\n",
+   "src/providers/value-host.json": "{ \"runtime\": \"FiberGraph\" }\n",
+   "src/providers/rf-layout.json": "{ \"graphs\": \".reactive-fiber/graphs\" }\n"
+  },
+  "pipelineLink": {
+   "path": "src/linked",
+   "target": "../outside",
+   "files": {
+    "outside/value.ts": "export const runtime = new FiberRuntime();\n"
+   }
+  },
+  "segmentTree": {
+   "src/hosts/value-segments.ts": "export const slash0 = \"lead/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/end\";\nexport const slash1 = \"lead/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/end\";\nexport const slash2 = \"lead/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/end\";\nexport const slash3 = \"lead/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/end\";\nexport const slash4 = \"lead/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/end\";\nexport const slash5 = \"lead/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/end\";\nexport const slash6 = \"lead/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/end\";\nexport const slash7 = \"lead/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/end\";\nexport const backslash0 = \"lead\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\end\";\nexport const backslash1 = \"lead\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\end\";\nexport const backslash2 = \"lead\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\end\";\nexport const backslash3 = \"lead\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\end\";\nexport const backslash4 = \"lead\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\end\";\nexport const backslash5 = \"lead\\\\flush_value_publications\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\end\";\nexport const backslash6 = \"lead\\\\request_rerender\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\end\";\nexport const backslash7 = \"lead\\\\flush_requested_renders\\\\fiber_optics\\\\FiberRuntime\\\\FiberGraph\\\\FiberScheduler\\\\queue_value_publication\\\\flush_value_publications\\\\request_rerender\\\\end\";\nexport const space0 = \"lead fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders end\";\nexport const space1 = \"lead FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics end\";\nexport const space2 = \"lead FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime end\";\nexport const space3 = \"lead FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph end\";\nexport const space4 = \"lead queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler end\";\nexport const space5 = \"lead flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication end\";\nexport const space6 = \"lead request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications end\";\nexport const space7 = \"lead flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender end\";\nexport const tab0 = \"lead\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tend\";\nexport const tab1 = \"lead\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tend\";\nexport const tab2 = \"lead\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tend\";\nexport const tab3 = \"lead\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tend\";\nexport const tab4 = \"lead\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tend\";\nexport const tab5 = \"lead\\tflush_value_publications\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tend\";\nexport const tab6 = \"lead\\trequest_rerender\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\tend\";\nexport const tab7 = \"lead\\tflush_requested_renders\\tfiber_optics\\tFiberRuntime\\tFiberGraph\\tFiberScheduler\\tqueue_value_publication\\tflush_value_publications\\trequest_rerender\\tend\";\n",
+   "src/hosts/value-segments.txt": "lead/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/end\nlead/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/end\nlead/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/end\nlead/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/end\nlead/queue_value_publication/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/end\nlead/flush_value_publications/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/end\nlead/request_rerender/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/end\nlead/flush_requested_renders/fiber_optics/FiberRuntime/FiberGraph/FiberScheduler/queue_value_publication/flush_value_publications/request_rerender/end\nlead\\fiber_optics\\FiberRuntime\\FiberGraph\\FiberScheduler\\queue_value_publication\\flush_value_publications\\request_rerender\\flush_requested_renders\\end\nlead\\FiberRuntime\\FiberGraph\\FiberScheduler\\queue_value_publication\\flush_value_publications\\request_rerender\\flush_requested_renders\\fiber_optics\\end\nlead\\FiberGraph\\FiberScheduler\\queue_value_publication\\flush_value_publications\\request_rerender\\flush_requested_renders\\fiber_optics\\FiberRuntime\\end\nlead\\FiberScheduler\\queue_value_publication\\flush_value_publications\\request_rerender\\flush_requested_renders\\fiber_optics\\FiberRuntime\\FiberGraph\\end\nlead\\queue_value_publication\\flush_value_publications\\request_rerender\\flush_requested_renders\\fiber_optics\\FiberRuntime\\FiberGraph\\FiberScheduler\\end\nlead\\flush_value_publications\\request_rerender\\flush_requested_renders\\fiber_optics\\FiberRuntime\\FiberGraph\\FiberScheduler\\queue_value_publication\\end\nlead\\request_rerender\\flush_requested_renders\\fiber_optics\\FiberRuntime\\FiberGraph\\FiberScheduler\\queue_value_publication\\flush_value_publications\\end\nlead\\flush_requested_renders\\fiber_optics\\FiberRuntime\\FiberGraph\\FiberScheduler\\queue_value_publication\\flush_value_publications\\request_rerender\\end\nlead fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders end\nlead FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics end\nlead FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime end\nlead FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph end\nlead queue_value_publication flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler end\nlead flush_value_publications request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication end\nlead request_rerender flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications end\nlead flush_requested_renders fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender end\nlead\tfiber_optics\tFiberRuntime\tFiberGraph\tFiberScheduler\tqueue_value_publication\tflush_value_publications\trequest_rerender\tflush_requested_renders\tend\nlead\tFiberRuntime\tFiberGraph\tFiberScheduler\tqueue_value_publication\tflush_value_publications\trequest_rerender\tflush_requested_renders\tfiber_optics\tend\nlead\tFiberGraph\tFiberScheduler\tqueue_value_publication\tflush_value_publications\trequest_rerender\tflush_requested_renders\tfiber_optics\tFiberRuntime\tend\nlead\tFiberScheduler\tqueue_value_publication\tflush_value_publications\trequest_rerender\tflush_requested_renders\tfiber_optics\tFiberRuntime\tFiberGraph\tend\nlead\tqueue_value_publication\tflush_value_publications\trequest_rerender\tflush_requested_renders\tfiber_optics\tFiberRuntime\tFiberGraph\tFiberScheduler\tend\nlead\tflush_value_publications\trequest_rerender\tflush_requested_renders\tfiber_optics\tFiberRuntime\tFiberGraph\tFiberScheduler\tqueue_value_publication\tend\nlead\trequest_rerender\tflush_requested_renders\tfiber_optics\tFiberRuntime\tFiberGraph\tFiberScheduler\tqueue_value_publication\tflush_value_publications\tend\nlead\tflush_requested_renders\tfiber_optics\tFiberRuntime\tFiberGraph\tFiberScheduler\tqueue_value_publication\tflush_value_publications\trequest_rerender\tend\n"
+  },
+  "reachProbe": {
+   "head": {
+    "script": "export const reachHead = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"FiberScheduler\", \"queue_value_publication\", \"flush_value_publications\", \"request_rerender\", \"flush_requested_renders\"]; spawnSync(\"rf\");",
+    "raw": "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
+    "launcher": "spawnSync"
+   },
+   "tail": {
+    "script": "export const reachTail = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"FiberScheduler\", \"queue_value_publication\", \"flush_value_publications\", \"request_rerender\", \"flush_requested_renders\"]; execFileSync(\"rf\");",
+    "raw": "fiber_optics FiberRuntime FiberGraph FiberScheduler queue_value_publication flush_value_publications request_rerender flush_requested_renders rf",
+    "launcher": "execFileSync"
+   }
+  },
+  "reachControls": {
+   "src/workbench/reach/kind.ts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.mts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.cts": "export const kind = 1;\n",
+   "src/workbench/reach/kind.tsx": "export const kind = <b>kind</b>;\n",
+   "src/workbench/reach/kind.js": "export const kind = 1;\n",
+   "src/workbench/reach/kind.mjs": "export const kind = 1;\n",
+   "src/workbench/reach/kind.cjs": "module.exports = 1;\n",
+   "src/workbench/reach/kind.jsx": "export const kind = <b>kind</b>;\n",
+   "src/workbench/reach/notes.txt": "a non-script file\n",
+   "src/workbench/reach/.dot-named.ts": "export const dotNamed = 1;\n",
+   "src/workbench/reach/.dot-directory/kind.ts": "export const dotDirectory = 1;\n"
+  },
+  "reachNegative": {
+   "files": {
+    "src/reach/probed.ts": "export const probed = 1;\n",
+    "src/reach/headless.ts": "export const headless = 1;\n",
+    "src/reach/tailless.ts": "export const tailless = 1;\n",
+    "src/reach/unprobed.ts": "export const unprobed = 1;\n",
+    "src/reach/headless.txt": "a raw file\n",
+    "src/reach/tailless.txt": "a raw file\n",
+    "src/reach/partial.ts": "export const reachHead = [\"fiber_optics\", \"FiberRuntime\", \"FiberGraph\", \"withheld\", \"queue_value_publication\", \"flush_value_publications\", \"withheld\", \"flush_requested_renders\"]; spawnSync(\"rf\");\n",
+    "src/reach/partial.txt": "fiber_optics FiberRuntime FiberGraph withheld queue_value_publication flush_value_publications withheld flush_requested_renders rf\n"
+   },
+   "withheld": {
+    "src/reach/headless.ts": [
+     "head"
+    ],
+    "src/reach/tailless.ts": [
+     "tail"
+    ],
+    "src/reach/unprobed.ts": [
+     "head",
+     "tail"
+    ],
+    "src/reach/headless.txt": [
+     "head"
+    ],
+    "src/reach/tailless.txt": [
+     "tail"
+    ],
+    "src/reach/partial.ts": [
+     "head",
+     "tail"
+    ],
+    "src/reach/partial.txt": [
+     "head",
+     "tail"
+    ]
+   }
+  },
+  "reachDense": {
+   "module": "src/workbench/reach/dense.ts",
+   "lines": 6000,
+   "negative": {
+    "module": "src/workbench/reach/dense-withheld.ts",
+    "lines": 9,
+    "withheld": [
+     1,
+     5,
+     9
+    ]
+   },
+   "partial": {
+    "module": "src/workbench/reach/dense-partial.ts",
+    "words": [
+     "fiber_optics",
+     "FiberRuntime",
+     "FiberGraph",
+     "FiberScheduler",
+     "queue_value_publication",
+     "flush_value_publications",
+     "request_rerender",
+     "flush_requested_renders"
+    ],
+    "neutral": "withheld"
+   },
+   "filler": "export {};"
+  },
+  "walkControl": {
+   "files": {
+    "src/workbench/providers/reactivefiber.ts": "export const anchorNearMisses = [\"r\",\"f\",\"rfx\",\"xrf\",\"RF\",\" rf \",\"--no\",\"commit\",\"--no-commitx\",\"x--no-commit\",\"--NO-COMMIT\",\" --no-commit \",\"nativeReactive\",\"FiberRender\",\"nativeReactiveFiberRenderx\",\"xnativeReactiveFiberRender\",\"NATIVEREACTIVEFIBERRENDER\",\" nativeReactiveFiberRender \",\"fiber_\",\"signal_count\",\"fiber_signal_countx\",\"xfiber_signal_count\",\"FIBER_SIGNAL_COUNT\",\" fiber_signal_count \"];\n",
+    "src/walked-only.ts": "export const walkedOnly = 1;\n",
+    "src/workbench/providers/reactivefiber.ts.orig": "a leftover copy\n",
+    "src/workbench/providers/reactivefiber": "a path the provider's path extends\n",
+    "src/other/reactivefiber.ts": "export const sameBaseName = 1;\n",
+    "src/.walked-hidden.ts": "export const walkedHidden = 1;\n",
+    "src/.hidden/walked-only.ts": "export const hiddenWalked = 1;\n"
+   },
+   "listed": [
+    "src/workbench/providers/reactivefiber.ts",
+    "src/listed-only.ts",
+    "src/walked-only.ts.orig",
+    "src/walked-only",
+    "src/other/walked-only.ts",
+    "src/.listed-hidden.ts",
+    "src/.hidden/listed-only.ts"
+   ]
+  },
+  "registrationTree": {
+   "src/workbench/providers/value-publish.ts": "const DESCRIPTOR = { id: \"fiber.value.publish\", effectClass: \"write\" };\nexport function registerFiberValuePublish(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: DESCRIPTOR, invoke: async () => null });\n}\n",
+   "src/workbench/providers/value-spellings.ts": "declare const registry: { register(provider: unknown): void };\ndeclare const PROVIDER: unknown;\nexport const registerValueSpellings = (): void => {\n  registry.register(PROVIDER);\n  registry.register.call(registry, PROVIDER);\n  registry.register.apply(registry, [PROVIDER]);\n  registry[\"register\"](PROVIDER);\n  registry[`register`](PROVIDER);\n  Reflect.apply(registry.register, registry, [PROVIDER]);\n  (registry.register)(PROVIDER);\n  registry?.register(PROVIDER);\n  const add = registry.register.bind(registry);\n  add(PROVIDER);\n  const { register } = registry;\n  register.call(registry, PROVIDER);\n};\n",
+   "src/workbench/providers/value-positions.tsx": "declare const n: number;\nexport class Host {\n  #register(): void {}\n}\nexport const head = `register${n}`;\nexport const middle = `a${n}register${n}`;\nexport const tail = `a${n}register`;\nexport const both = \"register, then registerNativeProviders\";\nexport const pattern = /register/;\nexport const view = <b>register</b>;\n",
+   "src/workbench/providers/value-names.ts": "import registerValueDefault, { registerValueImported, registerValueOriginal as renamed } from \"./value-publish.js\";\nimport * as registerValueStar from \"./value-publish.js\";\nimport registerValueRequire = require(\"./value-publish.js\");\nexport * as registerValueReexport from \"./value-publish.js\";\ndeclare const host: { registerValueBinding: number };\nexport function registerValueDeclared(): void {}\nexport const registerValueArrow = (): void => {};\nexport const named = function registerValueNamed(): void {};\nclass registerValueClass {}\nexport const expression = class registerValueClassExpression {};\nexport class Members {\n  registerValueMethod(): void {}\n  registerValueField = 1;\n  get registerValueGetter(): number {\n    return 1;\n  }\n  set registerValueSetter(value: number) {}\n}\nfunction install(registerValueParameter: () => void): void {}\nconst { registerValueBinding } = host;\nexport const assigned = { registerValueAssigned: 1, registerValueArrow };\ninterface Shape {\n  registerValueSignature(): void;\n  registerValueProperty: number;\n}\ninterface registerValueInterface {}\ntype registerValueAlias = number;\nenum registerValueEnum {\n  A,\n}\nenum Kinds {\n  registerValueMember,\n}\nnamespace registerValueNamespace {}\nfunction generic<registerValueType>(): void {}\nexport { install as registerValueExported, registerValueArrow as installArrow };\nexport const quoted = { \"registerValueQuoted\": 1, [\"registerValueComputed\"]: 2, [`registerValueComputedTemplate`]: 3 };\nexport class Privates {\n  #registerValuePrivate(): void {}\n}\nenum Quoted {\n  \"registerValueQuotedMember\" = 1,\n}\nimport { \"registerValueString\" as stringImport } from \"./value-publish.js\";\nexport { install as \"registerValueStringExport\" };\ndeclare module \"registerValueModule\" {}\nconst register_value = 1;\nconst register2 = 2;\n",
+   "src/workbench/hosts/value-bridge.ts": "declare const modules: { registerNativeProviders(registry: unknown, root: string): void };\nmodules.registerNativeProviders({}, \"/\");\nmodules[\"registerNativeProviders\"].call(modules, {}, \"/\");\n",
+   "src/workbench/providers/value-host.json": "{ \"register\": \"fiber.value.publish\", \"bridge\": \"registerNativeProviders\" }\n",
+   "src/workbench/providers/value-near-miss.ts": "declare const pi: Record<string, (tool: unknown) => void>;\nexport const registered = true;\nexport class RegisterHost {}\nexport function unregister(): void {}\npi.registerTool({ name: \"value\" });\nexport const note = \"registering is refused; preregister\";\nexport const separators = \"$register register_x register2 registerX\";\n"
+  },
+  "descriptorControls": {
+   "runtimeHost": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "external",
+    "permissions": [
+     "fiber:host"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "fiber.runtime.host",
+    "contractSource": "fiber_optics FiberRuntime"
+   },
+   "valueFlush": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "fiberoptics:flush"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "fiberoptics.value.flush"
+   },
+   "commitRender": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "reactivefiber:commit"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "reactivefiber.render.commit",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render"
+   },
+   "observePreview": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "reactivefiber:render"
+    ],
+    "supportedModes": [
+     "invoke",
+     "observe"
+    ],
+    "id": "reactivefiber.render.preview",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
+   },
+   "rfContract": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "context:render"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "context.render.preview",
+    "contractSource": "rf@0.1.845:context.render"
+   },
+   "entryDescription": {
+    "version": "1.0.0",
+    "description": "queue_value_publication, then flush_value_publications",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.value.queue"
+   },
+   "previewShape": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "reactivefiber:render"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "reactivefiber.render.preview",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
+   },
+   "nestedSchema": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "handle": {
+       "type": "string",
+       "description": "a FiberRuntime handle"
+      }
+     }
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.handle.read"
+   },
+   "rfLayoutDescription": {
+    "version": "1.0.0",
+    "description": "reads .reactive-fiber/graphs/context.toml",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.layout.read"
+   },
+   "neutral": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "forge:gate:status"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "forge.gate.status"
+   }
+  },
+  "committedForms": [
+   "transaction_id",
+   "render_id",
+   "ephemeral",
+   "commit_seq",
+   "storage_write_count"
+  ],
+  "unreadForms": [
+   "wouldCommit",
+   "effects"
+  ],
+  "workspaceFiles": {
+   ".reactive-fiber/graphs/context.toml": "id = \"context\"\n",
+   ".reactive-fiber/components/summary.toml": "id = \"summary\"\n",
+   "notes/source.md": "# source\n"
+  },
+  "composed": {
+   "module": "composed.ts",
+   "source": "export const name = \"fiber\" + \"_optics\";\nexport const entry = [\"flush\", \"value\", \"publications\"].join(\"_\");\nexport const host = \"Fiber\" + \"Runtime\";\ndeclare const registry: Record<string, (provider: unknown) => void>;\nregistry[[\"regi\", \"ster\"].join(\"\")]({});\n"
+  },
+  "comment": {
+   "module": "comment.ts",
+   "source": "// new FiberRuntime() over fiber_optics\n/* flush_value_publications */\nexport {};\n"
+  },
+  "otherVocabulary": [
+   {
+    "module": "other-vocabulary.ts",
+    "source": "import { Runtime } from \"@reactive/fo-runtime\";\nconst runtime = new Runtime();\nruntime.enqueue(1);\nruntime.drain();\nexport const fibre = \"fibre optics\";\n"
+   },
+   {
+    "version": "1.0.0",
+    "description": "hosts the value runtime and drains its queue",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "context.engine.host"
+   }
+  ],
+  "registrationVocabulary": {
+   "module": "registration-vocabulary.ts",
+   "source": "import { registerNativeReactiveFiberRender } from \"./providers/reactivefiber.js\";\ndeclare const registry: { providers: Map<string, unknown> };\ndeclare const PROVIDER: unknown;\nregistry.providers.set(\"fiber.value.publish\", PROVIDER);\nregisterNativeReactiveFiberRender(registry as never, \"/a\");\nregisterNativeReactiveFiberRender(registry as never, \"/b\");\nfunction registerLocalValue(): void {}\nregisterLocalValue();\nregisterLocalValue();\nimport * as providers from \"./providers/reactivefiber.js\";\nproviders.registerNativeReactiveFiberRender(registry as never, \"/c\");\n"
+  },
+  "otherLaunch": {
+   "module": "other-launch.ts",
+   "source": "import { execSync, spawnSync } from \"node:child_process\";\nconst RF_BIN = \"rf\";\nexecSync(\"rf context render --json\");\nspawnSync(RF_BIN, [\"context\", \"render\", \"--json\"]);\n"
+  },
+  "armedIds": {
+   "late": "fiber.reactive.invoked-late",
+   "now": "fiber.reactive.invoked-now"
+  },
+  "splitSpelling": {
+   "module": "split-spelling.ts",
+   "source": "export const label = \"Fiber Optics\";\nexport const graph = \"fiber graph\";\nexport const path = \"fiber/optics\";\n"
+  },
+  "otherVocabularyMembers": [
+   "on",
+   "off",
+   "once",
+   "Symbol(Symbol.asyncIterator)"
+  ],
+  "outsideTree": {
+   "src/clean.ts": "export const clean = 1;\n",
+   "qa/host.mjs": "import { FiberRuntime } from \"fiber_optics\";\nnew FiberRuntime().flush_value_publications();\n",
+   "examples/host.ts": "import \"fiber-optics\";\n",
+   "Dockerfile": "FROM python:3.12-slim\nRUN pip install FiberOpticsSDK==0.1.0\n",
+   "scripts/setup-sidecar.sh": "#!/bin/sh\npip install fiber_optics\n",
+   "tools/value-host/deps.txt": "fiber_optics==0.1.0\n",
+   "src/hand-off.ts": "import * as host from \"value-host\";\nimport { add, plug } from \"value-host\";\ndeclare const registry: unknown;\nhost.registerValueHost(registry);\nplug(registry);\nadd({});\n",
+   "providers/local-value.cjs": "exports.register = registry => registry.register({ descriptor: { id: \"fiber.value.publish\" }, runtime: \"FiberRuntime\" });\n",
+   "vendor/value-host/dist/index.js": "module.exports = require(\"fiber_optics\");\n",
+   "tox.ini": "[testenv]\ndeps = fiber_optics\n",
+   "web/bun.lock": "{ \"packages\": { \"fiber-optics\": [\"fiber-optics@0.1.0\"] } }\n",
+   "web/package.yaml": "dependencies:\n  fiber-optics: ^0.1.0\n",
+   "test/fixtures/host/pyproject.toml": "[project]\ndependencies = [\"fiber-optics>=0.1\"]\n"
+  },
+  "residuals": {
+   "R-COMPOSED": [
+    "Q1"
+   ],
+   "R-NON-CODE": [
+    "Q2"
+   ],
+   "R-OUTSIDE-SRC": [
+    "Q3"
+   ],
+   "R-INJECTED-RELAY": [
+    "Q4"
+   ],
+   "R-UNREAD-MARKER": [
+    "Q5"
+   ],
+   "R-LATE-REACTION": [
+    "Q6"
+   ],
+   "R-OTHER-VOCABULARY": [
+    "Q7"
+   ]
+  }
+ },
+ "record": {
+  "pins": {
+   "A": [
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+   ],
+   "B": [
+    "B1",
+    "B2"
+   ],
+   "C": [
+    "C1",
+    "C2"
+   ]
+  },
+  "residuals": [
+   "Q1 R-COMPOSED",
+   "Q2 R-NON-CODE",
+   "Q3 R-OUTSIDE-SRC",
+   "Q4 R-INJECTED-RELAY",
+   "Q5 R-UNREAD-MARKER",
+   "Q6 R-LATE-REACTION",
+   "Q7 R-OTHER-VOCABULARY"
+  ]
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's title, notes and acceptance and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "before any Fiber-hosting capability registers",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "surface": "manifests",
+      "manifestTextsAboveFloor": true,
+      "packageJson": [],
+      "lockPackagesAboveFloor": true,
+      "floorControls": {
+       "modules": {
+        "at": true,
+        "below": false
+       },
+       "texts": {
+        "at": true,
+        "below": false
+       },
+       "manifestTexts": {
+        "at": true,
+        "below": false
+       },
+       "lockPackages": {
+        "at": true,
+        "below": false
+       }
+      },
+      "lock": [],
+      "rootNpmSelected": true,
+      "rootNpmControls": {
+       "package.json": false,
+       "package-lock.json": false
+      },
+      "npmIgnored": {
+       "test/": true,
+       "src/": false
+      },
+      "npmIgnoreControls": {
+       "spaced": {
+        "test/": true,
+        "src/": true
+       },
+       "tabbedCrlf": {
+        "test/": true,
+        "src/": true
+       },
+       "longer": {
+        "test/": false,
+        "src/": false
+       },
+       "commented": {
+        "test/": false,
+        "src/": false
+       }
+      },
+      "rawManifestHits": [],
+      "manifestTree": {
+       "selected": [
+        "Requirements_Docs.TXT",
+        "build.constraints.lock",
+        "constraints.in",
+        "constraints.pip",
+        "constraints.txt",
+        "constraints/base.txt",
+        "dev-requirements.txt",
+        "docs/requirements.md",
+        "environment.yml",
+        "examples/host/npm-shrinkwrap.json",
+        "examples/host/package-lock.json",
+        "examples/host/package.json",
+        "examples/host/pnpm-lock.yaml",
+        "examples/host/yarn.lock",
+        "package.json",
+        "py/Requirements/base.txt",
+        "py/host/Pipfile",
+        "py/host/Pipfile.lock",
+        "py/host/environment.yaml",
+        "py/host/pdm.lock",
+        "py/host/poetry.lock",
+        "py/host/setup.cfg",
+        "py/host/setup.py",
+        "py/host/uv.lock",
+        "py/requirements/test.txt",
+        "pylock.dev.toml",
+        "pylock.toml",
+        "requirements copy.txt",
+        "requirements.in",
+        "requirements.lock",
+        "requirements.pip",
+        "requirements.txt",
+        "requirements/base.pip",
+        "requirements/base.txt",
+        "requirements/dev.in",
+        "requirements/env/dev.txt",
+        "rust/observer/Cargo.lock",
+        "rust/observer/Cargo.toml",
+        "sidecar/requirements",
+        "sidecar/requirements-dev.txt",
+        "test-requirements.txt",
+        "tools/value-host/pyproject.toml",
+        "web/Package.json"
+       ],
+       "forms": {
+        "Requirements_Docs.TXT": "pip-name",
+        "build.constraints.lock": "pip-name",
+        "constraints.in": "pip-name",
+        "constraints.pip": "pip-name",
+        "constraints.txt": "pip-name",
+        "constraints/base.txt": "pip-directory",
+        "dev-requirements.txt": "pip-name",
+        "docs/requirements.md": "pip-name",
+        "environment.yml": "manifest-name",
+        "examples/host/npm-shrinkwrap.json": "manifest-name",
+        "examples/host/package-lock.json": "manifest-name",
+        "examples/host/package.json": "manifest-name",
+        "examples/host/pnpm-lock.yaml": "manifest-name",
+        "examples/host/yarn.lock": "manifest-name",
+        "package.json": "manifest-name",
+        "py/Requirements/base.txt": "pip-directory",
+        "py/host/Pipfile": "manifest-name",
+        "py/host/Pipfile.lock": "manifest-name",
+        "py/host/environment.yaml": "manifest-name",
+        "py/host/pdm.lock": "manifest-name",
+        "py/host/poetry.lock": "manifest-name",
+        "py/host/setup.cfg": "manifest-name",
+        "py/host/setup.py": "manifest-name",
+        "py/host/uv.lock": "manifest-name",
+        "py/requirements/test.txt": "pip-directory",
+        "pylock.dev.toml": "pip-name",
+        "pylock.toml": "pip-name",
+        "requirements copy.txt": "pip-name",
+        "requirements.in": "pip-name",
+        "requirements.lock": "pip-name",
+        "requirements.pip": "pip-name",
+        "requirements.txt": "pip-name",
+        "requirements/base.pip": "pip-directory",
+        "requirements/base.txt": "pip-directory",
+        "requirements/dev.in": "pip-directory",
+        "requirements/env/dev.txt": "pip-directory",
+        "rust/observer/Cargo.lock": "manifest-name",
+        "rust/observer/Cargo.toml": "manifest-name",
+        "sidecar/requirements": "pip-name",
+        "sidecar/requirements-dev.txt": "pip-name",
+        "test-requirements.txt": "pip-name",
+        "tools/value-host/pyproject.toml": "manifest-name",
+        "web/Package.json": "manifest-name"
+       },
+       "raw": [
+        "Requirements_Docs.TXT",
+        "build.constraints.lock",
+        "constraints.in",
+        "constraints.pip",
+        "constraints.txt",
+        "constraints/base.txt",
+        "dev-requirements.txt",
+        "docs/requirements.md",
+        "environment.yml",
+        "examples/host/npm-shrinkwrap.json",
+        "examples/host/package-lock.json",
+        "examples/host/package.json",
+        "examples/host/pnpm-lock.yaml",
+        "examples/host/yarn.lock",
+        "py/Requirements/base.txt",
+        "py/host/Pipfile",
+        "py/host/Pipfile.lock",
+        "py/host/environment.yaml",
+        "py/host/pdm.lock",
+        "py/host/poetry.lock",
+        "py/host/setup.cfg",
+        "py/host/setup.py",
+        "py/host/uv.lock",
+        "py/requirements/test.txt",
+        "pylock.dev.toml",
+        "pylock.toml",
+        "requirements copy.txt",
+        "requirements.in",
+        "requirements.lock",
+        "requirements.pip",
+        "requirements.txt",
+        "requirements/base.pip",
+        "requirements/base.txt",
+        "requirements/dev.in",
+        "requirements/env/dev.txt",
+        "rust/observer/Cargo.lock",
+        "rust/observer/Cargo.toml",
+        "sidecar/requirements",
+        "sidecar/requirements-dev.txt",
+        "test-requirements.txt",
+        "tools/value-host/pyproject.toml",
+        "web/Package.json"
+       ],
+       "hits": [
+        "Requirements_Docs.TXT:1: fiberoptics",
+        "build.constraints.lock:1: fiberoptics",
+        "constraints.in:1: fiberoptics",
+        "constraints.pip:1: fiberoptics",
+        "constraints/base.txt:1: fiberoptics",
+        "dev-requirements.txt:1: fiberoptics",
+        "environment.yml:3: fiberoptics",
+        "examples/host/npm-shrinkwrap.json:1: fiberoptics",
+        "examples/host/package-lock.json:1: fiberoptics",
+        "examples/host/package.json:1: fiberoptics",
+        "examples/host/pnpm-lock.yaml:2: fiberoptics",
+        "examples/host/yarn.lock:1: fiberoptics",
+        "py/Requirements/base.txt:1: fiberoptics",
+        "py/host/Pipfile:2: fiberoptics",
+        "py/host/Pipfile.lock:1: fiberoptics",
+        "py/host/environment.yaml:2: fiberoptics",
+        "py/host/pdm.lock:2: fiberoptics",
+        "py/host/poetry.lock:2: fiberoptics",
+        "py/host/setup.cfg:2: fiberoptics",
+        "py/host/setup.py:1: fiberoptics",
+        "py/host/uv.lock:2: fiberoptics",
+        "py/requirements/test.txt:1: fiberoptics",
+        "pylock.dev.toml:2: fiberoptics",
+        "pylock.toml:2: fiberoptics",
+        "requirements copy.txt:1: fiberoptics",
+        "requirements.in:1: fiberoptics",
+        "requirements.lock:1: fiberoptics",
+        "requirements.pip:1: fiberoptics",
+        "requirements.txt:1: fiberoptics",
+        "requirements/base.pip:1: fiberoptics",
+        "requirements/base.txt:1: fiberoptics",
+        "requirements/dev.in:1: fiberoptics",
+        "requirements/env/dev.txt:1: fiberoptics",
+        "rust/observer/Cargo.lock:2: fiberoptics",
+        "rust/observer/Cargo.toml:2: fiberoptics",
+        "sidecar/requirements:1: fiberoptics",
+        "sidecar/requirements-dev.txt:2: fiberoptics",
+        "test-requirements.txt:1: fiberoptics",
+        "tools/value-host/pyproject.toml:3: fiberoptics",
+        "web/Package.json:1: fiberoptics"
+       ]
+      },
+      "manifestControls": {
+       "dependencies": 1,
+       "devDependencies": 1,
+       "peerDependencies": 1,
+       "optionalDependencies": 1,
+       "bundleDependencies": 1,
+       "nestedValue": 1,
+       "nearMissRf": 0,
+       "nearMissSplit": 0
+      },
+      "shadowedKey": {
+       "parsed": 0,
+       "raw": 1
+      },
+      "lockControls": {
+       "lockPath": 1,
+       "lockName": 1,
+       "lockQuiet": 0
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "surface": "src",
+      "modulesAboveFloor": true,
+      "textsAboveFloor": true,
+      "symlinks": [],
+      "onlyWalked": [],
+      "onlyTracked": [],
+      "providerRead": true,
+      "anchors": {
+       "rf": true,
+       "--no-commit": true,
+       "nativeReactiveFiberRender": true,
+       "fiber_signal_count": true
+      },
+      "hosting": [],
+      "listsNonScript": {
+       "walk": true,
+       "git": true
+      },
+      "pipeline": {
+       "modules": [
+        "src/hosts/value-segments.ts",
+        "src/hosts/value-segments.txt",
+        "src/hosts/value-sidecar.py",
+        "src/hosts/value-sidecar.ts",
+        "src/providers/rf-layout.json",
+        "src/providers/value-host.json"
+       ],
+       "nonScript": [
+        "src/hosts/value-segments.txt",
+        "src/hosts/value-sidecar.py",
+        "src/providers/rf-layout.json",
+        "src/providers/value-host.json"
+       ],
+       "symlinks": [
+        "src/linked"
+       ],
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "hosting": [
+        "src/hosts/value-segments.ts:1: fiberoptics",
+        "src/hosts/value-segments.ts:1: fiberruntime",
+        "src/hosts/value-segments.ts:1: fibergraph",
+        "src/hosts/value-segments.ts:1: fiberscheduler",
+        "src/hosts/value-segments.ts:2: fiberoptics",
+        "src/hosts/value-segments.ts:2: fiberruntime",
+        "src/hosts/value-segments.ts:2: fibergraph",
+        "src/hosts/value-segments.ts:2: fiberscheduler",
+        "src/hosts/value-segments.ts:3: fiberoptics",
+        "src/hosts/value-segments.ts:3: fiberruntime",
+        "src/hosts/value-segments.ts:3: fibergraph",
+        "src/hosts/value-segments.ts:3: fiberscheduler",
+        "src/hosts/value-segments.ts:4: fiberoptics",
+        "src/hosts/value-segments.ts:4: fiberruntime",
+        "src/hosts/value-segments.ts:4: fibergraph",
+        "src/hosts/value-segments.ts:4: fiberscheduler",
+        "src/hosts/value-segments.ts:5: fiberoptics",
+        "src/hosts/value-segments.ts:5: fiberruntime",
+        "src/hosts/value-segments.ts:5: fibergraph",
+        "src/hosts/value-segments.ts:5: fiberscheduler",
+        "src/hosts/value-segments.ts:6: fiberoptics",
+        "src/hosts/value-segments.ts:6: fiberruntime",
+        "src/hosts/value-segments.ts:6: fibergraph",
+        "src/hosts/value-segments.ts:6: fiberscheduler",
+        "src/hosts/value-segments.ts:7: fiberoptics",
+        "src/hosts/value-segments.ts:7: fiberruntime",
+        "src/hosts/value-segments.ts:7: fibergraph",
+        "src/hosts/value-segments.ts:7: fiberscheduler",
+        "src/hosts/value-segments.ts:8: fiberoptics",
+        "src/hosts/value-segments.ts:8: fiberruntime",
+        "src/hosts/value-segments.ts:8: fibergraph",
+        "src/hosts/value-segments.ts:8: fiberscheduler",
+        "src/hosts/value-segments.ts:9: fiberoptics",
+        "src/hosts/value-segments.ts:9: fiberruntime",
+        "src/hosts/value-segments.ts:9: fibergraph",
+        "src/hosts/value-segments.ts:9: fiberscheduler",
+        "src/hosts/value-segments.ts:10: fiberoptics",
+        "src/hosts/value-segments.ts:10: fiberruntime",
+        "src/hosts/value-segments.ts:10: fibergraph",
+        "src/hosts/value-segments.ts:10: fiberscheduler",
+        "src/hosts/value-segments.ts:11: fiberoptics",
+        "src/hosts/value-segments.ts:11: fiberruntime",
+        "src/hosts/value-segments.ts:11: fibergraph",
+        "src/hosts/value-segments.ts:11: fiberscheduler",
+        "src/hosts/value-segments.ts:12: fiberoptics",
+        "src/hosts/value-segments.ts:12: fiberruntime",
+        "src/hosts/value-segments.ts:12: fibergraph",
+        "src/hosts/value-segments.ts:12: fiberscheduler",
+        "src/hosts/value-segments.ts:13: fiberoptics",
+        "src/hosts/value-segments.ts:13: fiberruntime",
+        "src/hosts/value-segments.ts:13: fibergraph",
+        "src/hosts/value-segments.ts:13: fiberscheduler",
+        "src/hosts/value-segments.ts:14: fiberoptics",
+        "src/hosts/value-segments.ts:14: fiberruntime",
+        "src/hosts/value-segments.ts:14: fibergraph",
+        "src/hosts/value-segments.ts:14: fiberscheduler",
+        "src/hosts/value-segments.ts:15: fiberoptics",
+        "src/hosts/value-segments.ts:15: fiberruntime",
+        "src/hosts/value-segments.ts:15: fibergraph",
+        "src/hosts/value-segments.ts:15: fiberscheduler",
+        "src/hosts/value-segments.ts:16: fiberoptics",
+        "src/hosts/value-segments.ts:16: fiberruntime",
+        "src/hosts/value-segments.ts:16: fibergraph",
+        "src/hosts/value-segments.ts:16: fiberscheduler",
+        "src/hosts/value-segments.ts:17: fiberoptics",
+        "src/hosts/value-segments.ts:17: fiberruntime",
+        "src/hosts/value-segments.ts:17: fibergraph",
+        "src/hosts/value-segments.ts:17: fiberscheduler",
+        "src/hosts/value-segments.ts:18: fiberoptics",
+        "src/hosts/value-segments.ts:18: fiberruntime",
+        "src/hosts/value-segments.ts:18: fibergraph",
+        "src/hosts/value-segments.ts:18: fiberscheduler",
+        "src/hosts/value-segments.ts:19: fiberoptics",
+        "src/hosts/value-segments.ts:19: fiberruntime",
+        "src/hosts/value-segments.ts:19: fibergraph",
+        "src/hosts/value-segments.ts:19: fiberscheduler",
+        "src/hosts/value-segments.ts:20: fiberoptics",
+        "src/hosts/value-segments.ts:20: fiberruntime",
+        "src/hosts/value-segments.ts:20: fibergraph",
+        "src/hosts/value-segments.ts:20: fiberscheduler",
+        "src/hosts/value-segments.ts:21: fiberoptics",
+        "src/hosts/value-segments.ts:21: fiberruntime",
+        "src/hosts/value-segments.ts:21: fibergraph",
+        "src/hosts/value-segments.ts:21: fiberscheduler",
+        "src/hosts/value-segments.ts:22: fiberoptics",
+        "src/hosts/value-segments.ts:22: fiberruntime",
+        "src/hosts/value-segments.ts:22: fibergraph",
+        "src/hosts/value-segments.ts:22: fiberscheduler",
+        "src/hosts/value-segments.ts:23: fiberoptics",
+        "src/hosts/value-segments.ts:23: fiberruntime",
+        "src/hosts/value-segments.ts:23: fibergraph",
+        "src/hosts/value-segments.ts:23: fiberscheduler",
+        "src/hosts/value-segments.ts:24: fiberoptics",
+        "src/hosts/value-segments.ts:24: fiberruntime",
+        "src/hosts/value-segments.ts:24: fibergraph",
+        "src/hosts/value-segments.ts:24: fiberscheduler",
+        "src/hosts/value-segments.ts:25: fiberoptics",
+        "src/hosts/value-segments.ts:25: fiberruntime",
+        "src/hosts/value-segments.ts:25: fibergraph",
+        "src/hosts/value-segments.ts:25: fiberscheduler",
+        "src/hosts/value-segments.ts:26: fiberoptics",
+        "src/hosts/value-segments.ts:26: fiberruntime",
+        "src/hosts/value-segments.ts:26: fibergraph",
+        "src/hosts/value-segments.ts:26: fiberscheduler",
+        "src/hosts/value-segments.ts:27: fiberoptics",
+        "src/hosts/value-segments.ts:27: fiberruntime",
+        "src/hosts/value-segments.ts:27: fibergraph",
+        "src/hosts/value-segments.ts:27: fiberscheduler",
+        "src/hosts/value-segments.ts:28: fiberoptics",
+        "src/hosts/value-segments.ts:28: fiberruntime",
+        "src/hosts/value-segments.ts:28: fibergraph",
+        "src/hosts/value-segments.ts:28: fiberscheduler",
+        "src/hosts/value-segments.ts:29: fiberoptics",
+        "src/hosts/value-segments.ts:29: fiberruntime",
+        "src/hosts/value-segments.ts:29: fibergraph",
+        "src/hosts/value-segments.ts:29: fiberscheduler",
+        "src/hosts/value-segments.ts:30: fiberoptics",
+        "src/hosts/value-segments.ts:30: fiberruntime",
+        "src/hosts/value-segments.ts:30: fibergraph",
+        "src/hosts/value-segments.ts:30: fiberscheduler",
+        "src/hosts/value-segments.ts:31: fiberoptics",
+        "src/hosts/value-segments.ts:31: fiberruntime",
+        "src/hosts/value-segments.ts:31: fibergraph",
+        "src/hosts/value-segments.ts:31: fiberscheduler",
+        "src/hosts/value-segments.ts:32: fiberoptics",
+        "src/hosts/value-segments.ts:32: fiberruntime",
+        "src/hosts/value-segments.ts:32: fibergraph",
+        "src/hosts/value-segments.ts:32: fiberscheduler",
+        "src/hosts/value-segments.txt:1: fiberoptics",
+        "src/hosts/value-segments.txt:1: fiberruntime",
+        "src/hosts/value-segments.txt:1: fibergraph",
+        "src/hosts/value-segments.txt:1: fiberscheduler",
+        "src/hosts/value-segments.txt:2: fiberoptics",
+        "src/hosts/value-segments.txt:2: fiberruntime",
+        "src/hosts/value-segments.txt:2: fibergraph",
+        "src/hosts/value-segments.txt:2: fiberscheduler",
+        "src/hosts/value-segments.txt:3: fiberoptics",
+        "src/hosts/value-segments.txt:3: fiberruntime",
+        "src/hosts/value-segments.txt:3: fibergraph",
+        "src/hosts/value-segments.txt:3: fiberscheduler",
+        "src/hosts/value-segments.txt:4: fiberoptics",
+        "src/hosts/value-segments.txt:4: fiberruntime",
+        "src/hosts/value-segments.txt:4: fibergraph",
+        "src/hosts/value-segments.txt:4: fiberscheduler",
+        "src/hosts/value-segments.txt:5: fiberoptics",
+        "src/hosts/value-segments.txt:5: fiberruntime",
+        "src/hosts/value-segments.txt:5: fibergraph",
+        "src/hosts/value-segments.txt:5: fiberscheduler",
+        "src/hosts/value-segments.txt:6: fiberoptics",
+        "src/hosts/value-segments.txt:6: fiberruntime",
+        "src/hosts/value-segments.txt:6: fibergraph",
+        "src/hosts/value-segments.txt:6: fiberscheduler",
+        "src/hosts/value-segments.txt:7: fiberoptics",
+        "src/hosts/value-segments.txt:7: fiberruntime",
+        "src/hosts/value-segments.txt:7: fibergraph",
+        "src/hosts/value-segments.txt:7: fiberscheduler",
+        "src/hosts/value-segments.txt:8: fiberoptics",
+        "src/hosts/value-segments.txt:8: fiberruntime",
+        "src/hosts/value-segments.txt:8: fibergraph",
+        "src/hosts/value-segments.txt:8: fiberscheduler",
+        "src/hosts/value-segments.txt:9: fiberoptics",
+        "src/hosts/value-segments.txt:9: fiberruntime",
+        "src/hosts/value-segments.txt:9: fibergraph",
+        "src/hosts/value-segments.txt:9: fiberscheduler",
+        "src/hosts/value-segments.txt:10: fiberoptics",
+        "src/hosts/value-segments.txt:10: fiberruntime",
+        "src/hosts/value-segments.txt:10: fibergraph",
+        "src/hosts/value-segments.txt:10: fiberscheduler",
+        "src/hosts/value-segments.txt:11: fiberoptics",
+        "src/hosts/value-segments.txt:11: fiberruntime",
+        "src/hosts/value-segments.txt:11: fibergraph",
+        "src/hosts/value-segments.txt:11: fiberscheduler",
+        "src/hosts/value-segments.txt:12: fiberoptics",
+        "src/hosts/value-segments.txt:12: fiberruntime",
+        "src/hosts/value-segments.txt:12: fibergraph",
+        "src/hosts/value-segments.txt:12: fiberscheduler",
+        "src/hosts/value-segments.txt:13: fiberoptics",
+        "src/hosts/value-segments.txt:13: fiberruntime",
+        "src/hosts/value-segments.txt:13: fibergraph",
+        "src/hosts/value-segments.txt:13: fiberscheduler",
+        "src/hosts/value-segments.txt:14: fiberoptics",
+        "src/hosts/value-segments.txt:14: fiberruntime",
+        "src/hosts/value-segments.txt:14: fibergraph",
+        "src/hosts/value-segments.txt:14: fiberscheduler",
+        "src/hosts/value-segments.txt:15: fiberoptics",
+        "src/hosts/value-segments.txt:15: fiberruntime",
+        "src/hosts/value-segments.txt:15: fibergraph",
+        "src/hosts/value-segments.txt:15: fiberscheduler",
+        "src/hosts/value-segments.txt:16: fiberoptics",
+        "src/hosts/value-segments.txt:16: fiberruntime",
+        "src/hosts/value-segments.txt:16: fibergraph",
+        "src/hosts/value-segments.txt:16: fiberscheduler",
+        "src/hosts/value-segments.txt:17: fiberoptics",
+        "src/hosts/value-segments.txt:17: fiberruntime",
+        "src/hosts/value-segments.txt:17: fibergraph",
+        "src/hosts/value-segments.txt:17: fiberscheduler",
+        "src/hosts/value-segments.txt:18: fiberoptics",
+        "src/hosts/value-segments.txt:18: fiberruntime",
+        "src/hosts/value-segments.txt:18: fibergraph",
+        "src/hosts/value-segments.txt:18: fiberscheduler",
+        "src/hosts/value-segments.txt:19: fiberoptics",
+        "src/hosts/value-segments.txt:19: fiberruntime",
+        "src/hosts/value-segments.txt:19: fibergraph",
+        "src/hosts/value-segments.txt:19: fiberscheduler",
+        "src/hosts/value-segments.txt:20: fiberoptics",
+        "src/hosts/value-segments.txt:20: fiberruntime",
+        "src/hosts/value-segments.txt:20: fibergraph",
+        "src/hosts/value-segments.txt:20: fiberscheduler",
+        "src/hosts/value-segments.txt:21: fiberoptics",
+        "src/hosts/value-segments.txt:21: fiberruntime",
+        "src/hosts/value-segments.txt:21: fibergraph",
+        "src/hosts/value-segments.txt:21: fiberscheduler",
+        "src/hosts/value-segments.txt:22: fiberoptics",
+        "src/hosts/value-segments.txt:22: fiberruntime",
+        "src/hosts/value-segments.txt:22: fibergraph",
+        "src/hosts/value-segments.txt:22: fiberscheduler",
+        "src/hosts/value-segments.txt:23: fiberoptics",
+        "src/hosts/value-segments.txt:23: fiberruntime",
+        "src/hosts/value-segments.txt:23: fibergraph",
+        "src/hosts/value-segments.txt:23: fiberscheduler",
+        "src/hosts/value-segments.txt:24: fiberoptics",
+        "src/hosts/value-segments.txt:24: fiberruntime",
+        "src/hosts/value-segments.txt:24: fibergraph",
+        "src/hosts/value-segments.txt:24: fiberscheduler",
+        "src/hosts/value-segments.txt:25: fiberoptics",
+        "src/hosts/value-segments.txt:25: fiberruntime",
+        "src/hosts/value-segments.txt:25: fibergraph",
+        "src/hosts/value-segments.txt:25: fiberscheduler",
+        "src/hosts/value-segments.txt:26: fiberoptics",
+        "src/hosts/value-segments.txt:26: fiberruntime",
+        "src/hosts/value-segments.txt:26: fibergraph",
+        "src/hosts/value-segments.txt:26: fiberscheduler",
+        "src/hosts/value-segments.txt:27: fiberoptics",
+        "src/hosts/value-segments.txt:27: fiberruntime",
+        "src/hosts/value-segments.txt:27: fibergraph",
+        "src/hosts/value-segments.txt:27: fiberscheduler",
+        "src/hosts/value-segments.txt:28: fiberoptics",
+        "src/hosts/value-segments.txt:28: fiberruntime",
+        "src/hosts/value-segments.txt:28: fibergraph",
+        "src/hosts/value-segments.txt:28: fiberscheduler",
+        "src/hosts/value-segments.txt:29: fiberoptics",
+        "src/hosts/value-segments.txt:29: fiberruntime",
+        "src/hosts/value-segments.txt:29: fibergraph",
+        "src/hosts/value-segments.txt:29: fiberscheduler",
+        "src/hosts/value-segments.txt:30: fiberoptics",
+        "src/hosts/value-segments.txt:30: fiberruntime",
+        "src/hosts/value-segments.txt:30: fibergraph",
+        "src/hosts/value-segments.txt:30: fiberscheduler",
+        "src/hosts/value-segments.txt:31: fiberoptics",
+        "src/hosts/value-segments.txt:31: fiberruntime",
+        "src/hosts/value-segments.txt:31: fibergraph",
+        "src/hosts/value-segments.txt:31: fiberscheduler",
+        "src/hosts/value-segments.txt:32: fiberoptics",
+        "src/hosts/value-segments.txt:32: fiberruntime",
+        "src/hosts/value-segments.txt:32: fibergraph",
+        "src/hosts/value-segments.txt:32: fiberscheduler",
+        "src/hosts/value-sidecar.py:1: fiberoptics",
+        "src/hosts/value-sidecar.py:1: fiberruntime",
+        "src/hosts/value-sidecar.py:2: fiberruntime",
+        "src/providers/value-host.json:1: fibergraph"
+       ]
+      },
+      "reach": {
+       "head": {
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
+        "launches": []
+       },
+       "tail": {
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
+        "launches": []
+       },
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "liveWalk": false
+      },
+      "reachListed": {
+       "head": {
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
+        "launches": []
+       },
+       "tail": {
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
+        "launches": []
+       },
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "liveWalk": true
+      },
+      "reachNegative": {
+       "head": {
+        "hosting": {
+         "fiberoptics": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberruntime": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fibergraph": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberscheduler": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushvaluepublications": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "requestrerender": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushrequestedrenders": [
+          "src/reach/headless.ts",
+          "src/reach/headless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "launches": [
+         "src/reach/headless.ts",
+         "src/reach/headless.txt",
+         "src/reach/unprobed.ts"
+        ]
+       },
+       "tail": {
+        "hosting": {
+         "fiberoptics": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberruntime": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fibergraph": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "fiberscheduler": [
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushvaluepublications": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "requestrerender": [
+          "src/reach/partial.ts",
+          "src/reach/partial.txt",
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ],
+         "flushrequestedrenders": [
+          "src/reach/tailless.ts",
+          "src/reach/tailless.txt",
+          "src/reach/unprobed.ts"
+         ]
+        },
+        "launches": [
+         "src/reach/partial.ts",
+         "src/reach/tailless.ts",
+         "src/reach/tailless.txt",
+         "src/reach/unprobed.ts"
+        ]
+       },
+       "onlyWalked": [],
+       "onlyTracked": [],
+       "liveWalk": false
+      },
+      "dense": {
+       "src/workbench/reach/dense.ts": {
+        "lines": 6000,
+        "hosting": {
+         "fiberoptics": [],
+         "fiberruntime": [],
+         "fibergraph": [],
+         "fiberscheduler": []
+        },
+        "entries": {
+         "queuevaluepublication": [],
+         "flushvaluepublications": [],
+         "requestrerender": [],
+         "flushrequestedrenders": []
+        },
+        "launchesMissing": 0
+       },
+       "src/workbench/reach/dense-withheld.ts": {
+        "lines": 9,
+        "hosting": {
+         "fiberoptics": [
+          1,
+          5,
+          9
+         ],
+         "fiberruntime": [
+          1,
+          5,
+          9
+         ],
+         "fibergraph": [
+          1,
+          5,
+          9
+         ],
+         "fiberscheduler": [
+          1,
+          5,
+          9
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          1,
+          5,
+          9
+         ],
+         "flushvaluepublications": [
+          1,
+          5,
+          9
+         ],
+         "requestrerender": [
+          1,
+          5,
+          9
+         ],
+         "flushrequestedrenders": [
+          1,
+          5,
+          9
+         ]
+        },
+        "launchesMissing": 3
+       },
+       "src/workbench/reach/dense-partial.ts": {
+        "lines": 8,
+        "hosting": {
+         "fiberoptics": [
+          1
+         ],
+         "fiberruntime": [
+          2
+         ],
+         "fibergraph": [
+          3
+         ],
+         "fiberscheduler": [
+          4
+         ]
+        },
+        "entries": {
+         "queuevaluepublication": [
+          5
+         ],
+         "flushvaluepublications": [
+          6
+         ],
+         "requestrerender": [
+          7
+         ],
+         "flushrequestedrenders": [
+          8
+         ]
+        },
+        "launchesMissing": 0
+       },
+       "onlyWalked": [],
+       "onlyTracked": []
+      },
+      "walkControl": {
+       "onlyWalked": [
+        "src/.hidden/walked-only.ts",
+        "src/.walked-hidden.ts",
+        "src/other/reactivefiber.ts",
+        "src/walked-only.ts",
+        "src/workbench/providers/reactivefiber",
+        "src/workbench/providers/reactivefiber.ts.orig"
+       ],
+       "onlyTracked": [
+        "src/listed-only.ts",
+        "src/walked-only.ts.orig",
+        "src/walked-only",
+        "src/other/walked-only.ts",
+        "src/.listed-hidden.ts",
+        "src/.hidden/listed-only.ts"
+       ],
+       "providerRead": true,
+       "anchors": {
+        "rf": false,
+        "--no-commit": false,
+        "nativeReactiveFiberRender": false,
+        "fiber_signal_count": false
+       },
+       "pipelineProviderRead": false
+      },
+      "controls": {
+       "importFrom": [
+        "import-from.ts:1: fiberoptics"
+       ],
+       "dynamicImport": [
+        "dynamic-import.ts:1: fiberoptics"
+       ],
+       "requireCall": [
+        "require-call.cjs:1: fiberoptics"
+       ],
+       "sidecarArgv": [
+        "sidecar.ts:2: fiberoptics"
+       ],
+       "runtimeClass": [
+        "runtime-class.ts:2: fiberruntime"
+       ],
+       "graphType": [
+        "graph-type.ts:1: fibergraph"
+       ],
+       "schedulerTemplate": [
+        "scheduler-template.ts:2: fiberscheduler"
+       ],
+       "regexPattern": [
+        "regex-pattern.ts:1: fiberoptics"
+       ],
+       "privateName": [
+        "private-name.ts:2: fiberoptics",
+        "private-name.ts:4: fiberoptics"
+       ],
+       "jsxText": [
+        "jsx-text.tsx:1: fiberoptics"
+       ],
+       "classInPath": [
+        "class-in-path.ts:1: fiberoptics",
+        "class-in-path.ts:1: fibergraph"
+       ],
+       "nearMiss": [],
+       "rfLayout": [],
+       "templateParts": [
+        "template-parts.ts:3: fiberoptics",
+        "template-parts.ts:3: fibergraph",
+        "template-parts.ts:4: fiberruntime"
+       ],
+       "exportFrom": [
+        "export-from.ts:1: fiberoptics",
+        "export-from.ts:2: fiberoptics"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "surface": "registered capabilities",
+      "artifact": "a registered Pi Fiber-hosting or Fiber-publishing capability (none exists)",
+      "missing": {
+       "native": [],
+       "injected": []
+      },
+      "missingControls": {
+       "forge.gate.status": [
+        "forge.gate.status"
+       ],
+       "furnace.run.inspect": [
+        "furnace.run.inspect"
+       ],
+       "hyperunix.find": [
+        "hyperunix.find"
+       ],
+       "reactivefiber.render.preview": [
+        "reactivefiber.render.preview"
+       ]
+      },
+      "substitutionControls": {
+       "forge.gate.status": {
+        "forge.gate.status.typed": [
+         "forge.gate.status"
+        ],
+        "typed.forge.gate.status": [
+         "forge.gate.status"
+        ],
+        "forge.gate.statu": [
+         "forge.gate.status"
+        ],
+        "orge.gate.status": [
+         "forge.gate.status"
+        ]
+       },
+       "furnace.run.inspect": {
+        "furnace.run.inspect.typed": [
+         "furnace.run.inspect"
+        ],
+        "typed.furnace.run.inspect": [
+         "furnace.run.inspect"
+        ],
+        "furnace.run.inspec": [
+         "furnace.run.inspect"
+        ],
+        "urnace.run.inspect": [
+         "furnace.run.inspect"
+        ]
+       },
+       "hyperunix.find": {
+        "hyperunix.find.typed": [
+         "hyperunix.find"
+        ],
+        "typed.hyperunix.find": [
+         "hyperunix.find"
+        ],
+        "hyperunix.fin": [
+         "hyperunix.find"
+        ],
+        "yperunix.find": [
+         "hyperunix.find"
+        ]
+       },
+       "reactivefiber.render.preview": {
+        "reactivefiber.render.preview.typed": [
+         "reactivefiber.render.preview"
+        ],
+        "typed.reactivefiber.render.preview": [
+         "reactivefiber.render.preview"
+        ],
+        "reactivefiber.render.previe": [
+         "reactivefiber.render.preview"
+        ],
+        "eactivefiber.render.preview": [
+         "reactivefiber.render.preview"
+        ]
+       }
+      },
+      "native": {
+       "hosting": [],
+       "family": [
+        {
+         "id": "reactivefiber.render.preview",
+         "criteria": [
+          "id",
+          "permission",
+          "contract",
+          "rf-contract"
+         ],
+         "effectClass": "read",
+         "supportedModes": [
+          "invoke"
+         ],
+         "permissions": [
+          "reactivefiber:render"
+         ],
+         "carrier": true,
+         "description": "RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+         "publishing": []
+        }
+       ]
+      },
+      "injected": {
+       "hosting": [],
+       "family": [
+        {
+         "id": "reactivefiber.render.preview",
+         "criteria": [
+          "id",
+          "permission",
+          "contract",
+          "rf-contract"
+         ],
+         "effectClass": "read",
+         "supportedModes": [
+          "invoke"
+         ],
+         "permissions": [
+          "reactivefiber:render"
+         ],
+         "carrier": true,
+         "description": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+         "publishing": []
+        }
+       ]
+      },
+      "staticSites": [
+       "src/agent-types.ts#(module):registerAgents@FunctionDeclaration",
+       "src/cross-extension-rpc.ts#(module):registerRpcHandlers@FunctionDeclaration",
+       "src/group-join.ts#GroupJoinManager:registerGroup@MethodDeclaration",
+       "src/index.ts#(module):registerAgents@ImportSpecifier",
+       "src/index.ts#(module):registerRpcHandlers@ImportSpecifier",
+       "src/index.ts#(module):registerToolReportingUsage@FunctionDeclaration",
+       "src/index.ts#(module):registerWorkbenchTools@FunctionDeclaration",
+       "src/index.ts#registryFor:registerNativeProviders@PropertyAccessExpression",
+       "src/workbench/capability-registry.ts#CapabilityRegistry:register@MethodDeclaration",
+       "src/workbench/hosts/local-detached.ts#(module):registerNativeForgeGateStatus@ImportSpecifier",
+       "src/workbench/hosts/local-detached.ts#(module):registerNativeFurnaceRunInspect@ImportSpecifier",
+       "src/workbench/hosts/local-detached.ts#(module):registerNativeHyperUnixFind@ImportSpecifier",
+       "src/workbench/hosts/local-detached.ts#(module):registerNativeReactiveFiberRender@ImportSpecifier",
+       "src/workbench/hosts/local-detached.ts#module:register@PropertySignature",
+       "src/workbench/hosts/local-detached.ts#register:register@PropertyAccessExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@CallExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@NewExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+       "src/workbench/hosts/local-detached.ts#registryFor:register@VariableDeclaration",
+       "src/workbench/native-modules.ts#WorkbenchNativeModules:registerNativeProviders@PropertySignature",
+       "src/workbench/native-modules.ts#importAll:registerNativeProviders@MethodDeclaration",
+       "src/workbench/providers/forge.ts#(module):registerForgeGateStatus@FunctionDeclaration",
+       "src/workbench/providers/forge.ts#(module):registerNativeForgeGateStatus@FunctionDeclaration",
+       "src/workbench/providers/forge.ts#registerForgeGateStatus:register@PropertyAccessExpression",
+       "src/workbench/providers/forge.ts#registerNativeForgeGateStatus:register@PropertyAccessExpression",
+       "src/workbench/providers/furnace.ts#(module):registerFurnaceRunInspect@FunctionDeclaration",
+       "src/workbench/providers/furnace.ts#(module):registerNativeFurnaceRunInspect@FunctionDeclaration",
+       "src/workbench/providers/furnace.ts#registerFurnaceRunInspect:register@PropertyAccessExpression",
+       "src/workbench/providers/furnace.ts#registerNativeFurnaceRunInspect:register@PropertyAccessExpression",
+       "src/workbench/providers/hyperunix.ts#(module):registerHyperUnixFind@FunctionDeclaration",
+       "src/workbench/providers/hyperunix.ts#(module):registerNativeHyperUnixFind@FunctionDeclaration",
+       "src/workbench/providers/hyperunix.ts#registerHyperUnixFind:register@PropertyAccessExpression",
+       "src/workbench/providers/hyperunix.ts#registerNativeHyperUnixFind:register@PropertyAccessExpression",
+       "src/workbench/providers/reactivefiber.ts#(module):registerNativeReactiveFiberRender@FunctionDeclaration",
+       "src/workbench/providers/reactivefiber.ts#(module):registerReactiveFiberRender@FunctionDeclaration",
+       "src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender:register@PropertyAccessExpression",
+       "src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender:register@PropertyAccessExpression"
+      ],
+      "registrationControl": [
+       "src/workbench/hosts/value-bridge.ts#(module):registerNativeProviders@ElementAccessExpression",
+       "src/workbench/hosts/value-bridge.ts#(module):registerNativeProviders@PropertyAccessExpression",
+       "src/workbench/hosts/value-bridge.ts#modules:registerNativeProviders@MethodSignature",
+       "src/workbench/providers/value-host.json:1: register",
+       "src/workbench/providers/value-host.json:1: registerNativeProviders",
+       "src/workbench/providers/value-names.ts#(module):register2@VariableDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueAlias@TypeAliasDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueArrow@VariableDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueBinding@BindingElement",
+       "src/workbench/providers/value-names.ts#(module):registerValueClass@ClassDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueDeclared@FunctionDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueDefault@ImportClause",
+       "src/workbench/providers/value-names.ts#(module):registerValueEnum@EnumDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueExported@ExportSpecifier",
+       "src/workbench/providers/value-names.ts#(module):registerValueInterface@InterfaceDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueModule@ModuleDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueNamespace@ModuleDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueReexport@NamespaceExport",
+       "src/workbench/providers/value-names.ts#(module):registerValueRequire@ImportEqualsDeclaration",
+       "src/workbench/providers/value-names.ts#(module):registerValueStar@NamespaceImport",
+       "src/workbench/providers/value-names.ts#(module):registerValueStringExport@ExportSpecifier",
+       "src/workbench/providers/value-names.ts#(module):register_value@VariableDeclaration",
+       "src/workbench/providers/value-names.ts#Kinds:registerValueMember@EnumMember",
+       "src/workbench/providers/value-names.ts#Members:registerValueField@PropertyDeclaration",
+       "src/workbench/providers/value-names.ts#Members:registerValueGetter@GetAccessor",
+       "src/workbench/providers/value-names.ts#Members:registerValueMethod@MethodDeclaration",
+       "src/workbench/providers/value-names.ts#Members:registerValueSetter@SetAccessor",
+       "src/workbench/providers/value-names.ts#Privates:registerValuePrivate@MethodDeclaration",
+       "src/workbench/providers/value-names.ts#Quoted:registerValueQuotedMember@EnumMember",
+       "src/workbench/providers/value-names.ts#Shape:registerValueProperty@PropertySignature",
+       "src/workbench/providers/value-names.ts#Shape:registerValueSignature@MethodSignature",
+       "src/workbench/providers/value-names.ts#assigned:registerValueArrow@ShorthandPropertyAssignment",
+       "src/workbench/providers/value-names.ts#assigned:registerValueAssigned@PropertyAssignment",
+       "src/workbench/providers/value-names.ts#expression:registerValueClassExpression@ClassExpression",
+       "src/workbench/providers/value-names.ts#generic:registerValueType@TypeParameter",
+       "src/workbench/providers/value-names.ts#host:registerValueBinding@PropertySignature",
+       "src/workbench/providers/value-names.ts#install:registerValueParameter@Parameter",
+       "src/workbench/providers/value-names.ts#installArrow:registerValueArrow@ExportSpecifier",
+       "src/workbench/providers/value-names.ts#named:registerValueNamed@FunctionExpression",
+       "src/workbench/providers/value-names.ts#quoted:registerValueComputed@ComputedPropertyName",
+       "src/workbench/providers/value-names.ts#quoted:registerValueComputedTemplate@ComputedPropertyName",
+       "src/workbench/providers/value-names.ts#quoted:registerValueQuoted@PropertyAssignment",
+       "src/workbench/providers/value-names.ts#registerValueDefault:registerValueImported@ImportSpecifier",
+       "src/workbench/providers/value-names.ts#renamed:registerValueOriginal@ImportSpecifier",
+       "src/workbench/providers/value-names.ts#stringImport:registerValueString@ImportSpecifier",
+       "src/workbench/providers/value-positions.tsx#Host:register@MethodDeclaration",
+       "src/workbench/providers/value-positions.tsx#both:register@VariableDeclaration",
+       "src/workbench/providers/value-positions.tsx#both:registerNativeProviders@VariableDeclaration",
+       "src/workbench/providers/value-positions.tsx#head:register@TemplateExpression",
+       "src/workbench/providers/value-positions.tsx#middle:register@TemplateSpan",
+       "src/workbench/providers/value-positions.tsx#pattern:register@VariableDeclaration",
+       "src/workbench/providers/value-positions.tsx#tail:register@TemplateSpan",
+       "src/workbench/providers/value-positions.tsx#view:register@JsxElement",
+       "src/workbench/providers/value-publish.ts#(module):registerFiberValuePublish@FunctionDeclaration",
+       "src/workbench/providers/value-publish.ts#registerFiberValuePublish:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#(module):registerValueSpellings@VariableDeclaration",
+       "src/workbench/providers/value-spellings.ts#add:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@BindingElement",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@ElementAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@ElementAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registerValueSpellings:register@PropertyAccessExpression",
+       "src/workbench/providers/value-spellings.ts#registry:register@MethodSignature"
+      ],
+      "controls": {
+       "runtimeHost": {
+        "criteria": [
+         "id",
+         "permission",
+         "contract"
+        ],
+        "publishing": [
+         "effectClass external",
+         "contract not ending with \" --no-commit\""
+        ],
+        "needles": [
+         "fiberruntime",
+         "fiberoptics"
+        ]
+       },
+       "valueFlush": {
+        "criteria": [
+         "id",
+         "permission"
+        ],
+        "publishing": [
+         "effectClass write",
+         "contract not ending with \" --no-commit\""
+        ],
+        "needles": [
+         "fiberoptics"
+        ]
+       },
+       "commitRender": {
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
+        "publishing": [
+         "effectClass write",
+         "contract not ending with \" --no-commit\""
+        ],
+        "needles": []
+       },
+       "observePreview": {
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
+        "publishing": [
+         "mode observe"
+        ],
+        "needles": []
+       },
+       "rfContract": {
+        "criteria": [
+         "rf-contract"
+        ],
+        "publishing": [
+         "contract not ending with \" --no-commit\""
+        ],
+        "needles": []
+       },
+       "entryDescription": {
+        "criteria": [],
+        "publishing": [],
+        "needles": [
+         "queuevaluepublication",
+         "flushvaluepublications"
+        ]
+       },
+       "previewShape": {
+        "criteria": [
+         "id",
+         "permission",
+         "contract",
+         "rf-contract"
+        ],
+        "publishing": [],
+        "needles": []
+       },
+       "nestedSchema": {
+        "criteria": [],
+        "publishing": [],
+        "needles": [
+         "fiberruntime"
+        ]
+       },
+       "rfLayoutDescription": {
+        "criteria": [],
+        "publishing": [],
+        "needles": []
+       },
+       "neutral": {
+        "criteria": [],
+        "publishing": [],
+        "needles": []
+       }
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "surface": "rf launch",
+      "flag": "--no-commit",
+      "launchRoster": [
+       "src/workbench/providers/reactivefiber.ts: spawn"
+      ],
+      "pipeline": [
+       "src/hosts/value-sidecar.py:3: rf"
+      ],
+      "launchControls": {
+       "spawnRf": [
+        "spawn-rf.ts: spawn"
+       ],
+       "execFileSyncRf": [
+        "exec-rf.ts: execFileSync"
+       ],
+       "memberSpawnRf": [
+        "member-spawn-rf.ts: spawn"
+       ],
+       "launcherNames": [
+        "launcher-names.ts: spawnSync",
+        "launcher-names.ts: execFile",
+        "launcher-names.ts: exec",
+        "launcher-names.ts: execSync",
+        "launcher-names.ts: fork"
+       ],
+       "identifierLaunchers": [
+        "identifier-launchers.ts: spawnSync",
+        "identifier-launchers.ts: execFile",
+        "identifier-launchers.ts: exec",
+        "identifier-launchers.ts: execSync",
+        "identifier-launchers.ts: fork"
+       ],
+       "memberExecFileSync": [
+        "member-exec-file-sync.ts: execFileSync"
+       ],
+       "optionalCall": [
+        "optional-call.ts: spawn"
+       ],
+       "optionalChain": [
+        "optional-chain.ts: spawn"
+       ],
+       "typeArguments": [
+        "type-arguments.ts: spawn"
+       ],
+       "propertyReceiver": [
+        "property-receiver.ts: spawn"
+       ],
+       "otherBinary": [],
+       "pythonLaunch": [
+        "render-sidecar.py:2: rf"
+       ],
+       "shellLaunch": [
+        "render.sh:2: rf"
+       ],
+       "rawNearMiss": []
+      },
+      "arms": {
+       "legacy": "returned",
+       "view": "returned"
+      },
+      "spawns": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "model-fixture",
+        "--task",
+        "task-fixture",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ],
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--view",
+        "swarm.worker",
+        "--task-id",
+        "bead-fixture-000",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ],
+      "everyLaunchNoCommit": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "a falsifier proves publication happens only through an explicit host flush call",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "surface": "native preview",
+      "forms": {
+       "transaction_id": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "render_id": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "ephemeral": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "commit_seq": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "storage_write_count": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       }
+      },
+      "control": {
+       "legacy": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       },
+       "view": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       }
+      },
+      "spawns": 12
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "surface": "src",
+      "walkHeldToGit": true,
+      "entries": [],
+      "pipeline": [
+       "src/hosts/value-segments.ts:1: queuevaluepublication",
+       "src/hosts/value-segments.ts:1: flushvaluepublications",
+       "src/hosts/value-segments.ts:1: requestrerender",
+       "src/hosts/value-segments.ts:1: flushrequestedrenders",
+       "src/hosts/value-segments.ts:2: queuevaluepublication",
+       "src/hosts/value-segments.ts:2: flushvaluepublications",
+       "src/hosts/value-segments.ts:2: requestrerender",
+       "src/hosts/value-segments.ts:2: flushrequestedrenders",
+       "src/hosts/value-segments.ts:3: queuevaluepublication",
+       "src/hosts/value-segments.ts:3: flushvaluepublications",
+       "src/hosts/value-segments.ts:3: requestrerender",
+       "src/hosts/value-segments.ts:3: flushrequestedrenders",
+       "src/hosts/value-segments.ts:4: queuevaluepublication",
+       "src/hosts/value-segments.ts:4: flushvaluepublications",
+       "src/hosts/value-segments.ts:4: requestrerender",
+       "src/hosts/value-segments.ts:4: flushrequestedrenders",
+       "src/hosts/value-segments.ts:5: queuevaluepublication",
+       "src/hosts/value-segments.ts:5: flushvaluepublications",
+       "src/hosts/value-segments.ts:5: requestrerender",
+       "src/hosts/value-segments.ts:5: flushrequestedrenders",
+       "src/hosts/value-segments.ts:6: queuevaluepublication",
+       "src/hosts/value-segments.ts:6: flushvaluepublications",
+       "src/hosts/value-segments.ts:6: requestrerender",
+       "src/hosts/value-segments.ts:6: flushrequestedrenders",
+       "src/hosts/value-segments.ts:7: queuevaluepublication",
+       "src/hosts/value-segments.ts:7: flushvaluepublications",
+       "src/hosts/value-segments.ts:7: requestrerender",
+       "src/hosts/value-segments.ts:7: flushrequestedrenders",
+       "src/hosts/value-segments.ts:8: queuevaluepublication",
+       "src/hosts/value-segments.ts:8: flushvaluepublications",
+       "src/hosts/value-segments.ts:8: requestrerender",
+       "src/hosts/value-segments.ts:8: flushrequestedrenders",
+       "src/hosts/value-segments.ts:9: queuevaluepublication",
+       "src/hosts/value-segments.ts:9: flushvaluepublications",
+       "src/hosts/value-segments.ts:9: requestrerender",
+       "src/hosts/value-segments.ts:9: flushrequestedrenders",
+       "src/hosts/value-segments.ts:10: queuevaluepublication",
+       "src/hosts/value-segments.ts:10: flushvaluepublications",
+       "src/hosts/value-segments.ts:10: requestrerender",
+       "src/hosts/value-segments.ts:10: flushrequestedrenders",
+       "src/hosts/value-segments.ts:11: queuevaluepublication",
+       "src/hosts/value-segments.ts:11: flushvaluepublications",
+       "src/hosts/value-segments.ts:11: requestrerender",
+       "src/hosts/value-segments.ts:11: flushrequestedrenders",
+       "src/hosts/value-segments.ts:12: queuevaluepublication",
+       "src/hosts/value-segments.ts:12: flushvaluepublications",
+       "src/hosts/value-segments.ts:12: requestrerender",
+       "src/hosts/value-segments.ts:12: flushrequestedrenders",
+       "src/hosts/value-segments.ts:13: queuevaluepublication",
+       "src/hosts/value-segments.ts:13: flushvaluepublications",
+       "src/hosts/value-segments.ts:13: requestrerender",
+       "src/hosts/value-segments.ts:13: flushrequestedrenders",
+       "src/hosts/value-segments.ts:14: queuevaluepublication",
+       "src/hosts/value-segments.ts:14: flushvaluepublications",
+       "src/hosts/value-segments.ts:14: requestrerender",
+       "src/hosts/value-segments.ts:14: flushrequestedrenders",
+       "src/hosts/value-segments.ts:15: queuevaluepublication",
+       "src/hosts/value-segments.ts:15: flushvaluepublications",
+       "src/hosts/value-segments.ts:15: requestrerender",
+       "src/hosts/value-segments.ts:15: flushrequestedrenders",
+       "src/hosts/value-segments.ts:16: queuevaluepublication",
+       "src/hosts/value-segments.ts:16: flushvaluepublications",
+       "src/hosts/value-segments.ts:16: requestrerender",
+       "src/hosts/value-segments.ts:16: flushrequestedrenders",
+       "src/hosts/value-segments.ts:17: queuevaluepublication",
+       "src/hosts/value-segments.ts:17: flushvaluepublications",
+       "src/hosts/value-segments.ts:17: requestrerender",
+       "src/hosts/value-segments.ts:17: flushrequestedrenders",
+       "src/hosts/value-segments.ts:18: queuevaluepublication",
+       "src/hosts/value-segments.ts:18: flushvaluepublications",
+       "src/hosts/value-segments.ts:18: requestrerender",
+       "src/hosts/value-segments.ts:18: flushrequestedrenders",
+       "src/hosts/value-segments.ts:19: queuevaluepublication",
+       "src/hosts/value-segments.ts:19: flushvaluepublications",
+       "src/hosts/value-segments.ts:19: requestrerender",
+       "src/hosts/value-segments.ts:19: flushrequestedrenders",
+       "src/hosts/value-segments.ts:20: queuevaluepublication",
+       "src/hosts/value-segments.ts:20: flushvaluepublications",
+       "src/hosts/value-segments.ts:20: requestrerender",
+       "src/hosts/value-segments.ts:20: flushrequestedrenders",
+       "src/hosts/value-segments.ts:21: queuevaluepublication",
+       "src/hosts/value-segments.ts:21: flushvaluepublications",
+       "src/hosts/value-segments.ts:21: requestrerender",
+       "src/hosts/value-segments.ts:21: flushrequestedrenders",
+       "src/hosts/value-segments.ts:22: queuevaluepublication",
+       "src/hosts/value-segments.ts:22: flushvaluepublications",
+       "src/hosts/value-segments.ts:22: requestrerender",
+       "src/hosts/value-segments.ts:22: flushrequestedrenders",
+       "src/hosts/value-segments.ts:23: queuevaluepublication",
+       "src/hosts/value-segments.ts:23: flushvaluepublications",
+       "src/hosts/value-segments.ts:23: requestrerender",
+       "src/hosts/value-segments.ts:23: flushrequestedrenders",
+       "src/hosts/value-segments.ts:24: queuevaluepublication",
+       "src/hosts/value-segments.ts:24: flushvaluepublications",
+       "src/hosts/value-segments.ts:24: requestrerender",
+       "src/hosts/value-segments.ts:24: flushrequestedrenders",
+       "src/hosts/value-segments.ts:25: queuevaluepublication",
+       "src/hosts/value-segments.ts:25: flushvaluepublications",
+       "src/hosts/value-segments.ts:25: requestrerender",
+       "src/hosts/value-segments.ts:25: flushrequestedrenders",
+       "src/hosts/value-segments.ts:26: queuevaluepublication",
+       "src/hosts/value-segments.ts:26: flushvaluepublications",
+       "src/hosts/value-segments.ts:26: requestrerender",
+       "src/hosts/value-segments.ts:26: flushrequestedrenders",
+       "src/hosts/value-segments.ts:27: queuevaluepublication",
+       "src/hosts/value-segments.ts:27: flushvaluepublications",
+       "src/hosts/value-segments.ts:27: requestrerender",
+       "src/hosts/value-segments.ts:27: flushrequestedrenders",
+       "src/hosts/value-segments.ts:28: queuevaluepublication",
+       "src/hosts/value-segments.ts:28: flushvaluepublications",
+       "src/hosts/value-segments.ts:28: requestrerender",
+       "src/hosts/value-segments.ts:28: flushrequestedrenders",
+       "src/hosts/value-segments.ts:29: queuevaluepublication",
+       "src/hosts/value-segments.ts:29: flushvaluepublications",
+       "src/hosts/value-segments.ts:29: requestrerender",
+       "src/hosts/value-segments.ts:29: flushrequestedrenders",
+       "src/hosts/value-segments.ts:30: queuevaluepublication",
+       "src/hosts/value-segments.ts:30: flushvaluepublications",
+       "src/hosts/value-segments.ts:30: requestrerender",
+       "src/hosts/value-segments.ts:30: flushrequestedrenders",
+       "src/hosts/value-segments.ts:31: queuevaluepublication",
+       "src/hosts/value-segments.ts:31: flushvaluepublications",
+       "src/hosts/value-segments.ts:31: requestrerender",
+       "src/hosts/value-segments.ts:31: flushrequestedrenders",
+       "src/hosts/value-segments.ts:32: queuevaluepublication",
+       "src/hosts/value-segments.ts:32: flushvaluepublications",
+       "src/hosts/value-segments.ts:32: requestrerender",
+       "src/hosts/value-segments.ts:32: flushrequestedrenders",
+       "src/hosts/value-segments.txt:1: queuevaluepublication",
+       "src/hosts/value-segments.txt:1: flushvaluepublications",
+       "src/hosts/value-segments.txt:1: requestrerender",
+       "src/hosts/value-segments.txt:1: flushrequestedrenders",
+       "src/hosts/value-segments.txt:2: queuevaluepublication",
+       "src/hosts/value-segments.txt:2: flushvaluepublications",
+       "src/hosts/value-segments.txt:2: requestrerender",
+       "src/hosts/value-segments.txt:2: flushrequestedrenders",
+       "src/hosts/value-segments.txt:3: queuevaluepublication",
+       "src/hosts/value-segments.txt:3: flushvaluepublications",
+       "src/hosts/value-segments.txt:3: requestrerender",
+       "src/hosts/value-segments.txt:3: flushrequestedrenders",
+       "src/hosts/value-segments.txt:4: queuevaluepublication",
+       "src/hosts/value-segments.txt:4: flushvaluepublications",
+       "src/hosts/value-segments.txt:4: requestrerender",
+       "src/hosts/value-segments.txt:4: flushrequestedrenders",
+       "src/hosts/value-segments.txt:5: queuevaluepublication",
+       "src/hosts/value-segments.txt:5: flushvaluepublications",
+       "src/hosts/value-segments.txt:5: requestrerender",
+       "src/hosts/value-segments.txt:5: flushrequestedrenders",
+       "src/hosts/value-segments.txt:6: queuevaluepublication",
+       "src/hosts/value-segments.txt:6: flushvaluepublications",
+       "src/hosts/value-segments.txt:6: requestrerender",
+       "src/hosts/value-segments.txt:6: flushrequestedrenders",
+       "src/hosts/value-segments.txt:7: queuevaluepublication",
+       "src/hosts/value-segments.txt:7: flushvaluepublications",
+       "src/hosts/value-segments.txt:7: requestrerender",
+       "src/hosts/value-segments.txt:7: flushrequestedrenders",
+       "src/hosts/value-segments.txt:8: queuevaluepublication",
+       "src/hosts/value-segments.txt:8: flushvaluepublications",
+       "src/hosts/value-segments.txt:8: requestrerender",
+       "src/hosts/value-segments.txt:8: flushrequestedrenders",
+       "src/hosts/value-segments.txt:9: queuevaluepublication",
+       "src/hosts/value-segments.txt:9: flushvaluepublications",
+       "src/hosts/value-segments.txt:9: requestrerender",
+       "src/hosts/value-segments.txt:9: flushrequestedrenders",
+       "src/hosts/value-segments.txt:10: queuevaluepublication",
+       "src/hosts/value-segments.txt:10: flushvaluepublications",
+       "src/hosts/value-segments.txt:10: requestrerender",
+       "src/hosts/value-segments.txt:10: flushrequestedrenders",
+       "src/hosts/value-segments.txt:11: queuevaluepublication",
+       "src/hosts/value-segments.txt:11: flushvaluepublications",
+       "src/hosts/value-segments.txt:11: requestrerender",
+       "src/hosts/value-segments.txt:11: flushrequestedrenders",
+       "src/hosts/value-segments.txt:12: queuevaluepublication",
+       "src/hosts/value-segments.txt:12: flushvaluepublications",
+       "src/hosts/value-segments.txt:12: requestrerender",
+       "src/hosts/value-segments.txt:12: flushrequestedrenders",
+       "src/hosts/value-segments.txt:13: queuevaluepublication",
+       "src/hosts/value-segments.txt:13: flushvaluepublications",
+       "src/hosts/value-segments.txt:13: requestrerender",
+       "src/hosts/value-segments.txt:13: flushrequestedrenders",
+       "src/hosts/value-segments.txt:14: queuevaluepublication",
+       "src/hosts/value-segments.txt:14: flushvaluepublications",
+       "src/hosts/value-segments.txt:14: requestrerender",
+       "src/hosts/value-segments.txt:14: flushrequestedrenders",
+       "src/hosts/value-segments.txt:15: queuevaluepublication",
+       "src/hosts/value-segments.txt:15: flushvaluepublications",
+       "src/hosts/value-segments.txt:15: requestrerender",
+       "src/hosts/value-segments.txt:15: flushrequestedrenders",
+       "src/hosts/value-segments.txt:16: queuevaluepublication",
+       "src/hosts/value-segments.txt:16: flushvaluepublications",
+       "src/hosts/value-segments.txt:16: requestrerender",
+       "src/hosts/value-segments.txt:16: flushrequestedrenders",
+       "src/hosts/value-segments.txt:17: queuevaluepublication",
+       "src/hosts/value-segments.txt:17: flushvaluepublications",
+       "src/hosts/value-segments.txt:17: requestrerender",
+       "src/hosts/value-segments.txt:17: flushrequestedrenders",
+       "src/hosts/value-segments.txt:18: queuevaluepublication",
+       "src/hosts/value-segments.txt:18: flushvaluepublications",
+       "src/hosts/value-segments.txt:18: requestrerender",
+       "src/hosts/value-segments.txt:18: flushrequestedrenders",
+       "src/hosts/value-segments.txt:19: queuevaluepublication",
+       "src/hosts/value-segments.txt:19: flushvaluepublications",
+       "src/hosts/value-segments.txt:19: requestrerender",
+       "src/hosts/value-segments.txt:19: flushrequestedrenders",
+       "src/hosts/value-segments.txt:20: queuevaluepublication",
+       "src/hosts/value-segments.txt:20: flushvaluepublications",
+       "src/hosts/value-segments.txt:20: requestrerender",
+       "src/hosts/value-segments.txt:20: flushrequestedrenders",
+       "src/hosts/value-segments.txt:21: queuevaluepublication",
+       "src/hosts/value-segments.txt:21: flushvaluepublications",
+       "src/hosts/value-segments.txt:21: requestrerender",
+       "src/hosts/value-segments.txt:21: flushrequestedrenders",
+       "src/hosts/value-segments.txt:22: queuevaluepublication",
+       "src/hosts/value-segments.txt:22: flushvaluepublications",
+       "src/hosts/value-segments.txt:22: requestrerender",
+       "src/hosts/value-segments.txt:22: flushrequestedrenders",
+       "src/hosts/value-segments.txt:23: queuevaluepublication",
+       "src/hosts/value-segments.txt:23: flushvaluepublications",
+       "src/hosts/value-segments.txt:23: requestrerender",
+       "src/hosts/value-segments.txt:23: flushrequestedrenders",
+       "src/hosts/value-segments.txt:24: queuevaluepublication",
+       "src/hosts/value-segments.txt:24: flushvaluepublications",
+       "src/hosts/value-segments.txt:24: requestrerender",
+       "src/hosts/value-segments.txt:24: flushrequestedrenders",
+       "src/hosts/value-segments.txt:25: queuevaluepublication",
+       "src/hosts/value-segments.txt:25: flushvaluepublications",
+       "src/hosts/value-segments.txt:25: requestrerender",
+       "src/hosts/value-segments.txt:25: flushrequestedrenders",
+       "src/hosts/value-segments.txt:26: queuevaluepublication",
+       "src/hosts/value-segments.txt:26: flushvaluepublications",
+       "src/hosts/value-segments.txt:26: requestrerender",
+       "src/hosts/value-segments.txt:26: flushrequestedrenders",
+       "src/hosts/value-segments.txt:27: queuevaluepublication",
+       "src/hosts/value-segments.txt:27: flushvaluepublications",
+       "src/hosts/value-segments.txt:27: requestrerender",
+       "src/hosts/value-segments.txt:27: flushrequestedrenders",
+       "src/hosts/value-segments.txt:28: queuevaluepublication",
+       "src/hosts/value-segments.txt:28: flushvaluepublications",
+       "src/hosts/value-segments.txt:28: requestrerender",
+       "src/hosts/value-segments.txt:28: flushrequestedrenders",
+       "src/hosts/value-segments.txt:29: queuevaluepublication",
+       "src/hosts/value-segments.txt:29: flushvaluepublications",
+       "src/hosts/value-segments.txt:29: requestrerender",
+       "src/hosts/value-segments.txt:29: flushrequestedrenders",
+       "src/hosts/value-segments.txt:30: queuevaluepublication",
+       "src/hosts/value-segments.txt:30: flushvaluepublications",
+       "src/hosts/value-segments.txt:30: requestrerender",
+       "src/hosts/value-segments.txt:30: flushrequestedrenders",
+       "src/hosts/value-segments.txt:31: queuevaluepublication",
+       "src/hosts/value-segments.txt:31: flushvaluepublications",
+       "src/hosts/value-segments.txt:31: requestrerender",
+       "src/hosts/value-segments.txt:31: flushrequestedrenders",
+       "src/hosts/value-segments.txt:32: queuevaluepublication",
+       "src/hosts/value-segments.txt:32: flushvaluepublications",
+       "src/hosts/value-segments.txt:32: requestrerender",
+       "src/hosts/value-segments.txt:32: flushrequestedrenders",
+       "src/hosts/value-sidecar.py:2: flushvaluepublications"
+      ],
+      "controls": {
+       "snakeCall": [
+        "snake-call.ts:1: queuevaluepublication",
+        "snake-call.ts:2: queuevaluepublication"
+       ],
+       "camelCall": [
+        "camel-call.ts:1: flushvaluepublications",
+        "camel-call.ts:2: flushvaluepublications"
+       ],
+       "stringKey": [
+        "string-key.ts:2: requestrerender"
+       ],
+       "destructured": [
+        "destructured.ts:2: flushrequestedrenders"
+       ],
+       "nearMiss": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "a query change alone produces zero publication or inference side effects",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "registryServes": [
+       "invoke",
+       "inspect"
+      ],
+      "reactive": [],
+      "providers": {
+       "native": [
+        [
+         "descriptor",
+         "invoke"
+        ]
+       ],
+       "injected": [
+        [
+         "descriptor",
+         "invoke"
+        ]
+       ]
+      },
+      "registration": {
+       "native": [],
+       "injected": []
+      },
+      "controls": {
+       "subscribingRegistry": [
+        "SubscribingRegistry.subscribe: subscribe"
+       ],
+       "inheritingRegistry": [
+        "InheritingRegistry.subscribe: subscribe"
+       ],
+       "fieldRegistry": [
+        "FieldRegistry.subscribe: subscribe"
+       ],
+       "staticRegistry": [
+        "StaticRegistry.subscribe: subscribe"
+       ],
+       "pollingProvider": [
+        "Timeout+1"
+       ],
+       "resourceKinds": [
+        "FSEVENTWRAP+1",
+        "Immediate+1",
+        "PROCESSWRAP+1",
+        "PROMISE+1",
+        "TickObject+2",
+        "Timeout+2"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "native": {
+       "registration": [],
+       "changes": [],
+       "spawnsAfterChange": 0,
+       "invoked": [
+        [
+         "--workspace",
+         "<root>",
+         "context",
+         "render",
+         "--model",
+         "model-fixture",
+         "--task",
+         "task-after",
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       ],
+       "value": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       },
+       "secondChange": [],
+       "spawnsAfterSecondChange": 1
+      },
+      "injected": {
+       "callsAfterChange": 0,
+       "callsAfterInvoke": 1,
+       "callsAfterSecondChange": 1,
+       "spawns": 0
+      },
+      "reactiveControl": {
+       "registration": [
+        "Timeout+1"
+       ],
+       "spawnsAfterChange": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "residual": "R-COMPOSED",
+      "hosting": [],
+      "entries": [],
+      "registration": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "residual": "R-NON-CODE",
+      "hosting": [],
+      "entries": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "residual": "R-OUTSIDE-SRC",
+      "walked": [
+       "src/clean.ts",
+       "src/hand-off.ts"
+      ],
+      "hits": [],
+      "registration": [],
+      "outside": [
+       {
+        "path": "qa/host.mjs",
+        "walked": false,
+        "selected": false,
+        "needles": 4
+       },
+       {
+        "path": "examples/host.ts",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "Dockerfile",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "scripts/setup-sidecar.sh",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "tools/value-host/deps.txt",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "providers/local-value.cjs",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "vendor/value-host/dist/index.js",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "tox.ini",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "web/bun.lock",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "web/package.yaml",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       },
+       {
+        "path": "test/fixtures/host/pyproject.toml",
+        "walked": false,
+        "selected": false,
+        "needles": 1
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "residual": "R-INJECTED-RELAY",
+      "returned": {
+       "transaction_id": "rft_bbbbbbbbbbbbbbbbbbbbbb",
+       "render_id": null,
+       "ephemeral": true,
+       "commit_seq": null,
+       "storage_write_count": 0
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "residual": "R-UNREAD-MARKER",
+      "forms": {
+       "wouldCommit": {
+        "legacy": "returned",
+        "view": "returned"
+       },
+       "effects": {
+        "legacy": "returned",
+        "view": "returned"
+       }
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "residual": "R-LATE-REACTION",
+      "registration": [
+       "Timeout+1"
+      ],
+      "spawnsAfterChange": 0,
+      "invocationArmed": {
+       "registration": [],
+       "late": 0,
+       "now": 1
+      }
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "residual": "R-OTHER-VOCABULARY",
+      "hosting": [],
+      "split": [],
+      "members": [],
+      "launches": [],
+      "launchSpellings": [],
+      "registration": [
+       "registration-vocabulary.ts#(module):registerNativeReactiveFiberRender@ImportSpecifier",
+       "registration-vocabulary.ts#(module):registerLocalValue@FunctionDeclaration"
+      ],
+      "manifest": [],
+      "descriptor": {
+       "criteria": [],
+       "publishing": [],
+       "needles": []
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
