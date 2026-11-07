@@ -14,7 +14,7 @@
  * the 457-file triage tree stays master-only at 0b25e14e as an evidence archive, so no row reads a triage file here, and
  * EAT-R004's reading is recorded in docs/workbench/receipts/wb-12x1.md.
  *
- * MEASURED (by the cutting seat ws-04 of g10-work-s228, 2026-11-06, at trunk c4e8f826): on the six pages as committed at
+ * MEASURED (cut #1, by the cutting seat ws-04 of g10-work-s228, 2026-11-06, at trunk c4e8f826): on the six pages as committed at
  * doc@7c80c34346c2 (blob-identical at 0b25e14e) every row's Existing wording stands exactly once, on the row's line, and no
  * Repair stands anywhere; this census then reads 47 failed rows and 3 passed (the ledger-only rows M011, M033 and M044,
  * whose pages stay unchanged). On the corrected pages every row's standing text stands exactly once on the row's line (line
@@ -24,60 +24,114 @@
  * the sentence that follows M023's Repair ("Those checks, read at MW `f7c0a943`, are <M022's Repair>."; the build token is
  * the version marking the rf historical claim census reads on 01:L55).
  *
+ * CUT #2 (seat ws-14 of g10-work-s233, 2026-11-07, trunk fd90f9d3 merged into the branch): the respin of gate refusal #1
+ * (outbox O:2204, guard R-B636). Cut #1's reader is kept; red-first, this cut adds the plants that refusal named - the
+ * boundary moves (U1, GP10-R05), the straddles (U1, GP10-R03), the receipt and export twins (U2, GP10-R09, GP10-R10,
+ * GP10-R13), the scratch-repository reading (U2, GP10-R12) - and the SHOWN reading that fails closed on HIDDEN forms, with
+ * its plants (U3, the GP10-P01 and GP10-P04 shapes). The six pages are unchanged and hold no HIDDEN form.
+ *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
- * - "the reading": the six pages are files git would commit (tracked or untracked, never ignored), each page key is named by
- *   at least one row, and every row's Where parses to one page and a line range inside it.
+ * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
+ *   index) or untracked and matched by no exclude rule (.gitignore, info/exclude), and it is on disk - each page key is
+ *   named by at least one row, and every row's Where parses to one page and a line range inside it.
+ * - "the reading's plants": a scratch repository (test/helpers/scratch.ts, git run without the locating variables and
+ *   with no global or system config) holds one path in each COMMITTABLE_PLANTS state - tracked; untracked; tracked and
+ *   matched by .gitignore; untracked and matched by .gitignore; untracked and matched by info/exclude; removed from the
+ *   index and matched by info/exclude while still on disk; tracked and removed from disk; never written - and committable
+ *   lists exactly the first three.
  * - "the row kinds": a row is ledger-only when its Repair starts "ledger only:", same-edit when it names "same edit as
  *   C<nnnn>" (the host is the row of that claim: an edit row on the same page and line), and an edit row otherwise; the
  *   kind decides the pins (edit and same-edit: stands and absent; ledger-only: stands), and the requirement id of M<nnn> is
  *   EAT-R<nnn + 93>.
  * - "frozen shape": ROWS pins requirement, id, claim, status, class, where, kind, pins and the sha256 (first 16 hex) of the
  *   Existing wording and of the Repair, one literal entry per row.
- * - "outside anchor": the tracked bead export's wb-12x1 row (.beads/issues.jsonl) - its title is the statement above, its
- *   ACCEPTANCE lists EAT-R004 and then exactly the 50 requirement ids of ROWS in order, and its SURFACES cite
+ * - "straddles": over the 47 edit and same-edit rows, an Existing occurrence can overlap a standing text without lying
+ *   wholly inside it only where the standing text's last characters are the Existing wording's first (M045: it starts
+ *   inside and ends after) or its first characters are the Existing wording's last (M022 and M045: it starts before and
+ *   ends inside); no standing text lies inside its Existing wording, so no occurrence can contain one.
+ * - "code rows": exactly M028 and M029 stand inside a code block (02's ts block), where a reader is shown an HTML form as
+ *   code, so their HIDDEN plants read clean.
+ * - "hidden forms": no page holds a HIDDEN form, and each HIDDEN_PLANTS entry, added after a blank line to any of the six
+ *   pages, reds that page's first row with exactly its form.
+ * - "outside anchor": the tracked bead export's wb-12x1 row (.beads/issues.jsonl, the row whose id is wb-12x1) - its title
+ *   is the statement above, its ACCEPTANCE segment starts "requirements " and lists EAT-R004 and then exactly the 50
+ *   requirement ids of ROWS in order, up to " - each per its ATOMIC-REQUIREMENTS.md entry", and its SURFACES cite
  *   ATOMIC-REQUIREMENTS.md and TDD-MATRIX.md at the 0b25e14e pin this header names.
- * - "receipt anchor": the last dated entry of docs/workbench/receipts/wb-12x1.md holds one table with the columns Requirement,
- *   Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256, and its rows equal ROWS in order (each wording by its
- *   full sha256, so the receipt spells none of the text this census judges).
- * - one case per row, titled "<requirement> <id> <claim> <class> <where>": the predicate over the live page. STANDS: the row's
- *   standing text (an edit row's Repair; a same-edit row's host Repair; a ledger-only row's Existing wording, the norm the
- *   ledger correction leaves in place) stands exactly once on its page, on a line of its Where. ABSENT (edit and same-edit
- *   rows): every occurrence of the row's Existing wording on its page lies wholly inside an occurrence of the standing text
- *   (the Existing wording of M002, M006, M024, M029, M034 and M046, and of the same-edit row M013, is part of it). Beside
- *   the live reading, the requirement's adversarial mutant runs in memory on the same page and each one reds the row with
- *   the findings it names: RESTORE (the standing text replaced by the overstrong wording: the row's Existing wording, or for
- *   a same-edit row its host's), NORM-EDIT (ledger-only: the norm deleted), SHORTEN (the standing text cut at its last
- *   space: a qualifier removed), MOVED (the standing text moved to a new last line), DUPLICATE (a second copy on a new last
- *   line) and ELSEWHERE (rows with ABSENT: the Existing wording added on a new last line).
+ * - "outside anchor twins": the anchor passes the row as exported and fails on each EXPORT_TWINS edit of it (an id joined
+ *   after EAT-R143 by "and" or by a comma, an id dropped, two ids swapped, words before the list, another delimiter after
+ *   it, another surface pin), on another title, and on an export whose only line naming wb-12x1 is another bead's row.
+ * - "receipt anchor": the last dated entry of docs/workbench/receipts/wb-12x1.md (the last depth-2 heading whose text starts
+ *   with a YYYY-MM-DD date followed by a space or its end, and everything after it) holds exactly one table with the
+ *   columns Requirement, Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256, and its rows equal ROWS in
+ *   order and both ways (each wording by its full sha256, so the receipt spells none of the text this census judges).
+ * - "receipt anchor twins": the anchor passes the receipt as committed and with a later dated entry holding the same
+ *   table, a later undated section, a later depth-3 dated heading or a later heading whose date runs into other text (the
+ *   last three without the table), and fails on a later dated entry without the table, with the table twice, with a
+ *   renamed column, with M001's and M002's rows swapped, with a row more or a row fewer, or with one wrong cell in any of
+ *   the eight columns.
+ * - one case per row, titled "<requirement> <id> <claim> <class> <where>": the predicate over the live page. STANDS: the
+ *   row's standing text (an edit row's Repair; a same-edit row's host Repair; a ledger-only row's Existing wording, the
+ *   norm the ledger correction leaves in place) stands exactly once on its page, on a line of its Where (from its first
+ *   line to its last). ABSENT (edit and same-edit rows): every occurrence of the row's Existing wording on its page lies
+ *   wholly inside an occurrence of the standing text - it starts at or after that occurrence's start and ends at or
+ *   before its end (the Existing wording of M002, M006, M024, M029, M034 and M046, and of the same-edit row M013, is part
+ *   of it). SHOWN: the page holds no HIDDEN form. Beside the live reading, the requirement's adversarial mutant and the
+ *   plants run in memory on the same page, and each one reds the row with exactly the findings it names: RESTORE (the
+ *   standing text replaced by the overstrong wording: the row's Existing wording, or for a same-edit row its host's),
+ *   NORM-EDIT (ledger-only: the norm deleted), SHORTEN (the standing text cut at its last space: a qualifier removed),
+ *   MOVED (the standing text moved to a new last line), DUPLICATE (a second copy on a new last line), ELSEWHERE (rows with
+ *   ABSENT: the Existing wording added on a new last line), MOVED-BEFORE and MOVED-AFTER (the standing text moved to the
+ *   end of the line just before its Where's first line, or just after its last line), STRADDLE-END and STRADDLE-START
+ *   (the straddle rows: the Existing wording glued after or before the standing text through their overlap), and
+ *   HIDDEN-COMMENT and HIDDEN-ATTRIBUTE (the standing text inside an HTML comment, or in a span's title attribute: the page
+ *   holds html; on the code rows they read clean).
  * - "R-PARAPHRASE quiet rows": the residual below, each member beside its twin control.
  * - "records": every row's case ran and reached its predicate.
- * Each positive claim's independent falsifier is the mutant set its case names, and for the table itself the frozen shape,
- * the export anchor and the receipt anchor (a row deleted, a pin deleted, a phrase shortened or a row swapped reds at least
- * one of them; a row deleted from every literal of this file reds both anchors).
+ * HIDDEN (the forms a reader is not shown, or that this census does not read as shown; it fails closed on them): a
+ * Markdown token (marked's GFM lexer, every token walked) of a kind outside SHOWN, the kinds the six pages use today
+ * (space, hr, heading, paragraph, text, strong, em, codespan, code, list, list_item, table and link) - so an HTML block or
+ * inline token (comments and tags), a link reference definition, an image, struck text, a block quote, a hard line
+ * break, a backslash escape or a task-list checkbox - and a link title, or whitespace in a link destination or in a
+ * fenced-code info string.
+ * FALSIFIERS (each positive claim's independent falsifier): STANDS' "exactly once" - DUPLICATE, RESTORE, SHORTEN and
+ * NORM-EDIT; "on a line of its Where" - MOVED, MOVED-BEFORE and MOVED-AFTER (both bounds, each at its boundary line);
+ * ABSENT's "wholly inside" - STRADDLE-END and STRADDLE-START on the straddle rows, with ELSEWHERE and RESTORE; SHOWN -
+ * HIDDEN-COMMENT, HIDDEN-ATTRIBUTE and the hidden-forms plants; the reading's "never ignored" and "on disk" - the
+ * reading's plants; the receipt anchor's "last dated entry", "exactly one table", "with the columns" and "in order and
+ * both ways" - the receipt anchor twins; the outside anchor's "the row whose id is wb-12x1" and "exactly the 50 ... in
+ * order" - the outside anchor twins; and for the table itself the frozen shape, the export anchor and the receipt anchor
+ * (a row deleted, a pin deleted, a phrase shortened or a row swapped reds at least one of them; a row deleted from every
+ * literal of this file reds both anchors).
  *
  * NOT CLAIMED (scope sentences): EAT-R004 - the landing of the corrected program and the triage on trunk, and its
  * qa/workbench/mechanical-docs-cut journey - is NOT CLAIMED by this census (owner ruling M:60615 (1): the triage half reads
  * as satisfied by the master landing and the s3 mirror; the receipt records that reading). The triage map (CLAIMS.jsonl and
  * the other triage files) and "Preserve the original pin and status in the triage map" are NOT CLAIMED by this census: the
  * triage is master-only and this cut writes none of it. Wording on any page outside the six, wording outside the 50 rows,
- * rendered text (the predicate reads raw source text), whether a Repair is true of the producer (the census pins the
- * wording the audit prescribes, not the audit's evidence), a hollow that edits this file and the receipt's table together
- * (the receipt is append-only under standing rule 15) and a hollow that edits this file's predicate and its mutant
- * expectations together are NOT CLAIMED by this census.
+ * how a renderer shows the forms SHOWN admits (styling, a sanitizer, a host's own Markdown extensions such as front-matter
+ * tables; this census reads raw source text and fails closed on HIDDEN), whether a Repair is true of the producer (the
+ * census pins the wording the audit prescribes, not the audit's evidence), a table in an earlier dated entry of the
+ * receipt (the last dated entry governs), a hollow that edits this file and the receipt's table together (the receipt is
+ * append-only under standing rule 15) and a hollow that edits this file's predicate or anchors together with the
+ * mutants, plants or twins that pin them are NOT CLAIMED by this census.
  * RESIDUAL (named family + pinned quiet row; rule 19(d)): R-PARAPHRASE - the predicate is the exact REMEDIATION wording, so
- * an overstrong claim restated in other words, split over two lines or broken by Markdown emphasis reads clean. Quiet rows:
- * "R-PARAPHRASE quiet rows" (M001 reworded, M050 split over two lines, M018 with emphasis), each beside a twin that adds the
- * exact Existing wording to the same page and reds.
+ * an overstrong claim restated in other words, split over two lines, broken by Markdown emphasis or restated in other
+ * characters (a no-break space, a zero-width space, a Cyrillic homoglyph or a character reference) reads clean. Quiet
+ * rows: "R-PARAPHRASE quiet rows" (M001 reworded, M050 split over two lines, M018 with emphasis, and M001 with each of the
+ * four character restatements), each beside a twin that adds the exact Existing wording to the same page and reds.
  *
  * Display paths added: none. Test-only: no src change.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Lexer, type Tokens } from "marked";
+import { Lexer, type Tokens, walkTokens } from "marked";
 import { describe, expect, it } from "vitest";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-12x1";
@@ -768,7 +822,51 @@ function occurrences(text: string, needle: string): number[] {
   return at;
 }
 
-/** The predicate: no findings means the row's correction stands on its page. */
+/** The Markdown token kinds this census reads as text a reader is shown: exactly the kinds the six pages use today. */
+const SHOWN: ReadonlySet<string> = new Set(["space", "hr", "heading", "paragraph", "text", "strong", "em", "codespan", "code", "list", "list_item", "table", "link"]);
+/** The HIDDEN forms of a page (marked's GFM lexer, every token walked): a token of a kind outside SHOWN (an HTML block or
+ * inline token, comments and tags alike; a link reference definition; an image; ...), a link title, and whitespace in a
+ * link destination or in a fenced-code info string - the forms a reader is not shown, or that this census does not read
+ * as shown, so it fails closed on them. Each form once, in the order the walk meets it. */
+function hiddenFormsOf(text: string): string[] {
+  const forms = new Set<string>();
+  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+    if (!SHOWN.has(token.type)) forms.add(token.type);
+    else if (token.type === "link") {
+      const link = token as Tokens.Link;
+      if (typeof link.title === "string") forms.add("link title");
+      if (/\s/.test(link.href)) forms.add("link destination");
+    } else if (token.type === "code" && /\s/.test((token as Tokens.Code).lang ?? "")) forms.add("code info");
+  });
+  return [...forms];
+}
+/** Whether `standing` lies inside a code block of the page: a reader is shown a code block's text as code, an HTML form included. */
+function inCodeBlock(text: string, standing: string): boolean {
+  let inside = false;
+  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+    if (token.type === "code" && (token as Tokens.Code).text.includes(standing)) inside = true;
+  });
+  return inside;
+}
+/** The longest k below the Existing wording's length with the standing text's last k characters equal to the Existing
+ * wording's first k (0 when none): the Existing wording glued there starts inside the standing text and ends after it. */
+function endOverlap(standing: string, existing: string): number {
+  for (let k = Math.min(standing.length, existing.length - 1); k > 0; k -= 1) if (standing.endsWith(existing.slice(0, k))) return k;
+  return 0;
+}
+/** The longest k below the Existing wording's length with the standing text's first k characters equal to the Existing
+ * wording's last k (0 when none): the Existing wording glued there starts before the standing text and ends inside it. */
+function startOverlap(standing: string, existing: string): number {
+  for (let k = Math.min(standing.length, existing.length - 1); k > 0; k -= 1) if (standing.startsWith(existing.slice(existing.length - k))) return k;
+  return 0;
+}
+/** The rows (of the 47 edit and same-edit rows) whose Existing wording can straddle their standing text, by overlap side. */
+const STRADDLE_END: readonly string[] = ["M045"];
+const STRADDLE_START: readonly string[] = ["M022", "M045"];
+/** The rows whose standing text lies inside a code block of its page (02's ts block). */
+const CODE_ROWS: readonly string[] = ["M028", "M029"];
+
+/** The predicate: no findings means the row's correction stands on its page, and the page shows it. */
 function findingsOf(row: Row, text: string): string[] {
   const place = placeOf(row);
   const findings: string[] = [];
@@ -787,6 +885,7 @@ function findingsOf(row: Row, text: string): string[] {
     const outside = occurrences(text, row.existing).find(start => !spans.some(([from, to]) => start >= from && start + row.existing.length <= to));
     if (outside !== undefined) findings.push(`${row.id} overstrong wording stands at ${place.page}:L${lineAt(text, outside)}`);
   }
+  for (const form of hiddenFormsOf(text)) findings.push(`${row.id} page ${place.page} holds ${form}`);
   return findings;
 }
 
@@ -795,7 +894,17 @@ interface Mutant {
   readonly text: string;
   readonly findings: readonly string[];
 }
-/** The requirement's adversarial mutant, applied in memory to the live page, with the findings each must produce. */
+/** The mutant names a row's case carries beyond the requirement's own set: the boundary moves, the straddles its row
+ * admits and the two hidden plants. */
+const plantedNamesOf = (row: Row): string[] => [
+  "MOVED-BEFORE",
+  "MOVED-AFTER",
+  ...(STRADDLE_END.includes(row.id) ? ["STRADDLE-END"] : []),
+  ...(STRADDLE_START.includes(row.id) ? ["STRADDLE-START"] : []),
+  "HIDDEN-COMMENT",
+  "HIDDEN-ATTRIBUTE",
+];
+/** The requirement's adversarial mutant and the plants, applied in memory to the live page, with the findings each must produce. */
 function mutantsOf(row: Row, text: string): Mutant[] {
   const place = placeOf(row);
   const standing = standingOf(row);
@@ -803,6 +912,12 @@ function mutantsOf(row: Row, text: string): Mutant[] {
   const line = lineAt(text, index);
   const newLast = text.split("\n").length;
   const appended = (extra: string): string => `${text}${extra}\n`;
+  /** The page with the standing text moved to the end of line `to` (a one-line text: every line keeps its number). */
+  const movedTo = (to: number): string => {
+    const lines = text.replace(standing, "").split("\n");
+    lines[to - 1] = `${lines[to - 1] ?? ""} ${standing}`;
+    return lines.join("\n");
+  };
   const mutants: Mutant[] = [];
   if (row.kind === "ledger-only") mutants.push({ name: "NORM-EDIT", text: text.replace(standing, ""), findings: [`${row.id} stands 0 times`] });
   else mutants.push({ name: "RESTORE", text: text.replace(standing, restoredOf(row)), findings: [`${row.id} stands 0 times`, `${row.id} overstrong wording stands at ${place.page}:L${line}`] });
@@ -814,38 +929,110 @@ function mutantsOf(row: Row, text: string): Mutant[] {
   mutants.push({ name: "MOVED", text: appended(standing).replace(standing, ""), findings: [`${row.id} stands at ${place.page}:L${newLast}`] });
   mutants.push({ name: "DUPLICATE", text: appended(standing), findings: [`${row.id} stands 2 times`] });
   if (row.pins.includes("absent")) mutants.push({ name: "ELSEWHERE", text: appended(row.existing), findings: [`${row.id} overstrong wording stands at ${place.page}:L${newLast}`] });
+  mutants.push({ name: "MOVED-BEFORE", text: movedTo(place.first - 1), findings: [`${row.id} stands at ${place.page}:L${place.first - 1}`] });
+  mutants.push({ name: "MOVED-AFTER", text: movedTo(place.last + 1), findings: [`${row.id} stands at ${place.page}:L${place.last + 1}`] });
+  if (row.pins.includes("absent")) {
+    const overstrong = [`${row.id} overstrong wording stands at ${place.page}:L${line}`];
+    const end = endOverlap(standing, row.existing);
+    if (end > 0) mutants.push({ name: "STRADDLE-END", text: text.replace(standing, `${standing}${row.existing.slice(end)}`), findings: overstrong });
+    const start = startOverlap(standing, row.existing);
+    if (start > 0) mutants.push({ name: "STRADDLE-START", text: text.replace(standing, `${row.existing.slice(0, row.existing.length - start)}${standing}`), findings: overstrong });
+  }
+  const hidden = inCodeBlock(text, standing) ? [] : [`${row.id} page ${place.page} holds html`];
+  const quote = standing.includes('"') ? "'" : '"';
+  mutants.push({ name: "HIDDEN-COMMENT", text: text.replace(standing, `<!-- ${standing} -->`), findings: hidden });
+  mutants.push({ name: "HIDDEN-ATTRIBUTE", text: text.replace(standing, `<span title=${quote}${standing}${quote}></span>`), findings: hidden });
   return mutants;
 }
 
-/** What git would commit: tracked or untracked, never ignored, and still on disk. */
-function committable(paths: readonly string[]): string[] {
-  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...paths], { cwd: ROOT, encoding: "utf8" });
-  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(ROOT, path))))].sort();
+/** One plant per HIDDEN form: the snippet a page gains (after a blank line) and the form its row must then report. */
+const HIDDEN_PLANTS: readonly { readonly name: string; readonly snippet: string; readonly form: string }[] = [
+  { name: "an HTML block (a comment on its own line)", snippet: "<!-- a note -->", form: "html" },
+  { name: "inline HTML (a comment inside a sentence)", snippet: "A note <!-- hidden --> here.", form: "html" },
+  { name: "inline HTML (a tag with an attribute)", snippet: 'A note <span title="hidden"></span> here.', form: "html" },
+  { name: "a link reference definition", snippet: "[note]: https://example.invalid/note", form: "def" },
+  { name: "an image", snippet: "![hidden](note.png)", form: "image" },
+  { name: "struck text", snippet: "~~struck~~ note", form: "del" },
+  { name: "a block quote", snippet: "> quoted note", form: "blockquote" },
+  { name: "a hard line break", snippet: "a line  \nbroken", form: "br" },
+  { name: "a backslash escape", snippet: "a \\* star", form: "escape" },
+  { name: "a task-list checkbox", snippet: "- [ ] task", form: "checkbox" },
+  { name: "a link title", snippet: '[note](https://example.invalid/note "hidden")', form: "link title" },
+  { name: "a link destination with whitespace", snippet: "[note](<hidden words>)", form: "link destination" },
+  { name: "a fenced-code info string with whitespace", snippet: "```ts hidden words\nconst note = 1;\n```", form: "code info" },
+];
+
+/** What git would commit: tracked or untracked, never ignored, and still on disk (read in `root` with the environment `env`). */
+function committable(paths: readonly string[], root = ROOT, env: NodeJS.ProcessEnv = process.env): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...paths], { cwd: root, encoding: "utf8", env });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(root, path))))].sort();
 }
+/** Git variables that choose which repository, index, object store or config a git child acts on (the set
+ * test/workbench-commit-message-scan.test.ts drops): a scratch repository's git child runs without them, and with the
+ * global and system config read from /dev/null, so it reads only the scratch repository's own rules. */
+const GIT_LOCATING = ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE", "GIT_CONFIG_PARAMETERS", "GIT_CONFIG_COUNT"];
+function scratchGitEnv(): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = { ...process.env, GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" };
+  for (const key of Object.keys(env)) if (GIT_LOCATING.includes(key) || /^GIT_CONFIG_(KEY|VALUE)_\d+$/.test(key)) delete env[key];
+  return env;
+}
+/** The reading's plants: one path in each state a named path can be in, and whether git would commit it. */
+const COMMITTABLE_PLANTS: readonly { readonly path: string; readonly state: string; readonly commits: boolean }[] = [
+  { path: "tracked.md", state: "tracked", commits: true },
+  { path: "untracked.md", state: "untracked, matched by no exclude rule", commits: true },
+  { path: "tracked-ignored.md", state: "tracked, and matched by .gitignore", commits: true },
+  { path: "ignored.md", state: "untracked, matched by .gitignore", commits: false },
+  { path: "excluded.md", state: "untracked, matched by info/exclude", commits: false },
+  { path: "unindexed.md", state: "removed from the index (git rm --cached) and matched by info/exclude, still on disk", commits: false },
+  { path: "deleted.md", state: "tracked, removed from disk", commits: false },
+  { path: "missing.md", state: "never written", commits: false },
+];
 
 interface ExportRow {
   readonly title: string;
   readonly description: string;
 }
-function exportRow(): ExportRow {
-  for (const line of readFileSync(join(ROOT, EXPORT), "utf8").split("\n")) {
+/** The bead's row of a bead export (JSONL text). */
+function exportRowOf(jsonl: string): ExportRow {
+  for (const line of jsonl.split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; description?: unknown };
     if (row.id === BEAD && typeof row.title === "string" && typeof row.description === "string") return { title: row.title, description: row.description };
   }
   throw new Error(`${EXPORT} holds no ${BEAD} row`);
 }
+const exportText = (): string => readFileSync(join(ROOT, EXPORT), "utf8");
 /** A " | "-separated segment of the export description, by its leading label. */
 function segment(description: string, label: string): string {
   const found = description.split(" | ").find(part => part.startsWith(`${label}: `));
   if (found === undefined) throw new Error(`the ${BEAD} export description has no ${label} segment`);
   return found.slice(label.length + 2);
 }
+/** The outside anchor over one reading of the bead export (JSONL text). */
+function exportAnchor(jsonl: string): void {
+  const row = exportRowOf(jsonl);
+  expect(row.title).toBe(STATEMENT);
+  const acceptance = segment(row.description, "ACCEPTANCE");
+  const listed = /^requirements ((?:EAT-R\d{3}, )*EAT-R\d{3}) - each per its ATOMIC-REQUIREMENTS\.md entry/.exec(acceptance)?.[1]?.split(", ") ?? [];
+  expect(listed).toEqual(["EAT-R004", ...ROWS.map(entry => entry.requirement)]);
+  const surfaces = segment(row.description, "SURFACES");
+  expect(surfaces.split("; ")).toEqual([`${PROGRAM}/triage/requirements/ATOMIC-REQUIREMENTS.md@${TRIAGE_PIN}`, `${PROGRAM}/triage/requirements/TDD-MATRIX.md@${TRIAGE_PIN}`]);
+}
+/** The outside anchor twins: one edit of the exported description each (the text it replaces, exactly once), every one refused. */
+const EXPORT_TWINS: readonly { readonly name: string; readonly from: string; readonly to: string }[] = [
+  { name: "W13: one id more, joined after EAT-R143 by 'and'", from: "EAT-R143 - each per", to: "EAT-R143 and EAT-R200 - each per" },
+  { name: "one id more, listed after EAT-R143", from: "EAT-R143 - each per", to: "EAT-R143, EAT-R200 - each per" },
+  { name: "one id dropped", from: "EAT-R120, ", to: "" },
+  { name: "two ids swapped", from: "EAT-R095, EAT-R096, ", to: "EAT-R096, EAT-R095, " },
+  { name: "words before the list", from: "ACCEPTANCE: requirements ", to: "ACCEPTANCE: also requirements " },
+  { name: "another delimiter after the list", from: " - each per its ATOMIC-REQUIREMENTS.md entry", to: " - each per its TDD-MATRIX.md entry" },
+  { name: "another surface pin", from: `TDD-MATRIX.md@${TRIAGE_PIN}`, to: `TDD-MATRIX.md@${"0".repeat(40)}` },
+];
 
 const sha256 = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
-/** The receipt's table as cell texts: the one table with RECEIPT_COLUMNS after the receipt's last dated entry heading. */
-function receiptTable(): string[][] {
-  const tokens = new Lexer({ gfm: true }).lex(readFileSync(join(ROOT, RECEIPT), "utf8"));
+/** The receipt's census table as cell texts: the one table with RECEIPT_COLUMNS after the receipt text's last dated entry heading. */
+function receiptTableOf(text: string): string[][] {
+  const tokens = new Lexer({ gfm: true }).lex(text);
   let last = -1;
   tokens.forEach((token, index) => {
     if (token.type === "heading" && (token as Tokens.Heading).depth === 2 && /^\d{4}-\d{2}-\d{2}(?: |$)/.test((token as Tokens.Heading).text)) last = index;
@@ -855,7 +1042,19 @@ function receiptTable(): string[][] {
   if (tables.length !== 1) throw new Error(`${RECEIPT}'s last entry holds ${tables.length} tables with the census columns`);
   return (tables[0]?.rows ?? []).map(row => row.map(cell => cell.text));
 }
+const receiptText = (): string => readFileSync(join(ROOT, RECEIPT), "utf8");
 const receiptRowOf = (row: Row): string[] => [row.requirement, row.id, row.claim, row.where, row.kind, row.pins.join(", "), sha256(row.existing), sha256(row.repair)];
+/** The receipt anchor over one reading of the receipt text: its last dated entry's census table equals ROWS, in order and both ways. */
+function receiptAnchor(text: string): void {
+  const receiptTable = (): string[][] => receiptTableOf(text);
+  expect(receiptTable()).toEqual(ROWS.map(receiptRowOf));
+}
+/** A census table in the receipt's Markdown form. */
+const tableText = (rows: readonly (readonly string[])[], columns: readonly string[] = RECEIPT_COLUMNS): string =>
+  [columns, columns.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+/** The receipt text with a later section appended: its heading, a blank line and its body. */
+const laterSection = (text: string, heading: string, body: string): string => `${text}\n${heading}\n\n${body}\n`;
+const LATER_ENTRY = "## 2026-11-08 receipt: a later entry (an in-memory twin)";
 
 const REACHED = new Set<string>();
 
@@ -869,6 +1068,29 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
       return place.first < 1 || place.last < place.first || place.last > pageText(place.page).split("\n").length;
     });
     expect(outside.map(row => row.id)).toEqual([]);
+  });
+
+  it("the reading's plants: in a scratch repository, git would commit exactly the tracked paths and the untracked paths no exclude rule matches, while they are on disk", () => {
+    const dir = makeScratch("wb-12x1-committable-");
+    try {
+      const env = scratchGitEnv();
+      const git = (...args: string[]): void => {
+        execFileSync("git", args, { cwd: dir, env, stdio: "pipe" });
+      };
+      git("init", "-q");
+      for (const plant of COMMITTABLE_PLANTS) if (plant.path !== "missing.md") writeFileSync(join(dir, plant.path), `${plant.state}\n`);
+      git("add", "--", "tracked.md", "tracked-ignored.md", "unindexed.md", "deleted.md");
+      writeFileSync(join(dir, ".gitignore"), "ignored.md\ntracked-ignored.md\n");
+      mkdirSync(join(dir, ".git", "info"), { recursive: true });
+      writeFileSync(join(dir, ".git", "info", "exclude"), "excluded.md\nunindexed.md\n");
+      git("rm", "--cached", "-q", "--", "unindexed.md");
+      rmSync(join(dir, "deleted.md"));
+      expect(existsSync(join(dir, "unindexed.md")), "unindexed.md is still on disk").toBe(true);
+      const named = COMMITTABLE_PLANTS.map(plant => plant.path);
+      expect(committable(named, dir, env)).toEqual(COMMITTABLE_PLANTS.filter(plant => plant.commits).map(plant => plant.path).sort());
+    } finally {
+      removeScratch(dir);
+    }
   });
 
   it("the row kinds: REMEDIATION's own words give each row's kind, the kind gives its pins, a same-edit host is an edit row on the same line, and M<nnn> is EAT-R<nnn + 93>", () => {
@@ -938,36 +1160,93 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     ]);
   });
 
+  it("straddles: an Existing occurrence can straddle its standing text only on M045 (starting inside it) and on M022 and M045 (ending inside it), and no standing text lies inside its Existing wording", () => {
+    const absent = ROWS.filter(row => row.pins.includes("absent"));
+    expect(absent).toHaveLength(47);
+    expect(absent.filter(row => endOverlap(standingOf(row), row.existing) > 0).map(row => row.id)).toEqual(STRADDLE_END);
+    expect(absent.filter(row => startOverlap(standingOf(row), row.existing) > 0).map(row => row.id)).toEqual(STRADDLE_START);
+    expect(absent.filter(row => row.existing.includes(standingOf(row))).map(row => row.id)).toEqual([]);
+  });
+
+  it("code rows: exactly M028 and M029 stand inside a code block, where a reader is shown an HTML form as code", () => {
+    expect(ROWS.filter(row => inCodeBlock(pageText(placeOf(row).page), standingOf(row))).map(row => row.id)).toEqual(CODE_ROWS);
+  });
+
+  it("hidden forms: no page holds a HIDDEN form, and each HIDDEN plant added to any of the six pages reds that page's first row with exactly its form", () => {
+    expect(HIDDEN_PLANTS.map(plant => plant.form)).toEqual(["html", "html", "html", "def", "image", "del", "blockquote", "br", "escape", "checkbox", "link title", "link destination", "code info"]);
+    for (const key of Object.keys(PAGES).filter(isPageKey)) {
+      const row = ROWS.find(entry => placeOf(entry).page === key);
+      expect(row, key).toBeDefined();
+      if (row === undefined) continue;
+      const text = pageText(key);
+      expect(hiddenFormsOf(text), `${key} as committed`).toEqual([]);
+      for (const plant of HIDDEN_PLANTS) expect(findingsOf(row, `${text}\n${plant.snippet}\n`), `${key} + ${plant.name}`).toEqual([`${row.id} page ${key} holds ${plant.form}`]);
+    }
+  });
+
   it("outside anchor: the tracked bead export's wb-12x1 row names the statement, lists EAT-R004 then exactly these 50 requirements, and cites the 0b25e14e pin", () => {
-    const row = exportRow();
-    expect(row.title).toBe(STATEMENT);
-    const acceptance = segment(row.description, "ACCEPTANCE");
-    const listed = /^requirements ((?:EAT-R\d{3}, )*EAT-R\d{3}) - each per its ATOMIC-REQUIREMENTS\.md entry/.exec(acceptance)?.[1]?.split(", ") ?? [];
-    expect(listed).toEqual(["EAT-R004", ...ROWS.map(entry => entry.requirement)]);
-    const surfaces = segment(row.description, "SURFACES");
-    expect(surfaces.split("; ")).toEqual([`${PROGRAM}/triage/requirements/ATOMIC-REQUIREMENTS.md@${TRIAGE_PIN}`, `${PROGRAM}/triage/requirements/TDD-MATRIX.md@${TRIAGE_PIN}`]);
+    exportAnchor(exportText());
+  }, 60_000);
+
+  it("outside anchor twins: the exported row passes the anchor, and one edit of it (an id more, fewer or out of order, words around the list, another pin or title, another bead's row) fails it", () => {
+    const live = exportRowOf(exportText());
+    const twinOf = (edit: Partial<ExportRow>): string => JSON.stringify({ id: BEAD, ...live, ...edit });
+    exportAnchor(twinOf({}));
+    for (const twin of EXPORT_TWINS) {
+      expect(live.description.split(twin.from).length - 1, `${twin.name}: the edited text stands once`).toBe(1);
+      expect(() => exportAnchor(twinOf({ description: live.description.replace(twin.from, () => twin.to) })), twin.name).toThrow(/deeply equal/);
+    }
+    expect(() => exportAnchor(twinOf({ title: `${STATEMENT}.` })), "another title").toThrow(/to be/);
+    expect(() => exportAnchor(JSON.stringify({ id: "wb-other", title: STATEMENT, description: live.description, dependsOn: BEAD })), "another bead's row naming wb-12x1").toThrow(/holds no wb-12x1 row/);
   }, 60_000);
 
   it("receipt anchor: the last dated entry of docs/workbench/receipts/wb-12x1.md holds these rows' table, by digest, in order and both ways", () => {
-    expect(receiptTable()).toEqual(ROWS.map(receiptRowOf));
+    receiptAnchor(receiptText());
   });
 
-  describe("ROWS: a row's standing text stands once on a line of its Where, and (edit and same-edit rows) its Existing wording stands on its page only inside that text", () => {
+  it("receipt anchor twins: a later dated entry must hold exactly one census table equal to ROWS in order and both ways, while a later undated, depth-3 or undated-date section leaves the last dated entry in force", () => {
+    const live = receiptText();
+    const expected = ROWS.map(receiptRowOf);
+    const table = tableText(expected);
+    const note = "- A later note.";
+    expect(() => receiptAnchor(live), "the receipt as committed").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, table)), "W09C: a later dated entry with the same table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## Notes", note)), "a later undated section").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "### 2026-11-08 receipt: a sub-entry", note)), "a later depth-3 dated heading").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08x receipt", note)), "a later heading whose date runs into other text").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, note)), "W09B: a later dated entry without the table").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n${table}`)), "a later dated entry with the table twice").toThrow(/holds 2 tables/);
+    const renamed = RECEIPT_COLUMNS.map(column => (column === "Existing sha-256" ? "Existing sha256" : column));
+    expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, tableText(expected, renamed))), "a renamed column").toThrow(/holds 0 tables/);
+    const edited: [string, string[][]][] = [
+      ["W10: M001's and M002's rows swapped", [...expected.slice(1, 2), ...expected.slice(0, 1), ...expected.slice(2)]],
+      ["a row more (M050's twice)", [...expected, ...expected.slice(-1)]],
+      ["a row fewer (M050's dropped)", expected.slice(0, -1)],
+      ...RECEIPT_COLUMNS.map((column, at): [string, string[][]] => [`a wrong ${column} cell on M001's row`, expected.map((cells, row) => (row === 0 ? cells.map((cell, index) => (index === at ? `${cell}x` : cell)) : cells))]),
+    ];
+    for (const [name, rows] of edited) expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, tableText(rows))), name).toThrow(/deeply equal/);
+  });
+
+  describe("ROWS: a row's standing text stands once on a line of its Where, (edit and same-edit rows) its Existing wording stands on its page only inside that text, and its page holds no HIDDEN form", () => {
     it.each(ROWS.map((row): [string, Row] => [`${row.requirement} ${row.id} ${row.claim} ${row.transform} ${row.where}`, row]))("%s", (_title, row) => {
       const text = pageText(placeOf(row).page);
       expect(findingsOf(row, text), "the live page").toEqual([]);
       const mutants = mutantsOf(row, text);
-      expect(mutants.map(mutant => mutant.name)).toEqual(row.kind === "ledger-only" ? ["NORM-EDIT", "SHORTEN", "MOVED", "DUPLICATE"] : ["RESTORE", "SHORTEN", "MOVED", "DUPLICATE", "ELSEWHERE"]);
+      expect(mutants.map(mutant => mutant.name)).toEqual(row.kind === "ledger-only" ? ["NORM-EDIT", "SHORTEN", "MOVED", "DUPLICATE", ...plantedNamesOf(row)] : ["RESTORE", "SHORTEN", "MOVED", "DUPLICATE", "ELSEWHERE", ...plantedNamesOf(row)]);
       for (const mutant of mutants) expect(findingsOf(row, mutant.text), mutant.name).toEqual(mutant.findings);
       REACHED.add(row.id);
     });
   });
 
-  it("R-PARAPHRASE quiet rows: an overstrong claim reworded, split over two lines or broken by emphasis reads clean, while its exact wording on the same page reds", () => {
+  it("R-PARAPHRASE quiet rows: an overstrong claim reworded, split over two lines, broken by emphasis or restated in other characters reads clean, while its exact wording on the same page reds", () => {
     const quiet = [
       { id: "M001", added: "Source implemented, tests and receipts were recorded." },
       { id: "M050", added: "No Pi-to-Mechanical end-to-end acceptance has\nbeen witnessed." },
       { id: "M018", added: "It includes cwd/model/permissions/**tools**/roles/grants/principal." },
+      { id: "M001", added: `Source${String.fromCodePoint(0xa0)}implemented, tests and receipts recorded` },
+      { id: "M001", added: `Sou${String.fromCodePoint(0x200b)}rce implemented, tests and receipts recorded` },
+      { id: "M001", added: `S${String.fromCodePoint(0x43e)}urce implemented, tests and receipts recorded` },
+      { id: "M001", added: "Source&#32;implemented, tests and receipts recorded" },
     ];
     for (const { id, added } of quiet) {
       const row = byId.get(id);
