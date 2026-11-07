@@ -120,6 +120,28 @@
  * one-character parts, the digit-only and digit-inside parts and the texts around an id that no control writes (JUDGED CHECKS
  * (e), NOT CLAIMED (the judged checks)). The six are further controls in the sense NOT CLAIMED uses: no outside anchor names
  * them (this census reads no wb-i4m6 or wb-3mze row).
+ * Cut #15 (wb-fcz8: the R694 carry of landing 1008's F1, a PASS-WITH-FINDING - eight gate one-edit members of RESIDUAL_WITNESS,
+ * GP4-RW-NOW (a part holding the capital W unread), GP4-RW-PDIG2 (a part holding a digit other than 2 unread), GP4-RW-WNUM (a
+ * W-number read only as one digit, as 1 and a digit or as 12 and a digit), GP4-RW-PDIGEND2 (a part of capitals ending in a digit
+ * other than 2 unread), GP4-RW-PARTLEN-NOT4 (a part of four characters unread), GP4-RW-CTX-BAR (no id right after the text
+ * 'bar '), GP4-RW-CTX-COLONSP (no id right after the text ': ') and GP4-RW-AFTER-SEMI (no id right before a ';'), kept cut #14's
+ * census green, realized by export witnesses that append one id at the end of wb-u6ho's F2 line) pins controls in those witness
+ * shapes, the helper, every top-level table, the claims, the kills, the residual's row, its frozen literal, its two direct
+ * anchors and the test titles unchanged: eight F2 line controls each append its witness's text verbatim at the line's end -
+ * RIDS-PARTW-END (GW4-NOW-END's W2-WATERCODE), RIDS-PARTDIG-END (GW4-DIG3-END's W2-GLUEDCODE3), RIDS-DIGONLY-END
+ * (GW4-DIG3ONE-END's W2-3), RIDS-WNUM-END (GW4-W20-END's W20-GLUEDCODE), RIDS-PART4-END (GW4-FOUR-END's W2-FOUR),
+ * RIDS-CTXBAR-END (GW4-BAR-END's 'bar W2-BARCODES'), RIDS-CTXCOLON-END (GW4-COLON-END's ': W2-COLONCODE') and RIDS-SEMI-END
+ * (GW4-SEMI-END's 'W2-SEMIKCODE;') -; where the line's second W1-GLUEDCODE mention stands, a twin of each but RIDS-DIGONLY-END
+ * (whose member three other controls hold), each under an id of its own: RIDS-PARTW W2-DRAWCODE, RIDS-PARTDIG W2-MIDCODE7 (it
+ * holds GP4-RW-PDIG2 and GP4-RW-PDIGEND2 both), RIDS-WNUM W35-GLUEDCODE, RIDS-PART4 W2-QUAD, RIDS-CTXBAR 'bar W2-BARMIDS',
+ * RIDS-CTXCOLON ': W2-COLONMIDS' and RIDS-SEMI 'W2-SEMIMIDS;'; and a further control there, RIDS-ALLDIGITS (W2-D0123456789, a
+ * part of one capital and the ten digits). Each payload is in the controls' frozen literal, so that each of the eight members
+ * reds the census and none rests on one control alone, and every capital and every digit is now written in a part (before this
+ * cut no control wrote the capital W or a digit other than 2 there). NOT CLAIMED (the judged checks) names the values of those
+ * dimensions that no control writes: a W-number of two or three digits but 10, 11, 12, 20, 35, 123 and 124, a part of three,
+ * five or six characters, a one-character part but '2', '3', 'A' and 'Z', a digit leading a part but '2' and '3', and a part of
+ * capitals ending in one digit but '2', '3' and '7' (JUDGED CHECKS (e), NOT CLAIMED (the judged checks)). The sixteen are
+ * further controls in the sense NOT CLAIMED uses: no outside anchor names them (this census reads no wb-3mze or wb-fcz8 row).
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -275,13 +297,16 @@
  * IDS-EXTRA-TWICE, IDS-MULTIPART, IDS-UNNAMED, IDS-NO-LINE, IDS-OWN-PARTIAL, IDS-OWN-INSIDE, IDS2-MULTIPART, IDS2-BODY-START,
  * IDS2-DIGITS, IDS-GLUED, IDS-TRAILING, IDS2-GLUED, IDS2-TRAILING, X-TOKENCOLON, BODY-COLON-TAB, IDS3-EXTRA, IDS3-MULTIPART,
  * IDS3-BODY-START, IDS3-DIGITS, IDS3-NO-LINE, IDS3-GLUED, IDS3-TRAILING (witnessContradictions); (e) R-GLUED-CODE's export anchor
- * (wb-c8nb refusal #1's U1 and U2, landing 995's F1 (wb-i4m6) and landing 1003's F1 (wb-3mze): wb-u6ho's F2 line - the form of
- * the ids it names, those ids both ways against the residual's rows, and its GP2-N2 pairing): RIDS-TWODIGIT, RIDS-DIGITPART,
+ * (wb-c8nb refusal #1's U1 and U2, landing 995's F1 (wb-i4m6), landing 1003's F1 (wb-3mze) and landing 1008's F1 (wb-fcz8):
+ * wb-u6ho's F2 line - the form of the ids it names, those ids both ways against the residual's rows, and its GP2-N2 pairing):
+ * RIDS-TWODIGIT, RIDS-DIGITPART,
  * RIDS-TWOPART, RIDS-OTHERDIGIT, RIDS-DIGITLEAD, RIDS-EXTRA-TWICE, RIDS-UNNAMED, RIDS-RENAMED, RIDS-NO-LINE, RIDS-GLUED,
  * RIDS-TRAILING, RIDS-LOWER, RIDS-EMPTYPART, RIDS-NOPART, RIDS-OTHERLETTER, RIDS-LETTERID, RIDS-PAIR-SPACED, RIDS-PAIR-QUOTE,
  * RIDS-PAIR-EARLYCLOSE, RIDS-PAIR-NONE, RIDS-BOTH, RIDS-3DIGIT-END, RIDS-ZERO-END, RIDS-LONGPART-END, RIDS-PAREN-END,
  * RIDS-DOT-END, RIDS-END-PLAIN, RIDS-3DIGIT, RIDS-ZERO, RIDS-LONGPART, RIDS-PAREN, RIDS-SHORTPART-END, RIDS-CAP1-END,
- * RIDS-CTX2-END, RIDS-SHORTPART, RIDS-CAP1, RIDS-CTX2 (residualLineContradictions). A
+ * RIDS-CTX2-END, RIDS-SHORTPART, RIDS-CAP1, RIDS-CTX2, RIDS-PARTW-END, RIDS-PARTDIG-END, RIDS-DIGONLY-END, RIDS-WNUM-END,
+ * RIDS-PART4-END, RIDS-CTXBAR-END, RIDS-CTXCOLON-END, RIDS-SEMI-END, RIDS-PARTW, RIDS-PARTDIG, RIDS-WNUM, RIDS-PART4,
+ * RIDS-CTXBAR, RIDS-CTXCOLON, RIDS-SEMI, RIDS-ALLDIGITS (residualLineContradictions). A
  * key form's witness beside the index's claim probe receiver is no edit a control can make: the compiler reads
  * 'Opts<Context.Inner>[key]' as two comparisons, no element access.
  * The TypeScript compiler anchors T-TOKENS,
@@ -345,11 +370,13 @@
  * another word, case or white space around a mutant's code or the control's 'under', or another code shape, than its controls write
  * (R-GLUED-CODE's one pinned row aside, RESIDUALS); in its notes another line shape before the F1 line; in wb-u6ho's F2 line
  * another id, place or text around an id, or another pairing text, than its controls write (among them an id of four or more
- * digits, a zero before another digit, a part of three to six or of twelve or more characters, a part of one character other
- * than the '2', 'A' and 'Z' its controls write, a part of two or more digits and no capital, a part with a digit between two of
- * its capitals, three or more parts, an id at another place than the two W1-GLUEDCODE mentions' and the line's end, and an id
- * after or before a text no control writes there - the one character right next to it, or a longer text, as the two characters
- * before it), or another place of that line in its notes; and in a refusal line
+ * digits, a zero before another digit, a W-number of two or three digits other than the 10, 11, 12, 20, 35, 123 and 124 its
+ * controls write, a part of three, five or six or of twelve or more characters, a part of one character other than the '2',
+ * '3', 'A' and 'Z' its controls write, a part of two or more digits and no capital, a part led by a digit other than the '2' and
+ * '3' its controls write, a part of capitals ending in one digit other than the '2', '3' and '7' its controls write, a part with
+ * a digit between two of its capitals, three or more parts, an id at another place than the two W1-GLUEDCODE mentions' and the
+ * line's end, and an id after or before a text no control writes there - the one character right next to it, or a longer text,
+ * as the two characters before it), or another place of that line in its notes; and in a refusal line
  * another place of its first ': ' or another id form - and a further control removed from its table and from the controls' frozen
  * literal together (no outside anchor names it).
  * The judged checks name one residual, R-GLUED-CODE (the wb-u6ho line check's, RESIDUALS): every edit of their inputs is one a
@@ -2438,6 +2465,36 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["RIDS-SHORTPART", residualWitness("W2-XY"), ["wb-u6ho's F2 line names W2-XY, which is no R-GLUED-CODE row"]],
       ["RIDS-CAP1", residualWitness("W2-Z"), ["wb-u6ho's F2 line names W2-Z, which is no R-GLUED-CODE row"]],
       ["RIDS-CTX2", residualWitness("foo W2-CTXMIDS"), ["wb-u6ho's F2 line names W2-CTXMIDS, which is no R-GLUED-CODE row"]],
+      // wb-fcz8 (the R694 carry of landing 1008's F1): one id more at the line's end in the shape of each export witness F1
+      // names, its text verbatim - a part holding the capital W (GW4-NOW-END's W2-WATERCODE), a part of capitals ending in the
+      // digit 3 (GW4-DIG3-END's W2-GLUEDCODE3), a part of the one digit 3 (GW4-DIG3ONE-END's W2-3), a W-number of two digits led
+      // by 2 (GW4-W20-END's W20-GLUEDCODE), a part of four characters (GW4-FOUR-END's W2-FOUR), the text 'bar ' right before the
+      // id (GW4-BAR-END's W2-BARCODES), the text ': ' right before it (GW4-COLON-END's W2-COLONCODE) and a ';' right after it
+      // (GW4-SEMI-END's W2-SEMIKCODE). They hold the dimensions F1's eight members edit: a part's capitals (GP4-RW-NOW), a
+      // part's digits (GP4-RW-PDIG2), the W-number (GP4-RW-WNUM), a part's last digit (GP4-RW-PDIGEND2), a part's length
+      // (GP4-RW-PARTLEN-NOT4), the text before an id (GP4-RW-CTX-BAR, GP4-RW-CTX-COLONSP) and the character after one
+      // (GP4-RW-AFTER-SEMI)
+      ["RIDS-PARTW-END", residualEnd(" W2-WATERCODE"), ["wb-u6ho's F2 line names W2-WATERCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTDIG-END", residualEnd(" W2-GLUEDCODE3"), ["wb-u6ho's F2 line names W2-GLUEDCODE3, which is no R-GLUED-CODE row"]],
+      ["RIDS-DIGONLY-END", residualEnd(" W2-3"), ["wb-u6ho's F2 line names W2-3, which is no R-GLUED-CODE row"]],
+      ["RIDS-WNUM-END", residualEnd(" W20-GLUEDCODE"), ["wb-u6ho's F2 line names W20-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PART4-END", residualEnd(" W2-FOUR"), ["wb-u6ho's F2 line names W2-FOUR, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXBAR-END", residualEnd(" bar W2-BARCODES"), ["wb-u6ho's F2 line names W2-BARCODES, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXCOLON-END", residualEnd(": W2-COLONCODE"), ["wb-u6ho's F2 line names W2-COLONCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-SEMI-END", residualEnd(" W2-SEMIKCODE;"), ["wb-u6ho's F2 line names W2-SEMIKCODE, which is no R-GLUED-CODE row"]],
+      // and a twin of seven where the line's second W1-GLUEDCODE mention stands, each under an id of its own - a part holding
+      // the capital W inside it, a part of capitals ending in the digit 7 (it holds GP4-RW-PDIG2 and GP4-RW-PDIGEND2 both), a
+      // W-number of two digits led by 3, a part of four characters, the texts 'bar ' and ': ' right before an id and a ';' right
+      // after one (so that no one control removed reopens a member) - and a further control there, a part of one capital and
+      // the ten digits, so that every digit is written in a part (before this cut no control wrote a part digit other than 2)
+      ["RIDS-PARTW", residualWitness("W2-DRAWCODE"), ["wb-u6ho's F2 line names W2-DRAWCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTDIG", residualWitness("W2-MIDCODE7"), ["wb-u6ho's F2 line names W2-MIDCODE7, which is no R-GLUED-CODE row"]],
+      ["RIDS-WNUM", residualWitness("W35-GLUEDCODE"), ["wb-u6ho's F2 line names W35-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PART4", residualWitness("W2-QUAD"), ["wb-u6ho's F2 line names W2-QUAD, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXBAR", residualWitness("bar W2-BARMIDS"), ["wb-u6ho's F2 line names W2-BARMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXCOLON", residualWitness(": W2-COLONMIDS"), ["wb-u6ho's F2 line names W2-COLONMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-SEMI", residualWitness("W2-SEMIMIDS;"), ["wb-u6ho's F2 line names W2-SEMIMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-ALLDIGITS", residualWitness("W2-D0123456789"), ["wb-u6ho's F2 line names W2-D0123456789, which is no R-GLUED-CODE row"]],
     ];
     for (const [control, line, contradictions] of residualControls) expect(residualLineContradictions(line, residualIds, glued), `${control}: the F2 line check reports exactly this edit's contradictions`).toEqual(contradictions);
     // KILLS' order check (refusal #1's U3: KILLS held as a set): the lines name KILLS' own order, as the judged set holds
@@ -2785,6 +2842,22 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       ["RIDS-SHORTPART", ["wb-u6ho's F2 line names W2-XY, which is no R-GLUED-CODE row"]],
       ["RIDS-CAP1", ["wb-u6ho's F2 line names W2-Z, which is no R-GLUED-CODE row"]],
       ["RIDS-CTX2", ["wb-u6ho's F2 line names W2-CTXMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTW-END", ["wb-u6ho's F2 line names W2-WATERCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTDIG-END", ["wb-u6ho's F2 line names W2-GLUEDCODE3, which is no R-GLUED-CODE row"]],
+      ["RIDS-DIGONLY-END", ["wb-u6ho's F2 line names W2-3, which is no R-GLUED-CODE row"]],
+      ["RIDS-WNUM-END", ["wb-u6ho's F2 line names W20-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PART4-END", ["wb-u6ho's F2 line names W2-FOUR, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXBAR-END", ["wb-u6ho's F2 line names W2-BARCODES, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXCOLON-END", ["wb-u6ho's F2 line names W2-COLONCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-SEMI-END", ["wb-u6ho's F2 line names W2-SEMIKCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTW", ["wb-u6ho's F2 line names W2-DRAWCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PARTDIG", ["wb-u6ho's F2 line names W2-MIDCODE7, which is no R-GLUED-CODE row"]],
+      ["RIDS-WNUM", ["wb-u6ho's F2 line names W35-GLUEDCODE, which is no R-GLUED-CODE row"]],
+      ["RIDS-PART4", ["wb-u6ho's F2 line names W2-QUAD, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXBAR", ["wb-u6ho's F2 line names W2-BARMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-CTXCOLON", ["wb-u6ho's F2 line names W2-COLONMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-SEMI", ["wb-u6ho's F2 line names W2-SEMIMIDS, which is no R-GLUED-CODE row"]],
+      ["RIDS-ALLDIGITS", ["wb-u6ho's F2 line names W2-D0123456789, which is no R-GLUED-CODE row"]],
     ]);
   });
 
