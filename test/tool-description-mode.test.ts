@@ -14,6 +14,7 @@ import { installScratchLeakGuard, makeScratch, removeAllScratch, removeScratch }
 installScratchLeakGuard();
 
 const EXAMPLE_TEMPLATE = fileURLToPath(new URL("../examples/agent-tool-description.md", import.meta.url));
+const README = fileURLToPath(new URL("../README.md", import.meta.url));
 
 function makePi() {
   const tools = new Map<string, any>();
@@ -335,6 +336,57 @@ describe("toolDescriptionMode", () => {
       expect(tools.get("Agent").description).not.toContain("isolation");
       // The bullet above it survives — the gate trims a suffix, not the list.
       expect(tools.get("Agent").description).toContain("resume continues a previous agent by ID");
+    });
+  });
+
+  // wb-5ik5 (landing 1017) made cleanupWorktree keep the worktree when Git
+  // preservation fails: no branch is created and the agent's work stays in the
+  // directory. That landing's gate finding F1 (follow-up wb-x6be) found three
+  // lines that describe isolation unchanged and false for that case: README.md
+  // "The worktree directory is removed on completion either way", the full
+  // bullet's "The worktree is removed when the agent finishes" and the compact
+  // bullet's "(removed on completion)". Each case below holds one of those
+  // lines' replacements word for word and that old line absent; the
+  // failed-preservation behaviour the replacements describe is pinned by
+  // wb-5ik5's own rows (the PF rows of test/worktree.test.ts), not here.
+  describe("the isolation docs lines for a failed Git preservation (wb-x6be)", () => {
+    const FULL_ISOLATION_BULLET =
+      '- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. When the agent finishes, any changes it made are committed to a branch named in the result and the worktree is removed; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent\'s work in it.';
+    const COMPACT_ISOLATION_BULLET =
+      '- isolation: "worktree" gives the agent its own git worktree; on completion, changes land on a branch named in the result and the worktree is removed, but if Git preservation fails, the worktree is kept and no branch is created.';
+    /** The paragraph that opens README.md's Worktree Isolation section and its case list, line by line, through the blank line that ends them. */
+    const README_ISOLATION_BLOCK = [
+      "The agent gets a full, isolated copy of the repository. On completion the worktree directory is removed, unless Git preservation fails (the last case below); otherwise what differs is whether a branch is left behind:",
+      "- **No changes:** worktree is cleaned up automatically, no branch",
+      "- **Changes made:** changes are committed to a new branch (`pi-agent-<id>`), and the result names the branch and the `git merge` command for it. The branch is the only artifact — the worktree path is gone, so nothing points into it",
+      "- **Agent committed its own work:** the branch is created at the agent's HEAD, preserving its commits (uncommitted leftovers are committed on top first)",
+      "- **Git preservation fails:** if checking for, committing or branching the changes fails, no branch is created and the worktree directory is kept instead of removed, with the agent's work in it",
+      "",
+    ];
+
+    it("the full description has one isolation bullet, FULL_ISOLATION_BULLET, and no \"The worktree is removed when the agent finishes\"", () => {
+      const desc: string = setup().get("Agent").description;
+      expect(desc.split("\n").filter(line => line.startsWith('- Use isolation: "worktree"'))).toEqual([FULL_ISOLATION_BULLET]);
+      expect(desc).not.toContain("The worktree is removed when the agent finishes");
+    });
+
+    it("the compact description has one isolation bullet, COMPACT_ISOLATION_BULLET, and no \"(removed on completion)\"", () => {
+      const desc: string = setup({ toolDescriptionMode: "compact" }).get("Agent").description;
+      expect(desc.split("\n").filter(line => line.startsWith('- isolation: "worktree"'))).toEqual([COMPACT_ISOLATION_BULLET]);
+      expect(desc).not.toContain("(removed on completion)");
+    });
+
+    it("README.md's Worktree Isolation section holds README_ISOLATION_BLOCK, and README.md has no \"The worktree directory is removed on completion either way\"", () => {
+      const readme = readFileSync(README, "utf-8");
+      const lines = readme.split("\n");
+      const heading = lines.indexOf("## Worktree Isolation");
+      const start = lines.findIndex((line, index) => index > heading && line.startsWith("The agent gets a full, isolated copy of the repository."));
+      const nextHeading = lines.findIndex((line, index) => index > heading && line.startsWith("#"));
+      expect(heading).toBeGreaterThan(-1);
+      expect(start).toBeGreaterThan(heading);
+      expect(start + README_ISOLATION_BLOCK.length).toBeLessThan(nextHeading);
+      expect(lines.slice(start, start + README_ISOLATION_BLOCK.length)).toEqual(README_ISOLATION_BLOCK);
+      expect(readme).not.toContain("The worktree directory is removed on completion either way");
     });
   });
 
