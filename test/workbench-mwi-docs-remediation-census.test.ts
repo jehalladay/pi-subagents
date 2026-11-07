@@ -38,6 +38,18 @@
  * WNESTED), the one-segment export reading (F5, WE1b), the whitespace plants (U3, GP2-F1, GP2-F2), and twin rows for
  * ABSENT's bounds and the overlapping count. The six pages are unchanged.
  *
+ * CUT #4 (seat ws-11 of g10-work-s237, 2026-11-07, trunk merged into the branch from 7f54a59e on): the respin of gate refusal #3
+ * (gate record of g10-gate-s236 on cut #3 f218f1c1), authored in the enumerate-the-resolvable form (standing rule 19(c))
+ * for the HIDDEN set under its second-stage cap (refusal #3 U1) and, as cut #3 was, for the R-B636 set under its cap of
+ * record (ruling R-B672); the receipt anchor's column words are cured at rung 1 (refusal #3 U2). Red-first, this cut
+ * adds: the title plants (U1, GP1-H4: single quotes and parentheses beside double quotes, after a bare and after an
+ * angle-bracket destination, on the destination's line and on the next), the destination spellings (U1, GP1-H1 and
+ * GP1-H3: each WHITESPACE unit first, last and alone inside angle brackets, and each BARE_WHITESPACE unit between two
+ * words of a bare destination), the fence spellings (U1, GP1-H2: three tildes, four backticks and four tildes beside
+ * three backticks, and fences indented three spaces), an HTML block that is a tag, the column twins (U2, GP1-K1 and
+ * GP1-K2) and the top-level reading of the dated headings (refusal #3 F4, WQ1 and WQ2). Each HIDDEN claim below names
+ * exactly the plants that pin it. The six pages are unchanged.
+ *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
  *   index) or untracked and matched by no exclude rule (.gitignore, info/exclude), and it is on disk - each page key is
@@ -59,12 +71,26 @@
  *   ends inside); no standing text lies inside its Existing wording, so no occurrence can contain one.
  * - "code rows": exactly M028 and M029 stand inside a code block (02's ts block), where a reader is shown an HTML form as
  *   code, so their HIDDEN plants read clean.
- * - "hidden forms": no page holds a HIDDEN form, and each HIDDEN_PLANTS entry, added after a blank line to any of the six
- *   pages, reds that page's first row with exactly its form.
+ * - "hidden forms": no page holds a HIDDEN form, and each of the 14 HIDDEN_PLANTS entries - an HTML block (a comment, a
+ *   tag), inline HTML (a comment, a tag with an attribute), a link reference definition, an image, struck text, a block
+ *   quote, a hard line break, a backslash escape, a task-list checkbox, a double-quoted link title, a space inside an
+ *   angle-bracket destination and a space in a backtick-fenced info string, each snippet as HIDDEN_PLANTS spells it -
+ *   added after a blank line to any of the six pages, reds that page's first row with exactly its form.
  * - "hidden whitespace": WHITESPACE equals the code units, of all 65,536 UTF-16 code units, that JavaScript's \s class
- *   matches, but the line feed and the carriage return (23 units); each one in a link destination ("[note](<hidden" unit
- *   "words>)") and in a fenced-code info string ("```ts" unit "hidden"), added after a blank line to any of the six pages,
- *   reds that page's first row with exactly "link destination" or "code info".
+ *   matches, but the line feed and the carriage return (23 units); BARE_WHITESPACE equals the WHITESPACE units that
+ *   marked keeps in the destination of "[note](hidden" unit "words)" (19 units: all but U+0009, U+000B, U+000C and
+ *   U+0020); whitespacePlantsOf spells the ten plants of one unit as its literal pins them; and each whitespace plant,
+ *   added after a blank line to any of the six pages, reds that page's first row with exactly "link destination" or
+ *   "code info": each WHITESPACE unit inside an angle-bracket destination between two words ("[note](<hidden" unit
+ *   "words>)"), first ("[note](<" unit "hidden>)"), last ("[note](<hidden" unit ">)") and alone ("[note](<" unit ">)");
+ *   each BARE_WHITESPACE unit between two words of a bare destination ("[note](hidden" unit "words)"); and each
+ *   WHITESPACE unit between "ts" and "hidden" in the info string of a fence of three backticks, three tildes, four
+ *   backticks or four tildes, at the line's start or indented three spaces (the fence line, "const note = 1;" and the
+ *   closing fence, each at that indent).
+ * - "link titles": TITLE_PLANTS is the 12 snippets its literal pins - "[note](", the destination
+ *   https://example.invalid/note bare or in angle brackets, a space or a line feed, then "hidden" in double quotes, in
+ *   single quotes or in parentheses, then ")" - and each one, added after a blank line to any of the six pages, reds that
+ *   page's first row with exactly "link title".
  * - "absent's bounds": on a two-line page whose second line is a twin row's standing text "alpha beta gamma delta"
  *   (Where 01:L2), an Existing wording that starts at that text's start, lies inside it, ends at its end or is the whole
  *   of it reads no finding; one that starts one character before it ("xalpha", the line "xalpha beta gamma delta"), one
@@ -84,18 +110,21 @@
  * - "outside anchor segments": the anchor fails, with "has 2 ACCEPTANCE segments" or "has 2 SURFACES segments", on the
  *   row with an extra ACCEPTANCE segment before the real one (WE1b) or a copy of it after the real one, and with an extra
  *   SURFACES segment after or before the real one.
- * - "receipt anchor": the last dated entry of docs/workbench/receipts/wb-12x1.md (the last depth-2 heading whose text, as
- *   marked's lexer gives it, matches /^\d{4}-\d{2}-\d{2}(?: |$)/ - four, two and two ASCII digits joined by hyphen-minus
- *   at its start, then a space or its end - and everything after it) holds exactly one table with the columns
- *   Requirement, Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256, at any depth (every token walked: a
- *   table in a block quote or a list item counts; a code block's text is code), and its rows equal ROWS in order and both
- *   ways (each wording by its full sha256, so the receipt spells none of the text this census judges).
+ * - "receipt anchor": the last dated entry of docs/workbench/receipts/wb-12x1.md (the last top-level depth-2 heading - a
+ *   heading of the receipt's own token list, never one inside a block quote or a list item - whose text, as marked's
+ *   lexer gives it, matches /^\d{4}-\d{2}-\d{2}(?: |$)/ - four, two and two ASCII digits joined by hyphen-minus at its
+ *   start, then a space or its end - and everything after it) holds exactly one census table, at any depth (every token
+ *   walked: a table in a block quote or a list item counts; a code block's text is code) - a table whose header cells,
+ *   as marked's lexer gives their text, are the eight RECEIPT_COLUMNS (Requirement, Row, Claim, Where, Kind, Pins,
+ *   Existing sha-256 and Repair sha-256) in that order, as far as the receipt anchor's columns case reads them - and its
+ *   rows equal ROWS in order and both ways (each wording by its full sha256, so the receipt spells none of the text this
+ *   census judges).
  * - "receipt anchor twins": the anchor passes the receipt as committed and with a later dated entry holding the same
  *   table, a later undated section, a later depth-3 dated heading or a later heading whose date runs into other text (the
  *   last three without the table), and fails on a later dated entry without the table, with the table twice, with a
  *   renamed column, with M001's and M002's rows swapped, with a row more or a row fewer, or with one wrong cell in any of
  *   the eight columns.
- * - "receipt anchor's dated entries": a later depth-2 heading that is the date alone, the date then a space and more text,
+ * - "receipt anchor's dated entries": a later top-level depth-2 heading that is the date alone, the date then a space and more text,
  *   a shape-valid non-calendar date ("2026-13-45") or a setext depth-2 dated heading opens an entry (so the anchor fails
  *   without the table); and the last dated entry stays in force through a later setext depth-1 dated heading and through
  *   later runs of headings that open none: dated headings at depths 1 and 3 to 6 (WD1's shape); depth-2 headings whose
@@ -109,6 +138,14 @@
  *   block-quoted copy (WNESTED) or a copy in a list item, on a later undated section holding a second census table or a
  *   block-quoted one, and on a later depth-3 dated heading holding a second one; the table's text in a code block does
  *   not count.
+ * - "receipt anchor's columns": a later dated entry holding the census rows under a header that is not RECEIPT_COLUMNS
+ *   in order holds no census table (the anchor fails with "holds 0 tables"): each of the eight columns with a character
+ *   added ("x") and with its last character dropped (16 twins), Requirement and Row swapped with their cells, a ninth
+ *   column (Note), the last column dropped with its cells, Requirement in lower case, and Existing sha-256 with its space
+ *   doubled, written as a tab or written as a no-break space (23 twins, the count pinned).
+ * - "receipt anchor's top-level headings": a later depth-2 dated heading inside a block quote (WQ1, "> ## 2026-11-08
+ *   receipt: ...") or a list item (WQ2, "- ## 2026-11-08 receipt: ...") opens no entry: followed by a note, the last
+ *   dated entry stays in force (the anchor passes); followed by the census table, the last dated entry holds two.
  * - one case per row, titled "<requirement> <id> <claim> <class> <where>": the predicate over the live page. STANDS: the
  *   row's standing text (an edit row's Repair; a same-edit row's host Repair; a ledger-only row's Existing wording, the
  *   norm the ledger correction leaves in place) stands exactly once on its page, on a line of its Where (from its first
@@ -130,21 +167,29 @@
  *   Where and exactly "<id> stands at <page>:L<n>" on every other line (only the row's STANDS findings are read there: a
  *   move onto a fence or table line may change the page's other findings).
  * - "R-PARAPHRASE quiet rows": the residual below, each member beside its twin control.
- * - "records": every row's case and every row's sweep ran and reached its predicate.
- * HIDDEN (the forms a reader is not shown, or that this census does not read as shown; it fails closed on them): a
- * Markdown token (marked's GFM lexer, every token walked) of a kind outside SHOWN, the kinds the six pages use today
- * (space, hr, heading, paragraph, text, strong, em, codespan, code, list, list_item, table and link) - so an HTML block or
- * inline token (comments and tags), a link reference definition, an image, struck text, a block quote, a hard line
- * break, a backslash escape or a task-list checkbox - and a link title, or whitespace (a code unit of JavaScript's \s
- * class; WHITESPACE lists the 23 that can stand there) in a link destination or in a fenced-code info string.
+ * - "records": every row's case and every row's sweep ran and reached its predicate, and the title and whitespace plant
+ *   runs ran on every page (PLANTED: "<page> titles 12" and "<page> whitespace 249").
+ * HIDDEN (the forms a reader is not shown, or that this census does not read as shown; SHOWN fails closed on them): a page
+ * holds a HIDDEN form when hiddenFormsOf (marked's GFM lexer, every token walked) finds one, and the pinned set is
+ * exactly the plants the cases above spell, each added after a blank line at the end of a page (and html also where
+ * HIDDEN-COMMENT and HIDDEN-ATTRIBUTE put it, at each row's standing text) - a token of a kind outside SHOWN, the kinds
+ * the six pages use today (space, hr, heading, paragraph, text, strong, em, codespan, code, list, list_item, table and
+ * link): the eight kinds the hidden-forms plants spell (html - an HTML block that is a comment or a tag, an inline
+ * comment, an inline tag with an attribute -, def, image, del, blockquote, br, escape and checkbox); a link
+ * title: the 12 title plants; whitespace in a link destination: the four angle-bracket spellings of each WHITESPACE unit
+ * and the bare spelling of each BARE_WHITESPACE unit; and whitespace in a fenced-code info string: the six fence
+ * spellings of each WHITESPACE unit.
  * FALSIFIERS (each positive claim's independent falsifier): STANDS' "exactly once" - DUPLICATE, RESTORE, SHORTEN,
  * NORM-EDIT and stands' count (two overlapping copies); "on a line of its Where" - MOVED, MOVED-BEFORE, MOVED-AFTER and
  * the line sweep (both bounds, at every line of the page); ABSENT's "wholly inside" - STRADDLE-END and STRADDLE-START on
  * the straddle rows, ELSEWHERE, RESTORE and absent's bounds (each bound at the first character in and out); SHOWN -
- * HIDDEN-COMMENT, HIDDEN-ATTRIBUTE, the hidden-forms plants and the hidden-whitespace plants; the reading's "never
- * ignored" and "on disk" - the reading's plants; the receipt anchor's "last dated entry" - the receipt anchor twins and
- * its dated-entry runs; its "exactly one table" and "at any depth" - the receipt anchor twins and its table count; its
- * "with the columns" and "in order and both ways" - the receipt anchor twins; the outside anchor's "the row whose id is
+ * HIDDEN-COMMENT, HIDDEN-ATTRIBUTE, the hidden-forms plants, the whitespace plants and the title plants (each HIDDEN
+ * family by its own plants, and BARE_WHITESPACE by marked's own reading of the bare destination); the reading's "never
+ * ignored" and "on disk" - the reading's plants; the receipt anchor's "last dated entry" - the receipt anchor twins, its
+ * dated-entry runs and its top-level headings (WQ1, WQ2 and their table twins); its "exactly one table" and "at any
+ * depth" - the receipt anchor twins and its table count; its header "the eight RECEIPT_COLUMNS in that order" - the
+ * receipt anchor's columns (23 twins) and the twins' renamed column; its "in order and both ways" - the receipt anchor
+ * twins; the outside anchor's "the row whose id is
  * wb-12x1" and "exactly the 50 ... in order" - the outside anchor twins; its "one ACCEPTANCE segment" and "one SURFACES
  * segment" - the outside anchor segments; and for the table itself the frozen shape, the export anchor and the receipt anchor
  * (a row deleted, a pin deleted, a phrase shortened or a row swapped reds at least one of them; a row deleted from every
@@ -165,8 +210,16 @@
  * the text's end; a code unit outside SWEPT at one of the ten date positions or before the date; and a line that marked's
  * lexer does not give as a heading (U+2028 or U+2029 after the date makes the line a paragraph). Whitespace outside
  * JavaScript's \s class (a zero-width space, for one) in a link destination or an info string is NOT CLAIMED by this
- * census, nor is an empty link title ("", '' or ()), which marked gives as no title. A standing text moved past the
- * page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
+ * census, nor is an empty link title ("", '' or ()), which marked gives as no title. A HIDDEN form spelled otherwise than
+ * a plant is NOT CLAIMED by this census: one at another place on a page than its plant's (after a blank line at the
+ * page's end; for HIDDEN-COMMENT and HIDDEN-ATTRIBUTE, at the row's standing text), or inside
+ * another container (a table cell, a heading, emphasis, a list item, a block quote's content); one with other text than
+ * its plant (another link text, destination, title or info-string word than "note", https://example.invalid/note,
+ * "hidden", "words" and "ts"); a reference-style link or an image's own title or destination; another fence length,
+ * indent or closing; whitespace that a character reference or a percent-encoding spells; and a token kind outside SHOWN
+ * that no hidden-forms plant spells. A receipt header that differs from RECEIPT_COLUMNS in a way no columns twin spells
+ * (another normalization form or a homoglyph of a column's letters, for two) is NOT CLAIMED by this census. A standing
+ * text moved past the page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
  * RESIDUAL (named family + pinned quiet row; rule 19(d)): R-PARAPHRASE - the predicate is the exact REMEDIATION wording, so
  * an overstrong claim restated in other words, split over two lines, broken by Markdown emphasis or restated in other
  * characters (a no-break space, a zero-width space, a Cyrillic homoglyph or a character reference) reads clean. Quiet
@@ -877,11 +930,10 @@ function occurrences(text: string, needle: string): number[] {
 
 /** The Markdown token kinds this census reads as text a reader is shown: exactly the kinds the six pages use today. */
 const SHOWN: ReadonlySet<string> = new Set(["space", "hr", "heading", "paragraph", "text", "strong", "em", "codespan", "code", "list", "list_item", "table", "link"]);
-/** The HIDDEN forms of a page (marked's GFM lexer, every token walked): a token of a kind outside SHOWN (an HTML block or
- * inline token, comments and tags alike; a link reference definition; an image; ...), a link title, and whitespace (a code
- * unit of JavaScript's \s class; WHITESPACE lists the 23 that can stand there) in a link destination or in a fenced-code
- * info string - the forms a reader is not shown, or that this census does not read as shown, so it fails closed on them.
- * Each form once, in the order the walk meets it. */
+/** What SHOWN reads as HIDDEN on a page (marked's GFM lexer, every token walked; the code below is the reading). What
+ * this census claims of it is exactly its plants - the header's HIDDEN paragraph (the hidden-forms, whitespace and title
+ * plants, and HIDDEN-COMMENT and HIDDEN-ATTRIBUTE); a form spelled otherwise is NOT CLAIMED. Each form once, in the order
+ * the walk meets it. */
 function hiddenFormsOf(text: string): string[] {
   const forms = new Set<string>();
   walkTokens(new Lexer({ gfm: true }).lex(text), token => {
@@ -1002,6 +1054,7 @@ function mutantsOf(row: Row, text: string): Mutant[] {
 /** One plant per HIDDEN form: the snippet a page gains (after a blank line) and the form its row must then report. */
 const HIDDEN_PLANTS: readonly { readonly name: string; readonly snippet: string; readonly form: string }[] = [
   { name: "an HTML block (a comment on its own line)", snippet: "<!-- a note -->", form: "html" },
+  { name: "an HTML block (a tag on its own line)", snippet: "<div>hidden</div>", form: "html" },
   { name: "inline HTML (a comment inside a sentence)", snippet: "A note <!-- hidden --> here.", form: "html" },
   { name: "inline HTML (a tag with an attribute)", snippet: 'A note <span title="hidden"></span> here.', form: "html" },
   { name: "a link reference definition", snippet: "[note]: https://example.invalid/note", form: "def" },
@@ -1015,18 +1068,65 @@ const HIDDEN_PLANTS: readonly { readonly name: string; readonly snippet: string;
   { name: "a link destination with whitespace", snippet: "[note](<hidden words>)", form: "link destination" },
   { name: "a fenced-code info string with whitespace", snippet: "```ts hidden words\nconst note = 1;\n```", form: "code info" },
 ];
-/** The whitespace of the HIDDEN words: every UTF-16 code unit JavaScript's \s class matches except the line feed and the
- * carriage return, which end the line, so neither can stand inside a link destination or a fenced-code info string. marked
- * keeps each of these 23 inside both (an angle-bracket destination; an info string after its first word). */
+/** The whitespace of the HIDDEN plants: every UTF-16 code unit JavaScript's \s class matches except the line feed and the
+ * carriage return (no plant puts a line break inside a destination or an info string). marked keeps each of these 23 in
+ * every angle-bracket spelling and every fence spelling the whitespace plants use. */
 const WHITESPACE: readonly number[] = [0x9, 0xb, 0xc, 0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
-/** The two whitespace plants of one code unit: a link destination and a fenced-code info string that hold it. */
-const whitespacePlantsOf = (unit: number): readonly { readonly snippet: string; readonly form: string }[] => {
+/** BARE_WHITESPACE: the WHITESPACE units marked keeps between two words of a link destination without angle brackets -
+ * all but U+0009, U+000B, U+000C and U+0020, which marked keeps in no bare destination it gives "[note](hidden" unit "words)". */
+const BARE_WHITESPACE: readonly number[] = [0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
+interface WhitespacePlant {
+  readonly spelling: string;
+  readonly snippet: string;
+  readonly form: string;
+}
+/** The whitespace plants of one WHITESPACE unit: the unit inside an angle-bracket link destination (between two words,
+ * first, last and alone) and between "ts" and "hidden" in a fenced-code info string (a fence of three backticks, three
+ * tildes, four backticks or four tildes, at the line's start or indented three spaces). */
+const whitespacePlantsOf = (unit: number): readonly WhitespacePlant[] => {
   const space = String.fromCharCode(unit);
+  const fenced = (indent: string, fence: string): string => `${indent}${fence}ts${space}hidden\n${indent}const note = 1;\n${indent}${fence}`;
   return [
-    { snippet: `[note](<hidden${space}words>)`, form: "link destination" },
-    { snippet: `\`\`\`ts${space}hidden\nconst note = 1;\n\`\`\``, form: "code info" },
+    { spelling: "angle-bracket destination, between two words", snippet: `[note](<hidden${space}words>)`, form: "link destination" },
+    { spelling: "angle-bracket destination, first", snippet: `[note](<${space}hidden>)`, form: "link destination" },
+    { spelling: "angle-bracket destination, last", snippet: `[note](<hidden${space}>)`, form: "link destination" },
+    { spelling: "angle-bracket destination, alone", snippet: `[note](<${space}>)`, form: "link destination" },
+    { spelling: "info string, three backticks", snippet: fenced("", "```"), form: "code info" },
+    { spelling: "info string, three tildes", snippet: fenced("", "~~~"), form: "code info" },
+    { spelling: "info string, four backticks", snippet: fenced("", "````"), form: "code info" },
+    { spelling: "info string, four tildes", snippet: fenced("", "~~~~"), form: "code info" },
+    { spelling: "info string, three backticks indented three spaces", snippet: fenced("   ", "```"), form: "code info" },
+    { spelling: "info string, three tildes indented three spaces", snippet: fenced("   ", "~~~"), form: "code info" },
   ];
 };
+/** The bare-destination plant of one BARE_WHITESPACE unit: the unit between two words of a destination without angle brackets. */
+const barePlantOf = (unit: number): WhitespacePlant => ({ spelling: "bare destination, between two words", snippet: `[note](hidden${String.fromCharCode(unit)}words)`, form: "link destination" });
+/** The hrefs marked gives the links of a text. */
+function hrefsOf(text: string): string[] {
+  const hrefs: string[] = [];
+  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+    if (token.type === "link") hrefs.push((token as Tokens.Link).href);
+  });
+  return hrefs;
+}
+/** The title plants: "hidden" in each of the three title delimiters, after a bare and after an angle-bracket destination,
+ * on the destination's line and on the next line. */
+const TITLE_DELIMITERS: readonly (readonly [string, string, string])[] = [
+  ["double quotes", '"', '"'],
+  ["single quotes", "'", "'"],
+  ["parentheses", "(", ")"],
+];
+const TITLE_DESTINATIONS: readonly (readonly [string, string])[] = [
+  ["a bare destination", "https://example.invalid/note"],
+  ["an angle-bracket destination", "<https://example.invalid/note>"],
+];
+const TITLE_GAPS: readonly (readonly [string, string])[] = [
+  ["on the destination's line", " "],
+  ["on the next line", "\n"],
+];
+const TITLE_PLANTS: readonly { readonly name: string; readonly snippet: string }[] = TITLE_DELIMITERS.flatMap(([delimiters, open, close]) =>
+  TITLE_DESTINATIONS.flatMap(([destination, href]) => TITLE_GAPS.map(([gap, between]) => ({ name: `a title in ${delimiters} after ${destination}, ${gap}`, snippet: `[note](${href}${between}${open}hidden${close})` }))),
+);
 
 /** What git would commit: tracked or untracked, never ignored, and still on disk (read in `root` with the environment `env`). */
 function committable(paths: readonly string[], root = ROOT, env: NodeJS.ProcessEnv = process.env): string[] {
@@ -1134,6 +1234,8 @@ const LATER_ENTRY = "## 2026-11-08 receipt: a later entry (an in-memory twin)";
 
 const REACHED = new Set<string>();
 const SWEPT_ROWS = new Set<string>();
+/** The plant runs the whitespace and title cases reached: "<page> whitespace <n>" and "<page> titles <n>" per page. */
+const PLANTED = new Set<string>();
 
 describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMEDIATION rows on the six landed program and skill pages, each by its stands pin (and its absent pin on the 47 edit and same-edit rows), red under the requirement's adversarial mutants", () => {
   it("the reading: the six pages are files git would commit, every page key is a row's, and every Where is a line range on its page", () => {
@@ -1249,8 +1351,8 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(ROWS.filter(row => inCodeBlock(pageText(placeOf(row).page), standingOf(row))).map(row => row.id)).toEqual(CODE_ROWS);
   });
 
-  it("hidden forms: no page holds a HIDDEN form, and each HIDDEN plant added to any of the six pages reds that page's first row with exactly its form", () => {
-    expect(HIDDEN_PLANTS.map(plant => plant.form)).toEqual(["html", "html", "html", "def", "image", "del", "blockquote", "br", "escape", "checkbox", "link title", "link destination", "code info"]);
+  it("hidden forms: no page holds a HIDDEN form, and each of the 14 HIDDEN_PLANTS snippets added to any of the six pages reds that page's first row with exactly its form", () => {
+    expect(HIDDEN_PLANTS.map(plant => plant.form)).toEqual(["html", "html", "html", "html", "def", "image", "del", "blockquote", "br", "escape", "checkbox", "link title", "link destination", "code info"]);
     for (const key of Object.keys(PAGES).filter(isPageKey)) {
       const row = ROWS.find(entry => placeOf(entry).page === key);
       expect(row, key).toBeDefined();
@@ -1261,14 +1363,56 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     }
   });
 
-  it("hidden whitespace: WHITESPACE is every UTF-16 code unit JavaScript's \\s matches but the line feed and the carriage return, and each one in a link destination or in a fenced-code info string, added to any of the six pages, reds that page's first row with exactly that form", () => {
+  it("hidden whitespace: WHITESPACE is every UTF-16 code unit JavaScript's \\s matches but the line feed and the carriage return, BARE_WHITESPACE every one marked keeps between two words of a bare destination, and each whitespace plant - a WHITESPACE unit in one of the four angle-bracket spellings or the six fence spellings, a BARE_WHITESPACE unit in the bare spelling - added to any of the six pages reds that page's first row with exactly its form", () => {
     expect(Array.from({ length: 0x10000 }, (_, unit) => unit).filter(unit => unit !== 0xa && unit !== 0xd && /\s/.test(String.fromCharCode(unit)))).toEqual(WHITESPACE);
+    // BARE_WHITESPACE is read off marked itself: the WHITESPACE units a destination without angle brackets keeps between two words.
+    expect(WHITESPACE.filter(unit => hrefsOf(barePlantOf(unit).snippet).includes(`hidden${String.fromCharCode(unit)}words`))).toEqual(BARE_WHITESPACE);
+    expect(whitespacePlantsOf(0x20).map(plant => `${plant.form}: ${plant.spelling}: ${JSON.stringify(plant.snippet)}`)).toEqual([
+      'link destination: angle-bracket destination, between two words: "[note](<hidden words>)"',
+      'link destination: angle-bracket destination, first: "[note](< hidden>)"',
+      'link destination: angle-bracket destination, last: "[note](<hidden >)"',
+      'link destination: angle-bracket destination, alone: "[note](< >)"',
+      'code info: info string, three backticks: "```ts hidden\\nconst note = 1;\\n```"',
+      'code info: info string, three tildes: "~~~ts hidden\\nconst note = 1;\\n~~~"',
+      'code info: info string, four backticks: "````ts hidden\\nconst note = 1;\\n````"',
+      'code info: info string, four tildes: "~~~~ts hidden\\nconst note = 1;\\n~~~~"',
+      'code info: info string, three backticks indented three spaces: "   ```ts hidden\\n   const note = 1;\\n   ```"',
+      'code info: info string, three tildes indented three spaces: "   ~~~ts hidden\\n   const note = 1;\\n   ~~~"',
+    ]);
+    expect(`${barePlantOf(0xa0).form}: ${barePlantOf(0xa0).spelling}: ${JSON.stringify(barePlantOf(0xa0).snippet)}`).toBe(`link destination: bare destination, between two words: "[note](hidden${String.fromCharCode(0xa0)}words)"`);
     for (const key of Object.keys(PAGES).filter(isPageKey)) {
       const row = ROWS.find(entry => placeOf(entry).page === key);
       expect(row, key).toBeDefined();
       if (row === undefined) continue;
       const text = pageText(key);
-      for (const unit of WHITESPACE) for (const plant of whitespacePlantsOf(unit)) expect(findingsOf(row, `${text}\n${plant.snippet}\n`), `${key} + U+${unit.toString(16).padStart(4, "0")} in a ${plant.form}`).toEqual([`${row.id} page ${key} holds ${plant.form}`]);
+      const plants = [...WHITESPACE.flatMap(unit => whitespacePlantsOf(unit).map(plant => [unit, plant] as const)), ...BARE_WHITESPACE.map(unit => [unit, barePlantOf(unit)] as const)];
+      for (const [unit, plant] of plants) expect(findingsOf(row, `${text}\n${plant.snippet}\n`), `${key} + U+${unit.toString(16).padStart(4, "0")} in a ${plant.spelling}`).toEqual([`${row.id} page ${key} holds ${plant.form}`]);
+      PLANTED.add(`${key} whitespace ${plants.length}`);
+    }
+  }, 60_000);
+
+  it("link titles: each TITLE_PLANTS entry, a title in double quotes, single quotes or parentheses after a bare or an angle-bracket destination, on the destination's line or the next, added to any of the six pages reds that page's first row with exactly 'link title'", () => {
+    expect(TITLE_PLANTS.map(plant => plant.snippet)).toEqual([
+      '[note](https://example.invalid/note "hidden")',
+      '[note](https://example.invalid/note\n"hidden")',
+      '[note](<https://example.invalid/note> "hidden")',
+      '[note](<https://example.invalid/note>\n"hidden")',
+      "[note](https://example.invalid/note 'hidden')",
+      "[note](https://example.invalid/note\n'hidden')",
+      "[note](<https://example.invalid/note> 'hidden')",
+      "[note](<https://example.invalid/note>\n'hidden')",
+      "[note](https://example.invalid/note (hidden))",
+      "[note](https://example.invalid/note\n(hidden))",
+      "[note](<https://example.invalid/note> (hidden))",
+      "[note](<https://example.invalid/note>\n(hidden))",
+    ]);
+    for (const key of Object.keys(PAGES).filter(isPageKey)) {
+      const row = ROWS.find(entry => placeOf(entry).page === key);
+      expect(row, key).toBeDefined();
+      if (row === undefined) continue;
+      const text = pageText(key);
+      for (const plant of TITLE_PLANTS) expect(findingsOf(row, `${text}\n${plant.snippet}\n`), `${key} + ${plant.name}`).toEqual([`${row.id} page ${key} holds link title`]);
+      PLANTED.add(`${key} titles ${TITLE_PLANTS.length}`);
     }
   });
 
@@ -1348,7 +1492,7 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => exportAnchor(twinOf(live.description.replace(surfaces, () => `SURFACES: none | ${surfaces}`))), "an extra SURFACES segment before the real one").toThrow(/has 2 SURFACES segments/);
   }, 60_000);
 
-  it("receipt anchor's dated entries: a later depth-2 heading that is the date alone, the date then a space and text, a shape-only date or a setext depth-2 dated heading opens an entry, and the later runs this case spells (other depths, other code units after the date, near-miss dates) open none", () => {
+  it("receipt anchor's dated entries: a later top-level depth-2 heading that is the date alone, the date then a space and text, a shape-only date or a setext depth-2 dated heading opens an entry, and the later runs this case spells (other depths, other code units after the date, near-miss dates) open none", () => {
     const live = receiptText();
     const note = "- A later note.";
     const run = (headings: readonly string[]): string => `${live}\n${headings.join("\n")}\n`;
@@ -1390,6 +1534,38 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => receiptAnchor(laterSection(live, "## Notes", quoted)), "a later undated section holding a block-quoted census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, "### 2026-11-08 receipt: a sub-entry", table)), "a later depth-3 dated heading holding a second census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n\`\`\`\n${table}\n\`\`\``)), "a later dated entry holding the table and its text in a code block").not.toThrow();
+  });
+
+  it("receipt anchor's columns: a later dated entry whose table header is not the eight RECEIPT_COLUMNS in order - any one column with a character added or its last character dropped, Requirement and Row swapped, a ninth column, the last column dropped, Requirement in lower case, or Existing sha-256's space doubled or written as a tab or a no-break space - holds no census table", () => {
+    const live = receiptText();
+    const expected = ROWS.map(receiptRowOf);
+    const twins: [string, readonly string[], readonly (readonly string[])[]][] = [
+      ...RECEIPT_COLUMNS.flatMap((column, at): [string, readonly string[], readonly (readonly string[])[]][] => [
+        [`WK: ${column} with a character added`, RECEIPT_COLUMNS.map((name, index) => (index === at ? `${name}x` : name)), expected],
+        [`WK: ${column} with its last character dropped`, RECEIPT_COLUMNS.map((name, index) => (index === at ? name.slice(0, -1) : name)), expected],
+      ]),
+      ["Requirement and Row swapped (the cells with them)", ["Row", "Requirement", ...RECEIPT_COLUMNS.slice(2)], expected.map(([first = "", second = "", ...rest]) => [second, first, ...rest])],
+      ["a ninth column (Note, every row's cell 'none')", [...RECEIPT_COLUMNS, "Note"], expected.map(cells => [...cells, "none"])],
+      ["the last column dropped (the cells with it)", RECEIPT_COLUMNS.slice(0, -1), expected.map(cells => cells.slice(0, -1))],
+      ["Requirement in lower case", ["requirement", ...RECEIPT_COLUMNS.slice(1)], expected],
+      ["Existing sha-256 with its space doubled", RECEIPT_COLUMNS.map(name => (name === "Existing sha-256" ? "Existing  sha-256" : name)), expected],
+      ["Existing sha-256 with a tab for its space", RECEIPT_COLUMNS.map(name => (name === "Existing sha-256" ? "Existing\tsha-256" : name)), expected],
+      ["Existing sha-256 with a no-break space for its space", RECEIPT_COLUMNS.map(name => (name === "Existing sha-256" ? `Existing${String.fromCodePoint(0xa0)}sha-256` : name)), expected],
+    ];
+    expect(twins).toHaveLength(2 * RECEIPT_COLUMNS.length + 7);
+    for (const [name, columns, rows] of twins) expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, tableText(rows, columns))), name).toThrow(/holds 0 tables/);
+  });
+
+  it("receipt anchor's top-level headings: a later dated depth-2 heading inside a block quote (WQ1) or a list item (WQ2) opens no entry - without the table the last dated entry stays in force, and with the table after it the last dated entry holds two", () => {
+    const live = receiptText();
+    const table = tableText(ROWS.map(receiptRowOf));
+    const note = "A later note.";
+    const quotedHeading = "> ## 2026-11-08 receipt: a later dated heading inside a block quote";
+    const listedHeading = "- ## 2026-11-08 receipt: a later dated heading inside a list item";
+    expect(() => receiptAnchor(laterSection(live, quotedHeading, note)), "WQ1: a dated heading inside a block quote, then a note").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, listedHeading, note)), "WQ2: a dated heading inside a list item, then a note").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, quotedHeading, table)), "a dated heading inside a block quote, then the table").toThrow(/holds 2 tables/);
+    expect(() => receiptAnchor(laterSection(live, listedHeading, table)), "a dated heading inside a list item, then the table").toThrow(/holds 2 tables/);
   });
 
   describe("ROWS: a row's standing text stands once on a line of its Where, (edit and same-edit rows) its Existing wording stands on its page only inside that text, and its page holds no HIDDEN form", () => {
@@ -1436,8 +1612,10 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     }
   });
 
-  it("records: every row's case ran and reached its predicate", () => {
+  it("records: every row's case and sweep ran and reached its predicate, and the title and whitespace plant runs ran on every page", () => {
     expect([...REACHED].sort()).toEqual(ROWS.map(row => row.id).sort());
     expect([...SWEPT_ROWS].sort()).toEqual(ROWS.map(row => row.id).sort());
+    const perPage = 10 * WHITESPACE.length + BARE_WHITESPACE.length;
+    expect([...PLANTED].sort()).toEqual(Object.keys(PAGES).flatMap(key => [`${key} titles ${TITLE_PLANTS.length}`, `${key} whitespace ${perPage}`]).sort());
   });
 });
