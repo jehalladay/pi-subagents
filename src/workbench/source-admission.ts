@@ -1,27 +1,34 @@
 /**
- * source-admission.ts: host-owned write admission against an immutable source identity (wb-s8rm, the B-source bead of the
+ * source-admission.ts: host-owned write admission against a measured source identity (wb-s8rm, the B-source bead of the
  * mechanical-workflows-interop-2026-11-04 program, slice PI-1, requirements EAT-R022..EAT-R027; the program is design-only and
- * its function host does not exist yet). test/workbench-mechanical-source-admission.test.ts names the case that pins each
- * form these comments state; a form no case pins is NOT CLAIMED there.
+ * its function host does not exist yet). The header of test/workbench-mechanical-source-admission.test.ts names the case that
+ * pins each form these comments state, the residual family whose quiet rows it pins, and the forms it does not claim.
  *
- * admitSourceWrite(request, host, dispatch) calls a write-capable dispatch at most once, with the one grant it mints, after
- * these rules pass in this order; the first refusal wins and is returned before the dispatch is called:
- * 1. request shape: a plain request object, a clean invocation reference and a dispatch function;
- * 2. cancellation: the host's signal is not aborted;
- * 3. the write request: the caller's JSON policy asks for writes (it never grants them; EAT-R027);
- * 4. confinement (EAT-R023, confineWorkspace): the caller's workspace path is a locator, never authority;
- * 5. measurement (EAT-R022, EAT-R026, measureSourceIdentity): the host measures the source identity itself;
- * 6. attestation (EAT-R027): the host's attestation slot holds an attestation this host's WriteBoundaryAuthority minted for
- *    exactly that workspace and identity;
- * 7. the writer lease (EAT-R024): one lease per canonical workspace root;
- * then the host's admission wait, cancellation, a fresh measurement whose digest must equal the admitted one, and the
- * attestation read again (EAT-R025). The lease is released when the admission refuses after taking it or the dispatch
- * settles, and a dispatch error propagates unchanged. A refusal carries the fixed reason of its code, never caller text.
+ * admitSourceWrite(request, host, dispatch) calls dispatch at most once, with the one grant it mints, after these rules pass in
+ * this order; otherwise it returns the refusal of the first rule that fails and does not call dispatch:
+ * 1. request shape (malformed-request): request is a plain object whose invocationId is clean text, and dispatch is a function;
+ * 2. cancellation (admission-cancelled): host.signal is not aborted;
+ * 3. the write request (writes-not-requested): request.policy asks for writes (see writesRequested); asking grants nothing;
+ * 4. confinement (EAT-R023): confineWorkspace(host.authorizedRoot, request.workspace, host.git) answers confined, else its
+ *    refusal is returned;
+ * 5. measurement (EAT-R022, EAT-R026): measureSourceIdentity(the confined canonical root, host.gateManifest, host.git) answers
+ *    measured, else its refusal is returned;
+ * 6. attestation (EAT-R027): host.attestation is an object host.authority minted (attestation-absent), whose workspace is that
+ *    canonical root (attestation-other-workspace) and whose sourceIdentity is that identity's digest (attestation-stale);
+ * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease;
+ * 8. the admission wait: host.admissionWait, when set, is called with host.signal and resolves; a rejection refuses
+ *    admission-cancelled when host.signal is aborted by then and admission-refused otherwise;
+ * 9. cancellation (admission-cancelled): host.signal is not aborted;
+ * 10. the fresh measurement (EAT-R025, source-changed): measureSourceIdentity of that root answers measured, with the digest of
+ *    the identity rule 5 measured;
+ * 11. the attestation read again: rule 6's checks and codes, against the fresh identity.
+ * The lease rule 7 takes is released when a later rule refuses and when dispatch settles; an error dispatch throws propagates
+ * unchanged. A refusal carries the fixed reason of its code (REASONS) and, on dirty-base only, the counts.
  *
- * Boundaries: the module launches nothing. Git is read through the host's SourceGitReader, and every call's argv starts with
- * --no-optional-locks -c core.fsmonitor=false -c core.untrackedCache=false. Not wired yet: workflow_execute still refuses a
- * function definition (execute-tool.ts, unsupported-definition-kind) until the dispatch bead composes this seam. One
- * WriterLeases registry binds the writers of one host process.
+ * Git is read through host.git (a SourceGitReader), and every argv the module passes it starts with --no-optional-locks -c
+ * core.fsmonitor=false -c core.untrackedCache=false. Not wired yet: workflow_execute still refuses a function definition
+ * (execute-tool.ts, unsupported-definition-kind) until the dispatch bead composes this seam. One WriterLeases registry binds the
+ * writers of one host process.
  */
 import { createHash } from "node:crypto";
 import { lstatSync, readFileSync, realpathSync } from "node:fs";
@@ -33,9 +40,8 @@ import { identityDigest } from "./identity.js";
 export const SOURCE_IDENTITY_DOMAIN = "source-identity";
 
 /**
- * The host's read-only Git reader: runs git in `directory` with exactly `args` and returns its stdout as a Buffer, or undefined
- * when git cannot answer. The host owns the process and its environment. A reader that throws, or answers with anything but a
- * Buffer, has not answered.
+ * The host's Git reader: it runs git in `directory` with `args` and returns git's stdout, or undefined when git cannot answer.
+ * The host owns the process and its environment. The module reads a throw, or an answer that is not a Buffer, as no answer.
  */
 export type SourceGitReader = (directory: string, args: readonly string[]) => Buffer | undefined;
 
@@ -57,9 +63,11 @@ export type SourceAdmissionCode =
   | "source-changed";
 
 /**
- * Counts of the records of git status --porcelain=v1 -z --untracked-files=all --no-renames: untracked counts the "??" records,
- * staged the other records whose index column is not a space, tracked the other records whose worktree column is not a space
- * (one record can count as staged and as tracked). Ignored paths are not listed.
+ * Counts of the NUL-separated records of the measurement's git status call (status --porcelain=v1 -z --untracked-files=all
+ * --ignore-submodules=none --no-renames, after the global options): untracked counts the records whose two status columns are
+ * both "?", staged the other records whose first (index) column is not a space, and tracked the other records whose second
+ * (worktree) column is not a space, so one record can count as staged and as tracked. A path git status does not list is not
+ * counted.
  */
 export interface SourceDirtiness {
   readonly tracked: number;
@@ -74,8 +82,9 @@ export interface SourceAdmissionRefusal {
   readonly dirty?: SourceDirtiness;
 }
 /**
- * The measured identity of one clean workspace, frozen together with its gateManifest member. Only measureSourceIdentity mints
- * one that an authority will attest.
+ * What measureSourceIdentity answers for a workspace it measured: frozen, with its gateManifest member frozen. dirtiness "clean"
+ * records that the measurement's git status call listed no record (see SourceDirtiness). Only measureSourceIdentity mints one
+ * that an authority will attest.
  */
 export interface SourceIdentity {
   readonly canonicalRoot: string;
@@ -103,32 +112,29 @@ export interface WriterLease {
   readonly invocationId: string;
 }
 export interface SourceWriteRequest {
-  /** The host-minted logical invocation reference: clean text (see cleanText). */
+  /** The invocation reference: clean text (see cleanText). */
   readonly invocationId: string;
-  /** The caller's absolute workspace path: a locator, never authority. */
+  /** The caller's absolute workspace path; rule 4 confines it. */
   readonly workspace: string;
-  /** The caller's JSON policy: it asks for writes (see writesRequested) and never authorizes them. */
+  /** The caller's JSON policy: rule 3 reads whether it asks for writes (see writesRequested), and asking grants nothing. */
   readonly policy?: JsonValue;
 }
-/** What only the host supplies. Nothing here is read from the request. */
+/** What the host supplies. */
 export interface SourceAdmissionHost {
-  /** The absolute root the host authorized writes under, judged by its realpath; the workspace must resolve inside it. */
+  /** The absolute path of the root the host authorized writes under; rule 4 judges the workspace against its realpath. */
   readonly authorizedRoot: string;
-  /** The gate manifest the identity binds: a path relative to the workspace root. */
+  /** The gate manifest the identity binds: a path relative to the workspace root (see gateManifestOf). */
   readonly gateManifest: string;
   readonly git: SourceGitReader;
   readonly authority: WriteBoundaryAuthority;
-  /** The operator's attestation from the host's own channel. Read again after the admission wait, so withdrawing it refuses. */
+  /** The operator's attestation from the host's own channel: rule 6 reads it, and rule 11 reads it again after the wait. */
   attestation?: WriteBoundaryAttestation;
   readonly leases: WriterLeases;
   readonly signal?: AbortSignal;
-  /**
-   * The host's asynchronous admission wait (queue, budget or operator). A rejection refuses admission-cancelled when the signal
-   * is aborted by then and admission-refused otherwise; after it resolves the source is measured again.
-   */
+  /** The host's asynchronous admission wait (queue, budget or operator): rule 8. */
   readonly admissionWait?: (signal: AbortSignal | undefined) => Promise<void>;
 }
-/** The one child write capability this module mints: frozen, and handed to the dispatch only. */
+/** The one child write capability this module mints: frozen, and passed to dispatch; the outcome carries no grant. */
 export interface SourceWriteGrant {
   readonly invocationId: string;
   readonly identity: SourceIdentity;
@@ -143,25 +149,26 @@ const REASONS: Readonly<Record<SourceAdmissionCode, string>> = Object.freeze({
   "writes-not-requested": "the request does not ask for writes, so no write capability is granted",
   "workspace-unresolvable": "the workspace or the authorized root does not resolve",
   "workspace-outside-root": "the workspace resolves outside the authorized canonical root",
-  "workspace-not-worktree-root": "the workspace is not the root of its own Git worktree",
-  "source-unmeasurable": "the source identity cannot be measured: no canonical worktree root, a repository other than the one its .git names, no HEAD, or an index entry hidden from git status or unmerged",
-  "dirty-base": "the implementation base has tracked, staged or untracked edits",
-  "gate-manifest-unavailable": "the gate manifest is missing, leaves the workspace, is not a regular file or exceeds its bound",
-  "attestation-absent": "no operator attestation minted by this host covers the write boundary",
+  "workspace-not-worktree-root": "git does not report the workspace as the root of its own worktree",
+  "source-unmeasurable": "the source identity cannot be measured: git does not answer a measurement call, or reports another worktree root, another Git directory than the workspace's .git, no object id for HEAD's commit or tree, or an index entry tagged other than H",
+  "dirty-base": "git status lists tracked, staged or untracked edits of the implementation base",
+  "gate-manifest-unavailable": "the gate manifest path is absolute or leaves the workspace, or what it names is missing, unreadable, not a regular file or over its bound",
+  "attestation-absent": "the host holds no operator attestation that its authority minted",
   "attestation-other-workspace": "the operator attestation names another workspace",
   "attestation-stale": "the operator attestation names another source identity of this workspace",
-  "writer-held": "another invocation holds the writer lease of this canonical workspace",
+  "writer-held": "the writer lease of this canonical workspace is held",
   "admission-cancelled": "the invocation was cancelled during admission",
   "admission-refused": "the host admission wait refused the invocation",
-  "source-changed": "the source identity changed while the admission waited",
+  "source-changed": "the source identity measured after the admission wait is not the admitted one",
 });
 
 /** A commit or tree object id: 40 (SHA-1) or 64 (SHA-256) lowercase hex digits. */
 const OBJECT_ID = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
+/** The clean-text bound: 4096 UTF-8 bytes. */
 const TEXT_BYTES = 4096;
 /** The gate manifest bound: 1 MiB (1048576 bytes). */
 const GATE_MANIFEST_BYTES = 1024 * 1024;
-/** Global options that open every call's argv: --no-optional-locks (no optional index write), core.fsmonitor and core.untrackedCache off. */
+/** The global options that open every argv the module passes the reader: --no-optional-locks (no optional index write), core.fsmonitor and core.untrackedCache off. */
 const GIT_MEASURE_OPTIONS: readonly string[] = ["--no-optional-locks", "-c", "core.fsmonitor=false", "-c", "core.untrackedCache=false"];
 
 /** Every SourceIdentity measureSourceIdentity minted; an authority attests no other object. */
@@ -171,14 +178,17 @@ function refusal(code: SourceAdmissionCode): SourceAdmissionRefusal {
   return Object.freeze({ decision: "refused", code, reason: REASONS[code] });
 }
 
-/** An object whose prototype is Object.prototype or null (an array is not one). */
+/** An object whose prototype is Object.prototype or null; an array is not one. */
 function plainObject(value: unknown): value is Record<string, unknown> {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
   const prototype = Object.getPrototypeOf(value);
   return prototype === Object.prototype || prototype === null;
 }
 
-/** Clean text: a string that is not blank after trim(), of at most 4096 UTF-8 bytes, with no U+0000-U+001F or U+007F. */
+/**
+ * Clean text: a string that String.prototype.trim() does not reduce to "", of at most 4096 UTF-8 bytes, with no code point in
+ * U+0000-U+001F or U+007F.
+ */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && !/[\u0000-\u001f\u007f]/.test(value);
 }
@@ -187,7 +197,11 @@ function absolutePath(value: unknown): value is string {
   return cleanText(value) && isAbsolute(value);
 }
 
-/** path is root or inside it, judged by path.relative: a sibling that only shares the root's prefix is outside. */
+/**
+ * Whether path is root or inside it, judged by path.relative(root, path): "" (root itself) is inside, and so is any other
+ * relative path that is not "..", does not start with "../" and is not absolute. So a sibling that only shares root's prefix is
+ * outside, and a child whose name starts with ".." is inside.
+ */
 function contains(root: string, path: string): boolean {
   const rel = relative(root, path);
   return rel === "" || (rel !== ".." && !rel.startsWith(`..${sep}`) && !isAbsolute(rel));
@@ -245,9 +259,9 @@ function dirtiness(status: Buffer): SourceDirtiness {
 }
 
 /**
- * The gate manifest measured by bytes, whether Git tracks it or not. Undefined when the declared path is absolute, when it leaves
- * the workspace by path or its realpath leaves it by symlink, when it is missing or cannot be read, when what it resolves to is not
- * a regular file, or when it holds more than 1 MiB.
+ * The gate manifest measured by its bytes, whether Git tracks it or ignores it. Undefined when the declared path is absolute,
+ * when it leaves the workspace by path or its realpath leaves it, when what it names is missing or unreadable, when that is not a
+ * regular file, or when it holds more than 1 MiB.
  */
 function gateManifestOf(root: string, manifest: string): { readonly path: string; readonly sha256: string } | undefined {
   if (isAbsolute(manifest)) return undefined;
@@ -267,10 +281,11 @@ function gateManifestOf(root: string, manifest: string): { readonly path: string
 }
 
 /**
- * EAT-R023: the canonical root of the caller's workspace. Both paths must be absolute (a relative one would resolve against Pi's
- * own directory); the workspace's realpath must lie inside the authorized root's realpath, judged by path.relative and never by a
- * string prefix, and must be the root git reports for it, so a subdirectory of a wider checkout is refused. Refusals in order:
- * malformed-request, workspace-unresolvable, workspace-outside-root, workspace-not-worktree-root.
+ * EAT-R023: the canonical root of the caller's workspace, checked in this order. authorizedRoot and workspace must be absolute
+ * clean text and git a function (malformed-request); both must resolve by realpath (workspace-unresolvable); the workspace's
+ * realpath must be the authorized root's realpath or inside it, judged by contains and never by a string prefix
+ * (workspace-outside-root); and it must be the root git reports for it, so a subdirectory of a worktree is refused
+ * (workspace-not-worktree-root).
  */
 export function confineWorkspace(authorizedRoot: string, workspace: string, git: SourceGitReader): WorkspaceConfinement {
   if (!absolutePath(authorizedRoot) || !absolutePath(workspace) || typeof git !== "function") return refusal("malformed-request");
@@ -283,14 +298,15 @@ export function confineWorkspace(authorizedRoot: string, workspace: string, git:
 }
 
 /**
- * EAT-R022 and EAT-R026: the identity of a clean worktree, measured by the host, in this order. canonicalRoot must be the root
- * git reports for it, by realpath; git must report the same Git directory for it as when it is told the workspace's own .git
- * (--git-dir=<root>/.git), so a reader whose environment points git at another repository is refused; HEAD must name a commit
- * and a tree; every index entry must be listed with the tag "H " by git ls-files -v (git status does not read the working-tree
- * file of an entry flagged assume-unchanged or skip-worktree, and an unmerged entry has no single staged version, so such an
- * identity is unmeasurable rather than clean); git status (see SourceDirtiness) must list no record; and the gate manifest must
- * be available (see gateManifestOf).
- * HEAD equality alone never admits.
+ * EAT-R022 and EAT-R026: measures one workspace through the reader, in this order. canonicalRoot must be absolute clean text, the
+ * gate manifest clean text and git a function (malformed-request). Then, each refusing source-unmeasurable: the root git reports
+ * for canonicalRoot must be canonicalRoot by realpath; git must report the same Git directory plainly and with
+ * --git-dir=<canonicalRoot>/.git, so a reader whose GIT_DIR names another repository is refused; HEAD^{commit} and HEAD^{tree}
+ * must answer object ids; every entry git ls-files -v -z lists must carry the tag "H " (assume-unchanged, skip-worktree and
+ * unmerged entries carry other tags); and git status must answer. A git status record refuses dirty-base with the counts (see
+ * SourceDirtiness), and last the gate manifest must measure (gate-manifest-unavailable; see gateManifestOf). Dirtiness is read
+ * from git status alone, so an edit git status does not list is measured clean (the suite's residual family UNLISTED-EDITS pins
+ * two such edits). HEAD equality alone never admits.
  */
 export function measureSourceIdentity(canonicalRoot: string, gateManifest: string, git: SourceGitReader): SourceMeasurement {
   if (!absolutePath(canonicalRoot) || !cleanText(gateManifest) || typeof git !== "function") return refusal("malformed-request");
@@ -316,8 +332,9 @@ export function measureSourceIdentity(canonicalRoot: string, gateManifest: strin
 }
 
 /**
- * The host's attestation channel (EAT-R027). The operator attests one write boundary: one measured identity of one canonical
- * workspace, by a clean operator id. Only an object this instance minted is an attestation: an equal-shaped copy (a JSON policy
+ * The host's attestation channel (EAT-R027). attest(operatorId, identity) mints a frozen attestation naming the identity's
+ * canonical root and digest, and throws a validation CapabilityError unless operatorId is clean text and measureSourceIdentity
+ * minted the identity. minted(value) is true only for an attestation this instance minted: an equal-shaped copy (a JSON policy
  * member, a spread) and another instance's attestation are not.
  */
 export class WriteBoundaryAuthority {
@@ -337,15 +354,16 @@ export class WriteBoundaryAuthority {
 }
 
 /**
- * EAT-R024: at most one writer per canonical workspace root in this host. The registry is keyed by the canonical root the
- * admission measured, never by the caller's spelling of the workspace. A lease is released only by presenting the very object
- * acquire returned while it still holds the root, so a stale lease, or a copy naming the same root and invocation, never frees
- * the root for another writer.
+ * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root and
+ * answers undefined while one does; leases of different roots are independent, so taking or releasing one root's lease leaves
+ * every other root's as it was. release frees a root only for the very object acquire returned while it still holds that root,
+ * so a released lease, or a copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease by the
+ * canonical root it measured, never by the caller's spelling of the workspace.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
 
-  /** Throws unless canonicalRoot is an absolute path and invocationId is clean text; undefined while the root is held. */
+  /** Throws a validation CapabilityError unless canonicalRoot is absolute clean text and invocationId is clean text. */
   acquire(canonicalRoot: string, invocationId: string): WriterLease | undefined {
     if (!absolutePath(canonicalRoot) || !cleanText(invocationId)) throw new CapabilityError("validation", "A writer lease names a canonical workspace root and an invocation.");
     if (this.#held.has(canonicalRoot)) return undefined;
@@ -354,12 +372,14 @@ export class WriterLeases {
     return lease;
   }
 
+  /** True when it freed the root. */
   release(lease: WriterLease): boolean {
     if (this.#held.get(lease.canonicalRoot) !== lease) return false;
     this.#held.delete(lease.canonicalRoot);
     return true;
   }
 
+  /** The invocation id of the lease that holds canonicalRoot, or undefined. */
   holder(canonicalRoot: string): string | undefined {
     return this.#held.get(canonicalRoot)?.invocationId;
   }
@@ -383,10 +403,7 @@ function boundaryOf(host: SourceAdmissionHost, identity: SourceIdentity): { read
   return { decision: "attested", operatorId: attestation.operatorId };
 }
 
-/**
- * Admits one write against the host-measured source identity and calls dispatch at most once, with the only grant it mints,
- * by the rules and in the order the module comment lists.
- */
+/** Admits one write by the rules the module comment lists, in that order. */
 export async function admitSourceWrite<T>(request: SourceWriteRequest, host: SourceAdmissionHost, dispatch: (grant: SourceWriteGrant) => Promise<T>): Promise<SourceAdmissionOutcome<T>> {
   if (!plainObject(request) || !cleanText(request.invocationId) || typeof dispatch !== "function") return refusal("malformed-request");
   if (host.signal?.aborted) return refusal("admission-cancelled");
@@ -408,7 +425,7 @@ export async function admitSourceWrite<T>(request: SourceWriteRequest, host: Sou
       }
     }
     if (host.signal?.aborted) return refusal("admission-cancelled");
-    // EAT-R025: the identity a write is admitted against is measured after the last await, never only before it.
+    // Rule 10 (EAT-R025): the root is measured again after the admission wait.
     const current = measureSourceIdentity(admitted.identity.canonicalRoot, host.gateManifest, host.git);
     if (current.decision === "refused" || current.identity.digest !== admitted.identity.digest) return refusal("source-changed");
     const attested = boundaryOf(host, current.identity);

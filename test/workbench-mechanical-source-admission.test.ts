@@ -1,59 +1,78 @@
 /**
- * wb-s8rm [MWI-source]: host-owned write admission against an immutable source identity. Program
+ * wb-s8rm [MWI-source]: host-owned write admission against a measured source identity. Program
  * mechanical-workflows-interop-2026-11-04, slice PI-1, bead B-source: requirements EAT-R022..EAT-R027 of
  * triage/requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e, quoted below with their acceptance and adversarial
- * mutant. The program is design-only; this suite pins the Pi-local admission seam, src/workbench/source-admission.ts.
+ * mutant. The program is design-only; this suite pins the Pi-local admission seam, src/workbench/source-admission.ts, in the
+ * forms this header lists. Each quotation is followed by the reading this suite pins for it.
  *
  * Every case drives that module on real Git repositories built in tracked scratch (test/helpers/scratch.ts), read through the
  * suite's SourceGitReader: real git with the repository-locating variables removed (the fixture's own git calls remove them too);
  * the cases that say so wrap it to fail, record or rewrite chosen calls. The write-capable dispatch is the injected `dispatch`
  * callback, so "no write-capable host dispatch", "refusal before SDK dispatch" and "no child write capability" each read as zero
  * calls to it; a SourceWriteGrant is only ever what that callback receives. Every refusal is asserted whole: its code, the fixed
- * reason of that code (REASON below) and, on dirty-base only, the dirty counts. Every case that expects admitSourceWrite to
- * refuse also asserts zero dispatches.
+ * reason of that code (REASON below) and, on dirty-base only, the dirty counts. Every admission a case expects to refuse is
+ * asserted to make zero calls to its dispatch.
  *
  * PINNED READER SET (case id: assertion target).
  * - EAT-R022 "Pi MUST refuse a dirty implementation base." Acceptance: "Set tracked, staged or untracked edits at admission;
- *   assert no write-capable host dispatch; clean committed tree passes." Mutant: "Use HEAD equality alone." R022-CLEAN: one
- *   dispatch whose grant names the HEAD commit and tree git reports. R022-TRACKED, R022-STAGED, R022-UNTRACKED: one edit each,
- *   refusal dirty-base with that edit in its own column. R022-COUNTS: a base whose git status lists " M", "MM", " D", "A " and
- *   three "??" records (two files of one new directory listed one by one) refuses dirty-base with tracked 3, staged 2, untracked
- *   3. R022-STATUS-COLUMNS: a "?M" record (read through a reader that rewrites status) counts as staged and as tracked, never as
- *   untracked. R022-RENAME: a staged rename counts as a staged deletion and a staged addition (tracked 0, staged 2).
- *   R022-ASSUME-UNCHANGED, R022-SKIP-WORKTREE, R022-UNMERGED: an index entry that git ls-files -v tags other than "H " refuses
- *   source-unmeasurable, also when git status lists it (UNMERGED); each case reads the tag first (h, S, M). R022-NO-HEAD: a
- *   repository whose HEAD names no commit refuses source-unmeasurable. R022-ROOT-ONLY: measureSourceIdentity on a subdirectory, a
- *   symlink alias and a dot spelling of the worktree root refuses source-unmeasurable. R022-TOPLEVEL-ALIAS: a reader that reports
- *   the worktree root through a symlink alias measures the canonical root. R022-MISDIRECTED-GIT: a reader whose GIT_DIR points
- *   git at another repository refuses source-unmeasurable. R022-REPOSITORY-FORMS: a linked worktree (the .git file git worktree
- *   add writes), a .git file naming a relative Git directory with an LF ending and with a CRLF ending, and a .git symlink to a
- *   Git directory each measure the HEAD commit git reports (the linked worktree also dispatches). R022-SHA256: a repository with
- *   64-hex object ids measures them. R022-READER-ARGV: the exact argv of every reader call a measurement and an admission make,
- *   in order, each opening with --no-optional-locks -c core.fsmonitor=false -c core.untrackedCache=false. R022-NO-INDEX-WRITE: a
+ *   assert no write-capable host dispatch; clean committed tree passes." Mutant: "Use HEAD equality alone." Pinned reading: a
+ *   base is dirty when the measurement's git status call lists a record; the residual family UNLISTED-EDITS below names edits
+ *   that call does not list. R022-CLEAN: one dispatch whose grant names the HEAD commit and tree git reports. R022-TRACKED,
+ *   R022-STAGED, R022-UNTRACKED: one edit each (git status " M", "M " and "??"), refusal dirty-base with that edit in its own
+ *   column. R022-COUNTS: a base whose git status lists " M", "MM", " D", "A " and three "??" records (two files of one new
+ *   directory listed one by one) refuses dirty-base with tracked 3, staged 2, untracked 3. R022-STATUS-COLUMNS: a "?M" record
+ *   (read through a reader that rewrites status) counts as staged and as tracked, never as untracked. R022-TYPE-AND-INTENT: a type
+ *   change (" T"), the same change staged ("T ") and an intent-to-add file (" A", which ls-files tags H) refuse dirty-base with
+ *   tracked 1, staged 1 and tracked 1. R022-RENAME: a staged rename counts as a staged deletion and a staged addition (tracked 0,
+ *   staged 2). R022-ASSUME-UNCHANGED, R022-SKIP-WORKTREE, R022-UNMERGED: an index entry that git ls-files -v tags other than "H "
+ *   refuses source-unmeasurable, also when git status lists it (UNMERGED); each case reads the tag first (h, S, M). R022-NO-HEAD:
+ *   a repository whose HEAD names no commit refuses source-unmeasurable. R022-ROOT-ONLY: measureSourceIdentity on a
+ *   subdirectory, a symlink alias and a dot spelling of the worktree root refuses source-unmeasurable. R022-TOPLEVEL-ALIAS: a
+ *   reader that reports the worktree root through a symlink alias measures the canonical root. R022-MISDIRECTED-GIT: a reader
+ *   whose GIT_DIR names another repository refuses source-unmeasurable. R022-REPOSITORY-FORMS: a linked worktree (the .git file
+ *   git worktree add writes), a .git file naming a relative Git directory with an LF ending and with a CRLF ending, and a .git
+ *   symlink to a Git directory each measure the HEAD commit git reports (the linked worktree also dispatches). R022-SHA256: a
+ *   repository with 64-hex object ids measures them, and a HEAD answer there one hex digit too long or too short refuses
+ *   source-unmeasurable. R022-READER-ARGV: the exact argv of every reader call a measurement and an admission make, in order,
+ *   each opening with --no-optional-locks -c core.fsmonitor=false -c core.untrackedCache=false. R022-NO-INDEX-WRITE: a
  *   measurement leaves .git/index byte-identical where a plain git status rewrites it. R022-FSMONITOR: an edit that a configured
  *   fsmonitor hook hides from git status refuses dirty-base. R022-SUBMODULE: a moved submodule that ignore = all hides from git
  *   status refuses dirty-base. R022-READER-PARTIAL: a reader that does not answer exactly one call (or both git-dir calls) -
  *   undefined, a throw or a string - refuses source-unmeasurable for every call of the measurement, as does a HEAD answer that is
- *   no object id, is upper-cased or is one hex digit too long; over a tracked edit with status unanswered, and over an
- *   assume-unchanged edit with ls-files unanswered, the admission dispatches nothing. R022-IGNORED: an ignored build file is not
- *   an edit (one dispatch).
+ *   no object id, is upper-cased or is one hex digit too long or too short; over a tracked edit with status unanswered, and over
+ *   an assume-unchanged edit with ls-files unanswered, the admission dispatches nothing. R022-IGNORED: an ignored build file is
+ *   not an edit (one dispatch).
+ *   RESIDUAL UNLISTED-EDITS (named family, pinned quiet rows): an edit the measurement's git status call does not list is measured
+ *   clean. R022-STAT-TRUST: under core.checkStat=minimal a same-size edit whose mtime is restored is listed by no git status, and
+ *   the measurement answers the identity it answered before the edit. R022-CLEAN-FILTER: under a configured clean filter that
+ *   maps the edited file back to its committed bytes the same holds. Each row reds the day the measurement refuses its edit.
  * - EAT-R023 "Pi MUST confine the workspace to the authorized canonical root." Acceptance: "Supply wrong workspace,
  *   prefix-collision sibling and realpath escape; assert refusal before writing." Mutant: "Accept string startsWith root."
- *   R023-WRONG, R023-SIBLING, R023-ESCAPE: refusal workspace-outside-root although the operator attested that workspace (WRONG
- *   also for a subdirectory of the outside worktree). R023-PARENT: the authorized root's parent refuses workspace-outside-root.
- *   R023-SUBDIR: a subdirectory of a worktree refuses workspace-not-worktree-root. R023-RELATIVE: a relative path refuses
- *   malformed-request. R023-UNRESOLVABLE: a missing workspace (inside or outside the root) and a missing authorized root refuse
- *   workspace-unresolvable. R023-ALIAS-INSIDE: a symlink that resolves inside the root dispatches against the canonical root.
- *   R023-ROOT-ALIAS: an authorized root given as a symlink to the root dispatches. R023-SPACED-NAME: a workspace whose directory
- *   name holds a space, a non-ASCII letter and a trailing space dispatches against that canonical root. R023-CONFINE:
- *   confineWorkspace itself answers the sibling and the workspace.
+ *   Pinned reading: the workspace's realpath must be the authorized root's realpath or inside it by path.relative, and must be the
+ *   worktree root git reports for it. R023-WRONG, R023-SIBLING, R023-ESCAPE: refusal workspace-outside-root although the operator
+ *   attested that workspace (WRONG also for a subdirectory of the outside worktree). R023-PARENT: the authorized root's parent
+ *   refuses workspace-outside-root. R023-SUBDIR: a subdirectory of a worktree refuses workspace-not-worktree-root.
+ *   R023-RELATIVE: a relative path refuses malformed-request. R023-UNRESOLVABLE: a missing workspace (inside or outside the root)
+ *   and a missing authorized root refuse workspace-unresolvable. R023-ALIAS-INSIDE: a symlink that resolves inside the root
+ *   dispatches against the canonical root. R023-ROOT-ALIAS: an authorized root given as a symlink to the root dispatches.
+ *   R023-SPACED-NAME: a workspace whose directory name holds a space, a non-ASCII letter and a trailing space dispatches against
+ *   that canonical root. R023-CONFINE: confineWorkspace itself answers the sibling and the workspace. R023-DOTDOT-NAME: a
+ *   workspace inside the root whose name starts with ".." confines and dispatches. R023-ROOT-ITSELF: an authorized root that is
+ *   the workspace itself confines and dispatches.
  * - EAT-R024 "Pi MUST bind a single writer to each materialized workspace." Acceptance: "Admit two invocation IDs for the same
  *   canonical workspace; at most one writer lease is granted; cancellation releases only the lease it owns." Mutant: "Allocate
- *   lease by caller alias instead of canonical root." R024-ALIAS: while one invocation writes, a symlink alias and a dot spelling
- *   of the same workspace refuse writer-held. R024-CANCEL-OWN: a refused invocation's cancellation leaves the holder's lease; the
- *   holder's cancellation releases it. R024-STALE: a released lease never releases the next holder's lease. R024-FOREIGN: a copy
- *   naming the held root and invocation, and a released lease of the same invocation id after it acquired the root again, release
- *   nothing. R024-VALIDATION: acquire throws for a relative root and for a blank invocation.
+ *   lease by caller alias instead of canonical root." Pinned reading: one lease per canonical root, and leases of different roots
+ *   are independent. R024-ALIAS: while one invocation writes, a symlink alias and a dot spelling of the same workspace refuse
+ *   writer-held. R024-CANCEL-OWN: a refused invocation's cancellation leaves the holder's lease; the holder's cancellation
+ *   releases it. R024-STALE: a released lease never releases the next holder's lease. R024-FOREIGN: a copy naming the held root
+ *   and invocation, and a released lease of the same invocation id after it acquired the root again, release nothing.
+ *   R024-VALIDATION: acquire throws a validation CapabilityError with its exact message, and takes no lease, for a relative
+ *   root, an absolute root holding U+000A or of 4097 UTF-8 bytes, and a root or invocation that is "", " ", holds U+000A or is
+ *   4097 UTF-8 bytes long. R024-TWO-ROOTS: while inv-a writes on ws, inv-b's admission on a second
+ *   workspace under the root dispatches, and inv-c's admission on ws refuses writer-held. R024-RELEASE-OTHER-ROOT: three roots
+ *   leased at once by one invocation id each hold their own lease; releasing one frees that root only, and the other two still
+ *   answer undefined to acquire; at admission level, a write on a second workspace that completes leaves the first workspace's
+ *   lease held, so another admission there refuses writer-held.
  * - EAT-R025 "Pi MUST recheck the source basis after asynchronous admission." Acceptance: "Park admission, change commit/tree,
  *   gate manifest or tracked bytes, release; assert refusal before SDK dispatch." Mutant: "Check source only before await."
  *   R025-COMMIT (commit and tree), R025-AMEND (commit, same tree), R025-GATE (gate manifest bytes), R025-TRACKED (tracked bytes):
@@ -69,7 +88,8 @@
  *   path, a ../ path, a path that leaves the workspace and comes back through an outside symlink, a symlink out of it, a
  *   directory and an unreadable file refuse gate-manifest-unavailable. R026-NOT-REGULAR: a FIFO refuses
  *   gate-manifest-unavailable. R026-BOUND: a 1048576-byte manifest measures and a 1048577-byte one refuses
- *   gate-manifest-unavailable.
+ *   gate-manifest-unavailable. R026-DOTDOT-MANIFEST: committed manifests whose path starts with ".." (a file, and a file in a
+ *   directory whose name does) measure with that path.
  * - EAT-R027 "Pi MUST require an operator-attested write boundary." Acceptance: "Launch with allowWrites:true but absent host
  *   attestation; assert no child write capability. An attestation for another workspace also refuses." Mutant: "Trust JSON policy
  *   as authorization." R027-ABSENT: allowWrites:true and no attestation refuses attestation-absent. R027-POLICY-COPY: an
@@ -79,23 +99,37 @@
  *   called), an inherited member and a class instance each refuse writes-not-requested. R027-REQUESTED: a plain and a
  *   null-prototype policy with own allowWrites true dispatch. R027-WITHDRAWN: an attestation withdrawn while admission waits
  *   refuses. R027-REATTESTED: an attestation replaced while admission waits is read again (the grant names the new operator).
- *   R027-UNMEASURED: the authority attests only an identity the host measured, by a clean operator id. R027-ATTESTED: the grant
- *   carries the operator and is frozen, and the outcome carries no grant. R027-ATTESTATION-FROZEN: a minted attestation is
- *   frozen, so it cannot be rewritten to name another workspace.
+ *   R027-UNMEASURED: attest throws a validation CapabilityError with its exact message for an identity the host did not measure
+ *   and for the operator ids "", " ", two holding U+000A and one of 4097 UTF-8 bytes. R027-ATTESTED: the grant carries the operator and is frozen, and the
+ *   outcome carries no grant. R027-ATTESTATION-FROZEN: a minted attestation is frozen, so it cannot be rewritten to name another
+ *   workspace.
  * - General: GEN-PRE-ABORTED (admission-cancelled, no lease), GEN-WAIT-REFUSED (admission-refused, lease released),
  *   GEN-WAIT-CANCELLED (a wait that rejects because the signal aborted refuses admission-cancelled, lease released),
- *   GEN-DISPATCH-THROWS (the error propagates, lease released), GEN-MALFORMED (an invocation reference that is blank, holds a
- *   U+0000, U+000A, U+001F or U+007F, or exceeds 4096 UTF-8 bytes refuses malformed-request), GEN-CLEAN-TEXT (4096 UTF-8 bytes,
- *   ASCII and two-byte, dispatch), GEN-MALFORMED-SHAPES (a request that is not a plain object, a dispatch or reader that is not a
- *   function, a relative authorized root, an absolute workspace or root path holding U+000A or over 4096 UTF-8 bytes, and
- *   measureSourceIdentity's relative root, unclean manifest or non-function reader refuse malformed-request), GEN-READER-FAILS (a
- *   reader that throws or answers with no Buffer at its first call is a refusal, never a rejection), GEN-REASON-FIXED (the reason
- *   names neither the caller's workspace nor its invocation). Rule order, one case per adjacent pair, each failing both rules of
- *   its pair and no rule before them (the earlier code wins): GEN-ORDER-SHAPE-CANCEL, GEN-ORDER-CANCEL-REQUEST,
- *   GEN-ORDER-REQUEST-CONFINE, GEN-ORDER-CONFINE-MEASURE, GEN-ORDER-MEASURE-ATTEST, GEN-ORDER-STATUS-MANIFEST (within the
- *   measurement), GEN-ORDER-ATTEST-LEASE, GEN-ORDER-WAIT-REFUSED (a refusing wait before the fresh measurement),
- *   GEN-ORDER-WAIT-CANCEL (cancellation after the wait before the fresh measurement), GEN-ORDER-REMEASURE-REATTEST (the fresh
- *   measurement before the attestation is read again).
+ *   GEN-DISPATCH-THROWS (the error propagates, lease released), GEN-MALFORMED (an invocation reference that is "" or " ", holds
+ *   any one of the code points U+0000-U+001F and U+007F, or exceeds 4096 UTF-8 bytes as one-, two-, three- or four-byte text
+ *   refuses malformed-request), GEN-MALFORMED-BLANK (the case first derives, by scanning every code point, the set that
+ *   String.prototype.trim() removes; each of those code points alone, and all of them together, refuse malformed-request as an
+ *   invocation reference and as a gate manifest, and throw a validation CapabilityError as an operator id and as a lease
+ *   invocation), GEN-MALFORMED-TYPES (undefined, null, a number, a boolean, an object and an array as the invocation reference,
+ *   the workspace, the authorized root, the gate manifest, measureSourceIdentity's root and manifest, confineWorkspace's paths,
+ *   an operator id and a lease's root and invocation refuse malformed-request or throw a validation CapabilityError, never
+ *   another error), GEN-CLEAN-TEXT (4096 UTF-8 bytes of one-, two-, three- and four-byte text dispatch), GEN-CLEAN-TEXT-FORMS
+ *   (content between the code points trim() removes that lie outside U+0000-U+001F, and U+0020, U+007E, U+0080, U+009F and
+ *   U+00A0 inside content, dispatch as an invocation reference, attest as an operator id and acquire as a lease invocation),
+ *   GEN-MALFORMED-SHAPES (a request that is not a plain object, a dispatch or reader that is not a function, a relative
+ *   authorized root, an absolute workspace or root path holding U+000A or over 4096 UTF-8 bytes, and measureSourceIdentity's
+ *   relative root, unclean manifest ("", " ", two holding U+000A, one of 4097 UTF-8 bytes) or non-function reader refuse
+ *   malformed-request), GEN-NULL-PROTOTYPE-REQUEST (a
+ *   null-prototype request object dispatches), GEN-READER-FAILS (a reader that throws or answers with no Buffer at its first
+ *   call is a refusal, never a rejection), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its invocation).
+ *   Rule order (the eleven rules of the module comment): each of these cases fails the two rules it names and no rule before them,
+ *   and expects the code of the first: GEN-ORDER-SHAPE-CANCEL (1, 2), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
+ *   (3, 4), GEN-ORDER-CONFINE-MEASURE (4, 5), GEN-ORDER-MEASURE-ATTEST (5, 6), GEN-ORDER-ATTEST-LEASE (6, 7),
+ *   GEN-ORDER-LEASE-WAIT (7, 8; the wait is never called, while the same wait is called and refuses once the lease is free),
+ *   GEN-WAIT-CANCELLED (8, 9; rule 8's code for a signal aborted by then is admission-cancelled), GEN-ORDER-WAIT-CANCEL (9, 10)
+ *   and GEN-ORDER-REMEASURE-REATTEST (10, 11), so each adjacent pair of the eleven rules has a case. GEN-ORDER-WAIT-REFUSED fails
+ *   rules 8 and 10 (admission-refused), and GEN-ORDER-STATUS-MANIFEST fails git status and the gate manifest within rule 5
+ *   (dirty-base).
  *
  * NOT CLAIMED (scope sentences; each bounds what this suite proves):
  * - The function branch of workflow_execute is NOT CLAIMED by this suite: execute-tool.ts still refuses a function definition
@@ -104,14 +138,15 @@
  * - An edit made outside Pi after the final measurement is NOT CLAIMED by this suite.
  * - A change made between two of the module's own reads (a file swapped, grown or replaced between a check and the read after it)
  *   is NOT CLAIMED by this suite.
- * - Ignored paths other than the gate manifest are NOT CLAIMED by this suite: dirtiness reads tracked, staged and untracked
- *   paths.
+ * - Ignored paths are NOT CLAIMED by this suite beyond R022-IGNORED (an ignored build file is no edit) and the ignored gate
+ *   manifests the R026 cases measure.
  * - Where a worktree's Git directory lives (inside or outside the authorized root) is NOT CLAIMED by this suite.
  * - What core.untrackedCache=false changes in a measurement is NOT CLAIMED by this suite: R022-READER-ARGV pins that every call
  *   carries it, and no untracked-cache state that hides a new file was realized on this host.
- * - The host's own git reader (its process and environment) is NOT CLAIMED by this suite: the module launches nothing, and the
- *   suite's reader stands in for the host's.
- * - Paths on a platform whose path separator is not "/" are NOT CLAIMED by this suite.
+ * - The host's own git reader (its process and environment) is NOT CLAIMED by this suite: the suite's reader stands in for the
+ *   host's, and of the variables that point git at other files only GIT_DIR (R022-MISDIRECTED-GIT) is pinned.
+ * - Mount points are NOT CLAIMED by this suite: confinement judges realpaths, and a realpath does not see through a mount.
+ * - Paths on a platform whose path separator is not "/", and case-insensitive file systems, are NOT CLAIMED by this suite.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -197,23 +232,61 @@ const REASON: Readonly<Record<SourceAdmissionCode, string>> = {
   "writes-not-requested": "the request does not ask for writes, so no write capability is granted",
   "workspace-unresolvable": "the workspace or the authorized root does not resolve",
   "workspace-outside-root": "the workspace resolves outside the authorized canonical root",
-  "workspace-not-worktree-root": "the workspace is not the root of its own Git worktree",
-  "source-unmeasurable": "the source identity cannot be measured: no canonical worktree root, a repository other than the one its .git names, no HEAD, or an index entry hidden from git status or unmerged",
-  "dirty-base": "the implementation base has tracked, staged or untracked edits",
-  "gate-manifest-unavailable": "the gate manifest is missing, leaves the workspace, is not a regular file or exceeds its bound",
-  "attestation-absent": "no operator attestation minted by this host covers the write boundary",
+  "workspace-not-worktree-root": "git does not report the workspace as the root of its own worktree",
+  "source-unmeasurable": "the source identity cannot be measured: git does not answer a measurement call, or reports another worktree root, another Git directory than the workspace's .git, no object id for HEAD's commit or tree, or an index entry tagged other than H",
+  "dirty-base": "git status lists tracked, staged or untracked edits of the implementation base",
+  "gate-manifest-unavailable": "the gate manifest path is absolute or leaves the workspace, or what it names is missing, unreadable, not a regular file or over its bound",
+  "attestation-absent": "the host holds no operator attestation that its authority minted",
   "attestation-other-workspace": "the operator attestation names another workspace",
   "attestation-stale": "the operator attestation names another source identity of this workspace",
-  "writer-held": "another invocation holds the writer lease of this canonical workspace",
+  "writer-held": "the writer lease of this canonical workspace is held",
   "admission-cancelled": "the invocation was cancelled during admission",
   "admission-refused": "the host admission wait refused the invocation",
-  "source-changed": "the source identity changed while the admission waited",
+  "source-changed": "the source identity measured after the admission wait is not the admitted one",
 };
+
+/** The exact messages of the validation CapabilityErrors the module throws. */
+const ATTEST_OPERATOR = "A write boundary attestation names its operator.";
+const ATTEST_UNMEASURED = "Only a source identity this host measured can be attested.";
+const LEASE_VALIDATION = "A writer lease names a canonical workspace root and an invocation.";
+
+/** The code points String.prototype.trim() removes (ECMAScript WhiteSpace and LineTerminator); GEN-MALFORMED-BLANK derives it. */
+const TRIMMED: readonly number[] = [
+  0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff,
+];
+
+/** Text that is not clean at each site that requires clean text: "", " ", a control code point and 4097 UTF-8 bytes. */
+const UNCLEAN_TEXT: readonly string[] = ["", " ", "text\nnext", "a".repeat(4097)];
+
+/** Code points as hex, for assertion labels. */
+function codePoints(value: string): string {
+  return [...value].map(character => character.codePointAt(0)?.toString(16)).join(" ");
+}
 
 /** The whole refusal: its code, the fixed reason of that code and, on dirty-base only, the dirty counts. */
 function expectRefused(outcome: unknown, code: SourceAdmissionCode, dirty?: SourceDirtiness, label?: string): void {
   const expected = dirty === undefined ? { decision: "refused", code, reason: REASON[code] } : { decision: "refused", code, reason: REASON[code], dirty };
   expect(outcome, label).toStrictEqual(expected);
+}
+
+/** The call throws a validation CapabilityError with exactly this message. */
+function expectValidation(call: () => unknown, message: string, label?: string): void {
+  let thrown: unknown;
+  try {
+    call();
+  } catch (error) {
+    thrown = error;
+  }
+  expect(thrown, label).toBeInstanceOf(CapabilityError);
+  expect(thrown instanceof CapabilityError ? [thrown.category, thrown.message] : undefined, label).toEqual(["validation", message]);
+}
+
+/** The lines of a plain git status --porcelain=v1 --untracked-files=all, sorted and untrimmed. */
+function porcelain(cwd: string): string[] {
+  return execFileSync("git", ["status", "--porcelain=v1", "--untracked-files=all"], { cwd, env: FIXTURE_ENV, encoding: "utf8" })
+    .split("\n")
+    .filter(line => line !== "")
+    .sort();
 }
 
 /** A clean repository: README.md, forge.toml and src/index.ts committed; gate.local.toml and ignored/ ignored. Canonical path. */
@@ -283,7 +356,7 @@ function recording(): { readonly calls: [string, string[]][]; readonly reader: S
   };
 }
 
-type Fault = "undefined" | "throws" | "string" | "junk" | "upper" | "long";
+type Fault = "undefined" | "throws" | "string" | "junk" | "upper" | "long" | "short";
 
 /** The suite's reader, except that the calls `matches` selects are answered with `fault`. */
 function faulty(matches: (args: readonly string[]) => boolean, fault: Fault): SourceGitReader {
@@ -295,6 +368,7 @@ function faulty(matches: (args: readonly string[]) => boolean, fault: Fault): So
     if (fault === "junk") return Buffer.from("not-an-object-id\n");
     if (fault === "upper") return output === undefined ? undefined : Buffer.from(output.toString("utf8").toUpperCase());
     if (fault === "long") return output === undefined ? undefined : Buffer.from(`${output.toString("utf8").trimEnd()}a\n`);
+    if (fault === "short") return output === undefined ? undefined : Buffer.from(`${output.toString("utf8").trimEnd().slice(0, -1)}\n`);
     return undefined;
   };
 }
@@ -351,7 +425,7 @@ afterEach(() => {
   removeScratch(scratchDir);
 });
 
-describe("EAT-R022: a dirty implementation base is refused before any write-capable dispatch", { timeout: CASE_MS }, () => {
+describe("EAT-R022: a base whose git status lists a record is refused before any write-capable dispatch", { timeout: CASE_MS }, () => {
   it("R022-CLEAN: a clean committed tree dispatches once against the HEAD commit and tree git reports", async () => {
     const { grants, dispatch } = recorder();
     const outcome = await admitSourceWrite(requestFor(ws), hostFor(authority.attest(OPERATOR, identityOf(ws))), dispatch);
@@ -369,9 +443,10 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("R022-TRACKED: an unstaged edit to a tracked file refuses dirty-base", async () => {
+  it('R022-TRACKED: an unstaged edit that git status lists as " M" refuses dirty-base', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     writeFileSync(join(ws, "README.md"), "# edited, not staged\n");
+    expect(porcelain(ws)).toEqual([" M README.md"]);
     const { grants, dispatch } = recorder();
     const outcome = await admitSourceWrite(requestFor(ws), hostFor(attestation), dispatch);
     expectRefused(outcome, "dirty-base", { tracked: 1, staged: 0, untracked: 0 });
@@ -379,19 +454,21 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("R022-STAGED: a staged edit refuses dirty-base", async () => {
+  it('R022-STAGED: a staged edit that git status lists as "M " refuses dirty-base', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     writeFileSync(join(ws, "src", "index.ts"), "export const fixture = 2;\n");
     git(ws, "add", "src/index.ts");
+    expect(porcelain(ws)).toEqual(["M  src/index.ts"]);
     const { grants, dispatch } = recorder();
     const outcome = await admitSourceWrite(requestFor(ws), hostFor(attestation), dispatch);
     expectRefused(outcome, "dirty-base", { tracked: 0, staged: 1, untracked: 0 });
     expect(grants).toHaveLength(0);
   });
 
-  it("R022-UNTRACKED: an untracked file refuses dirty-base", async () => {
+  it('R022-UNTRACKED: a file that git status lists as "??" refuses dirty-base', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     writeFileSync(join(ws, "notes.txt"), "not added\n");
+    expect(porcelain(ws)).toEqual(["?? notes.txt"]);
     const { grants, dispatch } = recorder();
     const outcome = await admitSourceWrite(requestFor(ws), hostFor(attestation), dispatch);
     expectRefused(outcome, "dirty-base", { tracked: 0, staged: 0, untracked: 1 });
@@ -422,6 +499,26 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
   it("R022-STATUS-COLUMNS: a status record whose index column is ? and whose worktree column is not counts as staged and tracked", () => {
     const crafted: SourceGitReader = (directory, args) => (args.includes("status") ? Buffer.from("?M crafted.txt\0") : gitReader(directory, args));
     expectRefused(measureSourceIdentity(ws, "forge.toml", crafted), "dirty-base", { tracked: 1, staged: 1, untracked: 0 });
+  });
+
+  it('R022-TYPE-AND-INTENT: a type change (" T"), the same change staged ("T ") and an intent-to-add file (" A") count by their columns', async () => {
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    rmSync(join(ws, "README.md"));
+    symlinkSync("forge.toml", join(ws, "README.md"));
+    expect(porcelain(ws)).toEqual([" T README.md"]);
+    expectRefused(measureSourceIdentity(ws, "forge.toml", gitReader), "dirty-base", { tracked: 1, staged: 0, untracked: 0 });
+    git(ws, "add", "README.md");
+    expect(porcelain(ws)).toEqual(["T  README.md"]);
+    expectRefused(measureSourceIdentity(ws, "forge.toml", gitReader), "dirty-base", { tracked: 0, staged: 1, untracked: 0 });
+    git(ws, "reset", "-q", "--hard");
+    expect(porcelain(ws)).toEqual([]);
+    writeFileSync(join(ws, "notes.txt"), "intended\n");
+    git(ws, "add", "-N", "notes.txt");
+    expect(porcelain(ws)).toEqual([" A notes.txt"]);
+    expect(git(ws, "ls-files", "-v", "notes.txt")).toBe("H notes.txt");
+    const { grants, dispatch } = recorder();
+    expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation), dispatch), "dirty-base", { tracked: 1, staged: 0, untracked: 0 });
+    expect(grants).toHaveLength(0);
   });
 
   it("R022-RENAME: a staged rename counts as a staged deletion and a staged addition", async () => {
@@ -500,7 +597,7 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
     expect(measureSourceIdentity(ws, "forge.toml", aliasing)).toMatchObject({ decision: "measured", identity: { canonicalRoot: ws } });
   });
 
-  it("R022-MISDIRECTED-GIT: a reader that points git at another repository refuses source-unmeasurable", async () => {
+  it("R022-MISDIRECTED-GIT: a reader whose GIT_DIR names another repository refuses source-unmeasurable", async () => {
     const other = fixtureRepo(join(root, "other"));
     writeFileSync(join(other, "README.md"), "# another history\n");
     git(other, "commit", "-q", "--no-verify", "-am", "another history");
@@ -534,11 +631,16 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
     expect(identityOf(symlinked).commit).toBe(git(symlinked, "rev-parse", "HEAD"));
   });
 
-  it("R022-SHA256: a repository whose object ids are 64 hex digits measures them", () => {
+  it("R022-SHA256: a repository whose object ids are 64 hex digits measures them, and a HEAD answer one digit long or short refuses", () => {
     const wide = fixtureRepo(join(root, "wide"), "sha256");
     const identity = identityOf(wide);
     expect([identity.commit.length, identity.tree.length]).toEqual([64, 64]);
     expect([identity.commit, identity.tree]).toEqual([git(wide, "rev-parse", "HEAD"), git(wide, "rev-parse", "HEAD^{tree}")]);
+    for (const [call, matches] of MEASUREMENT_CALLS.filter(([call]) => call.startsWith("rev-parse HEAD"))) {
+      for (const fault of ["long", "short"] as const) {
+        expectRefused(measureSourceIdentity(wide, "forge.toml", faulty(matches, fault)), "source-unmeasurable", undefined, `${call}: ${fault}`);
+      }
+    }
   });
 
   it("R022-READER-ARGV: a measurement and an admission make exactly these reader calls, each opening with the global options", async () => {
@@ -616,7 +718,7 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
       }
     }
     for (const [call, matches] of MEASUREMENT_CALLS.filter(([call]) => call.startsWith("rev-parse HEAD"))) {
-      for (const fault of ["junk", "upper", "long"] as const) {
+      for (const fault of ["junk", "upper", "long", "short"] as const) {
         expectRefused(measureSourceIdentity(ws, "forge.toml", faulty(matches, fault)), "source-unmeasurable", undefined, `${call}: ${fault}`);
       }
     }
@@ -644,9 +746,40 @@ describe("EAT-R022: a dirty implementation base is refused before any write-capa
     expect(outcome).toMatchObject({ decision: "dispatched" });
     expect(grants).toHaveLength(1);
   });
+
+  it("R022-STAT-TRUST: under core.checkStat=minimal a same-size edit whose mtime is restored is listed by no git status and measured clean (residual UNLISTED-EDITS)", () => {
+    git(ws, "config", "core.checkStat", "minimal");
+    const old = new Date("2020-01-01T00:00:00Z");
+    utimesSync(join(ws, "README.md"), old, old);
+    git(ws, "status", "--porcelain");
+    const before = identityOf(ws);
+    expect(readFileSync(join(ws, "README.md"), "utf8")).toBe("# source fixture\n");
+    writeFileSync(join(ws, "README.md"), "# SOURCE FIXTURE\n");
+    utimesSync(join(ws, "README.md"), old, old);
+    expect(git(ws, "hash-object", "README.md")).not.toBe(git(ws, "rev-parse", ":README.md"));
+    expect(porcelain(ws)).toEqual([]);
+    const after = identityOf(ws);
+    expect([after.dirtiness, after.digest]).toEqual(["clean", before.digest]);
+  });
+
+  it("R022-CLEAN-FILTER: under a clean filter that maps the edited file back to its committed bytes the edit is listed by no git status and measured clean (residual UNLISTED-EDITS)", () => {
+    const committed = join(base, "README.committed");
+    writeFileSync(committed, readFileSync(join(ws, "README.md")));
+    git(ws, "config", "filter.hide.clean", `cat '${committed}'`);
+    mkdirSync(join(ws, ".git", "info"), { recursive: true });
+    writeFileSync(join(ws, ".git", "info", "attributes"), "README.md filter=hide\n");
+    const before = identityOf(ws);
+    writeFileSync(join(ws, "README.md"), "# SOURCE FIXTURE\n");
+    const moved = new Date("2021-06-01T00:00:00Z");
+    utimesSync(join(ws, "README.md"), moved, moved);
+    expect(git(ws, "hash-object", "--no-filters", "README.md")).not.toBe(git(ws, "rev-parse", ":README.md"));
+    expect(porcelain(ws)).toEqual([]);
+    const after = identityOf(ws);
+    expect([after.dirtiness, after.digest]).toEqual(["clean", before.digest]);
+  });
 });
 
-describe("EAT-R023: the workspace is confined to the authorized canonical root", { timeout: CASE_MS }, () => {
+describe("EAT-R023: the workspace's realpath must be the authorized root's realpath or inside it, and its own worktree root", { timeout: CASE_MS }, () => {
   it("R023-WRONG: a workspace outside the authorized root refuses workspace-outside-root although it is attested", async () => {
     const elsewhere = fixtureRepo(join(base, "elsewhere"));
     const { grants, dispatch } = recorder();
@@ -741,9 +874,27 @@ describe("EAT-R023: the workspace is confined to the authorized canonical root",
     expectRefused(confineWorkspace(root, sibling, gitReader), "workspace-outside-root");
     expect(confineWorkspace(root, `${ws}/.`, gitReader)).toEqual({ decision: "confined", canonicalRoot: ws });
   });
+
+  it('R023-DOTDOT-NAME: a workspace inside the root whose name starts with ".." confines and dispatches', async () => {
+    const dotted = fixtureRepo(join(root, "..ws"));
+    expect(dotted).toBe(`${root}/..ws`);
+    expect(confineWorkspace(root, dotted, gitReader)).toEqual({ decision: "confined", canonicalRoot: dotted });
+    const { grants, dispatch } = recorder();
+    const outcome = await admitSourceWrite(requestFor(dotted), hostFor(authority.attest(OPERATOR, identityOf(dotted))), dispatch);
+    expect(outcome).toMatchObject({ decision: "dispatched" });
+    expect(grants.map(grant => grant.identity.canonicalRoot)).toEqual([dotted]);
+  });
+
+  it("R023-ROOT-ITSELF: an authorized root that is the workspace itself confines and dispatches", async () => {
+    expect(confineWorkspace(ws, ws, gitReader)).toEqual({ decision: "confined", canonicalRoot: ws });
+    const { grants, dispatch } = recorder();
+    const outcome = await admitSourceWrite(requestFor(ws), hostFor(authority.attest(OPERATOR, identityOf(ws)), { authorizedRoot: ws }), dispatch);
+    expect(outcome).toMatchObject({ decision: "dispatched" });
+    expect(grants.map(grant => grant.identity.canonicalRoot)).toEqual([ws]);
+  });
 });
 
-describe("EAT-R024: one writer lease per canonical workspace", { timeout: CASE_MS }, () => {
+describe("EAT-R024: one writer lease per canonical workspace root, and leases of different roots are independent", { timeout: CASE_MS }, () => {
   it("R024-ALIAS: while one invocation writes, an alias and a dot spelling of the same workspace refuse writer-held", async () => {
     const alias = join(root, "alias");
     symlinkSync(ws, alias);
@@ -817,11 +968,67 @@ describe("EAT-R024: one writer lease per canonical workspace", { timeout: CASE_M
     expect(leases.holder(ws)).toBe("inv-a");
   });
 
-  it("R024-VALIDATION: acquire throws for a relative root and for a blank invocation, and takes no lease", () => {
-    expect(() => leases.acquire("authorized/ws", "inv-a")).toThrow(CapabilityError);
-    expect(() => leases.acquire(ws, " ")).toThrow(CapabilityError);
+  it("R024-VALIDATION: acquire throws a validation CapabilityError for a root or invocation that is not clean text, or a relative root, and takes no lease", () => {
+    for (const canonicalRoot of ["authorized/ws", `${ws}\n`, `/${"a".repeat(4096)}`, ...UNCLEAN_TEXT]) {
+      expectValidation(() => leases.acquire(canonicalRoot, "inv-a"), LEASE_VALIDATION, JSON.stringify(canonicalRoot.slice(0, 40)));
+      expect(leases.holder(canonicalRoot)).toBeUndefined();
+    }
+    for (const invocationId of UNCLEAN_TEXT) {
+      expectValidation(() => leases.acquire(ws, invocationId), LEASE_VALIDATION, JSON.stringify(invocationId.slice(0, 40)));
+    }
     expect(leases.holder(ws)).toBeUndefined();
-    expect(leases.holder("authorized/ws")).toBeUndefined();
+  });
+
+  it("R024-TWO-ROOTS: while one invocation writes on a workspace, another workspace under the root dispatches, and the first stays held", async () => {
+    const ws2 = fixtureRepo(join(root, "ws2"));
+    const writing = deferred();
+    const held: string[] = [];
+    const first = admitSourceWrite(requestFor(ws, "inv-a"), hostFor(authority.attest(OPERATOR, identityOf(ws))), async grant => {
+      held.push(grant.invocationId);
+      await writing.promise;
+      return "a";
+    });
+    expect(held).toEqual(["inv-a"]);
+    const second = recorder();
+    await expect(admitSourceWrite(requestFor(ws2, "inv-b"), hostFor(authority.attest(OPERATOR, identityOf(ws2))), second.dispatch)).resolves.toMatchObject({ decision: "dispatched" });
+    expect(second.grants.map(grant => [grant.identity.canonicalRoot, grant.invocationId])).toEqual([[ws2, "inv-b"]]);
+    expect([leases.holder(ws), leases.holder(ws2)]).toEqual(["inv-a", undefined]);
+    const third = recorder();
+    expectRefused(await admitSourceWrite(requestFor(ws, "inv-c"), hostFor(authority.attest(OPERATOR, identityOf(ws))), third.dispatch), "writer-held");
+    expect(third.grants).toHaveLength(0);
+    writing.resolve();
+    await expect(first).resolves.toMatchObject({ decision: "dispatched", value: "a" });
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("R024-RELEASE-OTHER-ROOT: releasing one root's lease frees that root only, and leaves the other roots' leases held", async () => {
+    const r1 = join(root, "r1");
+    const r2 = join(root, "r2");
+    const r3 = join(root, "r3");
+    const taken = [r1, r2, r3].map(path => leases.acquire(path, "inv-a"));
+    expect(taken.map(lease => lease?.canonicalRoot)).toEqual([r1, r2, r3]);
+    expect([r1, r2, r3].map(path => leases.holder(path))).toEqual(["inv-a", "inv-a", "inv-a"]);
+    const middle = taken[1];
+    if (middle === undefined) return;
+    expect(leases.release(middle)).toBe(true);
+    expect([r1, r2, r3].map(path => leases.holder(path))).toEqual(["inv-a", undefined, "inv-a"]);
+    expect([leases.acquire(r1, "inv-c"), leases.acquire(r3, "inv-c")]).toEqual([undefined, undefined]);
+    expect(leases.acquire(r2, "inv-d")).toMatchObject({ canonicalRoot: r2, invocationId: "inv-d" });
+    const ws2 = fixtureRepo(join(root, "ws2"));
+    const writing = deferred();
+    const first = admitSourceWrite(requestFor(ws, "inv-a"), hostFor(authority.attest(OPERATOR, identityOf(ws))), async () => {
+      await writing.promise;
+      return "a";
+    });
+    expect(leases.holder(ws)).toBe("inv-a");
+    const second = recorder();
+    await expect(admitSourceWrite(requestFor(ws2, "inv-b"), hostFor(authority.attest(OPERATOR, identityOf(ws2))), second.dispatch)).resolves.toMatchObject({ decision: "dispatched" });
+    expect([leases.holder(ws), leases.holder(ws2)]).toEqual(["inv-a", undefined]);
+    const third = recorder();
+    expectRefused(await admitSourceWrite(requestFor(ws, "inv-c"), hostFor(authority.attest(OPERATOR, identityOf(ws))), third.dispatch), "writer-held");
+    expect(third.grants).toHaveLength(0);
+    writing.resolve();
+    await expect(first).resolves.toMatchObject({ decision: "dispatched", value: "a" });
   });
 });
 
@@ -953,7 +1160,7 @@ describe("EAT-R026: the gate manifest digest is part of the source identity", { 
     expect(authority.attest(OPERATOR, identity).workspace).toBe(ws);
   });
 
-  it("R026-UNAVAILABLE: a missing, absolute, escaping or non-file manifest refuses gate-manifest-unavailable", () => {
+  it("R026-UNAVAILABLE: a missing, absolute, escaping, non-file or unreadable manifest refuses gate-manifest-unavailable", () => {
     writeFileSync(join(root, "outside.toml"), '[gate]\nsteps = ["test"]\n');
     mkdirSync(join(ws, "ignored"));
     symlinkSync(join(root, "outside.toml"), join(ws, "ignored", "gate.toml"));
@@ -988,6 +1195,18 @@ describe("EAT-R026: the gate manifest digest is part of the source identity", { 
     writeFileSync(join(ws, "ignored", "over.toml"), Buffer.alloc(1048577, 0x61));
     expect(identityOf(ws, "ignored/most.toml").gateManifest).toEqual({ path: "ignored/most.toml", sha256: sha256(most) });
     expectRefused(measureSourceIdentity(ws, "ignored/over.toml", gitReader), "gate-manifest-unavailable");
+  });
+
+  it('R026-DOTDOT-MANIFEST: committed gate manifests whose path starts with ".." measure with that path', () => {
+    const bytes = '[gate]\nsteps = ["test"]\n';
+    writeFileSync(join(ws, "..gate.toml"), bytes);
+    mkdirSync(join(ws, "..d"));
+    writeFileSync(join(ws, "..d", "gate.toml"), bytes);
+    git(ws, "add", "..gate.toml", "..d/gate.toml");
+    git(ws, "commit", "-q", "--no-verify", "-m", "gate manifests under dotted names");
+    expect(porcelain(ws)).toEqual([]);
+    expect(identityOf(ws, "..gate.toml").gateManifest).toEqual({ path: "..gate.toml", sha256: sha256(bytes) });
+    expect(identityOf(ws, "..d/gate.toml").gateManifest).toEqual({ path: "..d/gate.toml", sha256: sha256(bytes) });
   });
 });
 
@@ -1103,12 +1322,12 @@ describe("EAT-R027: writes need an operator attestation the host minted for this
     expect(grants.map(grant => grant.operatorId)).toEqual(["operator-2"]);
   });
 
-  it("R027-UNMEASURED: the authority attests only a source identity the host measured, by a clean operator id", () => {
+  it("R027-UNMEASURED: attest throws a validation CapabilityError for an identity the host did not measure and for an operator id that is not clean text", () => {
     const measured = identityOf(ws);
     const lookalike: SourceIdentity = { ...measured, gateManifest: { ...measured.gateManifest } };
-    expect(() => authority.attest(OPERATOR, lookalike)).toThrow(/measured/);
-    for (const operatorId of ["", " ", "operator\nnext"]) {
-      expect(() => authority.attest(operatorId, measured), JSON.stringify(operatorId)).toThrow(/operator/);
+    expectValidation(() => authority.attest(OPERATOR, lookalike), ATTEST_UNMEASURED);
+    for (const operatorId of ["operator\nnext", ...UNCLEAN_TEXT]) {
+      expectValidation(() => authority.attest(operatorId, measured), ATTEST_OPERATOR, JSON.stringify(operatorId.slice(0, 40)));
     }
   });
 
@@ -1187,25 +1406,94 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("GEN-MALFORMED: a request without a clean invocation reference refuses malformed-request", async () => {
+  it('GEN-MALFORMED: an invocation reference that is "" or " ", holds a code point of U+0000-U+001F or U+007F, or exceeds 4096 UTF-8 bytes refuses malformed-request', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
-    const twoByte = String.fromCodePoint(0xe9);
-    const invocationIds = ["", " ", "inv\nnext", `inv${String.fromCodePoint(0)}x`, `inv${String.fromCodePoint(0x1f)}x`, `inv${String.fromCodePoint(0x7f)}x`, "a".repeat(4097), twoByte.repeat(2049)];
-    for (const invocationId of invocationIds) {
-      expectRefused(await admitSourceWrite(requestFor(ws, invocationId), hostFor(attestation), dispatch), "malformed-request", undefined, `${invocationId.length} units`);
+    const controls = [...Array.from({ length: 0x20 }, (_, codePoint) => codePoint), 0x7f].map(codePoint => `inv${String.fromCodePoint(codePoint)}x`);
+    const oversized = ["a".repeat(4097), String.fromCodePoint(0xe9).repeat(2049), String.fromCodePoint(0x20ac).repeat(1366), String.fromCodePoint(0x1f600).repeat(1025)];
+    expect(oversized.map(text => Buffer.byteLength(text))).toEqual([4097, 4098, 4098, 4100]);
+    for (const invocationId of ["", " ", "inv\nnext", ...controls, ...oversized]) {
+      expectRefused(await admitSourceWrite(requestFor(ws, invocationId), hostFor(attestation), dispatch), "malformed-request", undefined, `${invocationId.length} units: ${codePoints(invocationId.slice(0, 4))}`);
     }
     expect(grants).toHaveLength(0);
   });
 
-  it("GEN-CLEAN-TEXT: an invocation reference of exactly 4096 UTF-8 bytes, ASCII or two-byte, dispatches", async () => {
+  it('GEN-MALFORMED-BLANK: text that String.prototype.trim() reduces to "" is refused as an invocation reference, gate manifest, operator id and lease invocation', async () => {
+    const removed: number[] = [];
+    for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
+      if (codePoint >= 0xd800 && codePoint <= 0xdfff) continue;
+      if (String.fromCodePoint(codePoint).trim() === "") removed.push(codePoint);
+    }
+    expect(removed).toEqual(TRIMMED);
+    const identity = identityOf(ws);
+    const attestation = authority.attest(OPERATOR, identity);
+    const { grants, dispatch } = recorder();
+    for (const blank of [...TRIMMED.map(codePoint => String.fromCodePoint(codePoint)), String.fromCodePoint(...TRIMMED)]) {
+      const label = codePoints(blank);
+      expectRefused(await admitSourceWrite(requestFor(ws, blank), hostFor(attestation), dispatch), "malformed-request", undefined, label);
+      expectRefused(measureSourceIdentity(ws, blank, gitReader), "malformed-request", undefined, label);
+      expectValidation(() => authority.attest(blank, identity), ATTEST_OPERATOR, label);
+      expectValidation(() => leases.acquire(ws, blank), LEASE_VALIDATION, label);
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-MALFORMED-TYPES: a value that is not a string where text is required refuses malformed-request or throws a validation CapabilityError", async () => {
+    const identity = identityOf(ws);
+    const attestation = authority.attest(OPERATOR, identity);
+    const { grants, dispatch } = recorder();
+    const values: readonly unknown[] = [undefined, null, 1, true, {}, ["inv-a"]];
+    for (const [index, value] of values.entries()) {
+      const label = `value ${index}`;
+      const text = value as string;
+      const requests: readonly unknown[] = [
+        { invocationId: value, workspace: ws, policy: { allowWrites: true } },
+        { invocationId: "inv-a", workspace: value, policy: { allowWrites: true } },
+      ];
+      for (const request of requests) {
+        expectRefused(await admitSourceWrite(request as SourceWriteRequest, hostFor(attestation), dispatch), "malformed-request", undefined, label);
+      }
+      expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation, { authorizedRoot: text }), dispatch), "malformed-request", undefined, label);
+      expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation, { gateManifest: text }), dispatch), "malformed-request", undefined, label);
+      expectRefused(measureSourceIdentity(text, "forge.toml", gitReader), "malformed-request", undefined, label);
+      expectRefused(measureSourceIdentity(ws, text, gitReader), "malformed-request", undefined, label);
+      expectRefused(confineWorkspace(text, ws, gitReader), "malformed-request", undefined, label);
+      expectRefused(confineWorkspace(root, text, gitReader), "malformed-request", undefined, label);
+      expectValidation(() => authority.attest(text, identity), ATTEST_OPERATOR, label);
+      expectValidation(() => leases.acquire(text, "inv-a"), LEASE_VALIDATION, label);
+      expectValidation(() => leases.acquire(ws, text), LEASE_VALIDATION, label);
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-CLEAN-TEXT: an invocation reference of exactly 4096 UTF-8 bytes of one-, two-, three- or four-byte text dispatches", async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
-    for (const invocationId of ["a".repeat(4096), String.fromCodePoint(0xe9).repeat(2048)]) {
+    const references = ["a".repeat(4096), String.fromCodePoint(0xe9).repeat(2048), `${String.fromCodePoint(0x20ac).repeat(1365)}a`, String.fromCodePoint(0x1f600).repeat(1024)];
+    for (const invocationId of references) {
       expect(Buffer.byteLength(invocationId)).toBe(4096);
       await expect(admitSourceWrite(requestFor(ws, invocationId), hostFor(attestation), dispatch)).resolves.toMatchObject({ decision: "dispatched" });
     }
-    expect(grants).toHaveLength(2);
+    expect(grants).toHaveLength(4);
+  });
+
+  it("GEN-CLEAN-TEXT-FORMS: content between code points trim() removes, and U+0020, U+007E, U+0080, U+009F or U+00A0 inside content, is clean text", async () => {
+    const identity = identityOf(ws);
+    const attestation = authority.attest(OPERATOR, identity);
+    const { grants, dispatch } = recorder();
+    const padding = String.fromCodePoint(...TRIMMED.filter(codePoint => codePoint > 0x1f));
+    const references = [`${padding}inv-a${padding}`, ...[0x20, 0x7e, 0x80, 0x9f, 0xa0].map(codePoint => `inv${String.fromCodePoint(codePoint)}a`)];
+    for (const reference of references) {
+      const label = codePoints(reference);
+      await expect(admitSourceWrite(requestFor(ws, reference), hostFor(attestation), dispatch), label).resolves.toMatchObject({ decision: "dispatched" });
+      expect(authority.attest(reference, identity).operatorId, label).toBe(reference);
+      const lease = leases.acquire(ws, reference);
+      expect(lease, label).toMatchObject({ canonicalRoot: ws, invocationId: reference });
+      if (lease !== undefined) expect(leases.release(lease), label).toBe(true);
+    }
+    expect(grants.map(grant => grant.invocationId)).toEqual(references);
   });
 
   it("GEN-MALFORMED-SHAPES: a request that is not a plain object, a dispatch or reader that is not a function, or a relative root refuses malformed-request", async () => {
@@ -1230,13 +1518,22 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
       expectRefused(await admitSourceWrite(requestFor(workspace), hostFor(attestation), dispatch), "malformed-request", undefined, `${workspace.length} units`);
     }
     expectRefused(confineWorkspace(`${root}\n`, ws, gitReader), "malformed-request");
+    expectRefused(confineWorkspace(`/${"a".repeat(4096)}`, ws, gitReader), "malformed-request");
     expectRefused(measureSourceIdentity("authorized/ws", "forge.toml", gitReader), "malformed-request");
-    for (const manifest of ["", " ", "forge\n.toml"]) {
+    for (const manifest of ["forge\n.toml", ...UNCLEAN_TEXT]) {
       expectRefused(measureSourceIdentity(ws, manifest, gitReader), "malformed-request", undefined, JSON.stringify(manifest));
     }
     expectRefused(measureSourceIdentity(ws, "forge.toml", notReader), "malformed-request");
     expect(grants).toHaveLength(0);
     expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-NULL-PROTOTYPE-REQUEST: a request object with a null prototype is a plain object and dispatches", async () => {
+    const request: SourceWriteRequest = Object.assign(Object.create(null), requestFor(ws));
+    expect(Object.getPrototypeOf(request)).toBeNull();
+    const { grants, dispatch } = recorder();
+    await expect(admitSourceWrite(request, hostFor(authority.attest(OPERATOR, identityOf(ws))), dispatch)).resolves.toMatchObject({ decision: "dispatched" });
+    expect(grants).toHaveLength(1);
   });
 
   it("GEN-READER-FAILS: a reader that throws or answers with no Buffer is a refusal, never a rejection", async () => {
@@ -1320,6 +1617,27 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expectRefused(await admitSourceWrite(requestFor(ws, "inv-b"), hostFor(undefined), dispatch), "attestation-absent");
     expect(leases.holder(ws)).toBe("inv-a");
     expect(grants).toHaveLength(0);
+  });
+
+  it("GEN-ORDER-LEASE-WAIT: a held lease with a refusing wait refuses writer-held and never calls the wait", async () => {
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    let waits = 0;
+    const refusing = async (): Promise<void> => {
+      waits += 1;
+      throw new Error("host budget closed");
+    };
+    const held = leases.acquire(ws, "inv-a");
+    expect(held).toBeDefined();
+    const { grants, dispatch } = recorder();
+    expectRefused(await admitSourceWrite(requestFor(ws, "inv-b"), hostFor(attestation, { admissionWait: refusing }), dispatch), "writer-held");
+    expect(waits).toBe(0);
+    expect(leases.holder(ws)).toBe("inv-a");
+    if (held === undefined) return;
+    expect(leases.release(held)).toBe(true);
+    expectRefused(await admitSourceWrite(requestFor(ws, "inv-b"), hostFor(attestation, { admissionWait: refusing }), dispatch), "admission-refused");
+    expect(waits).toBe(1);
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
   });
 
   it("GEN-ORDER-WAIT-REFUSED: a refusing wait while the source changed refuses admission-refused", async () => {
