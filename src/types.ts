@@ -5,6 +5,7 @@
 import type { ThinkingLevel } from "@earendil-works/pi-ai";
 import type { AgentSession } from "@earendil-works/pi-coding-agent";
 import type { LifetimeUsage } from "./usage.js";
+import type { WorktreeCleanupResult } from "./worktree.js";
 
 export type { ThinkingLevel };
 
@@ -204,8 +205,14 @@ export interface AgentRecord {
   pendingSteers?: string[];
   /** Worktree info if the agent is running in an isolated worktree. */
   worktree?: { path: string; branch: string; baseSha: string; workPath: string };
-  /** Worktree cleanup result after agent completion. */
-  worktreeResult?: { hasChanges: boolean; branch?: string };
+  /**
+   * Worktree cleanup result. For a failed preservation (wb-5ik5, EAT-R003), the settlement of a resolved run, the
+   * settlement of a rejected run and a stop that lands while the worktree is being created each store the
+   * WorktreePreservationFailedResult cleanupWorktree returned. The claim is the forms the ST rows of
+   * test/worktree-preservation-settlement.test.ts and the E2E-R003 row of test/worktree-preservation-failure-e2e.test.ts
+   * plant, where the stored value equals that variant exactly, and nothing wider.
+   */
+  worktreeResult?: WorktreeCleanupResult;
   /** The tool_use_id from the original Agent tool call. */
   toolCallId?: string;
   /** Path to the streaming output transcript file. */
