@@ -1,0 +1,311 @@
+/**
+ * admission.ts — the host's admission budget, shared by every workflow run it starts at once (wb-ny54, MWI B-limits:
+ * EAT-R073..EAT-R076 of the mechanical-workflows-interop-2026-11-04 triage, ATOMIC-REQUIREMENTS.md at pi-subagents master
+ * 0b25e14e).
+ *
+ * A run's own semaphores bound one script and nothing else: runWorkflow builds a fresh pair per call, so two scripts running
+ * at once each get their whole limit. A HostAdmission is built once by the host and handed to every run it starts, so its
+ * pools count the dispatches of all of them. It is a count and a first-in-first-out line per pool, not a second scheduler:
+ * it admits, queues and refuses requests, and starts no work. A run asks for the pools a dispatch is charged to last, after
+ * the run's own permit and before that dispatch, and dispatches only once every pool has admitted it.
+ *
+ * Three pools, each with its own limit (see {@link dispatchPools} for the charge of each dispatch):
+ *  - sdk-queries: owned agent queries, one per agent() dispatch;
+ *  - child-processes: host children, one per agent dispatch and one per live node dispatch. The Claude Agent SDK runs a query
+ *    in a child process and every native provider runs its CLI in one; a Pi-backend child runs in-process and is charged all
+ *    the same, so the pool bounds what the host may start, not what an operating system counted;
+ *  - forge-operations: native Forge operations, one per live node dispatch dispatchPools charges to it. The suite pins that
+ *    charge for a forge.gate.status node and its absence for a hyperunix.find or forgery.gate.status node; which other
+ *    capability ids carry it is not claimed here.
+ *
+ * One queue deadline runs from a request's call across every pool it names. A request still waiting when its deadline's
+ * timer fires is refused, typed (admission-deadline, naming the pool it waits on), hands back every pool it had taken and
+ * leaves the line. On the real clock the suite pins that refusal between 20 ms before and 240 ms after a 400 ms and a
+ * 2000 ms deadline, and between 20 ms before and 200 ms after a 500 ms deadline spent across two pools; a tighter bound,
+ * and any bound on another deadline, is not claimed.
+ *
+ * Pools are taken one at a time in HOST_ADMISSION_POOLS order and held while the next is awaited, so two requests can never
+ * wait on each other in a cycle. A request cancelled on its signal leaves the line at once and hands back every pool it had
+ * taken. A released slot passes straight to the oldest waiter, so the count never dips below what is running.
+ */
+
+import { performance } from "node:perf_hooks";
+
+/** Every pool, in the order a request takes them. */
+export const HOST_ADMISSION_POOLS = Object.freeze(["sdk-queries", "child-processes", "forge-operations"] as const);
+export type HostAdmissionPool = (typeof HOST_ADMISSION_POOLS)[number];
+
+/** The longest queue deadline a budget accepts: setTimeout's ceiling, past which Node sets a timer's delay to 1 ms. */
+export const HOST_ADMISSION_MAX_DEADLINE_MS = 2_147_483_647;
+
+/**
+ * The separately configured limits. The suite pins that 0, -1, 0.5, NaN, Infinity and 2^53 are refused as each of them and 1
+ * is accepted, that a pool limit accepts 2^31 and Number.MAX_SAFE_INTEGER, and that the queue deadline accepts
+ * HOST_ADMISSION_MAX_DEADLINE_MS and refuses one more; which other values are refused is not claimed here.
+ */
+export interface HostAdmissionLimits {
+  /** Owned agent queries in flight across every run sharing the budget. */
+  readonly sdkQueries: number;
+  /** Host children in flight: agent dispatches and live node dispatches alike. */
+  readonly childProcesses: number;
+  /** Native Forge operations in flight: the live node dispatches dispatchPools charges to forge-operations. */
+  readonly forgeOperations: number;
+  /** The queue deadline, in milliseconds from a request's call (see the module comment for how closely its refusal is pinned). */
+  readonly queueDeadlineMs: number;
+}
+
+export type HostAdmissionErrorCode = "invalid-limit" | "unknown-pool" | "admission-deadline" | "admission-cancelled";
+
+/** A typed refusal: an invalid limit (invalid-limit), an invalid request (unknown-pool), the queue deadline (admission-deadline), or a request cancelled on its caller's signal (admission-cancelled). */
+export class HostAdmissionError extends Error {
+  constructor(
+    readonly code: HostAdmissionErrorCode,
+    message: string,
+    /** For admission-deadline, and for admission-cancelled while queued: the pool the request was waiting on. */
+    readonly pool?: HostAdmissionPool,
+  ) {
+    super(message);
+    this.name = "HostAdmissionError";
+  }
+}
+
+/** Why a request is waiting: the pool with no room, that pool's limit and load, the line ahead of it, and for how long. */
+export interface HostAdmissionWait {
+  readonly pool: HostAdmissionPool;
+  readonly limit: number;
+  readonly inFlight: number;
+  readonly ahead: number;
+  readonly waitedMs: number;
+}
+
+/** Counts only, per pool: no ids, labels or payloads. */
+export interface HostAdmissionPoolCounts {
+  readonly limit: number;
+  readonly inFlight: number;
+  readonly peakInFlight: number;
+  readonly queued: number;
+  readonly admitted: number;
+  readonly refused: number;
+  readonly cancelledWhileQueued: number;
+}
+
+export interface HostAdmissionSnapshot {
+  readonly queueDeadlineMs: number;
+  readonly pools: Readonly<Record<HostAdmissionPool, HostAdmissionPoolCounts>>;
+}
+
+/** The pools one admitted request holds until it calls release(), once; a second call is a no-op. */
+export interface HostAdmissionLease {
+  readonly pools: readonly HostAdmissionPool[];
+  /** Monotonic milliseconds from the request to its admission. */
+  readonly waitedMs: number;
+  release(): void;
+}
+
+export interface HostAdmissionRequest {
+  /** Cancels the wait: the request leaves the line and hands back what it had taken. */
+  readonly signal?: AbortSignal;
+  /** Told once per pool the request has to queue on, at the moment it queues. */
+  onQueued?(wait: HostAdmissionWait): void;
+}
+
+/** A dispatch the workflow runtime is about to hand its host. */
+export type AdmittedDispatch = { readonly kind: "agent" } | { readonly kind: "node"; readonly capabilityId: string };
+
+const AGENT_POOLS: readonly HostAdmissionPool[] = Object.freeze(["sdk-queries", "child-processes"]);
+const FORGE_NODE_POOLS: readonly HostAdmissionPool[] = Object.freeze(["child-processes", "forge-operations"]);
+const NODE_POOLS: readonly HostAdmissionPool[] = Object.freeze(["child-processes"]);
+
+/**
+ * The pools a dispatch is charged to: an agent is an owned SDK query and a host child; a node is a host child, and a
+ * forge.gate.status node is a native Forge operation as well, while a hyperunix.find or forgery.gate.status node is not.
+ * Which other capability ids are charged to forge-operations is not claimed here.
+ */
+export function dispatchPools(dispatch: AdmittedDispatch): readonly HostAdmissionPool[] {
+  if (dispatch.kind === "agent") return AGENT_POOLS;
+  return dispatch.capabilityId.startsWith("forge.") ? FORGE_NODE_POOLS : NODE_POOLS;
+}
+
+interface Waiter {
+  readonly queuedAt: number;
+  /** Hands this waiter a slot a release passed on; the slot is already counted in flight. */
+  readonly admit: () => void;
+}
+
+class Pool {
+  inFlight = 0;
+  peakInFlight = 0;
+  admitted = 0;
+  refused = 0;
+  cancelledWhileQueued = 0;
+  /** Oldest first. */
+  readonly line: Waiter[] = [];
+
+  constructor(
+    readonly name: HostAdmissionPool,
+    readonly limit: number,
+  ) {}
+
+  counts(): HostAdmissionPoolCounts {
+    return Object.freeze({
+      limit: this.limit, inFlight: this.inFlight, peakInFlight: this.peakInFlight, queued: this.line.length,
+      admitted: this.admitted, refused: this.refused, cancelledWhileQueued: this.cancelledWhileQueued,
+    });
+  }
+}
+
+function positiveLimit(name: keyof HostAdmissionLimits, value: unknown, ceiling: number): number {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1 || value > ceiling) {
+    const bound = ceiling === Number.MAX_SAFE_INTEGER ? "" : ` no greater than ${ceiling}`;
+    throw new HostAdmissionError("invalid-limit", `Invalid host admission limit ${name}: a positive integer${bound} is required.`);
+  }
+  return value;
+}
+
+function cancelled(pool: HostAdmissionPool): HostAdmissionError {
+  return new HostAdmissionError("admission-cancelled", `Host admission for ${pool} was cancelled while queued.`, pool);
+}
+
+export class HostAdmission {
+  readonly queueDeadlineMs: number;
+  private readonly pools: ReadonlyMap<HostAdmissionPool, Pool>;
+
+  constructor(limits: HostAdmissionLimits) {
+    const sdkQueries = positiveLimit("sdkQueries", limits.sdkQueries, Number.MAX_SAFE_INTEGER);
+    const childProcesses = positiveLimit("childProcesses", limits.childProcesses, Number.MAX_SAFE_INTEGER);
+    const forgeOperations = positiveLimit("forgeOperations", limits.forgeOperations, Number.MAX_SAFE_INTEGER);
+    this.queueDeadlineMs = positiveLimit("queueDeadlineMs", limits.queueDeadlineMs, HOST_ADMISSION_MAX_DEADLINE_MS);
+    this.pools = new Map<HostAdmissionPool, Pool>([
+      ["sdk-queries", new Pool("sdk-queries", sdkQueries)],
+      ["child-processes", new Pool("child-processes", childProcesses)],
+      ["forge-operations", new Pool("forge-operations", forgeOperations)],
+    ]);
+  }
+
+  /**
+   * Admit one request to every pool it names, or refuse it typed: at the queue deadline (admission-deadline), on its signal
+   * (admission-cancelled), or for naming no pool or an unknown one (unknown-pool). A refused or cancelled request holds
+   * nothing afterwards.
+   */
+  async acquire(requested: readonly HostAdmissionPool[], request: HostAdmissionRequest = {}): Promise<HostAdmissionLease> {
+    const wanted = this.ordered(requested);
+    const startedAt = performance.now();
+    const deadlineAt = startedAt + this.queueDeadlineMs;
+    const taken: Pool[] = [];
+    try {
+      for (const pool of wanted) {
+        await this.take(pool, deadlineAt, request);
+        taken.push(pool);
+      }
+    } catch (error) {
+      for (const pool of taken.reverse()) this.give(pool);
+      throw error;
+    }
+    const waitedMs = performance.now() - startedAt;
+    let released = false;
+    return Object.freeze({
+      pools: Object.freeze(wanted.map(pool => pool.name)),
+      waitedMs,
+      release: () => {
+        if (released) return;
+        released = true;
+        for (const pool of [...wanted].reverse()) this.give(pool);
+      },
+    });
+  }
+
+  /** Every request waiting now, by the pool it waits on: counts and pool names only. */
+  waiting(): readonly HostAdmissionWait[] {
+    const at = performance.now();
+    return Object.freeze([...this.pools.values()].flatMap(pool => pool.line.map((waiter, ahead) =>
+      Object.freeze({ pool: pool.name, limit: pool.limit, inFlight: pool.inFlight, ahead, waitedMs: at - waiter.queuedAt }))));
+  }
+
+  snapshot(): HostAdmissionSnapshot {
+    return Object.freeze({
+      queueDeadlineMs: this.queueDeadlineMs,
+      pools: Object.freeze({
+        "sdk-queries": this.pool("sdk-queries").counts(),
+        "child-processes": this.pool("child-processes").counts(),
+        "forge-operations": this.pool("forge-operations").counts(),
+      }),
+    });
+  }
+
+  private pool(name: HostAdmissionPool): Pool {
+    const pool = this.pools.get(name);
+    if (pool === undefined) throw new HostAdmissionError("unknown-pool", "Unknown host admission pool.");
+    return pool;
+  }
+
+  /** The named pools, deduplicated, in HOST_ADMISSION_POOLS order. */
+  private ordered(requested: readonly HostAdmissionPool[]): Pool[] {
+    if (!Array.isArray(requested) || requested.length === 0) {
+      throw new HostAdmissionError("unknown-pool", "A host admission request must name at least one pool.");
+    }
+    const known: readonly string[] = HOST_ADMISSION_POOLS;
+    if (requested.some(name => !known.includes(name))) throw new HostAdmissionError("unknown-pool", "Unknown host admission pool.");
+    return HOST_ADMISSION_POOLS.filter(name => requested.includes(name)).map(name => this.pool(name));
+  }
+
+  /** One slot of `pool`: at once, or in line until a release admits it, the deadline's timer refuses it or the signal cancels it. */
+  private take(pool: Pool, deadlineAt: number, request: HostAdmissionRequest): Promise<void> {
+    const { signal } = request;
+    if (signal?.aborted) return Promise.reject(cancelled(pool.name));
+    if (pool.line.length === 0 && pool.inFlight < pool.limit) {
+      pool.inFlight++;
+      pool.peakInFlight = Math.max(pool.peakInFlight, pool.inFlight);
+      pool.admitted++;
+      return Promise.resolve();
+    }
+    return new Promise<void>((resolve, reject) => {
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      /** Out of the line, once: false when a release, the deadline or the signal already took it out. */
+      const leave = (): boolean => {
+        const at = pool.line.indexOf(waiter);
+        if (at < 0) return false;
+        pool.line.splice(at, 1);
+        clearTimeout(timer);
+        signal?.removeEventListener("abort", onAbort);
+        return true;
+      };
+      const onAbort = (): void => {
+        if (!leave()) return;
+        pool.cancelledWhileQueued++;
+        reject(cancelled(pool.name));
+      };
+      const waiter: Waiter = {
+        queuedAt: performance.now(),
+        admit: () => {
+          clearTimeout(timer);
+          signal?.removeEventListener("abort", onAbort);
+          pool.admitted++;
+          resolve();
+        },
+      };
+      pool.line.push(waiter);
+      timer = setTimeout(() => {
+        if (!leave()) return;
+        pool.refused++;
+        reject(new HostAdmissionError(
+          "admission-deadline",
+          `Host admission refused: the ${this.queueDeadlineMs}ms queue deadline passed while waiting for ${pool.name} (limit ${pool.limit}, ${pool.inFlight} in flight).`,
+          pool.name,
+        ));
+      }, Math.max(0, deadlineAt - waiter.queuedAt));
+      signal?.addEventListener("abort", onAbort, { once: true });
+      try {
+        request.onQueued?.(Object.freeze({ pool: pool.name, limit: pool.limit, inFlight: pool.inFlight, ahead: pool.line.length - 1, waitedMs: 0 }));
+      } catch {
+        // A report that throws must not strand the request it reports on: the wait stands, bounded as ever.
+      }
+    });
+  }
+
+  /** A slot of `pool` back: to the oldest waiter, still counted, or freed. */
+  private give(pool: Pool): void {
+    const next = pool.line.shift();
+    if (next !== undefined) next.admit();
+    else pool.inFlight--;
+  }
+}

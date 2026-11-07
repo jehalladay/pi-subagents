@@ -18,6 +18,7 @@ import { Worker } from "node:worker_threads";
 import { type CapabilityDescriptor, type CapabilityDiagnostic, CapabilityError, type JsonValue, validatedCapabilityJson } from "../workbench/capability-registry.js";
 import { nativeEvidence, nativeRefOf } from "../workbench/native-evidence.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
+import { dispatchPools, type HostAdmission, type HostAdmissionLease, type HostAdmissionWait } from "./admission.js";
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
@@ -315,7 +316,9 @@ export interface WorkflowControl {
    * Immediate for a running agent and for one held at a pause. An agent parked
    * behind the concurrency limit takes its skip when it reaches the front —
    * the alternative is a cancellable semaphore for a case that resolves itself
-   * as soon as any sibling finishes.
+   * as soon as any sibling finishes. One queued on the host's shared admission
+   * ({@link RunWorkflowOptions.hostAdmission}) leaves that line at once: the
+   * slot it waits for may belong to another run entirely (wb-ny54).
    */
   skip(index: number): boolean;
   /**
@@ -338,9 +341,34 @@ export interface RunWorkflowOptions {
   signal?: AbortSignal;
   /** Fired per batch, not per entry — see the worker's progress batching. */
   onProgress?(entries: readonly WorkflowEntry[]): void;
+  /**
+   * Agents this run may have in flight at once. Like the three caps, it is
+   * checked at the call (wb-ny54, EAT-R073): 0, -1, 0.5, NaN and Infinity make
+   * runWorkflow reject with a WorkflowRuntimeError before a 0 ms timer set just
+   * before the call fires, and before anything is dispatched, rather than
+   * parking every agent behind a semaphore with no permits; 2^53 is refused
+   * with a WorkflowRuntimeError as well, and Number.MAX_SAFE_INTEGER is
+   * accepted. Which other values are refused is not claimed here.
+   */
   concurrency?: number;
   agentCap?: number;
   itemCap?: number;
+  /**
+   * The host's admission budget, shared by every run the host starts at once
+   * (wb-ny54, EAT-R074..EAT-R076). Each agent dispatch and each live node
+   * dispatch waits for the pools it is charged to (admission.ts dispatchPools)
+   * last, after this run's own permit and before the dispatch; a call replayed
+   * from the resume journal takes none. A wait refused at the queue deadline
+   * dispatches nothing and answers the call with a fatal error (an agent's
+   * carries the refusal's text, a node's is an `unavailable` CapabilityError):
+   * awaited directly or inside parallel() or pipeline(), it fails the run, and
+   * the script's own try/catch can still catch it. A skip takes an agent's wait
+   * out of the line, and the run's end takes every wait it has queued out.
+   * Absent, a run is bounded by its own semaphores only.
+   */
+  hostAdmission?: HostAdmission;
+  /** Told when one of this run's dispatches queues on {@link hostAdmission}: the pool, its load, the line ahead. */
+  onAdmissionWait?(wait: WorkflowAdmissionWait): void;
   /**
    * Hands the caller the run's control surface, once per run.
    *
@@ -377,6 +405,13 @@ export interface RunWorkflowOptions {
      */
     append?(entry: WorkflowJournalEntry): unknown;
   };
+}
+
+/** One of a run's dispatches waiting on the host's shared admission: which call, and why it waits. */
+export interface WorkflowAdmissionWait extends HostAdmissionWait {
+  readonly kind: "agent" | "node";
+  /** The call's position among the run's agents or nodes, as its progress row carries it. */
+  readonly index: number;
 }
 
 export interface WorkflowRunResult {
@@ -726,16 +761,34 @@ export function validateScript(script: string): { meta: WorkflowMeta; body: stri
   return extractMeta(script);
 }
 
+/** Checks a run limit the caller set, as the concurrency option's doc states; one left unset takes its default (wb-ny54, EAT-R073). */
+function positiveRunLimit(name: "concurrency" | "agentCap" | "itemCap" | "nestedCap", value: number | undefined, fallback: number): number {
+  if (value === undefined) return fallback;
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
+    throw new WorkflowRuntimeError(`Workflow ${name} must be a positive integer.`);
+  }
+  return value;
+}
+
 export async function runWorkflow(options: RunWorkflowOptions): Promise<WorkflowRunResult> {
   const { script, host } = options;
 
   assertBoundarySafe(options.args, "args");
 
   const { meta, body } = validateScript(script);
-  const agentCap = options.agentCap ?? WORKFLOW_AGENT_CAP;
-  const itemCap = options.itemCap ?? WORKFLOW_ITEM_CAP;
-  const semaphore = new Semaphore(options.concurrency ?? workflowConcurrency());
+  // Checked here, at the call and before anything is dispatched (wb-ny54,
+  // EAT-R073), before the semaphores and caps below are built: the values the
+  // concurrency option's doc lists are refused. Unchecked, a zero, negative or
+  // NaN concurrency would park every agent and hang the run, and a fraction or
+  // Infinity would be taken as a permit count.
+  const agentCap = positiveRunLimit("agentCap", options.agentCap, WORKFLOW_AGENT_CAP);
+  const itemCap = positiveRunLimit("itemCap", options.itemCap, WORKFLOW_ITEM_CAP);
+  const nestedCap = positiveRunLimit("nestedCap", options.nestedCap, WORKFLOW_NESTED_CAP);
+  const semaphore = new Semaphore(positiveRunLimit("concurrency", options.concurrency, workflowConcurrency()));
   const nodeSemaphore = new Semaphore(16);
+  const hostAdmission = options.hostAdmission;
+  /** Aborted when the run settles: every wait of this run still in the host's line leaves it, undispatched (EAT-R076). */
+  const admissionAbort = new AbortController();
 
   const progress: WorkflowEntry[] = [];
   const inflight = new Set<string>();
@@ -916,7 +969,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       metaJson: JSON.stringify(meta),
       argsJson: options.args === undefined ? undefined : JSON.stringify(options.args),
       itemCap,
-      nestedCap: options.nestedCap ?? WORKFLOW_NESTED_CAP,
+      nestedCap,
     },
   });
 
@@ -941,6 +994,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       if (settled) return;
       settled = true;
       options.signal?.removeEventListener("abort", onAbort);
+      // Out of the host's shared line as the run settles: every wait of this
+      // run still queued leaves it now, so a later release goes to the next
+      // waiter rather than to a dispatch this run will never make.
+      admissionAbort.abort();
       // Symmetric with `semaphore.drain()` below: everything parked is woken so
       // it observes the settle and unwinds. Nothing depends on it — the run's
       // promise resolves either way — it just does not leave live-agent
@@ -1174,6 +1231,58 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             return settleSkipped({});
           }
 
+          // The host's shared pools come last, after this run's own permit and
+          // before the dispatch (wb-ny54, EAT-R074..EAT-R076), so a run never
+          // queues on the host for more agents than its own limit starts.
+          // A skip or the run's end takes the wait out of the host's line at
+          // once; a wait refused at the queue deadline dispatches nothing and
+          // answers the call with a fatal error, as the agent cap does:
+          // awaited directly or inside parallel() or pipeline() it fails the
+          // run, and the script's own try/catch can still catch it.
+          let lease: HostAdmissionLease | undefined;
+          if (hostAdmission !== undefined) {
+            const leaveLine = new AbortController();
+            const cancelWait = (): void => leaveLine.abort();
+            admissionAbort.signal.addEventListener("abort", cancelWait, { once: true });
+            live.wake = cancelWait;
+            try {
+              lease = await hostAdmission.acquire(dispatchPools({ kind: "agent" }), {
+                signal: leaveLine.signal,
+                onQueued: wait => options.onAdmissionWait?.({ ...wait, kind: "agent", index }),
+              });
+            } catch (error) {
+              semaphore.release();
+              if (aborted || settled) {
+                respond(callId, false, undefined, "Workflow aborted.", true);
+                return;
+              }
+              if (intent() === "skip") return settleSkipped({});
+              const refusal = error instanceof Error ? error.message : String(error);
+              // On record as an attempt that did not settle, so a resume runs it
+              // again rather than reading a gap as an unchanged prefix.
+              appendRow({ index, key, ok: false, ...resumeMark, ...basisMark });
+              emit([{ ...base, queuedAt, state: "error", error: refusal }]);
+              respond(callId, false, undefined, refusal, true);
+              return;
+            } finally {
+              live.wake = undefined;
+              admissionAbort.signal.removeEventListener("abort", cancelWait);
+            }
+            // Paused, skipped or ended (by abort or by failure) while queued on
+            // the host: the slots arrived, and go straight back, exactly as the
+            // run's own permit.
+            if (aborted || settled || isPaused() || intent() === "skip") {
+              lease.release();
+              semaphore.release();
+              if (aborted || settled) {
+                respond(callId, false, undefined, "Workflow aborted.", true);
+                return;
+              }
+              if (intent() === "skip") return settleSkipped({});
+              continue;
+            }
+          }
+
           // Carried on every emit from here on, so a retried row keeps saying
           // why it is on its second attempt instead of losing it to the next
           // progress update.
@@ -1268,6 +1377,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             inflight.delete(agentId);
             live.started = false;
             semaphore.release();
+            lease?.release();
           }
 
           if (settled) return;
@@ -1582,6 +1692,39 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         openNodes.delete(callId);
         return;
       }
+      // The host's shared pools, last, after the run's node permit and before
+      // the dispatch, as for an agent (wb-ny54): a refused wait dispatches
+      // nothing, writes no dispatched marker and answers the call with a fatal
+      // `unavailable` CapabilityError; the run's end takes a queued wait out of
+      // the line, and a node whose slots arrive as its run ends, by abort or by
+      // failure, is not dispatched.
+      let lease: HostAdmissionLease | undefined;
+      if (hostAdmission !== undefined) {
+        try {
+          lease = await hostAdmission.acquire(dispatchPools({ kind: "node", capabilityId: payload.capabilityId }), {
+            signal: admissionAbort.signal,
+            onQueued: wait => options.onAdmissionWait?.({ ...wait, kind: "node", index }),
+          });
+        } catch (error) {
+          nodeSemaphore.release();
+          openNodes.delete(callId);
+          if (aborted || settled) return;
+          const refusal = error instanceof Error ? error.message : String(error);
+          emit([{ ...base, lastProgressAt: Date.now(), state: "error", error: refusal }]);
+          // Nothing ran, so nothing new goes on record; an override's original
+          // effect row is carried forward, as when a dispatched marker cannot be
+          // written, so a resume still stops at the position.
+          if (admission.kind === "override-live") appendRow({ ...admission.entry });
+          respond(callId, false, undefined, refusal, true, { name: "CapabilityError", category: "unavailable", message: refusal });
+          return;
+        }
+        if (aborted || settled) {
+          lease.release();
+          nodeSemaphore.release();
+          openNodes.delete(callId);
+          return;
+        }
+      }
       const startedAt = Date.now();
       emit([{ ...base, startedAt }]);
       try {
@@ -1670,6 +1813,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         respond(callId, false, undefined, detail, true, { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "transport", message: detail });
       } finally {
         nodeSemaphore.release();
+        lease?.release();
       }
     }
 
