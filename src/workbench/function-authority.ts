@@ -6,32 +6,42 @@
  * Once decideExecute (execute.ts) admits a function request, its launch may wait (an admission queue, backpressure, an
  * operator hold) before its loader imports the pinned export and its provider runs.
  * dispatchFunctionWithAuthority is the boundary such a launch passes through: it decides the function's authority when
- * the request enters and again, from FRESH host reads, once the wait settles, and nothing is awaited between that final
- * decision and the one dispatch it permits. No decision taken at entry is carried across the wait.
+ * the request enters and again, from FRESH host reads, once the optional wait settles. Pinned final-boundary timing: a
+ * host change queued as a microtask right after the wait settles, or queued by the final read itself with or without a
+ * wait, lands after the one dispatch the final decision permits is invoked. Other scheduling forms are NOT CLAIMED. No
+ * decision taken at entry is carried across the wait.
  *
  * Authority comes from the host alone: the grants the operator configured and the effective principal and session.
  * The request, its input, its JSON policy and the reviewed definition's metadata never confer a right.
  *   EAT-R028  workbench:execute must be held; a definition the adopted contract binds never confers it.
- *   EAT-R029  the exact host-issued action grant the adopted contract binds to the definition must be held, by string
- *             equality: another function's grant, a sibling action, the same permission under another namespace, or a
- *             longer or shorter spelling never stands in.
+ *   EAT-R029  the exact host-issued action grant the adopted contract binds to the definition must be held, matched by
+ *             string equality. Pinned stand-ins that never pass: another function's grant, a sibling action, the same
+ *             permission under another namespace, a namespace sibling, a shorter spelling, longer spellings through a
+ *             hyphen, a dot or a digit, the exact action extended by 1 to 232 repeated letters at either end, and every
+ *             one-character insertion, deletion or substitution of it. Other spellings are NOT CLAIMED.
  *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
  *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
  *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
  * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
- * refuses, and one that passes the earlier rules refuses as function-action-unadopted. adoptFunctionActions accepts only a spelling Pi can carry through its grant
- * settings (workbench.capabilityGrants in settings.ts: namespace:permission, no wildcard) and its detached transport
- * (local-detached.ts admits a launch grant of at most 256 characters), and throws on any other, so no grammar is
- * bypassed silently; only a contract it returned is ever honored.
+ * refuses, and one that passes the earlier rules refuses as function-action-unadopted. The suite pins adoption against
+ * workbench.capabilityGrants and the detached transport at its enumerated refusal rows, accepted rows, 256/257-character
+ * boundary, head/tail character sweep, adjacent-dot, adjacent-hyphen and 100-character-namespace samples, and interior
+ * sweep (each grammar character doubled inside a part; parts of 1 to 244 characters). Other spellings are NOT CLAIMED.
+ * Only a contract adoptFunctionActions returned is ever honored.
  *
- * Not wired: a well-formed workflow_execute request naming a function definition resolves and launches nothing. With
- * workbench:execute held (and workbench:detach as well for a detached request) it refuses as unsupported-definition-kind;
- * without workbench:execute it refuses as missing-execute-grant, and a detached request without workbench:detach refuses
- * as missing-detach-grant. Routing a function launcher through this boundary is a later cut.
+ * Not wired: each pinned workflow_execute request naming a function definition resolves and launches nothing. A host
+ * grant read that is not known permission data (no read, a non-array read, or a list holding a spelling outside the
+ * grammar, in the six pinned shapes) refuses as unknown-permission-data, held execute or not. In the eight pinned
+ * known-permission rows, a request without workbench:execute refuses as missing-execute-grant, a detached request with it
+ * but without workbench:detach refuses as missing-detach-grant, and the rest refuse as unsupported-definition-kind. Other
+ * host reads are NOT CLAIMED. Routing a function launcher through this boundary is a later cut.
  *
- * The host supplies the two reads, the wait and the dispatch. Each refusal reason is fixed text for its refusal policy:
- * no reason composes the definition, the invocation, the held grants or the identity.
+ * The host supplies the two reads, the wait and the dispatch. Pinned fixed reasons: for each pinned pair of requests (the
+ * seven pairs that differ in definition, invocation, identity and held grants, and the five pairs that differ only in
+ * definition kind, the changed identity field, the shape of unknown permission data, the held-grant count or the schema
+ * version), both requests carry one reason, and the first seven name none of their definition, action, invocation or
+ * identity texts. Other pairs are NOT CLAIMED.
  */
 import { CapabilityError, type CapabilityErrorCategory } from "./capability-registry.js";
 import { EXECUTE_GRANT, type ExecuteAdmission } from "./execute.js";
@@ -113,9 +123,9 @@ export interface FunctionDispatchOptions<T> {
   readonly dispatch: (authority: FunctionDispatchAuthority) => Promise<T>;
 }
 
-/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, no wildcard. */
+/** The seam's namespace:permission grammar for an action grant, judged against settings.ts at the suite's enumerated samples. */
 const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
-/** The longest grant local-detached.ts admits on a detached launch request. */
+/** The seam's action-grant length bound, judged against local-detached.ts's launch-grant check at 256 and 257 characters. */
 const TRANSPORT_GRANT_CHARS = 256;
 /** Pi's own authorities (workbench:execute, workbench:detach and the rest) live here; none doubles as a function action. */
 const PI_NAMESPACE = "workbench:";
@@ -135,11 +145,15 @@ function own(record: Record<string, unknown>, key: string): unknown {
   const descriptor = Object.getOwnPropertyDescriptor(record, key);
   return descriptor && Object.hasOwn(descriptor, "value") ? descriptor.value : undefined;
 }
-/** At most 256 bytes of non-blank text that the shared sanitizer leaves unchanged. */
+/**
+ * The clean-text check: a non-blank string of at most 256 bytes that stripUnsafeText leaves unchanged. Pinned: each Unicode
+ * code point, U+0000 to U+10FFFF, inserted alone into a definition id and into a principal, judged against stripUnsafeText,
+ * and the listed escape, blank and byte-bound rows. Other multi-unit texts are NOT CLAIMED.
+ */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && stripUnsafeText(value) === value;
 }
-/** A spelling both the grant settings and the detached transport can carry. */
+/** The seam's grammar and length test for an action grant. */
 function representable(grant: unknown): grant is string {
   return typeof grant === "string" && grant.length <= TRANSPORT_GRANT_CHARS && GRANT.test(grant);
 }
@@ -150,8 +164,9 @@ function invalid(message: string): never {
 /**
  * Adopts the exact action grants a producer contract binds, one per reviewed definition. Throws on a binding list that
  * is not an array of 1 to 64 bindings, on a binding that is not a plain object holding exactly definitionId and
- * actionGrant as own data properties, on a definition id that is not clean text, on a spelling Pi cannot carry, on a Pi
- * workbench grant and on a definition or grant bound twice. The returned contract, its binding list and each binding
+ * actionGrant as own data properties, on a definition id that is not clean text, on a spelling outside the seam's grammar
+ * or longer than 256 characters, on a Pi workbench grant and on a definition or grant bound twice. The returned contract,
+ * its binding list and each binding
  * are frozen, and only a contract returned here is honored by decideFunctionAuthority.
  */
 export function adoptFunctionActions(bindings: readonly FunctionActionBinding[]): FunctionActionContract {
@@ -202,9 +217,12 @@ function boundAction(contract: FunctionActionContract, definitionId: string): st
 }
 
 /**
- * Synchronous: it returns the decision itself and mutates nothing it is given. Rules apply in order and the first match
- * wins: a function definition, a known and unchanged effective identity, known permission data, workbench:execute, an
- * adopted action for this definition, then that exact action grant.
+ * Synchronous: it returns the decision itself and mutates nothing it is given. Its rules, in order: a function definition,
+ * a known and unchanged effective identity, known permission data, workbench:execute, an adopted action for this
+ * definition, then that exact action grant. Pinned order: each single fault, each of the 20 standard pairs, and the five
+ * further rows (a script admission with no grant read, with a non-array grant read, or with an unknown entry identity; a
+ * forged contract or an unbound definition without workbench:execute) report the earliest failing rule. Other fault forms
+ * are NOT CLAIMED.
  */
 export function decideFunctionAuthority(input: FunctionAuthorityInput): FunctionAuthorityDecision {
   const { invocationId, definition } = input.admission;
@@ -238,7 +256,7 @@ export async function dispatchFunctionWithAuthority<T>(options: FunctionDispatch
   const entry = decideFunctionAuthority({ admission, contract, entered, current: { grants: host.grants(), identity: entered } });
   if (entry.decision === "refused") return Object.freeze({ status: "refused", stage: "entry", refusal: entry });
   if (park !== undefined) await park();
-  // The FINAL boundary: both reads are fresh, and nothing is awaited between this decision and the dispatch.
+  // The FINAL boundary: both reads are fresh.
   const final = decideFunctionAuthority({ admission, contract, entered, current: { grants: host.grants(), identity: host.identity() } });
   if (final.decision === "refused") return Object.freeze({ status: "refused", stage: "dispatch", refusal: final });
   const value = await dispatch(final.authority);

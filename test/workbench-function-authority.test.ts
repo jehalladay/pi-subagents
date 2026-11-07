@@ -17,11 +17,17 @@
  * The condition all four share: "Exact action grant spelling is proposed; MW-CONTRACT must bind it. It must be representable
  * through Pi grant settings and detached transport; no silent grammar bypass."
  *
- * The other describe blocks pin further claims of the module's doc comments and of the receipt: the action grammar,
- * judged through loadSettings and through launchDetachedWorkflow's launch-grant check; adoption's bounds and binding
- * members; the rule order; the refusal reasons; unknown permission data; the function-definition boundary; and the
- * not-wired clause, judged through workflow_execute. Cut #2 (the respin of gate refusal #1) added the judged mirror and
- * every block after the function-definition boundary, and added cases inside the EAT blocks.
+ * The other describe blocks pin, each at its enumerated rows only: the action grammar (adoption judged through loadSettings
+ * and through launchDetachedWorkflow's launch-grant check at the listed samples and sweeps; the Conditions line above is
+ * pinned at those samples only); adoption's bounds, binding members and clean-text check; the rule order at the
+ * enumerated fault forms; the fixed refusal reasons at the enumerated request pairs; unknown permission data; the
+ * function-definition boundary; and the not-wired reading of workflow_execute at the enumerated host reads. Cut #2 (the
+ * respin of gate refusal #1) added the judged mirror and every block after the function-definition boundary. Cut #3 (the
+ * enumerate-the-resolvable respin of refusal #2, R-B656) pins each further form refusal #2 recorded, red-first against its
+ * named member, and narrows the describes to their pinned rows. NOT CLAIMED by this suite: rule-order fault forms, reason
+ * pairs, grammar spellings, workflow_execute host reads and final-boundary scheduling forms beyond the enumerated rows;
+ * multi-unit unsafe text beyond the listed rows; action-grant spellings beyond the enumerated EAT-R029 rows and sweeps.
+ * No residual is named: every known-unpinned form of refusal #2 is pinned by a row below.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -55,6 +61,7 @@ import {
 } from "../src/workbench/function-authority.js";
 import { launchDetachedWorkflow } from "../src/workbench/hosts/local-detached.js";
 import type { DefinitionRef } from "../src/workbench/identity.js";
+import { stripUnsafeText } from "../src/workbench/redaction.js";
 import { hermeticDir } from "./helpers/boot-extension.js";
 
 const DIGEST = `sha256:${"ab".repeat(32)}`;
@@ -237,6 +244,8 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     ["another function's action grant", OTHER_FUNCTION_ACTION],
     ["another action of the same function", "fixture-fn:develop-read"],
     ["a longer spelling that begins with the exact action", `${ACTION}-all`],
+    ["a longer spelling that extends the exact action through a dot", `${ACTION}.sub`],
+    ["a longer spelling that extends the exact action through a digit", `${ACTION}2`],
     ["a shorter spelling the exact action begins with", "fixture-fn:develop"],
     ["a namespace sibling", "fixture-fn:write"],
   ])("refuses %s in the adopted action's namespace (%s)", async (_what, grant) => {
@@ -294,9 +303,54 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(refusalOf(await h.run(admissionFor(), forged))).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
     expect(h.loader).not.toHaveBeenCalled();
   });
+
+  it("no one-character insertion, deletion or substitution of the exact action stands in for it: each refuses, as a missing action grant when the grammar admits it", () => {
+    const alphabet = [..."abcdefghijklmnopqrstuvwxyz0123456789.-"];
+    const variants = new Set<string>();
+    for (let index = 0; index <= ACTION.length; index += 1) {
+      for (const char of alphabet) variants.add(`${ACTION.slice(0, index)}${char}${ACTION.slice(index)}`);
+      if (index < ACTION.length) {
+        variants.add(`${ACTION.slice(0, index)}${ACTION.slice(index + 1)}`);
+        for (const char of alphabet) variants.add(`${ACTION.slice(0, index)}${char}${ACTION.slice(index + 1)}`);
+      }
+    }
+    variants.delete(ACTION);
+    const outcomes = new Map<string, number>();
+    for (const variant of variants) {
+      const decision = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, variant], identity: HOST } });
+      const outcome = decision.decision === "refused" ? decision.policy : `authorized by ${variant}`;
+      outcomes.set(outcome, (outcomes.get(outcome) ?? 0) + 1);
+    }
+    expect([...outcomes.keys()].sort()).toEqual(["missing-function-action-grant", "unknown-permission-data"]);
+    expect(outcomes.get("missing-function-action-grant")).toBeGreaterThan(1000);
+  });
+
+  it("the exact action extended by 1 to 232 repeated letters at either end, up to the 256-character bound, never stands in", () => {
+    const refused: string[] = [];
+    for (let count = 1; count <= 256 - ACTION.length; count += 1) {
+      for (const variant of [`${ACTION}${"a".repeat(count)}`, `${"a".repeat(count)}${ACTION}`]) {
+        const decision = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, variant], identity: HOST } });
+        if (decision.decision === "refused" && decision.policy === "missing-function-action-grant") refused.push(variant);
+      }
+    }
+    expect(refused).toHaveLength(2 * (256 - ACTION.length));
+  });
+
+  it("the unadopted production contract refuses under every subset of the pinned grant pool, for both fixture definitions", () => {
+    const pool = [EXECUTE_GRANT, DETACH_GRANT, ACTION, OTHER_FUNCTION_ACTION, "forge:inspect", "fixture-fn:develop", "workbench:design"];
+    const authorized: string[] = [];
+    for (let mask = 0; mask < 2 ** pool.length; mask += 1) {
+      const grants = pool.filter((_, bit) => (mask & (1 << bit)) !== 0);
+      for (const id of [FUNCTION_ID, OTHER_FUNCTION_ID]) {
+        const decision = decideFunctionAuthority({ admission: admissionFor(id), contract: FUNCTION_ACTION_CONTRACT, entered: HOST, current: { grants, identity: HOST } });
+        if (decision.decision !== "refused") authorized.push(`${id} ${JSON.stringify(grants)}`);
+      }
+    }
+    expect(authorized).toEqual([]);
+  });
 });
 
-describe("the action grammar: representable through Pi grant settings and the detached transport, no silent bypass (wb-201v)", () => {
+describe("the action grammar: adoption judged against Pi grant settings and the detached transport at the enumerated samples (wb-201v)", () => {
   it("refuses to adopt the program's example spelling mechanical:develop:write, which workbench.capabilityGrants cannot carry", () => {
     sandbox = hermeticDir({ settings: { workbench: { workflowAgentBackend: "claude", capabilityGrants: [EXECUTE_GRANT, PROPOSED_EXAMPLE] } } });
     const dir = sandbox.dir;
@@ -310,7 +364,7 @@ describe("the action grammar: representable through Pi grant settings and the de
     expect(h.loader).not.toHaveBeenCalled();
   });
 
-  it("a representable spelling round-trips through loadSettings, and a host reading settings on every call dispatches under it", async () => {
+  it("the representable spelling fixture-fn:develop-write round-trips through loadSettings, and a host reading settings on every call dispatches under it", async () => {
     sandbox = hermeticDir({ settings: { workbench: { workflowAgentBackend: "claude", capabilityGrants: [EXECUTE_GRANT, ACTION] } } });
     const dir = sandbox.dir;
     expect(loadSettings(dir).workbench?.capabilityGrants).toEqual([EXECUTE_GRANT, ACTION]);
@@ -385,7 +439,29 @@ describe("the action grammar: representable through Pi grant settings and the de
     expect(adopted).toBe(letters.length * 2 + grammar.length * 2);
   });
 
-  it("the 256-character bound is the detached transport's own: launchDetachedWorkflow's launch-grant check carries 256 characters and refuses 257, first, last or alone in the grant list, while workbench.capabilityGrants carries both", async () => {
+  it.each([
+    ["two adjacent dots", "fixture..fn:write"],
+    ["two adjacent hyphens", "fixture--fn:write"],
+    ["a 100-character namespace", `${"n".repeat(100)}:write`],
+  ])("a spelling with %s is adopted, and workbench.capabilityGrants and the detached transport both carry it", async (_what, actionGrant) => {
+    const dir = judgeDir();
+    expect([adoptable(actionGrant), settingsCarry(dir, actionGrant), await transportCarries(dir, [EXECUTE_GRANT, actionGrant])]).toEqual([true, true, true]);
+  });
+
+  it("for each grammar character doubled inside a namespace or a permission, and for parts of 1, 2, 63, 64, 65, 100, 128, 200 and 244 characters, adoption accepts the spelling and workbench.capabilityGrants and the detached transport both carry it", async () => {
+    const dir = judgeDir();
+    const spellings = [..."abcdefghijklmnopqrstuvwxyz0123456789.-"].flatMap(char => [`fix${char}${char}ture:write`, `fixture:wr${char}${char}ite`]);
+    for (const length of [1, 2, 63, 64, 65, 100, 128, 200, 244]) spellings.push(`${"n".repeat(length)}:write`, `fixture:${"w".repeat(length)}`);
+    const disagreements: string[] = [];
+    for (const spelling of spellings) {
+      const verdicts = [adoptable(spelling), settingsCarry(dir, spelling), await transportCarries(dir, [EXECUTE_GRANT, spelling])];
+      if (verdicts.some(verdict => !verdict)) disagreements.push(`${spelling}: ${JSON.stringify(verdicts)}`);
+    }
+    expect(spellings).toHaveLength(94);
+    expect(disagreements).toEqual([]);
+  });
+
+  it("at the pinned 256- and 257-character spellings, launchDetachedWorkflow's launch-grant check carries 256 characters and refuses 257, first, last or alone in the grant list, while workbench.capabilityGrants carries both", async () => {
     const at256 = `fixture-fn:${"a".repeat(245)}`;
     const at257 = `${at256}a`;
     expect([at256.length, at257.length]).toEqual([256, 257]);
@@ -395,7 +471,7 @@ describe("the action grammar: representable through Pi grant settings and the de
     for (const grants of [[at257], [EXECUTE_GRANT, at257], [at257, EXECUTE_GRANT]]) expect(await transportCarries(dir, grants)).toBe(false);
   });
 
-  it("the transport bound mirrored by the seam is the one local-detached enforces on every launch grant", () => {
+  it("the text of local-detached's launch-grant check names the seam's 256-character bound", () => {
     const detached = readFileSync(new URL("../src/workbench/hosts/local-detached.ts", import.meta.url), "utf8");
     expect(detached).toContain('grants.some(grant => typeof grant !== "string" || !grant.trim() || grant.length > 256)');
   });
@@ -522,6 +598,9 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     ["a non-text session", { principal: HOST.principal, sessionId: 1 }],
     ["a principal of 257 bytes in 256 characters", { principal: `${"a".repeat(255)}\u00e9`, sessionId: "s1" }],
     ["a principal carrying an escape", { principal: `${HOST.principal}\u001b[0m`, sessionId: "s1" }],
+    ["a principal carrying a BEL C0 control", { principal: `${HOST.principal}${String.fromCodePoint(7)}`, sessionId: "s1" }],
+    ["a principal carrying a bidi override", { principal: `${HOST.principal}${String.fromCodePoint(0x202e)}`, sessionId: "s1" }],
+    ["a principal carrying a default-ignorable point", { principal: `${HOST.principal}${String.fromCodePoint(0x200b)}`, sessionId: "s1" }],
   ])("denies %s as unknown identity data before any dispatch", async (_what, identity) => {
     const dispatch = vi.fn(async () => "ran");
     const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
@@ -654,6 +733,32 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     expect(queued).toBe(true);
     expect(atDispatch).toEqual([{ grants: [EXECUTE_GRANT, ACTION], identity: HOST }]);
   });
+
+  it("with no admission park, a revocation queued by the final read never precedes dispatch", async () => {
+    const state = { grants: [EXECUTE_GRANT, ACTION] as readonly string[] };
+    let reads = 0;
+    const atDispatch: (readonly string[])[] = [];
+    const result = await dispatchFunctionWithAuthority({
+      admission: admissionFor(),
+      contract: CONTRACT,
+      host: {
+        grants: () => {
+          reads += 1;
+          if (reads === 2) queueMicrotask(() => {
+            state.grants = [EXECUTE_GRANT];
+          });
+          return state.grants;
+        },
+        identity: () => ({ ...HOST }),
+      },
+      dispatch: async () => {
+        atDispatch.push(state.grants);
+        return "ran";
+      },
+    });
+    expect(result.status).toBe("dispatched");
+    expect(atDispatch).toEqual([[EXECUTE_GRANT, ACTION]]);
+  });
 });
 
 describe("the boundary admits function definitions only (wb-201v)", () => {
@@ -693,6 +798,41 @@ describe("adoptFunctionActions: the binding list's bounds and each binding's mem
     expect(grantGetter).not.toHaveBeenCalled();
   });
 
+  it.each([
+    ["a BEL C0 control", 7],
+    ["a bidi override", 0x202e],
+    ["a default-ignorable point", 0x200b],
+  ])("a definition id carrying %s is not clean text", (_what, codePoint) => {
+    const definitionId = `${FUNCTION_ID}${String.fromCodePoint(codePoint)}`;
+    expect(() => adoptFunctionActions([{ definitionId, actionGrant: ACTION }])).toThrow(/clean definition id/);
+  });
+
+  it("each Unicode code point, U+0000 to U+10FFFF, inserted alone into a definition id and into a principal, is clean text exactly when stripUnsafeText leaves the text unchanged", () => {
+    const admission = admissionFor();
+    const disagreements: string[] = [];
+    let unsafe = 0;
+    for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
+      const unit = String.fromCodePoint(codePoint);
+      const definitionId = `fixture.${unit}.v1`;
+      const clean = stripUnsafeText(definitionId) === definitionId;
+      if (!clean) unsafe += 1;
+      let adopted = true;
+      try {
+        adoptFunctionActions([{ definitionId, actionGrant: ACTION }]);
+      } catch {
+        adopted = false;
+      }
+      // Entered as HOST, so a clean principal reads as a changed identity and an unclean one as unknown identity data.
+      const principal = `local-operator:1000:${unit}`;
+      const decision = decideFunctionAuthority({ admission, contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, ACTION], identity: { principal, sessionId: HOST.sessionId } } });
+      const known = decision.decision === "refused" && decision.policy === "changed-effective-identity";
+      if (adopted !== clean || known !== (stripUnsafeText(principal) === principal)) disagreements.push(codePoint.toString(16));
+      if (disagreements.length > 20) break;
+    }
+    expect(disagreements).toEqual([]);
+    expect(unsafe).toBeGreaterThan(6000);
+  }, 120_000);
+
   it("a definition id is at most 256 bytes, counted in bytes: 256 ASCII bytes are adopted, 257 bytes in 256 characters throw", () => {
     const at256 = `fixture.${"a".repeat(248)}`;
     const wide = `${"a".repeat(255)}é`;
@@ -702,7 +842,7 @@ describe("adoptFunctionActions: the binding list's bounds and each binding's mem
   });
 });
 
-describe("decideFunctionAuthority: its rules apply in order and the first match wins (wb-201v)", () => {
+describe("decideFunctionAuthority: at the enumerated fault forms, the earliest failing rule reports (wb-201v)", () => {
   type Fault = "kind" | "unknown-identity" | "changed-identity" | "unknown-permissions" | "no-execute" | "unadopted" | "no-action";
   /** The rules in their stated order, each named by the one fault that breaks it and the policy that fault reports alone. */
   const ORDER: readonly (readonly [Fault, FunctionAuthorityRefusal])[] = [
@@ -744,9 +884,19 @@ describe("decideFunctionAuthority: its rules apply in order and the first match 
   it.each(PAIRS)("the %s and %s faults together report the earlier rule, %s", (first, second, policy) => {
     expect(decideFunctionAuthority(deepFreeze(withFaults(first, second)))).toMatchObject({ decision: "refused", policy });
   });
+
+  it.each([
+    ["a script admission with no grant read", { admission: admissionFor(FUNCTION_ID, undefined, TASK, "script"), contract: CONTRACT, entered: HOST, current: { grants: undefined, identity: HOST } }, "not-a-function-definition"],
+    ["a script admission with a non-array grant read", { admission: admissionFor(FUNCTION_ID, undefined, TASK, "script"), contract: CONTRACT, entered: HOST, current: { grants: EXECUTE_GRANT, identity: HOST } }, "not-a-function-definition"],
+    ["a script admission with unknown entry identity", { admission: admissionFor(FUNCTION_ID, undefined, TASK, "script"), contract: CONTRACT, entered: undefined, current: { grants: [EXECUTE_GRANT, ACTION], identity: HOST } }, "not-a-function-definition"],
+    ["a forged adopted contract without workbench:execute", { admission: admissionFor(), contract: Object.freeze({ state: "adopted", bindings: Object.freeze([Object.freeze({ definitionId: FUNCTION_ID, actionGrant: ACTION })]) }) as FunctionActionContract, entered: HOST, current: { grants: [ACTION], identity: HOST } }, "missing-execute-grant"],
+    ["an unbound definition without workbench:execute", { admission: admissionFor("fixture.unbound.v1"), contract: CONTRACT, entered: HOST, current: { grants: [ACTION], identity: HOST } }, "missing-execute-grant"],
+  ] as const)("%s reports the earlier rule", (_what, input, policy) => {
+    expect(decideFunctionAuthority(deepFreeze(input))).toMatchObject({ decision: "refused", policy });
+  });
 });
 
-describe("each refusal reason is fixed text for its refusal policy (wb-201v)", () => {
+describe("refusal reasons: one fixed reason per policy across the enumerated request pairs (wb-201v)", () => {
   interface Scenario {
     readonly id: string;
     readonly action: string;
@@ -800,6 +950,22 @@ describe("each refusal reason is fixed text for its refusal policy (wb-201v)", (
     for (const s of [A, B]) for (const text of [s.id, s.action, s.invocation, s.identity.principal, s.identity.sessionId]) expect(a.reason).not.toContain(text);
   });
 
+  const input = (grants: unknown, identity: FunctionIdentity = HOST, admission: ExecuteAdmission = admissionFor()): FunctionAuthorityInput => ({ admission, contract: CONTRACT, entered: HOST, current: { grants, identity } });
+  const V2: ExecuteAdmission = Object.freeze({ ...admissionFor(), definition: Object.freeze({ ...admissionFor().definition, schemaVersion: "mechanical-workflows/entrypoint/v2" }) });
+  const FIELD_PAIRS: readonly (readonly [string, FunctionAuthorityRefusal, FunctionAuthorityInput, FunctionAuthorityInput])[] = [
+    ["a script and a furnace-formula admission", "not-a-function-definition", input([EXECUTE_GRANT, ACTION], HOST, admissionFor(FUNCTION_ID, undefined, TASK, "script")), input([EXECUTE_GRANT, ACTION], HOST, admissionFor(FUNCTION_ID, undefined, TASK, "furnace-formula"))],
+    ["a changed principal and a changed session", "changed-effective-identity", input([EXECUTE_GRANT, ACTION], { principal: "local-operator:1001:s1", sessionId: HOST.sessionId }), input([EXECUTE_GRANT, ACTION], { principal: HOST.principal, sessionId: "s2" })],
+    ["no grant read and a list holding a spelling outside the grammar", "unknown-permission-data", input(undefined), input([EXECUTE_GRANT, PROPOSED_EXAMPLE])],
+    ["one held grant and two held grants", "missing-execute-grant", input([ACTION]), input([ACTION, OTHER_FUNCTION_ACTION])],
+    ["two schema versions of the bound definition", "missing-function-action-grant", input([EXECUTE_GRANT, OTHER_FUNCTION_ACTION]), input([EXECUTE_GRANT, OTHER_FUNCTION_ACTION], HOST, V2)],
+  ];
+  it.each(FIELD_PAIRS)("%s carry one %s reason", (_pair, policy, first, second) => {
+    const [a, b] = [decideFunctionAuthority(first), decideFunctionAuthority(second)];
+    if (a.decision !== "refused" || b.decision !== "refused") throw new Error(`expected two ${policy} refusals`);
+    expect([a.policy, b.policy]).toEqual([policy, policy]);
+    expect(a.reason).toBe(b.reason);
+  });
+
   it("the boundary returns the decision's refusal unchanged, at entry and at the final boundary", async () => {
     const atEntry = await harness({ grants: [ACTION] }).run(admissionFor());
     const pureEntry = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [ACTION], identity: HOST } });
@@ -836,16 +1002,16 @@ describe("decideFunctionAuthority: unknown permission data and its input (wb-201
   });
 });
 
-describe("not wired: workflow_execute resolves and launches no function definition (wb-201v)", () => {
+describe("not wired: each enumerated workflow_execute request naming a function definition resolves and launches nothing (wb-201v)", () => {
   const ctx = { cwd: "/ws" } as unknown as ExtensionContext;
-  async function executeFunction(rights: readonly string[], hostMode: "embedded" | "detached") {
+  async function executeFunction(rights: unknown, hostMode: "embedded" | "detached") {
     const resolveSource = vi.fn((): never => {
       throw new Error("a function definition is never resolved");
     });
     const launchEmbedded = vi.fn(async () => []);
     const launchDetached = vi.fn(async () => []);
     const deps: WorkflowExecuteDeps = {
-      grants: () => rights,
+      grants: () => rights as readonly string[],
       observerScope: () => ({ workspace: "/ws", principal: HOST.principal }),
       localPrincipal: () => HOST.principal,
       sessionIdOf: () => HOST.sessionId,
@@ -860,6 +1026,17 @@ describe("not wired: workflow_execute resolves and launches no function definiti
     const reply = JSON.parse(text) as { error?: { code?: string } };
     return { code: reply.error?.code, calls: [resolveSource.mock.calls.length, launchEmbedded.mock.calls.length, launchDetached.mock.calls.length] };
   }
+
+  it.each([
+    ["embedded with no grant read", "embedded", undefined],
+    ["embedded with a non-array grant read", "embedded", EXECUTE_GRANT],
+    ["embedded with workbench:execute and a spelling outside the grammar", "embedded", [EXECUTE_GRANT, PROPOSED_EXAMPLE]],
+    ["detached with workbench:execute, workbench:detach and a spelling outside the grammar", "detached", [EXECUTE_GRANT, DETACH_GRANT, PROPOSED_EXAMPLE]],
+    ["detached with workbench:execute and a spelling outside the grammar", "detached", [EXECUTE_GRANT, PROPOSED_EXAMPLE]],
+    ["embedded with only a spelling outside the grammar", "embedded", [PROPOSED_EXAMPLE]],
+  ] as const)("a request %s refuses as unknown-permission-data, with zero resolve and launch calls", async (_what, hostMode, rights) => {
+    expect(await executeFunction(rights, hostMode)).toEqual({ code: "unknown-permission-data", calls: [0, 0, 0] });
+  });
 
   it.each([
     ["embedded", [EXECUTE_GRANT], "unsupported-definition-kind"],
