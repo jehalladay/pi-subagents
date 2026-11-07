@@ -154,3 +154,56 @@ mutant EAT-R085: drop the digits from a gate name's first part (A013) -> 1 faile
 mutant EAT-R086: swap the duplicate and malformed line rules (A108) -> 1 failed | 456 passed (457); parse a whitespace-only bead export line as JSON (A243) -> 1 failed | 456 passed (457)
 mutant EAT-R087: judge an added path that holds the receipts directory anywhere as a receipt (A487) -> 1 failed | 456 passed (457); refuse an index added under any directory named docs (A483) -> 1 failed | 456 passed (457)
 ```
+
+## 2026-11-07 cut #4, the respin of refusal #3 (the rendered-view words in the enumerate form; the field-value, TRACEABILITY and W11 reader words held to pin lists)
+
+Seat ws-09 of run g10-work-s235 cut this respin on trunk 71b4a59fb4f9124f776a4378bce79b5aa027b8e6 (landing 1016), merged into the branch over cut #3 (7478d96306527af2e0c906efef525806707585b0), which PREP F refused as refusal #3, and merged trunk d758d3513bb03a45aec541bfefd58aa34e440de5 (landing 1018) into the branch before handoff. Refusal #3 asks for the structural exit of the claim words frozen at R-B641 to a child bead (its F13 (1)); this cut does not restate those words and leaves them as cut #3 wrote them. The rendered-view words are at their second-stage cap, so this cut takes the enumerate-the-resolvable form for them, and the three U6 word sets are at rung 1 of their own guards.
+
+What changed:
+
+- The validator's code is unchanged; only its doc comments change. The module header gains a THE PIN LISTS paragraph and, before RESIDUALS, a PIN LISTS section of 168 pin lines in six lists (RV and RH for the rendered view, FV and FG for the release block's field values, TR for TRACEABILITY, WR for the W11 heading, table and HTML readers). Each pin line is one case of the test, by id: the reader it calls, its input or pinned form, and the result. The test runs every case and holds the header's pin lines to its own rows, so a pin line and its case cannot drift apart.
+- U5, the rendered-view words, at their second-stage cap (the enumerate-the-resolvable form of rule 19(c)). THE RENDERED VIEW paragraph now claims exactly the RV and RH pin lines, and a markdown input those lines do not hold is NOT CLAIMED. The function docs of decodeReferences, inlineText, tableCells, blockLines and renderedText refer their readings to those lines. The twelve members GR1, GR2, GR3, GR4, GR6, GR7, GR9, GR13, GR15, GR17, GR24 and GR26 are each refused by at least one row, and so are the PLAUSIBLE GR5 and GR28. A reference whose definition lies outside the W11 section stays the residual R-REFDEF-OUTSIDE.
+- U6 (a), the field-value words of the release block. The first field bullet names the lines and refers the values of contract, program, slice, slice status, real infrastructure gate, gate tier and gate result to the FV and FG pin lines. GQ3 and GQ16 are refused.
+- U6 (b), the immutable-path words. IMMUTABLE_PATHS refers judgeCut's traceability-changed reading to the TR pin lines. GQ85 is refused.
+- U6 (c), the W11 heading, table and HTML reader words of walkTokens, headingTexts, w11Rows, w11Html, the w11-status-unknown bullet and judgeCut's heading-uniqueness clause. Each refers its readings to the RH or WR pin lines. GR20, GR21, GQ64, GQ66, GQ67 and GQ88 are refused.
+- The test's real-tree row now expects four release blocks in this receipt, one per cut entry.
+
+What this entry does not claim:
+
+- No slice is live, and no Mechanical invocation exists. The validator calls no Mechanical code.
+- For the rendered-view, field-value, TRACEABILITY and W11 reader words, an input that no pin line holds is NOT CLAIMED.
+- The claim words frozen at R-B641 (the envelope, seam, CLI, block-reading, W11-section and pointer words of refusal #3 U1 to U4) are not restated by this entry or by this cut.
+- The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut. The amendment's own rule defers them until the Nov-6 pins are carried per EAT-R172, which wb-cbt4 owns.
+- The project skill and the program docs are still absent at this base (both land with wb-12x1), so this cut updates neither, and its release block names both as blockers.
+
+```mwi-release
+contract: workbench.mwi-release/v1
+program: mechanical-workflows-interop-2026-11-04
+bead: wb-j5y5
+slice: PI-7
+slice status: partial
+requirements: EAT-R082, EAT-R083, EAT-R084, EAT-R085, EAT-R086, EAT-R087
+real infrastructure gate: none
+baseline sha / source paths: 71b4a59fb4f9124f776a4378bce79b5aa027b8e6; qa/workbench/mwi-release.mjs (doc comments only), test/workbench-mwi-release.test.ts, docs/workbench/receipts/wb-j5y5.md
+specific behavior to change: cure refusal #3 of cut #3: state the rendered-view words as exactly the RV and RH pin lines (the enumerate form of rule 19(c) at the U5 cap), hold the field-value, TRACEABILITY and W11 reader words to the FV, FG, TR and WR pin lines, and refuse each U5 and U6 member red-first; no judge changes behavior
+owner repo and producer authority: Pi (pi-subagents); the validator reads forge's build result envelope (result-envelope/v1), forge.toml, the in-tree bead export and Git, and calls no producer
+supported API/version confirmed by installed code: marked 18.0.11 (its Lexer, which qa/workbench/receipts-index.mjs also uses) and git 2.50.1; no producer API is called
+one negative reproducer and one positive journey: negative: each of refusal #3's twelve U5 and nine U6 members, and GR5 and GR28, is refused by at least one row of the cut #4 test; positive: the control receipt, the control envelope and the slice cut pass, and node qa/workbench/mwi-release.mjs --base d758d3513bb03a45aec541bfefd58aa34e440de5 over this cut's working tree exits 0 with no finding, judging the four release blocks of this receipt, closure open without an envelope
+observed code vs planned code: observed: the validator and its tests; planned: none in this cut
+permissions, effects, cancellation and retention: none: the judges are pure; the CLI reads Git and files and writes only stdout and stderr
+native evidence/identity and no-false-PASS predicate: not run: this cut changes no judge, and it restates no gate-envelope predicate
+timing/resource budget and control behavior: not run: no timing claim; every vitest run here is capped with VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8
+Forge commands run and exact outcomes: the lint and typing steps ran under the seat's ritual of record, whose Furnace run and attempt ids (or its typed fallback) are on the delivery note's ritual line and on the ledger's ritual-check row for run g10-work-s235, over the seat worktree tree that holds every delivered byte of this cut (trunks 71b4a59 and d758d35 merged into cut #3, plus the cut #4 bytes, uncommitted); that clean claim excludes qa/workbench/mwi-release.mjs, which biome's files.includes (src/**/*.ts, test/**/*.ts) leaves unlinted and tsconfig.test.json's checkJs false leaves untype-checked, in the ritual and in the complete gate alike; a one-off tsc 6.0.3 --ignoreConfig --allowJs --checkJs --strict --types node run over the module reads 0 errors; the complete gate (forge build --require-complete --no-replay --keep-going --json) is not run by this seat, because the machine gate lane runs it on the collected commit
+docs, skill, source map, feature matrix and receipt updates: docs/workbench/receipts/wb-j5y5.md (this entry); docs/workbench/feature-matrix.md is unchanged by this cut
+remaining blockers and next safe independent cut: .agents/skills/pi-mechanical-interop/SKILL.md and docs/workbench/programs/mechanical-workflows-interop-2026-11-04/ are absent at bases 71b4a59 and d758d35 (both land with wb-12x1), so this cut updates neither; the next safe independent cut is any program bead's first cut, with a release block in its receipt
+red command: VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8 ./node_modules/.bin/vitest run test/workbench-mwi-release.test.ts
+red result: 55 failed | 593 passed (648), the cut #4 test against the cut #4 module with refusal #3's twelve U5 and nine U6 members applied together (two runs, equal); the cut #4 test against the cut #3 module reads 11 failed | 637 passed (648), the pin-list header rows only
+first failing assertion: AssertionError: expected 'x&#1114111;y' to be 'x' + U+10FFFF + 'y' // Object.is equality (pin RV04, renderedText("x&#1114111;y"), refused under member GR2)
+positive rerun: VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8 ./node_modules/.bin/vitest run test/workbench-mwi-release.test.ts -> 648 passed (648)
+mutant EAT-R082: accept a W11 status turned landed-gated without a witnessed live gate (the requirement's own mutant) -> 42 failed | 606 passed (648); keep a six-digit hexadecimal reference as written (refusal #3 member GR1) -> 4 failed | 644 passed (648); drop list items from the token walk (GR20) -> 7 failed | 641 passed (648); judge the W11 heading's uniqueness only when the matrix changes (GQ88) -> 2 failed | 646 passed (648)
+mutant EAT-R083: accept a red result that reports no failure (the requirement's own mutant) -> 3 failed | 645 passed (648)
+mutant EAT-R084: accept an old commit's gate (the requirement's own mutant) -> 2 failed | 646 passed (648)
+mutant EAT-R085: accept a live claim whose producer gate failed, was skipped or did not run (the requirement's own mutant) -> 8 failed | 640 passed (648); read the gate value None as no gate (GQ16) -> 2 failed | 646 passed (648)
+mutant EAT-R086: accept a fabricated wb identifier (the requirement's own mutant) -> 1 failed | 647 passed (648); accept a contract that only begins with workbench.mwi-release/v1 (GQ3) -> 1 failed | 647 passed (648)
+mutant EAT-R087: accept a global status row appended to TRACEABILITY (the requirement's own mutant) -> 14 failed | 634 passed (648); accept a TRACEABILITY the cut adds over a base without it (GQ85) -> 1 failed | 647 passed (648)
+```

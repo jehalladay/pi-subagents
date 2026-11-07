@@ -15,6 +15,15 @@
  * families inside the claimed subject that the validator is known to be quiet on are the RESIDUALS at the end of this comment;
  * each has quiet rows and a live twin in the test.
  *
+ * THE PIN LISTS (cut #4, the respin of refusal #3). The words of THE RENDERED VIEW below are in the enumerate-the-resolvable form
+ * of rule 19(c) (the U5 set at the R-B654 (2) guard's second-stage cap). The field-value words of THE RELEASE BLOCK (refusal #3
+ * U6 (a)), the immutable-path words of IMMUTABLE_PATHS (U6 (b)) and the W11 heading, table and HTML reader words (U6 (c)) are held
+ * to their pins. Each pin line under PIN LISTS at the end of this comment is one case of test/workbench-mwi-release.test.ts: its
+ * id, the reader it calls, its input or pinned form, and the result the reader gives; the test runs each case and holds these
+ * lines to its own rows. For these words the claim is exactly the pin lists: an input no pin line holds is NOT CLAIMED.
+ * The claim words frozen at R-B641 are not restated by this cut: refusal #3 asks for their structural exit to a child bead (its
+ * F13 (1)), and this cut leaves them as cut #3 wrote them.
+ *
  * THE RELEASE BLOCK. A release receipt is a per-bead receipt, docs/workbench/receipts/<bead-id>.md. Its release blocks are the
  * fenced code blocks (a backtick or a tilde fence) at the TOP LEVEL of its markdown whose info string, as marked reads it
  * (trimmed), is exactly `mwi-release`. Pinned as no release block: the info strings `mwi-releases`, `mwi-release extra`,
@@ -23,9 +32,10 @@
  * block is read; the validator does not count blocks per receipt entry. Each non-blank line of a block is one `label: value` field
  * whose label ends at the first colon; blank lines are skipped, and a non-blank line without a label (an empty label included) and
  * a repeated label are kept as the block's malformed entries. Its fields:
- *  - the claim: contract (workbench.mwi-release/v1), program, bead, slice (PI-0..PI-7), slice status (design-only, partial, live,
- *    closed), requirements (the EAT ids the cut serves) and real infrastructure gate (a gate name such as PI-DETACHED-GRANTS, or
- *    `none`); a named gate adds gate tier, gate result, gate commit and gate receipt;
+ *  - the claim: contract, program, bead, slice, slice status, requirements and real infrastructure gate (a gate's name, or
+ *    `none`), and for a named gate gate tier, gate result, gate commit and gate receipt; the values claimed for contract, program,
+ *    slice, slice status, real infrastructure gate, gate tier and gate result are the FV and FG pin lines, and a value no pin line
+ *    holds is NOT CLAIMED;
  *  - the twelve lines of the program's handoff contract (04-agent-handoff.md, "Handoff contract for each change"); a leg that did
  *    not run says so (`not run: <why>`, or `none`) instead of being left out;
  *  - the red-first legs: red command, red result, first failing assertion, positive rerun, and one `mutant <EAT id>` line per
@@ -52,18 +62,10 @@
  * string, and the arrays [true] and [1]. The full list is the test's PREDICATE_FORMS. Its other conditions are listed at
  * gateEnvelopeFindings.
  *
- * THE RENDERED VIEW. Every docs rule reads markdown as marked's Lexer tokenizes it (renderedText) and reads the tokens as text.
- * Pinned: a code span reads as its text with its character references kept; emphasis, strong emphasis, a backslash escape, an
- * inline link (with a title, with a code-span text), a full, collapsed or shortcut reference link whose definition is in the same
- * lexed text, and an autolink read as their text; the character references &#NN; (up to seven digits), &#xNN; and &#XNN; (up to
- * six hex digits of either case), &amp; &lt; &gt; &quot; &apos; &nbsp; read as the characters they render (a number of 0 or above
- * 0x10FFFF is kept as written, and so is a named reference not listed); a fenced or an indented code block and a heading read as
- * their text; a whitespace run reads as one space, and so do a soft line break and a hard one (two trailing spaces or a
- * backslash); raw HTML (a block, an HTML comment and inline HTML) reads as nothing; a blockquote, a nested blockquote and a lazy
- * continuation line read as their lines; a table reads one line per row with its cells joined by " | ", a list one line per item.
- * A section is found by its heading's rendered text (markdownSection): an ATX heading with a closing sequence, an indented ATX
- * heading and a setext heading are the same heading, while a heading inside an HTML comment, a fenced block or an indented code
- * block is none. A section is lexed alone (RESIDUALS: R-REFDEF-OUTSIDE).
+ * THE RENDERED VIEW (refusal #3 U5; the enumerate-the-resolvable form of rule 19(c)). The W11 absence and same-cut rules read the
+ * W11 section through renderedText, and w11Headings reads heading text through headingTexts; both read marked's Lexer tokens as
+ * text. Their claim is exactly the RV and RH pin lines; a markdown input those lines do not hold is NOT CLAIMED. A section is
+ * lexed alone (RESIDUALS: R-REFDEF-OUTSIDE).
  *
  * CLI:
  *   node qa/workbench/mwi-release.mjs --base <rev> [--head <rev>] [--commit <rev>] [--gate-envelope <path>]
@@ -83,14 +85,189 @@
  *           outside a work tree) and, last, the usage line
  *
  * NOT CLAIMED: a live slice or any Mechanical invocation (the validator calls no Mechanical code); a count of release blocks per
- * receipt entry; rendering by any markdown engine other than marked, and every markdown construct the rendered view above does
- * not name (an image, a strikethrough and a footnote among them); a revision spelling the CLI paragraph does not name; what a
+ * receipt entry; rendering by any markdown engine other than marked, and every markdown input the RV and RH pin lines do not
+ * hold (an image, a strikethrough and a footnote among them); a revision spelling the CLI paragraph does not name; what a
  * symlink under src/workbench/hosts/ points at (a host file is read as the text Git or the file system gives); a gate envelope's
  * selection accounting, replay or warm-memo state (EAT-R084 reads the invocation's only, skip and path and each required leg's
  * step; its keep_going and verb are not read), and a predicate form PREDICATE_FORMS does not list; a forge run tier declared other
  * than as a [build] gate leg or a [build.commands.<tier>] table of forge.toml; a test file path or a forge run tier spelled with a
  * character the seam paragraph does not name; how the working-tree cut reads a path removed from the index but kept in the
  * working tree (git rm --cached).
+ *
+ * PIN LISTS (THE PIN LISTS above; ids in test/workbench-mwi-release.test.ts):
+ * RV lines: renderedText(<input>) reads <text>. RH lines: headingTexts(<input>) reads <texts>.
+ *   RV01 "x&#65;y" -> "xAy"
+ *   RV02 "x&#0000065;y" -> "xAy"
+ *   RV03 "x&#1;y" -> "x\u0001y"
+ *   RV04 "x&#1114111;y" -> "x\udbff\udfffy"
+ *   RV05 "x&#x41;y" -> "xAy"
+ *   RV06 "x&#X41;y" -> "xAy"
+ *   RV07 "x&#x4a;y" -> "xJy"
+ *   RV08 "x&#x4A;y" -> "xJy"
+ *   RV09 "x&#x000041;y" -> "xAy"
+ *   RV10 "x&#x10FFFF;y" -> "x\udbff\udfffy"
+ *   RV11 "&amp; &lt; &gt; &quot; &apos; a&nbsp;b" -> "& < > \" ' a b"
+ *   RV12 "x&#0;y" -> "x&#0;y"
+ *   RV13 "x&#x0;y" -> "x&#x0;y"
+ *   RV14 "x&#1114112;y" -> "x&#1114112;y"
+ *   RV15 "x&#x110000;y" -> "x&#x110000;y"
+ *   RV16 "x&#00000065;y" -> "x&#00000065;y"
+ *   RV17 "x&#x0000041;y" -> "x&#x0000041;y"
+ *   RV18 "x&copy;y" -> "x&copy;y"
+ *   RV19 "x&AMP;y &NBSP; &Lt; &Amp;" -> "x&AMP;y &NBSP; &Lt; &Amp;"
+ *   RV20 "No `a&amp;b` host" -> "No a&amp;b host"
+ *   RV21 "No binding\thost exists." -> "No binding host exists."
+ *   RV22 "No binding   host exists." -> "No binding host exists."
+ *   RV23 "No binding\nhost exists." -> "No binding host exists."
+ *   RV24 "No binding\u00a0host exists." -> "No binding host exists."
+ *   RV25 "No binding  \nhost exists." -> "No binding host exists."
+ *   RV26 "No binding\\\nhost exists." -> "No binding host exists."
+ *   RV27 "No *binding* _host_ exists." -> "No binding host exists."
+ *   RV28 "No **binding** __host__ exists." -> "No binding host exists."
+ *   RV29 "No binding\\-host exists." -> "No binding-host exists."
+ *   RV30 "No [binding](#w11) host exists." -> "No binding host exists."
+ *   RV31 "No [binding](#w11 \"the binding\") host exists." -> "No binding host exists."
+ *   RV32 "No [`binding`](#w11) host exists." -> "No binding host exists."
+ *   RV33 "No [binding][b] host exists.\n\n[b]: #w11" -> "No binding host exists."
+ *   RV34 "No [binding][] host exists.\n\n[binding]: #w11" -> "No binding host exists."
+ *   RV35 "No [binding] host exists.\n\n[binding]: #w11" -> "No binding host exists."
+ *   RV36 "Ask <https://binding.example.invalid> first." -> "Ask https://binding.example.invalid first."
+ *   RV37 "Ask <binding@example.invalid> first." -> "Ask binding@example.invalid first."
+ *   RV38 "No <span>binding</span> host exists." -> "No binding host exists."
+ *   RV39 "```\nNo binding host exists.\n```" -> "No binding host exists."
+ *   RV40 "```\nNo binding\nhost exists.\n```" -> "No binding host exists."
+ *   RV41 "    No binding\n    host exists." -> "No binding host exists."
+ *   RV42 "### No binding host exists." -> "No binding host exists."
+ *   RV43 "No binding host exists.\n---" -> "No binding host exists."
+ *   RV44 "<div>\nNo binding host exists.\n</div>" -> ""
+ *   RV45 "<!-- No binding host exists. -->" -> ""
+ *   RV46 "> No binding host exists." -> "No binding host exists."
+ *   RV47 "> No binding\n>\n> host exists." -> "No binding\nhost exists."
+ *   RV48 "> > No binding host exists." -> "No binding host exists."
+ *   RV49 "> No binding\nhost exists." -> "No binding host exists."
+ *   RV50 "- No *binding* host exists." -> "No binding host exists."
+ *   RV51 "- No binding\n\n  host exists." -> "No binding host exists."
+ *   RV52 "- note\n\n  No binding host exists." -> "note No binding host exists."
+ *   RV53 "- one\n- two" -> "one\ntwo"
+ *   RV54 "1. one\n2. two" -> "one\ntwo"
+ *   RV55 "- a\n  - b\n  - c\n- d" -> "a b c\nd"
+ *   RV56 "| Feature | Status |\n| --- | --- |\n| a | **b** |\n| c | d |" -> "Feature | Status\na | b\nc | d"
+ *   RV57 "x&#x1;y" -> "x\u0001y"
+ *   RV58 "x&amp y &#65 z" -> "x&amp y &#65 z"
+ *   RV59 "```\nx &amp; y\n```" -> "x &amp; y"
+ *   RV60 "a\n\n##\n\nb" -> "a\nb"
+ *   RV61 "No binding\u2003host exists." -> "No binding host exists."
+ *   RV62 "No binding\u3000host exists." -> "No binding host exists."
+ *   RV63 "No binding\fhost exists." -> "No binding host exists."
+ *   RV64 "No binding\u000bhost exists." -> "No binding host exists."
+ *   RV65 "No binding\ufeffhost exists." -> "No binding host exists."
+ *   RV66 "No binding\u2028host exists." -> "No binding host exists."
+ *   RH01 "## W11:  MechanicalWorkflows binding host" -> ["W11: MechanicalWorkflows binding host"]
+ *   RH02 "## W11:\tMechanicalWorkflows binding host" -> ["W11: MechanicalWorkflows binding host"]
+ *   RH03 "## A ##" -> ["A"]
+ *   RH04 "  ## A" -> ["A"]
+ *   RH05 "A\n---" -> ["A"]
+ *   RH06 "<!--\n## A\n-->" -> []
+ *   RH07 "```\n## A\n```" -> []
+ *   RH08 "    ## A" -> []
+ * FV lines: the test's control block (PI-7 partial, gate none) with that line set to <value> gives <rules> from
+ * receiptBlockFindings; FG lines: the same on that block naming the producer gate PI-DETACHED-GRANTS, result pass.
+ *   FV01 contract "workbench.mwi-release/v1" -> []
+ *   FV02 contract "workbench.mwi-release/v10" -> ["contract-mismatch"]
+ *   FV03 contract "workbench.mwi-release/v2" -> ["contract-mismatch"]
+ *   FV04 contract "xworkbench.mwi-release/v1" -> ["contract-mismatch"]
+ *   FV05 contract "Workbench.mwi-release/v1" -> ["contract-mismatch"]
+ *   FV06 contract "WORKBENCH.MWI-RELEASE/V1" -> ["contract-mismatch"]
+ *   FV07 contract "workbench.mwi-release" -> ["contract-mismatch"]
+ *   FV08 program "mechanical-workflows-interop-2026-11-04" -> []
+ *   FV09 program "mechanical-workflows-interop-2026-11-040" -> ["program-mismatch"]
+ *   FV10 program "xmechanical-workflows-interop-2026-11-04" -> ["program-mismatch"]
+ *   FV11 program "Mechanical-workflows-interop-2026-11-04" -> ["program-mismatch"]
+ *   FV12 program "mechanical-workflows-interop" -> ["program-mismatch"]
+ *   FV13 slice "PI-0" -> []
+ *   FV14 slice "PI-1" -> []
+ *   FV15 slice "PI-2" -> []
+ *   FV16 slice "PI-3" -> []
+ *   FV17 slice "PI-4" -> []
+ *   FV18 slice "PI-5" -> []
+ *   FV19 slice "PI-6" -> []
+ *   FV20 slice "PI-7" -> []
+ *   FV21 slice "PI-8" -> ["slice-unknown"]
+ *   FV22 slice "pi-7" -> ["slice-unknown"]
+ *   FV23 slice "PI-70" -> ["slice-unknown"]
+ *   FV24 slice "PI-07" -> ["slice-unknown"]
+ *   FV25 slice "I-7" -> ["slice-unknown"]
+ *   FV26 slice status "design-only" -> []
+ *   FV27 slice status "partial" -> []
+ *   FV28 slice status "live" -> ["closing-gate-unnamed"]
+ *   FV29 slice status "closed" -> ["closing-gate-unnamed"]
+ *   FV30 slice status "Partial" -> ["status-unknown"]
+ *   FV31 slice status "PARTIAL" -> ["status-unknown"]
+ *   FV32 slice status "partially" -> ["status-unknown"]
+ *   FV33 slice status "art" -> ["status-unknown"]
+ *   FV34 slice status "Live" -> ["status-unknown"]
+ *   FV35 real infrastructure gate "none" -> []
+ *   FV36 real infrastructure gate "None" -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
+ *   FV37 real infrastructure gate "NONE" -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
+ *   FV38 real infrastructure gate "nones" -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
+ *   FV39 real infrastructure gate "none." -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
+ *   FV40 real infrastructure gate "" -> ["gate-line-missing"]
+ *   FG01 gate tier "producer" -> []
+ *   FG02 gate tier "fixture" -> []
+ *   FG03 gate tier "historical" -> []
+ *   FG04 gate tier "Producer" -> ["gate-tier-unknown"]
+ *   FG05 gate tier "producers" -> ["gate-tier-unknown"]
+ *   FG06 gate tier "duce" -> ["gate-tier-unknown"]
+ *   FG07 gate result "pass" -> []
+ *   FG08 gate result "fail" -> []
+ *   FG09 gate result "skipped" -> []
+ *   FG10 gate result "unavailable" -> []
+ *   FG11 gate result "not-run" -> []
+ *   FG12 gate result "Pass" -> ["gate-result-unknown"]
+ *   FG13 gate result "passed" -> ["gate-result-unknown"]
+ *   FG14 gate result "ass" -> ["gate-result-unknown"]
+ * TR lines: TRACEABILITY.md at <base> and <head> (null: absent) gives <rules> from judgeCut; BASE is "# Traceability\n\n| ID | Status |\n| --- | --- |\n| WB-001 | planned |\n".
+ *   TR01 BASE -> BASE + "| WB-999 | landed-gated |\n": ["traceability-changed"]
+ *   TR02 BASE -> "# Traceability\n": ["traceability-changed"]
+ *   TR03 BASE -> null: ["traceability-changed"]
+ *   TR04 null -> "# new global status\n": ["traceability-changed"]
+ *   TR05 BASE -> BASE + "\n": ["traceability-changed"]
+ *   TR06 BASE -> "# Traceability\r\n\r\n| ID | Status |\r\n| --- | --- |\r\n| WB-001 | planned |\r\n": ["traceability-changed"]
+ *   TR07 BASE -> "# Traceability\n\n| ID | Status |\n| --- | --- |\n| WB-001 | Planned |\n": ["traceability-changed"]
+ *   TR08 BASE -> "# Traceability\n\n| ID | Status |\n| --- | --- |\n| WB-001  | planned |\n": ["traceability-changed"]
+ *   TR09 BASE + "| WB-002 | caf\u00e9 |\n" -> BASE + "| WB-002 | cafe\u0301 |\n": ["traceability-changed"]
+ *   TR10 BASE -> BASE: []
+ *   TR11 null -> null: []
+ *   TR12 BASE + "| WB-002 | planned |\n" -> "# Traceability\n\n| ID | Status |\n| --- | --- |\n| WB-002 | planned |\n| WB-001 | planned |\n": ["traceability-changed"]
+ * WR lines: <reader> over the case's input (its pinned form, when one short line shows it) gives <result>.
+ *   WR01 headingTexts "# a\n\n## b\n\n### c\n\n#### d\n\n##### e\n\n###### f" -> ["a","b","c","d","e","f"]
+ *   WR02 headingTexts "> ## B" -> ["B"]
+ *   WR03 headingTexts "- ## B" -> ["B"]
+ *   WR04 headingTexts "> - ## B" -> ["B"]
+ *   WR05 headingTexts "- > ## B" -> ["B"]
+ *   WR06 headingTexts "1. ## B" -> ["B"]
+ *   WR07 sliceRules -> ["w11-heading-not-unique"]
+ *   WR08 w11Rows -> [{"feature":"Hosted develop()","status":"planned"},{"feature":"Hosted develop()","status":"landed-gated"}]
+ *   WR09 sliceRules -> ["w11-landed-gated-unwitnessed"]
+ *   WR10 w11Rows "| Features | Status |" -> [{"feature":"","status":"planned"}]
+ *   WR11 w11Rows "| feature | Status |" -> [{"feature":"","status":"planned"}]
+ *   WR12 w11Rows "| Feature | status |" -> [{"feature":"Hosted develop()","status":""}]
+ *   WR13 sliceRules "| Feature | status | Evidence | Caveats |" -> ["w11-status-unknown"]
+ *   WR14 w11Rows "| Feature | STATUS |" -> [{"feature":"Hosted develop()","status":""}]
+ *   WR15 w11Rows "| **Feature** | **Status** |" -> [{"feature":"Hosted develop()","status":"planned"}]
+ *   WR16 w11Rows "| Feature | Status | Status |" -> [{"feature":"Hosted develop()","status":"planned"}]
+ *   WR17 sliceRules "Planned" -> ["w11-status-unknown"]
+ *   WR18 sliceRules "PLANNED" -> ["w11-status-unknown"]
+ *   WR19 sliceRules "planned." -> ["w11-status-unknown"]
+ *   WR20 w11Findings -> []
+ *   WR21 w11Html "| Feature | Status <i>x</i> | Evidence | Caveats |" -> ["<i>","</i>"]
+ *   WR22 sliceRules "| Feature | Status <i>x</i> | Evidence | Caveats |" -> ["w11-html","w11-status-unknown"]
+ *   WR23 w11Html "<div>\nx\n</div>" -> ["<div>\nx\n</div>"]
+ *   WR24 w11Html "a <i>b</i> c" -> ["<i>","</i>"]
+ *   WR25 w11Html "<!-- x -->" -> ["<!-- x -->"]
+ *   WR26 w11Html "| Hosted develop() | <b>planned</b> | e | c |" -> ["<b>","</b>"]
+ *   WR27 judgeCut -> ["w11-heading-not-unique"]
+ *   WR28 w11Rows "| Feature | Feature | Status |" -> [{"feature":"Hosted develop()","status":"planned"}]
  *
  * RESIDUALS (named families; each has pinned quiet rows and a live twin in the test's RESIDUALS table):
  *  - R-ABSENCE-OTHER-WORDS: a W11 absence statement not written with the absence words in one rendered line (quiet: a
@@ -190,7 +367,7 @@ export const W11_HEADING = `## ${W11_TITLE}`;
 export const MATRIX_STATUSES = Object.freeze(["landed-gated", "partial", "in-progress", "planned", "not-started"]);
 export const PROGRAM_DOCS_DIR = `docs/workbench/programs/${PROGRAM}/`;
 export const TRACEABILITY_PATH = "docs/workbench/TRACEABILITY.md";
-/** EAT-R087's immutable paths: their bytes at the head equal their bytes at the cut base. */
+/** EAT-R087's immutable paths (TRACEABILITY.md); judgeCut's traceability-changed reading of them is claimed exactly as the TR pin lines give it. */
 export const IMMUTABLE_PATHS = Object.freeze([TRACEABILITY_PATH]);
 export const RECEIPTS_DIR = "docs/workbench/receipts/";
 export const HOSTS_DIR = "src/workbench/hosts/";
@@ -518,7 +695,8 @@ function tokenList(value) {
 }
 
 /**
- * Every token under `tokens`, depth first: nested block and inline tokens, list items and table cells included.
+ * The tokens under `tokens`, depth first: each token, then its tokens, its list items and a table's header and body cells. Its
+ * readings are claimed only through headingTexts, w11Rows and w11Html, exactly as the RH and WR pin lines give them.
  * @param {unknown} tokens
  * @returns {Generator<Record<string, unknown>, void, undefined>}
  */
@@ -535,7 +713,7 @@ function* walkTokens(tokens) {
 }
 
 /**
- * Text with its character references read as the characters they render (an out-of-range number is kept as written).
+ * Text with the character references CHARACTER_REFERENCE matches decoded, or kept, as the RV pin lines show.
  * @param {string} text
  * @returns {string}
  */
@@ -551,8 +729,7 @@ function decodeReferences(text) {
 const oneLine = (text) => text.replace(/\s+/g, " ").trim();
 
 /**
- * The rendered text of inline tokens: markup reads as its text, raw HTML as nothing, a line break as a space; character references
- * are decoded in text, never in a code span.
+ * The rendered text of inline tokens (renderedText's inline part; the RV pin lines show it).
  * @param {unknown} tokens
  * @returns {string}
  */
@@ -569,7 +746,7 @@ function inlineText(tokens) {
 }
 
 /**
- * The rendered cells of a table token, one array per row: its header row first, then every body row.
+ * The rendered cells of a table token, one array per row, its header row first (RV56; WR10-WR16 read its header row).
  * @param {Record<string, unknown>} table
  * @returns {string[][]}
  */
@@ -579,8 +756,7 @@ function tableCells(table) {
 }
 
 /**
- * The rendered lines of block tokens: one line per heading, paragraph, code block, table row (its cells joined by " | ") and
- * list item; a blockquote's lines are its blocks' lines; raw HTML gives none.
+ * The rendered lines of block tokens (renderedText's block part; the RV pin lines show it).
  * @param {unknown} tokens
  * @returns {string[]}
  */
@@ -598,7 +774,7 @@ function blockLines(tokens) {
 }
 
 /**
- * The rendered view of markdown as text (THE RENDERED VIEW above): one line per block, table row and list item.
+ * The rendered view of markdown as text (THE RENDERED VIEW above): exactly the RV pin lines claim its readings.
  * @param {string} markdown
  * @returns {string}
  */
@@ -607,7 +783,8 @@ export function renderedText(markdown) {
 }
 
 /**
- * The rendered text of every heading of markdown, at any depth and at any nesting (a heading in a blockquote or a list item too).
+ * The rendered text of the headings of markdown, in document order; its readings are claimed exactly as the RH pin lines and
+ * WR01-WR06 give them.
  * @param {string} markdown
  * @returns {string[]}
  */
@@ -662,9 +839,9 @@ export function w11Section(matrix) {
 }
 
 /**
- * Every body row of every table of a W11 section (a table nested in a blockquote or a list item too), in the rendered view: the
- * cells under its header cells reading Feature and Status, in whichever columns they stand ("" when the table has no such header
- * cell).
+ * The body rows of the tables of a W11 section, in the rendered view: the cells under its header cells reading Feature and
+ * Status, in whichever columns they stand ("" when the table has no such header cell). Its readings of a table nested in a list
+ * item and of the header cells are claimed exactly as WR08, WR10-WR16 and WR28 give them.
  * @param {string} section
  * @returns {W11Row[]}
  */
@@ -691,7 +868,8 @@ export function w11Statuses(section) {
 }
 
 /**
- * The raw HTML a W11 section holds: block HTML, HTML comments and inline HTML alike.
+ * The raw HTML a W11 section holds, one entry per html token walkTokens yields; its readings are claimed exactly as WR21 and
+ * WR23-WR26 give them.
  * @param {string} section
  * @returns {string[]}
  */
@@ -709,7 +887,8 @@ export function w11Html(section) {
  * carry leaves it false; an EAT-R083 or an EAT-R086 finding alone does not; one such clean claim beside a refused one makes it
  * true; a claim judged without a candidate leaves it false and the closure open (unkeyed).
  *  - w11-landed-gated-unwitnessed: a head row reads landed-gated while no base row with the same Feature cell does, unwitnessed;
- *  - w11-status-unknown: a head row's Status cell is none of MATRIX_STATUSES ("" when its table has no Status column);
+ *  - w11-status-unknown: a head row's Status cell is not exactly one of MATRIX_STATUSES ("" when its table has no Status column;
+ *    WR13 and WR17-WR20);
  *  - w11-html: the head section holds raw HTML (its rendered view would not be its whole text);
  *  - w11-absence-stale: the head section states that no binding host exists (the absence words "no binding host" or
  *    "no binding-host", singular or plural, in any case, as a whole phrase in one rendered line: no word character just before
@@ -746,7 +925,8 @@ export function w11Findings(input) {
 /**
  * Judges a cut base..head: EAT-R087 over its added and immutable paths; EAT-R082/R083/R085/R086 over each release block of a
  * changed per-bead receipt that the receipt did not already hold at the cut base, text for text (an appended, an inserted and an
- * edited block alike; a block the base already holds is not judged again); the W11 rules and the W11 heading's uniqueness; and
+ * edited block alike; a block the base already holds is not judged again); the W11 rules and the W11 heading's uniqueness, the
+ * latter over the head feature matrix whether or not the cut changes it (WR27); and
  * EAT-R084 over the machine gate envelope when one is supplied (judged against the cut's candidate commit; without a candidate it
  * throws). A finding of a receipt's block names that receipt (`receipt`); a finding of the cut's paths, of W11 or of the envelope
  * carries no `receipt` key.
