@@ -4,9 +4,9 @@
  * 0b25e14e; the triage tree stays master-only). The cases are test/workbench-mwi-cancel-repro.test.ts.
  *
  * runParkedDispatchExperiment drives the REAL runWorkflow over the REAL createClaudeWorkflowHost through the host's
- * documented fixture query seam (FakeClaudeSdk). The SDK module is never mocked, and the experiment arms no timer: the
- * suite's INSTRUMENT-NO-TIMER reads this source for the timer globals and the timers modules, and this source and the
- * suite's for vi's mock and doMock. The barrier is the host's own beforeDispatch option: the target attempt's call parks
+ * documented fixture query seam (FakeClaudeSdk). What the suite's INSTRUMENT-NO-TIMER reads in this source's text, and
+ * in the suite's own, is listed in the suite's header; whether a run of the experiment arms a timer is NOT CLAIMED.
+ * The barrier is the host's own beforeDispatch option: the target attempt's call parks
  * the host inside `await config.beforeDispatch?.()` until the experiment releases it. While
  * the host is parked the experiment issues the runtime's per-agent control (WorkflowControl's method named by the plan,
  * skip or retry, by row index), then releases the barrier and records what followed. Every fixture query's script

@@ -30,8 +30,13 @@
  *   with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again with
  *   those fields omitted; PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24 plans, each once, in the order
  *   of the product of the four plan unions as the helper declares them (read with the TypeScript parser).
- *   INSTRUMENT-NO-TIMER pins, by the same parser, that the helper names no timer global and imports no timers module,
- *   and that neither the helper nor this suite names vi's mock or doMock.
+ *   INSTRUMENT-NO-TIMER pins, by the same parser, what the helper's source text holds: no timer global's name
+ *   (setTimeout, setInterval, setImmediate) as an identifier, no literal text (string, template or regular expression)
+ *   containing one of those names or the text timers, no import() call and no static import of a timers module; and
+ *   that neither the helper nor this suite holds vi's mock or doMock as an identifier, nor as a literal text equal to
+ *   the name beyond this suite's own MOCK_NAMES list. The same reads flag each of those forms in a planted text.
+ *   Comments are not read. Whether a run of the experiment arms a timer, and a name or module specifier that a source
+ *   builds while it runs, are NOT CLAIMED.
  * - Named judge rows. Each row is a reading written out beside the verdict it must get: R015-SEAM, R015-SEAM-ROWS,
  *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS.
  * - Judge grids: R015-SEAM-GRID, R015-ORACLE-GRID and R016-ORACLE-GRID. Each grid is the product of the axis lists that
@@ -39,8 +44,11 @@
  *   applied to every reading of that product (a profile replaces, together, the fields that builder names as its
  *   noise). Every reading built either way must get the verdict ruledVerdict gives, and the number of readings is
  *   pinned. ruledVerdict restates the rules of the helper's header, one rule per line, in the order the verdict lists
- *   them. GRID-AXES pins the axis lists and NOISE, that each NOISE field takes every value of its list, and that the
- *   four plan facet lists, ENTRY_STATES and RUN_STATUSES equal the unions their source files declare.
+ *   them. GRID-AXES pins each axis list by value (COUNTS, CONTROLS, STARTUPS, ROUTES, BARRIERS, SETUP_AGENTS,
+ *   ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES, CALL_LOG_OFFSETS and
+ *   ONE_START_SPLITS), NOISE by each profile's position in every list it draws from, that each NOISE field takes every
+ *   value of its list, and that the four plan facet lists, ENTRY_STATES and RUN_STATUSES equal the unions their source
+ *   files declare.
  * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
  * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
  * value, settlement list or run status that no list holds) and a reading outside those products. Production
@@ -495,26 +503,96 @@ function declaredUnion(file: string, owner: string, property?: string): readonly
   return union.types.flatMap(member => (ts.isLiteralTypeNode(member) && ts.isStringLiteral(member.literal) ? [member.literal.text] : []));
 }
 
-/** Every identifier a source file holds (read with the TypeScript parser; comments and string literals hold none). */
-function identifiersOf(file: string): ReadonlySet<string> {
+/** Every identifier a parsed source holds (comments and string literals hold none). */
+function identifierNames(source: ts.SourceFile): ReadonlySet<string> {
   const names = new Set<string>();
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node)) names.add(node.text);
     ts.forEachChild(node, visit);
   };
-  visit(parse(file));
+  visit(source);
   return names;
 }
 
-/** Every module a source file imports, by its specifier. */
-function importedModules(file: string): readonly string[] {
-  return parse(file).statements.flatMap(statement =>
+/** Every identifier a source file holds (read with the TypeScript parser; comments and string literals hold none). */
+function identifiersOf(file: string): ReadonlySet<string> {
+  return identifierNames(parse(file));
+}
+
+/** Every module a parsed source imports by a top-level import declaration, by its specifier. */
+function importSpecifiers(source: ts.SourceFile): readonly string[] {
+  return source.statements.flatMap(statement =>
     ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) ? [statement.moduleSpecifier.text] : [],
   );
 }
 
-/** The timer globals the helper's header says the experiment never arms. */
+/** Every module a source file imports, by its specifier. */
+function importedModules(file: string): readonly string[] {
+  return importSpecifiers(parse(file));
+}
+
+/**
+ * The text of every literal a parsed source holds, in source order: each string literal, each template literal part
+ * (a template with no substitution, and the head, middle and tail of one with substitutions) and each regular
+ * expression literal (its text, slashes and flags included). Comments hold none.
+ */
+function literalTexts(source: ts.SourceFile): readonly string[] {
+  const texts: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (
+      ts.isStringLiteral(node) ||
+      ts.isNoSubstitutionTemplateLiteral(node) ||
+      ts.isTemplateHead(node) ||
+      ts.isTemplateMiddle(node) ||
+      ts.isTemplateTail(node) ||
+      ts.isRegularExpressionLiteral(node)
+    ) {
+      texts.push(node.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return texts;
+}
+
+/** How many import() calls a parsed source holds, at any depth. */
+function dynamicImportCount(source: ts.SourceFile): number {
+  let count = 0;
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) count += 1;
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return count;
+}
+
+/** The timer globals INSTRUMENT-NO-TIMER looks for in the helper's source text. */
 const TIMER_GLOBALS: readonly string[] = ["setTimeout", "setInterval", "setImmediate"];
+/** The timers modules, by the specifiers a static import can name. */
+const TIMER_MODULES: readonly string[] = ["timers", "node:timers", "timers/promises", "node:timers/promises"];
+/** What no literal text of the helper may contain: a timer global's name, or the text every timers module's specifier holds. */
+const TIMER_WORDS: readonly string[] = [...TIMER_GLOBALS, "timers"];
+/** vi's two module-mocking methods. These are this suite's only literal texts equal to either name; INSTRUMENT-NO-TIMER counts them. */
+const MOCK_NAMES: readonly string[] = ["mock", "doMock"];
+
+/**
+ * A planted source text, parsed and never run, holding each form INSTRUMENT-NO-TIMER's reads look for: a static import
+ * of a timers module (its specifier, and the imported name as an identifier), a timer global called by its name, by a
+ * string key and by a template key, a template with substitutions whose head, middle and tail each hold one form, a
+ * regular expression literal naming a timer global, an import() call of a timers module, vi's mock as a destructured
+ * name and vi's doMock by a string key.
+ */
+const PLANTED_FORMS = [
+  'import { setImmediate } from "node:timers";',
+  "setInterval(() => {}, 0);",
+  'globalThis["setTimeout"](() => {}, 0);',
+  "globalThis[`setInterval`](() => {}, 0);",
+  `const parts = \`setImmediate\${0}setTimeout\${0}timers/promises\`;`,
+  "const pattern = /setInterval/;",
+  'await import("node:timers/promises");',
+  "const { mock } = vi;",
+  'vi["doMock"]("planted");',
+].join("\n");
 
 describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)", () => {
   it("R015-SPAWN fresh spawn: the seam validates, and the skip is lost: one SDK start, settled done, the script got the answer", async () => {
@@ -1077,7 +1155,7 @@ const PLAN_ROWS: readonly PlanRow[] = [
 ];
 
 describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", () => {
-  it("GRID-AXES the axis lists and the 17 NOISE profiles, frozen; the four plan facet lists, ENTRY_STATES and RUN_STATUSES each equal the union their source file declares (read with the TypeScript parser); each NOISE field takes every value of its list", () => {
+  it("GRID-AXES each axis list by value and the 17 NOISE profiles by each one's position in every list it draws from, frozen; the four plan facet lists, ENTRY_STATES and RUN_STATUSES each equal the union their source file declares (read with the TypeScript parser); each NOISE field takes every value of its list", () => {
     expect({
       counts: COUNTS,
       controls: CONTROLS,
@@ -1148,6 +1226,78 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
       noiseLaterEntries: 4,
       noiseOneStartSplits: 3,
     });
+    // The chosen-sample lists, which no source file declares, frozen by value (undefined entries, key sets and the {}
+    // and [] values each compared strictly).
+    expect({ finalRows: FINAL_ROWS, scriptValues: SCRIPT_VALUES, settlementLists: SETTLEMENT_LISTS, oneStartSplits: ONE_START_SPLITS }).toStrictEqual({
+      finalRows: [
+        undefined,
+        { state: "start", skipped: true, attempt: 1, reason: null },
+        { state: "start", skipped: true, attempt: 2, reason: "user-retry" },
+        { state: "start", skipped: false, attempt: 1, reason: null },
+        { state: "start", skipped: false, attempt: 2, reason: "user-retry" },
+        { state: "progress", skipped: true, attempt: 1, reason: null },
+        { state: "progress", skipped: true, attempt: 2, reason: "user-retry" },
+        { state: "progress", skipped: false, attempt: 1, reason: null },
+        { state: "progress", skipped: false, attempt: 2, reason: "user-retry" },
+        { state: "done", skipped: true, attempt: 1, reason: null },
+        { state: "done", skipped: true, attempt: 2, reason: "user-retry" },
+        { state: "done", skipped: false, attempt: 1, reason: null },
+        { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
+        { state: "error", skipped: true, attempt: 1, reason: null },
+        { state: "error", skipped: true, attempt: 2, reason: "user-retry" },
+        { state: "error", skipped: false, attempt: 1, reason: null },
+        { state: "error", skipped: false, attempt: 2, reason: "user-retry" },
+      ],
+      scriptValues: [null, undefined, false, 0, "", "answer 0", "null", {}, []],
+      settlementLists: [
+        [],
+        [{ ok: false, skipped: true, error: "Claude SDK query was cancelled." }],
+        [{ ok: false, skipped: true, error: "Workflow aborted." }],
+        [{ ok: true, skipped: false }],
+        [
+          { ok: true, skipped: false },
+          { ok: true, skipped: false },
+        ],
+        [
+          { ok: false, skipped: true, error: "Claude SDK query was cancelled." },
+          { ok: true, skipped: false },
+        ],
+      ],
+      oneStartSplits: [
+        { original: 1, replacement: 0, extra: 0 },
+        { original: 0, replacement: 1, extra: 0 },
+        { original: 0, replacement: 0, extra: 1 },
+      ],
+    });
+    // NOISE frozen: each profile, by its position in each list it draws from (the same element, by identity), in the
+    // order settlements, run status, barrier, final row, script value, original, replacement and later entries, one start.
+    const NOISE_SOURCES: readonly (readonly unknown[])[] = [SETTLEMENT_LISTS, RUN_STATUSES, BARRIERS, FINAL_ROWS, SCRIPT_VALUES, COUNTS, COUNTS, COUNTS, ONE_START_SPLITS];
+    const positions = NOISE.map(noise =>
+      [noise.hostSettlements, noise.runStatus, noise.barrier, noise.finalRow, noise.scriptValue, noise.entries.original, noise.entries.replacement, noise.entries.extra, noise.oneStart].map(
+        (value, field) => NOISE_SOURCES[field].indexOf(value),
+      ),
+    );
+    expect(positions).toEqual([
+      [0, 0, 0, 0, 0, 0, 1, 2, 0],
+      [1, 1, 1, 1, 1, 1, 2, 3, 1],
+      [2, 2, 0, 2, 2, 2, 3, 0, 2],
+      [3, 0, 1, 3, 3, 3, 0, 1, 0],
+      [4, 1, 0, 4, 4, 0, 1, 2, 1],
+      [5, 2, 1, 5, 5, 1, 2, 3, 2],
+      [0, 0, 0, 6, 6, 2, 3, 0, 0],
+      [1, 1, 1, 7, 7, 3, 0, 1, 1],
+      [2, 2, 0, 8, 8, 0, 1, 2, 2],
+      [3, 0, 1, 9, 0, 1, 2, 3, 0],
+      [4, 1, 0, 10, 1, 2, 3, 0, 1],
+      [5, 2, 1, 11, 2, 3, 0, 1, 2],
+      [0, 0, 0, 12, 3, 0, 1, 2, 0],
+      [1, 1, 1, 13, 4, 1, 2, 3, 1],
+      [2, 2, 0, 14, 5, 2, 3, 0, 2],
+      [3, 0, 1, 15, 6, 3, 0, 1, 0],
+      [4, 1, 0, 16, 7, 0, 1, 2, 1],
+    ]);
+    // Each NOISE field takes every value of its list: every position of each source list appears in that field's column.
+    expect(NOISE_SOURCES.map((list, field) => list.every((_, position) => positions.some(row => row[field] === position)))).toEqual([true, true, true, true, true, true, true, true, true]);
   });
 
   it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
@@ -1157,15 +1307,43 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     expect(PLAN_ROWS.map(row => planId(row.reading.plan))).toEqual(product);
   });
 
-  it("INSTRUMENT-NO-TIMER the helper's source, read with the TypeScript parser, names no timer global and imports no timers module, and neither it nor this suite names vi's mock or doMock; the same read names runWorkflow, so it is not empty", () => {
+  it("INSTRUMENT-NO-TIMER the helper's source, read with the TypeScript parser, holds no timer global's name as an identifier, no literal text (string, template or regular expression) containing one or the text timers, no import() call and no static import of a timers module, and neither it nor this suite holds vi's mock or doMock as an identifier or, beyond this suite's MOCK_NAMES, as an equal literal text; the same reads flag each of those forms in a planted text, and the helper read finds runWorkflow and the runtime module's specifier, so it is not empty", () => {
     const helper = identifiersOf(HELPER);
     const suite = identifiersOf(SUITE);
     expect({
       timers: TIMER_GLOBALS.filter(name => helper.has(name)),
-      timerModules: importedModules(HELPER).filter(specifier => ["timers", "node:timers", "timers/promises", "node:timers/promises"].includes(specifier)),
-      mocks: ["mock", "doMock"].filter(name => helper.has(name) || suite.has(name)),
+      timerModules: importedModules(HELPER).filter(specifier => TIMER_MODULES.includes(specifier)),
+      mocks: MOCK_NAMES.filter(name => helper.has(name) || suite.has(name)),
       readsRunWorkflow: helper.has("runWorkflow"),
     }).toEqual({ timers: [], timerModules: [], mocks: [], readsRunWorkflow: true });
+    const helperSource = parse(HELPER);
+    const helperTexts = literalTexts(helperSource);
+    expect({
+      timerTexts: helperTexts.filter(text => TIMER_WORDS.some(word => text.includes(word))),
+      dynamicImports: dynamicImportCount(helperSource),
+      mockTexts: helperTexts.filter(text => MOCK_NAMES.includes(text)),
+      suiteMockTexts: literalTexts(parse(SUITE)).filter(text => MOCK_NAMES.includes(text)).length,
+      readsRuntimeSpecifier: helperTexts.includes("../../src/workflow/runtime.js"),
+    }).toEqual({ timerTexts: [], dynamicImports: 0, mockTexts: [], suiteMockTexts: 2, readsRuntimeSpecifier: true });
+    // Liveness: the same reads, over the planted text, flag each form.
+    const planted = ts.createSourceFile("planted-forms.ts", PLANTED_FORMS, ts.ScriptTarget.ES2022, true);
+    const plantedNames = identifierNames(planted);
+    const plantedTexts = literalTexts(planted);
+    expect({
+      timers: TIMER_GLOBALS.filter(name => plantedNames.has(name)),
+      timerModules: importSpecifiers(planted).filter(specifier => TIMER_MODULES.includes(specifier)),
+      timerTexts: plantedTexts.filter(text => TIMER_WORDS.some(word => text.includes(word))),
+      dynamicImports: dynamicImportCount(planted),
+      mocks: MOCK_NAMES.filter(name => plantedNames.has(name)).length,
+      mockTexts: plantedTexts.filter(text => MOCK_NAMES.includes(text)).length,
+    }).toEqual({
+      timers: ["setInterval", "setImmediate"],
+      timerModules: ["node:timers"],
+      timerTexts: ["node:timers", "setTimeout", "setInterval", "setImmediate", "setTimeout", "timers/promises", "/setInterval/", "node:timers/promises"],
+      dynamicImports: 1,
+      mocks: 1,
+      mockTexts: 1,
+    });
   });
 
   it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict", { timeout: GRID_TIMEOUT }, async () => {
